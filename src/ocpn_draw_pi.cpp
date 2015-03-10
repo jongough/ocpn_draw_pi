@@ -550,6 +550,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
             case 2:                      // Ctrl B
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
+                    m_iCallerId = m_leftclick_boundary_id;
                     cc1->SetCursor( *cc1->pCursorPencil );
                     bret = TRUE;
                 } else bret = FALSE;
