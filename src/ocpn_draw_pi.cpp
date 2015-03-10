@@ -539,12 +539,33 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
 {
     bool bret = FALSE;
-    if( nBoundary_State > 0 ){
-        nBoundary_State = 0;
-        FinishBoundary();
-        cc1->SetCursor( *cc1->pCursorArrow ); 
-        SetToolbarItemState( m_leftclick_boundary_id, false );
-        cc1->Refresh(false);
+    if( event.GetKeyCode() < 128 )            //ascii
+    {
+        int key_char = event.GetKeyCode();
+    
+        if ( event.ControlDown() )
+            key_char -= 64;
+
+        switch( key_char ) {
+            case 2:                      // Ctrl B
+                if ( event.ShiftDown() ) { // Shift-Ctrl-B
+                    nBoundary_State = 1;
+                    cc1->SetCursor( *cc1->pCursorPencil );
+                    bret = TRUE;
+                } else bret = FALSE;
+                break;
+                
+            case 27: // Generic Break
+                if( nBoundary_State > 0 ){
+                    nBoundary_State = 0;
+                    FinishBoundary();
+                    cc1->SetCursor( *cc1->pCursorArrow ); 
+                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    cc1->Refresh(false);
+                    bret = TRUE;
+                } else bret = FALSE;
+                break;
+        }
     }
     return bret;
 }

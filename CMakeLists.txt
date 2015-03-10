@@ -91,16 +91,16 @@ SET(HDRS
         	include/wx/jsonwriter.h
 )
 
-IF(WIN32)
-SET(SRC_LTINYXML
-		src/tinyxml/tinyxml.cpp
-		src/tinyxml/tinyxml.h
-		src/tinyxml/tinyxmlerror.cpp
-		src/tinyxml/tinyxmlparser.cpp
-		src/tinyxml/tinystr.cpp
-		src/tinyxml/tinystr.h
-)
-ENDIF(WIN32)
+#IF(WIN32)
+#SET(SRC_LTINYXML
+#		src/tinyxml/tinyxml.cpp
+#		src/tinyxml/tinyxml.h
+#		src/tinyxml/tinyxmlerror.cpp
+#		src/tinyxml/tinyxmlparser.cpp
+#		src/tinyxml/tinystr.cpp
+#		src/tinyxml/tinystr.h
+#)
+#ENDIF(WIN32)
 
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
