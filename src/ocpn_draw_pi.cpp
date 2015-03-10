@@ -132,10 +132,12 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
       :opencpn_plugin_113(ppimgr)
 {
-      // Create the PlugIn icons
-      g_ppimgr = ppimgr;
-      g_pi_manager = (PlugInManager *) ppimgr;
-      g_SData_Locn = new wxString();
+    // Create the PlugIn icons
+    g_ppimgr = ppimgr;
+    g_pi_manager = (PlugInManager *) ppimgr;
+    g_SData_Locn = new wxString();
+    g_SData_Locn = GetpSharedDataLocation();
+    initialize_images();
 
 }
 
@@ -156,8 +158,6 @@ int ocpn_draw_pi::Init(void)
     m_pMouseBoundary = NULL;
     m_bDrawingBoundary = NULL;
 
-    g_SData_Locn = GetpSharedDataLocation();
-    initialize_images();
 
     AddLocaleCatalog( _T("opencpn-ocpn_draw_pi") );
 
