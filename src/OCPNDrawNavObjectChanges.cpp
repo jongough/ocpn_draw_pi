@@ -59,7 +59,7 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
  
     if(flags & OUT_TYPE) {
         child = node.append_child("type");
-//        child.append_child(pugi::node_pcdata).set_value(pr->m_sTypeString);
+        child.append_child(pugi::node_pcdata).set_value(pr->m_sTypeString.ToAscii());
     }
     
     if(flags & OUT_TIME) {
@@ -171,7 +171,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     pugi::xml_node child;
     
     child = node.append_child("opencpn:type");
-//    child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString);
+	child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString.ToAscii());
     
     if( pPath->m_PathNameString.Len() ) {
         wxCharBuffer buffer=pPath->m_PathNameString.ToUTF8();
@@ -218,31 +218,6 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
         }
     }
     
-/*    pugi::xml_node child_ext = node.append_child("extensions");
-    
-    child = child_ext.append_child("opencpn:type");
-    child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString);
-    
-    child = child_ext.append_child("opencpn:guid");
-    child.append_child(pugi::node_pcdata).set_value(pPath->m_GUID.mb_str());
-    
-    child = child_ext.append_child("opencpn:viz");
-    child.append_child(pugi::node_pcdata).set_value(pPath->IsVisible() == true ? "1" : "0");
-
-    child = child_ext.append_child("opencpn:active");
-    child.append_child(pugi::node_pcdata).set_value(pPath->m_bPathIsActive == true ? "1" : "0");
-    
-//    if( pBoundary->m_width != STYLE_UNDEFINED || pBoundary->m_style != STYLE_UNDEFINED  || pBoundary->m_Colour.length() > 0 || pBoundary->m_FillColour.length() > 0 ) {
-        child = child_ext.append_child("opencpn:style");
-        
-        pugi::xml_attribute colour = child.append_attribute("colour");
-        colour.set_value( pPath->m_LineColour.ToAscii() );
-        pugi::xml_attribute fillcolour = child.append_attribute("fillcolour");
-        fillcolour.set_value( pPath->m_FillColour.ToAscii() );
-        child.append_attribute("width") = pPath->m_width;
-        child.append_attribute("style") = pPath->m_style;
-//    }
-*/    
     child = node.append_child("opencpn:guid");
     child.append_child(pugi::node_pcdata).set_value(pPath->m_GUID.mb_str());
     
@@ -271,7 +246,6 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
         prp = node2->GetData();
             
         GPXCreateOCPNPoint(node.append_child("opencpn:OCPNPoint"), prp, OPT_OCPNPOINT);
-//        GPXCreateWpt(node.append_child("bndpt"), prp, OPT_BOUNDARYPT);
             
         node2 = node2->GetNext();
     }
@@ -286,7 +260,6 @@ bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
     pugi::xml_node child_ext = m_gpx_root.append_child("extensions");
     GPXCreatePath(child_ext.append_child("opencpn:path"), pb);
     
-//    pugi::xml_node xchild = object.child("extensions");
     pugi::xml_node xchild = child_ext.child("extensions");
     //FIXME  What if extensions do not exist?
     pugi::xml_node child = xchild.append_child("opencpn:action");
