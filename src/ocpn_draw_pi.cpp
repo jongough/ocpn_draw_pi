@@ -159,27 +159,27 @@ int ocpn_draw_pi::Init(void)
     m_bDrawingBoundary = NULL;
 
 
-    AddLocaleCatalog( _T("opencpn-ocpn_draw_pi") );
+    AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
 
-	lastWaypointInRoute = _T("-1");
+	lastWaypointInRoute = wxS("-1");
 	eventsEnabled = true;
 
 	// Get a pointer to the opencpn display canvas, to use as a parent for windows created
 	m_parent_window = GetOCPNCanvasWindow();
 
 	m_pconfig = (OCPNDrawConfig *)GetOCPNConfigObject();
-    OCPNDrawConfig *pConfig = new OCPNDrawConfig( wxString( _T("") ), wxString( _T("") ), m_pconfig->m_sNavObjSetFile );
+    OCPNDrawConfig *pConfig = new OCPNDrawConfig( wxString( wxS("") ), wxString( wxS("") ), m_pconfig->m_sNavObjSetFile );
     pConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(pConfig->m_sNavObjSetChangesFile);
     
     pSelect = new OCPNSelect();
     
 	LoadConfig();
 	if(m_bLOGShowIcon) {
-            m_leftclick_config_id  = InsertPlugInTool(_T("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
-                  _("OCPN Draw Manager"), _T(""), NULL,
+            m_leftclick_config_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
+                  wxS("OCPN Draw Manager"), wxS(""), NULL,
                    OCPN_DRAW_POSITION, 0, this);
-            m_leftclick_boundary_id  = InsertPlugInTool(_T("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary, wxITEM_NORMAL,
-                  _("OCPN Draw Boundary"), _T(""), NULL,
+            m_leftclick_boundary_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary, wxITEM_NORMAL,
+                  wxS("OCPN Draw Boundary"), wxS(""), NULL,
                    OCPN_DRAW_POSITION, 0, this);
 	}
 
@@ -199,11 +199,11 @@ int ocpn_draw_pi::Init(void)
     cc1 = (ChartCanvas *)m_parent_window;
 
     if( !g_StyleManager->IsOK() ) {
-        wxString msg = _("Failed to initialize the user interface. ");
-        msg << _("OpenCPN cannot start. ");
-        msg << _("The necessary configuration files were not found. ");
-        //msg << _("See the log file at ") << glog_file << _(" for details.");
-        wxMessageDialog w( NULL, msg, _("Failed to initialize the user interface. "),
+        wxString msg = wxS("Failed to initialize the user interface. ");
+        msg << wxS("OpenCPN cannot start. ");
+        msg << wxS("The necessary configuration files were not found. ");
+        //msg << wxS("See the log file at ") << glog_file << wxS(" for details.");
+        wxMessageDialog w( NULL, msg, wxS("Failed to initialize the user interface. "),
                 wxCANCEL | wxICON_ERROR );
         w.ShowModal();
         exit( EXIT_FAILURE );
@@ -221,7 +221,7 @@ int ocpn_draw_pi::Init(void)
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
 
-	SendPluginMessage(_T("OCPN_DRAW_READY_FOR_REQUESTS"), _T("TRUE"));
+	SendPluginMessage(wxS("OCPN_DRAW_READY_FOR_REQUESTS"), wxS("TRUE"));
 
 	return (
             WANTS_OVERLAY_CALLBACK  |
@@ -252,7 +252,7 @@ bool ocpn_draw_pi::DeInit(void)
 
 void ocpn_draw_pi::shutdown(bool menu)
 {
-	SendPluginMessage(_T("OCPNDRAW_READY_FOR_REQUESTS"), _T("FALSE"));
+	SendPluginMessage(wxS("OCPNDRAW_READY_FOR_REQUESTS"), wxS("FALSE"));
 
 
 }
@@ -303,17 +303,17 @@ int ocpn_draw_pi::GetAPIVersionMinor()
 
 wxString ocpn_draw_pi::GetCommonName()
 {
-	return _("ocpn_draw");
+	return wxS("ocpn_draw");
 }
 
 wxString ocpn_draw_pi::GetShortDescription()
 {
-	return _("General drawing for OpenCPN");
+	return wxS("General drawing for OpenCPN");
 }
 
 wxString ocpn_draw_pi::GetLongDescription()
 {
-	return _("General Drawing for OpenCPN\n\nThanks to the community for their helpful suggestions.");
+	return wxS("General Drawing for OpenCPN\n\nThanks to the community for their helpful suggestions.");
 }
 
 
@@ -341,13 +341,13 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 	dlgShow = false;
 /*
 #ifdef __WXMSW__
-	optionsDialog = new LogbookOptions(parent, opt, this, -1, _("Logbook Preferences"), wxDefaultPosition,  wxSize( 692,660  ),
+	optionsDialog = new LogbookOptions(parent, opt, this, -1, wxS("Logbook Preferences"), wxDefaultPosition,  wxSize( 692,660  ),
 		wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 #elif defined __WXOSX__
-    optionsDialog = new LogbookOptions(parent, opt, this, -1, _("Logbook Preferences"), wxDefaultPosition,  wxSize( 710,685 ) ,
+    optionsDialog = new LogbookOptions(parent, opt, this, -1, wxS("Logbook Preferences"), wxDefaultPosition,  wxSize( 710,685 ) ,
 		wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 #else
-	optionsDialog = new LogbookOptions(parent, opt, this, -1, _("Logbook Preferences"), wxDefaultPosition,  wxSize( 740,700 ) ,
+	optionsDialog = new LogbookOptions(parent, opt, this, -1, wxS("Logbook Preferences"), wxDefaultPosition,  wxSize( 740,700 ) ,
 		wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 #endif
 	optionsDialog->m_checkBoxShowLogbook->SetValue(m_bLOGShowIcon);
@@ -361,8 +361,8 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
                   m_bLOGShowIcon= optionsDialog->m_checkBoxShowLogbook->GetValue();
 
                   if(m_bLOGShowIcon)
-                        m_leftclick_config_id  = InsertPlugInTool(_T(""), _img_logbook_pi, _img_logbook_pi, wxITEM_NORMAL,
-                              _("ocpn_draw"), _T(""), NULL, OCPN_DRAW_POSITION,
+                        m_leftclick_config_id  = InsertPlugInTool(wxS(""), _img_logbook_pi, _img_logbook_pi, wxITEM_NORMAL,
+                              wxS("ocpn_draw"), wxS(""), NULL, OCPN_DRAW_POSITION,
                               0, this);
                   else
                         RemovePlugInTool(m_leftclick_config_id);
@@ -426,7 +426,7 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
 			m_timer = new wxTimer(timer,ID_LOGTIMER);
 			timer->Connect( wxEVT_TIMER, wxObjectEventFunction( &LogbookTimer::OnTimer ));
 		}
-        m_plogbook_window = new LogbookDialog(this, m_timer, timer, m_parent_window, wxID_ANY, _("Active Logbook"), wxDefaultPosition, wxSize( opt->dlgWidth,opt->dlgHeight ), wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxRESIZE_BORDER);
+        m_plogbook_window = new LogbookDialog(this, m_timer, timer, m_parent_window, wxID_ANY, wxS("Active Logbook"), wxDefaultPosition, wxSize( opt->dlgWidth,opt->dlgHeight ), wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxRESIZE_BORDER);
 		m_plogbook_window->init();
 		m_plogbook_window->CenterOnParent();
 		m_plogbook_window->Show();
@@ -447,9 +447,9 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
 	}
 
     if (m_plogbook_window->IsShown())
-            SendPluginMessage(wxString(_T("LOGBOOK_WINDOW_SHOWN")), wxEmptyString);
+            SendPluginMessage(wxString(wxS("LOGBOOK_WINDOW_SHOWN")), wxEmptyString);
       else
-            SendPluginMessage(_T("LOGBOOK_WINDOW_HIDDEN"), wxEmptyString);
+            SendPluginMessage(wxS("LOGBOOK_WINDOW_HIDDEN"), wxEmptyString);
 
 	if(state == OFF)
 	{
@@ -474,14 +474,14 @@ void ocpn_draw_pi::SaveConfig()
 
     if(pConf)
     {
-        pConf->SetPath ( _T ( "/PlugIns/libocpn_draw_pi.so" ) );
-        pConf->Write ( _T( "DefaultActiveLineColour" ), g_ActiveLineColour );
-        pConf->Write ( _T( "DefaultInActiveLineColour" ), g_InActiveLineColour );
-        pConf->Write ( _T( "DefaultActiveFillColour" ), g_ActiveFillColour );
-        pConf->Write ( _T( "DefaultInActiveFillColour" ), g_InActiveFillColour );
-        pConf->Write ( _T( "ShowLOGIcon" ), m_bLOGShowIcon );
-        pConf->Write( _T ( "PathLineWidth" ), g_path_line_width );
-        pConf->Write( _T ( "DefaultWPIcon" ), g_default_wp_icon );
+        pConf->SetPath ( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->Write ( wxS( "DefaultActiveLineColour" ), g_ActiveLineColour );
+        pConf->Write ( wxS( "DefaultInActiveLineColour" ), g_InActiveLineColour );
+        pConf->Write ( wxS( "DefaultActiveFillColour" ), g_ActiveFillColour );
+        pConf->Write ( wxS( "DefaultInActiveFillColour" ), g_InActiveFillColour );
+        pConf->Write ( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
+        pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
+        pConf->Write( wxS( "DefaultWPIcon" ), g_default_wp_icon );
     }
 }
 
@@ -491,14 +491,14 @@ void ocpn_draw_pi::LoadConfig()
 
     if(pConf)
     {
-        pConf->SetPath ( _T( "/PlugIns/libocpn_draw_pi.so" ) );
-        pConf->Read ( _T( "DefaultActiveLineColour" ), &g_ActiveLineColour, _T("Red") );
-        pConf->Read ( _T( "DefaultInActiveLineColour" ), &g_InActiveLineColour, _T("LightGray") );
-        pConf->Read ( _T( "DefaultActiveFillColour" ), &g_ActiveFillColour, _T("Red") );
-        pConf->Read ( _T( "DefaultInActiveFillColour" ), &g_InActiveFillColour, _T("LightGray") );
-        pConf->Read ( _T( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
-        pConf->Read( _T ( "PathLineWidth" ), &g_path_line_width, 2 );
-        pConf->Read( _T ( "DefaultWPIcon" ), &g_default_wp_icon, _T("triangle") );
+        pConf->SetPath ( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->Read ( wxS( "DefaultActiveLineColour" ), &g_ActiveLineColour, wxS("Red") );
+        pConf->Read ( wxS( "DefaultInActiveLineColour" ), &g_InActiveLineColour, wxS("LightGray") );
+        pConf->Read ( wxS( "DefaultActiveFillColour" ), &g_ActiveFillColour, wxS("Red") );
+        pConf->Read ( wxS( "DefaultInActiveFillColour" ), &g_InActiveFillColour, wxS("LightGray") );
+        pConf->Read ( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
+        pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
+        pConf->Read( wxS( "DefaultWPIcon" ), &g_default_wp_icon, wxS("triangle") );
     }
     
     pOCPNPointList = new OCPNPointList;
@@ -509,7 +509,7 @@ void ocpn_draw_pi::LoadConfig()
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
 /*
-    if(message_id == _T("OCPN_RTE_ENDED"))
+    if(message_id == wxS("OCPN_RTE_ENDED"))
     {
         if(!opt->waypointArrived) return;
 
@@ -523,13 +523,13 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 
         RMB rmb;
         rmb.From = lastWaypointInRoute;
-        rmb.To = _T("-1");
+        rmb.To = wxS("-1");
         m_plogbook_window->logbook->WP_skipped = false;
         m_plogbook_window->logbook->OCPN_Message = true;
 
         m_plogbook_window->logbook->checkWayPoint(rmb);
         m_plogbook_window->logbook->OCPN_Message = false;
-        lastWaypointInRoute = _T("-1");
+        lastWaypointInRoute = wxS("-1");
         m_plogbook_window->logbook->lastWayPoint = wxEmptyString;
         m_plogbook_window->logbook->routeIsActive = false;
     }
@@ -664,12 +664,12 @@ void ocpn_draw_pi::build_cursors(void)
 
 #if defined( __WXGTK__) || defined(__WXOSX__)
 
-    ICursorLeft = style->GetIcon( _T("left") ).ConvertToImage();
-    ICursorRight = style->GetIcon( _T("right") ).ConvertToImage();
-    ICursorUp = style->GetIcon( _T("up") ).ConvertToImage();
-    ICursorDown = style->GetIcon( _T("down") ).ConvertToImage();
-    ICursorPencil = style->GetIcon( _T("pencil") ).ConvertToImage();
-    ICursorCross = style->GetIcon( _T("cross") ).ConvertToImage();
+    ICursorLeft = style->GetIcon( wxS("left") ).ConvertToImage();
+    ICursorRight = style->GetIcon( wxS("right") ).ConvertToImage();
+    ICursorUp = style->GetIcon( wxS("up") ).ConvertToImage();
+    ICursorDown = style->GetIcon( wxS("down") ).ConvertToImage();
+    ICursorPencil = style->GetIcon( wxS("pencil") ).ConvertToImage();
+    ICursorCross = style->GetIcon( wxS("cross") ).ConvertToImage();
 
 //#if wxCHECK_VERSION(2, 8, 12)
 //#else
@@ -737,12 +737,12 @@ void ocpn_draw_pi::build_cursors(void)
 
 #else
 
-    ICursorLeft = style->GetIcon( _T("left") ).ConvertToImage();
-    ICursorRight = style->GetIcon( _T("right") ).ConvertToImage();
-    ICursorUp = style->GetIcon( _T("up") ).ConvertToImage();
-    ICursorDown = style->GetIcon( _T("down") ).ConvertToImage();
-    ICursorPencil = style->GetIcon( _T("pencil") ).ConvertToImage();
-    ICursorCross = style->GetIcon( _T("cross") ).ConvertToImage();
+    ICursorLeft = style->GetIcon( wxS("left") ).ConvertToImage();
+    ICursorRight = style->GetIcon( wxS("right") ).ConvertToImage();
+    ICursorUp = style->GetIcon( wxS("up") ).ConvertToImage();
+    ICursorDown = style->GetIcon( wxS("down") ).ConvertToImage();
+    ICursorPencil = style->GetIcon( wxS("pencil") ).ConvertToImage();
+    ICursorCross = style->GetIcon( wxS("cross") ).ConvertToImage();
 
     if( ICursorLeft.Ok() ) {
         ICursorLeft.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
@@ -857,20 +857,20 @@ wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance )
     wxString *sUnit = new wxString( getUsrDistanceUnit_Plugin( -1 ) );
     double usrDistance = toUsrDistance( distance, -1 );
 //    if( usrDistance < 0.1 &&  ( unit == DISTANCE_KM || unit == DISTANCE_MI || unit == DISTANCE_NMI ) ) {
-    if( usrDistance < 0.1 &&  ( sUnit->IsSameAs( _("km") ) || sUnit->IsSameAs( _("mi") ) || sUnit->IsSameAs( _("NMi") ) ) ) {
-        if ( sUnit->IsSameAs("mi") ) sUnit->assign("ft");
-        else sUnit->assign("M");
+    if( usrDistance < 0.1 &&  ( sUnit->IsSameAs( wxS("km") ) || sUnit->IsSameAs( wxS("mi") ) || sUnit->IsSameAs( wxS("NMi") ) ) ) {
+        if ( sUnit->IsSameAs(wxS("mi")) ) sUnit->assign(wxS("ft"));
+        else sUnit->assign(wxS("M"));
         usrDistance = toUsrDistance( distance, -1 );
     }
     wxString format;
     if( usrDistance < 5.0 ) {
-        format = _T("%1.2f ");
+        format = wxS("%1.2f ");
     } else if( usrDistance < 100.0 ) {
-        format = _T("%2.1f ");
+        format = wxS("%2.1f ");
     } else if( usrDistance < 1000.0 ) {
-        format = _T("%3.0f ");
+        format = wxS("%3.0f ");
     } else {
-        format = _T("%4.0f ");
+        format = wxS("%4.0f ");
     }
     result << wxString::Format(format, usrDistance ) << *sUnit;
     return result;
@@ -887,6 +887,7 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 {
     m_vp = vp;
     RenderPathLegs( (ocpnDC &) *pmdc );
+	return TRUE;
 }
 
 bool ocpn_draw_pi::RenderOverlay(wxDC &mdc, PlugIn_ViewPort *vp)
@@ -963,10 +964,10 @@ void ocpn_draw_pi::RenderPathLegs(  ocpnDC &dc )
 //        else
             pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)pFrame->GetTrueOrMag( brg ) );
 
-        pathInfo << _T(" ") << FormatDistanceAdaptive( dist );
+        pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
 
         wxFont *dFont;
-        dFont = FontMgr::Get().GetFont( _("BoundaryLegInfoRollover") );
+        dFont = FontMgr::Get().GetFont( wxS("BoundaryLegInfoRollover") );
         dc.SetFont( *dFont );
 
         int w, h;
@@ -982,17 +983,17 @@ void ocpn_draw_pi::RenderPathLegs(  ocpnDC &dc )
         yp = r_rband.y;
         yp += hilite_offset;
 
-        AlphaBlending( dc, xp, yp, w, h, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 172 );
+        AlphaBlending( dc, xp, yp, w, h, 0.0, GetGlobalColor( wxS( "YELO1" ) ), 172 );
 
-        dc.SetPen( wxPen( GetGlobalColor( _T ( "UBLCK" ) ) ) );
+        dc.SetPen( wxPen( GetGlobalColor( wxS( "UBLCK" ) ) ) );
         dc.DrawText( pathInfo, xp, yp );
 
         wxString s0;
         if ( nBoundary_State >= 2 ) {
             if( !boundary->m_bIsInLayer )
-                s0.Append( _("Boundary: ") );
+                s0.Append( wxS("Boundary: ") );
             else
-                s0.Append( _("Layer Boundary: ") );
+                s0.Append( wxS("Layer Boundary: ") );
         }
 
         s0 += FormatDistanceAdaptive( boundary->m_path_length + dist );
@@ -1003,7 +1004,7 @@ void ocpn_draw_pi::RenderPathLegs(  ocpnDC &dc )
 
 void ocpn_draw_pi::RenderExtraBoundaryLegInfo( ocpnDC &dc, wxPoint ref_point, wxString s )
 {
-    wxFont *dFont = FontMgr::Get().GetFont( _("BoundaryLegInfoRollover") );
+    wxFont *dFont = FontMgr::Get().GetFont( wxS("BoundaryLegInfoRollover") );
     dc.SetFont( *dFont );
 
     int w, h;
@@ -1020,9 +1021,9 @@ void ocpn_draw_pi::RenderExtraBoundaryLegInfo( ocpnDC &dc, wxPoint ref_point, wx
     yp = ref_point.y + h;
     yp += hilite_offset;
 
-    AlphaBlending( dc, xp, yp, w, h, 0.0, GetGlobalColor( _T ( "YELO1" ) ), 172 );
+    AlphaBlending( dc, xp, yp, w, h, 0.0, GetGlobalColor( wxS( "YELO1" ) ), 172 );
 
-    dc.SetPen( wxPen( GetGlobalColor( _T ( "UBLCK" ) ) ) );
+    dc.SetPen( wxPen( GetGlobalColor( wxS( "UBLCK" ) ) ) );
     dc.DrawText( s, xp, yp );
 }
 
@@ -1183,8 +1184,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
 #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox( m_parent_window, _("Use nearby waypoint?"),
-                                        _("OpenCPN Boundary Create"),
+        dlg_return = OCPNMessageBox( m_parent_window, wxS("Use nearby waypoint?"),
+                                        wxS("OpenCPN Boundary Create"),
                                         (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
 #else
         dlg_return = wxID_YES;
@@ -1206,9 +1207,9 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, _T("diamond"), _T(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
         pMousePoint->SetNameShown( false );
-        pMousePoint->m_sTypeString = _T("BoundaryPoint");
+        pMousePoint->m_sTypeString = wxS("BoundaryPoint");
 
         pConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
         pSelect->AddSelectableOCPNPoint( rlat, rlon, pMousePoint );
@@ -1232,13 +1233,13 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 int segmentCount = (3.0 + (rhumbDist - gcDistNM)) / pow(rhumbDist-gcDistNM-1, 0.5 );
 
                 wxString msg;
-                msg << _("For this leg the Great Circle boundary is ")
-                    << FormatDistanceAdaptive( rhumbDist - gcDistNM ) << _(" shorter than rhumbline.\n\n")
-                    << _("Would you like include the Great Circle boundary points for this leg?");
+                msg << wxS("For this leg the Great Circle boundary is ")
+                    << FormatDistanceAdaptive( rhumbDist - gcDistNM ) << wxS(" shorter than rhumbline.\n\n")
+                    << wxS("Would you like include the Great Circle boundary points for this leg?");
                     
                 m_disable_edge_pan = true;  // This helps on OS X if MessageBox does not fully capture mouse
 
-                int answer = OCPNMessageBox( m_parent_window, msg, _("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
+                int answer = OCPNMessageBox( m_parent_window, msg, wxS("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
 
                 m_disable_edge_pan = false;
                 
@@ -1253,7 +1254,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                                 gcBearing, &gcCoord.x, &gcCoord.y, NULL );
 
                         if( i < segmentCount ) {
-                            gcPoint = new OCPNPoint( gcCoord.y, gcCoord.x, _T("xmblue"), _T(""),
+                            gcPoint = new OCPNPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
                                     GPX_EMPTY_STRING );
                             gcPoint->SetNameShown( false );
                             pConfig->AddNewOCPNPoint( gcPoint, -1 );

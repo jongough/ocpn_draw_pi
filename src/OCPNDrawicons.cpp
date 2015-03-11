@@ -21,18 +21,18 @@ void initialize_images(void)
 	wxString *pName = new wxString();
 	pName->clear();
 	//pName->append( g_SData_Locn);
-	pName->append ("share/opencpn/uidata/");
-	pName->append ("./OCPNDrawManager.png");
+	pName->append (wxS("share/opencpn/uidata/"));
+	pName->append (wxS("./OCPNDrawManager.png"));
 //	wxString *pOCPN_Draw = new wxString::( pName)
 	//pOCPN_Draw->append( "OCPNDrawManager.png" );
 	
 	_img_ocpn_draw_pi = new wxBitmap( *pName );
 	pName->clear();
 	//pName->append( g_SData_Locn);
-	pName->append ("share/opencpn/uidata/");
-	pName->append ("./OCPNDrawManagerGray.png");
+	pName->append (wxS("share/opencpn/uidata/"));
+	pName->append (wxS("./OCPNDrawManagerGray.png"));
 	_img_ocpn_draw_gray_pi = new wxBitmap( *pName );
-	_img_ocpn_draw_boundary = new wxBitmap("share/opencpn/uidata/button1.png");
+	_img_ocpn_draw_boundary = new wxBitmap(wxS("share/opencpn/uidata/button1.png"));
 	
 
 static unsigned char Bullet_green[] = {

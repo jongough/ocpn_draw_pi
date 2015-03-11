@@ -59,7 +59,7 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
  
     if(flags & OUT_TYPE) {
         child = node.append_child("type");
-        child.append_child(pugi::node_pcdata).set_value(pr->m_sTypeString);
+//        child.append_child(pugi::node_pcdata).set_value(pr->m_sTypeString);
     }
     
     if(flags & OUT_TIME) {
@@ -171,7 +171,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     pugi::xml_node child;
     
     child = node.append_child("opencpn:type");
-    child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString);
+//    child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString);
     
     if( pPath->m_PathNameString.Len() ) {
         wxCharBuffer buffer=pPath->m_PathNameString.ToUTF8();
