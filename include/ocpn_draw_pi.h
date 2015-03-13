@@ -106,6 +106,7 @@ public:
 //    void SetColorScheme(PI_ColorScheme cs);
     void GetOriginalColors();
     void SetOriginalColors();
+    void LateInit(void);
     
 
 
@@ -142,7 +143,10 @@ public:
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
     
     void RenderPathLegs( ocpnDC &dc );
-
+    
+    void    ProcessTimerEvent(wxTimerEvent& ev);
+    void    PopupMenuHandler(wxCommandEvent& ev);
+    
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
     wxCursor    *pCursorUp;
@@ -180,10 +184,9 @@ public:
 
 private:
     void    OnTimer(wxTimerEvent& ev);
+
     void	SaveConfig();
     void	LoadConfig();
-    void    build_cursors();
-    bool    SetCursor(const wxCursor &c);
     void    RenderExtraBoundaryLegInfo( ocpnDC &dc, wxPoint ref_point, wxString s );
     void    FinishBoundary();
 //    ArrayOfGridColWidth	readCols(ArrayOfGridColWidth ar, wxString str);

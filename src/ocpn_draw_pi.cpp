@@ -43,6 +43,7 @@
 #include "multiplexer.h"
 #include "OCPNSelect.h"
 #include "pathmanagerdialog.h"
+#include "OCPNDrawPointInfoImpl.h"
 #include "chcanv.h"
 #include "styles.h"
 #include "geodesic.h"
@@ -90,6 +91,7 @@ PathMan          *g_pPathMan;
 wxString         g_default_OCPNPoint_icon;
 PathProp       *pPathPropDialog;
 PathManagerDialog *pPathManagerDialog;
+OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 PlugInManager       *g_pi_manager;
 ocpnStyle::StyleManager* g_StyleManager;
 BoundaryList              *pBoundaryList;
@@ -135,10 +137,9 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     // Create the PlugIn icons
     g_ppimgr = ppimgr;
     g_pi_manager = (PlugInManager *) ppimgr;
-    g_SData_Locn = new wxString();
+    //g_SData_Locn = new wxString();
     g_SData_Locn = GetpSharedDataLocation();
     initialize_images();
-
 }
 
 
@@ -235,6 +236,7 @@ int ocpn_draw_pi::Init(void)
           USES_AUI_MANAGER			    |
           WANTS_ONPAINT_VIEWPORT    |
           WANTS_PLUGIN_MESSAGING    |
+          WANTS_LATE_INIT           |
           WANTS_MOUSE_EVENTS        |
           WANTS_VECTOR_CHART_OBJECT_INFO  |
           INSTALLS_PLUGIN_CHART_GL  |
@@ -242,6 +244,19 @@ int ocpn_draw_pi::Init(void)
           WANTS_KEYBOARD_EVENTS
 		);
 
+}
+
+void ocpn_draw_pi::LateInit(void)
+{
+  initialize_images();
+	if(m_bLOGShowIcon) {
+            m_leftclick_config_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
+                  wxS("OCPN Draw Manager"), wxS(""), NULL,
+                   OCPN_DRAW_POSITION, 0, this);
+            m_leftclick_boundary_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary, wxITEM_NORMAL,
+                  wxS("OCPN Draw Boundary"), wxS(""), NULL,
+                   OCPN_DRAW_POSITION, 0, this);
+	}
 }
 
 bool ocpn_draw_pi::DeInit(void)
@@ -583,6 +598,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = event.GetY();
         m_bDrawingBoundary = true;
 
+// TODO (jon#1#): Need to get access to 'CheckEdgePan' 
 //        cc1->CheckEdgePan( x, y, event.Dragging(), 5, 2 );
         cc1->Refresh( false );
     }
@@ -595,54 +611,67 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     } 
     
     if( event.LeftUp() ) {
-    bool b_startedit_boundary = false;
-/*    if( m_bBoundaryEditing ) {            // End of RoutePoint drag
-        if( m_pOCPNPointEditTarget ) {
-            pSelect->UpdateSelectablePathSegments( m_pOCPNPointEditTarget );
-            m_pOCPNPointEditTarget->m_bBlink = false;
-            
-            if( m_pEditBoundaryArray ) {
-                for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
-                    Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
-                    if( g_pPathMan->IsBoundaryValid(pb) ) {
-                        pb->FinalizeForRendering();
-                        pb->UpdateSegmentDistances();
-                        pb->m_bIsBeingEdited = false;
-
-                        pConfig->UpdatePath( pb );
-                        
-                        pb->SetHiLite( 0 );
-                    }
-                }
-                Refresh( false );
-            }
-
-            //    Update the BoundaryProperties Dialog, if currently shown
-            if( ( NULL != pBoundaryPropDialog ) && ( pBoundaryPropDialog->IsShown() ) ) {
+        bool b_startedit_boundary = false;
+/*        if( m_bBoundaryEditing ) {            // End of RoutePoint drag
+            if( m_pOCPNPointEditTarget ) {
+                pSelect->UpdateSelectablePathSegments( m_pOCPNPointEditTarget );
+                m_pOCPNPointEditTarget->m_bBlink = false;
+                
                 if( m_pEditBoundaryArray ) {
                     for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
                         Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
                         if( g_pPathMan->IsBoundaryValid(pb) ) {
-                            pBoundaryPropDialog->SetBoundaryAndUpdate( pb, true );
+                            pb->FinalizeForRendering();
+                            pb->UpdateSegmentDistances();
+                            pb->m_bIsBeingEdited = false;
+
+                            pConfig->UpdatePath( pb );
+                            
+                            pb->SetHiLite( 0 );
+                        }
+                    }
+                    Refresh( false );
+                }
+
+                //    Update the BoundaryProperties Dialog, if currently shown
+                if( ( NULL != pBoundaryPropDialog ) && ( pBoundaryPropDialog->IsShown() ) ) {
+                    if( m_pEditBoundaryArray ) {
+                        for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
+                            Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
+                            if( g_pPathMan->IsBoundaryValid(pb) ) {
+                                pBoundaryPropDialog->SetBoundaryAndUpdate( pb, true );
+                            }
                         }
                     }
                 }
+
+                m_pOCPNPointEditTarget->m_bPtIsSelected = false;
+                m_pOCPNPointEditTarget->m_bIsBeingEdited = false;
+                
+                delete m_pEditBoundaryArray;
+                m_pEditBoundaryArray = NULL;
+                undo->AfterUndoableAction( m_pRoutePointEditTarget );
             }
 
-            m_pOCPNPointEditTarget->m_bPtIsSelected = false;
-            m_pOCPNPointEditTarget->m_bIsBeingEdited = false;
-            
-            delete m_pEditBoundaryArray;
-            m_pEditBoundaryArray = NULL;
-            undo->AfterUndoableAction( m_pRoutePointEditTarget );
+            InvalidateGL();
+            m_bBoundaryEditing = false;
+            m_pRoutePointEditTarget = NULL;
+            if( !g_FloatingToolbarDialog->IsShown() ) gFrame->SurfaceToolbar();
         }
-
-        InvalidateGL();
-        m_bBoundaryEditing = false;
-        m_pRoutePointEditTarget = NULL;
-        if( !g_FloatingToolbarDialog->IsShown() ) gFrame->SurfaceToolbar();
-    }
 */
+    }
+    
+    if ( event.RightDown() ) {
+        if ( nBoundary_State > 0 ) {
+            nBoundary_State = 0;
+            FinishBoundary();
+            cc1->SetCursor( *cc1->pCursorArrow ); 
+            SetToolbarItemState( m_leftclick_boundary_id, false );
+            cc1->Refresh(false);
+            bret = TRUE;
+        } else if ( nBoundary_State == 0 ) {
+           // cc1->CanvasPopupMenu( x, y, SELTYPE_BOUNDARYCREATE ) ;
+        }
     }
     return bret;
 }
@@ -655,201 +684,6 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     m_cursor_lat = lat;
     m_cursor_lon = lon;
 }
-
-void ocpn_draw_pi::build_cursors(void)
-{
-//    Build the cursors
-
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
-
-#if defined( __WXGTK__) || defined(__WXOSX__)
-
-    ICursorLeft = style->GetIcon( wxS("left") ).ConvertToImage();
-    ICursorRight = style->GetIcon( wxS("right") ).ConvertToImage();
-    ICursorUp = style->GetIcon( wxS("up") ).ConvertToImage();
-    ICursorDown = style->GetIcon( wxS("down") ).ConvertToImage();
-    ICursorPencil = style->GetIcon( wxS("pencil") ).ConvertToImage();
-    ICursorCross = style->GetIcon( wxS("cross") ).ConvertToImage();
-
-//#if wxCHECK_VERSION(2, 8, 12)
-//#else
-    ICursorLeft.ConvertAlphaToMask(128);
-    ICursorRight.ConvertAlphaToMask(128);
-    ICursorUp.ConvertAlphaToMask(128);
-    ICursorDown.ConvertAlphaToMask(128);
-    ICursorPencil.ConvertAlphaToMask(10);
-    ICursorCross.ConvertAlphaToMask(10);
-//#endif
-
-    if ( ICursorLeft.Ok() )
-    {
-        ICursorLeft.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
-        ICursorLeft.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15 );
-        pCursorLeft = new wxCursor ( ICursorLeft );
-    }
-    else
-        pCursorLeft = new wxCursor ( wxCURSOR_ARROW );
-
-    if ( ICursorRight.Ok() )
-    {
-        ICursorRight.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 31 );
-        ICursorRight.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15 );
-        pCursorRight = new wxCursor ( ICursorRight );
-    }
-    else
-        pCursorRight = new wxCursor ( wxCURSOR_ARROW );
-
-    if ( ICursorUp.Ok() )
-    {
-        ICursorUp.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 15 );
-        ICursorUp.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 0 );
-        pCursorUp = new wxCursor ( ICursorUp );
-    }
-    else
-        pCursorUp = new wxCursor ( wxCURSOR_ARROW );
-
-    if ( ICursorDown.Ok() )
-    {
-        ICursorDown.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 15 );
-        ICursorDown.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 31 );
-        pCursorDown = new wxCursor ( ICursorDown );
-    }
-    else
-        pCursorDown = new wxCursor ( wxCURSOR_ARROW );
-
-    if ( ICursorPencil.Ok() )
-    {
-        ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
-        ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 16);
-        pCursorPencil = new wxCursor ( ICursorPencil );
-    }
-    else
-        pCursorPencil = new wxCursor ( wxCURSOR_ARROW );
-
-    if ( ICursorCross.Ok() )
-    {
-        ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 13 );
-        ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 12);
-        pCursorCross = new wxCursor ( ICursorCross );
-    }
-    else
-        pCursorCross = new wxCursor ( wxCURSOR_ARROW );
-
-#else
-
-    ICursorLeft = style->GetIcon( wxS("left") ).ConvertToImage();
-    ICursorRight = style->GetIcon( wxS("right") ).ConvertToImage();
-    ICursorUp = style->GetIcon( wxS("up") ).ConvertToImage();
-    ICursorDown = style->GetIcon( wxS("down") ).ConvertToImage();
-    ICursorPencil = style->GetIcon( wxS("pencil") ).ConvertToImage();
-    ICursorCross = style->GetIcon( wxS("cross") ).ConvertToImage();
-
-    if( ICursorLeft.Ok() ) {
-        ICursorLeft.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
-        ICursorLeft.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15 );
-        pCursorLeft = new wxCursor( ICursorLeft );
-    } else
-        pCursorLeft = new wxCursor( wxCURSOR_ARROW );
-
-    if( ICursorRight.Ok() ) {
-        ICursorRight.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 31 );
-        ICursorRight.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15 );
-        pCursorRight = new wxCursor( ICursorRight );
-    } else
-        pCursorRight = new wxCursor( wxCURSOR_ARROW );
-
-    if( ICursorUp.Ok() ) {
-        ICursorUp.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 15 );
-        ICursorUp.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 0 );
-        pCursorUp = new wxCursor( ICursorUp );
-    } else
-        pCursorUp = new wxCursor( wxCURSOR_ARROW );
-
-    if( ICursorDown.Ok() ) {
-        ICursorDown.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 15 );
-        ICursorDown.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 31 );
-        pCursorDown = new wxCursor( ICursorDown );
-    } else
-        pCursorDown = new wxCursor( wxCURSOR_ARROW );
-
-    if( ICursorPencil.Ok() ) {
-        ICursorPencil.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
-        ICursorPencil.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 15 );
-        pCursorPencil = new wxCursor( ICursorPencil );
-    } else
-        pCursorPencil = new wxCursor( wxCURSOR_ARROW );
-
-    if( ICursorCross.Ok() ) {
-        ICursorCross.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_X, 13 );
-        ICursorCross.SetOption( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 12 );
-        pCursorCross = new wxCursor( ICursorCross );
-    } else
-        pCursorCross = new wxCursor( wxCURSOR_ARROW );
-
-#endif      // MSW, X11
-    pCursorArrow = new wxCursor( wxCURSOR_ARROW );
-}
-/*
-bool ocpn_draw_pi::ChartCanvas::SetCursor( const wxCursor &c )
-{
-#ifdef ocpnUSE_GL
-    if( g_bopengl )
-        return m_glcc->SetCursor( c );
-    else
-#endif
-        return wxWindow::SetCursor( c );
-}
-*/
-/*
-void ocpn_draw_pi::Refresh( bool eraseBackground, const wxRect *rect )
-{
-    //  Keep the mouse position members up to date
-    GetCanvasPixPoint( mouse_x, mouse_y, m_cursor_lat, m_cursor_lon );
-
-    //      Retrigger the route leg popup timer
-    //      This handles the case when the chart is moving in auto-follow mode, but no user mouse input is made.
-    //      The timer handler may Hide() the popup if the chart moved enough
-    //      n.b.  We use slightly longer oneshot value to allow this method's Refresh() to complete before
-    //      ptentially getting another Refresh() in the popup timer handler.
-    if( (m_pRouteRolloverWin && m_pRouteRolloverWin->IsActive()) || 
-        (m_pAISRolloverWin && m_pAISRolloverWin->IsActive()) || 
-        (m_pBoundaryRolloverWin && m_pBoundaryRolloverWin->IsActive()) )
-        m_RolloverPopupTimer.Start( 500, wxTIMER_ONE_SHOT );
-
-#ifdef ocpnUSE_GL
-    if( g_bopengl ) {
-        
-        //      We need to invalidate the FBO cache to ensure repaint of "grounded" overlay objects.
-        if( eraseBackground && m_glcc->UsingFBO() )
-            m_glcc->Invalidate();
-        
-
-        m_glcc->Refresh( eraseBackground, NULL ); // We always are going to render the entire screen anyway, so make
-        // sure that the window managers understand the invalid area
-        // is actually the entire client area.
-
-        //  We need to selectively Refresh some child windows, if they are visible.
-        //  Note that some children are refreshed elsewhere on timer ticks, so don't need attention here.
-
-        //      Thumbnail chart
-        if( pthumbwin && pthumbwin->IsShown() ) {
-            pthumbwin->Raise();
-            pthumbwin->Refresh( false );
-        }
-
-        //      ChartInfo window
-        if( m_pCIWin && m_pCIWin->IsShown() ) {
-            m_pCIWin->Raise();
-            m_pCIWin->Refresh( false );
-        }
-
-
-    } else
-#endif
-        wxWindow::Refresh( eraseBackground, rect );
-
-}
-*/
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
 {
@@ -1299,3 +1133,43 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         
     return TRUE;
 } 
+
+void ocpn_draw_pi::OnTimer(wxTimerEvent& ev)
+{
+	ProcessTimerEvent( ev );
+}
+
+void ocpn_draw_pi::ProcessTimerEvent(wxTimerEvent& ev)
+{
+	//if(popUp())
+	//	plogbook_pi->m_plogbook_window->logbook->appendRow(true, true);
+}
+
+void ocpn_draw_pi::PopupMenuHandler(wxCommandEvent& ev)
+{
+	//if(plogbook_pi->eventsEnabled || NULL == plogbook_pi->m_plogbook_window) return false;
+
+	MyFrame *pFrame = g_pi_manager->GetParentFrame();
+  //wxFrame *frame = (wxFrame*)plogbook_pi->m_parent_window->GetParent();
+	if(pFrame->IsIconized())
+	{
+        if(pFrame->IsIconized())
+            pFrame->Iconize(false);
+
+//        plogbook_pi->m_plogbook_window->Iconize(false);
+//        plogbook_pi->m_parent_window->SetFocus();
+        return;
+	}
+/*
+	if(!plogbook_pi->m_plogbook_window->IsShown() && plogbook_pi->opt->popup)
+	{
+		plogbook_pi->m_plogbook_window->Show();
+        plogbook_pi->SendLogbookMessage(_T("LOGBOOK_WINDOW_SHOWN"), wxEmptyString);
+		plogbook_pi->dlgShow = true;
+	}
+
+	if(plogbook_pi->opt->popup)
+		plogbook_pi->m_plogbook_window->Raise();
+*/
+	return;
+}

@@ -40,6 +40,7 @@
 #include "OCPNDrawConfig.h"
 #include "Path.h"
 #include "PathProp.h"
+#include "OCPNDrawPointInfoImpl.h"
 #include "Boundary.h"
 #include "BoundaryProp.h"
 #include "PathMan.h"
@@ -134,6 +135,7 @@ extern OCPNDrawConfig  *pConfig;
 extern ChartCanvas *cc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
+extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern MyFrame          *gFrame;
 extern OCPNSelect           *pSelect;
@@ -1400,22 +1402,22 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
 {
 // TODO (jon#1#): May need to show OCPNPoint properties dialog here
     // There is one global instance of the MarkProp Dialog
-/*    
-    if( NULL == pMarkPropDialog )
-        pMarkPropDialog = new MarkInfoImpl( parent );
+    
+    if( NULL == pOCPNPointPropDialog )
+        pOCPNPointPropDialog = new OCPNDrawPointInfoImpl( parent );
 
-    pMarkPropDialog->SetRoutePoint( wp );
-    pMarkPropDialog->UpdateProperties();
+    pOCPNPointPropDialog->SetOCPNPoint( wp );
+    pOCPNPointPropDialog->UpdateProperties();
     if( wp->m_bIsInLayer ) {
-        wxString caption( _("Waypoint Properties, Layer: ") );
+        wxString caption( _("OCPN Draw Point Properties, Layer: ") );
         caption.Append( GetLayerName( wp->m_LayerID ) );
-        pMarkPropDialog->SetDialogTitle( caption );
+        pOCPNPointPropDialog->SetDialogTitle( caption );
     } else
-        pMarkPropDialog->SetDialogTitle( _("Waypoint Properties") );
+        pOCPNPointPropDialog->SetDialogTitle( _("OCPN Draw Point Properties") );
 
-    if( !pMarkPropDialog->IsShown() )
-        pMarkPropDialog->Show();
-*/
+    if( !pOCPNPointPropDialog->IsShown() )
+        pOCPNPointPropDialog->Show();
+
 }
 
 void PathManagerDialog::OnOCPNPointZoomtoClick( wxCommandEvent &event )

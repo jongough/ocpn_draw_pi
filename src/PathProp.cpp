@@ -227,7 +227,7 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
     wxMenu menu;
 
     if( ! m_pPath->m_bIsInLayer ) {
-        wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, _("&Waypoint Properties...") );
+        wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, _("&OCPNPoint Properties...") );
         editItem->Enable( m_wpList->GetSelectedItemCount() == 1 );
 
         wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, _("&Remove Selected") );
@@ -497,7 +497,7 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
 
             if( item == -1 ) break;
 
-            RoutePoint *wp = (RoutePoint *) m_wpList->GetItemData( item );
+            OCPNPoint *wp = (OCPNPoint *) m_wpList->GetItemData( item );
             if( !wp ) break;
 
             PathManagerDialog::OCPNPointShowPropertiesDialog( wp, this );
