@@ -23,7 +23,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "pathman.h"
+#include "PathMan.h"
 
 #include "wx/wxprec.h"
 
