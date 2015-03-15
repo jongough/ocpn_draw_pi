@@ -58,7 +58,7 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
     node.append_attribute("lon") = s.mb_str();
  
     if(flags & OUT_TYPE) {
-        child = node.append_child("type");
+        child = node.append_child("opencpn:type");
         child.append_child(pugi::node_pcdata).set_value(pr->m_sTypeString.ToAscii());
     }
     
@@ -158,8 +158,21 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
          }
         if(flags & OUT_ARRIVAL_RADIUS) {
             child = node.append_child("opencpn:arrival_radius");
-            s.Printf(_T("%.3f"), pr->GetWaypointArrivalRadius());
+            s.Printf(_T("%.3f"), pr->GetOCPNPointArrivalRadius());
             child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        }
+        if(flags & OUT_OCPNPOINT_RANGE_RINGS) {
+            child = node.append_child("opencpn:OCPNPoint_range_rings");
+            pugi::xml_attribute viz = child.append_attribute( "visible" );
+            viz.set_value( pr->m_bShowOCPNPointRangeRings );
+            pugi::xml_attribute number = child.append_attribute( "number" );
+            number.set_value( pr->m_iOCPNPointRangeRingsNumber );
+            pugi::xml_attribute step = child.append_attribute( "step" );
+            step.set_value( pr->m_fOCPNPointRangeRingsStep );
+            pugi::xml_attribute units = child.append_attribute( "units" );
+            units.set_value( pr->m_iOCPNPointRangeRingsStepUnits );
+            pugi::xml_attribute colour = child.append_attribute( "colour" );
+            colour.set_value( pr->m_wxcOCPNPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() ) ;
         }
     }
     

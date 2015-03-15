@@ -58,6 +58,7 @@ class PathManagerDialog : public wxDialog {
             
             void OnTabSwitch(wxNotebookEvent& event);
             static void OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* parent );
+            void ShowPathPropertiesDialog ( Path *path );
 //            void TrackToRoute( Track *track );
 
       private:

@@ -29,7 +29,10 @@
 #include <NavObjectCollection.h>
 #include "Path.h"
 
-#define OPT_OCPNPOINT     OPT_WPT                        
+#define OUT_OCPNPOINT_RANGE_RINGS OUT_WAYPOINT_RANGE_RINGS << 1
+
+#define OPT_OCPNPOINT   (OPT_WPT) +\
+                        (OUT_OCPNPOINT_RANGE_RINGS)
 
 
 class OCPNDrawNavObjectChanges : public NavObjectChanges

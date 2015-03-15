@@ -82,9 +82,20 @@ public:
       void SetDistance( double distance) { m_routeprop_distance = distance; };
       double GetDistance() { return m_routeprop_distance; };
 
-      void SetWaypointArrivalRadius(double dArrivalDistance) { m_WaypointArrivalRadius = dArrivalDistance; };
-      void SetWaypointArrivalRadius( wxString wxArrivalDistance ) { wxArrivalDistance.ToDouble( &m_WaypointArrivalRadius ); };
-      double GetWaypointArrivalRadius();
+      void SetOCPNPointArrivalRadius(double dArrivalDistance) { m_OCPNPointArrivalRadius = dArrivalDistance; };
+      void SetOCPNPointArrivalRadius( wxString wxArrivalDistance ) { wxArrivalDistance.ToDouble( &m_OCPNPointArrivalRadius ); };
+      double GetOCPNPointArrivalRadius();
+      bool  GetShowOCPNPointRangeRings(void) { return m_bShowOCPNPointRangeRings; };
+      int   GetOCPNPointRangeRingsNumber(void);
+      float GetOCPNPointRangeRingsStep(void);
+      int   GetOCPNPointRangeRingsStepUnits(void);
+      wxColour GetOCPNPointRangeRingsColour(void);
+      void  SetShowOCPNPointRangeRings(bool b_showOCPNPointRangeRings) { m_bShowOCPNPointRangeRings = b_showOCPNPointRangeRings; };
+      void  SetOCPNPointRangeRingsNumber(int i_OCPNPointRangeRingsNumber) { m_iOCPNPointRangeRingsNumber = i_OCPNPointRangeRingsNumber; };
+      void  SetOCPNPointRangeRingsStep(float f_OCPNPointRangeRingsStep) { m_fOCPNPointRangeRingsStep = f_OCPNPointRangeRingsStep; };
+      void  SetOCPNPointRangeRingsStepUnits(int i_OCPNPointRangeRingsStepUnits) { m_iOCPNPointRangeRingsStepUnits = i_OCPNPointRangeRingsStepUnits; };
+      void  SetOCPNPointRangeRingsColour( wxColour wxc_OCPNPointRangeRingsColour ) { m_wxcOCPNPointRangeRingsColour = wxc_OCPNPointRangeRingsColour; };
+
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
 
@@ -150,7 +161,14 @@ public:
       static bool s_bUpdateWaypointsDisplayList;
 #endif
 
-      double m_WaypointArrivalRadius;
+      double m_OCPNPointArrivalRadius;
+
+      bool              m_bShowOCPNPointRangeRings;
+      int               m_iOCPNPointRangeRingsNumber;
+      float             m_fOCPNPointRangeRingsStep;
+      int               m_iOCPNPointRangeRingsStepUnits;
+      wxColour          m_wxcOCPNPointRangeRingsColour;
+      
       
 private:
       wxString          m_MarkName;

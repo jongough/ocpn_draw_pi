@@ -26,13 +26,26 @@
 #include "OCPNDrawPointInfoImpl.h"
 #include "ocpn_plugin.h"
 #include "PointMan.h"
+#include "PathMan.h"
+#include "pathmanagerdialog.h"
+#include "PathProp.h"
+#include "OCPNSelect.h"
+#include "OCPNDrawConfig.h"
 
 extern PointMan        *pOCPNPointMan;
+extern ChartCanvas      *cc1;
+extern PathManagerDialog *pPathManagerDialog;
+extern PathProp       *pPathPropDialog;
+extern OCPNSelect        *pSelect;
+extern PathMan           *g_pPathMan;
+extern OCPNDrawConfig     *pConfig;
 
 OCPNDrawPointInfoImpl::OCPNDrawPointInfoImpl( wxWindow* parent, wxWindowID id, const wxString& title,
         const wxPoint& pos, const wxSize& size, long style ) :
         MarkInfoImpl( parent, id, title, pos, size, style )
 {
+      m_pMyLinkList = NULL;
+
 }
 
 OCPNDrawPointInfoImpl::~OCPNDrawPointInfoImpl()
@@ -117,7 +130,7 @@ bool OCPNDrawPointInfoImpl::UpdateProperties( bool positionOnly )
         m_textName->SetValue( m_pOCPNPoint->GetName() );
 
         wxString s_ArrivalRadius;
-        s_ArrivalRadius.Printf( _T("%.3f"), m_pOCPNPoint->GetWaypointArrivalRadius() );
+        s_ArrivalRadius.Printf( _T("%.3f"), m_pOCPNPoint->GetOCPNPointArrivalRadius() );
         m_textArrivalRadius->SetValue( s_ArrivalRadius );        
         
         m_textDescription->SetValue( m_pOCPNPoint->m_MarkDescription );
@@ -139,6 +152,13 @@ bool OCPNDrawPointInfoImpl::UpdateProperties( bool positionOnly )
         m_checkBoxShowName->SetValue( m_pOCPNPoint->m_bShowName );
         m_checkBoxVisible->SetValue( m_pOCPNPoint->m_bIsVisible );
         m_textCtrlGuid->SetValue( m_pOCPNPoint->m_GUID );
+        m_checkBoxShowWaypointRangeRings->SetValue( m_pOCPNPoint->GetShowOCPNPointRangeRings() );
+        m_choiceWaypointRangeRingsNumber->SetSelection( m_pOCPNPoint->GetOCPNPointRangeRingsNumber() );
+        m_choiceWaypointRangeRingsUnits->SetSelection( m_pOCPNPoint->GetOCPNPointRangeRingsStepUnits() );
+        wxString buf;
+        buf.Printf( _T("%.3f" ), m_pOCPNPoint->GetOCPNPointRangeRingsStep() );
+        m_textWaypointRangeRingsStep->SetValue( buf );
+        m_colourWaypointRangeRingsColour->SetColour( m_pOCPNPoint->GetOCPNPointRangeRingsColour() );
 
         int NbrOfLinks = m_pOCPNPoint->m_HyperlinkList->GetCount();
         HyperlinkList *hyperlinklist = m_pOCPNPoint->m_HyperlinkList;
@@ -248,5 +268,144 @@ void OCPNDrawPointInfoImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
     ::wxLaunchDefaultBrowser(url);
 //    event.Skip();
 #endif
+}
+
+void OCPNDrawPointInfoImpl::OnMarkInfoOKClick( wxCommandEvent& event )
+{
+    if( m_pOCPNPoint ) {
+        m_pOCPNPoint->m_iOCPNPointRangeRingsNumber = m_choiceWaypointRangeRingsNumber->GetSelection();
+        m_pOCPNPoint->m_fOCPNPointRangeRingsStep = atof( m_textWaypointRangeRingsStep->GetValue().mb_str() );
+        m_pOCPNPoint->m_iOCPNPointRangeRingsStepUnits = m_choiceWaypointRangeRingsUnits->GetSelection();
+        m_pOCPNPoint->m_wxcOCPNPointRangeRingsColour = m_colourWaypointRangeRingsColour->GetColour();
+        OnPositionCtlUpdated( event );
+        SaveChanges(); // write changes to globals and update config
+        cc1->RefreshRect( m_pOCPNPoint->CurrentRect_in_DC.Inflate( 1000, 100 ), false );
+    }
+    Show( false );
+    if( m_pMyLinkList ) {
+        delete m_pMyLinkList;
+        m_pMyLinkList = NULL;
+    }
+
+    if( pPathManagerDialog && pPathManagerDialog->IsShown() )
+        pPathManagerDialog->UpdateOCPNPointsListCtrl();
+        
+    if( pPathPropDialog && pPathPropDialog->IsShown() )
+        pPathPropDialog->UpdateProperties();
+
+    SetClientSize(m_defaultClientSize);
+    event.Skip();
+}
+
+bool OCPNDrawPointInfoImpl::SaveChanges()
+{
+    if( m_pOCPNPoint ) {
+        if( m_pOCPNPoint->m_bIsInLayer ) return true;
+
+        // Get User input Text Fields
+        m_pOCPNPoint->SetName( m_textName->GetValue() );
+        m_pOCPNPoint->SetOCPNPointArrivalRadius( m_textArrivalRadius->GetValue() );
+        m_pOCPNPoint->SetShowOCPNPointRangeRings( m_checkBoxShowWaypointRangeRings->GetValue() );
+        m_pOCPNPoint->m_MarkDescription = m_textDescription->GetValue();
+        m_pOCPNPoint->SetVisible( m_checkBoxVisible->GetValue() );
+        m_pOCPNPoint->SetNameShown( m_checkBoxShowName->GetValue() );
+        m_pOCPNPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ),
+                fromDMM_Plugin( m_textLongitude->GetValue() ) );
+        wxString *icon_name = pOCPNPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() );
+        if(icon_name && icon_name->Length())
+            m_pOCPNPoint->SetIconName( *icon_name );
+        m_pOCPNPoint->ReLoadIcon();
+
+        // Here is some logic....
+        // If the Markname is completely numeric, and is part of a route,
+        // Then declare it to be of attribute m_bDynamicName = true
+        // This is later used for re-numbering points on actions like
+        // Insert Point, Delete Point, Append Point, etc
+
+        if( m_pOCPNPoint->m_bIsInRoute ) {
+            bool b_name_is_numeric = true;
+            for( unsigned int i = 0; i < m_pOCPNPoint->GetName().Len(); i++ ) {
+                if( wxChar( '0' ) > m_pOCPNPoint->GetName()[i] ) b_name_is_numeric = false;
+                if( wxChar( '9' ) < m_pOCPNPoint->GetName()[i] ) b_name_is_numeric = false;
+            }
+
+            m_pOCPNPoint->m_bDynamicName = b_name_is_numeric;
+        } else
+            m_pOCPNPoint->m_bDynamicName = false;
+
+        if( m_pOCPNPoint->m_bIsInPath ) {
+            // Update the route segment selectables
+            pSelect->UpdateSelectablePathSegments( m_pOCPNPoint );
+
+            // Get an array of all paths using this point
+            wxArrayPtrVoid *pEditPathArray = g_pPathMan->GetPathArrayContaining( m_pOCPNPoint );
+
+            if( pEditPathArray ) {
+                for( unsigned int ir = 0; ir < pEditPathArray->GetCount(); ir++ ) {
+                    Path *pp = (Path *) pEditPathArray->Item( ir );
+                    pp->FinalizeForRendering();
+                    pp->UpdateSegmentDistances();
+
+                    pConfig->UpdatePath( pp );
+                }
+                delete pEditPathArray;
+            }
+        } else
+            pConfig->UpdateOCPNPoint( m_pOCPNPoint );
+
+        // No general settings need be saved pConfig->UpdateSettings();
+    }
+    return true;
+}
+
+void OCPNDrawPointInfoImpl::OnMarkInfoCancelClick( wxCommandEvent& event )
+{
+    if( m_pOCPNPoint ) {
+        m_pOCPNPoint->SetVisible( m_bIsVisible_save );
+        m_pOCPNPoint->SetNameShown( m_bShowName_save );
+        m_pOCPNPoint->SetPosition( m_lat_save, m_lon_save );
+        m_pOCPNPoint->SetIconName( m_IconName_save );
+        m_pOCPNPoint->ReLoadIcon();
+
+        m_pOCPNPoint->m_HyperlinkList->Clear();
+
+        int NbrOfLinks = m_pMyLinkList->GetCount();
+        if( NbrOfLinks > 0 ) {
+            wxHyperlinkListNode *linknode = m_pMyLinkList->GetFirst();
+            while( linknode ) {
+                Hyperlink *link = linknode->GetData();
+                Hyperlink* h = new Hyperlink();
+                h->DescrText = link->DescrText;
+                h->Link = link->Link;
+                h->LType = link->LType;
+
+                m_pOCPNPoint->m_HyperlinkList->Append( h );
+
+                linknode = linknode->GetNext();
+            }
+        }
+    }
+
+    Show( false );
+    delete m_pMyLinkList;
+    m_pMyLinkList = NULL;
+    SetClientSize(m_defaultClientSize);
+
+    event.Skip();
+}
+
+void OCPNDrawPointInfoImpl::OnPositionCtlUpdated( wxCommandEvent& event )
+{
+    // Fetch the control values, convert to degrees
+    double lat = fromDMM_Plugin( m_textLatitude->GetValue() );
+    double lon = fromDMM_Plugin( m_textLongitude->GetValue() );
+
+    if( !m_pOCPNPoint->m_bIsInLayer ) {
+        m_pOCPNPoint->SetPosition( lat, lon );
+        pSelect->ModifySelectablePoint( lat, lon, (void *) m_pOCPNPoint, SELTYPE_OCPNPOINT );
+    }
+
+    // Update the mark position dynamically
+    cc1->Refresh();
 }
 

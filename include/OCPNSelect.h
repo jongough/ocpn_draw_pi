@@ -30,8 +30,10 @@
 //#include "Select.h"
 //#include "Boundary.h"
 
-#define SELTYPE_OCPNPOINT            0x0800
-#define SELTYPE_PATHSEGMENT          0x1000
+#define SELTYPE_UNKNOWN              0x0001
+#define SELTYPE_OCPNPOINT            0x0002
+#define SELTYPE_PATHSEGMENT          0x0004
+#define SELTYPE_PATHCREATE           0x0008
 
 class OCPNSelect
 {

@@ -365,7 +365,7 @@ PathManagerDialog::PathManagerDialog( wxWindow *parent )
     style |= wxSTAY_ON_TOP;
 #endif
 
-    wxDialog::Create( parent, -1, wxString( _("Route, Boundary, Mark & Track Manager") ), wxDefaultPosition, wxDefaultSize,
+    wxDialog::Create( parent, -1, wxString( _("Path & Point Manager") ), wxDefaultPosition, wxDefaultSize,
             style );
     
     wxFont *qFont = GetOCPNScaledFont(_("Dialog"));
@@ -964,7 +964,7 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
 
 void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
 {
-    // Show path properties dialog for selected boundary
+    // Show path properties dialog for selected path
     long item = -1;
     item = m_pPathListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
@@ -973,17 +973,72 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
 
     if( !path ) return;
 
+    ShowPathPropertiesDialog ( path );
+/*    if( NULL == pPathPropDialog )          // There is one global instance of the PathProp Dialog
+        pPathPropDialog = new PathProp( GetParent() );
+
+    pPathPropDialog->SetPathAndUpdate( path );
+    pPathPropDialog->UpdateProperties( path );
+    if( !path->m_bIsInLayer ) {
+        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
+            pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
+        else {
+            wxString sTitle( path->m_sTypeString );
+            sTitle.append( wxS(" Properties") );
+            pPathPropDialog->SetDialogTitle( sTitle );
+        }
+    }
+    else {
+        wxString caption("");
+        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() ) {
+            caption.append( wxS("Path Properties, Layer: ") );
+        }
+        else {
+            caption.append( path->m_sTypeString );
+            caption.append( wxS(" Properties, Layer:") );
+        }
+        caption.append( GetLayerName( path->m_LayerID ) );
+        pPathPropDialog->SetDialogTitle( caption );
+        
+    }
+
+    if( !pPathPropDialog->IsShown() )
+        pPathPropDialog->Show();
+    
+    UpdatePathListCtrl();
+
+    m_bNeedConfigFlush = true;
+*/    
+}
+
+void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
+{
     if( NULL == pPathPropDialog )          // There is one global instance of the PathProp Dialog
         pPathPropDialog = new PathProp( GetParent() );
 
     pPathPropDialog->SetPathAndUpdate( path );
     pPathPropDialog->UpdateProperties( path );
-    if( !path->m_bIsInLayer )
-        pPathPropDialog->SetDialogTitle( _("Path Properties") );
+    if( !path->m_bIsInLayer ) {
+        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
+            pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
+        else {
+            wxString sTitle( path->m_sTypeString );
+            sTitle.append( wxS(" Properties") );
+            pPathPropDialog->SetDialogTitle( sTitle );
+        }
+    }
     else {
-        wxString caption( _T("Path Properties, Layer: ") );
-        caption.Append( GetLayerName( path->m_LayerID ) );
+        wxString caption("");
+        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() ) {
+            caption.append( wxS("Path Properties, Layer: ") );
+        }
+        else {
+            caption.append( path->m_sTypeString );
+            caption.append( wxS(" Properties, Layer:") );
+        }
+        caption.append( GetLayerName( path->m_LayerID ) );
         pPathPropDialog->SetDialogTitle( caption );
+        
     }
 
     if( !pPathPropDialog->IsShown() )
@@ -993,7 +1048,6 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
 
     m_bNeedConfigFlush = true;
 }
-
 void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
 {
 //      if (cc1->m_bFollow)
@@ -1408,12 +1462,19 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
 
     pOCPNPointPropDialog->SetOCPNPoint( wp );
     pOCPNPointPropDialog->UpdateProperties();
+
+    wxString caption("");
+    if ( wp->m_sTypeString.IsNull() || wp->m_sTypeString.IsEmpty() )
+        caption.append( wxS("OCPN Draw Point") );
+    else
+        caption.append( wp->m_sTypeString );
+    caption.append( wxS(" Properties") );
+
     if( wp->m_bIsInLayer ) {
-        wxString caption( _("OCPN Draw Point Properties, Layer: ") );
+        caption.append( wxS(", Layer: ") );
         caption.Append( GetLayerName( wp->m_LayerID ) );
-        pOCPNPointPropDialog->SetDialogTitle( caption );
-    } else
-        pOCPNPointPropDialog->SetDialogTitle( _("OCPN Draw Point Properties") );
+    }
+    pOCPNPointPropDialog->SetDialogTitle( caption );
 
     if( !pOCPNPointPropDialog->IsShown() )
         pOCPNPointPropDialog->Show();

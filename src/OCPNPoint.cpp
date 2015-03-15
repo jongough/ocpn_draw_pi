@@ -37,18 +37,22 @@
 #include "cutil.h"
 #include "styles.h"
 
-extern PointMan *pOCPNPointMan;
-extern bool g_bIsNewLayer;
-extern int g_LayerIdx;
-extern ChartCanvas *cc1;
-extern PathMan *g_pPathMan;
-extern wxRect g_blink_rect;
-extern Multiplexer *g_pMUX;
-extern MyFrame *gFrame;
-extern bool g_btouch;
-extern bool g_bresponsive;
+extern PointMan     *pOCPNPointMan;
+extern bool         g_bIsNewLayer;
+extern int          g_LayerIdx;
+extern ChartCanvas  *cc1;
+extern PathMan      *g_pPathMan;
+extern wxRect       g_blink_rect;
+extern Multiplexer  *g_pMUX;
+extern MyFrame      *gFrame;
+extern bool         g_btouch;
+extern bool         g_bresponsive;
 extern ocpnStyle::StyleManager* g_StyleManager;
-extern double g_n_arrival_circle_radius;
+extern double       g_n_arrival_circle_radius;
+extern int          g_iOCPNPointRangeRingsNumber;
+extern float        g_fOCPNPointRangeRingsStep;
+extern int          g_iOCPNPointRangeRingsStepUnits;
+extern wxColour     g_colourOCPNPointRangeRingsColour;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( OCPNPointList );
@@ -97,7 +101,7 @@ OCPNPoint::OCPNPoint()
     m_bIsInLayer = false;
     m_LayerID = 0;
     
-    m_WaypointArrivalRadius = g_n_arrival_circle_radius;
+    m_OCPNPointArrivalRadius = g_n_arrival_circle_radius;
 }
 
 // Copy Constructor
@@ -141,7 +145,7 @@ OCPNPoint::OCPNPoint( OCPNPoint* orig )
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     
-    m_WaypointArrivalRadius = orig->GetWaypointArrivalRadius();
+    m_OCPNPointArrivalRadius = orig->GetOCPNPointArrivalRadius();
     
 }
 
@@ -210,7 +214,14 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     } else
         m_LayerID = 0;
     
-    SetWaypointArrivalRadius( g_n_arrival_circle_radius );
+    SetOCPNPointArrivalRadius( g_n_arrival_circle_radius );
+
+    m_bShowOCPNPointRangeRings = false;
+    m_iOCPNPointRangeRingsNumber = g_iOCPNPointRangeRingsNumber;
+    m_fOCPNPointRangeRingsStep = g_fOCPNPointRangeRingsStep;
+    m_iOCPNPointRangeRingsStepUnits = g_iOCPNPointRangeRingsStepUnits;
+    m_wxcOCPNPointRangeRingsColour = g_colourOCPNPointRangeRingsColour;
+    
 }
 
 OCPNPoint::~OCPNPoint( void )
@@ -668,12 +679,39 @@ bool OCPNPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
     return TRUE;
 }
 
-double OCPNPoint::GetWaypointArrivalRadius() {
-    if (m_WaypointArrivalRadius < 0.001) {
-        SetWaypointArrivalRadius( g_n_arrival_circle_radius );
+double OCPNPoint::GetOCPNPointArrivalRadius() {
+    if (m_OCPNPointArrivalRadius < 0.001) {
+        SetOCPNPointArrivalRadius( g_n_arrival_circle_radius );
         return g_n_arrival_circle_radius;
     }
     else
-        return m_WaypointArrivalRadius;
+        return m_OCPNPointArrivalRadius;
 }
 
+int   OCPNPoint::GetOCPNPointRangeRingsNumber() { 
+    if ( m_iOCPNPointRangeRingsNumber == -1 )
+        return g_iOCPNPointRangeRingsNumber;
+    else
+        return m_iOCPNPointRangeRingsNumber; 
+}
+
+float OCPNPoint::GetOCPNPointRangeRingsStep() { 
+    if ( m_fOCPNPointRangeRingsStep == -1 )
+        return g_fOCPNPointRangeRingsStep;
+    else
+        return m_fOCPNPointRangeRingsStep; 
+}
+
+int   OCPNPoint::GetOCPNPointRangeRingsStepUnits() { 
+    if ( m_iOCPNPointRangeRingsStepUnits == -1 )
+        return g_iOCPNPointRangeRingsStepUnits;
+    else
+        return m_iOCPNPointRangeRingsStepUnits ; 
+}
+
+wxColour OCPNPoint::GetOCPNPointRangeRingsColour(void) { 
+    if ( m_wxcOCPNPointRangeRingsColour.GetAsString(wxC2S_HTML_SYNTAX) == _T("#FFFFFF") )
+        return g_colourOCPNPointRangeRingsColour;
+    else
+        return m_wxcOCPNPointRangeRingsColour; 
+}

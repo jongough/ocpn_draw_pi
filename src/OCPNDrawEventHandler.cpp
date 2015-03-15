@@ -25,12 +25,15 @@
 
 #include "OCPNDrawEventHandler.h"
 #include "ocpn_draw_pi.h"
+#include "OCPNDrawCanvasMenuHandler.h"
 
 // Event Handler implementation 
 BEGIN_EVENT_TABLE ( OCPNDrawEventHandler, wxEvtHandler ) 
-  EVT_TIMER ( ROLLOVER_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
-  EVT_TIMER ( HEAD_DOG_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
+    EVT_TIMER ( ROLLOVER_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
+    EVT_TIMER ( HEAD_DOG_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
+    EVT_MENU ( ID_PATH_MENU_PROPERTIES, OCPNDrawEventHandler::PopupMenuHandler )
 END_EVENT_TABLE()
+
 
 OCPNDrawEventHandler::OCPNDrawEventHandler(ocpn_draw_pi *parent)
 {
@@ -52,3 +55,4 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
 {
     m_parent->PopupMenuHandler( event ); 
 } 
+

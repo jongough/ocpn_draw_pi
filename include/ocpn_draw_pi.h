@@ -64,6 +64,42 @@
 
 #define OCPN_DRAW_POSITION -1
 
+//    Constants for right click menus
+enum
+{
+    ID_OCPNPOINT_MENU_GOTO = 1,
+    ID_OCPNPOINT_MENU_DELPOINT,
+    ID_OCPNPOINT_MENU_PROPERTIES,
+    ID_OCPNPOINT_MENU_COPY,
+
+    ID_PATH_MENU_ACTIVATE,
+    ID_PATH_MENU_DEACTIVATE,
+    ID_PATH_MENU_INSERT,
+    ID_PATH_MENU_APPEND,
+    ID_PATH_MENU_COPY,
+    ID_OCPNPOPINT_MENU_COPY,
+    ID_PASTE_OCPNPOINT,
+    ID_PASTE_PATH,
+    ID_PATH_MENU_DELETE,
+    ID_PATH_MENU_REVERSE,
+    ID_PATH_MENU_DELPOINT,
+    ID_PATH_MENU_ACTPOINT,
+    ID_PATH_MENU_DEACTPOINT,
+    ID_PATH_MENU_ACTNXTPOINT,
+    ID_PATH_MENU_REMPOINT,
+    ID_PATH_MENU_PROPERTIES,
+
+    ID_UNDO,
+    ID_REDO,
+
+    ID_OCPNPOINT_MENU_ADDITIONAL_INFO,
+
+    ID_DEF_MENU_GROUPBASE,  // Must be last entry, as chart group identifiers are created dynamically
+
+    
+    ID_DEF_MENU_LAST
+};
+
 class Boundary;
 class BoundaryProp;
 
@@ -141,6 +177,7 @@ public:
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
+    void CanvasPopupMenu( int x, int y, int seltype );
     
     void RenderPathLegs( ocpnDC &dc );
     
@@ -162,6 +199,7 @@ public:
     
     int         nConfig_State;
     
+    int         nPath_State;
     int         nBoundary_State;
     Boundary    *m_pMouseBoundary;
     wxPoint     r_rband;
@@ -196,6 +234,10 @@ private:
 //    wxAuiManager     *m_pauimgr;
 
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
+    
+    void    MenuPrepend( wxMenu *menu, int id, wxString label);
+    void    MenuAppend( wxMenu *menu, int id, wxString label);
+    
     int               m_show_id;
     int               m_hide_id;
     bool				show;
@@ -206,10 +248,15 @@ private:
     StatWin                   *stats;
     ColorScheme               global_color_scheme;
     
-    OCPNPoint  *m_pSelectedBoundary;
+    Path        *m_pSelectedPath;
+    Boundary  *m_pSelectedBoundary;
+    OCPNPoint   *m_pFoundOCPNPoint;
     OCPNPoint  *m_pFoundOCPNPointSecond;
     
     bool        m_bDrawingBoundary;
+    
+    int         popx, popy;
+
 
 
 

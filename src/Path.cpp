@@ -35,7 +35,9 @@
 #include "OCPNSelect.h"
 #include "PointMan.h"
 #include "PathMan.h"
+#include "PathProp.h"
 #include "OCPNDrawConfig.h"
+#include "ocpn_draw_pi.h"
 
 
 extern PointMan *pOCPNPointMan;
@@ -51,7 +53,8 @@ extern wxString    g_ActiveLineColour;
 extern wxString    g_InActiveLineColour;
 extern wxString    g_ActiveFillColour;
 extern wxString    g_InActiveFillColour;
-
+extern PathProp    *pPathPropDialog;
+extern ocpn_draw_pi *g_ocpn_draw_pi;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -1100,3 +1103,26 @@ OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
     return ( newpoint );
 }
 
+void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
+{
+    //  Rebuild the route selectables
+    pSelect->DeleteAllSelectableOCPNPoints( path );
+    pSelect->DeleteAllSelectablePathSegments( path );
+
+    path->RemovePoint( point );
+
+    //  Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
+    if( (path->GetnPoints() <= 1) && (g_ocpn_draw_pi->nBoundary_State == 0) ) {
+        pConfig->DeleteConfigPath( path );
+        g_pPathMan->DeletePath( path );
+        path = NULL;
+    }
+    //  Add this point back into the selectables
+    pSelect->AddSelectableOCPNPoint( point->m_lat, point->m_lon, point );
+
+    if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
+        pPathPropDialog->SetPathAndUpdate( path, true );
+    }
+
+    cc1->InvalidateGL();
+}

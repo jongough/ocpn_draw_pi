@@ -40,10 +40,12 @@
 #include "PathMan.h"
 #include "PointMan.h"
 #include "OCPNDrawConfig.h"
+#include "OCPNPoint.h"
 #include "multiplexer.h"
 #include "OCPNSelect.h"
 #include "pathmanagerdialog.h"
 #include "OCPNDrawPointInfoImpl.h"
+#include "OCPNDrawEventHandler.h"
 #include "chcanv.h"
 #include "styles.h"
 #include "geodesic.h"
@@ -73,6 +75,7 @@ using namespace std;
 
 #include "OCPNDrawicons.h"
 
+ocpn_draw_pi    *g_ocpn_draw_pi;
 PathList        *pPathList;
 PointMan        *pOCPNPointMan;
 bool            g_bIsNewLayer;
@@ -101,8 +104,14 @@ wxString    g_ActiveLineColour;
 wxString    g_InActiveLineColour;
 wxString    g_ActiveFillColour;
 wxString    g_InActiveFillColour;
-wxString         g_PrivateDataDir;
+wxString    g_PrivateDataDir;
 
+OCPNDrawEventHandler    *g_OCPNDrawEventHandler;
+
+int          g_iOCPNPointRangeRingsNumber;
+float        g_fOCPNPointRangeRingsStep;
+int          g_iOCPNPointRangeRingsStepUnits;
+wxColour     g_colourOCPNPointRangeRingsColour;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -125,7 +134,6 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 }
 
 
-
 //---------------------------------------------------------------------------------------------------------
 //
 //          PlugIn initialization and de-init
@@ -137,6 +145,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     // Create the PlugIn icons
     g_ppimgr = ppimgr;
     g_pi_manager = (PlugInManager *) ppimgr;
+    g_ocpn_draw_pi = this;
+    m_pSelectedPath = NULL;
     //g_SData_Locn = new wxString();
     g_SData_Locn = GetpSharedDataLocation();
     initialize_images();
@@ -194,6 +204,9 @@ int ocpn_draw_pi::Init(void)
 
     // Now initialize UI Style.
     g_StyleManager = new ocpnStyle::StyleManager();
+    
+    // Create an OCPN Draw event handler
+    g_OCPNDrawEventHandler = new OCPNDrawEventHandler( g_ocpn_draw_pi );
     
 //    MyFrame *pFrame = g_pi_manager->GetParentFrame();
 //    cc1 = pFrame->GetCanvasWindow();    
@@ -334,6 +347,12 @@ wxString ocpn_draw_pi::GetLongDescription()
 
 void ocpn_draw_pi::OnContextMenuItemCallback(int id)
 {
+    switch ( id ) {
+        case ID_PATH_MENU_PROPERTIES: {
+//        ShowPathPropertiesDialog( _("Path Properties"), m_pSelectedPath );
+        break;
+        }
+    }
 }
 
 void ocpn_draw_pi::SetDefaults(void)
@@ -497,6 +516,11 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write ( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
         pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
         pConf->Write( wxS( "DefaultWPIcon" ), g_default_wp_icon );
+        pConf->Write( wxS( "OCPNPointRangeRingsNumber" ), g_iOCPNPointRangeRingsNumber );
+        pConf->Write( wxS( "OCPNPointRangeRingsStep" ), g_fOCPNPointRangeRingsStep );
+        pConf->Write( wxS( "OCPNPointRangeRingsStepUnits" ), g_iOCPNPointRangeRingsStepUnits );
+        pConf->Write( wxS( "OCPNPointRangeRingsColour" ), g_colourOCPNPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+
     }
 }
 
@@ -514,6 +538,19 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read ( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
         pConf->Read( wxS( "DefaultWPIcon" ), &g_default_wp_icon, wxS("triangle") );
+        pConf->Read( wxS( "OCPNPointRangeRingsNumber" ), &g_iOCPNPointRangeRingsNumber, 0 );
+        pConf->Read( wxS( "OCPNPointRangeRingsStep" ), &g_fOCPNPointRangeRingsStep, 1.0 );
+        pConf->Read( wxS( "OCPNPointRangeRingsStepUnits" ), &g_iOCPNPointRangeRingsStepUnits, 0 );
+        wxString  l_wxsOCPNPointRangeRingsColour;
+        g_colourOCPNPointRangeRingsColour = wxColour( *wxRED );
+        pConf->Read( wxS( "OCPNPointRangeRingsColour" ), &l_wxsOCPNPointRangeRingsColour, wxS( "RED" ) );
+        g_colourOCPNPointRangeRingsColour.Set( l_wxsOCPNPointRangeRingsColour );
+        
+//    g_colourWaypointRangeRingsColour = wxColour( *wxRED );
+//    wxString l_wxsWaypointRangeRingsColour;
+//    Read( _T( "WaypointRangeRingsColour" ), &l_wxsWaypointRangeRingsColour );
+//    g_colourWaypointRangeRingsColour.Set( l_wxsWaypointRangeRingsColour );
+
     }
     
     pOCPNPointList = new OCPNPointList;
@@ -671,6 +708,144 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
            // cc1->CanvasPopupMenu( x, y, SELTYPE_BOUNDARYCREATE ) ;
+            double slat, slon;
+            slat = m_cursor_lat;
+            slon = m_cursor_lon;
+            int seltype = 0;
+           
+            SelectItem *pFindPP;
+            SelectItem *pFindPathSeg;
+            pFindPP = pSelect->FindSelection( slat, slon, SELTYPE_OCPNPOINT );
+            pFindPathSeg = pSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
+            // start           
+            m_pFoundOCPNPoint = NULL;
+            if( pFindPP ) {
+                OCPNPoint *pFirstVizPoint = NULL;
+                OCPNPoint *pFoundActiveOCPNPoint = NULL;
+                OCPNPoint *pFoundVizOCPNPoint = NULL;
+                Path *pSelectedActivePath = NULL;
+                Path *pSelectedVizPath = NULL;
+                //Boundary *pSelectedActiveBoundary = NULL;
+                //Boundary *pSelectedVizBoundary = NULL;
+
+                //There is at least one OCPNpoint, so get the whole list
+                SelectableItemList SelList = pSelect->FindSelectionList( slat, slon,
+                                             SELTYPE_OCPNPOINT );
+                wxSelectableItemListNode *node = SelList.GetFirst();
+                while( node ) {
+                    SelectItem *pFindSel = node->GetData();
+
+                    OCPNPoint *pop = (OCPNPoint *) pFindSel->m_pData1;        //candidate
+
+                    //    Get an array of all paths using this point
+                    wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );
+
+                    // Use path array (if any) to determine actual visibility for this point
+                    bool bop_viz = false;
+                    if( ppath_array ) {
+                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                            Path *pp = (Path *) ppath_array->Item( ip );
+                            if( pp->IsVisible() ) {
+                                bop_viz = true;
+                                break;
+                            }
+                        }
+                        if( !bop_viz )                          // is not visible as part of path
+                            bop_viz = pop->IsVisible();         //  so treat as isolated point
+
+                    } else
+                        bop_viz = pop->IsVisible();               // isolated point
+
+                    if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
+
+                    // Use path array to choose the appropriate path
+                    // Give preference to any active path, otherwise select the first visible path in the array for this point
+                    m_pSelectedPath = NULL;
+                    if( ppath_array ) {
+                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                            Path *pp = (Path *) ppath_array->Item( ip );
+                            if( pp->m_bPathIsActive ) {
+                                pSelectedActivePath = pp;
+                                pFoundActiveOCPNPoint = pop;
+                                break;
+                            }
+                        }
+
+                        if( NULL == pSelectedVizPath ) {
+                            for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                                Path *pp = (Path *) ppath_array->Item( ip );
+                                if( pp->IsVisible() ) {
+                                    pSelectedVizPath = pp;
+                                    pFoundVizOCPNPoint = pop;
+                                    break;
+                                }
+                            }
+                        }
+
+                        delete ppath_array;
+                    }
+
+                    node = node->GetNext();
+                }
+
+                //      Now choose the "best" selections
+                if( pFoundActiveOCPNPoint ) {
+                    m_pFoundOCPNPoint = pFoundActiveOCPNPoint;
+                    m_pSelectedPath = pSelectedActivePath;
+                } else if( pFoundVizOCPNPoint ) {
+                    m_pFoundOCPNPoint = pFoundVizOCPNPoint;
+                    m_pSelectedPath = pSelectedVizPath;
+                } else
+                    // default is first visible point in list
+                    m_pFoundOCPNPoint = pFirstVizPoint;
+
+                if ( m_pSelectedPath ) {
+                    if ( m_pSelectedPath->IsVisible() )
+                        seltype |= SELTYPE_OCPNPOINT;
+                } else if( m_pFoundOCPNPoint ) seltype |= SELTYPE_OCPNPOINT;
+            }
+
+            if( pFindPathSeg )                  // there is at least one select item
+            {
+                SelectableItemList SelList = pSelect->FindSelectionList( slat, slon,
+                                             SELTYPE_PATHSEGMENT );
+
+                if( NULL == m_pSelectedPath )  // the case where a segment only is selected
+                {
+                    //  Choose the first visible path containing segment in the list
+                    wxSelectableItemListNode *node = SelList.GetFirst();
+                    while( node ) {
+                        SelectItem *pFindSel = node->GetData();
+
+                        Path *pp = (Path *) pFindSel->m_pData3;
+                        if( pp->IsVisible() ) {
+                            m_pSelectedPath = pp;
+                            break;
+                        }
+                        node = node->GetNext();
+                    }
+                }
+
+                if( m_pSelectedPath ) {
+                    if( NULL == m_pFoundOCPNPoint ) m_pFoundOCPNPoint =
+                            (OCPNPoint *) pFindPathSeg->m_pData1;
+                    m_pFoundOCPNPointSecond = (OCPNPoint *) pFindPathSeg->m_pData2;
+
+                    m_pSelectedPath->m_bPathIsSelected = !(seltype & SELTYPE_OCPNPOINT);
+                    if( m_pSelectedPath->m_bPathIsSelected )
+//                        m_pSelectedPath->Draw( dc, GetVP() );
+                    seltype |= SELTYPE_PATHSEGMENT;
+                }
+
+            }
+
+            if( 0 != seltype ) {
+                CanvasPopupMenu( event.GetX(), event.GetY(), seltype );
+                cc1->Refresh( false );            // needed for MSW, not GTK  Why??
+                bret = TRUE;
+            } else bret = FALSE;
+
+//end           
         }
     }
     return bret;
@@ -906,6 +1081,7 @@ void ocpn_draw_pi::FinishBoundary( void )
     
     m_pMouseBoundary = NULL;
 
+    m_pSelectedPath = NULL;
     m_pSelectedBoundary = NULL;
     m_pFoundOCPNPointSecond = NULL;
     
@@ -1043,7 +1219,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     if( NULL == pMousePoint ) {                 // need a new point
         pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
         pMousePoint->SetNameShown( false );
-        pMousePoint->m_sTypeString = wxS("BoundaryPoint");
+        pMousePoint->m_sTypeString = wxS("Boundary Point");
 
         pConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
         pSelect->AddSelectableOCPNPoint( rlat, rlon, pMousePoint );
@@ -1173,3 +1349,206 @@ void ocpn_draw_pi::PopupMenuHandler(wxCommandEvent& ev)
 */
 	return;
 }
+
+void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
+{
+    wxMenu* contextMenu = new wxMenu;
+    wxMenu* menuOCPNPoint = new wxMenu( wxS("OCPNPoint") );
+    wxMenu* menuPath = new wxMenu( wxS("Path") );
+
+    wxMenu *subMenuChart = new wxMenu;
+
+    wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
+
+    popx = x;
+    popy = y;
+/*
+#ifdef __WXGTK__
+#ifdef ocpnUSE_GTK_OPTIMIZE
+    //  This code changes the background color on the popup context menu
+    wxColour back_color = GetGlobalColor(_T("UIBCK"));
+    GdkColor color;
+
+    color.red = back_color.Red() << 8;
+    color.green = back_color.Green() << 8;
+    color.blue = back_color.Blue() << 8;
+
+//    gtk_widget_modify_bg (GTK_WIDGET(contextMenu->m_menu), GTK_STATE_NORMAL, &color);
+#endif
+#endif
+
+    if( seltype == SELTYPE_PATHCREATE ) {
+        MenuAppend( contextMenu, ID_PATH_MENU_FINISH, _menuText( _( "End Path" ), _("Esc") ) );
+    }
+
+    if( undo->AnythingToUndo() ) {
+        wxString undoItem;
+        undoItem << _("Undo") << _T(" ") << undo->GetNextUndoableAction()->Description();
+        MenuPrepend( contextMenu, ID_UNDO, _menuText( undoItem, _T("Ctrl-Z") ) );
+    }
+
+    if( undo->AnythingToRedo() ) {
+        wxString redoItem;
+        redoItem << _("Redo") << _T(" ") << undo->GetNextRedoableAction()->Description();
+#ifdef __WXOSX__
+        MenuPrepend( contextMenu, ID_REDO, _menuText( redoItem, _T("Shift-Ctrl-Z") ) );
+#else
+        MenuPrepend( contextMenu, ID_REDO, _menuText( redoItem, _T("Ctrl-Y") ) );
+#endif
+    }
+
+    MenuAppend( contextMenu, ID_DEF_MENU_DROP_OCPNPOINT, _menuText( _( "Drop OCPN Point" ), _T("Shift-Ctrl-M") ) );
+
+    MenuAppend( contextMenu, ID_DEF_MENU_GOTOPOSITION, _("Center View...") );
+
+    bool full_toggle_added = false;
+    if(g_btouch){
+        MenuAppend( contextMenu, ID_DEF_MENU_TOGGLE_FULL, _("Toggle Full Screen") );
+        full_toggle_added = true;
+    }
+        
+    
+    if(!full_toggle_added){
+        if(gFrame->IsFullScreen()){
+            MenuAppend( contextMenu, ID_DEF_MENU_TOGGLE_FULL, _("Toggle Full Screen") );
+        }
+    }
+        
+    
+    Kml* kml = new Kml;
+    int pasteBuffer = kml->ParsePasteBuffer();
+    if( pasteBuffer != KML_PASTE_INVALID ) {
+        switch( pasteBuffer ) {
+            case KML_PASTE_OCPNPOINT: {
+                MenuAppend( contextMenu, ID_PASTE_OCPNPOINT, wxS( "Paste OCPNPoint" ) );
+                break;
+            }
+            case KML_PASTE_PATH: {
+                MenuAppend( contextMenu, ID_PASTE_PATH, wxS( "Paste Path" ) );
+                break;
+            }
+        }
+    }
+    delete kml;
+
+#ifdef __WXMSW__
+    //  If we dismiss the context menu without action, we need to discard some mouse events....
+    //  Eat the next 2 button events, which happen as down-up on MSW XP
+    g_click_stop = 2;
+#endif
+*/
+    //  This is the default context menu
+    menuFocus = contextMenu;
+
+    if( seltype & SELTYPE_PATHSEGMENT ) {
+        bool blay = false;
+        if( m_pSelectedPath && m_pSelectedPath->m_bIsInLayer )
+            blay = true;
+
+        if( blay ) {
+            delete menuPath;
+            menuPath = new wxMenu( _("Layer Path") );
+            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
+        }
+        else {
+            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_INSERT, _( "Insert Waypoint" ) );
+            MenuAppend( menuPath, ID_PATH_MENU_DELETE, _( "Delete..." ) );
+            if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
+            else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
+        }
+
+        //      Set this menu as the "focused context menu"
+        menuFocus = menuPath;
+    }
+
+    if( seltype & SELTYPE_OCPNPOINT ) {
+        bool blay = false;
+        if( m_pFoundOCPNPoint && m_pFoundOCPNPoint->m_bIsInLayer )
+            blay = true;
+
+        if( blay ){
+            delete menuOCPNPoint;
+            menuOCPNPoint = new wxMenu( _("Layer OCPNPoint") );
+            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+
+            if( m_pSelectedPath && m_pSelectedPath->IsActive() )
+                MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+        }
+        else {
+            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
+                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundOCPNPoint )
+                    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+            }
+
+            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
+                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundOCPNPoint ) {
+                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
+                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
+                        MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next OCPNPoint" ) );
+                }
+            }
+            if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
+                MenuAppend( menuOCPNPoint, ID_PATH_MENU_REMPOINT, _( "Remove from Path" ) );
+
+            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_COPY, _( "Copy as KML" ) );
+
+            if ( m_pFoundOCPNPoint->GetIconName() != wxS("mob") ) {
+                if ( m_pSelectedPath )
+                    MenuAppend( menuOCPNPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
+            }
+            
+        }
+        //      Set this menu as the "focused context menu"
+        menuFocus = menuOCPNPoint;
+    }
+
+    //        Invoke the correct focused drop-down menu
+    //parent->PopupMenu( menuFocus, x, y );
+    cc1->PopupMenu( menuFocus, x, y );
+
+
+    // Cleanup
+    if( ( m_pSelectedPath ) ) {
+        m_pSelectedPath->m_bPathIsSelected = false;
+    }
+
+    m_pSelectedPath = NULL;
+
+    if( m_pFoundOCPNPoint ) {
+        m_pFoundOCPNPoint->m_bPtIsSelected = false;
+    }
+    m_pFoundOCPNPoint = NULL;
+
+    m_pFoundOCPNPointSecond = NULL;
+
+    delete contextMenu;
+    delete menuPath;
+    delete menuOCPNPoint;
+}
+
+//-------------------------------------------------------------------------------
+//          Popup Menu Handling
+//-------------------------------------------------------------------------------
+
+void ocpn_draw_pi::MenuPrepend( wxMenu *menu, int id, wxString label)
+{
+    wxMenuItem *item = new wxMenuItem(menu, id, label);
+#ifdef __WXMSW__
+    wxFont *qFont = GetOCPNScaledFont(_T("Menu"));
+    item->SetFont(*qFont);
+#endif
+    menu->Prepend(item);
+}
+
+void ocpn_draw_pi::MenuAppend( wxMenu *menu, int id, wxString label)
+{
+    wxMenuItem *item = new wxMenuItem(menu, id, label);
+#ifdef __WXMSW__
+    wxFont *qFont = GetOCPNScaledFont(_("Menu"));
+    item->SetFont(*qFont);
+#endif
+    menu->Append(item);
+}
+

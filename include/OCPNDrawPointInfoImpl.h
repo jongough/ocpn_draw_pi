@@ -36,11 +36,15 @@ class OCPNDrawPointInfoImpl : public MarkInfoImpl
         //OCPNDrawPointInfoImpl();
         virtual ~OCPNDrawPointInfoImpl();
         void SetOCPNPoint( OCPNPoint *pOP );
+        void OnMarkInfoOKClick( wxCommandEvent& event );
         bool UpdateProperties( bool positionOnly = false );
     protected:
     private:
         void OnHyperLinkClick(wxHyperlinkEvent &event);
-
+        bool SaveChanges();
+        void OnPositionCtlUpdated( wxCommandEvent& event );
+        void OnMarkInfoCancelClick( wxCommandEvent& event );
+        
         OCPNPoint  *m_pOCPNPoint;
         HyperlinkList *m_pMyLinkList;
         wxHyperlinkCtrl* m_pEditedLink;

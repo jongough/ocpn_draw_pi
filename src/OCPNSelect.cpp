@@ -445,7 +445,8 @@ SelectItem *OCPNSelect::FindSelection( float slat, float slon, int fseltype )
                     c = pFindSel->m_slon;
                     d = pFindSel->m_slon2;
 
-                    if( IsSegmentSelected( a, b, c, d, slat, slon ) ) goto find_ok;
+//                    if( IsSegmentSelected( a, b, c, d, slat, slon ) ) goto find_ok;
+                    if( IsSegmentSelected( a, b, c, d, slat, slon ) ) return pFindSel;
                     break;
                 default:
                     break;

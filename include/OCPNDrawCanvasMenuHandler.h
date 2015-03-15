@@ -16,7 +16,8 @@ class OCPNDrawCanvasMenuHandler : public CanvasMenuHandler
           Path *selectedPath,
           OCPNPoint *selectedOCPNPoint);
         virtual ~OCPNDrawCanvasMenuHandler();
-        
+        void    PopupMenuHandler( wxCommandEvent& event );
+
     
     protected:
     private:

@@ -227,14 +227,20 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
     wxMenu menu;
 
     if( ! m_pPath->m_bIsInLayer ) {
-        wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, _("&OCPNPoint Properties...") );
+        wxString sPropertiesType("");
+        if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
+            sPropertiesType.append( wxS("OCPN Draw Point") );
+        else
+            sPropertiesType.append( m_pPath->m_sTypeString );
+        sPropertiesType.append( wxS(" &Properties...") );
+        wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, sPropertiesType );
         editItem->Enable( m_wpList->GetSelectedItemCount() == 1 );
 
-        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, _("&Remove Selected") );
+        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, wxS("&Remove Selected") );
         delItem->Enable( m_wpList->GetSelectedItemCount() > 0 && m_wpList->GetItemCount() > 2 );
     }
 
-    wxMenuItem* copyItem = menu.Append( ID_PATHPROP_MENU_COPY_TEXT, _("&Copy all as text") );
+    wxMenuItem* copyItem = menu.Append( ID_PATHPROP_MENU_COPY_TEXT, wxS("&Copy all as text") );
 
     PopupMenu( &menu );
 }
@@ -472,21 +478,28 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
 {
     switch( event.GetId() ) {
         case ID_PATHPROP_MENU_DELETE: {
-            int dlg_return = OCPNMessageBox( this, _("Are you sure you want to remove this waypoint?"),
-                    _("OpenCPN Remove Waypoint"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            long item = -1;
+            item = m_wpList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            if( item == -1 ) break;
+
+            OCPNPoint *wp;
+            wp = (OCPNPoint *) m_wpList->GetItemData( item );
+
+            wxString sMessage( wxS("Are you sure you want to remove this ") );
+            wxString sCaption( wxS("OCPN Draw Remove ") );
+            wxString sType("");
+            if (!wp || wp->m_sTypeString.IsNull() || wp->m_sTypeString.IsEmpty() )
+                sType.append( wxS("waypoint") );
+            else
+                sType.append( wp->m_sTypeString );
+            sMessage.append( sType );
+            sMessage.append( wxS("?") );
+            sCaption.append( sType );
+            
+            int dlg_return = OCPNMessageBox( this, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
 
             if( dlg_return == wxID_YES ) {
-                long item = -1;
-                item = m_wpList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-
-                if( item == -1 ) break;
-
-                RoutePoint *wp;
-                wp = (RoutePoint *) m_wpList->GetItemData( item );
-
-// TODO (jon#1#): Fix up 'RemovePointFromPath. currently commented out
-                // need to handle this, not sure where
-                //cc1->RemovePointFromPath( wp, m_pPath );
+                m_pPath->RemovePointFromPath( wp, m_pPath );
             }
             break;
         }
@@ -593,7 +606,7 @@ bool PathProp::UpdateProperties( Path *pPath )
         //  Leg
         wxString t;
         t.Printf( _T("%d"), i );
-        if( i == 0 ) t = _T("---");
+        if( i == 0 ) t = _T("Boat");
         if( arrival ) m_wpList->SetItem( item_line_index, 0, t );
 
         //  Mark Name
@@ -730,6 +743,441 @@ bool PathProp::UpdateProperties( Path *pPath )
 
     ::wxEndBusyCursor();
 
+    return true;
+}
+
+bool PathProp::UpdateProperties()
+{
+    if( NULL == m_pPath ) return false;
+/*
+    ::wxBeginBusyCursor();
+
+    m_TotalDistCtl->SetValue( _T("") );
+    m_TimeEnrouteCtl->SetValue( _T("") );
+    int tz_selection = GetTZSelection();
+    long LMT_Offset = 0;         // offset in seconds from UTC for given location (-1 hr / 15 deg W)
+
+    m_SplitButton->Enable( false );
+    m_ExtendButton->Enable( false );
+
+    if( m_pRoute->m_bIsTrack ) {
+        m_pRoute->UpdateSegmentDistances();           // get segment and total distance
+        // but ignore leg speed calcs
+
+        // Calculate AVG speed if we are showing a track and total time
+        RoutePoint *last_point = m_pRoute->GetLastPoint();
+        RoutePoint *first_point = m_pRoute->GetPoint( 1 );
+        double total_seconds = 0.;
+
+        if( last_point->GetCreateTime().IsValid() && first_point->GetCreateTime().IsValid() ) {
+            total_seconds =
+                    last_point->GetCreateTime().Subtract( first_point->GetCreateTime() ).GetSeconds().ToDouble();
+            if( total_seconds != 0. ) {
+                m_avgspeed = m_pRoute->m_route_length / total_seconds * 3600;
+            } else {
+                m_avgspeed = 0;
+            }
+            wxString s;
+            s.Printf( _T("%5.2f"), toUsrSpeed( m_avgspeed ) );
+            m_PlanSpeedCtl->SetValue( s );
+        } else {
+            wxString s( _T("--") );
+            m_PlanSpeedCtl->SetValue( s );
+        }
+
+        //  Total length
+        wxString slen;
+        slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( m_pRoute->m_route_length ) );
+
+        m_TotalDistCtl->SetValue( slen );
+
+        //  Time
+        wxString time_form;
+        wxTimeSpan time( 0, 0, (int) total_seconds, 0 );
+        if( total_seconds > 3600. * 24. ) time_form = time.Format(
+                _(" %D Days  %H Hours  %M Minutes") );
+        else
+            if( total_seconds > 0. ) time_form = time.Format( _(" %H Hours  %M Minutes") );
+            else
+                time_form = _T("--");
+        m_TimeEnrouteCtl->SetValue( time_form );
+
+    } else        // Route
+    {
+        double brg;
+        double join_distance = 0.;
+        RoutePoint *first_point = m_pRoute->GetPoint( 1 );
+        if( first_point )
+            DistanceBearingMercator( first_point->m_lat, first_point->m_lon, gLat, gLon, &brg, &join_distance );
+
+        //    Update the "tides event" column header
+        wxListItem column_info;
+        if( m_wpList->GetColumn( 8, column_info ) ) {
+            wxString c = _("Next tide event");
+            if( gpIDX && m_starttime.IsValid() ) {
+                c = _T("@~~");
+                c.Append( wxString( gpIDX->IDX_station_name, wxConvUTF8 ) );
+                int i = c.Find( ',' );
+                if( i != wxNOT_FOUND ) c.Remove( i );
+
+            }
+            column_info.SetText( c );
+            m_wpList->SetColumn( 8, column_info );
+        }
+
+        //Update the "ETE/Timestamp" column header
+
+        if( m_wpList->GetColumn( 6, column_info ) ) {
+            if( m_starttime.IsValid() ) column_info.SetText( _("ETA") );
+            else
+                column_info.SetText( _("ETE") );
+            m_wpList->SetColumn( 6, column_info );
+        }
+
+        m_pRoute->UpdateSegmentDistances( m_planspeed );           // get segment and total distance
+        double leg_speed = m_planspeed;
+        wxTimeSpan stopover_time( 0 ); // time spent waiting for ETD
+        wxTimeSpan joining_time( 0 );   // time spent before reaching first waypoint
+
+        double total_seconds = 0.;
+
+        if( m_pRoute ) {
+            total_seconds = m_pRoute->m_route_time;
+            if( m_bStartNow ) {
+                if( m_pEnroutePoint ) gStart_LMT_Offset = long(
+                        ( m_pEnroutePoint->m_lon ) * 3600. / 15. );
+                else
+                    gStart_LMT_Offset = long(
+                            ( m_pRoute->pRoutePointList->GetFirst()->GetData()->m_lon ) * 3600.
+                                    / 15. );
+            }
+        }
+
+        if( m_bStartNow ) {
+            joining_time = wxTimeSpan::Seconds((long) wxRound( ( join_distance * 3600. ) / m_planspeed ) );
+            double join_seconds = joining_time.GetSeconds().ToDouble();
+            total_seconds += join_seconds;
+        }
+
+        if( m_starttime.IsValid() ) {
+            wxString s;
+            if( m_bStartNow ) {
+                wxDateTime d = wxDateTime::Now();
+                if( tz_selection == 1 ) {
+                    m_starttime = d.ToUTC();
+                    s = _T(">");
+                }
+            }
+            s += ts2s( m_starttime, tz_selection, (int) gStart_LMT_Offset, INPUT_FORMAT );
+            m_StartTimeCtl->SetValue( s );
+        } else
+            m_StartTimeCtl->Clear();
+
+        if( IsThisRouteExtendable() ) m_ExtendButton->Enable( true );
+
+        //  Total length
+        double total_length = m_pRoute->m_route_length;
+        if( m_bStartNow ) {
+            total_length += join_distance;
+        }
+
+        wxString slen;
+        slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( total_length ) );
+
+        if( !m_pEnroutePoint ) m_TotalDistCtl->SetValue( slen );
+        else
+            m_TotalDistCtl->Clear();
+
+        wxString time_form;
+        wxString tide_form;
+
+        //  Time
+
+        wxTimeSpan time( 0, 0, (int) total_seconds, 0 );
+        if( total_seconds > 3600. * 24. ) time_form = time.Format(
+                _(" %D Days  %H Hours  %M Minutes") );
+        else
+            time_form = time.Format( _(" %H Hours  %M Minutes") );
+
+        if( !m_pEnroutePoint ) m_TimeEnrouteCtl->SetValue( time_form );
+        else
+            m_TimeEnrouteCtl->Clear();
+
+        //  Iterate on Route Points
+        wxRoutePointListNode *node = m_pRoute->pRoutePointList->GetFirst();
+
+        int i = 0;
+        double slat = gLat;
+        double slon = gLon;
+        double tdis = 0.;
+        double tsec = 0.;    // total time in seconds
+
+        int stopover_count = 0;
+        bool arrival = true; // marks which pass over the wpt we do - 1. arrival 2. departure
+        bool enroute = true; // for active route, skip all points up to the active point
+
+        if( m_pRoute->m_bRtIsActive ) {
+            if( m_pEnroutePoint && m_bStartNow ) enroute = ( m_pRoute->GetPoint( 1 )->m_GUID
+                    == m_pEnroutePoint->m_GUID );
+        }
+
+        wxString nullify = _T("----");
+
+        int i_prev_point = -1;
+        RoutePoint *prev_route_point = NULL;
+
+        while( node ) {
+            RoutePoint *prp = node->GetData();
+            long item_line_index = i + stopover_count;
+
+            //  Leg
+            wxString t;
+            t.Printf( _T("%d"), i );
+            if( i == 0 ) t = _T("---");
+            if( arrival ) m_wpList->SetItem( item_line_index, 0, t );
+
+            //  Mark Name
+            if( arrival ) m_wpList->SetItem( item_line_index, 1, prp->GetName() );
+        // Store Dewcription
+            if( arrival ) m_wpList->SetItem( item_line_index, 9, prp->GetDescription() );
+
+            //  Distance
+            //  Note that Distance/Bearing for Leg 000 is as from current position
+
+            double brg, leg_dist;
+            bool starting_point = false;
+
+            starting_point = ( i == 0 ) && enroute;
+            if( m_pEnroutePoint && !starting_point ) starting_point = ( prp->m_GUID
+                    == m_pEnroutePoint->m_GUID );
+
+            if( starting_point ) {
+                slat = gLat;
+                slon = gLon;
+                if( gSog > 0.0 ) leg_speed = gSog; // should be VMG
+                else
+                    leg_speed = m_planspeed;
+                if( m_bStartNow ) {
+                    DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+                    if( i == 0 ) joining_time = wxTimeSpan::Seconds(
+                            (long) wxRound( ( leg_dist * 3600. ) / leg_speed ) );
+                }
+                enroute = true;
+            } else {
+                if( prp->m_seg_vmg > 0. ) leg_speed = prp->m_seg_vmg;
+                else
+                    leg_speed = m_planspeed;
+            }
+
+            DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+
+        // calculation of course at current WayPoint.
+        double course=10, tmp_leg_dist=23;
+        wxRoutePointListNode *next_node = node->GetNext();
+        RoutePoint * _next_prp = (next_node)? next_node->GetData(): NULL;
+        if (_next_prp )
+        {
+        DistanceBearingMercator( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
+        }else
+        {
+          course = 0.0;
+          tmp_leg_dist = 0.0;
+        }
+
+        prp->SetCourse(course); // save the course to the next waypoint for printing.
+        // end of calculation
+
+
+        t.Printf( _T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance( leg_dist ) );
+        if( arrival )
+            m_wpList->SetItem( item_line_index, 2, t );
+        if( !enroute )
+            m_wpList->SetItem( item_line_index, 2, nullify );
+        prp->SetDistance(leg_dist); // save the course to the next waypoint for printing.
+
+            //  Bearing
+        if( g_bShowMag )
+            t.Printf( _T("%03.0f Deg. M"), gFrame->GetTrueOrMag( brg ) );
+        else
+            t.Printf( _T("%03.0f Deg. T"), gFrame->GetTrueOrMag( brg ) );
+
+        if( arrival )
+            m_wpList->SetItem( item_line_index, 3, t );
+        if( !enroute )
+            m_wpList->SetItem( item_line_index, 3, nullify );
+
+        // Course (bearing of next )
+        if (_next_prp){
+            if( g_bShowMag )
+                t.Printf( _T("%03.0f Deg. M"), gFrame->GetTrueOrMag( course ) );
+            else
+                t.Printf( _T("%03.0f Deg. T"), gFrame->GetTrueOrMag( course ) );
+            if( arrival )
+                m_wpList->SetItem( item_line_index, 10, t );
+        }
+        else
+            m_wpList->SetItem( item_line_index, 10, nullify );
+
+            //  Lat/Lon
+            wxString tlat = toSDMM( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
+            if( arrival ) m_wpList->SetItem( item_line_index, 4, tlat );
+
+            wxString tlon = toSDMM( 2, prp->m_lon, prp->m_bIsInTrack );
+            if( arrival ) m_wpList->SetItem( item_line_index, 5, tlon );
+
+
+            tide_form = _T("");
+
+            LMT_Offset = long( ( prp->m_lon ) * 3600. / 15. );
+
+            // Time to each waypoint or creation date for tracks
+            if( i == 0 && enroute ) {
+                time_form.Printf( _("Start") );
+                if( m_starttime.IsValid() ) {
+                    wxDateTime act_starttime = m_starttime + joining_time;
+                    time_form.Append( _T(": ") );
+
+                    if( !arrival ) {
+                        wxDateTime etd = prp->m_seg_etd;
+                        if( etd.IsValid() && etd.IsLaterThan( m_starttime ) ) {
+                            stopover_time += etd.Subtract( m_starttime );
+                            act_starttime = prp->m_seg_etd;
+                        }
+                    }
+
+                    int ds = getDaylightStatus( prp->m_lat, prp->m_lon, act_starttime );
+                    wxString s = ts2s( act_starttime, tz_selection, (int) LMT_Offset,
+                            DISPLAY_FORMAT );
+                    time_form.Append( s );
+                    time_form.Append( _T("   (") );
+                    time_form.Append( GetDaylightString(ds) );
+                    time_form.Append( _T(")") );
+
+                    if( ptcmgr ) {
+                        int jx = 0;
+                        if( prp->GetName().Find( _T("@~~") ) != wxNOT_FOUND ) {
+                            tide_form = prp->GetName().Mid( prp->GetName().Find( _T("@~~") ) + 3 );
+                            jx = ptcmgr->GetStationIDXbyName( tide_form, prp->m_lat, prp->m_lon );
+                        }
+                        if( gpIDX || jx ) {
+                            time_t tm = act_starttime.GetTicks();
+                            tide_form = MakeTideInfo( jx, tm, tz_selection, LMT_Offset );
+                        }
+                    }
+                }
+                tdis = 0;
+                tsec = 0.;
+            } // end of route point 0
+            else {
+                if( arrival && enroute ) tdis += leg_dist;
+                if( leg_speed ) {
+                    if( arrival && enroute ) tsec += 3600 * leg_dist / leg_speed; // time in seconds to arrive here
+                    wxTimeSpan time( 0, 0, (int) tsec, 0 );
+
+                    if( m_starttime.IsValid() ) {
+
+                        wxDateTime ueta = m_starttime;
+                        ueta.Add( time + stopover_time + joining_time );
+
+                        if( !arrival ) {
+                            wxDateTime etd = prp->m_seg_etd;
+                            if( etd.IsValid() && etd.IsLaterThan( ueta ) ) {
+                                stopover_time += etd.Subtract( ueta );
+                                ueta = prp->m_seg_etd;
+                            }
+                        }
+
+                        int ds = getDaylightStatus( prp->m_lat, prp->m_lon, ueta );
+                        time_form = ts2s( ueta, tz_selection, LMT_Offset, DISPLAY_FORMAT );
+                        time_form.Append( _T("   (") );
+                        time_form.Append( GetDaylightString(ds) );
+                        time_form.Append( _T(")") );
+
+
+                        if( ptcmgr ) {
+                            int jx = 0;
+                            if( prp->GetName().Find( _T("@~~") ) != wxNOT_FOUND ) {
+                                tide_form = prp->GetName().Mid(
+                                        prp->GetName().Find( _T("@~~") ) + 3 );
+                                jx = ptcmgr->GetStationIDXbyName( tide_form, prp->m_lat, prp->m_lon );
+                            }
+                            if( gpIDX || jx ) {
+                                time_t tm = ueta.GetTicks();
+                                tide_form = MakeTideInfo( jx, tm, tz_selection, LMT_Offset );
+                            }
+                        }
+                    } else {
+                        if( tsec > 3600. * 24. ) time_form = time.Format( _T(" %D D  %H H  %M M") );
+                        else
+                            time_form = time.Format( _T(" %H H  %M M") );
+                    }
+                } // end if legspeed
+            }  // end of repeatable route point
+
+            if( enroute && ( arrival || m_starttime.IsValid() ) ) m_wpList->SetItem(
+                    item_line_index, 6, time_form );
+            else
+                m_wpList->SetItem( item_line_index, 6, _T("----") );
+
+            //Leg speed
+            wxString s;
+            s.Printf( _T("%5.2f"), toUsrSpeed( leg_speed ) );
+            if( arrival ) m_wpList->SetItem( item_line_index, 7, s );
+
+            if( enroute ) m_wpList->SetItem( item_line_index, 8, tide_form );
+            else {
+                m_wpList->SetItem( item_line_index, 7, nullify );
+                m_wpList->SetItem( item_line_index, 8, nullify );
+            }
+
+            //  Save for iterating distance/bearing calculation
+            slat = prp->m_lat;
+            slon = prp->m_lon;
+
+            // if stopover (ETD) found, loop for next output line for the same point
+            //   with departure time & tide information
+
+            if( arrival && ( prp->m_seg_etd.IsValid() ) ) {
+                stopover_count++;
+                arrival = false;
+            } else {
+                arrival = true;
+                i++;
+                node = node->GetNext();
+
+                //    Record this point info for use as previous point in next iteration.
+                i_prev_point = i - 1;
+                prev_route_point = prp;
+            }
+        }
+    }
+
+    if( m_pRoute->m_Colour == wxEmptyString ) m_chColor->Select( 0 );
+    else {
+        for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
+            if( m_pRoute->m_Colour == ::GpxxColorNames[i] ) {
+                m_chColor->Select( i + 1 );
+                break;
+            }
+        }
+    }
+
+    for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
+        if( m_pRoute->m_style == ::StyleValues[i] ) {
+            m_chStyle->Select( i );
+            break;
+        }
+    }
+
+    for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+        if( m_pRoute->m_width == ::WidthValues[i] ) {
+            m_chWidth->Select( i );
+            break;
+        }
+    }
+
+    ::wxEndBusyCursor();
+*/
     return true;
 }
 

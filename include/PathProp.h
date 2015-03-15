@@ -104,6 +104,7 @@ public:
     Path *GetPath(void){return m_pPath;}
 
     bool UpdateProperties( Path *pPath );
+    bool UpdateProperties();
     wxString MakeTideInfo(int jx, time_t tm, int tz_selection, long LMT_Offset);
     bool SaveChanges(void);
 

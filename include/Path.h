@@ -99,6 +99,8 @@ public:
 
     double GetRouteArrivalRadius(void){ return m_ArrivalRadius;}
     void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
+    
+    void RemovePointFromPath( OCPNPoint* point, Path* path );
 
     int         m_ConfigPathNum;
     bool        m_bPathIsSelected;

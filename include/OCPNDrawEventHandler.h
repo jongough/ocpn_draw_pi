@@ -30,7 +30,6 @@
 #include <wx/timer.h>
 #include "ocpn_draw_pi.h"
 
-#define ROLLOVER_TIMER  1000
 #define HEAD_DOG_TIMER  1001
 
 class OCPNDrawEventHandler : public wxEvtHandler
