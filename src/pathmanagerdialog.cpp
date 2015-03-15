@@ -1028,7 +1028,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
         }
     }
     else {
-        wxString caption("");
+        wxString caption( wxS("") );
         if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() ) {
             caption.append( wxS("Path Properties, Layer: ") );
         }
@@ -1463,7 +1463,7 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
     pOCPNPointPropDialog->SetOCPNPoint( wp );
     pOCPNPointPropDialog->UpdateProperties();
 
-    wxString caption("");
+    wxString caption( wxS("") );
     if ( wp->m_sTypeString.IsNull() || wp->m_sTypeString.IsEmpty() )
         caption.append( wxS("OCPN Draw Point") );
     else

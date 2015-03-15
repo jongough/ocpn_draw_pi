@@ -530,6 +530,7 @@ void ocpn_draw_pi::LoadConfig()
 
     if(pConf)
     {
+        wxString val;
         pConf->SetPath ( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
         pConf->Read ( wxS( "DefaultActiveLineColour" ), &g_ActiveLineColour, wxS("Red") );
         pConf->Read ( wxS( "DefaultInActiveLineColour" ), &g_InActiveLineColour, wxS("LightGray") );
@@ -539,12 +540,14 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
         pConf->Read( wxS( "DefaultWPIcon" ), &g_default_wp_icon, wxS("triangle") );
         pConf->Read( wxS( "OCPNPointRangeRingsNumber" ), &g_iOCPNPointRangeRingsNumber, 0 );
-        pConf->Read( wxS( "OCPNPointRangeRingsStep" ), &g_fOCPNPointRangeRingsStep, 1.0 );
+        pConf->Read( wxS( "OCPNPointRangeRingsStep" ), &val, wxS("1.0") );
+        g_fOCPNPointRangeRingsStep = atof( val.mb_str() );
         pConf->Read( wxS( "OCPNPointRangeRingsStepUnits" ), &g_iOCPNPointRangeRingsStepUnits, 0 );
         wxString  l_wxsOCPNPointRangeRingsColour;
         g_colourOCPNPointRangeRingsColour = wxColour( *wxRED );
         pConf->Read( wxS( "OCPNPointRangeRingsColour" ), &l_wxsOCPNPointRangeRingsColour, wxS( "RED" ) );
         g_colourOCPNPointRangeRingsColour.Set( l_wxsOCPNPointRangeRingsColour );
+
         
 //    g_colourWaypointRangeRingsColour = wxColour( *wxRED );
 //    wxString l_wxsWaypointRangeRingsColour;

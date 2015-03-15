@@ -227,7 +227,7 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
     wxMenu menu;
 
     if( ! m_pPath->m_bIsInLayer ) {
-        wxString sPropertiesType("");
+        wxString sPropertiesType( wxS("") );
         if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
             sPropertiesType.append( wxS("OCPN Draw Point") );
         else
@@ -487,7 +487,7 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
 
             wxString sMessage( wxS("Are you sure you want to remove this ") );
             wxString sCaption( wxS("OCPN Draw Remove ") );
-            wxString sType("");
+            wxString sType( wxS("") );
             if (!wp || wp->m_sTypeString.IsNull() || wp->m_sTypeString.IsEmpty() )
                 sType.append( wxS("waypoint") );
             else
