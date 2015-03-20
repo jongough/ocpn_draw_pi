@@ -42,6 +42,7 @@ extern bool         g_bIsNewLayer;
 extern int          g_LayerIdx;
 extern ChartCanvas  *cc1;
 extern PathMan      *g_pPathMan;
+extern PathList     *pPathList;
 extern wxRect       g_blink_rect;
 extern Multiplexer  *g_pMUX;
 extern MyFrame      *gFrame;
@@ -715,3 +716,77 @@ wxColour OCPNPoint::GetOCPNPointRangeRingsColour(void) {
     else
         return m_wxcOCPNPointRangeRingsColour; 
 }
+
+//-------------------------------------------------------------------------
+//
+//          Static GPX Support Routines
+//
+//-------------------------------------------------------------------------
+OCPNPoint *OCPNPointExists( const wxString& name, double lat, double lon )
+{
+    OCPNPoint *pret = NULL;
+//    if( g_bIsNewLayer ) return NULL;
+    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    bool Exists = false;
+    while( node ) {
+        OCPNPoint *pr = node->GetData();
+
+//        if( pr->m_bIsInLayer ) return NULL;
+
+        if( name == pr->GetName() ) {
+            if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 ) {
+                Exists = true;
+                pret = pr;
+                break;
+            }
+        }
+        node = node->GetNext();
+    }
+
+    return pret;
+}
+
+OCPNPoint *OCPNPointExists( const wxString& guid )
+{
+    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    while( node ) {
+        OCPNPoint *pr = node->GetData();
+
+//        if( pr->m_bIsInLayer ) return NULL;
+
+        if( guid == pr->m_GUID ) {
+            return pr;
+        }
+        node = node->GetNext();
+    }
+
+    return NULL;
+}
+
+bool OCPNPointIsInRouteList( OCPNPoint *pr )
+{
+    bool IsInList = false;
+
+    wxPathListNode *node1 = pPathList->GetFirst();
+    while( node1 ) {
+        Path *pPath = node1->GetData();
+        OCPNPointList *pOCPNPointList = pPath->pOCPNPointList;
+
+        wxOCPNPointListNode *node2 = pOCPNPointList->GetFirst();
+        OCPNPoint *prp;
+
+        while( node2 ) {
+            prp = node2->GetData();
+
+            if( pr->IsSame( prp ) ) {
+                IsInList = true;
+                break;
+            }
+
+            node2 = node2->GetNext();
+        }
+        node1 = node1->GetNext();
+    }
+    return IsInList;
+}
+

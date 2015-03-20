@@ -621,6 +621,8 @@ extern "C"  DECL_EXP wxFont *OCPNGetFont(wxString TextElement, int default_size)
 
 extern "C"  DECL_EXP wxString *GetpSharedDataLocation();
 
+extern "C"  DECL_EXP wxString GetSharedDataLocation();
+
 extern "C"  DECL_EXP ArrayOfPlugIn_AIS_Targets *GetAISTargetArray(void);
 
 extern "C"  DECL_EXP wxAuiManager *GetFrameAuiManager(void);

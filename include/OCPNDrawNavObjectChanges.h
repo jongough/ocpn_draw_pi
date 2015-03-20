@@ -39,7 +39,7 @@ class OCPNDrawNavObjectChanges : public NavObjectChanges
 {
     public:
         OCPNDrawNavObjectChanges();
-        OCPNDrawNavObjectChanges( wxString file_name ) : NavObjectChanges( file_name ) {};
+        OCPNDrawNavObjectChanges( wxString file_name );
         virtual ~OCPNDrawNavObjectChanges();
 
     bool CreateNavObjGPXPaths(void);
@@ -50,11 +50,30 @@ class OCPNDrawNavObjectChanges : public NavObjectChanges
     bool AddGPXPath(Path *pPath);
     bool AddGPXOCPNPoint(OCPNPoint *pWP );
     bool AddGPXOCPNPointsList( OCPNPointList *pOCPNPoints );
+    bool LoadAllGPXObjects( bool b_full_viz = false);
+
 
     bool CreateAllGPXObjects();
+    void SetRootGPXNode(void);
 
     protected:
     private:
+        OCPNPoint *GPXLoadOCPNPoint1( pugi::xml_node &opt_node, 
+                               wxString def_symbol_name,
+                               wxString GUID,
+                               bool b_fullviz,
+                               bool b_layer,
+                               bool b_layerviz,
+                               int layer_id
+                             );
+        Path *GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
+                      bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );
+        OCPNPoint *OCPNPointExists( const wxString& guid );
+        void InsertPathA( Path *pTentPath );
+        Path *PathExists( const wxString& guid);
+        Path *PathExists( Path * pTentPath );
+
+
 };
 
 #endif // OCPNDRAWNAVOBJECTCHANGES_H

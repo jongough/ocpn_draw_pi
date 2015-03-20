@@ -15,24 +15,26 @@ const wxBitmap *_img_Bullet_green;
 const wxBitmap *_img_Bullet_red;
 const wxBitmap *_img_Bullet_yellow;
 extern wxString g_SData_Locn;
+extern wxString *g_pHome_locn;
+extern wxString *g_pData;
+extern wxString *g_pImage;;
 
 void initialize_images(void)
 {
 	wxString *pName = new wxString();
 	pName->clear();
-	//pName->append( g_SData_Locn);
-	pName->append (wxS("share/opencpn/uidata/"));
-	pName->append (wxS("./OCPNDrawManager.png"));
-//	wxString *pOCPN_Draw = new wxString::( pName)
-	//pOCPN_Draw->append( "OCPNDrawManager.png" );
+	pName->append( *g_pImage );
+	pName->append (wxS("OCPNDrawManager.png"));
 	
 	_img_ocpn_draw_pi = new wxBitmap( *pName );
 	pName->clear();
-	//pName->append( g_SData_Locn);
-	pName->append (wxS("share/opencpn/uidata/"));
-	pName->append (wxS("./OCPNDrawManagerGray.png"));
+	pName->append( *g_pImage );
+	pName->append (wxS("OCPNDrawManagerGray.png"));
 	_img_ocpn_draw_gray_pi = new wxBitmap( *pName );
-	_img_ocpn_draw_boundary = new wxBitmap(wxS("share/opencpn/uidata/button1.png"));
+	pName->clear();
+	pName->append( *g_pImage );
+	pName->append (wxS("button1.png"));
+	_img_ocpn_draw_boundary = new wxBitmap( *pName );
 	
 
 static unsigned char Bullet_green[] = {

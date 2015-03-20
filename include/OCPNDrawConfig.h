@@ -39,23 +39,27 @@ class OCPNDrawConfig : public MyConfig
         OCPNDrawConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName);
         virtual ~OCPNDrawConfig();
 
-      virtual bool AddNewPath(Path *pr, int ConfigRouteNum = -1);
-      virtual bool UpdatePath(Path *pr);
-      virtual bool DeleteConfigPath(Path *pr);
+        virtual bool AddNewPath(Path *pr, int ConfigRouteNum = -1);
+        virtual bool UpdatePath(Path *pr);
+        virtual bool DeleteConfigPath(Path *pr);
 
-      virtual bool AddNewOCPNPoint(OCPNPoint *pWP, int ConfigRouteNum = -1);
-      virtual bool UpdateOCPNPoint(OCPNPoint *pWP);
-      virtual bool DeleteOCPNPoint(OCPNPoint *pWP);
+        virtual bool AddNewOCPNPoint(OCPNPoint *pWP, int ConfigRouteNum = -1);
+        virtual bool UpdateOCPNPoint(OCPNPoint *pWP);
+        virtual bool DeleteOCPNPoint(OCPNPoint *pWP);
 
-      virtual void UpdateNavObj();
+        virtual void UpdateNavObj();
+        virtual void LoadNavObjects();
 
-      bool ExportGPXPaths(wxWindow* parent, PathList *pPathss, const wxString suggestedName = _T("paths"));
-      bool ExportGPXOCPNPoints(wxWindow* parent, OCPNPointList *pOCPNPoints, const wxString suggestedName = _T("OCPN points"));
-      
-      
-      OCPNDrawNavObjectChanges  *m_pOCPNDrawNavObjectChangesSet;  
-      wxString                m_sOCPNDrawNavObjSetFile;
-      wxString                m_sOCPNDrawNavObjSetChangesFile;
+        bool ExportGPXPaths(wxWindow* parent, PathList *pPathss, const wxString suggestedName = _T("paths"));
+        bool ExportGPXOCPNPoints(wxWindow* parent, OCPNPointList *pOCPNPoints, const wxString suggestedName = _T("OCPN points"));
+
+
+        OCPNDrawNavObjectChanges  *m_pOCPNDrawNavObjectChangesSet;  
+        wxString                m_sOCPNDrawNavObjSetFile;
+        wxString                m_sOCPNDrawNavObjSetChangesFile;
+          
+        OCPNDrawNavObjectChanges    *m_pOCPNDrawNavObjectInputSet;
+
       
       
     protected:

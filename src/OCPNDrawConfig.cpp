@@ -26,14 +26,24 @@
 #include "OCPNDrawConfig.h"
 #include "OCPNDrawNavObjectChanges.h"
 
-extern OCPNDrawConfig *pConfig;
-
+//extern OCPNDrawConfig   *pConfig;
+OCPNDrawConfig   *pTestConfig;
+extern wxString         *g_pData;
+    
 OCPNDrawConfig::OCPNDrawConfig(const wxString &appName, const wxString &vendorName,
                               const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName)
 {
     //OCPNDrawConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
-    pConfig = (OCPNDrawConfig *) this;
+    pTestConfig = (OCPNDrawConfig *) this;
     //pConfig->LoadMyConfig( 0 );
+    m_sNavObjSetFile = *g_pData;
+    m_sNavObjSetFile += wxS( "ODnavobj.xml" );
+    m_sNavObjSetChangesFile = m_sNavObjSetFile + wxS( ".changes" );
+ 
+    m_pOCPNDrawNavObjectInputSet = NULL;
+    m_pOCPNDrawNavObjectChangesSet = NULL;
+
+    
 }
 
 OCPNDrawConfig::~OCPNDrawConfig()
@@ -198,3 +208,49 @@ void OCPNDrawConfig::UpdateNavObj( void )
     m_pNavObjectChangesSet = new NavObjectChanges(m_sNavObjSetChangesFile);
 
 }
+
+void OCPNDrawConfig::LoadNavObjects()
+{
+    //      next thing to do is read tracks, etc from the NavObject XML file,
+    wxLogMessage( _T("Loading navobjects from ODnavobj.xml") );
+    CreateRotatingNavObjBackup();
+
+    if( NULL == m_pOCPNDrawNavObjectInputSet )
+        m_pOCPNDrawNavObjectInputSet = new OCPNDrawNavObjectChanges();
+
+    if( ::wxFileExists( m_sNavObjSetFile ) &&
+        m_pOCPNDrawNavObjectInputSet->load_file( m_sNavObjSetFile.fn_str() ) )
+        m_pOCPNDrawNavObjectInputSet->LoadAllGPXObjects();
+
+    wxLogMessage( _T("Done loading ODnavobjects") );
+    delete m_pOCPNDrawNavObjectInputSet;
+
+    if( ::wxFileExists( m_sNavObjSetChangesFile ) ) {
+
+        wxULongLong size = wxFileName::GetSize(m_sNavObjSetChangesFile);
+
+        //We crashed last time :(
+        //That's why this file still exists...
+        //Let's reconstruct the unsaved changes
+        OCPNDrawNavObjectChanges *pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges();
+        pOCPNDrawNavObjectChangesSet->load_file( m_sNavObjSetChangesFile.fn_str() );
+
+        //  Remove the file before applying the changes,
+        //  just in case the changes file itself causes a fault.
+        //  If it does fault, at least the next restart will proceed without fault.
+        if( ::wxFileExists( m_sNavObjSetChangesFile ) )
+            ::wxRemoveFile( m_sNavObjSetChangesFile );
+        
+        if(size != 0){
+            wxLogMessage( _T("Applying NavObjChanges") );
+            pOCPNDrawNavObjectChangesSet->ApplyChanges();
+            UpdateNavObj();
+        }
+        
+        delete pOCPNDrawNavObjectChangesSet;
+           
+    }
+
+    m_pNavObjectChangesSet = new NavObjectChanges(m_sNavObjSetChangesFile);
+}
+

@@ -238,6 +238,7 @@ private:
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     
+    void    appendOSDirSlash(wxString* pString);    
     int               m_show_id;
     int               m_hide_id;
     bool				show;

@@ -106,6 +106,10 @@ wxString    g_ActiveFillColour;
 wxString    g_InActiveFillColour;
 wxString    g_PrivateDataDir;
 
+wxString    *g_pHome_Locn;
+wxString    *g_pData;
+wxString    *g_pImage;
+
 OCPNDrawEventHandler    *g_OCPNDrawEventHandler;
 
 int          g_iOCPNPointRangeRingsNumber;
@@ -147,8 +151,42 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pi_manager = (PlugInManager *) ppimgr;
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
-    //g_SData_Locn = new wxString();
-    g_SData_Locn = GetpSharedDataLocation();
+
+	wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+#ifdef __WXMSW__
+	wxString stdPath  = std_path.GetConfigDir();
+#endif
+#ifdef __WXGTK__
+	wxString stdPath  = std_path.GetResourcesDir();
+#endif
+#ifdef __WXOSX__
+	wxString stdPath  = std_path.GetUserConfigDir();   // should be ~/Library/Preferences	
+#endif
+
+    
+	g_pHome_Locn = new wxString();
+    g_pHome_Locn->Append(stdPath);
+    appendOSDirSlash(g_pHome_Locn);
+    
+    g_pHome_Locn->Append(_T("OCPNDraw"));
+    appendOSDirSlash(g_pHome_Locn);
+    if(!wxDir::Exists(*g_pHome_Locn))
+        wxMkdir(*g_pHome_Locn);
+        
+    g_pData = new wxString();
+    g_pData->append( *g_pHome_Locn );
+    g_pData->append( wxS("data") );
+    appendOSDirSlash( g_pData );
+    if ( !wxDir::Exists(*g_pData))
+        wxMkdir( *g_pData );
+    
+    g_pImage = new wxString();
+    g_pImage->append( *g_pHome_Locn );
+    g_pImage->append( wxS("image") );
+    appendOSDirSlash( g_pImage );
+    if ( !wxDir::Exists(*g_pImage))
+        wxMkdir( *g_pImage );
+    
     initialize_images();
 }
 
@@ -157,6 +195,7 @@ ocpn_draw_pi::~ocpn_draw_pi()
 {
 //    RemovePlugInTool(m_leftclick_config_id);
 //    RemovePlugInTool(m_leftclick_boundary_id);
+    pConfig->UpdateNavObj();
     SaveConfig();
 }
 
@@ -169,8 +208,8 @@ int ocpn_draw_pi::Init(void)
     m_pMouseBoundary = NULL;
     m_bDrawingBoundary = NULL;
 
-
-    AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
+    // Not sure what this is
+    //AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
 
 	lastWaypointInRoute = wxS("-1");
 	eventsEnabled = true;
@@ -179,8 +218,11 @@ int ocpn_draw_pi::Init(void)
 	m_parent_window = GetOCPNCanvasWindow();
 
 	m_pconfig = (OCPNDrawConfig *)GetOCPNConfigObject();
-    OCPNDrawConfig *pConfig = new OCPNDrawConfig( wxString( wxS("") ), wxString( wxS("") ), m_pconfig->m_sNavObjSetFile );
-    pConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(pConfig->m_sNavObjSetChangesFile);
+    pConfig = new OCPNDrawConfig( wxString( wxS("") ), wxString( wxS("") ), m_pconfig->m_sNavObjSetFile );
+    wxString sNavObjSetChangesFile;
+    sNavObjSetChangesFile.append( pConfig->m_sNavObjSetChangesFile );
+    pConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(sNavObjSetChangesFile);
+//    pConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(pConfig->m_sNavObjSetChangesFile);
     
     pSelect = new OCPNSelect();
     
@@ -234,6 +276,9 @@ int ocpn_draw_pi::Init(void)
     
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
+    
+    pConfig->LoadNavObjects();
+
 
 	SendPluginMessage(wxS("OCPN_DRAW_READY_FOR_REQUESTS"), wxS("TRUE"));
 
@@ -261,7 +306,7 @@ int ocpn_draw_pi::Init(void)
 
 void ocpn_draw_pi::LateInit(void)
 {
-  initialize_images();
+ /* initialize_images();
 	if(m_bLOGShowIcon) {
             m_leftclick_config_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
                   wxS("OCPN Draw Manager"), wxS(""), NULL,
@@ -270,6 +315,7 @@ void ocpn_draw_pi::LateInit(void)
                   wxS("OCPN Draw Boundary"), wxS(""), NULL,
                    OCPN_DRAW_POSITION, 0, this);
 	}
+	*/
 }
 
 bool ocpn_draw_pi::DeInit(void)
@@ -1555,3 +1601,10 @@ void ocpn_draw_pi::MenuAppend( wxMenu *menu, int id, wxString label)
     menu->Append(item);
 }
 
+void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
+{
+	wxChar sep = wxFileName::GetPathSeparator();
+
+	if (pString->Last() != sep)
+		pString->Append(sep);
+}
