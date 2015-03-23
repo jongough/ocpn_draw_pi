@@ -135,6 +135,7 @@ OCPNPoint::OCPNPoint( OCPNPoint* orig )
     m_pMarkFont = orig->m_pMarkFont;
     m_MarkDescription = orig->m_MarkDescription;
     m_btemp = orig->m_btemp;
+    m_sTypeString = orig->m_sTypeString;
 
     m_HyperlinkList = new HyperlinkList;
     m_IconName = orig->m_IconName;
@@ -186,6 +187,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
     m_btemp = false;
+    m_sTypeString = wxEmptyString;
 
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
@@ -500,8 +502,8 @@ void OCPNPoint::DrawGL( ViewPort &vp, OCPNRegion &region )
         m_wpBBox_rotation = vp.rotation;
     }
 
-    if(region.Contains(r3) == wxOutRegion)
-        return;
+//    if(region.Contains(r3) == wxOutRegion)
+//        return;
 
     ocpnDC dc;
 

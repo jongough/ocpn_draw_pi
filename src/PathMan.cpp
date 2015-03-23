@@ -74,7 +74,7 @@ WX_DEFINE_LIST(markicon_key_list_type);
 WX_DEFINE_LIST(markicon_description_list_type);
 
 extern PathList     *pPathList;
-extern OCPNDrawConfig  *pConfig;
+extern OCPNDrawConfig  *pOCPNDrawConfig;
 extern OCPNSelect      *pSelect;
 extern PlugInManager  *g_pi_manager;
 extern int             g_path_line_width;
@@ -152,7 +152,7 @@ bool PathMan::DeletePath( Path *pPath )
         if( pPath->m_bIsInLayer )
             return false;
             
-        pConfig->DeleteConfigPath( pPath );
+        pOCPNDrawConfig->DeleteConfigPath( pPath );
 
         //    Remove the path from associated lists
         pSelect->DeleteAllSelectablePathSegments( pPath );
@@ -170,7 +170,7 @@ bool PathMan::DeletePath( Path *pPath )
                 prp->m_bIsInPath = false;          // Take this point out of this (and only) path
                 if( !prp->m_bKeepXPath ) {
 //    This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
-//                              pConfig->DeleteWayPoint(prp);
+//                              pOCPNDrawConfig->DeleteWayPoint(prp);
 
                     pSelect->DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
 
@@ -283,11 +283,11 @@ void PathMan::DeleteAllPaths( void )
             continue;
         }
 
-        pConfig->m_bSkipChangeSetUpdate = true;
-        pConfig->DeleteConfigPath( ppath );
+        pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
+        pOCPNDrawConfig->DeleteConfigPath( ppath );
         DeletePath( ppath );
         node = pPathList->GetFirst();                   // Path
-        pConfig->m_bSkipChangeSetUpdate = false;
+        pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
     }
 
     ::wxEndBusyCursor();

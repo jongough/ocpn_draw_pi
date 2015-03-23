@@ -90,11 +90,13 @@ public:
       float GetOCPNPointRangeRingsStep(void);
       int   GetOCPNPointRangeRingsStepUnits(void);
       wxColour GetOCPNPointRangeRingsColour(void);
+      wxString GetTypeString(void) { return m_sTypeString; }
       void  SetShowOCPNPointRangeRings(bool b_showOCPNPointRangeRings) { m_bShowOCPNPointRangeRings = b_showOCPNPointRangeRings; };
       void  SetOCPNPointRangeRingsNumber(int i_OCPNPointRangeRingsNumber) { m_iOCPNPointRangeRingsNumber = i_OCPNPointRangeRingsNumber; };
       void  SetOCPNPointRangeRingsStep(float f_OCPNPointRangeRingsStep) { m_fOCPNPointRangeRingsStep = f_OCPNPointRangeRingsStep; };
       void  SetOCPNPointRangeRingsStepUnits(int i_OCPNPointRangeRingsStepUnits) { m_iOCPNPointRangeRingsStepUnits = i_OCPNPointRangeRingsStepUnits; };
       void  SetOCPNPointRangeRingsColour( wxColour wxc_OCPNPointRangeRingsColour ) { m_wxcOCPNPointRangeRingsColour = wxc_OCPNPointRangeRingsColour; };
+      void  SetTypeString( wxString sTypeString ) { m_sTypeString = sTypeString; }
 
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
@@ -148,7 +150,6 @@ public:
 
       HyperlinkList     *m_HyperlinkList;
       bool              m_btemp;
-      wxString          m_sTypeString;
 
 #ifdef ocpnUSE_GL
       void DrawGL( ViewPort &vp, OCPNRegion &region );
@@ -175,6 +176,7 @@ private:
       wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
       wxString          m_IconName;
+      wxString          m_sTypeString;
       
       void              *m_SelectNode;
       void              *m_ManagerNode;

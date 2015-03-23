@@ -46,6 +46,7 @@
 #include "pathmanagerdialog.h"
 #include "OCPNDrawPointInfoImpl.h"
 #include "OCPNDrawEventHandler.h"
+#include "glOCPNDrawChartCanvas.h"
 #include "chcanv.h"
 #include "styles.h"
 #include "geodesic.h"
@@ -85,7 +86,8 @@ wxString        g_default_wp_icon;
 double          g_dLat;
 double          g_dLon;
 OCPNSelect      *pSelect;
-OCPNDrawConfig  *pConfig;
+OCPNDrawConfig  *pOCPNDrawConfig;
+MyConfig          *pConfig;
 Multiplexer     *g_pMUX;
 float           g_GLMinSymbolLineWidth;
 wxString        *g_SData_Locn;
@@ -109,6 +111,7 @@ wxString    g_PrivateDataDir;
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
 wxString    *g_pImage;
+wxString    *g_pNavObjs;
 
 OCPNDrawEventHandler    *g_OCPNDrawEventHandler;
 
@@ -155,9 +158,11 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 	wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
 #ifdef __WXMSW__
 	wxString stdPath  = std_path.GetConfigDir();
+	wxString stdDataDir = std_path.GetUserDataDir();
 #endif
 #ifdef __WXGTK__
 	wxString stdPath  = std_path.GetResourcesDir();
+	wxString stdDataDir = std_path.GetUserDataDir();
 #endif
 #ifdef __WXOSX__
 	wxString stdPath  = std_path.GetUserConfigDir();   // should be ~/Library/Preferences	
@@ -186,6 +191,10 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash( g_pImage );
     if ( !wxDir::Exists(*g_pImage))
         wxMkdir( *g_pImage );
+        
+    g_pNavObjs = new wxString();
+    g_pNavObjs->append(stdDataDir);
+    appendOSDirSlash(g_pNavObjs);
     
     initialize_images();
 }
@@ -195,7 +204,7 @@ ocpn_draw_pi::~ocpn_draw_pi()
 {
 //    RemovePlugInTool(m_leftclick_config_id);
 //    RemovePlugInTool(m_leftclick_boundary_id);
-    pConfig->UpdateNavObj();
+    pOCPNDrawConfig->UpdateNavObj();
     SaveConfig();
 }
 
@@ -209,20 +218,20 @@ int ocpn_draw_pi::Init(void)
     m_bDrawingBoundary = NULL;
 
     // Not sure what this is
-    //AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
+    AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
 
-	lastWaypointInRoute = wxS("-1");
+	lastOCPNPointInPath = wxS("-1");
 	eventsEnabled = true;
 
 	// Get a pointer to the opencpn display canvas, to use as a parent for windows created
 	m_parent_window = GetOCPNCanvasWindow();
 
-	m_pconfig = (OCPNDrawConfig *)GetOCPNConfigObject();
-    pConfig = new OCPNDrawConfig( wxString( wxS("") ), wxString( wxS("") ), m_pconfig->m_sNavObjSetFile );
-    wxString sNavObjSetChangesFile;
-    sNavObjSetChangesFile.append( pConfig->m_sNavObjSetChangesFile );
-    pConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(sNavObjSetChangesFile);
-//    pConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(pConfig->m_sNavObjSetChangesFile);
+	m_pOCPNDrawConfig = GetOCPNConfigObject();
+    pOCPNDrawConfig = new OCPNDrawConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
+    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( pOCPNDrawConfig->m_sNavObjSetChangesFile );
+//    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
+    wxString sChangesFile = pOCPNDrawConfig->m_sNavObjSetChangesFile;
+//    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( sChangesFile );
     
     pSelect = new OCPNSelect();
     
@@ -277,7 +286,7 @@ int ocpn_draw_pi::Init(void)
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
     
-    pConfig->LoadNavObjects();
+    pOCPNDrawConfig->LoadNavObjects();
 
 
 	SendPluginMessage(wxS("OCPN_DRAW_READY_FOR_REQUESTS"), wxS("TRUE"));
@@ -293,6 +302,7 @@ int ocpn_draw_pi::Init(void)
           WANTS_PREFERENCES         |
           USES_AUI_MANAGER			    |
           WANTS_ONPAINT_VIEWPORT    |
+          WANTS_OPENGL_OVERLAY_CALLBACK |
           WANTS_PLUGIN_MESSAGING    |
           WANTS_LATE_INIT           |
           WANTS_MOUSE_EVENTS        |
@@ -550,7 +560,7 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
 
 void ocpn_draw_pi::SaveConfig()
 {
-    wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
+    wxFileConfig *pConf = (wxFileConfig *)m_pOCPNDrawConfig;
 
     if(pConf)
     {
@@ -572,7 +582,7 @@ void ocpn_draw_pi::SaveConfig()
 
 void ocpn_draw_pi::LoadConfig()
 {
-    wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
+    wxFileConfig *pConf = (wxFileConfig *)m_pOCPNDrawConfig;
 
     if(pConf)
     {
@@ -623,14 +633,14 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
             startLogbook();
 
         RMB rmb;
-        rmb.From = lastWaypointInRoute;
+        rmb.From = lastOCPNPointInPath;
         rmb.To = wxS("-1");
         m_plogbook_window->logbook->WP_skipped = false;
         m_plogbook_window->logbook->OCPN_Message = true;
 
         m_plogbook_window->logbook->checkWayPoint(rmb);
         m_plogbook_window->logbook->OCPN_Message = false;
-        lastWaypointInRoute = wxS("-1");
+        lastOCPNPointInPath = wxS("-1");
         m_plogbook_window->logbook->lastWayPoint = wxEmptyString;
         m_plogbook_window->logbook->routeIsActive = false;
     }
@@ -711,7 +721,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                             pb->UpdateSegmentDistances();
                             pb->m_bIsBeingEdited = false;
 
-                            pConfig->UpdatePath( pb );
+                            pOCPNDrawConfig->UpdatePath( pb );
                             
                             pb->SetHiLite( 0 );
                         }
@@ -958,6 +968,29 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &mdc, PlugIn_ViewPort *vp)
     return TRUE;
 }
 
+bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp)
+{
+    m_pcontext = pcontext;
+    m_vp = vp;
+    OCPNRegion region( vp->rv_rect );
+    //glOCPNDrawChartCanvas *p_ODChartCanvas = new glOCPNDrawChartCanvas( cc1 );
+    glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)cc1;
+    p_ODChartCanvas->SetClipRegion( cc1->GetVP(), region);
+
+//    RenderPathLegs( *poDC );
+    //p_ODChartCanvas->SetContext( pcontext )
+    //m_glcc = new glChartCanvas(this);
+    
+    if (m_pMouseBoundary) m_pMouseBoundary->DrawGL((ViewPort &)m_vp, region);
+//    if (pcontext) {
+    /* only draw in this rectangle */
+        p_ODChartCanvas->DrawAllPathsAndOCPNPoints( (ViewPort &)m_vp, region );
+//    }
+
+    p_ODChartCanvas->DisableClipRegion();
+    return TRUE;
+}
+
 void ocpn_draw_pi::RenderPathLegs(  ocpnDC &dc ) 
 {
     if( nBoundary_State >= 2) {
@@ -1107,7 +1140,7 @@ void ocpn_draw_pi::FinishBoundary( void )
 
     if( m_pMouseBoundary ) {
         if( m_pMouseBoundary->GetnPoints() > 1 ) {
-            pConfig->AddNewPath( m_pMouseBoundary, -1 );    // use auto next num
+            pOCPNDrawConfig->AddNewPath( m_pMouseBoundary, -1 );    // use auto next num
         } else {
             g_pPathMan->DeletePath( m_pMouseBoundary );
             m_pMouseBoundary = NULL;
@@ -1268,9 +1301,9 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     if( NULL == pMousePoint ) {                 // need a new point
         pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
         pMousePoint->SetNameShown( false );
-        pMousePoint->m_sTypeString = wxS("Boundary Point");
+        pMousePoint->SetTypeString( wxS("Boundary Point") );
 
-        pConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
+        pOCPNDrawConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
         pSelect->AddSelectableOCPNPoint( rlat, rlon, pMousePoint );
 
         if( nBoundary_State > 1 )
@@ -1316,7 +1349,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                             gcPoint = new OCPNPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
                                     GPX_EMPTY_STRING );
                             gcPoint->SetNameShown( false );
-                            pConfig->AddNewOCPNPoint( gcPoint, -1 );
+                            pOCPNDrawConfig->AddNewOCPNPoint( gcPoint, -1 );
                             pSelect->AddSelectableOCPNPoint( gcCoord.y, gcCoord.x, gcPoint );
                         } else {
                             gcPoint = pMousePoint; // Last point, previously exsisting!
@@ -1608,3 +1641,4 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 	if (pString->Last() != sep)
 		pString->Append(sep);
 }
+

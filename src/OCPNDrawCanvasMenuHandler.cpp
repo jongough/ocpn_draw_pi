@@ -78,7 +78,7 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
              }
             else {
                 parent->undo->BeforeUndoableAction( Undo_DeleteWaypoint, m_pFoundRoutePoint, Undo_IsOrphanded, NULL );
-                pConfig->DeleteWayPoint( m_pFoundRoutePoint );
+                pOCPNDrawConfig->DeleteWayPoint( m_pFoundRoutePoint );
                 pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, SELTYPE_ROUTEPOINT );
                 if( NULL != pWayPointMan )
                     pWayPointMan->RemoveRoutePoint( m_pFoundRoutePoint );
@@ -112,7 +112,7 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
             m_pSelectedRoute->Reverse( ask_return == wxID_YES );
             pSelect->AddAllSelectableRouteSegments( m_pSelectedRoute );
 
-            pConfig->UpdateRoute( m_pSelectedRoute );
+            pOCPNDrawConfig->UpdateRoute( m_pSelectedRoute );
 
             if( pRoutePropDialog && ( pRoutePropDialog->IsShown() ) ) {
                 pRoutePropDialog->SetRouteAndUpdate( m_pSelectedRoute );
@@ -198,7 +198,7 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
         pSelect->AddAllSelectableRoutePoints( m_pSelectedRoute );
 
         m_pSelectedRoute->RebuildGUIDList();          // ensure the GUID list is intact and good
-        pConfig->UpdateRoute( m_pSelectedRoute );
+        pOCPNDrawConfig->UpdateRoute( m_pSelectedRoute );
 
         if( pRoutePropDialog && ( pRoutePropDialog->IsShown() ) ) {
             pRoutePropDialog->SetRouteAndUpdate( m_pSelectedRoute, true );

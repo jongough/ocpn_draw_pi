@@ -61,7 +61,7 @@ extern int                g_StartTimeTZ;
 extern IDX_entry          *gpIDX;
 extern TCMgr              *ptcmgr;
 extern long               gStart_LMT_Offset;
-extern OCPNDrawConfig     *pConfig;
+extern OCPNDrawConfig     *pOCPNDrawConfig;
 extern PointMan        *pWayPointMan;
 extern ChartCanvas        *cc1;
 extern OCPNSelect        *pSelect;
@@ -488,10 +488,10 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
             wxString sMessage( wxS("Are you sure you want to remove this ") );
             wxString sCaption( wxS("OCPN Draw Remove ") );
             wxString sType( wxS("") );
-            if (!wp || wp->m_sTypeString.IsNull() || wp->m_sTypeString.IsEmpty() )
+            if (!wp || wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
                 sType.append( wxS("waypoint") );
             else
-                sType.append( wp->m_sTypeString );
+                sType.append( wp->GetTypeString() );
             sMessage.append( sType );
             sMessage.append( wxS("?") );
             sCaption.append( sType );
@@ -1199,8 +1199,8 @@ bool PathProp::SaveChanges( void )
         m_pPath->m_style = ::StyleValues[m_chStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 
-        pConfig->UpdatePath( m_pPath );
-        pConfig->UpdateSettings();
+        pOCPNDrawConfig->UpdatePath( m_pPath );
+        pOCPNDrawConfig->UpdateSettings();
     }
 
     if( m_pPath->IsActive() )

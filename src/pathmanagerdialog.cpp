@@ -131,7 +131,7 @@ extern wxString GetLayerName(int id);
 extern PathProp *pPathPropDialog;
 extern PathMan  *g_pPathMan;
 extern OCPNPointList    *pOCPNPointList;
-extern OCPNDrawConfig  *pConfig;
+extern OCPNDrawConfig  *pOCPNDrawConfig;
 extern ChartCanvas *cc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
@@ -740,7 +740,7 @@ PathManagerDialog::~PathManagerDialog()
 
     // Do this just once!!
 //      if (m_bNeedConfigFlush)
-//            pConfig->UpdateSettings();
+//            pOCPNDrawConfig->UpdateSettings();
 }
 
 void PathManagerDialog::SetColorScheme()
@@ -844,7 +844,7 @@ void PathManagerDialog::MakeAllPathsInvisible()
         if( ( *it )->IsVisible() ) { // avoid config updating as much as possible!
             ( *it )->SetVisible( false );
             m_pPathListCtrl->SetItemImage( m_pPathListCtrl->FindItem( -1, index ), 1 ); // Likely not same order :0
-            pConfig->UpdatePath( *it ); // auch, flushes config to disk. FIXME
+            pOCPNDrawConfig->UpdatePath( *it ); // auch, flushes config to disk. FIXME
         }
     }
 }
@@ -921,7 +921,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
         for(unsigned int i=0 ; i < list.GetCount() ; i++) {
             Path *path = list.Item(i)->GetData();
             if( path ) {
-                pConfig->DeleteConfigPath( path );
+                pOCPNDrawConfig->DeleteConfigPath( path );
                 g_pPathMan->DeletePath( path );
             }
         }
@@ -1069,7 +1069,7 @@ void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
     if( !path->IsVisible() ) {
         path->SetVisible( true );
         m_pPathListCtrl->SetItemImage( item, path->IsVisible() ? 0 : 1 );
-        pConfig->UpdatePath( path );
+        pOCPNDrawConfig->UpdatePath( path );
     }
 
     ZoomtoPath( path );
@@ -1097,7 +1097,7 @@ void PathManagerDialog::OnPathExportClick( wxCommandEvent &event )
         }
     }
 
-    pConfig->ExportGPXPaths( this, &list, suggested_name );
+    pOCPNDrawConfig->ExportGPXPaths( this, &list, suggested_name );
 }
 
 void PathManagerDialog::OnPathActivateClick( wxCommandEvent &event )
@@ -1130,7 +1130,7 @@ void PathManagerDialog::OnPathActivateClick( wxCommandEvent &event )
 
     UpdatePathListCtrl();
 
-    pConfig->UpdatePath( ppath );
+    pOCPNDrawConfig->UpdatePath( ppath );
 
     cc1->Refresh();
 
@@ -1163,7 +1163,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
 
         ::wxBeginBusyCursor();
 
-        pConfig->UpdatePath( path );
+        pOCPNDrawConfig->UpdatePath( path );
         cc1->Refresh();
 
         //   We need to update the waypoint list control only if the visibility of shared waypoints might have changed.
@@ -1415,7 +1415,7 @@ void PathManagerDialog::OnOCPNPointToggleVisibility( wxMouseEvent &event )
                                       wp->IsVisible() ? pOCPNPointMan->GetIconIndex( wp->GetIconBitmap() )
                                                       : pOCPNPointMan->GetXIconIndex( wp->GetIconBitmap() ) );
 
-        pConfig->UpdateOCPNPoint( wp );
+        pOCPNDrawConfig->UpdateOCPNPoint( wp );
 
         cc1->Refresh();
     }
@@ -1430,7 +1430,7 @@ void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
             GPX_EMPTY_STRING );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
     pSelect->AddSelectableOCPNPoint( gLat, gLon, pWP );
-    pConfig->AddNewOCPNPoint( pWP, -1 );    // use auto next num
+    pOCPNDrawConfig->AddNewOCPNPoint( pWP, -1 );    // use auto next num
     cc1->Refresh( false );      // Needed for MSW, why not GTK??
 
     OCPNPointShowPropertiesDialog( pWP, GetParent() );
@@ -1464,10 +1464,10 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
     pOCPNPointPropDialog->UpdateProperties();
 
     wxString caption( wxS("") );
-    if ( wp->m_sTypeString.IsNull() || wp->m_sTypeString.IsEmpty() )
+    if ( wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
         caption.append( wxS("OCPN Draw Point") );
     else
-        caption.append( wp->m_sTypeString );
+        caption.append( wp->GetTypeString() );
     caption.append( wxS(" Properties") );
 
     if( wp->m_bIsInLayer ) {
@@ -1625,7 +1625,7 @@ void PathManagerDialog::OnOCPNPointExportClick( wxCommandEvent &event )
         }
     }
 
-    pConfig->ExportGPXOCPNPoints( this, &list, suggested_name );
+    pOCPNDrawConfig->ExportGPXOCPNPoints( this, &list, suggested_name );
 }
 /*
 void PathManagerDialog::OnOCPNPointSendToGPSClick( wxCommandEvent &event )
@@ -1763,7 +1763,7 @@ void PathManagerDialog::OnLayNewClick( wxCommandEvent &event )
     HideWithEffect(wxSHOW_EFFECT_BLEND );
 #endif
     
-    pConfig->UI_ImportGPX( this, true, _T("") );
+    pOCPNDrawConfig->UI_ImportGPX( this, true, _T("") );
     
 #ifdef __WXOSX__
     ShowWithEffect(wxSHOW_EFFECT_BLEND );
@@ -1885,7 +1885,7 @@ void PathManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
         Path *pPath = node1->GetData();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
             pPath->SetVisible( layer->IsVisibleOnChart() );
-            pConfig->UpdatePath( pPath );
+            pOCPNDrawConfig->UpdatePath( pPath );
         }
         node1 = node1->GetNext();
     }
@@ -1986,7 +1986,7 @@ void PathManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
         Path *pPath = node1->GetData();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
             pPath->SetListed( layer->IsVisibleOnListing() );
-            pConfig->UpdatePath(pPath);
+            pOCPNDrawConfig->UpdatePath(pPath);
         }
         node1 = node1->GetNext();
     }
@@ -2084,7 +2084,7 @@ void PathManagerDialog::OnImportClick( wxCommandEvent &event )
     HideWithEffect(wxSHOW_EFFECT_BLEND );
 #endif
     
-    pConfig->UI_ImportGPX( this );
+    pOCPNDrawConfig->UI_ImportGPX( this );
 
 #ifdef __WXOSX__
     ShowWithEffect(wxSHOW_EFFECT_BLEND );
@@ -2098,12 +2098,12 @@ void PathManagerDialog::OnImportClick( wxCommandEvent &event )
 }
 void PathManagerDialog::OnExportClick( wxCommandEvent &event )
 {
-    pConfig->ExportGPX( this );
+    pOCPNDrawConfig->ExportGPX( this );
 }
 
 void PathManagerDialog::OnExportVizClick( wxCommandEvent &event )
 {
-    pConfig->ExportGPX( this, true, true );     // only visible objects, layers included
+    pOCPNDrawConfig->ExportGPX( this, true, true );     // only visible objects, layers included
 }
 
 //END Event handlers

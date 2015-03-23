@@ -112,12 +112,12 @@ public:
 
     bool				dlgShow;
     wxWindow            *m_parent_window;
-    //wxFileConfig		*m_pconfig;
-    OCPNDrawConfig		*m_pconfig;
+    wxFileConfig		*m_pOCPNDrawConfig;
+//    OCPNDrawConfig		*m_pOCPNDrawConfig;
     wxTimer 		    *m_timer;
     wxColour			col,col1,gridline,uitext,udkrd,back_color,text_color;
     wxColour			mcol,mcol1,mgridline, muitext,mudkrd,mback_color,mtext_color;
-    wxString			lastWaypointInRoute;
+    wxString			lastOCPNPointInPath;
 
     wxLocale*		local;
     int				state;
@@ -172,11 +172,12 @@ public:
     bool KeyboardEventHook( wxKeyEvent &event );
     void SetCursorLatLon(double lat, double lon);
     void SetCurrentViewPort(PlugIn_ViewPort &vp);
-    //bool RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
+    bool RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
+    void DrawAllPathsAndOCPNPoints( ViewPort &vp, OCPNRegion &region );
     void CanvasPopupMenu( int x, int y, int seltype );
     
     void RenderPathLegs( ocpnDC &dc );
@@ -216,8 +217,9 @@ public:
     Undo        *undo;
     
     PlugIn_ViewPort *m_vp;
-    wxGLContext     *pcontext;
+    wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
+    
 
 
 private:
@@ -257,6 +259,10 @@ private:
     bool        m_bDrawingBoundary;
     
     int         popx, popy;
+    wxString m_sNavObjSetChangesFile;
+    
+    wxString    m_Data;
+
 
 
 

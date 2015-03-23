@@ -36,9 +36,10 @@ extern OCPNSelect *pSelect;
 pugi::xml_node  gpx_path_child;
 pugi::xml_node  gpx_path_root;
 bool            m_bFirstPath;
-extern OCPNDrawConfig *pConfig;
+extern OCPNDrawConfig *pOCPNDrawConfig;
 extern PointMan        *pOCPNPointMan;
 extern PathMan          *g_pPathMan;
+
 
 
 OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges() : NavObjectChanges()
@@ -47,9 +48,12 @@ OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges() : NavObjectChanges()
     m_bFirstPath = true;
 }
 
-OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : NavObjectChanges(file_name)
+OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : NavObjectChanges( file_name )
 {
     //ctor
+    
+    m_ODfilename = file_name;
+    
     m_bFirstPath = true;
 }
 
@@ -71,7 +75,7 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
  
     if(flags & OUT_TYPE) {
         child = node.append_child("opencpn:type");
-        child.append_child(pugi::node_pcdata).set_value(pr->m_sTypeString.ToAscii());
+		child.append_child(pugi::node_pcdata).set_value(pr->GetTypeString().mb_str());
     }
     
     if(flags & OUT_TIME) {
@@ -196,7 +200,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     pugi::xml_node child;
     
     child = node.append_child("opencpn:type");
-	child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString.ToAscii());
+	child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString.mb_str());
     
     if( pPath->m_PathNameString.Len() ) {
         wxCharBuffer buffer=pPath->m_PathNameString.ToUTF8();
@@ -299,16 +303,16 @@ bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::AddOCPNPoint( OCPNPoint *pWP, const char *action )
+bool OCPNDrawNavObjectChanges::AddOCPNPoint( OCPNPoint *pOP, const char *action )
 {
     SetRootGPXNode();
     
-    pugi::xml_node child_ext = m_gpx_root.append_child("extensions");
-    GPXCreateOCPNPoint(m_gpx_root.append_child("opencpn:OCPNPoint"), pWP, OPT_OCPNPOINT);
+    pugi::xml_node object = m_gpx_root.append_child("opencpn:OCPNPoint");
+    GPXCreateOCPNPoint(object, pOP, OPT_OCPNPOINT);
 
 //    pugi::xml_node xchild = child_ext.child("extensions");
-//    pugi::xml_node child = xchild.append_child("opencpn:action");
-//    child.append_child(pugi::node_pcdata).set_value(action);
+    pugi::xml_node child = object.append_child("opencpn:action");
+    child.append_child(pugi::node_pcdata).set_value(action);
 
     pugi::xml_writer_file writer(m_changes_file);
     m_gpx_root.print(writer, " ");
@@ -897,9 +901,9 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
             if( pcontainer_path == NULL ) {
                 pop->m_bIsInPath = false; // Take this point out of this (and only) track/route
                 if( !pop->m_bKeepXPath ) {
-                    pConfig->m_bSkipChangeSetUpdate = true;
-                    pConfig->DeleteOCPNPoint( pop );
-                    pConfig->m_bSkipChangeSetUpdate = false;
+                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
+                    pOCPNDrawConfig->DeleteOCPNPoint( pop );
+                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
                     delete pop;
                 }
             }

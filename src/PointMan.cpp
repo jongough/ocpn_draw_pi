@@ -37,7 +37,7 @@ extern ocpnStyle::StyleManager* g_StyleManager;
 extern wxString         g_PrivateDataDir;
 extern OCPNPoint      *pAnchorWatchPoint1;
 extern OCPNPoint      *pAnchorWatchPoint2;
-//extern MyConfig           *pConfig;
+//extern MyConfig           *pOCPNDrawConfig;
 extern PathMan           *g_pPathMan;
 
 //--------------------------------------------------------------------------------
@@ -661,7 +661,7 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
 {
 /* 
     if( ! b_update_changeset )
-        pConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
+        pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
         
     if( pRp ) {
         // Get a list of all boundaries containing this point
@@ -679,11 +679,11 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
                 Path *pb = (Path *) ppath_array->Item( ib );
                 if( pb->GetnPoints() < 2 ) {
-                    bool prev_bskip = pConfig->m_bSkipChangeSetUpdate;
-                    pConfig->m_bSkipChangeSetUpdate = true;
-                    pConfig->DeleteConfigPath( pb );
+                    bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
+                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
+                    pOCPNDrawConfig->DeleteConfigPath( pb );
                     g_pRouteMan->DeletePath( pb );
-                    pConfig->m_bSkipChangeSetUpdate = prev_bskip;
+                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
                 }
             }
 
@@ -691,8 +691,8 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
         }
 
         // Now it is safe to delete the point
-        pConfig->DeleteOCPNPoint( pRp );
-        pConfig->m_bSkipChangeSetUpdate = false;
+        pOCPNDrawConfig->DeleteOCPNPoint( pRp );
+        pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
         
         pSelect->DeleteSelectableOCPNPoint( pRp );
 

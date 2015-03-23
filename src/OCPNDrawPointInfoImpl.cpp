@@ -38,7 +38,7 @@ extern PathManagerDialog *pPathManagerDialog;
 extern PathProp       *pPathPropDialog;
 extern OCPNSelect        *pSelect;
 extern PathMan           *g_pPathMan;
-extern OCPNDrawConfig     *pConfig;
+extern OCPNDrawConfig     *pOCPNDrawConfig;
 
 OCPNDrawPointInfoImpl::OCPNDrawPointInfoImpl( wxWindow* parent, wxWindowID id, const wxString& title,
         const wxPoint& pos, const wxSize& size, long style ) :
@@ -346,14 +346,14 @@ bool OCPNDrawPointInfoImpl::SaveChanges()
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
-                    pConfig->UpdatePath( pp );
+                    pOCPNDrawConfig->UpdatePath( pp );
                 }
                 delete pEditPathArray;
             }
         } else
-            pConfig->UpdateOCPNPoint( m_pOCPNPoint );
+            pOCPNDrawConfig->UpdateOCPNPoint( m_pOCPNPoint );
 
-        // No general settings need be saved pConfig->UpdateSettings();
+        // No general settings need be saved pOCPNDrawConfig->UpdateSettings();
     }
     return true;
 }

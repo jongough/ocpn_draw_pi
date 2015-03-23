@@ -54,6 +54,7 @@ SET(SRCS
  		src/OCPNDrawNavObjectChanges.cpp
  		src/OCPNDrawCanvasMenuHandler.cpp
  		src/OCPNDrawPointInfoImpl.cpp
+ 		src/glOCPNDrawChartCanvas.cpp
 # 		src/RoutePoint.cpp
 # 		src/Route.cpp
  		src/OCPNDrawicons.cpp
@@ -80,6 +81,7 @@ SET(HDRS
  		include/OCPNDrawNavObjectChanges.h
  		include/OCPNDrawCanvasMenuHandler.h
  		include/OCPNDrawPointInfoImpl.h
+ 		include/glOCPNDrawChartCanvas.h
  		include/vector2D.h
 # 		include/RoutePoint.h
  		include/ocpn_types.h

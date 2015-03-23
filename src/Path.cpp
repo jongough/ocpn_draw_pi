@@ -46,7 +46,7 @@ extern int g_LayerIdx;
 extern PathMan *g_pPathMan;
 extern int g_path_line_width;
 extern OCPNSelect *pSelect;
-extern OCPNDrawConfig *pConfig;
+extern OCPNDrawConfig *pOCPNDrawConfig;
 extern Multiplexer *g_pMUX;
 extern float g_GLMinSymbolLineWidth;
 extern wxString    g_ActiveLineColour;
@@ -61,7 +61,7 @@ WX_DEFINE_LIST ( PathList );
 
 Path::Path( void )
 {
-    m_sTypeString = _T("Path");
+    m_sTypeString = wxS("Path");
     m_bPathIsSelected = false;
     m_bPathIsActive = true;
     m_pPathActivePoint = NULL;
@@ -710,7 +710,7 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
 
     pSelect->DeleteAllSelectableOCPNPoints( (Path *) this );
     pSelect->DeleteAllSelectablePathSegments( (Path *) this );
-    pConfig->DeleteOCPNPoint( rp );
+    pOCPNDrawConfig->DeleteOCPNPoint( rp );
 
     pOCPNPointList->DeleteObject( rp );
 
@@ -727,7 +727,7 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
         pSelect->AddAllSelectablePathSegments( this );
         pSelect->AddAllSelectableOCPNPoints( this );
 
-        pConfig->UpdatePath( this );
+        pOCPNDrawConfig->UpdatePath( this );
         RebuildGUIDList();                  // ensure the GUID list is intact and good
 
         FinalizeForRendering();
@@ -761,7 +761,7 @@ void Path::RemovePoint( OCPNPoint *rp, bool bRenamePoints )
         pSelect->AddAllSelectablePathSegments( this );
         pSelect->AddAllSelectableOCPNPoints( this );
 
-        pConfig->UpdatePath( this );
+        pOCPNDrawConfig->UpdatePath( this );
         RebuildGUIDList();                  // ensure the GUID list is intact and good
 
         FinalizeForRendering();
@@ -944,7 +944,7 @@ void Path::SetVisible( bool visible, bool includeWpts )
         if ( rp->m_bKeepXPath )
         {
             rp->SetVisible( visible );
-            //pConfig->UpdateWayPoint( rp );
+            //pOCPNDrawConfig->UpdateWayPoint( rp );
         }
         node = node->GetNext();
     }
@@ -1113,7 +1113,7 @@ void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
 
     //  Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
     if( (path->GetnPoints() <= 1) && (g_ocpn_draw_pi->nBoundary_State == 0) ) {
-        pConfig->DeleteConfigPath( path );
+        pOCPNDrawConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );
         path = NULL;
     }

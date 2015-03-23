@@ -55,6 +55,8 @@ class OCPNDrawNavObjectChanges : public NavObjectChanges
 
     bool CreateAllGPXObjects();
     void SetRootGPXNode(void);
+    
+    FILE        *m_OCPNDrawchanges_file;
 
     protected:
     private:
@@ -72,6 +74,7 @@ class OCPNDrawNavObjectChanges : public NavObjectChanges
         void InsertPathA( Path *pTentPath );
         Path *PathExists( const wxString& guid);
         Path *PathExists( Path * pTentPath );
+        wxString m_ODfilename;
 
 
 };

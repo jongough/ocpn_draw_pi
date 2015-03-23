@@ -26,19 +26,17 @@
 #include "OCPNDrawConfig.h"
 #include "OCPNDrawNavObjectChanges.h"
 
-//extern OCPNDrawConfig   *pConfig;
-OCPNDrawConfig   *pTestConfig;
-extern wxString         *g_pData;
+//extern OCPNDrawConfig   *pOCPNDrawConfig;
+extern wxString         *g_pNavObjs;
     
 OCPNDrawConfig::OCPNDrawConfig(const wxString &appName, const wxString &vendorName,
                               const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName)
 {
     //OCPNDrawConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
-    pTestConfig = (OCPNDrawConfig *) this;
-    //pConfig->LoadMyConfig( 0 );
-    m_sNavObjSetFile = *g_pData;
+    //pOCPNDrawConfig->LoadMyConfig( 0 );
+    m_sNavObjSetFile = *g_pNavObjs;
     m_sNavObjSetFile += wxS( "ODnavobj.xml" );
-    m_sNavObjSetChangesFile = m_sNavObjSetFile + wxS( ".changes" );
+    m_sNavObjSetChangesFile = m_sNavObjSetFile + _T( ".changes" );
  
     m_pOCPNDrawNavObjectInputSet = NULL;
     m_pOCPNDrawNavObjectChangesSet = NULL;
