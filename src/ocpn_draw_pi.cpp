@@ -973,11 +973,11 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     m_pcontext = pcontext;
     m_vp = pivp;
     OCPNRegion region( pivp->rv_rect );
-    //glOCPNDrawChartCanvas *p_ODChartCanvas = new glOCPNDrawChartCanvas( cc1 );
     glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)cc1;
     p_ODChartCanvas->SetClipRegion( cc1->GetVP(), region);
 
-//    RenderPathLegs( *poDC );
+    ocpnDC DC;
+    RenderPathLegs( DC );
     //p_ODChartCanvas->SetContext( pcontext )
     //m_glcc = new glChartCanvas(this);
     
