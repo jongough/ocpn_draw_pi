@@ -75,13 +75,13 @@ void glOCPNDrawChartCanvas::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OC
 
         // Path is not wholly outside viewport
         if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {
-            pPathDraw->DrawGL( (ViewPort &)pivp, region );
+            pPathDraw->DrawGL( pivp, region );
         } else if( pivp.lat_max > 180. ) {
             if(test_minx + 360 <= pivp.lon_max && test_maxx + 360 >= pivp.lon_min)
-                pPathDraw->DrawGL( (ViewPort &)pivp, region );
+                pPathDraw->DrawGL( pivp, region );
         } else if( pPathDraw->CrossesIDL() || pivp.lon_min < -180. ) {
             if(test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
-                pPathDraw->DrawGL( (ViewPort &)pivp, region );
+                pPathDraw->DrawGL( pivp, region );
         }
 
     }
@@ -92,7 +92,7 @@ void glOCPNDrawChartCanvas::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OC
         for(wxOCPNPointListNode *pnode = pOCPNPointMan->GetOCPNPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             OCPNPoint *pOP = pnode->GetData();
             //if( pOP && (!pOP->m_bIsInPath && !pOP->m_bIsInTrack ) )
-                pOP->DrawGL( (ViewPort &)vp, region );
+                pOP->DrawGL( pivp, region );
         }
     }
     

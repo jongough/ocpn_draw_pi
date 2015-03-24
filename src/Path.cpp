@@ -351,7 +351,7 @@ void Path::Draw( ocpnDC& dc, ViewPort &VP )
 
 extern ChartCanvas *cc1; /* hopefully can eventually remove? */
 
-void Path::DrawGL( ViewPort &VP, OCPNRegion &region )
+void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
 {
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
@@ -491,9 +491,9 @@ void Path::DrawGL( ViewPort &VP, OCPNRegion &region )
     for(wxOCPNPointListNode *node = pOCPNPointList->GetFirst(); node; node = node->GetNext()) {
         OCPNPoint *prp = node->GetData();
         if ( !m_bVisible && prp->m_bKeepXPath )
-            prp->DrawGL( VP, region );
+            prp->DrawGL( piVP, region );
         else if (m_bVisible)
-            prp->DrawGL( VP, region );
+            prp->DrawGL( piVP, region );
         wxPoint rpt;
         cc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &rpt);
         bpts[ j++ ] = rpt;

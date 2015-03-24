@@ -27,6 +27,7 @@
 #include "MarkIcon.h"
 //#include "navutil.h"
 #include "PathMan.h"
+#include "cutil.h"
 
 #include <wx/dir.h>
 #include <wx/filename.h>
@@ -420,8 +421,7 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
 
 unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
 {
-    //fix up as should have GL enabled
-#ifndef ocpnUSE_GL 
+#ifdef ocpnUSE_GL 
     int index = GetIconIndex( pbm );
     MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
 

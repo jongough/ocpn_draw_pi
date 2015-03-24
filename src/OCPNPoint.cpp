@@ -410,7 +410,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 }
 
 #ifdef ocpnUSE_GL
-void OCPNPoint::DrawGL( ViewPort &vp, OCPNRegion &region )
+void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
 {
     if( !m_bIsVisible )
     return;
@@ -419,13 +419,16 @@ void OCPNPoint::DrawGL( ViewPort &vp, OCPNRegion &region )
     if( m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected ) return;
 
     if(m_wpBBox.GetValid() &&
-       vp.chart_scale == m_wpBBox_chart_scale &&
-       vp.rotation == m_wpBBox_rotation) {
+        pivp.chart_scale == m_wpBBox_chart_scale &&
+        pivp.rotation == m_wpBBox_rotation) {
+//       vp.chart_scale == m_wpBBox_chart_scale &&
+//       vp.rotation == m_wpBBox_rotation) {
         /* see if this waypoint can intersect with bounding box */
-        LLBBox vpBBox = vp.GetBBox();
-        if( vpBBox.IntersectOut( m_wpBBox ) ) {
+//        LLBBox vpBBox = vp.GetBBox();
+//        pivp.
+/*        if( vpBBox.IntersectOut( m_wpBBox ) ) {
             /* try with vp crossing IDL */
-            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
+/*            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
                 wxPoint2DDouble xlate( -360., 0. );
                 wxBoundingBox test_box2 = m_wpBBox;
                 test_box2.Translate( xlate );
@@ -441,6 +444,7 @@ void OCPNPoint::DrawGL( ViewPort &vp, OCPNRegion &region )
             } else
                 return;
         }
+*/        
     }
 
     wxPoint r;
@@ -491,15 +495,15 @@ void OCPNPoint::DrawGL( ViewPort &vp, OCPNRegion &region )
     }
     
     /* update bounding box */
-    if(!m_wpBBox.GetValid() || vp.chart_scale != m_wpBBox_chart_scale || vp.rotation != m_wpBBox_rotation) {
+    if(!m_wpBBox.GetValid() || pivp.chart_scale != m_wpBBox_chart_scale || pivp.rotation != m_wpBBox_rotation) {
         double lat1, lon1, lat2, lon2;
         cc1->GetCanvasPixPoint(r.x+hilitebox.x, r.y+hilitebox.y+hilitebox.height, lat1, lon1);
         cc1->GetCanvasPixPoint(r.x+hilitebox.x+hilitebox.width, r.y+hilitebox.y, lat2, lon2);
 
         m_wpBBox.SetMin(lon1, lat1);
         m_wpBBox.SetMax(lon2, lat2);
-        m_wpBBox_chart_scale = vp.chart_scale;
-        m_wpBBox_rotation = vp.rotation;
+        m_wpBBox_chart_scale = pivp.chart_scale;
+        m_wpBBox_rotation = pivp.rotation;
     }
 
 //    if(region.Contains(r3) == wxOutRegion)

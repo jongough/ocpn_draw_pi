@@ -31,6 +31,8 @@
 #include "Hyperlink.h"
 #include "gpxdocument.h"
 #include "ocpn_types.h"
+#include "ocpn_plugin.h"
+#include "OCPNRegion.h"
 #include "viewport.h"
 
 class ocpnDC;
@@ -152,7 +154,7 @@ public:
       bool              m_btemp;
 
 #ifdef ocpnUSE_GL
-      void DrawGL( ViewPort &vp, OCPNRegion &region );
+      void DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region );
       unsigned int m_iTextTexture;
       int m_iTextTextureWidth, m_iTextTextureHeight;
 
