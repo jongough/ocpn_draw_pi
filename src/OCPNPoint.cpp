@@ -38,17 +38,17 @@
 #include "styles.h"
 
 extern PointMan     *pOCPNPointMan;
-extern bool         g_bIsNewLayer;
-extern int          g_LayerIdx;
-extern ChartCanvas  *cc1;
+extern bool         g_bODIsNewLayer;
+extern int          g_ODLayerIdx;
+extern ChartCanvas  *ocpncc1;
 extern PathMan      *g_pPathMan;
 extern PathList     *pPathList;
 extern wxRect       g_blink_rect;
-extern Multiplexer  *g_pMUX;
+extern Multiplexer  *g_pODMUX;
 extern MyFrame      *gFrame;
 extern bool         g_btouch;
 extern bool         g_bresponsive;
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern double       g_n_arrival_circle_radius;
 extern int          g_iOCPNPointRangeRingsNumber;
 extern float        g_fOCPNPointRangeRingsStep;
@@ -187,7 +187,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
     m_btemp = false;
-    m_sTypeString = wxEmptyString;
+    m_sTypeString = wxS("Boundary Point");
 
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
@@ -210,9 +210,9 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     if( bAddToList && NULL != pOCPNPointMan )
         pOCPNPointMan->AddOCPNPoint( this );
 
-    m_bIsInLayer = g_bIsNewLayer;
+    m_bIsInLayer = g_bODIsNewLayer;
     if( m_bIsInLayer ) {
-        m_LayerID = g_LayerIdx;
+        m_LayerID = g_ODLayerIdx;
         m_bIsListed = false;
     } else
         m_LayerID = 0;
@@ -285,11 +285,11 @@ void OCPNPoint::ReLoadIcon( void )
         }
         //      Icon name is not in the standard or user lists, so add to the list a generic placeholder
         else{
-            ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+            ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
             if(style){
                 wxBitmap bmp = style->GetIcon( _T("circle") );
                 pOCPNPointMan->ProcessIcon( bmp, m_IconName, m_IconName );
-            }
+           }
         }
     }
         
@@ -307,7 +307,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     wxPoint r;
     wxRect hilitebox;
 
-    cc1->GetCanvasPointPix( m_lat, m_lon, &r );
+    ocpncc1->GetCanvasPointPix( m_lat, m_lon, &r );
 
     //  return the home point in this dc to allow "connect the dots"
     if( NULL != rpn ) *rpn = r;
@@ -366,7 +366,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     hi_colour = pen->GetColour();
     unsigned char transparency = 100;
     if( m_bIsBeingEdited ){
-        hi_colour = GetGlobalColor( _T ( "YELO1" ) );
+        GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         transparency = 150;
     }
     
@@ -451,7 +451,7 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
     wxRect hilitebox;
     unsigned char transparency = 150;
 
-    cc1->GetCanvasPointPix( m_lat, m_lon, &r );
+    ocpncc1->GetCanvasPointPix( m_lat, m_lon, &r );
 
 //    Substitue icon?
     wxBitmap *pbm;
@@ -497,8 +497,8 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
     /* update bounding box */
     if(!m_wpBBox.GetValid() || pivp.chart_scale != m_wpBBox_chart_scale || pivp.rotation != m_wpBBox_rotation) {
         double lat1, lon1, lat2, lon2;
-        cc1->GetCanvasPixPoint(r.x+hilitebox.x, r.y+hilitebox.y+hilitebox.height, lat1, lon1);
-        cc1->GetCanvasPixPoint(r.x+hilitebox.x+hilitebox.width, r.y+hilitebox.y, lat2, lon2);
+        ocpncc1->GetCanvasPixPoint(r.x+hilitebox.x, r.y+hilitebox.y+hilitebox.height, lat1, lon1);
+        ocpncc1->GetCanvasPixPoint(r.x+hilitebox.x+hilitebox.width, r.y+hilitebox.y, lat2, lon2);
 
         m_wpBBox.SetMin(lon1, lat1);
         m_wpBBox.SetMax(lon2, lat2);
@@ -519,7 +519,7 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
             hi_colour = pen->GetColour();
         }
         else{
-            hi_colour = GetGlobalColor( _T ( "YELO1" ) );
+            GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         }
         
         AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
@@ -666,8 +666,8 @@ bool OCPNPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
 {
   /*
     int result = 0;
-    if( g_pMUX )
-        result = g_pMUX->SendointToGPS( this, com_name, pProgress );
+    if( g_pODMUX )
+        result = g_pODMUX->SendointToGPS( this, com_name, pProgress );
 
     wxString msg;
     if( 0 == result )
@@ -728,47 +728,6 @@ wxColour OCPNPoint::GetOCPNPointRangeRingsColour(void) {
 //          Static GPX Support Routines
 //
 //-------------------------------------------------------------------------
-OCPNPoint *OCPNPointExists( const wxString& name, double lat, double lon )
-{
-    OCPNPoint *pret = NULL;
-//    if( g_bIsNewLayer ) return NULL;
-    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
-    bool Exists = false;
-    while( node ) {
-        OCPNPoint *pr = node->GetData();
-
-//        if( pr->m_bIsInLayer ) return NULL;
-
-        if( name == pr->GetName() ) {
-            if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 ) {
-                Exists = true;
-                pret = pr;
-                break;
-            }
-        }
-        node = node->GetNext();
-    }
-
-    return pret;
-}
-
-OCPNPoint *OCPNPointExists( const wxString& guid )
-{
-    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
-    while( node ) {
-        OCPNPoint *pr = node->GetData();
-
-//        if( pr->m_bIsInLayer ) return NULL;
-
-        if( guid == pr->m_GUID ) {
-            return pr;
-        }
-        node = node->GetNext();
-    }
-
-    return NULL;
-}
-
 bool OCPNPointIsInRouteList( OCPNPoint *pr )
 {
     bool IsInList = false;

@@ -32,7 +32,7 @@
 #include "Boundary.h"
 
 extern PathList *pPathList;
-extern OCPNSelect *pSelect;
+extern OCPNSelect *pOCPNSelect;
 pugi::xml_node  gpx_path_child;
 pugi::xml_node  gpx_path_root;
 bool            m_bFirstPath;
@@ -415,11 +415,11 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
             
             if(pOp) {
                 pOp->m_bIsolatedMark = true;      // This is an isolated mark
-                OCPNPoint *pExisting = WaypointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
+                OCPNPoint *pExisting = OCPNPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
                 if( !pExisting ) {
                     if( NULL != pOCPNPointMan )
                         pOCPNPointMan->AddOCPNPoint( pOp );
-                     pSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                     pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
                 else
                     delete pOp;
@@ -778,7 +778,7 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
              
              else
              if( ChildName == _T ( "opencpn:guid" ) ) {
-                //if ( !g_bIsNewLayer ) ) 
+                //if ( !g_bODIsNewLayer ) ) 
                 pTentBoundary->m_GUID =  wxString::FromUTF8(tschild.first_child().value());
              }
              
@@ -814,6 +814,30 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
     }
     pTentPath->UpdateSegmentDistances();
     return pTentPath;
+}
+
+OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& name, double lat, double lon )
+{
+    OCPNPoint *pret = NULL;
+//    if( g_bODIsNewLayer ) return NULL;
+    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    bool Exists = false;
+    while( node ) {
+        OCPNPoint *pr = node->GetData();
+
+//        if( pr->m_bIsInLayer ) return NULL;
+
+        if( name == pr->GetName() ) {
+            if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 ) {
+                Exists = true;
+                pret = pr;
+                break;
+            }
+        }
+        node = node->GetNext();
+    }
+
+    return pret;
 }
 
 OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& guid )
@@ -876,9 +900,9 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
             OCPNPoint *pop = node->GetData();
             
             if( ip )
-                pSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
+                pOCPNSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
                                                     pop->m_lon, prev_pConfPoint, pop, pTentPath );
-            pSelect->AddSelectableOCPNPoint(pop->m_lat, pop->m_lon, pop);
+            pOCPNSelect->AddSelectableOCPNPoint(pop->m_lat, pop->m_lon, pop);
             prev_rlat = pop->m_lat;
             prev_rlon = pop->m_lon;
             prev_pConfPoint = pop;

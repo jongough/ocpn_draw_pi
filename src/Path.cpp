@@ -41,14 +41,14 @@
 
 
 extern PointMan *pOCPNPointMan;
-extern bool g_bIsNewLayer;
-extern int g_LayerIdx;
+extern bool g_bODIsNewLayer;
+extern int g_ODLayerIdx;
 extern PathMan *g_pPathMan;
 extern int g_path_line_width;
-extern OCPNSelect *pSelect;
+extern OCPNSelect *pOCPNSelect;
 extern OCPNDrawConfig *pOCPNDrawConfig;
-extern Multiplexer *g_pMUX;
-extern float g_GLMinSymbolLineWidth;
+extern Multiplexer *g_pODMUX;
+extern float g_ODGLMinSymbolLineWidth;
 extern wxString    g_ActiveLineColour;
 extern wxString    g_InActiveLineColour;
 extern wxString    g_ActiveFillColour;
@@ -349,7 +349,7 @@ void Path::Draw( ocpnDC& dc, ViewPort &VP )
     }
 }
 
-extern ChartCanvas *cc1; /* hopefully can eventually remove? */
+extern ChartCanvas *ocpncc1; /* hopefully can eventually remove? */
 
 void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
 {
@@ -359,7 +359,8 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
     //  Being special case to draw something for a 1 point route....
     ocpnDC dc;
     if(m_hiliteWidth){
-        wxColour y = GetGlobalColor( _T ( "YELO1" ) );
+        wxColour y;
+        GetGlobalColor( wxS( "YELO1" ), &y );
         wxColour hilt( y.Red(), y.Green(), y.Blue(), 128 );
         wxPen HiPen( hilt, m_hiliteWidth, wxSOLID );
         dc.SetPen( HiPen );
@@ -367,7 +368,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
         OCPNPoint *prp0 = node->GetData();
         wxPoint r0;
-        cc1->GetCanvasPointPix( prp0->m_lat, prp0->m_lon, &r0);
+        ocpncc1->GetCanvasPointPix( prp0->m_lat, prp0->m_lon, &r0);
 
         if( m_nPoints == 1 ) {
             dc.StrokeLine( r0.x, r0.y, r0.x + 2, r0.y + 2 );
@@ -380,7 +381,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
             
             OCPNPoint *prp = node->GetData();
             wxPoint r1;
-            cc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &r1);
+            ocpncc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &r1);
 
             dc.StrokeLine( r0.x, r0.y, r1.x, r1.y );
                     
@@ -434,7 +435,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxCROSSDIAG_HATCH ) );
     
     glColor3ub(col.Red(), col.Green(), col.Blue());
-    glLineWidth( wxMax( g_GLMinSymbolLineWidth, width ) );
+    glLineWidth( wxMax( g_ODGLMinSymbolLineWidth, width ) );
     
     dc.SetGLStipple();
 
@@ -464,17 +465,17 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         if(dir)
         {
             double crosslat = lat_rl_crosses_meridian(lastlat, lastlon, prp->m_lat, prp->m_lon, 180.0);
-            cc1->GetCanvasPointPix( crosslat, dir*180, &r);
+            ocpncc1->GetCanvasPointPix( crosslat, dir*180, &r);
             glVertex2i(r.x, r.y);
             glEnd();
             glBegin(GL_LINE_STRIP);
-            cc1->GetCanvasPointPix( crosslat, -dir*180, &r);
+            ocpncc1->GetCanvasPointPix( crosslat, -dir*180, &r);
             glVertex2i(r.x, r.y);
         }
         lastlat=prp->m_lat;
         lastlon=prp->m_lon;
         
-        cc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &r);
+        ocpncc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &r);
         glVertex2i(r.x, r.y);
     }
     glEnd();
@@ -495,7 +496,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         else if (m_bVisible)
             prp->DrawGL( piVP, region );
         wxPoint rpt;
-        cc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &rpt);
+        ocpncc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &rpt);
         bpts[ j++ ] = rpt;
 //        bpts[ j++ ] = region;
 
@@ -566,7 +567,8 @@ void Path::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort &
         if( Visible == cohen_sutherland_line_clip_i( &x0, &y0, &x1, &y1, 0, sx, 0, sy ) ) {
             wxPen psave = dc.GetPen();
 
-            wxColour y = GetGlobalColor( _T ( "YELO1" ) );
+            wxColour y;
+            GetGlobalColor( wxS( "YELO1" ), &y );
             wxColour hilt( y.Red(), y.Green(), y.Blue(), 128 );
 
             wxPen HiPen( hilt, hilite_width, wxSOLID );
@@ -708,8 +710,8 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
     //    n.b. must delete Selectables  and update config before deleting the point
     if( rp->m_bIsInLayer ) return;
 
-    pSelect->DeleteAllSelectableOCPNPoints( (Path *) this );
-    pSelect->DeleteAllSelectablePathSegments( (Path *) this );
+    pOCPNSelect->DeleteAllSelectableOCPNPoints( (Path *) this );
+    pOCPNSelect->DeleteAllSelectablePathSegments( (Path *) this );
     pOCPNDrawConfig->DeleteOCPNPoint( rp );
 
     pOCPNPointList->DeleteObject( rp );
@@ -724,8 +726,8 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
     if( bRenamePoints ) RenameOCPNPoints();
 
     if( m_nPoints > 1 ) {
-        pSelect->AddAllSelectablePathSegments( this );
-        pSelect->AddAllSelectableOCPNPoints( this );
+        pOCPNSelect->AddAllSelectablePathSegments( this );
+        pOCPNSelect->AddAllSelectableOCPNPoints( this );
 
         pOCPNDrawConfig->UpdatePath( this );
         RebuildGUIDList();                  // ensure the GUID list is intact and good
@@ -737,8 +739,8 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
 
 void Path::RemovePoint( OCPNPoint *rp, bool bRenamePoints )
 {
-    pSelect->DeleteAllSelectableOCPNPoints( this );
-    pSelect->DeleteAllSelectablePathSegments( this );
+    pOCPNSelect->DeleteAllSelectableOCPNPoints( this );
+    pOCPNSelect->DeleteAllSelectablePathSegments( this );
 
     pOCPNPointList->DeleteObject( rp );
     if( wxNOT_FOUND != OCPNPointGUIDList.Index( rp->m_GUID ) ) OCPNPointGUIDList.Remove(
@@ -758,8 +760,8 @@ void Path::RemovePoint( OCPNPoint *rp, bool bRenamePoints )
 
 //      if ( m_nPoints > 1 )
     {
-        pSelect->AddAllSelectablePathSegments( this );
-        pSelect->AddAllSelectableOCPNPoints( this );
+        pOCPNSelect->AddAllSelectablePathSegments( this );
+        pOCPNSelect->AddAllSelectableOCPNPoints( this );
 
         pOCPNDrawConfig->UpdatePath( this );
         RebuildGUIDList();                  // ensure the GUID list is intact and good
@@ -1054,7 +1056,7 @@ void Path::UpdateSegmentDistances()
 //    Calculate the absolute distance from 1->2
 
             double brg, dd;
-            DistanceBearingMercator( slat1, slon1, slat2, slon2, &brg, &dd );
+            DistanceBearingMercator_Plugin( slat1, slon1, slat2, slon2, &brg, &dd );
 
 //    And store in Point 2
             prp->m_seg_len = dd;
@@ -1106,8 +1108,8 @@ OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
 void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
 {
     //  Rebuild the route selectables
-    pSelect->DeleteAllSelectableOCPNPoints( path );
-    pSelect->DeleteAllSelectablePathSegments( path );
+    pOCPNSelect->DeleteAllSelectableOCPNPoints( path );
+    pOCPNSelect->DeleteAllSelectablePathSegments( path );
 
     path->RemovePoint( point );
 
@@ -1118,11 +1120,11 @@ void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
         path = NULL;
     }
     //  Add this point back into the selectables
-    pSelect->AddSelectableOCPNPoint( point->m_lat, point->m_lon, point );
+    pOCPNSelect->AddSelectableOCPNPoint( point->m_lat, point->m_lon, point );
 
     if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
         pPathPropDialog->SetPathAndUpdate( path, true );
     }
 
-    cc1->InvalidateGL();
+    ocpncc1->InvalidateGL();
 }

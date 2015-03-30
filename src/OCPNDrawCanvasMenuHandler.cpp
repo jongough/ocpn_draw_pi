@@ -29,7 +29,7 @@
 #include "OCPNDrawCanvasMenuHandler.h"
 #include "chcanv.h"
 
-extern ChartCanvas     *cc1;
+extern ChartCanvas     *ocpncc1;
 extern int              g_click_stop;
 
 
@@ -55,7 +55,7 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
     wxPoint r;
     double zlat, zlon;
 
-    cc1->GetCanvasPixPoint( popx, popy, zlat, zlon );
+    ocpncc1->GetCanvasPixPoint( popx, popy, zlat, zlon );
 
     switch( event.GetId() ) {
 /*    case ID_WP_MENU_DELPOINT: {
@@ -79,7 +79,7 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
             else {
                 parent->undo->BeforeUndoableAction( Undo_DeleteWaypoint, m_pFoundRoutePoint, Undo_IsOrphanded, NULL );
                 pOCPNDrawConfig->DeleteWayPoint( m_pFoundRoutePoint );
-                pSelect->DeleteSelectablePoint( m_pFoundRoutePoint, SELTYPE_ROUTEPOINT );
+                pOCPNSelect->DeleteSelectablePoint( m_pFoundRoutePoint, SELTYPE_ROUTEPOINT );
                 if( NULL != pWayPointMan )
                     pWayPointMan->RemoveRoutePoint( m_pFoundRoutePoint );
                 parent->undo->AfterUndoableAction( NULL );
@@ -108,9 +108,9 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
                                _("Rename Waypoints?"), wxYES_NO | wxCANCEL );
 
         if( ask_return != wxID_CANCEL ) {
-            pSelect->DeleteAllSelectableRouteSegments( m_pSelectedRoute );
+            pOCPNSelect->DeleteAllSelectableRouteSegments( m_pSelectedRoute );
             m_pSelectedRoute->Reverse( ask_return == wxID_YES );
-            pSelect->AddAllSelectableRouteSegments( m_pSelectedRoute );
+            pOCPNSelect->AddAllSelectableRouteSegments( m_pSelectedRoute );
 
             pOCPNDrawConfig->UpdateRoute( m_pSelectedRoute );
 
@@ -191,11 +191,11 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
 
         m_pSelectedRoute->InsertPointAfter( m_pFoundRoutePoint, zlat, zlon );
 
-        pSelect->DeleteAllSelectableRoutePoints( m_pSelectedRoute );
-        pSelect->DeleteAllSelectableRouteSegments( m_pSelectedRoute );
+        pOCPNSelect->DeleteAllSelectableRoutePoints( m_pSelectedRoute );
+        pOCPNSelect->DeleteAllSelectableRouteSegments( m_pSelectedRoute );
 
-        pSelect->AddAllSelectableRouteSegments( m_pSelectedRoute );
-        pSelect->AddAllSelectableRoutePoints( m_pSelectedRoute );
+        pOCPNSelect->AddAllSelectableRouteSegments( m_pSelectedRoute );
+        pOCPNSelect->AddAllSelectableRoutePoints( m_pSelectedRoute );
 
         m_pSelectedRoute->RebuildGUIDList();          // ensure the GUID list is intact and good
         pOCPNDrawConfig->UpdateRoute( m_pSelectedRoute );
@@ -313,7 +313,7 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
     default: {
         //  Look for PlugIn Context Menu selections
         //  If found, make the callback
-        ArrayOfPlugInMenuItems item_array = g_pi_manager->GetPluginContextMenuItemArray();
+        ArrayOfPlugInMenuItems item_array = g_OD_pi_manager->GetPluginContextMenuItemArray();
 
         for( unsigned int i = 0; i < item_array.GetCount(); i++ ) {
             PlugInMenuItemContainer *pimis = item_array.Item( i );

@@ -34,7 +34,7 @@
 #include <wx/stdpaths.h>
 #include <wx/apptrait.h>
 
-extern ocpnStyle::StyleManager* g_StyleManager;
+extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern wxString         g_PrivateDataDir;
 extern OCPNPoint      *pAnchorWatchPoint1;
 extern OCPNPoint      *pAnchorWatchPoint2;
@@ -52,7 +52,7 @@ PointMan::PointMan()
 
     pmarkicon_image_list = NULL;
 
-    ocpnStyle::Style* style = g_StyleManager->GetCurrentStyle();
+    ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
     m_pIconArray = new wxArrayPtrVoid();
     ProcessIcons( style );
 
@@ -363,7 +363,7 @@ wxBitmap *PointMan::CreateDimBitmap( wxBitmap *pBitmap, double factor )
 
 void PointMan::SetColorScheme( ColorScheme cs )
 {
-    ProcessIcons( g_StyleManager->GetCurrentStyle() );
+    ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
 
     //    Iterate on the OCPNPoint list, requiring each to reload icon
 
@@ -694,7 +694,7 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
         pOCPNDrawConfig->DeleteOCPNPoint( pRp );
         pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
         
-        pSelect->DeleteSelectableOCPNPoint( pRp );
+        pOCPNSelect->DeleteSelectableOCPNPoint( pRp );
 
         //    The OCPNPoint might be currently in use as an anchor watch point
         if( pRp == pAnchorWatchPoint1 ) pAnchorWatchPoint1 = NULL;

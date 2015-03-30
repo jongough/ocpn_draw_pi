@@ -132,13 +132,13 @@ extern PathProp *pPathPropDialog;
 extern PathMan  *g_pPathMan;
 extern OCPNPointList    *pOCPNPointList;
 extern OCPNDrawConfig  *pOCPNDrawConfig;
-extern ChartCanvas *cc1;
+extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
 extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern MyFrame          *gFrame;
-extern OCPNSelect           *pSelect;
+extern OCPNSelect           *pOCPNSelect;
 extern double           gLat, gLon;
 extern double           gCog, gSog;
 extern bool             g_bShowLayers;
@@ -865,21 +865,21 @@ void PathManagerDialog::ZoomtoPath( Path *path )
     double rw, rh, ppm; // route width, height, final ppm scale to use
     int ww, wh; // chart window width, height
     // route bbox width in nm
-    DistanceBearingMercator( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMinY(),
+    DistanceBearingMercator_Plugin( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMinY(),
             RBBox.GetMaxX(), NULL, &rw );
     // route bbox height in nm
-    DistanceBearingMercator( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMaxY(),
+    DistanceBearingMercator_Plugin( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMaxY(),
             RBBox.GetMinX(), NULL, &rh );
 
-    cc1->GetSize( &ww, &wh );
+    ocpncc1->GetSize( &ww, &wh );
 
     ppm = wxMin(ww/(rw*1852), wh/(rh*1852)) * ( 100 - fabs( clat ) ) / 90;
 
     ppm = wxMin(ppm, 1.0);
 
-//      cc1->ClearbFollow();
-//      cc1->SetViewPoint(clat, clon, ppm, 0, cc1->GetVPRotation(), CURRENT_RENDER);
-//      cc1->Refresh();
+//      ocpncc1->ClearbFollow();
+//      ocpncc1->SetViewPoint(clat, clon, ppm, 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
+//        RequestRefresh( GetOCPNCanvasWindow() );
 
     gFrame->JumpToPosition( clat, clon, ppm );
 
@@ -898,7 +898,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
     bool busy = false;
     if( m_pPathListCtrl->GetSelectedItemCount() ) {
         ::wxBeginBusyCursor();
-//        cc1->CancelMousePath();
+//        ocpncc1->CancelMousePath();
         m_bNeedConfigFlush = true;
         busy = true;
     }
@@ -929,8 +929,8 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
         m_lastPathItem = -1;
         UpdatePathListCtrl();
 
-        cc1->undo->InvalidateUndo();
-        cc1->Refresh();
+        ocpncc1->undo->InvalidateUndo();
+        RequestRefresh( GetOCPNCanvasWindow() );
         ::wxEndBusyCursor();
     }
 
@@ -943,7 +943,7 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
 
     if( dialog_ret == wxID_YES ) {
 
-//        cc1->CancelMousePath();
+//        ocpncc1->CancelMousePath();
 
         g_pPathMan->DeleteAllPaths();
 // TODO Seth
@@ -955,8 +955,8 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
         UpdatePathListCtrl();
 
         if( pPathPropDialog ) pPathPropDialog->Hide();
-        cc1->undo->InvalidateUndo();
-        cc1->Refresh();
+        ocpncc1->undo->InvalidateUndo();
+        RequestRefresh( GetOCPNCanvasWindow() );
 
         m_bNeedConfigFlush = true;
     }
@@ -1050,7 +1050,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
 }
 void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
 {
-//      if (cc1->m_bFollow)
+//      if (ocpncc1->m_bFollow)
 //            return;
 
     // Zoom into the bounding box of the selected route
@@ -1132,7 +1132,7 @@ void PathManagerDialog::OnPathActivateClick( wxCommandEvent &event )
 
     pOCPNDrawConfig->UpdatePath( ppath );
 
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 
 //      btnRteActivate->SetLabel(route->m_bRtIsActive ? _("Deactivate") : _("Activate"));
 
@@ -1164,7 +1164,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
         ::wxBeginBusyCursor();
 
         pOCPNDrawConfig->UpdatePath( path );
-        cc1->Refresh();
+        RequestRefresh( GetOCPNCanvasWindow() );
 
         //   We need to update the waypoint list control only if the visibility of shared waypoints might have changed.
         if( has_shared_OCPNPoints )
@@ -1211,8 +1211,8 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
     Path *path = pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
 
-    if( cc1 )
-        cc1->Refresh();
+    if( ocpncc1 )
+        RequestRefresh( GetOCPNCanvasWindow() );
 
     UpdatePathButtons();
 
@@ -1279,7 +1279,7 @@ void PathManagerDialog::UpdateOCPNPointsListCtrl( OCPNPoint *rp_select, bool b_r
             m_pOCPNPointListCtrl->SetItem( idx, colOCPNPOINTNAME, name );
 
             double dst;
-            DistanceBearingMercator( rp->m_lat, rp->m_lon, gLat, gLon, NULL, &dst );
+            DistanceBearingMercator_Plugin( rp->m_lat, rp->m_lon, gLat, gLon, NULL, &dst );
             wxString dist;
             dist.Printf( _T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( dst ) );
             m_pOCPNPointListCtrl->SetItem( idx, colOCPNPOINTDIST, dist );
@@ -1417,7 +1417,7 @@ void PathManagerDialog::OnOCPNPointToggleVisibility( wxMouseEvent &event )
 
         pOCPNDrawConfig->UpdateOCPNPoint( wp );
 
-        cc1->Refresh();
+        RequestRefresh( GetOCPNCanvasWindow() );
     }
 
     // Allow wx to process...
@@ -1429,9 +1429,9 @@ void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
     OCPNPoint *pWP = new OCPNPoint( gLat, gLon, g_default_OCPNPoint_icon, wxEmptyString,
             GPX_EMPTY_STRING );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-    pSelect->AddSelectableOCPNPoint( gLat, gLon, pWP );
+    pOCPNSelect->AddSelectableOCPNPoint( gLat, gLon, pWP );
     pOCPNDrawConfig->AddNewOCPNPoint( pWP, -1 );    // use auto next num
-    cc1->Refresh( false );      // Needed for MSW, why not GTK??
+    RequestRefresh( GetOCPNCanvasWindow() );
 
     OCPNPointShowPropertiesDialog( pWP, GetParent() );
 }
@@ -1491,10 +1491,11 @@ void PathManagerDialog::OnOCPNPointZoomtoClick( wxCommandEvent &event )
 
     if( !wp ) return;
 
-//      cc1->ClearbFollow();
-//      cc1->SetViewPoint(wp->m_lat, wp->m_lon, cc1->GetVPScale(), 0, cc1->GetVPRotation(), CURRENT_RENDER);
-//      cc1->Refresh();
-    gFrame->JumpToPosition( wp->m_lat, wp->m_lon, cc1->GetVPScale() );
+//      ocpncc1->ClearbFollow();
+//      ocpncc1->SetViewPoint(wp->m_lat, wp->m_lon, ocpncc1->GetVPScale(), 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
+//      ocpncc1->Refresh();
+//      RequestRefresh( GetOCPNCanvasWindow() );    
+    gFrame->JumpToPosition( wp->m_lat, wp->m_lon, ocpncc1->GetVPScale() );
 
 }
 
@@ -1559,8 +1560,8 @@ void PathManagerDialog::OnOCPNPointDeleteClick( wxCommandEvent &event )
             pMarkPropDialog->UpdateProperties();
         }
 */
-        cc1->undo->InvalidateUndo();
-        cc1->Refresh();
+        ocpncc1->undo->InvalidateUndo();
+        RequestRefresh( GetOCPNCanvasWindow() );
         ::wxEndBusyCursor();
     }
 
@@ -1578,7 +1579,7 @@ void PathManagerDialog::OnOCPNPointGoToClick( wxCommandEvent &event )
 
     OCPNPoint *pWP_src = new OCPNPoint( gLat, gLon, g_default_OCPNPoint_icon, wxEmptyString,
             GPX_EMPTY_STRING );
-    pSelect->AddSelectableOCPNPoint( gLat, gLon, pWP_src );
+    pOCPNSelect->AddSelectableOCPNPoint( gLat, gLon, pWP_src );
 
     Path *temp_path = new Path();
     pPathList->Append( temp_path );
@@ -1586,7 +1587,7 @@ void PathManagerDialog::OnOCPNPointGoToClick( wxCommandEvent &event )
     temp_path->AddPoint( pWP_src );
     temp_path->AddPoint( wp );
 
-    pSelect->AddSelectablePathSegment( gLat, gLon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_path );
+    pOCPNSelect->AddSelectablePathSegment( gLat, gLon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_path );
 
     wxString name = wp->GetName();
     if( name.IsEmpty() ) name = _("(Unnamed OCPN Point)");
@@ -1678,8 +1679,8 @@ void PathManagerDialog::OnOCPNPointDeleteAllClick( wxCommandEvent &event )
     m_lastOCPNPointItem = -1;
     UpdatePathListCtrl();
     UpdateOCPNPointsListCtrl();
-    cc1->undo->InvalidateUndo();
-    cc1->Refresh();
+    ocpncc1->undo->InvalidateUndo();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 
 void PathManagerDialog::OnLaySelected( wxListEvent &event )
@@ -1775,7 +1776,7 @@ void PathManagerDialog::OnLayNewClick( wxCommandEvent &event )
     UpdatePathListCtrl();
     UpdateOCPNPointsListCtrl();
     UpdateLayListCtrl();
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 
 void PathManagerDialog::OnLayPropertiesClick( wxCommandEvent &event )
@@ -1855,7 +1856,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     UpdateOCPNPointsListCtrl();
     UpdateLayListCtrl();
 
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 
     m_bNeedConfigFlush = false;
 }
@@ -1907,7 +1908,7 @@ void PathManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
     UpdateLayListCtrl();
     UpdateLayButtons();
 
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 
 void PathManagerDialog::OnLayToggleNamesClick( wxCommandEvent &event )
@@ -1957,7 +1958,7 @@ void PathManagerDialog::ToggleLayerContentsNames( Layer *layer )
 
     UpdateLayButtons();
 
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 
 void PathManagerDialog::OnLayToggleListingClick( wxCommandEvent &event )
@@ -2012,7 +2013,7 @@ void PathManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
 
     ::wxEndBusyCursor();
 
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 
 void PathManagerDialog::OnLayDefaultAction( wxListEvent &event )
@@ -2094,7 +2095,7 @@ void PathManagerDialog::OnImportClick( wxCommandEvent &event )
     UpdateOCPNPointsListCtrl();
     UpdateLayListCtrl();
 
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 void PathManagerDialog::OnExportClick( wxCommandEvent &event )
 {

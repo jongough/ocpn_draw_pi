@@ -75,8 +75,8 @@ WX_DEFINE_LIST(markicon_description_list_type);
 
 extern PathList     *pPathList;
 extern OCPNDrawConfig  *pOCPNDrawConfig;
-extern OCPNSelect      *pSelect;
-extern PlugInManager  *g_pi_manager;
+extern OCPNSelect      *pOCPNSelect;
+extern PlugInManager  *g_OD_pi_manager;
 extern int             g_path_line_width;
 
 //--------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ bool PathMan::ActivatePath(Path *pPathToActivate )
     v[_T("Name")] = pPathToActivate->m_PathNameString;
     v[_T("GUID")] = pPathToActivate->m_GUID;
     wxString msg_id( _T("OCPN_PATH_ACTIVATED") );
-    g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+    g_OD_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
 
     pPathToActivate->m_bPathIsActive = true;
 
@@ -134,7 +134,7 @@ bool PathMan::DeactivatePath( Path *pPathToDeactivate )
     v[_T("Path_deactivated")] = pPathToDeactivate->m_PathNameString;
     v[_T("GUID")] = pPathToDeactivate->m_GUID;
     wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
-    g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+    g_OD_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
 
     pPathToDeactivate->m_bPathIsActive = false;
 //    console->pCDI->ClearBackground();
@@ -155,7 +155,7 @@ bool PathMan::DeletePath( Path *pPath )
         pOCPNDrawConfig->DeleteConfigPath( pPath );
 
         //    Remove the path from associated lists
-        pSelect->DeleteAllSelectablePathSegments( pPath );
+        pOCPNSelect->DeleteAllSelectablePathSegments( pPath );
         pPathList->DeleteObject( pPath );
 
         // walk the path, tentatively deleting/marking points used only by this route
@@ -172,7 +172,7 @@ bool PathMan::DeletePath( Path *pPath )
 //    This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
 //                              pOCPNDrawConfig->DeleteWayPoint(prp);
 
-                    pSelect->DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
+                    pOCPNSelect->DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
 
                     // Remove all instances of this point from the list.
                     wxOCPNPointListNode *pdnode = pnode;
@@ -326,24 +326,26 @@ void PathMan::SetColorScheme( ColorScheme cs )
             wxSOLID );
 
 //    Or in something like S-52 compliance
+    wxColour tColour;
+    GetGlobalColor( wxS("UINFB"), &tColour );
+    m_pPathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+    m_pPathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID );
 
-    m_pPathPen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("UINFB") ), g_path_line_width,
-            wxSOLID );
-    m_pSelectedPathPen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("UINFO") ),
-            g_path_line_width, wxSOLID );
-//      m_pActiveRoutePen =       wxThePenList->FindOrCreatePen(GetGlobalColor(_T("PLRTE")), g_route_line_width, wxSOLID);
-    m_pActivePathPen = wxThePenList->FindOrCreatePen( GetGlobalColor( _T("UARTE") ),
-            g_path_line_width, wxSOLID );
-//      m_pActiveRoutePointPen =  wxThePenList->FindOrCreatePen(GetGlobalColor(_T("PLRTE")), 2, wxSOLID);
-//      m_pRoutePointPen =        wxThePenList->FindOrCreatePen(GetGlobalColor(_T("CHBLK")), 2, wxSOLID);
+    GetGlobalColor( wxS("UINFO"), &tColour );
+    m_pSelectedPathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+    m_pSelectedPathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID );
 
-    m_pPathBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UINFB") ), wxSOLID );
-    m_pSelectedPathBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("UINFO") ),
-            wxSOLID );
-    m_pActivePathBrush = wxTheBrushList->FindOrCreateBrush( GetGlobalColor( _T("PLRTE") ),
-            wxSOLID );
-//      m_pActiveRoutePointBrush =  wxTheBrushList->FindOrCreatePen(GetGlobalColor(_T("PLRTE")), wxSOLID);
-//      m_pRoutePointBrush =        wxTheBrushList->FindOrCreatePen(GetGlobalColor(_T("CHBLK")), wxSOLID);
+    GetGlobalColor( wxS("UARTE"), &tColour );
+    m_pActivePathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+
+    GetGlobalColor( wxS("PLRTE"), &tColour );
+    m_pActivePathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID );
+    m_pActiveOCPNPointBrush =  wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID);
+
+    m_pActiveOCPNPointPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+    GetGlobalColor( wxS("CHBLK"), &tColour );
+    m_pOCPNPointPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+    m_pOCPNPointBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID);
 
 }
 

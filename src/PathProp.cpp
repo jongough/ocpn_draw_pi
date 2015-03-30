@@ -36,6 +36,7 @@
 #include <wx/printdlg.h>
 #include <wx/stattext.h>
 
+#include "ocpn_plugin.h"
 #include "styles.h"
 #include "OCPNDrawConfig.h"
 #include "georef.h"
@@ -63,14 +64,14 @@ extern TCMgr              *ptcmgr;
 extern long               gStart_LMT_Offset;
 extern OCPNDrawConfig     *pOCPNDrawConfig;
 extern PointMan        *pWayPointMan;
-extern ChartCanvas        *cc1;
-extern OCPNSelect        *pSelect;
+extern ChartCanvas        *ocpncc1;
+extern OCPNSelect        *pOCPNSelect;
 extern PathMan           *g_pPathMan;
 extern PathManagerDialog *pPathManagerDialog;
 extern PathProp       *pPathPropDialog;
 extern Track              *g_pActiveTrack;
 extern PathList       *pPathList;
-extern PlugInManager      *g_pi_manager;
+extern PlugInManager      *g_OD_pi_manager;
 extern bool                g_bShowMag;
 extern wxString    m_ActiveLineColour;
 extern wxString    m_InActiveLineColour;
@@ -78,6 +79,7 @@ extern wxString    m_ActiveFillColour;
 extern wxString    m_InActiveLineColour;
 
 extern MyFrame            *gFrame;
+extern PlugIn_ViewPort  *g_vp;
 
 // Global print data, to remember settings during the session
 extern wxPrintData               *g_printData;
@@ -468,7 +470,8 @@ void PathProp::OnPathPropListClick( wxListEvent& event )
         if( prp ) {
             prp->m_bPtIsSelected = true;                // highlight the routepoint
 
-            gFrame->JumpToPosition( prp->m_lat, prp->m_lon, cc1->GetVPScale() );
+            //gFrame->JumpToPosition( prp->m_lat, prp->m_lon, ocpncc1->GetVPScale() );
+            JumpToPosition( prp->m_lat, prp->m_lon, g_vp->chart_scale );
 
         }
     }
@@ -554,7 +557,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     double join_distance = 0.;
     OCPNPoint *first_point = pPath->GetPoint( 1 );
     if( first_point )
-        DistanceBearingMercator( first_point->m_lat, first_point->m_lon, gLat, gLon, &brg, &join_distance );
+        DistanceBearingMercator_Plugin( first_point->m_lat, first_point->m_lon, gLat, gLon, &brg, &join_distance );
 
     //    Update the "tides event" column header
     wxListItem column_info;
@@ -624,7 +627,7 @@ bool PathProp::UpdateProperties( Path *pPath )
         if( m_pEnroutePoint && !starting_point ) starting_point = ( prp->m_GUID
                 == m_pEnroutePoint->m_GUID );
 
-        DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+        DistanceBearingMercator_Plugin( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
 
     // calculation of course at current WayPoint.
     double course=10, tmp_leg_dist=23;
@@ -632,7 +635,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     OCPNPoint * _next_prp = (next_node)? next_node->GetData(): NULL;
     if (_next_prp )
     {
-        DistanceBearingMercator( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
+        DistanceBearingMercator_Plugin( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
     }else
     {
       course = 0.0;
@@ -808,7 +811,7 @@ bool PathProp::UpdateProperties()
         double join_distance = 0.;
         RoutePoint *first_point = m_pRoute->GetPoint( 1 );
         if( first_point )
-            DistanceBearingMercator( first_point->m_lat, first_point->m_lon, gLat, gLon, &brg, &join_distance );
+            DistanceBearingMercator_PlugIn( first_point->m_lat, first_point->m_lon, gLat, gLon, &brg, &join_distance );
 
         //    Update the "tides event" column header
         wxListItem column_info;
@@ -958,7 +961,7 @@ bool PathProp::UpdateProperties()
                 else
                     leg_speed = m_planspeed;
                 if( m_bStartNow ) {
-                    DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+                    DistanceBearingMercator_PlugIn( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
                     if( i == 0 ) joining_time = wxTimeSpan::Seconds(
                             (long) wxRound( ( leg_dist * 3600. ) / leg_speed ) );
                 }
@@ -969,7 +972,7 @@ bool PathProp::UpdateProperties()
                     leg_speed = m_planspeed;
             }
 
-            DistanceBearingMercator( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
+            DistanceBearingMercator_PlugIn( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
 
         // calculation of course at current WayPoint.
         double course=10, tmp_leg_dist=23;
@@ -977,7 +980,7 @@ bool PathProp::UpdateProperties()
         RoutePoint * _next_prp = (next_node)? next_node->GetData(): NULL;
         if (_next_prp )
         {
-        DistanceBearingMercator( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
+        DistanceBearingMercator_PlugIn( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
         }else
         {
           course = 0.0;
@@ -1209,7 +1212,7 @@ bool PathProp::SaveChanges( void )
         v[_T("Name")] =  m_pPath->m_PathNameString;
         v[_T("GUID")] =  m_pPath->m_GUID;
         wxString msg_id( _T("OCPN_BND_ACTIVATED") );
-        g_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+        g_OD_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
     }
 
     return true;
@@ -1237,8 +1240,7 @@ void PathProp::OnPathPropCancelClick( wxCommandEvent& event )
     m_bStartNow = false;
 
     Hide();
-    cc1->Refresh( false );
-
+    RequestRefresh( GetOCPNCanvasWindow() );
     event.Skip();
 }
 
@@ -1272,8 +1274,8 @@ void PathProp::OnPathPropOkClick( wxCommandEvent& event )
     }
 
     Hide();
-    cc1->Refresh( false );
-
+    RequestRefresh( GetOCPNCanvasWindow() );
+    
     event.Skip();
 
 }

@@ -24,6 +24,15 @@ SET(VERSION_MINOR ${PLUGIN_VERSION_MINOR})
 SET(VERSION_PATCH ${PLUGIN_VERSION_PATCH})
 SET(VERSION_DATE ${PLUGIN_VERSION_DATE})
 
+IF (PREFIX)
+    SET(CMAKE_INSTALL_PREFIX ${PREFIX})
+ELSE (PREFIX)
+    IF (NOT CMAKE_INSTALL_PREFIX)
+        SET(CMAKE_INSTALL_PREFIX ${TENTATIVE_PREFIX})
+    ENDIF (NOT CMAKE_INSTALL_PREFIX)
+ENDIF (PREFIX)
+
+
 configure_file(cmake/version.h.in ${CMAKE_SOURCE_DIR}/include/version.h)
 
 # this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.
@@ -55,8 +64,6 @@ SET(SRCS
  		src/OCPNDrawCanvasMenuHandler.cpp
  		src/OCPNDrawPointInfoImpl.cpp
  		src/glOCPNDrawChartCanvas.cpp
-# 		src/RoutePoint.cpp
-# 		src/Route.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
         	src/jsonval.cpp
@@ -72,8 +79,8 @@ SET(HDRS
  		include/PathMan.h
  		include/pathmanagerdialog.h
  		include/PathProp.h
- 		include/LinkPropDlg.h
- 		include/Layer.h
+# 		include/LinkPropDlg.h
+# 		include/Layer.h
  		include/Path.h
  		include/OCPNPoint.h
  		include/OCPNDrawConfig.h
@@ -82,9 +89,9 @@ SET(HDRS
  		include/OCPNDrawCanvasMenuHandler.h
  		include/OCPNDrawPointInfoImpl.h
  		include/glOCPNDrawChartCanvas.h
- 		include/vector2D.h
+# 		include/vector2D.h
 # 		include/RoutePoint.h
- 		include/ocpn_types.h
+# 		include/ocpn_types.h
 # 		include/navutil.h
 # 		include/Route.h
 # 		include/navutil.h
@@ -97,6 +104,33 @@ SET(HDRS
         	include/wx/jsonwriter.h
 )
 
+#IF(WIN32)
+SET(OCPNSRC
+#		ocpnsrc/bbox.cpp
+#		ocpnsrc/chart1.cpp
+#		ocpnsrc/chcanv.cpp
+#		ocpnsrc/cutil.cpp
+#		ocpnsrc/FontMgr.cpp
+#		ocpnsrc/geodesic.cpp
+#		ocpnsrc/glChartCanvas.cpp
+#		ocpnsrc/gpxdocument.cpp
+#		ocpnsrc/navutil.cpp
+#		ocpnsrc/OCPNPlatform.cpp
+#		ocpnsrc/pluginmanager.cpp
+#		ocpnsrc/Route.cpp
+#		ocpnsrc/SelectItem.cpp
+#		ocpnsrc/styles.cpp
+#		ocpnsrc/undo.cpp
+#		ocpnsrc/viewport.cpp
+#		ocpnsrc/nmea0183/nmea0183.cpp
+)
+#SET(OCPNHDRS
+#		ocpninclude/RoutePoint.h
+#		ocpninclude/Route.h
+#		ocpninclude/routeman.h
+#		ocpninclude/routemanagerdialog.h
+#)
+#ENDIF(WIN32)
 #IF(WIN32)
 #SET(SRC_LTINYXML
 #		src/tinyxml/tinyxml.cpp
@@ -111,8 +145,15 @@ SET(HDRS
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/../../include)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/lz4)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/bitmaps)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS})
+#IF(WIN32)
+ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC})
+#ELSE(WIN32)
+#ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS})
+#ENDIF(WIN32)
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")

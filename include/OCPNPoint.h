@@ -171,14 +171,19 @@ public:
       float             m_fOCPNPointRangeRingsStep;
       int               m_iOCPNPointRangeRingsStepUnits;
       wxColour          m_wxcOCPNPointRangeRingsColour;
-      
-      
-private:
+      wxString          m_sTypeString;
+      wxString          m_IconName;
       wxString          m_MarkName;
       wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
-      wxString          m_IconName;
-      wxString          m_sTypeString;
+      
+      
+private:
+      //wxString          m_MarkName;
+      //wxDateTime        m_CreateTimeX;
+      //wxBitmap          *m_pbmIcon;
+      //wxString          m_IconName;
+      //wxString          m_sTypeString;
       
       void              *m_SelectNode;
       void              *m_ManagerNode;

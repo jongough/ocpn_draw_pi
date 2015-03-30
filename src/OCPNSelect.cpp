@@ -29,7 +29,7 @@
 //#include "chcanv.h"
 #include "Path.h"
 
-extern ChartCanvas *cc1;
+extern ChartCanvas *ocpncc1;
 
 OCPNSelect::OCPNSelect()
 {
@@ -369,7 +369,7 @@ bool OCPNSelect::IsSegmentSelected( float a, float b, float c, float d, float sl
     if( ( c * d ) < 0. ) {
         //    Arrange for points to be increasing longitude, c to d
         double dist, brg;
-        DistanceBearingMercator( a, c, b, d, &brg, &dist );
+        DistanceBearingMercator_Plugin( a, c, b, d, &brg, &dist );
         if( brg < 180. )             // swap points?
                 {
             double tmp;
@@ -415,7 +415,7 @@ bool OCPNSelect::IsSegmentSelected( float a, float b, float c, float d, float sl
 
 void OCPNSelect::CalcSelectRadius()
 {
-    selectRadius = pixelRadius / ( cc1->GetCanvasTrueScale() * 1852 * 60 );
+    selectRadius = pixelRadius / ( ocpncc1->GetCanvasTrueScale() * 1852 * 60 );
 }
 
 SelectItem *OCPNSelect::FindSelection( float slat, float slon, int fseltype )

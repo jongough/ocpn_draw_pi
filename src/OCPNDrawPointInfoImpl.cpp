@@ -33,10 +33,10 @@
 #include "OCPNDrawConfig.h"
 
 extern PointMan        *pOCPNPointMan;
-extern ChartCanvas      *cc1;
+extern ChartCanvas      *ocpncc1;
 extern PathManagerDialog *pPathManagerDialog;
 extern PathProp       *pPathPropDialog;
-extern OCPNSelect        *pSelect;
+extern OCPNSelect        *pOCPNSelect;
 extern PathMan           *g_pPathMan;
 extern OCPNDrawConfig     *pOCPNDrawConfig;
 
@@ -279,7 +279,7 @@ void OCPNDrawPointInfoImpl::OnMarkInfoOKClick( wxCommandEvent& event )
         m_pOCPNPoint->m_wxcOCPNPointRangeRingsColour = m_colourWaypointRangeRingsColour->GetColour();
         OnPositionCtlUpdated( event );
         SaveChanges(); // write changes to globals and update config
-        cc1->RefreshRect( m_pOCPNPoint->CurrentRect_in_DC.Inflate( 1000, 100 ), false );
+        ocpncc1->RefreshRect( m_pOCPNPoint->CurrentRect_in_DC.Inflate( 1000, 100 ), false );
     }
     Show( false );
     if( m_pMyLinkList ) {
@@ -335,7 +335,7 @@ bool OCPNDrawPointInfoImpl::SaveChanges()
 
         if( m_pOCPNPoint->m_bIsInPath ) {
             // Update the route segment selectables
-            pSelect->UpdateSelectablePathSegments( m_pOCPNPoint );
+            pOCPNSelect->UpdateSelectablePathSegments( m_pOCPNPoint );
 
             // Get an array of all paths using this point
             wxArrayPtrVoid *pEditPathArray = g_pPathMan->GetPathArrayContaining( m_pOCPNPoint );
@@ -402,10 +402,11 @@ void OCPNDrawPointInfoImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 
     if( !m_pOCPNPoint->m_bIsInLayer ) {
         m_pOCPNPoint->SetPosition( lat, lon );
-        pSelect->ModifySelectablePoint( lat, lon, (void *) m_pOCPNPoint, SELTYPE_OCPNPOINT );
+        pOCPNSelect->ModifySelectablePoint( lat, lon, (void *) m_pOCPNPoint, SELTYPE_OCPNPOINT );
     }
 
     // Update the mark position dynamically
-    cc1->Refresh();
+    RequestRefresh( GetOCPNCanvasWindow() );
+  
 }
 

@@ -71,6 +71,7 @@ class OCPNDrawNavObjectChanges : public NavObjectChanges
         Path *GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
                       bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );
         OCPNPoint *OCPNPointExists( const wxString& guid );
+        OCPNPoint *OCPNPointExists( const wxString& name, double lat, double lon );
         void InsertPathA( Path *pTentPath );
         Path *PathExists( const wxString& guid);
         Path *PathExists( Path * pTentPath );
