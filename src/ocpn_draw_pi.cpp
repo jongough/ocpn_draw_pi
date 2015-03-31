@@ -964,9 +964,9 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
     return TRUE;
 }
 
-bool ocpn_draw_pi::RenderOverlay(wxDC &mdc, PlugIn_ViewPort *vp)
+bool ocpn_draw_pi::RenderOverlay(wxDC &mdc, PlugIn_ViewPort *pivp)
 {
-    m_vp = vp;
+    m_vp = pivp;
     ocpnDC *poDC = new ocpnDC( mdc );
     RenderPathLegs( *poDC );
     if (m_pMouseBoundary) m_pMouseBoundary->Draw( *poDC, (ViewPort &)m_vp);
@@ -979,21 +979,21 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     m_pcontext = pcontext;
     m_vp = pivp;
     OCPNRegion region( pivp->rv_rect );
-    glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)ocpncc1;
-    p_ODChartCanvas->SetClipRegion( ocpncc1->GetVP(), region);
+//    glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)ocpncc1;
+//    p_ODChartCanvas->SetClipRegion( ocpncc1->GetVP(), region);
 
-    ocpnDC DC;
-    RenderPathLegs( DC );
+//    ocpnDC *poDC = NULL;
+//    RenderPathLegs( *poDC );
     //p_ODChartCanvas->SetContext( pcontext )
     //m_glcc = new glChartCanvas(this);
     
     if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp, region);
 //    if (pcontext) {
     /* only draw in this rectangle */
-        p_ODChartCanvas->DrawAllPathsAndOCPNPoints( *pivp, region );
+        DrawAllPathsAndOCPNPoints( *pivp, region );
 //    }
 
-    p_ODChartCanvas->DisableClipRegion();
+//    p_ODChartCanvas->DisableClipRegion();
     return TRUE;
 }
 
@@ -1651,3 +1651,56 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 		pString->Append(sep);
 }
 
+void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion &region )
+{
+    for(wxPathListNode *node = pPathList->GetFirst();
+        node; node = node->GetNext() ) {
+        Path *pPathDraw = node->GetData();
+        if( !pPathDraw )
+            continue;
+
+        /* defer rendering active routes until later */ 
+        //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
+//            continue;
+
+        /* this routine is called very often, so rather than using the
+           wxBoundingBox::Intersect routine, do the comparisons directly
+           to reduce the number of floating point comparisons */
+
+//        const wxBoundingBox &vp_box = vp.GetBBox(), &test_box = pPathDraw->GetBBox();
+        const wxBoundingBox &test_box = pPathDraw->GetBBox();
+        if(test_box.GetMaxY() < pivp.lat_min)
+            continue;
+//        if(test_box.GetMaxY() < vp_box.GetMinY())
+//            continue;
+
+        if(test_box.GetMinY() > pivp.lon_max)
+            continue;
+
+        //double vp_minx = vp_box.GetMinX(), vp_maxx = vp_box.GetMaxX();
+        double test_minx = test_box.GetMinX(), test_maxx = test_box.GetMaxX();
+
+        // Path is not wholly outside viewport
+        if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {
+            pPathDraw->DrawGL( pivp, region );
+        } else if( pivp.lat_max > 180. ) {
+            if(test_minx + 360 <= pivp.lon_max && test_maxx + 360 >= pivp.lon_min)
+                pPathDraw->DrawGL( pivp, region );
+        } else if( pPathDraw->CrossesIDL() || pivp.lon_min < -180. ) {
+            if(test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
+                pPathDraw->DrawGL( pivp, region );
+        }
+
+    }
+
+    /* OCPNPoints not drawn as part of routes */
+    ViewPort vp = (ViewPort &)pivp;
+    if( vp.GetBBox().GetValid() && pOCPNPointMan) {
+        for(wxOCPNPointListNode *pnode = pOCPNPointMan->GetOCPNPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
+            OCPNPoint *pOP = pnode->GetData();
+            //if( pOP && (!pOP->m_bIsInPath && !pOP->m_bIsInTrack ) )
+                pOP->DrawGL( pivp, region );
+        }
+    }
+    
+}

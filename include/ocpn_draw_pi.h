@@ -177,7 +177,7 @@ public:
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
-    void DrawAllPathsAndOCPNPoints( ViewPort &vp, OCPNRegion &region );
+    void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion &region );
     void CanvasPopupMenu( int x, int y, int seltype );
     
     void RenderPathLegs( ocpnDC &dc );
