@@ -63,7 +63,7 @@ SET(SRCS
  		src/OCPNDrawNavObjectChanges.cpp
  		src/OCPNDrawCanvasMenuHandler.cpp
  		src/OCPNDrawPointInfoImpl.cpp
- 		src/glOCPNDrawChartCanvas.cpp
+# 		src/glOCPNDrawChartCanvas.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
         	src/jsonval.cpp
@@ -104,22 +104,23 @@ SET(HDRS
         	include/wx/jsonwriter.h
 )
 
-#IF(WIN32)
 SET(OCPNSRC
-#		ocpnsrc/bbox.cpp
+		ocpnsrc/bbox.cpp
 #		ocpnsrc/chart1.cpp
 #		ocpnsrc/chcanv.cpp
 #		ocpnsrc/cutil.cpp
 #		ocpnsrc/FontMgr.cpp
-#		ocpnsrc/geodesic.cpp
+		ocpnsrc/geodesic.cpp
 #		ocpnsrc/glChartCanvas.cpp
 #		ocpnsrc/gpxdocument.cpp
 #		ocpnsrc/navutil.cpp
+        ocpnsrc/ocpndc.cpp
+		ocpnsrc/OCPNRegion.cpp
 #		ocpnsrc/OCPNPlatform.cpp
 #		ocpnsrc/pluginmanager.cpp
 #		ocpnsrc/Route.cpp
 #		ocpnsrc/SelectItem.cpp
-#		ocpnsrc/styles.cpp
+		ocpnsrc/styles.cpp
 #		ocpnsrc/undo.cpp
 #		ocpnsrc/viewport.cpp
 #		ocpnsrc/nmea0183/nmea0183.cpp
@@ -130,7 +131,6 @@ SET(OCPNSRC
 #		ocpninclude/routeman.h
 #		ocpninclude/routemanagerdialog.h
 #)
-#ENDIF(WIN32)
 #IF(WIN32)
 #SET(SRC_LTINYXML
 #		src/tinyxml/tinyxml.cpp
@@ -149,11 +149,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/bitmaps)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
-#IF(WIN32)
 ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC})
-#ELSE(WIN32)
-#ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS})
-#ENDIF(WIN32)
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")

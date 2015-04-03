@@ -38,6 +38,7 @@
 #include "PathProp.h"
 #include "OCPNDrawConfig.h"
 #include "ocpn_draw_pi.h"
+#include "bbox.h"
 
 
 extern PointMan *pOCPNPointMan;
@@ -183,7 +184,7 @@ void Path::DrawPointWhich( ocpnDC& dc, int iPoint, wxPoint *rpn )
         GetPoint( iPoint )->Draw( dc, rpn );
 }
 
-void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, ViewPort &VP, bool bdraw_arrow )
+void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
 /*    if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
     else
@@ -216,7 +217,7 @@ void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, ViewPort &VP, bo
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }
 
-void Path::Draw( ocpnDC& dc, ViewPort &VP )
+void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 {
     wxColour col, fillcol;
     wxString colour, fillcolour;
@@ -293,8 +294,11 @@ void Path::Draw( ocpnDC& dc, ViewPort &VP )
         if ( m_bVisible )
         {
             //    Handle offscreen points
-            bool b_2_on = VP.GetBBox().PointInBox( prp2->m_lon, prp2->m_lat, 0 );
-            bool b_1_on = VP.GetBBox().PointInBox( prp1->m_lon, prp1->m_lat, 0 );
+            LLBBox llbb;
+            llbb.SetMin(VP.lon_min, VP.lat_min);
+            llbb.SetMax(VP.lon_max, VP.lat_max);
+            bool b_2_on = llbb.PointInBox( prp2->m_lon, prp2->m_lat, 0 );
+            bool b_1_on = llbb.PointInBox( prp1->m_lon, prp1->m_lat, 0 );
 
             //Simple case
             if( b_1_on && b_2_on ) RenderSegment( dc, rpt1.x, rpt1.y, rpt2.x, rpt2.y, VP, false, m_hiliteWidth ); // with no arrows
@@ -540,12 +544,13 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
 
 static int s_arrow_icon[] = { 0, 0, 5, 2, 18, 6, 12, 0, 18, -6, 5, -2, 0, 0 };
 
-void Path::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort &VP,
+void Path::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP,
         bool bdraw_arrow, int hilite_width )
 {
     //    Get the dc boundary
     int sx, sy;
-    dc.GetSize( &sx, &sy );
+    sx = VP.pix_width;
+    sy = VP.pix_height;
 
     //    Try to exit early if the segment is nowhere near the screen
     wxRect r( 0, 0, sx, sy );
@@ -626,7 +631,7 @@ void Path::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort &
     }
 }
 
-void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, ViewPort &VP)
+void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP)
 {
 #ifdef ocpnUSE_GL
     //    Draw a direction arrow        
@@ -885,7 +890,7 @@ bool Path::CalculateCrossesIDL( void )
     return idl_cross;
 }
 
-void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, ViewPort &VP )
+void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP )
 {
     dc_boundary.ResetBoundingBox();
     dc_boundary.DestroyClippingRegion();

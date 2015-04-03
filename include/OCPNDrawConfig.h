@@ -32,7 +32,8 @@
 class NavObjectCollection;
 //class NavObjectChanges;
 
-class OCPNDrawConfig : public MyConfig
+//class OCPNDrawConfig : public MyConfig
+class OCPNDrawConfig
 {
     public:
 //        OCPNDrawConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName) {}
@@ -50,15 +51,26 @@ class OCPNDrawConfig : public MyConfig
         virtual void UpdateNavObj();
         virtual void LoadNavObjects();
 
+        //virtual void UpdateSettings();
+        
+        void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);
+        void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
+
         bool ExportGPXPaths(wxWindow* parent, PathList *pPathss, const wxString suggestedName = _T("paths"));
         bool ExportGPXOCPNPoints(wxWindow* parent, OCPNPointList *pOCPNPoints, const wxString suggestedName = _T("OCPN points"));
-
+        
+        void CreateRotatingNavObjBackup();
+        bool OCPNPointIsInPathList( OCPNPoint *pr );
 
         OCPNDrawNavObjectChanges  *m_pOCPNDrawNavObjectChangesSet;  
         wxString                m_sOCPNDrawNavObjSetFile;
         wxString                m_sOCPNDrawNavObjSetChangesFile;
           
         OCPNDrawNavObjectChanges    *m_pOCPNDrawNavObjectInputSet;
+
+        bool                    m_bSkipChangeSetUpdate;
+        
+        wxString                m_gpx_path;
 
       
       

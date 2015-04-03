@@ -318,7 +318,9 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
         mdc.SetBackground( wxBrush( unused_color) );
         mdc.Clear();
         mdc.DrawBitmap( bmp0, 0, 0 );
-        wxPen red(GetGlobalColor(_T( "URED" )), 2 );
+        wxColour wxRed;
+        GetGlobalColor( wxS( "URED" ), &wxRed );
+        wxPen red( wxRed );
         mdc.SetPen( red );
         int xm = bmp.GetWidth();
         int ym = bmp.GetHeight();

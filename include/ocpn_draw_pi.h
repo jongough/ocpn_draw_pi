@@ -179,12 +179,15 @@ public:
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion &region );
     void CanvasPopupMenu( int x, int y, int seltype );
+    double  GetTrueOrMag(double a);
     
     void RenderPathLegs( ocpnDC &dc );
     
     void    ProcessTimerEvent(wxTimerEvent& ev);
     void    PopupMenuHandler(wxCommandEvent& ev);
     
+    void    SaveConfig();
+
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
     wxCursor    *pCursorUp;
@@ -219,15 +222,17 @@ public:
     PlugIn_ViewPort *m_vp;
     wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
+    wxGLCanvas      *m_glcc;
+    
+    int         nBlinkerTick;
     
 
 
 private:
     void    OnTimer(wxTimerEvent& ev);
 
-    void	SaveConfig();
     void	LoadConfig();
-    void    RenderExtraBoundaryLegInfo( ocpnDC &dc, wxPoint ref_point, wxString s );
+    void    RenderExtraBoundaryLegInfo(ocpnDC &dc, wxPoint ref_point, wxString s );
     void    FinishBoundary();
 //    ArrayOfGridColWidth	readCols(ArrayOfGridColWidth ar, wxString str);
 //    void					writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
@@ -240,7 +245,10 @@ private:
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     
-    void    appendOSDirSlash(wxString* pString);    
+    void    appendOSDirSlash(wxString* pString);  
+    
+    void    AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
+    
     int               m_show_id;
     int               m_hide_id;
     bool				show;

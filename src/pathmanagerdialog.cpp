@@ -34,6 +34,7 @@
 
 #include <iostream>
 
+#include "ocpn_plugin.h"
 #include "styles.h"
 #include "dychart.h"
 #include "navutil.h"
@@ -137,14 +138,14 @@ extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
 extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
-extern MyFrame          *gFrame;
 extern OCPNSelect           *pOCPNSelect;
-extern double           gLat, gLon;
+extern double           g_dLat, g_dLon;
 extern double           gCog, gSog;
 extern bool             g_bShowLayers;
 extern wxString         g_default_OCPNPoint_icon;
 
 extern AIS_Decoder      *g_pAIS;
+extern PlugIn_ViewPort  *g_pivp;
 
 // sort callback. Sort by route name.
 int sort_path_name_dir;
@@ -745,7 +746,8 @@ PathManagerDialog::~PathManagerDialog()
 
 void PathManagerDialog::SetColorScheme()
 {
-    DimeControl( this );
+    //TODO Need to find out what this is for?
+    //DimeControl( this );
 }
 
 void PathManagerDialog::UpdatePathListCtrl()
@@ -881,7 +883,7 @@ void PathManagerDialog::ZoomtoPath( Path *path )
 //      ocpncc1->SetViewPoint(clat, clon, ppm, 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
 //        RequestRefresh( GetOCPNCanvasWindow() );
 
-    gFrame->JumpToPosition( clat, clon, ppm );
+    JumpToPosition( clat, clon, ppm );
 
     m_bNeedConfigFlush = true;
 }
@@ -1279,9 +1281,9 @@ void PathManagerDialog::UpdateOCPNPointsListCtrl( OCPNPoint *rp_select, bool b_r
             m_pOCPNPointListCtrl->SetItem( idx, colOCPNPOINTNAME, name );
 
             double dst;
-            DistanceBearingMercator_Plugin( rp->m_lat, rp->m_lon, gLat, gLon, NULL, &dst );
+            DistanceBearingMercator_Plugin( rp->m_lat, rp->m_lon, g_dLat, g_dLon, NULL, &dst );
             wxString dist;
-            dist.Printf( _T("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( dst ) );
+            dist.Printf( _T("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( dst ) );
             m_pOCPNPointListCtrl->SetItem( idx, colOCPNPOINTDIST, dist );
 
             if( rp == rp_select ) selected_id = (long) rp_select; //index; //m_pWptListCtrl->GetItemData(item);
@@ -1426,10 +1428,10 @@ void PathManagerDialog::OnOCPNPointToggleVisibility( wxMouseEvent &event )
 
 void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
 {
-    OCPNPoint *pWP = new OCPNPoint( gLat, gLon, g_default_OCPNPoint_icon, wxEmptyString,
+    OCPNPoint *pWP = new OCPNPoint( g_dLat, g_dLon, g_default_OCPNPoint_icon, wxEmptyString,
             GPX_EMPTY_STRING );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-    pOCPNSelect->AddSelectableOCPNPoint( gLat, gLon, pWP );
+    pOCPNSelect->AddSelectableOCPNPoint( g_dLat, g_dLon, pWP );
     pOCPNDrawConfig->AddNewOCPNPoint( pWP, -1 );    // use auto next num
     RequestRefresh( GetOCPNCanvasWindow() );
 
@@ -1495,7 +1497,7 @@ void PathManagerDialog::OnOCPNPointZoomtoClick( wxCommandEvent &event )
 //      ocpncc1->SetViewPoint(wp->m_lat, wp->m_lon, ocpncc1->GetVPScale(), 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
 //      ocpncc1->Refresh();
 //      RequestRefresh( GetOCPNCanvasWindow() );    
-    gFrame->JumpToPosition( wp->m_lat, wp->m_lon, ocpncc1->GetVPScale() );
+    JumpToPosition( wp->m_lat, wp->m_lon, g_pivp->view_scale_ppm );
 
 }
 
@@ -1577,9 +1579,9 @@ void PathManagerDialog::OnOCPNPointGoToClick( wxCommandEvent &event )
 
     if( !wp ) return;
 
-    OCPNPoint *pWP_src = new OCPNPoint( gLat, gLon, g_default_OCPNPoint_icon, wxEmptyString,
+    OCPNPoint *pWP_src = new OCPNPoint( g_dLat, g_dLon, g_default_OCPNPoint_icon, wxEmptyString,
             GPX_EMPTY_STRING );
-    pOCPNSelect->AddSelectableOCPNPoint( gLat, gLon, pWP_src );
+    pOCPNSelect->AddSelectableOCPNPoint( g_dLat, g_dLon, pWP_src );
 
     Path *temp_path = new Path();
     pPathList->Append( temp_path );
@@ -1587,7 +1589,7 @@ void PathManagerDialog::OnOCPNPointGoToClick( wxCommandEvent &event )
     temp_path->AddPoint( pWP_src );
     temp_path->AddPoint( wp );
 
-    pOCPNSelect->AddSelectablePathSegment( gLat, gLon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_path );
+    pOCPNSelect->AddSelectablePathSegment( g_dLat, g_dLon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_path );
 
     wxString name = wp->GetName();
     if( name.IsEmpty() ) name = _("(Unnamed OCPN Point)");

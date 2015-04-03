@@ -46,8 +46,8 @@
 #include "pathmanagerdialog.h"
 #include "OCPNDrawPointInfoImpl.h"
 #include "OCPNDrawEventHandler.h"
-#include "glOCPNDrawChartCanvas.h"
 #include "chcanv.h"
+#include "Layer.h"
 #include "styles.h"
 #include "geodesic.h"
 #include "FontMgr.h"
@@ -73,6 +73,10 @@ using namespace std;
 #endif
 #endif
 
+#if !defined(NAN)
+static const long long lNaN = 0xfff8000000000000;
+#define NAN (*(double*)&lNaN)
+#endif
 
 #include "OCPNDrawicons.h"
 
@@ -119,7 +123,24 @@ int          g_iOCPNPointRangeRingsNumber;
 float        g_fOCPNPointRangeRingsStep;
 int          g_iOCPNPointRangeRingsStepUnits;
 wxColour     g_colourOCPNPointRangeRingsColour;
-PlugIn_ViewPort *g_vp;
+PlugIn_ViewPort *g_pivp;
+ocpnDC      *g_pDC;
+bool        g_bShowMag;
+double      gVar;
+double      g_UserVar;
+double      g_n_arrival_circle_radius;
+wxRect       g_blink_rect;
+bool         g_btouch;
+
+int              g_LayerIdx;
+bool             g_bShowLayers;
+wxString         g_VisibleLayers;
+wxString         g_InvisibleLayers;
+LayerList        *pLayerList;
+int              g_navobjbackups;
+
+OCPNPoint      *pAnchorWatchPoint1;
+OCPNPoint      *pAnchorWatchPoint2;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -217,6 +238,7 @@ int ocpn_draw_pi::Init(void)
     nConfig_State = 0;
     m_pMouseBoundary = NULL;
     m_bDrawingBoundary = NULL;
+    gVar = NAN;
 
     // Not sure what this is
     AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
@@ -229,9 +251,9 @@ int ocpn_draw_pi::Init(void)
 
 	m_pOCPNDrawConfig = GetOCPNConfigObject();
     pOCPNDrawConfig = new OCPNDrawConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
-    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( pOCPNDrawConfig->m_sNavObjSetChangesFile );
+    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( pOCPNDrawConfig->m_sOCPNDrawNavObjSetChangesFile );
 //    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
-    wxString sChangesFile = pOCPNDrawConfig->m_sNavObjSetChangesFile;
+    wxString sChangesFile = pOCPNDrawConfig->m_sOCPNDrawNavObjSetChangesFile;
 //    pOCPNDrawConfig->m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges( sChangesFile );
     
     pOCPNSelect = new OCPNSelect();
@@ -561,7 +583,7 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
 
 void ocpn_draw_pi::SaveConfig()
 {
-    wxFileConfig *pConf = (wxFileConfig *)m_pOCPNDrawConfig;
+    wxFileConfig *pConf = m_pOCPNDrawConfig;
 
     if(pConf)
     {
@@ -577,7 +599,8 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "OCPNPointRangeRingsStep" ), g_fOCPNPointRangeRingsStep );
         pConf->Write( wxS( "OCPNPointRangeRingsStepUnits" ), g_iOCPNPointRangeRingsStepUnits );
         pConf->Write( wxS( "OCPNPointRangeRingsColour" ), g_colourOCPNPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ) );
-
+        pConf->Write( wxS( "ShowMag" ), g_bShowMag );
+        pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
     }
 }
 
@@ -604,18 +627,21 @@ void ocpn_draw_pi::LoadConfig()
         g_colourOCPNPointRangeRingsColour = wxColour( *wxRED );
         pConf->Read( wxS( "OCPNPointRangeRingsColour" ), &l_wxsOCPNPointRangeRingsColour, wxS( "RED" ) );
         g_colourOCPNPointRangeRingsColour.Set( l_wxsOCPNPointRangeRingsColour );
-
-        
-//    g_colourWaypointRangeRingsColour = wxColour( *wxRED );
-//    wxString l_wxsWaypointRangeRingsColour;
-//    Read( _T( "WaypointRangeRingsColour" ), &l_wxsWaypointRangeRingsColour );
-//    g_colourWaypointRangeRingsColour.Set( l_wxsWaypointRangeRingsColour );
+        pConf->Read ( wxS( "ShowMag" ), &g_bShowMag, 0 );
+        g_UserVar = 0.0;
+        wxString umv;
+        pConf->Read( wxS( "UserMagVariation" ), &umv );
+        if(umv.Len())
+            umv.ToDouble( &g_UserVar );
 
     }
     
     pOCPNPointList = new OCPNPointList;
     pBoundaryList = new BoundaryList;
     pPathList = new PathList;
+    //    Layers
+    pLayerList = new LayerList;
+
 }
 
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
@@ -913,6 +939,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 //end           
         }
     }
+    
+    if (bret) ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    
     return bret;
 }
 
@@ -960,17 +989,21 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
 bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 {
     m_vp = vp;
-    RenderPathLegs( (ocpnDC &) *pmdc );
+    ocpnDC ocpnmdc( *pmdc );
+    RenderPathLegs( ocpnmdc );
     return TRUE;
 }
 
-bool ocpn_draw_pi::RenderOverlay(wxDC &mdc, PlugIn_ViewPort *pivp)
+bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
     m_vp = pivp;
-    ocpnDC *poDC = new ocpnDC( mdc );
-    RenderPathLegs( *poDC );
-    if (m_pMouseBoundary) m_pMouseBoundary->Draw( *poDC, (ViewPort &)m_vp);
-    DrawAllPathsInBBox( *poDC, ocpncc1->GetVP().GetBBox() );
+    g_pDC = new ocpnDC( dc );
+    LLBBox llbb;
+    llbb.SetMin( pivp->lon_min, pivp->lat_min );
+    llbb.SetMax( pivp->lon_max, pivp->lat_max );
+    DrawAllPathsInBBox( *g_pDC, llbb );
+    RenderPathLegs( *g_pDC );
+    
     return TRUE;
 }
 
@@ -978,12 +1011,18 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
     m_pcontext = pcontext;
     m_vp = pivp;
+
+    //m_glcc = wxGLCanvas( m_parent_window );
+    //wxGLCanvas m_wxGLC( m_parent_window );
+    g_pDC = NULL;
+    g_pDC = new ocpnDC();
+
     OCPNRegion region( pivp->rv_rect );
 //    glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)ocpncc1;
 //    p_ODChartCanvas->SetClipRegion( ocpncc1->GetVP(), region);
 
 //    ocpnDC *poDC = NULL;
-//    RenderPathLegs( *poDC );
+    RenderPathLegs( *g_pDC );
     //p_ODChartCanvas->SetContext( pcontext )
     //m_glcc = new glChartCanvas(this);
     
@@ -997,10 +1036,10 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     return TRUE;
 }
 
-void ocpn_draw_pi::RenderPathLegs(  ocpnDC &dc ) 
+void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc ) 
 {
     if( nBoundary_State >= 2) {
-
+        
         Boundary* boundary = 0;
         int state;
         boundary = m_pMouseBoundary;
@@ -1037,19 +1076,19 @@ void ocpn_draw_pi::RenderPathLegs(  ocpnDC &dc )
                     Geodesic::GreatCircleTravel( m_prev_rlon, m_prev_rlat, gcDist*p, brg, &pLon, &pLat, &gcBearing2 );
                     GetCanvasPixLL( m_vp, &destPoint, m_cursor_lat, m_cursor_lon);
                     //destPoint = VPoint.GetPixFromLL( pLat, pLon );
-                    boundary->DrawSegment( dc, &lastPoint, &destPoint, (ViewPort &)m_vp, false );
+                    boundary->DrawSegment( dc, &lastPoint, &destPoint, *m_vp, false );
                     wxPoint rpn;
                     boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                    boundary->DrawSegment( dc, &rpn , &destPoint, (ViewPort &)m_vp, false );
+                    boundary->DrawSegment( dc, &rpn , &destPoint, *m_vp, false );
                     lastPoint = destPoint;
                 }
             }
             else {
-                boundary->DrawSegment( dc, &lastPoint, &r_rband, (ViewPort &)m_vp, false );
+                boundary->DrawSegment( dc, &lastPoint, &r_rband, *m_vp, false );
                 if ( nBoundary_State >= 2) { 
                     wxPoint rpn;
                     boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                    boundary->DrawSegment( dc, &rpn , &r_rband, (ViewPort &)m_vp, false );
+                    boundary->DrawSegment( dc, &rpn , &r_rband, *m_vp, false );
                 }
             }
 //        }
@@ -1133,7 +1172,7 @@ void ocpn_draw_pi::RenderExtraBoundaryLegInfo( ocpnDC &dc, wxPoint ref_point, wx
 void ocpn_draw_pi::SetCurrentViewPort(PlugIn_ViewPort &vp)
 {
     m_vp = &vp;
-    g_vp = &vp;
+    g_pivp = &vp;
 }
 
 void ocpn_draw_pi::FinishBoundary( void )
@@ -1204,7 +1243,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
                 b_drawn = true;
 
                 if( ( pBoundaryDraw != active_boundary ) )
-                    pBoundaryDraw->Draw( dc, (ViewPort &)m_vp );
+                    pBoundaryDraw->Draw( dc, *m_vp );
             } else if( pBoundaryDraw->CrossesIDL() ) {
                 wxPoint2DDouble xlate( -360., 0. );
                 wxBoundingBox test_box1 = pBoundaryDraw->GetBBox();
@@ -1214,7 +1253,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
                 if( !BltBBox.IntersectOut( test_box1 ) ) // Boundary is not wholly outside window
                 {
                     b_drawn = true;
-                    if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, (ViewPort &)m_vp );
+                    if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, *m_vp );
                 }
             }
 
@@ -1227,7 +1266,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
                     if( !BltBBox.IntersectOut( test_box2 ) ) // Boundary is not wholly outside window
                     {
                         b_drawn = true;
-                        if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, ocpncc1->GetVP() );
+                        if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, *m_vp );
                     }
                 } else if( !b_drawn && ( BltBBox.GetMinX() < 180. ) && ( BltBBox.GetMaxX() > 180. ) ) {
                     wxPoint2DDouble xlate( 360., 0. );
@@ -1236,7 +1275,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
                     if( !BltBBox.IntersectOut( test_box3 ) ) // Boundary is not wholly outside window
                     {
                         b_drawn = true;
-                        if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, (ViewPort &)m_vp );
+                        if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, *m_vp );
                     }
                 }
             }
@@ -1246,7 +1285,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
     }
 
     //  Draw any active or selected route, boundary or track last, so that is is always on top
-    if( active_boundary ) active_boundary->Draw( dc, (ViewPort &)m_vp );
+    if( active_boundary ) active_boundary->Draw( dc, *m_vp );
 }
 
 bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
@@ -1284,7 +1323,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
 #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox( m_parent_window, wxS("Use nearby waypoint?"),
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, wxS("Use nearby waypoint?"),
                                         wxS("OpenCPN Boundary Create"),
                                         (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
 #else
@@ -1394,7 +1433,6 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         m_pMouseBoundary->m_lastMousePointIndex = m_pMouseBoundary->GetnPoints();
 
     nBoundary_State++;
-    ocpncc1->InvalidateGL();
     RequestRefresh( m_parent_window );
         
     return TRUE;
@@ -1627,7 +1665,8 @@ void ocpn_draw_pi::MenuPrepend( wxMenu *menu, int id, wxString label)
 {
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-    wxFont *qFont = GetOCPNScaledFont(_T("Menu"));
+//    wxFont *qFont = GetOCPNScaledFont(_T("Menu"));
+    wxFont *qFont = OCPNGetFont(wxS("Menu"));
     item->SetFont(*qFont);
 #endif
     menu->Prepend(item);
@@ -1637,7 +1676,8 @@ void ocpn_draw_pi::MenuAppend( wxMenu *menu, int id, wxString label)
 {
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-    wxFont *qFont = GetOCPNScaledFont(_("Menu"));
+//    wxFont *qFont = GetOCPNScaledFont(_("Menu"));
+    wxFont *qFont = OCPNGetFont(wxS("Menu"));
     item->SetFont(*qFont);
 #endif
     menu->Append(item);
@@ -1671,13 +1711,10 @@ void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion 
         const wxBoundingBox &test_box = pPathDraw->GetBBox();
         if(test_box.GetMaxY() < pivp.lat_min)
             continue;
-//        if(test_box.GetMaxY() < vp_box.GetMinY())
-//            continue;
 
         if(test_box.GetMinY() > pivp.lon_max)
             continue;
 
-        //double vp_minx = vp_box.GetMinX(), vp_maxx = vp_box.GetMaxX();
         double test_minx = test_box.GetMinX(), test_maxx = test_box.GetMaxX();
 
         // Path is not wholly outside viewport
@@ -1704,3 +1741,110 @@ void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion 
     }
     
 }
+
+/* render a rectangle at a given color and transparency */
+void ocpn_draw_pi::AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color,
+        unsigned char transparency )
+{
+    wxDC *pdc = dc.GetDC();
+    if( pdc ) {
+        //    Get wxImage of area of interest
+        wxBitmap obm( size_x, size_y );
+        wxMemoryDC mdc1;
+        mdc1.SelectObject( obm );
+        mdc1.Blit( 0, 0, size_x, size_y, pdc, x, y );
+        mdc1.SelectObject( wxNullBitmap );
+        wxImage oim = obm.ConvertToImage();
+
+        //    Create destination image
+        wxBitmap olbm( size_x, size_y );
+        wxMemoryDC oldc( olbm );
+        if(!oldc.IsOk())
+            return;
+
+        oldc.SetBackground( *wxBLACK_BRUSH );
+        oldc.SetBrush( *wxWHITE_BRUSH );
+        oldc.Clear();
+
+        if( radius > 0.0 )
+            oldc.DrawRoundedRectangle( 0, 0, size_x, size_y, radius );
+
+        wxImage dest = olbm.ConvertToImage();
+        unsigned char *dest_data = (unsigned char *) malloc(
+                size_x * size_y * 3 * sizeof(unsigned char) );
+        unsigned char *bg = oim.GetData();
+        unsigned char *box = dest.GetData();
+        unsigned char *d = dest_data;
+
+        //  Sometimes, on Windows, the destination image is corrupt...
+        if(NULL == box)
+            return;
+
+        float alpha = 1.0 - (float)transparency / 255.0;
+        int sb = size_x * size_y;
+        for( int i = 0; i < sb; i++ ) {
+            float a = alpha;
+            if( *box == 0 && radius > 0.0 ) a = 1.0;
+            int r = ( ( *bg++ ) * a ) + (1.0-a) * color.Red();
+            *d++ = r; box++;
+            int g = ( ( *bg++ ) * a ) + (1.0-a) * color.Green();
+            *d++ = g; box++;
+            int b = ( ( *bg++ ) * a ) + (1.0-a) * color.Blue();
+            *d++ = b; box++;
+        }
+
+        dest.SetData( dest_data );
+
+        //    Convert destination to bitmap and draw it
+        wxBitmap dbm( dest );
+        dc.DrawBitmap( dbm, x, y, false );
+
+        // on MSW, the dc Bounding box is not updated on DrawBitmap() method.
+        // Do it explicitely here for all platforms.
+        dc.CalcBoundingBox( x, y );
+        dc.CalcBoundingBox( x + size_x, y + size_y );
+    } else {
+#ifdef ocpnUSE_GL
+        /* opengl version */
+        glEnable( GL_BLEND );
+        glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+
+        if(radius > 1.0f){
+            wxColour c(color.Red(), color.Green(), color.Blue(), transparency);
+            dc.SetBrush(wxBrush(c));
+            dc.DrawRoundedRectangle( x, y, size_x, size_y, radius );
+        }
+        else {
+            glColor4ub( color.Red(), color.Green(), color.Blue(), transparency );
+            glBegin( GL_QUADS );
+            glVertex2i( x, y );
+            glVertex2i( x + size_x, y );
+            glVertex2i( x + size_x, y + size_y );
+            glVertex2i( x, y + size_y );
+            glEnd();
+        }
+        glDisable( GL_BLEND );
+#endif
+    }
+}
+
+double ocpn_draw_pi::GetTrueOrMag(double a)
+{
+    if( g_bShowMag ){
+        if(!wxIsNaN(gVar)){
+            if((a - gVar) >360.)
+                return (a - gVar - 360.);
+            else
+                return ((a - gVar) >= 0.) ? (a - gVar) : (a - gVar + 360.);
+        }
+        else{
+            if((a - g_UserVar) >360.)
+                return (a - g_UserVar - 360.);
+            else
+                return ((a - g_UserVar) >= 0.) ? (a - g_UserVar) : (a - g_UserVar + 360.);
+        }
+    }
+    else
+        return a;
+}
+

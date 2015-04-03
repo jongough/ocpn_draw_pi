@@ -59,8 +59,8 @@ public:
     int GetIndexOf(OCPNPoint *prp);
     OCPNPoint *InsertPointBefore(OCPNPoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
     void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
-    void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, ViewPort &VP, bool bdraw_arrow);
-    virtual void Draw(ocpnDC& dc, ViewPort &pVP);
+    void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
+    virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);
     virtual void DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region );
     OCPNPoint *GetLastPoint();
     void DeletePoint(OCPNPoint *rp, bool bRenamePoints = false);
@@ -68,7 +68,7 @@ public:
     void DeSelectPath();
     void FinalizeForRendering();
     void UpdateSegmentDistances();
-    void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, ViewPort &VP);
+    void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
     wxBoundingBox GetBBox();
     void SetnPoints(void){ m_nPoints = pOCPNPointList->GetCount(); }
@@ -84,8 +84,8 @@ public:
     void ClonePath(Path *psourceboundary, int start_nPoint, int end_nPoint, const wxString & suffix);
     void CloneAddedOCPNPoint(OCPNPoint *ptargetpoint, OCPNPoint *psourcepoint);
     void ClearHighlights(void);
-    void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
-    void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, ViewPort &VP);
+    void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
+    void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
 
     bool CrossesIDL(){ return m_bcrosses_idl; }
     void SetVisible(bool visible = true, bool includeWpts = true);

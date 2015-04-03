@@ -28,9 +28,11 @@
 
 #include "OCPNDrawCanvasMenuHandler.h"
 #include "chcanv.h"
+#include "ocpn_plugin.h"
 
 extern ChartCanvas     *ocpncc1;
 extern int              g_click_stop;
+extern PlugIn_ViewPort  *g_pivp;
 
 
 OCPNDrawCanvasMenuHandler::OCPNDrawCanvasMenuHandler(ChartCanvas *parentCanvas,
@@ -55,7 +57,11 @@ void OCPNDrawCanvasMenuHandler::PopupMenuHandler( wxCommandEvent& event )
     wxPoint r;
     double zlat, zlon;
 
-    ocpncc1->GetCanvasPixPoint( popx, popy, zlat, zlon );
+    //ocpncc1->GetCanvasPixPoint( popx, popy, zlat, zlon );
+    wxPoint wxp;
+    wxp.x = popx;
+    wxp.y = popy;
+    GetCanvasPixLL( g_pivp, &wxp, zlat, zlon );
 
     switch( event.GetId() ) {
 /*    case ID_WP_MENU_DELPOINT: {

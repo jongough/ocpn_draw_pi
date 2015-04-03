@@ -31,6 +31,7 @@ Boundary::Boundary()
     //ctor
     m_itest = 1;
     m_sTypeString = _T("Boundary");
+    
 }
 
 Boundary::~Boundary()

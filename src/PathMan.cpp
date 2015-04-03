@@ -117,11 +117,13 @@ bool PathMan::IsPathValid( Path *pPath )
 
 bool PathMan::ActivatePath(Path *pPathToActivate )
 {
-    wxJSONValue v;
-    v[_T("Name")] = pPathToActivate->m_PathNameString;
-    v[_T("GUID")] = pPathToActivate->m_GUID;
-    wxString msg_id( _T("OCPN_PATH_ACTIVATED") );
-    g_OD_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+    wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
+    wxString msg;
+    msg.append( wxS("Name: ") );
+    msg.append( pPathToActivate->m_PathNameString.c_str() );
+    msg.append( wxS(", GUID: ") );
+    msg.append( pPathToActivate->m_GUID );
+    SendPluginMessage( msg_id, msg );
 
     pPathToActivate->m_bPathIsActive = true;
 
@@ -130,11 +132,13 @@ bool PathMan::ActivatePath(Path *pPathToActivate )
 
 bool PathMan::DeactivatePath( Path *pPathToDeactivate )
 {
-    wxJSONValue v;
-    v[_T("Path_deactivated")] = pPathToDeactivate->m_PathNameString;
-    v[_T("GUID")] = pPathToDeactivate->m_GUID;
     wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
-    g_OD_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+    wxString msg;
+    msg.append( wxS("Name: ") );
+    msg.append( pPathToDeactivate->m_PathNameString.c_str() );
+    msg.append( wxS(", GUID: ") );
+    msg.append( pPathToDeactivate->m_GUID );
+    SendPluginMessage( msg_id, msg );
 
     pPathToDeactivate->m_bPathIsActive = false;
 //    console->pCDI->ClearBackground();

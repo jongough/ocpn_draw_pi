@@ -55,7 +55,7 @@
 #include "ocpn_draw_pi.h"
 
 
-extern double             gLat, gLon, gSog, gCog;
+extern double             g_dLat, g_dLon, gSog, gCog;
 extern double             g_PlanSpeed;
 extern wxDateTime         g_StartTime;
 extern int                g_StartTimeTZ;
@@ -78,8 +78,8 @@ extern wxString    m_InActiveLineColour;
 extern wxString    m_ActiveFillColour;
 extern wxString    m_InActiveLineColour;
 
-extern MyFrame            *gFrame;
-extern PlugIn_ViewPort  *g_vp;
+extern PlugIn_ViewPort  *g_pivp;
+extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 // Global print data, to remember settings during the session
 extern wxPrintData               *g_printData;
@@ -471,7 +471,7 @@ void PathProp::OnPathPropListClick( wxListEvent& event )
             prp->m_bPtIsSelected = true;                // highlight the routepoint
 
             //gFrame->JumpToPosition( prp->m_lat, prp->m_lon, ocpncc1->GetVPScale() );
-            JumpToPosition( prp->m_lat, prp->m_lon, g_vp->chart_scale );
+            JumpToPosition( prp->m_lat, prp->m_lon, g_pivp->chart_scale );
 
         }
     }
@@ -499,7 +499,7 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
             sMessage.append( wxS("?") );
             sCaption.append( sType );
             
-            int dlg_return = OCPNMessageBox( this, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            int dlg_return = OCPNMessageBox_PlugIn( this, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
 
             if( dlg_return == wxID_YES ) {
                 m_pPath->RemovePointFromPath( wp, m_pPath );
@@ -557,7 +557,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     double join_distance = 0.;
     OCPNPoint *first_point = pPath->GetPoint( 1 );
     if( first_point )
-        DistanceBearingMercator_Plugin( first_point->m_lat, first_point->m_lon, gLat, gLon, &brg, &join_distance );
+        DistanceBearingMercator_Plugin( first_point->m_lat, first_point->m_lon, g_dLat, g_dLon, &brg, &join_distance );
 
     //    Update the "tides event" column header
     wxListItem column_info;
@@ -578,7 +578,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     double total_length = pPath->m_path_length;
 
     wxString slen;
-    slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( total_length ) );
+    slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( total_length ) );
     m_TotalDistCtl->SetValue( slen );
 
     wxString time_form;
@@ -588,8 +588,8 @@ bool PathProp::UpdateProperties( Path *pPath )
     wxOCPNPointListNode *node = pPath->pOCPNPointList->GetFirst();
 
     int i = 0;
-    double slat = gLat;
-    double slon = gLon;
+    double slat = g_dLat;
+    double slon = g_dLon;
     double tdis = 0.;
     double tsec = 0.;    // total time in seconds
 
@@ -655,9 +655,9 @@ bool PathProp::UpdateProperties( Path *pPath )
 
         //  Bearing
     if( g_bShowMag )
-        t.Printf( _T("%03.0f Deg. M"), gFrame->GetTrueOrMag( brg ) );
+        t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brg ) );
     else
-        t.Printf( _T("%03.0f Deg. T"), gFrame->GetTrueOrMag( brg ) );
+        t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brg ) );
 
 //    if( arrival )
 //        m_wpList->SetItem( item_line_index, 3, t );
@@ -667,9 +667,9 @@ bool PathProp::UpdateProperties( Path *pPath )
     // Course (bearing of next )
     if (_next_prp){
         if( g_bShowMag )
-            t.Printf( _T("%03.0f Deg. M"), gFrame->GetTrueOrMag( course ) );
+            t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( course ) );
         else
-            t.Printf( _T("%03.0f Deg. T"), gFrame->GetTrueOrMag( course ) );
+            t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( course ) );
         if( arrival )
             m_wpList->SetItem( item_line_index, 7, t );
     }
@@ -1203,16 +1203,19 @@ bool PathProp::SaveChanges( void )
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 
         pOCPNDrawConfig->UpdatePath( m_pPath );
-        pOCPNDrawConfig->UpdateSettings();
+        g_ocpn_draw_pi->SaveConfig();
     }
 
     if( m_pPath->IsActive() )
     {
-        wxJSONValue v;
-        v[_T("Name")] =  m_pPath->m_PathNameString;
-        v[_T("GUID")] =  m_pPath->m_GUID;
-        wxString msg_id( _T("OCPN_BND_ACTIVATED") );
-        g_OD_pi_manager->SendJSONMessageToAllPlugins( msg_id, v );
+        wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
+        wxString msg;
+        msg.append( wxS("Name: ") );
+        msg.append( m_pPath->m_PathNameString.c_str() );
+        msg.append( wxS(", GUID: ") );
+        msg.append( m_pPath->m_GUID );
+        SendPluginMessage( msg_id, msg );
+
     }
 
     return true;
