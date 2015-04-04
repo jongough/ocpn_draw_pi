@@ -91,15 +91,6 @@ PathMan::PathMan()
     pPathActivatePoint = NULL;
 }
 
-
-PathMan::PathMan(MyApp *parent)
-{
-    m_pparent_app = parent;
-    pActivePath = NULL;
-    pActivePoint = NULL;
-    pPathActivatePoint = NULL;
-}
-
 PathMan::~PathMan()
 {
     if( pPathActivatePoint ) delete pPathActivatePoint;

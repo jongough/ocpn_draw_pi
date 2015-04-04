@@ -30,6 +30,7 @@
 #include "Quilt.h"
 #include "ocpn_types.h"
 #include "OCPNPoint.h"
+#include "Hyperlink.h"
 
 
 #define STYLE_UNDEFINED -1

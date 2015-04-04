@@ -35,24 +35,25 @@ extern PathList *pPathList;
 extern OCPNSelect *pOCPNSelect;
 pugi::xml_node  gpx_path_child;
 pugi::xml_node  gpx_path_root;
-bool            m_bFirstPath;
 extern OCPNDrawConfig *pOCPNDrawConfig;
 extern PointMan        *pOCPNPointMan;
 extern PathMan          *g_pPathMan;
 
 
 
-OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges() : NavObjectChanges()
+OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges() : pugi::xml_document()
 {
     //ctor
     m_bFirstPath = true;
+    m_OCPNDrawchanges_file = 0;
 }
 
-OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : NavObjectChanges( file_name )
+OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : pugi::xml_document()
 {
     //ctor
-    
     m_ODfilename = file_name;
+    
+    m_OCPNDrawchanges_file = fopen(m_ODfilename.mb_str(), "a");
     
     m_bFirstPath = true;
 }
@@ -60,6 +61,11 @@ OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : NavObje
 OCPNDrawNavObjectChanges::~OCPNDrawNavObjectChanges()
 {
     //dtor
+    if(m_OCPNDrawchanges_file)
+        fclose(m_OCPNDrawchanges_file);
+
+    if( ::wxFileExists( m_ODfilename ) )
+        ::wxRemoveFile( m_ODfilename );
 }
 
 bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags )
@@ -154,14 +160,20 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
             child.append_child(pugi::node_pcdata).set_value(pr->m_GUID.mb_str());
         }
          
-         if((flags & OUT_VIZ) && !pr->m_bIsVisible) {
+         if(flags & OUT_VIZ) {
              child = node.append_child("opencpn:viz");
-             child.append_child(pugi::node_pcdata).set_value("0");
+             if ( pr->m_bIsVisible )
+                child.append_child(pugi::node_pcdata).set_value("1");
+             else
+                child.append_child(pugi::node_pcdata).set_value("0");
          }
             
-         if((flags & OUT_VIZ_NAME) && pr->m_bShowName) {
+         if(flags & OUT_VIZ_NAME) {
              child = node.append_child("opencpn:viz_name");
-             child.append_child(pugi::node_pcdata).set_value("1");
+             if ( pr->m_bShowName )
+                child.append_child(pugi::node_pcdata).set_value("1");
+             else
+                child.append_child(pugi::node_pcdata).set_value("0");
          }
          
          if((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
@@ -296,9 +308,9 @@ bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
     pugi::xml_node child = object.append_child("opencpn:action");
     child.append_child(pugi::node_pcdata).set_value(action);
 
-    pugi::xml_writer_file writer(m_changes_file);
+    pugi::xml_writer_file writer(m_OCPNDrawchanges_file);
     object.print(writer, " ");
-    fflush(m_changes_file);
+    fflush(m_OCPNDrawchanges_file);
     
     return true;
 }
@@ -314,9 +326,9 @@ bool OCPNDrawNavObjectChanges::AddOCPNPoint( OCPNPoint *pOP, const char *action 
     pugi::xml_node child = object.append_child("opencpn:action");
     child.append_child(pugi::node_pcdata).set_value(action);
 
-    pugi::xml_writer_file writer(m_changes_file);
+    pugi::xml_writer_file writer(m_OCPNDrawchanges_file);
     m_gpx_root.print(writer, " ");
-    fflush(m_changes_file);
+    fflush(m_OCPNDrawchanges_file);
     
     return true;
 }
@@ -436,11 +448,12 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                     wxString TypeString;
                     for( pugi::xml_node child = object.first_child(); child != 0; child = child.next_sibling() ) {
                         const char *pcn = child.name();
-                        if( strcmp( pcn, "opencpn:type") ) {
+                        if( !strcmp( pcn, "opencpn:type") ) {
                                 TypeString = wxString::FromUTF8( child.first_child().value() );
+                                break;
                         }
                     }
-                    if ( TypeString.compare( wxS("Boundary") ) ) {
+                    if ( !TypeString.compare( wxS("Boundary") ) ) {
                         Path *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
@@ -494,25 +507,26 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
         const char *pcn = child.name();
         
         if( !strcmp( pcn, "sym" ) ) {
-            SymString = wxString::FromUTF8( child.first_child().value() );
+            SymString.clear();
+            SymString.append( wxString::FromUTF8( child.first_child().value() ) );
         }
         else
         if( !strcmp( pcn, "time") ) 
-            TimeString = wxString::FromUTF8( child.first_child().value() );
+            TimeString.append( wxString::FromUTF8( child.first_child().value() ) );
 
         else
         if( !strcmp( pcn, "name") ) {
-                NameString = wxString::FromUTF8( child.first_child().value() );
+            NameString.append( wxString::FromUTF8( child.first_child().value() ) );
         } 
         
         else
         if( !strcmp( pcn, "desc") ) {
-                DescString = wxString::FromUTF8( child.first_child().value() );
+            DescString.append( wxString::FromUTF8( child.first_child().value() ) );
         }
         
         else
         if( !strcmp( pcn, "type") ) {
-                TypeString = wxString::FromUTF8( child.first_child().value() );
+            TypeString.append( wxString::FromUTF8( child.first_child().value() ) );
         }
         
         else              // Read hyperlink
@@ -522,15 +536,15 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
             wxString HrefTypeString;
             if( linklist == NULL )
                 linklist = new HyperlinkList;
-            HrefString = wxString::FromUTF8( child.first_attribute().value() );
+            HrefString.append( wxString::FromUTF8( child.first_attribute().value() ) );
 
             for( pugi::xml_node child1 = child.first_child(); child1; child1 = child1.next_sibling() ) {
                 wxString LinkString = wxString::FromUTF8( child1.name() );
 
                 if( LinkString == _T ( "text" ) )
-                    HrefTextString = wxString::FromUTF8( child1.first_child().value() );
+                    HrefTextString.append( wxString::FromUTF8( child1.first_child().value() ) );
                 if( LinkString == _T ( "type" ) ) 
-                    HrefTypeString = wxString::FromUTF8( child1.first_child().value() );
+                    HrefTypeString.append( wxString::FromUTF8( child1.first_child().value() ) );
             }
           
             Hyperlink *link = new Hyperlink;
@@ -542,61 +556,59 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
 
     //    OpenCPN Extensions....
         else
-        if( !strcmp( pcn, "extensions") ) {
-            for( pugi::xml_node ext_child = child.first_child(); ext_child; ext_child = ext_child.next_sibling() ) {
-                wxString ext_name = wxString::FromUTF8( ext_child.name() );
-                if( ext_name == _T ( "opencpn:guid" ) ) {
-                  GuidString = wxString::FromUTF8( ext_child.first_child().value() );
-                }
-                else
-                if( ext_name == _T ( "opencpn:viz" ) ) {
-                    b_propviz = true;
-                    wxString s = wxString::FromUTF8( ext_child.first_child().value() );
-                    long v = 0;
-                    if( s.ToLong( &v ) )
-                        bviz = ( v != 0 );
-                }
-                else
-                if( ext_name == _T ( "opencpn:viz_name" ) ) {
-                    b_propvizname = true;
-                    wxString s = wxString::FromUTF8( ext_child.first_child().value() );
-                    long v = 0;
-                    if( s.ToLong( &v ) )
-                        bviz_name = ( v != 0 );
-                }
-                else
-                if( ext_name == _T ( "opencpn:auto_name" ) ) {
-                    wxString s = wxString::FromUTF8( ext_child.first_child().value() );
-                    long v = 0;
-                    if( s.ToLong( &v ) )
-                        bauto_name = ( v != 0 );
-                }
-                else
-                if( ext_name  == _T ( "opencpn:shared" ) ) {
-                    wxString s = wxString::FromUTF8( ext_child.first_child().value() );
-                    long v = 0;
-                    if( s.ToLong( &v ) )
-                        bshared = ( v != 0 );
-                }
-                if( ext_name == _T ( "opencpn:arrival_radius" ) ) {
-                    wxString::FromUTF8(ext_child.first_child().value()).ToDouble(&ArrivalRadius ) ;
-                }
-                if ( ext_name == _T("opencpn:OCPNPoint_range_rings") ) {
-                    for ( pugi::xml_attribute attr = ext_child.first_attribute(); attr; attr = attr.next_attribute() ) {
-                        if ( wxString::FromUTF8(attr.name()) == _T("number") )
-                            l_iOCPNPointRangeRingsNumber = attr.as_int();
-                        else if ( wxString::FromUTF8(attr.name()) == _T("step") )
-                            l_fOCPNPointRangeRingsStep = attr.as_float();
-                        else if ( wxString::FromUTF8(attr.name()) == _T("units") )
-                            l_pOCPNPointRangeRingsStepUnits = attr.as_int();
-                        else if ( wxString::FromUTF8(attr.name()) == _T("visible") )
-                            l_bOCPNPointRangeRingsVisible =  attr.as_bool();
-                        else if ( wxString::FromUTF8(attr.name()) == _T("colour") )
-                            l_wxcOCPNPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    }
-                }
-             }// for 
-        } //extensions
+        if( !strcmp( pcn, "opencpn:viz" ) ) {
+            b_propviz = true;
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                bviz = ( v != 0 );
+        }
+        else
+        if( !strcmp( pcn, "opencpn:viz_name") ) {
+            b_propvizname = true;
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                bviz_name = ( v != 0 );
+        }
+        else
+        if( !strcmp( pcn, "opencpn:guid" ) ) {
+            GuidString.clear();
+            GuidString.append( wxString::FromUTF8(child.first_child().value()) );
+        }
+        else
+        if( !strcmp( pcn, "opencpn:auto_name" ) ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                bauto_name = ( v != 0 );
+        }
+        else
+        if( !strcmp( pcn, "opencpn:shared" ) ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                bshared = ( v != 0 );
+        }
+        else
+        if( !strcmp( pcn, "opencpn:arrival_radius" ) ) {
+            wxString::FromUTF8(child.first_child().value()).ToDouble(&ArrivalRadius ) ;
+        }
+        else
+        if ( !strcmp( pcn, "opencpn:OCPNPoint_range_rings") ) {
+            for ( pugi::xml_attribute attr = child.first_attribute(); attr; attr = attr.next_attribute() ) {
+                if ( wxString::FromUTF8(attr.name()) == _T("number") )
+                    l_iOCPNPointRangeRingsNumber = attr.as_int();
+                else if ( wxString::FromUTF8(attr.name()) == _T("step") )
+                    l_fOCPNPointRangeRingsStep = attr.as_float();
+                else if ( wxString::FromUTF8(attr.name()) == _T("units") )
+                    l_pOCPNPointRangeRingsStepUnits = attr.as_int();
+                else if ( wxString::FromUTF8(attr.name()) == _T("visible") )
+                    l_bOCPNPointRangeRingsVisible =  attr.as_bool();
+                else if ( wxString::FromUTF8(attr.name()) == _T("colour") )
+                    l_wxcOCPNPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
+            }
+        }
     }   // for
 
     // Create waypoint
@@ -671,8 +683,7 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
     
     wxString Name = wxString::FromUTF8( wpt_node.name() );
     if( Name == _T ( "opencpn:path" ) ) {
-//    if( Name == _T ( "bnd" ) ) {
-        if ( pPathType->compare( wxS("Boundary") ) ) {
+        if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
             pTentBoundary = new Boundary();
             pTentPath = pTentBoundary;
         } else pTentPath = new Path();
@@ -683,7 +694,6 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
             wxString ChildName = wxString::FromUTF8( tschild.name() );
 
             if( ChildName == _T ( "opencpn:OCPNPoint" ) ) {
-//            if( ChildName == _T ( "bndpt" ) ) {
                 OCPNPoint *tpOp = GPXLoadOCPNPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
                 OCPNPoint *epp = OCPNPointExists( tpOp->m_GUID );
                 if( epp != NULL )
@@ -702,11 +712,11 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
             }
             else
             if( ChildName == _T ( "name" ) ) {
-                PathName = wxString::FromUTF8( tschild.first_child().value() );
+                PathName.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
             else
             if( ChildName == _T ( "desc" ) ) {
-                DescString = wxString::FromUTF8( tschild.first_child().value() );
+                DescString.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
                 
             else
@@ -735,9 +745,9 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
                     wxString LinkString = wxString::FromUTF8( child1.name() );
 
                     if( LinkString == _T ( "text" ) )
-                        HrefTextString = wxString::FromUTF8( child1.first_child().value() );
+                        HrefTextString.append( wxString::FromUTF8( child1.first_child().value() ) );
                     if( LinkString == _T ( "type" ) ) 
-                        HrefTypeString = wxString::FromUTF8( child1.first_child().value() );
+                        HrefTypeString.append( wxString::FromUTF8( child1.first_child().value() ) );
                 }
               
                 Hyperlink *link = new Hyperlink;
@@ -779,12 +789,13 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
              else
              if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
-                pTentBoundary->m_GUID =  wxString::FromUTF8(tschild.first_child().value());
+                pTentBoundary->m_GUID.clear();
+                pTentBoundary->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
              }
              
              else
              if( ChildName == _T ( "opencpn:time_display" ) ) {
-                pTentBoundary->m_TimeDisplayFormat, wxString::FromUTF8(tschild.first_child().value());
+                pTentBoundary->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
              }
         }
                     
@@ -968,3 +979,157 @@ Path *OCPNDrawNavObjectChanges::PathExists( Path * pTentPath )
     return NULL;
 }
 
+bool OCPNDrawNavObjectChanges::SaveFile( const wxString filename )
+{
+    save_file(filename.fn_str(), "  ");
+    return true;
+}
+
+bool OCPNDrawNavObjectChanges::ApplyChanges(void)
+{
+    //Let's reconstruct the unsaved changes
+    
+    pugi::xml_node object = this->first_child();
+    
+    while(strlen(object.name()))
+    {
+        if( !strcmp(object.name(), "opencpn:OCPNPoint") ) {
+            OCPNPoint *pOp = GPXLoadOCPNPoint1( object, _T("circle"), _T(""), false, false, false, 0 );
+            
+            if(pOp && pOCPNPointMan) {
+                pOp->m_bIsolatedMark = true;
+                OCPNPoint *pExisting = OCPNPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
+                
+                pugi::xml_node xchild = object.child("extensions");
+                pugi::xml_node child = xchild.child("opencpn:action");
+                
+                if(!strcmp(child.first_child().value(), "add") ){
+                    if( !pExisting ) 
+                        pOCPNPointMan->AddOCPNPoint( pOp );
+                    pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                }                    
+                
+                else if(!strcmp(child.first_child().value(), "update") ){
+                    if( pExisting )
+                        pOCPNPointMan->RemoveOCPNPoint( pExisting );
+                    pOCPNPointMan->AddOCPNPoint( pOp );
+                    pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                }
+                
+                else if(!strcmp(child.first_child().value(), "delete") ){
+                    if( pExisting )
+                        pOCPNPointMan->DestroyOCPNPoint( pExisting, false );
+                }
+                 
+                else
+                    delete pOp;
+            }
+        }
+        else
+            if( !strcmp(object.name(), "opencpn:path") ) {
+                pugi::xml_node typesearch = object.child("opencpn:type");
+                wxString wxsType = wxString::FromUTF8( typesearch.first_child().value() );
+                wxString *pwxsType = &wxsType;
+                Path *pPath = GPXLoadPath1( object, false, false, false, 0 , &wxsType );
+                
+                if(pPath && g_pPathMan) {
+                    pugi::xml_node child = object.child("opencpn:action");
+
+                    if(!strcmp(child.first_child().value(), "add") ){
+                        InsertPathA( pPath );
+                    }                    
+                
+                    else if(!strcmp(child.first_child().value(), "update") ){
+                        UpdatePathA( pPath );
+                    }
+                
+                    else if(!strcmp(child.first_child().value(), "delete") ){
+                        Path *pExisting = PathExists( pPath->m_GUID );
+                        if(pExisting){
+                            pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
+                            g_pPathMan->DeletePath( pExisting );
+                            pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
+                        }
+                    }
+                
+                    else
+                        delete pPath;
+                }
+            }
+    
+        object = object.next_sibling();
+                
+    }
+
+    return true;
+}
+
+int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
+{
+    if(!pOCPNPointMan)
+        return 0;
+    
+    int n_obj = 0;
+    pugi::xml_node objects = this->child("OCPNDraw");
+    
+    for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling())
+    {
+        if( !strcmp(object.name(), "opencpn:OCPNPoint") ) {
+            OCPNPoint *pOp = GPXLoadOCPNPoint1( object, _T("circle"), _T(""), true, true, b_layerviz, layer_id );
+            pOp->m_bIsolatedMark = true;      // This is an isolated mark
+            
+            if(pOp) {
+                pOCPNPointMan->AddOCPNPoint( pOp );
+                pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                n_obj++;
+            }
+            else
+                delete pOp;
+        }
+        else{
+            if( !strcmp(object.name(), "opencpn:path") ) {
+                pugi::xml_node typesearch = object;
+                wxString wxsType = wxEmptyString;
+                while(strlen(typesearch.name()))
+                {
+                    if (!strcmp(typesearch.name(), "opencpn:type") ) {
+                        wxsType.append( wxString::FromUTF8( typesearch.first_child().value() ) );
+                        break;
+                    }
+                    typesearch = typesearch.next_sibling();
+                }
+                
+                Path *pPath= GPXLoadPath1( object, true, true, b_layerviz, layer_id, &wxsType );
+                n_obj++;
+                InsertPathA( pPath );
+            }
+        }   
+    }
+    
+    return n_obj;
+}
+
+void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
+{
+    Path * path = PathExists( pTentPath->m_GUID );
+    if( path ) {
+        wxOCPNPointListNode *node = pTentPath->pOCPNPointList->GetFirst();
+        while( node ) {
+            OCPNPoint *pop = node->GetData();
+            OCPNPoint *ex_op = path->GetPoint( pop->m_GUID );
+            if( ex_op ) {
+                ex_op->m_lat = pop->m_lat;
+                ex_op->m_lon = pop->m_lon;
+                ex_op->SetIconName( pop->GetIconName() );
+                ex_op->m_MarkDescription = pop->m_MarkDescription;
+                ex_op->SetName( pop->GetName() );
+            } else {
+                pOCPNSelect->AddSelectableOCPNPoint( pop->m_lat, pop->m_lon, pop );
+            }
+            node = node->GetNext();
+        }
+    } else {
+        InsertPathA( pTentPath );
+    }
+}
+                       

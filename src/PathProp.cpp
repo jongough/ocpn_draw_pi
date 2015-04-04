@@ -203,7 +203,7 @@ PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, co
     SetExtraStyle( GetExtraStyle() | wxWS_EX_BLOCK_EVENTS );
     wxDialog::Create( parent, id, caption, pos, size, style );
 
-    wxFont *qFont = GetOCPNScaledFont(_("Dialog"));
+    wxFont *qFont = OCPNGetFont(_("Dialog"), 0);
     SetFont( *qFont );
         
     CreateControls();
@@ -524,7 +524,7 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
 
 void PathProp::SetColorScheme( ColorScheme cs )
 {
-    DimeControl( this );
+    g_ocpn_draw_pi->DimeControl( this );
 }
 
 /*
@@ -646,7 +646,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     // end of calculation
 
 
-    t.Printf( _T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance( leg_dist ) );
+    t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( leg_dist ) );
     if( arrival )
         m_wpList->SetItem( item_line_index, 2, t );
     if( !enroute )
@@ -677,10 +677,10 @@ bool PathProp::UpdateProperties( Path *pPath )
         m_wpList->SetItem( item_line_index, 7, nullify );
 
         //  Lat/Lon
-        wxString tlat = toSDMM( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
+        wxString tlat = toSDMM_PlugIn( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
         if( arrival ) m_wpList->SetItem( item_line_index, 4, tlat );
 
-        wxString tlon = toSDMM( 2, prp->m_lon, prp->m_bIsInTrack );
+        wxString tlon = toSDMM_PlugIn( 2, prp->m_lon, prp->m_bIsInTrack );
         if( arrival ) m_wpList->SetItem( item_line_index, 5, tlon );
 
 
@@ -790,7 +790,7 @@ bool PathProp::UpdateProperties()
 
         //  Total length
         wxString slen;
-        slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( m_pRoute->m_route_length ) );
+        slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( m_pRoute->m_route_length ) );
 
         m_TotalDistCtl->SetValue( slen );
 
@@ -885,7 +885,7 @@ bool PathProp::UpdateProperties()
         }
 
         wxString slen;
-        slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit(), toUsrDistance( total_length ) );
+        slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( total_length ) );
 
         if( !m_pEnroutePoint ) m_TotalDistCtl->SetValue( slen );
         else
@@ -991,7 +991,7 @@ bool PathProp::UpdateProperties()
         // end of calculation
 
 
-        t.Printf( _T("%6.2f ") + getUsrDistanceUnit(), toUsrDistance( leg_dist ) );
+        t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( leg_dist ) );
         if( arrival )
             m_wpList->SetItem( item_line_index, 2, t );
         if( !enroute )

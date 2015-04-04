@@ -27,6 +27,7 @@
 #include "SelectItem.h"
 #include "Path.h"
 #include "OCPNSelect.h"
+#include "ODvector2D.h"
 //#include "Select.h"
 //#include "Boundary.h"
 
@@ -79,6 +80,12 @@ public:
 
 private:
     void CalcSelectRadius();
+    double vGetLengthOfNormal( pODVector2D a, pODVector2D b, pODVector2D n );
+    double vDotProduct( pODVector2D v0, pODVector2D v1 );
+    pODVector2D vAddVectors( pODVector2D v0, pODVector2D v1, pODVector2D v );
+    pODVector2D vSubtractVectors( pODVector2D v0, pODVector2D v1, pODVector2D v );
+    double vVectorSquared( pODVector2D v0 );
+    double vVectorMagnitude( pODVector2D v0 );
 
     SelectableItemList *pSelectList;
     int pixelRadius;

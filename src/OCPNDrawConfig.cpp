@@ -29,6 +29,7 @@
 #include "PointMan.h"
 #include <wx/progdlg.h>
 
+
 //extern OCPNDrawConfig   *pOCPNDrawConfig;
 extern wxString         *g_pNavObjs;
 extern int              g_LayerIdx;
@@ -186,7 +187,7 @@ bool OCPNDrawConfig::ExportGPXOCPNPoints( wxWindow* parent, OCPNPointList *pOCPN
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox(NULL,  _("Overwrite existing file?"), _T("Confirm"),
+            int answer = OCPNMessageBox_PlugIn(NULL,  _("Overwrite existing file?"), _T("Confirm"),
                     wxICON_QUESTION | wxYES_NO | wxCANCEL );
             if( answer != wxID_YES ) return false;
         }
@@ -211,7 +212,7 @@ void OCPNDrawConfig::UpdateNavObj( void )
 
     delete pNavObjectSet;
 
-    if( ::wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) )
+    if( wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) )
         wxRemoveFile( m_sOCPNDrawNavObjSetChangesFile );
 
     delete m_pOCPNDrawNavObjectChangesSet;
@@ -228,14 +229,14 @@ void OCPNDrawConfig::LoadNavObjects()
     if( NULL == m_pOCPNDrawNavObjectInputSet )
         m_pOCPNDrawNavObjectInputSet = new OCPNDrawNavObjectChanges();
 
-    if( ::wxFileExists( m_sOCPNDrawNavObjSetFile ) &&
+    if( wxFileExists( m_sOCPNDrawNavObjSetFile ) &&
         m_pOCPNDrawNavObjectInputSet->load_file( m_sOCPNDrawNavObjSetFile.fn_str() ) )
         m_pOCPNDrawNavObjectInputSet->LoadAllGPXObjects();
 
     wxLogMessage( _T("Done loading ODnavobjects") );
     delete m_pOCPNDrawNavObjectInputSet;
 
-    if( ::wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) ) {
+    if( wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) ) {
 
         wxULongLong size = wxFileName::GetSize(m_sOCPNDrawNavObjSetChangesFile);
 
@@ -248,8 +249,8 @@ void OCPNDrawConfig::LoadNavObjects()
         //  Remove the file before applying the changes,
         //  just in case the changes file itself causes a fault.
         //  If it does fault, at least the next restart will proceed without fault.
-        if( ::wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) )
-            ::wxRemoveFile( m_sOCPNDrawNavObjSetChangesFile );
+        if( wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) )
+            wxRemoveFile( m_sOCPNDrawNavObjSetChangesFile );
         
         if(size != 0){
             wxLogMessage( _T("Applying NavObjChanges") );
@@ -279,7 +280,7 @@ void OCPNDrawConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox( NULL, _("Overwrite existing file?"), _T("Confirm"),
+            int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _T("Confirm"),
                     wxICON_QUESTION | wxYES_NO | wxCANCEL );
             if( answer != wxID_YES ) return;
         }
@@ -420,9 +421,9 @@ void OCPNDrawConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirp
         for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
             wxString path = file_array[i];
 
-            if( ::wxFileExists( path ) ) {
+            if( wxFileExists( path ) ) {
 
-                NavObjectCollection1 *pSet = new NavObjectCollection1;
+                OCPNDrawNavObjectChanges *pSet = new OCPNDrawNavObjectChanges;
                 pSet->load_file(path.fn_str());
 
                 if(islayer){
@@ -448,7 +449,7 @@ void OCPNDrawConfig::CreateRotatingNavObjBackup()
         wxString newname = wxString::Format( _T("%s.1"), m_sOCPNDrawNavObjSetFile.c_str() );
 
         wxFileOffset s_diff = 1;
-        if( ::wxFileExists( newname ) ) {
+        if( wxFileExists( newname ) ) {
 
             if( f.Open(oldname) ){
                 s_diff = f.Length();

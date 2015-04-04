@@ -63,6 +63,7 @@ SET(SRCS
  		src/OCPNDrawNavObjectChanges.cpp
  		src/OCPNDrawCanvasMenuHandler.cpp
  		src/OCPNDrawPointInfoImpl.cpp
+# 		src/ODUndo.cpp
 # 		src/glOCPNDrawChartCanvas.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
@@ -88,8 +89,9 @@ SET(HDRS
  		include/OCPNDrawNavObjectChanges.h
  		include/OCPNDrawCanvasMenuHandler.h
  		include/OCPNDrawPointInfoImpl.h
+# 		include/ODUndo.h
  		include/glOCPNDrawChartCanvas.h
-# 		include/vector2D.h
+ 		include/ODvector2D.h
 # 		include/RoutePoint.h
 # 		include/ocpn_types.h
 # 		include/navutil.h
@@ -108,18 +110,21 @@ SET(OCPNSRC
 		ocpnsrc/bbox.cpp
 #		ocpnsrc/chart1.cpp
 #		ocpnsrc/chcanv.cpp
-#		ocpnsrc/cutil.cpp
-#		ocpnsrc/FontMgr.cpp
+		ocpnsrc/cutil.cpp
+		ocpnsrc/FontMgr.cpp
 		ocpnsrc/geodesic.cpp
+		ocpnsrc/georef.cpp
 #		ocpnsrc/glChartCanvas.cpp
-#		ocpnsrc/gpxdocument.cpp
+		ocpnsrc/gpxdocument.cpp
+		ocpnsrc/Hyperlink.cpp
+		ocpnsrc/Layer.cpp
 #		ocpnsrc/navutil.cpp
         ocpnsrc/ocpndc.cpp
 		ocpnsrc/OCPNRegion.cpp
 #		ocpnsrc/OCPNPlatform.cpp
 #		ocpnsrc/pluginmanager.cpp
 #		ocpnsrc/Route.cpp
-#		ocpnsrc/SelectItem.cpp
+		ocpnsrc/SelectItem.cpp
 		ocpnsrc/styles.cpp
 #		ocpnsrc/undo.cpp
 #		ocpnsrc/viewport.cpp
@@ -131,16 +136,16 @@ SET(OCPNSRC
 #		ocpninclude/routeman.h
 #		ocpninclude/routemanagerdialog.h
 #)
-#IF(WIN32)
-#SET(SRC_LTINYXML
-#		src/tinyxml/tinyxml.cpp
-#		src/tinyxml/tinyxml.h
-#		src/tinyxml/tinyxmlerror.cpp
-#		src/tinyxml/tinyxmlparser.cpp
-#		src/tinyxml/tinystr.cpp
-#		src/tinyxml/tinystr.h
-#)
-#ENDIF(WIN32)
+IF(WIN32)
+SET(SRC_LTINYXML
+		ocpnsrc/tinyxml.cpp
+		ocpninclude/tinyxml.h
+		ocpnsrc/tinyxmlerror.cpp
+		ocpnsrc/tinyxmlparser.cpp
+#		src/tinystr.cpp
+#		ocpninclude/tinystr.h
+)
+ENDIF(WIN32)
 
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
@@ -149,7 +154,7 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/bitmaps)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC})
+ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${SRC_LTINYXML})
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")

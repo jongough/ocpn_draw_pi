@@ -28,14 +28,12 @@
 
 #include "Path.h"
 #include "PathMan.h"
-#include "chart1.h"
 
 
 class PathMan
 {
     public:
         PathMan();
-        PathMan(MyApp *parent);
         virtual ~PathMan();
 
         bool DeletePath(Path *pPath);
@@ -113,8 +111,6 @@ class PathMan
         wxBrush     *m_pActivePathBrush;
         wxBrush     *m_pActiveOCPNPointBrush;
         wxBrush     *m_pOCPNPointBrush;
-
-        NMEA0183    m_NMEA0183;                         // For autopilot output
 
         double      m_arrival_min;
         int         m_arrival_test;

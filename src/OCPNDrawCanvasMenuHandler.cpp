@@ -35,9 +35,12 @@ extern int              g_click_stop;
 extern PlugIn_ViewPort  *g_pivp;
 
 
+//OCPNDrawCanvasMenuHandler::OCPNDrawCanvasMenuHandler(ChartCanvas *parentCanvas,
+//                  Path *selectedPath,
+//                  OCPNPoint *selectedOCPNPoint) : CanvasMenuHandler( parentCanvas, (Route *) NULL, (Route *) NULL, (RoutePoint *) NULL, (int) 0, NULL )
 OCPNDrawCanvasMenuHandler::OCPNDrawCanvasMenuHandler(ChartCanvas *parentCanvas,
                   Path *selectedPath,
-                  OCPNPoint *selectedOCPNPoint) : CanvasMenuHandler( parentCanvas, (Route *) NULL, (Route *) NULL, (RoutePoint *) NULL, (int) 0, NULL )
+                  OCPNPoint *selectedOCPNPoint)
 {
     //ctor
     parent = parentCanvas;

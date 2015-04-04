@@ -187,6 +187,12 @@ public:
     void    PopupMenuHandler(wxCommandEvent& ev);
     
     void    SaveConfig();
+    
+    void    AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
+
+    void    DimeControl( wxWindow* ctrl );
+    void    DimeControl( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
+                  wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline );
 
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
@@ -247,7 +253,6 @@ private:
     
     void    appendOSDirSlash(wxString* pString);  
     
-    void    AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
     
     int               m_show_id;
     int               m_hide_id;

@@ -51,8 +51,6 @@ class OCPNDrawConfig
         virtual void UpdateNavObj();
         virtual void LoadNavObjects();
 
-        //virtual void UpdateSettings();
-        
         void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);
         void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
 

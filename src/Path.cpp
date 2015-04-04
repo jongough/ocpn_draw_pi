@@ -372,7 +372,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
         OCPNPoint *prp0 = node->GetData();
         wxPoint r0;
-        ocpncc1->GetCanvasPointPix( prp0->m_lat, prp0->m_lon, &r0);
+        GetCanvasPixLL( &piVP, &r0, prp0->m_lat, prp0->m_lon );
 
         if( m_nPoints == 1 ) {
             dc.StrokeLine( r0.x, r0.y, r0.x + 2, r0.y + 2 );
@@ -385,7 +385,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
             
             OCPNPoint *prp = node->GetData();
             wxPoint r1;
-            ocpncc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &r1);
+            GetCanvasPixLL( &piVP, &r1, prp->m_lat, prp->m_lon );
 
             dc.StrokeLine( r0.x, r0.y, r1.x, r1.y );
                     
@@ -469,17 +469,17 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         if(dir)
         {
             double crosslat = lat_rl_crosses_meridian(lastlat, lastlon, prp->m_lat, prp->m_lon, 180.0);
-            ocpncc1->GetCanvasPointPix( crosslat, dir*180, &r);
+            GetCanvasPixLL( &piVP, &r, crosslat, dir*180 );
             glVertex2i(r.x, r.y);
             glEnd();
             glBegin(GL_LINE_STRIP);
-            ocpncc1->GetCanvasPointPix( crosslat, -dir*180, &r);
+            GetCanvasPixLL( &piVP, &r, crosslat, -dir*180 );
             glVertex2i(r.x, r.y);
         }
         lastlat=prp->m_lat;
         lastlon=prp->m_lon;
         
-        ocpncc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &r);
+        GetCanvasPixLL( &piVP, &r, prp->m_lat, prp->m_lon );
         glVertex2i(r.x, r.y);
     }
     glEnd();
@@ -500,7 +500,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         else if (m_bVisible)
             prp->DrawGL( piVP, region );
         wxPoint rpt;
-        ocpncc1->GetCanvasPointPix( prp->m_lat, prp->m_lon, &rpt);
+        GetCanvasPixLL( &piVP, &rpt, prp->m_lat, prp->m_lon );
         bpts[ j++ ] = rpt;
 //        bpts[ j++ ] = region;
 
@@ -1131,5 +1131,4 @@ void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
         pPathPropDialog->SetPathAndUpdate( path, true );
     }
 
-    ocpncc1->InvalidateGL();
 }

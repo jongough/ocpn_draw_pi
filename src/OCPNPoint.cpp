@@ -309,7 +309,6 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     wxPoint r;
     wxRect hilitebox;
 
-    //ocpncc1->GetCanvasPointPix( m_lat, m_lon, &r );
     GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);
 
     //  return the home point in this dc to allow "connect the dots"
@@ -340,8 +339,8 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
-            m_pMarkFont = FontMgr::Get().GetFont( _( "Marks" ) );
-            m_FontColor = FontMgr::Get().GetFontColor( _( "Marks" ) );
+            m_pMarkFont = OCPNGetFont( wxS("Marks"), 0 );
+            m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
             CalculateNameExtents();
         }
 
@@ -376,7 +375,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         
     //  Highlite any selected point
     if( m_bPtIsSelected || m_bIsBeingEdited) {
-        AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
+        g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                 hi_colour, transparency );
     }
 
@@ -401,6 +400,36 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         }
     }
 
+    // Draw OCPNPoint range rings if activated
+    if( m_iOCPNPointRangeRingsNumber && m_bShowOCPNPointRangeRings ) {
+        double factor = 1.00;
+        if( m_iOCPNPointRangeRingsStepUnits == 1 )          // nautical miles
+            factor = 1 / 1.852;
+
+        factor *= m_fOCPNPointRangeRingsStep;
+
+        double tlat, tlon;
+        wxPoint r1;
+        ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
+        //cc1->GetCanvasPointPix( tlat, tlon, &r1 );
+        GetCanvasPixLL( g_pivp, &r1,  tlat, tlon);
+
+        double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
+                           pow( (double) (r.y - r1.y), 2 ) );
+        int pix_radius = (int) lpp;
+
+        wxPen ppPen1( m_wxcOCPNPointRangeRingsColour, 2 );
+        wxBrush saveBrush = dc.GetBrush();
+        wxPen savePen = dc.GetPen();
+        dc.SetPen( ppPen1 );
+        dc.SetBrush( wxBrush( m_wxcOCPNPointRangeRingsColour, wxTRANSPARENT ) );
+
+        for( int i = 1; i <= m_iOCPNPointRangeRingsNumber; i++ )
+            dc.StrokeCircle( r.x, r.y, i * pix_radius );
+        dc.SetPen( savePen );
+        dc.SetBrush( saveBrush );
+    }
+    
     //  Save the current draw rectangle in the current DC
     //    This will be useful for fast icon redraws
     CurrentRect_in_DC.x = r.x + hilitebox.x;
@@ -500,8 +529,13 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
     /* update bounding box */
     if(!m_wpBBox.GetValid() || pivp.chart_scale != m_wpBBox_chart_scale || pivp.rotation != m_wpBBox_rotation) {
         double lat1, lon1, lat2, lon2;
-        ocpncc1->GetCanvasPixPoint(r.x+hilitebox.x, r.y+hilitebox.y+hilitebox.height, lat1, lon1);
-        ocpncc1->GetCanvasPixPoint(r.x+hilitebox.x+hilitebox.width, r.y+hilitebox.y, lat2, lon2);
+        wxPoint wxpoint;
+        wxpoint.x = r.x+hilitebox.x;
+        wxpoint.y = r.y + hilitebox.height;
+        GetCanvasLLPix( &pivp, wxpoint, &lat1, &lon1 );
+        wxpoint.x = r.x + hilitebox.x + hilitebox.width;
+        wxpoint.y = r.y + hilitebox.y;
+        GetCanvasLLPix( &pivp, wxpoint, &lat2, &lon2 );
 
         m_wpBBox.SetMin(lon1, lat1);
         m_wpBBox.SetMax(lon2, lat2);
@@ -525,7 +559,7 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
             GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         }
         
-        AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
+        g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                        hi_colour, transparency );
     }
     
@@ -618,6 +652,35 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
             glDisable(GL_BLEND);
             glDisable(GL_TEXTURE_2D);
         }
+    }
+    
+    // Draw OCPNPoint range rings if activated
+    if( m_iOCPNPointRangeRingsNumber && m_bShowOCPNPointRangeRings ) {
+        double factor = 1.00;
+        if( m_iOCPNPointRangeRingsStepUnits == 1 )          // nautical miles
+            factor = 1 / 1.852;
+        
+        factor *= m_fOCPNPointRangeRingsStep;
+        
+        double tlat, tlon;
+        wxPoint r1;
+        ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
+        GetCanvasPixLL( g_pivp, &r1,  tlat, tlon);
+        
+        double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
+        pow( (double) (r.y - r1.y), 2 ) );
+        int pix_radius = (int) lpp;
+        
+        wxPen ppPen1( m_wxcOCPNPointRangeRingsColour, 2 );
+        wxBrush saveBrush = dc.GetBrush();
+        wxPen savePen = dc.GetPen();
+        dc.SetPen( ppPen1 );
+        dc.SetBrush( wxBrush( m_wxcOCPNPointRangeRingsColour, wxTRANSPARENT ) );
+        
+        for( int i = 1; i <= m_iOCPNPointRangeRingsNumber; i++ )
+            dc.StrokeCircle( r.x, r.y, i * pix_radius );
+        dc.SetPen( savePen );
+        dc.SetBrush( saveBrush );
     }
     
     if( m_bBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker

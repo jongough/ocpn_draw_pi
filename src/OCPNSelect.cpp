@@ -392,7 +392,7 @@ bool OCPNSelect::IsSegmentSelected( float a, float b, float c, float d, float sl
             && ( ( slon + adder ) >= ( fmin ( c,d ) - selectRadius ) )
             && ( ( slon + adder ) <= ( fmax ( c,d ) + selectRadius ) ) ) {
         //    Use vectors to do hit test....
-        vector2D va, vb, vn;
+        ODvector2D va, vb, vn;
 
         //    Assuming a Mercator projection
         double ap, cp;
@@ -512,4 +512,78 @@ SelectableItemList OCPNSelect::FindSelectionList( float slat, float slon, int fs
 
     return ret_list;
 }
+
+double OCPNSelect::vGetLengthOfNormal( pODVector2D a, pODVector2D b, pODVector2D n )
+{
+    ODvector2D c, vNormal;
+    vNormal.x = 0;
+    vNormal.y = 0;
+    //
+    //Obtain projection vector.
+    //
+    //c = ((a * b)/(|b|^2))*b
+    //
+    c.x = b->x * ( vDotProduct( a, b ) / vDotProduct( b, b ) );
+    c.y = b->y * ( vDotProduct( a, b ) / vDotProduct( b, b ) );
+//
+    //Obtain perpendicular projection : e = a - c
+    //
+    vSubtractVectors( a, &c, &vNormal );
+    //
+    //Fill PROJECTION structure with appropriate values.
+    //
+    *n = vNormal;
+
+    return ( vVectorMagnitude( &vNormal ) );
+}
+
+double OCPNSelect::vDotProduct( pODVector2D v0, pODVector2D v1 )
+{
+    double dotprod;
+
+    dotprod = ( v0 == NULL || v1 == NULL ) ? 0.0 : ( v0->x * v1->x ) + ( v0->y * v1->y );
+
+    return ( dotprod );
+}
+
+pODVector2D OCPNSelect::vAddVectors( pODVector2D v0, pODVector2D v1, pODVector2D v )
+{
+    if( v0 == NULL || v1 == NULL ) v = (pODVector2D) NULL;
+    else {
+        v->x = v0->x + v1->x;
+        v->y = v0->y + v1->y;
+    }
+    return ( v );
+}
+
+pODVector2D OCPNSelect::vSubtractVectors( pODVector2D v0, pODVector2D v1, pODVector2D v )
+{
+    if( v0 == NULL || v1 == NULL ) v = (pODVector2D) NULL;
+    else {
+        v->x = v0->x - v1->x;
+        v->y = v0->y - v1->y;
+    }
+    return ( v );
+}
+
+double OCPNSelect::vVectorSquared( pODVector2D v0 )
+{
+    double dS;
+
+    if( v0 == NULL ) dS = 0.0;
+    else
+        dS = ( ( v0->x * v0->x ) + ( v0->y * v0->y ) );
+    return ( dS );
+}
+
+double OCPNSelect::vVectorMagnitude( pODVector2D v0 )
+{
+    double dMagnitude;
+
+    if( v0 == NULL ) dMagnitude = 0.0;
+    else
+        dMagnitude = sqrt( vVectorSquared( v0 ) );
+    return ( dMagnitude );
+}
+
 

@@ -35,6 +35,7 @@
 #include <iostream>
 
 #include "ocpn_plugin.h"
+#include "ocpn_draw_pi.h"
 #include "styles.h"
 #include "dychart.h"
 #include "navutil.h"
@@ -369,7 +370,7 @@ PathManagerDialog::PathManagerDialog( wxWindow *parent )
     wxDialog::Create( parent, -1, wxString( _("Path & Point Manager") ), wxDefaultPosition, wxDefaultSize,
             style );
     
-    wxFont *qFont = GetOCPNScaledFont(_("Dialog"));
+    wxFont *qFont = OCPNGetFont(wxS("Dialog"), 0);
     SetFont( *qFont );
 
     m_lastOCPNPointItem = -1;
@@ -893,7 +894,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
 {
     PathList list;
 
-    int answer = OCPNMessageBox( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
+    int answer = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
     if ( answer != wxID_YES )
         return;
 
@@ -931,7 +932,8 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
         m_lastPathItem = -1;
         UpdatePathListCtrl();
 
-        ocpncc1->undo->InvalidateUndo();
+        // TODO fix up undo
+        //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
         ::wxEndBusyCursor();
     }
@@ -940,7 +942,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
 
 void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
 {
-    int dialog_ret = OCPNMessageBox( this, _("Are you sure you want to delete <ALL> paths?"),
+    int dialog_ret = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete <ALL> paths?"),
             wxString( _("OpenCPN Alert") ), wxYES_NO );
 
     if( dialog_ret == wxID_YES ) {
@@ -957,7 +959,8 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
         UpdatePathListCtrl();
 
         if( pPathPropDialog ) pPathPropDialog->Hide();
-        ocpncc1->undo->InvalidateUndo();
+        // TODO fix up undo
+        //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
 
         m_bNeedConfigFlush = true;
@@ -1157,7 +1160,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
         bool has_shared_OCPNPoints = g_pPathMan->DoesPathContainSharedPoints( path );
         
         if( has_shared_OCPNPoints && path->IsVisible() ) {
-            OCPNPoints_set_viz = OCPNMessageBox(  this, _("Do you also want to make the shared OCPN Points being part of this boundary invisible?"), _("Question"), wxYES_NO );
+            OCPNPoints_set_viz = OCPNMessageBox_PlugIn(  this, _("Do you also want to make the shared OCPN Points being part of this boundary invisible?"), _("Question"), wxYES_NO );
             togglesharedOCPNPoints = (OCPNPoints_set_viz == wxID_YES);
         }
         path->SetVisible( !path->IsVisible(), togglesharedOCPNPoints );
@@ -1505,7 +1508,7 @@ void PathManagerDialog::OnOCPNPointDeleteClick( wxCommandEvent &event )
 {
     OCPNPointList list;
 
-    int answer = OCPNMessageBox( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
+    int answer = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
     if ( answer != wxID_YES )
         return;
 
@@ -1538,7 +1541,7 @@ void PathManagerDialog::OnOCPNPointDeleteClick( wxCommandEvent &event )
 
                 if ( wp->m_bIsInPath )
                 {
-                    if ( wxYES == OCPNMessageBox(this,  _( "The OCPN Point you want to delete is used in a path, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
+                    if ( wxYES == OCPNMessageBox_PlugIn(this,  _( "The OCPN Point you want to delete is used in a path, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
                             pOCPNPointMan->DestroyOCPNPoint( wp );
                 }
                 else
@@ -1562,7 +1565,8 @@ void PathManagerDialog::OnOCPNPointDeleteClick( wxCommandEvent &event )
             pMarkPropDialog->UpdateProperties();
         }
 */
-        ocpncc1->undo->InvalidateUndo();
+        // TODO fix up undo
+        //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
         ::wxEndBusyCursor();
     }
@@ -1667,7 +1671,7 @@ void PathManagerDialog::OnOCPNPointDeleteAllClick( wxCommandEvent &event )
         buttons = wxYES_NO | wxCANCEL;
         type = 2;
     }
-    int answer = OCPNMessageBox( this, prompt, wxString( _("OpenCPN Alert") ), buttons );
+    int answer = OCPNMessageBox_PlugIn( this, prompt, wxString( _("OpenCPN Alert") ), buttons );
     if ( answer == wxID_YES )
         pOCPNPointMan->DeleteAllOCPNPoints( true );
     if ( answer == wxID_NO && type == 2 )
@@ -1681,7 +1685,8 @@ void PathManagerDialog::OnOCPNPointDeleteAllClick( wxCommandEvent &event )
     m_lastOCPNPointItem = -1;
     UpdatePathListCtrl();
     UpdateOCPNPointsListCtrl();
-    ocpncc1->undo->InvalidateUndo();
+    // TODO fix up undo
+    //ocpncc1->undo->InvalidateUndo();
     RequestRefresh( GetOCPNCanvasWindow() );
 }
 
@@ -1800,7 +1805,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     if( !layer ) return;
 
     wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
-    int answer = OCPNMessageBox( this, prompt, wxString( _("OpenCPN Alert") ), wxYES_NO );
+    int answer = OCPNMessageBox_PlugIn( this, prompt, wxString( _("OpenCPN Alert") ), wxYES_NO );
     if ( answer == wxID_NO )
         return;
     

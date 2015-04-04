@@ -9,7 +9,8 @@
       class Path;
       class OCPNPoint;
 
-class OCPNDrawCanvasMenuHandler : public CanvasMenuHandler
+//class OCPNDrawCanvasMenuHandler : public CanvasMenuHandler
+class OCPNDrawCanvasMenuHandler
 {
     public:
         OCPNDrawCanvasMenuHandler(ChartCanvas *parentCanvas,

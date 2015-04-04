@@ -49,8 +49,10 @@
 #include "chcanv.h"
 #include "Layer.h"
 #include "styles.h"
+#include "OCPNPlatform.h"
 #include "geodesic.h"
 #include "FontMgr.h"
+#include "IDX_entry.h"
 #include "wx/stdpaths.h"
 #include <wx/timer.h>
 #include <wx/event.h>
@@ -59,6 +61,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filefn.h>
 #include <wx/msgdlg.h>
+#include <wx/listbook.h>
 #include <memory>
 
 #include "wx/jsonreader.h"
@@ -138,9 +141,15 @@ wxString         g_VisibleLayers;
 wxString         g_InvisibleLayers;
 LayerList        *pLayerList;
 int              g_navobjbackups;
+wxString    GetLayerName(int id);
 
 OCPNPoint      *pAnchorWatchPoint1;
 OCPNPoint      *pAnchorWatchPoint2;
+
+IDX_entry          *gpIDX;
+
+wxString g_locale;
+int      g_click_stop;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -268,7 +277,8 @@ int ocpn_draw_pi::Init(void)
                    OCPN_DRAW_POSITION, 0, this);
 	}
 
-    undo = new Undo();
+    // TODO fix up undo
+	//    undo = new Undo();
 	// Create the Context Menu Items
 
 	//    In order to avoid an ASSERT on msw debug builds,
@@ -1098,12 +1108,12 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
 //        if( g_bShowMag )
 //            pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
 //        else
-            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)pFrame->GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), GetTrueOrMag( brg ) );
 
         pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
 
         wxFont *dFont;
-        dFont = FontMgr::Get().GetFont( wxS("BoundaryLegInfoRollover") );
+        dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
         dc.SetFont( *dFont );
 
         int w, h;
@@ -1143,7 +1153,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
 
 void ocpn_draw_pi::RenderExtraBoundaryLegInfo( ocpnDC &dc, wxPoint ref_point, wxString s )
 {
-    wxFont *dFont = FontMgr::Get().GetFont( wxS("BoundaryLegInfoRollover") );
+    wxFont *dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
 
     int w, h;
@@ -1219,7 +1229,8 @@ void ocpn_draw_pi::FinishBoundary( void )
     m_pSelectedBoundary = NULL;
     m_pFoundOCPNPointSecond = NULL;
     
-    undo->InvalidateUndo();
+    // TODO fix up undo
+    //undo->InvalidateUndo();
     RequestRefresh( m_parent_window );
 }
 
@@ -1333,8 +1344,9 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
             pMousePoint = pNearbyPoint;
 
             // Using existing OCPNpoint, so nothing to delete for undo.
-            if( nBoundary_State > 1 )
-                undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
+            //if( nBoundary_State > 1 )
+                // TODO fix up undo
+                //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
 
             // check all other boundaries and routes to see if this point appears in any other route
             // If it appears in NO other route, then it should e considered an isolated mark
@@ -1353,8 +1365,9 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         pOCPNDrawConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
         pOCPNSelect->AddSelectableOCPNPoint( rlat, rlon, pMousePoint );
 
-        if( nBoundary_State > 1 )
-            undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_IsOrphanded, NULL );
+        //if( nBoundary_State > 1 )
+            // TODO fix up undo
+            //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_IsOrphanded, NULL );
     }
 
     if(m_pMouseBoundary){
@@ -1378,7 +1391,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                     
                 m_disable_edge_pan = true;  // This helps on OS X if MessageBox does not fully capture mouse
 
-                int answer = OCPNMessageBox( m_parent_window, msg, wxS("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
+                int answer = OCPNMessageBox_PlugIn( m_parent_window, msg, wxS("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
 
                 m_disable_edge_pan = false;
                 
@@ -1408,20 +1421,23 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                         prevGcPoint = gcPoint;
                     }
 
-                    undo->CancelUndoableAction( true );
+                    // TODO fix up undo
+                    //undo->CancelUndoableAction( true );
 
                 } else {
                     m_pMouseBoundary->AddPoint( pMousePoint );
                     pOCPNSelect->AddSelectablePathSegment( m_prev_rlat, m_prev_rlon,
                             rlat, rlon, m_prev_pMousePoint, pMousePoint, m_pMouseBoundary );
-                    undo->AfterUndoableAction( m_pMouseBoundary );
+                    //TODO fix up undo
+                    //undo->AfterUndoableAction( m_pMouseBoundary );
                 }
             } else {
                 // Ordinary rhumblinesegment.
                 m_pMouseBoundary->AddPoint( pMousePoint );
                 pOCPNSelect->AddSelectablePathSegment( m_prev_rlat, m_prev_rlon,
                         rlat, rlon, m_prev_pMousePoint, pMousePoint, m_pMouseBoundary );
-                undo->AfterUndoableAction( m_pMouseBoundary );
+                // TODO fix up undo
+                //undo->AfterUndoableAction( m_pMouseBoundary );
             }
         }
     }
@@ -1665,8 +1681,7 @@ void ocpn_draw_pi::MenuPrepend( wxMenu *menu, int id, wxString label)
 {
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-//    wxFont *qFont = GetOCPNScaledFont(_T("Menu"));
-    wxFont *qFont = OCPNGetFont(wxS("Menu"));
+    wxFont *qFont = OCPNGetFont( wxS("Menu"), 0 );
     item->SetFont(*qFont);
 #endif
     menu->Prepend(item);
@@ -1676,8 +1691,7 @@ void ocpn_draw_pi::MenuAppend( wxMenu *menu, int id, wxString label)
 {
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-//    wxFont *qFont = GetOCPNScaledFont(_("Menu"));
-    wxFont *qFont = OCPNGetFont(wxS("Menu"));
+    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
     item->SetFont(*qFont);
 #endif
     menu->Append(item);
@@ -1848,3 +1862,144 @@ double ocpn_draw_pi::GetTrueOrMag(double a)
         return a;
 }
 
+void ocpn_draw_pi::DimeControl( wxWindow* ctrl )
+{
+#ifdef __WXQT__
+    return; // this is seriously broken on wxqt
+#endif
+    
+    if( NULL == ctrl ) return;
+
+    wxColour col, window_back_color, gridline, uitext, udkrd, ctrl_back_color, text_color;
+    GetGlobalColor( wxS("DILG0"), &col );
+    GetGlobalColor( wxS("DILG1"), &window_back_color );
+    GetGlobalColor( wxS("DILG1"), &ctrl_back_color );
+    GetGlobalColor( wxS("DILG3"), &text_color );
+    GetGlobalColor( wxS("UITX1"), &uitext );
+    GetGlobalColor( wxS("UDKRD"), &udkrd );
+    GetGlobalColor( wxS("GREY2"), &gridline );
+
+    DimeControl( ctrl, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
+}
+
+void ocpn_draw_pi::DimeControl( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
+                  wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline )
+{
+
+    ColorScheme cs = ocpncc1->GetColorScheme();
+
+    static int depth = 0; // recursion count
+    if ( depth == 0 ) {   // only for the window root, not for every child
+
+        // If the color scheme is DAY or RGB, use the default platform native colour for backgrounds
+        if( cs == GLOBAL_COLOR_SCHEME_DAY || cs == GLOBAL_COLOR_SCHEME_RGB ) {
+#ifdef __WXOSX__
+            window_back_color = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWFRAME);
+#else
+            window_back_color = wxNullColour;
+#endif
+
+            col = wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
+        }
+
+        ctrl->SetBackgroundColour( window_back_color );
+    }
+
+    wxWindowList kids = ctrl->GetChildren();
+    for( unsigned int i = 0; i < kids.GetCount(); i++ ) {
+        wxWindowListNode *node = kids.Item( i );
+        wxWindow *win = node->GetData();
+
+        if( win->IsKindOf( CLASSINFO(wxListBox) ) )
+            ( (wxListBox*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxListCtrl) ) )
+            ( (wxListCtrl*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxTextCtrl) ) )
+            ( (wxTextCtrl*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxStaticText) ) )
+            ( (wxStaticText*) win )->SetForegroundColour( uitext );
+
+#ifndef __WXOSX__
+        // on OS X most controls can't be styled, and trying to do so only creates weird coloured boxes around them
+
+        else if( win->IsKindOf( CLASSINFO(wxBitmapComboBox) ) )
+            ( (wxBitmapComboBox*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxChoice) ) )
+            ( (wxChoice*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxComboBox) ) )
+            ( (wxComboBox*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxRadioButton) ) )
+            ( (wxRadioButton*) win )->SetBackgroundColour( window_back_color );
+
+        else if( win->IsKindOf( CLASSINFO(wxScrolledWindow) ) ) {
+            if( cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB )
+                ( (wxScrolledWindow*) win )->SetBackgroundColour( window_back_color );
+        }
+#endif
+
+        else if( win->IsKindOf( CLASSINFO(wxGenericDirCtrl) ) )
+            ( (wxGenericDirCtrl*) win )->SetBackgroundColour( window_back_color );
+
+        else if( win->IsKindOf( CLASSINFO(wxListbook) ) )
+            ( (wxListbook*) win )->SetBackgroundColour( window_back_color );
+
+        else if( win->IsKindOf( CLASSINFO(wxTreeCtrl) ) )
+            ( (wxTreeCtrl*) win )->SetBackgroundColour( col );
+
+        else if( win->IsKindOf( CLASSINFO(wxNotebook) ) ) {
+            ( (wxNotebook*) win )->SetBackgroundColour( window_back_color );
+            ( (wxNotebook*) win )->SetForegroundColour( text_color );
+        }
+
+        else if( win->IsKindOf( CLASSINFO(wxButton) ) ) {
+            ( (wxButton*) win )->SetBackgroundColour( window_back_color );
+        }
+
+        else if( win->IsKindOf( CLASSINFO(wxToggleButton) ) ) {
+            ( (wxToggleButton*) win )->SetBackgroundColour( window_back_color );
+        }
+
+//        else if( win->IsKindOf( CLASSINFO(wxPanel) ) ) {
+////                  ((wxPanel*)win)->SetBackgroundColour(col1);
+//            if( cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB )
+//                ( (wxPanel*) win )->SetBackgroundColour( ctrl_back_color );
+//            else
+//                ( (wxPanel*) win )->SetBackgroundColour( wxNullColour );
+//        }
+
+        else if( win->IsKindOf( CLASSINFO(wxHtmlWindow) ) ) {
+            if( cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB )
+                ( (wxPanel*) win )->SetBackgroundColour( ctrl_back_color );
+            else
+                ( (wxPanel*) win )->SetBackgroundColour( wxNullColour );
+        }
+
+        else if( win->IsKindOf( CLASSINFO(wxGrid) ) ) {
+            ( (wxGrid*) win )->SetDefaultCellBackgroundColour( window_back_color );
+            ( (wxGrid*) win )->SetDefaultCellTextColour( uitext );
+            ( (wxGrid*) win )->SetLabelBackgroundColour( col );
+            ( (wxGrid*) win )->SetLabelTextColour( uitext );
+#if !wxCHECK_VERSION(3,0,0)
+            ( (wxGrid*) win )->SetDividerPen( wxPen( col ) );
+#endif            
+            ( (wxGrid*) win )->SetGridLineColour( gridline );
+        }
+
+        else {
+            ;
+        }
+
+        if( win->GetChildren().GetCount() > 0 ) {
+            depth++;
+            wxWindow * w = win;
+            DimeControl( w, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
+            depth--;
+        }
+    }
+}
