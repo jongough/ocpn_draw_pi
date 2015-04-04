@@ -26,7 +26,7 @@
 #ifndef OCPNDRAWCONFIG_H
 #define OCPNDRAWCONFIG_H
 
-#include <navutil.h>
+//#include <navutil.h>
 #include "OCPNDrawNavObjectChanges.h"
 
 class NavObjectCollection;

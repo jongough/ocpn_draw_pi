@@ -94,7 +94,6 @@ double          g_dLat;
 double          g_dLon;
 OCPNSelect      *pOCPNSelect;
 OCPNDrawConfig  *pOCPNDrawConfig;
-MyConfig          *pocpnConfig;
 Multiplexer     *g_pODMUX;
 float           g_ODGLMinSymbolLineWidth;
 wxString        *g_SData_Locn;

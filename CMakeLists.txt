@@ -123,6 +123,7 @@ SET(OCPNSRC
 		ocpnsrc/OCPNRegion.cpp
 #		ocpnsrc/OCPNPlatform.cpp
 #		ocpnsrc/pluginmanager.cpp
+        ocpnsrc/pugixml.cpp
 #		ocpnsrc/Route.cpp
 		ocpnsrc/SelectItem.cpp
 		ocpnsrc/styles.cpp

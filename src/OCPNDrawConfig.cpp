@@ -27,7 +27,11 @@
 #include "OCPNDrawNavObjectChanges.h"
 #include "Layer.h"
 #include "PointMan.h"
+#include "pugixml.hpp"
 #include <wx/progdlg.h>
+#include <wx/filename.h>
+#include <wx/file.h>
+#include <wx/dir.h>
 
 
 //extern OCPNDrawConfig   *pOCPNDrawConfig;
