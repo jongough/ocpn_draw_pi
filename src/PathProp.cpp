@@ -37,17 +37,16 @@
 #include <wx/stattext.h>
 
 #include "ocpn_plugin.h"
-#include "styles.h"
+//#include "styles.h"
 #include "OCPNDrawConfig.h"
 #include "georef.h"
-#include "chart1.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
 //#include "pathprintout.h"
 #include "chcanv.h"
 #include "chart1.h"
 #include "tcmgr.h"        // pjotrc 2011.03.02
-#include "PositionParser.h"
+#include "ODPositionParser.h"
 #include "pluginmanager.h"
 #include "PathProp.h"
 #include "PointMan.h"

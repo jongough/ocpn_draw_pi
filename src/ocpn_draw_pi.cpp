@@ -45,10 +45,11 @@
 #include "OCPNSelect.h"
 #include "pathmanagerdialog.h"
 #include "OCPNDrawPointInfoImpl.h"
+#include "ODPointPropertiesImpl.h"
 #include "OCPNDrawEventHandler.h"
 #include "chcanv.h"
 #include "Layer.h"
-#include "styles.h"
+//#include "styles.h"
 #include "OCPNPlatform.h"
 #include "geodesic.h"
 #include "FontMgr.h"
@@ -103,6 +104,7 @@ wxString         g_default_OCPNPoint_icon;
 PathProp       *pPathPropDialog;
 PathManagerDialog *pPathManagerDialog;
 OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
+ODPointPropertiesImpl *pODPointPropDialog;
 PlugInManager       *g_OD_pi_manager;
 ocpnStyle::StyleManager* g_ODStyleManager;
 BoundaryList              *pBoundaryList;
@@ -140,7 +142,6 @@ wxString         g_VisibleLayers;
 wxString         g_InvisibleLayers;
 LayerList        *pLayerList;
 int              g_navobjbackups;
-wxString    GetLayerName(int id);
 
 OCPNPoint      *pAnchorWatchPoint1;
 OCPNPoint      *pAnchorWatchPoint2;
@@ -157,6 +158,8 @@ wxImage ICursorDown;
 wxImage ICursorPencil;
 wxImage ICursorCross;
 
+// TODO check that this is really needed
+float g_GLMinSymbolLineWidth;
 
 // the class factories, used to create and destroy instances of the PlugIn
 

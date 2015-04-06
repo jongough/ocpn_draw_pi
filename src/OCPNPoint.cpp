@@ -35,7 +35,6 @@
 #include "navutil.h"
 #include "FontMgr.h"
 #include "cutil.h"
-#include "styles.h"
 #include "ocpn_draw_pi.h"
 
 extern PointMan     *pOCPNPointMan;

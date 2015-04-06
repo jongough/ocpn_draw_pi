@@ -1,23 +1,28 @@
-/*
-    This program is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License
-    as published by the Free Software Foundation; either version 2
-    of the License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor,
-    Boston, MA  02110-1301, USA.
-
-    ---
-    Copyright (C) 2010, Anders Lund <anders@alweb.dk>
- */
-
+/***************************************************************************
+ *
+ * Project:  OpenCPN
+ * Purpose:  OCPN Draw Path Manager Dialog support
+ * Author:   Jon Gough
+ *
+ ***************************************************************************
+ *   Copyright (C) 2010 by David S. Register                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
+ 
 #include "pathmanagerdialog.h"
 
 // For compilers that support precompilation, includes "wx/wx.h".
@@ -36,13 +41,14 @@
 
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
-#include "styles.h"
+//#include "styles.h"
 #include "dychart.h"
 #include "navutil.h"
 #include "OCPNDrawConfig.h"
 #include "Path.h"
 #include "PathProp.h"
 #include "OCPNDrawPointInfoImpl.h"
+#include "ODPointPropertiesImpl.h"
 #include "Boundary.h"
 #include "BoundaryProp.h"
 #include "PathMan.h"
@@ -129,7 +135,6 @@ enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 extern PathList *pPathList;
 extern BoundaryList *pBoundaryList;
 extern LayerList *pLayerList;
-extern wxString GetLayerName(int id);
 extern PathProp *pPathPropDialog;
 extern PathMan  *g_pPathMan;
 extern OCPNPointList    *pOCPNPointList;
@@ -138,6 +143,7 @@ extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
 extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
+extern ODPointPropertiesImpl *pODPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern OCPNSelect           *pOCPNSelect;
 extern double           g_dLat, g_dLon;
@@ -1462,11 +1468,12 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
 // TODO (jon#1#): May need to show OCPNPoint properties dialog here
     // There is one global instance of the MarkProp Dialog
     
-    if( NULL == pOCPNPointPropDialog )
-        pOCPNPointPropDialog = new OCPNDrawPointInfoImpl( parent );
+    if( NULL == pODPointPropDialog )
+        pODPointPropDialog = new ODPointPropertiesImpl( parent );
 
-    pOCPNPointPropDialog->SetOCPNPoint( wp );
-    pOCPNPointPropDialog->UpdateProperties();
+    pODPointPropDialog->SetOCPNPoint( wp );
+    pODPointPropDialog->SetDialogSize();
+    pODPointPropDialog->UpdateProperties();
 
     wxString caption( wxS("") );
     if ( wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
@@ -1479,10 +1486,10 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
         caption.append( wxS(", Layer: ") );
         caption.Append( GetLayerName( wp->m_LayerID ) );
     }
-    pOCPNPointPropDialog->SetDialogTitle( caption );
+    pODPointPropDialog->SetTitle( caption );
 
-    if( !pOCPNPointPropDialog->IsShown() )
-        pOCPNPointPropDialog->Show();
+    if( !pODPointPropDialog->IsShown() )
+        pODPointPropDialog->Show();
 
 }
 
@@ -2113,5 +2120,19 @@ void PathManagerDialog::OnExportVizClick( wxCommandEvent &event )
 {
     pOCPNDrawConfig->ExportGPX( this, true, true );     // only visible objects, layers included
 }
+
+wxString PathManagerDialog::GetLayerName( int id )
+{
+    wxString name( _T("unknown layer") );
+    if( id <= 0 ) return ( name );
+    LayerList::iterator it;
+    int index = 0;
+    for( it = ( *pLayerList ).begin(); it != ( *pLayerList ).end(); ++it, ++index ) {
+        Layer *lay = (Layer *) ( *it );
+        if( lay->m_LayerID == id ) return ( lay->m_LayerName );
+    }
+    return ( name );
+}
+
 
 //END Event handlers

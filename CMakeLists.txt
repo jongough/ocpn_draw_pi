@@ -62,7 +62,11 @@ SET(SRCS
  		src/OCPNDrawEventHandler.cpp
  		src/OCPNDrawNavObjectChanges.cpp
  		src/OCPNDrawCanvasMenuHandler.cpp
- 		src/OCPNDrawPointInfoImpl.cpp
+# 		src/OCPNDrawPointInfoImpl.cpp
+ 		src/ODPointPropertiesDialog.cpp
+ 		src/ODPointPropertiesImpl.cpp
+ 		src/ODPositionParser.cpp
+ 		src/ODstyles.cpp
 # 		src/ODUndo.cpp
 # 		src/glOCPNDrawChartCanvas.cpp
  		src/OCPNDrawicons.cpp
@@ -88,7 +92,10 @@ SET(HDRS
  		include/OCPNDrawEventHandler.h
  		include/OCPNDrawNavObjectChanges.h
  		include/OCPNDrawCanvasMenuHandler.h
- 		include/OCPNDrawPointInfoImpl.h
+# 		include/OCPNDrawPointInfoImpl.h
+ 		include/ODPointPropertiesDialog.h
+ 		include/ODPointPropertiesImpl.h
+ 		include/ODPositionParser.h
 # 		include/ODUndo.h
  		include/glOCPNDrawChartCanvas.h
  		include/ODvector2D.h
@@ -111,6 +118,7 @@ SET(OCPNSRC
 #		ocpnsrc/chart1.cpp
 #		ocpnsrc/chcanv.cpp
 		ocpnsrc/cutil.cpp
+		ocpnsrc/FontDesc.cpp
 		ocpnsrc/FontMgr.cpp
 		ocpnsrc/geodesic.cpp
 		ocpnsrc/georef.cpp
@@ -126,7 +134,6 @@ SET(OCPNSRC
         ocpnsrc/pugixml.cpp
 #		ocpnsrc/Route.cpp
 		ocpnsrc/SelectItem.cpp
-		ocpnsrc/styles.cpp
 #		ocpnsrc/undo.cpp
 #		ocpnsrc/viewport.cpp
 #		ocpnsrc/nmea0183/nmea0183.cpp

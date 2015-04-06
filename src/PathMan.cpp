@@ -43,7 +43,7 @@
 
 #include <wx/listimpl.cpp>
 
-#include "styles.h"
+//#include "styles.h"
 //#include "concanv.h"
 //#include "navutil.h"
 #include "georef.h"

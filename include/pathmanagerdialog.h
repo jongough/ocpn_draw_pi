@@ -60,6 +60,7 @@ class PathManagerDialog : public wxDialog {
             static void OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* parent );
             void ShowPathPropertiesDialog ( Path *path );
 //            void TrackToRoute( Track *track );
+            static wxString GetLayerName( int id );
 
       private:
             void Create();

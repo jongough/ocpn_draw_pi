@@ -232,6 +232,7 @@ public:
     
     int         nBlinkerTick;
     
+    void    appendOSDirSlash(wxString* pString);  
 
 
 private:
@@ -251,7 +252,6 @@ private:
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     
-    void    appendOSDirSlash(wxString* pString);  
     
     
     int               m_show_id;

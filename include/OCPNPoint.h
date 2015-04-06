@@ -28,6 +28,7 @@
 #include <wx/datetime.h>
 #include <wx/gdicmn.h>
 #include <wx/gauge.h>
+#include <wx/colour.h>
 #include "Hyperlink.h"
 #include "gpxdocument.h"
 #include "ocpn_types.h"

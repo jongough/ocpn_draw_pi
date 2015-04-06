@@ -25,8 +25,8 @@
 #include "OCPNSelect.h"
 #include "georef.h"
 #include "vector2D.h"
-#include "navutil.h"
-//#include "chcanv.h"
+//#include "navutil.h"
+#include "chcanv.h"
 #include "Path.h"
 
 extern ChartCanvas *ocpncc1;
