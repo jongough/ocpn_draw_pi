@@ -76,7 +76,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
 //    sz = wxSize(600, 400);
     SetClientSize(sz);
     m_defaultClientSize = sz;
-    m_panelBasicProperties->SetScrollRate(5, 5);
+    //m_panelBasicProperties->SetScrollRate(5, 5);
 
     wxSize fsize = GetSize();
     fsize.y = wxMin(fsize.y, dsize.y-80);

@@ -16,13 +16,12 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_SizerDialogBox = new wxBoxSizer( wxVERTICAL );
 	
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
-	m_panelBasicProperties = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxVSCROLL );
-	m_panelBasicProperties->SetScrollRate( 5, 5 );
+	m_panelBasicProperties = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_SizerBasicProperties = new wxBoxSizer( wxVERTICAL );
 	
 	m_staticText2 = new wxStaticText( m_panelBasicProperties, wxID_ANY, wxT("Properties"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText2->Wrap( -1 );
-	m_SizerBasicProperties->Add( m_staticText2, 0, wxALL, 5 );
+	m_SizerBasicProperties->Add( m_staticText2, 0, wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerInnerProperties;
 	bSizerInnerProperties = new wxBoxSizer( wxHORIZONTAL );
@@ -188,7 +187,9 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, wxT("Basic"), true );
+	m_notebookProperties->AddPage( m_panelBasicProperties, wxT("Basic"), false );
+	m_panel4 = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookProperties->AddPage( m_panel4, wxT("a page"), false );
 	m_panelDescription = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxVERTICAL );

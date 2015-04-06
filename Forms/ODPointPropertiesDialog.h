@@ -21,11 +21,10 @@
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
 #include <wx/button.h>
-#include <wx/scrolwin.h>
+#include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/panel.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
@@ -42,7 +41,7 @@ class ODPointPropertiesDialog : public wxDialog
 	protected:
 		wxBoxSizer* m_SizerDialogBox;
 		wxNotebook* m_notebookProperties;
-		wxScrolledWindow* m_panelBasicProperties;
+		wxPanel* m_panelBasicProperties;
 		wxBoxSizer* m_SizerBasicProperties;
 		wxStaticText* m_staticText2;
 		wxStaticText* m_staticText3;
@@ -71,6 +70,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textDescription;
 		wxButton* m_buttonExtDescription;
+		wxPanel* m_panel4;
 		wxPanel* m_panelDescription;
 		wxTextCtrl* m_textCtrlExtDescription;
 		wxPanel* m_Extended;
