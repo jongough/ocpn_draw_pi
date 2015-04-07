@@ -35,7 +35,7 @@
 
 
 //extern OCPNDrawConfig   *pOCPNDrawConfig;
-extern wxString         *g_pNavObjs;
+extern wxString         *g_pData;
 extern int              g_LayerIdx;
 extern bool             g_bShowLayers;
 extern wxString         g_VisibleLayers;
@@ -51,7 +51,7 @@ OCPNDrawConfig::OCPNDrawConfig(const wxString &appName, const wxString &vendorNa
 {
     //OCPNDrawConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
     //pOCPNDrawConfig->LoadMyConfig( 0 );
-    m_sOCPNDrawNavObjSetFile = *g_pNavObjs;
+    m_sOCPNDrawNavObjSetFile = *g_pData;
     m_sOCPNDrawNavObjSetFile += wxS( "ODnavobj.xml" );
     m_sOCPNDrawNavObjSetChangesFile = m_sOCPNDrawNavObjSetFile + _T( ".changes" );
  
