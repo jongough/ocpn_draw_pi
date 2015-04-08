@@ -730,6 +730,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
     if( nBoundary_State == 1 ) {
         ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+        RequestRefresh( m_parent_window );
     }
     
     if( nBoundary_State >= 2 ) {
@@ -1039,31 +1040,20 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     m_pcontext = pcontext;
     m_vp = pivp;
 
-    //m_glcc = wxGLCanvas( m_parent_window );
-    //wxGLCanvas m_wxGLC( m_parent_window );
-    g_pDC = NULL;
-    //g_pDC = new ocpnDC();
+    g_pDC = new ocpnDC();
 
     OCPNRegion region( pivp->rv_rect );
-//    glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)ocpncc1;
-//    p_ODChartCanvas->SetClipRegion( ocpncc1->GetVP(), region);
 
-//    ocpnDC *poDC = NULL;
     if( nBoundary_State > 0 ) {
         ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
     }
 
     RenderPathLegs( *g_pDC );
-    //p_ODChartCanvas->SetContext( pcontext )
-    //m_glcc = new glChartCanvas(this);
     
     if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp, region);
-//    if (pcontext) {
-    /* only draw in this rectangle */
-        DrawAllPathsAndOCPNPoints( *pivp, region );
-//    }
 
-//    p_ODChartCanvas->DisableClipRegion();
+    DrawAllPathsAndOCPNPoints( *pivp, region );
+
     return TRUE;
 }
 
