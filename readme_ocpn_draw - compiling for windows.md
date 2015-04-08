@@ -23,10 +23,17 @@ git fetch -all
 git branch -va 
 
 Then to set up the local branch using the remote
-git checkout -b boundary origin/boundary
 
-Result:  Branch boundary set up to track remote branch boundary from origin.
-Switched to a new branch 'boundary'
+If you want the latest code:
+	git checkout -b boundary origin/boundary
+	Result:  Branch boundary set up to track remote branch boundary from origin.
+	Switched to a new branch 'boundary'
+If you want the more stable code:
+	git checkout -b master origin/master
+	Result:  Branch master set up to track remote master from origin.
+	Switched to a new branch 'master'
+
+
 
 Next copy the file "opencpn.lib" from the most recent Opencpn Version 4.1
 to the 'build' directory.
