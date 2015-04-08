@@ -251,7 +251,6 @@ private:
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
-    bool    SetCursor( const wxCursor &c );
     
     
     int               m_show_id;
