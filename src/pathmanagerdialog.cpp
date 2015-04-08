@@ -826,7 +826,7 @@ void PathManagerDialog::UpdatePathButtons()
     btnPathDelete->Enable( m_pPathListCtrl->GetSelectedItemCount() > 0 );
     btnPathZoomto->Enable( enable1 ); 
     btnPathProperties->Enable( enable1 );
-    btnPathDeleteAll->Enable( enablemultiple );
+    btnPathDeleteAll->Enable( true );
 
     // set activate button text
     Path *path = NULL;

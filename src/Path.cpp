@@ -447,6 +447,12 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
     float lastlon = 0;
     float lastlat = 0;
     unsigned short int FromSegNo = 1;
+
+    wxPoint *bpts;
+    int j = 0;
+
+    bpts = new wxPoint[ pOCPNPointList->GetCount() ];
+
     for(wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
         node; node = node->GetNext()) {
         OCPNPoint *prp = node->GetData();
@@ -481,31 +487,12 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         
         GetCanvasPixLL( &piVP, &r, prp->m_lat, prp->m_lon );
         glVertex2i(r.x, r.y);
+
+        bpts[ j++ ] = r;
     }
     glEnd();
     glDisable (GL_LINE_STIPPLE);
     
-    /*  Path points  */
-//    bpts = new wxPoint[ pOCPNPointList->GetCount() ];
-//    DrawPointWhich( dc, 1, &rpt1 );
-    wxPoint *bpts;
-    int j = 0;
-
-    bpts = new wxPoint[ pOCPNPointList->GetCount() ];
-    
-    for(wxOCPNPointListNode *node = pOCPNPointList->GetFirst(); node; node = node->GetNext()) {
-        OCPNPoint *prp = node->GetData();
-        if ( !m_bVisible && prp->m_bKeepXPath )
-            prp->DrawGL( piVP, region );
-        else if (m_bVisible)
-            prp->DrawGL( piVP, region );
-        wxPoint rpt;
-        GetCanvasPixLL( &piVP, &rpt, prp->m_lat, prp->m_lon );
-        bpts[ j++ ] = rpt;
-//        bpts[ j++ ] = region;
-
-    }
-
     glEnable( GL_POLYGON_STIPPLE );
     GLubyte slope_cross_hatch[] = {
           0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
