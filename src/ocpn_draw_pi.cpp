@@ -728,7 +728,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
         //    Route Creation Rubber Banding
 
-    if( nBoundary_State > 0 ) {
+    if( nBoundary_State == 1 ) {
         ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
     }
     
@@ -968,6 +968,7 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     m_cursor_lat = lat;
     m_cursor_lon = lon;
+    
 }
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
