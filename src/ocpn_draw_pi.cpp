@@ -728,6 +728,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
         //    Route Creation Rubber Banding
 
+    if( nBoundary_State == 1 ) {
+        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    }
+    
     if( nBoundary_State >= 2 ) {
         r_rband.x = event.GetX();
         r_rband.y = event.GetY();
@@ -953,7 +957,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
     
     if (bret) ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
-    
+
     return bret;
 }
 
@@ -964,6 +968,7 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     m_cursor_lat = lat;
     m_cursor_lon = lon;
+    
 }
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
@@ -1002,6 +1007,11 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 {
     m_vp = vp;
     ocpnDC ocpnmdc( *pmdc );
+
+    if( nBoundary_State > 0 ) {
+        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    }
+
     RenderPathLegs( ocpnmdc );
     return TRUE;
 }
@@ -1013,6 +1023,11 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
     llbb.SetMax( pivp->lon_max, pivp->lat_max );
+
+    if( nBoundary_State > 0 ) {
+        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    }
+
     DrawAllPathsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
@@ -1027,13 +1042,17 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     //m_glcc = wxGLCanvas( m_parent_window );
     //wxGLCanvas m_wxGLC( m_parent_window );
     g_pDC = NULL;
-    g_pDC = new ocpnDC();
+    //g_pDC = new ocpnDC();
 
     OCPNRegion region( pivp->rv_rect );
 //    glOCPNDrawChartCanvas *p_ODChartCanvas = (glOCPNDrawChartCanvas *)ocpncc1;
 //    p_ODChartCanvas->SetClipRegion( ocpncc1->GetVP(), region);
 
 //    ocpnDC *poDC = NULL;
+    if( nBoundary_State > 0 ) {
+        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    }
+
     RenderPathLegs( *g_pDC );
     //p_ODChartCanvas->SetContext( pcontext )
     //m_glcc = new glChartCanvas(this);
@@ -1110,7 +1129,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
 //        if( g_bShowMag )
 //            pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)gFrame->GetTrueOrMag( brg ) );
 //        else
-            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
 
         pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
 
@@ -2005,3 +2024,4 @@ void ocpn_draw_pi::DimeControl( wxWindow* ctrl, wxColour col, wxColour window_ba
         }
     }
 }
+

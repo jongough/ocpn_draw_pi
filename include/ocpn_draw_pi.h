@@ -253,7 +253,6 @@ private:
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     
     
-    
     int               m_show_id;
     int               m_hide_id;
     bool				show;
