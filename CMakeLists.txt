@@ -68,7 +68,6 @@ SET(SRCS
  		src/ODPositionParser.cpp
  		src/ODstyles.cpp
 # 		src/ODUndo.cpp
-# 		src/glOCPNDrawChartCanvas.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
         	src/jsonval.cpp

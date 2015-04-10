@@ -188,7 +188,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
     m_btemp = false;
-    m_sTypeString = wxS("Boundary Point");
+    m_sTypeString = wxEmptyString;
 
     m_SelectNode = NULL;
     m_ManagerNode = NULL;

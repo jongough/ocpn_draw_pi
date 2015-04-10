@@ -362,6 +362,8 @@ void PathManagerDialog::OnTabSwitch( wxNotebookEvent &event )
         if( btnExportViz ) btnExportViz->Enable( true );
 
     }
+    if ( m_pOCPNPointListCtrl ) UpdateOCPNPointsListCtrl();
+    if ( m_pPathListCtrl ) UpdatePathListCtrl();
     event.Skip(); // remove if using event table... why?
 }
 
@@ -394,6 +396,8 @@ void PathManagerDialog::Create()
 {
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer( wxVERTICAL );
     SetSizer( itemBoxSizer1 );
+    m_pPathListCtrl = NULL;
+    m_pOCPNPointListCtrl = NULL;
 
     m_pNotebook = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxSize( -1, -1 ), wxNB_TOP );
     itemBoxSizer1->Add( m_pNotebook, 1,
@@ -1440,6 +1444,7 @@ void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
     OCPNPoint *pWP = new OCPNPoint( g_dLat, g_dLon, g_default_OCPNPoint_icon, wxEmptyString,
             GPX_EMPTY_STRING );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
+    pWP->SetTypeString( wxS("Point") );
     pOCPNSelect->AddSelectableOCPNPoint( g_dLat, g_dLon, pWP );
     pOCPNDrawConfig->AddNewOCPNPoint( pWP, -1 );    // use auto next num
     RequestRefresh( GetOCPNCanvasWindow() );

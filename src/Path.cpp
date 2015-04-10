@@ -39,6 +39,7 @@
 #include "OCPNDrawConfig.h"
 #include "ocpn_draw_pi.h"
 #include "bbox.h"
+#include "ocpndc.h"
 
 
 extern PointMan *pOCPNPointMan;
@@ -520,7 +521,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
         dc.SetPen(*wxTRANSPARENT_PEN);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxBDIAGONAL_HATCH ) );
         if ( j > 1 )
-            dc.DrawPolygon( j, bpts, 0, 0);
+            dc.DrawPolygonTessellated( j, bpts, 0, 0);
     }
     glEnd();
     glDisable (GL_POLYGON_STIPPLE);

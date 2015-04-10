@@ -621,6 +621,7 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
     pOP = new OCPNPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
     pOP->m_MarkDescription = DescString;
     pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
+    pOP->m_sTypeString = TypeString;
     pOP->SetOCPNPointArrivalRadius( ArrivalRadius );
     pOP->SetOCPNPointRangeRingsNumber( l_iOCPNPointRangeRingsNumber );
     pOP->SetOCPNPointRangeRingsStep( l_fOCPNPointRangeRingsStep );

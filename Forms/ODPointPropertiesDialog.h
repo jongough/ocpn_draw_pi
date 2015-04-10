@@ -70,7 +70,6 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textDescription;
 		wxButton* m_buttonExtDescription;
-		wxPanel* m_panel4;
 		wxPanel* m_panelDescription;
 		wxTextCtrl* m_textCtrlExtDescription;
 		wxPanel* m_Extended;

@@ -100,6 +100,15 @@ enum
     ID_DEF_MENU_LAST
 };
 
+//Constants for the drawing mode
+enum
+{
+    ID_MODE_BOUNDARY = 0,
+    ID_MODE_POINT,
+    
+    ID_LAST_MODE
+};
+
 class Boundary;
 class BoundaryProp;
 
@@ -213,6 +222,7 @@ public:
     int         nBoundary_State;
     Boundary    *m_pMouseBoundary;
     wxPoint     r_rband;
+    int         nPoint_State;
     double      m_dStartLat;
     double      m_dStartLon;
     double      m_cursor_lon, m_cursor_lat;
@@ -248,6 +258,7 @@ private:
 //    wxAuiManager     *m_pauimgr;
 
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
+    bool    CreatePointLeftClick( wxMouseEvent &event );
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
@@ -275,7 +286,8 @@ private:
     
     wxString    m_Data;
 
-
+    int         m_Mode;
+    int         m_numModes;
 
 
 

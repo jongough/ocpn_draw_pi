@@ -158,6 +158,17 @@ wxImage ICursorDown;
 wxImage ICursorPencil;
 wxImage ICursorCross;
 
+wxBitmap *_img_ocpn_draw_pi;
+wxBitmap *_img_ocpn_draw_gray_pi;
+wxBitmap *_img_ocpn_draw;
+wxBitmap *_img_ocpn_draw_boundary;
+wxBitmap *_img_ocpn_draw_boundary_gray;
+wxBitmap *_img_ocpn_draw_point;
+wxBitmap *_img_ocpn_draw_point_gray;
+const wxBitmap *_img_Bullet_green;
+const wxBitmap *_img_Bullet_red;
+const wxBitmap *_img_Bullet_yellow;
+
 // TODO check that this is really needed
 float g_GLMinSymbolLineWidth;
 
@@ -251,6 +262,10 @@ int ocpn_draw_pi::Init(void)
     m_bDrawingBoundary = NULL;
     gVar = NAN;
 
+    // Drawing modes from toolbar
+    m_Mode = 0;
+    m_numModes = ID_LAST_MODE - 1
+    ;
     // Not sure what this is
     AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
 
@@ -528,18 +543,38 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
         
     }
     else if ( id == m_leftclick_boundary_id ) {
-        if( 0 == nBoundary_State ){
-            nBoundary_State = 1;
-            ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
-            SetToolbarItemState( m_leftclick_boundary_id, true );
-        } else {
-            nBoundary_State = 0;
-            FinishBoundary();
-            //ocpncc1->SetCursor( *pCursorArrow ); 
-            SetToolbarItemState( m_leftclick_boundary_id, false );
-            RequestRefresh( m_parent_window );
+        switch (m_Mode)
+        {
+            case ID_MODE_BOUNDARY:
+                if( 0 == nBoundary_State ){
+                    nBoundary_State = 1;
+                    ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                } else {
+                    nBoundary_State = 0;
+                    nPoint_State = 0;
+                    FinishBoundary();
+                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    //RequestRefresh( m_parent_window );
+                }
+                break;
+                
+            case ID_MODE_POINT:
+                if( 0 == nPoint_State ){
+                    nPoint_State = 1;
+                    ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                } else {
+                    nBoundary_State = 0;
+                    nPoint_State = 0;
+                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    //RequestRefresh( m_parent_window );
+                }
+                break;
+                
+            default:
+                break;
         }
-        
     }
 /*
 	if(NULL == m_plogbook_window)
@@ -700,6 +735,8 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
             case 2:                      // Ctrl B
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
+                    m_Mode = ID_MODE_BOUNDARY;
+                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
                     m_iCallerId = m_leftclick_boundary_id;
                     ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
                     bret = TRUE;
@@ -710,6 +747,12 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if( nBoundary_State > 0 ){
                     nBoundary_State = 0;
                     FinishBoundary();
+                    ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
+                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    RequestRefresh( m_parent_window );
+                    bret = TRUE;
+                } else if( nPoint_State > 0 ){
+                    nPoint_State = 0;
                     ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
                     SetToolbarItemState( m_leftclick_boundary_id, false );
                     RequestRefresh( m_parent_window );
@@ -744,16 +787,22 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
 
     if ( event.LeftDown() ) {
-        if( m_iCallerId == m_leftclick_boundary_id && nBoundary_State > 0 )                  // creating boundary?
-        {   
-            ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
-            bret = CreateBoundaryLeftClick( event );
-        }
+        if( m_iCallerId == m_leftclick_boundary_id )
+            if (nBoundary_State > 0 )
+            {   
+                ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                bret = CreateBoundaryLeftClick( event );
+            } else if ( nPoint_State > 0)
+            {
+                ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                bret = CreatePointLeftClick( event );
+            }
+
     } 
     
     if( event.LeftUp() ) {
         bool b_startedit_boundary = false;
-    if (m_iCallerId == m_leftclick_boundary_id && nBoundary_State > 0) {
+    if (m_iCallerId == m_leftclick_boundary_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
         bret = true;
     }
     /*	else
@@ -807,9 +856,40 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
       }
     
     if ( event.RightDown() ) {
-        if ( nBoundary_State > 0 ) {
+        if ( nBoundary_State == 1 || nPoint_State == 1 ) {
+            m_Mode++;
+            if (m_Mode > m_numModes ) m_Mode = 0;
+            switch (m_Mode)
+            {
+                case ID_MODE_BOUNDARY:
+                    // Boundary
+                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    nBoundary_State = 1;
+                    nPoint_State = 0;
+                    break;
+                    
+                case ID_MODE_POINT:
+                    // Point
+                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
+                    nPoint_State = 1;
+                    nBoundary_State = 0;
+                    break;
+
+                default:
+                    // Boundary
+                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    break;
+            }
+            bret = TRUE;
+        } else if ( nBoundary_State > 1 ) {
             nBoundary_State = 0;
             FinishBoundary();
+            ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
+            SetToolbarItemState( m_leftclick_boundary_id, false );
+            RequestRefresh( m_parent_window );
+            bret = TRUE;
+        } else if ( nPoint_State > 1) {
+            nPoint_State = 0;
             ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
             SetToolbarItemState( m_leftclick_boundary_id, false );
             RequestRefresh( m_parent_window );
@@ -1310,6 +1390,67 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
     if( active_boundary ) active_boundary->Draw( dc, *m_vp );
 }
 
+bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
+{
+    double rlat, rlon;
+    
+    rlat = m_cursor_lat;
+    rlon = m_cursor_lon;
+
+    //    Check to see if there is a nearby point which may be reused
+    OCPNPoint *pMousePoint = NULL;
+
+    //    Calculate meaningful SelectRadius
+    int nearby_sel_rad_pix = 8;
+//        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
+    double nearby_radius_meters = nearby_sel_rad_pix / 1;
+
+    OCPNPoint *pNearbyPoint = pOCPNPointMan->GetNearbyOCPNPoint( rlat, rlon,
+                            nearby_radius_meters );
+    if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
+            && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+    {
+        int dlg_return;
+#ifndef __WXOSX__
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, wxS("Use nearby Pointoint?"),
+                                        wxS("OpenCPN Point Create"),
+                                        (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+#else
+        dlg_return = wxID_YES;
+#endif
+        if( dlg_return == wxID_YES ) {
+            pMousePoint = pNearbyPoint;
+
+            // Using existing OCPNpoint, so nothing to delete for undo.
+            //if( nBoundary_State > 1 )
+                // TODO fix up undo
+                //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
+
+            // check all other boundaries and routes to see if this point appears in any other route
+            // If it appears in NO other route, then it should e considered an isolated mark
+            if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
+            if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
+        }
+    }
+
+    if( NULL == pMousePoint ) {                 // need a new point
+        pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
+        pMousePoint->SetNameShown( false );
+        pMousePoint->SetTypeString( wxS("Point") );
+        pMousePoint->m_bIsolatedMark = TRUE;
+
+        pOCPNDrawConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
+        pOCPNSelect->AddSelectableOCPNPoint( rlat, rlon, pMousePoint );
+
+    }
+
+    nPoint_State++;
+    
+    RequestRefresh( m_parent_window );
+
+    return TRUE;
+}
+
 bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 {
     //Process boundary creation
@@ -1371,7 +1512,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     if( NULL == pMousePoint ) {                 // need a new point
         pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
         pMousePoint->SetNameShown( false );
-        //pMousePoint->SetTypeString( wxS("Boundary Point") );
+        pMousePoint->SetTypeString( wxS("Boundary Point") );
 
         pOCPNDrawConfig->AddNewOCPNPoint( pMousePoint, -1 );    // use auto next num
         pOCPNSelect->AddSelectableOCPNPoint( rlat, rlon, pMousePoint );
@@ -1420,6 +1561,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                             gcPoint = new OCPNPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
                                     GPX_EMPTY_STRING );
                             gcPoint->SetNameShown( false );
+                            gcPoint->SetTypeString( wxS("Boundary Point") );
                             pOCPNDrawConfig->AddNewOCPNPoint( gcPoint, -1 );
                             pOCPNSelect->AddSelectableOCPNPoint( gcCoord.y, gcCoord.x, gcPoint );
                         } else {
