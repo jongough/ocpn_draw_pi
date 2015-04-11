@@ -22,27 +22,27 @@ void initialize_images(void)
 	pName->append( *g_pImage );
 	pName->append (wxS("OCPNDrawManager.png"));
 	
-	_img_ocpn_draw_pi = new wxBitmap( *pName );
+	_img_ocpn_draw_pi = new wxBitmap( wxImage( *pName ) );
 	pName->clear();
 	pName->append( *g_pImage );
 	pName->append (wxS("OCPNDrawManagerGray.png"));
-	_img_ocpn_draw_gray_pi = new wxBitmap( *pName );
+	_img_ocpn_draw_gray_pi = new wxBitmap( wxImage( *pName ) );
 	pName->clear();
 	pName->append( *g_pImage );
 	pName->append (wxS("button1.png"));
-	_img_ocpn_draw_boundary = new wxBitmap( *pName );
+	_img_ocpn_draw_boundary = new wxBitmap( wxImage( *pName ) );
     pName->clear();
     pName->append( *g_pImage );
     pName->append (wxS("button2.png"));
-    _img_ocpn_draw_boundary_gray = new wxBitmap( *pName );
+    _img_ocpn_draw_boundary_gray = new wxBitmap( wxImage( *pName ) );
     pName->clear();
     pName->append( *g_pImage );
     pName->append (wxS("pointbutton.png"));
-    _img_ocpn_draw_point = new wxBitmap( *pName );
+    _img_ocpn_draw_point = new wxBitmap( wxImage( *pName ) );
     pName->clear();
     pName->append( *g_pImage );
     pName->append (wxS("pointbuttongray.png"));
-    _img_ocpn_draw_point_gray = new wxBitmap( *pName );
+    _img_ocpn_draw_point_gray = new wxBitmap( wxImage( *pName ) );
 	
 
 static unsigned char Bullet_green[] = {

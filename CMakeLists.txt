@@ -127,7 +127,7 @@ SET(OCPNSRC
 		ocpnsrc/Layer.cpp
 #		ocpnsrc/navutil.cpp
         ocpnsrc/ocpndc.cpp
-		ocpnsrc/OCPNRegion.cpp
+#		ocpnsrc/OCPNRegion.cpp
 #		ocpnsrc/OCPNPlatform.cpp
 #		ocpnsrc/pluginmanager.cpp
         ocpnsrc/pugixml.cpp

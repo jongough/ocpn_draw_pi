@@ -186,7 +186,7 @@ public:
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
-    void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion &region );
+    void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp );
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
     

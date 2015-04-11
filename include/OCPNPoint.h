@@ -155,7 +155,7 @@ public:
       bool              m_btemp;
 
 #ifdef ocpnUSE_GL
-      void DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region );
+      void DrawGL( PlugIn_ViewPort &pivp );
       unsigned int m_iTextTexture;
       int m_iTextTextureWidth, m_iTextTextureHeight;
 

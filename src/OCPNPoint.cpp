@@ -441,7 +441,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 }
 
 #ifdef ocpnUSE_GL
-void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
+void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
     if( !m_bIsVisible )
     return;
@@ -541,9 +541,6 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
         m_wpBBox_chart_scale = pivp.chart_scale;
         m_wpBBox_rotation = pivp.rotation;
     }
-
-//    if(region.Contains(r3) == wxOutRegion)
-//        return;
 
     ocpnDC dc;
 

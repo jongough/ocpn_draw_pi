@@ -202,11 +202,13 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 	wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
 #ifdef __WXMSW__
 	wxString stdPath  = std_path.GetConfigDir();
-	wxString stdDataDir = std_path.GetUserDataDir();
+	wxString stdDataDir = std_path.GetDataDir();
+    wxString stdHomeDir = std_path.GetUserDataDir();
 #endif
 #ifdef __WXGTK__
 	wxString stdPath  = std_path.GetResourcesDir();
 	wxString stdDataDir = std_path.GetUserDataDir();
+    wxString stdHomeDir = std_path.GetUserConfigDir();
 #endif
 #ifdef __WXOSX__
 	wxString stdPath  = std_path.GetUserConfigDir();   // should be ~/Library/Preferences	
@@ -215,6 +217,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     
 	g_pHome_Locn = new wxString();
     g_pHome_Locn->Append(stdPath);
+    //g_pHome_Locn->Append(stdHomeDir);
     appendOSDirSlash(g_pHome_Locn);
     
     g_pHome_Locn->Append(_T("OCPNDraw"));
@@ -231,7 +234,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     
     g_pImage = new wxString();
     g_pImage->append( *g_pHome_Locn );
-    g_pImage->append( wxS("image") );
+    g_pImage->append( wxS("images") );
     appendOSDirSlash( g_pImage );
     if ( !wxDir::Exists(*g_pImage))
         wxMkdir( *g_pImage );
@@ -1122,17 +1125,15 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 
     g_pDC = new ocpnDC();
 
-    OCPNRegion region( pivp->rv_rect );
-
     if( nBoundary_State > 0 ) {
         ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
     }
 
     RenderPathLegs( *g_pDC );
     
-    if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp, region);
+    if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp );
 
-    DrawAllPathsAndOCPNPoints( *pivp, region );
+    DrawAllPathsAndOCPNPoints( *pivp );
 
     return TRUE;
 }
@@ -1858,7 +1859,7 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 		pString->Append(sep);
 }
 
-void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion &region )
+void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp )
 {
     for(wxPathListNode *node = pPathList->GetFirst();
         node; node = node->GetNext() ) {
@@ -1886,13 +1887,13 @@ void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion 
 
         // Path is not wholly outside viewport
         if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {
-            pPathDraw->DrawGL( pivp, region );
+            pPathDraw->DrawGL( pivp );
         } else if( pivp.lat_max > 180. ) {
             if(test_minx + 360 <= pivp.lon_max && test_maxx + 360 >= pivp.lon_min)
-                pPathDraw->DrawGL( pivp, region );
+                pPathDraw->DrawGL( pivp );
         } else if( pPathDraw->CrossesIDL() || pivp.lon_min < -180. ) {
             if(test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
-                pPathDraw->DrawGL( pivp, region );
+                pPathDraw->DrawGL( pivp );
         }
 
     }
@@ -1903,7 +1904,7 @@ void ocpn_draw_pi::DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp, OCPNRegion 
         for(wxOCPNPointListNode *pnode = pOCPNPointMan->GetOCPNPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             OCPNPoint *pOP = pnode->GetData();
             //if( pOP && (!pOP->m_bIsInPath && !pOP->m_bIsInTrack ) )
-                pOP->DrawGL( pivp, region );
+                pOP->DrawGL( pivp );
         }
     }
     

@@ -127,6 +127,8 @@ void PointMan::ProcessUserIcons( ocpnStyle::Style* style )
 {
     wxString UserIconPath = g_PrivateDataDir;
     wxChar sep = wxFileName::GetPathSeparator();
+    if ( UserIconPath.IsNull() ) return;
+    
     if( UserIconPath.Last() != sep ) UserIconPath.Append( sep );
     UserIconPath.Append( _T("UserIcons") );
     

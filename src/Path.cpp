@@ -356,7 +356,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 
 extern ChartCanvas *ocpncc1; /* hopefully can eventually remove? */
 
-void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
+void Path::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
