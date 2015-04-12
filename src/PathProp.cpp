@@ -231,8 +231,10 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
         wxString sPropertiesType( wxS("") );
         if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
             sPropertiesType.append( wxS("OCPN Draw Point") );
-        else
+        else {
             sPropertiesType.append( m_pPath->m_sTypeString );
+            sPropertiesType.append( wxT(" Point") );
+        }
         sPropertiesType.append( wxS(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, sPropertiesType );
         editItem->Enable( m_wpList->GetSelectedItemCount() == 1 );

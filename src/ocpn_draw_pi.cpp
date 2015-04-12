@@ -44,7 +44,7 @@
 #include "multiplexer.h"
 #include "OCPNSelect.h"
 #include "pathmanagerdialog.h"
-#include "OCPNDrawPointInfoImpl.h"
+#include "OCPNDrawPropertiesImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "OCPNDrawEventHandler.h"
 #include "chcanv.h"
@@ -103,17 +103,25 @@ PathMan          *g_pPathMan;
 wxString         g_default_OCPNPoint_icon;
 PathProp       *pPathPropDialog;
 PathManagerDialog *pPathManagerDialog;
-OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 ODPointPropertiesImpl *pODPointPropDialog;
+OCPNDrawPropertiesImpl *pOCPNDrawPropDialog;
 PlugInManager       *g_OD_pi_manager;
 ocpnStyle::StyleManager* g_ODStyleManager;
 BoundaryList              *pBoundaryList;
 OCPNPointList           *pOCPNPointList;
 ChartCanvas     *ocpncc1;
-wxString    g_ActiveLineColour;
-wxString    g_InActiveLineColour;
-wxString    g_ActiveFillColour;
-wxString    g_InActiveFillColour;
+wxString    g_ActiveBoundaryLineColour;
+wxString    g_InActiveBoundaryLineColour;
+wxString    g_ActiveBoundaryFillColour;
+wxString    g_InActiveBoundaryFillColour;
+int          g_BoundaryLineWidth; 
+int          g_BoundaryLineStyle;
+wxString    g_ActivePathLineColour;
+wxString    g_InActivePathLineColour;
+wxString    g_ActivePathFillColour;
+wxString    g_InActivePathFillColour;
+int          g_PathLineWidth; 
+int          g_PathLineStyle;
 wxString    g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
@@ -123,10 +131,14 @@ wxString    *g_pNavObjs;
 
 OCPNDrawEventHandler    *g_OCPNDrawEventHandler;
 
+bool         g_bOCPNPointShowName;
+bool         g_bOCPNPointShowRangeRings;
 int          g_iOCPNPointRangeRingsNumber;
 float        g_fOCPNPointRangeRingsStep;
 int          g_iOCPNPointRangeRingsStepUnits;
 wxColour     g_colourOCPNPointRangeRingsColour;
+wxString     g_sOCPNPointIconName;
+
 PlugIn_ViewPort *g_pivp;
 ocpnDC      *g_pDC;
 bool        g_bShowMag;
@@ -332,8 +344,7 @@ int ocpn_draw_pi::Init(void)
 //    stats = new StatWin( ocpncc1 );
 //    stats->SetColorScheme( global_color_scheme );
    
-    
-    pOCPNPointMan = new PointMan();
+    if( pOCPNPointMan == NULL ) pOCPNPointMan = new PointMan();
     pOCPNPointMan->SetColorScheme( global_color_scheme );
     
     g_pPathMan = new PathMan();
@@ -481,38 +492,18 @@ int ocpn_draw_pi::GetToolbarToolCount(void)
 
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
-	dlgShow = false;
-/*
-#ifdef __WXMSW__
-	optionsDialog = new LogbookOptions(parent, opt, this, -1, wxS("Logbook Preferences"), wxDefaultPosition,  wxSize( 692,660  ),
-		wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
-#elif defined __WXOSX__
-    optionsDialog = new LogbookOptions(parent, opt, this, -1, wxS("Logbook Preferences"), wxDefaultPosition,  wxSize( 710,685 ) ,
-		wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
-#else
-	optionsDialog = new LogbookOptions(parent, opt, this, -1, wxS("Logbook Preferences"), wxDefaultPosition,  wxSize( 740,700 ) ,
-		wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
-#endif
-	optionsDialog->m_checkBoxShowLogbook->SetValue(m_bLOGShowIcon);
+	//dlgShow = false;
+    if( NULL == pOCPNDrawPropDialog )
+        pOCPNDrawPropDialog = new OCPNDrawPropertiesImpl( parent );
 
-     if(optionsDialog->ShowModal() == wxID_OK)
-      {
-		  optionsDialog->getValues();
-            //    Show Icon changed value?
-		  if(m_bLOGShowIcon != optionsDialog->m_checkBoxShowLogbook->GetValue())
-            {
-                  m_bLOGShowIcon= optionsDialog->m_checkBoxShowLogbook->GetValue();
+    pOCPNDrawPropDialog->SetDialogSize();
+    pOCPNDrawPropDialog->UpdateProperties();
 
-                  if(m_bLOGShowIcon)
-                        m_leftclick_config_id  = InsertPlugInTool(wxS(""), _img_logbook_pi, _img_logbook_pi, wxITEM_NORMAL,
-                              wxS("ocpn_draw"), wxS(""), NULL, OCPN_DRAW_POSITION,
-                              0, this);
-                  else
-                        RemovePlugInTool(m_leftclick_config_id);
-            }
-            SaveConfig();
-      }
-*/
+    pOCPNDrawPropDialog->ShowModal();
+
+    pOCPNDrawPropDialog->Destroy();
+    pOCPNDrawPropDialog = NULL;
+
 }
 
 void ocpn_draw_pi::OnToolbarToolCallback(int id)
@@ -637,14 +628,22 @@ void ocpn_draw_pi::SaveConfig()
 
     if(pConf)
     {
-        pConf->SetPath ( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
-        pConf->Write ( wxS( "DefaultActiveLineColour" ), g_ActiveLineColour );
-        pConf->Write ( wxS( "DefaultInActiveLineColour" ), g_InActiveLineColour );
-        pConf->Write ( wxS( "DefaultActiveFillColour" ), g_ActiveFillColour );
-        pConf->Write ( wxS( "DefaultInActiveFillColour" ), g_InActiveFillColour );
-        pConf->Write ( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
+        pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_ActiveBoundaryLineColour );
+        pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_InActiveBoundaryLineColour );
+        pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_ActiveBoundaryFillColour );
+        pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_InActiveBoundaryFillColour );
+        pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
+        pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
+        pConf->Write( wxS( "DefaultActivePathLineColour" ), g_ActivePathLineColour );
+        pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_InActivePathLineColour );
+        pConf->Write( wxS( "DefaultActivePathFillColour" ), g_ActivePathFillColour );
+        pConf->Write( wxS( "DefaultInActivePathFillColour" ), g_InActivePathFillColour );
+        pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
+        pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
+        pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
         pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
-        pConf->Write( wxS( "DefaultWPIcon" ), g_OD_default_wp_icon );
+        pConf->Write( wxS( "DefaultOCPNPointIcon" ), g_sOCPNPointIconName );
         pConf->Write( wxS( "OCPNPointRangeRingsNumber" ), g_iOCPNPointRangeRingsNumber );
         pConf->Write( wxS( "OCPNPointRangeRingsStep" ), g_fOCPNPointRangeRingsStep );
         pConf->Write( wxS( "OCPNPointRangeRingsStepUnits" ), g_iOCPNPointRangeRingsStepUnits );
@@ -661,14 +660,22 @@ void ocpn_draw_pi::LoadConfig()
     if(pConf)
     {
         wxString val;
-        pConf->SetPath ( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
-        pConf->Read ( wxS( "DefaultActiveLineColour" ), &g_ActiveLineColour, wxS("Red") );
-        pConf->Read ( wxS( "DefaultInActiveLineColour" ), &g_InActiveLineColour, wxS("LightGray") );
-        pConf->Read ( wxS( "DefaultActiveFillColour" ), &g_ActiveFillColour, wxS("Red") );
-        pConf->Read ( wxS( "DefaultInActiveFillColour" ), &g_InActiveFillColour, wxS("LightGray") );
-        pConf->Read ( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
+        pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->Read( wxS( "DefaultActiveBoundaryLineColour" ), &g_ActiveBoundaryLineColour, wxS("Red") );
+        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &g_InActiveBoundaryLineColour, wxS("LightGray") );
+        pConf->Read( wxS( "DefaultActiveBoundaryFillColour" ), &g_ActiveBoundaryFillColour, wxS("Red") );
+        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &g_InActiveBoundaryFillColour, wxS("LightGray") );
+        pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
+        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, 1 );
+        pConf->Read( wxS( "DefaultActivePathLineColour" ), &g_ActivePathLineColour, wxS("Red") );
+        pConf->Read( wxS( "DefaultInActivePathLineColour" ), &g_InActivePathLineColour, wxS("LightGray") );
+        pConf->Read( wxS( "DefaultActivePathFillColour" ), &g_ActivePathFillColour, wxS("Red") );
+        pConf->Read( wxS( "DefaultInActivePathFillColour" ), &g_InActivePathFillColour, wxS("LightGray") );
+        pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
+        pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 1 );
+        pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
-        pConf->Read( wxS( "DefaultWPIcon" ), &g_OD_default_wp_icon, wxS("triangle") );
+        pConf->Read( wxS( "DefaultOCPNPointIcon" ), &g_sOCPNPointIconName, wxS("triangle") );
         pConf->Read( wxS( "OCPNPointRangeRingsNumber" ), &g_iOCPNPointRangeRingsNumber, 0 );
         pConf->Read( wxS( "OCPNPointRangeRingsStep" ), &val, wxS("1.0") );
         g_fOCPNPointRangeRingsStep = atof( val.mb_str() );
@@ -677,7 +684,7 @@ void ocpn_draw_pi::LoadConfig()
         g_colourOCPNPointRangeRingsColour = wxColour( *wxRED );
         pConf->Read( wxS( "OCPNPointRangeRingsColour" ), &l_wxsOCPNPointRangeRingsColour, wxS( "RED" ) );
         g_colourOCPNPointRangeRingsColour.Set( l_wxsOCPNPointRangeRingsColour );
-        pConf->Read ( wxS( "ShowMag" ), &g_bShowMag, 0 );
+        pConf->Read( wxS( "ShowMag" ), &g_bShowMag, 0 );
         g_UserVar = 0.0;
         wxString umv;
         pConf->Read( wxS( "UserMagVariation" ), &umv );
@@ -1466,6 +1473,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         m_pMouseBoundary = new Boundary();
         pBoundaryList->Append( m_pMouseBoundary );
         pPathList->Append( m_pMouseBoundary);
+        m_pMouseBoundary->m_width = g_BoundaryLineWidth;
+        m_pMouseBoundary->m_style = g_BoundaryLineStyle;
         r_rband.x = event.GetX();
         r_rband.y = event.GetY();
         m_dStartLat = m_cursor_lat;

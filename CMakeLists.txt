@@ -63,6 +63,10 @@ SET(SRCS
  		src/OCPNDrawNavObjectChanges.cpp
  		src/OCPNDrawCanvasMenuHandler.cpp
 # 		src/OCPNDrawPointInfoImpl.cpp
+        src/OCPNDrawPropertiesDialog.cpp
+        src/OCPNDrawPropertiesImpl.cpp
+#        src/ODHelper.cpp
+#        src/ODIcons.cpp
  		src/ODPointPropertiesDialog.cpp
  		src/ODPointPropertiesImpl.cpp
  		src/ODPositionParser.cpp
@@ -91,7 +95,11 @@ SET(HDRS
  		include/OCPNDrawEventHandler.h
  		include/OCPNDrawNavObjectChanges.h
  		include/OCPNDrawCanvasMenuHandler.h
+ 		include/OCPNDrawPropertiesDialog.h
+ 		include/OCPNDrawPropertiesImpl.h
 # 		include/OCPNDrawPointInfoImpl.h
+#        include/ODHelper.h
+#        incluse/ODIcons.h
  		include/ODPointPropertiesDialog.h
  		include/ODPointPropertiesImpl.h
  		include/ODPositionParser.h
@@ -112,7 +120,7 @@ SET(HDRS
         	include/wx/jsonwriter.h
 )
 
-SET(OCPNSRC
+SET(OCPNSRC 
 		ocpnsrc/bbox.cpp
 #		ocpnsrc/chart1.cpp
 #		ocpnsrc/chcanv.cpp

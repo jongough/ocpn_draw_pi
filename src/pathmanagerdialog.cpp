@@ -142,7 +142,7 @@ extern OCPNDrawConfig  *pOCPNDrawConfig;
 extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
-extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
+//extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 extern ODPointPropertiesImpl *pODPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern OCPNSelect           *pOCPNSelect;

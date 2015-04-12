@@ -84,6 +84,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     SetSize(fsize);
     
 }
+
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
 {
 	// TODO: Implement onRightClick
@@ -122,7 +123,7 @@ void ODPointPropertiesImpl::OnArrivalRadiusChange( wxCommandEvent& event )
 void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 {
     // TODO: Implement OnShowRangeRingsSelect
-    if( m_checkBoxShowODPointRangeRings->GetValue() == FALSE ) {
+/*    if( m_checkBoxShowODPointRangeRings->GetValue() == FALSE ) {
         m_SizerODPointRangeRingsSelect->ShowItems( false );
         m_SizerPointRangeGrid->ShowItems( false );
     } else {
@@ -133,6 +134,7 @@ void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
     m_SizerBasicProperties->Layout();
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     event.Skip();
+*/    
 }
 
 void ODPointPropertiesImpl::OnRangeRingsStepChange( wxCommandEvent& event )
