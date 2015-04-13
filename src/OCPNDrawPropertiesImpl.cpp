@@ -127,7 +127,7 @@ void OCPNDrawPropertiesImpl::SaveChanges()
         g_fOCPNPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
         g_iOCPNPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
         g_colourOCPNPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
-        g_n_arrival_circle_radius = atof(m_textCtrlODPointArrivalRadius->GetValue());
+        m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
         g_bOCPNPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
         g_sOCPNPointIconName = m_bcomboBoxOCPNPointIcon->GetValue();
 }
