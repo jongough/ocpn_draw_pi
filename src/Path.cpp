@@ -51,10 +51,10 @@ extern OCPNSelect *pOCPNSelect;
 extern OCPNDrawConfig *pOCPNDrawConfig;
 extern Multiplexer *g_pODMUX;
 extern float g_ODGLMinSymbolLineWidth;
-extern wxString    g_ActiveBoundaryLineColour;
-extern wxString    g_InActiveBoundaryLineColour;
-extern wxString    g_ActiveBoundaryFillColour;
-extern wxString    g_InActiveBoundaryFillColour;
+extern wxString    g_ActivePathLineColour;
+extern wxString    g_InActivePathLineColour;
+extern wxString    g_ActivePathFillColour;
+extern wxString    g_InActivePathFillColour;
 extern PathProp    *pPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 
@@ -92,8 +92,10 @@ Path::Path( void )
     m_LayerID = 0;
     m_bIsInLayer = false;
 
-    m_LineColour = g_ActiveBoundaryLineColour;
-    m_FillColour = g_ActiveBoundaryFillColour;
+    m_ActiveLineColour = g_ActivePathLineColour;
+    m_ActiveFillColour = g_ActivePathFillColour;
+    m_InActiveLineColour = g_InActivePathLineColour;
+    m_InActiveFillColour = g_InActivePathFillColour;
 
     m_lastMousePointIndex = 0;
     m_NextLegGreatCircle = false;
@@ -197,14 +199,14 @@ void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
     wxString colour;
 
     if( m_bVisible && m_bPathIsActive ) {
-        colour = m_LineColour;
+        colour = m_ActiveLineColour;
     }
     else if ( m_bVisible && !m_bPathIsActive) {
-        colour = g_InActiveBoundaryLineColour;
+        colour = m_InActiveLineColour;
     }
 
     if( colour.IsNull() ) {
-        colour = m_LineColour;
+        colour = m_ActiveLineColour;
     } 
 
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
@@ -229,17 +231,17 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     if( m_nPoints == 0 ) return;
 
     if( m_bVisible && m_bPathIsActive ) {
-        colour = m_LineColour;
-        fillcolour = m_FillColour;
+        colour = m_ActiveLineColour;
+        fillcolour = m_ActiveFillColour;
     }
     else {
-        colour = g_InActiveBoundaryLineColour;
-        fillcolour = g_InActiveBoundaryFillColour;
+        colour = m_InActiveLineColour;
+        fillcolour = m_InActiveFillColour;
         
     }
 
     if( colour.IsNull() ) {
-        colour = m_LineColour;
+        colour = m_ActiveLineColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
@@ -249,7 +251,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     }
 
     if( fillcolour.IsNull() ) {
-        fillcolour = g_ActiveBoundaryFillColour;
+        fillcolour = m_ActiveFillColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( fillcolour == ::GpxxColorNames[i] ) {
@@ -405,17 +407,17 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     wxString colour, fillcolour;
     
     if( m_bVisible && m_bPathIsActive ) {
-        colour = m_LineColour;
-        fillcolour = m_FillColour;
+        colour = m_ActiveLineColour;
+        fillcolour = m_ActiveFillColour;
     }
     else {
-        colour = g_InActiveBoundaryLineColour;
-        fillcolour = g_InActiveBoundaryFillColour;
+        colour = m_InActiveLineColour;
+        fillcolour = m_InActiveFillColour;
         
     }
 
     if( colour.IsNull() ) {
-        colour = g_ActiveBoundaryLineColour;
+        colour = m_ActiveLineColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
@@ -425,7 +427,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     }
 
     if( fillcolour.IsNull() ) {
-        fillcol = g_ActiveBoundaryFillColour;
+        fillcol = m_ActiveFillColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( fillcolour == ::GpxxColorNames[i] ) {

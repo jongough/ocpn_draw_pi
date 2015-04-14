@@ -26,11 +26,21 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( BoundaryList );
 
-Boundary::Boundary() 
+extern wxString    g_ActiveBoundaryLineColour;
+extern wxString    g_InActiveBoundaryLineColour;
+extern wxString    g_ActiveBoundaryFillColour;
+extern wxString    g_InActiveBoundaryFillColour;
+
+Boundary::Boundary() : Path()
 {
     //ctor
     m_itest = 1;
     m_sTypeString = _T("Boundary");
+
+    m_ActiveLineColour = g_ActiveBoundaryLineColour;
+    m_ActiveFillColour = g_ActiveBoundaryFillColour;
+    m_InActiveLineColour = g_InActiveBoundaryLineColour;
+    m_InActiveFillColour = g_InActiveBoundaryFillColour;
     
 }
 

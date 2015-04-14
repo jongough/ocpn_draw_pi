@@ -787,13 +787,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
     
     if( nBoundary_State >= 2 ) {
-//        r_rband.x = event.GetX();
-//        r_rband.y = event.GetY();
-//        m_bDrawingBoundary = true;
+        r_rband.x = event.GetX();
+        r_rband.y = event.GetY();
+        m_bDrawingBoundary = true;
 
 // TODO (jon#1#): Need to get access to 'CheckEdgePan' 
 //        ocpncc1->CheckEdgePan( x, y, event.Dragging(), 5, 2 );
-//        RequestRefresh( m_parent_window );
+        RequestRefresh( m_parent_window );
     }
 
     if ( event.LeftDown() ) {
@@ -1110,6 +1110,7 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
     m_vp = pivp;
+//    g_pivp = pivp;
     g_pDC = new ocpnDC( dc );
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
@@ -1129,6 +1130,7 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
     m_pcontext = pcontext;
     m_vp = pivp;
+//    g_pivp = pivp;
 
     g_pDC = new ocpnDC();
 
@@ -1475,9 +1477,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         pPathList->Append( m_pMouseBoundary);
         m_pMouseBoundary->m_width = g_BoundaryLineWidth;
         m_pMouseBoundary->m_style = g_BoundaryLineStyle;
-        r_rband = wxGetMousePosition();
-        //r_rband.x = event.GetX();
-        //r_rband.y = event.GetY();
+        r_rband.x = event.GetX();
+        r_rband.y = event.GetY();
         m_dStartLat = m_cursor_lat;
         m_dStartLon = m_cursor_lon;
     }

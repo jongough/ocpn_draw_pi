@@ -133,8 +133,10 @@ public:
     OCPNPointList     *pOCPNPointList;
 
     wxRect      active_pt_rect;
-    wxString    m_LineColour;
-    wxString    m_FillColour;
+    wxString    m_ActiveLineColour;
+    wxString    m_ActiveFillColour;
+    wxString    m_InActiveLineColour;
+    wxString    m_InActiveFillColour;
     bool        m_btemp;
     int         m_hiliteWidth;
 

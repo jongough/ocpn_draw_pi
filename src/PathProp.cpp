@@ -711,20 +711,20 @@ bool PathProp::UpdateProperties( Path *pPath )
         }
     }
 
-    if( pPath->m_LineColour == wxEmptyString ) m_chColor->Select( 0 );
+    if( pPath->m_ActiveLineColour == wxEmptyString ) m_chColor->Select( 0 );
     else {
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-            if( pPath->m_LineColour == ::GpxxColorNames[i] ) {
+            if( pPath->m_ActiveLineColour == ::GpxxColorNames[i] ) {
                 m_chColor->Select( i + 1 );
                 break;
             }
         }
     }
 
-    if( pPath->m_FillColour == wxEmptyString ) m_chLineColor->Select( 0 );
+    if( pPath->m_ActiveFillColour == wxEmptyString ) m_chLineColor->Select( 0 );
     else {
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-            if( pPath->m_FillColour == ::GpxxColorNames[i] ) {
+            if( pPath->m_ActiveFillColour == ::GpxxColorNames[i] ) {
                 m_chLineColor->Select( i + 1 );
                 break;
             }
@@ -1194,12 +1194,12 @@ bool PathProp::SaveChanges( void )
         m_pPath->m_PathDescription = m_textDescription->GetValue();
         m_pPath->m_bPathIsActive = m_pPathActive->GetValue();
         
-        if( m_chColor->GetSelection() == 0 ) m_pPath->m_LineColour = wxEmptyString;
+        if( m_chColor->GetSelection() == 0 ) m_pPath->m_ActiveLineColour = wxEmptyString;
         else
-            m_pPath->m_LineColour = ::GpxxColorNames[m_chColor->GetSelection() - 1];
-        if( m_chLineColor->GetSelection() == 0 ) m_pPath->m_FillColour = wxEmptyString;
+            m_pPath->m_ActiveLineColour = ::GpxxColorNames[m_chColor->GetSelection() - 1];
+        if( m_chLineColor->GetSelection() == 0 ) m_pPath->m_ActiveFillColour = wxEmptyString;
         else
-            m_pPath->m_FillColour = ::GpxxColorNames[m_chLineColor->GetSelection() - 1];
+            m_pPath->m_ActiveFillColour = ::GpxxColorNames[m_chLineColor->GetSelection() - 1];
         m_pPath->m_style = ::StyleValues[m_chStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 

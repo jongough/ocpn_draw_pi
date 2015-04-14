@@ -270,10 +270,14 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     
     child = node.append_child("opencpn:style");
     
-    pugi::xml_attribute colour = child.append_attribute("colour");
-    colour.set_value( pPath->m_LineColour.ToAscii() );
-    pugi::xml_attribute fillcolour = child.append_attribute("fillcolour");
-    fillcolour.set_value( pPath->m_FillColour.ToAscii() );
+    pugi::xml_attribute activecolour = child.append_attribute("active_colour");
+    activecolour.set_value( pPath->m_ActiveLineColour.ToAscii() );
+    pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
+    activefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
+    pugi::xml_attribute inactivecolour = child.append_attribute("inactive_colour");
+    inactivecolour.set_value( pPath->m_ActiveLineColour.ToAscii() );
+    pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
+    inactivefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
 
@@ -776,10 +780,14 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
             if( ChildName == _T ( "opencpn:style" ) ) {
                 for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
                 {
-                    if ( wxString::FromUTF8( attr.name() ) == _T("colour" ) )
-                        pTentPath->m_LineColour = wxString::FromUTF8( attr.as_string() );
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("fillcolour" ) )
-                        pTentPath->m_FillColour = wxString::FromUTF8( attr.as_string() );
+                    if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
+                        pTentPath->m_ActiveLineColour = wxString::FromUTF8( attr.as_string() );
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) )
+                        pTentPath->m_ActiveFillColour = wxString::FromUTF8( attr.as_string() );
+                    if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
+                        pTentPath->m_InActiveLineColour = wxString::FromUTF8( attr.as_string() );
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) )
+                        pTentPath->m_InActiveFillColour = wxString::FromUTF8( attr.as_string() );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
                         pTentPath->m_style = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
