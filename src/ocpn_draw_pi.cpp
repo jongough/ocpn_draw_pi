@@ -666,13 +666,13 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultActiveBoundaryFillColour" ), &g_ActiveBoundaryFillColour, wxS("Red") );
         pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &g_InActiveBoundaryFillColour, wxS("LightGray") );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
-        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, 1 );
+        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, 100 );
         pConf->Read( wxS( "DefaultActivePathLineColour" ), &g_ActivePathLineColour, wxS("Red") );
         pConf->Read( wxS( "DefaultInActivePathLineColour" ), &g_InActivePathLineColour, wxS("LightGray") );
         pConf->Read( wxS( "DefaultActivePathFillColour" ), &g_ActivePathFillColour, wxS("Red") );
         pConf->Read( wxS( "DefaultInActivePathFillColour" ), &g_InActivePathFillColour, wxS("LightGray") );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
-        pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 1 );
+        pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 100 );
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
         pConf->Read( wxS( "DefaultOCPNPointIcon" ), &g_sOCPNPointIconName, wxS("triangle") );
@@ -1444,7 +1444,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), GPX_EMPTY_STRING );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Point") );
         pMousePoint->m_bIsolatedMark = TRUE;
@@ -1522,7 +1522,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, wxS("diamond"), wxS(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), GPX_EMPTY_STRING );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Boundary Point") );
 

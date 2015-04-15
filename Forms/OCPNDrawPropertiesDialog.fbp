@@ -1270,7 +1270,7 @@
                                         <property name="proportion">0</property>
                                         <object class="wxChoice" expanded="1">
                                             <property name="bg"></property>
-                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Reg&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
+                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Red&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
                                             <property name="context_help"></property>
                                             <property name="enabled">1</property>
                                             <property name="fg"></property>
@@ -1710,7 +1710,7 @@
                                         <property name="proportion">0</property>
                                         <object class="wxChoice" expanded="1">
                                             <property name="bg"></property>
-                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Reg&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
+                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Red&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
                                             <property name="context_help"></property>
                                             <property name="enabled">1</property>
                                             <property name="fg"></property>
@@ -1995,7 +1995,7 @@
                                         <property name="proportion">0</property>
                                         <object class="wxChoice" expanded="1">
                                             <property name="bg"></property>
-                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Reg&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
+                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Red&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
                                             <property name="context_help"></property>
                                             <property name="enabled">1</property>
                                             <property name="fg"></property>
@@ -2435,7 +2435,7 @@
                                         <property name="proportion">0</property>
                                         <object class="wxChoice" expanded="1">
                                             <property name="bg"></property>
-                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Reg&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
+                                            <property name="choices">&quot;Black&quot; &quot;Dark Red&quot; &quot;Dark Green&quot; &quot;Dark Yellow&quot; &quot;Dark Blue&quot; &quot;Dark Magenta&quot; &quot;Dark Cyan&quot; &quot;Light Gray&quot; &quot;Dark Gray&quot; &quot;Red&quot; &quot;Green&quot; &quot;Yellow&quot; &quot;Blue&quot; &quot;Magenta&quot; &quot;Cyan&quot; &quot;White&quot;</property>
                                             <property name="context_help"></property>
                                             <property name="enabled">1</property>
                                             <property name="fg"></property>

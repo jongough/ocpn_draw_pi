@@ -125,7 +125,7 @@ OCPNDrawPropertiesDialog::OCPNDrawPropertiesDialog( wxWindow* parent, wxWindowID
 	m_staticTextInactivePathLineColour->Wrap( -1 );
 	fgSizerPathSettings->Add( m_staticTextInactivePathLineColour, 0, wxALL, 5 );
 	
-	wxString m_choiceInActivePathLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Reg"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
+	wxString m_choiceInActivePathLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
 	int m_choiceInActivePathLineColourNChoices = sizeof( m_choiceInActivePathLineColourChoices ) / sizeof( wxString );
 	m_choiceInActivePathLineColour = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActivePathLineColourNChoices, m_choiceInActivePathLineColourChoices, 0 );
 	m_choiceInActivePathLineColour->SetSelection( 7 );
@@ -165,7 +165,7 @@ OCPNDrawPropertiesDialog::OCPNDrawPropertiesDialog( wxWindow* parent, wxWindowID
 	m_staticTextInactivePathFillColour->Wrap( -1 );
 	fgSizerPathSettings->Add( m_staticTextInactivePathFillColour, 0, wxALL, 5 );
 	
-	wxString m_choiceInActivePathFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Reg"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
+	wxString m_choiceInActivePathFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
 	int m_choiceInActivePathFillColourNChoices = sizeof( m_choiceInActivePathFillColourChoices ) / sizeof( wxString );
 	m_choiceInActivePathFillColour = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActivePathFillColourNChoices, m_choiceInActivePathFillColourChoices, 0 );
 	m_choiceInActivePathFillColour->SetSelection( 7 );
@@ -195,7 +195,7 @@ OCPNDrawPropertiesDialog::OCPNDrawPropertiesDialog( wxWindow* parent, wxWindowID
 	m_staticTextInactiveBoundaryLineColour->Wrap( -1 );
 	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryLineColour, 0, wxALL, 5 );
 	
-	wxString m_choiceInActiveBoundaryLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Reg"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
+	wxString m_choiceInActiveBoundaryLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
 	int m_choiceInActiveBoundaryLineColourNChoices = sizeof( m_choiceInActiveBoundaryLineColourChoices ) / sizeof( wxString );
 	m_choiceInActiveBoundaryLineColour = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActiveBoundaryLineColourNChoices, m_choiceInActiveBoundaryLineColourChoices, 0 );
 	m_choiceInActiveBoundaryLineColour->SetSelection( 7 );
@@ -235,7 +235,7 @@ OCPNDrawPropertiesDialog::OCPNDrawPropertiesDialog( wxWindow* parent, wxWindowID
 	m_staticTextInactiveBoundaryFillColour->Wrap( -1 );
 	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryFillColour, 0, wxALL, 5 );
 	
-	wxString m_choiceInActiveBoundaryFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Reg"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
+	wxString m_choiceInActiveBoundaryFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
 	int m_choiceInActiveBoundaryFillColourNChoices = sizeof( m_choiceInActiveBoundaryFillColourChoices ) / sizeof( wxString );
 	m_choiceInActiveBoundaryFillColour = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActiveBoundaryFillColourNChoices, m_choiceInActiveBoundaryFillColourChoices, 0 );
 	m_choiceInActiveBoundaryFillColour->SetSelection( 7 );

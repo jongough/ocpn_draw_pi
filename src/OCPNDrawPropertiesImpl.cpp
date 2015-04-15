@@ -98,30 +98,30 @@ void OCPNDrawPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 void OCPNDrawPropertiesImpl::SaveChanges()
 {
         if (m_choiceActiveBoundaryLineColour->GetSelection() == 0 ) g_ActiveBoundaryLineColour = wxEmptyString;
-        else g_ActiveBoundaryLineColour = ::GpxxColorNames[m_choiceActiveBoundaryLineColour->GetSelection() - 1];
+        else g_ActiveBoundaryLineColour = ::GpxxColorNames[m_choiceActiveBoundaryLineColour->GetSelection()];
         if (m_choiceInActiveBoundaryLineColour->GetSelection() == 0 ) g_InActiveBoundaryLineColour = wxEmptyString;
-        else g_InActiveBoundaryLineColour = ::GpxxColorNames[m_choiceInActiveBoundaryLineColour->GetSelection() - 1];
+        else g_InActiveBoundaryLineColour = ::GpxxColorNames[m_choiceInActiveBoundaryLineColour->GetSelection()];
 
         if (m_choiceActiveBoundaryFillColour->GetSelection() == 0 ) g_ActiveBoundaryFillColour = wxEmptyString;
-        else g_ActiveBoundaryFillColour = ::GpxxColorNames[m_choiceActiveBoundaryFillColour->GetSelection() - 1];
+        else g_ActiveBoundaryFillColour = ::GpxxColorNames[m_choiceActiveBoundaryFillColour->GetSelection()];
         if (m_choiceInActiveBoundaryFillColour->GetSelection() == 0 ) g_InActiveBoundaryFillColour = wxEmptyString;
-        else g_InActiveBoundaryFillColour = ::GpxxColorNames[m_choiceInActiveBoundaryFillColour->GetSelection() - 1];
+        else g_InActiveBoundaryFillColour = ::GpxxColorNames[m_choiceInActiveBoundaryFillColour->GetSelection()];
 
-        g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection();
-        g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection() + 1];
+        g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection() + 1;
+        g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection()];
         
         if (m_choiceActivePathLineColour->GetSelection() == 0 ) g_ActivePathLineColour = wxEmptyString;
-        else g_ActivePathLineColour = ::GpxxColorNames[m_choiceActivePathLineColour->GetSelection() - 1];
+        else g_ActivePathLineColour = ::GpxxColorNames[m_choiceActivePathLineColour->GetSelection()];
         if (m_choiceInActivePathLineColour->GetSelection() == 0 ) g_InActivePathLineColour = wxEmptyString;
-        else g_InActivePathLineColour = ::GpxxColorNames[m_choiceInActivePathLineColour->GetSelection() - 1];
+        else g_InActivePathLineColour = ::GpxxColorNames[m_choiceInActivePathLineColour->GetSelection()];
 
         if (m_choiceActivePathFillColour->GetSelection() == 0 ) g_ActivePathFillColour = wxEmptyString;
-        else g_ActivePathFillColour = ::GpxxColorNames[m_choiceActivePathFillColour->GetSelection() - 1];
+        else g_ActivePathFillColour = ::GpxxColorNames[m_choiceActivePathFillColour->GetSelection()];
         if (m_choiceInActivePathFillColour->GetSelection() == 0 ) g_InActivePathFillColour = wxEmptyString;
-        else g_InActivePathFillColour = ::GpxxColorNames[m_choiceInActivePathFillColour->GetSelection() - 1];
+        else g_InActivePathFillColour = ::GpxxColorNames[m_choiceInActivePathFillColour->GetSelection()];
 
-        g_PathLineWidth = m_choicePathLineWidth->GetSelection();
-        g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection() + 1 ];
+        g_PathLineWidth = m_choicePathLineWidth->GetSelection() + 1;
+        g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
         
         g_iOCPNPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
         g_fOCPNPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
@@ -201,21 +201,21 @@ void OCPNDrawPropertiesImpl::UpdateProperties( void )
 
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
             if( g_ActiveBoundaryLineColour == ::GpxxColorNames[i] )
-                m_choiceActiveBoundaryLineColour->Select( i + 1 );
+                m_choiceActiveBoundaryLineColour->Select( i );
             if( g_InActiveBoundaryLineColour == ::GpxxColorNames[i] )
-                m_choiceInActiveBoundaryLineColour->Select( i + 1 );
+                m_choiceInActiveBoundaryLineColour->Select( i );
             if( g_ActiveBoundaryFillColour == ::GpxxColorNames[i] )
-                m_choiceActiveBoundaryFillColour->Select( i + 1 );
+                m_choiceActiveBoundaryFillColour->Select( i );
             if( g_InActiveBoundaryFillColour == ::GpxxColorNames[i] )
-                m_choiceInActiveBoundaryFillColour->Select( i + 1 );
+                m_choiceInActiveBoundaryFillColour->Select( i );
             if( g_ActivePathLineColour == ::GpxxColorNames[i] )
-                m_choiceActivePathLineColour->Select( i + 1 );
+                m_choiceActivePathLineColour->Select( i );
             if( g_InActivePathLineColour == ::GpxxColorNames[i] )
-                m_choiceInActivePathLineColour->Select( i + 1 );
+                m_choiceInActivePathLineColour->Select( i );
             if( g_ActivePathFillColour == ::GpxxColorNames[i] )
-                m_choiceActivePathFillColour->Select( i + 1 );
+                m_choiceActivePathFillColour->Select( i );
             if( g_InActivePathFillColour == ::GpxxColorNames[i] )
-                m_choiceInActivePathFillColour->Select( i + 1 );
+                m_choiceInActivePathFillColour->Select( i );
         }
         
         for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
@@ -224,8 +224,8 @@ void OCPNDrawPropertiesImpl::UpdateProperties( void )
             if( g_PathLineStyle == ::StyleValues[i] )
                 m_choicePathLineStyle->Select( i );
         }
-        m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth );
-        m_choicePathLineWidth->SetSelection( g_PathLineWidth );
+        m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
+        m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
         
 
     return;
