@@ -1028,8 +1028,10 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
 
 void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
 {
-    if( NULL == pPathPropDialog )          // There is one global instance of the PathProp Dialog
-        pPathPropDialog = new PathProp( GetParent() );
+    if( NULL == pPathPropDialog ) {          // There is one global instance of the PathProp Dialog
+        if( path->m_sTypeString == wxS("Path") ) pPathPropDialog = new PathProp( GetParent() );
+        else if( path->m_sTypeString == wxS("Boundary") ) pPathPropDialog = new BoundaryProp( GetParent() );
+    }
 
     pPathPropDialog->SetPathAndUpdate( path );
     pPathPropDialog->UpdateProperties( path );

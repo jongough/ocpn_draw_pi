@@ -30,13 +30,15 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include <PathProp.h>
+#include "PathProp.h"
 
 
 class BoundaryProp : public PathProp
 {
     public:
         BoundaryProp();
+        BoundaryProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
+                        const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
         virtual ~BoundaryProp();
     protected:
     private:

@@ -1204,7 +1204,7 @@ bool PathProp::SaveChanges( void )
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 
         pOCPNDrawConfig->UpdatePath( m_pPath );
-        g_ocpn_draw_pi->SaveConfig();
+        //g_ocpn_draw_pi->SaveConfig();
     }
 
     if( m_pPath->IsActive() )

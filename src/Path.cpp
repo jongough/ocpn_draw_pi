@@ -402,7 +402,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     
     /* determine color and width */
     wxColour col, fillcol;
-    int width = g_path_line_width;
+    int width = m_width;
     
     wxString colour, fillcolour;
     
@@ -520,7 +520,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     glPolygonStipple( slope_cross_hatch );
     glBegin(GL_POLYGON_STIPPLE);
     if ( m_bVisible ) {
-        dc.SetPen(*wxTRANSPARENT_PEN);
+        //dc.SetPen(*wxTRANSPARENT_PEN);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxBDIAGONAL_HATCH ) );
         if ( j > 1 )
             dc.DrawPolygonTessellated( j, bpts, 0, 0);
