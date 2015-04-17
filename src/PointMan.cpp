@@ -25,7 +25,6 @@
 
 #include "styles.h"
 #include "MarkIcon.h"
-//#include "navutil.h"
 #include "OCPNDrawConfig.h"
 #include "OCPNSelect.h"
 #include "PathMan.h"

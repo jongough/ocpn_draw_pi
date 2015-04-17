@@ -743,7 +743,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
         //    Route Creation Rubber Banding
 
-    if( nBoundary_State == 1 || nPoint_State == 1 || nPath_State == 1 ) {
+    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 ) {
         ocpncc1->SetCursor( *pCurrentCursor );
         bRefresh = TRUE;
 //        RequestRefresh( m_parent_window );
@@ -839,6 +839,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    SetToolbarItemState( m_leftclick_boundary_id, true );
                     nBoundary_State = 1;
                     nPoint_State = 0;
                     break;
@@ -847,6 +848,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Point
                     pCurrentCursor = ocpncc1->pCursorCross;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
+                    SetToolbarItemState( m_leftclick_boundary_id, true );
                     nPoint_State = 1;
                     nBoundary_State = 0;
                     break;
@@ -855,6 +857,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    SetToolbarItemState( m_leftclick_boundary_id, true );
                     break;
             }
             bret = TRUE;
@@ -1083,7 +1086,7 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
     m_vp = pivp;
-//    g_pivp = pivp;
+    g_pivp = pivp;
     g_pDC = new ocpnDC( dc );
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
@@ -1094,6 +1097,7 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     }
     
     DrawAllPathsInBBox( *g_pDC, llbb );
+    DrawAllOCPNPointsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
     return TRUE;
@@ -1103,7 +1107,7 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
     m_pcontext = pcontext;
     m_vp = pivp;
-//    g_pivp = pivp;
+    g_pivp = pivp;
 
     g_pDC = new ocpnDC();
 
@@ -1371,6 +1375,29 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
 
     //  Draw any active or selected route, boundary or track last, so that is is always on top
     if( active_boundary ) active_boundary->Draw( dc, *m_vp );
+}
+
+void ocpn_draw_pi::DrawAllOCPNPointsInBBox( ocpnDC& dc, LLBBox& BltBBox )
+{
+    //        wxBoundingBox bbx;
+    if(!pOCPNPointMan)
+        return;
+    
+    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    
+    while( node ) {
+        OCPNPoint *pOP = node->GetData();
+        if( pOP ) {
+            if( pOP->m_bIsInRoute || pOP->m_bIsInPath ) {
+                node = node->GetNext();
+                continue;
+            } else {
+                if( BltBBox.PointInBox( pOP->m_lon, pOP->m_lat, 0 ) ) pOP->Draw( dc, NULL );
+            }
+        }
+        
+        node = node->GetNext();
+    }
 }
 
 bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )

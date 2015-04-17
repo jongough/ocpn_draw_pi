@@ -187,6 +187,7 @@ public:
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp );
+    void DrawAllOCPNPointsInBBox( ocpnDC &dc, LLBBox& BltBBox );
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
     
