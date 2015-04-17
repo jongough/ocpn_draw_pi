@@ -216,6 +216,8 @@ public:
     wxCursor    *pCursorArrow;
     wxCursor    *pCursorCross;
     
+    wxCursor    *pCurrentCursor;
+    
     int         nConfig_State;
     
     int         nPath_State;

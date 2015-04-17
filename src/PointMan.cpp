@@ -26,6 +26,8 @@
 #include "styles.h"
 #include "MarkIcon.h"
 //#include "navutil.h"
+#include "OCPNDrawConfig.h"
+#include "OCPNSelect.h"
 #include "PathMan.h"
 #include "cutil.h"
 
@@ -35,11 +37,12 @@
 #include <wx/apptrait.h>
 
 extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern wxString         g_PrivateDataDir;
-extern OCPNPoint      *pAnchorWatchPoint1;
-extern OCPNPoint      *pAnchorWatchPoint2;
-//extern MyConfig           *pOCPNDrawConfig;
-extern PathMan           *g_pPathMan;
+extern wxString                 g_PrivateDataDir;
+extern OCPNPoint                *pAnchorWatchPoint1;
+extern OCPNPoint                *pAnchorWatchPoint2;
+extern OCPNDrawConfig           *pOCPNDrawConfig;
+extern PathMan                  *g_pPathMan;
+extern OCPNSelect               *pOCPNSelect;
 
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
@@ -663,7 +666,6 @@ void PointMan::DeleteAllOCPNPoints( bool b_delete_used )
 
 void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
 {
-/* 
     if( ! b_update_changeset )
         pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
         
@@ -686,7 +688,7 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
                     bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
                     pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
                     pOCPNDrawConfig->DeleteConfigPath( pb );
-                    g_pRouteMan->DeletePath( pb );
+                    g_pPathMan->DeletePath( pb );
                     pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
                 }
             }
@@ -707,5 +709,4 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
         RemoveOCPNPoint( pRp);
 
     }
-*/   
 }

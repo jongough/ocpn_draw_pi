@@ -73,6 +73,7 @@ OCPNPoint::OCPNPoint()
     m_bIsActive = false;
     m_bBlink = false;
     m_bIsInRoute = false;
+    m_bIsInPath = false;
     m_bIsInBoundary = false;
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();
@@ -121,6 +122,7 @@ OCPNPoint::OCPNPoint( OCPNPoint* orig )
     m_bIsActive = orig->m_bIsActive;
     m_bBlink = orig->m_bBlink;
     m_bIsInRoute = orig->m_bIsInRoute;
+    m_bIsInPath = orig->m_bIsInPath;
     m_bIsInBoundary = orig->m_bIsInBoundary;
     m_bIsInTrack = orig->m_bIsInTrack;
     m_CreateTimeX = orig->m_CreateTimeX;
@@ -174,6 +176,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     m_bIsActive = false;
     m_bBlink = false;
     m_bIsInRoute = false;
+    m_bIsInPath = false;
     m_bIsInBoundary = false;
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();

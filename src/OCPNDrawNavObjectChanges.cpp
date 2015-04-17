@@ -31,12 +31,12 @@
 #include "OCPNPoint.h"
 #include "Boundary.h"
 
-extern PathList *pPathList;
-extern OCPNSelect *pOCPNSelect;
-pugi::xml_node  gpx_path_child;
-pugi::xml_node  gpx_path_root;
-extern OCPNDrawConfig *pOCPNDrawConfig;
-extern PointMan        *pOCPNPointMan;
+extern PathList         *pPathList;
+extern OCPNSelect       *pOCPNSelect;
+pugi::xml_node          gpx_path_child;
+pugi::xml_node          gpx_path_root;
+extern OCPNDrawConfig   *pOCPNDrawConfig;
+extern PointMan         *pOCPNPointMan;
 extern PathMan          *g_pPathMan;
 
 
@@ -331,7 +331,7 @@ bool OCPNDrawNavObjectChanges::AddOCPNPoint( OCPNPoint *pOP, const char *action 
     child.append_child(pugi::node_pcdata).set_value(action);
 
     pugi::xml_writer_file writer(m_OCPNDrawchanges_file);
-    m_gpx_root.print(writer, " ");
+    object.print(writer, " ");
     fflush(m_OCPNDrawchanges_file);
     
     return true;
@@ -383,6 +383,33 @@ bool OCPNDrawNavObjectChanges::AddGPXOCPNPointsList( OCPNPointList *pOCPNPoints 
     return true;
 }
 
+bool OCPNDrawNavObjectChanges::CreateNavObjGPXPoints( void )
+{
+    
+    //    Iterate over the Routepoint list, creating Nodes for
+    //    Routepoints that are not in any Route
+    //    as indicated by m_bIsolatedMark == false
+    
+    if(!pOCPNPointMan)
+        return false;
+    
+    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    
+    OCPNPoint *pr;
+    
+    while( node ) {
+        pr = node->GetData();
+        
+        if( ( pr->m_bIsolatedMark ) && !( pr->m_bIsInLayer ) && !(pr->m_btemp) )
+        {
+            GPXCreateOCPNPoint(m_gpx_root.append_child("opencpn:OCPNPoint"), pr, OPT_WPT);
+        }
+        node = node->GetNext();
+    }
+    
+    return true;
+}
+
 bool OCPNDrawNavObjectChanges::CreateNavObjGPXPaths( void )
 {
     pugi::xml_node child_ext;
@@ -405,6 +432,7 @@ bool OCPNDrawNavObjectChanges::CreateAllGPXObjects()
 {
     SetRootGPXNode();
     CreateNavObjGPXPaths();
+    CreateNavObjGPXPoints();
     
     return true;
 }
@@ -426,7 +454,7 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
     
     for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling())
     {
-        if( !strcmp(object.name(), "OCPNPoint") ) {
+        if( !strcmp(object.name(), "opencpn:OCPNPoint") ) {
             OCPNPoint *pOp = GPXLoadOCPNPoint1( object, _T("circle"), _T(""), b_full_viz, false, false, 0 );
             
             if(pOp) {
@@ -441,12 +469,7 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                     delete pOp;
             }
         }
- /*       else
-            if( !strcmp(object.name(), "trk") ) {
-                Track *pTrack = GPXLoadTrack1( object, b_full_viz, false, false, 0);
-                InsertTrack( pTrack );
-            }
-*/            else
+            else
                 if( !strcmp(object.name(), "opencpn:path") ) {
                     // find object type 
                     wxString TypeString;
@@ -529,7 +552,7 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
         }
         
         else
-        if( !strcmp( pcn, "type") ) {
+        if( !strcmp( pcn, "opencpn:type") ) {
             TypeString.append( wxString::FromUTF8( child.first_child().value() ) );
         }
         
@@ -624,7 +647,7 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
 
     pOP = new OCPNPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
     pOP->m_MarkDescription = DescString;
-    pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
+    //pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
     pOP->m_sTypeString = TypeString;
     pOP->SetOCPNPointArrivalRadius( ArrivalRadius );
     pOP->SetOCPNPointRangeRingsNumber( l_iOCPNPointRangeRingsNumber );
@@ -1009,8 +1032,7 @@ bool OCPNDrawNavObjectChanges::ApplyChanges(void)
                 pOp->m_bIsolatedMark = true;
                 OCPNPoint *pExisting = OCPNPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
                 
-                pugi::xml_node xchild = object.child("extensions");
-                pugi::xml_node child = xchild.child("opencpn:action");
+                pugi::xml_node child = object.child("opencpn:action");
                 
                 if(!strcmp(child.first_child().value(), "add") ){
                     if( !pExisting ) 

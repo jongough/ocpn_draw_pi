@@ -327,6 +327,8 @@ int ocpn_draw_pi::Init(void)
 //    MyFrame *pFrame = g_OD_pi_manager->GetParentFrame();
 //    ocpncc1 = pFrame->GetCanvasWindow();    
     ocpncc1 = (ChartCanvas *)m_parent_window;
+    
+    pCurrentCursor = ocpncc1->pCursorArrow;
 
     if( !g_ODStyleManager->IsOK() ) {
         wxString msg = wxS("Failed to initialize the user interface. ");
@@ -516,9 +518,10 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
             nConfig_State = 1;
             SetToolbarItemState( m_leftclick_config_id, true );
             if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-            pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                pPathManagerDialog = new PathManagerDialog( ocpncc1 );
 
             pPathManagerDialog->UpdatePathListCtrl();
+            pPathManagerDialog->UpdateOCPNPointsListCtrl();
             pPathManagerDialog->Show();
 
             //    Required if RMDialog is not STAY_ON_TOP
@@ -542,7 +545,8 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
             case ID_MODE_BOUNDARY:
                 if( 0 == nBoundary_State ){
                     nBoundary_State = 1;
-                    ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                    pCurrentCursor = ocpncc1->pCursorPencil;
+                    ocpncc1->SetCursor( *pCurrentCursor );
                     SetToolbarItemState( m_leftclick_boundary_id, true );
                 } else {
                     nBoundary_State = 0;
@@ -556,7 +560,8 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
             case ID_MODE_POINT:
                 if( 0 == nPoint_State ){
                     nPoint_State = 1;
-                    ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                    pCurrentCursor = ocpncc1->pCursorCross;
+                    ocpncc1->SetCursor( *pCurrentCursor );
                     SetToolbarItemState( m_leftclick_boundary_id, true );
                 } else {
                     nBoundary_State = 0;
@@ -570,53 +575,6 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
                 break;
         }
     }
-/*
-	if(NULL == m_plogbook_window)
-	{
-		if(m_timer == NULL)
-		{
-			if(timer == NULL)
-					timer = new LogbookTimer(this);
-			m_timer = new wxTimer(timer,ID_LOGTIMER);
-			timer->Connect( wxEVT_TIMER, wxObjectEventFunction( &LogbookTimer::OnTimer ));
-		}
-        m_plogbook_window = new LogbookDialog(this, m_timer, timer, m_parent_window, wxID_ANY, wxS("Active Logbook"), wxDefaultPosition, wxSize( opt->dlgWidth,opt->dlgHeight ), wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxRESIZE_BORDER);
-		m_plogbook_window->init();
-		m_plogbook_window->CenterOnParent();
-		m_plogbook_window->Show();
-		dlgShow = true;
-	}
-	else
-	{
-		if(m_plogbook_window->IsIconized())
-		{
-			m_plogbook_window->Iconize(false);
-			m_plogbook_window->Show(true);
-			dlgShow = true;
-		}
-		else
-		{
-			m_plogbook_window->Show(dlgShow);
-		}
-	}
-
-    if (m_plogbook_window->IsShown())
-            SendPluginMessage(wxString(wxS("LOGBOOK_WINDOW_SHOWN")), wxEmptyString);
-      else
-            SendPluginMessage(wxS("LOGBOOK_WINDOW_HIDDEN"), wxEmptyString);
-
-	if(state == OFF)
-	{
-		if(!opt->checkStateOfEvents())
-			state = ONNOEVENTS;
-		else
-			state = ONWITHEVENTS;
-	}
-	else
-	{
-		state = OFF;
-	}
-*/
       // Toggle is handled by the toolbar but we must keep plugin manager b_toggle updated
       // to actual status to ensure correct status upon toolbar rebuild
      // SetToolbarItemState( m_leftclick_config_id, dlgShow );
@@ -748,7 +706,8 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     m_Mode = ID_MODE_BOUNDARY;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
                     m_iCallerId = m_leftclick_boundary_id;
-                    ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                    pCurrentCursor = ocpncc1->pCursorPencil;
+                    ocpncc1->SetCursor( *pCurrentCursor );
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
@@ -757,13 +716,15 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if( nBoundary_State > 0 ){
                     nBoundary_State = 0;
                     FinishBoundary();
-                    ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
+                    pCurrentCursor = ocpncc1->pCursorArrow;
+                    ocpncc1->SetCursor( *pCurrentCursor ); 
                     SetToolbarItemState( m_leftclick_boundary_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
                     nPoint_State = 0;
-                    ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
+                    pCurrentCursor = ocpncc1->pCursorArrow;
+                    ocpncc1->SetCursor( *pCurrentCursor ); 
                     SetToolbarItemState( m_leftclick_boundary_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
@@ -778,12 +739,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 {
     int x, y;
     bool bret = FALSE;
+    bool bRefresh = FALSE;
 
         //    Route Creation Rubber Banding
 
-    if( nBoundary_State == 1 ) {
-        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
-        RequestRefresh( m_parent_window );
+    if( nBoundary_State == 1 || nPoint_State == 1 || nPath_State == 1 ) {
+        ocpncc1->SetCursor( *pCurrentCursor );
+        bRefresh = TRUE;
+//        RequestRefresh( m_parent_window );
     }
     
     if( nBoundary_State >= 2 ) {
@@ -793,18 +756,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
 // TODO (jon#1#): Need to get access to 'CheckEdgePan' 
 //        ocpncc1->CheckEdgePan( x, y, event.Dragging(), 5, 2 );
-        RequestRefresh( m_parent_window );
+        bRefresh = TRUE;
+//        RequestRefresh( m_parent_window );
     }
 
     if ( event.LeftDown() ) {
         if( m_iCallerId == m_leftclick_boundary_id )
             if (nBoundary_State > 0 )
             {   
-                ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                ocpncc1->SetCursor( *pCurrentCursor );
                 bret = CreateBoundaryLeftClick( event );
             } else if ( nPoint_State > 0)
             {
-                ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+                ocpncc1->SetCursor( *pCurrentCursor );
                 bret = CreatePointLeftClick( event );
             }
 
@@ -873,6 +837,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             {
                 case ID_MODE_BOUNDARY:
                     // Boundary
+                    pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
                     nBoundary_State = 1;
                     nPoint_State = 0;
@@ -880,6 +845,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     
                 case ID_MODE_POINT:
                     // Point
+                    pCurrentCursor = ocpncc1->pCursorCross;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
                     nPoint_State = 1;
                     nBoundary_State = 0;
@@ -887,6 +853,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
                 default:
                     // Boundary
+                    pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
                     break;
             }
@@ -894,14 +861,18 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( nBoundary_State > 1 ) {
             nBoundary_State = 0;
             FinishBoundary();
-            ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
+            pCurrentCursor = ocpncc1->pCursorArrow;
+            ocpncc1->SetCursor( *pCurrentCursor ); 
             SetToolbarItemState( m_leftclick_boundary_id, false );
-            RequestRefresh( m_parent_window );
+            bRefresh = TRUE;
+//            RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nPoint_State > 1) {
             nPoint_State = 0;
-            ocpncc1->SetCursor( *ocpncc1->pCursorArrow ); 
-            SetToolbarItemState( m_leftclick_boundary_id, false );
+            pCurrentCursor = ocpncc1->pCursorArrow;
+            ocpncc1->SetCursor( *pCurrentCursor ); 
+//            SetToolbarItemState( m_leftclick_boundary_id, false );
+            bRefresh = TRUE;
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
@@ -1039,7 +1010,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
             if( 0 != seltype ) {
                 CanvasPopupMenu( event.GetX(), event.GetY(), seltype );
-                RequestRefresh( m_parent_window );
+                //RequestRefresh( m_parent_window );
+                bRefresh = TRUE;
                 bret = TRUE;
             } else bret = FALSE;
 
@@ -1047,8 +1019,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         }
     }
     
-    if (bret) ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    if (bret) ocpncc1->SetCursor( *pCurrentCursor );
 
+    if( bRefresh ) RequestRefresh( m_parent_window );
     return bret;
 }
 
@@ -1099,8 +1072,8 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
     m_vp = vp;
     ocpnDC ocpnmdc( *pmdc );
 
-    if( nBoundary_State > 0 ) {
-        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0) {
+        ocpncc1->SetCursor( *pCurrentCursor );
     }
 
     RenderPathLegs( ocpnmdc );
@@ -1116,10 +1089,10 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
     llbb.SetMax( pivp->lon_max, pivp->lat_max );
 
-    if( nBoundary_State > 0 ) {
-        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 ) {
+        ocpncc1->SetCursor( *pCurrentCursor );
     }
-
+    
     DrawAllPathsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
@@ -1134,8 +1107,8 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 
     g_pDC = new ocpnDC();
 
-    if( nBoundary_State > 0 ) {
-        ocpncc1->SetCursor( *ocpncc1->pCursorPencil );
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0) {
+        ocpncc1->SetCursor( *pCurrentCursor );
     }
 
     RenderPathLegs( *g_pDC );
@@ -1439,7 +1412,6 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
             // check all other boundaries and routes to see if this point appears in any other route
             // If it appears in NO other route, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
-            if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
 
@@ -1514,10 +1486,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
             // check all other boundaries and routes to see if this point appears in any other route
             // If it appears in NO other route, then it should e considered an isolated mark
-            if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath =
-                    true;
-            if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath =
-                    true;
+            if( !g_pPathMan->FindPathContainingOCPNPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
 
