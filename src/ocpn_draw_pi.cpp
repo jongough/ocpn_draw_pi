@@ -213,22 +213,30 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 	wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
 #ifdef __WXMSW__
-	wxString stdPath  = std_path.GetConfigDir();
-	wxString stdDataDir = std_path.GetDataDir();
-    wxString stdHomeDir = std_path.GetUserDataDir();
+	wxString stdDataDir = std_path.GetConfigDir(); // Location of writable data store, win7 = c:\ProgramData\opencpn
+	wxString stdProgDir = std_path.GetDataDir(); // Location of the current excutable, win7 = c:\Program Files\OpenCPN
+    appendOSDirSlash( &stdProgDir );
+    stdProgDir.append( wxT("share") );
+    appendOSDirSlash( &stdProgDir );
+    wxString stdHomeDir = std_path.GetUserDataDir(); // Location of user directory, win7 = c:\User\xxx\AppData\Roaming\opencpn
 #endif
 #ifdef __WXGTK__
-	wxString stdPath  = std_path.GetResourcesDir();
-	wxString stdDataDir = std_path.GetUserDataDir();
+#ifndef NDEBUG
+    wxString stdDataDir = std_path.GetResourcesDir();
+    wxString stdProgDir = std_path.GetResourcesDir();
     wxString stdHomeDir = std_path.GetUserConfigDir();
+#else
+    wxString stdDataDir = std_path.GetResourcesDir();
+	wxString stdProgDir = std_path.GetUserDataDir();
+    wxString stdHomeDir = std_path.GetUserConfigDir();
+#endif 
 #endif
 #ifdef __WXOSX__
 	wxString stdPath  = std_path.GetUserConfigDir();   // should be ~/Library/Preferences	
 #endif
-
     
 	g_pHome_Locn = new wxString();
-    g_pHome_Locn->Append(stdPath);
+    g_pHome_Locn->Append(stdDataDir);
     //g_pHome_Locn->Append(stdHomeDir);
     appendOSDirSlash(g_pHome_Locn);
     
@@ -238,14 +246,24 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
         wxMkdir(*g_pHome_Locn);
         
     g_pData = new wxString();
-    g_pData->append( *g_pHome_Locn );
+    g_pData->append( stdDataDir );
+    appendOSDirSlash( g_pData );
+    g_pData->Append(_T("OCPNDraw"));
+    appendOSDirSlash( g_pData );
+    if ( !wxDir::Exists(*g_pData))
+        wxMkdir( *g_pData );
     g_pData->append( wxS("data") );
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
     
     g_pImage = new wxString();
-    g_pImage->append( *g_pHome_Locn );
+    g_pImage->append( stdProgDir );
+    appendOSDirSlash( g_pImage );
+    g_pImage->Append(_T("OCPNDraw"));
+    appendOSDirSlash( g_pImage );
+    if ( !wxDir::Exists(*g_pImage))
+        wxMkdir( *g_pImage );
     g_pImage->append( wxS("images") );
     appendOSDirSlash( g_pImage );
     if ( !wxDir::Exists(*g_pImage))
