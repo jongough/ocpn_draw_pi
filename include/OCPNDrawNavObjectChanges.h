@@ -80,6 +80,7 @@ class OCPNDrawNavObjectChanges : public pugi::xml_document
         virtual ~OCPNDrawNavObjectChanges();
 
     bool CreateNavObjGPXPaths(void);
+    bool CreateNavObjGPXPoints( void );    
     
     bool AddPath ( Path *pb, const char *action );
     bool AddOCPNPoint( OCPNPoint *pr, const char *action );

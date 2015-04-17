@@ -36,6 +36,7 @@
 #include <wx/stdpaths.h>
 #include <wx/progdlg.h>
 #include <wx/clipbrd.h>
+#include <wx/defs.h>
 
 #include <iostream>
 
@@ -142,14 +143,14 @@ extern OCPNDrawConfig  *pOCPNDrawConfig;
 extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
-extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
+//extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
 extern ODPointPropertiesImpl *pODPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern OCPNSelect           *pOCPNSelect;
 extern double           g_dLat, g_dLon;
 extern double           gCog, gSog;
 extern bool             g_bShowLayers;
-extern wxString         g_default_OCPNPoint_icon;
+extern wxString         g_sOCPNPointIconName;
 
 extern AIS_Decoder      *g_pAIS;
 extern PlugIn_ViewPort  *g_pivp;
@@ -352,7 +353,30 @@ void PathManagerDialog::OnTabSwitch( wxNotebookEvent &event )
 {
     if( !m_pNotebook ) return;
     int current_page = m_pNotebook->GetSelection();
-    if( current_page == 4 ) {
+    
+    switch (current_page)
+    {
+        case 0:
+            // Path
+            if ( m_pPathListCtrl ) UpdatePathListCtrl();
+            break;
+            
+        case 1:
+            // Point
+            if ( m_pOCPNPointListCtrl ) UpdateOCPNPointsListCtrl();
+            break;
+            
+        case 2:
+            // Layer
+            break;
+            
+        case wxNOT_FOUND:
+            break;
+            
+        default:
+            break;
+    }
+/*    if( current_page == 4 ) {
 //        if( btnImport ) btnImport->Enable( false );
 //        if( btnExport ) btnExport->Enable( false );
 //        if( btnExportViz ) btnExportViz->Enable( false );
@@ -362,6 +386,7 @@ void PathManagerDialog::OnTabSwitch( wxNotebookEvent &event )
         if( btnExportViz ) btnExportViz->Enable( true );
 
     }
+*/    
     event.Skip(); // remove if using event table... why?
 }
 
@@ -394,6 +419,8 @@ void PathManagerDialog::Create()
 {
     wxBoxSizer* itemBoxSizer1 = new wxBoxSizer( wxVERTICAL );
     SetSizer( itemBoxSizer1 );
+    m_pPathListCtrl = NULL;
+    m_pOCPNPointListCtrl = NULL;
 
     m_pNotebook = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxSize( -1, -1 ), wxNB_TOP );
     itemBoxSizer1->Add( m_pNotebook, 1,
@@ -469,76 +496,6 @@ void PathManagerDialog::Create()
     btnPathDeleteAll->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnPathDeleteAllClick), NULL, this );
 
-    //  Create "Boundary" panel
-/*    m_pBoundaryPath = new wxPanel( m_pNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
-            wxNO_BORDER | wxTAB_TRAVERSAL );
-    wxBoxSizer *sbsBoundaries = new wxBoxSizer( wxHORIZONTAL );
-    m_pPanelBoundary->SetSizer( sbsBoundaries );
-    m_pNotebook->AddPage( m_pPanelBoundary, _("Boundaries") );
-
-    m_pBoundaryListCtrl = new wxListCtrl( m_pPanelBoundary, -1, wxDefaultPosition, wxSize( 400, -1 ),
-            wxLC_REPORT  | wxLC_SORT_ASCENDING | wxLC_HRULES
-                    | wxBORDER_SUNKEN);
-    m_pBoundaryListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED,
-            wxListEventHandler(PathManagerDialog::OnBoundarySelected), NULL, this );
-    m_pBoundaryListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED,
-            wxListEventHandler(PathManagerDialog::OnBoundarySelected), NULL, this );
-    m_pBoundaryListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
-            wxListEventHandler(PathManagerDialog::OnBoundaryDefaultAction), NULL, this );
-    m_pPathListCtrl->Connect( wxEVT_LEFT_DOWN,
-            wxMouseEventHandler(PathManagerDialog::OnPathToggleVisibility), NULL, this );
-    m_pPathListCtrl->Connect( wxEVT_COMMAND_LIST_COL_CLICK,
-            wxListEventHandler(PathManagerDialog::OnPathColumnClicked), NULL, this );
-    sbsPaths->Add( m_pPathListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
-
-    // Columns: visibility ctrl, name
-    // note that under MSW for SetColumnWidth() to work we need to create the
-    // items with images initially even if we specify dummy image id
-
-    m_pPathListCtrl->InsertColumn( colPATHVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 40 );
-    m_pPathListCtrl->InsertColumn( colPATHNAME, _("Path Name"), wxLIST_FORMAT_LEFT, 120 );
-    m_pPathListCtrl->InsertColumn( colPATHDESC, _("Desc"), wxLIST_FORMAT_LEFT, 230 );
-
-    // Buttons: Delete, Properties...
-    wxBoxSizer *bsPathButtons = new wxBoxSizer( wxVERTICAL );
-    sbsPaths->Add( bsPathButtons, 0, wxALIGN_RIGHT );
-
-    btnPathProperties = new wxButton( m_pPanelPath, -1, _("&Properties...") );
-    bsPathButtons->Add( btnPathProperties, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-    btnPathProperties->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-            wxCommandEventHandler(PathManagerDialog::OnPathPropertiesClick), NULL, this );
-
-    btnPathActivate = new wxButton( m_pPanelPath, -1, _("&Activate") );
-    bsPathButtons->Add( btnPathActivate, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-    btnPathActivate->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-            wxCommandEventHandler(PathManagerDialog::OnPathActivateClick), NULL, this );
-    btnPathActivate->Connect( wxEVT_LEFT_DOWN,
-            wxMouseEventHandler(PathManagerDialog::OnPathBtnLeftDown), NULL, this );
-
-    btnPathZoomto = new wxButton( m_pPanelPath, -1, _("&Center View") );
-    bsPathButtons->Add( btnPathZoomto, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-    btnPathZoomto->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-            wxCommandEventHandler(PathManagerDialog::OnPathZoomtoClick), NULL, this );
-    btnPathZoomto->Connect( wxEVT_LEFT_DOWN,
-            wxMouseEventHandler(PathManagerDialog::OnPathBtnLeftDown), NULL, this );
-
-    btnPathDelete = new wxButton( m_pPanelPath, -1, _("&Delete") );
-    bsPathButtons->Add( btnPathDelete, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-    btnPathDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-            wxCommandEventHandler(PathManagerDialog::OnPathDeleteClick), NULL, this );
-
-    btnPathExport = new wxButton( m_pPanelPath, -1, _("&Export selected...") );
-    bsPathButtons->Add( btnPathExport, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-    btnPathExport->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-            wxCommandEventHandler(PathManagerDialog::OnPathExportClick), NULL, this );
-
-    bsPathButtons->AddSpacer( 10 );
-
-    btnPathDeleteAll = new wxButton( m_pPanelPath, -1, _("&Delete All") );
-    bsPathButtons->Add( btnPathDeleteAll, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-    btnPathDeleteAll->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-            wxCommandEventHandler(PathManagerDialog::OnPathDeleteAllClick), NULL, this );
-*/
     //  Create "OCPN points" panel
     m_pPanelOCPNPoint = new wxPanel( m_pNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
             wxNO_BORDER | wxTAB_TRAVERSAL );
@@ -1024,8 +981,10 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
 
 void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
 {
-    if( NULL == pPathPropDialog )          // There is one global instance of the PathProp Dialog
-        pPathPropDialog = new PathProp( GetParent() );
+    if( NULL == pPathPropDialog ) {          // There is one global instance of the PathProp Dialog
+        if( path->m_sTypeString == wxS("Path") ) pPathPropDialog = new PathProp( GetParent() );
+        else if( path->m_sTypeString == wxS("Boundary") ) pPathPropDialog = new BoundaryProp( GetParent() );
+    }
 
     pPathPropDialog->SetPathAndUpdate( path );
     pPathPropDialog->UpdateProperties( path );
@@ -1403,7 +1362,7 @@ void PathManagerDialog::UpdateOCPNPointButtons()
 
     btnOCPNPointProperties->Enable( enable1 );
     btnOCPNPointZoomto->Enable( enable1 );
-    btnOCPNPointDeleteAll->Enable( enablemultiple );
+    btnOCPNPointDeleteAll->Enable( TRUE );
     btnOCPNPointDelete->Enable( b_delete_enable && enablemultiple );
     btnOCPNPointGoTo->Enable( enable1 );
     btnOCPNPointExport->Enable( enablemultiple );
@@ -1437,9 +1396,10 @@ void PathManagerDialog::OnOCPNPointToggleVisibility( wxMouseEvent &event )
 
 void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
 {
-    OCPNPoint *pWP = new OCPNPoint( g_dLat, g_dLon, g_default_OCPNPoint_icon, wxEmptyString,
+    OCPNPoint *pWP = new OCPNPoint( g_dLat, g_dLon, g_sOCPNPointIconName, wxEmptyString,
             GPX_EMPTY_STRING );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
+    pWP->SetTypeString( wxS("Point") );
     pOCPNSelect->AddSelectableOCPNPoint( g_dLat, g_dLon, pWP );
     pOCPNDrawConfig->AddNewOCPNPoint( pWP, -1 );    // use auto next num
     RequestRefresh( GetOCPNCanvasWindow() );

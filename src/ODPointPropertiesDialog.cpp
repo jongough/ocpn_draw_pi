@@ -187,9 +187,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, wxT("Basic"), false );
-	m_panel4 = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	m_notebookProperties->AddPage( m_panel4, wxT("a page"), false );
+	m_notebookProperties->AddPage( m_panelBasicProperties, wxT("Basic"), true );
 	m_panelDescription = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxVERTICAL );

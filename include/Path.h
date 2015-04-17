@@ -62,7 +62,7 @@ public:
     void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
     void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
     virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);
-    virtual void DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region );
+    virtual void DrawGL( PlugIn_ViewPort &piVP );
     OCPNPoint *GetLastPoint();
     void DeletePoint(OCPNPoint *rp, bool bRenamePoints = false);
     void RemovePoint(OCPNPoint *rp, bool bRenamePoints = false);
@@ -133,8 +133,10 @@ public:
     OCPNPointList     *pOCPNPointList;
 
     wxRect      active_pt_rect;
-    wxString    m_LineColour;
-    wxString    m_FillColour;
+    wxString    m_ActiveLineColour;
+    wxString    m_ActiveFillColour;
+    wxString    m_InActiveLineColour;
+    wxString    m_InActiveFillColour;
     bool        m_btemp;
     int         m_hiliteWidth;
 

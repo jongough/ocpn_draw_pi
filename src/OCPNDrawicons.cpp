@@ -7,13 +7,9 @@
 #include "OCPNDrawicons.h"
 #include "ocpn_plugin.h"
 
-wxBitmap *_img_ocpn_draw_pi;
-wxBitmap *_img_ocpn_draw_gray_pi;
-wxBitmap *_img_ocpn_draw;
-wxBitmap *_img_ocpn_draw_boundary;
-const wxBitmap *_img_Bullet_green;
-const wxBitmap *_img_Bullet_red;
-const wxBitmap *_img_Bullet_yellow;
+extern const wxBitmap *_img_Bullet_green;
+extern const wxBitmap *_img_Bullet_red;
+extern const wxBitmap *_img_Bullet_yellow;
 extern wxString g_SData_Locn;
 extern wxString *g_pHome_locn;
 extern wxString *g_pData;
@@ -26,15 +22,27 @@ void initialize_images(void)
 	pName->append( *g_pImage );
 	pName->append (wxS("OCPNDrawManager.png"));
 	
-	_img_ocpn_draw_pi = new wxBitmap( *pName );
+	_img_ocpn_draw_pi = new wxBitmap( wxImage( *pName ) );
 	pName->clear();
 	pName->append( *g_pImage );
 	pName->append (wxS("OCPNDrawManagerGray.png"));
-	_img_ocpn_draw_gray_pi = new wxBitmap( *pName );
+	_img_ocpn_draw_gray_pi = new wxBitmap( wxImage( *pName ) );
 	pName->clear();
 	pName->append( *g_pImage );
 	pName->append (wxS("button1.png"));
-	_img_ocpn_draw_boundary = new wxBitmap( *pName );
+	_img_ocpn_draw_boundary = new wxBitmap( wxImage( *pName ) );
+    pName->clear();
+    pName->append( *g_pImage );
+    pName->append (wxS("button2.png"));
+    _img_ocpn_draw_boundary_gray = new wxBitmap( wxImage( *pName ) );
+    pName->clear();
+    pName->append( *g_pImage );
+    pName->append (wxS("pointbutton.png"));
+    _img_ocpn_draw_point = new wxBitmap( wxImage( *pName ) );
+    pName->clear();
+    pName->append( *g_pImage );
+    pName->append (wxS("pointbuttongray.png"));
+    _img_ocpn_draw_point_gray = new wxBitmap( wxImage( *pName ) );
 	
 
 static unsigned char Bullet_green[] = {

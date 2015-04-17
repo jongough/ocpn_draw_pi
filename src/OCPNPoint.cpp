@@ -73,6 +73,7 @@ OCPNPoint::OCPNPoint()
     m_bIsActive = false;
     m_bBlink = false;
     m_bIsInRoute = false;
+    m_bIsInPath = false;
     m_bIsInBoundary = false;
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();
@@ -121,6 +122,7 @@ OCPNPoint::OCPNPoint( OCPNPoint* orig )
     m_bIsActive = orig->m_bIsActive;
     m_bBlink = orig->m_bBlink;
     m_bIsInRoute = orig->m_bIsInRoute;
+    m_bIsInPath = orig->m_bIsInPath;
     m_bIsInBoundary = orig->m_bIsInBoundary;
     m_bIsInTrack = orig->m_bIsInTrack;
     m_CreateTimeX = orig->m_CreateTimeX;
@@ -174,6 +176,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     m_bIsActive = false;
     m_bBlink = false;
     m_bIsInRoute = false;
+    m_bIsInPath = false;
     m_bIsInBoundary = false;
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();
@@ -188,7 +191,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
     m_btemp = false;
-    m_sTypeString = wxS("Boundary Point");
+    m_sTypeString = wxEmptyString;
 
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
@@ -441,7 +444,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 }
 
 #ifdef ocpnUSE_GL
-void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
+void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
     if( !m_bIsVisible )
     return;
@@ -541,9 +544,6 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp, OCPNRegion &region )
         m_wpBBox_chart_scale = pivp.chart_scale;
         m_wpBBox_rotation = pivp.rotation;
     }
-
-//    if(region.Contains(r3) == wxOutRegion)
-//        return;
 
     ocpnDC dc;
 

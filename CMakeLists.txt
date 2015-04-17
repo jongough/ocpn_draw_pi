@@ -10,6 +10,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 PROJECT(ocpn_draw_pi)
 
 SET(PACKAGE_NAME ocpn_draw_pi)
+SET(PLUGIN_SOURCE_DIR .)
 SET(VERBOSE_NAME ocpn_draw)
 SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Del Elson")
@@ -63,12 +64,15 @@ SET(SRCS
  		src/OCPNDrawNavObjectChanges.cpp
  		src/OCPNDrawCanvasMenuHandler.cpp
 # 		src/OCPNDrawPointInfoImpl.cpp
+        src/OCPNDrawPropertiesDialog.cpp
+        src/OCPNDrawPropertiesImpl.cpp
+#        src/ODHelper.cpp
+#        src/ODIcons.cpp
  		src/ODPointPropertiesDialog.cpp
  		src/ODPointPropertiesImpl.cpp
  		src/ODPositionParser.cpp
  		src/ODstyles.cpp
 # 		src/ODUndo.cpp
-# 		src/glOCPNDrawChartCanvas.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
         	src/jsonval.cpp
@@ -92,7 +96,11 @@ SET(HDRS
  		include/OCPNDrawEventHandler.h
  		include/OCPNDrawNavObjectChanges.h
  		include/OCPNDrawCanvasMenuHandler.h
+ 		include/OCPNDrawPropertiesDialog.h
+ 		include/OCPNDrawPropertiesImpl.h
 # 		include/OCPNDrawPointInfoImpl.h
+#        include/ODHelper.h
+#        incluse/ODIcons.h
  		include/ODPointPropertiesDialog.h
  		include/ODPointPropertiesImpl.h
  		include/ODPositionParser.h
@@ -113,7 +121,7 @@ SET(HDRS
         	include/wx/jsonwriter.h
 )
 
-SET(OCPNSRC
+SET(OCPNSRC 
 		ocpnsrc/bbox.cpp
 #		ocpnsrc/chart1.cpp
 #		ocpnsrc/chcanv.cpp
@@ -128,7 +136,7 @@ SET(OCPNSRC
 		ocpnsrc/Layer.cpp
 #		ocpnsrc/navutil.cpp
         ocpnsrc/ocpndc.cpp
-		ocpnsrc/OCPNRegion.cpp
+#		ocpnsrc/OCPNRegion.cpp
 #		ocpnsrc/OCPNPlatform.cpp
 #		ocpnsrc/pluginmanager.cpp
         ocpnsrc/pugixml.cpp

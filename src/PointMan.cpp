@@ -25,7 +25,8 @@
 
 #include "styles.h"
 #include "MarkIcon.h"
-//#include "navutil.h"
+#include "OCPNDrawConfig.h"
+#include "OCPNSelect.h"
 #include "PathMan.h"
 #include "cutil.h"
 
@@ -35,11 +36,12 @@
 #include <wx/apptrait.h>
 
 extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern wxString         g_PrivateDataDir;
-extern OCPNPoint      *pAnchorWatchPoint1;
-extern OCPNPoint      *pAnchorWatchPoint2;
-//extern MyConfig           *pOCPNDrawConfig;
-extern PathMan           *g_pPathMan;
+extern wxString                 g_PrivateDataDir;
+extern OCPNPoint                *pAnchorWatchPoint1;
+extern OCPNPoint                *pAnchorWatchPoint2;
+extern OCPNDrawConfig           *pOCPNDrawConfig;
+extern PathMan                  *g_pPathMan;
+extern OCPNSelect               *pOCPNSelect;
 
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
@@ -127,6 +129,8 @@ void PointMan::ProcessUserIcons( ocpnStyle::Style* style )
 {
     wxString UserIconPath = g_PrivateDataDir;
     wxChar sep = wxFileName::GetPathSeparator();
+    if ( UserIconPath.IsNull() ) return;
+    
     if( UserIconPath.Last() != sep ) UserIconPath.Append( sep );
     UserIconPath.Append( _T("UserIcons") );
     
@@ -365,7 +369,7 @@ wxBitmap *PointMan::CreateDimBitmap( wxBitmap *pBitmap, double factor )
 
 void PointMan::SetColorScheme( ColorScheme cs )
 {
-    ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
+    //ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
 
     //    Iterate on the OCPNPoint list, requiring each to reload icon
 
@@ -385,6 +389,7 @@ bool PointMan::DoesIconExist(const wxString & icon_key) const
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
         pmi = (MarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( icon_key ) ) return true;
+        if( pmi->icon_description.IsSameAs( icon_key ) ) return true;
     }
 
     return false;
@@ -398,8 +403,8 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
 
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
         pmi = (MarkIcon *) m_pIconArray->Item( i );
-        if( pmi->icon_name.IsSameAs( icon_key ) )
-            break;
+        if( pmi->icon_name.IsSameAs( icon_key ) ) break;
+        if( pmi->icon_description.IsSameAs( icon_key ) ) break;
     }
 
     if( i == m_pIconArray->GetCount() )              // key not found
@@ -407,14 +412,14 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
         // find and return bitmap for "circle"
         for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
             pmi = (MarkIcon *) m_pIconArray->Item( i );
-//            if( pmi->icon_name.IsSameAs( _T("circle") ) )
-//                break;
+            if( pmi->icon_name.IsSameAs( _T("circle") ) )
+                break;
         }
+
+        if( i == m_pIconArray->GetCount() )              // "circle" not found
+            pmi = (MarkIcon *) m_pIconArray->Item( 0 );       // use item 0
     }
-
-    if( i == m_pIconArray->GetCount() )              // "circle" not found
-        pmi = (MarkIcon *) m_pIconArray->Item( 0 );       // use item 0
-
+    
     if( pmi )
         pret = pmi->picon_bitmap;
 
@@ -661,7 +666,6 @@ void PointMan::DeleteAllOCPNPoints( bool b_delete_used )
 
 void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
 {
-/* 
     if( ! b_update_changeset )
         pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
         
@@ -684,7 +688,7 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
                     bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
                     pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
                     pOCPNDrawConfig->DeleteConfigPath( pb );
-                    g_pRouteMan->DeletePath( pb );
+                    g_pPathMan->DeletePath( pb );
                     pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
                 }
             }
@@ -705,5 +709,4 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
         RemoveOCPNPoint( pRp);
 
     }
-*/   
 }

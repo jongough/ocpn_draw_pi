@@ -39,6 +39,7 @@
 #include "OCPNDrawConfig.h"
 #include "ocpn_draw_pi.h"
 #include "bbox.h"
+#include "ocpndc.h"
 
 
 extern PointMan *pOCPNPointMan;
@@ -50,10 +51,10 @@ extern OCPNSelect *pOCPNSelect;
 extern OCPNDrawConfig *pOCPNDrawConfig;
 extern Multiplexer *g_pODMUX;
 extern float g_ODGLMinSymbolLineWidth;
-extern wxString    g_ActiveLineColour;
-extern wxString    g_InActiveLineColour;
-extern wxString    g_ActiveFillColour;
-extern wxString    g_InActiveFillColour;
+extern wxString    g_ActivePathLineColour;
+extern wxString    g_InActivePathLineColour;
+extern wxString    g_ActivePathFillColour;
+extern wxString    g_InActivePathFillColour;
 extern PathProp    *pPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 
@@ -91,8 +92,10 @@ Path::Path( void )
     m_LayerID = 0;
     m_bIsInLayer = false;
 
-    m_LineColour = g_ActiveLineColour;
-    m_FillColour = g_ActiveFillColour;
+    m_ActiveLineColour = g_ActivePathLineColour;
+    m_ActiveFillColour = g_ActivePathFillColour;
+    m_InActiveLineColour = g_InActivePathLineColour;
+    m_InActiveFillColour = g_InActivePathFillColour;
 
     m_lastMousePointIndex = 0;
     m_NextLegGreatCircle = false;
@@ -196,14 +199,14 @@ void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
     wxString colour;
 
     if( m_bVisible && m_bPathIsActive ) {
-        colour = m_LineColour;
+        colour = m_ActiveLineColour;
     }
     else if ( m_bVisible && !m_bPathIsActive) {
-        colour = g_InActiveLineColour;
+        colour = m_InActiveLineColour;
     }
 
     if( colour.IsNull() ) {
-        colour = m_LineColour;
+        colour = m_ActiveLineColour;
     } 
 
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
@@ -228,17 +231,17 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     if( m_nPoints == 0 ) return;
 
     if( m_bVisible && m_bPathIsActive ) {
-        colour = m_LineColour;
-        fillcolour = m_FillColour;
+        colour = m_ActiveLineColour;
+        fillcolour = m_ActiveFillColour;
     }
     else {
-        colour = g_InActiveLineColour;
-        fillcolour = g_InActiveFillColour;
+        colour = m_InActiveLineColour;
+        fillcolour = m_InActiveFillColour;
         
     }
 
     if( colour.IsNull() ) {
-        colour = m_LineColour;
+        colour = m_ActiveLineColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
@@ -248,7 +251,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     }
 
     if( fillcolour.IsNull() ) {
-        fillcolour = g_ActiveFillColour;
+        fillcolour = m_ActiveFillColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( fillcolour == ::GpxxColorNames[i] ) {
@@ -355,7 +358,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 
 extern ChartCanvas *ocpncc1; /* hopefully can eventually remove? */
 
-void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
+void Path::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
@@ -399,22 +402,22 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
     
     /* determine color and width */
     wxColour col, fillcol;
-    int width = g_path_line_width;
+    int width = m_width;
     
     wxString colour, fillcolour;
     
     if( m_bVisible && m_bPathIsActive ) {
-        colour = m_LineColour;
-        fillcolour = m_FillColour;
+        colour = m_ActiveLineColour;
+        fillcolour = m_ActiveFillColour;
     }
     else {
-        colour = g_InActiveLineColour;
-        fillcolour = g_InActiveFillColour;
+        colour = m_InActiveLineColour;
+        fillcolour = m_InActiveFillColour;
         
     }
 
     if( colour.IsNull() ) {
-        colour = g_ActiveLineColour;
+        colour = m_ActiveLineColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
@@ -424,7 +427,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
     }
 
     if( fillcolour.IsNull() ) {
-        fillcol = g_ActiveFillColour;
+        fillcol = m_ActiveFillColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( fillcolour == ::GpxxColorNames[i] ) {
@@ -517,10 +520,10 @@ void Path::DrawGL( PlugIn_ViewPort &piVP, OCPNRegion &region )
     glPolygonStipple( slope_cross_hatch );
     glBegin(GL_POLYGON_STIPPLE);
     if ( m_bVisible ) {
-        dc.SetPen(*wxTRANSPARENT_PEN);
+        //dc.SetPen(*wxTRANSPARENT_PEN);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxBDIAGONAL_HATCH ) );
         if ( j > 1 )
-            dc.DrawPolygon( j, bpts, 0, 0);
+            dc.DrawPolygonTessellated( j, bpts, 0, 0);
     }
     glEnd();
     glDisable (GL_POLYGON_STIPPLE);
