@@ -369,7 +369,7 @@ wxBitmap *PointMan::CreateDimBitmap( wxBitmap *pBitmap, double factor )
 
 void PointMan::SetColorScheme( ColorScheme cs )
 {
-    ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
+    //ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
 
     //    Iterate on the OCPNPoint list, requiring each to reload icon
 
@@ -389,6 +389,7 @@ bool PointMan::DoesIconExist(const wxString & icon_key) const
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
         pmi = (MarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( icon_key ) ) return true;
+        if( pmi->icon_description.IsSameAs( icon_key ) ) return true;
     }
 
     return false;
@@ -402,8 +403,8 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
 
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
         pmi = (MarkIcon *) m_pIconArray->Item( i );
-        if( pmi->icon_name.IsSameAs( icon_key ) )
-            break;
+        if( pmi->icon_name.IsSameAs( icon_key ) ) break;
+        if( pmi->icon_description.IsSameAs( icon_key ) ) break;
     }
 
     if( i == m_pIconArray->GetCount() )              // key not found
@@ -411,14 +412,14 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
         // find and return bitmap for "circle"
         for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
             pmi = (MarkIcon *) m_pIconArray->Item( i );
-//            if( pmi->icon_name.IsSameAs( _T("circle") ) )
-//                break;
+            if( pmi->icon_name.IsSameAs( _T("circle") ) )
+                break;
         }
+
+        if( i == m_pIconArray->GetCount() )              // "circle" not found
+            pmi = (MarkIcon *) m_pIconArray->Item( 0 );       // use item 0
     }
-
-    if( i == m_pIconArray->GetCount() )              // "circle" not found
-        pmi = (MarkIcon *) m_pIconArray->Item( 0 );       // use item 0
-
+    
     if( pmi )
         pret = pmi->picon_bitmap;
 
