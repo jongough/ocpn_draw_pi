@@ -139,8 +139,9 @@ public:
     wxString    m_InActiveFillColour;
     bool        m_btemp;
     int         m_hiliteWidth;
+    wxPoint     *m_bpts;
 
-private:
+protected:    
     bool m_bNeedsUpdateBBox;
     wxBoundingBox     RBBox;
 
@@ -151,6 +152,12 @@ private:
     bool        m_bListed;
     double      m_ArrivalRadius;
     bool        m_bcrosses_idl;
+    wxColour    m_col;
+    wxColour    m_fillcol;
+    
+private:
+
+    
 };
 
 WX_DECLARE_LIST(Path, PathList); // establish class Path as list member

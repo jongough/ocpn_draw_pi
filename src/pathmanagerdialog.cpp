@@ -44,7 +44,7 @@
 #include "ocpn_draw_pi.h"
 //#include "styles.h"
 #include "dychart.h"
-#include "navutil.h"
+//#include "navutil.h"
 #include "OCPNDrawConfig.h"
 #include "Path.h"
 #include "PathProp.h"
@@ -60,8 +60,8 @@
 #include "chartbase.h"
 #include "Layer.h"
 #include "SendToGpsDlg.h"
-#include "TrackPropDlg.h"
-#include "AIS_Decoder.h"
+//#include "TrackPropDlg.h"
+//#include "AIS_Decoder.h"
 
 #define DIALOG_MARGIN 3
 
@@ -152,7 +152,7 @@ extern double           gCog, gSog;
 extern bool             g_bShowLayers;
 extern wxString         g_sOCPNPointIconName;
 
-extern AIS_Decoder      *g_pAIS;
+//extern AIS_Decoder      *g_pAIS;
 extern PlugIn_ViewPort  *g_pivp;
 
 // sort callback. Sort by route name.
@@ -1397,7 +1397,7 @@ void PathManagerDialog::OnOCPNPointToggleVisibility( wxMouseEvent &event )
 void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
 {
     OCPNPoint *pWP = new OCPNPoint( g_dLat, g_dLon, g_sOCPNPointIconName, wxEmptyString,
-            GPX_EMPTY_STRING );
+            wxT("") );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
     pWP->SetTypeString( wxS("Point") );
     pOCPNSelect->AddSelectableOCPNPoint( g_dLat, g_dLon, pWP );

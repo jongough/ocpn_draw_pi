@@ -73,6 +73,7 @@ SET(SRCS
  		src/ODPositionParser.cpp
  		src/ODstyles.cpp
 # 		src/ODUndo.cpp
+        src/ODUtils.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
         	src/jsonval.cpp
@@ -106,6 +107,7 @@ SET(HDRS
  		include/ODPositionParser.h
 # 		include/ODUndo.h
  		include/glOCPNDrawChartCanvas.h
+ 		include/ODUtils.h
  		include/ODvector2D.h
 # 		include/RoutePoint.h
 # 		include/ocpn_types.h
@@ -131,7 +133,6 @@ SET(OCPNSRC
 		ocpnsrc/geodesic.cpp
 		ocpnsrc/georef.cpp
 #		ocpnsrc/glChartCanvas.cpp
-		ocpnsrc/gpxdocument.cpp
 		ocpnsrc/Hyperlink.cpp
 		ocpnsrc/Layer.cpp
 #		ocpnsrc/navutil.cpp

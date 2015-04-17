@@ -47,6 +47,7 @@
 #include "OCPNDrawPropertiesImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "OCPNDrawEventHandler.h"
+#include "ODUtils.h"
 #include "chcanv.h"
 #include "Layer.h"
 //#include "styles.h"
@@ -222,6 +223,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 #endif
 #ifdef __WXGTK__
 #ifndef NDEBUG
+    // this is for development on linux
     wxString stdDataDir = std_path.GetResourcesDir();
     wxString stdProgDir = std_path.GetResourcesDir();
     wxString stdHomeDir = std_path.GetUserConfigDir();
@@ -1461,7 +1463,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Point") );
         pMousePoint->m_bIsolatedMark = TRUE;
@@ -1536,7 +1538,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Boundary Point") );
 
@@ -1585,7 +1587,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
                         if( i < segmentCount ) {
                             gcPoint = new OCPNPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
-                                    GPX_EMPTY_STRING );
+                                    wxT("") );
                             gcPoint->SetNameShown( false );
                             gcPoint->SetTypeString( wxS("Boundary Point") );
                             pOCPNDrawConfig->AddNewOCPNPoint( gcPoint, -1 );
