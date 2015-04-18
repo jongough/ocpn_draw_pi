@@ -230,6 +230,9 @@ public:
     int         nPath_State;
     int         nBoundary_State;
     Boundary    *m_pMouseBoundary;
+    Path        *m_pSelectedPath;
+    OCPNPoint   *m_pFoundOCPNPoint;
+    OCPNPoint   *m_pFoundOCPNPointSecond;
     wxPoint     r_rband;
     int         nPoint_State;
     double      m_dStartLat;
@@ -283,10 +286,7 @@ private:
     StatWin                   *stats;
     ColorScheme               global_color_scheme;
     
-    Path        *m_pSelectedPath;
-    Boundary  *m_pSelectedBoundary;
-    OCPNPoint   *m_pFoundOCPNPoint;
-    OCPNPoint  *m_pFoundOCPNPointSecond;
+    Boundary    *m_pSelectedBoundary;
     
     bool        m_bDrawingBoundary;
     

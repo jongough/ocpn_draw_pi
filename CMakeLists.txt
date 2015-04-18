@@ -62,7 +62,7 @@ SET(SRCS
  		src/OCPNDrawConfig.cpp
  		src/OCPNDrawEventHandler.cpp
  		src/OCPNDrawNavObjectChanges.cpp
- 		src/OCPNDrawCanvasMenuHandler.cpp
+# 		src/OCPNDrawCanvasMenuHandler.cpp
 # 		src/OCPNDrawPointInfoImpl.cpp
         src/OCPNDrawPropertiesDialog.cpp
         src/OCPNDrawPropertiesImpl.cpp
@@ -96,7 +96,7 @@ SET(HDRS
  		include/OCPNDrawConfig.h
  		include/OCPNDrawEventHandler.h
  		include/OCPNDrawNavObjectChanges.h
- 		include/OCPNDrawCanvasMenuHandler.h
+# 		include/OCPNDrawCanvasMenuHandler.h
  		include/OCPNDrawPropertiesDialog.h
  		include/OCPNDrawPropertiesImpl.h
 # 		include/OCPNDrawPointInfoImpl.h

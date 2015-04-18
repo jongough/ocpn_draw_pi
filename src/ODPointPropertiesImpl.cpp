@@ -23,9 +23,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
  
+#include "wx/wxprec.h"
+
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
+
 #include "ODPointPropertiesImpl.h"
-#include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
+#include "ocpn_plugin.h"
 #include "OCPNDrawConfig.h"
 #include "OCPNPoint.h"
 #include "OCPNSelect.h"

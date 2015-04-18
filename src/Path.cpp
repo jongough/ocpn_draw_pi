@@ -58,6 +58,7 @@ extern wxString    g_ActivePathFillColour;
 extern wxString    g_InActivePathFillColour;
 extern PathProp    *pPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
+extern wxString     g_sOCPNPointIconName;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -1031,7 +1032,7 @@ void Path::UpdateSegmentDistances()
 OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
         bool bRenamePoints )
 {
-    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, wxString( _T ( "diamond" ) ),
+    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName,
             GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
@@ -1057,6 +1058,33 @@ OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
 
     return ( newpoint );
 }
+
+OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, bool bRenamePoints )
+{
+    int nOP = pOCPNPointList->IndexOf( pOP );
+    if( nOP >= m_nPoints - 1 )
+        return NULL;
+    nOP++;
+    
+    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, GetNewMarkSequenced(), wxT("") );
+    newpoint->m_bIsInPath = true;
+    newpoint->m_bDynamicName = true;
+    newpoint->SetNameShown( false );
+    
+    pOCPNPointList->Insert( nOP, newpoint );
+    
+    OCPNPointGUIDList.Insert( pOP->m_GUID, nOP );
+    
+    m_nPoints++;
+    
+    if( bRenamePoints ) RenameOCPNPoints();
+    
+    FinalizeForRendering();
+    UpdateSegmentDistances();
+    
+    return ( newpoint );
+}
+
 
 void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
 {

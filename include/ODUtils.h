@@ -31,4 +31,7 @@
  const wxChar   *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime );
  wxString       GetUUID(void);
  int            GetRandomNumber(int range_min, int range_max); 
+ void           MenuPrepend( wxMenu *menu, int id, wxString label);
+ void           MenuAppend( wxMenu *menu, int id, wxString label);
+ 
 #endif

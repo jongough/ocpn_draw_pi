@@ -36,16 +36,25 @@ class OCPNDrawEventHandler : public wxEvtHandler
 {
     public:
         OCPNDrawEventHandler(ocpn_draw_pi *parent);
-        virtual ~OCPNDrawEventHandler();
+        OCPNDrawEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, OCPNPoint *selectedOCPNPoint);
+        ~OCPNDrawEventHandler();
         
         void OnTimerEvent( wxTimerEvent &event );
         void PopupMenuHandler( wxCommandEvent & event );
+        void PopupMenu( int x, int y, int seltype );
+        void SetPath( Path *path );
+        void SetPoint ( OCPNPoint *point );
+        void SetCanvas( ChartCanvas *canvas );
         
     protected:
     private:
-        ocpn_draw_pi  *m_parent;
+        ocpn_draw_pi    *m_parent;
+        ChartCanvas     *m_parentcanvas;
+        int             popx, popy;
+        Path            *m_pSelectedPath;
+        OCPNPoint       *m_pFoundOCPNPoint;
         
-        DECLARE_EVENT_TABLE();
+        //DECLARE_EVENT_TABLE();
 };
 
 #endif // OCPNDRAWEVENTHANDLER_H

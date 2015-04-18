@@ -22,7 +22,7 @@
 *   You should have received a copy of the GNU General Public License     *
 *   along with this program; if not, write to the                         *
 *   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ***************************************************************************
 */
 //#define _2_9_x_ // uncomment this to compile for 2.9.x
@@ -47,6 +47,7 @@
 #include "OCPNDrawPropertiesImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "OCPNDrawEventHandler.h"
+#include "OCPNDrawCanvasMenuHandler.h"
 #include "ODUtils.h"
 #include "chcanv.h"
 #include "Layer.h"
@@ -84,6 +85,7 @@ static const long long lNaN = 0xfff8000000000000;
 #endif
 
 #include "OCPNDrawicons.h"
+#include <OCPNDrawCanvasMenuHandler.h>
 
 ocpn_draw_pi    *g_ocpn_draw_pi;
 PathList        *pPathList;
@@ -111,6 +113,7 @@ ocpnStyle::StyleManager* g_ODStyleManager;
 BoundaryList              *pBoundaryList;
 OCPNPointList           *pOCPNPointList;
 ChartCanvas     *ocpncc1;
+
 wxString    g_ActiveBoundaryLineColour;
 wxString    g_InActiveBoundaryLineColour;
 wxString    g_ActiveBoundaryFillColour;
@@ -341,12 +344,10 @@ int ocpn_draw_pi::Init(void)
     // Now initialize UI Style.
     g_ODStyleManager = new ocpnStyle::StyleManager();
     
+    ocpncc1 = (ChartCanvas *)m_parent_window;
+    
     // Create an OCPN Draw event handler
     g_OCPNDrawEventHandler = new OCPNDrawEventHandler( g_ocpn_draw_pi );
-    
-//    MyFrame *pFrame = g_OD_pi_manager->GetParentFrame();
-//    ocpncc1 = pFrame->GetCanvasWindow();    
-    ocpncc1 = (ChartCanvas *)m_parent_window;
     
     pCurrentCursor = ocpncc1->pCursorArrow;
 
@@ -766,7 +767,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 ) {
         ocpncc1->SetCursor( *pCurrentCursor );
         bRefresh = TRUE;
-//        RequestRefresh( m_parent_window );
     }
     
     if( nBoundary_State >= 2 ) {
@@ -774,8 +774,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = event.GetY();
         m_bDrawingBoundary = true;
 
-// TODO (jon#1#): Need to get access to 'CheckEdgePan' 
-//        ocpncc1->CheckEdgePan( x, y, event.Dragging(), 5, 2 );
+// TODO (jon#1#): Need to get access to 'CheckEdgePan'. Patch has been submitted - 18/04/2015
+        //CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
         bRefresh = TRUE;
 //        RequestRefresh( m_parent_window );
     }
@@ -1032,7 +1032,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
 
             if( 0 != seltype ) {
-                CanvasPopupMenu( event.GetX(), event.GetY(), seltype );
+                g_OCPNDrawEventHandler->SetCanvas( ocpncc1 );
+                g_OCPNDrawEventHandler->SetPath( m_pSelectedPath );
+                g_OCPNDrawEventHandler->SetPoint( m_pFoundOCPNPoint );
+                g_OCPNDrawEventHandler->PopupMenu( event.GetX(), event.GetY(), seltype );
+                
                 //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
                 bret = TRUE;
@@ -1674,7 +1678,7 @@ void ocpn_draw_pi::PopupMenuHandler(wxCommandEvent& ev)
 */
 	return;
 }
-
+/*
 void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
 {
     wxMenu* contextMenu = new wxMenu;
@@ -1687,82 +1691,7 @@ void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
 
     popx = x;
     popy = y;
-/*
-#ifdef __WXGTK__
-#ifdef ocpnUSE_GTK_OPTIMIZE
-    //  This code changes the background color on the popup context menu
-    wxColour back_color
-    GetGlobalColor( wxS("UIBCK"), &black_color );
-    GdkColor color;
 
-    color.red = back_color.Red() << 8;
-    color.green = back_color.Green() << 8;
-    color.blue = back_color.Blue() << 8;
-
-//    gtk_widget_modify_bg (GTK_WIDGET(contextMenu->m_menu), GTK_STATE_NORMAL, &color);
-#endif
-#endif
-
-    if( seltype == SELTYPE_PATHCREATE ) {
-        MenuAppend( contextMenu, ID_PATH_MENU_FINISH, _menuText( _( "End Path" ), _("Esc") ) );
-    }
-
-    if( undo->AnythingToUndo() ) {
-        wxString undoItem;
-        undoItem << _("Undo") << _T(" ") << undo->GetNextUndoableAction()->Description();
-        MenuPrepend( contextMenu, ID_UNDO, _menuText( undoItem, _T("Ctrl-Z") ) );
-    }
-
-    if( undo->AnythingToRedo() ) {
-        wxString redoItem;
-        redoItem << _("Redo") << _T(" ") << undo->GetNextRedoableAction()->Description();
-#ifdef __WXOSX__
-        MenuPrepend( contextMenu, ID_REDO, _menuText( redoItem, _T("Shift-Ctrl-Z") ) );
-#else
-        MenuPrepend( contextMenu, ID_REDO, _menuText( redoItem, _T("Ctrl-Y") ) );
-#endif
-    }
-
-    MenuAppend( contextMenu, ID_DEF_MENU_DROP_OCPNPOINT, _menuText( _( "Drop OCPN Point" ), _T("Shift-Ctrl-M") ) );
-
-    MenuAppend( contextMenu, ID_DEF_MENU_GOTOPOSITION, _("Center View...") );
-
-    bool full_toggle_added = false;
-    if(g_btouch){
-        MenuAppend( contextMenu, ID_DEF_MENU_TOGGLE_FULL, _("Toggle Full Screen") );
-        full_toggle_added = true;
-    }
-        
-    
-    if(!full_toggle_added){
-        if(gFrame->IsFullScreen()){
-            MenuAppend( contextMenu, ID_DEF_MENU_TOGGLE_FULL, _("Toggle Full Screen") );
-        }
-    }
-        
-    
-    Kml* kml = new Kml;
-    int pasteBuffer = kml->ParsePasteBuffer();
-    if( pasteBuffer != KML_PASTE_INVALID ) {
-        switch( pasteBuffer ) {
-            case KML_PASTE_OCPNPOINT: {
-                MenuAppend( contextMenu, ID_PASTE_OCPNPOINT, wxS( "Paste OCPNPoint" ) );
-                break;
-            }
-            case KML_PASTE_PATH: {
-                MenuAppend( contextMenu, ID_PASTE_PATH, wxS( "Paste Path" ) );
-                break;
-            }
-        }
-    }
-    delete kml;
-
-#ifdef __WXMSW__
-    //  If we dismiss the context menu without action, we need to discard some mouse events....
-    //  Eat the next 2 button events, which happen as down-up on MSW XP
-    g_click_stop = 2;
-#endif
-*/
     //  This is the default context menu
     menuFocus = contextMenu;
 
@@ -1831,9 +1760,62 @@ void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
     }
 
     //        Invoke the correct focused drop-down menu
-    //parent->PopupMenu( menuFocus, x, y );
     ocpncc1->PopupMenu( menuFocus, x, y );
-
+    
+    wxwxMenuItemListNode *node = menuFocus->GetMenuItems().GetFirst();
+    
+    while( node ) {
+        wxMenuItem *it = node->GetData();
+        int ti = it->GetId();
+        //switch( it->GetId() ) {
+        switch( ti ) {
+                case ID_PATH_MENU_PROPERTIES:
+                if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
+                    pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                
+                pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+                break;
+            case ID_PATH_MENU_INSERT:
+                // Insert new OCPN Point
+                m_pSelectedPath->InsertPointAfter( m_pFoundOCPNPoint, m_cursor_lat, m_cursor_lon );
+                
+                pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
+                pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                
+                pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
+                
+                m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
+                pOCPNDrawConfig->UpdatePath( m_pSelectedPath );
+                
+                if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
+                    pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+                }
+                
+                break;
+            case ID_PATH_MENU_DELETE:
+                break;
+            case ID_PATH_MENU_DEACTIVATE:
+                break;
+            case ID_PATH_MENU_ACTIVATE:
+                break;
+            case ID_OCPNPOINT_MENU_PROPERTIES:
+                if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
+                    pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                
+                pPathManagerDialog->OCPNPointShowPropertiesDialog( m_pFoundOCPNPoint, ocpncc1 );
+                break;
+            case ID_PATH_MENU_ACTPOINT:
+            case ID_PATH_MENU_ACTNXTPOINT:
+            case ID_PATH_MENU_REMPOINT:
+            case ID_OCPNPOINT_MENU_COPY:
+            case ID_PATH_MENU_DELPOINT:
+                break;
+        }
+        node = node->GetNext();
+    }
+    
+    
 
     // Cleanup
     if( ( m_pSelectedPath ) ) {
@@ -1853,30 +1835,7 @@ void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
     delete menuPath;
     delete menuOCPNPoint;
 }
-
-//-------------------------------------------------------------------------------
-//          Popup Menu Handling
-//-------------------------------------------------------------------------------
-
-void ocpn_draw_pi::MenuPrepend( wxMenu *menu, int id, wxString label)
-{
-    wxMenuItem *item = new wxMenuItem(menu, id, label);
-#ifdef __WXMSW__
-    wxFont *qFont = OCPNGetFont( wxS("Menu"), 0 );
-    item->SetFont(*qFont);
-#endif
-    menu->Prepend(item);
-}
-
-void ocpn_draw_pi::MenuAppend( wxMenu *menu, int id, wxString label)
-{
-    wxMenuItem *item = new wxMenuItem(menu, id, label);
-#ifdef __WXMSW__
-    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
-    item->SetFont(*qFont);
-#endif
-    menu->Append(item);
-}
+*/
 
 void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 {

@@ -166,3 +166,26 @@ int GetRandomNumber(int range_min, int range_max)
     return (int)u;
 }
 
+//-------------------------------------------------------------------------------
+//          Popup Menu Handling
+//-------------------------------------------------------------------------------
+
+void MenuPrepend( wxMenu *menu, int id, wxString label)
+{
+    wxMenuItem *item = new wxMenuItem(menu, id, label);
+    #ifdef __WXMSW__
+    wxFont *qFont = OCPNGetFont( wxS("Menu"), 0 );
+    item->SetFont(*qFont);
+    #endif
+    menu->Prepend(item);
+}
+
+void MenuAppend( wxMenu *menu, int id, wxString label)
+{
+    wxMenuItem *item = new wxMenuItem(menu, id, label);
+    #ifdef __WXMSW__
+    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
+    item->SetFont(*qFont);
+    #endif
+    menu->Append(item);
+}
