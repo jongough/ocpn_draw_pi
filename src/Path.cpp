@@ -619,12 +619,12 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
 
 void Path::ClearHighlights( void )
 {
-    OCPNPoint *prp = NULL;
+    OCPNPoint *pop = NULL;
     wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
 
     while( node ) {
-        prp = node->GetData();
-        if( prp ) prp->m_bPtIsSelected = false;
+        pop = node->GetData();
+        if( pop ) pop->m_bPtIsSelected = false;
         node = node->GetNext();
     }
 }
@@ -632,6 +632,23 @@ void Path::ClearHighlights( void )
 wxString Path::GetNewMarkSequenced( void )
 {
     wxString ret;
+    int num;
+    num = 0;
+    OCPNPoint *pop = NULL;
+    
+    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    while ( node ) {
+        pop = node->GetData();
+        wxString  sPointName = pop->GetName();
+        if ( sPointName.length() == 5 ){
+            if( sPointName.Left( 2 ) == wxT("NM") ) {
+                num = atoi(sPointName.Mid( 2, sPointName.length() ));
+                if( num >= m_nm_sequence ) m_nm_sequence = num + 1;
+            }
+        }
+        node = node->GetNext();
+    }
+
     ret.Printf( _T ( "NM%03d" ), m_nm_sequence );
     m_nm_sequence++;
 

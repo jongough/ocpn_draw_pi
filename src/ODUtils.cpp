@@ -30,6 +30,7 @@
 #include "wx/wxprec.h"
  
 #include "ODUtils.h"
+#include "ocpn_plugin.h"
 
 // This function parses a string containing a GPX time representation
 // and returns a wxDateTime containing the UTC corresponding to the

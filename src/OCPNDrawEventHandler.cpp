@@ -155,7 +155,7 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sTypeShort = wxT("OpenCPN ");
                 sTypeShort.append( m_pSelectedPath->m_sTypeString );
                 sTypeShort.append( wxT(" Delete") );
-                dlg_return = OCPNMessageBox( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
             
             if( dlg_return == wxID_YES ) {
@@ -177,6 +177,7 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 
                 // TODO implement UNDO
                 //m_parent->undo->InvalidateUndo();
+                RequestRefresh( m_parentcanvas );
                 
             }
             break;
@@ -229,7 +230,8 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
         }
         else {
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
-            wxString sType = wxS("Insert ");
+            wxString sType;
+            sType.append( wxS("Insert ") );
             sType.append(m_pSelectedPath->m_sTypeString);
             sType.append( wxT(" Point") );
             MenuAppend( menuPath, ID_PATH_MENU_INSERT, sType );
@@ -288,61 +290,6 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
     m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( OCPNDrawEventHandler::PopupMenuHandler ), NULL, this );
     m_parentcanvas->PopupMenu( menuFocus, x, y );
     m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( OCPNDrawEventHandler::PopupMenuHandler ), NULL, this );
-/*    
-    wxwxMenuItemListNode *node = menuFocus->GetMenuItems().GetFirst();
-    
-    while( node ) {
-        wxMenuItem *it = node->GetData();
-        int ti = it->GetId();
-        //switch( it->GetId() ) {
-        switch( ti ) {
-            case ID_PATH_MENU_PROPERTIES:
-                if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-                    pPathManagerDialog = new PathManagerDialog( ocpncc1 );
-                
-                pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
-                break;
-            case ID_PATH_MENU_INSERT:
-                // Insert new OCPN Point
-                m_pSelectedPath->InsertPointAfter( m_pFoundOCPNPoint, m_cursor_lat, m_cursor_lon );
-                
-                pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
-                pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
-                
-                pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-                pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
-                
-                m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
-                pOCPNDrawConfig->UpdatePath( m_pSelectedPath );
-                
-                if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
-                    pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
-                }
-                
-                break;
-            case ID_PATH_MENU_DELETE:
-                break;
-            case ID_PATH_MENU_DEACTIVATE:
-                break;
-            case ID_PATH_MENU_ACTIVATE:
-                break;
-            case ID_OCPNPOINT_MENU_PROPERTIES:
-                if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-                    pPathManagerDialog = new PathManagerDialog( ocpncc1 );
-                
-                pPathManagerDialog->OCPNPointShowPropertiesDialog( m_pFoundOCPNPoint, ocpncc1 );
-                break;
-            case ID_PATH_MENU_ACTPOINT:
-            case ID_PATH_MENU_ACTNXTPOINT:
-            case ID_PATH_MENU_REMPOINT:
-            case ID_OCPNPOINT_MENU_COPY:
-            case ID_PATH_MENU_DELPOINT:
-                break;
-        }
-        node = node->GetNext();
-    }
-    
-*/    
     
     // Cleanup
     if( ( m_pSelectedPath ) ) {
@@ -357,7 +304,7 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
     m_pFoundOCPNPoint = NULL;
     
     //m_pFoundOCPNPointSecond = NULL;
-    
+    menuFocus = NULL;
     delete contextMenu;
     delete menuPath;
     delete menuOCPNPoint;

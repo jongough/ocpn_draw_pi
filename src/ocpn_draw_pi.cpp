@@ -913,6 +913,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             pFindPathSeg = pOCPNSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
             // start           
             m_pFoundOCPNPoint = NULL;
+            m_pSelectedPath = NULL;
             if( pFindPP ) {
                 OCPNPoint *pFirstVizPoint = NULL;
                 OCPNPoint *pFoundActiveOCPNPoint = NULL;
@@ -954,7 +955,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
                     // Use path array to choose the appropriate path
                     // Give preference to any active path, otherwise select the first visible path in the array for this point
-                    m_pSelectedPath = NULL;
                     if( ppath_array ) {
                         for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                             Path *pp = (Path *) ppath_array->Item( ip );
