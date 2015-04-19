@@ -790,35 +790,3 @@ wxColour OCPNPoint::GetOCPNPointRangeRingsColour(void) {
         return m_wxcOCPNPointRangeRingsColour; 
 }
 
-//-------------------------------------------------------------------------
-//
-//          Static GPX Support Routines
-//
-//-------------------------------------------------------------------------
-bool OCPNPointIsInRouteList( OCPNPoint *pr )
-{
-    bool IsInList = false;
-
-    wxPathListNode *node1 = pPathList->GetFirst();
-    while( node1 ) {
-        Path *pPath = node1->GetData();
-        OCPNPointList *pOCPNPointList = pPath->pOCPNPointList;
-
-        wxOCPNPointListNode *node2 = pOCPNPointList->GetFirst();
-        OCPNPoint *prp;
-
-        while( node2 ) {
-            prp = node2->GetData();
-
-            if( pr->IsSame( prp ) ) {
-                IsInList = true;
-                break;
-            }
-
-            node2 = node2->GetNext();
-        }
-        node1 = node1->GetNext();
-    }
-    return IsInList;
-}
-

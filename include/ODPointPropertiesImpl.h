@@ -112,10 +112,9 @@ protected:
     void OnExtDescriptionClick( wxCommandEvent& event );
     void OnPointPropertiesOKClick( wxCommandEvent& event );
     void OnPointPropertiesCancelClick( wxCommandEvent& event );
+    void OnCopyPasteLatLon( wxCommandEvent& event );
     
     void SaveChanges();
-
-    void OnCopyPasteLatLon( wxCommandEvent& event );
     
     wxBitmapComboBox* m_bcomboBoxIcon;
 
@@ -129,7 +128,8 @@ public:
     void SetOCPNPoint( OCPNPoint *pOP );
     bool UpdateProperties( bool positionOnly = false );
     void SetDialogSize( void );
-
+    void ValidateMark( void );
+    
 private:
       OCPNPoint  *m_pOCPNPoint;
       double        m_lat_save;

@@ -45,6 +45,7 @@ class OCPNDrawEventHandler : public wxEvtHandler
         void SetPath( Path *path );
         void SetPoint ( OCPNPoint *point );
         void SetCanvas( ChartCanvas *canvas );
+        void SetLatLon( double lat, double lon );
         
     protected:
     private:
@@ -53,6 +54,8 @@ class OCPNDrawEventHandler : public wxEvtHandler
         int             popx, popy;
         Path            *m_pSelectedPath;
         OCPNPoint       *m_pFoundOCPNPoint;
+        double          m_cursor_lat;
+        double          m_cursor_lon;
         
         //DECLARE_EVENT_TABLE();
 };

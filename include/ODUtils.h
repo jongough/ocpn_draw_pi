@@ -23,10 +23,10 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
  
- #ifndef ODUTILS_H
- #define ODUTILS_H
+#ifndef ODUTILS_H
+#define ODUTILS_H
  
- #include "wx/wxprec.h"
+#include "wx/wxprec.h"
  
  const wxChar   *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime );
  wxString       GetUUID(void);

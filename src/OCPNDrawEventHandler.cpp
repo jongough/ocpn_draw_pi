@@ -33,7 +33,9 @@
 #include "ocpn_draw_pi.h"
 //#include "OCPNDrawCanvasMenuHandler.h"
 #include "OCPNSelect.h"
+#include "PathMan.h"
 #include "PathProp.h"
+#include "ODPointPropertiesImpl.h"
 #include "ODUtils.h"
 #include "chcanv.h"
 
@@ -44,7 +46,10 @@ extern OCPNDrawConfig  *pOCPNDrawConfig;
 extern PlugIn_ViewPort *g_pivp;
 extern ChartCanvas     *ocpncc1;
 extern PathProp       *pPathPropDialog;
+extern PathMan          *g_pPathMan;
+extern ODPointPropertiesImpl    *g_pODPointPropDialog;
 
+extern bool             g_bConfirmObjectDelete;
 // Event Handler implementation 
 /*
 BEGIN_EVENT_TABLE ( OCPNDrawEventHandler, wxEvtHandler ) 
@@ -85,6 +90,13 @@ void OCPNDrawEventHandler::SetCanvas( ChartCanvas* canvas )
     m_parentcanvas = canvas;
 }
 
+void OCPNDrawEventHandler::SetLatLon( double lat, double lon )
+{
+    m_cursor_lat = lat;
+    m_cursor_lon = lon;
+}
+
+
 OCPNDrawEventHandler::~OCPNDrawEventHandler()
 {
     //dtor
@@ -101,13 +113,11 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
     OCPNPoint *pLast;
     
     wxPoint r;
-    double zlat, zlon;
     
     //ocpncc1->GetCanvasPixPoint( popx, popy, zlat, zlon );
     wxPoint wxp;
     wxp.x = popx;
     wxp.y = popy;
-    GetCanvasLLPix( g_pivp, wxp, &zlat, &zlon );
     
     switch( event.GetId() )
     {            
@@ -119,7 +129,7 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         case ID_PATH_MENU_INSERT:
             // Insert new OCPN Point
-            m_pSelectedPath->InsertPointAfter( m_pFoundOCPNPoint, zlat, zlon );
+            m_pSelectedPath->InsertPointAfter( m_pFoundOCPNPoint, m_cursor_lat, m_cursor_lon );
             
             pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
             pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
@@ -136,7 +146,41 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             break;
         case ID_PATH_MENU_DELETE:
+            int dlg_return;
+            dlg_return = wxID_YES;
+            if( g_bConfirmObjectDelete ) {
+                wxString sTypeLong = wxT("Are you sure you want to delete this ");
+                sTypeLong.append( m_pSelectedPath->m_sTypeString );
+                sTypeLong.append( wxT("?") );
+                wxString sTypeShort = wxT("OpenCPN ");
+                sTypeShort.append( m_pSelectedPath->m_sTypeString );
+                sTypeShort.append( wxT(" Delete") );
+                dlg_return = OCPNMessageBox( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            }
+            
+            if( dlg_return == wxID_YES ) {
+                if( g_pPathMan->GetpActivePath() == m_pSelectedPath ) g_pPathMan->DeactivatePath( m_pSelectedPath );
+                
+                if( !g_pPathMan->DeletePath( m_pSelectedPath ) )
+                    break;
+                if( pPathPropDialog && ( pPathPropDialog->IsShown()) && (m_pSelectedPath == pPathPropDialog->GetPath()) ) {
+                    pPathPropDialog->Hide();
+                }
+                
+                if( pPathManagerDialog && pPathManagerDialog->IsShown() )
+                    pPathManagerDialog->UpdatePathListCtrl();
+                
+                if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+                    g_pODPointPropDialog->ValidateMark();
+                    g_pODPointPropDialog->UpdateProperties();
+                }
+                
+                // TODO implement UNDO
+                //m_parent->undo->InvalidateUndo();
+                
+            }
             break;
+            
         case ID_PATH_MENU_DEACTIVATE:
             break;
         case ID_PATH_MENU_ACTIVATE:

@@ -144,7 +144,7 @@ extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
 //extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
-extern ODPointPropertiesImpl *pODPointPropDialog;
+extern ODPointPropertiesImpl *g_pODPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern OCPNSelect           *pOCPNSelect;
 extern double           g_dLat, g_dLon;
@@ -1428,12 +1428,12 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
 // TODO (jon#1#): May need to show OCPNPoint properties dialog here
     // There is one global instance of the MarkProp Dialog
     
-    if( NULL == pODPointPropDialog )
-        pODPointPropDialog = new ODPointPropertiesImpl( parent );
+    if( NULL == g_pODPointPropDialog )
+        g_pODPointPropDialog = new ODPointPropertiesImpl( parent );
 
-    pODPointPropDialog->SetOCPNPoint( wp );
-    pODPointPropDialog->SetDialogSize();
-    pODPointPropDialog->UpdateProperties();
+    g_pODPointPropDialog->SetOCPNPoint( wp );
+    g_pODPointPropDialog->SetDialogSize();
+    g_pODPointPropDialog->UpdateProperties();
 
     wxString caption( wxS("") );
     if ( wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
@@ -1446,10 +1446,10 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
         caption.append( wxS(", Layer: ") );
         caption.Append( GetLayerName( wp->m_LayerID ) );
     }
-    pODPointPropDialog->SetTitle( caption );
+    g_pODPointPropDialog->SetTitle( caption );
 
-    if( !pODPointPropDialog->IsShown() )
-        pODPointPropDialog->Show();
+    if( !g_pODPointPropDialog->IsShown() )
+        g_pODPointPropDialog->Show();
 
 }
 

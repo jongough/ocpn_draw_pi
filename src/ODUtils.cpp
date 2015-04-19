@@ -189,3 +189,4 @@ void MenuAppend( wxMenu *menu, int id, wxString label)
     #endif
     menu->Append(item);
 }
+

@@ -142,11 +142,12 @@ bool PathMan::DeactivatePath( Path *pPathToDeactivate )
 bool PathMan::DeletePath( Path *pPath )
 {
     if( pPath ) {
-        ::wxBeginBusyCursor();
 
         if( pPath->m_bIsInLayer )
             return false;
             
+        ::wxBeginBusyCursor();
+
         pOCPNDrawConfig->DeleteConfigPath( pPath );
 
         //    Remove the path from associated lists

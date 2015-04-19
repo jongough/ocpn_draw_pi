@@ -38,16 +38,15 @@
 #include "BoundaryProp.h"
 #include "Path.h"
 #include "PathMan.h"
+#include "pathmanagerdialog.h"
 #include "PointMan.h"
 #include "OCPNDrawConfig.h"
-#include "OCPNPoint.h"
-#include "multiplexer.h"
-#include "OCPNSelect.h"
-#include "pathmanagerdialog.h"
-#include "OCPNDrawPropertiesImpl.h"
-#include "ODPointPropertiesImpl.h"
 #include "OCPNDrawEventHandler.h"
-#include "OCPNDrawCanvasMenuHandler.h"
+#include "OCPNDrawPropertiesImpl.h"
+#include "OCPNDrawicons.h"
+#include "OCPNPoint.h"
+#include "OCPNSelect.h"
+#include "ODPointPropertiesImpl.h"
 #include "ODUtils.h"
 #include "chcanv.h"
 #include "Layer.h"
@@ -56,6 +55,7 @@
 #include "geodesic.h"
 #include "FontMgr.h"
 #include "IDX_entry.h"
+#include "multiplexer.h"
 #include "wx/stdpaths.h"
 #include <wx/timer.h>
 #include <wx/event.h>
@@ -84,8 +84,6 @@ static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)
 #endif
 
-#include "OCPNDrawicons.h"
-#include <OCPNDrawCanvasMenuHandler.h>
 
 ocpn_draw_pi    *g_ocpn_draw_pi;
 PathList        *pPathList;
@@ -106,8 +104,8 @@ PathMan          *g_pPathMan;
 wxString         g_default_OCPNPoint_icon;
 PathProp       *pPathPropDialog;
 PathManagerDialog *pPathManagerDialog;
-ODPointPropertiesImpl *pODPointPropDialog;
-OCPNDrawPropertiesImpl *pOCPNDrawPropDialog;
+ODPointPropertiesImpl *g_pODPointPropDialog;
+OCPNDrawPropertiesImpl *g_pOCPNDrawPropDialog;
 PlugInManager       *g_OD_pi_manager;
 ocpnStyle::StyleManager* g_ODStyleManager;
 BoundaryList              *pBoundaryList;
@@ -166,6 +164,7 @@ IDX_entry          *gpIDX;
 
 wxString g_locale;
 int      g_click_stop;
+bool             g_bConfirmObjectDelete;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -516,16 +515,16 @@ int ocpn_draw_pi::GetToolbarToolCount(void)
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
 	//dlgShow = false;
-    if( NULL == pOCPNDrawPropDialog )
-        pOCPNDrawPropDialog = new OCPNDrawPropertiesImpl( parent );
+    if( NULL == g_pOCPNDrawPropDialog )
+        g_pOCPNDrawPropDialog = new OCPNDrawPropertiesImpl( parent );
 
-    pOCPNDrawPropDialog->SetDialogSize();
-    pOCPNDrawPropDialog->UpdateProperties();
+    g_pOCPNDrawPropDialog->SetDialogSize();
+    g_pOCPNDrawPropDialog->UpdateProperties();
 
-    pOCPNDrawPropDialog->ShowModal();
+    g_pOCPNDrawPropDialog->ShowModal();
 
-    pOCPNDrawPropDialog->Destroy();
-    pOCPNDrawPropDialog = NULL;
+    g_pOCPNDrawPropDialog->Destroy();
+    g_pOCPNDrawPropDialog = NULL;
 
 }
 
@@ -669,6 +668,9 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "UserMagVariation" ), &umv );
         if(umv.Len())
             umv.ToDouble( &g_UserVar );
+        
+        // TODO implement this into the prefereces
+        g_bConfirmObjectDelete = TRUE;
 
     }
     
@@ -1035,6 +1037,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_OCPNDrawEventHandler->SetCanvas( ocpncc1 );
                 g_OCPNDrawEventHandler->SetPath( m_pSelectedPath );
                 g_OCPNDrawEventHandler->SetPoint( m_pFoundOCPNPoint );
+                g_OCPNDrawEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
                 g_OCPNDrawEventHandler->PopupMenu( event.GetX(), event.GetY(), seltype );
                 
                 //RequestRefresh( m_parent_window );
