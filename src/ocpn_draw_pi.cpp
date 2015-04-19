@@ -920,8 +920,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 OCPNPoint *pFoundVizOCPNPoint = NULL;
                 Path *pSelectedActivePath = NULL;
                 Path *pSelectedVizPath = NULL;
-                //Boundary *pSelectedActiveBoundary = NULL;
-                //Boundary *pSelectedVizBoundary = NULL;
 
                 //There is at least one OCPNpoint, so get the whole list
                 SelectableItemList SelList = pOCPNSelect->FindSelectionList( slat, slon,
