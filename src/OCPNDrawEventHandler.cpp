@@ -48,6 +48,8 @@ extern ChartCanvas     *ocpncc1;
 extern PathProp       *pPathPropDialog;
 extern PathMan          *g_pPathMan;
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
+extern bool             g_bSelectedPathEdit;
+extern Path             *g_PathToEdit;
 
 extern bool             g_bConfirmObjectDelete;
 // Event Handler implementation 
@@ -127,6 +129,12 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
             pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            break;
+        case ID_PATH_MENU_EDIT:
+            g_bSelectedPathEdit = TRUE;
+            m_pSelectedPath->m_bIsBeingEdited = TRUE;
+            g_PathToEdit = m_pSelectedPath;
+            g_ocpn_draw_pi->m_bPathEditing = TRUE;
             break;
         case ID_PATH_MENU_INSERT:
             // Insert new OCPN Point
@@ -214,6 +222,10 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             break;
         }
+        case ID_OCPNPOINT_MENU_EDIT:
+            m_pFoundOCPNPoint->m_bIsBeingEdited = TRUE;
+            g_ocpn_draw_pi->m_bOCPNPointEditing = TRUE;
+            break;
         case ID_OCPNPOINT_MENU_COPY:
             break;
         case ID_PATH_MENU_DELPOINT: {
@@ -269,6 +281,10 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
         else {
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
+            sType.append( wxS("Edit ") );
+            sType.append(m_pSelectedPath->m_sTypeString);
+            MenuAppend( menuPath, ID_PATH_MENU_EDIT, sType );
+            sType.clear();
             sType.append( wxS("Insert ") );
             sType.append(m_pSelectedPath->m_sTypeString);
             sType.append( wxT(" Point") );
@@ -297,6 +313,11 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
         }
         else {
             MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            wxString sType;
+            sType.append( wxS("Move ") );
+            sType.append(m_pFoundOCPNPoint->m_sTypeString);
+            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_EDIT, sType );
+
             if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
                 if(m_pSelectedPath->m_pPathActivePoint != m_pFoundOCPNPoint )
                     MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );

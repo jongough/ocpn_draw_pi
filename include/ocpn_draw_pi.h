@@ -68,12 +68,14 @@
 enum
 {
     ID_OCPNPOINT_MENU_GOTO = 1,
+    ID_OCPNPOINT_MENU_EDIT,
     ID_OCPNPOINT_MENU_DELPOINT,
     ID_OCPNPOINT_MENU_PROPERTIES,
     ID_OCPNPOINT_MENU_COPY,
 
     ID_PATH_MENU_ACTIVATE,
     ID_PATH_MENU_DEACTIVATE,
+    ID_PATH_MENU_EDIT,
     ID_PATH_MENU_INSERT,
     ID_PATH_MENU_APPEND,
     ID_PATH_MENU_COPY,
@@ -138,7 +140,9 @@ public:
     bool			eventsEnabled;
     int             m_iCallerId;
     bool            m_bBoundaryEditing;
-
+    bool            m_bPathEditing;
+    bool            m_bOCPNPointEditing;
+    
 
     //    The required PlugIn Methods
     int Init(void);
@@ -255,7 +259,7 @@ public:
     int         nBlinkerTick;
     
     void    appendOSDirSlash(wxString* pString);  
-
+    
 
 private:
     void    OnTimer(wxTimerEvent& ev);
@@ -287,6 +291,7 @@ private:
     ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;
+    OCPNPoint   *m_pEditOCPNPoint;
     
     bool        m_bDrawingBoundary;
     

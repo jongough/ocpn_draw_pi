@@ -126,6 +126,7 @@ public:
 	/** Constructor */
 	ODPointPropertiesImpl( wxWindow* parent );
     void SetOCPNPoint( OCPNPoint *pOP );
+    OCPNPoint *GetOCPNPoint( void ) { return m_pOCPNPoint; }
     bool UpdateProperties( bool positionOnly = false );
     void SetDialogSize( void );
     void ValidateMark( void );
