@@ -25,6 +25,15 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ***************************************************************************
 */
+#define DEBUG_BUILD
+#ifdef DEBUG_BUILD
+#  define DEBUG(x) do { \
+time_t now = time(0); \
+tm* localtm = localtime(&now); \
+std::cout << asctime(localtm) << x << std::endl; } while (0)
+#else
+#  define DEBUG(x) do {} while (0)
+#endif
 //#define _2_9_x_ // uncomment this to compile for 2.9.x
 
 #ifndef  WX_PRECOMP
@@ -721,6 +730,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
 {
     bool bret = FALSE;
+
     if( event.GetKeyCode() < 128 )            //ascii
     {
         int key_char = event.GetKeyCode();
@@ -770,9 +780,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     bool bret = FALSE;
     bool bRefresh = FALSE;
 
-        //    Route Creation Rubber Banding
-
-    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 ) {
+    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bOCPNPointEditing) {
         ocpncc1->SetCursor( *pCurrentCursor );
         bRefresh = TRUE;
     }
@@ -788,18 +796,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 //        RequestRefresh( m_parent_window );
     }
 
-    if( m_bPathEditing ) {
-        pCurrentCursor = ocpncc1->pCursorCross;
-        bRefresh = TRUE;
-        bret = FALSE;
-    }
-    
-    if ( m_bOCPNPointEditing ) {
-        pCurrentCursor = ocpncc1->pCursorCross;
-        bRefresh = TRUE;
-        bret = FALSE;
-    }
-    
     if ( event.LeftDown() ) {
         if( m_iCallerId == m_leftclick_boundary_id ) {
             if (nBoundary_State > 0 )
@@ -953,6 +949,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             pOCPNDrawConfig->UpdateOCPNPoint( m_pFoundOCPNPoint );
             pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
             
+            bret = TRUE;
+            
         }
     }
   
@@ -967,7 +965,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bRefresh = TRUE;
                 bret = TRUE;
             }
-*/            if( m_pEditOCPNPoint ) {
+*/            
+            if( m_pEditOCPNPoint ) {
                 pCurrentCursor = ocpncc1->pCursorCross;
                 m_pEditOCPNPoint->m_lat = m_cursor_lat;
                 m_pEditOCPNPoint->m_lon = m_cursor_lon;
@@ -981,16 +980,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 if( g_pODPointPropDialog && m_pEditOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                 
                 bRefresh = TRUE;
-                bret = TRUE;
+                bret = FALSE;
+                event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
             }
             
             if ( m_bOCPNPointEditing ) {
                 m_pFoundOCPNPoint->m_lat = m_cursor_lat;
                 m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                
                 if ( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                 
                 bRefresh = TRUE;
-                bret = TRUE;
+                bret = FALSE;
+                event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
             }
             
         }
@@ -1244,8 +1246,8 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 {
     m_vp = vp;
     ocpnDC ocpnmdc( *pmdc );
-
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0) {
+    
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
 
@@ -1261,8 +1263,8 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
     llbb.SetMax( pivp->lon_max, pivp->lat_max );
-
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 ) {
+    
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
     
@@ -1280,8 +1282,8 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     g_pivp = pivp;
 
     g_pDC = new ocpnDC();
-
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0) {
+    
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
 

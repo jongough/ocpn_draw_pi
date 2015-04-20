@@ -248,6 +248,7 @@ public:
     bool           m_disable_edge_pan;
     double      m_lat, m_lon;
     double      m_pixx, m_pixy;
+    wxPoint     m_cursorPoint;
     
     Undo        *undo;
     

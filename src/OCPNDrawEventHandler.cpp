@@ -281,8 +281,9 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
         else {
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
-            sType.append( wxS("Edit ") );
+            sType.append( wxS("Move ") );
             sType.append(m_pSelectedPath->m_sTypeString);
+            sType.append( wxS(" Point") );
             MenuAppend( menuPath, ID_PATH_MENU_EDIT, sType );
             sType.clear();
             sType.append( wxS("Insert ") );

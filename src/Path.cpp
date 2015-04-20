@@ -632,7 +632,7 @@ void Path::ClearHighlights( void )
 wxString Path::GetNewMarkSequenced( void )
 {
     wxString ret;
-    int num;
+    long num;
     num = 0;
     OCPNPoint *pop = NULL;
     
@@ -642,7 +642,7 @@ wxString Path::GetNewMarkSequenced( void )
         wxString  sPointName = pop->GetName();
         if ( sPointName.length() == 5 ){
             if( sPointName.Left( 2 ) == wxT("NM") ) {
-                num = atoi(sPointName.Mid( 2, sPointName.length() ));
+                sPointName.Mid( 2, sPointName.length() ).ToLong( &num );
                 if( num >= m_nm_sequence ) m_nm_sequence = num + 1;
             }
         }
