@@ -106,7 +106,7 @@ SET(HDRS
  		include/ODPointPropertiesImpl.h
  		include/ODPositionParser.h
 # 		include/ODUndo.h
- 		include/glOCPNDrawChartCanvas.h
+# 		include/glOCPNDrawChartCanvas.h
  		include/ODUtils.h
  		include/ODvector2D.h
 # 		include/RoutePoint.h
