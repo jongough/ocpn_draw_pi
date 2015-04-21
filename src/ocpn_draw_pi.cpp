@@ -98,7 +98,6 @@ ocpn_draw_pi            *g_ocpn_draw_pi;
 PathList                *pPathList;
 PointMan                *pOCPNPointMan;
 bool                    g_bODIsNewLayer;
-bool                    g_bSelectedPathEdit;
 int                     g_ODLayerIdx;
 int                     g_path_line_width;
 wxString                g_OD_default_wp_icon;
@@ -306,7 +305,6 @@ int ocpn_draw_pi::Init(void)
 	m_bBoundaryEditing = false;
     m_bPathEditing = false;
     m_bOCPNPointEditing = false;
-    g_bSelectedPathEdit = false;
     nBoundary_State = 0;
     nConfig_State = 0;
     m_pMouseBoundary = NULL;
@@ -833,15 +831,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if( m_bPathEditing ) {
             m_bPathEditing = FALSE;
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
-    /*        pOCPNDrawConfig->UpdatePath( m_pSelectedPath );
-            
-            if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
-                pPathPropDialog->SetPathAndUpdate( m_pSelectedPath );
-            }
-            pOCPNSelect->UpdateSelectablePathSegments( m_pEditOCPNPoint );
-    */        
             if( m_pEditOCPNPoint ) {
-                pOCPNSelect->UpdateSelectablePathSegments( m_pEditOCPNPoint );
+                //pOCPNSelect->UpdateSelectablePathSegments( m_pEditOCPNPoint );
+                pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
+                pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
                 m_pEditOCPNPoint->m_bBlink = false;
                 m_pEditOCPNPoint->m_bIsBeingEdited = false;
             }
@@ -869,7 +864,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bRefresh = TRUE;
             }
             
-            //    Update the BoundaryProperties Dialog, if currently shown
+            //    Update the PathProperties Dialog, if currently shown
             if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) {
                 if( m_pSelectedPath->pOCPNPointList ) {
                     for( unsigned int ip = 0; ip < m_pSelectedPath->pOCPNPointList->GetCount(); ip++ ) {
@@ -885,72 +880,27 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             // TODO reimplement undo
             //undo->AfterUndoableAction( m_pRoutePointEditTarget );
-
+            m_pSelectedPath = NULL;
             m_pEditOCPNPoint = NULL;
             pCurrentCursor = ocpncc1->pCursorArrow;
             bRefresh = TRUE;
             bret = TRUE;
-            
-        /*	else
-            if( m_bBoundaryEditing ) {            // End of RoutePoint drag
-                if( m_pOCPNPointEditTarget ) {
-                pOCPNSelect->UpdateSelectablePathSegments( m_pOCPNPointEditTarget );
-                m_pOCPNPointEditTarget->m_bBlink = false;
-                
-                if( m_pEditBoundaryArray ) {
-                    for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
-                    Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
-                    if( g_pPathMan->IsBoundaryValid(pb) ) {
-                        pb->FinalizeForRendering();
-                        pb->UpdateSegmentDistances();
-                        pb->m_bIsBeingEdited = false;
-
-                        pOCPNDrawConfig->UpdatePath( pb );
-                        
-                        pb->SetHiLite( 0 );
-                    }
-                    }
-                    Refresh( false );
-                }
-
-                //    Update the BoundaryProperties Dialog, if currently shown
-                if( ( NULL != pBoundaryPropDialog ) && ( pBoundaryPropDialog->IsShown() ) ) {
-                    if( m_pEditBoundaryArray ) {
-                    for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
-                        Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
-                        if( g_pPathMan->IsBoundaryValid(pb) ) {
-                        pBoundaryPropDialog->SetBoundaryAndUpdate( pb, true );
-                        }
-                    }
-                    }
-                }
-
-                m_pOCPNPointEditTarget->m_bPtIsSelected = false;
-                m_pOCPNPointEditTarget->m_bIsBeingEdited = false;
-                
-                delete m_pEditBoundaryArray;
-                m_pEditBoundaryArray = NULL;
-                undo->AfterUndoableAction( m_pRoutePointEditTarget );
-                }
-
-                InvalidateGL();
-                m_bBoundaryEditing = false;
-                m_pRoutePointEditTarget = NULL;
-                if( !g_FloatingToolbarDialog->IsShown() ) gFrame->SurfaceToolbar();
-            }
-    */
         }
         if( m_bOCPNPointEditing ) {
             m_bOCPNPointEditing = FALSE;
             m_pFoundOCPNPoint->m_bIsBeingEdited = FALSE;
             pCurrentCursor = ocpncc1->pCursorArrow;
+            pOCPNSelect->DeleteSelectableOCPNPoint( m_pFoundOCPNPoint );
+            pOCPNSelect->AddSelectableOCPNPoint( m_cursor_lat, m_cursor_lon, m_pFoundOCPNPoint );
             bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
             pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
             pOCPNDrawConfig->UpdateOCPNPoint( m_pFoundOCPNPoint );
             pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
+
+            m_pSelectedPath = NULL;
+            m_pEditOCPNPoint = NULL;
             
             bret = TRUE;
-            
         }
     }
   

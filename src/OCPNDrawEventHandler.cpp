@@ -48,7 +48,6 @@ extern ChartCanvas     *ocpncc1;
 extern PathProp       *pPathPropDialog;
 extern PathMan          *g_pPathMan;
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
-extern bool             g_bSelectedPathEdit;
 extern Path             *g_PathToEdit;
 
 extern bool             g_bConfirmObjectDelete;
@@ -130,8 +129,7 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             break;
-        case ID_PATH_MENU_EDIT:
-            g_bSelectedPathEdit = TRUE;
+        case ID_PATH_MENU_MOVE_POINT:
             m_pSelectedPath->m_bIsBeingEdited = TRUE;
             g_PathToEdit = m_pSelectedPath;
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
@@ -284,7 +282,7 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
             sType.append( wxS("Move ") );
             sType.append(m_pSelectedPath->m_sTypeString);
             sType.append( wxS(" Point") );
-            MenuAppend( menuPath, ID_PATH_MENU_EDIT, sType );
+            MenuAppend( menuPath, ID_PATH_MENU_MOVE_POINT, sType );
             sType.clear();
             sType.append( wxS("Insert ") );
             sType.append(m_pSelectedPath->m_sTypeString);
