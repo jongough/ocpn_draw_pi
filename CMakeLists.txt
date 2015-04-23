@@ -89,33 +89,20 @@ SET(HDRS
  		include/PathMan.h
  		include/pathmanagerdialog.h
  		include/PathProp.h
-# 		include/LinkPropDlg.h
-# 		include/Layer.h
  		include/Path.h
  		include/OCPNPoint.h
  		include/OCPNDrawConfig.h
  		include/OCPNDrawEventHandler.h
  		include/OCPNDrawNavObjectChanges.h
-# 		include/OCPNDrawCanvasMenuHandler.h
  		include/OCPNDrawPropertiesDialog.h
  		include/OCPNDrawPropertiesImpl.h
-# 		include/OCPNDrawPointInfoImpl.h
-#        include/ODHelper.h
-#        incluse/ODIcons.h
  		include/ODPointPropertiesDialog.h
  		include/ODPointPropertiesImpl.h
  		include/ODPositionParser.h
 # 		include/ODUndo.h
-# 		include/glOCPNDrawChartCanvas.h
  		include/ODUtils.h
  		include/ODvector2D.h
-# 		include/RoutePoint.h
-# 		include/ocpn_types.h
-# 		include/navutil.h
-# 		include/Route.h
-# 		include/navutil.h
  		include/OCPNDrawicons.h
-# 		include/chcanv.h
 		include/version.h
         	include/wx/json_defs.h
        		include/wx/jsonreader.h
@@ -125,27 +112,16 @@ SET(HDRS
 
 SET(OCPNSRC 
 		ocpnsrc/bbox.cpp
-#		ocpnsrc/chart1.cpp
-#		ocpnsrc/chcanv.cpp
 		ocpnsrc/cutil.cpp
 		ocpnsrc/FontDesc.cpp
 		ocpnsrc/FontMgr.cpp
 		ocpnsrc/geodesic.cpp
 		ocpnsrc/georef.cpp
-#		ocpnsrc/glChartCanvas.cpp
 		ocpnsrc/Hyperlink.cpp
 		ocpnsrc/Layer.cpp
-#		ocpnsrc/navutil.cpp
         ocpnsrc/ocpndc.cpp
-#		ocpnsrc/OCPNRegion.cpp
-#		ocpnsrc/OCPNPlatform.cpp
-#		ocpnsrc/pluginmanager.cpp
         ocpnsrc/pugixml.cpp
-#		ocpnsrc/Route.cpp
 		ocpnsrc/SelectItem.cpp
-#		ocpnsrc/undo.cpp
-#		ocpnsrc/viewport.cpp
-#		ocpnsrc/nmea0183/nmea0183.cpp
 )
 #SET(OCPNHDRS
 #		ocpninclude/RoutePoint.h

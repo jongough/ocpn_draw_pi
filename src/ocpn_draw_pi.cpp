@@ -309,7 +309,7 @@ int ocpn_draw_pi::Init(void)
     nConfig_State = 0;
     m_pMouseBoundary = NULL;
     m_bDrawingBoundary = NULL;
-    m_pEditOCPNPoint = NULL;
+    m_pFoundOCPNPoint = NULL;
     gVar = NAN;
 
     // Drawing modes from toolbar
@@ -807,11 +807,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
         } else if( m_bPathEditing ) {
             pCurrentCursor = ocpncc1->pCursorCross;
-            if( !m_pEditOCPNPoint ) {
+            if( !m_pFoundOCPNPoint ) {
                 SelectItem *pFindPP;
                 pFindPP = pOCPNSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
                 if( pFindPP ) {
-                    m_pEditOCPNPoint = (OCPNPoint *)pFindPP->m_pData1;
+                    m_pFoundOCPNPoint = (OCPNPoint *)pFindPP->m_pData1;
                 }
                 bret = TRUE;
             }
@@ -828,17 +828,17 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if (m_iCallerId == m_leftclick_boundary_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
             bret = true;
         }
-        if( m_bPathEditing ) {
+        if( m_bPathEditing || ( m_bOCPNPointEditing && m_pSelectedPath )) {
             m_bPathEditing = FALSE;
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
-            if( m_pEditOCPNPoint ) {
-                //pOCPNSelect->UpdateSelectablePathSegments( m_pEditOCPNPoint );
+            if( m_pFoundOCPNPoint ) {
+                //pOCPNSelect->UpdateSelectablePathSegments( m_pFoundOCPNPoint );
                 pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
                 pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
                 pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
                 pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
-                m_pEditOCPNPoint->m_bBlink = false;
-                m_pEditOCPNPoint->m_bIsBeingEdited = false;
+                m_pFoundOCPNPoint->m_bBlink = false;
+                m_pFoundOCPNPoint->m_bIsBeingEdited = false;
             }
             
             m_pSelectedPath->FinalizeForRendering();
@@ -881,12 +881,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             // TODO reimplement undo
             //undo->AfterUndoableAction( m_pRoutePointEditTarget );
             m_pSelectedPath = NULL;
-            m_pEditOCPNPoint = NULL;
+            m_pFoundOCPNPoint = NULL;
             pCurrentCursor = ocpncc1->pCursorArrow;
             bRefresh = TRUE;
             bret = TRUE;
-        }
-        if( m_bOCPNPointEditing ) {
+        } else if( m_bOCPNPointEditing ) {
             m_bOCPNPointEditing = FALSE;
             m_pFoundOCPNPoint->m_bIsBeingEdited = FALSE;
             pCurrentCursor = ocpncc1->pCursorArrow;
@@ -898,7 +897,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
 
             m_pSelectedPath = NULL;
-            m_pEditOCPNPoint = NULL;
+            m_pFoundOCPNPoint = NULL;
             
             bret = TRUE;
         }
@@ -906,35 +905,33 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
   
     if( event.Dragging() ) {
         if( event.LeftIsDown() ) {
-/*            if( m_pEditOCPNPoint ) {
+/*            if( m_pFoundOCPNPoint ) {
                 pCurrentCursor = ocpncc1->pCursorCross;
-                m_pEditOCPNPoint->m_lat = m_cursor_lat;
-                m_pEditOCPNPoint->m_lon = m_cursor_lon;
-                //pOCPNSelect->UpdateSelectablePathSegments(m_pEditOCPNPoint );
-                if( g_pODPointPropDialog && m_pEditOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                //pOCPNSelect->UpdateSelectablePathSegments(m_pFoundOCPNPoint );
+                if( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                 bRefresh = TRUE;
                 bret = TRUE;
             }
 */            
-            if( m_pEditOCPNPoint ) {
+            if( m_pFoundOCPNPoint && m_bPathEditing ) {
                 pCurrentCursor = ocpncc1->pCursorCross;
-                m_pEditOCPNPoint->m_lat = m_cursor_lat;
-                m_pEditOCPNPoint->m_lon = m_cursor_lon;
-                pOCPNSelect->UpdateSelectablePathSegments( m_pEditOCPNPoint );
+                m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                pOCPNSelect->UpdateSelectablePathSegments( m_pFoundOCPNPoint );
                 m_pSelectedPath->FinalizeForRendering();
                 m_pSelectedPath->UpdateSegmentDistances();
                 m_pSelectedPath->SetHiLite( 0 );
                 
                 //    Update the PathProperties Dialog, if currently shown
                 if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) pPathPropDialog->UpdateProperties( m_pSelectedPath );
-                if( g_pODPointPropDialog && m_pEditOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                if( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                 
                 bRefresh = TRUE;
                 bret = FALSE;
                 event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
-            }
-            
-            if ( m_bOCPNPointEditing ) {
+            } else if ( m_bOCPNPointEditing ) {
                 m_pFoundOCPNPoint->m_lat = m_cursor_lat;
                 m_pFoundOCPNPoint->m_lon = m_cursor_lon;
                 

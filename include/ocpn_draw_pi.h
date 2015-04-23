@@ -292,7 +292,6 @@ private:
     ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;
-    OCPNPoint   *m_pEditOCPNPoint;
     
     bool        m_bDrawingBoundary;
     

@@ -708,29 +708,30 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
     }
 }
 
-void Path::RemovePoint( OCPNPoint *rp, bool bRenamePoints )
+void Path::RemovePoint( OCPNPoint *op, bool bRenamePoints )
 {
     pOCPNSelect->DeleteAllSelectableOCPNPoints( this );
     pOCPNSelect->DeleteAllSelectablePathSegments( this );
 
-    pOCPNPointList->DeleteObject( rp );
-    if( wxNOT_FOUND != OCPNPointGUIDList.Index( rp->m_GUID ) ) OCPNPointGUIDList.Remove(
-            rp->m_GUID );
+    pOCPNPointList->DeleteObject( op );
+    if( wxNOT_FOUND != OCPNPointGUIDList.Index( op->m_GUID ) ) OCPNPointGUIDList.Remove(
+            op->m_GUID );
     m_nPoints -= 1;
 
     // check all other routes to see if this point appears in any other route
-//    Route *pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint( rp );
+    Path *pcontainer_path = g_pPathMan->FindPathContainingOCPNPoint( op );
 
-//    if( pcontainer_route == NULL ) {
-        rp->m_bIsInPath = false;          // Take this point out of this (and only) route
-//        rp->m_bDynamicName = false;
-//        rp->m_bIsolatedMark = true;        // This has become an isolated mark
-//    }
+    if( pcontainer_path == NULL ) {
+        op->m_bIsInPath = false;          // Take this point out of this (and only) route
+        op->m_bDynamicName = false;
+        op->m_bIsolatedMark = true;        // This has become an isolated mark
+        op->SetTypeString (wxT("Point") );
+        pOCPNDrawConfig->AddNewOCPNPoint( op );
+    }
 
     if( bRenamePoints ) RenameOCPNPoints();
 
-//      if ( m_nPoints > 1 )
-    {
+    if ( m_nPoints > 1 ) {
         pOCPNSelect->AddAllSelectablePathSegments( this );
         pOCPNSelect->AddAllSelectableOCPNPoints( this );
 
@@ -1054,7 +1055,8 @@ OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
-
+    newpoint->SetTypeString( wxT("Boundary Point") );
+    
     int nRP = pOCPNPointList->IndexOf( pRP );
     if ( nRP == 0 ) {
         pOCPNPointList->Insert( pOCPNPointList->GetCount() - 1, newpoint );
@@ -1087,6 +1089,7 @@ OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, boo
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
+    newpoint->SetTypeString( wxT("Boundary Point") );
     
     pOCPNPointList->Insert( nOP, newpoint );
     
@@ -1106,8 +1109,8 @@ OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, boo
 void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
 {
     //  Rebuild the route selectables
-    pOCPNSelect->DeleteAllSelectableOCPNPoints( path );
-    pOCPNSelect->DeleteAllSelectablePathSegments( path );
+    //pOCPNSelect->DeleteAllSelectableOCPNPoints( path );
+    //pOCPNSelect->DeleteAllSelectablePathSegments( path );
 
     path->RemovePoint( point );
 
@@ -1116,7 +1119,8 @@ void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
         pOCPNDrawConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );
         path = NULL;
-    }
+    } 
+    
     //  Add this point back into the selectables
     pOCPNSelect->AddSelectableOCPNPoint( point->m_lat, point->m_lon, point );
 

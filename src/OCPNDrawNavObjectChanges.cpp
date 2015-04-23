@@ -1143,7 +1143,21 @@ int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_laye
 void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
 {
     Path * path = PathExists( pTentPath->m_GUID );
+    int nNewPoints = pTentPath->GetnPoints();
+    int nOrigPoints = path->GetnPoints();
+
     if( path ) {
+        if ( nNewPoints < nOrigPoints ) {
+            wxOCPNPointListNode *node = path->pOCPNPointList->GetFirst();
+            while( node ) {
+                OCPNPoint *pFP = node->GetData();
+                OCPNPoint *pOP = pTentPath->GetPoint( pFP->m_GUID );
+                if (!pOP ) {
+                    path->RemovePoint( pFP );
+                    node = path->pOCPNPointList->GetFirst(); // start at begining of list again
+                } else node = node->GetNext();
+            }
+        }
         wxOCPNPointListNode *node = pTentPath->pOCPNPointList->GetFirst();
         while( node ) {
             OCPNPoint *pop = node->GetData();

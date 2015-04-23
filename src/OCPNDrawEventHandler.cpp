@@ -38,6 +38,7 @@
 #include "ODPointPropertiesImpl.h"
 #include "ODUtils.h"
 #include "chcanv.h"
+#include "PointMan.h"
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
 extern PathManagerDialog *pPathManagerDialog;
@@ -49,6 +50,7 @@ extern PathProp       *pPathPropDialog;
 extern PathMan          *g_pPathMan;
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
 extern Path             *g_PathToEdit;
+extern PointMan         *pOCPNPointMan;
 
 extern bool             g_bConfirmObjectDelete;
 // Event Handler implementation 
@@ -217,7 +219,12 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->RemovePointFromPath( m_pFoundOCPNPoint, m_pSelectedPath );
+                m_pFoundOCPNPoint->SetTypeString( wxT("OCPN Point") );
             }
+            
+            g_ocpn_draw_pi->m_bPathEditing = FALSE;
+            g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
+            
             break;
         }
         case ID_OCPNPOINT_MENU_EDIT:
@@ -244,8 +251,46 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 m_pSelectedPath->DeletePoint( m_pFoundOCPNPoint );
                 if( pPathPropDialog && pPathPropDialog->IsShown() ) pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
             }
+            g_ocpn_draw_pi->m_bPathEditing = FALSE;
+            g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
             break;
         }
+        case ID_OCPNPOINT_MENU_DELPOINT: {
+            wxString sMessage( wxS("Are you sure you want to delete this ") );
+            wxString sCaption( wxS("OCPN Draw Delete ") );
+            wxString sType( wxS("") );
+            if (!m_pFoundOCPNPoint || m_pFoundOCPNPoint->GetTypeString().IsNull() || m_pFoundOCPNPoint->GetTypeString().IsEmpty() )
+                sType.append( wxS("OCPN Point") );
+            else
+                sType.append( m_pFoundOCPNPoint->GetTypeString() );
+            sMessage.append( sType );
+            sMessage.append( wxS("?") );
+            sCaption.append( sType );
+            
+            dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            
+            if( dlg_return == wxID_YES ) {
+                // If the OCPNPoint belongs to an invisible path, we come here instead of to ID_PATH_MENU_DELPOINT
+                //  Check it, and if so then remove the point from its routes
+                wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pFoundOCPNPoint );
+                if( ppath_array ) {
+                    pOCPNPointMan->DestroyOCPNPoint( m_pFoundOCPNPoint );
+                }
+                else {
+                    pOCPNDrawConfig->DeleteOCPNPoint( m_pFoundOCPNPoint );
+                    pOCPNSelect->DeleteSelectablePoint( m_pFoundOCPNPoint, SELTYPE_OCPNPOINT );
+                    if( NULL != pOCPNPointMan )
+                        pOCPNPointMan->RemoveOCPNPoint( m_pFoundOCPNPoint );
+                }
+                
+                if( pPathManagerDialog && pPathManagerDialog->IsShown() )
+                    pPathManagerDialog->UpdateOCPNPointsListCtrl();
+            }
+            g_ocpn_draw_pi->m_bPathEditing = FALSE;
+            g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
+            break;
+        }
+            
     }
     
 } 
@@ -332,12 +377,10 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
             if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
                 MenuAppend( menuOCPNPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
             
-            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_COPY, _( "Copy as KML" ) );
-            
-            if ( m_pFoundOCPNPoint->GetIconName() != wxS("mob") ) {
-                if ( m_pSelectedPath )
-                    MenuAppend( menuOCPNPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
-            }
+            if( m_pSelectedPath )
+                MenuAppend( menuOCPNPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
+            else
+                MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
             
         }
         //      Set this menu as the "focused context menu"

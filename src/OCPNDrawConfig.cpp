@@ -94,6 +94,12 @@ bool OCPNDrawConfig::UpdatePath( Path *pb )
 
 bool OCPNDrawConfig::DeleteConfigPath( Path *pb )
 {
+    if( pb->m_bIsInLayer ) return true;
+    
+    if( !m_bSkipChangeSetUpdate ) {
+        m_pOCPNDrawNavObjectChangesSet->AddPath( pb, "delete" );
+        
+    }
     return true;
 }
 
