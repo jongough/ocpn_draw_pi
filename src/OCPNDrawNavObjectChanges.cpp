@@ -275,9 +275,9 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
     activefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
     pugi::xml_attribute inactivecolour = child.append_attribute("inactive_colour");
-    inactivecolour.set_value( pPath->m_ActiveLineColour.ToAscii() );
+    inactivecolour.set_value( pPath->m_InActiveLineColour.ToAscii() );
     pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
-    inactivefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
+    inactivefillcolour.set_value( pPath->m_InActiveFillColour.ToAscii() );
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
 
@@ -1173,6 +1173,10 @@ void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
             }
             node = node->GetNext();
         }
+        pOCPNSelect->DeleteAllSelectableOCPNPoints( pTentPath );
+        pOCPNSelect->DeleteAllSelectablePathSegments( pTentPath );
+        pOCPNSelect->AddAllSelectablePathSegments( pTentPath );
+        pOCPNSelect->AddAllSelectableOCPNPoints( pTentPath );
     } else {
         InsertPathA( pTentPath );
     }

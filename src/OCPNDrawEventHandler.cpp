@@ -191,8 +191,26 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_PATH_MENU_DEACTIVATE:
+            wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
+            wxString msg;
+            msg.append( wxS("Name: ") );
+            msg.append( pPathToDeactivate->m_PathNameString.c_str() );
+            msg.append( wxS(", GUID: ") );
+            msg.append( pPathToDeactivate->m_GUID );
+            SendPluginMessage( msg_id, msg );
+            
+            g_pPathMan->DeactivatePath( m_pSelectedPath );
             break;
         case ID_PATH_MENU_ACTIVATE:
+            wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
+            wxString msg;
+            msg.append( wxS("Name: ") );
+            msg.append( pPathToActivate->m_PathNameString.c_str() );
+            msg.append( wxS(", GUID: ") );
+            msg.append( pPathToActivate->m_GUID );
+            SendPluginMessage( msg_id, msg );
+            
+            g_pPathMan->ActivatePath( m_pSelectedPath );
             break;
         case ID_OCPNPOINT_MENU_PROPERTIES:
             if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
@@ -352,8 +370,8 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
             menuOCPNPoint = new wxMenu( _("Layer OCPNPoint") );
             MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
-            if( m_pSelectedPath && m_pSelectedPath->IsActive() )
-                MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+            //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
+            //    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
         }
         else {
             MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
@@ -362,18 +380,18 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
             sType.append(m_pFoundOCPNPoint->m_sTypeString);
             MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_EDIT, sType );
 
-            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
-                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundOCPNPoint )
-                    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
-            }
+//            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
+//                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundOCPNPoint )
+//                    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+//            }
             
-            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
-                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundOCPNPoint ) {
-                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
-                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
-                        MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next OCPNPoint" ) );
-                }
-            }
+//            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
+//                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundOCPNPoint ) {
+//                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
+//                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
+//                        MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next OCPNPoint" ) );
+//                }
+//            }
             if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
                 MenuAppend( menuOCPNPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
             
