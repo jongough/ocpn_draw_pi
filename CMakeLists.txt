@@ -10,35 +10,14 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 PROJECT(ocpn_draw_pi)
 
 SET(PACKAGE_NAME ocpn_draw_pi)
-SET(PLUGIN_SOURCE_DIR .)
 SET(VERBOSE_NAME ocpn_draw)
 SET(TITLE_NAME OCPNDRAW)
-SET(CPACK_PACKAGE_CONTACT "Del Elson")
+SET(CPACK_PACKAGE_CONTACT "Jon Gough")
+
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "2")
 
 SET(BUNDLE_DATA FALSE)
-
-INCLUDE( VERSION.cmake )
-SET(PLUGIN_VERSION "${PLUGIN_VERSION_MAJOR}.${PLUGIN_VERSION_MINOR}.${PLUGIN_VERSION_PATCH}" )
-
-SET(VERSION_MAJOR ${PLUGIN_VERSION_MAJOR})
-SET(VERSION_MINOR ${PLUGIN_VERSION_MINOR})
-SET(VERSION_PATCH ${PLUGIN_VERSION_PATCH})
-SET(VERSION_DATE ${PLUGIN_VERSION_DATE})
-
-IF (PREFIX)
-    SET(CMAKE_INSTALL_PREFIX ${PREFIX})
-ELSE (PREFIX)
-    IF (NOT CMAKE_INSTALL_PREFIX)
-        SET(CMAKE_INSTALL_PREFIX ${TENTATIVE_PREFIX})
-    ENDIF (NOT CMAKE_INSTALL_PREFIX)
-ENDIF (PREFIX)
-
-
-configure_file(cmake/version.h.in ${CMAKE_SOURCE_DIR}/include/version.h)
-
-# this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.
-# apparently, the base CMakeLists.txt file must have "some" target to activate all the clean steps.
-ADD_CUSTOM_TARGET(dummy COMMENT "dummy: Done." DEPENDS ${PACKAGE_NAME})
 
 SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
 
@@ -131,16 +110,6 @@ SET(OCPNSRC
 #		ocpninclude/routeman.h
 #		ocpninclude/routemanagerdialog.h
 #)
-IF(WIN32)
-SET(SRC_LTINYXML
-		ocpnsrc/tinyxml.cpp
-		ocpninclude/tinyxml.h
-		ocpnsrc/tinyxmlerror.cpp
-		ocpnsrc/tinyxmlparser.cpp
-#		src/tinystr.cpp
-#		ocpninclude/tinystr.h
-)
-ENDIF(WIN32)
 
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
@@ -148,8 +117,29 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/bitmaps)
+
+IF(UNIX)
+ INCLUDE("cmake/FindTinyXML.cmake")
+ FIND_PACKAGE(TinyXML QUIET)
+ENDIF(UNIX)
+
+IF(TINYXML_FOUND)
+ message (STATUS "Building with system tinyxml")
+ INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC})
+ TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
+ELSE(TINYXML_FOUND)
+ message (STATUS "Building with embedded tinyxml")
+ INCLUDE_DIRECTORIES(src/tinyxml/)
+ SET(SRC_LTINYXML
+            src/tinyxml/tinyxml.cpp
+            src/tinyxml/tinyxmlparser.cpp
+            src/tinyxml/tinyxmlerror.cpp
+ )
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${SRC_LTINYXML})
+ENDIF(TINYXML_FOUND)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${SRC_LTINYXML})
+
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")

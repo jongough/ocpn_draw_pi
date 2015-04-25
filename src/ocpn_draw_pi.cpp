@@ -144,7 +144,6 @@ wxString    g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
-wxString    *g_pImage;
 wxString    *g_pNavObjs;
 
 OCPNDrawEventHandler    *g_OCPNDrawEventHandler;
@@ -277,18 +276,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
     
-    g_pImage = new wxString();
-    g_pImage->append( stdProgDir );
-    appendOSDirSlash( g_pImage );
-    g_pImage->Append(_T("OCPNDraw"));
-    appendOSDirSlash( g_pImage );
-    if ( !wxDir::Exists(*g_pImage))
-        wxMkdir( *g_pImage );
-    g_pImage->append( wxS("images") );
-    appendOSDirSlash( g_pImage );
-    if ( !wxDir::Exists(*g_pImage))
-        wxMkdir( *g_pImage );
-        
     g_pNavObjs = new wxString();
     g_pNavObjs->append(stdDataDir);
     appendOSDirSlash(g_pNavObjs);

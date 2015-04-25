@@ -1,6 +1,6 @@
 ##---------------------------------------------------------------------------
-## Author:      Sean D'Epagnier
-## Copyright:   
+## Author:      Pavel Kalian (Based on the work of Sean D'Epagnier)
+## Copyright:   2014
 ## License:     GPLv3+
 ##---------------------------------------------------------------------------
 
@@ -31,13 +31,11 @@ IF(NOT MSVC)
   ADD_DEFINITIONS( "-Wall -g -fprofile-arcs -ftest-coverage -fexceptions" )
  ELSE(PROFILING)
 #  ADD_DEFINITIONS( "-Wall -g -fexceptions" )
-# ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
- ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -fexceptions" )
+ ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
  ENDIF(PROFILING)
 
  IF(NOT APPLE)
   SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
-#  SET(CMAKE_SHARED_LINKER_FLAGS "")
  ELSE(NOT APPLE)
   SET(CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
  ENDIF(NOT APPLE)
