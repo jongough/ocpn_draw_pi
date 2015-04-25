@@ -1,5 +1,5 @@
 ##---------------------------------------------------------------------------
-## Author:      jongough aka. Jon Gough
+# Author:      jongough aka. Jon Gough
 ## Copyright:
 ## License:     wxWidgets License
 ##---------------------------------------------------------------------------
@@ -85,7 +85,7 @@ SET(HDRS
  		include/ODvector2D.h
  		include/OCPNDrawicons.h
 		include/version.h
-        	include/wx/json_defs.h
+#        	include/wx/json_defs.h
        		include/wx/jsonreader.h
         	include/wx/jsonval.h
         	include/wx/jsonwriter.h

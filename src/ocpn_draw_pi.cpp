@@ -292,7 +292,6 @@ ocpn_draw_pi::~ocpn_draw_pi()
 //    RemovePlugInTool(m_leftclick_boundary_id);
     pOCPNDrawConfig->UpdateNavObj();
     SaveConfig();
-    ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
     delete g_OCPNDrawEventHandler;
     delete g_pPathRolloverWin;
     
@@ -437,6 +436,7 @@ void ocpn_draw_pi::LateInit(void)
 
 bool ocpn_draw_pi::DeInit(void)
 {
+    ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
 	shutdown(false);
 	return true;
 }
@@ -901,7 +901,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             pCurrentCursor = ocpncc1->pCursorArrow;
             bRefresh = TRUE;
             bret = TRUE;
-        } else if( m_bOCPNPointEditing ) {
+        } else if( m_pFoundOCPNPoint && m_bOCPNPointEditing ) {
             m_bOCPNPointEditing = FALSE;
             m_pFoundOCPNPoint->m_bIsBeingEdited = FALSE;
             pCurrentCursor = ocpncc1->pCursorArrow;
@@ -932,31 +932,35 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = TRUE;
             }
 */            
-            if( m_pFoundOCPNPoint && m_bPathEditing ) {
-                pCurrentCursor = ocpncc1->pCursorCross;
-                m_pFoundOCPNPoint->m_lat = m_cursor_lat;
-                m_pFoundOCPNPoint->m_lon = m_cursor_lon;
-                pOCPNSelect->UpdateSelectablePathSegments( m_pFoundOCPNPoint );
-                m_pSelectedPath->FinalizeForRendering();
-                m_pSelectedPath->UpdateSegmentDistances();
-                m_pSelectedPath->SetHiLite( 0 );
-                
-                //    Update the PathProperties Dialog, if currently shown
-                if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) pPathPropDialog->UpdateProperties( m_pSelectedPath );
-                if( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                
-                bRefresh = TRUE;
-                bret = FALSE;
-                event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
-            } else if ( m_bOCPNPointEditing ) {
-                m_pFoundOCPNPoint->m_lat = m_cursor_lat;
-                m_pFoundOCPNPoint->m_lon = m_cursor_lon;
-                
-                if ( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                
-                bRefresh = TRUE;
-                bret = FALSE;
-                event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+            if( m_pFoundOCPNPoint )
+            {
+                if( m_bPathEditing )
+                {
+                    pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                    m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                    pOCPNSelect->UpdateSelectablePathSegments( m_pFoundOCPNPoint );
+                    m_pSelectedPath->FinalizeForRendering();
+                    m_pSelectedPath->UpdateSegmentDistances();
+                    m_pSelectedPath->SetHiLite( 0 );
+                    
+                    //    Update the PathProperties Dialog, if currently shown
+                    if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) pPathPropDialog->UpdateProperties( m_pSelectedPath );
+                    if( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                    
+                    bRefresh = TRUE;
+                    bret = FALSE;
+                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                } else if ( m_bOCPNPointEditing ) {
+                    m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                    m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                    
+                    if ( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                    
+                    bRefresh = TRUE;
+                    bret = FALSE;
+                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                }
             }
             
         }

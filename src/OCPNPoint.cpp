@@ -462,8 +462,8 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 //        LLBBox vpBBox = vp.GetBBox();
 //        pivp.
 /*        if( vpBBox.IntersectOut( m_wpBBox ) ) {
-            /* try with vp crossing IDL */
-/*            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
+            //try with vp crossing IDL
+            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
                 wxPoint2DDouble xlate( -360., 0. );
                 wxBoundingBox test_box2 = m_wpBBox;
                 test_box2.Translate( xlate );
@@ -565,8 +565,9 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
     
     bool bDrawHL = false;
 
-    MyFrame *gFrame;
-    if( m_bBlink && ( gFrame->nBlinkerTick & 1 ) ) bDrawHL = true;
+
+    if( m_bBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
+        bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         int glw, glh;
