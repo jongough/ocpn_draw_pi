@@ -30,8 +30,9 @@
 #endif //precompiled headers
 
 #include "OCPNDrawEventHandler.h"
+#include "RolloverWin.h"
 #include "ocpn_draw_pi.h"
-//#include "OCPNDrawCanvasMenuHandler.h"
+#include "ocpn_plugin.h"
 #include "OCPNSelect.h"
 #include "PathMan.h"
 #include "PathProp.h"
@@ -39,6 +40,7 @@
 #include "ODUtils.h"
 #include "chcanv.h"
 #include "PointMan.h"
+#include <wx/window.h>
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
 extern PathManagerDialog *pPathManagerDialog;
@@ -51,16 +53,22 @@ extern PathMan          *g_pPathMan;
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
 extern Path             *g_PathToEdit;
 extern PointMan         *pOCPNPointMan;
-
+extern bool             g_bShowMag;
 extern bool             g_bConfirmObjectDelete;
+extern ODRolloverWin     *g_pPathRolloverWin;
+extern SelectItem      *g_pRolloverPathSeg;
+extern int              g_cursor_x;
+extern int              g_cursor_y;
+
 // Event Handler implementation 
-/*
-BEGIN_EVENT_TABLE ( OCPNDrawEventHandler, wxEvtHandler ) 
-    EVT_TIMER ( ROLLOVER_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
-    EVT_TIMER ( HEAD_DOG_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
-    EVT_MENU ( ID_PATH_MENU_PROPERTIES, OCPNDrawEventHandler::PopupMenuHandler )
-END_EVENT_TABLE()
-*/
+
+//BEGIN_EVENT_TABLE ( OCPNDrawEventHandler, wxEvtHandler ) 
+//    EVT_TIMER ( ROLLOVER_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
+    //EVT_TIMER ( ROPOPUP_TIMER, OCPNDrawEventHandler::OnRolloverPopupTimerEvent )
+    //    EVT_TIMER ( HEAD_DOG_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
+//    EVT_MENU ( ID_PATH_MENU_PROPERTIES, OCPNDrawEventHandler::PopupMenuHandler )
+//END_EVENT_TABLE()
+
 
 OCPNDrawEventHandler::OCPNDrawEventHandler(ocpn_draw_pi *parent)
 {
@@ -109,6 +117,140 @@ void OCPNDrawEventHandler::OnTimerEvent(wxTimerEvent& event)
 { 
     m_parent->ProcessTimerEvent( event ); 
 } 
+
+void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
+{
+    #ifdef __OCPN__ANDROID__
+    return;
+    #endif
+    
+    bool b_need_refresh = false;
+    
+    bool showRollover = false;
+    
+    if( NULL == g_pRolloverPathSeg ) {
+        //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
+        
+        SelectableItemList SelList = pOCPNSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
+                                                                     SELTYPE_PATHSEGMENT );
+        
+        int iTest = SelList.GetCount();
+        wxSelectableItemListNode *node = SelList.GetFirst();
+        while( node ) {
+            SelectItem *pFindSel = node->GetData();
+            
+            Path *pp = (Path *) pFindSel->m_pData3;        //candidate
+            
+            if( pp && pp->IsVisible() ) {
+                g_pRolloverPathSeg = pFindSel;
+                showRollover = true;
+                
+                if( NULL == g_pPathRolloverWin ) {
+                    g_pPathRolloverWin = new ODRolloverWin( g_ocpn_draw_pi->m_parent_window );
+                    g_pPathRolloverWin->IsActive( false );
+                }
+                
+                if( !g_pPathRolloverWin->IsActive() ) {
+                    wxString s;
+                    OCPNPoint *segShow_point_a = (OCPNPoint *) g_pRolloverPathSeg->m_pData1;
+                    OCPNPoint *segShow_point_b = (OCPNPoint *) g_pRolloverPathSeg->m_pData2;
+                    
+                    double brg, dist;
+                    DistanceBearingMercator( segShow_point_b->m_lat, segShow_point_b->m_lon,
+                                             segShow_point_a->m_lat, segShow_point_a->m_lon, &brg, &dist );
+                    
+                    if( !pp->m_bIsInLayer ) {
+                        wxString wxsText;
+                        wxsText.append( pp->m_sTypeString );
+                        wxsText.append( wxT(": ") );
+                        s.append( wxsText );
+                    }
+                    else {
+                        wxString wxsText;
+                        wxsText.append( wxT("Layer ") );
+                        wxsText.append( pp->m_sTypeString );
+                        wxsText.append( wxT(": ") );
+                        s.Append( wxsText );
+                    }
+                    
+                    if( pp->m_PathNameString.IsEmpty() ) s.Append( _("(unnamed)") );
+                    else
+                        s.Append( pp->m_PathNameString );
+                    
+                    s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
+                    << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
+                    << _(" to ") << segShow_point_b->GetName()
+                    << _T("\n");
+                    
+                    if( g_bShowMag )
+                        s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brg ) );
+                    else
+                        s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brg ) );
+                    
+                    s << g_ocpn_draw_pi->FormatDistanceAdaptive( dist );
+                    
+                    // Compute and display cumulative distance from route start point to current
+                    // leg end point.
+                    
+                    if( segShow_point_a != pp->pOCPNPointList->GetFirst()->GetData() ) {
+                        wxOCPNPointListNode *node = (pp->pOCPNPointList)->GetFirst()->GetNext();
+                        OCPNPoint *pop;
+                        float dist_to_endleg = 0;
+                        wxString t;
+                        
+                        while( node ) {
+                            pop = node->GetData();
+                            dist_to_endleg += pop->m_seg_len;
+                            if( pop->IsSame( segShow_point_a ) ) break;
+                            node = node->GetNext();
+                        }
+                        s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
+                    }
+                    
+                    g_pPathRolloverWin->SetString( s );
+                    
+                    wxSize win_size = ocpncc1->GetSize();
+                    //if( console && console->IsShown() ) win_size.x -= console->().x;
+                    wxPoint point;
+                    GetCanvasPixLL( g_pivp, &point, g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon );
+                    PlugInNormalizeViewport( g_pivp );
+                    g_pPathRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, PATH_ROLLOVER, win_size );
+                    g_pPathRolloverWin->SetBitmap( PATH_ROLLOVER );
+                    g_pPathRolloverWin->IsActive( true );
+                    b_need_refresh = true;
+                    showRollover = true;
+                    break;
+                }
+            } else
+                node = node->GetNext();
+        }
+    } else {
+        //    Is the cursor still in select radius?
+        if( !pOCPNSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
+            showRollover = false;
+        else
+            showRollover = true;
+    }
+    
+    //    If currently creating a Path, do not show this rollover window
+    if( g_ocpn_draw_pi->nPath_State )
+        showRollover = false;
+    
+    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() && !showRollover ) {
+        g_pPathRolloverWin->IsActive( false );
+        g_pRolloverPathSeg = NULL;
+        g_pPathRolloverWin->Destroy();
+        g_pPathRolloverWin = NULL;
+        b_need_refresh = true;
+    } else if( g_pPathRolloverWin && showRollover ) {
+        g_pPathRolloverWin->IsActive( true );
+        g_pPathRolloverWin->Show();
+        b_need_refresh = true;
+    }
+    
+    if( b_need_refresh )
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+}
 
 void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event ) 
 {
@@ -190,28 +332,30 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             break;
         }
-        case ID_PATH_MENU_DEACTIVATE:
+        case ID_PATH_MENU_DEACTIVATE: {
             wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
             wxString msg;
             msg.append( wxS("Name: ") );
-            msg.append( pPathToDeactivate->m_PathNameString.c_str() );
+            msg.append( m_pSelectedPath->m_PathNameString.c_str() );
             msg.append( wxS(", GUID: ") );
-            msg.append( pPathToDeactivate->m_GUID );
+            msg.append( m_pSelectedPath->m_GUID );
             SendPluginMessage( msg_id, msg );
             
             g_pPathMan->DeactivatePath( m_pSelectedPath );
             break;
-        case ID_PATH_MENU_ACTIVATE:
+        }
+        case ID_PATH_MENU_ACTIVATE: {
             wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
             wxString msg;
             msg.append( wxS("Name: ") );
-            msg.append( pPathToActivate->m_PathNameString.c_str() );
+            msg.append( m_pSelectedPath->m_PathNameString.c_str() );
             msg.append( wxS(", GUID: ") );
-            msg.append( pPathToActivate->m_GUID );
+            msg.append( m_pSelectedPath->m_GUID );
             SendPluginMessage( msg_id, msg );
             
             g_pPathMan->ActivatePath( m_pSelectedPath );
             break;
+        }
         case ID_OCPNPOINT_MENU_PROPERTIES:
             if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
                 pPathManagerDialog = new PathManagerDialog( ocpncc1 );

@@ -71,6 +71,7 @@ SET(SRCS
  		src/ODPointPropertiesDialog.cpp
  		src/ODPointPropertiesImpl.cpp
  		src/ODPositionParser.cpp
+ 		src/ODRolloverWin.cpp
  		src/ODstyles.cpp
 # 		src/ODUndo.cpp
         src/ODUtils.cpp
@@ -99,6 +100,7 @@ SET(HDRS
  		include/ODPointPropertiesDialog.h
  		include/ODPointPropertiesImpl.h
  		include/ODPositionParser.h
+ 		include/ODRolloverWin.h
 # 		include/ODUndo.h
  		include/ODUtils.h
  		include/ODvector2D.h

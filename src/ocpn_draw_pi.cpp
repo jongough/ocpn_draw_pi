@@ -57,6 +57,8 @@ std::cout << asctime(localtm) << x << std::endl; } while (0)
 #include "OCPNSelect.h"
 #include "ODPointPropertiesImpl.h"
 #include "ODUtils.h"
+#include "SelectItem.h"
+
 #include "chcanv.h"
 #include "Layer.h"
 //#include "styles.h"
@@ -103,6 +105,8 @@ int                     g_path_line_width;
 wxString                g_OD_default_wp_icon;
 double                  g_dLat;
 double                  g_dLon;
+int                     g_cursor_x;
+int                     g_cursor_y;
 OCPNSelect              *pOCPNSelect;
 OCPNDrawConfig          *pOCPNDrawConfig;
 Multiplexer             *g_pODMUX;
@@ -121,6 +125,8 @@ BoundaryList            *pBoundaryList;
 OCPNPointList           *pOCPNPointList;
 ChartCanvas             *ocpncc1;
 Path                    *g_PathToEdit;
+ODRolloverWin           *g_pPathRolloverWin;
+SelectItem              *g_pRolloverPathSeg;
 
 wxString    g_ActiveBoundaryLineColour;
 wxString    g_InActiveBoundaryLineColour;
@@ -154,7 +160,7 @@ wxString     g_sOCPNPointIconName;
 PlugIn_ViewPort *g_pivp;
 ocpnDC          *g_pDC;
 bool            g_bShowMag;
-double          gVar;
+double          g_dVar;
 double          g_UserVar;
 double          g_n_arrival_circle_radius;
 wxRect          g_blink_rect;
@@ -297,6 +303,10 @@ ocpn_draw_pi::~ocpn_draw_pi()
 //    RemovePlugInTool(m_leftclick_boundary_id);
     pOCPNDrawConfig->UpdateNavObj();
     SaveConfig();
+    ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
+    delete g_OCPNDrawEventHandler;
+    delete g_pPathRolloverWin;
+    
 }
 
 int ocpn_draw_pi::Init(void)
@@ -310,12 +320,15 @@ int ocpn_draw_pi::Init(void)
     m_pMouseBoundary = NULL;
     m_bDrawingBoundary = NULL;
     m_pFoundOCPNPoint = NULL;
-    gVar = NAN;
+    g_dVar = NAN;
+    nBoundary_State = 0;
+    nPoint_State = 0;
+    nPath_State = 0;
 
     // Drawing modes from toolbar
     m_Mode = 0;
-    m_numModes = ID_LAST_MODE - 1
-    ;
+    m_numModes = ID_LAST_MODE - 1;
+    
     // Not sure what this is
     AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
 
@@ -360,6 +373,12 @@ int ocpn_draw_pi::Init(void)
     
     // Create an OCPN Draw event handler
     g_OCPNDrawEventHandler = new OCPNDrawEventHandler( g_ocpn_draw_pi );
+    g_pPathRolloverWin = new ODRolloverWin( m_parent_window );
+    g_pRolloverPathSeg = NULL;
+    
+    m_RolloverPopupTimer.SetOwner( ocpncc1, ODROPOPUP_TIMER );
+    m_rollover_popup_timer_msec = 20;
+    ocpncc1->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
     
     pCurrentCursor = ocpncc1->pCursorArrow;
 
@@ -777,7 +796,16 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     int x, y;
     bool bret = FALSE;
     bool bRefresh = FALSE;
+    
+    g_cursor_x = event.GetX();
+    g_cursor_y = event.GetY();
 
+    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() )
+        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
+    else
+        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        
+    
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bOCPNPointEditing) {
         ocpncc1->SetCursor( *pCurrentCursor );
         bRefresh = TRUE;
@@ -824,7 +852,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     } 
     
     if( event.LeftUp() ) {
-        bool b_startedit_boundary = false;
         if (m_iCallerId == m_leftclick_boundary_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
             bret = true;
         }
@@ -901,6 +928,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             bret = TRUE;
         }
+
     }
   
     if( event.Dragging() ) {
@@ -1141,6 +1169,28 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         }
     }
     
+    //      Check to see if there is a path under the cursor
+    //      If so, start the rollover timer which creates the popup
+    bool b_start_rollover = false;
+    if(!b_start_rollover && !m_bPathEditing){
+        SelectableItemList SelList = pOCPNSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
+        wxSelectableItemListNode *node = SelList.GetFirst();
+        while( node ) {
+            SelectItem *pFindSel = node->GetData();
+            
+            Path *pp= (Path *) pFindSel->m_pData3;        //candidate
+            
+            if( pp && pp->IsVisible() ){
+                b_start_rollover = true;
+                break;
+            }
+            node = node->GetNext();
+        }       // while
+    }
+    
+    if( b_start_rollover )
+        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+    
     if (bret) ocpncc1->SetCursor( *pCurrentCursor );
 
     if( bRefresh ) RequestRefresh( m_parent_window );
@@ -1154,7 +1204,7 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     m_cursor_lat = lat;
     m_cursor_lon = lon;
-    
+    if( g_OCPNDrawEventHandler ) g_OCPNDrawEventHandler->SetLatLon( lat, lon );
 }
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
@@ -1192,6 +1242,8 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
 bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 {
     m_vp = vp;
+    g_pivp = vp;
+    
     ocpnDC ocpnmdc( *pmdc );
     
     if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
@@ -1773,6 +1825,8 @@ void ocpn_draw_pi::PopupMenuHandler(wxCommandEvent& ev)
 */
 	return;
 }
+
+
 /*
 void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
 {
@@ -2080,11 +2134,11 @@ void ocpn_draw_pi::AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size
 double ocpn_draw_pi::GetTrueOrMag(double a)
 {
     if( g_bShowMag ){
-        if(!wxIsNaN(gVar)){
-            if((a - gVar) >360.)
-                return (a - gVar - 360.);
+        if(!wxIsNaN(g_dVar)){
+            if((a - g_dVar) >360.)
+                return (a - g_dVar - 360.);
             else
-                return ((a - gVar) >= 0.) ? (a - gVar) : (a - gVar + 360.);
+                return ((a - g_dVar) >= 0.) ? (a - g_dVar) : (a - g_dVar + 360.);
         }
         else{
             if((a - g_UserVar) >360.)
