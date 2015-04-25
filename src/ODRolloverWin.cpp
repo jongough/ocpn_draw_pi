@@ -100,7 +100,7 @@ void ODRolloverWin::SetBitmap( int rollover )
         default:
         case PATH_ROLLOVER:
             wxColour wxCol;
-            GetGlobalColor( wxT("YEL01"), &wxCol );
+            GetGlobalColor( wxT("YELO1"), &wxCol );
             g_ocpn_draw_pi->AlphaBlending( dc, 0, 0, m_size.x, m_size.y, 6.0, wxCol, 172 );
             mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("PathLegInfoRollover") ) );
             break;

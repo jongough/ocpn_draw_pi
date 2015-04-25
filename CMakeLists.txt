@@ -19,7 +19,7 @@ SET(VERSION_MINOR "2")
 
 SET(BUNDLE_DATA FALSE)
 
-SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
+#SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
 
 SET(CMAKE_BUILD_TYPE Debug)
 
@@ -84,7 +84,7 @@ SET(HDRS
  		include/ODUtils.h
  		include/ODvector2D.h
  		include/OCPNDrawicons.h
-		include/version.h
+#		include/version.h
 #        	include/wx/json_defs.h
        		include/wx/jsonreader.h
         	include/wx/jsonval.h

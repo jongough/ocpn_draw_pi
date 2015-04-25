@@ -292,8 +292,6 @@ ocpn_draw_pi::~ocpn_draw_pi()
 //    RemovePlugInTool(m_leftclick_boundary_id);
     pOCPNDrawConfig->UpdateNavObj();
     SaveConfig();
-    delete g_OCPNDrawEventHandler;
-    delete g_pPathRolloverWin;
     
 }
 
@@ -437,7 +435,9 @@ void ocpn_draw_pi::LateInit(void)
 bool ocpn_draw_pi::DeInit(void)
 {
     ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
-	shutdown(false);
+    delete g_OCPNDrawEventHandler;
+    delete g_pPathRolloverWin;
+    shutdown(false);
 	return true;
 }
 
