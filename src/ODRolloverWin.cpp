@@ -29,6 +29,7 @@
 #include <wx/dcscreen.h>
 
 #include "ocpn_draw_pi.h"
+#include "ocpn_plugin.h"
 #include "ODRolloverWin.h"
 #include "ocpndc.h"
 #include "timers.h"
@@ -98,7 +99,9 @@ void ODRolloverWin::SetBitmap( int rollover )
     switch( rollover ) {
         default:
         case PATH_ROLLOVER:
-            g_ocpn_draw_pi->AlphaBlending( dc, 0, 0, m_size.x, m_size.y, 6.0, GetGlobalColor( _T ( "YELO1" ) ), 172 );
+            wxColour wxCol;
+            GetGlobalColor( wxT("YEL01"), &wxCol );
+            g_ocpn_draw_pi->AlphaBlending( dc, 0, 0, m_size.x, m_size.y, 6.0, wxCol, 172 );
             mdc.SetTextForeground( FontMgr::Get().GetFontColor( _("PathLegInfoRollover") ) );
             break;
             

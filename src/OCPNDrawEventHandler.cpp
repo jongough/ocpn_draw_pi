@@ -30,13 +30,13 @@
 #endif //precompiled headers
 
 #include "OCPNDrawEventHandler.h"
-#include "RolloverWin.h"
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "OCPNSelect.h"
 #include "PathMan.h"
 #include "PathProp.h"
 #include "ODPointPropertiesImpl.h"
+#include "ODRolloverWin.h"
 #include "ODUtils.h"
 #include "chcanv.h"
 #include "PointMan.h"
@@ -384,6 +384,12 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 m_pFoundOCPNPoint->SetTypeString( wxT("OCPN Point") );
             }
             
+            pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
+            pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+            
+            pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+            pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
+
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
             
@@ -510,16 +516,21 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
             blay = true;
         
         if( blay ){
-            delete menuOCPNPoint;
-            menuOCPNPoint = new wxMenu( _("Layer OCPNPoint") );
+            wxString sType;
+            sType.append( wxT("Layer ") );
+            sType.append( m_pFoundOCPNPoint->m_sTypeString );
+            menuOCPNPoint->SetTitle( sType );
             MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
             //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
             //    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
         }
         else {
-            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
+            sType.append( m_pFoundOCPNPoint->m_sTypeString );
+            menuOCPNPoint->SetTitle( sType );
+            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            sType.clear();
             sType.append( wxS("Move ") );
             sType.append(m_pFoundOCPNPoint->m_sTypeString);
             MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_EDIT, sType );
