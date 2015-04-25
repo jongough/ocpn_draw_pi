@@ -4,6 +4,7 @@
 #include <wx/wx.h>
 #endif
 #include <wx/mstream.h>
+#include <wx/filename.h>
 #include "OCPNDrawicons.h"
 #include "ocpn_plugin.h"
 
@@ -17,32 +18,24 @@ extern wxString *g_pImage;;
 
 void initialize_images(void)
 {
-	wxString *pName = new wxString();
-	pName->clear();
-	pName->append( *g_pImage );
-	pName->append (wxS("OCPNDrawManager.png"));
-	
-	_img_ocpn_draw_pi = new wxBitmap( wxImage( *pName ) );
-	pName->clear();
-	pName->append( *g_pImage );
-	pName->append (wxS("OCPNDrawManagerGray.png"));
-	_img_ocpn_draw_gray_pi = new wxBitmap( wxImage( *pName ) );
-	pName->clear();
-	pName->append( *g_pImage );
-	pName->append (wxS("button1.png"));
-	_img_ocpn_draw_boundary = new wxBitmap( wxImage( *pName ) );
-    pName->clear();
-    pName->append( *g_pImage );
-    pName->append (wxS("button2.png"));
-    _img_ocpn_draw_boundary_gray = new wxBitmap( wxImage( *pName ) );
-    pName->clear();
-    pName->append( *g_pImage );
-    pName->append (wxS("pointbutton.png"));
-    _img_ocpn_draw_point = new wxBitmap( wxImage( *pName ) );
-    pName->clear();
-    pName->append( *g_pImage );
-    pName->append (wxS("pointbuttongray.png"));
-    _img_ocpn_draw_point_gray = new wxBitmap( wxImage( *pName ) );
+    wxFileName fn;
+    fn.SetPath(*GetpSharedDataLocation());
+    fn.AppendDir(_T("plugins"));
+    fn.AppendDir(_T("ocpn_draw_pi"));
+    fn.AppendDir(_T("data"));
+
+    fn.SetFullName(_T("OCPNDrawManager.png"));
+    _img_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("OCPNDrawManagerGray.png"));
+    _img_ocpn_draw_gray_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("button1.png"));
+    _img_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("button2.png"));
+    _img_ocpn_draw_boundary_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("pointbutton.png"));
+    _img_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("pointbuttongray.png"));
+    _img_ocpn_draw_point_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
 	
 
 static unsigned char Bullet_green[] = {

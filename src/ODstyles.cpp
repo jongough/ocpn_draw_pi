@@ -579,17 +579,17 @@ StyleManager::StyleManager(void)
     wxString homeDir;
 
 #ifdef __WXMSW__
-        homeDir =  std_path.GetConfigDir();   // on w98, produces "/windows/Application Data"
+    homeDir =  std_path.GetConfigDir();   // on w98, produces "/windows/Application Data"
 #else
-        homeDir = std_path.GetUserConfigDir();
+    homeDir = std_path.GetUserConfigDir();
 #endif    
 
-        #ifdef  __WXOSX__
-        appendOSDirSlash(&homeDir);
-        m_homeDir.Append(_T("opencpn"));
+#ifdef  __WXOSX__
+    g_ocpn_draw_pi->appendOSDirSlash( &homeDir );
+    homeDir.Append( _T("opencpn") );
 #endif            
 
-        g_ocpn_draw_pi->appendOSDirSlash( &homeDir );
+    g_ocpn_draw_pi->appendOSDirSlash( &homeDir );
 
     
     Init( sData_Dir + _T("uidata") + wxFileName::GetPathSeparator() );
