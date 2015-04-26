@@ -57,7 +57,7 @@ OCPNDrawConfig::OCPNDrawConfig(const wxString &appName, const wxString &vendorNa
  
     m_pOCPNDrawNavObjectInputSet = NULL;
     m_pOCPNDrawNavObjectChangesSet = NULL;
-
+    m_bSkipChangeSetUpdate = FALSE;
     
 }
 
@@ -94,6 +94,12 @@ bool OCPNDrawConfig::UpdatePath( Path *pb )
 
 bool OCPNDrawConfig::DeleteConfigPath( Path *pb )
 {
+    if( pb->m_bIsInLayer ) return true;
+    
+    if( !m_bSkipChangeSetUpdate ) {
+        m_pOCPNDrawNavObjectChangesSet->AddPath( pb, "delete" );
+        
+    }
     return true;
 }
 
@@ -227,7 +233,10 @@ void OCPNDrawConfig::UpdateNavObj( void )
 void OCPNDrawConfig::LoadNavObjects()
 {
     //      next thing to do is read tracks, etc from the NavObject XML file,
-    wxLogMessage( _T("Loading navobjects from ODnavobj.xml") );
+    wxString sLogMessage;
+    sLogMessage.append( wxT("Loading navobjects from ") );
+    sLogMessage.append(m_sOCPNDrawNavObjSetFile );
+    wxLogMessage( sLogMessage );
     CreateRotatingNavObjBackup();
 
     if( NULL == m_pOCPNDrawNavObjectInputSet )
@@ -257,7 +266,10 @@ void OCPNDrawConfig::LoadNavObjects()
             wxRemoveFile( m_sOCPNDrawNavObjSetChangesFile );
         
         if(size != 0){
-            wxLogMessage( _T("Applying NavObjChanges") );
+            wxString sLogMessage;
+            sLogMessage.append( wxT("Applying changes from ") );
+            sLogMessage.append( m_sOCPNDrawNavObjSetChangesFile );
+            wxLogMessage( sLogMessage );
             pOCPNDrawNavObjectChangesSet->ApplyChanges();
             UpdateNavObj();
         }

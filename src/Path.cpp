@@ -30,7 +30,7 @@
 //#include "routeman.h"
 #include "ocpndc.h"
 #include "cutil.h"
-#include "navutil.h"
+//#include "navutil.h"
 #include "multiplexer.h"
 #include "OCPNSelect.h"
 #include "PointMan.h"
@@ -38,6 +38,7 @@
 #include "PathProp.h"
 #include "OCPNDrawConfig.h"
 #include "ocpn_draw_pi.h"
+#include "ODUtils.h"
 #include "bbox.h"
 #include "ocpndc.h"
 
@@ -57,6 +58,7 @@ extern wxString    g_ActivePathFillColour;
 extern wxString    g_InActivePathFillColour;
 extern PathProp    *pPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
+extern wxString     g_sOCPNPointIconName;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -82,7 +84,7 @@ Path::Path( void )
     pOCPNPointList = new OCPNPointList;
     m_pLastAddedPoint = NULL;
     m_pFirstAddedPoint = NULL;
-    m_GUID = GpxDocument::GetUUID();
+    m_GUID = GetUUID();
     m_btemp = false;
     
     m_bNeedsUpdateBBox = true;
@@ -222,7 +224,6 @@ void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
 
 void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 {
-    wxColour col, fillcol;
     wxString colour, fillcolour;
     int style = wxSOLID;
     int width = g_path_line_width;
@@ -245,7 +246,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
-            col = ::GpxxColors[i];
+            m_col = ::GpxxColors[i];
             break;
         }
     }
@@ -255,7 +256,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( fillcolour == ::GpxxColorNames[i] ) {
-            fillcol = ::GpxxColors[i];
+            m_fillcol = ::GpxxColors[i];
             break;
         }
     }
@@ -264,12 +265,12 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     if( m_width != STYLE_UNDEFINED ) width = m_width;
 
     if ( m_bVisible ) {
-        dc.SetPen( *wxThePenList->FindOrCreatePen( col, width, style ) );
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxCROSSDIAG_HATCH ) );
+        dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
+        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
     }
 
     wxPoint rpt1, rpt2;
-    wxPoint *bpts = new wxPoint[ pOCPNPointList->GetCount() ];
+    m_bpts = new wxPoint[ pOCPNPointList->GetCount() ];
     int j = 0;
     
     if ( m_bVisible )
@@ -277,10 +278,9 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 
     wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
     OCPNPoint *prp1 = node->GetData();
-    wxPoint frpt = rpt1;
     node = node->GetNext();
     
-    bpts[ j++ ] = rpt1;
+    m_bpts[ j++ ] = rpt1;
         
     if ( !m_bVisible && prp1->m_bKeepXPath )
             prp1->Draw( dc );
@@ -292,7 +292,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
             prp2->Draw( dc );
         else if (m_bVisible)
             prp2->Draw( dc, &rpt2 );
-        bpts[ j++ ] = ( rpt2 );
+        m_bpts[ j++ ] = ( rpt2 );
 
         if ( m_bVisible )
         {
@@ -348,12 +348,6 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
         node = node->GetNext();
     }
 
-    // fill boundary with hatching
-    if ( m_bVisible ) {
-        dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxCROSSDIAG_HATCH ) );
-        dc.DrawPolygon( j, bpts, 0, 0);
-    }
 }
 
 extern ChartCanvas *ocpncc1; /* hopefully can eventually remove? */
@@ -401,7 +395,6 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 //        return;
     
     /* determine color and width */
-    wxColour col, fillcol;
     int width = m_width;
     
     wxString colour, fillcolour;
@@ -421,27 +414,27 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
-            col = ::GpxxColors[i];
+            m_col = ::GpxxColors[i];
             break;
         }
     }
 
     if( fillcolour.IsNull() ) {
-        fillcol = m_ActiveFillColour;
+        m_fillcol = m_ActiveFillColour;
     }
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( fillcolour == ::GpxxColorNames[i] ) {
-            fillcol = ::GpxxColors[i];
+            m_fillcol = ::GpxxColors[i];
             break;
         }
     }
    
     int style = wxSOLID;
     if( m_style != STYLE_UNDEFINED ) style = m_style;
-    dc.SetPen( *wxThePenList->FindOrCreatePen( col, width, style ) );
-    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxCROSSDIAG_HATCH ) );
+    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
     
-    glColor3ub(col.Red(), col.Green(), col.Blue());
+    glColor3ub(m_col.Red(), m_col.Green(), m_col.Blue());
     glLineWidth( wxMax( g_ODGLMinSymbolLineWidth, width ) );
     
     dc.SetGLStipple();
@@ -451,10 +444,9 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     float lastlat = 0;
     unsigned short int FromSegNo = 1;
 
-    wxPoint *bpts;
     int j = 0;
 
-    bpts = new wxPoint[ pOCPNPointList->GetCount() ];
+    m_bpts = new wxPoint[ pOCPNPointList->GetCount() ];
 
     for(wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
         node; node = node->GetNext()) {
@@ -491,43 +483,10 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
         GetCanvasPixLL( &piVP, &r, prp->m_lat, prp->m_lon );
         glVertex2i(r.x, r.y);
 
-        bpts[ j++ ] = r;
+        m_bpts[ j++ ] = r;
     }
     glEnd();
     glDisable (GL_LINE_STIPPLE);
-    
-    glEnable( GL_POLYGON_STIPPLE );
-    GLubyte slope_cross_hatch[] = {
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
-          0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
-          0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55
-        };    
-    glPolygonStipple( slope_cross_hatch );
-    glBegin(GL_POLYGON_STIPPLE);
-    if ( m_bVisible ) {
-        //dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( fillcol, wxBDIAGONAL_HATCH ) );
-        if ( j > 1 )
-            dc.DrawPolygonTessellated( j, bpts, 0, 0);
-    }
-    glEnd();
-    glDisable (GL_POLYGON_STIPPLE);
-
         
 #endif
 }
@@ -660,12 +619,12 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
 
 void Path::ClearHighlights( void )
 {
-    OCPNPoint *prp = NULL;
+    OCPNPoint *pop = NULL;
     wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
 
     while( node ) {
-        prp = node->GetData();
-        if( prp ) prp->m_bPtIsSelected = false;
+        pop = node->GetData();
+        if( pop ) pop->m_bPtIsSelected = false;
         node = node->GetNext();
     }
 }
@@ -673,6 +632,23 @@ void Path::ClearHighlights( void )
 wxString Path::GetNewMarkSequenced( void )
 {
     wxString ret;
+    long num;
+    num = 0;
+    OCPNPoint *pop = NULL;
+    
+    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    while ( node ) {
+        pop = node->GetData();
+        wxString  sPointName = pop->GetName();
+        if ( sPointName.length() == 5 ){
+            if( sPointName.Left( 2 ) == wxT("NM") ) {
+                sPointName.Mid( 2, sPointName.length() ).ToLong( &num );
+                if( num >= m_nm_sequence ) m_nm_sequence = num + 1;
+            }
+        }
+        node = node->GetNext();
+    }
+
     ret.Printf( _T ( "NM%03d" ), m_nm_sequence );
     m_nm_sequence++;
 
@@ -732,29 +708,30 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
     }
 }
 
-void Path::RemovePoint( OCPNPoint *rp, bool bRenamePoints )
+void Path::RemovePoint( OCPNPoint *op, bool bRenamePoints )
 {
     pOCPNSelect->DeleteAllSelectableOCPNPoints( this );
     pOCPNSelect->DeleteAllSelectablePathSegments( this );
 
-    pOCPNPointList->DeleteObject( rp );
-    if( wxNOT_FOUND != OCPNPointGUIDList.Index( rp->m_GUID ) ) OCPNPointGUIDList.Remove(
-            rp->m_GUID );
+    pOCPNPointList->DeleteObject( op );
+    if( wxNOT_FOUND != OCPNPointGUIDList.Index( op->m_GUID ) ) OCPNPointGUIDList.Remove(
+            op->m_GUID );
     m_nPoints -= 1;
 
     // check all other routes to see if this point appears in any other route
-//    Route *pcontainer_route = g_pRouteMan->FindRouteContainingWaypoint( rp );
+    Path *pcontainer_path = g_pPathMan->FindPathContainingOCPNPoint( op );
 
-//    if( pcontainer_route == NULL ) {
-        rp->m_bIsInPath = false;          // Take this point out of this (and only) route
-//        rp->m_bDynamicName = false;
-//        rp->m_bIsolatedMark = true;        // This has become an isolated mark
-//    }
+    if( pcontainer_path == NULL ) {
+        op->m_bIsInPath = false;          // Take this point out of this (and only) route
+        op->m_bDynamicName = false;
+        op->m_bIsolatedMark = true;        // This has become an isolated mark
+        op->SetTypeString (wxT("Point") );
+        pOCPNDrawConfig->AddNewOCPNPoint( op );
+    }
 
     if( bRenamePoints ) RenameOCPNPoints();
 
-//      if ( m_nPoints > 1 )
-    {
+    if ( m_nPoints > 1 ) {
         pOCPNSelect->AddAllSelectablePathSegments( this );
         pOCPNSelect->AddAllSelectableOCPNPoints( this );
 
@@ -1073,12 +1050,13 @@ void Path::UpdateSegmentDistances()
 OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
         bool bRenamePoints )
 {
-    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, wxString( _T ( "diamond" ) ),
-            GetNewMarkSequenced(), GPX_EMPTY_STRING );
+    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName,
+            GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
-
+    newpoint->SetTypeString( wxT("Boundary Point") );
+    
     int nRP = pOCPNPointList->IndexOf( pRP );
     if ( nRP == 0 ) {
         pOCPNPointList->Insert( pOCPNPointList->GetCount() - 1, newpoint );
@@ -1100,11 +1078,39 @@ OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
     return ( newpoint );
 }
 
+OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, bool bRenamePoints )
+{
+    int nOP = pOCPNPointList->IndexOf( pOP );
+    if( nOP >= m_nPoints - 1 )
+        return NULL;
+    nOP++;
+    
+    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, GetNewMarkSequenced(), wxT("") );
+    newpoint->m_bIsInPath = true;
+    newpoint->m_bDynamicName = true;
+    newpoint->SetNameShown( false );
+    newpoint->SetTypeString( wxT("Boundary Point") );
+    
+    pOCPNPointList->Insert( nOP, newpoint );
+    
+    OCPNPointGUIDList.Insert( pOP->m_GUID, nOP );
+    
+    m_nPoints++;
+    
+    if( bRenamePoints ) RenameOCPNPoints();
+    
+    FinalizeForRendering();
+    UpdateSegmentDistances();
+    
+    return ( newpoint );
+}
+
+
 void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
 {
     //  Rebuild the route selectables
-    pOCPNSelect->DeleteAllSelectableOCPNPoints( path );
-    pOCPNSelect->DeleteAllSelectablePathSegments( path );
+    //pOCPNSelect->DeleteAllSelectableOCPNPoints( path );
+    //pOCPNSelect->DeleteAllSelectablePathSegments( path );
 
     path->RemovePoint( point );
 
@@ -1113,7 +1119,8 @@ void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
         pOCPNDrawConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );
         path = NULL;
-    }
+    } 
+    
     //  Add this point back into the selectables
     pOCPNSelect->AddSelectableOCPNPoint( point->m_lat, point->m_lon, point );
 

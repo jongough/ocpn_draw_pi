@@ -42,6 +42,7 @@
 #include "OCPNPoint.h"
 #include "OCPNDrawConfig.h"
 #include "pathmanagerdialog.h"
+#include "ODRolloverWin.h"
 
 #include "georef.h"
 #include "statwin.h"
@@ -68,12 +69,14 @@
 enum
 {
     ID_OCPNPOINT_MENU_GOTO = 1,
+    ID_OCPNPOINT_MENU_EDIT,
     ID_OCPNPOINT_MENU_DELPOINT,
     ID_OCPNPOINT_MENU_PROPERTIES,
     ID_OCPNPOINT_MENU_COPY,
 
     ID_PATH_MENU_ACTIVATE,
     ID_PATH_MENU_DEACTIVATE,
+    ID_PATH_MENU_MOVE_POINT,
     ID_PATH_MENU_INSERT,
     ID_PATH_MENU_APPEND,
     ID_PATH_MENU_COPY,
@@ -111,6 +114,12 @@ enum
 
 class Boundary;
 class BoundaryProp;
+class SelectItem;
+
+const wxString GpxxColorNames[] = { _("Black"), _("DarkRed"), _("DarkGreen"), _("DarkYellow"), _("DarkBlue"), _("DarkMagenta"), _("DarkCyan"), _("LightGray"), _("DarkGray"), _("Red"), _("Green"), _("Yellow"), _("Blue"), _("Magenta"), _("Cyan"), _("White") };//The last color defined by Garmin is transparent - we ignore it
+const wxColour GpxxColors[] = { wxColour(0x00, 0x00, 0x00), wxColour(0x60, 0x00, 0x00), wxColour(0x00, 0x60, 0x00), wxColour(0x80, 0x80, 0x00), wxColour(0x00, 0x00, 0x60), wxColour(0x60, 0x00, 0x60), wxColour(0x00, 0x80, 0x80), wxColour(0xC0, 0xC0, 0xC0), wxColour(0x60, 0x60, 0x60), wxColour(0xFF, 0x00, 0x00), wxColour(0x00, 0xFF, 0x00), wxColour(0xF0, 0xF0, 0x00), wxColour(0x00, 0x00, 0xFF), wxColour(0xFE, 0x00, 0xFE), wxColour(0x00, 0xFF, 0xFF), wxColour(0xFF, 0xFF, 0xFF) };
+const int StyleValues[] = { -1, wxSOLID, wxDOT, wxLONG_DASH, wxSHORT_DASH, wxDOT_DASH };
+const int WidthValues[] = { -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
 class ocpn_draw_pi : public opencpn_plugin_113
 {
@@ -133,7 +142,9 @@ public:
     bool			eventsEnabled;
     int             m_iCallerId;
     bool            m_bBoundaryEditing;
-
+    bool            m_bPathEditing;
+    bool            m_bOCPNPointEditing;
+    
 
     //    The required PlugIn Methods
     int Init(void);
@@ -204,6 +215,7 @@ public:
     void    DimeControl( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
                   wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline );
 
+
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
     wxCursor    *pCursorUp;
@@ -224,6 +236,9 @@ public:
     int         nPath_State;
     int         nBoundary_State;
     Boundary    *m_pMouseBoundary;
+    Path        *m_pSelectedPath;
+    OCPNPoint   *m_pFoundOCPNPoint;
+    OCPNPoint   *m_pFoundOCPNPointSecond;
     wxPoint     r_rband;
     int         nPoint_State;
     double      m_dStartLat;
@@ -235,6 +250,7 @@ public:
     bool           m_disable_edge_pan;
     double      m_lat, m_lon;
     double      m_pixx, m_pixy;
+    wxPoint     m_cursorPoint;
     
     Undo        *undo;
     
@@ -246,7 +262,7 @@ public:
     int         nBlinkerTick;
     
     void    appendOSDirSlash(wxString* pString);  
-
+    
 
 private:
     void    OnTimer(wxTimerEvent& ev);
@@ -266,6 +282,8 @@ private:
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     
+    wxTimer         m_RolloverPopupTimer;
+    
     
     int               m_show_id;
     int               m_hide_id;
@@ -277,10 +295,7 @@ private:
     StatWin                   *stats;
     ColorScheme               global_color_scheme;
     
-    Path        *m_pSelectedPath;
-    Boundary  *m_pSelectedBoundary;
-    OCPNPoint   *m_pFoundOCPNPoint;
-    OCPNPoint  *m_pFoundOCPNPointSecond;
+    Boundary    *m_pSelectedBoundary;
     
     bool        m_bDrawingBoundary;
     
@@ -292,8 +307,7 @@ private:
     int         m_Mode;
     int         m_numModes;
 
-
-
+    int         m_rollover_popup_timer_msec;
 };
 
 

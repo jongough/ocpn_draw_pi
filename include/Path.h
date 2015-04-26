@@ -59,6 +59,7 @@ public:
     OCPNPoint *GetPoint ( const wxString &guid );
     int GetIndexOf(OCPNPoint *prp);
     OCPNPoint *InsertPointBefore(OCPNPoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
+    OCPNPoint *InsertPointAfter(OCPNPoint *pOP, double rlat, double rlon, bool bRenamePoints = false);
     void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
     void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
     virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);
@@ -139,8 +140,9 @@ public:
     wxString    m_InActiveFillColour;
     bool        m_btemp;
     int         m_hiliteWidth;
+    wxPoint     *m_bpts;
 
-private:
+protected:    
     bool m_bNeedsUpdateBBox;
     wxBoundingBox     RBBox;
 
@@ -151,6 +153,12 @@ private:
     bool        m_bListed;
     double      m_ArrivalRadius;
     bool        m_bcrosses_idl;
+    wxColour    m_col;
+    wxColour    m_fillcol;
+    
+private:
+
+    
 };
 
 WX_DECLARE_LIST(Path, PathList); // establish class Path as list member

@@ -278,7 +278,7 @@ bool OCPNSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                     delete node;
                     
                     if( SELTYPE_OCPNPOINT == SeltypeToDelete ){
-                        RoutePoint *prp = (RoutePoint *)pdata;
+                        OCPNPoint *prp = (OCPNPoint *)pdata;
                         prp->SetSelectNode( NULL );
                     }
                     

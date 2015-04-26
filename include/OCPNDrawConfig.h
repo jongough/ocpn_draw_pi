@@ -43,7 +43,7 @@ class OCPNDrawConfig
         virtual bool AddNewPath(Path *pr, int ConfigRouteNum = -1);
         virtual bool UpdatePath(Path *pr);
         virtual bool DeleteConfigPath(Path *pr);
-
+        
         virtual bool AddNewOCPNPoint(OCPNPoint *pWP, int ConfigRouteNum = -1);
         virtual bool UpdateOCPNPoint(OCPNPoint *pWP);
         virtual bool DeleteOCPNPoint(OCPNPoint *pWP);

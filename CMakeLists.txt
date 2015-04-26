@@ -1,5 +1,5 @@
 ##---------------------------------------------------------------------------
-## Author:      jongough aka. Jon Gough
+# Author:      jongough aka. Jon Gough
 ## Copyright:
 ## License:     wxWidgets License
 ##---------------------------------------------------------------------------
@@ -10,37 +10,17 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 PROJECT(ocpn_draw_pi)
 
 SET(PACKAGE_NAME ocpn_draw_pi)
-SET(PLUGIN_SOURCE_DIR .)
 SET(VERBOSE_NAME ocpn_draw)
 SET(TITLE_NAME OCPNDRAW)
-SET(CPACK_PACKAGE_CONTACT "Del Elson")
+SET(CPACK_PACKAGE_CONTACT "Jon Gough")
+
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "2")
+SET(VERSION_PATCH "0100")
 
 SET(BUNDLE_DATA FALSE)
 
-INCLUDE( VERSION.cmake )
-SET(PLUGIN_VERSION "${PLUGIN_VERSION_MAJOR}.${PLUGIN_VERSION_MINOR}.${PLUGIN_VERSION_PATCH}" )
-
-SET(VERSION_MAJOR ${PLUGIN_VERSION_MAJOR})
-SET(VERSION_MINOR ${PLUGIN_VERSION_MINOR})
-SET(VERSION_PATCH ${PLUGIN_VERSION_PATCH})
-SET(VERSION_DATE ${PLUGIN_VERSION_DATE})
-
-IF (PREFIX)
-    SET(CMAKE_INSTALL_PREFIX ${PREFIX})
-ELSE (PREFIX)
-    IF (NOT CMAKE_INSTALL_PREFIX)
-        SET(CMAKE_INSTALL_PREFIX ${TENTATIVE_PREFIX})
-    ENDIF (NOT CMAKE_INSTALL_PREFIX)
-ENDIF (PREFIX)
-
-
-configure_file(cmake/version.h.in ${CMAKE_SOURCE_DIR}/include/version.h)
-
-# this dummy target is necessary to make sure the ADDITIONAL_MAKE_CLEAN_FILES directive is executed.
-# apparently, the base CMakeLists.txt file must have "some" target to activate all the clean steps.
-ADD_CUSTOM_TARGET(dummy COMMENT "dummy: Done." DEPENDS ${PACKAGE_NAME})
-
-SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
+#SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
 
 SET(CMAKE_BUILD_TYPE Debug)
 
@@ -62,7 +42,7 @@ SET(SRCS
  		src/OCPNDrawConfig.cpp
  		src/OCPNDrawEventHandler.cpp
  		src/OCPNDrawNavObjectChanges.cpp
- 		src/OCPNDrawCanvasMenuHandler.cpp
+# 		src/OCPNDrawCanvasMenuHandler.cpp
 # 		src/OCPNDrawPointInfoImpl.cpp
         src/OCPNDrawPropertiesDialog.cpp
         src/OCPNDrawPropertiesImpl.cpp
@@ -71,8 +51,10 @@ SET(SRCS
  		src/ODPointPropertiesDialog.cpp
  		src/ODPointPropertiesImpl.cpp
  		src/ODPositionParser.cpp
+ 		src/ODRolloverWin.cpp
  		src/ODstyles.cpp
 # 		src/ODUndo.cpp
+        src/ODUtils.cpp
  		src/OCPNDrawicons.cpp
         	src/jsonreader.cpp
         	src/jsonval.cpp
@@ -88,34 +70,23 @@ SET(HDRS
  		include/PathMan.h
  		include/pathmanagerdialog.h
  		include/PathProp.h
-# 		include/LinkPropDlg.h
-# 		include/Layer.h
  		include/Path.h
  		include/OCPNPoint.h
  		include/OCPNDrawConfig.h
  		include/OCPNDrawEventHandler.h
  		include/OCPNDrawNavObjectChanges.h
- 		include/OCPNDrawCanvasMenuHandler.h
  		include/OCPNDrawPropertiesDialog.h
  		include/OCPNDrawPropertiesImpl.h
-# 		include/OCPNDrawPointInfoImpl.h
-#        include/ODHelper.h
-#        incluse/ODIcons.h
  		include/ODPointPropertiesDialog.h
  		include/ODPointPropertiesImpl.h
  		include/ODPositionParser.h
+ 		include/ODRolloverWin.h
 # 		include/ODUndo.h
- 		include/glOCPNDrawChartCanvas.h
+ 		include/ODUtils.h
  		include/ODvector2D.h
-# 		include/RoutePoint.h
-# 		include/ocpn_types.h
-# 		include/navutil.h
-# 		include/Route.h
-# 		include/navutil.h
  		include/OCPNDrawicons.h
-# 		include/chcanv.h
-		include/version.h
-        	include/wx/json_defs.h
+#		include/version.h
+#        	include/wx/json_defs.h
        		include/wx/jsonreader.h
         	include/wx/jsonval.h
         	include/wx/jsonwriter.h
@@ -123,28 +94,16 @@ SET(HDRS
 
 SET(OCPNSRC 
 		ocpnsrc/bbox.cpp
-#		ocpnsrc/chart1.cpp
-#		ocpnsrc/chcanv.cpp
 		ocpnsrc/cutil.cpp
 		ocpnsrc/FontDesc.cpp
 		ocpnsrc/FontMgr.cpp
 		ocpnsrc/geodesic.cpp
 		ocpnsrc/georef.cpp
-#		ocpnsrc/glChartCanvas.cpp
-		ocpnsrc/gpxdocument.cpp
 		ocpnsrc/Hyperlink.cpp
 		ocpnsrc/Layer.cpp
-#		ocpnsrc/navutil.cpp
         ocpnsrc/ocpndc.cpp
-#		ocpnsrc/OCPNRegion.cpp
-#		ocpnsrc/OCPNPlatform.cpp
-#		ocpnsrc/pluginmanager.cpp
         ocpnsrc/pugixml.cpp
-#		ocpnsrc/Route.cpp
 		ocpnsrc/SelectItem.cpp
-#		ocpnsrc/undo.cpp
-#		ocpnsrc/viewport.cpp
-#		ocpnsrc/nmea0183/nmea0183.cpp
 )
 #SET(OCPNHDRS
 #		ocpninclude/RoutePoint.h
@@ -152,16 +111,6 @@ SET(OCPNSRC
 #		ocpninclude/routeman.h
 #		ocpninclude/routemanagerdialog.h
 #)
-IF(WIN32)
-SET(SRC_LTINYXML
-		ocpnsrc/tinyxml.cpp
-		ocpninclude/tinyxml.h
-		ocpnsrc/tinyxmlerror.cpp
-		ocpnsrc/tinyxmlparser.cpp
-#		src/tinystr.cpp
-#		ocpninclude/tinystr.h
-)
-ENDIF(WIN32)
 
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
@@ -169,8 +118,29 @@ INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/bitmaps)
+
+IF(UNIX)
+ INCLUDE("cmake/FindTinyXML.cmake")
+ FIND_PACKAGE(TinyXML QUIET)
+ENDIF(UNIX)
+
+IF(TINYXML_FOUND)
+ message (STATUS "Building with system tinyxml")
+ INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC})
+ TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
+ELSE(TINYXML_FOUND)
+ message (STATUS "Building with embedded tinyxml")
+ INCLUDE_DIRECTORIES(src/tinyxml/)
+ SET(SRC_LTINYXML
+            src/tinyxml/tinyxml.cpp
+            src/tinyxml/tinyxmlparser.cpp
+            src/tinyxml/tinyxmlerror.cpp
+ )
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${SRC_LTINYXML})
+ENDIF(TINYXML_FOUND)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${SRC_LTINYXML})
+
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")

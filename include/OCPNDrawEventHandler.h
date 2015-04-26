@@ -29,23 +29,51 @@
 #include <wx/event.h>
 #include <wx/timer.h>
 #include "ocpn_draw_pi.h"
+#include "ODRolloverWin.h"
 
-#define HEAD_DOG_TIMER  1001
+// Forward declarations
+class SelectItem;
+
+enum
+{
+    HEAD_DOG_TIMER  = 1000,
+    ODROPOPUP_TIMER,
+    ROLLOVER_TIMER,
+    
+    LAST_TIMER
+};
 
 class OCPNDrawEventHandler : public wxEvtHandler
 {
     public:
         OCPNDrawEventHandler(ocpn_draw_pi *parent);
-        virtual ~OCPNDrawEventHandler();
+        OCPNDrawEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, OCPNPoint *selectedOCPNPoint);
+        ~OCPNDrawEventHandler();
         
         void OnTimerEvent( wxTimerEvent &event );
         void PopupMenuHandler( wxCommandEvent & event );
+        void OnRolloverPopupTimerEvent( wxTimerEvent &event );
+        void PopupMenu( int x, int y, int seltype );
+        void SetPath( Path *path );
+        void SetPoint ( OCPNPoint *point );
+        void SetCanvas( ChartCanvas *canvas );
+        void SetLatLon( double lat, double lon );
+
         
     protected:
     private:
-        ocpn_draw_pi  *m_parent;
+        ocpn_draw_pi    *m_parent;
+        ChartCanvas     *m_parentcanvas;
+        int             popx, popy;
+        Path            *m_pSelectedPath;
+        OCPNPoint       *m_pFoundOCPNPoint;
+        double          m_cursor_lat;
+        double          m_cursor_lon;
+
         
-        DECLARE_EVENT_TABLE();
+        
+        
+//        DECLARE_EVENT_TABLE();
 };
 
 #endif // OCPNDRAWEVENTHANDLER_H

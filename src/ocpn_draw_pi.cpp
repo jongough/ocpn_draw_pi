@@ -22,9 +22,18 @@
 *   You should have received a copy of the GNU General Public License     *
 *   along with this program; if not, write to the                         *
 *   Free Software Foundation, Inc.,                                       *
-*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ***************************************************************************
 */
+#define DEBUG_BUILD
+#ifdef DEBUG_BUILD
+#  define DEBUG(x) do { \
+time_t now = time(0); \
+tm* localtm = localtime(&now); \
+std::cout << asctime(localtm) << x << std::endl; } while (0)
+#else
+#  define DEBUG(x) do {} while (0)
+#endif
 //#define _2_9_x_ // uncomment this to compile for 2.9.x
 
 #ifndef  WX_PRECOMP
@@ -38,15 +47,18 @@
 #include "BoundaryProp.h"
 #include "Path.h"
 #include "PathMan.h"
+#include "pathmanagerdialog.h"
 #include "PointMan.h"
 #include "OCPNDrawConfig.h"
-#include "OCPNPoint.h"
-#include "multiplexer.h"
-#include "OCPNSelect.h"
-#include "pathmanagerdialog.h"
-#include "OCPNDrawPropertiesImpl.h"
-#include "ODPointPropertiesImpl.h"
 #include "OCPNDrawEventHandler.h"
+#include "OCPNDrawPropertiesImpl.h"
+#include "OCPNDrawicons.h"
+#include "OCPNPoint.h"
+#include "OCPNSelect.h"
+#include "ODPointPropertiesImpl.h"
+#include "ODUtils.h"
+#include "SelectItem.h"
+
 #include "chcanv.h"
 #include "Layer.h"
 //#include "styles.h"
@@ -54,6 +66,7 @@
 #include "geodesic.h"
 #include "FontMgr.h"
 #include "IDX_entry.h"
+#include "multiplexer.h"
 #include "wx/stdpaths.h"
 #include <wx/timer.h>
 #include <wx/event.h>
@@ -82,51 +95,55 @@ static const long long lNaN = 0xfff8000000000000;
 #define NAN (*(double*)&lNaN)
 #endif
 
-#include "OCPNDrawicons.h"
 
-ocpn_draw_pi    *g_ocpn_draw_pi;
-PathList        *pPathList;
-PointMan        *pOCPNPointMan;
-bool            g_bODIsNewLayer;
-int             g_ODLayerIdx;
-int             g_path_line_width;
-wxString        g_OD_default_wp_icon;
-double          g_dLat;
-double          g_dLon;
-OCPNSelect      *pOCPNSelect;
-OCPNDrawConfig  *pOCPNDrawConfig;
-Multiplexer     *g_pODMUX;
-float           g_ODGLMinSymbolLineWidth;
-wxString        *g_SData_Locn;
-void            *g_ppimgr;
-PathMan          *g_pPathMan;
-wxString         g_default_OCPNPoint_icon;
-PathProp       *pPathPropDialog;
-PathManagerDialog *pPathManagerDialog;
-ODPointPropertiesImpl *pODPointPropDialog;
-OCPNDrawPropertiesImpl *pOCPNDrawPropDialog;
-PlugInManager       *g_OD_pi_manager;
-ocpnStyle::StyleManager* g_ODStyleManager;
-BoundaryList              *pBoundaryList;
+ocpn_draw_pi            *g_ocpn_draw_pi;
+PathList                *pPathList;
+PointMan                *pOCPNPointMan;
+bool                    g_bODIsNewLayer;
+int                     g_ODLayerIdx;
+int                     g_path_line_width;
+wxString                g_OD_default_wp_icon;
+double                  g_dLat;
+double                  g_dLon;
+int                     g_cursor_x;
+int                     g_cursor_y;
+OCPNSelect              *pOCPNSelect;
+OCPNDrawConfig          *pOCPNDrawConfig;
+Multiplexer             *g_pODMUX;
+float                   g_ODGLMinSymbolLineWidth;
+wxString                *g_SData_Locn;
+void                    *g_ppimgr;
+PathMan                 *g_pPathMan;
+wxString                g_default_OCPNPoint_icon;
+PathProp                *pPathPropDialog;
+PathManagerDialog       *pPathManagerDialog;
+ODPointPropertiesImpl   *g_pODPointPropDialog;
+OCPNDrawPropertiesImpl  *g_pOCPNDrawPropDialog;
+PlugInManager           *g_OD_pi_manager;
+ocpnStyle::StyleManager *g_ODStyleManager;
+BoundaryList            *pBoundaryList;
 OCPNPointList           *pOCPNPointList;
-ChartCanvas     *ocpncc1;
+ChartCanvas             *ocpncc1;
+Path                    *g_PathToEdit;
+ODRolloverWin           *g_pPathRolloverWin;
+SelectItem              *g_pRolloverPathSeg;
+
 wxString    g_ActiveBoundaryLineColour;
 wxString    g_InActiveBoundaryLineColour;
 wxString    g_ActiveBoundaryFillColour;
 wxString    g_InActiveBoundaryFillColour;
-int          g_BoundaryLineWidth; 
-int          g_BoundaryLineStyle;
+int         g_BoundaryLineWidth; 
+int         g_BoundaryLineStyle;
 wxString    g_ActivePathLineColour;
 wxString    g_InActivePathLineColour;
 wxString    g_ActivePathFillColour;
 wxString    g_InActivePathFillColour;
-int          g_PathLineWidth; 
-int          g_PathLineStyle;
+int         g_PathLineWidth; 
+int         g_PathLineStyle;
 wxString    g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
-wxString    *g_pImage;
 wxString    *g_pNavObjs;
 
 OCPNDrawEventHandler    *g_OCPNDrawEventHandler;
@@ -140,28 +157,29 @@ wxColour     g_colourOCPNPointRangeRingsColour;
 wxString     g_sOCPNPointIconName;
 
 PlugIn_ViewPort *g_pivp;
-ocpnDC      *g_pDC;
-bool        g_bShowMag;
-double      gVar;
-double      g_UserVar;
-double      g_n_arrival_circle_radius;
-wxRect       g_blink_rect;
-bool         g_btouch;
+ocpnDC          *g_pDC;
+bool            g_bShowMag;
+double          g_dVar;
+double          g_UserVar;
+double          g_n_arrival_circle_radius;
+wxRect          g_blink_rect;
+bool            g_btouch;
 
-int              g_LayerIdx;
-bool             g_bShowLayers;
-wxString         g_VisibleLayers;
-wxString         g_InvisibleLayers;
-LayerList        *pLayerList;
-int              g_navobjbackups;
+int             g_LayerIdx;
+bool            g_bShowLayers;
+wxString        g_VisibleLayers;
+wxString        g_InvisibleLayers;
+LayerList       *pLayerList;
+int             g_navobjbackups;
 
-OCPNPoint      *pAnchorWatchPoint1;
-OCPNPoint      *pAnchorWatchPoint2;
+OCPNPoint       *pAnchorWatchPoint1;
+OCPNPoint       *pAnchorWatchPoint2;
 
-IDX_entry          *gpIDX;
+IDX_entry       *gpIDX;
 
-wxString g_locale;
-int      g_click_stop;
+wxString        g_locale;
+int             g_click_stop;
+bool            g_bConfirmObjectDelete;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -213,8 +231,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 	wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
 #ifdef __WXMSW__
-	wxString stdDataDir = std_path.GetConfigDir(); // Location of writable data store, win7 = c:\ProgramData\opencpn
-	wxString stdProgDir = std_path.GetDataDir(); // Location of the current excutable, win7 = c:\Program Files\OpenCPN
+    wxString stdDataDir = std_path.GetConfigDir(); // Location of writable data store, win7 = c:\ProgramData\opencpn
+    wxString stdProgDir = std_path.GetDataDir(); // Location of the current excutable, win7 = c:\Program Files\OpenCPN
     appendOSDirSlash( &stdProgDir );
     stdProgDir.append( wxT("share") );
     appendOSDirSlash( &stdProgDir );
@@ -222,17 +240,20 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 #endif
 #ifdef __WXGTK__
 #ifndef NDEBUG
+    // this is for development on linux
     wxString stdDataDir = std_path.GetResourcesDir();
     wxString stdProgDir = std_path.GetResourcesDir();
     wxString stdHomeDir = std_path.GetUserConfigDir();
 #else
     wxString stdDataDir = std_path.GetResourcesDir();
-	wxString stdProgDir = std_path.GetUserDataDir();
+    wxString stdProgDir = std_path.GetUserDataDir();
     wxString stdHomeDir = std_path.GetUserConfigDir();
 #endif 
 #endif
 #ifdef __WXOSX__
-	wxString stdPath  = std_path.GetUserConfigDir();   // should be ~/Library/Preferences	
+    wxString stdDataDir = std_path.GetResourcesDir();
+    wxString stdProgDir = std_path.GetUserDataDir();
+    wxString stdHomeDir = std_path.GetUserConfigDir();   // should be ~/Library/Preferences	
 #endif
     
 	g_pHome_Locn = new wxString();
@@ -257,18 +278,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
     
-    g_pImage = new wxString();
-    g_pImage->append( stdProgDir );
-    appendOSDirSlash( g_pImage );
-    g_pImage->Append(_T("OCPNDraw"));
-    appendOSDirSlash( g_pImage );
-    if ( !wxDir::Exists(*g_pImage))
-        wxMkdir( *g_pImage );
-    g_pImage->append( wxS("images") );
-    appendOSDirSlash( g_pImage );
-    if ( !wxDir::Exists(*g_pImage))
-        wxMkdir( *g_pImage );
-        
     g_pNavObjs = new wxString();
     g_pNavObjs->append(stdDataDir);
     appendOSDirSlash(g_pNavObjs);
@@ -283,22 +292,29 @@ ocpn_draw_pi::~ocpn_draw_pi()
 //    RemovePlugInTool(m_leftclick_boundary_id);
     pOCPNDrawConfig->UpdateNavObj();
     SaveConfig();
+    
 }
 
 int ocpn_draw_pi::Init(void)
 {
 	dlgShow = false;
 	m_bBoundaryEditing = false;
+    m_bPathEditing = false;
+    m_bOCPNPointEditing = false;
     nBoundary_State = 0;
     nConfig_State = 0;
     m_pMouseBoundary = NULL;
     m_bDrawingBoundary = NULL;
-    gVar = NAN;
+    m_pFoundOCPNPoint = NULL;
+    g_dVar = NAN;
+    nBoundary_State = 0;
+    nPoint_State = 0;
+    nPath_State = 0;
 
     // Drawing modes from toolbar
     m_Mode = 0;
-    m_numModes = ID_LAST_MODE - 1
-    ;
+    m_numModes = ID_LAST_MODE - 1;
+    
     // Not sure what this is
     AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
 
@@ -339,12 +355,16 @@ int ocpn_draw_pi::Init(void)
     // Now initialize UI Style.
     g_ODStyleManager = new ocpnStyle::StyleManager();
     
+    ocpncc1 = (ChartCanvas *)m_parent_window;
+    
     // Create an OCPN Draw event handler
     g_OCPNDrawEventHandler = new OCPNDrawEventHandler( g_ocpn_draw_pi );
+    g_pPathRolloverWin = new ODRolloverWin( m_parent_window );
+    g_pRolloverPathSeg = NULL;
     
-//    MyFrame *pFrame = g_OD_pi_manager->GetParentFrame();
-//    ocpncc1 = pFrame->GetCanvasWindow();    
-    ocpncc1 = (ChartCanvas *)m_parent_window;
+    m_RolloverPopupTimer.SetOwner( ocpncc1, ODROPOPUP_TIMER );
+    m_rollover_popup_timer_msec = 20;
+    ocpncc1->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
     
     pCurrentCursor = ocpncc1->pCursorArrow;
 
@@ -414,7 +434,10 @@ void ocpn_draw_pi::LateInit(void)
 
 bool ocpn_draw_pi::DeInit(void)
 {
-	shutdown(false);
+    ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( OCPNDrawEventHandler::OnRolloverPopupTimerEvent ) );
+    delete g_OCPNDrawEventHandler;
+    delete g_pPathRolloverWin;
+    shutdown(false);
 	return true;
 }
 
@@ -513,16 +536,16 @@ int ocpn_draw_pi::GetToolbarToolCount(void)
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
 	//dlgShow = false;
-    if( NULL == pOCPNDrawPropDialog )
-        pOCPNDrawPropDialog = new OCPNDrawPropertiesImpl( parent );
+    if( NULL == g_pOCPNDrawPropDialog )
+        g_pOCPNDrawPropDialog = new OCPNDrawPropertiesImpl( parent );
 
-    pOCPNDrawPropDialog->SetDialogSize();
-    pOCPNDrawPropDialog->UpdateProperties();
+    g_pOCPNDrawPropDialog->SetDialogSize();
+    g_pOCPNDrawPropDialog->UpdateProperties();
 
-    pOCPNDrawPropDialog->ShowModal();
+    g_pOCPNDrawPropDialog->ShowModal();
 
-    pOCPNDrawPropDialog->Destroy();
-    pOCPNDrawPropDialog = NULL;
+    g_pOCPNDrawPropDialog->Destroy();
+    g_pOCPNDrawPropDialog = NULL;
 
 }
 
@@ -666,6 +689,9 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "UserMagVariation" ), &umv );
         if(umv.Len())
             umv.ToDouble( &g_UserVar );
+        
+        // TODO implement this into the prefereces
+        g_bConfirmObjectDelete = TRUE;
 
     }
     
@@ -710,6 +736,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
 {
     bool bret = FALSE;
+
     if( event.GetKeyCode() < 128 )            //ascii
     {
         int key_char = event.GetKeyCode();
@@ -758,13 +785,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     int x, y;
     bool bret = FALSE;
     bool bRefresh = FALSE;
+    
+    g_cursor_x = event.GetX();
+    g_cursor_y = event.GetY();
 
-        //    Route Creation Rubber Banding
-
-    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 ) {
+    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() )
+        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
+    else
+        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        
+    
+    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bOCPNPointEditing) {
         ocpncc1->SetCursor( *pCurrentCursor );
         bRefresh = TRUE;
-//        RequestRefresh( m_parent_window );
     }
     
     if( nBoundary_State >= 2 ) {
@@ -772,14 +805,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = event.GetY();
         m_bDrawingBoundary = true;
 
-// TODO (jon#1#): Need to get access to 'CheckEdgePan' 
-//        ocpncc1->CheckEdgePan( x, y, event.Dragging(), 5, 2 );
+// TODO (jon#1#): Need to get access to 'CheckEdgePan'. Patch has been submitted - 18/04/2015
+        //CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
         bRefresh = TRUE;
 //        RequestRefresh( m_parent_window );
     }
 
     if ( event.LeftDown() ) {
-        if( m_iCallerId == m_leftclick_boundary_id )
+        if( m_iCallerId == m_leftclick_boundary_id ) {
             if (nBoundary_State > 0 )
             {   
                 ocpncc1->SetCursor( *pCurrentCursor );
@@ -789,64 +822,150 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 ocpncc1->SetCursor( *pCurrentCursor );
                 bret = CreatePointLeftClick( event );
             }
-
+        } else if( m_bPathEditing ) {
+            pCurrentCursor = ocpncc1->pCursorCross;
+            if( !m_pFoundOCPNPoint ) {
+                SelectItem *pFindPP;
+                pFindPP = pOCPNSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
+                if( pFindPP ) {
+                    m_pFoundOCPNPoint = (OCPNPoint *)pFindPP->m_pData1;
+                }
+                bret = TRUE;
+            }
+            bRefresh = TRUE;
+        } else if ( m_bOCPNPointEditing ) {
+            pCurrentCursor = ocpncc1->pCursorCross;
+            bret = TRUE;
+        }
+        
     } 
     
     if( event.LeftUp() ) {
-        bool b_startedit_boundary = false;
-    if (m_iCallerId == m_leftclick_boundary_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
-        bret = true;
-    }
-    /*	else
-        if( m_bBoundaryEditing ) {            // End of RoutePoint drag
-            if( m_pOCPNPointEditTarget ) {
-            pOCPNSelect->UpdateSelectablePathSegments( m_pOCPNPointEditTarget );
-            m_pOCPNPointEditTarget->m_bBlink = false;
-            
-            if( m_pEditBoundaryArray ) {
-                for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
-                Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
-                if( g_pPathMan->IsBoundaryValid(pb) ) {
-                    pb->FinalizeForRendering();
-                    pb->UpdateSegmentDistances();
-                    pb->m_bIsBeingEdited = false;
-
-                    pOCPNDrawConfig->UpdatePath( pb );
-                    
-                    pb->SetHiLite( 0 );
-                }
-                }
-                Refresh( false );
+        if (m_iCallerId == m_leftclick_boundary_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
+            bret = true;
+        }
+        if( m_bPathEditing || ( m_bOCPNPointEditing && m_pSelectedPath )) {
+            m_bPathEditing = FALSE;
+            m_pSelectedPath->m_bIsBeingEdited = FALSE;
+            if( m_pFoundOCPNPoint ) {
+                //pOCPNSelect->UpdateSelectablePathSegments( m_pFoundOCPNPoint );
+                pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
+                pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
+                m_pFoundOCPNPoint->m_bBlink = false;
+                m_pFoundOCPNPoint->m_bIsBeingEdited = false;
             }
-
-            //    Update the BoundaryProperties Dialog, if currently shown
-            if( ( NULL != pBoundaryPropDialog ) && ( pBoundaryPropDialog->IsShown() ) ) {
-                if( m_pEditBoundaryArray ) {
-                for( unsigned int ib = 0; ib < m_pEditBoundaryArray->GetCount(); ib++ ) {
-                    Boundary *pb = (Boundary *) m_pEditBoundaryArray->Item( ib );
-                    if( g_pPathMan->IsBoundaryValid(pb) ) {
-                    pBoundaryPropDialog->SetBoundaryAndUpdate( pb, true );
+            
+            m_pSelectedPath->FinalizeForRendering();
+            m_pSelectedPath->UpdateSegmentDistances();
+            bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
+            pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
+            pOCPNDrawConfig->UpdatePath( m_pSelectedPath );
+            pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
+            
+            if( m_pSelectedPath->pOCPNPointList ) {
+                for( unsigned int ip = 0; ip < m_pSelectedPath->pOCPNPointList->GetCount(); ip++ ) {
+                    Path *pp = (Path *) m_pSelectedPath->pOCPNPointList->Item( ip );
+                    if( g_pPathMan->IsPathValid(pp) ) {
+                        pp->FinalizeForRendering();
+                        pp->UpdateSegmentDistances();
+                        pp->m_bIsBeingEdited = false;
+                        
+                        pOCPNDrawConfig->UpdatePath( pp );
+                        
+                        pp->SetHiLite( 0 );
                     }
                 }
+                bRefresh = TRUE;
+            }
+            
+            //    Update the PathProperties Dialog, if currently shown
+            if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) {
+                if( m_pSelectedPath->pOCPNPointList ) {
+                    for( unsigned int ip = 0; ip < m_pSelectedPath->pOCPNPointList->GetCount(); ip++ ) {
+                        Path *pp = (Path *) m_pSelectedPath->pOCPNPointList->Item( ip );
+                        if( g_pPathMan->IsPathValid(pp) ) {
+                            pPathPropDialog->SetPathAndUpdate( pp, true );
+                        }
+                    }
                 }
             }
-
-            m_pOCPNPointEditTarget->m_bPtIsSelected = false;
-            m_pOCPNPointEditTarget->m_bIsBeingEdited = false;
             
-            delete m_pEditBoundaryArray;
-            m_pEditBoundaryArray = NULL;
-            undo->AfterUndoableAction( m_pRoutePointEditTarget );
-            }
+            //m_pSelectedPath->m_bPtIsSelected = false;
+            
+            // TODO reimplement undo
+            //undo->AfterUndoableAction( m_pRoutePointEditTarget );
+            m_pSelectedPath = NULL;
+            m_pFoundOCPNPoint = NULL;
+            pCurrentCursor = ocpncc1->pCursorArrow;
+            bRefresh = TRUE;
+            bret = TRUE;
+        } else if( m_pFoundOCPNPoint && m_bOCPNPointEditing ) {
+            m_bOCPNPointEditing = FALSE;
+            m_pFoundOCPNPoint->m_bIsBeingEdited = FALSE;
+            pCurrentCursor = ocpncc1->pCursorArrow;
+            pOCPNSelect->DeleteSelectableOCPNPoint( m_pFoundOCPNPoint );
+            pOCPNSelect->AddSelectableOCPNPoint( m_cursor_lat, m_cursor_lon, m_pFoundOCPNPoint );
+            bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
+            pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
+            pOCPNDrawConfig->UpdateOCPNPoint( m_pFoundOCPNPoint );
+            pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
 
-            InvalidateGL();
-            m_bBoundaryEditing = false;
-            m_pRoutePointEditTarget = NULL;
-            if( !g_FloatingToolbarDialog->IsShown() ) gFrame->SurfaceToolbar();
+            m_pSelectedPath = NULL;
+            m_pFoundOCPNPoint = NULL;
+            
+            bret = TRUE;
         }
-*/
-      }
-    
+
+    }
+  
+    if( event.Dragging() ) {
+        if( event.LeftIsDown() ) {
+/*            if( m_pFoundOCPNPoint ) {
+                pCurrentCursor = ocpncc1->pCursorCross;
+                m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                //pOCPNSelect->UpdateSelectablePathSegments(m_pFoundOCPNPoint );
+                if( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                bRefresh = TRUE;
+                bret = TRUE;
+            }
+*/            
+            if( m_pFoundOCPNPoint )
+            {
+                if( m_bPathEditing )
+                {
+                    pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                    m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                    pOCPNSelect->UpdateSelectablePathSegments( m_pFoundOCPNPoint );
+                    m_pSelectedPath->FinalizeForRendering();
+                    m_pSelectedPath->UpdateSegmentDistances();
+                    m_pSelectedPath->SetHiLite( 0 );
+                    
+                    //    Update the PathProperties Dialog, if currently shown
+                    if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) pPathPropDialog->UpdateProperties( m_pSelectedPath );
+                    if( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                    
+                    bRefresh = TRUE;
+                    bret = FALSE;
+                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                } else if ( m_bOCPNPointEditing ) {
+                    m_pFoundOCPNPoint->m_lat = m_cursor_lat;
+                    m_pFoundOCPNPoint->m_lon = m_cursor_lon;
+                    
+                    if ( g_pODPointPropDialog && m_pFoundOCPNPoint == g_pODPointPropDialog->GetOCPNPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                    
+                    bRefresh = TRUE;
+                    bret = FALSE;
+                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                }
+            }
+            
+        }
+        
+    }
     if ( event.RightDown() ) {
         if ( nBoundary_State == 1 || nPoint_State == 1 ) {
             m_Mode++;
@@ -909,14 +1028,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             pFindPathSeg = pOCPNSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
             // start           
             m_pFoundOCPNPoint = NULL;
+            m_pSelectedPath = NULL;
             if( pFindPP ) {
                 OCPNPoint *pFirstVizPoint = NULL;
                 OCPNPoint *pFoundActiveOCPNPoint = NULL;
                 OCPNPoint *pFoundVizOCPNPoint = NULL;
                 Path *pSelectedActivePath = NULL;
                 Path *pSelectedVizPath = NULL;
-                //Boundary *pSelectedActiveBoundary = NULL;
-                //Boundary *pSelectedVizBoundary = NULL;
 
                 //There is at least one OCPNpoint, so get the whole list
                 SelectableItemList SelList = pOCPNSelect->FindSelectionList( slat, slon,
@@ -950,7 +1068,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
                     // Use path array to choose the appropriate path
                     // Give preference to any active path, otherwise select the first visible path in the array for this point
-                    m_pSelectedPath = NULL;
                     if( ppath_array ) {
                         for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                             Path *pp = (Path *) ppath_array->Item( ip );
@@ -1030,7 +1147,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
 
             if( 0 != seltype ) {
-                CanvasPopupMenu( event.GetX(), event.GetY(), seltype );
+                g_OCPNDrawEventHandler->SetCanvas( ocpncc1 );
+                g_OCPNDrawEventHandler->SetPath( m_pSelectedPath );
+                g_OCPNDrawEventHandler->SetPoint( m_pFoundOCPNPoint );
+                g_OCPNDrawEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
+                g_OCPNDrawEventHandler->PopupMenu( event.GetX(), event.GetY(), seltype );
+                
                 //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
                 bret = TRUE;
@@ -1039,6 +1161,28 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 //end           
         }
     }
+    
+    //      Check to see if there is a path under the cursor
+    //      If so, start the rollover timer which creates the popup
+    bool b_start_rollover = false;
+    if(!b_start_rollover && !m_bPathEditing){
+        SelectableItemList SelList = pOCPNSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
+        wxSelectableItemListNode *node = SelList.GetFirst();
+        while( node ) {
+            SelectItem *pFindSel = node->GetData();
+            
+            Path *pp= (Path *) pFindSel->m_pData3;        //candidate
+            
+            if( pp && pp->IsVisible() ){
+                b_start_rollover = true;
+                break;
+            }
+            node = node->GetNext();
+        }       // while
+    }
+    
+    if( b_start_rollover )
+        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
     
     if (bret) ocpncc1->SetCursor( *pCurrentCursor );
 
@@ -1053,7 +1197,7 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     m_cursor_lat = lat;
     m_cursor_lon = lon;
-    
+    if( g_OCPNDrawEventHandler ) g_OCPNDrawEventHandler->SetLatLon( lat, lon );
 }
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
@@ -1091,9 +1235,11 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
 bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
 {
     m_vp = vp;
+    g_pivp = vp;
+    
     ocpnDC ocpnmdc( *pmdc );
-
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0) {
+    
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
 
@@ -1109,8 +1255,8 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
     llbb.SetMax( pivp->lon_max, pivp->lat_max );
-
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 ) {
+    
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
     
@@ -1128,8 +1274,8 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     g_pivp = pivp;
 
     g_pDC = new ocpnDC();
-
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0) {
+    
+    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bOCPNPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
 
@@ -1217,7 +1363,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
         int hilite_offset = 3;
     #ifdef __WXMAC__
         wxScreenDC sdc;
-        sdc.GetTextExtent(routeInfo, &w, &h, NULL, NULL, dFont);
+        sdc.GetTextExtent( pathInfo, &w, &h, NULL, NULL, dFont );
     #else
         dc.GetTextExtent( pathInfo, &w, &h );
     #endif
@@ -1461,7 +1607,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Point") );
         pMousePoint->m_bIsolatedMark = TRUE;
@@ -1536,7 +1682,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     }
 
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), GPX_EMPTY_STRING );
+        pMousePoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Boundary Point") );
 
@@ -1585,7 +1731,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
                         if( i < segmentCount ) {
                             gcPoint = new OCPNPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
-                                    GPX_EMPTY_STRING );
+                                    wxT("") );
                             gcPoint->SetNameShown( false );
                             gcPoint->SetTypeString( wxS("Boundary Point") );
                             pOCPNDrawConfig->AddNewOCPNPoint( gcPoint, -1 );
@@ -1673,6 +1819,8 @@ void ocpn_draw_pi::PopupMenuHandler(wxCommandEvent& ev)
 	return;
 }
 
+
+/*
 void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
 {
     wxMenu* contextMenu = new wxMenu;
@@ -1685,82 +1833,7 @@ void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
 
     popx = x;
     popy = y;
-/*
-#ifdef __WXGTK__
-#ifdef ocpnUSE_GTK_OPTIMIZE
-    //  This code changes the background color on the popup context menu
-    wxColour back_color
-    GetGlobalColor( wxS("UIBCK"), &black_color );
-    GdkColor color;
 
-    color.red = back_color.Red() << 8;
-    color.green = back_color.Green() << 8;
-    color.blue = back_color.Blue() << 8;
-
-//    gtk_widget_modify_bg (GTK_WIDGET(contextMenu->m_menu), GTK_STATE_NORMAL, &color);
-#endif
-#endif
-
-    if( seltype == SELTYPE_PATHCREATE ) {
-        MenuAppend( contextMenu, ID_PATH_MENU_FINISH, _menuText( _( "End Path" ), _("Esc") ) );
-    }
-
-    if( undo->AnythingToUndo() ) {
-        wxString undoItem;
-        undoItem << _("Undo") << _T(" ") << undo->GetNextUndoableAction()->Description();
-        MenuPrepend( contextMenu, ID_UNDO, _menuText( undoItem, _T("Ctrl-Z") ) );
-    }
-
-    if( undo->AnythingToRedo() ) {
-        wxString redoItem;
-        redoItem << _("Redo") << _T(" ") << undo->GetNextRedoableAction()->Description();
-#ifdef __WXOSX__
-        MenuPrepend( contextMenu, ID_REDO, _menuText( redoItem, _T("Shift-Ctrl-Z") ) );
-#else
-        MenuPrepend( contextMenu, ID_REDO, _menuText( redoItem, _T("Ctrl-Y") ) );
-#endif
-    }
-
-    MenuAppend( contextMenu, ID_DEF_MENU_DROP_OCPNPOINT, _menuText( _( "Drop OCPN Point" ), _T("Shift-Ctrl-M") ) );
-
-    MenuAppend( contextMenu, ID_DEF_MENU_GOTOPOSITION, _("Center View...") );
-
-    bool full_toggle_added = false;
-    if(g_btouch){
-        MenuAppend( contextMenu, ID_DEF_MENU_TOGGLE_FULL, _("Toggle Full Screen") );
-        full_toggle_added = true;
-    }
-        
-    
-    if(!full_toggle_added){
-        if(gFrame->IsFullScreen()){
-            MenuAppend( contextMenu, ID_DEF_MENU_TOGGLE_FULL, _("Toggle Full Screen") );
-        }
-    }
-        
-    
-    Kml* kml = new Kml;
-    int pasteBuffer = kml->ParsePasteBuffer();
-    if( pasteBuffer != KML_PASTE_INVALID ) {
-        switch( pasteBuffer ) {
-            case KML_PASTE_OCPNPOINT: {
-                MenuAppend( contextMenu, ID_PASTE_OCPNPOINT, wxS( "Paste OCPNPoint" ) );
-                break;
-            }
-            case KML_PASTE_PATH: {
-                MenuAppend( contextMenu, ID_PASTE_PATH, wxS( "Paste Path" ) );
-                break;
-            }
-        }
-    }
-    delete kml;
-
-#ifdef __WXMSW__
-    //  If we dismiss the context menu without action, we need to discard some mouse events....
-    //  Eat the next 2 button events, which happen as down-up on MSW XP
-    g_click_stop = 2;
-#endif
-*/
     //  This is the default context menu
     menuFocus = contextMenu;
 
@@ -1829,9 +1902,62 @@ void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
     }
 
     //        Invoke the correct focused drop-down menu
-    //parent->PopupMenu( menuFocus, x, y );
     ocpncc1->PopupMenu( menuFocus, x, y );
-
+    
+    wxwxMenuItemListNode *node = menuFocus->GetMenuItems().GetFirst();
+    
+    while( node ) {
+        wxMenuItem *it = node->GetData();
+        int ti = it->GetId();
+        //switch( it->GetId() ) {
+        switch( ti ) {
+                case ID_PATH_MENU_PROPERTIES:
+                if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
+                    pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                
+                pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+                break;
+            case ID_PATH_MENU_INSERT:
+                // Insert new OCPN Point
+                m_pSelectedPath->InsertPointAfter( m_pFoundOCPNPoint, m_cursor_lat, m_cursor_lon );
+                
+                pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
+                pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                
+                pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
+                
+                m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
+                pOCPNDrawConfig->UpdatePath( m_pSelectedPath );
+                
+                if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
+                    pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+                }
+                
+                break;
+            case ID_PATH_MENU_DELETE:
+                break;
+            case ID_PATH_MENU_DEACTIVATE:
+                break;
+            case ID_PATH_MENU_ACTIVATE:
+                break;
+            case ID_OCPNPOINT_MENU_PROPERTIES:
+                if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
+                    pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                
+                pPathManagerDialog->OCPNPointShowPropertiesDialog( m_pFoundOCPNPoint, ocpncc1 );
+                break;
+            case ID_PATH_MENU_ACTPOINT:
+            case ID_PATH_MENU_ACTNXTPOINT:
+            case ID_PATH_MENU_REMPOINT:
+            case ID_OCPNPOINT_MENU_COPY:
+            case ID_PATH_MENU_DELPOINT:
+                break;
+        }
+        node = node->GetNext();
+    }
+    
+    
 
     // Cleanup
     if( ( m_pSelectedPath ) ) {
@@ -1851,30 +1977,7 @@ void ocpn_draw_pi::CanvasPopupMenu( int x, int y, int seltype )
     delete menuPath;
     delete menuOCPNPoint;
 }
-
-//-------------------------------------------------------------------------------
-//          Popup Menu Handling
-//-------------------------------------------------------------------------------
-
-void ocpn_draw_pi::MenuPrepend( wxMenu *menu, int id, wxString label)
-{
-    wxMenuItem *item = new wxMenuItem(menu, id, label);
-#ifdef __WXMSW__
-    wxFont *qFont = OCPNGetFont( wxS("Menu"), 0 );
-    item->SetFont(*qFont);
-#endif
-    menu->Prepend(item);
-}
-
-void ocpn_draw_pi::MenuAppend( wxMenu *menu, int id, wxString label)
-{
-    wxMenuItem *item = new wxMenuItem(menu, id, label);
-#ifdef __WXMSW__
-    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
-    item->SetFont(*qFont);
-#endif
-    menu->Append(item);
-}
+*/
 
 void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 {
@@ -2024,11 +2127,11 @@ void ocpn_draw_pi::AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size
 double ocpn_draw_pi::GetTrueOrMag(double a)
 {
     if( g_bShowMag ){
-        if(!wxIsNaN(gVar)){
-            if((a - gVar) >360.)
-                return (a - gVar - 360.);
+        if(!wxIsNaN(g_dVar)){
+            if((a - g_dVar) >360.)
+                return (a - g_dVar - 360.);
             else
-                return ((a - gVar) >= 0.) ? (a - gVar) : (a - gVar + 360.);
+                return ((a - g_dVar) >= 0.) ? (a - g_dVar) : (a - g_dVar + 360.);
         }
         else{
             if((a - g_UserVar) >360.)

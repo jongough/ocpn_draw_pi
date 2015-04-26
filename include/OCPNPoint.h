@@ -30,7 +30,6 @@
 #include <wx/gauge.h>
 #include <wx/colour.h>
 #include "Hyperlink.h"
-#include "gpxdocument.h"
 #include "ocpn_types.h"
 #include "ocpn_plugin.h"
 #include "OCPNRegion.h"
@@ -42,7 +41,7 @@ class wxDC;
 class OCPNPoint
 {
 public:
-      OCPNPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = GPX_EMPTY_STRING, bool bAddToList = true);
+      OCPNPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
       OCPNPoint( OCPNPoint* orig );
       OCPNPoint();
       ~OCPNPoint(void);

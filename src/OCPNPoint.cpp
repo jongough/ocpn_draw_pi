@@ -32,10 +32,11 @@
 #include "PointMan.h"
 #include "PathMan.h"
 #include "multiplexer.h"
-#include "navutil.h"
+//#include "navutil.h"
 #include "FontMgr.h"
 #include "cutil.h"
 #include "ocpn_draw_pi.h"
+#include "ODUtils.h"
 
 extern PointMan     *pOCPNPointMan;
 extern bool         g_bODIsNewLayer;
@@ -461,8 +462,8 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 //        LLBBox vpBBox = vp.GetBBox();
 //        pivp.
 /*        if( vpBBox.IntersectOut( m_wpBBox ) ) {
-            /* try with vp crossing IDL */
-/*            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
+            //try with vp crossing IDL
+            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
                 wxPoint2DDouble xlate( -360., 0. );
                 wxBoundingBox test_box2 = m_wpBBox;
                 test_box2.Translate( xlate );
@@ -564,8 +565,9 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
     
     bool bDrawHL = false;
 
-    MyFrame *gFrame;
-    if( m_bBlink && ( gFrame->nBlinkerTick & 1 ) ) bDrawHL = true;
+
+    if( m_bBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
+        bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         int glw, glh;
@@ -787,124 +789,5 @@ wxColour OCPNPoint::GetOCPNPointRangeRingsColour(void) {
         return g_colourOCPNPointRangeRingsColour;
     else
         return m_wxcOCPNPointRangeRingsColour; 
-}
-
-//-------------------------------------------------------------------------
-//
-//          Static GPX Support Routines
-//
-//-------------------------------------------------------------------------
-bool OCPNPointIsInRouteList( OCPNPoint *pr )
-{
-    bool IsInList = false;
-
-    wxPathListNode *node1 = pPathList->GetFirst();
-    while( node1 ) {
-        Path *pPath = node1->GetData();
-        OCPNPointList *pOCPNPointList = pPath->pOCPNPointList;
-
-        wxOCPNPointListNode *node2 = pOCPNPointList->GetFirst();
-        OCPNPoint *prp;
-
-        while( node2 ) {
-            prp = node2->GetData();
-
-            if( pr->IsSame( prp ) ) {
-                IsInList = true;
-                break;
-            }
-
-            node2 = node2->GetNext();
-        }
-        node1 = node1->GetNext();
-    }
-    return IsInList;
-}
-
-// This function parses a string containing a GPX time representation
-// and returns a wxDateTime containing the UTC corresponding to the
-// input. The function return value is a pointer past the last valid
-// character parsed (if successful) or NULL (if the string is invalid).
-//
-// Valid GPX time strings are in ISO 8601 format as follows:
-//
-//   [-]<YYYY>-<MM>-<DD>T<hh>:<mm>:<ss>Z|(+|-<hh>:<mm>)
-//
-// For example, 2010-10-30T14:34:56Z and 2010-10-30T14:34:56-04:00
-// are the same time. The first is UTC and the second is EDT.
-
-const wxChar *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime )
-{
-    long sign, hrs_west, mins_west;
-    const wxChar *end;
-
-    // Skip any leading whitespace
-    while( isspace( *datetime ) )
-        datetime++;
-
-    // Skip (and ignore) leading hyphen
-    if( *datetime == wxT('-') ) datetime++;
-
-    // Parse and validate ISO 8601 date/time string
-    if( ( end = dt.ParseFormat( datetime, wxT("%Y-%m-%dT%T") ) ) != NULL ) {
-
-        // Invalid date/time
-        if( *end == 0 ) return NULL;
-
-        // ParseFormat outputs in UTC if the controlling
-        // wxDateTime class instance has not been initialized.
-
-        // Date/time followed by UTC time zone flag, so we are done
-        else
-            if( *end == wxT('Z') ) {
-                end++;
-                return end;
-            }
-
-            // Date/time followed by given number of hrs/mins west of UTC
-            else
-                if( *end == wxT('+') || *end == wxT('-') ) {
-
-                    // Save direction from UTC
-                    if( *end == wxT('+') ) sign = 1;
-                    else
-                        sign = -1;
-                    end++;
-
-                    // Parse hrs west of UTC
-                    if( isdigit( *end ) && isdigit( *( end + 1 ) ) && *( end + 2 ) == wxT(':') ) {
-
-                        // Extract and validate hrs west of UTC
-                        wxString( end ).ToLong( &hrs_west );
-                        if( hrs_west > 12 ) return NULL;
-                        end += 3;
-
-                        // Parse mins west of UTC
-                        if( isdigit( *end ) && isdigit( *( end + 1 ) ) ) {
-
-                            // Extract and validate mins west of UTC
-                            wxChar mins[3];
-                            mins[0] = *end;
-                            mins[1] = *( end + 1 );
-                            mins[2] = 0;
-                            wxString( mins ).ToLong( &mins_west );
-                            if( mins_west > 59 ) return NULL;
-
-                            // Apply correction
-                            dt -= sign * wxTimeSpan( hrs_west, mins_west, 0, 0 );
-                            return end + 2;
-                        } else
-                            // Missing mins digits
-                            return NULL;
-                    } else
-                        // Missing hrs digits or colon
-                        return NULL;
-                } else
-                    // Unknown field after date/time (not UTC, not hrs/mins
-                    //  west of UTC)
-                    return NULL;
-    } else
-        // Invalid ISO 8601 date/time
-        return NULL;
 }
 

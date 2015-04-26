@@ -275,9 +275,9 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
     activefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
     pugi::xml_attribute inactivecolour = child.append_attribute("inactive_colour");
-    inactivecolour.set_value( pPath->m_ActiveLineColour.ToAscii() );
+    inactivecolour.set_value( pPath->m_InActiveLineColour.ToAscii() );
     pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
-    inactivefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
+    inactivefillcolour.set_value( pPath->m_InActiveFillColour.ToAscii() );
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
 
@@ -300,6 +300,8 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
                        
 bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
 {
+    if( !m_OCPNDrawchanges_file )
+        return false;
     SetRootGPXNode();
 
     pugi::xml_node object = m_gpx_root.append_child("opencpn:path");
@@ -1143,7 +1145,21 @@ int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_laye
 void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
 {
     Path * path = PathExists( pTentPath->m_GUID );
+    int nNewPoints = pTentPath->GetnPoints();
+    int nOrigPoints = path->GetnPoints();
+
     if( path ) {
+        if ( nNewPoints < nOrigPoints ) {
+            wxOCPNPointListNode *node = path->pOCPNPointList->GetFirst();
+            while( node ) {
+                OCPNPoint *pFP = node->GetData();
+                OCPNPoint *pOP = pTentPath->GetPoint( pFP->m_GUID );
+                if (!pOP ) {
+                    path->RemovePoint( pFP );
+                    node = path->pOCPNPointList->GetFirst(); // start at begining of list again
+                } else node = node->GetNext();
+            }
+        }
         wxOCPNPointListNode *node = pTentPath->pOCPNPointList->GetFirst();
         while( node ) {
             OCPNPoint *pop = node->GetData();
@@ -1159,6 +1175,10 @@ void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
             }
             node = node->GetNext();
         }
+        pOCPNSelect->DeleteAllSelectableOCPNPoints( pTentPath );
+        pOCPNSelect->DeleteAllSelectablePathSegments( pTentPath );
+        pOCPNSelect->AddAllSelectablePathSegments( pTentPath );
+        pOCPNSelect->AddAllSelectableOCPNPoints( pTentPath );
     } else {
         InsertPathA( pTentPath );
     }

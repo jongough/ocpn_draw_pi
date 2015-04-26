@@ -21,28 +21,54 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef GLOCPNDRAWCHARTCANVAS_H
-#define GLOCPNDRAWCHARTCANVAS_H
+#ifndef __ODROLLOVERWIN_H__
+#define __ODROLLOVERWIN_H__
 
-#include <glChartCanvas.h>
-#include "ocpn_plugin.h"
+#include <wx/window.h>
+#include <wx/timer.h>
+#include "ocpn_types.h"
 
 
-class glOCPNDrawChartCanvas : public glChartCanvas
+//constants for rollovers fonts
+enum
 {
-    public:
-        glOCPNDrawChartCanvas(wxWindow *parent);
-        virtual ~glOCPNDrawChartCanvas();
-        
-        void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &vp, OCPNRegion &region );
-
-    protected:
-    private:
-//#ifdef ocpnUSE_GL
-      glChartCanvas *m_glcc;
-      wxGLContext   *m_pGLcontext;
-//#endif
-    
+    PATH_ROLLOVER = 1
 };
 
-#endif // GLOCPNDRAWCHARTCANVAS_H
+class ODRolloverWin: public wxWindow
+{
+public:
+    ODRolloverWin( wxWindow *parent, int timeout = -1 );
+    ~ODRolloverWin();
+
+    void OnPaint( wxPaintEvent& event );
+
+    void SetColorScheme( ColorScheme cs );
+    void SetString(const wxString &s) { m_string = s; }
+    void SetPosition( wxPoint pt ) { m_position = pt; }
+    void SetBitmap( int rollover );
+    wxBitmap* GetBitmap() { return m_pbm; }
+    void SetBestPosition( int x, int y, int off_x, int off_y, int rollover, wxSize parent_size );
+    void OnTimer( wxTimerEvent& event );
+    void OnMouseEvent( wxMouseEvent& event );
+    void SetMousePropogation( int level ) { m_mmouse_propogate = level; }
+    bool IsActive() { return isActive; }
+    void IsActive( bool state ) { isActive = state; }
+
+private:
+    wxWindow    *m_parent;
+    wxString    m_string;
+    wxSize      m_size;
+    wxPoint     m_position;
+    wxTimer     m_timer_timeout;
+    int         m_timeout_sec;
+    int         m_mmouse_propogate;
+    bool        isActive;
+    wxFont      *m_plabelFont;
+    wxBitmap    *m_pbm;
+    
+DECLARE_EVENT_TABLE()
+};
+
+
+#endif

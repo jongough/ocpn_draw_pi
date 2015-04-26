@@ -1,6 +1,6 @@
 ##---------------------------------------------------------------------------
-## Author:      Sean D'Epagnier
-## Copyright:   
+## Author:      Pavel Kalian (Based on the work of Sean D'Epagnier)
+## Copyright:   2014
 ## License:     GPLv3+
 ##---------------------------------------------------------------------------
 
@@ -16,7 +16,7 @@ ENDIF (COMMAND cmake_policy)
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 
 configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/src/version.h)
-SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}" )
+SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}_${VERSION_PATCH}" )
 
 #SET(CMAKE_BUILD_TYPE Debug)
 #SET(CMAKE_VERBOSE_MAKEFILE ON)
@@ -30,14 +30,15 @@ IF(NOT MSVC)
  IF(PROFILING)
   ADD_DEFINITIONS( "-Wall -g -fprofile-arcs -ftest-coverage -fexceptions" )
  ELSE(PROFILING)
-#  ADD_DEFINITIONS( "-Wall -g -fexceptions" )
-# ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
- ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -fexceptions" )
+ IF(CMAKE_BUILD_TYPE EQUAL "Debug")
+  ADD_DEFINITIONS( "-Wall -g -fexceptions" )
+ ELSE(DEBUG)
+  ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
+ ENDIF(DEBUG)
  ENDIF(PROFILING)
 
  IF(NOT APPLE)
   SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
-#  SET(CMAKE_SHARED_LINKER_FLAGS "")
  ELSE(NOT APPLE)
   SET(CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
  ENDIF(NOT APPLE)

@@ -23,9 +23,16 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
  
+#include "wx/wxprec.h"
+
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
+
 #include "ODPointPropertiesImpl.h"
-#include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
+#include "ocpn_plugin.h"
 #include "OCPNDrawConfig.h"
 #include "OCPNPoint.h"
 #include "OCPNSelect.h"
@@ -421,3 +428,22 @@ void ODPointPropertiesImpl::OnCopyPasteLatLon( wxCommandEvent& event )
     }
 }
 
+void ODPointPropertiesImpl::ValidateMark( void )
+{
+    //    Look in the master list of Waypoints to see if the currently selected waypoint is still valid
+    //    It may have been deleted as part of a route
+    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    
+    bool b_found = false;
+    while( node ) {
+        OCPNPoint *op = node->GetData();
+        if( m_pOCPNPoint == op ) {
+            b_found = true;
+            break;
+        }
+        
+        node = node->GetNext();
+    }
+    
+    if( !b_found ) m_pOCPNPoint = NULL;
+}

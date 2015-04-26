@@ -44,7 +44,7 @@
 #include "ocpn_draw_pi.h"
 //#include "styles.h"
 #include "dychart.h"
-#include "navutil.h"
+//#include "navutil.h"
 #include "OCPNDrawConfig.h"
 #include "Path.h"
 #include "PathProp.h"
@@ -60,8 +60,8 @@
 #include "chartbase.h"
 #include "Layer.h"
 #include "SendToGpsDlg.h"
-#include "TrackPropDlg.h"
-#include "AIS_Decoder.h"
+//#include "TrackPropDlg.h"
+//#include "AIS_Decoder.h"
 
 #define DIALOG_MARGIN 3
 
@@ -144,7 +144,7 @@ extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *pOCPNPointMan;
 //extern OCPNDrawPointInfoImpl *pOCPNPointPropDialog;
-extern ODPointPropertiesImpl *pODPointPropDialog;
+extern ODPointPropertiesImpl *g_pODPointPropDialog;
 //extern MarkInfoImpl     *pMarkPropDialog;
 extern OCPNSelect           *pOCPNSelect;
 extern double           g_dLat, g_dLon;
@@ -152,7 +152,7 @@ extern double           gCog, gSog;
 extern bool             g_bShowLayers;
 extern wxString         g_sOCPNPointIconName;
 
-extern AIS_Decoder      *g_pAIS;
+//extern AIS_Decoder      *g_pAIS;
 extern PlugIn_ViewPort  *g_pivp;
 
 // sort callback. Sort by route name.
@@ -1397,7 +1397,7 @@ void PathManagerDialog::OnOCPNPointToggleVisibility( wxMouseEvent &event )
 void PathManagerDialog::OnOCPNPointNewClick( wxCommandEvent &event )
 {
     OCPNPoint *pWP = new OCPNPoint( g_dLat, g_dLon, g_sOCPNPointIconName, wxEmptyString,
-            GPX_EMPTY_STRING );
+            wxT("") );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
     pWP->SetTypeString( wxS("Point") );
     pOCPNSelect->AddSelectableOCPNPoint( g_dLat, g_dLon, pWP );
@@ -1428,12 +1428,12 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
 // TODO (jon#1#): May need to show OCPNPoint properties dialog here
     // There is one global instance of the MarkProp Dialog
     
-    if( NULL == pODPointPropDialog )
-        pODPointPropDialog = new ODPointPropertiesImpl( parent );
+    if( NULL == g_pODPointPropDialog )
+        g_pODPointPropDialog = new ODPointPropertiesImpl( parent );
 
-    pODPointPropDialog->SetOCPNPoint( wp );
-    pODPointPropDialog->SetDialogSize();
-    pODPointPropDialog->UpdateProperties();
+    g_pODPointPropDialog->SetOCPNPoint( wp );
+    g_pODPointPropDialog->SetDialogSize();
+    g_pODPointPropDialog->UpdateProperties();
 
     wxString caption( wxS("") );
     if ( wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
@@ -1446,10 +1446,10 @@ void PathManagerDialog::OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* 
         caption.append( wxS(", Layer: ") );
         caption.Append( GetLayerName( wp->m_LayerID ) );
     }
-    pODPointPropDialog->SetTitle( caption );
+    g_pODPointPropDialog->SetTitle( caption );
 
-    if( !pODPointPropDialog->IsShown() )
-        pODPointPropDialog->Show();
+    if( !g_pODPointPropDialog->IsShown() )
+        g_pODPointPropDialog->Show();
 
 }
 

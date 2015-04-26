@@ -23,11 +23,13 @@
 
 #include "PointMan.h"
 
+#include "ocpn_draw_pi.h"
 #include "styles.h"
 #include "MarkIcon.h"
 #include "OCPNDrawConfig.h"
 #include "OCPNSelect.h"
 #include "PathMan.h"
+#include "ODUtils.h"
 #include "cutil.h"
 
 #include <wx/dir.h>
@@ -42,6 +44,7 @@ extern OCPNPoint                *pAnchorWatchPoint2;
 extern OCPNDrawConfig           *pOCPNDrawConfig;
 extern PathMan                  *g_pPathMan;
 extern OCPNSelect               *pOCPNSelect;
+extern ocpn_draw_pi             *g_ocpn_draw_pi;
 
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
@@ -560,7 +563,7 @@ wxString PointMan::CreateGUID( OCPNPoint *pRP )
      m_nGUID++;
 
      return GUID;*/
-    return GpxDocument::GetUUID();
+    return GetUUID();
 }
 
 OCPNPoint *PointMan::FindOCPNPointByGUID(const wxString &guid)
