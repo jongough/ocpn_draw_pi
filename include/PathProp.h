@@ -132,8 +132,8 @@ public:
     int         m_nSelected; // index of point selected in Properties dialog row
     int         m_tz_selection;
 
-    wxDateTime	 m_starttime; // kept as UTC
-//    wxRadioBox	*pDispTz;
+    wxDateTime   m_starttime; // kept as UTC
+//    wxRadioBox    *pDispTz;
     wxStaticText  *m_staticText1;
     wxStaticText  *m_staticText2;
     wxStaticText  *m_staticText3;

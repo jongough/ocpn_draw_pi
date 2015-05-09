@@ -1,28 +1,28 @@
 /***************************************************************************
- *
- * Project:  OpenCPN
- * Purpose:  OCPN Draw Point Properties Dialog support
- * Author:   Jon Gough
- *
- ***************************************************************************
- *   Copyright (C) 2010 by David S. Register                               *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- **************************************************************************/
- 
+*
+* Project:  OpenCPN
+* Purpose:  OCPN Draw Point Properties Dialog support
+* Author:   Jon Gough
+*
+***************************************************************************
+*   Copyright (C) 2010 by David S. Register                               *
+*                                                                         *
+*   This program is free software; you can redistribute it and/or modify  *
+*   it under the terms of the GNU General Public License as published by  *
+*   the Free Software Foundation; either version 2 of the License, or     *
+*   (at your option) any later version.                                   *
+*                                                                         *
+*   This program is distributed in the hope that it will be useful,       *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+*   GNU General Public License for more details.                          *
+*                                                                         *
+*   You should have received a copy of the GNU General Public License     *
+*   along with this program; if not, write to the                         *
+*   Free Software Foundation, Inc.,                                       *
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+**************************************************************************/
+
 #include "wx/wxprec.h"
 
 #ifndef  WX_PRECOMP
@@ -94,7 +94,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
 
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
 {
-	// TODO: Implement onRightClick
+    // TODO: Implement onRightClick
     wxMenu* popup = new wxMenu();
     popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
     popup->Append( ID_RCLK_MENU_COPY_LL, _("Copy lat/long") );
@@ -108,7 +108,7 @@ void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
 
 void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 {
-	// TODO: Implement OnPositionCtlUpdated
+    // TODO: Implement OnPositionCtlUpdated
     // Fetch the control values, convert to degrees
     double lat = fromDMM_Plugin( m_textLatitude->GetValue() );
     double lon = fromDMM_Plugin( m_textLongitude->GetValue() );
@@ -124,7 +124,7 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnArrivalRadiusChange( wxCommandEvent& event )
 {
-	// TODO: Implement OnArrivalRadiusChange
+    // TODO: Implement OnArrivalRadiusChange
 }
 
 void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
@@ -146,17 +146,17 @@ void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnRangeRingsStepChange( wxCommandEvent& event )
 {
-	// TODO: Implement OnRangeRingsStepChange
+    // TODO: Implement OnRangeRingsStepChange
 }
 
 void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
 {
-	// TODO: Implement OnDescChangedBasic
+    // TODO: Implement OnDescChangedBasic
 }
 
 void ODPointPropertiesImpl::OnExtDescriptionClick( wxCommandEvent& event )
 {
-	// TODO: Implement OnExtDescriptionClick
+    // TODO: Implement OnExtDescriptionClick
 }
 
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )

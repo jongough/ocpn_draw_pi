@@ -27,11 +27,8 @@
 
 #include "Path.h"
 #include "georef.h"
-//#include "routeman.h"
 #include "ocpndc.h"
 #include "cutil.h"
-//#include "navutil.h"
-#include "multiplexer.h"
 #include "OCPNSelect.h"
 #include "PointMan.h"
 #include "PathMan.h"
@@ -41,7 +38,8 @@
 #include "ODUtils.h"
 #include "bbox.h"
 #include "ocpndc.h"
-
+#include "dychart.h"
+#include <wx/gdicmn.h>
 
 extern PointMan *pOCPNPointMan;
 extern bool g_bODIsNewLayer;
@@ -50,7 +48,6 @@ extern PathMan *g_pPathMan;
 extern int g_path_line_width;
 extern OCPNSelect *pOCPNSelect;
 extern OCPNDrawConfig *pOCPNDrawConfig;
-extern Multiplexer *g_pODMUX;
 extern float g_ODGLMinSymbolLineWidth;
 extern wxString    g_ActivePathLineColour;
 extern wxString    g_InActivePathLineColour;
@@ -584,7 +581,6 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
 {
 #ifdef ocpnUSE_GL
     //    Draw a direction arrow        
-    wxPoint icon[10];
     float icon_scale_factor = 100 * VP.view_scale_ppm;
     icon_scale_factor = fmin ( icon_scale_factor, 1.5 );              // Sets the max size
     icon_scale_factor = fmax ( icon_scale_factor, .10 );
@@ -1105,6 +1101,26 @@ OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, boo
     return ( newpoint );
 }
 
+void Path::InsertPointAfter( OCPNPoint *pOP, OCPNPoint *pnOP, bool bRenamePoints )
+{
+    int nOP = pOCPNPointList->IndexOf( pOP );
+    if( nOP >= m_nPoints - 1 )
+        return;
+    nOP++;
+    
+    pOCPNPointList->Insert( nOP, pnOP );
+    
+    OCPNPointGUIDList.Insert( pnOP->m_GUID, nOP );
+    
+    m_nPoints++;
+    
+    if( bRenamePoints ) RenameOCPNPoints();
+    
+    FinalizeForRendering();
+    UpdateSegmentDistances();
+    
+    return;
+}
 
 void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
 {

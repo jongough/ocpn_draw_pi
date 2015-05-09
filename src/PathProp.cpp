@@ -37,21 +37,19 @@
 #include <wx/stattext.h>
 
 #include "ocpn_plugin.h"
-//#include "styles.h"
 #include "OCPNDrawConfig.h"
 #include "georef.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
-//#include "pathprintout.h"
 #include "chcanv.h"
 #include "chart1.h"
-#include "tcmgr.h"        // pjotrc 2011.03.02
 #include "ODPositionParser.h"
 #include "pluginmanager.h"
 #include "PathProp.h"
 #include "PointMan.h"
 #include "OCPNSelect.h"
 #include "ocpn_draw_pi.h"
+#include "IDX_entry.h"
 
 
 extern double             g_dLat, g_dLon, gSog, gCog;
@@ -59,7 +57,6 @@ extern double             g_PlanSpeed;
 extern wxDateTime         g_StartTime;
 extern int                g_StartTimeTZ;
 extern IDX_entry          *gpIDX;
-extern TCMgr              *ptcmgr;
 extern long               gStart_LMT_Offset;
 extern OCPNDrawConfig     *pOCPNDrawConfig;
 extern PointMan        *pWayPointMan;
@@ -194,7 +191,6 @@ PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, co
 
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
-    long wstyle = style;
 #ifdef __WXOSX__
     wstyle |= wxSTAY_ON_TOP;
 #endif
@@ -242,8 +238,6 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
         wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, wxS("&Remove Selected") );
         delItem->Enable( m_wpList->GetSelectedItemCount() > 0 && m_wpList->GetItemCount() > 2 );
     }
-
-    wxMenuItem* copyItem = menu.Append( ID_PATHPROP_MENU_COPY_TEXT, wxS("&Copy all as text") );
 
     PopupMenu( &menu );
 }
@@ -455,10 +449,8 @@ void PathProp::OnPathPropListClick( wxListEvent& event )
 
     //      We use different methods to determine the selected point,
     //      depending on whether this is a Route or a Track.
-    int selected_no;
     const wxListItem &i = event.GetItem();
     i.GetText().ToLong( &itemno );
-    selected_no = itemno;
 
     m_pPath->ClearHighlights();
 
@@ -548,8 +540,6 @@ bool PathProp::UpdateProperties( Path *pPath )
 
     ::wxBeginBusyCursor();
 
-    long LMT_Offset = 0;         // offset in seconds from UTC for given location (-1 hr / 15 deg W)
-    
     m_PathNameCtl->SetValue( pPath->m_PathNameString );
     m_textDescription->SetValue( pPath->m_PathDescription);
     m_pPathActive->SetValue( pPath->IsActive() );
@@ -591,15 +581,13 @@ bool PathProp::UpdateProperties( Path *pPath )
     int i = 0;
     double slat = g_dLat;
     double slon = g_dLon;
-    double tdis = 0.;
-    double tsec = 0.;    // total time in seconds
 
     int stopover_count = 0;
     bool arrival = true; // marks which pass over the wpt we do - 1. arrival 2. departure
     bool enroute = true; // for active route, skip all points up to the active point
 
     wxString nullify = _T("----");
-
+    
     int i_prev_point = -1;
     OCPNPoint *prev_OCPNPoint_point = NULL;
 
@@ -687,7 +675,7 @@ bool PathProp::UpdateProperties( Path *pPath )
 
         tide_form = _T("");
 
-        LMT_Offset = long( ( prp->m_lon ) * 3600. / 15. );
+        //LMT_Offset = long( ( prp->m_lon ) * 3600. / 15. );
 
 
         //  Save for iterating distance/bearing calculation

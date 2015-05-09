@@ -26,10 +26,7 @@
 
 #include "SelectItem.h"
 #include "Path.h"
-#include "OCPNSelect.h"
 #include "ODvector2D.h"
-//#include "Select.h"
-//#include "Boundary.h"
 
 #define SELTYPE_UNKNOWN              0x0001
 #define SELTYPE_OCPNPOINT            0x0002

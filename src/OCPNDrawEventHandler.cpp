@@ -134,7 +134,6 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         SelectableItemList SelList = pOCPNSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
                                                                      SELTYPE_PATHSEGMENT );
         
-        int iTest = SelList.GetCount();
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
@@ -254,8 +253,6 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 
 void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event ) 
 {
-    //m_parent->PopupMenuHandler( event ); 
-    OCPNPoint *pLast;
     int dlg_return;
     
     wxPoint r;
@@ -469,8 +466,6 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
     wxMenu* menuOCPNPoint = new wxMenu( wxS("OCPNPoint") );
     wxMenu* menuPath = new wxMenu( wxS("Path") );
     
-    wxMenu *subMenuChart = new wxMenu;
-    
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
     
     popx = x;
@@ -492,11 +487,6 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
         else {
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
-            sType.append( wxS("Move ") );
-            sType.append(m_pSelectedPath->m_sTypeString);
-            sType.append( wxS(" Point") );
-            MenuAppend( menuPath, ID_PATH_MENU_MOVE_POINT, sType );
-            sType.clear();
             sType.append( wxS("Insert ") );
             sType.append(m_pSelectedPath->m_sTypeString);
             sType.append( wxT(" Point") );

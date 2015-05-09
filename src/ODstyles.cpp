@@ -331,7 +331,7 @@ wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollov
 
 wxBitmap Style::BuildPluginIcon( const wxBitmap* bm, int iconType )
 {
-	if( ! bm || ! bm->IsOk() ) return wxNullBitmap;
+    if( ! bm || ! bm->IsOk() ) return wxNullBitmap;
 
     wxBitmap iconbm;
 

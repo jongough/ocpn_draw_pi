@@ -60,6 +60,7 @@ public:
     int GetIndexOf(OCPNPoint *prp);
     OCPNPoint *InsertPointBefore(OCPNPoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
     OCPNPoint *InsertPointAfter(OCPNPoint *pOP, double rlat, double rlon, bool bRenamePoints = false);
+    void InsertPointAfter( OCPNPoint *pOP, OCPNPoint *pnOP, bool bRenamePoints = false);
     void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
     void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
     virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);

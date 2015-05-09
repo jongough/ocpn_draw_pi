@@ -26,17 +26,14 @@
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>
 
-//#include "routeman.h"
-//#include "chcanv.h"
 #include "OCPNPoint.h"
 #include "PointMan.h"
 #include "PathMan.h"
-#include "multiplexer.h"
-//#include "navutil.h"
 #include "FontMgr.h"
 #include "cutil.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
+#include "ocpndc.h"
 
 extern PointMan     *pOCPNPointMan;
 extern bool         g_bODIsNewLayer;
@@ -45,7 +42,6 @@ extern ChartCanvas  *ocpncc1;
 extern PathMan      *g_pPathMan;
 extern PathList     *pPathList;
 extern wxRect       g_blink_rect;
-extern Multiplexer  *g_pODMUX;
 extern bool         g_btouch;
 extern bool         g_bresponsive;
 extern ocpnStyle::StyleManager* g_ODStyleManager;

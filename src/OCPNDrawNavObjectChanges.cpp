@@ -1,28 +1,28 @@
 /***************************************************************************
- *
- * Project:  OpenCPN
- * Purpose:  OCPN Draw Nav Objects support
- * Author:   Jon Gough
- *
- ***************************************************************************
- *   Copyright (C) 2010 by David S. Register                               *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- **************************************************************************/
- 
+*
+* Project:  OpenCPN
+* Purpose:  OCPN Draw Nav Objects support
+* Author:   Jon Gough
+*
+***************************************************************************
+*   Copyright (C) 2010 by David S. Register                               *
+*                                                                         *
+*   This program is free software; you can redistribute it and/or modify  *
+*   it under the terms of the GNU General Public License as published by  *
+*   the Free Software Foundation; either version 2 of the License, or     *
+*   (at your option) any later version.                                   *
+*                                                                         *
+*   This program is distributed in the hope that it will be useful,       *
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+*   GNU General Public License for more details.                          *
+*                                                                         *
+*   You should have received a copy of the GNU General Public License     *
+*   along with this program; if not, write to the                         *
+*   Free Software Foundation, Inc.,                                       *
+*   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+**************************************************************************/
+
 #include "OCPNDrawNavObjectChanges.h"
 #include "OCPNSelect.h"
 #include "OCPNDrawConfig.h"
@@ -78,10 +78,10 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
     node.append_attribute("lat") = s.mb_str();
     s.Printf(_T("%.9f"), pr->m_lon);
     node.append_attribute("lon") = s.mb_str();
- 
+
     if(flags & OUT_TYPE) {
         child = node.append_child("opencpn:type");
-		child.append_child(pugi::node_pcdata).set_value(pr->GetTypeString().mb_str());
+        child.append_child(pugi::node_pcdata).set_value(pr->GetTypeString().mb_str());
     }
     
     if(flags & OUT_TIME) {
@@ -159,31 +159,31 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
             child = node.append_child("opencpn:guid");
             child.append_child(pugi::node_pcdata).set_value(pr->m_GUID.mb_str());
         }
-         
-         if(flags & OUT_VIZ) {
-             child = node.append_child("opencpn:viz");
-             if ( pr->m_bIsVisible )
+        
+        if(flags & OUT_VIZ) {
+            child = node.append_child("opencpn:viz");
+            if ( pr->m_bIsVisible )
                 child.append_child(pugi::node_pcdata).set_value("1");
-             else
+            else
                 child.append_child(pugi::node_pcdata).set_value("0");
-         }
+        }
             
-         if(flags & OUT_VIZ_NAME) {
-             child = node.append_child("opencpn:viz_name");
-             if ( pr->m_bShowName )
+        if(flags & OUT_VIZ_NAME) {
+            child = node.append_child("opencpn:viz_name");
+            if ( pr->m_bShowName )
                 child.append_child(pugi::node_pcdata).set_value("1");
-             else
+            else
                 child.append_child(pugi::node_pcdata).set_value("0");
-         }
-         
-         if((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
-             child = node.append_child("opencpn:auto_name");
-             child.append_child(pugi::node_pcdata).set_value("1");
-         }
-         if((flags & OUT_SHARED) && pr->m_bKeepXPath) {
-             child = node.append_child("opencpn:shared");
-             child.append_child(pugi::node_pcdata).set_value("1");
-         }
+        }
+        
+        if((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
+            child = node.append_child("opencpn:auto_name");
+            child.append_child(pugi::node_pcdata).set_value("1");
+        }
+        if((flags & OUT_SHARED) && pr->m_bKeepXPath) {
+            child = node.append_child("opencpn:shared");
+            child.append_child(pugi::node_pcdata).set_value("1");
+        }
         if(flags & OUT_ARRIVAL_RADIUS) {
             child = node.append_child("opencpn:arrival_radius");
             s.Printf(_T("%.3f"), pr->GetOCPNPointArrivalRadius());
@@ -212,7 +212,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     pugi::xml_node child;
     
     child = node.append_child("opencpn:type");
-	child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString.mb_str());
+    child.append_child(pugi::node_pcdata).set_value(pPath->m_sTypeString.mb_str());
     
     if( pPath->m_PathNameString.Len() ) {
         wxCharBuffer buffer=pPath->m_PathNameString.ToUTF8();
@@ -285,8 +285,6 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     wxOCPNPointListNode *node2 = pOCPNPointList->GetFirst();
     OCPNPoint *prp;
     
-    unsigned short int GPXTrkSegNo1 = 1;
-    
     while( node2  ) {
         prp = node2->GetData();
             
@@ -297,7 +295,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     
     return true;
 }
-                       
+                    
 bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
 {
     if( !m_OCPNDrawchanges_file )
@@ -418,7 +416,7 @@ bool OCPNDrawNavObjectChanges::CreateNavObjGPXPaths( void )
     // Paths
     wxPathListNode *node1 = pPathList->GetFirst();
 //    child_ext = m_gpx_root.append_child("extensions");
-     while( node1 ) {
+    while( node1 ) {
         Path *pBoundary = node1->GetData();
         
         if( !pBoundary->m_bIsInLayer && !pBoundary->m_btemp )
@@ -465,7 +463,7 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                 if( !pExisting ) {
                     if( NULL != pOCPNPointMan )
                         pOCPNPointMan->AddOCPNPoint( pOp );
-                     pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                    pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
                 else
                     delete pOp;
@@ -495,13 +493,13 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
 }
 
 OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_node, 
-                               wxString def_symbol_name,
-                               wxString GUID,
-                               bool b_fullviz,
-                               bool b_layer,
-                               bool b_layerviz,
-                               int layer_id
-                             )
+                            wxString def_symbol_name,
+                            wxString GUID,
+                            bool b_fullviz,
+                            bool b_layer,
+                            bool b_layerviz,
+                            int layer_id
+                            )
 {
     bool bviz = false;
     bool bviz_name = false;
@@ -509,7 +507,6 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
     bool bshared = false;
     bool b_propvizname = false;
     bool b_propviz = false;
-    bool bviz_OCPNPointrangerings = false;
 
     wxString SymString = def_symbol_name;       // default icon
     wxString NameString;
@@ -575,7 +572,7 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
                 if( LinkString == _T ( "type" ) ) 
                     HrefTypeString.append( wxString::FromUTF8( child1.first_child().value() ) );
             }
-          
+        
             Hyperlink *link = new Hyperlink;
             link->Link = HrefString;
             link->DescrText = HrefTextString;
@@ -678,7 +675,7 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
         pOP->m_bIsVisible = b_layerviz;
         pOP->SetListed( false );
     }
-   
+
     pOP->m_bKeepXPath = bshared;
     pOP->m_bDynamicName = bauto_name;
 
@@ -697,16 +694,16 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
 }
 
 Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
-                      bool b_layer,
-                      bool b_layerviz,
-                      int layer_id, wxString *pPathType )
+                    bool b_layer,
+                    bool b_layerviz,
+                    int layer_id, wxString *pPathType )
 {
     wxString PathName;
     wxString DescString;
     bool b_propviz = false;
     bool b_viz = true;
-    bool b_propactive = false;
     bool b_active = false;
+    bool b_propactive = false;
     Boundary    *pTentBoundary = NULL;
     Path        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
@@ -756,9 +753,9 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
                 for( pugi::xml_node gpxx_child = tschild.first_child(); gpxx_child; gpxx_child = gpxx_child.next_sibling() ) {
                     wxString gpxx_name = wxString::FromUTF8( gpxx_child.name() );
                     if( gpxx_name.EndsWith( _T ( "LineColour" ) ) )
-                         pTentBoundary->m_FillColour = wxString::FromUTF8(gpxx_child.first_child().value() );
+                        pTentBoundary->m_FillColour = wxString::FromUTF8(gpxx_child.first_child().value() );
                     if( gpxx_name.EndsWith( _T ( "FillColour" ) ) )
-                         pTentBoundary->m_Colour = wxString::FromUTF8(gpxx_child.first_child().value() );
+                        pTentBoundary->m_Colour = wxString::FromUTF8(gpxx_child.first_child().value() );
                 }
             }
             
@@ -779,7 +776,7 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
                     if( LinkString == _T ( "type" ) ) 
                         HrefTypeString.append( wxString::FromUTF8( child1.first_child().value() ) );
                 }
-              
+            
                 Hyperlink *link = new Hyperlink;
                 link->Link = HrefString;
                 link->DescrText = HrefTextString;
@@ -818,31 +815,31 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
                     else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
                         pTentPath->m_width = attr.as_int();
                 }
-             }
-             
-             else
-             if( ChildName == _T ( "opencpn:guid" ) ) {
+            }
+            
+            else
+            if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
                 pTentBoundary->m_GUID.clear();
                 pTentBoundary->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
-             }
-             
-             else
-             if( ChildName == _T ( "opencpn:time_display" ) ) {
+            }
+            
+            else
+            if( ChildName == _T ( "opencpn:time_display" ) ) {
                 pTentBoundary->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
-             }
+            }
         }
                     
         pTentPath->m_PathNameString = PathName;
         pTentPath->m_PathDescription = DescString;
 
         if( b_propviz )
-                  pTentPath->SetVisible( b_viz );
+                pTentPath->SetVisible( b_viz );
         else {
             if( b_fullviz )
                 pTentPath->SetVisible();
         }
- 
+
         pTentPath->m_bPathIsActive = b_active;
         
         if( b_layer ){
@@ -851,7 +848,7 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
             pTentPath->m_LayerID = layer_id;
             pTentPath->SetListed( false );
         }            
- 
+
     }
     if( linklist ) {
         delete pTentPath->m_HyperlinkList;                    // created in RoutePoint ctor
@@ -864,9 +861,7 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
 OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& name, double lat, double lon )
 {
     OCPNPoint *pret = NULL;
-//    if( g_bODIsNewLayer ) return NULL;
     wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
-    bool Exists = false;
     while( node ) {
         OCPNPoint *pr = node->GetData();
 
@@ -874,7 +869,6 @@ OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& name, doub
 
         if( name == pr->GetName() ) {
             if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 ) {
-                Exists = true;
                 pret = pr;
                 break;
             }
@@ -915,21 +909,21 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
     //    TODO  All this trouble for a tentative path.......Should make some path methods????
     if( bAddpath ) {
             if( PathExists( pTentPath->m_GUID ) ) { //We are importing a different path with the same guid, so let's generate it a new guid
-                               pTentPath->m_GUID = pOCPNPointMan->CreateGUID( NULL );
-                               //Now also change guids for the routepoints
-                               wxOCPNPointListNode *pthisnode = ( pTentPath->pOCPNPointList )->GetFirst();
-                               while( pthisnode ) {
-                                   OCPNPoint *pP =  pthisnode->GetData();
-                                   if( pP && pP->m_bIsolatedMark )
+                            pTentPath->m_GUID = pOCPNPointMan->CreateGUID( NULL );
+                            //Now also change guids for the routepoints
+                            wxOCPNPointListNode *pthisnode = ( pTentPath->pOCPNPointList )->GetFirst();
+                            while( pthisnode ) {
+                                OCPNPoint *pP =  pthisnode->GetData();
+                                if( pP && pP->m_bIsolatedMark )
                                         pP->m_GUID = pOCPNPointMan->CreateGUID( NULL );
-                                   pthisnode = pthisnode->GetNext();
-                               }
+                                pthisnode = pthisnode->GetNext();
+                            }
             }
             
         pPathList->Append( pTentPath );
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
         
-                 
+                
     //    Do the (deferred) calculation of BBox
         pTentPath->FinalizeForRendering();
 
@@ -983,7 +977,7 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
         delete pTentPath;
     }
 }
-                       
+                    
 Path *OCPNDrawNavObjectChanges::PathExists( const wxString& guid )
 {
     wxPathListNode *path_node = pPathList->GetFirst();
@@ -1053,7 +1047,7 @@ bool OCPNDrawNavObjectChanges::ApplyChanges(void)
                     if( pExisting )
                         pOCPNPointMan->DestroyOCPNPoint( pExisting, false );
                 }
-                 
+                
                 else
                     delete pOp;
             }
@@ -1062,7 +1056,6 @@ bool OCPNDrawNavObjectChanges::ApplyChanges(void)
             if( !strcmp(object.name(), "opencpn:path") ) {
                 pugi::xml_node typesearch = object.child("opencpn:type");
                 wxString wxsType = wxString::FromUTF8( typesearch.first_child().value() );
-                wxString *pwxsType = &wxsType;
                 Path *pPath = GPXLoadPath1( object, false, false, false, 0 , &wxsType );
                 
                 if(pPath && g_pPathMan) {
@@ -1145,11 +1138,9 @@ int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_laye
 void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
 {
     Path * path = PathExists( pTentPath->m_GUID );
-    int nNewPoints = pTentPath->GetnPoints();
-    int nOrigPoints = path->GetnPoints();
 
     if( path ) {
-        if ( nNewPoints < nOrigPoints ) {
+        if ( pTentPath->GetnPoints() < path->GetnPoints() ) {
             wxOCPNPointListNode *node = path->pOCPNPointList->GetFirst();
             while( node ) {
                 OCPNPoint *pFP = node->GetData();
@@ -1161,6 +1152,7 @@ void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
             }
         }
         wxOCPNPointListNode *node = pTentPath->pOCPNPointList->GetFirst();
+        OCPNPoint *save_ex_op = NULL;
         while( node ) {
             OCPNPoint *pop = node->GetData();
             OCPNPoint *ex_op = path->GetPoint( pop->m_GUID );
@@ -1170,8 +1162,10 @@ void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
                 ex_op->SetIconName( pop->GetIconName() );
                 ex_op->m_MarkDescription = pop->m_MarkDescription;
                 ex_op->SetName( pop->GetName() );
+                save_ex_op = ex_op;
             } else {
-                pOCPNSelect->AddSelectableOCPNPoint( pop->m_lat, pop->m_lon, pop );
+                path->InsertPointAfter( save_ex_op, pop );
+                save_ex_op = pop;
             }
             node = node->GetNext();
         }
@@ -1183,4 +1177,4 @@ void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
         InsertPathA( pTentPath );
     }
 }
-                       
+                    

@@ -59,9 +59,6 @@
 #include "georef.h"
 #include "chartbase.h"
 #include "Layer.h"
-#include "SendToGpsDlg.h"
-//#include "TrackPropDlg.h"
-//#include "AIS_Decoder.h"
 
 #define DIALOG_MARGIN 3
 
@@ -223,8 +220,6 @@ int wxCALLBACK SortOCPNPointsOnName(long item1, long item2, long list)
 #endif
 
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
-
     OCPNPoint *pRP1 = (OCPNPoint *)item1;
     OCPNPoint *pRP2 = (OCPNPoint *)item2;
 
@@ -776,7 +771,6 @@ void PathManagerDialog::UpdatePathButtons()
     long selected_index_index = m_pPathListCtrl->GetNextItem( -1, wxLIST_NEXT_ALL,
             wxLIST_STATE_SELECTED );
     bool enable1 =  m_pPathListCtrl->GetSelectedItemCount() == 1;
-    bool enablemultiple =  m_pPathListCtrl->GetSelectedItemCount() >= 1;
 
     m_lastPathItem = selected_index_index;
 

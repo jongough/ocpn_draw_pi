@@ -18,9 +18,6 @@ MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/src/version.h)
 SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}_${VERSION_PATCH}" )
 
-#SET(CMAKE_BUILD_TYPE Debug)
-#SET(CMAKE_VERBOSE_MAKEFILE ON)
-
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/src)
 
 # SET(PROFILING 1)
@@ -30,11 +27,8 @@ IF(NOT MSVC)
  IF(PROFILING)
   ADD_DEFINITIONS( "-Wall -g -fprofile-arcs -ftest-coverage -fexceptions" )
  ELSE(PROFILING)
- IF(CMAKE_BUILD_TYPE EQUAL "Debug")
-  ADD_DEFINITIONS( "-Wall -g -fexceptions" )
- ELSE(DEBUG)
-  ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
- ENDIF(DEBUG)
+  ADD_DEFINITIONS( "-Wall -fexceptions" )
+#  ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
  ENDIF(PROFILING)
 
  IF(NOT APPLE)

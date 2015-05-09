@@ -43,17 +43,9 @@
 
 #include <wx/listimpl.cpp>
 
-//#include "styles.h"
-//#include "concanv.h"
-//#include "navutil.h"
 #include "georef.h"
-//#include "routeprop.h"
-//#include "routemanagerdialog.h"
 #include "pluginmanager.h"
-#include "multiplexer.h"
-#include "MarkIcon.h"
 #include "cutil.h"
-#include "AIS_Decoder.h"
 #include "OCPNSelect.h"
 #include "OCPNDrawConfig.h"
 

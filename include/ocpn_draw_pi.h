@@ -128,18 +128,18 @@ public:
     ocpn_draw_pi(void *ppimgr);
     ~ocpn_draw_pi();
 
-    bool				dlgShow;
+    bool                dlgShow;
     wxWindow            *m_parent_window;
-    wxFileConfig		*m_pOCPNDrawConfig;
-//    OCPNDrawConfig		*m_pOCPNDrawConfig;
-    wxTimer 		    *m_timer;
-    wxColour			col,col1,gridline,uitext,udkrd,back_color,text_color;
-    wxColour			mcol,mcol1,mgridline, muitext,mudkrd,mback_color,mtext_color;
-    wxString			lastOCPNPointInPath;
+    wxFileConfig        *m_pOCPNDrawConfig;
+//    OCPNDrawConfig        *m_pOCPNDrawConfig;
+    wxTimer             *m_timer;
+    wxColour            col,col1,gridline,uitext,udkrd,back_color,text_color;
+    wxColour            mcol,mcol1,mgridline, muitext,mudkrd,mback_color,mtext_color;
+    wxString            lastOCPNPointInPath;
 
-    wxLocale*		local;
-    int				state;
-    bool			eventsEnabled;
+    wxLocale*        local;
+    int                state;
+    bool            eventsEnabled;
     int             m_iCallerId;
     bool            m_bBoundaryEditing;
     bool            m_bPathEditing;
@@ -267,13 +267,13 @@ public:
 private:
     void    OnTimer(wxTimerEvent& ev);
 
-    void	LoadConfig();
+    void    LoadConfig();
     void    RenderExtraBoundaryLegInfo(ocpnDC &dc, wxPoint ref_point, wxString s );
     void    FinishBoundary();
-//    ArrayOfGridColWidth	readCols(ArrayOfGridColWidth ar, wxString str);
-//    void					writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
-//    ArrayOfGridColWidth	readColsOld(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
-    void					dialogDimmer(PI_ColorScheme cs,wxWindow* ctrl,wxColour col,wxColour col1, wxColour back_color,wxColour text_color, wxColour uitext, wxColour udkrd);
+//    ArrayOfGridColWidth    readCols(ArrayOfGridColWidth ar, wxString str);
+//    void                    writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
+//    ArrayOfGridColWidth    readColsOld(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
+    void                    dialogDimmer(PI_ColorScheme cs,wxWindow* ctrl,wxColour col,wxColour col1, wxColour back_color,wxColour text_color, wxColour uitext, wxColour udkrd);
 //    wxAuiManager     *m_pauimgr;
 
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
@@ -287,9 +287,9 @@ private:
     
     int               m_show_id;
     int               m_hide_id;
-    bool				show;
-    int				m_leftclick_config_id;
-    int				m_leftclick_boundary_id;
+    bool                show;
+    int                m_leftclick_config_id;
+    int                m_leftclick_boundary_id;
 
     bool              m_bLOGShowIcon;
     StatWin                   *stats;

@@ -36,7 +36,7 @@ void initialize_images(void)
     _img_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(_T("pointbuttongray.png"));
     _img_ocpn_draw_point_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-	
+    
 
 static unsigned char Bullet_green[] = {
 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 
@@ -73,10 +73,10 @@ static unsigned char Bullet_green[] = {
 };
 
 
-	{
-		wxMemoryInputStream sm(Bullet_green,sizeof(Bullet_green));
-		_img_Bullet_green = new wxBitmap(wxImage(sm));
-	}
+    {
+        wxMemoryInputStream sm(Bullet_green,sizeof(Bullet_green));
+        _img_Bullet_green = new wxBitmap(wxImage(sm));
+    }
 
 static unsigned char Bullet_red[] = {
 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 
@@ -107,10 +107,10 @@ static unsigned char Bullet_red[] = {
 0x42, 0x60, 0x82, 
 };
 
-	{
-		wxMemoryInputStream sm(Bullet_red,sizeof(Bullet_red));
-		_img_Bullet_red = new wxBitmap(wxImage(sm));
-	}
+    {
+        wxMemoryInputStream sm(Bullet_red,sizeof(Bullet_red));
+        _img_Bullet_red = new wxBitmap(wxImage(sm));
+    }
 
 static unsigned char Bullet_yellow[] = {
 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 
@@ -146,10 +146,10 @@ static unsigned char Bullet_yellow[] = {
 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82, 
 };
 
-	{
-		wxMemoryInputStream sm(Bullet_yellow,sizeof(Bullet_yellow));
-		_img_Bullet_yellow = new wxBitmap(wxImage(sm));
-	}
+    {
+        wxMemoryInputStream sm(Bullet_yellow,sizeof(Bullet_yellow));
+        _img_Bullet_yellow = new wxBitmap(wxImage(sm));
+    }
 
-	return;
+    return;
 }
