@@ -15,102 +15,178 @@ SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
-SET(VERSION_MINOR "2")
-SET(VERSION_PATCH "0100")
+SET(VERSION_MINOR "3")
+SET(VERSION_PATCH "0003")
+SET(VERSION_DATE "10/05/2015")
 
 SET(BUNDLE_DATA FALSE)
 
-#SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
+#SET(CMAKE_BUILD_TYPE "Debug")
+#SET(CMAKE_BUILD_TYPE "Release")
+#SET(CMAKE_BUILD_TYPE "RelWithDebInfo")
+IF( NOT CMAKE_BUILD_TYPE )
+  SET( CMAKE_BUILD_TYPE Release CACHE STRING
+       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+       FORCE )
+ENDIF( NOT CMAKE_BUILD_TYPE )
 
-SET(CMAKE_BUILD_TYPE Debug)
+MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+
+SET(CMAKE_VERBOSE_MAKEFILE ON)
+
+#SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${CMAKE_SOURCE_DIR}/include/version.h)
 
 INCLUDE("cmake/PluginConfigure.cmake")
 
 ADD_DEFINITIONS(-DUSE_S57)
 
 SET(SRCS
-		src/ocpn_draw_pi.cpp
- 		src/Boundary.cpp
-		src/BoundaryProp.cpp
- 		src/PointMan.cpp
- 		src/OCPNSelect.cpp
- 		src/PathMan.cpp
- 		src/pathmanagerdialog.cpp
- 		src/PathProp.cpp
- 		src/Path.cpp
- 		src/OCPNPoint.cpp
- 		src/OCPNDrawConfig.cpp
- 		src/OCPNDrawEventHandler.cpp
- 		src/OCPNDrawNavObjectChanges.cpp
-# 		src/OCPNDrawCanvasMenuHandler.cpp
-# 		src/OCPNDrawPointInfoImpl.cpp
-        src/OCPNDrawPropertiesDialog.cpp
-        src/OCPNDrawPropertiesImpl.cpp
-#        src/ODHelper.cpp
-#        src/ODIcons.cpp
- 		src/ODPointPropertiesDialog.cpp
- 		src/ODPointPropertiesImpl.cpp
- 		src/ODPositionParser.cpp
- 		src/ODRolloverWin.cpp
- 		src/ODstyles.cpp
-# 		src/ODUndo.cpp
+        src/ocpn_draw_pi.cpp
+        src/Boundary.cpp
+        src/BoundaryProp.cpp
+        src/PointMan.cpp
+        src/ODSelect.cpp
+        src/PathMan.cpp
+        src/pathmanagerdialog.cpp
+        src/PathProp.cpp
+        src/Path.cpp
+        src/ODPoint.cpp
+        src/ODConfig.cpp
+        src/ODEventHandler.cpp
+        src/ODNavObjectChanges.cpp
+        src/ODPropertiesDialog.cpp
+        src/ODPropertiesImpl.cpp
+        src/ODPointPropertiesDialog.cpp
+        src/ODPointPropertiesImpl.cpp
+        src/ODPositionParser.cpp
+        src/ODRolloverWin.cpp
+        src/ODstyles.cpp
         src/ODUtils.cpp
- 		src/OCPNDrawicons.cpp
-        	src/jsonreader.cpp
-        	src/jsonval.cpp
-        	src/jsonwriter.cpp
- 	)
+         src/ODicons.cpp
+            src/jsonreader.cpp
+            src/jsonval.cpp
+            src/jsonwriter.cpp
+     )
 
 SET(HDRS
-		include/ocpn_draw_pi.h
- 		include/Boundary.h
- 		include/BoundaryProp.h
- 		include/PointMan.h
- 		include/OCPNSelect.h
- 		include/PathMan.h
- 		include/pathmanagerdialog.h
- 		include/PathProp.h
- 		include/Path.h
- 		include/OCPNPoint.h
- 		include/OCPNDrawConfig.h
- 		include/OCPNDrawEventHandler.h
- 		include/OCPNDrawNavObjectChanges.h
- 		include/OCPNDrawPropertiesDialog.h
- 		include/OCPNDrawPropertiesImpl.h
- 		include/ODPointPropertiesDialog.h
- 		include/ODPointPropertiesImpl.h
- 		include/ODPositionParser.h
- 		include/ODRolloverWin.h
-# 		include/ODUndo.h
- 		include/ODUtils.h
- 		include/ODvector2D.h
- 		include/OCPNDrawicons.h
-#		include/version.h
-#        	include/wx/json_defs.h
-       		include/wx/jsonreader.h
-        	include/wx/jsonval.h
-        	include/wx/jsonwriter.h
+        include/ocpn_draw_pi.h
+        include/Boundary.h
+        include/BoundaryProp.h
+        include/PointMan.h
+        include/ODSelect.h
+        include/PathMan.h
+        include/pathmanagerdialog.h
+        include/PathProp.h
+        include/Path.h
+        include/ODPoint.h
+        include/ODConfig.h
+        include/ODEventHandler.h
+        include/ODNavObjectChanges.h
+        include/ODPropertiesDialog.h
+        include/ODPropertiesImpl.h
+        include/ODPointPropertiesDialog.h
+        include/ODPointPropertiesImpl.h
+        include/ODPositionParser.h
+        include/ODRolloverWin.h
+        include/ODUtils.h
+        include/ODvector2D.h
+        include/ODicons.h
+        include/version.h
+#            include/wx/json_defs.h
+            include/wx/jsonreader.h
+            include/wx/jsonval.h
+            include/wx/jsonwriter.h
 )
 
 SET(OCPNSRC 
-		ocpnsrc/bbox.cpp
-		ocpnsrc/cutil.cpp
-		ocpnsrc/FontDesc.cpp
-		ocpnsrc/FontMgr.cpp
-		ocpnsrc/geodesic.cpp
-		ocpnsrc/georef.cpp
-		ocpnsrc/Hyperlink.cpp
-		ocpnsrc/Layer.cpp
+        ocpnsrc/bbox.cpp
+        ocpnsrc/cutil.cpp
+        ocpnsrc/FontDesc.cpp
+        ocpnsrc/FontMgr.cpp
+        ocpnsrc/geodesic.cpp
+        ocpnsrc/georef.cpp
+        ocpnsrc/Hyperlink.cpp
+        ocpnsrc/Layer.cpp
         ocpnsrc/ocpndc.cpp
         ocpnsrc/pugixml.cpp
-		ocpnsrc/SelectItem.cpp
+        ocpnsrc/SelectItem.cpp
 )
-#SET(OCPNHDRS
-#		ocpninclude/RoutePoint.h
-#		ocpninclude/Route.h
-#		ocpninclude/routeman.h
-#		ocpninclude/routemanagerdialog.h
-#)
+SET(OCPNHDRS
+        ocpninclude/AISTargetAlertDialog.h
+        ocpninclude/AISTargetQueryDialog.h
+        ocpninclude/apb.hpp
+        ocpninclude/bbox.h
+        ocpninclude/canvasMenu.h
+        ocpninclude/chart1.h
+        ocpninclude/chartbase.h
+        ocpninclude/chartdbs.h
+        ocpninclude/chcanv.h
+        ocpninclude/CM93DSlide.h
+        ocpninclude/ConnectionParams.h
+        ocpninclude/cutil.h
+        ocpninclude/datastream.h
+        ocpninclude/dsPortType.h
+        ocpninclude/dychart.h
+        ocpninclude/emboss_data.h
+        ocpninclude/FontDesc.h
+        ocpninclude/FontMgr.h
+        ocpninclude/geodesic.h
+        ocpninclude/georef.h
+        ocpninclude/gga.hpp
+        ocpninclude/gll.hpp
+        ocpninclude/GoToPositionDialog.h
+        ocpninclude/GPwpl.hpp
+        ocpninclude/gpxdocument.h
+        ocpninclude/gsv.hpp
+        ocpninclude/hdg.hpp
+        ocpninclude/hdm.hpp
+        ocpninclude/hdt.hpp
+        ocpninclude/Hyperlink.h
+        ocpninclude/IDX_entry.h
+        ocpninclude/LatLong.hpp
+        ocpninclude/Layer.h
+        ocpninclude/LinkPropDlg.h
+        ocpninclude/MarkIcon.h
+        ocpninclude/navutil.h
+        ocpninclude/nmea0183.h
+        ocpninclude/nmea0183.hpp
+        ocpninclude/ocpCursor.h
+        ocpninclude/ocpndc.h
+        ocpninclude/OCPNPlatform.h
+        ocpninclude/OCPNRegion.h
+        ocpninclude/ocpn_types.h
+        ocpninclude/pluginmanager.h
+        ocpninclude/pugiconfig.hpp
+        ocpninclude/pugixml.hpp
+        ocpninclude/Quilt.h
+        ocpninclude/Response.hpp
+        ocpninclude/RMB.hpp
+        ocpninclude/RMC.HPP
+        ocpninclude/RolloverWin.h
+        ocpninclude/Route.h
+        ocpninclude/RoutePoint.h
+        ocpninclude/routeprop.h
+        ocpninclude/rte.hpp
+        ocpninclude/s52s57.h
+        ocpninclude/s57chart.h
+        ocpninclude/S57ClassRegistrar.h
+        ocpninclude/S57Light.h
+        ocpninclude/S57QueryDialog.h
+        ocpninclude/s57RegistrarMgr.h
+        ocpninclude/S57Sector.h
+        ocpninclude/scrollingdialog.h
+        ocpninclude/SelectItem.h
+        ocpninclude/Sentence.hpp
+        ocpninclude/statwin.h
+        ocpninclude/styles.h
+        ocpninclude/timers.h
+        ocpninclude/undo.h
+        ocpninclude/vector2D.h
+        ocpninclude/viewport.h
+        ocpninclude/vtg.hpp
+        ocpninclude/wpl.hpp
+        ocpninclude/xte.hpp
+)
 
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )

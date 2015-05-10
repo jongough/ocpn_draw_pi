@@ -26,8 +26,8 @@
 #include "ocpn_draw_pi.h"
 #include "styles.h"
 #include "MarkIcon.h"
-#include "OCPNDrawConfig.h"
-#include "OCPNSelect.h"
+#include "ODConfig.h"
+#include "ODSelect.h"
 #include "PathMan.h"
 #include "ODUtils.h"
 #include "cutil.h"
@@ -39,11 +39,11 @@
 
 extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern wxString                 g_PrivateDataDir;
-extern OCPNPoint                *pAnchorWatchPoint1;
-extern OCPNPoint                *pAnchorWatchPoint2;
-extern OCPNDrawConfig           *pOCPNDrawConfig;
+extern ODPoint                *pAnchorWatchPoint1;
+extern ODPoint                *pAnchorWatchPoint2;
+extern ODConfig           *pODConfig;
 extern PathMan                  *g_pPathMan;
-extern OCPNSelect               *pOCPNSelect;
+extern ODSelect               *pODSelect;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 
 //--------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ extern ocpn_draw_pi             *g_ocpn_draw_pi;
 PointMan::PointMan()
 {
 
-    m_pOCPNPointList = new OCPNPointList;
+    m_pODPointList = new ODPointList;
 
     pmarkicon_image_list = NULL;
 
@@ -66,16 +66,16 @@ PointMan::PointMan()
 
 PointMan::~PointMan()
 {
-    //    Two step here, since the OCPNPoint dtor also touches the
-    //    OCPNPoint list.
-    //    Copy the master OCPNPoint list to a temporary list,
+    //    Two step here, since the ODPoint dtor also touches the
+    //    ODPoint list.
+    //    Copy the master ODPoint list to a temporary list,
     //    then clear and delete objects from the temp list
 
-    OCPNPointList temp_list;
+    ODPointList temp_list;
 
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
 
         temp_list.Append( pr );
         node = node->GetNext();
@@ -84,8 +84,8 @@ PointMan::~PointMan()
     temp_list.DeleteContents( true );
     temp_list.Clear();
 
-    m_pOCPNPointList->Clear();
-    delete m_pOCPNPointList;
+    m_pODPointList->Clear();
+    delete m_pODPointList;
 
     for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
         MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( i );
@@ -100,28 +100,28 @@ PointMan::~PointMan()
     delete pmarkicon_image_list;
 }
 
-bool PointMan::AddOCPNPoint(OCPNPoint *prp)
+bool PointMan::AddODPoint(ODPoint *prp)
 {
     if(!prp)
         return false;
     
-    wxOCPNPointListNode *prpnode = m_pOCPNPointList->Append(prp);
+    wxODPointListNode *prpnode = m_pODPointList->Append(prp);
     prp->SetManagerListNode( prpnode );
     
     return true;
 }
 
-bool PointMan::RemoveOCPNPoint(OCPNPoint *prp)
+bool PointMan::RemoveODPoint(ODPoint *prp)
 {
     if(!prp)
         return false;
     
-    wxOCPNPointListNode *prpnode = (wxOCPNPointListNode *)prp->GetManagerListNode();
+    wxODPointListNode *prpnode = (wxODPointListNode *)prp->GetManagerListNode();
     
     if(prpnode) 
         delete prpnode;
     else
-        m_pOCPNPointList->DeleteObject(prp);
+        m_pODPointList->DeleteObject(prp);
     
     prp->SetManagerListNode( NULL );
     
@@ -374,11 +374,11 @@ void PointMan::SetColorScheme( ColorScheme cs )
 {
     //ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
 
-    //    Iterate on the OCPNPoint list, requiring each to reload icon
+    //    Iterate on the ODPoint list, requiring each to reload icon
 
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
         pr->ReLoadIcon();
         node = node->GetNext();
     }
@@ -552,7 +552,7 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
 
 //  Create the unique identifier
 
-wxString PointMan::CreateGUID( OCPNPoint *pRP )
+wxString PointMan::CreateGUID( ODPoint *pRP )
 {
     //FIXME: this method is not needed at all (if GetUUID works...)
     /*wxDateTime now = wxDateTime::Now();
@@ -566,27 +566,27 @@ wxString PointMan::CreateGUID( OCPNPoint *pRP )
     return GetUUID();
 }
 
-OCPNPoint *PointMan::FindOCPNPointByGUID(const wxString &guid)
+ODPoint *PointMan::FindODPointByGUID(const wxString &guid)
 {
-    wxOCPNPointListNode *prpnode = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *prpnode = m_pODPointList->GetFirst();
     while( prpnode ) {
-        OCPNPoint *prp = prpnode->GetData();
+        ODPoint *prp = prpnode->GetData();
 
         if( prp->m_GUID == guid ) return ( prp );
 
-        prpnode = prpnode->GetNext(); //OCPNPoint
+        prpnode = prpnode->GetNext(); //ODPoint
     }
 
     return NULL;
 }
 
-OCPNPoint *PointMan::GetNearbyOCPNPoint( double lat, double lon, double radius_meters )
+ODPoint *PointMan::GetNearbyODPoint( double lat, double lon, double radius_meters )
 {
-    //    Iterate on the OCPNPoint list, checking distance
+    //    Iterate on the ODPoint list, checking distance
 
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
 
         double a = lat - pr->m_lat;
         double b = lon - pr->m_lon;
@@ -600,14 +600,14 @@ OCPNPoint *PointMan::GetNearbyOCPNPoint( double lat, double lon, double radius_m
 
 }
 
-OCPNPoint *PointMan::GetOtherNearbyOCPNPoint( double lat, double lon, double radius_meters,
+ODPoint *PointMan::GetOtherNearbyODPoint( double lat, double lon, double radius_meters,
         const wxString &guid )
 {
-    //    Iterate on the OCPNPoint list, checking distance
+    //    Iterate on the ODPoint list, checking distance
 
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
 
         double a = lat - pr->m_lat;
         double b = lon - pr->m_lon;
@@ -621,25 +621,25 @@ OCPNPoint *PointMan::GetOtherNearbyOCPNPoint( double lat, double lon, double rad
 
 }
 
-void PointMan::ClearOCPNPointFonts( void )
+void PointMan::ClearODPointFonts( void )
 {
-    //    Iterate on the OCPNPoint list, clearing Font pointers
+    //    Iterate on the ODPoint list, clearing Font pointers
     //    This is typically done globally after a font switch
 
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
 
         pr->m_pMarkFont = NULL;
         node = node->GetNext();
     }
 }
 
-bool PointMan::SharedOCPNPointsExist()
+bool PointMan::SharedODPointsExist()
 {
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *prp = node->GetData();
+        ODPoint *prp = node->GetData();
         if (prp->m_bKeepXPath && ( prp->m_bIsInPath || prp == pAnchorWatchPoint1 || prp == pAnchorWatchPoint2))
             return true;
         node = node->GetNext();
@@ -647,19 +647,19 @@ bool PointMan::SharedOCPNPointsExist()
     return false;
 }
 
-void PointMan::DeleteAllOCPNPoints( bool b_delete_used )
+void PointMan::DeleteAllODPoints( bool b_delete_used )
 {
-    //    Iterate on the OCPNPoint list, deleting all
-    wxOCPNPointListNode *node = m_pOCPNPointList->GetFirst();
+    //    Iterate on the ODPoint list, deleting all
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        OCPNPoint *prp = node->GetData();
+        ODPoint *prp = node->GetData();
         // if argument is false, then only delete non-route waypoints
         if( !prp->m_bIsInLayer && ( prp->GetIconName() != _T("mob") )
             && ( ( b_delete_used && prp->m_bKeepXPath )
                         || ( ( !prp->m_bIsInPath ) && !( prp == pAnchorWatchPoint1 ) && !( prp == pAnchorWatchPoint2 ) ) ) ) {
-            DestroyOCPNPoint(prp);
+            DestroyODPoint(prp);
             delete prp;
-            node = m_pOCPNPointList->GetFirst();
+            node = m_pODPointList->GetFirst();
         } else
             node = node->GetNext();
     }
@@ -667,10 +667,10 @@ void PointMan::DeleteAllOCPNPoints( bool b_delete_used )
 
 }
 
-void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
+void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
 {
     if( ! b_update_changeset )
-        pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
+        pODConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
         
     if( pRp ) {
         // Get a list of all boundaries containing this point
@@ -688,11 +688,11 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
                 Path *pb = (Path *) ppath_array->Item( ib );
                 if( pb->GetnPoints() < 2 ) {
-                    bool prev_bskip = pOCPNDrawConfig->m_bSkipChangeSetUpdate;
-                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
-                    pOCPNDrawConfig->DeleteConfigPath( pb );
+                    bool prev_bskip = pODConfig->m_bSkipChangeSetUpdate;
+                    pODConfig->m_bSkipChangeSetUpdate = true;
+                    pODConfig->DeleteConfigPath( pb );
                     g_pPathMan->DeletePath( pb );
-                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = prev_bskip;
+                    pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
                 }
             }
 
@@ -700,16 +700,16 @@ void PointMan::DestroyOCPNPoint( OCPNPoint *pRp, bool b_update_changeset )
         }
 
         // Now it is safe to delete the point
-        pOCPNDrawConfig->DeleteOCPNPoint( pRp );
-        pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
+        pODConfig->DeleteODPoint( pRp );
+        pODConfig->m_bSkipChangeSetUpdate = false;
         
-        pOCPNSelect->DeleteSelectableOCPNPoint( pRp );
+        pODSelect->DeleteSelectableODPoint( pRp );
 
-        //    The OCPNPoint might be currently in use as an anchor watch point
+        //    The ODPoint might be currently in use as an anchor watch point
         if( pRp == pAnchorWatchPoint1 ) pAnchorWatchPoint1 = NULL;
         if( pRp == pAnchorWatchPoint2 ) pAnchorWatchPoint2 = NULL;
 
-        RemoveOCPNPoint( pRp);
+        RemoveODPoint( pRp);
 
     }
 }

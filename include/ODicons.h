@@ -1,9 +1,11 @@
-/******************************************************************************
- *
+/***************************************************************************
+ * 
  * Project:  OpenCPN
+ * Purpose:  ODicons
+ * Author:   Jon Gough
  *
  ***************************************************************************
- *   Copyright (C) 2013 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,30 +21,27 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __ODVECTOR2D_H__
-#define __ODVECTOR2D_H__
+#ifndef ODICONS_H
+#define ODICONS_H 1
 
-#include "ODPoint.h"
-
-class ODvector2D
-{
-public:
-    ODvector2D() { x = 0.0; y = 0.0; }
-    ODvector2D( double a, double b ) { x = a; y = b; }
-    void Set( ODPoint* p ) { lat = p->m_lat; lon = p->m_lon; }
-    friend bool operator==( ODvector2D &a, ODvector2D &b ) { return a.x == b.x && a.y == b.y; }
-    friend bool operator!=( ODvector2D &a, ODvector2D &b ) { return a.x != b.x || a.y != b.y; }
-    friend ODvector2D operator-( ODvector2D a, ODvector2D b ) { return ODvector2D( a.x - b.x, a.y - b.y ); }
-    friend ODvector2D operator+( ODvector2D a, ODvector2D b ) { return ODvector2D( a.x + b.x, a.y + b.y ); }
-    friend ODvector2D operator*( double t, ODvector2D a ) { return ODvector2D( a.x * t, a.y * t ); }
-
-    union{ double x; double lon; };
-    union{ double y; double lat; };
-};
-
-typedef ODvector2D* pODVector2D;
-
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
 #endif
+
+extern void initialize_images(void);
+
+extern void *g_ppimgr;
+extern wxBitmap *_img_ocpn_draw_pi;
+extern wxBitmap *_img_ocpn_draw_gray_pi;
+extern wxBitmap *_img_ocpn_draw;
+extern wxBitmap *_img_ocpn_draw_boundary;
+extern wxBitmap *_img_ocpn_draw_boundary_gray;
+extern wxBitmap *_img_ocpn_draw_point;
+extern wxBitmap *_img_ocpn_draw_point_gray;
+extern const wxBitmap *_img_Bullet_green;
+extern const wxBitmap *_img_Bullet_red;
+extern const wxBitmap *_img_Bullet_yellow;
+#endif /* ODICONS_H */

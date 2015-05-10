@@ -39,8 +39,8 @@
 #include "version.h"
 #include "ocpn_plugin.h"
 #include "undo.h"
-#include "OCPNPoint.h"
-#include "OCPNDrawConfig.h"
+#include "ODPoint.h"
+#include "ODConfig.h"
 #include "pathmanagerdialog.h"
 #include "ODRolloverWin.h"
 
@@ -128,22 +128,22 @@ public:
     ocpn_draw_pi(void *ppimgr);
     ~ocpn_draw_pi();
 
-    bool				dlgShow;
+    bool                dlgShow;
     wxWindow            *m_parent_window;
-    wxFileConfig		*m_pOCPNDrawConfig;
-//    OCPNDrawConfig		*m_pOCPNDrawConfig;
-    wxTimer 		    *m_timer;
-    wxColour			col,col1,gridline,uitext,udkrd,back_color,text_color;
-    wxColour			mcol,mcol1,mgridline, muitext,mudkrd,mback_color,mtext_color;
-    wxString			lastOCPNPointInPath;
+    wxFileConfig        *m_pODConfig;
+//    ODConfig        *m_pODConfig;
+    wxTimer             *m_timer;
+    wxColour            col,col1,gridline,uitext,udkrd,back_color,text_color;
+    wxColour            mcol,mcol1,mgridline, muitext,mudkrd,mback_color,mtext_color;
+    wxString            lastODPointInPath;
 
-    wxLocale*		local;
-    int				state;
-    bool			eventsEnabled;
+    wxLocale*        local;
+    int                state;
+    bool            eventsEnabled;
     int             m_iCallerId;
     bool            m_bBoundaryEditing;
     bool            m_bPathEditing;
-    bool            m_bOCPNPointEditing;
+    bool            m_bODPointEditing;
     
 
     //    The required PlugIn Methods
@@ -197,8 +197,8 @@ public:
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
-    void DrawAllPathsAndOCPNPoints( PlugIn_ViewPort &pivp );
-    void DrawAllOCPNPointsInBBox( ocpnDC &dc, LLBBox& BltBBox );
+    void DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp );
+    void DrawAllODPointsInBBox( ocpnDC &dc, LLBBox& BltBBox );
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
     
@@ -237,8 +237,8 @@ public:
     int         nBoundary_State;
     Boundary    *m_pMouseBoundary;
     Path        *m_pSelectedPath;
-    OCPNPoint   *m_pFoundOCPNPoint;
-    OCPNPoint   *m_pFoundOCPNPointSecond;
+    ODPoint   *m_pFoundODPoint;
+    ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;
     int         nPoint_State;
     double      m_dStartLat;
@@ -246,7 +246,7 @@ public:
     double      m_cursor_lon, m_cursor_lat;
     double      m_prev_rlat, m_prev_rlon;
     double      m_true_scale_ppm;
-    OCPNPoint   *m_prev_pMousePoint;
+    ODPoint   *m_prev_pMousePoint;
     bool           m_disable_edge_pan;
     double      m_lat, m_lon;
     double      m_pixx, m_pixy;
@@ -267,13 +267,13 @@ public:
 private:
     void    OnTimer(wxTimerEvent& ev);
 
-    void	LoadConfig();
+    void    LoadConfig();
     void    RenderExtraBoundaryLegInfo(ocpnDC &dc, wxPoint ref_point, wxString s );
     void    FinishBoundary();
-//    ArrayOfGridColWidth	readCols(ArrayOfGridColWidth ar, wxString str);
-//    void					writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
-//    ArrayOfGridColWidth	readColsOld(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
-    void					dialogDimmer(PI_ColorScheme cs,wxWindow* ctrl,wxColour col,wxColour col1, wxColour back_color,wxColour text_color, wxColour uitext, wxColour udkrd);
+//    ArrayOfGridColWidth    readCols(ArrayOfGridColWidth ar, wxString str);
+//    void                    writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
+//    ArrayOfGridColWidth    readColsOld(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
+    void                    dialogDimmer(PI_ColorScheme cs,wxWindow* ctrl,wxColour col,wxColour col1, wxColour back_color,wxColour text_color, wxColour uitext, wxColour udkrd);
 //    wxAuiManager     *m_pauimgr;
 
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
@@ -287,9 +287,9 @@ private:
     
     int               m_show_id;
     int               m_hide_id;
-    bool				show;
-    int				m_leftclick_config_id;
-    int				m_leftclick_boundary_id;
+    bool                show;
+    int                m_leftclick_config_id;
+    int                m_leftclick_boundary_id;
 
     bool              m_bLOGShowIcon;
     StatWin                   *stats;

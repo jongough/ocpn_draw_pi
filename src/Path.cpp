@@ -27,30 +27,27 @@
 
 #include "Path.h"
 #include "georef.h"
-//#include "routeman.h"
 #include "ocpndc.h"
 #include "cutil.h"
-//#include "navutil.h"
-#include "multiplexer.h"
-#include "OCPNSelect.h"
+#include "ODSelect.h"
 #include "PointMan.h"
 #include "PathMan.h"
 #include "PathProp.h"
-#include "OCPNDrawConfig.h"
+#include "ODConfig.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 #include "bbox.h"
 #include "ocpndc.h"
+#include "dychart.h"
+#include <wx/gdicmn.h>
 
-
-extern PointMan *pOCPNPointMan;
+extern PointMan *pODPointMan;
 extern bool g_bODIsNewLayer;
 extern int g_ODLayerIdx;
 extern PathMan *g_pPathMan;
 extern int g_path_line_width;
-extern OCPNSelect *pOCPNSelect;
-extern OCPNDrawConfig *pOCPNDrawConfig;
-extern Multiplexer *g_pODMUX;
+extern ODSelect *pODSelect;
+extern ODConfig *pODConfig;
 extern float g_ODGLMinSymbolLineWidth;
 extern wxString    g_ActivePathLineColour;
 extern wxString    g_InActivePathLineColour;
@@ -58,7 +55,7 @@ extern wxString    g_ActivePathFillColour;
 extern wxString    g_InActivePathFillColour;
 extern PathProp    *pPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern wxString     g_sOCPNPointIconName;
+extern wxString     g_sODPointIconName;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -81,7 +78,7 @@ Path::Path( void )
     m_style = STYLE_UNDEFINED;
     m_hiliteWidth = 0;
 
-    pOCPNPointList = new OCPNPointList;
+    pODPointList = new ODPointList;
     m_pLastAddedPoint = NULL;
     m_pFirstAddedPoint = NULL;
     m_GUID = GetUUID();
@@ -107,14 +104,14 @@ Path::Path( void )
 
 Path::~Path( void )
 {
-    pOCPNPointList->DeleteContents( false );            // do not delete Marks
-    pOCPNPointList->Clear();
-    delete pOCPNPointList;
+    pODPointList->DeleteContents( false );            // do not delete Marks
+    pODPointList->Clear();
+    delete pODPointList;
     m_HyperlinkList->Clear();
     delete m_HyperlinkList;
 }
 
-void Path::AddPoint( OCPNPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
+void Path::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
 {
     if( pNewPoint->m_bIsolatedMark ) {
         pNewPoint->m_bKeepXPath = true;
@@ -122,7 +119,7 @@ void Path::AddPoint( OCPNPoint *pNewPoint, bool b_rename_in_sequence, bool b_def
     pNewPoint->m_bIsolatedMark = false;       // definitely no longer isolated
     pNewPoint->m_bIsInPath = true;
 
-    pOCPNPointList->Append( pNewPoint );
+    pODPointList->Append( pNewPoint );
 
     m_nPoints++;
 
@@ -147,14 +144,14 @@ void Path::AddPoint( OCPNPoint *pNewPoint, bool b_rename_in_sequence, bool b_def
 
 void Path::AddTentativePoint( const wxString& GUID )
 {
-    OCPNPointGUIDList.Add( GUID );
+    ODPointGUIDList.Add( GUID );
     return;
 }
 
-OCPNPoint *Path::GetPoint( int nWhichPoint )
+ODPoint *Path::GetPoint( int nWhichPoint )
 {
-    OCPNPoint *prp;
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    ODPoint *prp;
+    wxODPointListNode *node = pODPointList->GetFirst();
 
     int i = 1;
     while( node ) {
@@ -168,10 +165,10 @@ OCPNPoint *Path::GetPoint( int nWhichPoint )
     return ( NULL );
 }
 
-OCPNPoint *Path::GetPoint( const wxString &guid )
+ODPoint *Path::GetPoint( const wxString &guid )
 {
-    OCPNPoint *prp;
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    ODPoint *prp;
+    wxODPointListNode *node = pODPointList->GetFirst();
 
     while( node ) {
         prp = node->GetData();
@@ -270,14 +267,14 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     }
 
     wxPoint rpt1, rpt2;
-    m_bpts = new wxPoint[ pOCPNPointList->GetCount() ];
+    m_bpts = new wxPoint[ pODPointList->GetCount() ];
     int j = 0;
     
     if ( m_bVisible )
         DrawPointWhich( dc, 1, &rpt1 );
 
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
-    OCPNPoint *prp1 = node->GetData();
+    wxODPointListNode *node = pODPointList->GetFirst();
+    ODPoint *prp1 = node->GetData();
     node = node->GetNext();
     
     m_bpts[ j++ ] = rpt1;
@@ -287,7 +284,7 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 
     while( node ) {
 
-        OCPNPoint *prp2 = node->GetData();
+        ODPoint *prp2 = node->GetData();
         if ( !m_bVisible && prp2->m_bKeepXPath )
             prp2->Draw( dc );
         else if (m_bVisible)
@@ -366,8 +363,8 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
         wxPen HiPen( hilt, m_hiliteWidth, wxSOLID );
         dc.SetPen( HiPen );
         
-        wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
-        OCPNPoint *prp0 = node->GetData();
+        wxODPointListNode *node = pODPointList->GetFirst();
+        ODPoint *prp0 = node->GetData();
         wxPoint r0;
         GetCanvasPixLL( &piVP, &r0, prp0->m_lat, prp0->m_lon );
 
@@ -380,7 +377,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     
         while( node ){
             
-            OCPNPoint *prp = node->GetData();
+            ODPoint *prp = node->GetData();
             wxPoint r1;
             GetCanvasPixLL( &piVP, &r1, prp->m_lat, prp->m_lon );
 
@@ -446,11 +443,11 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 
     int j = 0;
 
-    m_bpts = new wxPoint[ pOCPNPointList->GetCount() ];
+    m_bpts = new wxPoint[ pODPointList->GetCount() ];
 
-    for(wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    for(wxODPointListNode *node = pODPointList->GetFirst();
         node; node = node->GetNext()) {
-        OCPNPoint *prp = node->GetData();
+        ODPoint *prp = node->GetData();
         unsigned short int ToSegNo = prp->m_GPXTrkSegNo;
         
         /* crosses IDL? if so break up into two segments */
@@ -584,7 +581,6 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
 {
 #ifdef ocpnUSE_GL
     //    Draw a direction arrow        
-    wxPoint icon[10];
     float icon_scale_factor = 100 * VP.view_scale_ppm;
     icon_scale_factor = fmin ( icon_scale_factor, 1.5 );              // Sets the max size
     icon_scale_factor = fmax ( icon_scale_factor, .10 );
@@ -619,8 +615,8 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
 
 void Path::ClearHighlights( void )
 {
-    OCPNPoint *pop = NULL;
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    ODPoint *pop = NULL;
+    wxODPointListNode *node = pODPointList->GetFirst();
 
     while( node ) {
         pop = node->GetData();
@@ -634,9 +630,9 @@ wxString Path::GetNewMarkSequenced( void )
     wxString ret;
     long num;
     num = 0;
-    OCPNPoint *pop = NULL;
+    ODPoint *pop = NULL;
     
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
     while ( node ) {
         pop = node->GetData();
         wxString  sPointName = pop->GetName();
@@ -655,10 +651,10 @@ wxString Path::GetNewMarkSequenced( void )
     return ret;
 }
 
-OCPNPoint *Path::GetLastPoint()
+ODPoint *Path::GetLastPoint()
 {
-    OCPNPoint *data_m1 = NULL;
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    ODPoint *data_m1 = NULL;
+    wxODPointListNode *node = pODPointList->GetFirst();
 
     while( node ) {
         data_m1 = node->GetData();
@@ -667,40 +663,40 @@ OCPNPoint *Path::GetLastPoint()
     return ( data_m1 );
 }
 
-int Path::GetIndexOf( OCPNPoint *prp )
+int Path::GetIndexOf( ODPoint *prp )
 {
-    int ret = pOCPNPointList->IndexOf( prp ) + 1;
+    int ret = pODPointList->IndexOf( prp ) + 1;
     if( ret == wxNOT_FOUND ) return 0;
     else
         return ret;
 
 }
 
-void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
+void Path::DeletePoint( ODPoint *rp, bool bRenamePoints )
 {
     //    n.b. must delete Selectables  and update config before deleting the point
     if( rp->m_bIsInLayer ) return;
 
-    pOCPNSelect->DeleteAllSelectableOCPNPoints( (Path *) this );
-    pOCPNSelect->DeleteAllSelectablePathSegments( (Path *) this );
-    pOCPNDrawConfig->DeleteOCPNPoint( rp );
+    pODSelect->DeleteAllSelectableODPoints( (Path *) this );
+    pODSelect->DeleteAllSelectablePathSegments( (Path *) this );
+    pODConfig->DeleteODPoint( rp );
 
-    pOCPNPointList->DeleteObject( rp );
+    pODPointList->DeleteObject( rp );
 
-    if( ( rp->m_GUID.Len() ) && ( wxNOT_FOUND != OCPNPointGUIDList.Index( rp->m_GUID ) ) ) OCPNPointGUIDList.Remove(
+    if( ( rp->m_GUID.Len() ) && ( wxNOT_FOUND != ODPointGUIDList.Index( rp->m_GUID ) ) ) ODPointGUIDList.Remove(
             rp->m_GUID );
 
     delete rp;
 
     m_nPoints -= 1;
 
-    if( bRenamePoints ) RenameOCPNPoints();
+    if( bRenamePoints ) RenameODPoints();
 
     if( m_nPoints > 1 ) {
-        pOCPNSelect->AddAllSelectablePathSegments( this );
-        pOCPNSelect->AddAllSelectableOCPNPoints( this );
+        pODSelect->AddAllSelectablePathSegments( this );
+        pODSelect->AddAllSelectableODPoints( this );
 
-        pOCPNDrawConfig->UpdatePath( this );
+        pODConfig->UpdatePath( this );
         RebuildGUIDList();                  // ensure the GUID list is intact and good
 
         FinalizeForRendering();
@@ -708,34 +704,34 @@ void Path::DeletePoint( OCPNPoint *rp, bool bRenamePoints )
     }
 }
 
-void Path::RemovePoint( OCPNPoint *op, bool bRenamePoints )
+void Path::RemovePoint( ODPoint *op, bool bRenamePoints )
 {
-    pOCPNSelect->DeleteAllSelectableOCPNPoints( this );
-    pOCPNSelect->DeleteAllSelectablePathSegments( this );
+    pODSelect->DeleteAllSelectableODPoints( this );
+    pODSelect->DeleteAllSelectablePathSegments( this );
 
-    pOCPNPointList->DeleteObject( op );
-    if( wxNOT_FOUND != OCPNPointGUIDList.Index( op->m_GUID ) ) OCPNPointGUIDList.Remove(
+    pODPointList->DeleteObject( op );
+    if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove(
             op->m_GUID );
     m_nPoints -= 1;
 
     // check all other routes to see if this point appears in any other route
-    Path *pcontainer_path = g_pPathMan->FindPathContainingOCPNPoint( op );
+    Path *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
 
     if( pcontainer_path == NULL ) {
         op->m_bIsInPath = false;          // Take this point out of this (and only) route
         op->m_bDynamicName = false;
         op->m_bIsolatedMark = true;        // This has become an isolated mark
         op->SetTypeString (wxT("Point") );
-        pOCPNDrawConfig->AddNewOCPNPoint( op );
+        pODConfig->AddNewODPoint( op );
     }
 
-    if( bRenamePoints ) RenameOCPNPoints();
+    if( bRenamePoints ) RenameODPoints();
 
     if ( m_nPoints > 1 ) {
-        pOCPNSelect->AddAllSelectablePathSegments( this );
-        pOCPNSelect->AddAllSelectableOCPNPoints( this );
+        pODSelect->AddAllSelectablePathSegments( this );
+        pODSelect->AddAllSelectableODPoints( this );
 
-        pOCPNDrawConfig->UpdatePath( this );
+        pODConfig->UpdatePath( this );
         RebuildGUIDList();                  // ensure the GUID list is intact and good
 
         FinalizeForRendering();
@@ -746,9 +742,9 @@ void Path::RemovePoint( OCPNPoint *op, bool bRenamePoints )
 
 void Path::DeSelectPath()
 {
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
 
-    OCPNPoint *rp;
+    ODPoint *rp;
     while( node ) {
         rp = node->GetData();
         rp->m_bPtIsSelected = false;
@@ -759,9 +755,9 @@ void Path::DeSelectPath()
 
 void Path::ReloadPathPointIcons()
 {
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
 
-    OCPNPoint *rp;
+    ODPoint *rp;
     while( node ) {
         rp = node->GetData();
         rp->ReLoadIcon();
@@ -788,8 +784,8 @@ wxBoundingBox Path::GetBBox( void )
     RBBox.Reset();
     m_bcrosses_idl = CalculateCrossesIDL();
 
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
-    OCPNPoint *data;
+    wxODPointListNode *node = pODPointList->GetFirst();
+    ODPoint *data;
 
     if( !m_bcrosses_idl ) {
         while( node ) {
@@ -828,11 +824,11 @@ wxBoundingBox Path::GetBBox( void )
 
 bool Path::CalculateCrossesIDL( void )
 {
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
     if( NULL == node ) return false;
 
     bool idl_cross = false;
-    OCPNPoint *data = node->GetData();             // first node
+    ODPoint *data = node->GetData();             // first node
 
     double lon0 = data->m_lon;
     node = node->GetNext();
@@ -869,10 +865,10 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
     // always be fully contained within the resulting rectangle.
     // Can we prove this?
     if( m_bVisible ) {
-        wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+        wxODPointListNode *node = pODPointList->GetFirst();
         while( node ) {
 
-            OCPNPoint *prp2 = node->GetData();
+            ODPoint *prp2 = node->GetData();
             bool blink_save = prp2->m_bBlink;
             prp2->m_bBlink = false;
             ocpnDC odc_boundary( dc_boundary );
@@ -892,14 +888,14 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
 
 void Path::RebuildGUIDList( void )
 {
-    OCPNPointGUIDList.Clear();               // empty the GUID list
+    ODPointGUIDList.Clear();               // empty the GUID list
 
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
 
-    OCPNPoint *rp;
+    ODPoint *rp;
     while( node ) {
         rp = node->GetData();
-        OCPNPointGUIDList.Add( rp->m_GUID );
+        ODPointGUIDList.Add( rp->m_GUID );
 
         node = node->GetNext();
     }
@@ -911,14 +907,14 @@ void Path::SetVisible( bool visible, bool includeWpts )
     if ( !includeWpts )
         return;
 
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
-    OCPNPoint *rp;
+    wxODPointListNode *node = pODPointList->GetFirst();
+    ODPoint *rp;
     while( node ) {
         rp = node->GetData();
         if ( rp->m_bKeepXPath )
         {
             rp->SetVisible( visible );
-            //pOCPNDrawConfig->UpdateWayPoint( rp );
+            //pODConfig->UpdateWayPoint( rp );
         }
         node = node->GetNext();
     }
@@ -931,34 +927,34 @@ void Path::SetListed( bool visible )
 
 void Path::AssemblePath( void )
 {
-    //    iterate over the OCPNPointGUIDs
-    for( unsigned int ip = 0; ip < OCPNPointGUIDList.GetCount(); ip++ ) {
-        wxString GUID = OCPNPointGUIDList[ip];
+    //    iterate over the ODPointGUIDs
+    for( unsigned int ip = 0; ip < ODPointGUIDList.GetCount(); ip++ ) {
+        wxString GUID = ODPointGUIDList[ip];
 
-        //    And on the OCPNPoints themselves
-        wxOCPNPointListNode *prpnode = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+        //    And on the ODPoints themselves
+        wxODPointListNode *prpnode = pODPointMan->GetODPointList()->GetFirst();
         while( prpnode ) {
-            OCPNPoint *prp = prpnode->GetData();
+            ODPoint *prp = prpnode->GetData();
 
             if( prp->m_GUID == GUID ) {
                 AddPoint( prp );
                 break;
             }
-            prpnode = prpnode->GetNext(); //OCPNPoint
+            prpnode = prpnode->GetNext(); //ODPoint
         }
     }
 }
 
-void Path::RenameOCPNPoints( void )
+void Path::RenameODPoints( void )
 {
     //    iterate on the route points.
     //    If dynamically named, rename according to current list position
 
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
 
     int i = 1;
     while( node ) {
-        OCPNPoint *prp = node->GetData();
+        ODPoint *prp = node->GetData();
         if( prp->m_bDynamicName ) {
             wxString name;
             name.Printf( _T ( "%03d" ), i );
@@ -971,11 +967,11 @@ void Path::RenameOCPNPoints( void )
 }
 
 //    Is this Path equal to another, meaning,
-//    Do all OCPNPoint positions and names match?
+//    Do all ODPoint positions and names match?
 bool Path::IsEqualTo( Path *ptargetroute )
 {
-    wxOCPNPointListNode *pthisnode = ( this->pOCPNPointList )->GetFirst();
-    wxOCPNPointListNode *pthatnode = ( ptargetroute->pOCPNPointList )->GetFirst();
+    wxODPointListNode *pthisnode = ( this->pODPointList )->GetFirst();
+    wxODPointListNode *pthatnode = ( ptargetroute->pODPointList )->GetFirst();
 
     if( NULL == pthisnode ) return false;
 
@@ -986,8 +982,8 @@ bool Path::IsEqualTo( Path *ptargetroute )
     while( pthisnode ) {
         if( NULL == pthatnode ) return false;
 
-        OCPNPoint *pthisrp = pthisnode->GetData();
-        OCPNPoint *pthatrp = pthatnode->GetData();
+        ODPoint *pthisrp = pthisnode->GetData();
+        ODPoint *pthatrp = pthatnode->GetData();
 
         if( ( fabs( pthisrp->m_lat - pthatrp->m_lat ) > 1.0e-6 )
                 || ( fabs( pthisrp->m_lon - pthatrp->m_lon ) > 1.0e-6 ) ) return false;
@@ -1011,17 +1007,17 @@ void Path::UpdateSegmentDistances()
 
     double path_len = 0.0;
 
-    wxOCPNPointListNode *node = pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pODPointList->GetFirst();
 
     if( node ) {
-        OCPNPoint *prp0 = node->GetData();
+        ODPoint *prp0 = node->GetData();
         slat1 = prp0->m_lat;
         slon1 = prp0->m_lon;
 
         node = node->GetNext();
 
         while( node ) {
-            OCPNPoint *prp = node->GetData();
+            ODPoint *prp = node->GetData();
             slat2 = prp->m_lat;
             slon2 = prp->m_lon;
 
@@ -1047,30 +1043,30 @@ void Path::UpdateSegmentDistances()
     m_path_length = path_len;
 }
 
-OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
+ODPoint *Path::InsertPointBefore( ODPoint *pRP, double rlat, double rlon,
         bool bRenamePoints )
 {
-    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName,
+    ODPoint *newpoint = new ODPoint( rlat, rlon, g_sODPointIconName,
             GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
     
-    int nRP = pOCPNPointList->IndexOf( pRP );
+    int nRP = pODPointList->IndexOf( pRP );
     if ( nRP == 0 ) {
-        pOCPNPointList->Insert( pOCPNPointList->GetCount() - 1, newpoint );
-        nRP = pOCPNPointList->GetCount();
+        pODPointList->Insert( pODPointList->GetCount() - 1, newpoint );
+        nRP = pODPointList->GetCount();
     }
     else {
-        pOCPNPointList->Insert( nRP, newpoint );
+        pODPointList->Insert( nRP, newpoint );
     }
 
-    OCPNPointGUIDList.Insert( pRP->m_GUID, nRP );
+    ODPointGUIDList.Insert( pRP->m_GUID, nRP );
 
     m_nPoints++;
 
-    if( bRenamePoints ) RenameOCPNPoints();
+    if( bRenamePoints ) RenameODPoints();
 
     FinalizeForRendering();
     UpdateSegmentDistances();
@@ -1078,26 +1074,26 @@ OCPNPoint *Path::InsertPointBefore( OCPNPoint *pRP, double rlat, double rlon,
     return ( newpoint );
 }
 
-OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, bool bRenamePoints )
+ODPoint *Path::InsertPointAfter( ODPoint *pOP, double rlat, double rlon, bool bRenamePoints )
 {
-    int nOP = pOCPNPointList->IndexOf( pOP );
+    int nOP = pODPointList->IndexOf( pOP );
     if( nOP >= m_nPoints - 1 )
         return NULL;
     nOP++;
     
-    OCPNPoint *newpoint = new OCPNPoint( rlat, rlon, g_sOCPNPointIconName, GetNewMarkSequenced(), wxT("") );
+    ODPoint *newpoint = new ODPoint( rlat, rlon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
     
-    pOCPNPointList->Insert( nOP, newpoint );
+    pODPointList->Insert( nOP, newpoint );
     
-    OCPNPointGUIDList.Insert( pOP->m_GUID, nOP );
+    ODPointGUIDList.Insert( pOP->m_GUID, nOP );
     
     m_nPoints++;
     
-    if( bRenamePoints ) RenameOCPNPoints();
+    if( bRenamePoints ) RenameODPoints();
     
     FinalizeForRendering();
     UpdateSegmentDistances();
@@ -1105,24 +1101,44 @@ OCPNPoint *Path::InsertPointAfter( OCPNPoint *pOP, double rlat, double rlon, boo
     return ( newpoint );
 }
 
+void Path::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
+{
+    int nOP = pODPointList->IndexOf( pOP );
+    if( nOP >= m_nPoints - 1 )
+        return;
+    nOP++;
+    
+    pODPointList->Insert( nOP, pnOP );
+    
+    ODPointGUIDList.Insert( pnOP->m_GUID, nOP );
+    
+    m_nPoints++;
+    
+    if( bRenamePoints ) RenameODPoints();
+    
+    FinalizeForRendering();
+    UpdateSegmentDistances();
+    
+    return;
+}
 
-void Path::RemovePointFromPath( OCPNPoint* point, Path* path )
+void Path::RemovePointFromPath( ODPoint* point, Path* path )
 {
     //  Rebuild the route selectables
-    //pOCPNSelect->DeleteAllSelectableOCPNPoints( path );
-    //pOCPNSelect->DeleteAllSelectablePathSegments( path );
+    //pODSelect->DeleteAllSelectableODPoints( path );
+    //pODSelect->DeleteAllSelectablePathSegments( path );
 
     path->RemovePoint( point );
 
     //  Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
     if( (path->GetnPoints() <= 1) && (g_ocpn_draw_pi->nBoundary_State == 0) ) {
-        pOCPNDrawConfig->DeleteConfigPath( path );
+        pODConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );
         path = NULL;
     } 
     
     //  Add this point back into the selectables
-    pOCPNSelect->AddSelectableOCPNPoint( point->m_lat, point->m_lon, point );
+    pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
 
     if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
         pPathPropDialog->SetPathAndUpdate( path, true );

@@ -37,21 +37,19 @@
 #include <wx/stattext.h>
 
 #include "ocpn_plugin.h"
-//#include "styles.h"
-#include "OCPNDrawConfig.h"
+#include "ODConfig.h"
 #include "georef.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
-//#include "pathprintout.h"
 #include "chcanv.h"
 #include "chart1.h"
-#include "tcmgr.h"        // pjotrc 2011.03.02
 #include "ODPositionParser.h"
 #include "pluginmanager.h"
 #include "PathProp.h"
 #include "PointMan.h"
-#include "OCPNSelect.h"
+#include "ODSelect.h"
 #include "ocpn_draw_pi.h"
+#include "IDX_entry.h"
 
 
 extern double             g_dLat, g_dLon, gSog, gCog;
@@ -59,12 +57,11 @@ extern double             g_PlanSpeed;
 extern wxDateTime         g_StartTime;
 extern int                g_StartTimeTZ;
 extern IDX_entry          *gpIDX;
-extern TCMgr              *ptcmgr;
 extern long               gStart_LMT_Offset;
-extern OCPNDrawConfig     *pOCPNDrawConfig;
+extern ODConfig     *pODConfig;
 extern PointMan        *pWayPointMan;
 extern ChartCanvas        *ocpncc1;
-extern OCPNSelect        *pOCPNSelect;
+extern ODSelect        *pODSelect;
 extern PathMan           *g_pPathMan;
 extern PathManagerDialog *pPathManagerDialog;
 extern PathProp       *pPathPropDialog;
@@ -194,7 +191,6 @@ PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, co
 
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
-    long wstyle = style;
 #ifdef __WXOSX__
     wstyle |= wxSTAY_ON_TOP;
 #endif
@@ -242,8 +238,6 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
         wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, wxS("&Remove Selected") );
         delItem->Enable( m_wpList->GetSelectedItemCount() > 0 && m_wpList->GetItemCount() > 2 );
     }
-
-    wxMenuItem* copyItem = menu.Append( ID_PATHPROP_MENU_COPY_TEXT, wxS("&Copy all as text") );
 
     PopupMenu( &menu );
 }
@@ -455,19 +449,17 @@ void PathProp::OnPathPropListClick( wxListEvent& event )
 
     //      We use different methods to determine the selected point,
     //      depending on whether this is a Route or a Track.
-    int selected_no;
     const wxListItem &i = event.GetItem();
     i.GetText().ToLong( &itemno );
-    selected_no = itemno;
 
     m_pPath->ClearHighlights();
 
-    wxOCPNPointListNode *node = m_pPath->pOCPNPointList->GetFirst();
+    wxODPointListNode *node = m_pPath->pODPointList->GetFirst();
     while( node && itemno-- ) {
         node = node->GetNext();
     }
     if( node ) {
-        OCPNPoint *prp = node->GetData();
+        ODPoint *prp = node->GetData();
         if( prp ) {
             prp->m_bPtIsSelected = true;                // highlight the routepoint
 
@@ -486,8 +478,8 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
             item = m_wpList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
             if( item == -1 ) break;
 
-            OCPNPoint *wp;
-            wp = (OCPNPoint *) m_wpList->GetItemData( item );
+            ODPoint *wp;
+            wp = (ODPoint *) m_wpList->GetItemData( item );
 
             wxString sMessage( wxS("Are you sure you want to remove this ") );
             wxString sCaption( wxS("OCPN Draw Remove ") );
@@ -514,10 +506,10 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
 
             if( item == -1 ) break;
 
-            OCPNPoint *wp = (OCPNPoint *) m_wpList->GetItemData( item );
+            ODPoint *wp = (ODPoint *) m_wpList->GetItemData( item );
             if( !wp ) break;
 
-            PathManagerDialog::OCPNPointShowPropertiesDialog( wp, this );
+            PathManagerDialog::ODPointShowPropertiesDialog( wp, this );
             break;
         }
     }
@@ -548,15 +540,13 @@ bool PathProp::UpdateProperties( Path *pPath )
 
     ::wxBeginBusyCursor();
 
-    long LMT_Offset = 0;         // offset in seconds from UTC for given location (-1 hr / 15 deg W)
-    
     m_PathNameCtl->SetValue( pPath->m_PathNameString );
     m_textDescription->SetValue( pPath->m_PathDescription);
     m_pPathActive->SetValue( pPath->IsActive() );
 
     double brg;
     double join_distance = 0.;
-    OCPNPoint *first_point = pPath->GetPoint( 1 );
+    ODPoint *first_point = pPath->GetPoint( 1 );
     if( first_point )
         DistanceBearingMercator_Plugin( first_point->m_lat, first_point->m_lon, g_dLat, g_dLon, &brg, &join_distance );
 
@@ -586,25 +576,20 @@ bool PathProp::UpdateProperties( Path *pPath )
     wxString tide_form;
 
     //  Iterate on Route Points
-    wxOCPNPointListNode *node = pPath->pOCPNPointList->GetFirst();
+    wxODPointListNode *node = pPath->pODPointList->GetFirst();
 
     int i = 0;
     double slat = g_dLat;
     double slon = g_dLon;
-    double tdis = 0.;
-    double tsec = 0.;    // total time in seconds
 
     int stopover_count = 0;
     bool arrival = true; // marks which pass over the wpt we do - 1. arrival 2. departure
     bool enroute = true; // for active route, skip all points up to the active point
 
     wxString nullify = _T("----");
-
-    int i_prev_point = -1;
-    OCPNPoint *prev_OCPNPoint_point = NULL;
-
+    
     while( node ) {
-        OCPNPoint *prp = node->GetData();
+        ODPoint *prp = node->GetData();
         long item_line_index = i + stopover_count;
 
         //  Leg
@@ -632,8 +617,8 @@ bool PathProp::UpdateProperties( Path *pPath )
 
     // calculation of course at current WayPoint.
     double course=10, tmp_leg_dist=23;
-    wxOCPNPointListNode *next_node = node->GetNext();
-    OCPNPoint * _next_prp = (next_node)? next_node->GetData(): NULL;
+    wxODPointListNode *next_node = node->GetNext();
+    ODPoint * _next_prp = (next_node)? next_node->GetData(): NULL;
     if (_next_prp )
     {
         DistanceBearingMercator_Plugin( _next_prp->m_lat, _next_prp->m_lon, prp->m_lat, prp->m_lon, &course, &tmp_leg_dist );
@@ -687,7 +672,7 @@ bool PathProp::UpdateProperties( Path *pPath )
 
         tide_form = _T("");
 
-        LMT_Offset = long( ( prp->m_lon ) * 3600. / 15. );
+        //LMT_Offset = long( ( prp->m_lon ) * 3600. / 15. );
 
 
         //  Save for iterating distance/bearing calculation
@@ -705,9 +690,6 @@ bool PathProp::UpdateProperties( Path *pPath )
             i++;
             node = node->GetNext();
 
-            //    Record this point info for use as previous point in next iteration.
-            i_prev_point = i - 1;
-            prev_OCPNPoint_point = prp;
         }
     }
 
@@ -1203,7 +1185,7 @@ bool PathProp::SaveChanges( void )
         m_pPath->m_style = ::StyleValues[m_chStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 
-        pOCPNDrawConfig->UpdatePath( m_pPath );
+        pODConfig->UpdatePath( m_pPath );
         //g_ocpn_draw_pi->SaveConfig();
     }
 
@@ -1340,7 +1322,7 @@ void PathProp::InitializeList()
     if( NULL == m_pPath ) return;
 
     //  Iterate on Route Points, inserting blank fields starting with index 0
-    wxOCPNPointListNode *pnode = m_pPath->pOCPNPointList->GetFirst();
+    wxODPointListNode *pnode = m_pPath->pODPointList->GetFirst();
     int in = 0;
     while( pnode ) {
         m_wpList->InsertItem( in, _T(""), 0 );
