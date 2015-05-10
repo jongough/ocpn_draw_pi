@@ -23,8 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "OCPNDrawConfig.h"
-#include "OCPNDrawNavObjectChanges.h"
+#include "ODConfig.h"
+#include "ODNavObjectChanges.h"
 #include "Layer.h"
 #include "PointMan.h"
 #include "pugixml.hpp"
@@ -34,76 +34,75 @@
 #include <wx/dir.h>
 
 
-//extern OCPNDrawConfig   *pOCPNDrawConfig;
 extern wxString         *g_pData;
 extern int              g_LayerIdx;
 extern bool             g_bShowLayers;
 extern wxString         g_VisibleLayers;
 extern wxString         g_InvisibleLayers;
 extern LayerList        *pLayerList;
-extern PointMan         *pOCPNPointMan;  
+extern PointMan         *pODPointMan;  
 extern PathList         *pPathList;
 extern int              g_navobjbackups;
 
-//OCPNDrawConfig::OCPNDrawConfig(const wxString &appName, const wxString &vendorName,
+//ODConfig::ODConfig(const wxString &appName, const wxString &vendorName,
 //                              const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName)
-OCPNDrawConfig::OCPNDrawConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName)
+ODConfig::ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName)
 {
-    //OCPNDrawConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
-    //pOCPNDrawConfig->LoadMyConfig( 0 );
-    m_sOCPNDrawNavObjSetFile = *g_pData;
-    m_sOCPNDrawNavObjSetFile += wxS( "ODnavobj.xml" );
-    m_sOCPNDrawNavObjSetChangesFile = m_sOCPNDrawNavObjSetFile + _T( ".changes" );
+    //ODConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
+    //pODConfig->LoadMyConfig( 0 );
+    m_sODNavObjSetFile = *g_pData;
+    m_sODNavObjSetFile += wxS( "ODnavobj.xml" );
+    m_sODNavObjSetChangesFile = m_sODNavObjSetFile + _T( ".changes" );
  
-    m_pOCPNDrawNavObjectInputSet = NULL;
-    m_pOCPNDrawNavObjectChangesSet = NULL;
+    m_pODNavObjectInputSet = NULL;
+    m_pODNavObjectChangesSet = NULL;
     m_bSkipChangeSetUpdate = FALSE;
     
 }
 
-OCPNDrawConfig::~OCPNDrawConfig()
+ODConfig::~ODConfig()
 {
     //dtor
 }
 
-bool OCPNDrawConfig::AddNewPath( Path *pb, int crm )
+bool ODConfig::AddNewPath( Path *pb, int crm )
 {
     if( pb->m_bIsInLayer )
         return true;
 
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pOCPNDrawNavObjectChangesSet->AddPath( pb, "add" );
+        m_pODNavObjectChangesSet->AddPath( pb, "add" );
     }
 
     return true;
 }
 
-bool OCPNDrawConfig::UpdatePath( Path *pb )
+bool ODConfig::UpdatePath( Path *pb )
 {
     if( pb->m_bIsInLayer ) return true;
 
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pOCPNDrawNavObjectChangesSet->AddPath( pb, "update" );
+        m_pODNavObjectChangesSet->AddPath( pb, "update" );
 
     }
 
     return true;
 }
 
-bool OCPNDrawConfig::DeleteConfigPath( Path *pb )
+bool ODConfig::DeleteConfigPath( Path *pb )
 {
     if( pb->m_bIsInLayer ) return true;
     
     if( !m_bSkipChangeSetUpdate ) {
-        m_pOCPNDrawNavObjectChangesSet->AddPath( pb, "delete" );
+        m_pODNavObjectChangesSet->AddPath( pb, "delete" );
         
     }
     return true;
 }
 
-bool OCPNDrawConfig::AddNewOCPNPoint( OCPNPoint *pWP, int crm )
+bool ODConfig::AddNewODPoint( ODPoint *pWP, int crm )
 {
     if( pWP->m_bIsInLayer )
         return true;
@@ -112,37 +111,37 @@ bool OCPNDrawConfig::AddNewOCPNPoint( OCPNPoint *pWP, int crm )
         return true;
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pOCPNDrawNavObjectChangesSet->AddOCPNPoint( pWP, "add" );
+        m_pODNavObjectChangesSet->AddODPoint( pWP, "add" );
     }
 
     return true;
 }
 
-bool OCPNDrawConfig::UpdateOCPNPoint( OCPNPoint *pWP )
+bool ODConfig::UpdateODPoint( ODPoint *pWP )
 {
     if( pWP->m_bIsInLayer )
         return true;
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pOCPNDrawNavObjectChangesSet->AddOCPNPoint( pWP, "update" );
+        m_pODNavObjectChangesSet->AddODPoint( pWP, "update" );
     }
 
     return true;
 }
 
-bool OCPNDrawConfig::DeleteOCPNPoint( OCPNPoint *pWP )
+bool ODConfig::DeleteODPoint( ODPoint *pWP )
 {
     if( pWP->m_bIsInLayer )
         return true;
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pOCPNDrawNavObjectChangesSet->AddOCPNPoint( pWP, "delete" );
+        m_pODNavObjectChangesSet->AddODPoint( pWP, "delete" );
     }
 
     return true;
 }
 
-bool OCPNDrawConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxString suggestedName )
+bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxString suggestedName )
 {
     wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
@@ -172,7 +171,7 @@ bool OCPNDrawConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const w
             if( answer != wxID_YES ) return false;
         }
 
-        OCPNDrawNavObjectChanges *pgpx = new OCPNDrawNavObjectChanges;
+        ODNavObjectChanges *pgpx = new ODNavObjectChanges;
         pgpx->AddGPXPathsList( pPaths );
         pgpx->SaveFile(fn.GetFullPath());
         delete pgpx;
@@ -182,7 +181,7 @@ bool OCPNDrawConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const w
         return false;
 }
 
-bool OCPNDrawConfig::ExportGPXOCPNPoints( wxWindow* parent, OCPNPointList *pOCPNPoints, const wxString suggestedName )
+bool ODConfig::ExportGPXODPoints( wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName )
 {
     wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
@@ -202,8 +201,8 @@ bool OCPNDrawConfig::ExportGPXOCPNPoints( wxWindow* parent, OCPNPointList *pOCPN
             if( answer != wxID_YES ) return false;
         }
 
-        OCPNDrawNavObjectChanges *pgpx = new OCPNDrawNavObjectChanges;
-        pgpx->AddGPXOCPNPointsList( pOCPNPoints );
+        ODNavObjectChanges *pgpx = new ODNavObjectChanges;
+        pgpx->AddGPXODPointsList( pODPoints );
         pgpx->SaveFile(fn.GetFullPath());
         delete pgpx;
 
@@ -212,76 +211,76 @@ bool OCPNDrawConfig::ExportGPXOCPNPoints( wxWindow* parent, OCPNPointList *pOCPN
         return false;
 }
 
-void OCPNDrawConfig::UpdateNavObj( void )
+void ODConfig::UpdateNavObj( void )
 {
 //   Create the NavObjectCollection, and save to specified file
-    OCPNDrawNavObjectChanges *pNavObjectSet = new OCPNDrawNavObjectChanges();
+    ODNavObjectChanges *pNavObjectSet = new ODNavObjectChanges();
 
     pNavObjectSet->CreateAllGPXObjects();
-    pNavObjectSet->SaveFile( m_sOCPNDrawNavObjSetFile );
+    pNavObjectSet->SaveFile( m_sODNavObjSetFile );
 
     delete pNavObjectSet;
 
-    if( wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) )
-        wxRemoveFile( m_sOCPNDrawNavObjSetChangesFile );
+    if( wxFileExists( m_sODNavObjSetChangesFile ) )
+        wxRemoveFile( m_sODNavObjSetChangesFile );
 
-    delete m_pOCPNDrawNavObjectChangesSet;
-    m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(m_sOCPNDrawNavObjSetChangesFile);
+    delete m_pODNavObjectChangesSet;
+    m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
 
 }
 
-void OCPNDrawConfig::LoadNavObjects()
+void ODConfig::LoadNavObjects()
 {
     //      next thing to do is read tracks, etc from the NavObject XML file,
     wxString sLogMessage;
     sLogMessage.append( wxT("Loading navobjects from ") );
-    sLogMessage.append(m_sOCPNDrawNavObjSetFile );
+    sLogMessage.append(m_sODNavObjSetFile );
     wxLogMessage( sLogMessage );
     CreateRotatingNavObjBackup();
 
-    if( NULL == m_pOCPNDrawNavObjectInputSet )
-        m_pOCPNDrawNavObjectInputSet = new OCPNDrawNavObjectChanges();
+    if( NULL == m_pODNavObjectInputSet )
+        m_pODNavObjectInputSet = new ODNavObjectChanges();
 
-    if( wxFileExists( m_sOCPNDrawNavObjSetFile ) &&
-        m_pOCPNDrawNavObjectInputSet->load_file( m_sOCPNDrawNavObjSetFile.fn_str() ) )
-        m_pOCPNDrawNavObjectInputSet->LoadAllGPXObjects();
+    if( wxFileExists( m_sODNavObjSetFile ) &&
+        m_pODNavObjectInputSet->load_file( m_sODNavObjSetFile.fn_str() ) )
+        m_pODNavObjectInputSet->LoadAllGPXObjects();
 
     wxLogMessage( _T("Done loading ODnavobjects") );
-    delete m_pOCPNDrawNavObjectInputSet;
+    delete m_pODNavObjectInputSet;
 
-    if( wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) ) {
+    if( wxFileExists( m_sODNavObjSetChangesFile ) ) {
 
-        wxULongLong size = wxFileName::GetSize(m_sOCPNDrawNavObjSetChangesFile);
+        wxULongLong size = wxFileName::GetSize(m_sODNavObjSetChangesFile);
 
         //We crashed last time :(
         //That's why this file still exists...
         //Let's reconstruct the unsaved changes
-        OCPNDrawNavObjectChanges *pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges();
-        pOCPNDrawNavObjectChangesSet->load_file( m_sOCPNDrawNavObjSetChangesFile.fn_str() );
+        ODNavObjectChanges *pODNavObjectChangesSet = new ODNavObjectChanges();
+        pODNavObjectChangesSet->load_file( m_sODNavObjSetChangesFile.fn_str() );
 
         //  Remove the file before applying the changes,
         //  just in case the changes file itself causes a fault.
         //  If it does fault, at least the next restart will proceed without fault.
-        if( wxFileExists( m_sOCPNDrawNavObjSetChangesFile ) )
-            wxRemoveFile( m_sOCPNDrawNavObjSetChangesFile );
+        if( wxFileExists( m_sODNavObjSetChangesFile ) )
+            wxRemoveFile( m_sODNavObjSetChangesFile );
         
         if(size != 0){
             wxString sLogMessage;
             sLogMessage.append( wxT("Applying changes from ") );
-            sLogMessage.append( m_sOCPNDrawNavObjSetChangesFile );
+            sLogMessage.append( m_sODNavObjSetChangesFile );
             wxLogMessage( sLogMessage );
-            pOCPNDrawNavObjectChangesSet->ApplyChanges();
+            pODNavObjectChangesSet->ApplyChanges();
             UpdateNavObj();
         }
         
-        delete pOCPNDrawNavObjectChangesSet;
+        delete pODNavObjectChangesSet;
            
     }
 
-    m_pOCPNDrawNavObjectChangesSet = new OCPNDrawNavObjectChanges(m_sOCPNDrawNavObjSetChangesFile);
+    m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
 }
 
-void OCPNDrawConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
+void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 {
     wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, wxT ( "" ),
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
@@ -303,10 +302,10 @@ void OCPNDrawConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 
         ::wxBeginBusyCursor();
 
-        OCPNDrawNavObjectChanges *pgpx = new OCPNDrawNavObjectChanges;
+        ODNavObjectChanges *pgpx = new ODNavObjectChanges;
 
         wxProgressDialog *pprog = NULL;
-        int count = pOCPNPointMan->GetOCPNPointList()->GetCount();
+        int count = pODPointMan->GetODPointList()->GetCount();
         if( count > 200) {
             pprog = new wxProgressDialog( _("Export GPX file"), _T("0/0"), count, NULL,
                                           wxPD_APP_MODAL | wxPD_SMOOTH |
@@ -318,8 +317,8 @@ void OCPNDrawConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         //WPTs
         int ic = 0;
 
-        wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
-        OCPNPoint *pr;
+        wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+        ODPoint *pr;
         while( node ) {
             if(pprog) {
                 wxString msg;
@@ -338,8 +337,8 @@ void OCPNDrawConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
             if( pr->m_bIsInLayer && !blayer )
                 b_add = false;
             if( b_add) {
-                if( pr->m_bKeepXPath || !OCPNPointIsInPathList( pr ) )
-                    pgpx->AddGPXOCPNPoint( pr);
+                if( pr->m_bKeepXPath || !ODPointIsInPathList( pr ) )
+                    pgpx->AddGPXODPoint( pr);
             }
 
             node = node->GetNext();
@@ -373,7 +372,7 @@ void OCPNDrawConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
     }
 }
 
-void OCPNDrawConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, bool isdirectory )
+void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, bool isdirectory )
 {
     int response = wxID_CANCEL;
     wxArrayString file_array;
@@ -439,7 +438,7 @@ void OCPNDrawConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirp
 
             if( wxFileExists( path ) ) {
 
-                OCPNDrawNavObjectChanges *pSet = new OCPNDrawNavObjectChanges;
+                ODNavObjectChanges *pSet = new ODNavObjectChanges;
                 pSet->load_file(path.fn_str());
 
                 if(islayer){
@@ -454,15 +453,15 @@ void OCPNDrawConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirp
     }
 }
 
-void OCPNDrawConfig::CreateRotatingNavObjBackup()
+void ODConfig::CreateRotatingNavObjBackup()
 {
     //Rotate navobj backups, but just in case there are some changes in the current version
     //to prevent the user trying to "fix" the problem by continuously starting the
     //application to overwrite all of his good backups...
     if( g_navobjbackups > 0 ) {
         wxFile f;
-        wxString oldname = m_sOCPNDrawNavObjSetFile;
-        wxString newname = wxString::Format( _T("%s.1"), m_sOCPNDrawNavObjSetFile.c_str() );
+        wxString oldname = m_sODNavObjSetFile;
+        wxString newname = wxString::Format( _T("%s.1"), m_sODNavObjSetFile.c_str() );
 
         wxFileOffset s_diff = 1;
         if( wxFileExists( newname ) ) {
@@ -483,38 +482,38 @@ void OCPNDrawConfig::CreateRotatingNavObjBackup()
         {
             for( int i = g_navobjbackups - 1; i >= 1; i-- )
             {
-                oldname = wxString::Format( _T("%s.%d"), m_sOCPNDrawNavObjSetFile.c_str(), i );
-                newname = wxString::Format( _T("%s.%d"), m_sOCPNDrawNavObjSetFile.c_str(), i + 1 );
+                oldname = wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i );
+                newname = wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i + 1 );
                 if( wxFile::Exists( oldname ) )
                     wxCopyFile( oldname, newname );
             }
 
-            if( wxFile::Exists( m_sOCPNDrawNavObjSetFile ) )
+            if( wxFile::Exists( m_sODNavObjSetFile ) )
             {
-                newname = wxString::Format( _T("%s.1"), m_sOCPNDrawNavObjSetFile.c_str() );
-                wxCopyFile( m_sOCPNDrawNavObjSetFile, newname );
+                newname = wxString::Format( _T("%s.1"), m_sODNavObjSetFile.c_str() );
+                wxCopyFile( m_sODNavObjSetFile, newname );
             }
         }
     }
     //try to clean the backups the user doesn't want - breaks if he deleted some by hand as it tries to be effective...
     for( int i = g_navobjbackups + 1; i <= 99; i++ )
-        if( wxFile::Exists( wxString::Format( _T("%s.%d"), m_sOCPNDrawNavObjSetFile.c_str(), i ) ) ) wxRemoveFile(
-                wxString::Format( _T("%s.%d"), m_sOCPNDrawNavObjSetFile.c_str(), i ) );
+        if( wxFile::Exists( wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i ) ) ) wxRemoveFile(
+                wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i ) );
         else
             break;
 }
 
-bool OCPNDrawConfig::OCPNPointIsInPathList( OCPNPoint *pr )
+bool ODConfig::ODPointIsInPathList( ODPoint *pr )
 {
     bool IsInList = false;
 
     wxPathListNode *node1 = pPathList->GetFirst();
     while( node1 ) {
         Path *pPath = node1->GetData();
-        OCPNPointList *pOCPNPointList = pPath->pOCPNPointList;
+        ODPointList *pODPointList = pPath->pODPointList;
 
-        wxOCPNPointListNode *node2 = pOCPNPointList->GetFirst();
-        OCPNPoint *prp;
+        wxODPointListNode *node2 = pODPointList->GetFirst();
+        ODPoint *prp;
 
         while( node2 ) {
             prp = node2->GetData();

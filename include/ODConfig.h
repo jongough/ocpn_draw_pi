@@ -23,30 +23,30 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
  
-#ifndef OCPNDRAWCONFIG_H
-#define OCPNDRAWCONFIG_H
+#ifndef ODCONFIG_H
+#define ODCONFIG_H
 
 //#include <navutil.h>
-#include "OCPNDrawNavObjectChanges.h"
+#include "ODNavObjectChanges.h"
 
 class NavObjectCollection;
 //class NavObjectChanges;
 
-//class OCPNDrawConfig : public MyConfig
-class OCPNDrawConfig
+//class ODConfig : public MyConfig
+class ODConfig
 {
     public:
-//        OCPNDrawConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName) {}
-        OCPNDrawConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName);
-        virtual ~OCPNDrawConfig();
+//        ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName) {}
+        ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName);
+        virtual ~ODConfig();
 
         virtual bool AddNewPath(Path *pr, int ConfigRouteNum = -1);
         virtual bool UpdatePath(Path *pr);
         virtual bool DeleteConfigPath(Path *pr);
         
-        virtual bool AddNewOCPNPoint(OCPNPoint *pWP, int ConfigRouteNum = -1);
-        virtual bool UpdateOCPNPoint(OCPNPoint *pWP);
-        virtual bool DeleteOCPNPoint(OCPNPoint *pWP);
+        virtual bool AddNewODPoint(ODPoint *pWP, int ConfigRouteNum = -1);
+        virtual bool UpdateODPoint(ODPoint *pWP);
+        virtual bool DeleteODPoint(ODPoint *pWP);
 
         virtual void UpdateNavObj();
         virtual void LoadNavObjects();
@@ -55,16 +55,16 @@ class OCPNDrawConfig
         void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
 
         bool ExportGPXPaths(wxWindow* parent, PathList *pPathss, const wxString suggestedName = _T("paths"));
-        bool ExportGPXOCPNPoints(wxWindow* parent, OCPNPointList *pOCPNPoints, const wxString suggestedName = _T("OCPN points"));
+        bool ExportGPXODPoints(wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName = _T("OCPN points"));
         
         void CreateRotatingNavObjBackup();
-        bool OCPNPointIsInPathList( OCPNPoint *pr );
+        bool ODPointIsInPathList( ODPoint *pr );
 
-        OCPNDrawNavObjectChanges  *m_pOCPNDrawNavObjectChangesSet;  
-        wxString                m_sOCPNDrawNavObjSetFile;
-        wxString                m_sOCPNDrawNavObjSetChangesFile;
+        ODNavObjectChanges  *m_pODNavObjectChangesSet;  
+        wxString                m_sODNavObjSetFile;
+        wxString                m_sODNavObjSetChangesFile;
           
-        OCPNDrawNavObjectChanges    *m_pOCPNDrawNavObjectInputSet;
+        ODNavObjectChanges    *m_pODNavObjectInputSet;
 
         bool                    m_bSkipChangeSetUpdate;
         

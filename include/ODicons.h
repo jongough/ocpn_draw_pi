@@ -1,9 +1,11 @@
-/******************************************************************************
- *
+/***************************************************************************
+ * 
  * Project:  OpenCPN
+ * Purpose:  ODicons
+ * Author:   Jon Gough
  *
  ***************************************************************************
- *   Copyright (C) 2013 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,41 +21,27 @@
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
- ***************************************************************************
- */
+ **************************************************************************/
 
-#ifndef __OCPNSOUNDDATA_H__
-#define __OCPNSOUNDDATA_H__
+#ifndef ODICONS_H
+#define ODICONS_H 1
 
-#ifdef OCPN_USE_PORTAUDIO
-
-#include "wx/wxprec.h"
-#ifndef  WX_PRECOMP
-#include "wx/wx.h"
-#endif //precompiled headers
-
-/// Sound data, as loaded from .wav file:
-class OCPNSoundData
-{
-public:
-    OCPNSoundData();
-    ~OCPNSoundData();
-
-    // .wav header information:
-    unsigned m_channels;       // num of channels (mono:1, stereo:2)
-    unsigned m_samplingRate;
-    unsigned m_bitsPerSample;  // if 8, then m_data contains unsigned 8bit
-    // samples (wxUint8), if 16 then signed 16bit
-    // (wxInt16)
-    unsigned m_samples;        // length in samples:
-
-    // wave data:
-    size_t   m_dataBytes;
-    wxUint8 *m_data;           // m_dataBytes bytes of data
-
-    wxUint8 *m_dataWithHeader; // ditto, but prefixed with .wav header
-};
-
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
 #endif
 
-#endif
+extern void initialize_images(void);
+
+extern void *g_ppimgr;
+extern wxBitmap *_img_ocpn_draw_pi;
+extern wxBitmap *_img_ocpn_draw_gray_pi;
+extern wxBitmap *_img_ocpn_draw;
+extern wxBitmap *_img_ocpn_draw_boundary;
+extern wxBitmap *_img_ocpn_draw_boundary_gray;
+extern wxBitmap *_img_ocpn_draw_point;
+extern wxBitmap *_img_ocpn_draw_point_gray;
+extern const wxBitmap *_img_Bullet_green;
+extern const wxBitmap *_img_Bullet_red;
+extern const wxBitmap *_img_Bullet_yellow;
+#endif /* ODICONS_H */

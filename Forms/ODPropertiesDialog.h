@@ -5,8 +5,8 @@
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __OCPNDrawPropertiesDialog__
-#define __OCPNDrawPropertiesDialog__
+#ifndef __ODPropertiesDialog__
+#define __ODPropertiesDialog__
 
 #include <wx/string.h>
 #include <wx/stattext.h>
@@ -32,9 +32,9 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class OCPNDrawPropertiesDialog
+/// Class ODPropertiesDialog
 ///////////////////////////////////////////////////////////////////////////////
-class OCPNDrawPropertiesDialog : public wxDialog 
+class ODPropertiesDialog : public wxDialog 
 {
 	private:
 	
@@ -95,9 +95,9 @@ class OCPNDrawPropertiesDialog : public wxDialog
 	
 	public:
 		
-		OCPNDrawPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
-		~OCPNDrawPropertiesDialog();
+		ODPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
+		~ODPropertiesDialog();
 	
 };
 
-#endif //__OCPNDrawPropertiesDialog__
+#endif //__ODPropertiesDialog__

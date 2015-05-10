@@ -38,13 +38,13 @@
 class ocpnDC;
 class wxDC;
 
-class OCPNPoint
+class ODPoint
 {
 public:
-      OCPNPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
-      OCPNPoint( OCPNPoint* orig );
-      OCPNPoint();
-      ~OCPNPoint(void);
+      ODPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
+      ODPoint( ODPoint* orig );
+      ODPoint();
+      ~ODPoint(void);
       void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
       void ReLoadIcon(void);
 
@@ -56,7 +56,7 @@ public:
       double GetLongitude() { return m_lon; };
       void CalculateDCRect(wxDC& dc, wxRect *prect);
 
-      bool IsSame(OCPNPoint *pOtherRP);        // toh, 2009.02.11
+      bool IsSame(ODPoint *pOtherRP);        // toh, 2009.02.11
       bool IsVisible() { return m_bIsVisible; }
       bool IsListed() { return m_bIsListed; }
       bool IsNameShown() { return m_bShowName; }
@@ -84,20 +84,20 @@ public:
       void SetDistance( double distance) { m_routeprop_distance = distance; };
       double GetDistance() { return m_routeprop_distance; };
 
-      void SetOCPNPointArrivalRadius(double dArrivalDistance) { m_OCPNPointArrivalRadius = dArrivalDistance; };
-      void SetOCPNPointArrivalRadius( wxString wxArrivalDistance ) { wxArrivalDistance.ToDouble( &m_OCPNPointArrivalRadius ); };
-      double GetOCPNPointArrivalRadius();
-      bool  GetShowOCPNPointRangeRings(void) { return m_bShowOCPNPointRangeRings; };
-      int   GetOCPNPointRangeRingsNumber(void);
-      float GetOCPNPointRangeRingsStep(void);
-      int   GetOCPNPointRangeRingsStepUnits(void);
-      wxColour GetOCPNPointRangeRingsColour(void);
+      void SetODPointArrivalRadius(double dArrivalDistance) { m_ODPointArrivalRadius = dArrivalDistance; };
+      void SetODPointArrivalRadius( wxString wxArrivalDistance ) { wxArrivalDistance.ToDouble( &m_ODPointArrivalRadius ); };
+      double GetODPointArrivalRadius();
+      bool  GetShowODPointRangeRings(void) { return m_bShowODPointRangeRings; };
+      int   GetODPointRangeRingsNumber(void);
+      float GetODPointRangeRingsStep(void);
+      int   GetODPointRangeRingsStepUnits(void);
+      wxColour GetODPointRangeRingsColour(void);
       wxString GetTypeString(void) { return m_sTypeString; }
-      void  SetShowOCPNPointRangeRings(bool b_showOCPNPointRangeRings) { m_bShowOCPNPointRangeRings = b_showOCPNPointRangeRings; };
-      void  SetOCPNPointRangeRingsNumber(int i_OCPNPointRangeRingsNumber) { m_iOCPNPointRangeRingsNumber = i_OCPNPointRangeRingsNumber; };
-      void  SetOCPNPointRangeRingsStep(float f_OCPNPointRangeRingsStep) { m_fOCPNPointRangeRingsStep = f_OCPNPointRangeRingsStep; };
-      void  SetOCPNPointRangeRingsStepUnits(int i_OCPNPointRangeRingsStepUnits) { m_iOCPNPointRangeRingsStepUnits = i_OCPNPointRangeRingsStepUnits; };
-      void  SetOCPNPointRangeRingsColour( wxColour wxc_OCPNPointRangeRingsColour ) { m_wxcOCPNPointRangeRingsColour = wxc_OCPNPointRangeRingsColour; };
+      void  SetShowODPointRangeRings(bool b_showODPointRangeRings) { m_bShowODPointRangeRings = b_showODPointRangeRings; };
+      void  SetODPointRangeRingsNumber(int i_ODPointRangeRingsNumber) { m_iODPointRangeRingsNumber = i_ODPointRangeRingsNumber; };
+      void  SetODPointRangeRingsStep(float f_ODPointRangeRingsStep) { m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; };
+      void  SetODPointRangeRingsStepUnits(int i_ODPointRangeRingsStepUnits) { m_iODPointRangeRingsStepUnits = i_ODPointRangeRingsStepUnits; };
+      void  SetODPointRangeRingsColour( wxColour wxc_ODPointRangeRingsColour ) { m_wxcODPointRangeRingsColour = wxc_ODPointRangeRingsColour; };
       void  SetTypeString( wxString sTypeString ) { m_sTypeString = sTypeString; }
 
 
@@ -164,13 +164,13 @@ public:
       static bool s_bUpdateWaypointsDisplayList;
 #endif
 
-      double m_OCPNPointArrivalRadius;
+      double m_ODPointArrivalRadius;
 
-      bool              m_bShowOCPNPointRangeRings;
-      int               m_iOCPNPointRangeRingsNumber;
-      float             m_fOCPNPointRangeRingsStep;
-      int               m_iOCPNPointRangeRingsStepUnits;
-      wxColour          m_wxcOCPNPointRangeRingsColour;
+      bool              m_bShowODPointRangeRings;
+      int               m_iODPointRangeRingsNumber;
+      float             m_fODPointRangeRingsStep;
+      int               m_iODPointRangeRingsStepUnits;
+      wxColour          m_wxcODPointRangeRingsColour;
       wxString          m_sTypeString;
       wxString          m_IconName;
       wxString          m_MarkName;
@@ -190,6 +190,6 @@ private:
       
 };
 
-WX_DECLARE_LIST(OCPNPoint, OCPNPointList);// establish class as list member
+WX_DECLARE_LIST(ODPoint, ODPointList);// establish class as list member
 
 #endif

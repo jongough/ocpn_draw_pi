@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  OCPNPoint dialog box  Support
+ * Purpose:  OCPN Draw Point helper functions
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -22,40 +22,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
-#ifndef OCPNDRAWPOINTINFOIMPL_H
-#define OCPNDRAWPOINTINFOIMPL_H
+ 
+#ifndef __ODHelper__
+#define __ODHelper__
 
-#include <routeprop.h>
-#include "OCPNPoint.h"
+#include "MarkIcon.h"
+#include <wx/imaglist.h>
 
-
-class OCPNDrawPointInfoImpl : public MarkInfoImpl
-{
-    public:
-        OCPNDrawPointInfoImpl( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Point Information"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1, -1 ), long style = wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxRESIZE_BORDER );
-        //OCPNDrawPointInfoImpl();
-        virtual ~OCPNDrawPointInfoImpl();
-        void SetOCPNPoint( OCPNPoint *pOP );
-        void OnMarkInfoOKClick( wxCommandEvent& event );
-        bool UpdateProperties( bool positionOnly = false );
-    protected:
-    private:
-        void OnHyperLinkClick(wxHyperlinkEvent &event);
-        bool SaveChanges();
-        void OnPositionCtlUpdated( wxCommandEvent& event );
-        void OnMarkInfoCancelClick( wxCommandEvent& event );
-        
-        OCPNPoint  *m_pOCPNPoint;
-        HyperlinkList *m_pMyLinkList;
-        wxHyperlinkCtrl* m_pEditedLink;
-
-        int           m_current_icon_Index;
-        double        m_lat_save;
-        double        m_lon_save;
-        wxString      m_IconName_save;
-        bool          m_bShowName_save;
-        bool          m_bIsVisible_save;
-
-};
-
-#endif // OCPNDRAWPOINTINFOIMPL_H
+wxImageList *GetMarkIcon_image_list( void );

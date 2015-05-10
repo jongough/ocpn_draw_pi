@@ -26,7 +26,7 @@
 #include <wx/dcscreen.h>
 #include <wx/tokenzr.h>
 
-#include "OCPNPoint.h"
+#include "ODPoint.h"
 #include "PointMan.h"
 #include "PathMan.h"
 #include "FontMgr.h"
@@ -35,7 +35,7 @@
 #include "ODUtils.h"
 #include "ocpndc.h"
 
-extern PointMan     *pOCPNPointMan;
+extern PointMan     *pODPointMan;
 extern bool         g_bODIsNewLayer;
 extern int          g_ODLayerIdx;
 extern ChartCanvas  *ocpncc1;
@@ -46,17 +46,17 @@ extern bool         g_btouch;
 extern bool         g_bresponsive;
 extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern double       g_n_arrival_circle_radius;
-extern int          g_iOCPNPointRangeRingsNumber;
-extern float        g_fOCPNPointRangeRingsStep;
-extern int          g_iOCPNPointRangeRingsStepUnits;
-extern wxColour     g_colourOCPNPointRangeRingsColour;
+extern int          g_iODPointRangeRingsNumber;
+extern float        g_fODPointRangeRingsStep;
+extern int          g_iODPointRangeRingsStepUnits;
+extern wxColour     g_colourODPointRangeRingsColour;
 extern PlugIn_ViewPort  *g_pivp;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( OCPNPointList );
+WX_DEFINE_LIST ( ODPointList );
 
-OCPNPoint::OCPNPoint()
+ODPoint::ODPoint()
 {
     m_pbmIcon = NULL;
 
@@ -91,7 +91,7 @@ OCPNPoint::OCPNPoint()
     
     m_HyperlinkList = new HyperlinkList;
 
-    m_GUID = pOCPNPointMan->CreateGUID( this );
+    m_GUID = pODPointMan->CreateGUID( this );
 
     m_IconName = wxEmptyString;
     ReLoadIcon();
@@ -101,11 +101,11 @@ OCPNPoint::OCPNPoint()
     m_bIsInLayer = false;
     m_LayerID = 0;
     
-    m_OCPNPointArrivalRadius = g_n_arrival_circle_radius;
+    m_ODPointArrivalRadius = g_n_arrival_circle_radius;
 }
 
 // Copy Constructor
-OCPNPoint::OCPNPoint( OCPNPoint* orig )
+ODPoint::ODPoint( ODPoint* orig )
 {
     m_MarkName = orig->GetName();
     m_lat = orig->m_lat;
@@ -142,16 +142,16 @@ OCPNPoint::OCPNPoint( OCPNPoint* orig )
     ReLoadIcon();
 
     m_bIsInLayer = orig->m_bIsInLayer;
-    m_GUID = pOCPNPointMan->CreateGUID( this );
+    m_GUID = pODPointMan->CreateGUID( this );
     
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     
-    m_OCPNPointArrivalRadius = orig->GetOCPNPointArrivalRadius();
+    m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
     
 }
 
-OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const wxString& name,
+ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxString& name,
         const wxString &pGUID, bool bAddToList )
 {
     //  Establish points
@@ -198,7 +198,7 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     if( !pGUID.IsEmpty() )
         m_GUID = pGUID;
     else
-        m_GUID = pOCPNPointMan->CreateGUID( this );
+        m_GUID = pODPointMan->CreateGUID( this );
 
     //      Get Icon bitmap
     m_IconName = icon_ident;
@@ -208,8 +208,8 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
 
     //  Possibly add the waypoint to the global list maintained by the waypoint manager
 
-    if( bAddToList && NULL != pOCPNPointMan )
-        pOCPNPointMan->AddOCPNPoint( this );
+    if( bAddToList && NULL != pODPointMan )
+        pODPointMan->AddODPoint( this );
 
     m_bIsInLayer = g_bODIsNewLayer;
     if( m_bIsInLayer ) {
@@ -218,21 +218,21 @@ OCPNPoint::OCPNPoint( double lat, double lon, const wxString& icon_ident, const 
     } else
         m_LayerID = 0;
     
-    SetOCPNPointArrivalRadius( g_n_arrival_circle_radius );
+    SetODPointArrivalRadius( g_n_arrival_circle_radius );
 
-    m_bShowOCPNPointRangeRings = false;
-    m_iOCPNPointRangeRingsNumber = g_iOCPNPointRangeRingsNumber;
-    m_fOCPNPointRangeRingsStep = g_fOCPNPointRangeRingsStep;
-    m_iOCPNPointRangeRingsStepUnits = g_iOCPNPointRangeRingsStepUnits;
-    m_wxcOCPNPointRangeRingsColour = g_colourOCPNPointRangeRingsColour;
+    m_bShowODPointRangeRings = false;
+    m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
+    m_fODPointRangeRingsStep = g_fODPointRangeRingsStep;
+    m_iODPointRangeRingsStepUnits = g_iODPointRangeRingsStepUnits;
+    m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
     
 }
 
-OCPNPoint::~OCPNPoint( void )
+ODPoint::~ODPoint( void )
 {
 //  Remove this point from the global waypoint list
-    if( NULL != pOCPNPointMan )
-        pOCPNPointMan->RemoveOCPNPoint( this );
+    if( NULL != pODPointMan )
+        pODPointMan->RemoveODPoint( this );
 
     if( m_HyperlinkList ) {
         m_HyperlinkList->DeleteContents( true );
@@ -240,7 +240,7 @@ OCPNPoint::~OCPNPoint( void )
     }
 }
 
-wxDateTime OCPNPoint::GetCreateTime()
+wxDateTime ODPoint::GetCreateTime()
 {
     if(!m_CreateTimeX.IsValid()) {
         if(m_timestring.Len())
@@ -249,19 +249,19 @@ wxDateTime OCPNPoint::GetCreateTime()
     return m_CreateTimeX;
 }
 
-void OCPNPoint::SetCreateTime( wxDateTime dt )
+void ODPoint::SetCreateTime( wxDateTime dt )
 {
     m_CreateTimeX = dt;
 }
 
 
-void OCPNPoint::SetName(const wxString & name)
+void ODPoint::SetName(const wxString & name)
 {
     m_MarkName = name;
     CalculateNameExtents();
 }
 
-void OCPNPoint::CalculateNameExtents( void )
+void ODPoint::CalculateNameExtents( void )
 {
     if( m_pMarkFont ) {
         wxScreenDC dc;
@@ -273,14 +273,14 @@ void OCPNPoint::CalculateNameExtents( void )
 
 }
 
-void OCPNPoint::ReLoadIcon( void )
+void ODPoint::ReLoadIcon( void )
 {
-    bool icon_exists = pOCPNPointMan->DoesIconExist(m_IconName);
+    bool icon_exists = pODPointMan->DoesIconExist(m_IconName);
     if( !icon_exists ){
         
         //  Try all lower case as a favor in the case where imported waypoints use mixed case names
         wxString tentative_icon = m_IconName.Lower();
-        if(pOCPNPointMan->DoesIconExist(tentative_icon)){
+        if(pODPointMan->DoesIconExist(tentative_icon)){
             // if found, convert point's icon name permanently.
             m_IconName = tentative_icon;
         }
@@ -289,12 +289,12 @@ void OCPNPoint::ReLoadIcon( void )
             ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
             if(style){
                 wxBitmap bmp = style->GetIcon( _T("circle") );
-                pOCPNPointMan->ProcessIcon( bmp, m_IconName, m_IconName );
+                pODPointMan->ProcessIcon( bmp, m_IconName, m_IconName );
            }
         }
     }
         
-    m_pbmIcon = pOCPNPointMan->GetIconBitmap( m_IconName );
+    m_pbmIcon = pODPointMan->GetIconBitmap( m_IconName );
 
 #ifdef ocpnUSE_GL
     m_wpBBox_chart_scale = -1;
@@ -303,7 +303,7 @@ void OCPNPoint::ReLoadIcon( void )
 #endif
 }
 
-void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
+void ODPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 {
     wxPoint r;
     wxRect hilitebox;
@@ -320,12 +320,12 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     if( m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected ) return;
 
     wxPen *pen;
-    if( m_bBlink ) pen = g_pPathMan->GetActiveOCPNPointPen();
-    else pen = g_pPathMan->GetOCPNPointPen();
+    if( m_bBlink ) pen = g_pPathMan->GetActiveODPointPen();
+    else pen = g_pPathMan->GetODPointPen();
 
 //    Substitue icon?
     wxBitmap *pbm;
-    if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = pOCPNPointMan->GetIconBitmap(
+    if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = pODPointMan->GetIconBitmap(
             _T ( "activepoint" ) );
     else
         pbm = m_pbmIcon;
@@ -399,13 +399,13 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         }
     }
 
-    // Draw OCPNPoint range rings if activated
-    if( m_iOCPNPointRangeRingsNumber && m_bShowOCPNPointRangeRings ) {
+    // Draw ODPoint range rings if activated
+    if( m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         double factor = 1.00;
-        if( m_iOCPNPointRangeRingsStepUnits == 1 )          // nautical miles
+        if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
             factor = 1 / 1.852;
 
-        factor *= m_fOCPNPointRangeRingsStep;
+        factor *= m_fODPointRangeRingsStep;
 
         double tlat, tlon;
         wxPoint r1;
@@ -417,13 +417,13 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
                            pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
 
-        wxPen ppPen1( m_wxcOCPNPointRangeRingsColour, 2 );
+        wxPen ppPen1( m_wxcODPointRangeRingsColour, 2 );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
-        dc.SetBrush( wxBrush( m_wxcOCPNPointRangeRingsColour, wxTRANSPARENT ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxTRANSPARENT ) );
 
-        for( int i = 1; i <= m_iOCPNPointRangeRingsNumber; i++ )
+        for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( r.x, r.y, i * pix_radius );
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
@@ -441,7 +441,7 @@ void OCPNPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 }
 
 #ifdef ocpnUSE_GL
-void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
+void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
     if( !m_bIsVisible )
     return;
@@ -487,7 +487,7 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 //    Substitue icon?
     wxBitmap *pbm;
     if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) )
-        pbm = pOCPNPointMan->GetIconBitmap(  _T ( "activepoint" ) );
+        pbm = pODPointMan->GetIconBitmap(  _T ( "activepoint" ) );
     else
         pbm = m_pbmIcon;
 
@@ -548,7 +548,7 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( m_bPtIsSelected ) {
         wxColour hi_colour;
         if( m_bBlink ){
-            wxPen *pen = g_pPathMan->GetActiveOCPNPointPen();
+            wxPen *pen = g_pPathMan->GetActiveODPointPen();
             hi_colour = pen->GetColour();
         }
         else{
@@ -567,7 +567,7 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         int glw, glh;
-        unsigned int IconTexture = pOCPNPointMan->GetIconTexture( pbm, glw, glh );
+        unsigned int IconTexture = pODPointMan->GetIconTexture( pbm, glw, glh );
         
         glBindTexture(GL_TEXTURE_2D, IconTexture);
         
@@ -651,13 +651,13 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
         }
     }
     
-    // Draw OCPNPoint range rings if activated
-    if( m_iOCPNPointRangeRingsNumber && m_bShowOCPNPointRangeRings ) {
+    // Draw ODPoint range rings if activated
+    if( m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         double factor = 1.00;
-        if( m_iOCPNPointRangeRingsStepUnits == 1 )          // nautical miles
+        if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
             factor = 1 / 1.852;
         
-        factor *= m_fOCPNPointRangeRingsStep;
+        factor *= m_fODPointRangeRingsStep;
         
         double tlat, tlon;
         wxPoint r1;
@@ -668,13 +668,13 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
         pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
         
-        wxPen ppPen1( m_wxcOCPNPointRangeRingsColour, 2 );
+        wxPen ppPen1( m_wxcODPointRangeRingsColour, 2 );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
-        dc.SetBrush( wxBrush( m_wxcOCPNPointRangeRingsColour, wxTRANSPARENT ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxTRANSPARENT ) );
         
-        for( int i = 1; i <= m_iOCPNPointRangeRingsNumber; i++ )
+        for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( r.x, r.y, i * pix_radius );
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
@@ -692,13 +692,13 @@ void OCPNPoint::DrawGL( PlugIn_ViewPort &pivp )
 }
 #endif
 
-void OCPNPoint::SetPosition( double lat, double lon )
+void ODPoint::SetPosition( double lat, double lon )
 {
     m_lat = lat;
     m_lon = lon;
 }
 
-void OCPNPoint::CalculateDCRect( wxDC& dc, wxRect *prect )
+void ODPoint::CalculateDCRect( wxDC& dc, wxRect *prect )
 {
     dc.ResetBoundingBox();
     dc.DestroyClippingRegion();
@@ -715,7 +715,7 @@ void OCPNPoint::CalculateDCRect( wxDC& dc, wxRect *prect )
 
 }
 
-bool OCPNPoint::IsSame( OCPNPoint *pOtherRP )
+bool ODPoint::IsSame( ODPoint *pOtherRP )
 {
     bool IsSame = false;
 
@@ -726,7 +726,7 @@ bool OCPNPoint::IsSame( OCPNPoint *pOtherRP )
     return IsSame;
 }
 
-bool OCPNPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
+bool ODPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
 {
   /*
     int result = 0;
@@ -750,40 +750,40 @@ bool OCPNPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
     return TRUE;
 }
 
-double OCPNPoint::GetOCPNPointArrivalRadius() {
-    if (m_OCPNPointArrivalRadius < 0.001) {
-        SetOCPNPointArrivalRadius( g_n_arrival_circle_radius );
+double ODPoint::GetODPointArrivalRadius() {
+    if (m_ODPointArrivalRadius < 0.001) {
+        SetODPointArrivalRadius( g_n_arrival_circle_radius );
         return g_n_arrival_circle_radius;
     }
     else
-        return m_OCPNPointArrivalRadius;
+        return m_ODPointArrivalRadius;
 }
 
-int   OCPNPoint::GetOCPNPointRangeRingsNumber() { 
-    if ( m_iOCPNPointRangeRingsNumber == -1 )
-        return g_iOCPNPointRangeRingsNumber;
+int   ODPoint::GetODPointRangeRingsNumber() { 
+    if ( m_iODPointRangeRingsNumber == -1 )
+        return g_iODPointRangeRingsNumber;
     else
-        return m_iOCPNPointRangeRingsNumber; 
+        return m_iODPointRangeRingsNumber; 
 }
 
-float OCPNPoint::GetOCPNPointRangeRingsStep() { 
-    if ( m_fOCPNPointRangeRingsStep == -1 )
-        return g_fOCPNPointRangeRingsStep;
+float ODPoint::GetODPointRangeRingsStep() { 
+    if ( m_fODPointRangeRingsStep == -1 )
+        return g_fODPointRangeRingsStep;
     else
-        return m_fOCPNPointRangeRingsStep; 
+        return m_fODPointRangeRingsStep; 
 }
 
-int   OCPNPoint::GetOCPNPointRangeRingsStepUnits() { 
-    if ( m_iOCPNPointRangeRingsStepUnits == -1 )
-        return g_iOCPNPointRangeRingsStepUnits;
+int   ODPoint::GetODPointRangeRingsStepUnits() { 
+    if ( m_iODPointRangeRingsStepUnits == -1 )
+        return g_iODPointRangeRingsStepUnits;
     else
-        return m_iOCPNPointRangeRingsStepUnits ; 
+        return m_iODPointRangeRingsStepUnits ; 
 }
 
-wxColour OCPNPoint::GetOCPNPointRangeRingsColour(void) { 
-    if ( m_wxcOCPNPointRangeRingsColour.GetAsString(wxC2S_HTML_SYNTAX) == _T("#FFFFFF") )
-        return g_colourOCPNPointRangeRingsColour;
+wxColour ODPoint::GetODPointRangeRingsColour(void) { 
+    if ( m_wxcODPointRangeRingsColour.GetAsString(wxC2S_HTML_SYNTAX) == _T("#FFFFFF") )
+        return g_colourODPointRangeRingsColour;
     else
-        return m_wxcOCPNPointRangeRingsColour; 
+        return m_wxcODPointRangeRingsColour; 
 }
 
