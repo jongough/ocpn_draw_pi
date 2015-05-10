@@ -25,14 +25,14 @@
 #ifndef __ODVECTOR2D_H__
 #define __ODVECTOR2D_H__
 
-#include "OCPNPoint.h"
+#include "ODPoint.h"
 
 class ODvector2D
 {
 public:
     ODvector2D() { x = 0.0; y = 0.0; }
     ODvector2D( double a, double b ) { x = a; y = b; }
-    void Set( OCPNPoint* p ) { lat = p->m_lat; lon = p->m_lon; }
+    void Set( ODPoint* p ) { lat = p->m_lat; lon = p->m_lon; }
     friend bool operator==( ODvector2D &a, ODvector2D &b ) { return a.x == b.x && a.y == b.y; }
     friend bool operator!=( ODvector2D &a, ODvector2D &b ) { return a.x != b.x || a.y != b.y; }
     friend ODvector2D operator-( ODvector2D a, ODvector2D b ) { return ODvector2D( a.x - b.x, a.y - b.y ); }

@@ -41,7 +41,7 @@ enum TrackContextMenu {
 
 class wxButton;
 class Path;
-class OCPNPoint;
+class ODPoint;
 class Layer;
 
 class PathManagerDialog : public wxDialog {
@@ -52,12 +52,12 @@ class PathManagerDialog : public wxDialog {
             ~PathManagerDialog();
             void SetColorScheme();
             void UpdatePathListCtrl();     // Rebuild route list
-            void UpdateOCPNPointsListCtrl(OCPNPoint *rp_select = NULL, bool b_retain_sort = false);
+            void UpdateODPointsListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
             void UpdateLayListCtrl();
-            void UpdateOCPNPointsListCtrlViz();
+            void UpdateODPointsListCtrlViz();
             
             void OnTabSwitch(wxNotebookEvent& event);
-            static void OCPNPointShowPropertiesDialog( OCPNPoint* wp, wxWindow* parent );
+            static void ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent );
             void ShowPathPropertiesDialog ( Path *path );
 //            void TrackToRoute( Track *track );
             static wxString GetLayerName( int id );
@@ -67,7 +67,7 @@ class PathManagerDialog : public wxDialog {
             void MakeAllPathsInvisible();  // Mark all boundaries as invisible. Does not flush settings.
             void ZoomtoPath(Path *path); // Attempt to zoom path into the view
             void UpdatePathButtons();
-            void UpdateOCPNPointButtons();
+            void UpdateODPointButtons();
             void UpdateLayButtons();           // Correct button state
             
             void ToggleLayerContentsOnChart(Layer *layer);
@@ -87,18 +87,18 @@ class PathManagerDialog : public wxDialog {
             void OnPathDeleteAllClick(wxCommandEvent &event);
             void OnPathActivateClick(wxCommandEvent &event);
             void OnTrkDefaultAction(wxListEvent &event);
-            void OnOCPNPointDefaultAction(wxListEvent &event);
-            void OnOCPNPointNewClick(wxCommandEvent &event);
-            void OnOCPNPointPropertiesClick(wxCommandEvent &event);
-            void OnOCPNPointZoomtoClick(wxCommandEvent &event);
-            void OnOCPNPointDeleteClick(wxCommandEvent &event);
-//            void OnOCPNPointGoToClick(wxCommandEvent &event);
-            void OnOCPNPointExportClick(wxCommandEvent &event);
-//            void OnOCPNPointSendToGPSClick(wxCommandEvent &event);
-            void OnOCPNPointDeleteAllClick(wxCommandEvent &event);
-            void OnOCPNPointSelected(wxListEvent &event);
-            void OnOCPNPointToggleVisibility(wxMouseEvent &event);
-            void OnOCPNPointColumnClicked(wxListEvent &event);
+            void OnODPointDefaultAction(wxListEvent &event);
+            void OnODPointNewClick(wxCommandEvent &event);
+            void OnODPointPropertiesClick(wxCommandEvent &event);
+            void OnODPointZoomtoClick(wxCommandEvent &event);
+            void OnODPointDeleteClick(wxCommandEvent &event);
+//            void OnODPointGoToClick(wxCommandEvent &event);
+            void OnODPointExportClick(wxCommandEvent &event);
+//            void OnODPointSendToGPSClick(wxCommandEvent &event);
+            void OnODPointDeleteAllClick(wxCommandEvent &event);
+            void OnODPointSelected(wxListEvent &event);
+            void OnODPointToggleVisibility(wxMouseEvent &event);
+            void OnODPointColumnClicked(wxListEvent &event);
 
             void OnLayDefaultAction(wxListEvent &event);
             void OnLayNewClick(wxCommandEvent &event);
@@ -117,11 +117,11 @@ class PathManagerDialog : public wxDialog {
             
             // properties
             wxNotebook *m_pNotebook;
-            wxPanel    *m_pPanelOCPNPoint;
+            wxPanel    *m_pPanelODPoint;
             wxPanel    *m_pPanelPath;
             wxPanel     *m_pPanelLay;
             wxListCtrl *m_pPathListCtrl;
-            wxListCtrl *m_pOCPNPointListCtrl;
+            wxListCtrl *m_pODPointListCtrl;
             wxListCtrl  *m_pLayListCtrl;
             
 
@@ -132,14 +132,14 @@ class PathManagerDialog : public wxDialog {
             wxButton *btnPathDeleteAll;
             wxButton *btnPathActivate;
             
-            wxButton *btnOCPNPointNew;
-            wxButton *btnOCPNPointProperties;
-            wxButton *btnOCPNPointZoomto;
-            wxButton *btnOCPNPointDelete;
-            wxButton *btnOCPNPointGoTo;
-            wxButton *btnOCPNPointExport;
-            wxButton *btnOCPNPointSendToGPS;
-            wxButton *btnOCPNPointDeleteAll;
+            wxButton *btnODPointNew;
+            wxButton *btnODPointProperties;
+            wxButton *btnODPointZoomto;
+            wxButton *btnODPointDelete;
+            wxButton *btnODPointGoTo;
+            wxButton *btnODPointExport;
+            wxButton *btnODPointSendToGPS;
+            wxButton *btnODPointDeleteAll;
             
             wxButton *btnLayNew;
             //wxButton *btnLayProperties;
@@ -156,7 +156,7 @@ class PathManagerDialog : public wxDialog {
             bool m_bCtrlDown;         // record control key state for some action buttons
             bool m_bNeedConfigFlush;  // if true, update config in destructor
 
-            int m_lastOCPNPointItem;
+            int m_lastODPointItem;
             int m_lastPathItem;
 };
 

@@ -22,7 +22,7 @@
  ***************************************************************************
  */
 
-#include "OCPNSelect.h"
+#include "ODSelect.h"
 #include "georef.h"
 #include "vector2D.h"
 //#include "navutil.h"
@@ -31,7 +31,7 @@
 
 extern ChartCanvas *ocpncc1;
 
-OCPNSelect::OCPNSelect()
+ODSelect::ODSelect()
 {
     pSelectList = new SelectableItemList;
     pixelRadius = 8;
@@ -42,7 +42,7 @@ OCPNSelect::OCPNSelect()
     
 }
 
-OCPNSelect::~OCPNSelect()
+ODSelect::~ODSelect()
 {
     pSelectList->DeleteContents( true );
     pSelectList->Clear();
@@ -50,29 +50,29 @@ OCPNSelect::~OCPNSelect()
 
 }
 
-bool OCPNSelect::AddSelectableOCPNPoint( float slat, float slon, OCPNPoint *pOCPNPointAdd )
+bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd )
 {
     SelectItem *pSelItem = new SelectItem;
     pSelItem->m_slat = slat;
     pSelItem->m_slon = slon;
     pSelItem->m_seltype = SELTYPE_OCPNPOINT;
     pSelItem->m_bIsSelected = false;
-    pSelItem->m_pData1 = pOCPNPointAdd;
+    pSelItem->m_pData1 = pODPointAdd;
 
     wxSelectableItemListNode *node;
     
-    if( pOCPNPointAdd->m_bIsInLayer )
+    if( pODPointAdd->m_bIsInLayer )
         node = pSelectList->Append( pSelItem );
     else
         node = pSelectList->Insert( pSelItem );
 
-    pOCPNPointAdd->SetSelectNode(node);
+    pODPointAdd->SetSelectNode(node);
     
     return true;
 }
 
-bool OCPNSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
-        OCPNPoint *pOCPNPointAdd1, OCPNPoint *pOCPNPointAdd2, Path *pPath )
+bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
+        ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, Path *pPath )
 {
     SelectItem *pSelItem = new SelectItem;
     pSelItem->m_slat = slat1;
@@ -81,8 +81,8 @@ bool OCPNSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2
     pSelItem->m_slon2 = slon2;
     pSelItem->m_seltype = SELTYPE_PATHSEGMENT;
     pSelItem->m_bIsSelected = false;
-    pSelItem->m_pData1 = pOCPNPointAdd1;
-    pSelItem->m_pData2 = pOCPNPointAdd2;
+    pSelItem->m_pData1 = pODPointAdd1;
+    pSelItem->m_pData2 = pODPointAdd2;
     pSelItem->m_pData3 = pPath;
 
     if( pPath->m_bIsInLayer ) pSelectList->Append( pSelItem );
@@ -92,7 +92,7 @@ bool OCPNSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2
     return true;
 }
 
-bool OCPNSelect::DeleteAllSelectablePathSegments( Path *pr )
+bool ODSelect::DeleteAllSelectablePathSegments( Path *pr )
 {
     SelectItem *pFindSel;
 
@@ -123,7 +123,7 @@ bool OCPNSelect::DeleteAllSelectablePathSegments( Path *pr )
     return true;
 }
 
-bool OCPNSelect::DeleteAllSelectableOCPNPoints( Path *pr )
+bool ODSelect::DeleteAllSelectableODPoints( Path *pr )
 {
     SelectItem *pFindSel;
 
@@ -133,12 +133,12 @@ bool OCPNSelect::DeleteAllSelectableOCPNPoints( Path *pr )
     while( node ) {
         pFindSel = node->GetData();
         if( pFindSel->m_seltype == SELTYPE_OCPNPOINT ) {
-            OCPNPoint *ps = (OCPNPoint *) pFindSel->m_pData1;
+            ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
             //    inner loop iterates on the route's point list
-            wxOCPNPointListNode *pnode = ( pr->pOCPNPointList )->GetFirst();
+            wxODPointListNode *pnode = ( pr->pODPointList )->GetFirst();
             while( pnode ) {
-                OCPNPoint *prp = pnode->GetData();
+                ODPoint *prp = pnode->GetData();
 
                 if( prp == ps ) {
                     delete pFindSel;
@@ -159,14 +159,14 @@ got_next_outer_node: continue;
     return true;
 }
 
-bool OCPNSelect::AddAllSelectableOCPNPoints( Path *pr )
+bool ODSelect::AddAllSelectableODPoints( Path *pr )
 {
-    if( pr->pOCPNPointList->GetCount() ) {
-        wxOCPNPointListNode *node = ( pr->pOCPNPointList )->GetFirst();
+    if( pr->pODPointList->GetCount() ) {
+        wxODPointListNode *node = ( pr->pODPointList )->GetFirst();
 
         while( node ) {
-            OCPNPoint *prp = node->GetData();
-            AddSelectableOCPNPoint( prp->m_lat, prp->m_lon, prp );
+            ODPoint *prp = node->GetData();
+            AddSelectableODPoint( prp->m_lat, prp->m_lon, prp );
             node = node->GetNext();
         }
         return true;
@@ -174,22 +174,22 @@ bool OCPNSelect::AddAllSelectableOCPNPoints( Path *pr )
         return false;
 }
 
-bool OCPNSelect::AddAllSelectablePathSegments( Path *pr )
+bool ODSelect::AddAllSelectablePathSegments( Path *pr )
 {
     wxPoint rpt, rptn;
     float slat1, slon1, slat2, slon2;
 
-    if( pr->pOCPNPointList->GetCount() ) {
-        wxOCPNPointListNode *node = ( pr->pOCPNPointList )->GetFirst();
+    if( pr->pODPointList->GetCount() ) {
+        wxODPointListNode *node = ( pr->pODPointList )->GetFirst();
 
-        OCPNPoint *prp0 = node->GetData();
+        ODPoint *prp0 = node->GetData();
         slat1 = prp0->m_lat;
         slon1 = prp0->m_lon;
 
         node = node->GetNext();
 
         while( node ) {
-            OCPNPoint *prp = node->GetData();
+            ODPoint *prp = node->GetData();
             slat2 = prp->m_lat;
             slon2 = prp->m_lon;
 
@@ -206,7 +206,7 @@ bool OCPNSelect::AddAllSelectablePathSegments( Path *pr )
         return false;
 }
 
-bool OCPNSelect::UpdateSelectablePathSegments( OCPNPoint *prp )
+bool ODSelect::UpdateSelectablePathSegments( ODPoint *prp )
 {
     SelectItem *pFindSel;
     bool ret = false;
@@ -237,7 +237,7 @@ bool OCPNSelect::UpdateSelectablePathSegments( OCPNPoint *prp )
     return ret;
 }
 
-SelectItem *OCPNSelect::AddSelectablePoint( float slat, float slon, const void *pdata, int fseltype )
+SelectItem *ODSelect::AddSelectablePoint( float slat, float slon, const void *pdata, int fseltype )
 {
     SelectItem *pSelItem = new SelectItem;
     if( pSelItem ) {
@@ -254,7 +254,7 @@ SelectItem *OCPNSelect::AddSelectablePoint( float slat, float slon, const void *
 }
 
 /*
-bool OCPNSelect::DeleteAllPoints( void )
+bool ODSelect::DeleteAllPoints( void )
 {
     pSelectList->DeleteContents( true );
     pSelectList->Clear();
@@ -262,7 +262,7 @@ bool OCPNSelect::DeleteAllPoints( void )
 }
 */
 
-bool OCPNSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
+bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
 {
     SelectItem *pFindSel;
 
@@ -278,7 +278,7 @@ bool OCPNSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                     delete node;
                     
                     if( SELTYPE_OCPNPOINT == SeltypeToDelete ){
-                        OCPNPoint *prp = (OCPNPoint *)pdata;
+                        ODPoint *prp = (ODPoint *)pdata;
                         prp->SetSelectNode( NULL );
                     }
                     
@@ -291,7 +291,7 @@ bool OCPNSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
     return false;
 }
 
-bool OCPNSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
+bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
 {
     SelectItem *pFindSel;
 
@@ -304,7 +304,7 @@ bool OCPNSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
             delete node;
             
             if( SELTYPE_OCPNPOINT == SeltypeToDelete ){
-                OCPNPoint *prp = (OCPNPoint *)pFindSel->m_pData1;
+                ODPoint *prp = (ODPoint *)pFindSel->m_pData1;
                 prp->SetSelectNode( NULL );
             }
             delete pFindSel;
@@ -319,7 +319,7 @@ bool OCPNSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
     return true;
 }
 
-bool OCPNSelect::DeleteSelectableOCPNPoint( OCPNPoint *prp )
+bool ODSelect::DeleteSelectableODPoint( ODPoint *prp )
 {
     
     if( NULL != prp ) {
@@ -340,7 +340,7 @@ bool OCPNSelect::DeleteSelectableOCPNPoint( OCPNPoint *prp )
     return false;
 }
 
-bool OCPNSelect::ModifySelectablePoint( float lat, float lon, void *data, int SeltypeToModify )
+bool ODSelect::ModifySelectablePoint( float lat, float lon, void *data, int SeltypeToModify )
 {
     SelectItem *pFindSel;
 
@@ -362,7 +362,7 @@ bool OCPNSelect::ModifySelectablePoint( float lat, float lon, void *data, int Se
     return false;
 }
 
-bool OCPNSelect::IsSegmentSelected( float a, float b, float c, float d, float slat, float slon )
+bool ODSelect::IsSegmentSelected( float a, float b, float c, float d, float slat, float slon )
 {
     double adder = 0.;
 
@@ -413,12 +413,12 @@ bool OCPNSelect::IsSegmentSelected( float a, float b, float c, float d, float sl
     return false;
 }
 
-void OCPNSelect::CalcSelectRadius()
+void ODSelect::CalcSelectRadius()
 {
     selectRadius = pixelRadius / ( ocpncc1->GetCanvasTrueScale() * 1852 * 60 );
 }
 
-SelectItem *OCPNSelect::FindSelection( float slat, float slon, int fseltype )
+SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
 {
     float a, b, c, d;
     SelectItem *pFindSel;
@@ -460,7 +460,7 @@ SelectItem *OCPNSelect::FindSelection( float slat, float slon, int fseltype )
     find_ok: return pFindSel;
 }
 
-bool OCPNSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel )
+bool ODSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel )
 {
     CalcSelectRadius();
 
@@ -472,7 +472,7 @@ bool OCPNSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem
     return IsSegmentSelected( a, b, c, d, slat, slon );
 }
 
-SelectableItemList OCPNSelect::FindSelectionList( float slat, float slon, int fseltype )
+SelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fseltype )
 {
     float a, b, c, d;
     SelectItem *pFindSel;
@@ -513,7 +513,7 @@ SelectableItemList OCPNSelect::FindSelectionList( float slat, float slon, int fs
     return ret_list;
 }
 
-double OCPNSelect::vGetLengthOfNormal( pODVector2D a, pODVector2D b, pODVector2D n )
+double ODSelect::vGetLengthOfNormal( pODVector2D a, pODVector2D b, pODVector2D n )
 {
     ODvector2D c, vNormal;
     vNormal.x = 0;
@@ -537,7 +537,7 @@ double OCPNSelect::vGetLengthOfNormal( pODVector2D a, pODVector2D b, pODVector2D
     return ( vVectorMagnitude( &vNormal ) );
 }
 
-double OCPNSelect::vDotProduct( pODVector2D v0, pODVector2D v1 )
+double ODSelect::vDotProduct( pODVector2D v0, pODVector2D v1 )
 {
     double dotprod;
 
@@ -546,7 +546,7 @@ double OCPNSelect::vDotProduct( pODVector2D v0, pODVector2D v1 )
     return ( dotprod );
 }
 
-pODVector2D OCPNSelect::vAddVectors( pODVector2D v0, pODVector2D v1, pODVector2D v )
+pODVector2D ODSelect::vAddVectors( pODVector2D v0, pODVector2D v1, pODVector2D v )
 {
     if( v0 == NULL || v1 == NULL ) v = (pODVector2D) NULL;
     else {
@@ -556,7 +556,7 @@ pODVector2D OCPNSelect::vAddVectors( pODVector2D v0, pODVector2D v1, pODVector2D
     return ( v );
 }
 
-pODVector2D OCPNSelect::vSubtractVectors( pODVector2D v0, pODVector2D v1, pODVector2D v )
+pODVector2D ODSelect::vSubtractVectors( pODVector2D v0, pODVector2D v1, pODVector2D v )
 {
     if( v0 == NULL || v1 == NULL ) v = (pODVector2D) NULL;
     else {
@@ -566,7 +566,7 @@ pODVector2D OCPNSelect::vSubtractVectors( pODVector2D v0, pODVector2D v1, pODVec
     return ( v );
 }
 
-double OCPNSelect::vVectorSquared( pODVector2D v0 )
+double ODSelect::vVectorSquared( pODVector2D v0 )
 {
     double dS;
 
@@ -576,7 +576,7 @@ double OCPNSelect::vVectorSquared( pODVector2D v0 )
     return ( dS );
 }
 
-double OCPNSelect::vVectorMagnitude( pODVector2D v0 )
+double ODSelect::vVectorMagnitude( pODVector2D v0 )
 {
     double dMagnitude;
 

@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __OCPNSELECT_H__
-#define __OCPNSELECT_H__
+#ifndef __ODSELECT_H__
+#define __ODSELECT_H__
 
 #include "SelectItem.h"
 #include "Path.h"
@@ -33,26 +33,26 @@
 #define SELTYPE_PATHSEGMENT          0x0004
 #define SELTYPE_PATHCREATE           0x0008
 
-class OCPNSelect
+class ODSelect
 {
 public:
-    OCPNSelect();
-    ~OCPNSelect();
+    ODSelect();
+    ~ODSelect();
 
     void SetSelectPixelRadius(int radius){ pixelRadius = radius; }
 
-    bool AddSelectableOCPNPoint( float slat, float slon, OCPNPoint *pOCPNPointAdd );
+    bool AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd );
     bool AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
-            OCPNPoint *pOCPNPointAdd1, OCPNPoint *pOCPNPointAdd2, Path *pPath );
+            ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, Path *pPath );
 
     SelectItem *FindSelection( float slat, float slon, int fseltype );
     SelectableItemList FindSelectionList( float slat, float slon, int fseltype );
 
     bool DeleteAllSelectablePathSegments( Path * );
-    bool DeleteAllSelectableOCPNPoints( Path * );
+    bool DeleteAllSelectableODPoints( Path * );
     bool AddAllSelectablePathSegments( Path *pr );
-    bool AddAllSelectableOCPNPoints( Path *pr );
-    bool UpdateSelectablePathSegments( OCPNPoint *prp );
+    bool AddAllSelectableODPoints( Path *pr );
+    bool UpdateSelectablePathSegments( ODPoint *prp );
     bool IsSegmentSelected( float a, float b, float c, float d, float slat, float slon );
     bool IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel );
 
@@ -66,7 +66,7 @@ public:
     //    Delete all selectable points in list by type
     bool DeleteAllSelectableTypePoints( int SeltypeToDelete );
 
-    bool DeleteSelectableOCPNPoint( OCPNPoint *prp );
+    bool DeleteSelectableODPoint( ODPoint *prp );
     
     //  Accessors
 

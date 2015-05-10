@@ -124,9 +124,9 @@ public:
     wxButton*     m_CopyTxtButton;
 
     Path     *m_pPath;
-    OCPNPoint *m_pExtendPoint;
+    ODPoint *m_pExtendPoint;
     Path    *m_pExtendPath;
-    OCPNPoint    *m_pEnroutePoint;
+    ODPoint    *m_pEnroutePoint;
     bool          m_bStartNow;
 
     int         m_nSelected; // index of point selected in Properties dialog row

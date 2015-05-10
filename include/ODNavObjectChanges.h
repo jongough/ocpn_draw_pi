@@ -23,8 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
  
-#ifndef OCPNDRAWNAVOBJECTCHANGES_H
-#define OCPNDRAWNAVOBJECTCHANGES_H
+#ifndef ODNAVOBJECTCHANGES_H
+#define ODNAVOBJECTCHANGES_H
 
 //#include <NavObjectCollection.h>
 #include "pugixml.hpp"
@@ -71,26 +71,26 @@
                         (OUT_OCPNPOINT_RANGE_RINGS)
 
 
-//class OCPNDrawNavObjectChanges : public NavObjectChanges
-class OCPNDrawNavObjectChanges : public pugi::xml_document
+//class ODNavObjectChanges : public NavObjectChanges
+class ODNavObjectChanges : public pugi::xml_document
 {
     public:
-        OCPNDrawNavObjectChanges();
-        OCPNDrawNavObjectChanges( wxString file_name );
-        virtual ~OCPNDrawNavObjectChanges();
+        ODNavObjectChanges();
+        ODNavObjectChanges( wxString file_name );
+        virtual ~ODNavObjectChanges();
 
     bool CreateNavObjGPXPaths(void);
     bool CreateNavObjGPXPoints( void );    
     
     bool AddPath ( Path *pb, const char *action );
-    bool AddOCPNPoint( OCPNPoint *pr, const char *action );
+    bool AddODPoint( ODPoint *pr, const char *action );
     bool AddGPXPathsList( PathList *pPaths );
     bool AddGPXPath(Path *pPath);
-    bool AddGPXOCPNPoint(OCPNPoint *pWP );
-    bool AddGPXOCPNPointsList( OCPNPointList *pOCPNPoints );
+    bool AddGPXODPoint(ODPoint *pWP );
+    bool AddGPXODPointsList( ODPointList *pODPoints );
     bool LoadAllGPXObjects( bool b_full_viz = false);
     int  LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
-    //OCPNPoint * GPXLoadOCPNPoint1( pugi::xml_node &odpt_node, wxString def_symbol_name, wxString GUID, bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id );
+    //ODPoint * GPXLoadODPoint1( pugi::xml_node &odpt_node, wxString def_symbol_name, wxString GUID, bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id );
 
     bool CreateAllGPXObjects();
     void SetRootGPXNode(void);
@@ -107,7 +107,7 @@ class OCPNDrawNavObjectChanges : public pugi::xml_document
 
     protected:
     private:
-        OCPNPoint *GPXLoadOCPNPoint1( pugi::xml_node &opt_node, 
+        ODPoint *GPXLoadODPoint1( pugi::xml_node &opt_node, 
                                wxString def_symbol_name,
                                wxString GUID,
                                bool b_fullviz,
@@ -117,8 +117,8 @@ class OCPNDrawNavObjectChanges : public pugi::xml_document
                              );
         Path *GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
                       bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );
-        OCPNPoint *OCPNPointExists( const wxString& guid );
-        OCPNPoint *OCPNPointExists( const wxString& name, double lat, double lon );
+        ODPoint *ODPointExists( const wxString& guid );
+        ODPoint *ODPointExists( const wxString& name, double lat, double lon );
         void InsertPathA( Path *pTentPath );
         void UpdatePathA( Path *pTentPath );
         Path *PathExists( const wxString& guid);

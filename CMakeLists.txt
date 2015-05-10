@@ -44,24 +44,24 @@ SET(SRCS
         src/Boundary.cpp
         src/BoundaryProp.cpp
         src/PointMan.cpp
-        src/OCPNSelect.cpp
+        src/ODSelect.cpp
         src/PathMan.cpp
         src/pathmanagerdialog.cpp
         src/PathProp.cpp
         src/Path.cpp
-        src/OCPNPoint.cpp
-        src/OCPNDrawConfig.cpp
-        src/OCPNDrawEventHandler.cpp
-        src/OCPNDrawNavObjectChanges.cpp
-        src/OCPNDrawPropertiesDialog.cpp
-        src/OCPNDrawPropertiesImpl.cpp
+        src/ODPoint.cpp
+        src/ODConfig.cpp
+        src/ODEventHandler.cpp
+        src/ODNavObjectChanges.cpp
+        src/ODPropertiesDialog.cpp
+        src/ODPropertiesImpl.cpp
         src/ODPointPropertiesDialog.cpp
         src/ODPointPropertiesImpl.cpp
         src/ODPositionParser.cpp
         src/ODRolloverWin.cpp
         src/ODstyles.cpp
         src/ODUtils.cpp
-         src/OCPNDrawicons.cpp
+         src/ODicons.cpp
             src/jsonreader.cpp
             src/jsonval.cpp
             src/jsonwriter.cpp
@@ -72,24 +72,24 @@ SET(HDRS
         include/Boundary.h
         include/BoundaryProp.h
         include/PointMan.h
-        include/OCPNSelect.h
+        include/ODSelect.h
         include/PathMan.h
         include/pathmanagerdialog.h
         include/PathProp.h
         include/Path.h
-        include/OCPNPoint.h
-        include/OCPNDrawConfig.h
-        include/OCPNDrawEventHandler.h
-        include/OCPNDrawNavObjectChanges.h
-        include/OCPNDrawPropertiesDialog.h
-        include/OCPNDrawPropertiesImpl.h
+        include/ODPoint.h
+        include/ODConfig.h
+        include/ODEventHandler.h
+        include/ODNavObjectChanges.h
+        include/ODPropertiesDialog.h
+        include/ODPropertiesImpl.h
         include/ODPointPropertiesDialog.h
         include/ODPointPropertiesImpl.h
         include/ODPositionParser.h
         include/ODRolloverWin.h
         include/ODUtils.h
         include/ODvector2D.h
-        include/OCPNDrawicons.h
+        include/ODicons.h
 #            include/wx/json_defs.h
             include/wx/jsonreader.h
             include/wx/jsonval.h

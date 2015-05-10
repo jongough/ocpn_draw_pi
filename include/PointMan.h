@@ -31,7 +31,7 @@
 #include "styles.h"
 //#include "Select.h"
 #include "nmea0183.h"
-#include "OCPNPoint.h"
+#include "ODPoint.h"
 
 //----------------------------------------------------------------------------
 //   constants
@@ -47,8 +47,8 @@
 //----------------------------------------------------------------------------
 
 class Path;
-class OCPNPoint;
-class OCPNPointList;
+class ODPoint;
+class ODPointList;
 
 //    List definitions for Point Manager Icons
 
@@ -67,15 +67,15 @@ class PointMan
       int GetIconIndex(const wxBitmap *pbm);
       int GetXIconIndex(const wxBitmap *pbm);
       int GetNumIcons(void){ return m_pIconArray->Count(); }
-      wxString CreateGUID(OCPNPoint *pRP);
-      OCPNPoint *GetNearbyOCPNPoint(double lat, double lon, double radius_meters);
-      OCPNPoint *GetOtherNearbyOCPNPoint(double lat, double lon, double radius_meters, const wxString &guid);
+      wxString CreateGUID(ODPoint *pRP);
+      ODPoint *GetNearbyODPoint(double lat, double lon, double radius_meters);
+      ODPoint *GetOtherNearbyODPoint(double lat, double lon, double radius_meters, const wxString &guid);
       void SetColorScheme(ColorScheme cs);
-      bool SharedOCPNPointsExist();
-      void DeleteAllOCPNPoints(bool b_delete_used);
-      OCPNPoint *FindOCPNPointByGUID(const wxString &guid);
-      void DestroyOCPNPoint(OCPNPoint *pRp, bool b_update_changeset = true);
-      void ClearOCPNPointFonts(void);
+      bool SharedODPointsExist();
+      void DeleteAllODPoints(bool b_delete_used);
+      ODPoint *FindODPointByGUID(const wxString &guid);
+      void DestroyODPoint(ODPoint *pRp, bool b_update_changeset = true);
+      void ClearODPointFonts(void);
       void ProcessIcons( ocpnStyle::Style* style );
       
       bool DoesIconExist(const wxString & icon_key) const;
@@ -85,15 +85,15 @@ class PointMan
 
       wxImageList *Getpmarkicon_image_list(void);
 
-      bool AddOCPNPoint(OCPNPoint *prp);
-      bool RemoveOCPNPoint(OCPNPoint *prp);
-      OCPNPointList *GetOCPNPointList(void) { return m_pOCPNPointList; }
+      bool AddODPoint(ODPoint *prp);
+      bool RemoveODPoint(ODPoint *prp);
+      ODPointList *GetODPointList(void) { return m_pODPointList; }
 
       void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
 protected:
 private:
       void ProcessUserIcons( ocpnStyle::Style* style );
-      OCPNPointList    *m_pOCPNPointList;
+      ODPointList    *m_pODPointList;
       wxBitmap *CreateDimBitmap(wxBitmap *pBitmap, double factor);
 
       wxImageList       *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change

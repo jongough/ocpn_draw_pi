@@ -29,10 +29,10 @@
 #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "OCPNDrawEventHandler.h"
+#include "ODEventHandler.h"
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
-#include "OCPNSelect.h"
+#include "ODSelect.h"
 #include "PathMan.h"
 #include "PathProp.h"
 #include "ODPointPropertiesImpl.h"
@@ -44,15 +44,15 @@
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
 extern PathManagerDialog *pPathManagerDialog;
-extern OCPNSelect      *pOCPNSelect;
-extern OCPNDrawConfig  *pOCPNDrawConfig;
+extern ODSelect      *pODSelect;
+extern ODConfig  *pODConfig;
 extern PlugIn_ViewPort *g_pivp;
 extern ChartCanvas     *ocpncc1;
 extern PathProp       *pPathPropDialog;
 extern PathMan          *g_pPathMan;
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
 extern Path             *g_PathToEdit;
-extern PointMan         *pOCPNPointMan;
+extern PointMan         *pODPointMan;
 extern bool             g_bShowMag;
 extern bool             g_bConfirmObjectDelete;
 extern ODRolloverWin     *g_pPathRolloverWin;
@@ -62,63 +62,63 @@ extern int              g_cursor_y;
 
 // Event Handler implementation 
 
-//BEGIN_EVENT_TABLE ( OCPNDrawEventHandler, wxEvtHandler ) 
-//    EVT_TIMER ( ROLLOVER_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
-    //EVT_TIMER ( ROPOPUP_TIMER, OCPNDrawEventHandler::OnRolloverPopupTimerEvent )
-    //    EVT_TIMER ( HEAD_DOG_TIMER, OCPNDrawEventHandler::OnTimerEvent ) 
-//    EVT_MENU ( ID_PATH_MENU_PROPERTIES, OCPNDrawEventHandler::PopupMenuHandler )
+//BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler ) 
+//    EVT_TIMER ( ROLLOVER_TIMER, ODEventHandler::OnTimerEvent ) 
+    //EVT_TIMER ( ROPOPUP_TIMER, ODEventHandler::OnRolloverPopupTimerEvent )
+    //    EVT_TIMER ( HEAD_DOG_TIMER, ODEventHandler::OnTimerEvent ) 
+//    EVT_MENU ( ID_PATH_MENU_PROPERTIES, ODEventHandler::PopupMenuHandler )
 //END_EVENT_TABLE()
 
 
-OCPNDrawEventHandler::OCPNDrawEventHandler(ocpn_draw_pi *parent)
+ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 {
     //ctor
     m_parent = parent;
 }
 
 
-OCPNDrawEventHandler::OCPNDrawEventHandler(ChartCanvas *parent,
+ODEventHandler::ODEventHandler(ChartCanvas *parent,
                           Path *selectedPath,
-                          OCPNPoint *selectedOCPNPoint)
+                          ODPoint *selectedODPoint)
 {
     m_parentcanvas = parent;
     m_pSelectedPath = selectedPath;
-    m_pFoundOCPNPoint = selectedOCPNPoint;
+    m_pFoundODPoint = selectedODPoint;
 }
 
-void OCPNDrawEventHandler::SetPath( Path *path )
+void ODEventHandler::SetPath( Path *path )
 {
     m_pSelectedPath = path;
 }
 
-void OCPNDrawEventHandler::SetPoint( OCPNPoint* point )
+void ODEventHandler::SetPoint( ODPoint* point )
 {
-    m_pFoundOCPNPoint = point;
+    m_pFoundODPoint = point;
 }
 
-void OCPNDrawEventHandler::SetCanvas( ChartCanvas* canvas )
+void ODEventHandler::SetCanvas( ChartCanvas* canvas )
 {
     m_parentcanvas = canvas;
 }
 
-void OCPNDrawEventHandler::SetLatLon( double lat, double lon )
+void ODEventHandler::SetLatLon( double lat, double lon )
 {
     m_cursor_lat = lat;
     m_cursor_lon = lon;
 }
 
 
-OCPNDrawEventHandler::~OCPNDrawEventHandler()
+ODEventHandler::~ODEventHandler()
 {
     //dtor
 }
 
-void OCPNDrawEventHandler::OnTimerEvent(wxTimerEvent& event) 
+void ODEventHandler::OnTimerEvent(wxTimerEvent& event) 
 { 
     m_parent->ProcessTimerEvent( event ); 
 } 
 
-void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
+void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 {
     #ifdef __OCPN__ANDROID__
     return;
@@ -131,7 +131,7 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( NULL == g_pRolloverPathSeg ) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         
-        SelectableItemList SelList = pOCPNSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
+        SelectableItemList SelList = pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
                                                                      SELTYPE_PATHSEGMENT );
         
         wxSelectableItemListNode *node = SelList.GetFirst();
@@ -151,8 +151,8 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                 
                 if( !g_pPathRolloverWin->IsActive() ) {
                     wxString s;
-                    OCPNPoint *segShow_point_a = (OCPNPoint *) g_pRolloverPathSeg->m_pData1;
-                    OCPNPoint *segShow_point_b = (OCPNPoint *) g_pRolloverPathSeg->m_pData2;
+                    ODPoint *segShow_point_a = (ODPoint *) g_pRolloverPathSeg->m_pData1;
+                    ODPoint *segShow_point_b = (ODPoint *) g_pRolloverPathSeg->m_pData2;
                     
                     double brg, dist;
                     DistanceBearingMercator( segShow_point_b->m_lat, segShow_point_b->m_lon,
@@ -191,9 +191,9 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     // Compute and display cumulative distance from route start point to current
                     // leg end point.
                     
-                    if( segShow_point_a != pp->pOCPNPointList->GetFirst()->GetData() ) {
-                        wxOCPNPointListNode *node = (pp->pOCPNPointList)->GetFirst()->GetNext();
-                        OCPNPoint *pop;
+                    if( segShow_point_a != pp->pODPointList->GetFirst()->GetData() ) {
+                        wxODPointListNode *node = (pp->pODPointList)->GetFirst()->GetNext();
+                        ODPoint *pop;
                         float dist_to_endleg = 0;
                         wxString t;
                         
@@ -225,7 +225,7 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         }
     } else {
         //    Is the cursor still in select radius?
-        if( !pOCPNSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
+        if( !pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
             showRollover = false;
         else
             showRollover = true;
@@ -251,7 +251,7 @@ void OCPNDrawEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
 }
 
-void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event ) 
+void ODEventHandler::PopupMenuHandler(wxCommandEvent& event ) 
 {
     int dlg_return;
     
@@ -277,16 +277,16 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         case ID_PATH_MENU_INSERT:
             // Insert new OCPN Point
-            m_pSelectedPath->InsertPointAfter( m_pFoundOCPNPoint, m_cursor_lat, m_cursor_lon );
+            m_pSelectedPath->InsertPointAfter( m_pFoundODPoint, m_cursor_lat, m_cursor_lon );
             
-            pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
-            pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+            pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+            pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
             
-            pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
+            pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+            pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
             
             m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
-            pOCPNDrawConfig->UpdatePath( m_pSelectedPath );
+            pODConfig->UpdatePath( m_pSelectedPath );
             
             if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
                 pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
@@ -357,7 +357,7 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
                 pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
-            pPathManagerDialog->OCPNPointShowPropertiesDialog( m_pFoundOCPNPoint, ocpncc1 );
+            pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, ocpncc1 );
             break;
         case ID_PATH_MENU_ACTPOINT:
         case ID_PATH_MENU_ACTNXTPOINT:
@@ -366,10 +366,10 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             wxString sMessage( wxS("Are you sure you want to remove this ") );
             wxString sCaption( wxS("OCPN Draw Remove ") );
             wxString sType( wxS("") );
-            if (!m_pFoundOCPNPoint || m_pFoundOCPNPoint->GetTypeString().IsNull() || m_pFoundOCPNPoint->GetTypeString().IsEmpty() )
+            if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                 sType.append( wxS("OCPN Point") );
             else
-                sType.append( m_pFoundOCPNPoint->GetTypeString() );
+                sType.append( m_pFoundODPoint->GetTypeString() );
             sMessage.append( sType );
             sMessage.append( wxS("?") );
             sCaption.append( sType );
@@ -377,24 +377,24 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             
             if( dlg_return == wxID_YES ) {
-                m_pSelectedPath->RemovePointFromPath( m_pFoundOCPNPoint, m_pSelectedPath );
-                m_pFoundOCPNPoint->SetTypeString( wxT("OCPN Point") );
+                m_pSelectedPath->RemovePointFromPath( m_pFoundODPoint, m_pSelectedPath );
+                m_pFoundODPoint->SetTypeString( wxT("OCPN Point") );
             }
             
-            pOCPNSelect->DeleteAllSelectableOCPNPoints( m_pSelectedPath );
-            pOCPNSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+            pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+            pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
             
-            pOCPNSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            pOCPNSelect->AddAllSelectableOCPNPoints( m_pSelectedPath );
+            pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+            pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
 
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
-            g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
+            g_ocpn_draw_pi->m_bODPointEditing = FALSE;
             
             break;
         }
         case ID_OCPNPOINT_MENU_EDIT:
-            m_pFoundOCPNPoint->m_bIsBeingEdited = TRUE;
-            g_ocpn_draw_pi->m_bOCPNPointEditing = TRUE;
+            m_pFoundODPoint->m_bIsBeingEdited = TRUE;
+            g_ocpn_draw_pi->m_bODPointEditing = TRUE;
             break;
         case ID_OCPNPOINT_MENU_COPY:
             break;
@@ -402,10 +402,10 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             wxString sMessage( wxS("Are you sure you want to delete this ") );
             wxString sCaption( wxS("OCPN Draw Delete ") );
             wxString sType( wxS("") );
-            if (!m_pFoundOCPNPoint || m_pFoundOCPNPoint->GetTypeString().IsNull() || m_pFoundOCPNPoint->GetTypeString().IsEmpty() )
+            if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                 sType.append( wxS("OCPN Point") );
             else
-                sType.append( m_pFoundOCPNPoint->GetTypeString() );
+                sType.append( m_pFoundODPoint->GetTypeString() );
             sMessage.append( sType );
             sMessage.append( wxS("?") );
             sCaption.append( sType );
@@ -413,21 +413,21 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             
             if( dlg_return == wxID_YES ) {
-                m_pSelectedPath->DeletePoint( m_pFoundOCPNPoint );
+                m_pSelectedPath->DeletePoint( m_pFoundODPoint );
                 if( pPathPropDialog && pPathPropDialog->IsShown() ) pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
-            g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
+            g_ocpn_draw_pi->m_bODPointEditing = FALSE;
             break;
         }
         case ID_OCPNPOINT_MENU_DELPOINT: {
             wxString sMessage( wxS("Are you sure you want to delete this ") );
             wxString sCaption( wxS("OCPN Draw Delete ") );
             wxString sType( wxS("") );
-            if (!m_pFoundOCPNPoint || m_pFoundOCPNPoint->GetTypeString().IsNull() || m_pFoundOCPNPoint->GetTypeString().IsEmpty() )
+            if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                 sType.append( wxS("OCPN Point") );
             else
-                sType.append( m_pFoundOCPNPoint->GetTypeString() );
+                sType.append( m_pFoundODPoint->GetTypeString() );
             sMessage.append( sType );
             sMessage.append( wxS("?") );
             sCaption.append( sType );
@@ -435,24 +435,24 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
             dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             
             if( dlg_return == wxID_YES ) {
-                // If the OCPNPoint belongs to an invisible path, we come here instead of to ID_PATH_MENU_DELPOINT
+                // If the ODPoint belongs to an invisible path, we come here instead of to ID_PATH_MENU_DELPOINT
                 //  Check it, and if so then remove the point from its routes
-                wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pFoundOCPNPoint );
+                wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pFoundODPoint );
                 if( ppath_array ) {
-                    pOCPNPointMan->DestroyOCPNPoint( m_pFoundOCPNPoint );
+                    pODPointMan->DestroyODPoint( m_pFoundODPoint );
                 }
                 else {
-                    pOCPNDrawConfig->DeleteOCPNPoint( m_pFoundOCPNPoint );
-                    pOCPNSelect->DeleteSelectablePoint( m_pFoundOCPNPoint, SELTYPE_OCPNPOINT );
-                    if( NULL != pOCPNPointMan )
-                        pOCPNPointMan->RemoveOCPNPoint( m_pFoundOCPNPoint );
+                    pODConfig->DeleteODPoint( m_pFoundODPoint );
+                    pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_OCPNPOINT );
+                    if( NULL != pODPointMan )
+                        pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }
                 
                 if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-                    pPathManagerDialog->UpdateOCPNPointsListCtrl();
+                    pPathManagerDialog->UpdateODPointsListCtrl();
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
-            g_ocpn_draw_pi->m_bOCPNPointEditing = FALSE;
+            g_ocpn_draw_pi->m_bODPointEditing = FALSE;
             break;
         }
             
@@ -460,10 +460,10 @@ void OCPNDrawEventHandler::PopupMenuHandler(wxCommandEvent& event )
     
 } 
 
-void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
+void ODEventHandler::PopupMenu( int x, int y, int seltype )
 {
     wxMenu* contextMenu = new wxMenu;
-    wxMenu* menuOCPNPoint = new wxMenu( wxS("OCPNPoint") );
+    wxMenu* menuODPoint = new wxMenu( wxS("ODPoint") );
     wxMenu* menuPath = new wxMenu( wxS("Path") );
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
@@ -502,58 +502,58 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
     
     if( seltype & SELTYPE_OCPNPOINT ) {
         bool blay = false;
-        if( m_pFoundOCPNPoint && m_pFoundOCPNPoint->m_bIsInLayer )
+        if( m_pFoundODPoint && m_pFoundODPoint->m_bIsInLayer )
             blay = true;
         
         if( blay ){
             wxString sType;
             sType.append( wxT("Layer ") );
-            sType.append( m_pFoundOCPNPoint->m_sTypeString );
-            menuOCPNPoint->SetTitle( sType );
-            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            sType.append( m_pFoundODPoint->m_sTypeString );
+            menuODPoint->SetTitle( sType );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
             //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
-            //    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+            //    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
         }
         else {
             wxString sType;
-            sType.append( m_pFoundOCPNPoint->m_sTypeString );
-            menuOCPNPoint->SetTitle( sType );
-            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            sType.append( m_pFoundODPoint->m_sTypeString );
+            menuODPoint->SetTitle( sType );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             sType.clear();
             sType.append( wxS("Move ") );
-            sType.append(m_pFoundOCPNPoint->m_sTypeString);
-            MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_EDIT, sType );
+            sType.append(m_pFoundODPoint->m_sTypeString);
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_EDIT, sType );
 
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
-//                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundOCPNPoint )
-//                    MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+//                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundODPoint )
+//                    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
 //            }
             
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
-//                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundOCPNPoint ) {
+//                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundODPoint ) {
 //                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
 //                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
-//                        MenuAppend( menuOCPNPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next OCPNPoint" ) );
+//                        MenuAppend( menuODPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next ODPoint" ) );
 //                }
 //            }
             if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
-                MenuAppend( menuOCPNPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
+                MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
             
             if( m_pSelectedPath )
-                MenuAppend( menuOCPNPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
+                MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
             else
-                MenuAppend( menuOCPNPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
+                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
             
         }
         //      Set this menu as the "focused context menu"
-        menuFocus = menuOCPNPoint;
+        menuFocus = menuODPoint;
     }
     
     //        Invoke the correct focused drop-down menu
-    m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( OCPNDrawEventHandler::PopupMenuHandler ), NULL, this );
+    m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
     m_parentcanvas->PopupMenu( menuFocus, x, y );
-    m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( OCPNDrawEventHandler::PopupMenuHandler ), NULL, this );
+    m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
     
     // Cleanup
     if( ( m_pSelectedPath ) ) {
@@ -562,16 +562,16 @@ void OCPNDrawEventHandler::PopupMenu( int x, int y, int seltype )
     
     m_pSelectedPath = NULL;
     
-    if( m_pFoundOCPNPoint ) {
-        m_pFoundOCPNPoint->m_bPtIsSelected = false;
+    if( m_pFoundODPoint ) {
+        m_pFoundODPoint->m_bPtIsSelected = false;
     }
-    m_pFoundOCPNPoint = NULL;
+    m_pFoundODPoint = NULL;
     
-    //m_pFoundOCPNPointSecond = NULL;
+    //m_pFoundODPointSecond = NULL;
     menuFocus = NULL;
     delete contextMenu;
     delete menuPath;
-    delete menuOCPNPoint;
+    delete menuODPoint;
     
 }
 

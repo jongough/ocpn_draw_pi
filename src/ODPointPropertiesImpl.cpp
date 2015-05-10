@@ -33,9 +33,9 @@
 #include "ODPointPropertiesImpl.h"
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
-#include "OCPNDrawConfig.h"
-#include "OCPNPoint.h"
-#include "OCPNSelect.h"
+#include "ODConfig.h"
+#include "ODPoint.h"
+#include "ODSelect.h"
 #include "PathMan.h"
 #include "PathProp.h"
 #include "PointMan.h"
@@ -44,11 +44,11 @@
 #include <wx/menu.h>
 #include <wx/window.h>
 
-extern OCPNSelect   *pOCPNSelect;
+extern ODSelect   *pODSelect;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PointMan     *pOCPNPointMan;
+extern PointMan     *pODPointMan;
 extern PathMan      *g_pPathMan;
-extern OCPNDrawConfig  *pOCPNDrawConfig;
+extern ODConfig  *pODConfig;
 extern PathManagerDialog *pPathManagerDialog;
 extern PathProp     *pPathPropDialog;
 
@@ -113,9 +113,9 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
     double lat = fromDMM_Plugin( m_textLatitude->GetValue() );
     double lon = fromDMM_Plugin( m_textLongitude->GetValue() );
 
-    if( !m_pOCPNPoint->m_bIsInLayer ) {
-        m_pOCPNPoint->SetPosition( lat, lon );
-        pOCPNSelect->ModifySelectablePoint( lat, lon, (void *) m_pOCPNPoint, SELTYPE_OCPNPOINT );
+    if( !m_pODPoint->m_bIsInLayer ) {
+        m_pODPoint->SetPosition( lat, lon );
+        pODSelect->ModifySelectablePoint( lat, lon, (void *) m_pODPoint, SELTYPE_OCPNPOINT );
     }
 
     // Update the mark position dynamically
@@ -162,7 +162,7 @@ void ODPointPropertiesImpl::OnExtDescriptionClick( wxCommandEvent& event )
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     // TODO: Implement OnPointPropertiesOKClick
-    if( m_pOCPNPoint ) {
+    if( m_pODPoint ) {
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
 
@@ -171,7 +171,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     Show( false );
 
     if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-        pPathManagerDialog->UpdateOCPNPointsListCtrl();
+        pPathManagerDialog->UpdateODPointsListCtrl();
         
     if( pPathPropDialog && pPathPropDialog->IsShown() )
         pPathPropDialog->UpdateProperties();
@@ -183,14 +183,14 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )
 {
     // TODO: Implement OnPointPropertiesCancelClick
-    if( m_pOCPNPoint ) {
-        m_pOCPNPoint->SetVisible( m_bIsVisible_save );
-        m_pOCPNPoint->SetNameShown( m_bShowName_save );
-        m_pOCPNPoint->SetPosition( m_lat_save, m_lon_save );
-        m_pOCPNPoint->SetIconName( m_IconName_save );
-        m_pOCPNPoint->ReLoadIcon();
+    if( m_pODPoint ) {
+        m_pODPoint->SetVisible( m_bIsVisible_save );
+        m_pODPoint->SetNameShown( m_bShowName_save );
+        m_pODPoint->SetPosition( m_lat_save, m_lon_save );
+        m_pODPoint->SetIconName( m_IconName_save );
+        m_pODPoint->ReLoadIcon();
 
-        m_pOCPNPoint->m_HyperlinkList->Clear();
+        m_pODPoint->m_HyperlinkList->Clear();
     }
 
     Show( false );
@@ -201,25 +201,25 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
 
 void ODPointPropertiesImpl::SaveChanges()
 {
-    if( m_pOCPNPoint ) {
-        if( m_pOCPNPoint->m_bIsInLayer ) return;
+    if( m_pODPoint ) {
+        if( m_pODPoint->m_bIsInLayer ) return;
 
         // Get User input Text Fields
-        m_pOCPNPoint->m_iOCPNPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
-        m_pOCPNPoint->m_fOCPNPointRangeRingsStep = atof( m_textCtrlPointRangeRingsSteps->GetValue().mb_str() );
-        m_pOCPNPoint->m_iOCPNPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
-        m_pOCPNPoint->m_wxcOCPNPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
-        m_pOCPNPoint->SetName( m_textName->GetValue() );
-        m_pOCPNPoint->SetOCPNPointArrivalRadius( m_textArrivalRadius->GetValue() );
-        m_pOCPNPoint->SetShowOCPNPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
-        m_pOCPNPoint->m_MarkDescription = m_textDescription->GetValue();
-        m_pOCPNPoint->SetVisible( m_checkBoxVisible->GetValue() );
-        m_pOCPNPoint->SetNameShown( m_checkBoxShowName->GetValue() );
-        m_pOCPNPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
-        wxString *icon_name = pOCPNPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() );
+        m_pODPoint->m_iODPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
+        m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlPointRangeRingsSteps->GetValue().mb_str() );
+        m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
+        m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
+        m_pODPoint->SetName( m_textName->GetValue() );
+        m_pODPoint->SetODPointArrivalRadius( m_textArrivalRadius->GetValue() );
+        m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
+        m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
+        m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
+        m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
+        m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
+        wxString *icon_name = pODPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() );
         if(icon_name && icon_name->Length())
-            m_pOCPNPoint->SetIconName( *icon_name );
-        m_pOCPNPoint->ReLoadIcon();
+            m_pODPoint->SetIconName( *icon_name );
+        m_pODPoint->ReLoadIcon();
 
         // Here is some logic....
         // If the Markname is completely numeric, and is part of a route,
@@ -227,23 +227,23 @@ void ODPointPropertiesImpl::SaveChanges()
         // This is later used for re-numbering points on actions like
         // Insert Point, Delete Point, Append Point, etc
 
-        if( m_pOCPNPoint->m_bIsInPath ) {
+        if( m_pODPoint->m_bIsInPath ) {
             bool b_name_is_numeric = true;
-            for( unsigned int i = 0; i < m_pOCPNPoint->GetName().Len(); i++ ) {
-                if( wxChar( '0' ) > m_pOCPNPoint->GetName()[i] ) b_name_is_numeric = false;
-                if( wxChar( '9' ) < m_pOCPNPoint->GetName()[i] ) b_name_is_numeric = false;
+            for( unsigned int i = 0; i < m_pODPoint->GetName().Len(); i++ ) {
+                if( wxChar( '0' ) > m_pODPoint->GetName()[i] ) b_name_is_numeric = false;
+                if( wxChar( '9' ) < m_pODPoint->GetName()[i] ) b_name_is_numeric = false;
             }
 
-            m_pOCPNPoint->m_bDynamicName = b_name_is_numeric;
+            m_pODPoint->m_bDynamicName = b_name_is_numeric;
         } else
-            m_pOCPNPoint->m_bDynamicName = false;
+            m_pODPoint->m_bDynamicName = false;
 
-        if( m_pOCPNPoint->m_bIsInPath ) {
+        if( m_pODPoint->m_bIsInPath ) {
             // Update the Path segment selectables
-            pOCPNSelect->UpdateSelectablePathSegments( m_pOCPNPoint );
+            pODSelect->UpdateSelectablePathSegments( m_pODPoint );
 
             // Get an array of all paths using this point
-            wxArrayPtrVoid *pEditPathArray = g_pPathMan->GetPathArrayContaining( m_pOCPNPoint );
+            wxArrayPtrVoid *pEditPathArray = g_pPathMan->GetPathArrayContaining( m_pODPoint );
 
             if( pEditPathArray ) {
                 for( unsigned int ip = 0; ip < pEditPathArray->GetCount(); ip++ ) {
@@ -251,43 +251,43 @@ void ODPointPropertiesImpl::SaveChanges()
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
-                    pOCPNDrawConfig->UpdatePath( pp );
+                    pODConfig->UpdatePath( pp );
                 }
                 delete pEditPathArray;
             }
         } else
-            pOCPNDrawConfig->UpdateOCPNPoint( m_pOCPNPoint );
+            pODConfig->UpdateODPoint( m_pODPoint );
 
         // No general settings need be saved pConfig->UpdateSettings();
     }
     return;
 }
 
-void ODPointPropertiesImpl::SetOCPNPoint( OCPNPoint *pOP )
+void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
 {
-    m_pOCPNPoint = pOP;
-    if( m_pOCPNPoint ) {
-        m_lat_save = m_pOCPNPoint->m_lat;
-        m_lon_save = m_pOCPNPoint->m_lon;
-        m_IconName_save = m_pOCPNPoint->GetIconName();
-        m_bShowName_save = m_pOCPNPoint->m_bShowName;
-        m_bIsVisible_save = m_pOCPNPoint->m_bIsVisible;
+    m_pODPoint = pOP;
+    if( m_pODPoint ) {
+        m_lat_save = m_pODPoint->m_lat;
+        m_lon_save = m_pODPoint->m_lon;
+        m_IconName_save = m_pODPoint->GetIconName();
+        m_bShowName_save = m_pODPoint->m_bShowName;
+        m_bIsVisible_save = m_pODPoint->m_bIsVisible;
     }
 }
 
 bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 {
-    if( m_pOCPNPoint ) {
+    if( m_pODPoint ) {
 
-        m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pOCPNPoint->m_lat ) );
-        m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pOCPNPoint->m_lon ) );
-        m_lat_save = m_pOCPNPoint->m_lat;
-        m_lon_save = m_pOCPNPoint->m_lon;
+        m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
+        m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
+        m_lat_save = m_pODPoint->m_lat;
+        m_lon_save = m_pODPoint->m_lon;
 
         if( positionOnly ) return true;
 
         //Layer or not?
-        if( m_pOCPNPoint->m_bIsInLayer ) {
+        if( m_pODPoint->m_bIsInLayer ) {
             m_textName->SetEditable( false );
             m_textDescription->SetEditable( false );
             m_textCtrlExtDescription->SetEditable( false );
@@ -318,24 +318,24 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textCtrlPointRangeRingsSteps->SetEditable( true );
             m_colourPickerRangeRingsColour->Enable( true );
         }
-        m_textName->SetValue( m_pOCPNPoint->GetName() );
+        m_textName->SetValue( m_pODPoint->GetName() );
 
         wxString s_ArrivalRadius;
-        s_ArrivalRadius.Printf( _T("%.3f"), m_pOCPNPoint->GetOCPNPointArrivalRadius() );
+        s_ArrivalRadius.Printf( _T("%.3f"), m_pODPoint->GetODPointArrivalRadius() );
         m_textArrivalRadius->SetValue( s_ArrivalRadius );        
         
-        m_textDescription->SetValue( m_pOCPNPoint->m_MarkDescription );
-        m_textCtrlExtDescription->SetValue( m_pOCPNPoint->m_MarkDescription );
-        m_checkBoxShowName->SetValue( m_pOCPNPoint->m_bShowName );
-        m_checkBoxVisible->SetValue( m_pOCPNPoint->m_bIsVisible );
-        m_textCtrlGuid->SetValue( m_pOCPNPoint->m_GUID );
-        m_checkBoxShowODPointRangeRings->SetValue( m_pOCPNPoint->GetShowOCPNPointRangeRings() );
-        m_choicePointRangeRingsNumber->SetSelection( m_pOCPNPoint->GetOCPNPointRangeRingsNumber() );
-        m_choiceDistanceUnitsString->SetSelection( m_pOCPNPoint->GetOCPNPointRangeRingsStepUnits() );
+        m_textDescription->SetValue( m_pODPoint->m_MarkDescription );
+        m_textCtrlExtDescription->SetValue( m_pODPoint->m_MarkDescription );
+        m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );
+        m_checkBoxVisible->SetValue( m_pODPoint->m_bIsVisible );
+        m_textCtrlGuid->SetValue( m_pODPoint->m_GUID );
+        m_checkBoxShowODPointRangeRings->SetValue( m_pODPoint->GetShowODPointRangeRings() );
+        m_choicePointRangeRingsNumber->SetSelection( m_pODPoint->GetODPointRangeRingsNumber() );
+        m_choiceDistanceUnitsString->SetSelection( m_pODPoint->GetODPointRangeRingsStepUnits() );
         wxString buf;
-        buf.Printf( _T("%.3f" ), m_pOCPNPoint->GetOCPNPointRangeRingsStep() );
+        buf.Printf( _T("%.3f" ), m_pODPoint->GetODPointRangeRingsStep() );
         m_textCtrlPointRangeRingsSteps->SetValue( buf );
-        m_colourPickerRangeRingsColour->SetColour( m_pOCPNPoint->GetOCPNPointRangeRingsColour() );
+        m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         wxCommandEvent eDummy;
         OnShowRangeRingsSelect( eDummy );
         
@@ -343,26 +343,26 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_bcomboBoxIcon->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
         bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
-        wxImageList *icons = pOCPNPointMan->Getpmarkicon_image_list();
+        wxImageList *icons = pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
-            for( int i = 0; i < pOCPNPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = pOCPNPointMan->GetIconDescription( i );
+            for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
+                wxString *ps = pODPointMan->GetIconDescription( i );
                 m_bcomboBoxIcon->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
-        for( int i = 0; i < pOCPNPointMan->GetNumIcons(); i++ ) {
-            if( *pOCPNPointMan->GetIconKey( i ) == m_pOCPNPoint->GetIconName() )
+        for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
+            if( *pODPointMan->GetIconKey( i ) == m_pODPoint->GetIconName() )
                 iconToSelect = i;
         }
 
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxIcon->Append( m_pOCPNPoint->GetIconName(), icons->GetBitmap( 0 ) );
+            m_bcomboBoxIcon->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
             iconToSelect = m_bcomboBoxIcon->GetCount() - 1;
         }
         
@@ -432,12 +432,12 @@ void ODPointPropertiesImpl::ValidateMark( void )
 {
     //    Look in the master list of Waypoints to see if the currently selected waypoint is still valid
     //    It may have been deleted as part of a route
-    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
     
     bool b_found = false;
     while( node ) {
-        OCPNPoint *op = node->GetData();
-        if( m_pOCPNPoint == op ) {
+        ODPoint *op = node->GetData();
+        if( m_pODPoint == op ) {
             b_found = true;
             break;
         }
@@ -445,5 +445,5 @@ void ODPointPropertiesImpl::ValidateMark( void )
         node = node->GetNext();
     }
     
-    if( !b_found ) m_pOCPNPoint = NULL;
+    if( !b_found ) m_pODPoint = NULL;
 }

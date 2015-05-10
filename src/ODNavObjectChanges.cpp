@@ -23,32 +23,32 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 **************************************************************************/
 
-#include "OCPNDrawNavObjectChanges.h"
-#include "OCPNSelect.h"
-#include "OCPNDrawConfig.h"
+#include "ODNavObjectChanges.h"
+#include "ODSelect.h"
+#include "ODConfig.h"
 #include "PointMan.h"
 #include "PathMan.h"
-#include "OCPNPoint.h"
+#include "ODPoint.h"
 #include "Boundary.h"
 
 extern PathList         *pPathList;
-extern OCPNSelect       *pOCPNSelect;
+extern ODSelect       *pODSelect;
 pugi::xml_node          gpx_path_child;
 pugi::xml_node          gpx_path_root;
-extern OCPNDrawConfig   *pOCPNDrawConfig;
-extern PointMan         *pOCPNPointMan;
+extern ODConfig   *pODConfig;
+extern PointMan         *pODPointMan;
 extern PathMan          *g_pPathMan;
 
 
 
-OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges() : pugi::xml_document()
+ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
 {
     //ctor
     m_bFirstPath = true;
     m_OCPNDrawchanges_file = 0;
 }
 
-OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : pugi::xml_document()
+ODNavObjectChanges::ODNavObjectChanges(wxString file_name) : pugi::xml_document()
 {
     //ctor
     m_ODfilename = file_name;
@@ -58,7 +58,7 @@ OCPNDrawNavObjectChanges::OCPNDrawNavObjectChanges(wxString file_name) : pugi::x
     m_bFirstPath = true;
 }
 
-OCPNDrawNavObjectChanges::~OCPNDrawNavObjectChanges()
+ODNavObjectChanges::~ODNavObjectChanges()
 {
     //dtor
     if(m_OCPNDrawchanges_file)
@@ -68,7 +68,7 @@ OCPNDrawNavObjectChanges::~OCPNDrawNavObjectChanges()
         ::wxRemoveFile( m_ODfilename );
 }
 
-bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags )
+bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pr, unsigned int flags )
 {
     wxString s;
     pugi::xml_node child;
@@ -186,21 +186,21 @@ bool GPXCreateOCPNPoint( pugi::xml_node node, OCPNPoint *pr, unsigned int flags 
         }
         if(flags & OUT_ARRIVAL_RADIUS) {
             child = node.append_child("opencpn:arrival_radius");
-            s.Printf(_T("%.3f"), pr->GetOCPNPointArrivalRadius());
+            s.Printf(_T("%.3f"), pr->GetODPointArrivalRadius());
             child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         }
         if(flags & OUT_OCPNPOINT_RANGE_RINGS) {
-            child = node.append_child("opencpn:OCPNPoint_range_rings");
+            child = node.append_child("opencpn:ODPoint_range_rings");
             pugi::xml_attribute viz = child.append_attribute( "visible" );
-            viz.set_value( pr->m_bShowOCPNPointRangeRings );
+            viz.set_value( pr->m_bShowODPointRangeRings );
             pugi::xml_attribute number = child.append_attribute( "number" );
-            number.set_value( pr->m_iOCPNPointRangeRingsNumber );
+            number.set_value( pr->m_iODPointRangeRingsNumber );
             pugi::xml_attribute step = child.append_attribute( "step" );
-            step.set_value( pr->m_fOCPNPointRangeRingsStep );
+            step.set_value( pr->m_fODPointRangeRingsStep );
             pugi::xml_attribute units = child.append_attribute( "units" );
-            units.set_value( pr->m_iOCPNPointRangeRingsStepUnits );
+            units.set_value( pr->m_iODPointRangeRingsStepUnits );
             pugi::xml_attribute colour = child.append_attribute( "colour" );
-            colour.set_value( pr->m_wxcOCPNPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() ) ;
+            colour.set_value( pr->m_wxcODPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() ) ;
         }
     }
     
@@ -281,14 +281,14 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
 
-    OCPNPointList *pOCPNPointList = pPath->pOCPNPointList;
-    wxOCPNPointListNode *node2 = pOCPNPointList->GetFirst();
-    OCPNPoint *prp;
+    ODPointList *pODPointList = pPath->pODPointList;
+    wxODPointListNode *node2 = pODPointList->GetFirst();
+    ODPoint *prp;
     
     while( node2  ) {
         prp = node2->GetData();
             
-        GPXCreateOCPNPoint(node.append_child("opencpn:OCPNPoint"), prp, OPT_OCPNPOINT);
+        GPXCreateODPoint(node.append_child("opencpn:ODPoint"), prp, OPT_OCPNPOINT);
             
         node2 = node2->GetNext();
     }
@@ -296,7 +296,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     return true;
 }
                     
-bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
+bool ODNavObjectChanges::AddPath( Path *pb, const char *action )
 {
     if( !m_OCPNDrawchanges_file )
         return false;
@@ -319,12 +319,12 @@ bool OCPNDrawNavObjectChanges::AddPath( Path *pb, const char *action )
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::AddOCPNPoint( OCPNPoint *pOP, const char *action )
+bool ODNavObjectChanges::AddODPoint( ODPoint *pOP, const char *action )
 {
     SetRootGPXNode();
     
-    pugi::xml_node object = m_gpx_root.append_child("opencpn:OCPNPoint");
-    GPXCreateOCPNPoint(object, pOP, OPT_OCPNPOINT);
+    pugi::xml_node object = m_gpx_root.append_child("opencpn:ODPoint");
+    GPXCreateODPoint(object, pOP, OPT_OCPNPOINT);
 
 //    pugi::xml_node xchild = child_ext.child("extensions");
     pugi::xml_node child = object.append_child("opencpn:action");
@@ -337,7 +337,7 @@ bool OCPNDrawNavObjectChanges::AddOCPNPoint( OCPNPoint *pOP, const char *action 
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::AddGPXPathsList( PathList *pPaths )
+bool ODNavObjectChanges::AddGPXPathsList( PathList *pPaths )
 {
     SetRootGPXNode();
     
@@ -352,7 +352,7 @@ bool OCPNDrawNavObjectChanges::AddGPXPathsList( PathList *pPaths )
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::AddGPXPath(Path *pPath)
+bool ODNavObjectChanges::AddGPXPath(Path *pPath)
 {
     SetRootGPXNode();
     if ( m_bFirstPath ) {
@@ -362,47 +362,47 @@ bool OCPNDrawNavObjectChanges::AddGPXPath(Path *pPath)
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::AddGPXOCPNPoint(OCPNPoint *pWP )
+bool ODNavObjectChanges::AddGPXODPoint(ODPoint *pWP )
 {
     SetRootGPXNode();
-    GPXCreateOCPNPoint(m_gpx_root.append_child("OCPNPoint"), pWP, OPT_OCPNPOINT);
+    GPXCreateODPoint(m_gpx_root.append_child("ODPoint"), pWP, OPT_OCPNPOINT);
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::AddGPXOCPNPointsList( OCPNPointList *pOCPNPoints )
+bool ODNavObjectChanges::AddGPXODPointsList( ODPointList *pODPoints )
 {
     SetRootGPXNode();
     
-    wxOCPNPointListNode* pOCPNPointNode = pOCPNPoints->GetFirst();
-    while (pOCPNPointNode) {
-        OCPNPoint* pRP = pOCPNPointNode->GetData();
-        AddGPXOCPNPoint( pRP);
-        pOCPNPointNode = pOCPNPointNode->GetNext();
+    wxODPointListNode* pODPointNode = pODPoints->GetFirst();
+    while (pODPointNode) {
+        ODPoint* pRP = pODPointNode->GetData();
+        AddGPXODPoint( pRP);
+        pODPointNode = pODPointNode->GetNext();
     }
     
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::CreateNavObjGPXPoints( void )
+bool ODNavObjectChanges::CreateNavObjGPXPoints( void )
 {
     
     //    Iterate over the Routepoint list, creating Nodes for
     //    Routepoints that are not in any Route
     //    as indicated by m_bIsolatedMark == false
     
-    if(!pOCPNPointMan)
+    if(!pODPointMan)
         return false;
     
-    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
     
-    OCPNPoint *pr;
+    ODPoint *pr;
     
     while( node ) {
         pr = node->GetData();
         
         if( ( pr->m_bIsolatedMark ) && !( pr->m_bIsInLayer ) && !(pr->m_btemp) )
         {
-            GPXCreateOCPNPoint(m_gpx_root.append_child("opencpn:OCPNPoint"), pr, OPT_WPT);
+            GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pr, OPT_WPT);
         }
         node = node->GetNext();
     }
@@ -410,7 +410,7 @@ bool OCPNDrawNavObjectChanges::CreateNavObjGPXPoints( void )
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::CreateNavObjGPXPaths( void )
+bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
 {
     pugi::xml_node child_ext;
     // Paths
@@ -428,7 +428,7 @@ bool OCPNDrawNavObjectChanges::CreateNavObjGPXPaths( void )
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::CreateAllGPXObjects()
+bool ODNavObjectChanges::CreateAllGPXObjects()
 {
     SetRootGPXNode();
     CreateNavObjGPXPaths();
@@ -437,7 +437,7 @@ bool OCPNDrawNavObjectChanges::CreateAllGPXObjects()
     return true;
 }
 
-void OCPNDrawNavObjectChanges::SetRootGPXNode(void)
+void ODNavObjectChanges::SetRootGPXNode(void)
 {
     if(!strlen(m_gpx_root.name())) {
         m_gpx_root = append_child("OCPNDraw");
@@ -448,22 +448,22 @@ void OCPNDrawNavObjectChanges::SetRootGPXNode(void)
     }
 }
 
-bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
+bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
 {
     pugi::xml_node objects = this->child("OCPNDraw");
     
     for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling())
     {
-        if( !strcmp(object.name(), "opencpn:OCPNPoint") ) {
-            OCPNPoint *pOp = GPXLoadOCPNPoint1( object, _T("circle"), _T(""), b_full_viz, false, false, 0 );
+        if( !strcmp(object.name(), "opencpn:ODPoint") ) {
+            ODPoint *pOp = GPXLoadODPoint1( object, _T("circle"), _T(""), b_full_viz, false, false, 0 );
             
             if(pOp) {
                 pOp->m_bIsolatedMark = true;      // This is an isolated mark
-                OCPNPoint *pExisting = OCPNPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
+                ODPoint *pExisting = ODPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
                 if( !pExisting ) {
-                    if( NULL != pOCPNPointMan )
-                        pOCPNPointMan->AddOCPNPoint( pOp );
-                    pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                    if( NULL != pODPointMan )
+                        pODPointMan->AddODPoint( pOp );
+                    pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
                 else
                     delete pOp;
@@ -492,7 +492,7 @@ bool OCPNDrawNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
     return true;
 }
 
-OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_node, 
+ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node, 
                             wxString def_symbol_name,
                             wxString GUID,
                             bool b_fullviz,
@@ -515,19 +515,19 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
     wxString GuidString = GUID;         // default
     wxString TimeString;
     wxDateTime dt;
-    OCPNPoint *pOP = NULL;
+    ODPoint *pOP = NULL;
     
     HyperlinkList *linklist = NULL;
 
     double rlat = opt_node.attribute( "lat" ).as_double();
     double rlon = opt_node.attribute( "lon" ).as_double();
     double ArrivalRadius = 0;
-    int     l_iOCPNPointRangeRingsNumber = -1;
-    float   l_fOCPNPointRangeRingsStep = -1;
-    int     l_pOCPNPointRangeRingsStepUnits = -1;
-    bool    l_bOCPNPointRangeRingsVisible = false;
-    wxColour    l_wxcOCPNPointRangeRingsColour;
-    l_wxcOCPNPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
+    int     l_iODPointRangeRingsNumber = -1;
+    float   l_fODPointRangeRingsStep = -1;
+    int     l_pODPointRangeRingsStepUnits = -1;
+    bool    l_bODPointRangeRingsVisible = false;
+    wxColour    l_wxcODPointRangeRingsColour;
+    l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
     for( pugi::xml_node child = opt_node.first_child(); child != 0; child = child.next_sibling() ) {
         const char *pcn = child.name();
@@ -621,18 +621,18 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
             wxString::FromUTF8(child.first_child().value()).ToDouble(&ArrivalRadius ) ;
         }
         else
-        if ( !strcmp( pcn, "opencpn:OCPNPoint_range_rings") ) {
+        if ( !strcmp( pcn, "opencpn:ODPoint_range_rings") ) {
             for ( pugi::xml_attribute attr = child.first_attribute(); attr; attr = attr.next_attribute() ) {
                 if ( wxString::FromUTF8(attr.name()) == _T("number") )
-                    l_iOCPNPointRangeRingsNumber = attr.as_int();
+                    l_iODPointRangeRingsNumber = attr.as_int();
                 else if ( wxString::FromUTF8(attr.name()) == _T("step") )
-                    l_fOCPNPointRangeRingsStep = attr.as_float();
+                    l_fODPointRangeRingsStep = attr.as_float();
                 else if ( wxString::FromUTF8(attr.name()) == _T("units") )
-                    l_pOCPNPointRangeRingsStepUnits = attr.as_int();
+                    l_pODPointRangeRingsStepUnits = attr.as_int();
                 else if ( wxString::FromUTF8(attr.name()) == _T("visible") )
-                    l_bOCPNPointRangeRingsVisible =  attr.as_bool();
+                    l_bODPointRangeRingsVisible =  attr.as_bool();
                 else if ( wxString::FromUTF8(attr.name()) == _T("colour") )
-                    l_wxcOCPNPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                    l_wxcODPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
             }
         }
     }   // for
@@ -644,16 +644,16 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
             GuidString = _T("LayGUID");
     }
 
-    pOP = new OCPNPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
+    pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
     pOP->m_MarkDescription = DescString;
     //pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
     pOP->m_sTypeString = TypeString;
-    pOP->SetOCPNPointArrivalRadius( ArrivalRadius );
-    pOP->SetOCPNPointRangeRingsNumber( l_iOCPNPointRangeRingsNumber );
-    pOP->SetOCPNPointRangeRingsStep( l_fOCPNPointRangeRingsStep );
-    pOP->SetOCPNPointRangeRingsStepUnits( l_pOCPNPointRangeRingsStepUnits );
-    pOP->SetShowOCPNPointRangeRings( l_bOCPNPointRangeRingsVisible );
-    pOP->SetOCPNPointRangeRingsColour( l_wxcOCPNPointRangeRingsColour );
+    pOP->SetODPointArrivalRadius( ArrivalRadius );
+    pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
+    pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
+    pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
+    pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
+    pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
 
     if( b_propvizname )
         pOP->m_bShowName = bviz_name;
@@ -693,7 +693,7 @@ OCPNPoint * OCPNDrawNavObjectChanges::GPXLoadOCPNPoint1( pugi::xml_node &opt_nod
     return ( pOP );
 }
 
-Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
+Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
                     bool b_layer,
                     bool b_layerviz,
                     int layer_id, wxString *pPathType )
@@ -715,14 +715,14 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
             pTentPath = pTentBoundary;
         } else pTentPath = new Path();
         
-        OCPNPoint *pOp = NULL;
+        ODPoint *pOp = NULL;
         
         for( pugi::xml_node tschild = wpt_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
             wxString ChildName = wxString::FromUTF8( tschild.name() );
 
-            if( ChildName == _T ( "opencpn:OCPNPoint" ) ) {
-                OCPNPoint *tpOp = GPXLoadOCPNPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
-                OCPNPoint *epp = OCPNPointExists( tpOp->m_GUID );
+            if( ChildName == _T ( "opencpn:ODPoint" ) ) {
+                ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
+                ODPoint *epp = ODPointExists( tpOp->m_GUID );
                 if( epp != NULL )
                     pOp = epp;
                 else
@@ -732,7 +732,7 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
                 pOp->m_bIsInBoundary = true;                      // Hack
                 
                 if( epp == NULL )
-                    pOCPNPointMan->AddOCPNPoint( pOp );
+                    pODPointMan->AddODPoint( pOp );
                 else
                     delete tpOp;
                     
@@ -858,12 +858,12 @@ Path *OCPNDrawNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_f
     return pTentPath;
 }
 
-OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& name, double lat, double lon )
+ODPoint *ODNavObjectChanges::ODPointExists( const wxString& name, double lat, double lon )
 {
-    OCPNPoint *pret = NULL;
-    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    ODPoint *pret = NULL;
+    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
 
 //        if( pr->m_bIsInLayer ) return NULL;
 
@@ -879,11 +879,11 @@ OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& name, doub
     return pret;
 }
 
-OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& guid )
+ODPoint *ODNavObjectChanges::ODPointExists( const wxString& guid )
 {
-    wxOCPNPointListNode *node = pOCPNPointMan->GetOCPNPointList()->GetFirst();
+    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
     while( node ) {
-        OCPNPoint *pr = node->GetData();
+        ODPoint *pr = node->GetData();
 
 //        if( pr->m_bIsInLayer ) return NULL;
 
@@ -896,7 +896,7 @@ OCPNPoint *OCPNDrawNavObjectChanges::OCPNPointExists( const wxString& guid )
     return NULL;
 }
 
-void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
+void ODNavObjectChanges::InsertPathA( Path *pTentPath )
 {
     if( !pTentPath )
         return;
@@ -909,13 +909,13 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
     //    TODO  All this trouble for a tentative path.......Should make some path methods????
     if( bAddpath ) {
             if( PathExists( pTentPath->m_GUID ) ) { //We are importing a different path with the same guid, so let's generate it a new guid
-                            pTentPath->m_GUID = pOCPNPointMan->CreateGUID( NULL );
+                            pTentPath->m_GUID = pODPointMan->CreateGUID( NULL );
                             //Now also change guids for the routepoints
-                            wxOCPNPointListNode *pthisnode = ( pTentPath->pOCPNPointList )->GetFirst();
+                            wxODPointListNode *pthisnode = ( pTentPath->pODPointList )->GetFirst();
                             while( pthisnode ) {
-                                OCPNPoint *pP =  pthisnode->GetData();
+                                ODPoint *pP =  pthisnode->GetData();
                                 if( pP && pP->m_bIsolatedMark )
-                                        pP->m_GUID = pOCPNPointMan->CreateGUID( NULL );
+                                        pP->m_GUID = pODPointMan->CreateGUID( NULL );
                                 pthisnode = pthisnode->GetNext();
                             }
             }
@@ -932,16 +932,16 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
         
         int ip = 0;
         float prev_rlat = 0., prev_rlon = 0.;
-        OCPNPoint *prev_pConfPoint = NULL;
+        ODPoint *prev_pConfPoint = NULL;
         
-        wxOCPNPointListNode *node = pTentPath->pOCPNPointList->GetFirst();
+        wxODPointListNode *node = pTentPath->pODPointList->GetFirst();
         while( node ) {
-            OCPNPoint *pop = node->GetData();
+            ODPoint *pop = node->GetData();
             
             if( ip )
-                pOCPNSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
+                pODSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
                                                     pop->m_lon, prev_pConfPoint, pop, pTentPath );
-            pOCPNSelect->AddSelectableOCPNPoint(pop->m_lat, pop->m_lon, pop);
+            pODSelect->AddSelectableODPoint(pop->m_lat, pop->m_lon, pop);
             prev_rlat = pop->m_lat;
             prev_rlon = pop->m_lon;
             prev_pConfPoint = pop;
@@ -954,19 +954,19 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
     else {
         
         // walk the path, deleting points used only by this path
-        wxOCPNPointListNode *pnode = ( pTentPath->pOCPNPointList )->GetFirst();
+        wxODPointListNode *pnode = ( pTentPath->pODPointList )->GetFirst();
         while( pnode ) {
-            OCPNPoint *pop = pnode->GetData();
+            ODPoint *pop = pnode->GetData();
             
             // check all other paths to see if this point appears in any other path
-            Path *pcontainer_path = g_pPathMan->FindPathContainingOCPNPoint( pop );
+            Path *pcontainer_path = g_pPathMan->FindPathContainingODPoint( pop );
             
             if( pcontainer_path == NULL ) {
                 pop->m_bIsInPath = false; // Take this point out of this (and only) track/route
                 if( !pop->m_bKeepXPath ) {
-                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
-                    pOCPNDrawConfig->DeleteOCPNPoint( pop );
-                    pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
+                    pODConfig->m_bSkipChangeSetUpdate = true;
+                    pODConfig->DeleteODPoint( pop );
+                    pODConfig->m_bSkipChangeSetUpdate = false;
                     delete pop;
                 }
             }
@@ -978,7 +978,7 @@ void OCPNDrawNavObjectChanges::InsertPathA( Path *pTentPath )
     }
 }
                     
-Path *OCPNDrawNavObjectChanges::PathExists( const wxString& guid )
+Path *ODNavObjectChanges::PathExists( const wxString& guid )
 {
     wxPathListNode *path_node = pPathList->GetFirst();
 
@@ -992,7 +992,7 @@ Path *OCPNDrawNavObjectChanges::PathExists( const wxString& guid )
     return NULL;
 }
 
-Path *OCPNDrawNavObjectChanges::PathExists( Path * pTentPath )
+Path *ODNavObjectChanges::PathExists( Path * pTentPath )
 {
     wxPathListNode *path_node = pPathList->GetFirst();
     while( path_node ) {
@@ -1007,13 +1007,13 @@ Path *OCPNDrawNavObjectChanges::PathExists( Path * pTentPath )
     return NULL;
 }
 
-bool OCPNDrawNavObjectChanges::SaveFile( const wxString filename )
+bool ODNavObjectChanges::SaveFile( const wxString filename )
 {
     save_file(filename.fn_str(), "  ");
     return true;
 }
 
-bool OCPNDrawNavObjectChanges::ApplyChanges(void)
+bool ODNavObjectChanges::ApplyChanges(void)
 {
     //Let's reconstruct the unsaved changes
     
@@ -1021,31 +1021,31 @@ bool OCPNDrawNavObjectChanges::ApplyChanges(void)
     
     while(strlen(object.name()))
     {
-        if( !strcmp(object.name(), "opencpn:OCPNPoint") ) {
-            OCPNPoint *pOp = GPXLoadOCPNPoint1( object, _T("circle"), _T(""), false, false, false, 0 );
+        if( !strcmp(object.name(), "opencpn:ODPoint") ) {
+            ODPoint *pOp = GPXLoadODPoint1( object, _T("circle"), _T(""), false, false, false, 0 );
             
-            if(pOp && pOCPNPointMan) {
+            if(pOp && pODPointMan) {
                 pOp->m_bIsolatedMark = true;
-                OCPNPoint *pExisting = OCPNPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
+                ODPoint *pExisting = ODPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
                 
                 pugi::xml_node child = object.child("opencpn:action");
                 
                 if(!strcmp(child.first_child().value(), "add") ){
                     if( !pExisting ) 
-                        pOCPNPointMan->AddOCPNPoint( pOp );
-                    pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                        pODPointMan->AddODPoint( pOp );
+                    pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }                    
                 
                 else if(!strcmp(child.first_child().value(), "update") ){
                     if( pExisting )
-                        pOCPNPointMan->RemoveOCPNPoint( pExisting );
-                    pOCPNPointMan->AddOCPNPoint( pOp );
-                    pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                        pODPointMan->RemoveODPoint( pExisting );
+                    pODPointMan->AddODPoint( pOp );
+                    pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
                 
                 else if(!strcmp(child.first_child().value(), "delete") ){
                     if( pExisting )
-                        pOCPNPointMan->DestroyOCPNPoint( pExisting, false );
+                        pODPointMan->DestroyODPoint( pExisting, false );
                 }
                 
                 else
@@ -1072,9 +1072,9 @@ bool OCPNDrawNavObjectChanges::ApplyChanges(void)
                     else if(!strcmp(child.first_child().value(), "delete") ){
                         Path *pExisting = PathExists( pPath->m_GUID );
                         if(pExisting){
-                            pOCPNDrawConfig->m_bSkipChangeSetUpdate = true;
+                            pODConfig->m_bSkipChangeSetUpdate = true;
                             g_pPathMan->DeletePath( pExisting );
-                            pOCPNDrawConfig->m_bSkipChangeSetUpdate = false;
+                            pODConfig->m_bSkipChangeSetUpdate = false;
                         }
                     }
                 
@@ -1090,9 +1090,9 @@ bool OCPNDrawNavObjectChanges::ApplyChanges(void)
     return true;
 }
 
-int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
+int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
 {
-    if(!pOCPNPointMan)
+    if(!pODPointMan)
         return 0;
     
     int n_obj = 0;
@@ -1100,13 +1100,13 @@ int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_laye
     
     for (pugi::xml_node object = objects.first_child(); object; object = object.next_sibling())
     {
-        if( !strcmp(object.name(), "opencpn:OCPNPoint") ) {
-            OCPNPoint *pOp = GPXLoadOCPNPoint1( object, _T("circle"), _T(""), true, true, b_layerviz, layer_id );
+        if( !strcmp(object.name(), "opencpn:ODPoint") ) {
+            ODPoint *pOp = GPXLoadODPoint1( object, _T("circle"), _T(""), true, true, b_layerviz, layer_id );
             pOp->m_bIsolatedMark = true;      // This is an isolated mark
             
             if(pOp) {
-                pOCPNPointMan->AddOCPNPoint( pOp );
-                pOCPNSelect->AddSelectableOCPNPoint( pOp->m_lat, pOp->m_lon, pOp );
+                pODPointMan->AddODPoint( pOp );
+                pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 n_obj++;
             }
             else
@@ -1135,27 +1135,27 @@ int OCPNDrawNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_laye
     return n_obj;
 }
 
-void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
+void ODNavObjectChanges::UpdatePathA( Path *pTentPath )
 {
     Path * path = PathExists( pTentPath->m_GUID );
 
     if( path ) {
         if ( pTentPath->GetnPoints() < path->GetnPoints() ) {
-            wxOCPNPointListNode *node = path->pOCPNPointList->GetFirst();
+            wxODPointListNode *node = path->pODPointList->GetFirst();
             while( node ) {
-                OCPNPoint *pFP = node->GetData();
-                OCPNPoint *pOP = pTentPath->GetPoint( pFP->m_GUID );
+                ODPoint *pFP = node->GetData();
+                ODPoint *pOP = pTentPath->GetPoint( pFP->m_GUID );
                 if (!pOP ) {
                     path->RemovePoint( pFP );
-                    node = path->pOCPNPointList->GetFirst(); // start at begining of list again
+                    node = path->pODPointList->GetFirst(); // start at begining of list again
                 } else node = node->GetNext();
             }
         }
-        wxOCPNPointListNode *node = pTentPath->pOCPNPointList->GetFirst();
-        OCPNPoint *save_ex_op = NULL;
+        wxODPointListNode *node = pTentPath->pODPointList->GetFirst();
+        ODPoint *save_ex_op = NULL;
         while( node ) {
-            OCPNPoint *pop = node->GetData();
-            OCPNPoint *ex_op = path->GetPoint( pop->m_GUID );
+            ODPoint *pop = node->GetData();
+            ODPoint *ex_op = path->GetPoint( pop->m_GUID );
             if( ex_op ) {
                 ex_op->m_lat = pop->m_lat;
                 ex_op->m_lon = pop->m_lon;
@@ -1169,10 +1169,10 @@ void OCPNDrawNavObjectChanges::UpdatePathA( Path *pTentPath )
             }
             node = node->GetNext();
         }
-        pOCPNSelect->DeleteAllSelectableOCPNPoints( pTentPath );
-        pOCPNSelect->DeleteAllSelectablePathSegments( pTentPath );
-        pOCPNSelect->AddAllSelectablePathSegments( pTentPath );
-        pOCPNSelect->AddAllSelectableOCPNPoints( pTentPath );
+        pODSelect->DeleteAllSelectableODPoints( pTentPath );
+        pODSelect->DeleteAllSelectablePathSegments( pTentPath );
+        pODSelect->AddAllSelectablePathSegments( pTentPath );
+        pODSelect->AddAllSelectableODPoints( pTentPath );
     } else {
         InsertPathA( pTentPath );
     }

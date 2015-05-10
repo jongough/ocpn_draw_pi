@@ -29,7 +29,7 @@
 
 #include "Quilt.h"
 #include "ocpn_types.h"
-#include "OCPNPoint.h"
+#include "ODPoint.h"
 #include "Hyperlink.h"
 
 
@@ -49,43 +49,43 @@ public:
     Path(void);
     ~Path(void);
 
-    void AddPoint(OCPNPoint *pNewPoint,
+    void AddPoint(ODPoint *pNewPoint,
                 bool b_rename_in_sequence = true,
                 bool b_deferBoxCalc = false,
                 bool b_isLoading = false);
 
     void AddTentativePoint(const wxString& GUID);
-    OCPNPoint *GetPoint(int nPoint);
-    OCPNPoint *GetPoint ( const wxString &guid );
-    int GetIndexOf(OCPNPoint *prp);
-    OCPNPoint *InsertPointBefore(OCPNPoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
-    OCPNPoint *InsertPointAfter(OCPNPoint *pOP, double rlat, double rlon, bool bRenamePoints = false);
-    void InsertPointAfter( OCPNPoint *pOP, OCPNPoint *pnOP, bool bRenamePoints = false);
+    ODPoint *GetPoint(int nPoint);
+    ODPoint *GetPoint ( const wxString &guid );
+    int GetIndexOf(ODPoint *prp);
+    ODPoint *InsertPointBefore(ODPoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
+    ODPoint *InsertPointAfter(ODPoint *pOP, double rlat, double rlon, bool bRenamePoints = false);
+    void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
     void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
     void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
     virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);
     virtual void DrawGL( PlugIn_ViewPort &piVP );
-    OCPNPoint *GetLastPoint();
-    void DeletePoint(OCPNPoint *rp, bool bRenamePoints = false);
-    void RemovePoint(OCPNPoint *rp, bool bRenamePoints = false);
+    ODPoint *GetLastPoint();
+    void DeletePoint(ODPoint *rp, bool bRenamePoints = false);
+    void RemovePoint(ODPoint *rp, bool bRenamePoints = false);
     void DeSelectPath();
     void FinalizeForRendering();
     void UpdateSegmentDistances();
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
     wxBoundingBox GetBBox();
-    void SetnPoints(void){ m_nPoints = pOCPNPointList->GetCount(); }
+    void SetnPoints(void){ m_nPoints = pODPointList->GetCount(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);
     void RebuildGUIDList(void);
-    void RenameOCPNPoints();
+    void RenameODPoints();
     void RenamePathPoints();
     void ReloadPathPointIcons();
     wxString GetNewMarkSequenced(void);
     void AssemblePath();
     bool IsEqualTo(Path *ptargetboundary);
     void ClonePath(Path *psourceboundary, int start_nPoint, int end_nPoint, const wxString & suffix);
-    void CloneAddedOCPNPoint(OCPNPoint *ptargetpoint, OCPNPoint *psourcepoint);
+    void CloneAddedODPoint(ODPoint *ptargetpoint, ODPoint *psourcepoint);
     void ClearHighlights(void);
     void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
@@ -103,12 +103,12 @@ public:
     double GetRouteArrivalRadius(void){ return m_ArrivalRadius;}
     void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
     
-    void RemovePointFromPath( OCPNPoint* point, Path* path );
+    void RemovePointFromPath( ODPoint* point, Path* path );
 
     int         m_ConfigPathNum;
     bool        m_bPathIsSelected;
     bool        m_bPathIsActive;
-    OCPNPoint  *m_pPathActivePoint;
+    ODPoint  *m_pPathActivePoint;
     bool        m_bIsBeingCreated;
     bool        m_bIsBeingEdited;
     double      m_path_length;
@@ -116,8 +116,8 @@ public:
     wxString    m_sTypeString;
     wxString    m_PathNameString;
     wxString    m_PathDescription;
-    OCPNPoint  *m_pLastAddedPoint;
-    OCPNPoint  *m_pFirstAddedPoint;
+    ODPoint  *m_pLastAddedPoint;
+    ODPoint  *m_pFirstAddedPoint;
     bool        m_bDeleteOnArrival;
     wxString    m_GUID;
     bool        m_bIsInLayer;
@@ -131,8 +131,8 @@ public:
     wxString    m_TimeDisplayFormat;
     HyperlinkList     *m_HyperlinkList;
 
-    wxArrayString      OCPNPointGUIDList;
-    OCPNPointList     *pOCPNPointList;
+    wxArrayString      ODPointGUIDList;
+    ODPointList     *pODPointList;
 
     wxRect      active_pt_rect;
     wxString    m_ActiveLineColour;

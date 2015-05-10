@@ -42,14 +42,14 @@ class PathMan
         bool IsPathValid(Path *pRoute);
 
         Path *FindPathByGUID(wxString &guid);
-        Path *FindPathContainingOCPNPoint(OCPNPoint *pWP);
-        wxArrayPtrVoid *GetPathArrayContaining(OCPNPoint *pWP);
+        Path *FindPathContainingODPoint(ODPoint *pWP);
+        wxArrayPtrVoid *GetPathArrayContaining(ODPoint *pWP);
         bool DoesPathContainSharedPoints( Path *pPath );
 
         bool ActivatePath(Path *pPathToActivate);
-        bool ActivateOCPNPoint(Path *pA, OCPNPoint *pRP);
-        bool ActivateOCPNPoint(Path *pr, bool skipped);
-        OCPNPoint *FindBestActivatePoint(Path *pR, double lat, double lon, double cog, double sog);
+        bool ActivateODPoint(Path *pA, ODPoint *pRP);
+        bool ActivateODPoint(Path *pr, bool skipped);
+        ODPoint *FindBestActivatePoint(Path *pR, double lat, double lon, double cog, double sog);
 
         bool UpdateProgress();
         bool UpdateAutopilot();
@@ -58,7 +58,7 @@ class PathMan
         void SetColorScheme(ColorScheme cs);
 
         Path *GetpActivePath(){ return pActivePath;}
-        OCPNPoint *GetpActivePoint(){ return pActivePoint;}
+        ODPoint *GetpActivePoint(){ return pActivePoint;}
         double GetCurrentRngToActivePoint(){ return CurrentRngToActivePoint;}
         double GetCurrentBrgToActivePoint(){ return CurrentBrgToActivePoint;}
         double GetCurrentRngToActiveNormalArrival(){ return CurrentRangeToActiveNormalCrossing;}
@@ -70,13 +70,13 @@ class PathMan
         wxPen   * GetPathPen(void){return m_pPathPen;}
         wxPen   * GetSelectedPathPen(void){return m_pSelectedPathPen;}
         wxPen   * GetActivePathPen(void){return m_pActivePathPen;}
-        wxPen   * GetActiveOCPNPointPen(void){return m_pActiveOCPNPointPen;}
-        wxPen   * GetOCPNPointPen(void){return m_pOCPNPointPen;}
+        wxPen   * GetActiveODPointPen(void){return m_pActiveODPointPen;}
+        wxPen   * GetODPointPen(void){return m_pODPointPen;}
         wxBrush * GetPathBrush(void){return m_pPathBrush;}
         wxBrush * GetSelectedPathBrush(void){return m_pSelectedPathBrush;}
         wxBrush * GetActivePathBrush(void){return m_pActivePathBrush;}
-        wxBrush * GetActiveOCPNPointBrush(void){return m_pActiveOCPNPointBrush;}
-        wxBrush * GetOCPNPointBrush(void){return m_pOCPNPointBrush;}
+        wxBrush * GetActiveODPointBrush(void){return m_pActiveODPointBrush;}
+        wxBrush * GetODPointBrush(void){return m_pODPointBrush;}
 
         wxString GetRouteReverseMessage(void);
 
@@ -87,7 +87,7 @@ class PathMan
 
         MyApp       *m_pparent_app;
         Path        *pActivePath;
-        OCPNPoint   *pActivePoint;
+        ODPoint   *pActivePoint;
         double       PathBrgToActivePoint;        //TODO all these need to be doubles
         double       CurrentSegmentBeginLat;
         double       CurrentSegmentBeginLon;
@@ -96,21 +96,21 @@ class PathMan
         double       CurrentXTEToActivePoint;
         double       CourseToPathSegment;
         double       CurrentRangeToActiveNormalCrossing;
-        OCPNPoint   *pActivePathSegmentBeginPoint;
-        OCPNPoint   *pPathActivatePoint;
+        ODPoint   *pActivePathSegmentBeginPoint;
+        ODPoint   *pPathActivatePoint;
         double       CurrentSegmentCourse;
         int         XTEDir;
         bool        m_bArrival;
         wxPen       *m_pPathPen;
         wxPen       *m_pSelectedPathPen;
         wxPen       *m_pActivePathPen;
-        wxPen       *m_pActiveOCPNPointPen;
-        wxPen       *m_pOCPNPointPen;
+        wxPen       *m_pActiveODPointPen;
+        wxPen       *m_pODPointPen;
         wxBrush     *m_pPathBrush;
         wxBrush     *m_pSelectedPathBrush;
         wxBrush     *m_pActivePathBrush;
-        wxBrush     *m_pActiveOCPNPointBrush;
-        wxBrush     *m_pOCPNPointBrush;
+        wxBrush     *m_pActiveODPointBrush;
+        wxBrush     *m_pODPointBrush;
 
         double      m_arrival_min;
         int         m_arrival_test;

@@ -23,11 +23,11 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 **************************************************************************/
 
-#include "OCPNDrawPropertiesImpl.h"
+#include "ODPropertiesImpl.h"
 #include "ocpn_draw_pi.h"
 #include "PointMan.h"
 
-extern PointMan     *pOCPNPointMan;
+extern PointMan     *pODPointMan;
 extern int          g_path_line_width;
 extern wxString     g_OD_default_wp_icon;
 
@@ -44,29 +44,29 @@ extern wxString     g_InActivePathFillColour;
 extern int          g_PathLineWidth; 
 extern int          g_PathLineStyle;
 
-extern bool         g_bOCPNPointShowName;
-extern bool         g_bOCPNPointShowRangeRings;
-extern int          g_iOCPNPointRangeRingsNumber;
-extern float        g_fOCPNPointRangeRingsStep;
-extern int          g_iOCPNPointRangeRingsStepUnits;
-extern wxColour     g_colourOCPNPointRangeRingsColour;
-extern wxString     g_sOCPNPointIconName;
+extern bool         g_bODPointShowName;
+extern bool         g_bODPointShowRangeRings;
+extern int          g_iODPointRangeRingsNumber;
+extern float        g_fODPointRangeRingsStep;
+extern int          g_iODPointRangeRingsStepUnits;
+extern wxColour     g_colourODPointRangeRingsColour;
+extern wxString     g_sODPointIconName;
 
 extern double      g_n_arrival_circle_radius;
 
 
-OCPNDrawPropertiesImpl::OCPNDrawPropertiesImpl( wxWindow* parent )
+ODPropertiesImpl::ODPropertiesImpl( wxWindow* parent )
 :
-OCPNDrawPropertiesDialog( parent )
+ODPropertiesDialog( parent )
 {
-    m_bcomboBoxOCPNPointIcon = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
-    m_SizerNameIcon->Replace( m_comboBoxODPointIconName, m_bcomboBoxOCPNPointIcon );
+    m_bcomboBoxODPointIcon = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
+    m_SizerNameIcon->Replace( m_comboBoxODPointIconName, m_bcomboBoxODPointIcon );
     delete( m_comboBoxODPointIconName );
     m_comboBoxODPointIconName = NULL;
 
 }
 
-void OCPNDrawPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
+void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
     // TODO: Implement OnDrawPropertiesOKClick
     
@@ -78,7 +78,7 @@ void OCPNDrawPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
     event.Skip();
 }
 
-void OCPNDrawPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
+void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
     // TODO: Implement OnDrawPropertiesCancelClick
     Show( false );
@@ -87,7 +87,7 @@ void OCPNDrawPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event 
     event.Skip();
 }
 
-void OCPNDrawPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
+void ODPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 {
     // TODO: Implement OnDrawPropertiesApplyClick
     SaveChanges(); // write changes to globals and update config
@@ -95,7 +95,7 @@ void OCPNDrawPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
     event.Skip();
 }
 
-void OCPNDrawPropertiesImpl::SaveChanges()
+void ODPropertiesImpl::SaveChanges()
 {
         if (m_choiceActiveBoundaryLineColour->GetSelection() == 0 ) g_ActiveBoundaryLineColour = wxEmptyString;
         else g_ActiveBoundaryLineColour = ::GpxxColorNames[m_choiceActiveBoundaryLineColour->GetSelection()];
@@ -123,16 +123,16 @@ void OCPNDrawPropertiesImpl::SaveChanges()
         g_PathLineWidth = m_choicePathLineWidth->GetSelection() + 1;
         g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
         
-        g_iOCPNPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
-        g_fOCPNPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
-        g_iOCPNPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
-        g_colourOCPNPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
+        g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
+        g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
+        g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
+        g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
         m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
-        g_bOCPNPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
-        g_sOCPNPointIconName = m_bcomboBoxOCPNPointIcon->GetValue();
+        g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
+        g_sODPointIconName = m_bcomboBoxODPointIcon->GetValue();
 }
 
-void OCPNDrawPropertiesImpl::SetDialogSize( void )
+void ODPropertiesImpl::SetDialogSize( void )
 {
     wxSize sz = m_SizerProperties->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
@@ -150,39 +150,39 @@ void OCPNDrawPropertiesImpl::SetDialogSize( void )
     
 }
 
-void OCPNDrawPropertiesImpl::UpdateProperties( void )
+void ODPropertiesImpl::UpdateProperties( void )
 {
         wxString s_ArrivalRadius;
         s_ArrivalRadius.Printf( _T("%.3f"), g_n_arrival_circle_radius );
         m_textCtrlODPointArrivalRadius->SetValue( s_ArrivalRadius );
         
-        m_checkBoxShowName->SetValue( g_bOCPNPointShowName );
-        m_checkBoxShowODPointRangeRings->SetValue( g_bOCPNPointShowRangeRings );
-        m_choiceODPointRangeRingNumber->SetSelection( g_iOCPNPointRangeRingsNumber );
+        m_checkBoxShowName->SetValue( g_bODPointShowName );
+        m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
+        m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
         wxString s_RangeRingStep;
-        s_RangeRingStep.Printf( wxT("%.3f"), g_fOCPNPointRangeRingsStep );
+        s_RangeRingStep.Printf( wxT("%.3f"), g_fODPointRangeRingsStep );
         m_textCtrlODPointRangeRingSteps->SetValue( s_RangeRingStep );
-        m_choiceODPointDistanceUnit->SetSelection( g_iOCPNPointRangeRingsStepUnits );
-        m_colourPickerODPointRangeRingColours->SetColour( g_colourOCPNPointRangeRingsColour );
+        m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
+        m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
 
-        m_bcomboBoxOCPNPointIcon->Clear();
+        m_bcomboBoxODPointIcon->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
-        if( pOCPNPointMan == NULL ) pOCPNPointMan = new PointMan();
+        if( pODPointMan == NULL ) pODPointMan = new PointMan();
         
-        bool fillCombo = m_bcomboBoxOCPNPointIcon->GetCount() == 0;
-        wxImageList *icons = pOCPNPointMan->Getpmarkicon_image_list();
+        bool fillCombo = m_bcomboBoxODPointIcon->GetCount() == 0;
+        wxImageList *icons = pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
-            for( int i = 0; i < pOCPNPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = pOCPNPointMan->GetIconDescription( i );
-                m_bcomboBoxOCPNPointIcon->Append( *ps, icons->GetBitmap( i ) );
+            for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
+                wxString *ps = pODPointMan->GetIconDescription( i );
+                m_bcomboBoxODPointIcon->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
-        for( int i = 0; i < pOCPNPointMan->GetNumIcons(); i++ ) {
-            if( *pOCPNPointMan->GetIconKey( i ) == g_sOCPNPointIconName ) {
+        for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
+            if( *pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
                 iconToSelect = i;
                 break;
             }
@@ -191,12 +191,12 @@ void OCPNDrawPropertiesImpl::UpdateProperties( void )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxOCPNPointIcon->Append( g_sOCPNPointIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxOCPNPointIcon->GetCount() - 1;
+            m_bcomboBoxODPointIcon->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxODPointIcon->GetCount() - 1;
         }
         
         
-        m_bcomboBoxOCPNPointIcon->Select( iconToSelect );
+        m_bcomboBoxODPointIcon->Select( iconToSelect );
         icons = NULL;
 
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {

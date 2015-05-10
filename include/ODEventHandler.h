@@ -43,19 +43,19 @@ enum
     LAST_TIMER
 };
 
-class OCPNDrawEventHandler : public wxEvtHandler
+class ODEventHandler : public wxEvtHandler
 {
     public:
-        OCPNDrawEventHandler(ocpn_draw_pi *parent);
-        OCPNDrawEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, OCPNPoint *selectedOCPNPoint);
-        ~OCPNDrawEventHandler();
+        ODEventHandler(ocpn_draw_pi *parent);
+        ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, ODPoint *selectedODPoint);
+        ~ODEventHandler();
         
         void OnTimerEvent( wxTimerEvent &event );
         void PopupMenuHandler( wxCommandEvent & event );
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
         void PopupMenu( int x, int y, int seltype );
         void SetPath( Path *path );
-        void SetPoint ( OCPNPoint *point );
+        void SetPoint ( ODPoint *point );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
 
@@ -66,7 +66,7 @@ class OCPNDrawEventHandler : public wxEvtHandler
         ChartCanvas     *m_parentcanvas;
         int             popx, popy;
         Path            *m_pSelectedPath;
-        OCPNPoint       *m_pFoundOCPNPoint;
+        ODPoint       *m_pFoundODPoint;
         double          m_cursor_lat;
         double          m_cursor_lon;
 
