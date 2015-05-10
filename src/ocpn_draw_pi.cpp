@@ -911,16 +911,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
     if( event.Dragging() ) {
         if( event.LeftIsDown() ) {
-/*            if( m_pFoundODPoint ) {
-                pCurrentCursor = ocpncc1->pCursorCross;
-                m_pFoundODPoint->m_lat = m_cursor_lat;
-                m_pFoundODPoint->m_lon = m_cursor_lon;
-                //pODSelect->UpdateSelectablePathSegments(m_pFoundODPoint );
-                if( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                bRefresh = TRUE;
-                bret = TRUE;
-            }
-*/            
             if( m_pFoundODPoint )
             {
                 if( m_bPathEditing )
