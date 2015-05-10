@@ -783,10 +783,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
         
     
-    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
-        ocpncc1->SetCursor( *pCurrentCursor );
-        bRefresh = TRUE;
-    }
+//    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
+//        ocpncc1->SetCursor( *pCurrentCursor );
+//        bRefresh = TRUE;
+//    }
     
     if( nBoundary_State >= 2 ) {
         r_rband.x = event.GetX();
@@ -834,6 +834,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         }
         if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
             m_bPathEditing = FALSE;
+            m_bODPointEditing = FALSE;
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
             if( m_pFoundODPoint ) {
                 //pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
@@ -945,6 +946,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     
                     if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
+                    pCurrentCursor = ocpncc1->pCursorCross;
                     bRefresh = TRUE;
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through

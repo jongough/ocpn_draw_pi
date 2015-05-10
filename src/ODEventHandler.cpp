@@ -269,6 +269,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
             pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            m_pSelectedPath = NULL;
             break;
         case ID_PATH_MENU_MOVE_POINT:
             m_pSelectedPath->m_bIsBeingEdited = TRUE;
@@ -325,6 +326,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 // TODO implement UNDO
                 //m_parent->undo->InvalidateUndo();
                 RequestRefresh( m_parentcanvas );
+                m_pSelectedPath = NULL;
                 
             }
             break;
@@ -339,6 +341,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             SendPluginMessage( msg_id, msg );
             
             g_pPathMan->DeactivatePath( m_pSelectedPath );
+            m_pSelectedPath = NULL;
             break;
         }
         case ID_PATH_MENU_ACTIVATE: {
@@ -351,6 +354,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             SendPluginMessage( msg_id, msg );
             
             g_pPathMan->ActivatePath( m_pSelectedPath );
+            m_pSelectedPath = NULL;
             break;
         }
         case ID_OCPNPOINT_MENU_PROPERTIES:
@@ -358,6 +362,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
             pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, ocpncc1 );
+            m_pFoundODPoint = NULL;
             break;
         case ID_PATH_MENU_ACTPOINT:
         case ID_PATH_MENU_ACTNXTPOINT:
@@ -389,7 +394,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
 
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
-            
+            m_pFoundODPoint = NULL;
+            m_pSelectedPath = NULL;
             break;
         }
         case ID_OCPNPOINT_MENU_EDIT:
@@ -418,6 +424,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
+            m_pFoundODPoint = NULL;
+            m_pSelectedPath = NULL;
             break;
         }
         case ID_OCPNPOINT_MENU_DELPOINT: {
@@ -453,6 +461,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
+            m_pFoundODPoint = NULL;
             break;
         }
             

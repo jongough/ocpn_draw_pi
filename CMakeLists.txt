@@ -16,7 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "3")
-SET(VERSION_PATCH "0002")
+SET(VERSION_PATCH "0003")
+SET(VERSION_DATE "10/05/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -90,6 +91,7 @@ SET(HDRS
         include/ODUtils.h
         include/ODvector2D.h
         include/ODicons.h
+        include/version.h
 #            include/wx/json_defs.h
             include/wx/jsonreader.h
             include/wx/jsonval.h
