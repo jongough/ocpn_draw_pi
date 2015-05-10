@@ -40,7 +40,6 @@ PositionParser::PositionParser(const wxString & src)
 
 bool PositionParser::FindSeparator(const wxString & src)
 {
-    int length = src.Length();
     wxStringTokenizer t;
 
     // Used when format is similar to "12 34.56 N 12 34.56 E"
@@ -63,7 +62,6 @@ bool PositionParser::FindSeparator(const wxString & src)
 
     if( regex.IsValid() ) {
         if( regex.Matches( src ) ) {
-            int n = regex.GetMatchCount();
             latitudeString = regex.GetMatch( src, 1 );
             longitudeString = regex.GetMatch( src, 2 );
             latitudeString.Trim( true );

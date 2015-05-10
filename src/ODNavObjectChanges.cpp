@@ -703,7 +703,6 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
     bool b_propviz = false;
     bool b_viz = true;
     bool b_active = false;
-    bool b_propactive = false;
     Boundary    *pTentBoundary = NULL;
     Path        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
@@ -794,7 +793,6 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
             else
             if( ChildName == _T ( "opencpn:active" ) ) {
                         wxString active = wxString::FromUTF8(tschild.first_child().value());
-                        b_propactive = true;
                         b_active = ( active == _T("1") );
             }
             
