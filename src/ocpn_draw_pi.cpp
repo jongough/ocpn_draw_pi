@@ -783,10 +783,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
         
     
-//    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
-//        ocpncc1->SetCursor( *pCurrentCursor );
-//        bRefresh = TRUE;
-//    }
+    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
+        ocpncc1->SetCursor( *pCurrentCursor );
+        bRefresh = TRUE;
+    }
     
     if( nBoundary_State >= 2 ) {
         r_rband.x = event.GetX();
