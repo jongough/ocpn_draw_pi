@@ -76,7 +76,8 @@ class PointMan
       ODPoint *FindODPointByGUID(const wxString &guid);
       void DestroyODPoint(ODPoint *pRp, bool b_update_changeset = true);
       void ClearODPointFonts(void);
-      void ProcessIcons( ocpnStyle::Style* style );
+      //void ProcessIcons( ocpnStyle::Style* style );
+      void ProcessIcons( );
       
       bool DoesIconExist(const wxString & icon_key) const;
       wxBitmap *GetIconBitmap(int index);
@@ -92,7 +93,8 @@ class PointMan
       void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
 protected:
 private:
-      void ProcessUserIcons( ocpnStyle::Style* style );
+      //void ProcessUserIcons( ocpnStyle::Style* style );
+      void ProcessUserIcons( );
       ODPointList    *m_pODPointList;
       wxBitmap *CreateDimBitmap(wxBitmap *pBitmap, double factor);
 

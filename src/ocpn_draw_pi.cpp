@@ -119,7 +119,7 @@ PathManagerDialog       *pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
-ocpnStyle::StyleManager *g_ODStyleManager;
+//ocpnStyle::StyleManager *g_ODStyleManager;
 BoundaryList            *pBoundaryList;
 ODPointList           *pODPointList;
 ChartCanvas             *ocpncc1;
@@ -352,7 +352,8 @@ int ocpn_draw_pi::Init(void)
     wxMenu dummy_menu;
 
     // Now initialize UI Style.
-    g_ODStyleManager = new ocpnStyle::StyleManager();
+    //g_ODStyleManager = new ocpnStyle::StyleManager();
+    //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
     
     ocpncc1 = (ChartCanvas *)m_parent_window;
     
@@ -367,7 +368,7 @@ int ocpn_draw_pi::Init(void)
     
     pCurrentCursor = ocpncc1->pCursorArrow;
 
-    if( !g_ODStyleManager->IsOK() ) {
+/*    if( !g_ODStyleManager->IsOK() ) {
         wxString msg = wxS("Failed to initialize the user interface. ");
         msg << wxS("OpenCPN cannot start. ");
         msg << wxS("The necessary configuration files were not found. ");
@@ -377,7 +378,7 @@ int ocpn_draw_pi::Init(void)
         w.ShowModal();
         exit( EXIT_FAILURE );
     }
-    
+*/    
     //build_cursors(); // build cursors to use on chart
     
 //    stats = new StatWin( ocpncc1 );
