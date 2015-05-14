@@ -539,7 +539,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
 }
 
-void ocpn_draw_pi::OnToolbarToolCallback(int id)
+void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     dlgShow = !dlgShow;
     m_iCallerId = id;
@@ -609,6 +609,11 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
     // Toggle is handled by the toolbar but we must keep plugin manager b_toggle updated
     // to actual status to ensure correct status upon toolbar rebuild
     // SetToolbarItemState( m_leftclick_config_id, dlgShow );
+}
+
+void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
+{
+    return;
 }
 
 void ocpn_draw_pi::SaveConfig()
@@ -795,7 +800,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         m_bDrawingBoundary = true;
 
 // TODO (jon#1#): Need to get access to 'CheckEdgePan'. Patch has been submitted - 18/04/2015
-        //CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
+        CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
         bRefresh = TRUE;
 //        RequestRefresh( m_parent_window );
     }
