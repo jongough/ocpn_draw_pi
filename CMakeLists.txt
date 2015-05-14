@@ -60,7 +60,7 @@ SET(SRCS
         src/ODPointPropertiesImpl.cpp
         src/ODPositionParser.cpp
         src/ODRolloverWin.cpp
-        src/ODstyles.cpp
+#        src/ODstyles.cpp
         src/ODUtils.cpp
          src/ODicons.cpp
             src/jsonreader.cpp
@@ -154,6 +154,7 @@ SET(OCPNHDRS
         ocpninclude/ocpndc.h
         ocpninclude/OCPNPlatform.h
         ocpninclude/OCPNRegion.h
+        ocpninclude/ocpn_plugin.h
         ocpninclude/ocpn_types.h
         ocpninclude/pluginmanager.h
         ocpninclude/pugiconfig.hpp

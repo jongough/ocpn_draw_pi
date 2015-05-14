@@ -181,7 +181,8 @@ public:
     void SetDefaults(void);
     int GetToolbarToolCount(void);
     void ShowPreferencesDialog( wxWindow* parent );
-    void OnToolbarToolCallback(int id);
+    void OnToolbarToolDownCallback(int id);
+    void OnToolbarToolUpCallback(int id);
     void SetPluginMessage(wxString &message_id, wxString &message_body);
 
     void loadLayouts(wxWindow * parent);

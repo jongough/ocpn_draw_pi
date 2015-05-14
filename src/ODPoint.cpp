@@ -44,7 +44,7 @@ extern PathList     *pPathList;
 extern wxRect       g_blink_rect;
 extern bool         g_btouch;
 extern bool         g_bresponsive;
-extern ocpnStyle::StyleManager* g_ODStyleManager;
+//extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern double       g_n_arrival_circle_radius;
 extern int          g_iODPointRangeRingsNumber;
 extern float        g_fODPointRangeRingsStep;
@@ -286,11 +286,12 @@ void ODPoint::ReLoadIcon( void )
         }
         //      Icon name is not in the standard or user lists, so add to the list a generic placeholder
         else{
-            ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
-            if(style){
-                wxBitmap bmp = style->GetIcon( _T("circle") );
+            //ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
+            //if(style){
+                //wxBitmap bmp = style->GetIcon( _T("circle") );
+                wxBitmap bmp = GetIcon_PlugIn( _T("circle") );
                 pODPointMan->ProcessIcon( bmp, m_IconName, m_IconName );
-           }
+           //}
         }
     }
         

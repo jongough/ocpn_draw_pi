@@ -119,7 +119,7 @@ PathManagerDialog       *pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
-ocpnStyle::StyleManager *g_ODStyleManager;
+//ocpnStyle::StyleManager *g_ODStyleManager;
 BoundaryList            *pBoundaryList;
 ODPointList           *pODPointList;
 ChartCanvas             *ocpncc1;
@@ -352,7 +352,8 @@ int ocpn_draw_pi::Init(void)
     wxMenu dummy_menu;
 
     // Now initialize UI Style.
-    g_ODStyleManager = new ocpnStyle::StyleManager();
+    //g_ODStyleManager = new ocpnStyle::StyleManager();
+    //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
     
     ocpncc1 = (ChartCanvas *)m_parent_window;
     
@@ -367,7 +368,7 @@ int ocpn_draw_pi::Init(void)
     
     pCurrentCursor = ocpncc1->pCursorArrow;
 
-    if( !g_ODStyleManager->IsOK() ) {
+/*    if( !g_ODStyleManager->IsOK() ) {
         wxString msg = wxS("Failed to initialize the user interface. ");
         msg << wxS("OpenCPN cannot start. ");
         msg << wxS("The necessary configuration files were not found. ");
@@ -377,7 +378,7 @@ int ocpn_draw_pi::Init(void)
         w.ShowModal();
         exit( EXIT_FAILURE );
     }
-    
+*/    
     //build_cursors(); // build cursors to use on chart
     
 //    stats = new StatWin( ocpncc1 );
@@ -538,7 +539,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
 }
 
-void ocpn_draw_pi::OnToolbarToolCallback(int id)
+void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     dlgShow = !dlgShow;
     m_iCallerId = id;
@@ -608,6 +609,11 @@ void ocpn_draw_pi::OnToolbarToolCallback(int id)
     // Toggle is handled by the toolbar but we must keep plugin manager b_toggle updated
     // to actual status to ensure correct status upon toolbar rebuild
     // SetToolbarItemState( m_leftclick_config_id, dlgShow );
+}
+
+void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
+{
+    return;
 }
 
 void ocpn_draw_pi::SaveConfig()
@@ -794,7 +800,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         m_bDrawingBoundary = true;
 
 // TODO (jon#1#): Need to get access to 'CheckEdgePan'. Patch has been submitted - 18/04/2015
-        //CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
+        CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
         bRefresh = TRUE;
 //        RequestRefresh( m_parent_window );
     }

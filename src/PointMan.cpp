@@ -24,7 +24,7 @@
 #include "PointMan.h"
 
 #include "ocpn_draw_pi.h"
-#include "styles.h"
+//#include "styles.h"
 #include "MarkIcon.h"
 #include "ODConfig.h"
 #include "ODSelect.h"
@@ -37,7 +37,7 @@
 #include <wx/stdpaths.h>
 #include <wx/apptrait.h>
 
-extern ocpnStyle::StyleManager* g_ODStyleManager;
+//extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern wxString                 g_PrivateDataDir;
 extern ODPoint                *pAnchorWatchPoint1;
 extern ODPoint                *pAnchorWatchPoint2;
@@ -57,9 +57,9 @@ PointMan::PointMan()
 
     pmarkicon_image_list = NULL;
 
-    ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
+    //ocpnStyle::Style* style = g_ODStyleManager->GetCurrentStyle();
     m_pIconArray = new wxArrayPtrVoid();
-    ProcessIcons( style );
+    ProcessIcons();
 
     m_nGUID = 0;
 }
@@ -128,7 +128,7 @@ bool PointMan::RemoveODPoint(ODPoint *prp)
     return true;
 }
 
-void PointMan::ProcessUserIcons( ocpnStyle::Style* style )
+void PointMan::ProcessUserIcons( )
 {
     wxString UserIconPath = g_PrivateDataDir;
     wxChar sep = wxFileName::GetPathSeparator();
@@ -165,9 +165,9 @@ void PointMan::ProcessUserIcons( ocpnStyle::Style* style )
 }
 
 
-void PointMan::ProcessIcons( ocpnStyle::Style* style )
+void PointMan::ProcessIcons( )
 {
-    ProcessIcon( style->GetIcon( _T("empty") ), _T("empty"), _T("Empty") );
+/*    ProcessIcon( style->GetIcon( _T("empty") ), _T("empty"), _T("Empty") );
     ProcessIcon( style->GetIcon( _T("airplane") ), _T("airplane"), _T("Airplane") );
     ProcessIcon( style->GetIcon( _T("anchorage") ), _T("anchorage"), _T("Anchorage") );
     ProcessIcon( style->GetIcon( _T("anchor") ), _T("anchor"), _T("Anchor") );
@@ -211,11 +211,55 @@ void PointMan::ProcessIcons( ocpnStyle::Style* style )
     ProcessIcon( style->GetIcon( _T("xmgreen") ), _T("xmgreen"), _T("Green X") );
     ProcessIcon( style->GetIcon( _T("xmred") ), _T("xmred"), _T("Red X") );
     ProcessIcon( style->GetIcon( _T("activepoint") ), _T("activepoint"), _T("Active WP") );
-    
-    // Load user defined icons.
+*/    
+    ProcessIcon( GetIcon_PlugIn( _T("empty") ), _T("empty"), _T("Empty") );
+    ProcessIcon( GetIcon_PlugIn( _T("airplane") ), _T("airplane"), _T("Airplane") );
+    ProcessIcon( GetIcon_PlugIn( _T("anchorage") ), _T("anchorage"), _T("Anchorage") );
+    ProcessIcon( GetIcon_PlugIn( _T("anchor") ), _T("anchor"), _T("Anchor") );
+    ProcessIcon( GetIcon_PlugIn( _T("boarding") ), _T("boarding"), _T("Boarding Location") );
+    ProcessIcon( GetIcon_PlugIn( _T("boundary") ), _T("boundary"), _T("Boundary Mark") );
+    ProcessIcon( GetIcon_PlugIn( _T("bouy1") ), _T("bouy1"), _T("Bouy Type A") );
+    ProcessIcon( GetIcon_PlugIn( _T("bouy2") ), _T("bouy2"), _T("Bouy Type B") );
+    ProcessIcon( GetIcon_PlugIn( _T("campfire") ), _T("campfire"), _T("Campfire") );
+    ProcessIcon( GetIcon_PlugIn( _T("camping") ), _T("camping"), _T("Camping Spot") );
+    ProcessIcon( GetIcon_PlugIn( _T("coral") ), _T("coral"), _T("Coral") );
+    ProcessIcon( GetIcon_PlugIn( _T("fishhaven") ), _T("fishhaven"), _T("Fish Haven") );
+    ProcessIcon( GetIcon_PlugIn( _T("fishing") ), _T("fishing"), _T("Fishing Spot") );
+    ProcessIcon( GetIcon_PlugIn( _T("fish") ), _T("fish"), _T("Fish") );
+    ProcessIcon( GetIcon_PlugIn( _T("float") ), _T("float"), _T("Float") );
+    ProcessIcon( GetIcon_PlugIn( _T("food") ), _T("food"), _T("Food") );
+    ProcessIcon( GetIcon_PlugIn( _T("fuel") ), _T("fuel"), _T("Fuel") );
+    ProcessIcon( GetIcon_PlugIn( _T("greenlite") ), _T("greenlite"), _T("Green Light") );
+    ProcessIcon( GetIcon_PlugIn( _T("kelp") ), _T("kelp"), _T("Kelp") );
+    ProcessIcon( GetIcon_PlugIn( _T("light") ), _T("light1"), _T("Light Type A") );
+    ProcessIcon( GetIcon_PlugIn( _T("light1") ), _T("light"), _T("Light Type B") );
+    ProcessIcon( GetIcon_PlugIn( _T("litevessel") ), _T("litevessel"), _T("Light Vessel") );
+    ProcessIcon( GetIcon_PlugIn( _T("mob") ), _T("mob"), _T("MOB") );
+    ProcessIcon( GetIcon_PlugIn( _T("mooring") ), _T("mooring"), _T("Mooring Bouy") );
+    ProcessIcon( GetIcon_PlugIn( _T("oilbouy") ), _T("oilbouy"), _T("Oil Bouy") );
+    ProcessIcon( GetIcon_PlugIn( _T("platform") ), _T("platform"), _T("Platform") );
+    ProcessIcon( GetIcon_PlugIn( _T("redgreenlite") ), _T("redgreenlite"), _T("Red/Green Light") );
+    ProcessIcon( GetIcon_PlugIn( _T("redlite") ), _T("redlite"), _T("Red Light") );
+    ProcessIcon( GetIcon_PlugIn( _T("rock1") ), _T("rock1"), _T("Rock (exposed)") );
+    ProcessIcon( GetIcon_PlugIn( _T("rock2") ), _T("rock2"), _T("Rock, (awash)") );
+    ProcessIcon( GetIcon_PlugIn( _T("sand") ), _T("sand"), _T("Sand") );
+    ProcessIcon( GetIcon_PlugIn( _T("scuba") ), _T("scuba"), _T("Scuba") );
+    ProcessIcon( GetIcon_PlugIn( _T("shoal") ), _T("shoal"), _T("Shoal") );
+    ProcessIcon( GetIcon_PlugIn( _T("snag") ), _T("snag"), _T("Snag") );
+    ProcessIcon( GetIcon_PlugIn( _T("square") ), _T("square"), _T("Square") );
+    ProcessIcon( GetIcon_PlugIn( _T("triangle") ), _T("triangle"), _T("Triangle") );
+    ProcessIcon( GetIcon_PlugIn( _T("diamond") ), _T("diamond"), _T("Diamond") );
+    ProcessIcon( GetIcon_PlugIn( _T("circle") ), _T("circle"), _T("Circle") );
+    ProcessIcon( GetIcon_PlugIn( _T("wreck1") ), _T("wreck1"), _T("Wreck A") );
+    ProcessIcon( GetIcon_PlugIn( _T("wreck2") ), _T("wreck2"), _T("Wreck B") );
+    ProcessIcon( GetIcon_PlugIn( _T("xmblue") ), _T("xmblue"), _T("Blue X") );
+    ProcessIcon( GetIcon_PlugIn( _T("xmgreen") ), _T("xmgreen"), _T("Green X") );
+    ProcessIcon( GetIcon_PlugIn( _T("xmred") ), _T("xmred"), _T("Red X") );
+    ProcessIcon( GetIcon_PlugIn( _T("activepoint") ), _T("activepoint"), _T("Active WP") );
+// Load user defined icons.
     // Done after default icons are initialized,
     // so that user may substitute an icon by using the same name in the Usericons file.
-    ProcessUserIcons( style );
+    ProcessUserIcons( );
     
 }
 
