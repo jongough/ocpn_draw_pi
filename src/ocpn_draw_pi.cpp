@@ -287,8 +287,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-//    RemovePlugInTool(m_leftclick_config_id);
-//    RemovePlugInTool(m_leftclick_boundary_id);
+//    RemovePlugInTool(m_config_button_id);
+//    RemovePlugInTool(m_draw_button_id);
     pODConfig->UpdateNavObj();
     SaveConfig();
     
@@ -334,10 +334,10 @@ int ocpn_draw_pi::Init(void)
     
     LoadConfig();
     if(m_bLOGShowIcon) {
-            m_leftclick_config_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
+            m_config_button_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
                 wxS("OCPN Draw Manager"), wxS(""), NULL,
                 OCPN_DRAW_POSITION, 0, this);
-            m_leftclick_boundary_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary, wxITEM_NORMAL,
+            m_draw_button_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary, wxITEM_NORMAL,
                 wxS("OCPN Draw Boundary"), wxS(""), NULL,
                 OCPN_DRAW_POSITION, 0, this);
     }
@@ -428,6 +428,9 @@ bool ocpn_draw_pi::DeInit(void)
     ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     delete g_ODEventHandler;
     delete g_pPathRolloverWin;
+    RemovePlugInTool(m_config_button_id);
+    
+    RemovePlugInTool(m_draw_button_id);
     shutdown(false);
     return true;
 }
@@ -543,11 +546,12 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     dlgShow = !dlgShow;
     m_iCallerId = id;
-    // show the Logbook dialog
-    if ( id == m_leftclick_config_id ) {
+
+    if ( id == m_config_button_id ) {
         if( 0 == nConfig_State ){
+            // show the Draw dialog
             nConfig_State = 1;
-            SetToolbarItemState( m_leftclick_config_id, true );
+            //SetToolbarItemState( m_config_button_id, true );
             if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
                 pPathManagerDialog = new PathManagerDialog( ocpncc1 );
 
@@ -561,16 +565,14 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             pPathManagerDialog->Raise();
 #endif
             nConfig_State = 0;
-            SetToolbarItemState( m_leftclick_config_id, false );
+            //SetToolbarItemState( m_config_button_id, false );
             
         } else {
             nConfig_State = 0;
-            SetToolbarItemState( m_leftclick_config_id, false );
+            //SetToolbarItemState( m_config_button_id, false );
         }
-        
-        
     }
-    else if ( id == m_leftclick_boundary_id ) {
+    else if ( id == m_draw_button_id ) {
         switch (m_Mode)
         {
             case ID_MODE_BOUNDARY:
@@ -578,12 +580,12 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nBoundary_State = 1;
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     ocpncc1->SetCursor( *pCurrentCursor );
-                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                    //SetToolbarItemState( m_draw_button_id, true );
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     FinishBoundary();
-                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
                 }
                 break;
@@ -593,11 +595,11 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPoint_State = 1;
                     pCurrentCursor = ocpncc1->pCursorCross;
                     ocpncc1->SetCursor( *pCurrentCursor );
-                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                    //SetToolbarItemState( m_draw_button_id, true );
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
-                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
                 }
                 break;
@@ -608,7 +610,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
     }
     // Toggle is handled by the toolbar but we must keep plugin manager b_toggle updated
     // to actual status to ensure correct status upon toolbar rebuild
-    // SetToolbarItemState( m_leftclick_config_id, dlgShow );
+    // SetToolbarItemState( m_config_button_id, dlgShow );
 }
 
 void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
@@ -744,8 +746,8 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
                     m_Mode = ID_MODE_BOUNDARY;
-                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    m_iCallerId = m_leftclick_boundary_id;
+                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    m_iCallerId = m_draw_button_id;
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     ocpncc1->SetCursor( *pCurrentCursor );
                     bret = TRUE;
@@ -758,14 +760,14 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     FinishBoundary();
                     pCurrentCursor = ocpncc1->pCursorArrow;
                     ocpncc1->SetCursor( *pCurrentCursor ); 
-                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    //SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
                     nPoint_State = 0;
                     pCurrentCursor = ocpncc1->pCursorArrow;
                     ocpncc1->SetCursor( *pCurrentCursor ); 
-                    SetToolbarItemState( m_leftclick_boundary_id, false );
+                    //SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else bret = FALSE;
@@ -806,7 +808,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
 
     if ( event.LeftDown() ) {
-        if( m_iCallerId == m_leftclick_boundary_id ) {
+        if( m_iCallerId == m_draw_button_id ) {
             if (nBoundary_State > 0 )
             {   
                 ocpncc1->SetCursor( *pCurrentCursor );
@@ -835,7 +837,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     } 
     
     if( event.LeftUp() ) {
-        if (m_iCallerId == m_leftclick_boundary_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
+        if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0) ) {
             bret = true;
         }
         if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
@@ -961,8 +963,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 case ID_MODE_BOUNDARY:
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
-                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    //SetToolbarItemState( m_draw_button_id, true );
                     nBoundary_State = 1;
                     nPoint_State = 0;
                     break;
@@ -970,8 +972,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 case ID_MODE_POINT:
                     // Point
                     pCurrentCursor = ocpncc1->pCursorCross;
-                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
-                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
+                    //SetToolbarItemState( m_draw_button_id, true );
                     nPoint_State = 1;
                     nBoundary_State = 0;
                     break;
@@ -979,8 +981,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 default:
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
-                    SetToolbarToolBitmaps(m_leftclick_boundary_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    SetToolbarItemState( m_leftclick_boundary_id, true );
+                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    //SetToolbarItemState( m_draw_button_id, true );
                     break;
             }
             bret = TRUE;
@@ -989,7 +991,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FinishBoundary();
             pCurrentCursor = ocpncc1->pCursorArrow;
             ocpncc1->SetCursor( *pCurrentCursor ); 
-            SetToolbarItemState( m_leftclick_boundary_id, false );
+            //SetToolbarItemState( m_draw_button_id, false );
             bRefresh = TRUE;
 //            RequestRefresh( m_parent_window );
             bret = TRUE;
@@ -997,7 +999,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             nPoint_State = 0;
             pCurrentCursor = ocpncc1->pCursorArrow;
             ocpncc1->SetCursor( *pCurrentCursor ); 
-//            SetToolbarItemState( m_leftclick_boundary_id, false );
+//            SetToolbarItemState( m_draw_button_id, false );
             bRefresh = TRUE;
             RequestRefresh( m_parent_window );
             bret = TRUE;
@@ -1416,7 +1418,7 @@ void ocpn_draw_pi::FinishBoundary( void )
     nBoundary_State = 0;
     m_prev_pMousePoint = NULL;
 
-    SetToolbarItemState( m_leftclick_boundary_id, false );
+    //SetToolbarItemState( m_draw_button_id, false );
 //    ocpncc1->SetCursor( *pCursorArrow );
     m_bDrawingBoundary = false;
     

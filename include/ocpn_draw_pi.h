@@ -289,8 +289,8 @@ private:
     int               m_show_id;
     int               m_hide_id;
     bool                show;
-    int                m_leftclick_config_id;
-    int                m_leftclick_boundary_id;
+    int                m_config_button_id;
+    int                m_draw_button_id;
 
     bool              m_bLOGShowIcon;
     StatWin                   *stats;
