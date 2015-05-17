@@ -125,7 +125,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	m_SizerODPointRangeRingsSelect->Add( fgSizerODPointRangeRingsSelect, 0, wxALIGN_RIGHT|wxEXPAND, 2 );
 	
-	m_SizerPointRangeGrid = new wxFlexGridSizer( 2, 2, 0, 0 );
+	m_SizerPointRangeGrid = new wxFlexGridSizer( 3, 2, 0, 0 );
 	m_SizerPointRangeGrid->AddGrowableCol( 0 );
 	m_SizerPointRangeGrid->SetFlexibleDirection( wxBOTH );
 	m_SizerPointRangeGrid->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );

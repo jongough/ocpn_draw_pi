@@ -260,7 +260,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     //g_pHome_Locn->Append(stdHomeDir);
     appendOSDirSlash(g_pHome_Locn);
     
-    g_pHome_Locn->Append(_T("OCPNDraw"));
+    g_pHome_Locn->Append(_T("ocpn_draw_pi"));
     appendOSDirSlash(g_pHome_Locn);
     if(!wxDir::Exists(*g_pHome_Locn))
         wxMkdir(*g_pHome_Locn);
@@ -268,7 +268,11 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pData = new wxString();
     g_pData->append( stdDataDir );
     appendOSDirSlash( g_pData );
-    g_pData->Append(_T("OCPNDraw"));
+    g_pData->Append(_T("plugins"));
+    appendOSDirSlash( g_pData );
+    if ( !wxDir::Exists(*g_pData))
+        wxMkdir( *g_pData );
+    g_pData->Append(_T("ocpn_draw_pi"));
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
