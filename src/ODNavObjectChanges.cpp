@@ -45,7 +45,7 @@ ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
 {
     //ctor
     m_bFirstPath = true;
-    m_OCPNDrawchanges_file = 0;
+    m_ODchanges_file = 0;
 }
 
 ODNavObjectChanges::ODNavObjectChanges(wxString file_name) : pugi::xml_document()
@@ -53,7 +53,7 @@ ODNavObjectChanges::ODNavObjectChanges(wxString file_name) : pugi::xml_document(
     //ctor
     m_ODfilename = file_name;
     
-    m_OCPNDrawchanges_file = fopen(m_ODfilename.mb_str(), "a");
+    m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
     
     m_bFirstPath = true;
 }
@@ -61,11 +61,21 @@ ODNavObjectChanges::ODNavObjectChanges(wxString file_name) : pugi::xml_document(
 ODNavObjectChanges::~ODNavObjectChanges()
 {
     //dtor
-    if(m_OCPNDrawchanges_file)
-        fclose(m_OCPNDrawchanges_file);
+    if(m_ODchanges_file)
+        fclose(m_ODchanges_file);
 
     if( ::wxFileExists( m_ODfilename ) )
         ::wxRemoveFile( m_ODfilename );
+}
+
+void ODNavObjectChanges::RemoveChangesFile( void )
+{
+    if(m_ODchanges_file)
+        fclose(m_ODchanges_file);
+    if( ::wxFileExists( m_ODfilename.mb_str() ) )
+        ::wxRemoveFile( m_ODfilename.mb_str() );
+    
+    m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
 }
 
 bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pr, unsigned int flags )
@@ -298,7 +308,7 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
                     
 bool ODNavObjectChanges::AddPath( Path *pb, const char *action )
 {
-    if( !m_OCPNDrawchanges_file )
+    if( !m_ODchanges_file )
         return false;
     SetRootGPXNode();
 
@@ -312,9 +322,14 @@ bool ODNavObjectChanges::AddPath( Path *pb, const char *action )
     pugi::xml_node child = object.append_child("opencpn:action");
     child.append_child(pugi::node_pcdata).set_value(action);
 
-    pugi::xml_writer_file writer(m_OCPNDrawchanges_file);
+    pugi::xml_writer_file writer(m_ODchanges_file);
     object.print(writer, " ");
-    fflush(m_OCPNDrawchanges_file);
+#ifdef __WXMSW__
+    fclose(m_ODchanges_file);
+    m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
+#else __WXMSW__    
+    fflush(m_ODchanges_file);
+#endif __WXMSW__
     
     return true;
 }
@@ -330,9 +345,14 @@ bool ODNavObjectChanges::AddODPoint( ODPoint *pOP, const char *action )
     pugi::xml_node child = object.append_child("opencpn:action");
     child.append_child(pugi::node_pcdata).set_value(action);
 
-    pugi::xml_writer_file writer(m_OCPNDrawchanges_file);
+    pugi::xml_writer_file writer(m_ODchanges_file);
     object.print(writer, " ");
-    fflush(m_OCPNDrawchanges_file);
+#ifdef __WXMSW__
+    fclose(m_ODchanges_file);
+    m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
+#else __WXMSW__    
+    fflush(m_ODchanges_file);
+#endif __WXMSW__
     
     return true;
 }
@@ -714,27 +734,14 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
             pTentPath = pTentBoundary;
         } else pTentPath = new Path();
         
-        ODPoint *pOp = NULL;
-        
         for( pugi::xml_node tschild = wpt_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
             wxString ChildName = wxString::FromUTF8( tschild.name() );
 
             if( ChildName == _T ( "opencpn:ODPoint" ) ) {
                 ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
-                ODPoint *epp = ODPointExists( tpOp->m_GUID );
-                if( epp != NULL )
-                    pOp = epp;
-                else
-                    pOp = tpOp;
                 
-                pTentPath->AddPoint( pOp, false, true, true );          // defer BBox calculation
-                pOp->m_bIsInBoundary = true;                      // Hack
-                
-                if( epp == NULL )
-                    pODPointMan->AddODPoint( pOp );
-                else
-                    delete tpOp;
-                    
+                pTentPath->AddPoint( tpOp, false, true, true );          // defer BBox calculation
+                tpOp->m_bIsInBoundary = true;                      // Hack
             }
             else
             if( ChildName == _T ( "name" ) ) {
@@ -746,20 +753,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
             }
                 
             else
-            //TODO: This is wrong, left here just to save data of the 3.3 beta series users. 
-/*            if( ChildName.EndsWith( _T ( "BoundaryExtension" ) ) ) //Parse GPXX color
-            {
-                for( pugi::xml_node gpxx_child = tschild.first_child(); gpxx_child; gpxx_child = gpxx_child.next_sibling() ) {
-                    wxString gpxx_name = wxString::FromUTF8( gpxx_child.name() );
-                    if( gpxx_name.EndsWith( _T ( "LineColour" ) ) )
-                        pTentBoundary->m_FillColour = wxString::FromUTF8(gpxx_child.first_child().value() );
-                    if( gpxx_name.EndsWith( _T ( "FillColour" ) ) )
-                        pTentBoundary->m_Colour = wxString::FromUTF8(gpxx_child.first_child().value() );
-                }
-            }
-            
-            else
-*/            if( ChildName == _T ( "link") ) {
+            if( ChildName == _T ( "link") ) {
                 wxString HrefString;
                 wxString HrefTextString;
                 wxString HrefTypeString;
@@ -1167,10 +1161,10 @@ void ODNavObjectChanges::UpdatePathA( Path *pTentPath )
             }
             node = node->GetNext();
         }
-        pODSelect->DeleteAllSelectableODPoints( pTentPath );
-        pODSelect->DeleteAllSelectablePathSegments( pTentPath );
-        pODSelect->AddAllSelectablePathSegments( pTentPath );
-        pODSelect->AddAllSelectableODPoints( pTentPath );
+        pODSelect->DeleteAllSelectableODPoints( path );
+        pODSelect->DeleteAllSelectablePathSegments( path );
+        pODSelect->AddAllSelectablePathSegments( path );
+        pODSelect->AddAllSelectableODPoints( path );
     } else {
         InsertPathA( pTentPath );
     }

@@ -97,9 +97,9 @@ class ODNavObjectChanges : public pugi::xml_document
     
     bool ApplyChanges(void);
     bool SaveFile( const wxString filename );
-
+    void RemoveChangesFile( void );
     
-    FILE        *m_OCPNDrawchanges_file;
+    FILE        *m_ODchanges_file;
     
     pugi::xml_node      m_gpx_root;
     
