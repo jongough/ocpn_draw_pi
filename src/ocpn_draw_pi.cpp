@@ -650,6 +650,8 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ODPointRangeRingsColour" ), g_colourODPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ) );
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
+        pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
+        
     }
 }
 
@@ -690,6 +692,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "UserMagVariation" ), &umv );
         if(umv.Len())
             umv.ToDouble( &g_UserVar );
+        pConf->Read( wxS( "KeepODNavobjBackups" ), &g_navobjbackups, 5 );
         
         // TODO implement this into the prefereces
         g_bConfirmObjectDelete = TRUE;

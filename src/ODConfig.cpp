@@ -221,9 +221,8 @@ void ODConfig::UpdateNavObj( void )
 
     delete pNavObjectSet;
 
-    if( wxFileExists( m_sODNavObjSetChangesFile ) )
-        wxRemoveFile( m_sODNavObjSetChangesFile );
-
+    m_pODNavObjectChangesSet->RemoveChangesFile();
+    
     delete m_pODNavObjectChangesSet;
     m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
 
@@ -255,29 +254,28 @@ void ODConfig::LoadNavObjects()
         //We crashed last time :(
         //That's why this file still exists...
         //Let's reconstruct the unsaved changes
-        ODNavObjectChanges *pODNavObjectChangesSet = new ODNavObjectChanges();
-        pODNavObjectChangesSet->load_file( m_sODNavObjSetChangesFile.fn_str() );
+        m_pODNavObjectChangesSet->load_file( m_sODNavObjSetChangesFile.fn_str() );
+        
 
         //  Remove the file before applying the changes,
         //  just in case the changes file itself causes a fault.
         //  If it does fault, at least the next restart will proceed without fault.
-        if( wxFileExists( m_sODNavObjSetChangesFile ) )
-            wxRemoveFile( m_sODNavObjSetChangesFile );
+        m_pODNavObjectChangesSet->RemoveChangesFile();
         
         if(size != 0){
             wxString sLogMessage;
             sLogMessage.append( wxT("Applying changes from ") );
             sLogMessage.append( m_sODNavObjSetChangesFile );
             wxLogMessage( sLogMessage );
-            pODNavObjectChangesSet->ApplyChanges();
+            m_pODNavObjectChangesSet->ApplyChanges();
             UpdateNavObj();
         }
         
-        delete pODNavObjectChangesSet;
+//        delete m_pODNavObjectChangesSet;
            
     }
 
-    m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
+//    m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
 }
 
 void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
@@ -497,8 +495,8 @@ void ODConfig::CreateRotatingNavObjBackup()
     }
     //try to clean the backups the user doesn't want - breaks if he deleted some by hand as it tries to be effective...
     for( int i = g_navobjbackups + 1; i <= 99; i++ )
-        if( wxFile::Exists( wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i ) ) ) wxRemoveFile(
-                wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i ) );
+        if( wxFile::Exists( wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i ) ) ) 
+            ::wxRemoveFile( wxString::Format( _T("%s.%d"), m_sODNavObjSetFile.c_str(), i ) );
         else
             break;
 }
