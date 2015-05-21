@@ -271,11 +271,11 @@ void PathMan::DeleteAllPaths( void )
             continue;
         }
 
-        pODConfig->m_bSkipChangeSetUpdate = true;
+//        pODConfig->m_bSkipChangeSetUpdate = true;
         pODConfig->DeleteConfigPath( ppath );
         DeletePath( ppath );
         node = pPathList->GetFirst();                   // Path
-        pODConfig->m_bSkipChangeSetUpdate = false;
+//        pODConfig->m_bSkipChangeSetUpdate = false;
     }
 
     ::wxEndBusyCursor();
