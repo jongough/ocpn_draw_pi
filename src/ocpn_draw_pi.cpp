@@ -791,18 +791,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     bool bret = FALSE;
     bool bRefresh = FALSE;
     
-    if ( event.GetX() != 0 && event.GetY() != 0 ) {
-        g_cursor_x = event.GetX();
-        g_cursor_y = event.GetY();
-    }
-    else { 
-        DEBUG("event position: X: ");
-        DEBUG(g_cursor_x);
-        DEBUG(", Y: ");
-        DEBUG(g_cursor_y);
-        
-    }
-
+    g_cursor_x = event.GetX();
+    g_cursor_y = event.GetY();
+    
     if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() )
         m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
     else
@@ -819,10 +810,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_bDrawingBoundary = true;
 
-// TODO (jon#1#): Need to get access to 'CheckEdgePan'. Patch has been submitted - 18/04/2015
         CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 5, 2 );
         bRefresh = TRUE;
-//        RequestRefresh( m_parent_window );
     }
 
     if ( event.LeftDown() ) {
@@ -937,8 +926,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
     if( event.Dragging() ) {
         if( event.LeftIsDown() ) {
-            if( m_pFoundODPoint )
-            {
+            if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
+            else if( m_pFoundODPoint ) {
                 if( m_bPathEditing )
                 {
                     pCurrentCursor = ocpncc1->pCursorCross;
@@ -982,7 +971,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
                     nBoundary_State = 1;
                     nPoint_State = 0;
                     break;
@@ -1211,7 +1200,6 @@ wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance )
     wxString result;
     wxString *sUnit = new wxString( getUsrDistanceUnit_Plugin( -1 ) );
     double usrDistance = toUsrDistance_Plugin( distance, -1 );
-//    if( usrDistance < 0.1 &&  ( unit == DISTANCE_KM || unit == DISTANCE_MI || unit == DISTANCE_NMI ) ) {
     if( usrDistance < 0.1 &&  ( sUnit->IsSameAs( wxS("km") ) || sUnit->IsSameAs( wxS("mi") ) || sUnit->IsSameAs( wxS("NMi") ) ) ) {
         if ( sUnit->IsSameAs(wxS("mi")) ) sUnit->assign(wxS("ft"));
         else sUnit->assign(wxS("M"));
