@@ -88,11 +88,9 @@ public:
     void OnPathPropCancelClick( wxCommandEvent& event );
     void OnPathPropOkClick( wxCommandEvent& event );
     void OnPathPropListClick( wxListEvent& event );
-//    void OnRoutepropPrintClick( wxCommandEvent& event );
-//    void OnRoutepropCopyTxtClick( wxCommandEvent& event );
     void OnPathPropRightClick( wxListEvent &event );
     void OnPathPropMenuSelected( wxCommandEvent &event );
-//    bool IsThisRouteExtendable();
+    void OnPathPropDoubleClick( wxListEvent &event );
     void OnEvtColDragEnd(wxListEvent& event);
     void InitializeList();
 
@@ -117,7 +115,7 @@ public:
 
     wxCheckBox  *m_pPathActive;
 
-    wxListCtrl  *m_wpList;
+    wxListCtrl  *m_opList;
 
     wxButton*     m_CancelButton;
     wxButton*     m_OKButton;
