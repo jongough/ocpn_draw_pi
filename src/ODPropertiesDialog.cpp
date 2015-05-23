@@ -52,7 +52,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizer3;
-	fgSizer3 = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizer3 = new wxFlexGridSizer( 5, 2, 0, 0 );
 	fgSizer3->AddGrowableCol( 0 );
 	fgSizer3->SetFlexibleDirection( wxBOTH );
 	fgSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
@@ -107,7 +107,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_notebookProperties->AddPage( m_panelPoint, wxT("OCPN Point"), true );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerPathSettings;
-	fgSizerPathSettings = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizerPathSettings = new wxFlexGridSizer( 6, 2, 0, 0 );
 	fgSizerPathSettings->SetFlexibleDirection( wxBOTH );
 	fgSizerPathSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -177,7 +177,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_notebookProperties->AddPage( m_panelPath, wxT("Path"), false );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
-	fgSizerBoundarySettings = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizerBoundarySettings = new wxFlexGridSizer( 6, 2, 0, 0 );
 	fgSizerBoundarySettings->SetFlexibleDirection( wxBOTH );
 	fgSizerBoundarySettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	

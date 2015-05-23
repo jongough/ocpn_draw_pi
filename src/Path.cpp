@@ -484,7 +484,14 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     }
     glEnd();
     glDisable (GL_LINE_STIPPLE);
-        
+
+    /*  ODPoints  */
+    for(wxODPointListNode *node = pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        if ( m_bVisible || pOp->m_bKeepXPath )
+            pOp->DrawGL( piVP );
+    }        
+    
 #endif
 }
 

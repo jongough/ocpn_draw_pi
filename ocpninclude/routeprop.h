@@ -61,11 +61,17 @@ class   HyperlinkList;
 
 ////@begin control identifiers
 #define ID_ROUTEPROP 7000
-#define SYMBOL_ROUTEPROP_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_ROUTEPROP_TITLE _("Route Properties")
 #define SYMBOL_ROUTEPROP_IDNAME ID_ROUTEPROP
 #define SYMBOL_ROUTEPROP_SIZE wxSize(450, 300)
 #define SYMBOL_ROUTEPROP_POSITION wxDefaultPosition
+
+#ifdef __WXOSX__
+#define SYMBOL_ROUTEPROP_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX|wxSTAY_ON_TOP
+#else
+#define SYMBOL_ROUTEPROP_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
+#endif
+
 
 #define ID_TEXTCTRL            7001
 #define ID_TEXTCTRL2           7002
@@ -162,7 +168,8 @@ public:
     bool IsThisRouteExtendable();
     void OnEvtColDragEnd(wxListEvent& event);
     void InitializeList();
-
+    void RecalculateSize( void );
+    
     /// Should we show tooltips?
     static bool ShowToolTips();
 
@@ -330,12 +337,13 @@ class MarkInfoDef : public wxDialog
         void OnWaypointRangeRingSelect( wxCommandEvent& event );
         void OnShowWaypointRangeRingSelect( wxCommandEvent& event );
 
-
     public:
 
         MarkInfoDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Waypoint Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1, -1 ), long style = wxDEFAULT_DIALOG_STYLE|wxMAXIMIZE_BOX|wxRESIZE_BORDER );
         ~MarkInfoDef();
 
+        void RecalculateSize( void );
+        
         void m_hyperlink17OnContextMenu( wxMouseEvent &event )
         {
             m_hyperlink17->PopupMenu( m_menuLink, event.GetPosition() );
