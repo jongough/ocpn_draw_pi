@@ -293,8 +293,10 @@ ocpn_draw_pi::~ocpn_draw_pi()
 {
 //    RemovePlugInTool(m_config_button_id);
 //    RemovePlugInTool(m_draw_button_id);
-    pODConfig->UpdateNavObj();
-    SaveConfig();
+    if( pODConfig ) {
+        pODConfig->UpdateNavObj();
+        SaveConfig();
+    }
     
 }
 
@@ -791,7 +793,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     g_cursor_x = event.GetX();
     g_cursor_y = event.GetY();
-
+    
     if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() )
         m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
     else
@@ -804,14 +806,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
     
     if( nBoundary_State >= 2 ) {
-        r_rband.x = event.GetX();
-        r_rband.y = event.GetY();
+        r_rband.x = g_cursor_x;
+        r_rband.y = g_cursor_y;
         m_bDrawingBoundary = true;
 
-// TODO (jon#1#): Need to get access to 'CheckEdgePan'. Patch has been submitted - 18/04/2015
-        CheckEdgePan_PlugIn( event.GetX(), event.GetY(), event.Dragging(), 5, 2 );
+        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 5, 2 );
         bRefresh = TRUE;
-//        RequestRefresh( m_parent_window );
     }
 
     if ( event.LeftDown() ) {
@@ -926,8 +926,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
     if( event.Dragging() ) {
         if( event.LeftIsDown() ) {
-            if( m_pFoundODPoint )
-            {
+            if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
+            else if( m_pFoundODPoint ) {
                 if( m_bPathEditing )
                 {
                     pCurrentCursor = ocpncc1->pCursorCross;
@@ -971,7 +971,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
                     nBoundary_State = 1;
                     nPoint_State = 0;
                     break;
@@ -1146,7 +1146,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
-                g_ODEventHandler->PopupMenu( event.GetX(), event.GetY(), seltype );
+                g_ODEventHandler->PopupMenu( g_cursor_x, g_cursor_y, seltype );
                 
                 //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
@@ -1200,7 +1200,6 @@ wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance )
     wxString result;
     wxString *sUnit = new wxString( getUsrDistanceUnit_Plugin( -1 ) );
     double usrDistance = toUsrDistance_Plugin( distance, -1 );
-//    if( usrDistance < 0.1 &&  ( unit == DISTANCE_KM || unit == DISTANCE_MI || unit == DISTANCE_NMI ) ) {
     if( usrDistance < 0.1 &&  ( sUnit->IsSameAs( wxS("km") ) || sUnit->IsSameAs( wxS("mi") ) || sUnit->IsSameAs( wxS("NMi") ) ) ) {
         if ( sUnit->IsSameAs(wxS("mi")) ) sUnit->assign(wxS("ft"));
         else sUnit->assign(wxS("M"));
@@ -1285,6 +1284,8 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 
 void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc ) 
 {
+    ocpnDC tdc( dc );
+    
     if( nBoundary_State >= 2) {
         
         Boundary* boundary = 0;
@@ -1314,7 +1315,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
         }
 
 //        if( !g_btouch) {
-            boundary->DrawPointWhich( dc, boundary->m_lastMousePointIndex, &lastPoint );
+            boundary->DrawPointWhich( tdc, boundary->m_lastMousePointIndex, &lastPoint );
             if( boundary->m_NextLegGreatCircle ) {
                 for( int i=1; i<=milesDiff; i++ ) {
                     double p = (double)i * (1.0/(double)milesDiff);
@@ -1322,19 +1323,19 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
                     Geodesic::GreatCircleTravel( m_prev_rlon, m_prev_rlat, gcDist*p, brg, &pLon, &pLat, &gcBearing2 );
                     GetCanvasPixLL( m_vp, &destPoint, m_cursor_lat, m_cursor_lon);
                     //destPoint = VPoint.GetPixFromLL( pLat, pLon );
-                    boundary->DrawSegment( dc, &lastPoint, &destPoint, *m_vp, false );
+                    boundary->DrawSegment( tdc, &lastPoint, &destPoint, *m_vp, false );
                     wxPoint rpn;
-                    boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                    boundary->DrawSegment( dc, &rpn , &destPoint, *m_vp, false );
+                    boundary->GetPoint( 1 )->Draw( tdc, &rpn );
+                    boundary->DrawSegment( tdc, &rpn , &destPoint, *m_vp, false );
                     lastPoint = destPoint;
                 }
             }
             else {
-                boundary->DrawSegment( dc, &lastPoint, &r_rband, *m_vp, false );
+                boundary->DrawSegment( tdc, &lastPoint, &r_rband, *m_vp, false );
                 if ( nBoundary_State >= 2) { 
                     wxPoint rpn;
-                    boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                    boundary->DrawSegment( dc, &rpn , &r_rband, *m_vp, false );
+                    boundary->GetPoint( 1 )->Draw( tdc, &rpn );
+                    boundary->DrawSegment( tdc, &rpn , &r_rband, *m_vp, false );
                 }
             }
 //        }
@@ -1349,7 +1350,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
 
         wxFont *dFont;
         dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
-        dc.SetFont( *dFont );
+        tdc.SetFont( *dFont );
 
         int w, h;
         int xp, yp;
@@ -1358,7 +1359,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
         wxScreenDC sdc;
         sdc.GetTextExtent( pathInfo, &w, &h, NULL, NULL, dFont );
     #else
-        dc.GetTextExtent( pathInfo, &w, &h );
+        tdc.GetTextExtent( pathInfo, &w, &h );
     #endif
         xp = r_rband.x - w;
         yp = r_rband.y;
@@ -1366,11 +1367,12 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
 
         wxColour tColour;
         GetGlobalColor( wxS("YELO1"), &tColour );
-        AlphaBlending( dc, xp, yp, w, h, 0.0, tColour, 172 );
+        AlphaBlending( tdc, xp, yp, w, h, 0.0, tColour, 172 );
 
         GetGlobalColor( wxS("UBLCK"), &tColour );
-        dc.SetPen( wxPen( tColour ) );
-        dc.DrawText( pathInfo, xp, yp );
+        tdc.SetTextForeground( tColour );
+        tdc.SetPen( wxPen( tColour ) );
+        tdc.DrawText( pathInfo, xp, yp );
 
         wxString s0;
         if ( nBoundary_State >= 2 ) {
@@ -1382,7 +1384,7 @@ void ocpn_draw_pi::RenderPathLegs( ocpnDC &dc )
 
         s0 += FormatDistanceAdaptive( boundary->m_path_length + dist );
         
-        RenderExtraBoundaryLegInfo( dc, r_rband, s0 );
+        RenderExtraBoundaryLegInfo( tdc, r_rband, s0 );
     }
 }
 
@@ -1633,8 +1635,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         pPathList->Append( m_pMouseBoundary);
         m_pMouseBoundary->m_width = g_BoundaryLineWidth;
         m_pMouseBoundary->m_style = g_BoundaryLineStyle;
-        r_rband.x = event.GetX();
-        r_rband.y = event.GetY();
+        r_rband.x = g_cursor_x;
+        r_rband.y = g_cursor_y;
         m_dStartLat = m_cursor_lat;
         m_dStartLon = m_cursor_lon;
     }

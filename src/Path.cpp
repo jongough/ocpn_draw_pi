@@ -150,13 +150,13 @@ void Path::AddTentativePoint( const wxString& GUID )
 
 ODPoint *Path::GetPoint( int nWhichPoint )
 {
-    ODPoint *prp;
+    ODPoint *pOp;
     wxODPointListNode *node = pODPointList->GetFirst();
 
     int i = 1;
     while( node ) {
-        prp = node->GetData();
-        if( i == nWhichPoint ) return prp;
+        pOp = node->GetData();
+        if( i == nWhichPoint ) return pOp;
 
         i++;
         node = node->GetNext();
@@ -167,12 +167,12 @@ ODPoint *Path::GetPoint( int nWhichPoint )
 
 ODPoint *Path::GetPoint( const wxString &guid )
 {
-    ODPoint *prp;
+    ODPoint *pOp;
     wxODPointListNode *node = pODPointList->GetFirst();
 
     while( node ) {
-        prp = node->GetData();
-        if( guid == prp->m_GUID ) return prp;
+        pOp = node->GetData();
+        if( guid == pOp->m_GUID ) return pOp;
 
         node = node->GetNext();
     }
@@ -266,30 +266,30 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
     }
 
-    wxPoint rpt1, rpt2;
+    wxPoint ppt1, ppt2;
     m_bpts = new wxPoint[ pODPointList->GetCount() ];
     int j = 0;
     
     if ( m_bVisible )
-        DrawPointWhich( dc, 1, &rpt1 );
+        DrawPointWhich( dc, 1, &ppt1 );
 
     wxODPointListNode *node = pODPointList->GetFirst();
-    ODPoint *prp1 = node->GetData();
+    ODPoint *pOp1 = node->GetData();
     node = node->GetNext();
     
-    m_bpts[ j++ ] = rpt1;
+    m_bpts[ j++ ] = ppt1;
         
-    if ( !m_bVisible && prp1->m_bKeepXPath )
-            prp1->Draw( dc );
+    if ( !m_bVisible && pOp1->m_bKeepXPath )
+            pOp1->Draw( dc );
 
     while( node ) {
 
-        ODPoint *prp2 = node->GetData();
-        if ( !m_bVisible && prp2->m_bKeepXPath )
-            prp2->Draw( dc );
+        ODPoint *pOp2 = node->GetData();
+        if ( !m_bVisible && pOp2->m_bKeepXPath )
+            pOp2->Draw( dc );
         else if (m_bVisible)
-            prp2->Draw( dc, &rpt2 );
-        m_bpts[ j++ ] = ( rpt2 );
+            pOp2->Draw( dc, &ppt2 );
+        m_bpts[ j++ ] = ( ppt2 );
 
         if ( m_bVisible )
         {
@@ -297,11 +297,11 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
             LLBBox llbb;
             llbb.SetMin(VP.lon_min, VP.lat_min);
             llbb.SetMax(VP.lon_max, VP.lat_max);
-            bool b_2_on = llbb.PointInBox( prp2->m_lon, prp2->m_lat, 0 );
-            bool b_1_on = llbb.PointInBox( prp1->m_lon, prp1->m_lat, 0 );
+            bool b_2_on = llbb.PointInBox( pOp2->m_lon, pOp2->m_lat, 0 );
+            bool b_1_on = llbb.PointInBox( pOp1->m_lon, pOp1->m_lat, 0 );
 
             //Simple case
-            if( b_1_on && b_2_on ) RenderSegment( dc, rpt1.x, rpt1.y, rpt2.x, rpt2.y, VP, false, m_hiliteWidth ); // with no arrows
+            if( b_1_on && b_2_on ) RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x, ppt2.y, VP, false, m_hiliteWidth ); // with no arrows
 
             //    In the cases where one point is on, and one off
             //    we must decide which way to go in longitude
@@ -309,38 +309,38 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 
             double pix_full_circle = WGS84_semimajor_axis_meters * mercator_k0 * 2 * PI
                 * VP.view_scale_ppm;
-            double dp = pow( (double) ( rpt1.x - rpt2.x ), 2 ) + pow( (double) ( rpt1.y - rpt2.y ), 2 );
+            double dp = pow( (double) ( ppt1.x - ppt2.x ), 2 ) + pow( (double) ( ppt1.y - ppt2.y ), 2 );
             double dtest;
             int adder;
             if( b_1_on && !b_2_on ) {
-                if( rpt2.x < rpt1.x ) adder = (int) pix_full_circle;
+                if( ppt2.x < ppt1.x ) adder = (int) pix_full_circle;
                 else
                     adder = -(int) pix_full_circle;
 
-                dtest = pow( (double) ( rpt1.x - ( rpt2.x + adder ) ), 2 )
-                    + pow( (double) ( rpt1.y - rpt2.y ), 2 );
+                dtest = pow( (double) ( ppt1.x - ( ppt2.x + adder ) ), 2 )
+                    + pow( (double) ( ppt1.y - ppt2.y ), 2 );
 
                 if( dp < dtest ) adder = 0;
 
-                RenderSegment( dc, rpt1.x, rpt1.y, rpt2.x + adder, rpt2.y, VP, false, m_hiliteWidth );
+                RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x + adder, ppt2.y, VP, false, m_hiliteWidth );
             } else
                 if( !b_1_on ) {
-                    if( rpt1.x < rpt2.x ) adder = (int) pix_full_circle;
+                    if( ppt1.x < ppt2.x ) adder = (int) pix_full_circle;
                     else
                         adder = -(int) pix_full_circle;
                     
-                    float rxd = rpt2.x - ( rpt1.x + adder );
-                    float ryd = rpt1.y - rpt2.y;
+                    float rxd = ppt2.x - ( ppt1.x + adder );
+                    float ryd = ppt1.y - ppt2.y;
                     dtest = rxd*rxd + ryd*ryd;
                     
                     if( dp < dtest ) adder = 0;
 
-                    RenderSegment( dc, rpt1.x + adder, rpt1.y, rpt2.x, rpt2.y, VP, false, m_hiliteWidth );
+                    RenderSegment( dc, ppt1.x + adder, ppt1.y, ppt2.x, ppt2.y, VP, false, m_hiliteWidth );
                 }
         }
 
-        rpt1 = rpt2;
-        prp1 = prp2;
+        ppt1 = ppt2;
+        pOp1 = pOp2;
 
         node = node->GetNext();
     }
@@ -364,9 +364,9 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
         dc.SetPen( HiPen );
         
         wxODPointListNode *node = pODPointList->GetFirst();
-        ODPoint *prp0 = node->GetData();
+        ODPoint *pOp0 = node->GetData();
         wxPoint r0;
-        GetCanvasPixLL( &piVP, &r0, prp0->m_lat, prp0->m_lon );
+        GetCanvasPixLL( &piVP, &r0, pOp0->m_lat, pOp0->m_lon );
 
         if( m_nPoints == 1 ) {
             dc.StrokeLine( r0.x, r0.y, r0.x + 2, r0.y + 2 );
@@ -377,9 +377,9 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     
         while( node ){
             
-            ODPoint *prp = node->GetData();
+            ODPoint *pOp = node->GetData();
             wxPoint r1;
-            GetCanvasPixLL( &piVP, &r1, prp->m_lat, prp->m_lon );
+            GetCanvasPixLL( &piVP, &r1, pOp->m_lat, pOp->m_lon );
 
             dc.StrokeLine( r0.x, r0.y, r1.x, r1.y );
                     
@@ -447,14 +447,14 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 
     for(wxODPointListNode *node = pODPointList->GetFirst();
         node; node = node->GetNext()) {
-        ODPoint *prp = node->GetData();
-        unsigned short int ToSegNo = prp->m_GPXTrkSegNo;
+        ODPoint *pOp = node->GetData();
+        unsigned short int ToSegNo = pOp->m_GPXTrkSegNo;
         
         /* crosses IDL? if so break up into two segments */
         int dir = 0;
-        if(prp->m_lon > 150 && lastlon < -150)
+        if(pOp->m_lon > 150 && lastlon < -150)
             dir = -1;
-        else if(prp->m_lon < -150 && lastlon > 150)
+        else if(pOp->m_lon < -150 && lastlon > 150)
             dir = 1;
         
         wxPoint r;
@@ -466,7 +466,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
         }
         if(dir)
         {
-            double crosslat = lat_rl_crosses_meridian(lastlat, lastlon, prp->m_lat, prp->m_lon, 180.0);
+            double crosslat = lat_rl_crosses_meridian(lastlat, lastlon, pOp->m_lat, pOp->m_lon, 180.0);
             GetCanvasPixLL( &piVP, &r, crosslat, dir*180 );
             glVertex2i(r.x, r.y);
             glEnd();
@@ -474,17 +474,27 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
             GetCanvasPixLL( &piVP, &r, crosslat, -dir*180 );
             glVertex2i(r.x, r.y);
         }
-        lastlat=prp->m_lat;
-        lastlon=prp->m_lon;
+        lastlat=pOp->m_lat;
+        lastlon=pOp->m_lon;
         
-        GetCanvasPixLL( &piVP, &r, prp->m_lat, prp->m_lon );
+        GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
         glVertex2i(r.x, r.y);
+
+        //if ( m_bVisible || pOp->m_bKeepXPath )
+        //    pOp->DrawGL( piVP );
 
         m_bpts[ j++ ] = r;
     }
     glEnd();
     glDisable (GL_LINE_STIPPLE);
-        
+
+    /*  ODPoints  */
+    for(wxODPointListNode *node = pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        if ( m_bVisible || pOp->m_bKeepXPath )
+            pOp->DrawGL( piVP );
+    }        
+    
 #endif
 }
 
@@ -663,9 +673,9 @@ ODPoint *Path::GetLastPoint()
     return ( data_m1 );
 }
 
-int Path::GetIndexOf( ODPoint *prp )
+int Path::GetIndexOf( ODPoint *pOp )
 {
-    int ret = pODPointList->IndexOf( prp ) + 1;
+    int ret = pODPointList->IndexOf( pOp ) + 1;
     if( ret == wxNOT_FOUND ) return 0;
     else
         return ret;
@@ -868,14 +878,14 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
         wxODPointListNode *node = pODPointList->GetFirst();
         while( node ) {
 
-            ODPoint *prp2 = node->GetData();
-            bool blink_save = prp2->m_bBlink;
-            prp2->m_bBlink = false;
+            ODPoint *pOp2 = node->GetData();
+            bool blink_save = pOp2->m_bBlink;
+            pOp2->m_bBlink = false;
             ocpnDC odc_boundary( dc_boundary );
-            prp2->Draw( odc_boundary, NULL );
-            prp2->m_bBlink = blink_save;
+            pOp2->Draw( odc_boundary, NULL );
+            pOp2->m_bBlink = blink_save;
 
-            wxRect r =  prp2->CurrentRect_in_DC ;
+            wxRect r =  pOp2->CurrentRect_in_DC ;
             r.Inflate(m_hiliteWidth, m_hiliteWidth);        // allow for large hilite circles at segment ends
                 
             update_rect.Union( r );
@@ -932,15 +942,15 @@ void Path::AssemblePath( void )
         wxString GUID = ODPointGUIDList[ip];
 
         //    And on the ODPoints themselves
-        wxODPointListNode *prpnode = pODPointMan->GetODPointList()->GetFirst();
-        while( prpnode ) {
-            ODPoint *prp = prpnode->GetData();
+        wxODPointListNode *pOpnode = pODPointMan->GetODPointList()->GetFirst();
+        while( pOpnode ) {
+            ODPoint *pOp = pOpnode->GetData();
 
-            if( prp->m_GUID == GUID ) {
-                AddPoint( prp );
+            if( pOp->m_GUID == GUID ) {
+                AddPoint( pOp );
                 break;
             }
-            prpnode = prpnode->GetNext(); //ODPoint
+            pOpnode = pOpnode->GetNext(); //ODPoint
         }
     }
 }
@@ -954,11 +964,11 @@ void Path::RenameODPoints( void )
 
     int i = 1;
     while( node ) {
-        ODPoint *prp = node->GetData();
-        if( prp->m_bDynamicName ) {
+        ODPoint *pOp = node->GetData();
+        if( pOp->m_bDynamicName ) {
             wxString name;
             name.Printf( _T ( "%03d" ), i );
-            prp->SetName( name );
+            pOp->SetName( name );
         }
 
         node = node->GetNext();
@@ -1002,7 +1012,7 @@ bool Path::IsEqualTo( Path *ptargetroute )
  */
 void Path::UpdateSegmentDistances()
 {
-    wxPoint rpt, rptn;
+    wxPoint ppt, pptn;
     float slat1, slon1, slat2, slon2;
 
     double path_len = 0.0;
@@ -1010,16 +1020,16 @@ void Path::UpdateSegmentDistances()
     wxODPointListNode *node = pODPointList->GetFirst();
 
     if( node ) {
-        ODPoint *prp0 = node->GetData();
-        slat1 = prp0->m_lat;
-        slon1 = prp0->m_lon;
+        ODPoint *pOp0 = node->GetData();
+        slat1 = pOp0->m_lat;
+        slon1 = pOp0->m_lon;
 
         node = node->GetNext();
 
         while( node ) {
-            ODPoint *prp = node->GetData();
-            slat2 = prp->m_lat;
-            slon2 = prp->m_lon;
+            ODPoint *pOp = node->GetData();
+            slat2 = pOp->m_lat;
+            slon2 = pOp->m_lon;
 
 //    Calculate the absolute distance from 1->2
 
@@ -1027,14 +1037,14 @@ void Path::UpdateSegmentDistances()
             DistanceBearingMercator_Plugin( slat1, slon1, slat2, slon2, &brg, &dd );
 
 //    And store in Point 2
-            prp->m_seg_len = dd;
+            pOp->m_seg_len = dd;
 
             path_len += dd;
 
             slat1 = slat2;
             slon1 = slon2;
 
-            prp0 = prp;
+            pOp0 = pOp;
 
             node = node->GetNext();
         }

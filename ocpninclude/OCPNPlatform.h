@@ -50,6 +50,7 @@ public:
     static bool hasInternalBT(wxString profile = _T(""));       // Bluetooth
     bool startBluetoothScan();
     wxArrayString getBluetoothScanResults();
+    bool stopBluetoothScan();
     
 //  Per-Platform initialization support    
     
@@ -66,6 +67,20 @@ public:
     static void OnExit_2( void );
     
 
+    void SetDefaultOptions( void );
+    
+//--------------------------------------------------------------------------
+//      Platform Display Support
+//--------------------------------------------------------------------------
+    void ShowBusySpinner( void );
+    void HideBusySpinner( void );
+    double getFontPointsperPixel( void );
+    wxSize getDisplaySize();
+    double GetDisplaySizeMM();
+
+    wxFileDialog *AdjustFileDialogFont(wxWindow *container, wxFileDialog *dlg);
+    wxDirDialog  *AdjustDirDialogFont(wxWindow *container,  wxDirDialog *dlg);
+    
 //--------------------------------------------------------------------------
 //      Per-Platform file/directory support
 //--------------------------------------------------------------------------
@@ -80,6 +95,7 @@ public:
     wxString *GetPluginDirPtr();
     wxString *GetSharedDataDirPtr();
     wxString *GetPrivateDataDirPtr();
+    wxString &GetLogFileName(){ return mlog_file; }
     
     bool InitializeLogFile( void );
     void CloseLogFile( void );

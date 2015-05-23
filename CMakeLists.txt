@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "3")
-SET(VERSION_PATCH "0050")
-SET(VERSION_DATE "21/05/2015")
+SET(VERSION_PATCH "0100")
+SET(VERSION_DATE "23/05/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -180,6 +180,7 @@ SET(OCPNHDRS
         ocpninclude/Sentence.hpp
         ocpninclude/statwin.h
         ocpninclude/styles.h
+        ocpninclude/TexFont.h
         ocpninclude/timers.h
         ocpninclude/undo.h
         ocpninclude/vector2D.h
