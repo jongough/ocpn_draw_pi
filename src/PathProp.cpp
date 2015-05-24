@@ -184,7 +184,7 @@ PathProp::PathProp()
 PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
         const wxSize& size, long style )
 {
-    m_wpList = NULL;
+    m_opList = NULL;
     m_nSelected = 0;
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
@@ -215,7 +215,7 @@ PathProp::~PathProp()
 {
     //dtor
     delete m_PathNameCtl;
-    delete m_wpList;
+    delete m_opList;
 
 }
 
@@ -233,13 +233,27 @@ void PathProp::OnPathPropRightClick( wxListEvent &event )
         }
         sPropertiesType.append( wxS(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, sPropertiesType );
-        editItem->Enable( m_wpList->GetSelectedItemCount() == 1 );
+        editItem->Enable( m_opList->GetSelectedItemCount() == 1 );
 
         wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, wxS("&Remove Selected") );
-        delItem->Enable( m_wpList->GetSelectedItemCount() > 0 && m_wpList->GetItemCount() > 2 );
+        delItem->Enable( m_opList->GetSelectedItemCount() > 0 && m_opList->GetItemCount() > 2 );
     }
 
     PopupMenu( &menu );
+}
+
+void PathProp::OnPathPropDoubleClick( wxListEvent &event )
+{
+    long item = -1;
+    
+    item = m_opList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    
+    if( item == -1 ) return;
+    
+    ODPoint *op = (ODPoint *) m_opList->GetItemData( item );
+    if( !op ) return;
+    
+    PathManagerDialog::ODPointShowPropertiesDialog( op, this );
 }
 
 void PathProp::CreateControls()
@@ -361,7 +375,7 @@ void PathProp::CreateControls()
     itemStaticBoxSizer3->Add( bSizer2, 1, wxEXPAND, 0 );
 
     wxStaticBox* itemStaticBoxSizer14Static = new wxStaticBox( itemDialog1, wxID_ANY,
-            _("Waypoints") );
+            _("ODPoints") );
     m_pListSizer = new wxStaticBoxSizer( itemStaticBoxSizer14Static, wxVERTICAL );
     itemBoxSizer2->Add( m_pListSizer, 1, wxEXPAND | wxALL, 5 );
 
@@ -391,31 +405,31 @@ void PathProp::CreateControls()
 
 
     //      Create the list control
-    m_wpList = new wxListCtrl( itemDialog1, ID_PATHPROP_LISTCTRL, wxDefaultPosition, wxSize( 800, 200 ),
+    m_opList = new wxListCtrl( itemDialog1, ID_PATHPROP_LISTCTRL, wxDefaultPosition, wxSize( 800, 200 ),
             wxLC_REPORT | wxLC_HRULES | wxLC_VRULES | wxLC_EDIT_LABELS );
 
     int char_size = GetCharWidth();
 
-    m_wpList->InsertColumn( 0, _("Leg"), wxLIST_FORMAT_LEFT, char_size * 6 );
-    m_wpList->InsertColumn( 1, _("To Waypoint"), wxLIST_FORMAT_LEFT, char_size * 14 );
-    m_wpList->InsertColumn( 2, _("Distance"), wxLIST_FORMAT_RIGHT, char_size * 9 );
+    m_opList->InsertColumn( 0, _("Leg"), wxLIST_FORMAT_LEFT, char_size * 6 );
+    m_opList->InsertColumn( 1, _("To Point"), wxLIST_FORMAT_LEFT, char_size * 14 );
+    m_opList->InsertColumn( 2, _("Distance"), wxLIST_FORMAT_RIGHT, char_size * 9 );
 
     if(g_bShowMag)
-        m_wpList->InsertColumn( 3, _("Bearing (M)"), wxLIST_FORMAT_LEFT, char_size * 10 );
+        m_opList->InsertColumn( 3, _("Bearing (M)"), wxLIST_FORMAT_LEFT, char_size * 10 );
     else
-        m_wpList->InsertColumn( 3, _("Bearing"), wxLIST_FORMAT_LEFT, char_size * 10 );
+        m_opList->InsertColumn( 3, _("Bearing"), wxLIST_FORMAT_LEFT, char_size * 10 );
 
-    m_wpList->InsertColumn( 4, _("Latitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
-    m_wpList->InsertColumn( 5, _("Longitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
-    m_wpList->InsertColumn( 6, _("Next tide event"), wxLIST_FORMAT_LEFT, char_size * 11 );
+    m_opList->InsertColumn( 4, _("Latitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
+    m_opList->InsertColumn( 5, _("Longitude"), wxLIST_FORMAT_LEFT, char_size * 11 );
+    m_opList->InsertColumn( 6, _("Next tide event"), wxLIST_FORMAT_LEFT, char_size * 11 );
     if(g_bShowMag)
-        m_wpList->InsertColumn( 7, _("Course (M)"), wxLIST_FORMAT_LEFT, char_size * 10 );
+        m_opList->InsertColumn( 7, _("Course (M)"), wxLIST_FORMAT_LEFT, char_size * 10 );
     else
-        m_wpList->InsertColumn( 7, _("Course"), wxLIST_FORMAT_LEFT, char_size * 10 );
-    m_wpList->InsertColumn( 8, _("Description"), wxLIST_FORMAT_LEFT, char_size * 11 );
-    //    m_wpList->Hide();
+        m_opList->InsertColumn( 7, _("Course"), wxLIST_FORMAT_LEFT, char_size * 10 );
+    m_opList->InsertColumn( 8, _("Description"), wxLIST_FORMAT_LEFT, char_size * 11 );
+    //    m_opList->Hide();
 
-    m_pListSizer->Add( m_wpList, 2, wxEXPAND | wxALL, 5 );
+    m_pListSizer->Add( m_opList, 2, wxEXPAND | wxALL, 5 );
 
     //Set the maximum size of the entire  dialog
     int width, height;
@@ -426,7 +440,9 @@ void PathProp::CreateControls()
             wxListEventHandler(PathProp::OnPathPropRightClick), NULL, this );
     Connect( wxEVT_COMMAND_MENU_SELECTED,
             wxCommandEventHandler(PathProp::OnPathPropMenuSelected), NULL, this );
-
+    Connect( wxEVT_LIST_ITEM_ACTIVATED,
+             wxListEventHandler(PathProp::OnPathPropDoubleClick), NULL, this );
+    
     //  Fetch any config file values
 
 /*    if( g_StartTimeTZ == 0 )
@@ -475,19 +491,19 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
     switch( event.GetId() ) {
         case ID_PATHPROP_MENU_DELETE: {
             long item = -1;
-            item = m_wpList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            item = m_opList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
             if( item == -1 ) break;
 
-            ODPoint *wp;
-            wp = (ODPoint *) m_wpList->GetItemData( item );
+            ODPoint *op;
+            op = (ODPoint *) m_opList->GetItemData( item );
 
             wxString sMessage( wxS("Are you sure you want to remove this ") );
             wxString sCaption( wxS("OCPN Draw Remove ") );
             wxString sType( wxS("") );
-            if (!wp || wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
-                sType.append( wxS("waypoint") );
+            if (!op || op->GetTypeString().IsNull() || op->GetTypeString().IsEmpty() )
+                sType.append( wxS("Point") );
             else
-                sType.append( wp->GetTypeString() );
+                sType.append( op->GetTypeString() );
             sMessage.append( sType );
             sMessage.append( wxS("?") );
             sCaption.append( sType );
@@ -495,21 +511,21 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
             int dlg_return = OCPNMessageBox_PlugIn( this, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
 
             if( dlg_return == wxID_YES ) {
-                m_pPath->RemovePointFromPath( wp, m_pPath );
+                m_pPath->RemovePointFromPath( op, m_pPath );
             }
             break;
         }
         case ID_PATHPROP_MENU_EDIT_WP: {
             long item = -1;
 
-            item = m_wpList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            item = m_opList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
 
             if( item == -1 ) break;
 
-            ODPoint *wp = (ODPoint *) m_wpList->GetItemData( item );
-            if( !wp ) break;
+            ODPoint *op = (ODPoint *) m_opList->GetItemData( item );
+            if( !op ) break;
 
-            PathManagerDialog::ODPointShowPropertiesDialog( wp, this );
+            PathManagerDialog::ODPointShowPropertiesDialog( op, this );
             break;
         }
     }
@@ -552,7 +568,7 @@ bool PathProp::UpdateProperties( Path *pPath )
 
     //    Update the "tides event" column header
     wxListItem column_info;
-    if( m_wpList->GetColumn( 6, column_info ) ) {
+    if( m_opList->GetColumn( 6, column_info ) ) {
         wxString c = _("Next tide event");
         if( gpIDX && m_starttime.IsValid() ) {
             c = _T("@~~");
@@ -562,7 +578,7 @@ bool PathProp::UpdateProperties( Path *pPath )
 
         }
         column_info.SetText( c );
-        m_wpList->SetColumn( 6, column_info );
+        m_opList->SetColumn( 6, column_info );
     }
 
     //  Total length
@@ -596,12 +612,12 @@ bool PathProp::UpdateProperties( Path *pPath )
         wxString t;
         t.Printf( _T("%d"), i );
         if( i == 0 ) t = _T("Boat");
-        if( arrival ) m_wpList->SetItem( item_line_index, 0, t );
+        if( arrival ) m_opList->SetItem( item_line_index, 0, t );
 
         //  Mark Name
-        if( arrival ) m_wpList->SetItem( item_line_index, 1, prp->GetName() );
+        if( arrival ) m_opList->SetItem( item_line_index, 1, prp->GetName() );
     // Store Dewcription
-        if( arrival ) m_wpList->SetItem( item_line_index, 8, prp->GetDescription() );
+        if( arrival ) m_opList->SetItem( item_line_index, 8, prp->GetDescription() );
 
         //  Distance
         //  Note that Distance/Bearing for Leg 000 is as from current position
@@ -634,9 +650,9 @@ bool PathProp::UpdateProperties( Path *pPath )
 
     t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( leg_dist ) );
     if( arrival )
-        m_wpList->SetItem( item_line_index, 2, t );
+        m_opList->SetItem( item_line_index, 2, t );
     if( !enroute )
-        m_wpList->SetItem( item_line_index, 2, nullify );
+        m_opList->SetItem( item_line_index, 2, nullify );
     prp->SetDistance(leg_dist); // save the course to the next waypoint for printing.
 
         //  Bearing
@@ -646,9 +662,9 @@ bool PathProp::UpdateProperties( Path *pPath )
         t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brg ) );
 
 //    if( arrival )
-//        m_wpList->SetItem( item_line_index, 3, t );
+//        m_opList->SetItem( item_line_index, 3, t );
 //    if( !enroute )
-//        m_wpList->SetItem( item_line_index, 3, nullify );
+//        m_opList->SetItem( item_line_index, 3, nullify );
 
     // Course (bearing of next )
     if (_next_prp){
@@ -657,17 +673,17 @@ bool PathProp::UpdateProperties( Path *pPath )
         else
             t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( course ) );
         if( arrival )
-            m_wpList->SetItem( item_line_index, 7, t );
+            m_opList->SetItem( item_line_index, 7, t );
     }
     else
-        m_wpList->SetItem( item_line_index, 7, nullify );
+        m_opList->SetItem( item_line_index, 7, nullify );
 
         //  Lat/Lon
         wxString tlat = toSDMM_PlugIn( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
-        if( arrival ) m_wpList->SetItem( item_line_index, 4, tlat );
+        if( arrival ) m_opList->SetItem( item_line_index, 4, tlat );
 
         wxString tlon = toSDMM_PlugIn( 2, prp->m_lon, prp->m_bIsInTrack );
-        if( arrival ) m_wpList->SetItem( item_line_index, 5, tlon );
+        if( arrival ) m_opList->SetItem( item_line_index, 5, tlon );
 
 
         tide_form = _T("");
@@ -798,7 +814,7 @@ bool PathProp::UpdateProperties()
 
         //    Update the "tides event" column header
         wxListItem column_info;
-        if( m_wpList->GetColumn( 8, column_info ) ) {
+        if( m_opList->GetColumn( 8, column_info ) ) {
             wxString c = _("Next tide event");
             if( gpIDX && m_starttime.IsValid() ) {
                 c = _T("@~~");
@@ -808,16 +824,16 @@ bool PathProp::UpdateProperties()
 
             }
             column_info.SetText( c );
-            m_wpList->SetColumn( 8, column_info );
+            m_opList->SetColumn( 8, column_info );
         }
 
         //Update the "ETE/Timestamp" column header
 
-        if( m_wpList->GetColumn( 6, column_info ) ) {
+        if( m_opList->GetColumn( 6, column_info ) ) {
             if( m_starttime.IsValid() ) column_info.SetText( _("ETA") );
             else
                 column_info.SetText( _("ETE") );
-            m_wpList->SetColumn( 6, column_info );
+            m_opList->SetColumn( 6, column_info );
         }
 
         m_pRoute->UpdateSegmentDistances( m_planspeed );           // get segment and total distance
@@ -920,12 +936,12 @@ bool PathProp::UpdateProperties()
             wxString t;
             t.Printf( _T("%d"), i );
             if( i == 0 ) t = _T("---");
-            if( arrival ) m_wpList->SetItem( item_line_index, 0, t );
+            if( arrival ) m_opList->SetItem( item_line_index, 0, t );
 
             //  Mark Name
-            if( arrival ) m_wpList->SetItem( item_line_index, 1, prp->GetName() );
+            if( arrival ) m_opList->SetItem( item_line_index, 1, prp->GetName() );
         // Store Dewcription
-            if( arrival ) m_wpList->SetItem( item_line_index, 9, prp->GetDescription() );
+            if( arrival ) m_opList->SetItem( item_line_index, 9, prp->GetDescription() );
 
             //  Distance
             //  Note that Distance/Bearing for Leg 000 is as from current position
@@ -976,9 +992,9 @@ bool PathProp::UpdateProperties()
 
         t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( leg_dist ) );
         if( arrival )
-            m_wpList->SetItem( item_line_index, 2, t );
+            m_opList->SetItem( item_line_index, 2, t );
         if( !enroute )
-            m_wpList->SetItem( item_line_index, 2, nullify );
+            m_opList->SetItem( item_line_index, 2, nullify );
         prp->SetDistance(leg_dist); // save the course to the next waypoint for printing.
 
             //  Bearing
@@ -988,9 +1004,9 @@ bool PathProp::UpdateProperties()
             t.Printf( _T("%03.0f Deg. T"), gFrame->GetTrueOrMag( brg ) );
 
         if( arrival )
-            m_wpList->SetItem( item_line_index, 3, t );
+            m_opList->SetItem( item_line_index, 3, t );
         if( !enroute )
-            m_wpList->SetItem( item_line_index, 3, nullify );
+            m_opList->SetItem( item_line_index, 3, nullify );
 
         // Course (bearing of next )
         if (_next_prp){
@@ -999,17 +1015,17 @@ bool PathProp::UpdateProperties()
             else
                 t.Printf( _T("%03.0f Deg. T"), gFrame->GetTrueOrMag( course ) );
             if( arrival )
-                m_wpList->SetItem( item_line_index, 10, t );
+                m_opList->SetItem( item_line_index, 10, t );
         }
         else
-            m_wpList->SetItem( item_line_index, 10, nullify );
+            m_opList->SetItem( item_line_index, 10, nullify );
 
             //  Lat/Lon
             wxString tlat = toSDMM( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
-            if( arrival ) m_wpList->SetItem( item_line_index, 4, tlat );
+            if( arrival ) m_opList->SetItem( item_line_index, 4, tlat );
 
             wxString tlon = toSDMM( 2, prp->m_lon, prp->m_bIsInTrack );
-            if( arrival ) m_wpList->SetItem( item_line_index, 5, tlon );
+            if( arrival ) m_opList->SetItem( item_line_index, 5, tlon );
 
 
             tide_form = _T("");
@@ -1100,20 +1116,20 @@ bool PathProp::UpdateProperties()
                 } // end if legspeed
             }  // end of repeatable route point
 
-            if( enroute && ( arrival || m_starttime.IsValid() ) ) m_wpList->SetItem(
+            if( enroute && ( arrival || m_starttime.IsValid() ) ) m_opList->SetItem(
                     item_line_index, 6, time_form );
             else
-                m_wpList->SetItem( item_line_index, 6, _T("----") );
+                m_opList->SetItem( item_line_index, 6, _T("----") );
 
             //Leg speed
             wxString s;
             s.Printf( _T("%5.2f"), toUsrSpeed( leg_speed ) );
-            if( arrival ) m_wpList->SetItem( item_line_index, 7, s );
+            if( arrival ) m_opList->SetItem( item_line_index, 7, s );
 
-            if( enroute ) m_wpList->SetItem( item_line_index, 8, tide_form );
+            if( enroute ) m_opList->SetItem( item_line_index, 8, tide_form );
             else {
-                m_wpList->SetItem( item_line_index, 7, nullify );
-                m_wpList->SetItem( item_line_index, 8, nullify );
+                m_opList->SetItem( item_line_index, 7, nullify );
+                m_opList->SetItem( item_line_index, 8, nullify );
             }
 
             //  Save for iterating distance/bearing calculation
@@ -1268,7 +1284,7 @@ void PathProp::OnPathPropOkClick( wxCommandEvent& event )
 
 void PathProp::OnEvtColDragEnd( wxListEvent& event )
 {
-    m_wpList->Refresh();
+    m_opList->Refresh();
 }
 
 void PathProp::SetPathAndUpdate( Path *pB, bool only_points )
@@ -1288,15 +1304,15 @@ void PathProp::SetPathAndUpdate( Path *pB, bool only_points )
 
         m_PathNameCtl->SetFocus();
     }
-    m_wpList->DeleteAllItems();
+    m_opList->DeleteAllItems();
 
 #if 0
     // Select the proper list control, and add it to List sizer
     m_pListSizer->Clear();
 
     if( m_pPath ) {
-        m_wpList->Show();
-        m_pListSizer->Add( m_wpList, 2, wxEXPAND | wxALL, 5 );
+        m_opList->Show();
+        m_pListSizer->Add( m_opList, 2, wxEXPAND | wxALL, 5 );
     }
 //    GetSizer()->Fit( this );
     GetSizer()->Layout();
@@ -1308,7 +1324,7 @@ void PathProp::SetPathAndUpdate( Path *pB, bool only_points )
     UpdateProperties( pB );
 
     if( m_pPath )
-        m_wpList->Show();
+        m_opList->Show();
 
 //    GetSizer()->Fit( this );
 //    GetSizer()->Layout();
@@ -1325,11 +1341,11 @@ void PathProp::InitializeList()
     wxODPointListNode *pnode = m_pPath->pODPointList->GetFirst();
     int in = 0;
     while( pnode ) {
-        m_wpList->InsertItem( in, _T(""), 0 );
-        m_wpList->SetItemPtrData( in, (wxUIntPtr)pnode->GetData() );
+        m_opList->InsertItem( in, _T(""), 0 );
+        m_opList->SetItemPtrData( in, (wxUIntPtr)pnode->GetData() );
         in++;
         if( pnode->GetData()->m_seg_etd.IsValid() ) {
-            m_wpList->InsertItem( in, _T(""), 0 );
+            m_opList->InsertItem( in, _T(""), 0 );
             in++;
         }
         pnode = pnode->GetNext();

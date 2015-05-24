@@ -71,6 +71,7 @@ ODPointPropertiesDialog( parent )
     m_SizerNameIcon->Replace( m_comboBoxIcon, m_bcomboBoxIcon );
     delete( m_comboBoxIcon );
     m_comboBoxIcon = NULL;
+    m_pODPoint = NULL;
 
 }
 
@@ -163,6 +164,8 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     // TODO: Implement OnPointPropertiesOKClick
     if( m_pODPoint ) {
+        m_pODPoint->m_bIsBeingEdited = FALSE;
+        m_pODPoint->m_bBlink = FALSE;
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
 
@@ -184,13 +187,15 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
 {
     // TODO: Implement OnPointPropertiesCancelClick
     if( m_pODPoint ) {
+        m_pODPoint->m_bIsBeingEdited = FALSE;
+        m_pODPoint->m_bBlink = FALSE;
         m_pODPoint->SetVisible( m_bIsVisible_save );
         m_pODPoint->SetNameShown( m_bShowName_save );
         m_pODPoint->SetPosition( m_lat_save, m_lon_save );
         m_pODPoint->SetIconName( m_IconName_save );
         m_pODPoint->ReLoadIcon();
-
         m_pODPoint->m_HyperlinkList->Clear();
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     }
 
     Show( false );
@@ -265,13 +270,21 @@ void ODPointPropertiesImpl::SaveChanges()
 
 void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
 {
-    m_pODPoint = pOP;
     if( m_pODPoint ) {
+        m_pODPoint->m_bIsBeingEdited = FALSE;
+        m_pODPoint->m_bBlink = FALSE;
+    }
+    m_pODPoint = pOP;
+    
+    if( m_pODPoint ) {
+        m_pODPoint->m_bIsBeingEdited = TRUE;
+        m_pODPoint->m_bBlink = TRUE;
         m_lat_save = m_pODPoint->m_lat;
         m_lon_save = m_pODPoint->m_lon;
         m_IconName_save = m_pODPoint->GetIconName();
         m_bShowName_save = m_pODPoint->m_bShowName;
         m_bIsVisible_save = m_pODPoint->m_bIsVisible;
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     }
 }
 

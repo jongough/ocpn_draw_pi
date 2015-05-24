@@ -25,6 +25,18 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
  ***************************************************************************
  */
+#define DEBUG_BUILD
+#ifdef DEBUG_BUILD
+using namespace std;
+#  define DEBUG(x) do { \
+time_t now = time(0); \
+tm* localtm = localtime(&now); \
+char *stime = asctime(localtm); \
+stime[strlen(stime - 1)] = 0; \
+std::cout << stime << x << std::endl; } while (0)
+#else
+#  define DEBUG(x) do {} while (0)
+#endif
 
 #ifndef _OCPNDRAWPI_H_
 #define _OCPNDRAWPI_H_
