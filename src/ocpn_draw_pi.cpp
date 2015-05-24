@@ -25,15 +25,6 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 ***************************************************************************
 */
-#define DEBUG_BUILD
-#ifdef DEBUG_BUILD
-#  define DEBUG(x) do { \
-time_t now = time(0); \
-tm* localtm = localtime(&now); \
-std::cout << asctime(localtm) << x << std::endl; } while (0)
-#else
-#  define DEBUG(x) do {} while (0)
-#endif
 //#define _2_9_x_ // uncomment this to compile for 2.9.x
 
 #ifndef  WX_PRECOMP
@@ -365,6 +356,7 @@ int ocpn_draw_pi::Init(void)
     
     // Create an OCPN Draw event handler
     g_ODEventHandler = new ODEventHandler( g_ocpn_draw_pi );
+    
     g_pPathRolloverWin = new ODRolloverWin( m_parent_window );
     g_pRolloverPathSeg = NULL;
     

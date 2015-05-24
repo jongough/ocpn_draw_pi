@@ -62,18 +62,20 @@ extern int              g_cursor_y;
 
 // Event Handler implementation 
 
-//BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler ) 
-//    EVT_TIMER ( ROLLOVER_TIMER, ODEventHandler::OnTimerEvent ) 
-    //EVT_TIMER ( ROPOPUP_TIMER, ODEventHandler::OnRolloverPopupTimerEvent )
-    //    EVT_TIMER ( HEAD_DOG_TIMER, ODEventHandler::OnTimerEvent ) 
-//    EVT_MENU ( ID_PATH_MENU_PROPERTIES, ODEventHandler::PopupMenuHandler )
-//END_EVENT_TABLE()
+BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler ) 
+    //EVT_TIMER( OD_TIMER_1, ODEventHandler::OnODTimer1 )
+    EVT_TIMER( -1, ODEventHandler::OnODTimer1 )
+END_EVENT_TABLE()
 
 
 ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 {
     //ctor
     m_parent = parent;
+    m_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
+    ODTimer1.SetOwner( this );
+    ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
+    
 }
 
 
@@ -115,8 +117,18 @@ ODEventHandler::~ODEventHandler()
 
 void ODEventHandler::OnTimerEvent(wxTimerEvent& event) 
 { 
+    DEBUG("In OnTimerEvent");
+    DEBUG( event.GetId() );
     m_parent->ProcessTimerEvent( event ); 
 } 
+
+void ODEventHandler::OnODTimer1( wxTimerEvent& event )
+{
+    DEBUG("In OnODTimer1");
+    DEBUG(g_ocpn_draw_pi->nBlinkerTick);
+    g_ocpn_draw_pi->nBlinkerTick++;
+    RequestRefresh( m_parentcanvas );
+}
 
 void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 {

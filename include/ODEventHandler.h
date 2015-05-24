@@ -34,12 +34,14 @@
 // Forward declarations
 class SelectItem;
 
+#define TIMER_OD_1 999
+
 enum
 {
     HEAD_DOG_TIMER  = 1000,
     ODROPOPUP_TIMER,
     ROLLOVER_TIMER,
-    
+    OD_TIMER_1,
     LAST_TIMER
 };
 
@@ -58,7 +60,8 @@ class ODEventHandler : public wxEvtHandler
         void SetPoint ( ODPoint *point );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
-
+        
+        void OnODTimer1(wxTimerEvent& event);
         
     protected:
     private:
@@ -69,11 +72,9 @@ class ODEventHandler : public wxEvtHandler
         ODPoint       *m_pFoundODPoint;
         double          m_cursor_lat;
         double          m_cursor_lon;
-
+        wxTimer         ODTimer1;
         
-        
-        
-//        DECLARE_EVENT_TABLE();
+        DECLARE_EVENT_TABLE();
 };
 
 #endif // OCPNDRAWEVENTHANDLER_H
