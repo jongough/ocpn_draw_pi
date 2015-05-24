@@ -142,7 +142,8 @@ public:
     bool        m_btemp;
     int         m_hiliteWidth;
     wxPoint     *m_bpts;
-
+    int         m_iBlink;
+    
 protected:    
     bool m_bNeedsUpdateBBox;
     wxBoundingBox     RBBox;

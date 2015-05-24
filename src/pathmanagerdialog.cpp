@@ -339,7 +339,8 @@ int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
 // event table. Empty, because I find it much easier to see what is connected to what
 // using Connect() where possible, so that it is visible in the code.
 BEGIN_EVENT_TABLE(PathManagerDialog, wxDialog)
-EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, PathManagerDialog::OnTabSwitch) // This should work under Windows :-(
+    EVT_NOTEBOOK_PAGE_CHANGED(wxID_ANY, PathManagerDialog::OnTabSwitch) // This should work under Windows :-(
+    EVT_CLOSE(PathManagerDialog::OnClose)
 END_EVENT_TABLE()
 
 void PathManagerDialog::OnTabSwitch( wxNotebookEvent &event )
@@ -432,7 +433,7 @@ void PathManagerDialog::Create()
     m_pPathListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED,
             wxListEventHandler(PathManagerDialog::OnPathSelected), NULL, this );
     m_pPathListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_DESELECTED,
-            wxListEventHandler(PathManagerDialog::OnPathSelected), NULL, this );
+            wxListEventHandler(PathManagerDialog::OnPathDeSelected), NULL, this );
     m_pPathListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
             wxListEventHandler(PathManagerDialog::OnPathDefaultAction), NULL, this );
     m_pPathListCtrl->Connect( wxEVT_LEFT_DOWN,
@@ -640,10 +641,14 @@ void PathManagerDialog::Create()
             wxCommandEventHandler(PathManagerDialog::OnLayToggleListingClick), NULL, this );
 
     // Dialog buttons
-    wxSizer *szButtons = CreateButtonSizer( wxOK );
+    //wxSizer *szButtons = CreateButtonSizer( wxOK );
+    //this->Connect( -1, wxEVT_SHOW, wxCloseEventHandler(PathManagerDialog::OnOK), NULL, this);
 
-    itemBoxSizer5->Add( szButtons, 0, wxALL | wxALIGN_RIGHT, DIALOG_MARGIN );
-
+    btnPathOK = new wxButton( this, -1, _("&OK") );
+    itemBoxSizer5->Add( btnPathOK, 0, wxALL | wxALIGN_RIGHT, DIALOG_MARGIN );
+    btnPathOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
+                            wxCommandEventHandler(PathManagerDialog::OnOK), NULL, this );
+    
     Fit();
 
     SetMinSize( GetBestSize() );
@@ -1171,6 +1176,8 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
     Path *path = pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
+    path->m_iBlink++;
+    
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
 
     if( ocpncc1 )
@@ -1178,6 +1185,22 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
 
     UpdatePathButtons();
 
+}
+
+void PathManagerDialog::OnPathDeSelected( wxListEvent &event )
+{
+    long clicked_index = event.m_itemIndex;
+    // Process the clicked item
+    Path *path = pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
+    path->m_iBlink--;
+    
+    m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
+    
+    if( ocpncc1 )
+        RequestRefresh( GetOCPNCanvasWindow() );
+    
+    UpdatePathButtons();
+    
 }
 
 void PathManagerDialog::OnPathColumnClicked( wxListEvent &event )
@@ -2086,5 +2109,29 @@ wxString PathManagerDialog::GetLayerName( int id )
     return ( name );
 }
 
+void PathManagerDialog::OnClose(wxCloseEvent& event)
+{
+    DeSelectPaths();
+}
 
+void PathManagerDialog::OnOK(wxCommandEvent &event)
+{
+    DeSelectPaths();
+}
+
+void PathManagerDialog::DeSelectPaths( void )
+{
+    long selected_item = -1;
+    
+    for( ;; )
+    {
+        selected_item = m_pPathListCtrl->GetNextItem( selected_item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+        if( selected_item == -1 ) break;
+        Path *path = pPathList->Item( m_pPathListCtrl->GetItemData( selected_item ) )->GetData();
+        m_pPathListCtrl->SetItemState( selected_item, 0, wxLIST_STATE_SELECTED );
+        path->m_iBlink--;
+        if( path->m_iBlink < 0 ) path->m_iBlink = 0;
+    }
+    Show( false );
+}
 //END Event handlers

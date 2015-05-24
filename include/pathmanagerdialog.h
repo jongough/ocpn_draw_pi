@@ -76,6 +76,7 @@ class PathManagerDialog : public wxDialog {
 
             // event handlers
             void OnPathSelected(wxListEvent &event);
+            void OnPathDeSelected(wxListEvent &event);
             void OnPathDefaultAction(wxListEvent &event);
             void OnPathToggleVisibility(wxMouseEvent &event);
             void OnPathColumnClicked(wxListEvent &event);
@@ -115,6 +116,10 @@ class PathManagerDialog : public wxDialog {
             void OnExportClick(wxCommandEvent &event);
             void OnExportVizClick(wxCommandEvent &event);
             
+            void OnClose(wxCloseEvent &event);
+            void OnOK(wxCommandEvent &event);
+            void DeSelectPaths( void );
+            
             // properties
             wxNotebook *m_pNotebook;
             wxPanel    *m_pPanelODPoint;
@@ -151,6 +156,8 @@ class PathManagerDialog : public wxDialog {
             wxButton *btnImport;
             wxButton *btnExport;
             wxButton *btnExportViz;
+            
+            wxButton *btnPathOK;
             
             bool m_bPossibleClick;    // do
             bool m_bCtrlDown;         // record control key state for some action buttons

@@ -27,7 +27,6 @@
 #define PATHMAN_H
 
 #include "Path.h"
-#include "PathMan.h"
 
 
 class PathMan

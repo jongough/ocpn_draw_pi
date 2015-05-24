@@ -849,7 +849,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
                 pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
                 pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
-                m_pFoundODPoint->m_bBlink = false;
+                m_pFoundODPoint->m_iBlink--;
                 m_pFoundODPoint->m_bIsBeingEdited = false;
             }
             
@@ -1126,8 +1126,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
 
                     m_pSelectedPath->m_bPathIsSelected = !(seltype & SELTYPE_OCPNPOINT);
-                    if( m_pSelectedPath->m_bPathIsSelected )
-//                        m_pSelectedPath->Draw( dc, GetVP() );
+//                    if( m_pSelectedPath->m_bPathIsSelected ) {
+//                        m_pSelectedPath->m_iBlink++;
+                        //m_pSelectedPath->Draw( *g_pDC, *g_pivp );
+//                    }
                     seltype |= SELTYPE_PATHSEGMENT;
                 }
 
