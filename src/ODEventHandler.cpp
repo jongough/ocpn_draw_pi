@@ -113,19 +113,11 @@ void ODEventHandler::SetLatLon( double lat, double lon )
 ODEventHandler::~ODEventHandler()
 {
     //dtor
+    ODTimer1.Stop();
 }
-
-void ODEventHandler::OnTimerEvent(wxTimerEvent& event) 
-{ 
-    DEBUG("In OnTimerEvent");
-    DEBUG( event.GetId() );
-    m_parent->ProcessTimerEvent( event ); 
-} 
 
 void ODEventHandler::OnODTimer1( wxTimerEvent& event )
 {
-    DEBUG("In OnODTimer1");
-    DEBUG(g_ocpn_draw_pi->nBlinkerTick);
     g_ocpn_draw_pi->nBlinkerTick++;
     RequestRefresh( m_parentcanvas );
 }

@@ -52,7 +52,7 @@ class ODEventHandler : public wxEvtHandler
         ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, ODPoint *selectedODPoint);
         ~ODEventHandler();
         
-        void OnTimerEvent( wxTimerEvent &event );
+        void OnODTimer1(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
         void PopupMenu( int x, int y, int seltype );
@@ -60,8 +60,6 @@ class ODEventHandler : public wxEvtHandler
         void SetPoint ( ODPoint *point );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
-        
-        void OnODTimer1(wxTimerEvent& event);
         
     protected:
     private:
