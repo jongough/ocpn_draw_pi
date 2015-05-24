@@ -68,7 +68,7 @@ ODPoint::ODPoint()
     m_bPtIsSelected = false;
     m_bIsBeingEdited = false;
     m_bIsActive = false;
-    m_bBlink = false;
+    m_iBlink = 0;
     m_bIsInRoute = false;
     m_bIsInPath = false;
     m_bIsInBoundary = false;
@@ -117,7 +117,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_bPtIsSelected = orig->m_bPtIsSelected;
     m_bIsBeingEdited = orig->m_bIsBeingEdited;
     m_bIsActive = orig->m_bIsActive;
-    m_bBlink = orig->m_bBlink;
+    m_iBlink = orig->m_iBlink;
     m_bIsInRoute = orig->m_bIsInRoute;
     m_bIsInPath = orig->m_bIsInPath;
     m_bIsInBoundary = orig->m_bIsInBoundary;
@@ -171,7 +171,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_bPtIsSelected = false;
     m_bIsBeingEdited = false;
     m_bIsActive = false;
-    m_bBlink = false;
+    m_iBlink = 0;
     m_bIsInRoute = false;
     m_bIsInPath = false;
     m_bIsInBoundary = false;
@@ -321,7 +321,7 @@ void ODPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     if( m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected ) return;
 
     wxPen *pen;
-    if( m_bBlink ) pen = g_pPathMan->GetActiveODPointPen();
+    if( m_iBlink ) pen = g_pPathMan->GetActiveODPointPen();
     else pen = g_pPathMan->GetODPointPen();
 
 //    Substitue icon?
@@ -381,7 +381,7 @@ void ODPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 
     bool bDrawHL = false;
 
-    if( m_bBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
+    if( m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
@@ -437,7 +437,7 @@ void ODPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     CurrentRect_in_DC.width = hilitebox.width;
     CurrentRect_in_DC.height = hilitebox.height;
 
-    if( m_bBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
+    if( m_iBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
 
 }
 
@@ -548,7 +548,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     //  Highlite any selected point
     if( m_bPtIsSelected ) {
         wxColour hi_colour;
-        if( m_bBlink ){
+        if( m_iBlink ){
             wxPen *pen = g_pPathMan->GetActiveODPointPen();
             hi_colour = pen->GetColour();
         }
@@ -563,7 +563,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     bool bDrawHL = false;
 
 
-    if( m_bBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
+    if( m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
         bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
@@ -681,7 +681,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         dc.SetBrush( saveBrush );
     }
     
-    if( m_bBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
+    if( m_iBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
     
     //    This will be useful for fast icon redraws
     CurrentRect_in_DC.x = r.x + hilitebox.x;
@@ -689,7 +689,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     CurrentRect_in_DC.width = hilitebox.width;
     CurrentRect_in_DC.height = hilitebox.height;
 
-    if( m_bBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
+    if( m_iBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
 }
 #endif
 

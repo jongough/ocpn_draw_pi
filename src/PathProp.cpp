@@ -179,6 +179,7 @@ END_EVENT_TABLE()
 PathProp::PathProp()
 {
     //ctor
+    m_pPath = NULL;
 }
 
 PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
@@ -188,6 +189,7 @@ PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, co
     m_nSelected = 0;
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
+    m_pPath = NULL;
 
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
@@ -1222,22 +1224,21 @@ bool PathProp::SaveChanges( void )
 
 void PathProp::OnPathPropCancelClick( wxCommandEvent& event )
 {
-    //    Look in the route list to be sure the raoute is still available
-    //    (May have been deleted by RouteMangerDialog...)
+    //    Look in the path list to be sure the path is still available
+    //    (May have been deleted by PathMangerDialog...)
 
-    bool b_found_boundary = false;
     wxPathListNode *node = pPathList->GetFirst();
     while( node ) {
         Path *pPath = node->GetData();
 
         if( pPath == m_pPath ) {
-            b_found_boundary = true;
+            m_pPath->m_iBlink--;
+            m_pPath->ClearHighlights();
             break;
         }
         node = node->GetNext();
     }
 
-    if( b_found_boundary ) m_pPath->ClearHighlights();
 
     m_bStartNow = false;
 
@@ -1248,25 +1249,22 @@ void PathProp::OnPathPropCancelClick( wxCommandEvent& event )
 
 void PathProp::OnPathPropOkClick( wxCommandEvent& event )
 {
-    //    Look in the boundary list to be sure the boundary is still available
-    //    (May have been deleted by RouteManagerDialog...)
+    //    Look in the path list to be sure the path is still available
+    //    (May have been deleted by PathManagerDialog...)
 
-    bool b_found_boundary = false;
     wxPathListNode *node = pPathList->GetFirst();
     while( node ) {
         Path *pPath = node->GetData();
 
         if( pPath == m_pPath ) {
-            b_found_boundary = true;
+            m_pPath->m_iBlink--;
+            SaveChanges();              // write changes to globals and update config
+            m_pPath->ClearHighlights();
             break;
         }
         node = node->GetNext();
     }
 
-    if( b_found_boundary ) {
-        SaveChanges();              // write changes to globals and update config
-        m_pPath->ClearHighlights();
-    }
 
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
@@ -1298,7 +1296,14 @@ void PathProp::SetPathAndUpdate( Path *pB, bool only_points )
         //      long LMT_Offset = 0;                    // offset in seconds from UTC for given location (-1 hr / 15 deg W)
         m_tz_selection = 1;
 
+        if( m_pPath ) {
+            m_pPath->m_iBlink--;
+            if(m_pPath->m_iBlink < 0 ) 
+                m_pPath->m_iBlink = 0;
+        }
         m_pPath = pB;
+        m_pPath->m_iBlink++;
+        if(m_pPath->m_iBlink > 2) m_pPath->m_iBlink = 2;
         
         m_PathNameCtl->SetValue( m_pPath->m_PathNameString );
 

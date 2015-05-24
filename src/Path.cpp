@@ -73,6 +73,7 @@ Path::Path( void )
     m_path_length = 0.0;
     m_bVisible = true;
     m_bListed = true;
+    m_iBlink = 0;
     m_bDeleteOnArrival = false;
     m_width = STYLE_UNDEFINED;
     m_style = STYLE_UNDEFINED;
@@ -188,12 +189,12 @@ void Path::DrawPointWhich( ocpnDC& dc, int iPoint, wxPoint *rpn )
 
 void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
-/*    if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
+    if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
     else
         if( m_bPathIsActive ) dc.SetPen( *g_pPathMan->GetActivePathPen() );
         else
             dc.SetPen( *g_pPathMan->GetPathPen() );
-*/    
+    
     wxColour col;
     wxString colour;
 
@@ -241,6 +242,10 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     if( colour.IsNull() ) {
         colour = m_ActiveLineColour;
     }
+    
+    if( m_bVisible && m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
+        colour = m_InActiveLineColour;
+    
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
             m_col = ::GpxxColors[i];
@@ -879,11 +884,11 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
         while( node ) {
 
             ODPoint *pOp2 = node->GetData();
-            bool blink_save = pOp2->m_bBlink;
-            pOp2->m_bBlink = false;
+            bool blink_save = pOp2->m_iBlink;
+            pOp2->m_iBlink = false;
             ocpnDC odc_boundary( dc_boundary );
             pOp2->Draw( odc_boundary, NULL );
-            pOp2->m_bBlink = blink_save;
+            pOp2->m_iBlink = blink_save;
 
             wxRect r =  pOp2->CurrentRect_in_DC ;
             r.Inflate(m_hiliteWidth, m_hiliteWidth);        // allow for large hilite circles at segment ends
