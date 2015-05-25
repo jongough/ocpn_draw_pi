@@ -105,8 +105,8 @@ wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 wxString                g_default_ODPoint_icon;
-PathProp                *pPathPropDialog;
-PathManagerDialog       *pPathManagerDialog;
+PathProp                *g_pPathPropDialog;
+PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
@@ -550,17 +550,17 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             // show the Draw dialog
             nConfig_State = 1;
             //SetToolbarItemState( m_config_button_id, true );
-            if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-                pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
+                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
 
-            pPathManagerDialog->UpdatePathListCtrl();
-            pPathManagerDialog->UpdateODPointsListCtrl();
-            pPathManagerDialog->Show();
+            g_pPathManagerDialog->UpdatePathListCtrl();
+            g_pPathManagerDialog->UpdateODPointsListCtrl();
+            g_pPathManagerDialog->Show();
 
             //    Required if RMDialog is not STAY_ON_TOP
 #ifdef __WXOSX__
-            pPathManagerDialog->Centre();
-            pPathManagerDialog->Raise();
+            g_pPathManagerDialog->Centre();
+            g_pPathManagerDialog->Raise();
 #endif
             nConfig_State = 0;
             //SetToolbarItemState( m_config_button_id, false );
@@ -877,12 +877,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             
             //    Update the PathProperties Dialog, if currently shown
-            if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) {
+            if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) {
                 if( m_pSelectedPath->pODPointList ) {
                     for( unsigned int ip = 0; ip < m_pSelectedPath->pODPointList->GetCount(); ip++ ) {
                         Path *pp = (Path *) m_pSelectedPath->pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
-                            pPathPropDialog->SetPathAndUpdate( pp, true );
+                            g_pPathPropDialog->SetPathAndUpdate( pp, true );
                         }
                     }
                 }
@@ -931,7 +931,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedPath->SetHiLite( 0 );
                     
                     //    Update the PathProperties Dialog, if currently shown
-                    if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) pPathPropDialog->UpdateProperties( m_pSelectedPath );
+                    if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) g_pPathPropDialog->UpdateProperties( m_pSelectedPath );
                     if( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
                     bRefresh = TRUE;
@@ -1445,12 +1445,12 @@ void ocpn_draw_pi::FinishBoundary( void )
         }
             
 
-        if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
-            pPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
+        if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
+            g_pPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
         }
 
-        if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-            pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+            g_pPathManagerDialog->UpdatePathListCtrl();
 
     }
     

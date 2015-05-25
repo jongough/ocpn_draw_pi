@@ -133,7 +133,7 @@ enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 extern PathList *pPathList;
 extern BoundaryList *pBoundaryList;
 extern LayerList *pLayerList;
-extern PathProp *pPathPropDialog;
+extern PathProp *g_pPathPropDialog;
 extern PathMan  *g_pPathMan;
 extern ODPointList    *pODPointList;
 extern ODConfig  *pODConfig;
@@ -918,7 +918,7 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
         m_lastPathItem = -1;
         UpdatePathListCtrl();
 
-        if( pPathPropDialog ) pPathPropDialog->Hide();
+        if( g_pPathPropDialog ) g_pPathPropDialog->Hide();
         // TODO fix up undo
         //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
@@ -939,18 +939,18 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
     if( !path ) return;
 
     ShowPathPropertiesDialog ( path );
-/*    if( NULL == pPathPropDialog )          // There is one global instance of the PathProp Dialog
-        pPathPropDialog = new PathProp( GetParent() );
+/*    if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
+        g_pPathPropDialog = new PathProp( GetParent() );
 
-    pPathPropDialog->SetPathAndUpdate( path );
-    pPathPropDialog->UpdateProperties( path );
+    g_pPathPropDialog->SetPathAndUpdate( path );
+    g_pPathPropDialog->UpdateProperties( path );
     if( !path->m_bIsInLayer ) {
         if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
-            pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
+            g_pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
         else {
             wxString sTitle( path->m_sTypeString );
             sTitle.append( wxS(" Properties") );
-            pPathPropDialog->SetDialogTitle( sTitle );
+            g_pPathPropDialog->SetDialogTitle( sTitle );
         }
     }
     else {
@@ -963,12 +963,12 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
             caption.append( wxS(" Properties, Layer:") );
         }
         caption.append( GetLayerName( path->m_LayerID ) );
-        pPathPropDialog->SetDialogTitle( caption );
+        g_pPathPropDialog->SetDialogTitle( caption );
         
     }
 
-    if( !pPathPropDialog->IsShown() )
-        pPathPropDialog->Show();
+    if( !g_pPathPropDialog->IsShown() )
+        g_pPathPropDialog->Show();
     
     UpdatePathListCtrl();
 
@@ -978,20 +978,20 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
 
 void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
 {
-    if( NULL == pPathPropDialog ) {          // There is one global instance of the PathProp Dialog
-        if( path->m_sTypeString == wxS("Path") ) pPathPropDialog = new PathProp( GetParent() );
-        else if( path->m_sTypeString == wxS("Boundary") ) pPathPropDialog = new BoundaryProp( GetParent() );
+    if( NULL == g_pPathPropDialog ) {          // There is one global instance of the PathProp Dialog
+        if( path->m_sTypeString == wxS("Path") ) g_pPathPropDialog = new PathProp( GetParent() );
+        else if( path->m_sTypeString == wxS("Boundary") ) g_pPathPropDialog = new BoundaryProp( GetParent() );
     }
 
-    pPathPropDialog->SetPathAndUpdate( path );
-    pPathPropDialog->UpdateProperties( path );
+    g_pPathPropDialog->SetPathAndUpdate( path );
+    g_pPathPropDialog->UpdateProperties( path );
     if( !path->m_bIsInLayer ) {
         if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
-            pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
+            g_pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
         else {
             wxString sTitle( path->m_sTypeString );
             sTitle.append( wxS(" Properties") );
-            pPathPropDialog->SetDialogTitle( sTitle );
+            g_pPathPropDialog->SetDialogTitle( sTitle );
         }
     }
     else {
@@ -1004,12 +1004,12 @@ void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
             caption.append( wxS(" Properties, Layer:") );
         }
         caption.append( GetLayerName( path->m_LayerID ) );
-        pPathPropDialog->SetDialogTitle( caption );
+        g_pPathPropDialog->SetDialogTitle( caption );
         
     }
 
-    if( !pPathPropDialog->IsShown() )
-        pPathPropDialog->Show();
+    if( !g_pPathPropDialog->IsShown() )
+        g_pPathPropDialog->Show();
     
     UpdatePathListCtrl();
 

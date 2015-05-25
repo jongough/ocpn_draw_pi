@@ -53,7 +53,7 @@ extern wxString    g_ActivePathLineColour;
 extern wxString    g_InActivePathLineColour;
 extern wxString    g_ActivePathFillColour;
 extern wxString    g_InActivePathFillColour;
-extern PathProp    *pPathPropDialog;
+extern PathProp    *g_pPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern wxString     g_sODPointIconName;
 
@@ -1155,8 +1155,8 @@ void Path::RemovePointFromPath( ODPoint* point, Path* path )
     //  Add this point back into the selectables
     pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
 
-    if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
-        pPathPropDialog->SetPathAndUpdate( path, true );
+    if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
+        g_pPathPropDialog->SetPathAndUpdate( path, true );
     }
 
 }

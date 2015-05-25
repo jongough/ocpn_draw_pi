@@ -47,7 +47,7 @@
 extern PathMan *g_pPathMan;
 extern ODConfig *pODConfig;
 extern ODSelect *pODSelect;
-extern PathManagerDialog *pPathManagerDialog;
+extern PathManagerDialog *g_pPathManagerDialog;
 extern ODPointman *pODPointMan;
 extern ChartCanvas *cc1;
 extern MyFrame *gFrame;
@@ -131,7 +131,7 @@ void doUndoDeleteODPoint( UndoAction* action )
     pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
     pODConfig->AddNewODPoint( point, -1 );
     if( NULL != pODPointMan ) pODPointMan->AddODPoint( point );
-    if( pPathManagerDialog && pPathManagerDialog->IsShown() ) pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }
 
 void doRedoDeleteODPoint( UndoAction* action )
@@ -140,7 +140,7 @@ void doRedoDeleteODPoint( UndoAction* action )
     pODConfig->DeleteODPoint( point );
     pODSelect->DeleteSelectablePoint( point, SELTYPE_OCPNPOINT );
     if( NULL != pODPointMan ) pODPointMan->RemoveODPoint( point );
-    if( pPathManagerDialog && pPathManagerDialog->IsShown() ) pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }
 
 void doUndoAppenODPoint( UndoAction* action )

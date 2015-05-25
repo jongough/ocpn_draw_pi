@@ -43,20 +43,21 @@
 #include <wx/window.h>
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
-extern PathManagerDialog *pPathManagerDialog;
-extern ODSelect      *pODSelect;
-extern ODConfig  *pODConfig;
+extern PathManagerDialog *g_pPathManagerDialog;
+extern ODSelect         *pODSelect;
+extern ODConfig         *pODConfig;
 extern PlugIn_ViewPort *g_pivp;
 extern ChartCanvas     *ocpncc1;
-extern PathProp       *pPathPropDialog;
+extern PathProp         *g_pPathPropDialog;
 extern PathMan          *g_pPathMan;
+
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
 extern Path             *g_PathToEdit;
 extern PointMan         *pODPointMan;
 extern bool             g_bShowMag;
 extern bool             g_bConfirmObjectDelete;
-extern ODRolloverWin     *g_pPathRolloverWin;
-extern SelectItem      *g_pRolloverPathSeg;
+extern ODRolloverWin    *g_pPathRolloverWin;
+extern SelectItem       *g_pRolloverPathSeg;
 extern int              g_cursor_x;
 extern int              g_cursor_y;
 
@@ -118,8 +119,11 @@ ODEventHandler::~ODEventHandler()
 
 void ODEventHandler::OnODTimer1( wxTimerEvent& event )
 {
-    g_ocpn_draw_pi->nBlinkerTick++;
-    RequestRefresh( m_parentcanvas );
+    g_ocpn_draw_pi->nBlinkerTick++; 
+    if( ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
+        ( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) ||
+        ( g_pPathPropDialog && g_pPathPropDialog->IsShown() ) )
+        RequestRefresh( m_parentcanvas );
 }
 
 void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
@@ -269,10 +273,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     switch( event.GetId() )
     {            
         case ID_PATH_MENU_PROPERTIES:
-            if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-                pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
+                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
-            pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
         case ID_PATH_MENU_MOVE_POINT:
@@ -293,8 +297,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
             pODConfig->UpdatePath( m_pSelectedPath );
             
-            if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
-                pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+            if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
+                g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
             }
             
             break;
@@ -315,12 +319,12 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 
                 if( !g_pPathMan->DeletePath( m_pSelectedPath ) )
                     break;
-                if( pPathPropDialog && ( pPathPropDialog->IsShown()) && (m_pSelectedPath == pPathPropDialog->GetPath()) ) {
-                    pPathPropDialog->Hide();
+                if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown()) && (m_pSelectedPath == g_pPathPropDialog->GetPath()) ) {
+                    g_pPathPropDialog->Hide();
                 }
                 
-                if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-                    pPathManagerDialog->UpdatePathListCtrl();
+                if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+                    g_pPathManagerDialog->UpdatePathListCtrl();
                 
                 if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
                     g_pODPointPropDialog->ValidateMark();
@@ -362,10 +366,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_OCPNPOINT_MENU_PROPERTIES:
-            if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-                pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
+                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
-            pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, ocpncc1 );
+            g_pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, ocpncc1 );
             m_pFoundODPoint = NULL;
             break;
         case ID_PATH_MENU_ACTPOINT:
@@ -424,7 +428,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->DeletePoint( m_pFoundODPoint );
-                if( pPathPropDialog && pPathPropDialog->IsShown() ) pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+                if( g_pPathPropDialog && g_pPathPropDialog->IsShown() ) g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
@@ -460,8 +464,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                         pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }
                 
-                if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-                    pPathManagerDialog->UpdateODPointsListCtrl();
+                if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+                    g_pPathManagerDialog->UpdateODPointsListCtrl();
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;

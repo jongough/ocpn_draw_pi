@@ -63,8 +63,8 @@ extern PointMan        *pWayPointMan;
 extern ChartCanvas        *ocpncc1;
 extern ODSelect        *pODSelect;
 extern PathMan           *g_pPathMan;
-extern PathManagerDialog *pPathManagerDialog;
-extern PathProp       *pPathPropDialog;
+extern PathManagerDialog *g_pPathManagerDialog;
+extern PathProp       *g_pPathPropDialog;
 extern Track              *g_pActiveTrack;
 extern PathList       *pPathList;
 extern PlugInManager      *g_OD_pi_manager;
@@ -1269,8 +1269,8 @@ void PathProp::OnPathPropOkClick( wxCommandEvent& event )
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
 
-    if( pPathManagerDialog && pPathManagerDialog->IsShown() ) {
-        pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) {
+        g_pPathManagerDialog->UpdatePathListCtrl();
     }
 
     Hide();
