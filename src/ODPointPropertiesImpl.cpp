@@ -183,6 +183,12 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     event.Skip();
 }
 
+void ODPointPropertiesImpl::OnPointPropertiesClose( wxCloseEvent& event )
+{
+    wxCommandEvent nullEvent;
+    OnPointPropertiesCancelClick( nullEvent );
+}
+
 void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )
 {
     // TODO: Implement OnPointPropertiesCancelClick

@@ -85,6 +85,7 @@ public:
 
     void SetColorScheme(ColorScheme cs);
     void SetDialogTitle(const wxString & title);
+    void OnPathPropCloseClick( wxCloseEvent& event );
     void OnPathPropCancelClick( wxCommandEvent& event );
     void OnPathPropOkClick( wxCommandEvent& event );
     void OnPathPropListClick( wxListEvent& event );

@@ -170,6 +170,7 @@ IMPLEMENT_DYNAMIC_CLASS( PathProp, wxDialog )
 BEGIN_EVENT_TABLE( PathProp, wxDialog )
     EVT_BUTTON( ID_PATHPROP_CANCEL, PathProp::OnPathPropCancelClick )
     EVT_BUTTON( ID_PATHPROP_OK, PathProp::OnPathPropOkClick )
+    EVT_CLOSE( PathProp::OnPathPropCloseClick )
 END_EVENT_TABLE()
 
 /*!
@@ -1220,6 +1221,13 @@ bool PathProp::SaveChanges( void )
     }
 
     return true;
+}
+
+void PathProp::OnPathPropCloseClick(wxCloseEvent& event)
+{
+    wxCommandEvent nullEvent;
+    OnPathPropCancelClick( nullEvent );
+    
 }
 
 void PathProp::OnPathPropCancelClick( wxCommandEvent& event )

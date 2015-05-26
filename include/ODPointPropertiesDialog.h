@@ -80,6 +80,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxButton* m_Cancel;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnPointPropertiesClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void onRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
