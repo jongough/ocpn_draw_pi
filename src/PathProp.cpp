@@ -63,8 +63,8 @@ extern PointMan        *pWayPointMan;
 extern ChartCanvas        *ocpncc1;
 extern ODSelect        *pODSelect;
 extern PathMan           *g_pPathMan;
-extern PathManagerDialog *pPathManagerDialog;
-extern PathProp       *pPathPropDialog;
+extern PathManagerDialog *g_pPathManagerDialog;
+extern PathProp       *g_pPathPropDialog;
 extern Track              *g_pActiveTrack;
 extern PathList       *pPathList;
 extern PlugInManager      *g_OD_pi_manager;
@@ -170,6 +170,7 @@ IMPLEMENT_DYNAMIC_CLASS( PathProp, wxDialog )
 BEGIN_EVENT_TABLE( PathProp, wxDialog )
     EVT_BUTTON( ID_PATHPROP_CANCEL, PathProp::OnPathPropCancelClick )
     EVT_BUTTON( ID_PATHPROP_OK, PathProp::OnPathPropOkClick )
+    EVT_CLOSE( PathProp::OnPathPropCloseClick )
 END_EVENT_TABLE()
 
 /*!
@@ -1222,6 +1223,13 @@ bool PathProp::SaveChanges( void )
     return true;
 }
 
+void PathProp::OnPathPropCloseClick(wxCloseEvent& event)
+{
+    wxCommandEvent nullEvent;
+    OnPathPropCancelClick( nullEvent );
+    
+}
+
 void PathProp::OnPathPropCancelClick( wxCommandEvent& event )
 {
     //    Look in the path list to be sure the path is still available
@@ -1269,8 +1277,8 @@ void PathProp::OnPathPropOkClick( wxCommandEvent& event )
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
 
-    if( pPathManagerDialog && pPathManagerDialog->IsShown() ) {
-        pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) {
+        g_pPathManagerDialog->UpdatePathListCtrl();
     }
 
     Hide();

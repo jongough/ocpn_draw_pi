@@ -112,6 +112,7 @@ protected:
     void OnExtDescriptionClick( wxCommandEvent& event );
     void OnPointPropertiesOKClick( wxCommandEvent& event );
     void OnPointPropertiesCancelClick( wxCommandEvent& event );
+    void OnPointPropertiesClose( wxCloseEvent& event );
     void OnCopyPasteLatLon( wxCommandEvent& event );
     
     void SaveChanges();

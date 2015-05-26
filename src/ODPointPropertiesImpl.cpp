@@ -49,8 +49,8 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PointMan     *pODPointMan;
 extern PathMan      *g_pPathMan;
 extern ODConfig  *pODConfig;
-extern PathManagerDialog *pPathManagerDialog;
-extern PathProp     *pPathPropDialog;
+extern PathManagerDialog *g_pPathManagerDialog;
+extern PathProp     *g_pPathPropDialog;
 
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
@@ -173,14 +173,20 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     }
     Show( false );
 
-    if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-        pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdateODPointsListCtrl();
         
-    if( pPathPropDialog && pPathPropDialog->IsShown() )
-        pPathPropDialog->UpdateProperties();
+    if( g_pPathPropDialog && g_pPathPropDialog->IsShown() )
+        g_pPathPropDialog->UpdateProperties();
 
     SetClientSize(m_defaultClientSize);
     event.Skip();
+}
+
+void ODPointPropertiesImpl::OnPointPropertiesClose( wxCloseEvent& event )
+{
+    wxCommandEvent nullEvent;
+    OnPointPropertiesCancelClick( nullEvent );
 }
 
 void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )

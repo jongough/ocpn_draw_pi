@@ -105,8 +105,8 @@ wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 wxString                g_default_ODPoint_icon;
-PathProp                *pPathPropDialog;
-PathManagerDialog       *pPathManagerDialog;
+PathProp                *g_pPathPropDialog;
+PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
@@ -339,6 +339,25 @@ int ocpn_draw_pi::Init(void)
                 OCPN_DRAW_POSITION, 0, this);
     }
 
+    // Set tool to show in tool bar
+    switch (m_Mode)
+    {
+        case ID_MODE_BOUNDARY:
+            // Boundary
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+            break;
+            
+        case ID_MODE_POINT:
+            // Point
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
+            break;
+            
+        default:
+            // Boundary
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+            break;
+    }
+    
     // TODO fix up undo
     //    undo = new Undo();
     // Create the Context Menu Items
@@ -549,25 +568,26 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
         if( 0 == nConfig_State ){
             // show the Draw dialog
             nConfig_State = 1;
-            //SetToolbarItemState( m_config_button_id, true );
-            if( NULL == pPathManagerDialog )         // There is one global instance of the Dialog
-                pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+            SetToolbarItemState( m_config_button_id, true );
+            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
+                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
 
-            pPathManagerDialog->UpdatePathListCtrl();
-            pPathManagerDialog->UpdateODPointsListCtrl();
-            pPathManagerDialog->Show();
+            g_pPathManagerDialog->UpdatePathListCtrl();
+            g_pPathManagerDialog->UpdateODPointsListCtrl();
+            g_pPathManagerDialog->Show();
+            
 
             //    Required if RMDialog is not STAY_ON_TOP
 #ifdef __WXOSX__
-            pPathManagerDialog->Centre();
-            pPathManagerDialog->Raise();
+            g_pPathManagerDialog->Centre();
+            g_pPathManagerDialog->Raise();
 #endif
             nConfig_State = 0;
-            //SetToolbarItemState( m_config_button_id, false );
+            SetToolbarItemState( m_config_button_id, false );
             
         } else {
             nConfig_State = 0;
-            //SetToolbarItemState( m_config_button_id, false );
+            SetToolbarItemState( m_config_button_id, false );
         }
     }
     else if ( id == m_draw_button_id ) {
@@ -578,12 +598,12 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nBoundary_State = 1;
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     ocpncc1->SetCursor( *pCurrentCursor );
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     FinishBoundary();
-                    //SetToolbarItemState( m_draw_button_id, false );
+                    SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
                 }
                 break;
@@ -593,11 +613,11 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPoint_State = 1;
                     pCurrentCursor = ocpncc1->pCursorCross;
                     ocpncc1->SetCursor( *pCurrentCursor );
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
-                    //SetToolbarItemState( m_draw_button_id, false );
+                    SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
                 }
                 break;
@@ -645,6 +665,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
+        pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
         
     }
 }
@@ -687,6 +708,7 @@ void ocpn_draw_pi::LoadConfig()
         if(umv.Len())
             umv.ToDouble( &g_UserVar );
         pConf->Read( wxS( "KeepODNavobjBackups" ), &g_navobjbackups, 5 );
+        pConf->Read( wxS( "CurrentDrawMode" ), &m_Mode, 0 );
         
         // TODO implement this into the prefereces
         g_bConfirmObjectDelete = TRUE;
@@ -761,14 +783,14 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     FinishBoundary();
                     pCurrentCursor = ocpncc1->pCursorArrow;
                     ocpncc1->SetCursor( *pCurrentCursor ); 
-                    //SetToolbarItemState( m_draw_button_id, false );
+                    SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
                     nPoint_State = 0;
                     pCurrentCursor = ocpncc1->pCursorArrow;
                     ocpncc1->SetCursor( *pCurrentCursor ); 
-                    //SetToolbarItemState( m_draw_button_id, false );
+                    SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else bret = FALSE;
@@ -877,12 +899,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             
             //    Update the PathProperties Dialog, if currently shown
-            if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) {
+            if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) {
                 if( m_pSelectedPath->pODPointList ) {
                     for( unsigned int ip = 0; ip < m_pSelectedPath->pODPointList->GetCount(); ip++ ) {
                         Path *pp = (Path *) m_pSelectedPath->pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
-                            pPathPropDialog->SetPathAndUpdate( pp, true );
+                            g_pPathPropDialog->SetPathAndUpdate( pp, true );
                         }
                     }
                 }
@@ -931,7 +953,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedPath->SetHiLite( 0 );
                     
                     //    Update the PathProperties Dialog, if currently shown
-                    if( ( NULL != pPathPropDialog ) && ( pPathPropDialog->IsShown() ) ) pPathPropDialog->UpdateProperties( m_pSelectedPath );
+                    if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) g_pPathPropDialog->UpdateProperties( m_pSelectedPath );
                     if( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
                     bRefresh = TRUE;
@@ -972,7 +994,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Point
                     pCurrentCursor = ocpncc1->pCursorCross;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
                     nPoint_State = 1;
                     nBoundary_State = 0;
                     break;
@@ -981,7 +1003,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
                     break;
             }
             bret = TRUE;
@@ -990,7 +1012,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FinishBoundary();
             pCurrentCursor = ocpncc1->pCursorArrow;
             ocpncc1->SetCursor( *pCurrentCursor ); 
-            //SetToolbarItemState( m_draw_button_id, false );
+            SetToolbarItemState( m_draw_button_id, false );
             bRefresh = TRUE;
 //            RequestRefresh( m_parent_window );
             bret = TRUE;
@@ -1421,7 +1443,7 @@ void ocpn_draw_pi::FinishBoundary( void )
     nBoundary_State = 0;
     m_prev_pMousePoint = NULL;
 
-    //SetToolbarItemState( m_draw_button_id, false );
+    SetToolbarItemState( m_draw_button_id, false );
 //    ocpncc1->SetCursor( *pCursorArrow );
     m_bDrawingBoundary = false;
     
@@ -1445,12 +1467,12 @@ void ocpn_draw_pi::FinishBoundary( void )
         }
             
 
-        if( pPathPropDialog && ( pPathPropDialog->IsShown() ) ) {
-            pPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
+        if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
+            g_pPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
         }
 
-        if( pPathManagerDialog && pPathManagerDialog->IsShown() )
-            pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+            g_pPathManagerDialog->UpdatePathListCtrl();
 
     }
     
