@@ -646,6 +646,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
+        pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
         
     }
 }
@@ -688,6 +689,7 @@ void ocpn_draw_pi::LoadConfig()
         if(umv.Len())
             umv.ToDouble( &g_UserVar );
         pConf->Read( wxS( "KeepODNavobjBackups" ), &g_navobjbackups, 5 );
+        pConf->Read( wxS( "CurrentDrawMode" ), &m_Mode, 0 );
         
         // TODO implement this into the prefereces
         g_bConfirmObjectDelete = TRUE;
