@@ -339,6 +339,25 @@ int ocpn_draw_pi::Init(void)
                 OCPN_DRAW_POSITION, 0, this);
     }
 
+    // Set tool to show in tool bar
+    switch (m_Mode)
+    {
+        case ID_MODE_BOUNDARY:
+            // Boundary
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+            break;
+            
+        case ID_MODE_POINT:
+            // Point
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
+            break;
+            
+        default:
+            // Boundary
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+            break;
+    }
+    
     // TODO fix up undo
     //    undo = new Undo();
     // Create the Context Menu Items
