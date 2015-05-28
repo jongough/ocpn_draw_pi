@@ -31,11 +31,11 @@
 #include "ODPoint.h"
 #include "Boundary.h"
 
-extern PathList         *pPathList;
-extern ODSelect       *pODSelect;
+extern PathList         *g_pPathList;
+extern ODSelect       *g_pODSelect;
 pugi::xml_node          gpx_path_child;
 pugi::xml_node          gpx_path_root;
-extern ODConfig   *pODConfig;
+extern ODConfig   *g_pODConfig;
 extern PointMan         *pODPointMan;
 extern PathMan          *g_pPathMan;
 
@@ -291,8 +291,8 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
 
-    ODPointList *pODPointList = pPath->pODPointList;
-    wxODPointListNode *node2 = pODPointList->GetFirst();
+    ODPointList *g_pODPointList = pPath->g_pODPointList;
+    wxODPointListNode *node2 = g_pODPointList->GetFirst();
     ODPoint *prp;
     
     while( node2  ) {
@@ -434,7 +434,7 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
 {
     pugi::xml_node child_ext;
     // Paths
-    wxPathListNode *node1 = pPathList->GetFirst();
+    wxPathListNode *node1 = g_pPathList->GetFirst();
 //    child_ext = m_gpx_root.append_child("extensions");
     while( node1 ) {
         Path *pBoundary = node1->GetData();
@@ -483,7 +483,7 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                 if( !pExisting ) {
                     if( NULL != pODPointMan )
                         pODPointMan->AddODPoint( pOp );
-                    pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
+                    g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
                 else
                     delete pOp;
@@ -903,7 +903,7 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
             if( PathExists( pTentPath->m_GUID ) ) { //We are importing a different path with the same guid, so let's generate it a new guid
                             pTentPath->m_GUID = pODPointMan->CreateGUID( NULL );
                             //Now also change guids for the routepoints
-                            wxODPointListNode *pthisnode = ( pTentPath->pODPointList )->GetFirst();
+                            wxODPointListNode *pthisnode = ( pTentPath->g_pODPointList )->GetFirst();
                             while( pthisnode ) {
                                 ODPoint *pP =  pthisnode->GetData();
                                 if( pP && pP->m_bIsolatedMark )
@@ -912,7 +912,7 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
                             }
             }
             
-        pPathList->Append( pTentPath );
+        g_pPathList->Append( pTentPath );
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
         
                 
@@ -926,14 +926,14 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
         float prev_rlat = 0., prev_rlon = 0.;
         ODPoint *prev_pConfPoint = NULL;
         
-        wxODPointListNode *node = pTentPath->pODPointList->GetFirst();
+        wxODPointListNode *node = pTentPath->g_pODPointList->GetFirst();
         while( node ) {
             ODPoint *pop = node->GetData();
             
             if( ip )
-                pODSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
+                g_pODSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
                                                     pop->m_lon, prev_pConfPoint, pop, pTentPath );
-            pODSelect->AddSelectableODPoint(pop->m_lat, pop->m_lon, pop);
+            g_pODSelect->AddSelectableODPoint(pop->m_lat, pop->m_lon, pop);
             prev_rlat = pop->m_lat;
             prev_rlon = pop->m_lon;
             prev_pConfPoint = pop;
@@ -946,7 +946,7 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
     else {
         
         // walk the path, deleting points used only by this path
-        wxODPointListNode *pnode = ( pTentPath->pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( pTentPath->g_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *pop = pnode->GetData();
             
@@ -956,9 +956,9 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
             if( pcontainer_path == NULL ) {
                 pop->m_bIsInPath = false; // Take this point out of this (and only) track/route
                 if( !pop->m_bKeepXPath ) {
-                    pODConfig->m_bSkipChangeSetUpdate = true;
-                    pODConfig->DeleteODPoint( pop );
-                    pODConfig->m_bSkipChangeSetUpdate = false;
+                    g_pODConfig->m_bSkipChangeSetUpdate = true;
+                    g_pODConfig->DeleteODPoint( pop );
+                    g_pODConfig->m_bSkipChangeSetUpdate = false;
                     delete pop;
                 }
             }
@@ -972,7 +972,7 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
                     
 Path *ODNavObjectChanges::PathExists( const wxString& guid )
 {
-    wxPathListNode *path_node = pPathList->GetFirst();
+    wxPathListNode *path_node = g_pPathList->GetFirst();
 
     while( path_node ) {
         Path *ppath = path_node->GetData();
@@ -986,7 +986,7 @@ Path *ODNavObjectChanges::PathExists( const wxString& guid )
 
 Path *ODNavObjectChanges::PathExists( Path * pTentPath )
 {
-    wxPathListNode *path_node = pPathList->GetFirst();
+    wxPathListNode *path_node = g_pPathList->GetFirst();
     while( path_node ) {
         Path *ppath = path_node->GetData();
 
@@ -1025,14 +1025,14 @@ bool ODNavObjectChanges::ApplyChanges(void)
                 if(!strcmp(child.first_child().value(), "add") ){
                     if( !pExisting ) 
                         pODPointMan->AddODPoint( pOp );
-                    pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
+                    g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }                    
                 
                 else if(!strcmp(child.first_child().value(), "update") ){
                     if( pExisting )
                         pODPointMan->RemoveODPoint( pExisting );
                     pODPointMan->AddODPoint( pOp );
-                    pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
+                    g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
                 
                 else if(!strcmp(child.first_child().value(), "delete") ){
@@ -1064,9 +1064,9 @@ bool ODNavObjectChanges::ApplyChanges(void)
                     else if(!strcmp(child.first_child().value(), "delete") ){
                         Path *pExisting = PathExists( pPath->m_GUID );
                         if(pExisting){
-                            pODConfig->m_bSkipChangeSetUpdate = true;
+                            g_pODConfig->m_bSkipChangeSetUpdate = true;
                             g_pPathMan->DeletePath( pExisting );
-                            pODConfig->m_bSkipChangeSetUpdate = false;
+                            g_pODConfig->m_bSkipChangeSetUpdate = false;
                         }
                     }
                 
@@ -1098,7 +1098,7 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
             
             if(pOp) {
                 pODPointMan->AddODPoint( pOp );
-                pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
+                g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 n_obj++;
             }
             else
@@ -1133,17 +1133,17 @@ void ODNavObjectChanges::UpdatePathA( Path *pTentPath )
 
     if( path ) {
         if ( pTentPath->GetnPoints() < path->GetnPoints() ) {
-            wxODPointListNode *node = path->pODPointList->GetFirst();
+            wxODPointListNode *node = path->g_pODPointList->GetFirst();
             while( node ) {
                 ODPoint *pFP = node->GetData();
                 ODPoint *pOP = pTentPath->GetPoint( pFP->m_GUID );
                 if (!pOP ) {
                     path->RemovePoint( pFP );
-                    node = path->pODPointList->GetFirst(); // start at begining of list again
+                    node = path->g_pODPointList->GetFirst(); // start at begining of list again
                 } else node = node->GetNext();
             }
         }
-        wxODPointListNode *node = pTentPath->pODPointList->GetFirst();
+        wxODPointListNode *node = pTentPath->g_pODPointList->GetFirst();
         ODPoint *save_ex_op = NULL;
         while( node ) {
             ODPoint *pop = node->GetData();
@@ -1161,10 +1161,10 @@ void ODNavObjectChanges::UpdatePathA( Path *pTentPath )
             }
             node = node->GetNext();
         }
-        pODSelect->DeleteAllSelectableODPoints( path );
-        pODSelect->DeleteAllSelectablePathSegments( path );
-        pODSelect->AddAllSelectablePathSegments( path );
-        pODSelect->AddAllSelectableODPoints( path );
+        g_pODSelect->DeleteAllSelectableODPoints( path );
+        g_pODSelect->DeleteAllSelectablePathSegments( path );
+        g_pODSelect->AddAllSelectablePathSegments( path );
+        g_pODSelect->AddAllSelectableODPoints( path );
     } else {
         InsertPathA( pTentPath );
     }

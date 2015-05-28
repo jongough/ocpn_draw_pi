@@ -88,7 +88,7 @@ static const long long lNaN = 0xfff8000000000000;
 
 
 ocpn_draw_pi            *g_ocpn_draw_pi;
-PathList                *pPathList;
+PathList                *g_pPathList;
 PointMan                *pODPointMan;
 bool                    g_bODIsNewLayer;
 int                     g_ODLayerIdx;
@@ -98,8 +98,8 @@ double                  g_dLat;
 double                  g_dLon;
 int                     g_cursor_x;
 int                     g_cursor_y;
-ODSelect              *pODSelect;
-ODConfig          *pODConfig;
+ODSelect              *g_pODSelect;
+ODConfig          *g_pODConfig;
 float                   g_ODGLMinSymbolLineWidth;
 wxString                *g_SData_Locn;
 void                    *g_ppimgr;
@@ -111,8 +111,8 @@ ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
 //ocpnStyle::StyleManager *g_ODStyleManager;
-BoundaryList            *pBoundaryList;
-ODPointList           *pODPointList;
+BoundaryList            *g_pBoundaryList;
+ODPointList           *g_pODPointList;
 ChartCanvas             *ocpncc1;
 Path                    *g_PathToEdit;
 ODRolloverWin           *g_pPathRolloverWin;
@@ -159,7 +159,7 @@ int             g_LayerIdx;
 bool            g_bShowLayers;
 wxString        g_VisibleLayers;
 wxString        g_InvisibleLayers;
-LayerList       *pLayerList;
+LayerList       *g_pLayerList;
 int             g_navobjbackups;
 
 ODPoint       *pAnchorWatchPoint1;
@@ -284,8 +284,8 @@ ocpn_draw_pi::~ocpn_draw_pi()
 {
 //    RemovePlugInTool(m_config_button_id);
 //    RemovePlugInTool(m_draw_button_id);
-    if( pODConfig ) {
-        pODConfig->UpdateNavObj();
+    if( g_pODConfig ) {
+        g_pODConfig->UpdateNavObj();
         SaveConfig();
     }
     
@@ -321,13 +321,13 @@ int ocpn_draw_pi::Init(void)
     m_parent_window = GetOCPNCanvasWindow();
 
     m_pODConfig = GetOCPNConfigObject();
-    pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
-    pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( pODConfig->m_sODNavObjSetChangesFile );
-//    pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
-    wxString sChangesFile = pODConfig->m_sODNavObjSetChangesFile;
-//    pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
+    g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
+    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( g_pODConfig->m_sODNavObjSetChangesFile );
+//    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
+    wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
+//    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
     
-    pODSelect = new ODSelect();
+    g_pODSelect = new ODSelect();
     
     LoadConfig();
     if(m_bLOGShowIcon) {
@@ -407,7 +407,7 @@ int ocpn_draw_pi::Init(void)
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
     
-    pODConfig->LoadNavObjects();
+    g_pODConfig->LoadNavObjects();
 
 
     SendPluginMessage(wxS("OCPN_DRAW_READY_FOR_REQUESTS"), wxS("TRUE"));
@@ -715,11 +715,11 @@ void ocpn_draw_pi::LoadConfig()
 
     }
     
-    pODPointList = new ODPointList;
-    pBoundaryList = new BoundaryList;
-    pPathList = new PathList;
+    g_pODPointList = new ODPointList;
+    g_pBoundaryList = new BoundaryList;
+    g_pPathList = new PathList;
     //    Layers
-    pLayerList = new LayerList;
+    g_pLayerList = new LayerList;
 
 }
 
@@ -843,7 +843,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             pCurrentCursor = ocpncc1->pCursorCross;
             if( !m_pFoundODPoint ) {
                 SelectItem *pFindPP;
-                pFindPP = pODSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
+                pFindPP = g_pODSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
                 if( pFindPP ) {
                     m_pFoundODPoint = (ODPoint *)pFindPP->m_pData1;
                 }
@@ -866,31 +866,31 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_bODPointEditing = FALSE;
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
             if( m_pFoundODPoint ) {
-                //pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
-                pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
-                pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-                pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-                pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
+                //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
+                g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+                g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
                 m_pFoundODPoint->m_iBlink--;
                 m_pFoundODPoint->m_bIsBeingEdited = false;
             }
             
             m_pSelectedPath->FinalizeForRendering();
             m_pSelectedPath->UpdateSegmentDistances();
-            bool prev_bskip = pODConfig->m_bSkipChangeSetUpdate;
-            pODConfig->m_bSkipChangeSetUpdate = false;
-            pODConfig->UpdatePath( m_pSelectedPath );
-            pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
+            bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
+            g_pODConfig->m_bSkipChangeSetUpdate = false;
+            g_pODConfig->UpdatePath( m_pSelectedPath );
+            g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
             
-            if( m_pSelectedPath->pODPointList ) {
-                for( unsigned int ip = 0; ip < m_pSelectedPath->pODPointList->GetCount(); ip++ ) {
-                    Path *pp = (Path *) m_pSelectedPath->pODPointList->Item( ip );
+            if( m_pSelectedPath->g_pODPointList ) {
+                for( unsigned int ip = 0; ip < m_pSelectedPath->g_pODPointList->GetCount(); ip++ ) {
+                    Path *pp = (Path *) m_pSelectedPath->g_pODPointList->Item( ip );
                     if( g_pPathMan->IsPathValid(pp) ) {
                         pp->FinalizeForRendering();
                         pp->UpdateSegmentDistances();
                         pp->m_bIsBeingEdited = false;
                         
-                        pODConfig->UpdatePath( pp );
+                        g_pODConfig->UpdatePath( pp );
                         
                         pp->SetHiLite( 0 );
                     }
@@ -900,9 +900,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             //    Update the PathProperties Dialog, if currently shown
             if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) {
-                if( m_pSelectedPath->pODPointList ) {
-                    for( unsigned int ip = 0; ip < m_pSelectedPath->pODPointList->GetCount(); ip++ ) {
-                        Path *pp = (Path *) m_pSelectedPath->pODPointList->Item( ip );
+                if( m_pSelectedPath->g_pODPointList ) {
+                    for( unsigned int ip = 0; ip < m_pSelectedPath->g_pODPointList->GetCount(); ip++ ) {
+                        Path *pp = (Path *) m_pSelectedPath->g_pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
                             g_pPathPropDialog->SetPathAndUpdate( pp, true );
                         }
@@ -923,12 +923,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_bODPointEditing = FALSE;
             m_pFoundODPoint->m_bIsBeingEdited = FALSE;
             pCurrentCursor = ocpncc1->pCursorArrow;
-            pODSelect->DeleteSelectableODPoint( m_pFoundODPoint );
-            pODSelect->AddSelectableODPoint( m_cursor_lat, m_cursor_lon, m_pFoundODPoint );
-            bool prev_bskip = pODConfig->m_bSkipChangeSetUpdate;
-            pODConfig->m_bSkipChangeSetUpdate = false;
-            pODConfig->UpdateODPoint( m_pFoundODPoint );
-            pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
+            g_pODSelect->DeleteSelectableODPoint( m_pFoundODPoint );
+            g_pODSelect->AddSelectableODPoint( m_cursor_lat, m_cursor_lon, m_pFoundODPoint );
+            bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
+            g_pODConfig->m_bSkipChangeSetUpdate = false;
+            g_pODConfig->UpdateODPoint( m_pFoundODPoint );
+            g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
 
             m_pSelectedPath = NULL;
             m_pFoundODPoint = NULL;
@@ -947,7 +947,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     pCurrentCursor = ocpncc1->pCursorCross;
                     m_pFoundODPoint->m_lat = m_cursor_lat;
                     m_pFoundODPoint->m_lon = m_cursor_lon;
-                    pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
+                    g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
                     m_pSelectedPath->FinalizeForRendering();
                     m_pSelectedPath->UpdateSegmentDistances();
                     m_pSelectedPath->SetHiLite( 0 );
@@ -1033,8 +1033,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
             SelectItem *pFindPP;
             SelectItem *pFindPathSeg;
-            pFindPP = pODSelect->FindSelection( slat, slon, SELTYPE_OCPNPOINT );
-            pFindPathSeg = pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
+            pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_OCPNPOINT );
+            pFindPathSeg = g_pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
             // start           
             m_pFoundODPoint = NULL;
             m_pSelectedPath = NULL;
@@ -1046,7 +1046,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 Path *pSelectedVizPath = NULL;
 
                 //There is at least one OCPNpoint, so get the whole list
-                SelectableItemList SelList = pODSelect->FindSelectionList( slat, slon,
+                SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
                                             SELTYPE_OCPNPOINT );
                 wxSelectableItemListNode *node = SelList.GetFirst();
                 while( node ) {
@@ -1123,7 +1123,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
             if( pFindPathSeg )                  // there is at least one select item
             {
-                SelectableItemList SelList = pODSelect->FindSelectionList( slat, slon,
+                SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
                                             SELTYPE_PATHSEGMENT );
 
                 if( NULL == m_pSelectedPath )  // the case where a segment only is selected
@@ -1177,7 +1177,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     //      If so, start the rollover timer which creates the popup
     bool b_start_rollover = false;
     if(!b_start_rollover && !m_bPathEditing){
-        SelectableItemList SelList = pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
@@ -1448,14 +1448,14 @@ void ocpn_draw_pi::FinishBoundary( void )
     m_bDrawingBoundary = false;
     
     if ( m_pMouseBoundary && m_pMouseBoundary->GetnPoints() > 1 && m_pMouseBoundary->m_pLastAddedPoint != m_pMouseBoundary->m_pFirstAddedPoint ) {
-        pODSelect->AddSelectablePathSegment(m_prev_rlat, m_prev_rlon, m_dStartLat, m_dStartLon, m_pMouseBoundary->m_pLastAddedPoint, m_pMouseBoundary->m_pFirstAddedPoint, m_pMouseBoundary );
+        g_pODSelect->AddSelectablePathSegment(m_prev_rlat, m_prev_rlon, m_dStartLat, m_dStartLon, m_pMouseBoundary->m_pLastAddedPoint, m_pMouseBoundary->m_pFirstAddedPoint, m_pMouseBoundary );
         m_pMouseBoundary->AddPoint( m_pMouseBoundary->m_pFirstAddedPoint );
         m_pMouseBoundary->m_lastMousePointIndex = m_pMouseBoundary->GetnPoints();
     }
 
     if( m_pMouseBoundary ) {
         if( m_pMouseBoundary->GetnPoints() > 1 ) {
-            pODConfig->AddNewPath( m_pMouseBoundary, -1 );    // use auto next num
+            g_pODConfig->AddNewPath( m_pMouseBoundary, -1 );    // use auto next num
         } else {
             g_pPathMan->DeletePath( m_pMouseBoundary );
             m_pMouseBoundary = NULL;
@@ -1491,7 +1491,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
 {
     Boundary *active_boundary = NULL;
 
-    wxBoundaryListNode *pnode = (wxBoundaryListNode *)pPathList->GetFirst();
+    wxBoundaryListNode *pnode = (wxBoundaryListNode *)g_pPathList->GetFirst();
     while( pnode ) {
         bool b_run = false;
         bool b_drawn = false;
@@ -1623,8 +1623,8 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
         pMousePoint->SetTypeString( wxS("Point") );
         pMousePoint->m_bIsolatedMark = TRUE;
 
-        pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
-        pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
+        g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
+        g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
 
     }
 
@@ -1647,8 +1647,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
     if( nBoundary_State == 1 ) {
         m_pMouseBoundary = new Boundary();
-        pBoundaryList->Append( m_pMouseBoundary );
-        pPathList->Append( m_pMouseBoundary);
+        g_pBoundaryList->Append( m_pMouseBoundary );
+        g_pPathList->Append( m_pMouseBoundary);
         m_pMouseBoundary->m_width = g_BoundaryLineWidth;
         m_pMouseBoundary->m_style = g_BoundaryLineStyle;
         r_rband.x = g_cursor_x;
@@ -1697,8 +1697,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Boundary Point") );
 
-        pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
-        pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
+        g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
+        g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
 
         //if( nBoundary_State > 1 )
             // TODO fix up undo
@@ -1745,14 +1745,14 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                                     wxT("") );
                             gcPoint->SetNameShown( false );
                             gcPoint->SetTypeString( wxS("Boundary Point") );
-                            pODConfig->AddNewODPoint( gcPoint, -1 );
-                            pODSelect->AddSelectableODPoint( gcCoord.y, gcCoord.x, gcPoint );
+                            g_pODConfig->AddNewODPoint( gcPoint, -1 );
+                            g_pODSelect->AddSelectableODPoint( gcCoord.y, gcCoord.x, gcPoint );
                         } else {
                             gcPoint = pMousePoint; // Last point, previously exsisting!
                         }
 
                         m_pMouseBoundary->AddPoint( gcPoint );
-                        pODSelect->AddSelectablePathSegment( prevGcPoint->m_lat, prevGcPoint->m_lon,
+                        g_pODSelect->AddSelectablePathSegment( prevGcPoint->m_lat, prevGcPoint->m_lon,
                                 gcPoint->m_lat, gcPoint->m_lon, prevGcPoint, gcPoint, m_pMouseBoundary );
                         prevGcPoint = gcPoint;
                     }
@@ -1762,7 +1762,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
                 } else {
                     m_pMouseBoundary->AddPoint( pMousePoint );
-                    pODSelect->AddSelectablePathSegment( m_prev_rlat, m_prev_rlon,
+                    g_pODSelect->AddSelectablePathSegment( m_prev_rlat, m_prev_rlon,
                             rlat, rlon, m_prev_pMousePoint, pMousePoint, m_pMouseBoundary );
                     //TODO fix up undo
                     //undo->AfterUndoableAction( m_pMouseBoundary );
@@ -1770,7 +1770,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
             } else {
                 // Ordinary rhumblinesegment.
                 m_pMouseBoundary->AddPoint( pMousePoint );
-                pODSelect->AddSelectablePathSegment( m_prev_rlat, m_prev_rlon,
+                g_pODSelect->AddSelectablePathSegment( m_prev_rlat, m_prev_rlon,
                         rlat, rlon, m_prev_pMousePoint, pMousePoint, m_pMouseBoundary );
                 // TODO fix up undo
                 //undo->AfterUndoableAction( m_pMouseBoundary );
@@ -1811,7 +1811,7 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 
 void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 {
-    for(wxPathListNode *node = pPathList->GetFirst();
+    for(wxPathListNode *node = g_pPathList->GetFirst();
         node; node = node->GetNext() ) {
         Path *pPathDraw = node->GetData();
         if( !pPathDraw )

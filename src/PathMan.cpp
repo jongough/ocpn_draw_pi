@@ -65,9 +65,9 @@ WX_DEFINE_LIST(markicon_bitmap_list_type);
 WX_DEFINE_LIST(markicon_key_list_type);
 WX_DEFINE_LIST(markicon_description_list_type);
 
-extern PathList     *pPathList;
-extern ODConfig  *pODConfig;
-extern ODSelect      *pODSelect;
+extern PathList     *g_pPathList;
+extern ODConfig  *g_pODConfig;
+extern ODSelect      *g_pODSelect;
 extern PlugInManager  *g_OD_pi_manager;
 extern int             g_path_line_width;
 
@@ -90,7 +90,7 @@ PathMan::~PathMan()
 
 bool PathMan::IsPathValid( Path *pPath )
 {
-    wxPathListNode *node = pPathList->GetFirst();
+    wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         if( pPath == node->GetData() ) return true;
         node = node->GetNext();
@@ -140,14 +140,14 @@ bool PathMan::DeletePath( Path *pPath )
             
         ::wxBeginBusyCursor();
 
-        pODConfig->DeleteConfigPath( pPath );
+        g_pODConfig->DeleteConfigPath( pPath );
 
         //    Remove the path from associated lists
-        pODSelect->DeleteAllSelectablePathSegments( pPath );
-        pPathList->DeleteObject( pPath );
+        g_pODSelect->DeleteAllSelectablePathSegments( pPath );
+        g_pPathList->DeleteObject( pPath );
 
         // walk the path, tentatively deleting/marking points used only by this route
-        wxODPointListNode *pnode = ( pPath->pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( pPath->g_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
 
@@ -158,15 +158,15 @@ bool PathMan::DeletePath( Path *pPath )
                 prp->m_bIsInPath = false;          // Take this point out of this (and only) path
                 if( !prp->m_bKeepXPath ) {
 //    This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
-//                              pODConfig->DeleteWayPoint(prp);
+//                              g_pODConfig->DeleteWayPoint(prp);
 
-                    pODSelect->DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
+                    g_pODSelect->DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
 
                     // Remove all instances of this point from the list.
                     wxODPointListNode *pdnode = pnode;
                     while( pdnode ) {
-                        pPath->pODPointList->DeleteNode( pdnode );
-                        pdnode = pPath->pODPointList->Find( prp );
+                        pPath->g_pODPointList->DeleteNode( pdnode );
+                        pdnode = pPath->g_pODPointList->Find( prp );
                     }
 
                     pnode = NULL;
@@ -180,7 +180,7 @@ bool PathMan::DeletePath( Path *pPath )
             }
             if( pnode ) pnode = pnode->GetNext();
             else
-                pnode = pPath->pODPointList->GetFirst();                // restart the list
+                pnode = pPath->g_pODPointList->GetFirst();                // restart the list
         }
 
         delete pPath;
@@ -196,7 +196,7 @@ bool PathMan::DoesPathContainSharedPoints( Path *pPath )
     if( pPath ) {
         // walk the route, looking at each point to see if it is used by another route
         // or is isolated
-        wxODPointListNode *pnode = ( pPath->pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( pPath->g_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
 
@@ -217,7 +217,7 @@ bool PathMan::DoesPathContainSharedPoints( Path *pPath )
         }
         
         //      Now walk the path again, looking for isolated type shared waypoints
-        pnode = ( pPath->pODPointList )->GetFirst();
+        pnode = ( pPath->g_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
             if( prp->m_bKeepXPath == true )
@@ -234,11 +234,11 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
 {
     wxArrayPtrVoid *pArray = new wxArrayPtrVoid;
 
-    wxPathListNode *path_node = pPathList->GetFirst();
+    wxPathListNode *path_node = g_pPathList->GetFirst();
     while( path_node ) {
         Path *ppath = path_node->GetData();
 
-        wxODPointListNode *OCPNpoint_node = ( ppath->pODPointList )->GetFirst();
+        wxODPointListNode *OCPNpoint_node = ( ppath->g_pODPointList )->GetFirst();
         while( OCPNpoint_node ) {
             ODPoint *prp = OCPNpoint_node->GetData();
             if( prp == pWP )                // success
@@ -263,7 +263,7 @@ void PathMan::DeleteAllPaths( void )
     ::wxBeginBusyCursor();
 
     //    Iterate on the RouteList
-    wxPathListNode *node = pPathList->GetFirst();
+    wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         Path *ppath = node->GetData();
         if( ppath->m_bIsInLayer ) {
@@ -271,11 +271,11 @@ void PathMan::DeleteAllPaths( void )
             continue;
         }
 
-//        pODConfig->m_bSkipChangeSetUpdate = true;
-        pODConfig->DeleteConfigPath( ppath );
+//        g_pODConfig->m_bSkipChangeSetUpdate = true;
+        g_pODConfig->DeleteConfigPath( ppath );
         DeletePath( ppath );
-        node = pPathList->GetFirst();                   // Path
-//        pODConfig->m_bSkipChangeSetUpdate = false;
+        node = g_pPathList->GetFirst();                   // Path
+//        g_pODConfig->m_bSkipChangeSetUpdate = false;
     }
 
     ::wxEndBusyCursor();
@@ -284,11 +284,11 @@ void PathMan::DeleteAllPaths( void )
 
 Path *PathMan::FindPathContainingODPoint( ODPoint *pWP )
 {
-    wxPathListNode *node = pPathList->GetFirst();
+    wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         Path *ppath = node->GetData();
 
-        wxODPointListNode *pnode = ( ppath->pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( ppath->g_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
             if( prp == pWP )  return ppath;

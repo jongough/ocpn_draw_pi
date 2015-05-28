@@ -58,7 +58,7 @@ void Boundary::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     if ( m_bVisible ) {
         dc.SetPen(*wxTRANSPARENT_PEN);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
-        dc.DrawPolygon( pODPointList->GetCount(), m_bpts, 0, 0);
+        dc.DrawPolygon( g_pODPointList->GetCount(), m_bpts, 0, 0);
     }
 
 }
@@ -96,8 +96,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     if ( m_bVisible ) {
         //dc.SetPen(*wxTRANSPARENT_PEN);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxBDIAGONAL_HATCH ) );
-        if ( pODPointList->GetCount() > 1 )
-            dc.DrawPolygonTessellated( pODPointList->GetCount(), m_bpts, 0, 0);
+        if ( g_pODPointList->GetCount() > 1 )
+            dc.DrawPolygonTessellated( g_pODPointList->GetCount(), m_bpts, 0, 0);
     }
     glEnd();
     glDisable (GL_POLYGON_STIPPLE);

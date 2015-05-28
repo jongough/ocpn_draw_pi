@@ -41,9 +41,9 @@
 extern wxString                 g_PrivateDataDir;
 extern ODPoint                *pAnchorWatchPoint1;
 extern ODPoint                *pAnchorWatchPoint2;
-extern ODConfig           *pODConfig;
+extern ODConfig           *g_pODConfig;
 extern PathMan                  *g_pPathMan;
-extern ODSelect               *pODSelect;
+extern ODSelect               *g_pODSelect;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 
 //--------------------------------------------------------------------------------
@@ -714,7 +714,7 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
 void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
 {
     if( ! b_update_changeset )
-        pODConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
+        g_pODConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
         
     if( pRp ) {
         // Get a list of all boundaries containing this point
@@ -732,11 +732,11 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
                 Path *pb = (Path *) ppath_array->Item( ib );
                 if( pb->GetnPoints() < 2 ) {
-                    bool prev_bskip = pODConfig->m_bSkipChangeSetUpdate;
-                    pODConfig->m_bSkipChangeSetUpdate = true;
-                    pODConfig->DeleteConfigPath( pb );
+                    bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
+                    g_pODConfig->m_bSkipChangeSetUpdate = true;
+                    g_pODConfig->DeleteConfigPath( pb );
                     g_pPathMan->DeletePath( pb );
-                    pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
+                    g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
                 }
             }
 
@@ -744,10 +744,10 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
         }
 
         // Now it is safe to delete the point
-        pODConfig->DeleteODPoint( pRp );
-        pODConfig->m_bSkipChangeSetUpdate = false;
+        g_pODConfig->DeleteODPoint( pRp );
+        g_pODConfig->m_bSkipChangeSetUpdate = false;
         
-        pODSelect->DeleteSelectableODPoint( pRp );
+        g_pODSelect->DeleteSelectableODPoint( pRp );
 
         //    The ODPoint might be currently in use as an anchor watch point
         if( pRp == pAnchorWatchPoint1 ) pAnchorWatchPoint1 = NULL;

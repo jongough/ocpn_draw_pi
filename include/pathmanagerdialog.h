@@ -98,6 +98,7 @@ class PathManagerDialog : public wxDialog {
 //            void OnODPointSendToGPSClick(wxCommandEvent &event);
             void OnODPointDeleteAllClick(wxCommandEvent &event);
             void OnODPointSelected(wxListEvent &event);
+            void OnODPointDeSelected(wxListEvent &event);
             void OnODPointToggleVisibility(wxMouseEvent &event);
             void OnODPointColumnClicked(wxListEvent &event);
 
@@ -119,6 +120,7 @@ class PathManagerDialog : public wxDialog {
             void OnClose(wxCloseEvent &event);
             void OnOK(wxCommandEvent &event);
             void DeSelectPaths( void );
+            void DeSelectODPoints( void );
             
             // properties
             wxNotebook *m_pNotebook;
