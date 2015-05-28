@@ -74,7 +74,7 @@ public:
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
     wxBoundingBox GetBBox();
-    void SetnPoints(void){ m_nPoints = pODPointList->GetCount(); }
+    void SetnPoints(void){ m_nPoints = g_pODPointList->GetCount(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);
     void RebuildGUIDList(void);
@@ -132,7 +132,7 @@ public:
     HyperlinkList     *m_HyperlinkList;
 
     wxArrayString      ODPointGUIDList;
-    ODPointList     *pODPointList;
+    ODPointList     *g_pODPointList;
 
     wxRect      active_pt_rect;
     wxString    m_ActiveLineColour;

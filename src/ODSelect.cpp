@@ -136,7 +136,7 @@ bool ODSelect::DeleteAllSelectableODPoints( Path *pr )
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
             //    inner loop iterates on the route's point list
-            wxODPointListNode *pnode = ( pr->pODPointList )->GetFirst();
+            wxODPointListNode *pnode = ( pr->g_pODPointList )->GetFirst();
             while( pnode ) {
                 ODPoint *prp = pnode->GetData();
 
@@ -161,8 +161,8 @@ got_next_outer_node: continue;
 
 bool ODSelect::AddAllSelectableODPoints( Path *pr )
 {
-    if( pr->pODPointList->GetCount() ) {
-        wxODPointListNode *node = ( pr->pODPointList )->GetFirst();
+    if( pr->g_pODPointList->GetCount() ) {
+        wxODPointListNode *node = ( pr->g_pODPointList )->GetFirst();
 
         while( node ) {
             ODPoint *prp = node->GetData();
@@ -179,8 +179,8 @@ bool ODSelect::AddAllSelectablePathSegments( Path *pr )
     wxPoint rpt, rptn;
     float slat1, slon1, slat2, slon2;
 
-    if( pr->pODPointList->GetCount() ) {
-        wxODPointListNode *node = ( pr->pODPointList )->GetFirst();
+    if( pr->g_pODPointList->GetCount() ) {
+        wxODPointListNode *node = ( pr->g_pODPointList )->GetFirst();
 
         ODPoint *prp0 = node->GetData();
         slat1 = prp0->m_lat;

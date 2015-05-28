@@ -39,9 +39,9 @@ extern int              g_LayerIdx;
 extern bool             g_bShowLayers;
 extern wxString         g_VisibleLayers;
 extern wxString         g_InvisibleLayers;
-extern LayerList        *pLayerList;
+extern LayerList        *g_pLayerList;
 extern PointMan         *pODPointMan;  
-extern PathList         *pPathList;
+extern PathList         *g_pPathList;
 extern int              g_navobjbackups;
 
 //ODConfig::ODConfig(const wxString &appName, const wxString &vendorName,
@@ -49,7 +49,7 @@ extern int              g_navobjbackups;
 ODConfig::ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName)
 {
     //ODConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
-    //pODConfig->LoadMyConfig( 0 );
+    //g_pODConfig->LoadMyConfig( 0 );
     m_sODNavObjSetFile = *g_pData;
     m_sODNavObjSetFile += wxS( "ODnavobj.xml" );
     m_sODNavObjSetChangesFile = m_sODNavObjSetFile + _T( ".changes" );
@@ -342,7 +342,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
             node = node->GetNext();
         }
         //Paths
-        wxPathListNode *node1 = pPathList->GetFirst();
+        wxPathListNode *node1 = g_pPathList->GetFirst();
         while( node1 ) {
             Path *pPath = node1->GetData();
 
@@ -428,7 +428,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
             laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
             wxLogMessage( laymsg );
 
-            pLayerList->Insert( l );
+            g_pLayerList->Insert( l );
         }
 
         for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
@@ -505,12 +505,12 @@ bool ODConfig::ODPointIsInPathList( ODPoint *pr )
 {
     bool IsInList = false;
 
-    wxPathListNode *node1 = pPathList->GetFirst();
+    wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
         Path *pPath = node1->GetData();
-        ODPointList *pODPointList = pPath->pODPointList;
+        ODPointList *g_pODPointList = pPath->g_pODPointList;
 
-        wxODPointListNode *node2 = pODPointList->GetFirst();
+        wxODPointListNode *node2 = g_pODPointList->GetFirst();
         ODPoint *prp;
 
         while( node2 ) {

@@ -58,15 +58,15 @@ extern wxDateTime         g_StartTime;
 extern int                g_StartTimeTZ;
 extern IDX_entry          *gpIDX;
 extern long               gStart_LMT_Offset;
-extern ODConfig     *pODConfig;
+extern ODConfig     *g_pODConfig;
 extern PointMan        *pWayPointMan;
 extern ChartCanvas        *ocpncc1;
-extern ODSelect        *pODSelect;
+extern ODSelect        *g_pODSelect;
 extern PathMan           *g_pPathMan;
 extern PathManagerDialog *g_pPathManagerDialog;
 extern PathProp       *g_pPathPropDialog;
 extern Track              *g_pActiveTrack;
-extern PathList       *pPathList;
+extern PathList       *g_pPathList;
 extern PlugInManager      *g_OD_pi_manager;
 extern bool                g_bShowMag;
 extern wxString    m_ActiveLineColour;
@@ -473,7 +473,7 @@ void PathProp::OnPathPropListClick( wxListEvent& event )
 
     m_pPath->ClearHighlights();
 
-    wxODPointListNode *node = m_pPath->pODPointList->GetFirst();
+    wxODPointListNode *node = m_pPath->g_pODPointList->GetFirst();
     while( node && itemno-- ) {
         node = node->GetNext();
     }
@@ -595,7 +595,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     wxString tide_form;
 
     //  Iterate on Route Points
-    wxODPointListNode *node = pPath->pODPointList->GetFirst();
+    wxODPointListNode *node = pPath->g_pODPointList->GetFirst();
 
     int i = 0;
     double slat = g_dLat;
@@ -1204,7 +1204,7 @@ bool PathProp::SaveChanges( void )
         m_pPath->m_style = ::StyleValues[m_chStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 
-        pODConfig->UpdatePath( m_pPath );
+        g_pODConfig->UpdatePath( m_pPath );
         //g_ocpn_draw_pi->SaveConfig();
     }
 
@@ -1235,7 +1235,7 @@ void PathProp::OnPathPropCancelClick( wxCommandEvent& event )
     //    Look in the path list to be sure the path is still available
     //    (May have been deleted by PathMangerDialog...)
 
-    wxPathListNode *node = pPathList->GetFirst();
+    wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         Path *pPath = node->GetData();
 
@@ -1260,7 +1260,7 @@ void PathProp::OnPathPropOkClick( wxCommandEvent& event )
     //    Look in the path list to be sure the path is still available
     //    (May have been deleted by PathManagerDialog...)
 
-    wxPathListNode *node = pPathList->GetFirst();
+    wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         Path *pPath = node->GetData();
 
@@ -1351,7 +1351,7 @@ void PathProp::InitializeList()
     if( NULL == m_pPath ) return;
 
     //  Iterate on Route Points, inserting blank fields starting with index 0
-    wxODPointListNode *pnode = m_pPath->pODPointList->GetFirst();
+    wxODPointListNode *pnode = m_pPath->g_pODPointList->GetFirst();
     int in = 0;
     while( pnode ) {
         m_opList->InsertItem( in, _T(""), 0 );

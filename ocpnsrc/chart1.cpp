@@ -184,7 +184,7 @@ int                       g_restore_dbindex;
 double                    g_ChartNotRenderScaleFactor;
 
 RouteList                 *pRouteList;
-LayerList                 *pLayerList;
+LayerList                 *g_pLayerList;
 bool                      g_bIsNewLayer;
 int                       g_LayerIdx;
 bool                      g_bLayerViz;
@@ -2106,7 +2106,7 @@ int MyApp::OnExit()
 
     DeInitializeUserColors();
 
-    delete pLayerList;
+    delete g_pLayerList;
 
 #ifdef USE_S57
     delete m_pRegistrarMan;
@@ -3135,10 +3135,10 @@ void MyFrame::OnCloseWindow( wxCloseEvent& event )
     }
     delete g_pConnectionParams;
     
-    if(pLayerList){
+    if(g_pLayerList){
         LayerList::iterator it;
-        while(pLayerList->GetCount()){
-            Layer *lay = pLayerList->GetFirst()->GetData();
+        while(g_pLayerList->GetCount()){
+            Layer *lay = g_pLayerList->GetFirst()->GetData();
             delete lay;                 // automatically removes the layer from list, see Layer dtor
         }
     }

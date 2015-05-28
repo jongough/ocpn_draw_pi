@@ -44,11 +44,11 @@
 #include <wx/menu.h>
 #include <wx/window.h>
 
-extern ODSelect   *pODSelect;
+extern ODSelect   *g_pODSelect;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PointMan     *pODPointMan;
 extern PathMan      *g_pPathMan;
-extern ODConfig  *pODConfig;
+extern ODConfig  *g_pODConfig;
 extern PathManagerDialog *g_pPathManagerDialog;
 extern PathProp     *g_pPathPropDialog;
 
@@ -116,7 +116,7 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 
     if( !m_pODPoint->m_bIsInLayer ) {
         m_pODPoint->SetPosition( lat, lon );
-        pODSelect->ModifySelectablePoint( lat, lon, (void *) m_pODPoint, SELTYPE_OCPNPOINT );
+        g_pODSelect->ModifySelectablePoint( lat, lon, (void *) m_pODPoint, SELTYPE_OCPNPOINT );
     }
 
     // Update the mark position dynamically
@@ -251,7 +251,7 @@ void ODPointPropertiesImpl::SaveChanges()
 
         if( m_pODPoint->m_bIsInPath ) {
             // Update the Path segment selectables
-            pODSelect->UpdateSelectablePathSegments( m_pODPoint );
+            g_pODSelect->UpdateSelectablePathSegments( m_pODPoint );
 
             // Get an array of all paths using this point
             wxArrayPtrVoid *pEditPathArray = g_pPathMan->GetPathArrayContaining( m_pODPoint );
@@ -262,12 +262,12 @@ void ODPointPropertiesImpl::SaveChanges()
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
-                    pODConfig->UpdatePath( pp );
+                    g_pODConfig->UpdatePath( pp );
                 }
                 delete pEditPathArray;
             }
         } else
-            pODConfig->UpdateODPoint( m_pODPoint );
+            g_pODConfig->UpdateODPoint( m_pODPoint );
 
         // No general settings need be saved pConfig->UpdateSettings();
     }

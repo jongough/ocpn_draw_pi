@@ -26,7 +26,7 @@
 #include "BoundaryProp.h"
 #include "Boundary.h"
 
-extern BoundaryList       *pBoundaryList;
+extern BoundaryList       *g_pBoundaryList;
 
 
 BoundaryProp::BoundaryProp()

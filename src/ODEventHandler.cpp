@@ -44,8 +44,8 @@
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
 extern PathManagerDialog *g_pPathManagerDialog;
-extern ODSelect         *pODSelect;
-extern ODConfig         *pODConfig;
+extern ODSelect         *g_pODSelect;
+extern ODConfig         *g_pODConfig;
 extern PlugIn_ViewPort *g_pivp;
 extern ChartCanvas     *ocpncc1;
 extern PathProp         *g_pPathPropDialog;
@@ -139,7 +139,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( NULL == g_pRolloverPathSeg ) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         
-        SelectableItemList SelList = pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
                                                                      SELTYPE_PATHSEGMENT );
         
         wxSelectableItemListNode *node = SelList.GetFirst();
@@ -199,8 +199,8 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     // Compute and display cumulative distance from route start point to current
                     // leg end point.
                     
-                    if( segShow_point_a != pp->pODPointList->GetFirst()->GetData() ) {
-                        wxODPointListNode *node = (pp->pODPointList)->GetFirst()->GetNext();
+                    if( segShow_point_a != pp->g_pODPointList->GetFirst()->GetData() ) {
+                        wxODPointListNode *node = (pp->g_pODPointList)->GetFirst()->GetNext();
                         ODPoint *pop;
                         float dist_to_endleg = 0;
                         wxString t;
@@ -233,7 +233,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         }
     } else {
         //    Is the cursor still in select radius?
-        if( !pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
+        if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
             showRollover = false;
         else
             showRollover = true;
@@ -288,14 +288,14 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             // Insert new OCPN Point
             m_pSelectedPath->InsertPointAfter( m_pFoundODPoint, m_cursor_lat, m_cursor_lon );
             
-            pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-            pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+            g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+            g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
             
-            pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
+            g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+            g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
             
             m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
-            pODConfig->UpdatePath( m_pSelectedPath );
+            g_pODConfig->UpdatePath( m_pSelectedPath );
             
             if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
                 g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
@@ -394,11 +394,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 m_pFoundODPoint->SetTypeString( wxT("OCPN Point") );
             }
             
-            pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-            pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+            g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+            g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
             
-            pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
+            g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+            g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
 
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
@@ -458,8 +458,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     pODPointMan->DestroyODPoint( m_pFoundODPoint );
                 }
                 else {
-                    pODConfig->DeleteODPoint( m_pFoundODPoint );
-                    pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_OCPNPOINT );
+                    g_pODConfig->DeleteODPoint( m_pFoundODPoint );
+                    g_pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_OCPNPOINT );
                     if( NULL != pODPointMan )
                         pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }

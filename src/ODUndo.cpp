@@ -45,8 +45,8 @@
 #include "ODundo.h"
 
 extern PathMan *g_pPathMan;
-extern ODConfig *pODConfig;
-extern ODSelect *pODSelect;
+extern ODConfig *g_pODConfig;
+extern ODSelect *g_pODSelect;
 extern PathManagerDialog *g_pPathManagerDialog;
 extern ODPointman *pODPointMan;
 extern ChartCanvas *cc1;
@@ -119,7 +119,7 @@ void doUndoMoveODPoint( UndoAction* action ) {
             Path *pp = (Path *) pathArray->Item( ir );
             pp->FinalizeForRendering();
             pp->UpdateSegmentDistances();
-            pODConfig->UpdatePath( pp );
+            g_pODConfig->UpdatePath( pp );
         }
         delete pathArray;
     }
@@ -128,8 +128,8 @@ void doUndoMoveODPoint( UndoAction* action ) {
 void doUndoDeleteODPoint( UndoAction* action )
 {
     ODPoint* point = (OCPNPPoint*) action->before[0];
-    pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
-    pODConfig->AddNewODPoint( point, -1 );
+    g_pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
+    g_pODConfig->AddNewODPoint( point, -1 );
     if( NULL != pODPointMan ) pODPointMan->AddODPoint( point );
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }
@@ -137,8 +137,8 @@ void doUndoDeleteODPoint( UndoAction* action )
 void doRedoDeleteODPoint( UndoAction* action )
 {
     ODPoint* point = (ODPoint*) action->before[0];
-    pODConfig->DeleteODPoint( point );
-    pODSelect->DeleteSelectablePoint( point, SELTYPE_OCPNPOINT );
+    g_pODConfig->DeleteODPoint( point );
+    g_pODSelect->DeleteSelectablePoint( point, SELTYPE_OCPNPOINT );
     if( NULL != pODPointMan ) pODPointMan->RemoveODPoint( point );
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }
