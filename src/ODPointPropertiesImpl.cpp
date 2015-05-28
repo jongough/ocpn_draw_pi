@@ -166,6 +166,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
+        if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
 
@@ -195,6 +196,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
+        if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
         m_pODPoint->SetVisible( m_bIsVisible_save );
         m_pODPoint->SetNameShown( m_bShowName_save );
         m_pODPoint->SetPosition( m_lat_save, m_lon_save );
