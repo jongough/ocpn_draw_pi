@@ -159,7 +159,7 @@ int             g_LayerIdx;
 bool            g_bShowLayers;
 wxString        g_VisibleLayers;
 wxString        g_InvisibleLayers;
-LayerList       *g_pLayerList;
+LayerList       *pLayerList;
 int             g_navobjbackups;
 
 ODPoint       *pAnchorWatchPoint1;
@@ -718,7 +718,7 @@ void ocpn_draw_pi::LoadConfig()
     g_pBoundaryList = new BoundaryList;
     g_pPathList = new PathList;
     //    Layers
-    g_pLayerList = new LayerList;
+    pLayerList = new LayerList;
 
 }
 

@@ -132,7 +132,7 @@ enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 // GLOBALS :0
 extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
-extern LayerList    *g_pLayerList;
+extern LayerList    *pLayerList;
 extern PathProp     *g_pPathPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
@@ -1690,17 +1690,17 @@ void PathManagerDialog::UpdateLayButtons()
     btnLayToggleNames->Enable( enable );
 
     if( item >= 0 ) {
-        if( g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnChart() ) btnLayToggleChart->SetLabel(
+        if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnChart() ) btnLayToggleChart->SetLabel(
                 _("Hide from chart") );
         else
             btnLayToggleChart->SetLabel( _("Show on chart") );
 
-        if( g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->HasVisibleNames() ) btnLayToggleNames->SetLabel(
+        if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->HasVisibleNames() ) btnLayToggleNames->SetLabel(
                 _("Hide WPT names") );
         else
             btnLayToggleNames->SetLabel( _("Show WPT names") );
 
-        if( g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnListing() ) btnLayToggleListing->SetLabel(
+        if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnListing() ) btnLayToggleListing->SetLabel(
                 _("Unlist contents") );
         else
             btnLayToggleListing->SetLabel( _("List contents") );
@@ -1720,7 +1720,7 @@ void PathManagerDialog::OnLayToggleVisibility( wxMouseEvent &event )
     //    Clicking Visibility column?
     if( clicked_index > -1 && event.GetX() < m_pLayListCtrl->GetColumnWidth( colLAYVISIBLE ) ) {
         // Process the clicked item
-        Layer *layer = g_pLayerList->Item( m_pLayListCtrl->GetItemData( clicked_index ) )->GetData();
+        Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( clicked_index ) )->GetData();
 
         layer->SetVisibleOnChart( !layer->IsVisibleOnChart() );
         m_pLayListCtrl->SetItemImage( clicked_index, layer->IsVisibleOnChart() ? 0 : 1 );
@@ -1770,7 +1770,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    Layer *layer = g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+    Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
 
     if( !layer ) return;
 
@@ -1827,7 +1827,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
         pMarkPropDialog->UpdateProperties();
     }
 */
-    g_pLayerList->DeleteObject( layer );
+    pLayerList->DeleteObject( layer );
 
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
@@ -1845,7 +1845,7 @@ void PathManagerDialog::OnLayToggleChartClick( wxCommandEvent &event )
     item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    Layer *layer = g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+    Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
 
     if( !layer ) return;
 
@@ -1895,7 +1895,7 @@ void PathManagerDialog::OnLayToggleNamesClick( wxCommandEvent &event )
     item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    Layer *layer = g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+    Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
 
     if( !layer ) return;
 
@@ -1945,7 +1945,7 @@ void PathManagerDialog::OnLayToggleListingClick( wxCommandEvent &event )
     item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    Layer *layer = g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+    Layer *layer = pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
 
     if( !layer ) return;
 
@@ -2014,7 +2014,7 @@ void PathManagerDialog::UpdateLayListCtrl()
     // then add routes to the listctrl
     LayerList::iterator it;
     int index = 0;
-    for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
+    for( it = ( *pLayerList ).begin(); it != ( *pLayerList ).end(); ++it, ++index ) {
         Layer *lay = (Layer *) ( *it );
 
         wxListItem li;
@@ -2086,7 +2086,7 @@ wxString PathManagerDialog::GetLayerName( int id )
     if( id <= 0 ) return ( name );
     LayerList::iterator it;
     int index = 0;
-    for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
+    for( it = ( *pLayerList ).begin(); it != ( *pLayerList ).end(); ++it, ++index ) {
         Layer *lay = (Layer *) ( *it );
         if( lay->m_LayerID == id ) return ( lay->m_LayerName );
     }
