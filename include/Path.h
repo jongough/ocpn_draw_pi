@@ -49,10 +49,10 @@ public:
     Path(void);
     ~Path(void);
 
-    void AddPoint(ODPoint *pNewPoint,
-                bool b_rename_in_sequence = true,
-                bool b_deferBoxCalc = false,
-                bool b_isLoading = false);
+    void AddPoint(ODPoint* pNewPoint, 
+                  bool b_rename_in_sequence = true,
+                  bool b_deferBoxCalc = false,
+                  bool b_isLoading = false);
 
     void AddTentativePoint(const wxString& GUID);
     ODPoint *GetPoint(int nPoint);
@@ -74,7 +74,7 @@ public:
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
     wxBoundingBox GetBBox();
-    void SetnPoints(void){ m_nPoints = g_pODPointList->GetCount(); }
+    void SetnPoints(void){ m_nPoints = m_pODPointList->GetCount(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);
     void RebuildGUIDList(void);
@@ -132,7 +132,7 @@ public:
     HyperlinkList     *m_HyperlinkList;
 
     wxArrayString      ODPointGUIDList;
-    ODPointList     *g_pODPointList;
+    ODPointList     *m_pODPointList;
 
     wxRect      active_pt_rect;
     wxString    m_ActiveLineColour;

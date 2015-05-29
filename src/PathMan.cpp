@@ -147,7 +147,7 @@ bool PathMan::DeletePath( Path *pPath )
         g_pPathList->DeleteObject( pPath );
 
         // walk the path, tentatively deleting/marking points used only by this route
-        wxODPointListNode *pnode = ( pPath->g_pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
 
@@ -165,8 +165,8 @@ bool PathMan::DeletePath( Path *pPath )
                     // Remove all instances of this point from the list.
                     wxODPointListNode *pdnode = pnode;
                     while( pdnode ) {
-                        pPath->g_pODPointList->DeleteNode( pdnode );
-                        pdnode = pPath->g_pODPointList->Find( prp );
+                        pPath->m_pODPointList->DeleteNode( pdnode );
+                        pdnode = pPath->m_pODPointList->Find( prp );
                     }
 
                     pnode = NULL;
@@ -180,7 +180,7 @@ bool PathMan::DeletePath( Path *pPath )
             }
             if( pnode ) pnode = pnode->GetNext();
             else
-                pnode = pPath->g_pODPointList->GetFirst();                // restart the list
+                pnode = pPath->m_pODPointList->GetFirst();                // restart the list
         }
 
         delete pPath;
@@ -196,7 +196,7 @@ bool PathMan::DoesPathContainSharedPoints( Path *pPath )
     if( pPath ) {
         // walk the route, looking at each point to see if it is used by another route
         // or is isolated
-        wxODPointListNode *pnode = ( pPath->g_pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
 
@@ -217,7 +217,7 @@ bool PathMan::DoesPathContainSharedPoints( Path *pPath )
         }
         
         //      Now walk the path again, looking for isolated type shared waypoints
-        pnode = ( pPath->g_pODPointList )->GetFirst();
+        pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
             if( prp->m_bKeepXPath == true )
@@ -238,7 +238,7 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
     while( path_node ) {
         Path *ppath = path_node->GetData();
 
-        wxODPointListNode *OCPNpoint_node = ( ppath->g_pODPointList )->GetFirst();
+        wxODPointListNode *OCPNpoint_node = ( ppath->m_pODPointList )->GetFirst();
         while( OCPNpoint_node ) {
             ODPoint *prp = OCPNpoint_node->GetData();
             if( prp == pWP )                // success
@@ -288,7 +288,7 @@ Path *PathMan::FindPathContainingODPoint( ODPoint *pWP )
     while( node ) {
         Path *ppath = node->GetData();
 
-        wxODPointListNode *pnode = ( ppath->g_pODPointList )->GetFirst();
+        wxODPointListNode *pnode = ( ppath->m_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
             if( prp == pWP )  return ppath;

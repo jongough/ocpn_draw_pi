@@ -27,7 +27,7 @@
 #include "ocpn_draw_pi.h"
 #include "PointMan.h"
 
-extern PointMan     *pODPointMan;
+extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
 extern wxString     g_OD_default_wp_icon;
 
@@ -52,7 +52,10 @@ extern int          g_iODPointRangeRingsStepUnits;
 extern wxColour     g_colourODPointRangeRingsColour;
 extern wxString     g_sODPointIconName;
 
-extern double      g_n_arrival_circle_radius;
+extern double       g_n_arrival_circle_radius;
+
+extern bool         g_bConfirmObjectDelete;
+extern int          g_navobjbackups;
 
 
 ODPropertiesImpl::ODPropertiesImpl( wxWindow* parent )
@@ -68,8 +71,6 @@ ODPropertiesDialog( parent )
 
 void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnDrawPropertiesOKClick
-    
     SaveChanges(); // write changes to globals and update config
     Show( false );
 
@@ -80,7 +81,6 @@ void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 
 void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnDrawPropertiesCancelClick
     Show( false );
     SetClientSize(m_defaultClientSize);
 
@@ -89,7 +89,6 @@ void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 
 void ODPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnDrawPropertiesApplyClick
     SaveChanges(); // write changes to globals and update config
 
     event.Skip();
@@ -130,6 +129,8 @@ void ODPropertiesImpl::SaveChanges()
         m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
         g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
         g_sODPointIconName = m_bcomboBoxODPointIcon->GetValue();
+        g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
+        g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
 }
 
 void ODPropertiesImpl::SetDialogSize( void )
@@ -167,22 +168,22 @@ void ODPropertiesImpl::UpdateProperties( void )
 
         m_bcomboBoxODPointIcon->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
-        if( pODPointMan == NULL ) pODPointMan = new PointMan();
+        if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
         
         bool fillCombo = m_bcomboBoxODPointIcon->GetCount() == 0;
-        wxImageList *icons = pODPointMan->Getpmarkicon_image_list();
+        wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
-            for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = pODPointMan->GetIconDescription( i );
+            for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+                wxString *ps = g_pODPointMan->GetIconDescription( i );
                 m_bcomboBoxODPointIcon->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
-        for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
-            if( *pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
+        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+            if( *g_pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
                 iconToSelect = i;
                 break;
             }
@@ -226,6 +227,9 @@ void ODPropertiesImpl::UpdateProperties( void )
         }
         m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
         m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
+        
+        m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
+        m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
         
 
     return;

@@ -40,7 +40,7 @@ extern bool             g_bShowLayers;
 extern wxString         g_VisibleLayers;
 extern wxString         g_InvisibleLayers;
 extern LayerList        *g_pLayerList;
-extern PointMan         *pODPointMan;  
+extern PointMan         *g_pODPointMan;  
 extern PathList         *g_pPathList;
 extern int              g_navobjbackups;
 
@@ -303,7 +303,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         ODNavObjectChanges *pgpx = new ODNavObjectChanges;
 
         wxProgressDialog *pprog = NULL;
-        int count = pODPointMan->GetODPointList()->GetCount();
+        int count = g_pODPointMan->GetODPointList()->GetCount();
         if( count > 200) {
             pprog = new wxProgressDialog( _("Export GPX file"), _T("0/0"), count, NULL,
                                           wxPD_APP_MODAL | wxPD_SMOOTH |
@@ -315,7 +315,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         //WPTs
         int ic = 0;
 
-        wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+        wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
         ODPoint *pr;
         while( node ) {
             if(pprog) {
@@ -508,9 +508,9 @@ bool ODConfig::ODPointIsInPathList( ODPoint *pr )
     wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
         Path *pPath = node1->GetData();
-        ODPointList *g_pODPointList = pPath->g_pODPointList;
+        ODPointList *pODPointList = pPath->m_pODPointList;
 
-        wxODPointListNode *node2 = g_pODPointList->GetFirst();
+        wxODPointListNode *node2 = pODPointList->GetFirst();
         ODPoint *prp;
 
         while( node2 ) {

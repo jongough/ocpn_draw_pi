@@ -473,7 +473,7 @@ void PathProp::OnPathPropListClick( wxListEvent& event )
 
     m_pPath->ClearHighlights();
 
-    wxODPointListNode *node = m_pPath->g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
     while( node && itemno-- ) {
         node = node->GetNext();
     }
@@ -595,7 +595,7 @@ bool PathProp::UpdateProperties( Path *pPath )
     wxString tide_form;
 
     //  Iterate on Route Points
-    wxODPointListNode *node = pPath->g_pODPointList->GetFirst();
+    wxODPointListNode *node = pPath->m_pODPointList->GetFirst();
 
     int i = 0;
     double slat = g_dLat;
@@ -1351,7 +1351,7 @@ void PathProp::InitializeList()
     if( NULL == m_pPath ) return;
 
     //  Iterate on Route Points, inserting blank fields starting with index 0
-    wxODPointListNode *pnode = m_pPath->g_pODPointList->GetFirst();
+    wxODPointListNode *pnode = m_pPath->m_pODPointList->GetFirst();
     int in = 0;
     while( pnode ) {
         m_opList->InsertItem( in, _T(""), 0 );

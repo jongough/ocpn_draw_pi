@@ -41,7 +41,7 @@
 #include "dychart.h"
 #include <wx/gdicmn.h>
 
-extern PointMan *pODPointMan;
+extern PointMan *g_pODPointMan;
 extern bool g_bODIsNewLayer;
 extern int g_ODLayerIdx;
 extern PathMan *g_pPathMan;
@@ -79,7 +79,7 @@ Path::Path( void )
     m_style = STYLE_UNDEFINED;
     m_hiliteWidth = 0;
 
-    g_pODPointList = new ODPointList;
+    m_pODPointList = new ODPointList;
     m_pLastAddedPoint = NULL;
     m_pFirstAddedPoint = NULL;
     m_GUID = GetUUID();
@@ -105,9 +105,9 @@ Path::Path( void )
 
 Path::~Path( void )
 {
-    g_pODPointList->DeleteContents( false );            // do not delete Marks
-    g_pODPointList->Clear();
-    delete g_pODPointList;
+    m_pODPointList->DeleteContents( false );            // do not delete Marks
+    m_pODPointList->Clear();
+    delete m_pODPointList;
     m_HyperlinkList->Clear();
     delete m_HyperlinkList;
 }
@@ -120,7 +120,7 @@ void Path::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_defer
     pNewPoint->m_bIsolatedMark = false;       // definitely no longer isolated
     pNewPoint->m_bIsInPath = true;
 
-    g_pODPointList->Append( pNewPoint );
+    m_pODPointList->Append( pNewPoint );
 
     m_nPoints++;
 
@@ -152,7 +152,7 @@ void Path::AddTentativePoint( const wxString& GUID )
 ODPoint *Path::GetPoint( int nWhichPoint )
 {
     ODPoint *pOp;
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     int i = 1;
     while( node ) {
@@ -169,7 +169,7 @@ ODPoint *Path::GetPoint( int nWhichPoint )
 ODPoint *Path::GetPoint( const wxString &guid )
 {
     ODPoint *pOp;
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     while( node ) {
         pOp = node->GetData();
@@ -272,13 +272,13 @@ void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     }
 
     wxPoint ppt1, ppt2;
-    m_bpts = new wxPoint[ g_pODPointList->GetCount() ];
+    m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
     int j = 0;
     
     if ( m_bVisible )
         DrawPointWhich( dc, 1, &ppt1 );
 
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *pOp1 = node->GetData();
     node = node->GetNext();
     
@@ -368,7 +368,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
         wxPen HiPen( hilt, m_hiliteWidth, wxSOLID );
         dc.SetPen( HiPen );
         
-        wxODPointListNode *node = g_pODPointList->GetFirst();
+        wxODPointListNode *node = m_pODPointList->GetFirst();
         ODPoint *pOp0 = node->GetData();
         wxPoint r0;
         GetCanvasPixLL( &piVP, &r0, pOp0->m_lat, pOp0->m_lon );
@@ -448,9 +448,9 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 
     int j = 0;
 
-    m_bpts = new wxPoint[ g_pODPointList->GetCount() ];
+    m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
 
-    for(wxODPointListNode *node = g_pODPointList->GetFirst();
+    for(wxODPointListNode *node = m_pODPointList->GetFirst();
         node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();
         unsigned short int ToSegNo = pOp->m_GPXTrkSegNo;
@@ -494,7 +494,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     glDisable (GL_LINE_STIPPLE);
 
     /*  ODPoints  */
-    for(wxODPointListNode *node = g_pODPointList->GetFirst(); node; node = node->GetNext()) {
+    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();
         if ( m_bVisible || pOp->m_bKeepXPath )
             pOp->DrawGL( piVP );
@@ -631,7 +631,7 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
 void Path::ClearHighlights( void )
 {
     ODPoint *pop = NULL;
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     while( node ) {
         pop = node->GetData();
@@ -647,7 +647,7 @@ wxString Path::GetNewMarkSequenced( void )
     num = 0;
     ODPoint *pop = NULL;
     
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     while ( node ) {
         pop = node->GetData();
         wxString  sPointName = pop->GetName();
@@ -669,7 +669,7 @@ wxString Path::GetNewMarkSequenced( void )
 ODPoint *Path::GetLastPoint()
 {
     ODPoint *data_m1 = NULL;
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     while( node ) {
         data_m1 = node->GetData();
@@ -680,7 +680,7 @@ ODPoint *Path::GetLastPoint()
 
 int Path::GetIndexOf( ODPoint *pOp )
 {
-    int ret = g_pODPointList->IndexOf( pOp ) + 1;
+    int ret = m_pODPointList->IndexOf( pOp ) + 1;
     if( ret == wxNOT_FOUND ) return 0;
     else
         return ret;
@@ -696,7 +696,7 @@ void Path::DeletePoint( ODPoint *rp, bool bRenamePoints )
     g_pODSelect->DeleteAllSelectablePathSegments( (Path *) this );
     g_pODConfig->DeleteODPoint( rp );
 
-    g_pODPointList->DeleteObject( rp );
+    m_pODPointList->DeleteObject( rp );
 
     if( ( rp->m_GUID.Len() ) && ( wxNOT_FOUND != ODPointGUIDList.Index( rp->m_GUID ) ) ) ODPointGUIDList.Remove(
             rp->m_GUID );
@@ -724,7 +724,7 @@ void Path::RemovePoint( ODPoint *op, bool bRenamePoints )
     g_pODSelect->DeleteAllSelectableODPoints( this );
     g_pODSelect->DeleteAllSelectablePathSegments( this );
 
-    g_pODPointList->DeleteObject( op );
+    m_pODPointList->DeleteObject( op );
     if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove(
             op->m_GUID );
     m_nPoints -= 1;
@@ -757,7 +757,7 @@ void Path::RemovePoint( ODPoint *op, bool bRenamePoints )
 
 void Path::DeSelectPath()
 {
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     ODPoint *rp;
     while( node ) {
@@ -770,7 +770,7 @@ void Path::DeSelectPath()
 
 void Path::ReloadPathPointIcons()
 {
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     ODPoint *rp;
     while( node ) {
@@ -799,7 +799,7 @@ wxBoundingBox Path::GetBBox( void )
     RBBox.Reset();
     m_bcrosses_idl = CalculateCrossesIDL();
 
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *data;
 
     if( !m_bcrosses_idl ) {
@@ -839,7 +839,7 @@ wxBoundingBox Path::GetBBox( void )
 
 bool Path::CalculateCrossesIDL( void )
 {
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     if( NULL == node ) return false;
 
     bool idl_cross = false;
@@ -880,7 +880,7 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
     // always be fully contained within the resulting rectangle.
     // Can we prove this?
     if( m_bVisible ) {
-        wxODPointListNode *node = g_pODPointList->GetFirst();
+        wxODPointListNode *node = m_pODPointList->GetFirst();
         while( node ) {
 
             ODPoint *pOp2 = node->GetData();
@@ -905,7 +905,7 @@ void Path::RebuildGUIDList( void )
 {
     ODPointGUIDList.Clear();               // empty the GUID list
 
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     ODPoint *rp;
     while( node ) {
@@ -922,7 +922,7 @@ void Path::SetVisible( bool visible, bool includeWpts )
     if ( !includeWpts )
         return;
 
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *rp;
     while( node ) {
         rp = node->GetData();
@@ -947,7 +947,7 @@ void Path::AssemblePath( void )
         wxString GUID = ODPointGUIDList[ip];
 
         //    And on the ODPoints themselves
-        wxODPointListNode *pOpnode = pODPointMan->GetODPointList()->GetFirst();
+        wxODPointListNode *pOpnode = g_pODPointMan->GetODPointList()->GetFirst();
         while( pOpnode ) {
             ODPoint *pOp = pOpnode->GetData();
 
@@ -965,7 +965,7 @@ void Path::RenameODPoints( void )
     //    iterate on the route points.
     //    If dynamically named, rename according to current list position
 
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     int i = 1;
     while( node ) {
@@ -985,8 +985,8 @@ void Path::RenameODPoints( void )
 //    Do all ODPoint positions and names match?
 bool Path::IsEqualTo( Path *ptargetroute )
 {
-    wxODPointListNode *pthisnode = ( this->g_pODPointList )->GetFirst();
-    wxODPointListNode *pthatnode = ( ptargetroute->g_pODPointList )->GetFirst();
+    wxODPointListNode *pthisnode = ( this->m_pODPointList )->GetFirst();
+    wxODPointListNode *pthatnode = ( ptargetroute->m_pODPointList )->GetFirst();
 
     if( NULL == pthisnode ) return false;
 
@@ -1022,7 +1022,7 @@ void Path::UpdateSegmentDistances()
 
     double path_len = 0.0;
 
-    wxODPointListNode *node = g_pODPointList->GetFirst();
+    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     if( node ) {
         ODPoint *pOp0 = node->GetData();
@@ -1068,13 +1068,13 @@ ODPoint *Path::InsertPointBefore( ODPoint *pRP, double rlat, double rlon,
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
     
-    int nRP = g_pODPointList->IndexOf( pRP );
+    int nRP = m_pODPointList->IndexOf( pRP );
     if ( nRP == 0 ) {
-        g_pODPointList->Insert( g_pODPointList->GetCount() - 1, newpoint );
-        nRP = g_pODPointList->GetCount();
+        m_pODPointList->Insert( m_pODPointList->GetCount() - 1, newpoint );
+        nRP = m_pODPointList->GetCount();
     }
     else {
-        g_pODPointList->Insert( nRP, newpoint );
+        m_pODPointList->Insert( nRP, newpoint );
     }
 
     ODPointGUIDList.Insert( pRP->m_GUID, nRP );
@@ -1091,7 +1091,7 @@ ODPoint *Path::InsertPointBefore( ODPoint *pRP, double rlat, double rlon,
 
 ODPoint *Path::InsertPointAfter( ODPoint *pOP, double rlat, double rlon, bool bRenamePoints )
 {
-    int nOP = g_pODPointList->IndexOf( pOP );
+    int nOP = m_pODPointList->IndexOf( pOP );
     if( nOP >= m_nPoints - 1 )
         return NULL;
     nOP++;
@@ -1102,7 +1102,7 @@ ODPoint *Path::InsertPointAfter( ODPoint *pOP, double rlat, double rlon, bool bR
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
     
-    g_pODPointList->Insert( nOP, newpoint );
+    m_pODPointList->Insert( nOP, newpoint );
     
     ODPointGUIDList.Insert( pOP->m_GUID, nOP );
     
@@ -1118,12 +1118,12 @@ ODPoint *Path::InsertPointAfter( ODPoint *pOP, double rlat, double rlon, bool bR
 
 void Path::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
 {
-    int nOP = g_pODPointList->IndexOf( pOP );
+    int nOP = m_pODPointList->IndexOf( pOP );
     if( nOP >= m_nPoints - 1 )
         return;
     nOP++;
     
-    g_pODPointList->Insert( nOP, pnOP );
+    m_pODPointList->Insert( nOP, pnOP );
     
     ODPointGUIDList.Insert( pnOP->m_GUID, nOP );
     

@@ -16,6 +16,37 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_SizerProperties = new wxBoxSizer( wxVERTICAL );
 	
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panelGeneral = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizerGeneral;
+	bSizerGeneral = new wxBoxSizer( wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizer4;
+	fgSizer4 = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizer4->SetFlexibleDirection( wxBOTH );
+	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_checkBoxConfirmObjectDelete = new wxCheckBox( m_panelGeneral, wxID_ANY, wxT("Confirm Object Delete"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxConfirmObjectDelete->SetValue(true); 
+	fgSizer4->Add( m_checkBoxConfirmObjectDelete, 0, wxALL, 5 );
+	
+	wxBoxSizer* bSizerFiller1;
+	bSizerFiller1 = new wxBoxSizer( wxVERTICAL );
+	
+	fgSizer4->Add( bSizerFiller1, 1, wxEXPAND, 5 );
+	
+	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, wxT("Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextNavObjBackups->Wrap( -1 );
+	fgSizer4->Add( m_staticTextNavObjBackups, 0, wxALL, 5 );
+	
+	m_spinCtrlNavObjBackups = new wxSpinCtrl( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 5 );
+	fgSizer4->Add( m_spinCtrlNavObjBackups, 0, wxALL, 5 );
+	
+	bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
+	
+	m_panelGeneral->SetSizer( bSizerGeneral );
+	m_panelGeneral->Layout();
+	bSizerGeneral->Fit( m_panelGeneral );
+	m_notebookProperties->AddPage( m_panelGeneral, wxT("General"), true );
 	m_panelPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerOCPNPoint;
 	bSizerOCPNPoint = new wxBoxSizer( wxVERTICAL );
@@ -104,7 +135,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_panelPoint->SetSizer( bSizerOCPNPoint );
 	m_panelPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelPoint );
-	m_notebookProperties->AddPage( m_panelPoint, wxT("OCPN Point"), true );
+	m_notebookProperties->AddPage( m_panelPoint, wxT("OCPN Point"), false );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerPathSettings;
 	fgSizerPathSettings = new wxFlexGridSizer( 6, 2, 0, 0 );

@@ -48,7 +48,7 @@ extern PathMan *g_pPathMan;
 extern ODConfig *g_pODConfig;
 extern ODSelect *g_pODSelect;
 extern PathManagerDialog *g_pPathManagerDialog;
-extern ODPointman *pODPointMan;
+extern ODPointman *g_pODPointMan;
 extern ChartCanvas *cc1;
 extern MyFrame *gFrame;
 extern MarkInfoImpl *pMarkPropDialog;
@@ -130,7 +130,7 @@ void doUndoDeleteODPoint( UndoAction* action )
     ODPoint* point = (OCPNPPoint*) action->before[0];
     g_pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
     g_pODConfig->AddNewODPoint( point, -1 );
-    if( NULL != pODPointMan ) pODPointMan->AddODPoint( point );
+    if( NULL != g_pODPointMan ) g_pODPointMan->AddODPoint( point );
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }
 
@@ -139,7 +139,7 @@ void doRedoDeleteODPoint( UndoAction* action )
     ODPoint* point = (ODPoint*) action->before[0];
     g_pODConfig->DeleteODPoint( point );
     g_pODSelect->DeleteSelectablePoint( point, SELTYPE_OCPNPOINT );
-    if( NULL != pODPointMan ) pODPointMan->RemoveODPoint( point );
+    if( NULL != g_pODPointMan ) g_pODPointMan->RemoveODPoint( point );
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }
 
@@ -177,28 +177,28 @@ void doUndoAppenODPoint( UndoAction* action )
 
 void doRedoAppendWaypoint( UndoAction* action )
 {
-    RoutePoint* point = (RoutePoint*) action->before[0];
-    Route* route = (Route*) action->after[0];
+    ODPoint* point = (ODPoint*) action->before[0];
+    Path* path = (Path*) action->after[0];
 
     if( action->beforeType[0] == Undo_IsOrphanded ) {
-        pConfig->AddNewWayPoint( point, -1 );
-        pSelect->AddSelectableRoutePoint( point->m_lat, point->m_lon, point );
+        pConfig->AddNewODPoint( point, -1 );
+        pSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
     }
 
-    RoutePoint* prevpoint = route->GetLastPoint();
+    ODPoint* prevpoint = Path->GetLastPoint();
 
-    route->AddPoint( point );
-    pSelect->AddSelectableRouteSegment( prevpoint->m_lat, prevpoint->m_lon,
-            point->m_lat, point->m_lon, prevpoint, point, route );
+    path->AddPoint( point );
+    pSelect->AddSelectablePathSegment( prevpoint->m_lat, prevpoint->m_lon,
+            point->m_lat, point->m_lon, prevpoint, point, path );
 
-    if( pRouteManagerDialog && pRouteManagerDialog->IsShown() ) pRouteManagerDialog->UpdateWptListCtrl();
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 
-    if( gFrame->nRoute_State > 1 ) {
-        gFrame->nRoute_State++;
-        cc1->m_prev_pMousePoint = route->GetLastPoint();
+    if( gFrame->nPath_State > 1 ) {
+        gFrame->nPath_State++;
+        cc1->m_prev_pMousePoint = path->GetLastPoint();
         cc1->m_prev_rlat = cc1->m_prev_pMousePoint->m_lat;
         cc1->m_prev_rlon = cc1->m_prev_pMousePoint->m_lon;
-        route->m_lastMousePointIndex = route->GetnPoints();
+        path->m_lastMousePointIndex = path->GetnPoints();
     }
 }
 

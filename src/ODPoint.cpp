@@ -35,7 +35,7 @@
 #include "ODUtils.h"
 #include "ocpndc.h"
 
-extern PointMan     *pODPointMan;
+extern PointMan     *g_pODPointMan;
 extern bool         g_bODIsNewLayer;
 extern int          g_ODLayerIdx;
 extern ChartCanvas  *ocpncc1;
@@ -91,7 +91,7 @@ ODPoint::ODPoint()
     
     m_HyperlinkList = new HyperlinkList;
 
-    m_GUID = pODPointMan->CreateGUID( this );
+    m_GUID = GetUUID();
 
     m_IconName = wxEmptyString;
     ReLoadIcon();
@@ -142,7 +142,7 @@ ODPoint::ODPoint( ODPoint* orig )
     ReLoadIcon();
 
     m_bIsInLayer = orig->m_bIsInLayer;
-    m_GUID = pODPointMan->CreateGUID( this );
+    m_GUID = GetUUID();
     
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
@@ -198,7 +198,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     if( !pGUID.IsEmpty() )
         m_GUID = pGUID;
     else
-        m_GUID = pODPointMan->CreateGUID( this );
+        m_GUID = GetUUID();
 
     //      Get Icon bitmap
     m_IconName = icon_ident;
@@ -206,10 +206,10 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
 
     SetName( name );
 
-    //  Possibly add the waypoint to the global list maintained by the waypoint manager
+    //  Possibly add the ODPoint to the global list maintained by the ODPoint manager
 
-    if( bAddToList && NULL != pODPointMan )
-        pODPointMan->AddODPoint( this );
+    if( bAddToList && NULL != g_pODPointMan )
+        g_pODPointMan->AddODPoint( this );
 
     m_bIsInLayer = g_bODIsNewLayer;
     if( m_bIsInLayer ) {
@@ -231,8 +231,8 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
 ODPoint::~ODPoint( void )
 {
 //  Remove this point from the global waypoint list
-    if( NULL != pODPointMan )
-        pODPointMan->RemoveODPoint( this );
+    if( NULL != g_pODPointMan )
+        g_pODPointMan->RemoveODPoint( this );
 
     if( m_HyperlinkList ) {
         m_HyperlinkList->DeleteContents( true );
@@ -275,12 +275,12 @@ void ODPoint::CalculateNameExtents( void )
 
 void ODPoint::ReLoadIcon( void )
 {
-    bool icon_exists = pODPointMan->DoesIconExist(m_IconName);
+    bool icon_exists = g_pODPointMan->DoesIconExist(m_IconName);
     if( !icon_exists ){
         
         //  Try all lower case as a favor in the case where imported waypoints use mixed case names
         wxString tentative_icon = m_IconName.Lower();
-        if(pODPointMan->DoesIconExist(tentative_icon)){
+        if(g_pODPointMan->DoesIconExist(tentative_icon)){
             // if found, convert point's icon name permanently.
             m_IconName = tentative_icon;
         }
@@ -290,12 +290,12 @@ void ODPoint::ReLoadIcon( void )
             //if(style){
                 //wxBitmap bmp = style->GetIcon( _T("circle") );
                 wxBitmap bmp = GetIcon_PlugIn( _T("circle") );
-                pODPointMan->ProcessIcon( bmp, m_IconName, m_IconName );
+                g_pODPointMan->ProcessIcon( bmp, m_IconName, m_IconName );
            //}
         }
     }
         
-    m_pbmIcon = pODPointMan->GetIconBitmap( m_IconName );
+    m_pbmIcon = g_pODPointMan->GetIconBitmap( m_IconName );
 
 #ifdef ocpnUSE_GL
     m_wpBBox_chart_scale = -1;
@@ -326,7 +326,7 @@ void ODPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 
 //    Substitue icon?
     wxBitmap *pbm;
-    if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = pODPointMan->GetIconBitmap(
+    if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = g_pODPointMan->GetIconBitmap(
             _T ( "activepoint" ) );
     else
         pbm = m_pbmIcon;
@@ -488,7 +488,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 //    Substitue icon?
     wxBitmap *pbm;
     if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) )
-        pbm = pODPointMan->GetIconBitmap(  _T ( "activepoint" ) );
+        pbm = g_pODPointMan->GetIconBitmap(  _T ( "activepoint" ) );
     else
         pbm = m_pbmIcon;
 
@@ -568,7 +568,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         int glw, glh;
-        unsigned int IconTexture = pODPointMan->GetIconTexture( pbm, glw, glh );
+        unsigned int IconTexture = g_pODPointMan->GetIconTexture( pbm, glw, glh );
         
         glBindTexture(GL_TEXTURE_2D, IconTexture);
         

@@ -594,22 +594,6 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
     
 }
 
-//  Create the unique identifier
-
-wxString PointMan::CreateGUID( ODPoint *pRP )
-{
-    //FIXME: this method is not needed at all (if GetUUID works...)
-    /*wxDateTime now = wxDateTime::Now();
-     time_t ticks = now.GetTicks();
-     wxString GUID;
-     GUID.Printf(_T("%d-%d-%d-%d"), ((int)fabs(pRP->m_lat * 1e4)), ((int)fabs(pRP->m_lon * 1e4)), (int)ticks, m_nGUID);
-
-     m_nGUID++;
-
-     return GUID;*/
-    return GetUUID();
-}
-
 ODPoint *PointMan::FindODPointByGUID(const wxString &guid)
 {
     wxODPointListNode *prpnode = m_pODPointList->GetFirst();

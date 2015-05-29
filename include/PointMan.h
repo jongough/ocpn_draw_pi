@@ -67,7 +67,6 @@ class PointMan
       int GetIconIndex(const wxBitmap *pbm);
       int GetXIconIndex(const wxBitmap *pbm);
       int GetNumIcons(void){ return m_pIconArray->Count(); }
-      wxString CreateGUID(ODPoint *pRP);
       ODPoint *GetNearbyODPoint(double lat, double lon, double radius_meters);
       ODPoint *GetOtherNearbyODPoint(double lat, double lon, double radius_meters, const wxString &guid);
       void SetColorScheme(ColorScheme cs);
