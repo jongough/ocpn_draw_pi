@@ -39,7 +39,7 @@ Next copy the file "opencpn.lib" from the most recent Opencpn Version 4.1
 to the 'build' directory.
 
 Then
-cmake ..
+cmake -T v120_xp ..
 cmake --build .
 cmake --build . --config release
 

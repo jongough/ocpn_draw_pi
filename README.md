@@ -20,3 +20,4 @@ cmake --build .    <---compiles debug, Note the "." period
 cmake --build . --config release   <---compiles release
 cpack                             <---builds the NSIS Release
 
+
