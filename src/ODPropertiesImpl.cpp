@@ -27,7 +27,7 @@
 #include "ocpn_draw_pi.h"
 #include "PointMan.h"
 
-extern PointMan     *pODPointMan;
+extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
 extern wxString     g_OD_default_wp_icon;
 
@@ -168,22 +168,22 @@ void ODPropertiesImpl::UpdateProperties( void )
 
         m_bcomboBoxODPointIcon->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
-        if( pODPointMan == NULL ) pODPointMan = new PointMan();
+        if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
         
         bool fillCombo = m_bcomboBoxODPointIcon->GetCount() == 0;
-        wxImageList *icons = pODPointMan->Getpmarkicon_image_list();
+        wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
-            for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = pODPointMan->GetIconDescription( i );
+            for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+                wxString *ps = g_pODPointMan->GetIconDescription( i );
                 m_bcomboBoxODPointIcon->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
-        for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
-            if( *pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
+        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+            if( *g_pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
                 iconToSelect = i;
                 break;
             }

@@ -46,7 +46,7 @@
 
 extern ODSelect   *g_pODSelect;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PointMan     *pODPointMan;
+extern PointMan     *g_pODPointMan;
 extern PathMan      *g_pPathMan;
 extern ODConfig  *g_pODConfig;
 extern PathManagerDialog *g_pPathManagerDialog;
@@ -226,7 +226,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
-        wxString *icon_name = pODPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() );
+        wxString *icon_name = g_pODPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() );
         if(icon_name && icon_name->Length())
             m_pODPoint->SetIconName( *icon_name );
         m_pODPoint->ReLoadIcon();
@@ -278,6 +278,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
+        if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
     }
     m_pODPoint = pOP;
     
@@ -361,19 +362,19 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_bcomboBoxIcon->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
         bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
-        wxImageList *icons = pODPointMan->Getpmarkicon_image_list();
+        wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
-            for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = pODPointMan->GetIconDescription( i );
+            for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+                wxString *ps = g_pODPointMan->GetIconDescription( i );
                 m_bcomboBoxIcon->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
-        for( int i = 0; i < pODPointMan->GetNumIcons(); i++ ) {
-            if( *pODPointMan->GetIconKey( i ) == m_pODPoint->GetIconName() )
+        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+            if( *g_pODPointMan->GetIconKey( i ) == m_pODPoint->GetIconName() )
                 iconToSelect = i;
         }
 
@@ -450,7 +451,7 @@ void ODPointPropertiesImpl::ValidateMark( void )
 {
     //    Look in the master list of Waypoints to see if the currently selected waypoint is still valid
     //    It may have been deleted as part of a route
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     
     bool b_found = false;
     while( node ) {

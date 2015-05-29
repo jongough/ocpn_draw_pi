@@ -53,7 +53,7 @@ extern PathMan          *g_pPathMan;
 
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
 extern Path             *g_PathToEdit;
-extern PointMan         *pODPointMan;
+extern PointMan         *g_pODPointMan;
 extern bool             g_bShowMag;
 extern bool             g_bConfirmObjectDelete;
 extern ODRolloverWin    *g_pPathRolloverWin;
@@ -199,8 +199,8 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     // Compute and display cumulative distance from route start point to current
                     // leg end point.
                     
-                    if( segShow_point_a != pp->g_pODPointList->GetFirst()->GetData() ) {
-                        wxODPointListNode *node = (pp->g_pODPointList)->GetFirst()->GetNext();
+                    if( segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
+                        wxODPointListNode *node = (pp->m_pODPointList)->GetFirst()->GetNext();
                         ODPoint *pop;
                         float dist_to_endleg = 0;
                         wxString t;
@@ -409,7 +409,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         }
-        case ID_OCPNPOINT_MENU_EDIT:
+        case ID_OCPNPOINT_MENU_MOVE:
             m_pFoundODPoint->m_bIsBeingEdited = TRUE;
             g_ocpn_draw_pi->m_bODPointEditing = TRUE;
             break;
@@ -464,13 +464,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 //  Check it, and if so then remove the point from its routes
                 wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pFoundODPoint );
                 if( ppath_array ) {
-                    pODPointMan->DestroyODPoint( m_pFoundODPoint );
+                    g_pODPointMan->DestroyODPoint( m_pFoundODPoint );
                 }
                 else {
                     g_pODConfig->DeleteODPoint( m_pFoundODPoint );
                     g_pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_OCPNPOINT );
-                    if( NULL != pODPointMan )
-                        pODPointMan->RemoveODPoint( m_pFoundODPoint );
+                    if( NULL != g_pODPointMan )
+                        g_pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }
                 
                 if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
@@ -549,7 +549,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             sType.clear();
             sType.append( wxS("Move ") );
             sType.append(m_pFoundODPoint->m_sTypeString);
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_EDIT, sType );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_MOVE, sType );
 
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
 //                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundODPoint )

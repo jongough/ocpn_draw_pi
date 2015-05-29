@@ -139,7 +139,7 @@ extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
 extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
-extern PointMan      *pODPointMan;
+extern PointMan      *g_pODPointMan;
 extern ODPointPropertiesImpl *g_pODPointPropDialog;
 extern ODSelect     *g_pODSelect;
 extern double       g_dLat, g_dLon;
@@ -661,7 +661,7 @@ void PathManagerDialog::Create()
     imglist->Add( wxBitmap( eyex ) );
     m_pPathListCtrl->AssignImageList( imglist, wxIMAGE_LIST_SMALL );
     // Assign will handle destroy, Set will not. It's OK, that's what we want
-    m_pODPointListCtrl->SetImageList( pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
+    m_pODPointListCtrl->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
 //    m_pLayListCtrl->SetImageList( imglist, wxIMAGE_LIST_SMALL );
 
     SetColorScheme();
@@ -1211,11 +1211,11 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *rp_select, bool b_retai
     }
 
     //  Freshen the image list
-    m_pODPointListCtrl->SetImageList( pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
+    m_pODPointListCtrl->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
     
     m_pODPointListCtrl->DeleteAllItems();
 
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     int index = 0;
     while( node ) {
@@ -1230,8 +1230,8 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *rp_select, bool b_retai
 
             wxListItem li;
             li.SetId( index );
-            li.SetImage( rp->IsVisible() ? pODPointMan->GetIconIndex( rp->GetIconBitmap() )
-                                    : pODPointMan->GetXIconIndex( rp->GetIconBitmap() ) );
+            li.SetImage( rp->IsVisible() ? g_pODPointMan->GetIconIndex( rp->GetIconBitmap() )
+                                    : g_pODPointMan->GetXIconIndex( rp->GetIconBitmap() ) );
             li.SetData( rp );
             li.SetText( _T("") );
             long idx = m_pODPointListCtrl->InsertItem( li );
@@ -1288,8 +1288,8 @@ void PathManagerDialog::UpdateODPointsListCtrlViz( )
             break;
         
         ODPoint *pRP = (ODPoint *)m_pODPointListCtrl->GetItemData(item);
-        int image = pRP->IsVisible() ? pODPointMan->GetIconIndex( pRP->GetIconBitmap() )
-        : pODPointMan->GetXIconIndex( pRP->GetIconBitmap() ) ;
+        int image = pRP->IsVisible() ? g_pODPointMan->GetIconIndex( pRP->GetIconBitmap() )
+        : g_pODPointMan->GetXIconIndex( pRP->GetIconBitmap() ) ;
                         
         m_pODPointListCtrl->SetItemImage(item, image);
     }
@@ -1388,8 +1388,8 @@ void PathManagerDialog::OnODPointToggleVisibility( wxMouseEvent &event )
 
         wp->SetVisible( !wp->IsVisible() );
         m_pODPointListCtrl->SetItemImage( clicked_index,
-                                      wp->IsVisible() ? pODPointMan->GetIconIndex( wp->GetIconBitmap() )
-                                                      : pODPointMan->GetXIconIndex( wp->GetIconBitmap() ) );
+                                      wp->IsVisible() ? g_pODPointMan->GetIconIndex( wp->GetIconBitmap() )
+                                                      : g_pODPointMan->GetXIconIndex( wp->GetIconBitmap() ) );
 
         g_pODConfig->UpdateODPoint( wp );
 
@@ -1512,10 +1512,10 @@ void PathManagerDialog::OnODPointDeleteClick( wxCommandEvent &event )
                 if ( wp->m_bIsInPath )
                 {
                     if ( wxYES == OCPNMessageBox_PlugIn(this,  _( "The OCPN Point you want to delete is used in a path, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
-                            pODPointMan->DestroyODPoint( wp );
+                            g_pODPointMan->DestroyODPoint( wp );
                 }
                 else
-                    pODPointMan->DestroyODPoint( wp );
+                    g_pODPointMan->DestroyODPoint( wp );
 
             }
         }
@@ -1629,7 +1629,7 @@ void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
 {
     wxString prompt;
     int buttons, type;
-    if ( !pODPointMan->SharedODPointsExist() )
+    if ( !g_pODPointMan->SharedODPointsExist() )
     {
         prompt = _("Are you sure you want to delete <ALL> OCPN points?");
         buttons = wxYES_NO;
@@ -1643,9 +1643,9 @@ void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
     }
     int answer = OCPNMessageBox_PlugIn( this, prompt, wxString( _("OpenCPN Alert") ), buttons );
     if ( answer == wxID_YES )
-        pODPointMan->DeleteAllODPoints( true );
+        g_pODPointMan->DeleteAllODPoints( true );
     if ( answer == wxID_NO && type == 2 )
-        pODPointMan->DeleteAllODPoints( false );          // only delete unused OCPN points
+        g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OCPN points
 
 /*    if( pMarkPropDialog ) {
         pMarkPropDialog->SetODPoint( NULL );
@@ -1806,7 +1806,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     //}
 
     // Process waypoints in this layer
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     wxODPointListNode *node3;
 
     while( node ) {
@@ -1815,7 +1815,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
         if( rp && ( rp->m_LayerID == layer->m_LayerID ) ) {
             rp->m_bIsInLayer = false;
             rp->m_LayerID = 0;
-            pODPointMan->DestroyODPoint( rp, false );         // no need to update the change set on layer ops
+            g_pODPointMan->DestroyODPoint( rp, false );         // no need to update the change set on layer ops
         }
 
         node = node3;
@@ -1869,7 +1869,7 @@ void PathManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
     }
 
     // Process OCPN points in this layer
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
         ODPoint *rp = node->GetData();
@@ -1911,7 +1911,7 @@ void PathManagerDialog::ToggleLayerContentsNames( Layer *layer )
     while( node1 ) {
         Path *pPath = node1->GetData();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
-            wxODPointListNode *node = pPath->g_pODPointList->GetFirst();
+            wxODPointListNode *node = pPath->m_pODPointList->GetFirst();
             ODPoint *prp1 = node->GetData();
             while( node ) {
                 prp1->m_bShowName = layer->HasVisibleNames();
@@ -1922,7 +1922,7 @@ void PathManagerDialog::ToggleLayerContentsNames( Layer *layer )
     }
 
     // Process OCPN points in this layer
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
         ODPoint *rp = node->GetData();
@@ -1973,7 +1973,7 @@ void PathManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
     //  n.b.  If the OCPN point belongs to a track, and is not shared, then do not list it.
     //  This is a performance optimization, allowing large track support.
 
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
         ODPoint *rp = node->GetData();

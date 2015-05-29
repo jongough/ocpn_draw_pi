@@ -89,7 +89,7 @@ static const long long lNaN = 0xfff8000000000000;
 
 ocpn_draw_pi            *g_ocpn_draw_pi;
 PathList                *g_pPathList;
-PointMan                *pODPointMan;
+PointMan                *g_pODPointMan;
 bool                    g_bODIsNewLayer;
 int                     g_ODLayerIdx;
 int                     g_path_line_width;
@@ -401,8 +401,8 @@ int ocpn_draw_pi::Init(void)
 //    stats = new StatWin( ocpncc1 );
 //    stats->SetColorScheme( global_color_scheme );
 
-    if( pODPointMan == NULL ) pODPointMan = new PointMan();
-    pODPointMan->SetColorScheme( global_color_scheme );
+    if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
+    g_pODPointMan->SetColorScheme( global_color_scheme );
     
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
@@ -870,7 +870,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
                 g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
                 g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
-                m_pFoundODPoint->m_iBlink--;
+                //m_pFoundODPoint->m_iBlink--;
                 m_pFoundODPoint->m_bIsBeingEdited = false;
             }
             
@@ -881,9 +881,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODConfig->UpdatePath( m_pSelectedPath );
             g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
             
-            if( m_pSelectedPath->g_pODPointList ) {
-                for( unsigned int ip = 0; ip < m_pSelectedPath->g_pODPointList->GetCount(); ip++ ) {
-                    Path *pp = (Path *) m_pSelectedPath->g_pODPointList->Item( ip );
+            if( m_pSelectedPath->m_pODPointList ) {
+                for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
+                    Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
                     if( g_pPathMan->IsPathValid(pp) ) {
                         pp->FinalizeForRendering();
                         pp->UpdateSegmentDistances();
@@ -899,9 +899,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             //    Update the PathProperties Dialog, if currently shown
             if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) {
-                if( m_pSelectedPath->g_pODPointList ) {
-                    for( unsigned int ip = 0; ip < m_pSelectedPath->g_pODPointList->GetCount(); ip++ ) {
-                        Path *pp = (Path *) m_pSelectedPath->g_pODPointList->Item( ip );
+                if( m_pSelectedPath->m_pODPointList ) {
+                    for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
+                        Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
                             g_pPathPropDialog->SetPathAndUpdate( pp, true );
                         }
@@ -1024,7 +1024,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
-        // ocpncc1->CanvasPopupMenu( x, y, SELTYPE_BOUNDARYCREATE ) ;
             double slat, slon;
             slat = m_cursor_lat;
             slon = m_cursor_lon;
@@ -1554,10 +1553,10 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox)
 void ocpn_draw_pi::DrawAllODPointsInBBox( ocpnDC& dc, LLBBox& BltBBox )
 {
     //        wxBoundingBox bbx;
-    if(!pODPointMan)
+    if(!g_pODPointMan)
         return;
     
-    wxODPointListNode *node = pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     
     while( node ) {
         ODPoint *pOP = node->GetData();
@@ -1589,7 +1588,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
 //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
 
-    ODPoint *pNearbyPoint = pODPointMan->GetNearbyODPoint( rlat, rlon,
+    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                             nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
             && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
@@ -1664,7 +1663,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
 
-    ODPoint *pNearbyPoint = pODPointMan->GetNearbyODPoint( rlat, rlon,
+    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                             nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
             && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
@@ -1849,8 +1848,8 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 
     /* ODPoints not drawn as part of routes */
     ViewPort vp = (ViewPort &)pivp;
-    if( vp.GetBBox().GetValid() && pODPointMan) {
-        for(wxODPointListNode *pnode = pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
+    if( vp.GetBBox().GetValid() && g_pODPointMan) {
+        for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
             //if( pOP && (!pOP->m_bIsInPath && !pOP->m_bIsInTrack ) )
                 pOP->DrawGL( pivp );

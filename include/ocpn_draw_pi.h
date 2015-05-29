@@ -81,7 +81,7 @@ std::cout << stime << x << std::endl; } while (0)
 enum
 {
     ID_OCPNPOINT_MENU_GOTO = 1,
-    ID_OCPNPOINT_MENU_EDIT,
+    ID_OCPNPOINT_MENU_MOVE,
     ID_OCPNPOINT_MENU_DELPOINT,
     ID_OCPNPOINT_MENU_PROPERTIES,
     ID_OCPNPOINT_MENU_COPY,
