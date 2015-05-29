@@ -807,7 +807,7 @@ void PathManagerDialog::MakeAllPathsInvisible()
         if( ( *it )->IsVisible() ) { // avoid config updating as much as possible!
             ( *it )->SetVisible( false );
             m_pPathListCtrl->SetItemImage( m_pPathListCtrl->FindItem( -1, index ), 1 ); // Likely not same order :0
-            g_pODConfig->UpdatePath( *it ); // auch, flushes config to disk. FIXME
+            g_pODConfig->UpdatePath( *it ); 
         }
     }
 }
@@ -910,10 +910,6 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
 //        ocpncc1->CancelMousePath();
 
         g_pPathMan->DeleteAllPaths();
-// TODO Seth
-//            m_pSelectedRoute = NULL;
-//            m_pFoundRoutePoint = NULL;
-//            m_pFoundRoutePointSecond = NULL;
 
         m_lastPathItem = -1;
         UpdatePathListCtrl();
@@ -1144,26 +1140,6 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
     // Allow wx to process...
     event.Skip();
 }
-
-// FIXME add/remove route segments/waypoints from selectable items, so there are no
-// hidden selectables! This should probably be done outside this class!
-// The problem is that the current waypoint class does not provide good support
-// for this, there is a "visible" property, but no means for proper management.
-// Jan. 28 2010: Ideas:
-// - Calculate on the fly how many visible routes use a waypoint.
-//   This requires a semidouble loop (routes, waypoints in visible routes). It could
-//   be done by the function getting the selection. Potentially somewhat slow?
-// - OR keep a property in waypoints telling that
-//   (A number, increased/decreased for each waypoint by Route::SetVisible()).
-//   Immediate result when detecting the selectable object, small overhead in
-//   Route::SetVisible(). I prefer this.
-// - We also need to know if the waypoint should otherwise be visible,
-//   ie it is a "normal" waypoint used in the route (then it should be visible
-//   in all cases). Is this possible with current code?
-// - Get rid of the Select objects, they do no good! They should be replaced with a function
-//   in the application, the search would reqire equal amount of looping, but less
-//   dereferencing pointers, and it would remove the overhead of keeping and maintaining
-//   the extra pointer lists.
 
 void PathManagerDialog::OnPathBtnLeftDown( wxMouseEvent &event )
 {
@@ -1455,9 +1431,6 @@ void PathManagerDialog::OnODPointPropertiesClick( wxCommandEvent &event )
 
 void PathManagerDialog::ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent )
 {
-// TODO (jon#1#): May need to show ODPoint properties dialog here
-    // There is one global instance of the MarkProp Dialog
-    
     if( NULL == g_pODPointPropDialog )
         g_pODPointPropDialog = new ODPointPropertiesImpl( parent );
 
@@ -2081,10 +2054,6 @@ void PathManagerDialog::UpdateLayListCtrl()
 
 void PathManagerDialog::OnImportClick( wxCommandEvent &event )
 {
-    // Import routes
-    // FIXME there is no way to instruct this function about what to import.
-    // Suggest to add that!
-    
 #ifdef __WXOSX__
     HideWithEffect(wxSHOW_EFFECT_BLEND );
 #endif

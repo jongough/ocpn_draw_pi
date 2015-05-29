@@ -95,7 +95,6 @@ void ODPointPropertiesImpl::SetDialogSize( void )
 
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
 {
-    // TODO: Implement onRightClick
     wxMenu* popup = new wxMenu();
     popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
     popup->Append( ID_RCLK_MENU_COPY_LL, _("Copy lat/long") );
@@ -109,8 +108,6 @@ void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
 
 void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 {
-    // TODO: Implement OnPositionCtlUpdated
-    // Fetch the control values, convert to degrees
     double lat = fromDMM_Plugin( m_textLatitude->GetValue() );
     double lon = fromDMM_Plugin( m_textLongitude->GetValue() );
 

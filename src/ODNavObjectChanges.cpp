@@ -30,6 +30,7 @@
 #include "PathMan.h"
 #include "ODPoint.h"
 #include "Boundary.h"
+#include "ODUtils.h"
 
 extern PathList         *g_pPathList;
 extern ODSelect       *g_pODSelect;
@@ -315,10 +316,6 @@ bool ODNavObjectChanges::AddPath( Path *pb, const char *action )
     pugi::xml_node object = m_gpx_root.append_child("opencpn:path");
     GPXCreatePath(object, pb );
     
-//    pugi::xml_node child_ext = m_gpx_root.append_child("extensions");
-    
-//    pugi::xml_node xchild = child_ext.child("extensions");
-    //FIXME  What if extensions do not exist?
     pugi::xml_node child = object.append_child("opencpn:action");
     child.append_child(pugi::node_pcdata).set_value(action);
 
@@ -901,15 +898,15 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
     //    TODO  All this trouble for a tentative path.......Should make some path methods????
     if( bAddpath ) {
             if( PathExists( pTentPath->m_GUID ) ) { //We are importing a different path with the same guid, so let's generate it a new guid
-                            pTentPath->m_GUID = pODPointMan->CreateGUID( NULL );
-                            //Now also change guids for the routepoints
-                            wxODPointListNode *pthisnode = ( pTentPath->g_pODPointList )->GetFirst();
-                            while( pthisnode ) {
-                                ODPoint *pP =  pthisnode->GetData();
-                                if( pP && pP->m_bIsolatedMark )
-                                        pP->m_GUID = pODPointMan->CreateGUID( NULL );
-                                pthisnode = pthisnode->GetNext();
-                            }
+                pTentPath->m_GUID = GetUUID();
+                //Now also change guids for the routepoints
+                wxODPointListNode *pthisnode = ( pTentPath->g_pODPointList )->GetFirst();
+                while( pthisnode ) {
+                    ODPoint *pP =  pthisnode->GetData();
+                    if( pP && pP->m_bIsolatedMark )
+                        pP->m_GUID = GetUUID();
+                    pthisnode = pthisnode->GetNext();
+                }
             }
             
         g_pPathList->Append( pTentPath );

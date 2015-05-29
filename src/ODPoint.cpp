@@ -91,7 +91,7 @@ ODPoint::ODPoint()
     
     m_HyperlinkList = new HyperlinkList;
 
-    m_GUID = pODPointMan->CreateGUID( this );
+    m_GUID = GetUUID();
 
     m_IconName = wxEmptyString;
     ReLoadIcon();
@@ -142,7 +142,7 @@ ODPoint::ODPoint( ODPoint* orig )
     ReLoadIcon();
 
     m_bIsInLayer = orig->m_bIsInLayer;
-    m_GUID = pODPointMan->CreateGUID( this );
+    m_GUID = GetUUID();
     
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
@@ -198,7 +198,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     if( !pGUID.IsEmpty() )
         m_GUID = pGUID;
     else
-        m_GUID = pODPointMan->CreateGUID( this );
+        m_GUID = GetUUID();
 
     //      Get Icon bitmap
     m_IconName = icon_ident;

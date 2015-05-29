@@ -71,8 +71,6 @@ ODPropertiesDialog( parent )
 
 void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnDrawPropertiesOKClick
-    
     SaveChanges(); // write changes to globals and update config
     Show( false );
 
@@ -83,7 +81,6 @@ void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 
 void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnDrawPropertiesCancelClick
     Show( false );
     SetClientSize(m_defaultClientSize);
 
@@ -92,7 +89,6 @@ void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 
 void ODPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnDrawPropertiesApplyClick
     SaveChanges(); // write changes to globals and update config
 
     event.Skip();
