@@ -11,3 +11,12 @@ Currently you will need to create the images folder before trying to run OCPNDra
 If you are running under windows the 'PACKAGE' process works and will create an installable exe (you just have to run it). 
 There is no package for Linux at the moment, although the Linux version is likely to be more stable as that is the 
 platform used to develop this plugin.
+
+From OpenCPN.org Developers Manual - Compiling for Windows
+after you copy the most current opencpn.lib file from the most recently fetched & compiled Opencpn to the build directory, from the "build" directory issue:
+
+cmake -T v120_xp ..   <---sets up cmakelists.txt
+cmake --build .    <---compiles debug, Note the "." period
+cmake --build . --config release   <---compiles release
+cpack                             <---builds the NSIS Release
+
