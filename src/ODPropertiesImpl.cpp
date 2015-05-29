@@ -52,7 +52,10 @@ extern int          g_iODPointRangeRingsStepUnits;
 extern wxColour     g_colourODPointRangeRingsColour;
 extern wxString     g_sODPointIconName;
 
-extern double      g_n_arrival_circle_radius;
+extern double       g_n_arrival_circle_radius;
+
+extern bool         g_bConfirmObjectDelete;
+extern int          g_navobjbackups;
 
 
 ODPropertiesImpl::ODPropertiesImpl( wxWindow* parent )
@@ -130,6 +133,8 @@ void ODPropertiesImpl::SaveChanges()
         m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
         g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
         g_sODPointIconName = m_bcomboBoxODPointIcon->GetValue();
+        g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
+        g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
 }
 
 void ODPropertiesImpl::SetDialogSize( void )
@@ -226,6 +231,9 @@ void ODPropertiesImpl::UpdateProperties( void )
         }
         m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
         m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
+        
+        m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
+        m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
         
 
     return;

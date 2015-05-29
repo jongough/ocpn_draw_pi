@@ -376,18 +376,21 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_ACTNXTPOINT:
             break;
         case ID_PATH_MENU_REMPOINT: {
-            wxString sMessage( wxS("Are you sure you want to remove this ") );
-            wxString sCaption( wxS("OCPN Draw Remove ") );
-            wxString sType( wxS("") );
-            if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                sType.append( wxS("OCPN Point") );
-            else
-                sType.append( m_pFoundODPoint->GetTypeString() );
-            sMessage.append( sType );
-            sMessage.append( wxS("?") );
-            sCaption.append( sType );
-            
-            dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            dlg_return = wxID_YES;
+            if( g_bConfirmObjectDelete ) {
+                wxString sMessage( wxS("Are you sure you want to remove this ") );
+                wxString sCaption( wxS("OCPN Draw Remove ") );
+                wxString sType( wxS("") );
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
+                    sType.append( wxS("OCPN Point") );
+                else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+                sMessage.append( sType );
+                sMessage.append( wxS("?") );
+                sCaption.append( sType );
+                
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            }
             
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->RemovePointFromPath( m_pFoundODPoint, m_pSelectedPath );
@@ -413,18 +416,21 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_OCPNPOINT_MENU_COPY:
             break;
         case ID_PATH_MENU_DELPOINT: {
-            wxString sMessage( wxS("Are you sure you want to delete this ") );
-            wxString sCaption( wxS("OCPN Draw Delete ") );
-            wxString sType( wxS("") );
-            if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                sType.append( wxS("OCPN Point") );
-            else
-                sType.append( m_pFoundODPoint->GetTypeString() );
-            sMessage.append( sType );
-            sMessage.append( wxS("?") );
-            sCaption.append( sType );
-            
-            dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            dlg_return = wxID_YES;
+            if( g_bConfirmObjectDelete ) {
+                wxString sMessage( wxS("Are you sure you want to delete this ") );
+                wxString sCaption( wxS("OCPN Draw Delete ") );
+                wxString sType( wxS("") );
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
+                    sType.append( wxS("OCPN Point") );
+                else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+                sMessage.append( sType );
+                sMessage.append( wxS("?") );
+                sCaption.append( sType );
+                
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            }
             
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->DeletePoint( m_pFoundODPoint );
@@ -437,18 +443,21 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_OCPNPOINT_MENU_DELPOINT: {
-            wxString sMessage( wxS("Are you sure you want to delete this ") );
-            wxString sCaption( wxS("OCPN Draw Delete ") );
-            wxString sType( wxS("") );
-            if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                sType.append( wxS("OCPN Point") );
-            else
-                sType.append( m_pFoundODPoint->GetTypeString() );
-            sMessage.append( sType );
-            sMessage.append( wxS("?") );
-            sCaption.append( sType );
-            
-            dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            dlg_return = wxID_YES;
+            if( g_bConfirmObjectDelete ) {
+                wxString sMessage( wxS("Are you sure you want to delete this ") );
+                wxString sCaption( wxS("OCPN Draw Delete ") );
+                wxString sType( wxS("") );
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
+                    sType.append( wxS("OCPN Point") );
+                else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+                sMessage.append( sType );
+                sMessage.append( wxS("?") );
+                sCaption.append( sType );
+                
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            }
             
             if( dlg_return == wxID_YES ) {
                 // If the ODPoint belongs to an invisible path, we come here instead of to ID_PATH_MENU_DELPOINT

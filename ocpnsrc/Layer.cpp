@@ -28,7 +28,7 @@
 WX_DEFINE_LIST(LayerList);
 
 extern bool g_bShowLayers;
-extern LayerList *g_pLayerList;
+extern LayerList *pLayerList;
 
 Layer::Layer( void )
 {
@@ -46,7 +46,7 @@ Layer::Layer( void )
 Layer::~Layer( void )
 {
 //  Remove this layer from the global layer list
-    if( NULL != g_pLayerList ) g_pLayerList->DeleteObject( this );
+    if( NULL != pLayerList ) pLayerList->DeleteObject( this );
 
 }
 

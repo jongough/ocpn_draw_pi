@@ -9,21 +9,22 @@
 #define __ODPropertiesDialog__
 
 #include <wx/string.h>
-#include <wx/stattext.h>
+#include <wx/checkbox.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/textctrl.h>
 #include <wx/sizer.h>
-#include <wx/checkbox.h>
-#include <wx/combobox.h>
-#include <wx/choice.h>
-#include <wx/clrpicker.h>
+#include <wx/stattext.h>
+#include <wx/spinctrl.h>
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
+#include <wx/textctrl.h>
+#include <wx/combobox.h>
+#include <wx/choice.h>
+#include <wx/clrpicker.h>
 #include <wx/notebook.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
@@ -41,6 +42,10 @@ class ODPropertiesDialog : public wxDialog
 	protected:
 		wxBoxSizer* m_SizerProperties;
 		wxNotebook* m_notebookProperties;
+		wxPanel* m_panelGeneral;
+		wxCheckBox* m_checkBoxConfirmObjectDelete;
+		wxStaticText* m_staticTextNavObjBackups;
+		wxSpinCtrl* m_spinCtrlNavObjBackups;
 		wxPanel* m_panelPoint;
 		wxStaticText* m_staticText14;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
