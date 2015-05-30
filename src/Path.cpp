@@ -414,6 +414,9 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     if( colour.IsNull() ) {
         colour = m_ActiveLineColour;
     }
+    if( m_bVisible && m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
+        colour = m_InActiveLineColour;
+
     for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
         if( colour == ::GpxxColorNames[i] ) {
             m_col = ::GpxxColors[i];

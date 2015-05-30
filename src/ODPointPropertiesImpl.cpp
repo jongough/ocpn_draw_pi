@@ -159,15 +159,14 @@ void ODPointPropertiesImpl::OnExtDescriptionClick( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnPointPropertiesOKClick
+    bool bRefresh = false;
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
         if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
-
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        bRefresh = true;
     }
     Show( false );
 
@@ -178,6 +177,9 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
         g_pPathPropDialog->UpdateProperties();
 
     SetClientSize(m_defaultClientSize);
+
+    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    
     event.Skip();
 }
 
@@ -189,7 +191,7 @@ void ODPointPropertiesImpl::OnPointPropertiesClose( wxCloseEvent& event )
 
 void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )
 {
-    // TODO: Implement OnPointPropertiesCancelClick
+    bool bRefresh = false;
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
@@ -200,12 +202,14 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
         m_pODPoint->SetIconName( m_IconName_save );
         m_pODPoint->ReLoadIcon();
         m_pODPoint->m_HyperlinkList->Clear();
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        bRefresh = true;
     }
 
     Show( false );
     SetClientSize(m_defaultClientSize);
 
+    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    
     event.Skip();
 }
 

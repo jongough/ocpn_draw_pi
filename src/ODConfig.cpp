@@ -39,7 +39,7 @@ extern int              g_LayerIdx;
 extern bool             g_bShowLayers;
 extern wxString         g_VisibleLayers;
 extern wxString         g_InvisibleLayers;
-extern LayerList        *g_pLayerList;
+extern LayerList        *pLayerList;
 extern PointMan         *g_pODPointMan;  
 extern PathList         *g_pPathList;
 extern int              g_navobjbackups;
@@ -428,7 +428,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
             laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
             wxLogMessage( laymsg );
 
-            g_pLayerList->Insert( l );
+            pLayerList->Insert( l );
         }
 
         for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {

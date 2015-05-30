@@ -576,21 +576,24 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         menuFocus = menuODPoint;
     }
     
+    if( ( m_pSelectedPath ) ) {
+        m_pSelectedPath->m_bPathIsSelected = true;
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    } else if( m_pFoundODPoint ) {
+        m_pFoundODPoint->m_bPtIsSelected = true;
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    }
+    
     //        Invoke the correct focused drop-down menu
     m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
     m_parentcanvas->PopupMenu( menuFocus, x, y );
     m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
     
     // Cleanup
-    if( ( m_pSelectedPath ) ) {
-        m_pSelectedPath->m_bPathIsSelected = false;
-    }
-    
+    if( ( m_pSelectedPath ) ) m_pSelectedPath->m_bPathIsSelected = false;
     m_pSelectedPath = NULL;
     
-    if( m_pFoundODPoint ) {
-        m_pFoundODPoint->m_bPtIsSelected = false;
-    }
+    if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = false;
     m_pFoundODPoint = NULL;
     
     //m_pFoundODPointSecond = NULL;
