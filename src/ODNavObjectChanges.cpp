@@ -385,7 +385,7 @@ bool ODNavObjectChanges::AddGPXPath(Path *pPath)
 bool ODNavObjectChanges::AddGPXODPoint(ODPoint *pWP )
 {
     SetRootGPXNode();
-    GPXCreateODPoint(m_gpx_root.append_child("ODPoint"), pWP, OPT_OCPNPOINT);
+    GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pWP, OPT_OCPNPOINT);
     return true;
 }
 
