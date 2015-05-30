@@ -921,6 +921,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if( m_pFoundODPoint && m_bODPointEditing ) {
             m_bODPointEditing = FALSE;
             m_pFoundODPoint->m_bIsBeingEdited = FALSE;
+            m_pFoundODPoint->m_bPtIsSelected = false;
             pCurrentCursor = ocpncc1->pCursorArrow;
             g_pODSelect->DeleteSelectableODPoint( m_pFoundODPoint );
             g_pODSelect->AddSelectableODPoint( m_cursor_lat, m_cursor_lon, m_pFoundODPoint );
@@ -932,6 +933,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pSelectedPath = NULL;
             m_pFoundODPoint = NULL;
             
+            bret = TRUE;
+        } else if( m_pFoundODPoint ) {
+            m_pFoundODPoint->m_bPtIsSelected = false;
             bret = TRUE;
         }
 
@@ -1117,6 +1121,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     if ( m_pSelectedPath->IsVisible() )
                         seltype |= SELTYPE_OCPNPOINT;
                 } else if( m_pFoundODPoint ) seltype |= SELTYPE_OCPNPOINT;
+
+                if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = true;
             }
 
             if( pFindPathSeg )                  // there is at least one select item
@@ -1282,11 +1288,15 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     g_pivp = pivp;
 
     g_pDC = new ocpnDC();
+    LLBBox llbb;
+    llbb.SetMin( pivp->lon_min, pivp->lat_min );
+    llbb.SetMax( pivp->lon_max, pivp->lat_max );
     
     if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bODPointEditing ) {
         ocpncc1->SetCursor( *pCurrentCursor );
     }
 
+//    DrawAllODPointsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
     if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp );
