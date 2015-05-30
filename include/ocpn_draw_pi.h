@@ -32,8 +32,8 @@ using namespace std;
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
-stime[strlen(stime - 1)] = 0; \
-std::cout << stime << x << std::endl; } while (0)
+stime[strlen(stime) - 1 ] = 0; \
+std::cout << stime << " : " << x << std::endl; } while (0)
 #else
 #  define DEBUG(x) do {} while (0)
 #endif

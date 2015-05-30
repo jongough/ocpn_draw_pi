@@ -438,7 +438,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
-    
+
     glColor3ub(m_col.Red(), m_col.Green(), m_col.Blue());
     glLineWidth( wxMax( g_ODGLMinSymbolLineWidth, width ) );
     
