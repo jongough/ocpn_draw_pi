@@ -603,9 +603,9 @@ void PathManagerDialog::Create()
             wxListEventHandler(PathManagerDialog::OnLayColumnClicked), NULL, this );
     itemBoxSizer7->Add( m_pLayListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
 
-    m_pLayListCtrl->InsertColumn( colLAYVISIBLE, _T(""), wxLIST_FORMAT_LEFT, 28 );
-    m_pLayListCtrl->InsertColumn( colLAYNAME, _("Layer Name"), wxLIST_FORMAT_LEFT, 250 );
-    m_pLayListCtrl->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, 100 );
+    m_pLayListCtrl->InsertColumn( colLAYVISIBLE, wxT("Show"), wxLIST_FORMAT_LEFT, 28 );
+    m_pLayListCtrl->InsertColumn( colLAYNAME, wxT("Layer Name"), wxLIST_FORMAT_LEFT, 250 );
+    m_pLayListCtrl->InsertColumn( colLAYITEMS, wxT("No. of items"), wxLIST_FORMAT_LEFT, 100 );
 
     wxBoxSizer *bsLayButtons = new wxBoxSizer( wxVERTICAL );
     itemBoxSizer7->Add( bsLayButtons, 0, wxALIGN_RIGHT );
@@ -662,7 +662,9 @@ void PathManagerDialog::Create()
     m_pPathListCtrl->AssignImageList( imglist, wxIMAGE_LIST_SMALL );
     // Assign will handle destroy, Set will not. It's OK, that's what we want
     m_pODPointListCtrl->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
-//    m_pLayListCtrl->SetImageList( imglist, wxIMAGE_LIST_SMALL );
+    
+    //m_pLayListCtrl->AssignImageList( imglist, wxIMAGE_LIST_SMALL );
+    m_pLayListCtrl->SetImageList( imglist, wxIMAGE_LIST_SMALL );
 
     SetColorScheme();
 
@@ -680,6 +682,7 @@ PathManagerDialog::~PathManagerDialog()
 {
     delete m_pPathListCtrl;
     delete m_pODPointListCtrl;
+    delete m_pLayListCtrl;
 
     delete btnODPointNew;
     delete btnODPointProperties;
@@ -687,11 +690,15 @@ PathManagerDialog::~PathManagerDialog()
     delete btnODPointDelete;
     delete btnODPointGoTo;
     delete btnODPointExport;
-//    delete btnODPointSendToGPS;
     delete btnODPointDeleteAll;
     delete btnImport;
     delete btnExport;
     delete btnExportViz;
+    delete btnLayNew;
+    delete btnLayDelete;
+    delete btnLayToggleChart;
+    delete btnLayToggleNames;
+    delete btnLayToggleListing;
     btnImport = NULL;
     btnExport = NULL;
     btnExportViz = NULL;

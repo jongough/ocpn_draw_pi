@@ -1129,20 +1129,19 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
         }
         else{
             if( !strcmp(object.name(), "opencpn:path") ) {
-                pugi::xml_node typesearch = object;
-                wxString wxsType = wxEmptyString;
-                while(strlen(typesearch.name()))
-                {
-                    if (!strcmp(typesearch.name(), "opencpn:type") ) {
-                        wxsType.append( wxString::FromUTF8( typesearch.first_child().value() ) );
+                wxString TypeString;
+                for( pugi::xml_node child = object.first_child(); child != 0; child = child.next_sibling() ) {
+                    const char *pcn = child.name();
+                    if( !strcmp( pcn, "opencpn:type") ) {
+                        TypeString = wxString::FromUTF8( child.first_child().value() );
                         break;
                     }
-                    typesearch = typesearch.next_sibling();
                 }
-                
-                Path *pPath= GPXLoadPath1( object, true, true, b_layerviz, layer_id, &wxsType );
-                n_obj++;
-                InsertPathA( pPath );
+                if ( !TypeString.compare( wxS("Boundary") ) ) {
+                    Path *pPath = GPXLoadPath1( object, true, true, b_layerviz, layer_id, &TypeString );
+                    n_obj++;
+                    InsertPathA( pPath );
+                }
             }
         }   
     }
