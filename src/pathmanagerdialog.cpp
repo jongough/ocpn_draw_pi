@@ -603,7 +603,7 @@ void PathManagerDialog::Create()
             wxListEventHandler(PathManagerDialog::OnLayColumnClicked), NULL, this );
     itemBoxSizer7->Add( m_pLayListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
 
-    m_pLayListCtrl->InsertColumn( colLAYVISIBLE, wxT("Show"), wxLIST_FORMAT_LEFT, 28 );
+    m_pLayListCtrl->InsertColumn( colLAYVISIBLE, wxT("Show"), wxLIST_FORMAT_LEFT, 44 );
     m_pLayListCtrl->InsertColumn( colLAYNAME, wxT("Layer Name"), wxLIST_FORMAT_LEFT, 250 );
     m_pLayListCtrl->InsertColumn( colLAYITEMS, wxT("No. of items"), wxLIST_FORMAT_LEFT, 100 );
 
