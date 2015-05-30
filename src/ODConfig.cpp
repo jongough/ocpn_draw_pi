@@ -440,7 +440,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
                 pSet->load_file(path.fn_str());
 
                 if(islayer){
-                    l->m_NoOfItems = pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisibleOnChart);
+                    l->m_NoOfItems += pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisibleOnChart);
                 }
                 else
                     pSet->LoadAllGPXObjects( true );    // Import with full vizibility of names and objects
