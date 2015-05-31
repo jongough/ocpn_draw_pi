@@ -16,7 +16,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "3")
-SET(VERSION_PATCH "0270")
+SET(VERSION_PATCH "0300")
 SET(VERSION_DATE "31/05/2015")
 
 SET(BUNDLE_DATA FALSE)
@@ -60,9 +60,9 @@ SET(SRCS
         src/ODPointPropertiesImpl.cpp
         src/ODPositionParser.cpp
         src/ODRolloverWin.cpp
-#        src/ODstyles.cpp
         src/ODUtils.cpp
-         src/ODicons.cpp
+        src/ODicons.cpp
+        src/TextPoint.cpp
             src/jsonreader.cpp
             src/jsonval.cpp
             src/jsonwriter.cpp
@@ -91,6 +91,7 @@ SET(HDRS
         include/ODUtils.h
         include/ODvector2D.h
         include/ODicons.h
+        include/TextPoint.h
         include/version.h
 #            include/wx/json_defs.h
             include/wx/jsonreader.h

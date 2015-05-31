@@ -51,14 +51,21 @@ void initialize_images(void)
     _img_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(_T("OCPNDrawManagerGray.png"));
     _img_ocpn_draw_gray_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    
     fn.SetFullName(_T("button1.png"));
     _img_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(_T("button2.png"));
     _img_ocpn_draw_boundary_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    
     fn.SetFullName(_T("pointbutton.png"));
     _img_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(_T("pointbuttongray.png"));
     _img_ocpn_draw_point_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    
+    fn.SetFullName(_T("textpointbutton.png"));
+    _img_ocpn_draw_textpoint = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("textpointbuttongray.png"));
+    _img_ocpn_draw_textpoint_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
 
 static unsigned char Bullet_green[] = {

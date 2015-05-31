@@ -120,6 +120,7 @@ enum
 {
     ID_MODE_BOUNDARY = 0,
     ID_MODE_POINT,
+    ID_MODE_TEXT_POINT,
     
     ID_LAST_MODE
 };
@@ -156,6 +157,7 @@ public:
     bool            m_bBoundaryEditing;
     bool            m_bPathEditing;
     bool            m_bODPointEditing;
+    bool            m_bTextPointEditing;
     
 
     //    The required PlugIn Methods
@@ -241,8 +243,9 @@ public:
     wxCursor    *pCursorPencil;
     wxCursor    *pCursorArrow;
     wxCursor    *pCursorCross;
+    wxCursor    *m_pTextCursorCross;
     
-    wxCursor    *pCurrentCursor;
+    wxCursor    *m_pCurrentCursor;
     
     int         nConfig_State;
     
@@ -254,6 +257,7 @@ public:
     ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;
     int         nPoint_State;
+    int         nTextPoint_State;
     double      m_dStartLat;
     double      m_dStartLon;
     double      m_cursor_lon, m_cursor_lat;
@@ -291,6 +295,7 @@ private:
 
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
     bool    CreatePointLeftClick( wxMouseEvent &event );
+    bool    CreateTextPointLeftClick( wxMouseEvent &event );
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);

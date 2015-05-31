@@ -36,9 +36,11 @@ class TextPoint : public ODPoint
     TextPoint(const TextPoint& other);
     ~TextPoint();
     
+    void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+    
     protected:
     private:
-        wxStaticText *m_pstText;
+        wxTextCtrl *m_pstText;
         
 };
 

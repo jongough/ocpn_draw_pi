@@ -42,23 +42,59 @@ extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 TextPoint::TextPoint() : ODPoint()
 {
-    m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
-    m_pstText->SetLabel( wxS("This is just a test") );
+    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
 }
 
 TextPoint::TextPoint(const TextPoint& other)
 {
-
+    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
 }
 
 TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const wxString& name,
                   const wxString &pGUID, bool bAddToList )
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
 {
-    
+    wxPoint destPoint;
+    GetCanvasPixLL( g_ocpn_draw_pi->m_vp, &destPoint, m_lat, m_lon);
+    wxSize tSize;
+    tSize.x = 200;
+    tSize.y = 50;
+    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""), destPoint, tSize ,wxTE_MULTILINE | wxTE_READONLY );
+//    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""), destPoint);
+    m_pstText->SetForegroundColour(*wxBLACK);
+    //m_pstText->SetBackgroundColour(wxTRANSPARENT);
+    m_pstText->SetEditable( FALSE );
+//    wxTextAttr  *pStyle;
+//    pStyle->AddFlag(wxTE_MULTILINE);
+    //m_pstText->SetDefaultStyle( *pStyle );
 }
 TextPoint::~TextPoint()
 {
-    delete m_pstText;
+    if( m_pstText ) delete m_pstText;
 
+}
+
+void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
+{
+    ODPoint::Draw( dc, rpn );
+    
+    if( !m_bIsVisible )
+        return;
+    
+    dc.SetTextForeground( *wxBLACK );
+    //dc.SetBackground( *wxWHITE );
+    wxPoint destPoint;
+    GetCanvasPixLL( g_ocpn_draw_pi->m_vp, &destPoint, m_lat, m_lon);
+    //if( m_pstText ) delete m_pstText;
+//    m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, m_MarkDescription, destPoint );
+//    wxFont *pFont = OCPNGetFont(wxT("Marks"), 0);
+//    m_pstText->SetFont( *pFont );
+    m_pstText->SetPosition( destPoint );
+    m_pstText->Clear();
+    m_pstText->AppendText( m_MarkDescription );
+    //dc.DrawText( m_MarkDescription, destPoint.x, destPoint.y);
+    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    //SetFont(wxFont(32, wxFONTFAMILY_SWISS,  wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
+    
+    //dc.DrawText();
 }
