@@ -33,6 +33,7 @@
 
 // Forward declarations
 class SelectItem;
+class TextPoint;
 
 #define TIMER_OD_1 999
 
@@ -50,6 +51,7 @@ class ODEventHandler : public wxEvtHandler
     public:
         ODEventHandler(ocpn_draw_pi *parent);
         ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, ODPoint *selectedODPoint);
+        ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, TextPoint *selectedTextPoint);
         ~ODEventHandler();
         
         void OnODTimer1(wxTimerEvent& event);
@@ -58,6 +60,7 @@ class ODEventHandler : public wxEvtHandler
         void PopupMenu( int x, int y, int seltype );
         void SetPath( Path *path );
         void SetPoint ( ODPoint *point );
+        void SetPoint ( TextPoint *point );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
         

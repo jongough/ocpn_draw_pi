@@ -787,3 +787,7 @@ wxColour ODPoint::GetODPointRangeRingsColour(void) {
         return m_wxcODPointRangeRingsColour; 
 }
 
+void ODPoint::SetMarkDescription(wxString sMarkDescription)
+{
+    m_MarkDescription = sMarkDescription;
+}

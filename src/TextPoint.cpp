@@ -33,10 +33,13 @@
 #include "ocpn_draw_pi.h"
 #include "FontMgr.h"
 #include "ocpndc.h"
+#include "PointMan.h"
 
 #include <wx/stattext.h>
 
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
+extern PlugIn_ViewPort  *g_pivp;
+extern PointMan     *g_pODPointMan;
 
 //extern ChartCanvas  *ocpncc1;
 
@@ -54,19 +57,14 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
                   const wxString &pGUID, bool bAddToList )
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
 {
-    wxPoint destPoint;
-    GetCanvasPixLL( g_ocpn_draw_pi->m_vp, &destPoint, m_lat, m_lon);
+    m_DescriptionLocationOffsetX = -10;
+    m_DescriptionLocationOffsetY = 8;
+    
     wxSize tSize;
-    tSize.x = 200;
-    tSize.y = 50;
-    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""), destPoint, tSize ,wxTE_MULTILINE | wxTE_READONLY );
-//    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""), destPoint);
-    m_pstText->SetForegroundColour(*wxBLACK);
-    //m_pstText->SetBackgroundColour(wxTRANSPARENT);
-    m_pstText->SetEditable( FALSE );
-//    wxTextAttr  *pStyle;
-//    pStyle->AddFlag(wxTE_MULTILINE);
-    //m_pstText->SetDefaultStyle( *pStyle );
+    tSize.x = 250;
+    tSize.y = 75;
+    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT("Test"), wxDefaultPosition, wxDefaultSize ,wxTE_MULTILINE | wxTE_READONLY );
+    m_pstText->SetDefaultStyle(wxTextAttr(*wxBLACK, wxNullColour));
 }
 TextPoint::~TextPoint()
 {
@@ -81,20 +79,57 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     if( !m_bIsVisible )
         return;
     
-    dc.SetTextForeground( *wxBLACK );
-    //dc.SetBackground( *wxWHITE );
-    wxPoint destPoint;
-    GetCanvasPixLL( g_ocpn_draw_pi->m_vp, &destPoint, m_lat, m_lon);
-    //if( m_pstText ) delete m_pstText;
-//    m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, m_MarkDescription, destPoint );
-//    wxFont *pFont = OCPNGetFont(wxT("Marks"), 0);
-//    m_pstText->SetFont( *pFont );
-    m_pstText->SetPosition( destPoint );
-    m_pstText->Clear();
-    m_pstText->AppendText( m_MarkDescription );
-    //dc.DrawText( m_MarkDescription, destPoint.x, destPoint.y);
+    m_pMarkFont = OCPNGetFont( wxS("Marks"), 0 );
+    m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
+    CalculateDescriptionExtents();
+    dc.SetFont( *m_pMarkFont );
+    dc.SetTextForeground( m_FontColor );
+
+    
+    //    Substitue icon?
+    wxBitmap *pbm;
+    if( m_bIsActive ) pbm = g_pODPointMan->GetIconBitmap(
+        _T ( "activepoint" ) );
+    else
+        pbm = m_pbmIcon;
+    
+    int sx2 = pbm->GetWidth() / 2;
+    int sy2 = pbm->GetHeight() / 2;
+    
+    //    Calculate the mark drawing extents
+    wxPoint r;
+    GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);    
+    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
+    if( m_pMarkFont ) {
+        wxRect r2( r.x + m_DescriptionLocationOffsetX, r.y + m_DescriptionLocationOffsetY, m_DescriptionExtents.x,
+                   m_DescriptionExtents.y );
+        r1.Union( r2 );
+    }
+   
+   r.x = r.x + m_DescriptionLocationOffsetX;
+   r.y = r.y + m_DescriptionLocationOffsetY;
+   m_pstText->SetPosition( r );
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     //SetFont(wxFont(32, wxFONTFAMILY_SWISS,  wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
     
     //dc.DrawText();
+}
+
+void TextPoint::CalculateDescriptionExtents( void )
+{
+    if( m_pMarkFont ) {
+        wxScreenDC dc;
+        
+        dc.SetFont( *m_pMarkFont );
+        m_DescriptionExtents = dc.GetTextExtent( m_MarkDescription );
+    } else
+        m_DescriptionExtents = wxSize( 0, 0 );
+    
+}
+
+void TextPoint::SetMarkDescription( wxString sMarkDescription )
+{
+    ODPoint::SetMarkDescription( sMarkDescription );
+    m_pstText->Clear();
+    m_pstText->WriteText( sMarkDescription );
 }

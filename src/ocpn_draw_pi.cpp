@@ -308,6 +308,7 @@ int ocpn_draw_pi::Init(void)
     g_dVar = NAN;
     nBoundary_State = 0;
     nPoint_State = 0;
+    nTextPoint_State = 0;
     nPath_State = 0;
 
     // Drawing modes from toolbar
@@ -561,7 +562,8 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     dlgShow = !dlgShow;
     m_iCallerId = id;
-
+DEBUG("Toolbar1: id: ");
+DEBUG(id);
     if ( id == m_config_button_id ) {
         if( 0 == nConfig_State ){
             // show the Draw dialog
@@ -1102,6 +1104,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     SelectItem *pFindSel = node->GetData();
 
                     ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
+                    if(pop->m_sTypeString == wxT("Text Point"))
+                        ODPoint *pop = (TextPoint *) pFindSel->m_pData1;        //candidate
+                    else
+                        ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
+                    
 
                     //    Get an array of all paths using this point
                     wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );

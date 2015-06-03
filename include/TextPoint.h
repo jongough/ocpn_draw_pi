@@ -37,10 +37,17 @@ class TextPoint : public ODPoint
     ~TextPoint();
     
     void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+    void SetMarkDescription( wxString sMarkDescription );
     
     protected:
     private:
+        void CalculateDescriptionExtents( void );
+        
         wxTextCtrl *m_pstText;
+        wxSize     m_DescriptionExtents;
+        int        m_DescriptionLocationOffsetX;
+        int        m_DescriptionLocationOffsetY;
+        
         
 };
 

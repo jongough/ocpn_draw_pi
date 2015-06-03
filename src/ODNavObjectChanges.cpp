@@ -29,6 +29,7 @@
 #include "PointMan.h"
 #include "PathMan.h"
 #include "ODPoint.h"
+#include "TextPoint.h"
 #include "Boundary.h"
 #include "ODUtils.h"
 
@@ -536,6 +537,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxString TimeString;
     wxDateTime dt;
     ODPoint *pOP = NULL;
+    TextPoint *pTP = NULL;
     
     HyperlinkList *linklist = NULL;
 
@@ -667,9 +669,18 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     // Check to see if this point already exits
     pOP = tempODPointExists( GuidString );
     if( !pOP ) {
-        pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
+        TextPoint * tTP;
+        if( TypeString == wxT("Text Point") ) {
+            pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
+            pOP = pTP;
+        }
+        else
+            pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
         m_ptODPointList->Append( pOP ); 
-        pOP->m_MarkDescription = DescString;
+        if( TypeString == "Text Point" )
+            pTP->SetMarkDescription( DescString );
+        else
+            pOP->SetMarkDescription( DescString );
         //pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
         pOP->m_sTypeString = TypeString;
         pOP->SetODPointArrivalRadius( ArrivalRadius );

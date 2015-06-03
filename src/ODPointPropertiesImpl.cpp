@@ -229,6 +229,11 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetODPointArrivalRadius( m_textArrivalRadius->GetValue() );
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
+        if(m_pODPoint->m_sTypeString == wxT("Text Point"))
+            m_pTextPoint->SetMarkDescription( m_textDescription->GetValue() );
+        else
+            m_pODPoint->SetMarkDescription( m_textDescription->GetValue() );
+        
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
@@ -286,7 +291,11 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_pODPoint->m_iBlink--;
         if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
     }
-    m_pODPoint = pOP;
+    if(pOP->m_sTypeString == wxT("Text Point")) {
+        m_pTextPoint = (TextPoint *)pOP;
+        m_pODPoint = m_pTextPoint;
+    } else
+        m_pODPoint = pOP;
     
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = TRUE;

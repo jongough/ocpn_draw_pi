@@ -40,6 +40,7 @@
 #include "ODUtils.h"
 #include "chcanv.h"
 #include "PointMan.h"
+#include "TextPoint.h"
 #include <wx/window.h>
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
@@ -89,12 +90,26 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent,
     m_pFoundODPoint = selectedODPoint;
 }
 
+ODEventHandler::ODEventHandler(ChartCanvas *parent,
+                               Path *selectedPath,
+                               TextPoint *selectedTextPoint)
+{
+    m_parentcanvas = parent;
+    m_pSelectedPath = selectedPath;
+    m_pFoundODPoint = selectedTextPoint;
+}
+
 void ODEventHandler::SetPath( Path *path )
 {
     m_pSelectedPath = path;
 }
 
 void ODEventHandler::SetPoint( ODPoint* point )
+{
+    m_pFoundODPoint = point;
+}
+
+void ODEventHandler::SetPoint( TextPoint* point )
 {
     m_pFoundODPoint = point;
 }
@@ -478,6 +493,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
+            delete m_pFoundODPoint;
             m_pFoundODPoint = NULL;
             break;
         }
