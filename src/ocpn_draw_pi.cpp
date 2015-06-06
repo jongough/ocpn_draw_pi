@@ -34,7 +34,6 @@
 #include "wx/wxprec.h"
 
 #include "ocpn_draw_pi.h"
-#include "version.h"
 #include "Boundary.h"
 #include "BoundaryProp.h"
 #include "Path.h"
