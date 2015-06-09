@@ -45,7 +45,7 @@ public:
       ODPoint( ODPoint* orig );
       ODPoint();
       ~ODPoint(void);
-      void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+      virtual void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
       void ReLoadIcon(void);
 
       wxDateTime GetCreateTime(void);
@@ -154,7 +154,7 @@ public:
       bool              m_btemp;
 
 #ifdef ocpnUSE_GL
-      void DrawGL( PlugIn_ViewPort &pivp );
+      virtual void DrawGL( PlugIn_ViewPort &pivp );
       unsigned int m_iTextTexture;
       int m_iTextTextureWidth, m_iTextTextureHeight;
 

@@ -256,7 +256,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash(g_pHome_Locn);
     if(!wxDir::Exists(*g_pHome_Locn))
         wxMkdir(*g_pHome_Locn);
-        
+    DEBUG( *g_pHome_Locn )    ;
+    
     g_pData = new wxString();
     g_pData->append( stdDataDir );
     appendOSDirSlash( g_pData );
@@ -362,6 +363,7 @@ int ocpn_draw_pi::Init(void)
             
         default:
             // Boundary
+            m_Mode = ID_MODE_BOUNDARY;
             SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
             break;
     }
@@ -639,6 +641,7 @@ DEBUG(id);
                 break;
                 
             default:
+                m_Mode = ID_MODE_BOUNDARY;
                 break;
         }
     }
