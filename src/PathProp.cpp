@@ -195,7 +195,7 @@ PathProp::PathProp( wxWindow* parent, wxWindowID id, const wxString& caption, co
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
 #ifdef __WXOSX__
-    wstyle |= wxSTAY_ON_TOP;
+    style |= wxSTAY_ON_TOP;
 #endif
 
     SetExtraStyle( GetExtraStyle() | wxWS_EX_BLOCK_EVENTS );
