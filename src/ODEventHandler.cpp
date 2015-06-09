@@ -493,7 +493,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
-            delete m_pFoundODPoint;
+            if(m_pFoundODPoint->m_sTypeString == wxT("Text Point"))
+                delete (TextPoint *)m_pFoundODPoint;
+            else
+                delete m_pFoundODPoint;
             m_pFoundODPoint = NULL;
             break;
         }

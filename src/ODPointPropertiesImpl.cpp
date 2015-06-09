@@ -178,7 +178,8 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
         g_pPathPropDialog->UpdateProperties();
 
     SetClientSize(m_defaultClientSize);
-
+    
+    g_ocpn_draw_pi->m_pFoundODPoint = NULL;
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
@@ -210,6 +211,8 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     Show( false );
     SetClientSize(m_defaultClientSize);
 
+    g_ocpn_draw_pi->m_pFoundODPoint = NULL;
+    
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();

@@ -28,6 +28,8 @@
 
 #include "ODPoint.h"
 
+class ODText;
+
 class TextPoint : public ODPoint
 {
     public:
@@ -37,17 +39,22 @@ class TextPoint : public ODPoint
     ~TextPoint();
     
     void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+    void DrawGL( PlugIn_ViewPort &pivp );
     void SetMarkDescription( wxString sMarkDescription );
     
     protected:
     private:
         void CalculateDescriptionExtents( void );
         
-        wxTextCtrl *m_pstText;
-        wxSize     m_DescriptionExtents;
-        int        m_DescriptionLocationOffsetX;
-        int        m_DescriptionLocationOffsetY;
+        wxStaticText    *m_pstText;
+        wxTextCtrl      *m_ptcText;
+        wxSize          m_DescriptionExtents;
+        int             m_DescriptionLocationOffsetX;
+        int             m_DescriptionLocationOffsetY;
+        int             m_iWrapLen;
         
+        unsigned int    m_iTextTexture;
+        int             m_iTextTextureWidth, m_iTextTextureHeight;
         
 };
 

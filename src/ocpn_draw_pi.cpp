@@ -338,8 +338,8 @@ int ocpn_draw_pi::Init(void)
             m_config_button_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
                 wxS("OCPN Draw Manager"), wxS(""), NULL,
                 OCPN_DRAW_POSITION, 0, this);
-            m_draw_button_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary, wxITEM_NORMAL,
-                wxS("OCPN Draw Boundary"), wxS(""), NULL,
+            m_draw_button_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray, wxITEM_NORMAL,
+                wxS("OCPN Draw Drawing Tool"), wxS(""), NULL,
                 OCPN_DRAW_POSITION, 0, this);
     }
 
@@ -1105,9 +1105,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 
                     ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
                     if(pop->m_sTypeString == wxT("Text Point"))
-                        ODPoint *pop = (TextPoint *) pFindSel->m_pData1;        //candidate
+                        pop = (TextPoint *) pFindSel->m_pData1;        //candidate
                     else
-                        ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
+                        pop = (ODPoint *) pFindSel->m_pData1;        //candidate
                     
 
                     //    Get an array of all paths using this point
@@ -1234,7 +1234,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     //      Check to see if there is a path under the cursor
     //      If so, start the rollover timer which creates the popup
     bool b_start_rollover = false;
-    if(!b_start_rollover && !m_bPathEditing){
+    if(!b_start_rollover && !m_bPathEditing && !bret ){
         SelectableItemList SelList = g_pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
@@ -1749,7 +1749,6 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     if( NULL == pMousePoint ) {                 // need a new point
         pMousePoint = new TextPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
-        pMousePoint->SetTypeString( wxS("Text Point") );
         pMousePoint->m_bIsolatedMark = TRUE;
         
         g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
@@ -1984,8 +1983,18 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
     if( pivp.bValid && g_pODPointList ) {
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
-            if( ( pOP->m_lon >= pivp.lon_min && pOP->m_lon <= pivp.lon_max ) && ( pOP->m_lat >= pivp.lat_min && pOP->m_lat <= pivp.lat_max ) )
-                pOP->DrawGL( pivp );
+            TextPoint *pTP;
+            if( pOP->m_sTypeString == wxT("Text Point") ) {
+                pTP = (TextPoint *)pnode->GetData();
+                pOP = pTP;
+            }
+            if( ( pOP->m_lon >= pivp.lon_min && pOP->m_lon <= pivp.lon_max ) && ( pOP->m_lat >= pivp.lat_min && pOP->m_lat <= pivp.lat_max ) ) {
+                if( pOP->m_sTypeString == wxT("Text Point") ) {
+                    pTP->DrawGL( pivp );
+                }
+                else
+                    pOP->DrawGL( pivp );
+            }
         }
     }
     

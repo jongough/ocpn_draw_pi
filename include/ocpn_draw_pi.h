@@ -27,7 +27,7 @@
  */
 #define DEBUG_BUILD
 #ifdef DEBUG_BUILD
-using namespace std;
+//using namespace std;
 #  define DEBUG(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
