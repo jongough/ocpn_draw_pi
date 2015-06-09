@@ -73,7 +73,7 @@ void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
     Show( false );
-
+	EndModal(wxID_OK);
     SetClientSize(m_defaultClientSize);
 
     event.Skip();
@@ -82,6 +82,7 @@ void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
     Show( false );
+	EndModal(wxID_CANCEL);
     SetClientSize(m_defaultClientSize);
 
     event.Skip();
