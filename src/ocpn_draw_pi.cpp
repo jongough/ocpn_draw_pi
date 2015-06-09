@@ -817,7 +817,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
         ocpncc1->SetCursor( *pCurrentCursor );
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 5, 2 );
+        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 3, 2 );
         bRefresh = TRUE;
     }
     
@@ -991,7 +991,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Boundary
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    SetToolbarItemState( m_draw_button_id, true );
+                    //SetToolbarItemState( m_draw_button_id, true );
                     nBoundary_State = 1;
                     nPoint_State = 0;
                     break;
@@ -1000,16 +1000,17 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     // Point
                     pCurrentCursor = ocpncc1->pCursorCross;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point, _img_ocpn_draw_point_gray);
-                    SetToolbarItemState( m_draw_button_id, true );
+                    //SetToolbarItemState( m_draw_button_id, true );
                     nPoint_State = 1;
                     nBoundary_State = 0;
                     break;
 
                 default:
                     // Boundary
+                    m_Mode = ID_MODE_BOUNDARY;
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
-                    SetToolbarItemState( m_draw_button_id, true );
+                    //SetToolbarItemState( m_draw_button_id, true );
                     break;
             }
             bret = TRUE;
@@ -1026,7 +1027,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             nPoint_State = 0;
             pCurrentCursor = ocpncc1->pCursorArrow;
             ocpncc1->SetCursor( *pCurrentCursor ); 
-//            SetToolbarItemState( m_draw_button_id, false );
+            SetToolbarItemState( m_draw_button_id, false );
             bRefresh = TRUE;
             RequestRefresh( m_parent_window );
             bret = TRUE;
