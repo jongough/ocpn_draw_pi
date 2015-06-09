@@ -254,7 +254,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash(g_pHome_Locn);
     if(!wxDir::Exists(*g_pHome_Locn))
         wxMkdir(*g_pHome_Locn);
-        
+    DEBUG( *g_pHome_Locn )    ;
+    
     g_pData = new wxString();
     g_pData->append( stdDataDir );
     appendOSDirSlash( g_pData );
@@ -353,6 +354,7 @@ int ocpn_draw_pi::Init(void)
             
         default:
             // Boundary
+            m_Mode = ID_MODE_BOUNDARY;
             SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
             break;
     }
@@ -622,6 +624,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 break;
                 
             default:
+                m_Mode = ID_MODE_BOUNDARY;
                 break;
         }
     }
@@ -814,6 +817,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
         ocpncc1->SetCursor( *pCurrentCursor );
+        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 5, 2 );
         bRefresh = TRUE;
     }
     
