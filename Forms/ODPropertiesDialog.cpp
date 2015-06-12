@@ -21,7 +21,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	bSizerGeneral = new wxBoxSizer( wxVERTICAL );
 	
 	wxFlexGridSizer* fgSizer4;
-	fgSizer4 = new wxFlexGridSizer( 2, 2, 0, 0 );
+	fgSizer4 = new wxFlexGridSizer( 4, 2, 0, 0 );
 	fgSizer4->SetFlexibleDirection( wxBOTH );
 	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -40,6 +40,20 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	
 	m_spinCtrlNavObjBackups = new wxSpinCtrl( m_panelGeneral, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 5 );
 	fgSizer4->Add( m_spinCtrlNavObjBackups, 0, wxALL, 5 );
+	
+	m_staticTextEdgePan = new wxStaticText( m_panelGeneral, wxID_ANY, wxT("Edge Panning Sensitivity (%age screen width) Default 5"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextEdgePan->Wrap( -1 );
+	fgSizer4->Add( m_staticTextEdgePan, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderEdgePan = new wxSlider( m_panelGeneral, wxID_ANY, 5, 0, 10, wxDefaultPosition, wxSize( -1,-1 ), wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizer4->Add( m_sliderEdgePan, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticTextInitialEdgePan = new wxStaticText( m_panelGeneral, wxID_ANY, wxT("Initial Edge Panning Sensitivity (%age screen width) Default 3"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInitialEdgePan->Wrap( -1 );
+	fgSizer4->Add( m_staticTextInitialEdgePan, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderInitialEdgePan = new wxSlider( m_panelGeneral, wxID_ANY, 3, 0, 10, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizer4->Add( m_sliderInitialEdgePan, 0, wxALL|wxEXPAND, 5 );
 	
 	bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
 	

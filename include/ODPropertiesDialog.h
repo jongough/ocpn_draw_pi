@@ -17,6 +17,7 @@
 #include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/spinctrl.h>
+#include <wx/slider.h>
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -46,6 +47,10 @@ class ODPropertiesDialog : public wxDialog
 		wxCheckBox* m_checkBoxConfirmObjectDelete;
 		wxStaticText* m_staticTextNavObjBackups;
 		wxSpinCtrl* m_spinCtrlNavObjBackups;
+		wxStaticText* m_staticTextEdgePan;
+		wxSlider* m_sliderEdgePan;
+		wxStaticText* m_staticTextInitialEdgePan;
+		wxSlider* m_sliderInitialEdgePan;
 		wxPanel* m_panelPoint;
 		wxStaticText* m_staticText14;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;

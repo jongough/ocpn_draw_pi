@@ -7,6 +7,16 @@ ODPropertiesDialog( parent )
 
 }
 
+void ODPropertiesImpl::OnDrawPropertiesEdgePanChanged( wxScrollEvent& event )
+{
+	// TODO: Implement OnDrawPropertiesEdgePanChanged
+}
+
+void ODPropertiesImpl::OnDrawPropertiesInitialEdgePan( wxScrollEvent& event )
+{
+	// TODO: Implement OnDrawPropertiesInitialEdgePan
+}
+
 void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
 	// TODO: Implement OnDrawPropertiesOKClick
