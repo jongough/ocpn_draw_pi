@@ -160,6 +160,8 @@ wxString        g_VisibleLayers;
 wxString        g_InvisibleLayers;
 LayerList       *pLayerList;
 int             g_navobjbackups;
+int             g_EdgePanSensitivity;
+int             g_InitialEdgePanSensitivity;
 
 ODPoint       *pAnchorWatchPoint1;
 ODPoint       *pAnchorWatchPoint2;
@@ -665,6 +667,8 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
         pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
         pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
+        pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity);
+        pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity);
         
     }
 }
@@ -710,6 +714,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "CurrentDrawMode" ), &m_Mode, 0 );
         pConf->Read( wxS( "ConfirmObjectDelete" ), &g_bConfirmObjectDelete, 0 );
 
+        pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
+        pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
     }
     
     g_pODPointList = new ODPointList;
@@ -815,7 +821,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
         ocpncc1->SetCursor( *pCurrentCursor );
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 3, 2 );
+        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2 );
         bRefresh = TRUE;
     }
     
@@ -824,7 +830,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_bDrawingBoundary = true;
 
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), 5, 2 );
+        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_EdgePanSensitivity, 2 );
         bRefresh = TRUE;
     }
 
@@ -916,7 +922,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             //undo->AfterUndoableAction( m_pRoutePointEditTarget );
             m_pSelectedPath = NULL;
             m_pFoundODPoint = NULL;
-            SetCursor_PlugIn( NULL );
+            //SetCursor_PlugIn( NULL );
             //pCurrentCursor = ocpncc1->pCursorArrow;
             bRefresh = TRUE;
             bret = TRUE;
