@@ -13,6 +13,8 @@ class ODPropertiesImpl : public ODPropertiesDialog
 {
 protected:
 	// Handlers for ODPropertiesDialog events.
+	void OnDrawPropertiesEdgePanChanged( wxScrollEvent& event );
+	void OnDrawPropertiesInitialEdgePan( wxScrollEvent& event );
 	void OnDrawPropertiesOKClick( wxCommandEvent& event );
 	void OnDrawPropertiesCancelClick( wxCommandEvent& event );
 	void OnDrawPropertiesApplyClick( wxCommandEvent& event );
