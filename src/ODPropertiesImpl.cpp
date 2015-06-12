@@ -57,6 +57,8 @@ extern double       g_n_arrival_circle_radius;
 extern bool         g_bConfirmObjectDelete;
 extern int          g_navobjbackups;
 
+extern int          g_EdgePanSensitivity;
+extern int          g_InitialEdgePanSensitivity;
 
 ODPropertiesImpl::ODPropertiesImpl( wxWindow* parent )
 :
@@ -68,12 +70,13 @@ ODPropertiesDialog( parent )
     m_comboBoxODPointIconName = NULL;
 
 }
-
 void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
     Show( false );
-	EndModal(wxID_OK);
+#ifdef __WXOSX__    
+    EndModal(wxID_OK);
+#endif
     SetClientSize(m_defaultClientSize);
 
     event.Skip();
@@ -82,7 +85,9 @@ void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
     Show( false );
+#ifdef __WXOSX__    
 	EndModal(wxID_CANCEL);
+#endif
     SetClientSize(m_defaultClientSize);
 
     event.Skip();
@@ -132,6 +137,9 @@ void ODPropertiesImpl::SaveChanges()
         g_sODPointIconName = m_bcomboBoxODPointIcon->GetValue();
         g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
         g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
+        
+        g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
+        g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
 }
 
 void ODPropertiesImpl::SetDialogSize( void )
@@ -231,6 +239,8 @@ void ODPropertiesImpl::UpdateProperties( void )
         
         m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
         m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
+        m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
+        m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
         
 
     return;
