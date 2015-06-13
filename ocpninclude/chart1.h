@@ -392,6 +392,7 @@ class MyFrame: public wxFrame
     void SurfaceToolbar(void);
     void ToggleToolbar( bool b_smooth = false );
     
+    void ShowChartBarIfEnabled(void);
     void SetToolbarScale(void);
     
     void HandlePianoClick(int selected_index, int selected_dbIndex);
@@ -438,6 +439,7 @@ class MyFrame: public wxFrame
 
     wxTimer             InitTimer;
     int                 m_iInitCount;
+    bool                m_initializing;
 
     wxTimer             FrameTCTimer;
     wxTimer             FrameTimer1;
