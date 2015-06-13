@@ -293,6 +293,7 @@ private:
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
+    void    FindSelectedObject( void )    ;
     
     wxTimer         m_RolloverPopupTimer;
     
@@ -320,6 +321,8 @@ private:
     int         m_numModes;
 
     int         m_rollover_popup_timer_msec;
+    
+    int         m_seltype;
 };
 
 

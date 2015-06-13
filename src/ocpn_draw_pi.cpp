@@ -190,7 +190,7 @@ const wxBitmap *_img_Bullet_green;
 const wxBitmap *_img_Bullet_red;
 const wxBitmap *_img_Bullet_yellow;
 
-// TODO check that this is really needed
+// Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 float g_GLMinSymbolLineWidth;
 
 // the class factories, used to create and destroy instances of the PlugIn
@@ -565,6 +565,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
 
+            DimeWindow( g_pPathManagerDialog );
             g_pPathManagerDialog->UpdatePathListCtrl();
             g_pPathManagerDialog->UpdateODPointsListCtrl();
             g_pPathManagerDialog->Show();
@@ -800,7 +801,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 break;
         }
     }
-    ocpncc1->SetCursor( *pCurrentCursor );
+    if( pCurrentCursor ) ocpncc1->SetCursor( *pCurrentCursor );
     //SetCursor_PlugIn( pCurrentCursor );
     return bret;
 }
@@ -834,6 +835,32 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         bRefresh = TRUE;
     }
 
+    if ( event.LeftDClick() ) {
+        FindSelectedObject();
+        if( m_pSelectedPath ) {
+            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
+                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+            
+            DimeWindow( g_pPathManagerDialog );
+            g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            m_pSelectedPath = NULL;
+            bret = true;
+        } else if( m_pFoundODPoint ) {
+            if( NULL == g_pODPointPropDialog )
+                g_pODPointPropDialog = new ODPointPropertiesImpl( ocpncc1 );
+            
+            DimeWindow( g_pODPointPropDialog );
+            g_pODPointPropDialog->SetODPoint( m_pFoundODPoint );
+            g_pODPointPropDialog->SetDialogSize();
+            g_pODPointPropDialog->UpdateProperties();
+            
+            if( !g_pODPointPropDialog->IsShown() )
+                g_pODPointPropDialog->Show();
+            m_pFoundODPoint = NULL;
+            bret = true;
+        }
+    }
+    
     if ( event.LeftDown() ) {
         if( m_iCallerId == m_draw_button_id ) {
             if (nBoundary_State > 0 )
@@ -945,7 +972,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if( m_pFoundODPoint ) {
             m_pFoundODPoint->m_bPtIsSelected = false;
             bret = TRUE;
+        } else if ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+            // This is to handle the double click to bring up the dialog box so that the screen does not jump on the extra clicks.
+            bret = TRUE;
         }
+        
 
     }
 
@@ -1037,145 +1068,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
-            double slat, slon;
-            slat = m_cursor_lat;
-            slon = m_cursor_lon;
-            int seltype = 0;
-        
-            SelectItem *pFindPP;
-            SelectItem *pFindPathSeg;
-            pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_OCPNPOINT );
-            pFindPathSeg = g_pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
-            // start           
-            m_pFoundODPoint = NULL;
-            m_pSelectedPath = NULL;
-            if( pFindPP ) {
-                ODPoint *pFirstVizPoint = NULL;
-                ODPoint *pFoundActiveODPoint = NULL;
-                ODPoint *pFoundVizODPoint = NULL;
-                Path *pSelectedActivePath = NULL;
-                Path *pSelectedVizPath = NULL;
-
-                //There is at least one OCPNpoint, so get the whole list
-                SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
-                                            SELTYPE_OCPNPOINT );
-                wxSelectableItemListNode *node = SelList.GetFirst();
-                while( node ) {
-                    SelectItem *pFindSel = node->GetData();
-
-                    ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
-
-                    //    Get an array of all paths using this point
-                    wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );
-
-                    // Use path array (if any) to determine actual visibility for this point
-                    bool bop_viz = false;
-                    if( ppath_array ) {
-                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                            Path *pp = (Path *) ppath_array->Item( ip );
-                            if( pp->IsVisible() ) {
-                                bop_viz = true;
-                                break;
-                            }
-                        }
-                        if( !bop_viz )                          // is not visible as part of path
-                            bop_viz = pop->IsVisible();         //  so treat as isolated point
-
-                    } else
-                        bop_viz = pop->IsVisible();               // isolated point
-
-                    if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
-
-                    // Use path array to choose the appropriate path
-                    // Give preference to any active path, otherwise select the first visible path in the array for this point
-                    if( ppath_array ) {
-                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                            Path *pp = (Path *) ppath_array->Item( ip );
-                            if( pp->m_bPathIsActive ) {
-                                pSelectedActivePath = pp;
-                                pFoundActiveODPoint = pop;
-                                break;
-                            }
-                        }
-
-                        if( NULL == pSelectedVizPath ) {
-                            for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                                Path *pp = (Path *) ppath_array->Item( ip );
-                                if( pp->IsVisible() ) {
-                                    pSelectedVizPath = pp;
-                                    pFoundVizODPoint = pop;
-                                    break;
-                                }
-                            }
-                        }
-
-                        delete ppath_array;
-                    }
-
-                    node = node->GetNext();
-                }
-
-                //      Now choose the "best" selections
-                if( pFoundActiveODPoint ) {
-                    m_pFoundODPoint = pFoundActiveODPoint;
-                    m_pSelectedPath = pSelectedActivePath;
-                } else if( pFoundVizODPoint ) {
-                    m_pFoundODPoint = pFoundVizODPoint;
-                    m_pSelectedPath = pSelectedVizPath;
-                } else
-                    // default is first visible point in list
-                    m_pFoundODPoint = pFirstVizPoint;
-
-                if ( m_pSelectedPath ) {
-                    if ( m_pSelectedPath->IsVisible() )
-                        seltype |= SELTYPE_OCPNPOINT;
-                } else if( m_pFoundODPoint ) seltype |= SELTYPE_OCPNPOINT;
-
-                if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = true;
-            }
-
-            if( pFindPathSeg )                  // there is at least one select item
-            {
-                SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
-                                            SELTYPE_PATHSEGMENT );
-
-                if( NULL == m_pSelectedPath )  // the case where a segment only is selected
-                {
-                    //  Choose the first visible path containing segment in the list
-                    wxSelectableItemListNode *node = SelList.GetFirst();
-                    while( node ) {
-                        SelectItem *pFindSel = node->GetData();
-
-                        Path *pp = (Path *) pFindSel->m_pData3;
-                        if( pp->IsVisible() ) {
-                            m_pSelectedPath = pp;
-                            break;
-                        }
-                        node = node->GetNext();
-                    }
-                }
-
-                if( m_pSelectedPath ) {
-                    if( NULL == m_pFoundODPoint ) m_pFoundODPoint =
-                            (ODPoint *) pFindPathSeg->m_pData1;
-                    m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
-
-                    m_pSelectedPath->m_bPathIsSelected = !(seltype & SELTYPE_OCPNPOINT);
-//                    if( m_pSelectedPath->m_bPathIsSelected ) {
-//                        m_pSelectedPath->m_iBlink++;
-                        //m_pSelectedPath->Draw( *g_pDC, *g_pivp );
-//                    }
-                    seltype |= SELTYPE_PATHSEGMENT;
-                }
-
-            }
-
-            if( 0 != seltype ) {
+            FindSelectedObject();
+            
+            if( 0 != m_seltype ) {
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
-                g_ODEventHandler->PopupMenu( g_cursor_x, g_cursor_y, seltype );
+                g_ODEventHandler->PopupMenu( g_cursor_x, g_cursor_y, m_seltype );
                 
                 //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
@@ -1213,6 +1113,143 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     if( bRefresh ) RequestRefresh( m_parent_window );
     return bret;
+}
+
+void ocpn_draw_pi::FindSelectedObject()
+{
+    double slat, slon;
+    slat = m_cursor_lat;
+    slon = m_cursor_lon;
+    m_seltype = 0;
+    
+    SelectItem *pFindPP;
+    SelectItem *pFindPathSeg;
+    pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_OCPNPOINT );
+    pFindPathSeg = g_pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
+    // start           
+    m_pFoundODPoint = NULL;
+    m_pSelectedPath = NULL;
+    if( pFindPP ) {
+        ODPoint *pFirstVizPoint = NULL;
+        ODPoint *pFoundActiveODPoint = NULL;
+        ODPoint *pFoundVizODPoint = NULL;
+        Path *pSelectedActivePath = NULL;
+        Path *pSelectedVizPath = NULL;
+        
+        //There is at least one OCPNpoint, so get the whole list
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
+                                                                     SELTYPE_OCPNPOINT );
+        wxSelectableItemListNode *node = SelList.GetFirst();
+        while( node ) {
+            SelectItem *pFindSel = node->GetData();
+            
+            ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
+            
+            //    Get an array of all paths using this point
+            wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );
+            
+            // Use path array (if any) to determine actual visibility for this point
+            bool bop_viz = false;
+            if( ppath_array ) {
+                for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                    Path *pp = (Path *) ppath_array->Item( ip );
+                    if( pp->IsVisible() ) {
+                        bop_viz = true;
+                        break;
+                    }
+                }
+                if( !bop_viz )                          // is not visible as part of path
+                    bop_viz = pop->IsVisible();         //  so treat as isolated point
+                    
+            } else
+                bop_viz = pop->IsVisible();               // isolated point
+                
+                if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
+                
+                // Use path array to choose the appropriate path
+                // Give preference to any active path, otherwise select the first visible path in the array for this point
+                if( ppath_array ) {
+                    for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                        Path *pp = (Path *) ppath_array->Item( ip );
+                        if( pp->m_bPathIsActive ) {
+                            pSelectedActivePath = pp;
+                            pFoundActiveODPoint = pop;
+                            break;
+                        }
+                    }
+                    
+                    if( NULL == pSelectedVizPath ) {
+                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                            Path *pp = (Path *) ppath_array->Item( ip );
+                            if( pp->IsVisible() ) {
+                                pSelectedVizPath = pp;
+                                pFoundVizODPoint = pop;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    delete ppath_array;
+                }
+                
+                node = node->GetNext();
+        }
+        
+        //      Now choose the "best" selections
+        if( pFoundActiveODPoint ) {
+            m_pFoundODPoint = pFoundActiveODPoint;
+            m_pSelectedPath = pSelectedActivePath;
+        } else if( pFoundVizODPoint ) {
+            m_pFoundODPoint = pFoundVizODPoint;
+            m_pSelectedPath = pSelectedVizPath;
+        } else
+            // default is first visible point in list
+            m_pFoundODPoint = pFirstVizPoint;
+        
+        if ( m_pSelectedPath ) {
+            if ( m_pSelectedPath->IsVisible() )
+                m_seltype |= SELTYPE_OCPNPOINT;
+        } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_OCPNPOINT;
+        
+        if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = true;
+    }
+    
+    if( pFindPathSeg )                  // there is at least one select item
+    {
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
+                                                                     SELTYPE_PATHSEGMENT );
+        
+        if( NULL == m_pSelectedPath )  // the case where a segment only is selected
+        {
+            //  Choose the first visible path containing segment in the list
+            wxSelectableItemListNode *node = SelList.GetFirst();
+            while( node ) {
+                SelectItem *pFindSel = node->GetData();
+                
+                Path *pp = (Path *) pFindSel->m_pData3;
+                if( pp->IsVisible() ) {
+                    m_pSelectedPath = pp;
+                    break;
+                }
+                node = node->GetNext();
+            }
+        }
+        
+        if( m_pSelectedPath ) {
+            if( NULL == m_pFoundODPoint ) m_pFoundODPoint =
+                (ODPoint *) pFindPathSeg->m_pData1;
+            m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
+            
+            m_pSelectedPath->m_bPathIsSelected = !(m_seltype & SELTYPE_OCPNPOINT);
+            //                    if( m_pSelectedPath->m_bPathIsSelected ) {
+            //                        m_pSelectedPath->m_iBlink++;
+            //m_pSelectedPath->Draw( *g_pDC, *g_pivp );
+            //                    }
+            m_seltype |= SELTYPE_PATHSEGMENT;
+        }
+        
+    }
+    
 }
 
 void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
