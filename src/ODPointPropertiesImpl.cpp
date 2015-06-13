@@ -65,6 +65,8 @@ ODPointPropertiesDialog( parent )
             wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
     this->Connect( ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
             wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+    
+    DimeWindow( this );
 
     // TODO check if wxFrameBuilder supports BitmapComboBox. This code is to handle the case when it does not
     m_bcomboBoxIcon = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
@@ -159,7 +161,6 @@ void ODPointPropertiesImpl::OnExtDescriptionClick( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
-    bool bRefresh = false;
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
@@ -167,7 +168,6 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
         if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
-        bRefresh = true;
     }
     Show( false );
 
@@ -193,7 +193,6 @@ void ODPointPropertiesImpl::OnPointPropertiesClose( wxCloseEvent& event )
 
 void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )
 {
-    bool bRefresh = false;
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_iBlink--;
@@ -205,7 +204,6 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
         m_pODPoint->SetIconName( m_IconName_save );
         m_pODPoint->ReLoadIcon();
         m_pODPoint->m_HyperlinkList->Clear();
-        bRefresh = true;
     }
 
     Show( false );
@@ -291,6 +289,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
 {
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
+        m_pODPoint->m_bPtIsSelected = FALSE;
         m_pODPoint->m_iBlink--;
         if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
     }
@@ -403,9 +402,22 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             iconToSelect = m_bcomboBoxIcon->GetCount() - 1;
         }
         
-        
         m_bcomboBoxIcon->Select( iconToSelect );
         icons = NULL;
+
+        wxString caption( wxS("") );
+        if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
+            caption.append( wxS("OCPN Draw Point") );
+        else
+            caption.append( m_pODPoint->GetTypeString() );
+        caption.append( wxS(" Properties") );
+        
+        if( m_pODPoint->m_bIsInLayer ) {
+            caption.append( wxS(", Layer: ") );
+            caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
+        }
+        SetTitle( caption );
+        
     }
 
     return true;

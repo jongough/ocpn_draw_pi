@@ -562,8 +562,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     
     bool bDrawHL = false;
 
-    if( m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
-        bDrawHL = true;
+    if( m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         int glw, glh;

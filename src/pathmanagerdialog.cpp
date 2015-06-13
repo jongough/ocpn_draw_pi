@@ -716,7 +716,7 @@ PathManagerDialog::~PathManagerDialog()
 void PathManagerDialog::SetColorScheme()
 {
     //TODO Need to find out what this is for?
-    //DimeControl( this );
+    DimeWindow( this );
 }
 
 void PathManagerDialog::UpdatePathListCtrl()
@@ -1441,22 +1441,10 @@ void PathManagerDialog::ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* pare
     if( NULL == g_pODPointPropDialog )
         g_pODPointPropDialog = new ODPointPropertiesImpl( parent );
 
+    DimeWindow( g_pODPointPropDialog );
     g_pODPointPropDialog->SetODPoint( wp );
     g_pODPointPropDialog->SetDialogSize();
     g_pODPointPropDialog->UpdateProperties();
-
-    wxString caption( wxS("") );
-    if ( wp->GetTypeString().IsNull() || wp->GetTypeString().IsEmpty() )
-        caption.append( wxS("OCPN Draw Point") );
-    else
-        caption.append( wp->GetTypeString() );
-    caption.append( wxS(" Properties") );
-
-    if( wp->m_bIsInLayer ) {
-        caption.append( wxS(", Layer: ") );
-        caption.Append( GetLayerName( wp->m_LayerID ) );
-    }
-    g_pODPointPropDialog->SetTitle( caption );
 
     if( !g_pODPointPropDialog->IsShown() )
         g_pODPointPropDialog->Show();

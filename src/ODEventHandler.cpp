@@ -291,6 +291,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
+            DimeWindow( g_pPathManagerDialog );
             g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
