@@ -47,6 +47,7 @@
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "ODPointPropertiesImpl.h"
+#include "ODToolbarImpl.h"
 #include "ODUtils.h"
 #include "SelectItem.h"
 
@@ -171,6 +172,10 @@ IDX_entry       *gpIDX;
 wxString        g_locale;
 int             g_click_stop;
 bool            g_bConfirmObjectDelete;
+
+ODToolbarImpl   *g_pODToolbar;
+int             g_iToolbarPosX;
+int             g_iToolbarPosY;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -361,6 +366,27 @@ int ocpn_draw_pi::Init(void)
             break;
     }
     
+    // Create floating toolbar for drawing
+    g_pODToolbar = new ODToolbarImpl( m_parent_window, ID_TOOLBARPANEL, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL );
+    //g_pODToolbar->m_toolBarODToolbar->SetPosition( wxPoint(150, 150));
+    //size_t nNumTools = g_pODToolbar->m_toolBarODToolbar->GetToolsCount();
+    //int nBoundaryPos = g_pODToolbar->m_toolBarODToolbar->GetToolPos( ID_BOUNDARY );
+    //g_pODToolbar->m_toolBarODToolbar->SetToolNormalBitmap( ID_BOUNDARY, *_img_ocpn_draw_boundary_gray );
+    //g_pODToolbar->m_toolBarODToolbar->SetToolNormalBitmap( ID_ODPOINT, *_img_ocpn_draw_point_gray );
+    //g_pODToolbar->m_toolBarODToolbar->SetToolNormalBitmap( ID_TEXTPOINT, _img_ocpn_draw_text_gray );
+    //wxPoint wxpPos = g_pODToolbar->GetPosition();
+    wxPoint wxpToolbarPos;
+    wxpToolbarPos.x = g_iToolbarPosX;
+    wxpToolbarPos.y = g_iToolbarPosY;
+//    g_pODToolbar->SetPosition( wxpToolbarPos );
+//    g_pODToolbar->m_toolBarODToolbar->SetPosition( wxpToolbarPos );
+    //g_pODToolbar->Show();
+    //g_pODToolbar->SetSize(1,1);
+    g_pODToolbar->CenterOnParent();
+    //g_pODToolbar->Show();
+//    ptbItem->SetNormalBitmap( _img_ocpn_draw_textpoint_gray );
+    //g_pODToolbar->Hide();
+
     // TODO fix up undo
     //    undo = new Undo();
     // Create the Context Menu Items
@@ -594,6 +620,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     ocpncc1->SetCursor( *pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, true );
+                    g_pODToolbar->m_toolBarODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
@@ -602,6 +629,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
+                    g_pODToolbar->m_toolBarODToolbar->Hide();
                 }
                 break;
                 
@@ -612,6 +640,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     ocpncc1->SetCursor( *pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
+                    g_pODToolbar->m_toolBarODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
@@ -619,6 +648,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
+                    g_pODToolbar->m_toolBarODToolbar->Hide();
                 }
                 break;
                 
@@ -668,8 +698,10 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
         pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
         pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
-        pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity);
-        pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity);
+        pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
+        pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
+        pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
+        pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
         
     }
 }
@@ -717,6 +749,9 @@ void ocpn_draw_pi::LoadConfig()
 
         pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
         pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
+
+        pConf->Read( wxS( "ToolBarPosX" ), &g_iToolbarPosX, 0);
+        pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
     }
     
     g_pODPointList = new ODPointList;
