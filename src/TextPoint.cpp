@@ -34,7 +34,7 @@
 #include "FontMgr.h"
 #include "ocpndc.h"
 #include "PointMan.h"
-#include "ODText.h"
+#include "TextPoint.h"
 #include "cutil.h"
 
 #include <wx/stattext.h>
