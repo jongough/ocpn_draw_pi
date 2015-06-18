@@ -618,16 +618,15 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 if( 0 == nBoundary_State ){
                     nBoundary_State = 1;
                     pCurrentCursor = ocpncc1->pCursorPencil;
-                    //SetCursor_PlugIn( pCurrentCursor );
-                    ocpncc1->SetCursor( *pCurrentCursor );
+                    SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     FinishBoundary();
-                    //pCurrentCursor = NULL;
-                    //SetCursor_PlugIn( pCurrentCursor );
+                    pCurrentCursor = NULL;
+                    SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
                     g_pODToolbar->Hide();
@@ -638,15 +637,14 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 if( 0 == nPoint_State ){
                     nPoint_State = 1;
                     pCurrentCursor = ocpncc1->pCursorCross;
-                    //SetCursor_PlugIn( pCurrentCursor );
-                    ocpncc1->SetCursor( *pCurrentCursor );
+                    SetCursor_PlugIn( pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
-                    //pCurrentCursor = NULL;
-                    //SetCursor_PlugIn( pCurrentCursor );
+                    pCurrentCursor = NULL;
+                    SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
                     g_pODToolbar->Hide();
@@ -812,7 +810,6 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
                     m_iCallerId = m_draw_button_id;
                     pCurrentCursor = ocpncc1->pCursorPencil;
-                    //ocpncc1->SetCursor( *pCurrentCursor );
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
@@ -821,15 +818,13 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if( nBoundary_State > 0 ){
                     nBoundary_State = 0;
                     FinishBoundary();
-                    pCurrentCursor = ocpncc1->pCursorArrow;
-                    //ocpncc1->SetCursor( *pCurrentCursor ); 
+                    pCurrentCursor = NULL;
                     //SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
                     nPoint_State = 0;
-                    pCurrentCursor = ocpncc1->pCursorArrow;
-                    //ocpncc1->SetCursor( *pCurrentCursor ); 
+                    pCurrentCursor = NULL;
                     //SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
@@ -837,8 +832,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 break;
         }
     }
-    if( pCurrentCursor ) ocpncc1->SetCursor( *pCurrentCursor );
-    //SetCursor_PlugIn( pCurrentCursor );
+    SetCursor_PlugIn( pCurrentCursor );
     return bret;
 }
 
@@ -857,7 +851,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || m_bPathEditing || m_bODPointEditing) {
-        ocpncc1->SetCursor( *pCurrentCursor );
         CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2 );
         bRefresh = TRUE;
     }
@@ -901,11 +894,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if( m_iCallerId == m_draw_button_id ) {
             if (nBoundary_State > 0 )
             {   
-                ocpncc1->SetCursor( *pCurrentCursor );
                 bret = CreateBoundaryLeftClick( event );
             } else if ( nPoint_State > 0)
             {
-                ocpncc1->SetCursor( *pCurrentCursor );
                 bret = CreatePointLeftClick( event );
             }
         } else if( m_bPathEditing ) {
@@ -933,6 +924,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
             m_bPathEditing = FALSE;
             m_bODPointEditing = FALSE;
+            pCurrentCursor = NULL;
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
             if( m_pFoundODPoint ) {
                 //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
@@ -985,15 +977,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             //undo->AfterUndoableAction( m_pRoutePointEditTarget );
             m_pSelectedPath = NULL;
             m_pFoundODPoint = NULL;
-            //SetCursor_PlugIn( NULL );
-            //pCurrentCursor = ocpncc1->pCursorArrow;
             bRefresh = TRUE;
             bret = TRUE;
         } else if( m_pFoundODPoint && m_bODPointEditing ) {
             m_bODPointEditing = FALSE;
             m_pFoundODPoint->m_bIsBeingEdited = FALSE;
             m_pFoundODPoint->m_bPtIsSelected = false;
-            pCurrentCursor = ocpncc1->pCursorArrow;
+            pCurrentCursor = NULL;
             g_pODSelect->DeleteSelectableODPoint( m_pFoundODPoint );
             g_pODSelect->AddSelectableODPoint( m_cursor_lat, m_cursor_lon, m_pFoundODPoint );
             bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
@@ -1089,16 +1079,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( nBoundary_State > 1 ) {
             nBoundary_State = 0;
             FinishBoundary();
-            pCurrentCursor = ocpncc1->pCursorArrow;
-            //ocpncc1->SetCursor( *pCurrentCursor ); 
+            pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             bRefresh = TRUE;
 //            RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nPoint_State > 1) {
             nPoint_State = 0;
-            pCurrentCursor = ocpncc1->pCursorArrow;
-            //ocpncc1->SetCursor( *pCurrentCursor ); 
+            pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             bRefresh = TRUE;
             RequestRefresh( m_parent_window );
@@ -1144,8 +1132,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if( b_start_rollover )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
     
-    if (bret && pCurrentCursor) ocpncc1->SetCursor( *pCurrentCursor );
-    //SetCursor_PlugIn( pCurrentCursor );
+    SetCursor_PlugIn( pCurrentCursor );
     
     if( bRefresh ) RequestRefresh( m_parent_window );
     return bret;
@@ -1336,10 +1323,6 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
     
     ocpnDC ocpnmdc( *pmdc );
     
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bODPointEditing ) {
-        ocpncc1->SetCursor( *pCurrentCursor );
-    }
-
     RenderPathLegs( ocpnmdc );
     return TRUE;
 }
@@ -1352,10 +1335,6 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
     llbb.SetMax( pivp->lon_max, pivp->lat_max );
-    
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bODPointEditing ) {
-        ocpncc1->SetCursor( *pCurrentCursor );
-    }
     
     DrawAllPathsInBBox( *g_pDC, llbb );
     DrawAllODPointsInBBox( *g_pDC, llbb );
@@ -1375,10 +1354,6 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
     llbb.SetMax( pivp->lon_max, pivp->lat_max );
     
-    if( nBoundary_State > 0 || nPoint_State > 0 || nPath_State > 0 || m_bPathEditing || m_bODPointEditing ) {
-        ocpncc1->SetCursor( *pCurrentCursor );
-    }
-
 //    DrawAllODPointsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
@@ -1535,7 +1510,6 @@ void ocpn_draw_pi::FinishBoundary( void )
     m_prev_pMousePoint = NULL;
 
     //SetToolbarItemState( m_draw_button_id, false );
-//    ocpncc1->SetCursor( *pCursorArrow );
     m_bDrawingBoundary = false;
     
     if ( m_pMouseBoundary && m_pMouseBoundary->GetnPoints() > 1 && m_pMouseBoundary->m_pLastAddedPoint != m_pMouseBoundary->m_pFirstAddedPoint ) {
