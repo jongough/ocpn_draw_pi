@@ -382,6 +382,7 @@ int ocpn_draw_pi::Init(void)
 //    g_pODToolbar->m_toolBarODToolbar->SetPosition( wxpToolbarPos );
     //g_pODToolbar->Show();
     //g_pODToolbar->SetSize(1,1);
+    g_pODToolbar->Fit();
     g_pODToolbar->CenterOnParent();
     //g_pODToolbar->Show();
 //    ptbItem->SetNormalBitmap( _img_ocpn_draw_textpoint_gray );
@@ -620,7 +621,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     ocpncc1->SetCursor( *pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->m_toolBarODToolbar->Show();
+                    g_pODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
@@ -629,7 +630,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
-                    g_pODToolbar->m_toolBarODToolbar->Hide();
+                    g_pODToolbar->Hide();
                 }
                 break;
                 
@@ -640,7 +641,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     ocpncc1->SetCursor( *pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->m_toolBarODToolbar->Show();
+                    g_pODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
@@ -648,7 +649,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     //SetCursor_PlugIn( pCurrentCursor );
                     //SetToolbarItemState( m_draw_button_id, false );
                     //RequestRefresh( m_parent_window );
-                    g_pODToolbar->m_toolBarODToolbar->Hide();
+                    g_pODToolbar->Hide();
                 }
                 break;
                 
