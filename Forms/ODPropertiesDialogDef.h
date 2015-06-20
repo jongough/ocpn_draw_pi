@@ -1,13 +1,15 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jan 29 2014)
+// C++ code generated with wxFormBuilder (version Jun 17 2015)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ODPropertiesDialog__
-#define __ODPropertiesDialog__
+#ifndef __ODPROPERTIESDIALOGDEF_H__
+#define __ODPROPERTIESDIALOGDEF_H__
 
+#include <wx/artprov.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/string.h>
 #include <wx/checkbox.h>
 #include <wx/gdicmn.h>
@@ -34,9 +36,9 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class ODPropertiesDialog
+/// Class ODPropertiesDialogDef
 ///////////////////////////////////////////////////////////////////////////////
-class ODPropertiesDialog : public wxDialog 
+class ODPropertiesDialogDef : public wxDialog 
 {
 	private:
 	
@@ -93,6 +95,20 @@ class ODPropertiesDialog : public wxDialog
 		wxChoice* m_choiceActiveBoundaryFillColour;
 		wxStaticText* m_staticTextInactiveBoundaryFillColour;
 		wxChoice* m_choiceInActiveBoundaryFillColour;
+		wxPanel* m_panelAbout;
+		wxStaticText* m_staticTextName;
+		wxStaticText* m_staticTextNameVal;
+		wxStaticText* m_staticTextVersion;
+		wxStaticText* m_staticTextMajor;
+		wxStaticText* m_staticTextMajorVal;
+		wxStaticText* m_staticTextMinor;
+		wxStaticText* m_staticTextMinorVal;
+		wxStaticText* m_staticTextPatcvh;
+		wxStaticText* m_staticTextPatchVal;
+		wxStaticText* m_staticTextDate;
+		wxStaticText* m_staticTextDateVal;
+		wxStaticText* m_staticTextOther;
+		wxStaticText* m_staticText34;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonAApply;
@@ -105,9 +121,9 @@ class ODPropertiesDialog : public wxDialog
 	
 	public:
 		
-		ODPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
-		~ODPropertiesDialog();
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
+		~ODPropertiesDialogDef();
 	
 };
 
-#endif //__ODPropertiesDialog__
+#endif //__ODPROPERTIESDIALOGDEF_H__
