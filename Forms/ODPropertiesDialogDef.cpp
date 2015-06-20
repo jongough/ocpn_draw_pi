@@ -21,7 +21,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	bSizerGeneral = new wxBoxSizer( wxVERTICAL );
 	
 	wxFlexGridSizer* fgSizer4;
-	fgSizer4 = new wxFlexGridSizer( 4, 2, 0, 0 );
+	fgSizer4 = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizer4->SetFlexibleDirection( wxBOTH );
 	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -56,6 +56,16 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_sliderInitialEdgePan = new wxSlider( m_panelGeneral, wxID_ANY, 3, 0, 10, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer4->Add( m_sliderInitialEdgePan, 0, wxALL|wxEXPAND, 5 );
 	
+	m_staticTextToolbar = new wxStaticText( m_panelGeneral, wxID_ANY, wxT("Display Toolbar"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextToolbar->Wrap( -1 );
+	fgSizer4->Add( m_staticTextToolbar, 0, wxALL, 5 );
+	
+	wxString m_choiceToolbarChoices[] = { wxT("Never"), wxT("Whilst Drawing"), wxT("Always") };
+	int m_choiceToolbarNChoices = sizeof( m_choiceToolbarChoices ) / sizeof( wxString );
+	m_choiceToolbar = new wxChoice( m_panelGeneral, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceToolbarNChoices, m_choiceToolbarChoices, 0 );
+	m_choiceToolbar->SetSelection( 1 );
+	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
+	
 	
 	bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
 	
@@ -73,7 +83,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticText14 = new wxStaticText( m_panelPoint, wxID_ANY, wxT("Arrival Radius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText14->Wrap( -1 );
-	bSizerArrivalRadius->Add( m_staticText14, 1, wxALIGN_CENTER|wxALL, 5 );
+	bSizerArrivalRadius->Add( m_staticText14, 1, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
 	
 	m_textCtrlODPointArrivalRadius = new wxTextCtrl( m_panelPoint, wxID_ANY, wxT("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_textCtrlODPointArrivalRadius->SetMaxLength( 0 ); 
@@ -91,14 +101,17 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkBoxShowName = new wxCheckBox( m_panelPoint, wxID_ANY, wxT("Show Name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER|wxALL, 5 );
+	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
+	
+	
+	m_SizerNameIcon->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	m_staticTextIcon = new wxStaticText( m_panelPoint, wxID_ANY, wxT("Icon"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextIcon->Wrap( -1 );
-	m_SizerNameIcon->Add( m_staticTextIcon, 0, wxALIGN_CENTER|wxALL, 5 );
+	m_SizerNameIcon->Add( m_staticTextIcon, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_comboBoxODPointIconName = new wxComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerNameIcon->Add( m_comboBoxODPointIconName, 0, wxALL, 5 );
+	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );

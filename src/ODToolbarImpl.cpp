@@ -37,28 +37,109 @@
 #include "ODicons.h"
 #include "ocpn_draw_pi.h"
 
+extern ocpn_draw_pi *g_ocpn_draw_pi;
+
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent )
 {
     m_toolBoundary = m_toolBarODToolbar->AddTool( ID_BOUNDARY, wxS("Boundary"), *_img_ocpn_draw_boundary_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
-    //m_toolBarODToolbar->AddTool( ID_ODPOINT, wxS("Point"), *_img_ocpn_draw_point_gray, wxS("ODPoint"), wxITEM_CHECK );
+    m_toolODPoint = m_toolBarODToolbar->AddTool( ID_ODPOINT, wxS("Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
     m_toolBarODToolbar->SetInitialSize();
+    m_toolbarSize = m_toolBarODToolbar->GetSize();
     
-    //    m_toolBarODToolbar->AddTool( ID_TEXTPOINT, wxT("Text Point"), wxNullBitmap, wxNullBitmap, wxITEM_NORMAL, wxT("Text Point"), wxEmptyString );
-/*    m_toolBarODToolbar->Connect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( ODToolbarImpl::OnLeaveWindow ), NULL, this );
-    m_toolBarODToolbar->Connect( wxEVT_MOTION, wxMouseEventHandler( ODToolbarImpl::OnMotion ), NULL, this );
-    m_toolBarODToolbar->Connect( wxEVT_PAINT, wxPaintEventHandler( ODToolbarImpl::OnPaint ), NULL, this );
-    m_toolBarODToolbar->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODToolbarImpl::OnSetFocus ), NULL, this );
-*/    
-    
+    Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
 }
 
 ODToolbarImpl::~ODToolbarImpl()
 {
-/*    m_toolBarODToolbar->Disconnect( wxEVT_LEAVE_WINDOW, wxMouseEventHandler( ODToolbarImpl::OnLeaveWindow ), NULL, this );
-    m_toolBarODToolbar->Disconnect( wxEVT_MOTION, wxMouseEventHandler( ODToolbarImpl::OnMotion ), NULL, this );
-    m_toolBarODToolbar->Disconnect( wxEVT_PAINT, wxPaintEventHandler( ODToolbarImpl::OnPaint ), NULL, this );
-    m_toolBarODToolbar->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODToolbarImpl::OnSetFocus ), NULL, this );
-*/    
+    Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
 }
 
+void ODToolbarImpl::OnActivate( wxActivateEvent& event )
+{
+    if( !event.GetActive() ) return;
+    
+    switch(g_ocpn_draw_pi->m_Mode)
+    {
+        case ID_MODE_BOUNDARY:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            break;
+        }
+            
+        case ID_MODE_POINT: 
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
+            break;
+        }
+        case ID_NONE:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            break;
+        }
+        default:
+            break;
+    }
+            
+}
 
+void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
+{
+    switch( event.GetId() )
+    {
+        case ID_BOUNDARY:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            g_ocpn_draw_pi->m_Mode = ID_MODE_BOUNDARY;
+            if( g_ocpn_draw_pi->nBoundary_State == 0) g_ocpn_draw_pi->nBoundary_State = 1;
+            g_ocpn_draw_pi->SetToolbarTool();
+            break;
+        }
+        case ID_ODPOINT:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
+            g_ocpn_draw_pi->m_Mode = ID_MODE_POINT;
+            if( g_ocpn_draw_pi->nPoint_State == 0) g_ocpn_draw_pi->nPoint_State = 1;
+            g_ocpn_draw_pi->SetToolbarTool();
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void ODToolbarImpl::OnClose( wxCloseEvent& event )
+{
+    g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+}
+
+void ODToolbarImpl::SetToolbarTool( int iTool )
+{
+    switch( iTool )
+    {
+        case ID_BOUNDARY:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            break;
+        }
+        case ID_ODPOINT:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
+            break;
+        }
+        case ID_NONE:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            break;
+        }
+        default:
+            break;
+    }
+}

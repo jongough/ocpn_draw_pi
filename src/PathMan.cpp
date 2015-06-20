@@ -301,7 +301,7 @@ Path *PathMan::FindPathContainingODPoint( ODPoint *pWP )
     return NULL;                              // not found
 }
 
-void PathMan::SetColorScheme( ColorScheme cs )
+void PathMan::SetColorScheme( PI_ColorScheme cs )
 {
     // Re-Create the pens and colors
 

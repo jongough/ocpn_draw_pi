@@ -25,7 +25,7 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
  ***************************************************************************
  */
-#define DEBUG_BUILD
+
 #ifdef DEBUG_BUILD
 #  define DEBUG(x) do { \
 time_t now = time(0); \
@@ -33,9 +33,28 @@ tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
 std::cout << stime << " : " << x << std::endl; } while (0)
+
+#  define DEBUGST(x) do { \
+time_t now = time(0); \
+tm* localtm = localtime(&now); \
+char *stime = asctime(localtm); \
+stime[strlen(stime) - 1 ] = 0; \
+std::cout << stime << " : " << x; } while (0)
+
+#  define DEBUGCONT(x) do { \
+std::cout << x ; } while (0)
+
+#  define DEBUGEND(x) do { \
+std::cout << x << std::endl; } while (0)
 #else
 #  define DEBUG(x) do {} while (0)
+#  define DEBUGST(x) do {} while (0)
+#  define DEBUGCONT(x) do {} while (0)
+#  define DEBUGEND(x) do {} while (0)
 #endif
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
 
 #ifndef _OCPNDRAWPI_H_
 #define _OCPNDRAWPI_H_
@@ -47,7 +66,6 @@ std::cout << stime << " : " << x << std::endl; } while (0)
 #endif //precompiled headers
 
 
-#include "version.h"
 #include "ocpn_plugin.h"
 #include "undo.h"
 #include "ODPoint.h"
@@ -139,7 +157,6 @@ public:
     ocpn_draw_pi(void *ppimgr);
     ~ocpn_draw_pi();
 
-    bool                dlgShow;
     wxWindow            *m_parent_window;
     wxFileConfig        *m_pODConfig;
 //    ODConfig        *m_pODConfig;
@@ -174,15 +191,11 @@ public:
     void GetOriginalColors();
     void SetOriginalColors();
     void LateInit(void);
-    
-
-
- 
 
     //    The optional method overrides
-
     void OnContextMenuItemCallback(int id);
     void latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy);
+    void SetColorScheme(PI_ColorScheme cs);
 
     //    The required override PlugIn Methods
     //     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
@@ -216,6 +229,7 @@ public:
     
     void RenderPathLegs( ocpnDC &dc );
     
+    // OD Methods
     void    ProcessTimerEvent(wxTimerEvent& ev);
     void    PopupMenuHandler(wxCommandEvent& ev);
     
@@ -226,7 +240,7 @@ public:
     void    DimeControl( wxWindow* ctrl );
     void    DimeControl( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
                   wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline );
-
+    void    SetToolbarTool( void );
 
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
@@ -272,6 +286,8 @@ public:
     wxGLCanvas      *m_glcc;
     
     int         nBlinkerTick;
+    int         m_Mode;
+    int                m_draw_button_id;
     
     void    appendOSDirSlash(wxString* pString);  
     
@@ -302,11 +318,10 @@ private:
     int               m_hide_id;
     bool                show;
     int                m_config_button_id;
-    int                m_draw_button_id;
 
     bool              m_bLOGShowIcon;
     StatWin                   *stats;
-    ColorScheme               global_color_scheme;
+    PI_ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;
     
@@ -317,7 +332,6 @@ private:
     
     wxString    m_Data;
 
-    int         m_Mode;
     int         m_numModes;
 
     int         m_rollover_popup_timer_msec;

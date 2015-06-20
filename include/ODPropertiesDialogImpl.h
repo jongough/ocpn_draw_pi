@@ -45,7 +45,6 @@ protected:
     
     void SaveChanges();
     
-    wxBitmapComboBox    *m_bcomboBoxODPointIcon;
     wxSize              m_defaultClientSize;
 
     

@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "00010")
-SET(VERSION_DATE "18/06/2015")
+SET(VERSION_PATCH "0100")
+SET(VERSION_DATE "20/06/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -54,8 +54,8 @@ SET(SRCS
         src/ODConfig.cpp
         src/ODEventHandler.cpp
         src/ODNavObjectChanges.cpp
-        src/ODPropertiesDialog.cpp
-        src/ODPropertiesImpl.cpp
+        src/ODPropertiesDialogDef.cpp
+        src/ODPropertiesDialogImpl.cpp
         src/ODPointPropertiesDialog.cpp
         src/ODPointPropertiesImpl.cpp
         src/ODPositionParser.cpp
@@ -84,8 +84,8 @@ SET(HDRS
         include/ODConfig.h
         include/ODEventHandler.h
         include/ODNavObjectChanges.h
-        include/ODPropertiesDialog.h
-        include/ODPropertiesImpl.h
+        include/ODPropertiesDialogDef.h
+        include/ODPropertiesDialogImpl.h
         include/ODPointPropertiesDialog.h
         include/ODPointPropertiesImpl.h
         include/ODPositionParser.h

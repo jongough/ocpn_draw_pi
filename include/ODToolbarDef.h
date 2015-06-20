@@ -30,11 +30,17 @@ class ODToolbarDialog : public wxDialog
 	private:
 	
 	protected:
+		
+		// Virtual event handlers, overide them in your derived class
+		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
+		
 	
 	public:
 		wxToolBar* m_toolBarODToolbar;
 		
-		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 131,74 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP|wxRAISED_BORDER ); 
+		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 125,74 ), long style = wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP ); 
 		~ODToolbarDialog();
 	
 };
