@@ -45,6 +45,7 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &po
     m_toolODPoint = m_toolBarODToolbar->AddTool( ID_ODPOINT, wxS("Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
     m_toolBarODToolbar->SetInitialSize();
     m_toolbarSize = m_toolBarODToolbar->GetSize();
+	m_toolBarODToolbar->Realize();
     
     Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
 }
