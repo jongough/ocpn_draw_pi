@@ -69,10 +69,6 @@ ODPointPropertiesDialog( parent )
     DimeWindow( this );
 
     // TODO check if wxFrameBuilder supports BitmapComboBox. This code is to handle the case when it does not
-    m_bcomboBoxIcon = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
-    m_SizerNameIcon->Replace( m_comboBoxIcon, m_bcomboBoxIcon );
-    delete( m_comboBoxIcon );
-    m_comboBoxIcon = NULL;
     m_pODPoint = NULL;
 
 }
@@ -391,7 +387,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         // find the correct item in the combo box
         int iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconKey( i ) == m_pODPoint->GetIconName() )
+            if( *g_pODPointMan->GetIconDescription( i ) == m_pODPoint->GetIconName() )
                 iconToSelect = i;
         }
 
@@ -402,7 +398,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             iconToSelect = m_bcomboBoxIcon->GetCount() - 1;
         }
         
-        m_bcomboBoxIcon->Select( iconToSelect );
+        m_bcomboBoxIcon->SetSelection( iconToSelect );
         icons = NULL;
 
         wxString caption( wxS("") );

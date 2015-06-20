@@ -20,13 +20,13 @@
 #include <wx/stattext.h>
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
+#include <wx/choice.h>
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/textctrl.h>
-#include <wx/combobox.h>
-#include <wx/choice.h>
+#include <wx/bmpcbox.h>
 #include <wx/clrpicker.h>
 #include <wx/notebook.h>
 #include <wx/button.h>
@@ -53,13 +53,14 @@ class ODPropertiesDialogDef : public wxDialog
 		wxSlider* m_sliderEdgePan;
 		wxStaticText* m_staticTextInitialEdgePan;
 		wxSlider* m_sliderInitialEdgePan;
+		wxStaticText* m_staticTextToolbar;
 		wxPanel* m_panelPoint;
 		wxStaticText* m_staticText14;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_SizerNameIcon;
 		wxCheckBox* m_checkBoxShowName;
 		wxStaticText* m_staticTextIcon;
-		wxComboBox* m_comboBoxODPointIconName;
+		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxStaticText* m_staticTextRangeRingNumber;
 		wxChoice* m_choiceODPointRangeRingNumber;
@@ -120,6 +121,7 @@ class ODPropertiesDialogDef : public wxDialog
 		
 	
 	public:
+		wxChoice* m_choiceToolbar;
 		
 		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
 		~ODPropertiesDialogDef();

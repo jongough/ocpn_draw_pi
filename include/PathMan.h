@@ -54,7 +54,7 @@ class PathMan
         bool UpdateAutopilot();
         bool DeactivatePath( Path *pPathToDeactivate );
         bool IsAnyPathActive(void){ return (pActivePath != NULL); }
-        void SetColorScheme(ColorScheme cs);
+        void SetColorScheme(PI_ColorScheme cs);
 
         Path *GetpActivePath(){ return pActivePath;}
         ODPoint *GetpActivePoint(){ return pActivePoint;}

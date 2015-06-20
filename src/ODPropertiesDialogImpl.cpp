@@ -61,14 +61,12 @@ extern int          g_navobjbackups;
 extern int          g_EdgePanSensitivity;
 extern int          g_InitialEdgePanSensitivity;
 
+extern int          g_iDisplayToolbar;
+
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
-ODPropertiesDialogImpl( parent )
+ODPropertiesDialogDef( parent )
 {
-    m_bcomboBoxODPointIcon = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
-    m_SizerNameIcon->Replace( m_comboBoxODPointIconName, m_bcomboBoxODPointIcon );
-    delete( m_comboBoxODPointIconName );
-    m_comboBoxODPointIconName = NULL;
     
     m_staticTextNameVal->SetLabel( wxT("OpenCPN Draw Plugin") );
     m_staticTextMajorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MAJOR ));
@@ -142,12 +140,14 @@ void ODPropertiesDialogImpl::SaveChanges()
         g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
         m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
         g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
-        g_sODPointIconName = m_bcomboBoxODPointIcon->GetValue();
+        g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
         g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
         g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
         
         g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
         g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
+        
+        g_iDisplayToolbar = m_choiceToolbar->GetSelection();
 }
 
 void ODPropertiesDialogImpl::SetDialogSize( void )
@@ -183,24 +183,24 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
         m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
 
-        m_bcomboBoxODPointIcon->Clear();
+        m_bcomboBoxODPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
         if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
         
-        bool fillCombo = m_bcomboBoxODPointIcon->GetCount() == 0;
+        bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
         wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
-                m_bcomboBoxODPointIcon->Append( *ps, icons->GetBitmap( i ) );
+                m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
+            if( *g_pODPointMan->GetIconDescription( i ) == g_sODPointIconName ) {
                 iconToSelect = i;
                 break;
             }
@@ -209,12 +209,12 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxODPointIcon->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxODPointIcon->GetCount() - 1;
+            m_bcomboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
         }
         
         
-        m_bcomboBoxODPointIcon->Select( iconToSelect );
+        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         icons = NULL;
 
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
@@ -249,6 +249,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
         m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
         m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
+        m_choiceToolbar->Select( g_iDisplayToolbar );
         
 
     return;

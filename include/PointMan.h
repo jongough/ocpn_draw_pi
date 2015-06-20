@@ -69,7 +69,7 @@ class PointMan
       int GetNumIcons(void){ return m_pIconArray->Count(); }
       ODPoint *GetNearbyODPoint(double lat, double lon, double radius_meters);
       ODPoint *GetOtherNearbyODPoint(double lat, double lon, double radius_meters, const wxString &guid);
-      void SetColorScheme(ColorScheme cs);
+      void SetColorScheme(PI_ColorScheme cs);
       bool SharedODPointsExist();
       void DeleteAllODPoints(bool b_delete_used);
       ODPoint *FindODPointByGUID(const wxString &guid);

@@ -41,18 +41,18 @@
             <property name="hidden">0</property>
             <property name="id">wxID_ANY</property>
             <property name="maximum_size"></property>
-            <property name="minimum_size"></property>
+            <property name="minimum_size">125,74</property>
             <property name="name">ODToolbarDialog</property>
             <property name="pos"></property>
-            <property name="size">131,74</property>
+            <property name="size">125,74</property>
             <property name="style">wxCAPTION|wxCLOSE_BOX|wxSTAY_ON_TOP</property>
             <property name="subclass"></property>
             <property name="title">Draw Toolbar</property>
             <property name="tooltip"></property>
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
-            <property name="window_style">wxRAISED_BORDER</property>
-            <event name="OnActivate"></event>
+            <property name="window_style"></property>
+            <event name="OnActivate">OnActivate</event>
             <event name="OnActivateApp"></event>
             <event name="OnAuiFindManager"></event>
             <event name="OnAuiPaneButton"></event>
@@ -61,7 +61,7 @@
             <event name="OnAuiPaneRestore"></event>
             <event name="OnAuiRender"></event>
             <event name="OnChar"></event>
-            <event name="OnClose"></event>
+            <event name="OnClose">OnClose</event>
             <event name="OnEnterWindow"></event>
             <event name="OnEraseBackground"></event>
             <event name="OnHibernate"></event>
@@ -86,7 +86,7 @@
             <event name="OnRightDown"></event>
             <event name="OnRightUp"></event>
             <event name="OnSetFocus"></event>
-            <event name="OnSize"></event>
+            <event name="OnSize">OnSize</event>
             <event name="OnUpdateUI"></event>
             <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size">20,20</property>
@@ -152,7 +152,7 @@
                         <property name="tooltip"></property>
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
-                        <property name="window_style"></property>
+                        <property name="window_style">wxNO_BORDER</property>
                         <event name="OnChar"></event>
                         <event name="OnEnterWindow"></event>
                         <event name="OnEraseBackground"></event>
