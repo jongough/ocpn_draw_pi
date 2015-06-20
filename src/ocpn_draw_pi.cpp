@@ -42,12 +42,14 @@
 #include "PointMan.h"
 #include "ODConfig.h"
 #include "ODEventHandler.h"
-#include "ODPropertiesImpl.h"
+#include "ODPropertiesDialogImpl.h"
 #include "ODicons.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "ODPointPropertiesImpl.h"
+#include "ODToolbarImpl.h"
 #include "ODUtils.h"
+#include "version.h"
 #include "SelectItem.h"
 
 #include "chcanv.h"
@@ -107,7 +109,7 @@ wxString                g_default_ODPoint_icon;
 PathProp                *g_pPathPropDialog;
 PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
-ODPropertiesImpl  *g_pOCPNDrawPropDialog;
+ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
 //ocpnStyle::StyleManager *g_ODStyleManager;
 BoundaryList            *g_pBoundaryList;
@@ -171,6 +173,11 @@ IDX_entry       *gpIDX;
 wxString        g_locale;
 int             g_click_stop;
 bool            g_bConfirmObjectDelete;
+
+ODToolbarImpl   *g_pODToolbar;
+int             g_iToolbarPosX;
+int             g_iToolbarPosY;
+int             g_iDisplayToolbar;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -254,9 +261,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     
     g_pHome_Locn->Append(_T("ocpn_draw_pi"));
     appendOSDirSlash(g_pHome_Locn);
-    if(!wxDir::Exists(*g_pHome_Locn))
-        wxMkdir(*g_pHome_Locn);
-    DEBUG( *g_pHome_Locn )    ;
+//    if(!wxDir::Exists(*g_pHome_Locn))
+//        wxMkdir(*g_pHome_Locn);
     
     g_pData = new wxString();
     g_pData->append( stdDataDir );
@@ -295,7 +301,6 @@ ocpn_draw_pi::~ocpn_draw_pi()
 
 int ocpn_draw_pi::Init(void)
 {
-    dlgShow = false;
     m_bBoundaryEditing = false;
     m_bPathEditing = false;
     m_bODPointEditing = false;
@@ -361,6 +366,19 @@ int ocpn_draw_pi::Init(void)
             break;
     }
     
+    // Create floating toolbar for drawing
+    g_pODToolbar = new ODToolbarImpl( m_parent_window, ID_TOOLBARPANEL, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL );
+    wxPoint wxpToolbarPos;
+    wxpToolbarPos.x = g_iToolbarPosX;
+    wxpToolbarPos.y = g_iToolbarPosY;
+    g_pODToolbar->SetPosition( wxpToolbarPos );
+    g_pODToolbar->Fit();
+    g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
+    if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
+    if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
+    g_pODToolbar->SetToolbarTool( ID_NONE );
+    m_Mode = ID_NONE;
+
     // TODO fix up undo
     //    undo = new Undo();
     // Create the Context Menu Items
@@ -436,11 +454,16 @@ void ocpn_draw_pi::LateInit(void)
 bool ocpn_draw_pi::DeInit(void)
 {
     ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
-    delete g_ODEventHandler;
-    delete g_pPathRolloverWin;
-    RemovePlugInTool(m_config_button_id);
+    if( g_ODEventHandler ) delete g_ODEventHandler;
+    g_ODEventHandler = NULL;
+    if( g_pPathRolloverWin ) delete g_pPathRolloverWin;
+    g_pPathRolloverWin = NULL;
     
-    RemovePlugInTool(m_draw_button_id);
+    if( m_config_button_id ) RemovePlugInTool(m_config_button_id);
+    m_config_button_id = 0;
+    
+    if( m_draw_button_id ) RemovePlugInTool(m_draw_button_id);
+    m_draw_button_id = 0;
     shutdown(false);
     return true;
 }
@@ -469,6 +492,11 @@ void ocpn_draw_pi::SetOriginalColors()
     udkrd = mudkrd;
     back_color = mback_color;
     text_color = mtext_color;
+}
+
+void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
+{
+    global_color_scheme = cs;
 }
 
 void ocpn_draw_pi::UpdateAuiStatus(void)
@@ -540,7 +568,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
     //dlgShow = false;
     if( NULL == g_pOCPNDrawPropDialog )
-        g_pOCPNDrawPropDialog = new ODPropertiesImpl( parent );
+        g_pOCPNDrawPropDialog = new ODPropertiesDialogImpl( parent );
 
     g_pOCPNDrawPropDialog->SetDialogSize();
     g_pOCPNDrawPropDialog->UpdateProperties();
@@ -554,8 +582,8 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
 void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
-    dlgShow = !dlgShow;
     m_iCallerId = id;
+    if( m_Mode == ID_NONE ) m_Mode = 0;
 
     if ( id == m_config_button_id ) {
         if( 0 == nConfig_State ){
@@ -592,15 +620,17 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nBoundary_State = 1;
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     SetCursor_PlugIn( pCurrentCursor );
-                    //SetToolbarItemState( m_draw_button_id, true );
+                    SetToolbarItemState( m_draw_button_id, true );
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     FinishBoundary();
                     pCurrentCursor = NULL;
                     SetCursor_PlugIn( pCurrentCursor );
-                    //SetToolbarItemState( m_draw_button_id, false );
-                    //RequestRefresh( m_parent_window );
+                    SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                    if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
                 break;
                 
@@ -610,24 +640,23 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     pCurrentCursor = ocpncc1->pCursorCross;
                     SetCursor_PlugIn( pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     pCurrentCursor = NULL;
                     SetCursor_PlugIn( pCurrentCursor );
-                    //SetToolbarItemState( m_draw_button_id, false );
-                    //RequestRefresh( m_parent_window );
+                    SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                    if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
                 break;
-                
+            
             default:
                 m_Mode = ID_MODE_BOUNDARY;
                 break;
         }
     }
-    // Toggle is handled by the toolbar but we must keep plugin manager b_toggle updated
-    // to actual status to ensure correct status upon toolbar rebuild
-    // SetToolbarItemState( m_config_button_id, dlgShow );
 }
 
 void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
@@ -666,8 +695,11 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
         pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
         pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
-        pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity);
-        pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity);
+        pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
+        pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
+        pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
+        pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
+        pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
         
     }
 }
@@ -715,6 +747,10 @@ void ocpn_draw_pi::LoadConfig()
 
         pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
         pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
+
+        pConf->Read( wxS( "ToolBarPosX" ), &g_iToolbarPosX, 0);
+        pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
+        pConf->Read( wxS( "DisplayToolbar" ), &g_iDisplayToolbar, 1 );
     }
     
     g_pODPointList = new ODPointList;
@@ -776,6 +812,10 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     pCurrentCursor = ocpncc1->pCursorPencil;
                     bret = TRUE;
                 } else bret = FALSE;
+                if(g_iDisplayToolbar == ID_DISPLAY_WHILST_DRAWING ) {
+                    g_pODToolbar->SetPosition( wxPoint(g_iToolbarPosX, g_iToolbarPosY) );
+                    g_pODToolbar->Show();
+                }
                 break;
                 
             case 27: // Generic Break
@@ -783,16 +823,18 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     nBoundary_State = 0;
                     FinishBoundary();
                     pCurrentCursor = NULL;
-                    //SetToolbarItemState( m_draw_button_id, false );
+                    SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
                     nPoint_State = 0;
                     pCurrentCursor = NULL;
-                    //SetToolbarItemState( m_draw_button_id, false );
+                    SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else bret = FALSE;
+                g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 break;
         }
     }
@@ -1010,48 +1052,32 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if ( event.RightDown() ) {
         if ( nBoundary_State == 1 || nPoint_State == 1 ) {
             m_Mode++;
-            if (m_Mode > m_numModes ) m_Mode = 0;
-            switch (m_Mode)
+            SetToolbarTool();
+            switch( m_Mode )
             {
                 case ID_MODE_BOUNDARY:
-                    // Boundary
-                    pCurrentCursor = ocpncc1->pCursorPencil;
-                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
-                    SetToolbarItemState( m_draw_button_id, true );
-                    nBoundary_State = 1;
-                    nPoint_State = 0;
+                    g_pODToolbar->SetToolbarTool( ID_BOUNDARY );
                     break;
-                    
                 case ID_MODE_POINT:
-                    // Point
-                    pCurrentCursor = ocpncc1->pCursorCross;
-                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_gray, _img_ocpn_draw_point);
-                    SetToolbarItemState( m_draw_button_id, true );
-                    nPoint_State = 1;
-                    nBoundary_State = 0;
+                    g_pODToolbar->SetToolbarTool( ID_ODPOINT );
                     break;
-
-                default:
-                    // Boundary
-                    m_Mode = ID_MODE_BOUNDARY;
-                    pCurrentCursor = ocpncc1->pCursorPencil;
-                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
-                    SetToolbarItemState( m_draw_button_id, true );
-                    break;
-            }
+            }       
             bret = TRUE;
         } else if ( nBoundary_State > 1 ) {
             nBoundary_State = 0;
             FinishBoundary();
             pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+            if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
-//            RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nPoint_State > 1) {
             nPoint_State = 0;
             pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+            if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
             RequestRefresh( m_parent_window );
             bret = TRUE;
@@ -2139,3 +2165,39 @@ void ocpn_draw_pi::DimeControl( wxWindow* ctrl, wxColour col, wxColour window_ba
     }
 }
 
+void ocpn_draw_pi::SetToolbarTool( void )
+{
+    if ( nBoundary_State == 1 || nPoint_State == 1 ) {
+        if (m_Mode > m_numModes ) m_Mode = 0;
+        switch (m_Mode)
+        {
+            case ID_MODE_BOUNDARY:
+                // Boundary
+                pCurrentCursor = ocpncc1->pCursorPencil;
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
+                SetToolbarItemState( m_draw_button_id, true );
+                nBoundary_State = 1;
+                nPoint_State = 0;
+                break;
+                
+            case ID_MODE_POINT:
+                // Point
+                pCurrentCursor = ocpncc1->pCursorCross;
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_gray, _img_ocpn_draw_point);
+                SetToolbarItemState( m_draw_button_id, true );
+                nPoint_State = 1;
+                nBoundary_State = 0;
+                break;
+                
+            default:
+                // Boundary
+                m_Mode = ID_MODE_BOUNDARY;
+                pCurrentCursor = ocpncc1->pCursorPencil;
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
+                g_pODToolbar->SetToolbarTool( ID_BOUNDARY );
+                SetToolbarItemState( m_draw_button_id, true );
+                break;
+        }
+    }
+    
+}

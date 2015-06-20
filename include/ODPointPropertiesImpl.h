@@ -117,8 +117,6 @@ protected:
     
     void SaveChanges();
     
-    wxBitmapComboBox* m_bcomboBoxIcon;
-
     wxObject*               m_contextObject;
     wxSize                  m_defaultClientSize;
 

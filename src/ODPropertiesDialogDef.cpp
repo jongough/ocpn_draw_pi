@@ -1,15 +1,15 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jan 29 2014)
+// C++ code generated with wxFormBuilder (version Jun 17 2015)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ODPropertiesDialog.h"
+#include "ODPropertiesDialogDef.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
-ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
@@ -21,7 +21,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	bSizerGeneral = new wxBoxSizer( wxVERTICAL );
 	
 	wxFlexGridSizer* fgSizer4;
-	fgSizer4 = new wxFlexGridSizer( 4, 2, 0, 0 );
+	fgSizer4 = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizer4->SetFlexibleDirection( wxBOTH );
 	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -31,6 +31,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	
 	wxBoxSizer* bSizerFiller1;
 	bSizerFiller1 = new wxBoxSizer( wxVERTICAL );
+	
 	
 	fgSizer4->Add( bSizerFiller1, 1, wxEXPAND, 5 );
 	
@@ -55,7 +56,19 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_sliderInitialEdgePan = new wxSlider( m_panelGeneral, wxID_ANY, 3, 0, 10, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer4->Add( m_sliderInitialEdgePan, 0, wxALL|wxEXPAND, 5 );
 	
+	m_staticTextToolbar = new wxStaticText( m_panelGeneral, wxID_ANY, wxT("Display Toolbar"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextToolbar->Wrap( -1 );
+	fgSizer4->Add( m_staticTextToolbar, 0, wxALL, 5 );
+	
+	wxString m_choiceToolbarChoices[] = { wxT("Never"), wxT("Whilst Drawing"), wxT("Always") };
+	int m_choiceToolbarNChoices = sizeof( m_choiceToolbarChoices ) / sizeof( wxString );
+	m_choiceToolbar = new wxChoice( m_panelGeneral, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceToolbarNChoices, m_choiceToolbarChoices, 0 );
+	m_choiceToolbar->SetSelection( 1 );
+	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
+	
+	
 	bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
+	
 	
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
@@ -70,29 +83,36 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	
 	m_staticText14 = new wxStaticText( m_panelPoint, wxID_ANY, wxT("Arrival Radius"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText14->Wrap( -1 );
-	bSizerArrivalRadius->Add( m_staticText14, 1, wxALIGN_CENTER|wxALL, 5 );
+	bSizerArrivalRadius->Add( m_staticText14, 1, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
 	
 	m_textCtrlODPointArrivalRadius = new wxTextCtrl( m_panelPoint, wxID_ANY, wxT("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlODPointArrivalRadius->SetMaxLength( 0 ); 
 	bSizerArrivalRadius->Add( m_textCtrlODPointArrivalRadius, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
 	
 	bSizerOCPNPoint->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerShowRangeRings;
 	bSizerShowRangeRings = new wxBoxSizer( wxHORIZONTAL );
 	
+	
 	bSizerOCPNPoint->Add( bSizerShowRangeRings, 0, 0, 5 );
 	
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkBoxShowName = new wxCheckBox( m_panelPoint, wxID_ANY, wxT("Show Name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER|wxALL, 5 );
+	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
+	
+	
+	m_SizerNameIcon->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	m_staticTextIcon = new wxStaticText( m_panelPoint, wxID_ANY, wxT("Icon"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextIcon->Wrap( -1 );
-	m_SizerNameIcon->Add( m_staticTextIcon, 0, wxALIGN_CENTER|wxALL, 5 );
+	m_SizerNameIcon->Add( m_staticTextIcon, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_comboBoxODPointIconName = new wxComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerNameIcon->Add( m_comboBoxODPointIconName, 0, wxALL, 5 );
+	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
 	
 	bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
 	
@@ -107,6 +127,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	
 	wxBoxSizer* bSizer9;
 	bSizer9 = new wxBoxSizer( wxVERTICAL );
+	
 	
 	fgSizer3->Add( bSizer9, 1, wxEXPAND, 5 );
 	
@@ -125,6 +146,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	fgSizer3->Add( m_staticTextRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlODPointRangeRingSteps = new wxTextCtrl( m_panelPoint, wxID_ANY, wxT("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlODPointRangeRingSteps->SetMaxLength( 0 ); 
 	fgSizer3->Add( m_textCtrlODPointRangeRingSteps, 0, wxALL|wxALIGN_RIGHT, 5 );
 	
 	m_staticTextDistanceUnit = new wxStaticText( m_panelPoint, wxID_ANY, wxT("Distance Unit"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -144,7 +166,9 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_colourPickerODPointRangeRingColours = new wxColourPickerCtrl( m_panelPoint, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizer3->Add( m_colourPickerODPointRangeRingColours, 0, wxALL|wxALIGN_RIGHT, 5 );
 	
+	
 	bSizerOCPNPoint->Add( fgSizer3, 0, wxEXPAND, 5 );
+	
 	
 	m_panelPoint->SetSizer( bSizerOCPNPoint );
 	m_panelPoint->Layout();
@@ -216,6 +240,7 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_choiceInActivePathFillColour->SetSelection( 7 );
 	fgSizerPathSettings->Add( m_choiceInActivePathFillColour, 0, wxALL, 5 );
 	
+	
 	m_panelPath->SetSizer( fgSizerPathSettings );
 	m_panelPath->Layout();
 	fgSizerPathSettings->Fit( m_panelPath );
@@ -286,10 +311,82 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_choiceInActiveBoundaryFillColour->SetSelection( 7 );
 	fgSizerBoundarySettings->Add( m_choiceInActiveBoundaryFillColour, 0, wxALL, 5 );
 	
+	
 	m_panelBoundary->SetSizer( fgSizerBoundarySettings );
 	m_panelBoundary->Layout();
 	fgSizerBoundarySettings->Fit( m_panelBoundary );
 	m_notebookProperties->AddPage( m_panelBoundary, wxT("Boundary"), false );
+	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizer5;
+	fgSizer5 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer5->SetFlexibleDirection( wxBOTH );
+	fgSizer5->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextName = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Name:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextName->Wrap( -1 );
+	fgSizer5->Add( m_staticTextName, 0, wxALL, 5 );
+	
+	m_staticTextNameVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextNameVal->Wrap( -1 );
+	fgSizer5->Add( m_staticTextNameVal, 0, wxALL, 5 );
+	
+	m_staticTextVersion = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Version:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextVersion->Wrap( -1 );
+	fgSizer5->Add( m_staticTextVersion, 0, wxALL, 5 );
+	
+	wxFlexGridSizer* fgSizer6;
+	fgSizer6 = new wxFlexGridSizer( 0, 6, 0, 0 );
+	fgSizer6->SetFlexibleDirection( wxBOTH );
+	fgSizer6->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextMajor = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Major:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextMajor->Wrap( -1 );
+	fgSizer6->Add( m_staticTextMajor, 0, wxALL, 5 );
+	
+	m_staticTextMajorVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextMajorVal->Wrap( -1 );
+	fgSizer6->Add( m_staticTextMajorVal, 0, wxALL, 5 );
+	
+	m_staticTextMinor = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Minor:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextMinor->Wrap( -1 );
+	fgSizer6->Add( m_staticTextMinor, 0, wxALL, 5 );
+	
+	m_staticTextMinorVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextMinorVal->Wrap( -1 );
+	fgSizer6->Add( m_staticTextMinorVal, 0, wxALL, 5 );
+	
+	m_staticTextPatcvh = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Patch:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPatcvh->Wrap( -1 );
+	fgSizer6->Add( m_staticTextPatcvh, 0, wxALL, 5 );
+	
+	m_staticTextPatchVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPatchVal->Wrap( -1 );
+	fgSizer6->Add( m_staticTextPatchVal, 0, wxALL, 5 );
+	
+	
+	fgSizer5->Add( fgSizer6, 1, wxEXPAND, 5 );
+	
+	m_staticTextDate = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDate->Wrap( -1 );
+	fgSizer5->Add( m_staticTextDate, 0, wxALL, 5 );
+	
+	m_staticTextDateVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDateVal->Wrap( -1 );
+	fgSizer5->Add( m_staticTextDateVal, 0, wxALL, 5 );
+	
+	m_staticTextOther = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Other:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOther->Wrap( -1 );
+	fgSizer5->Add( m_staticTextOther, 0, wxALL, 5 );
+	
+	m_staticText34 = new wxStaticText( m_panelAbout, wxID_ANY, wxT("Please report problems using FlySpray at:\nhttp://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n\nor\n\nat the OpenCPN forum:\nhttp://www.cruisersforum.com/forums/f134\n\nor\n\nRaise an issue in GIT at:\nhttps://github.com/jongough/ocpn_draw_pi/issues\n"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText34->Wrap( -1 );
+	fgSizer5->Add( m_staticText34, 0, wxALL, 5 );
+	
+	
+	m_panelAbout->SetSizer( fgSizer5 );
+	m_panelAbout->Layout();
+	fgSizer5->Fit( m_panelAbout );
+	m_notebookProperties->AddPage( m_panelAbout, wxT("About"), false );
 	
 	m_SizerProperties->Add( m_notebookProperties, 0, wxALL, 5 );
 	
@@ -305,22 +402,25 @@ ODPropertiesDialog::ODPropertiesDialog( wxWindow* parent, wxWindowID id, const w
 	m_buttonAApply = new wxButton( this, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizerOKCancelApply->Add( m_buttonAApply, 0, wxALL, 5 );
 	
+	
 	m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND, 5 );
+	
 	
 	this->SetSizer( m_SizerProperties );
 	this->Layout();
 	m_SizerProperties->Fit( this );
 	
 	// Connect Events
-	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialog::OnDrawPropertiesOKClick ), NULL, this );
-	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialog::OnDrawPropertiesCancelClick ), NULL, this );
-	m_buttonAApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialog::OnDrawPropertiesApplyClick ), NULL, this );
+	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
+	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
+	m_buttonAApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
 }
 
-ODPropertiesDialog::~ODPropertiesDialog()
+ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
-	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialog::OnDrawPropertiesOKClick ), NULL, this );
-	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialog::OnDrawPropertiesCancelClick ), NULL, this );
-	m_buttonAApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialog::OnDrawPropertiesApplyClick ), NULL, this );
+	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
+	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
+	m_buttonAApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
+	
 }
