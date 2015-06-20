@@ -23,9 +23,10 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 **************************************************************************/
 
-#include "ODPropertiesImpl.h"
+#include "ODPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
 #include "PointMan.h"
+#include "version.h"
 
 extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
@@ -60,17 +61,22 @@ extern int          g_navobjbackups;
 extern int          g_EdgePanSensitivity;
 extern int          g_InitialEdgePanSensitivity;
 
-ODPropertiesImpl::ODPropertiesImpl( wxWindow* parent )
+extern int          g_iDisplayToolbar;
+
+ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
-ODPropertiesDialog( parent )
+ODPropertiesDialogDef( parent )
 {
-    m_bcomboBoxODPointIcon = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_DROPDOWN ); 
-    m_SizerNameIcon->Replace( m_comboBoxODPointIconName, m_bcomboBoxODPointIcon );
-    delete( m_comboBoxODPointIconName );
-    m_comboBoxODPointIconName = NULL;
+    
+    m_staticTextNameVal->SetLabel( wxT("OpenCPN Draw Plugin") );
+    m_staticTextMajorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MAJOR ));
+    m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
+    m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
+    m_staticTextDateVal->SetLabel(PLUGIN_VERSION_DATE);
+    
 
 }
-void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
+void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
     Show( false );
@@ -82,7 +88,7 @@ void ODPropertiesImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
     event.Skip();
 }
 
-void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
+void ODPropertiesDialogImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
     Show( false );
 #ifdef __WXOSX__    
@@ -93,14 +99,14 @@ void ODPropertiesImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
     event.Skip();
 }
 
-void ODPropertiesImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
+void ODPropertiesDialogImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
 
     event.Skip();
 }
 
-void ODPropertiesImpl::SaveChanges()
+void ODPropertiesDialogImpl::SaveChanges()
 {
         if (m_choiceActiveBoundaryLineColour->GetSelection() == 0 ) g_ActiveBoundaryLineColour = wxEmptyString;
         else g_ActiveBoundaryLineColour = ::GpxxColorNames[m_choiceActiveBoundaryLineColour->GetSelection()];
@@ -134,15 +140,17 @@ void ODPropertiesImpl::SaveChanges()
         g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
         m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
         g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
-        g_sODPointIconName = m_bcomboBoxODPointIcon->GetValue();
+        g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
         g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
         g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
         
         g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
         g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
+        
+        g_iDisplayToolbar = m_choiceToolbar->GetSelection();
 }
 
-void ODPropertiesImpl::SetDialogSize( void )
+void ODPropertiesDialogImpl::SetDialogSize( void )
 {
     wxSize sz = m_SizerProperties->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
@@ -160,7 +168,7 @@ void ODPropertiesImpl::SetDialogSize( void )
     
 }
 
-void ODPropertiesImpl::UpdateProperties( void )
+void ODPropertiesDialogImpl::UpdateProperties( void )
 {
         wxString s_ArrivalRadius;
         s_ArrivalRadius.Printf( _T("%.3f"), g_n_arrival_circle_radius );
@@ -175,24 +183,24 @@ void ODPropertiesImpl::UpdateProperties( void )
         m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
         m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
 
-        m_bcomboBoxODPointIcon->Clear();
+        m_bcomboBoxODPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
         if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
         
-        bool fillCombo = m_bcomboBoxODPointIcon->GetCount() == 0;
+        bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
         wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
-                m_bcomboBoxODPointIcon->Append( *ps, icons->GetBitmap( i ) );
+                m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
         // find the correct item in the combo box
         int iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconKey( i ) == g_sODPointIconName ) {
+            if( *g_pODPointMan->GetIconDescription( i ) == g_sODPointIconName ) {
                 iconToSelect = i;
                 break;
             }
@@ -201,12 +209,12 @@ void ODPropertiesImpl::UpdateProperties( void )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxODPointIcon->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxODPointIcon->GetCount() - 1;
+            m_bcomboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
         }
         
         
-        m_bcomboBoxODPointIcon->Select( iconToSelect );
+        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         icons = NULL;
 
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
@@ -241,6 +249,7 @@ void ODPropertiesImpl::UpdateProperties( void )
         m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
         m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
         m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
+        m_choiceToolbar->Select( g_iDisplayToolbar );
         
 
     return;

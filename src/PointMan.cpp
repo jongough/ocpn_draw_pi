@@ -415,7 +415,7 @@ wxBitmap *PointMan::CreateDimBitmap( wxBitmap *pBitmap, double factor )
 
 }
 
-void PointMan::SetColorScheme( ColorScheme cs )
+void PointMan::SetColorScheme( PI_ColorScheme cs )
 {
     //ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
 

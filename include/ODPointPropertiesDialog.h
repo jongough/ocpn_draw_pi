@@ -1,13 +1,15 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jan 29 2014)
+// C++ code generated with wxFormBuilder (version Jun 17 2015)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ODPointPropertiesDialog__
-#define __ODPointPropertiesDialog__
+#ifndef __ODPOINTPROPERTIESDIALOG_H__
+#define __ODPOINTPROPERTIESDIALOG_H__
 
+#include <wx/artprov.h>
+#include <wx/xrc/xmlres.h>
 #include <wx/string.h>
 #include <wx/stattext.h>
 #include <wx/gdicmn.h>
@@ -17,7 +19,7 @@
 #include <wx/sizer.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
-#include <wx/combobox.h>
+#include <wx/bmpcbox.h>
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
 #include <wx/button.h>
@@ -49,7 +51,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxBoxSizer* m_SizerNameIcon;
 		wxCheckBox* m_checkBoxShowName;
 		wxStaticText* m_staticTextIcon;
-		wxComboBox* m_comboBoxIcon;
+		wxBitmapComboBox* m_bcomboBoxIcon;
 		wxStaticText* m_staticTextLatitude;
 		wxTextCtrl* m_textLatitude;
 		wxStaticText* m_staticTextLogitude;
@@ -95,9 +97,9 @@ class ODPointPropertiesDialog : public wxDialog
 	
 	public:
 		
-		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxVSCROLL );
+		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP|wxVSCROLL ); 
 		~ODPointPropertiesDialog();
 	
 };
 
-#endif //__ODPointPropertiesDialog__
+#endif //__ODPOINTPROPERTIESDIALOG_H__
