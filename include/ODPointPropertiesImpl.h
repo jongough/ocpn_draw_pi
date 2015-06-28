@@ -113,6 +113,7 @@ protected:
     void OnPointPropertiesOKClick( wxCommandEvent& event );
     void OnPointPropertiesCancelClick( wxCommandEvent& event );
     void OnPointPropertiesClose( wxCloseEvent& event );
+    void OnComboboxSelected( wxCommandEvent& event );
     void OnCopyPasteLatLon( wxCommandEvent& event );
     
     void SaveChanges();

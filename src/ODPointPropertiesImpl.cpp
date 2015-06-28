@@ -155,6 +155,11 @@ void ODPointPropertiesImpl::OnExtDescriptionClick( wxCommandEvent& event )
     // TODO: Implement OnExtDescriptionClick
 }
 
+void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+}
+
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     if( m_pODPoint ) {
@@ -226,7 +231,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
-        wxString *icon_name = g_pODPointMan->GetIconKey( m_bcomboBoxIcon->GetSelection() );
+        wxString *icon_name = g_pODPointMan->GetIconKey( m_bcomboBoxODPointIconName->GetSelection() );
         if(icon_name && icon_name->Length())
             m_pODPoint->SetIconName( *icon_name );
         m_pODPoint->ReLoadIcon();
@@ -313,7 +318,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textCtrlExtDescription->SetEditable( false );
             m_textLatitude->SetEditable( false );
             m_textLongitude->SetEditable( false );
-            m_bcomboBoxIcon->Enable( false );
+            m_bcomboBoxODPointIconName->Enable( false );
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
             m_textArrivalRadius->SetEditable ( false );
@@ -328,7 +333,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textCtrlExtDescription->SetEditable( true );
             m_textLatitude->SetEditable( true );
             m_textLongitude->SetEditable( true );
-            m_bcomboBoxIcon->Enable( true );
+            m_bcomboBoxODPointIconName->Enable( true );
             m_checkBoxShowName->Enable( true );
             m_checkBoxVisible->Enable( true );
             m_textArrivalRadius->SetEditable ( true );
@@ -360,15 +365,15 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         OnShowRangeRingsSelect( eDummy );
         
 
-        m_bcomboBoxIcon->Clear();
+        m_bcomboBoxODPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
-        bool fillCombo = m_bcomboBoxIcon->GetCount() == 0;
+        bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
         wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
-                m_bcomboBoxIcon->Append( *ps, icons->GetBitmap( i ) );
+                m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
@@ -382,11 +387,13 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxIcon->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxIcon->GetCount() - 1;
+            m_bcomboBoxODPointIconName->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
         }
         
-        m_bcomboBoxIcon->SetSelection( iconToSelect );
+        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
+        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+        
         icons = NULL;
 
         wxString caption( wxS("") );

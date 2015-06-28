@@ -19,14 +19,15 @@
 #include <wx/sizer.h>
 #include <wx/textctrl.h>
 #include <wx/checkbox.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
 #include <wx/button.h>
 #include <wx/panel.h>
-#include <wx/bitmap.h>
-#include <wx/image.h>
-#include <wx/icon.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
@@ -51,7 +52,8 @@ class ODPointPropertiesDialog : public wxDialog
 		wxBoxSizer* m_SizerNameIcon;
 		wxCheckBox* m_checkBoxShowName;
 		wxStaticText* m_staticTextIcon;
-		wxBitmapComboBox* m_bcomboBoxIcon;
+		wxStaticBitmap* m_bitmapPointBitmap;
+		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxStaticText* m_staticTextLatitude;
 		wxTextCtrl* m_textLatitude;
 		wxStaticText* m_staticTextLogitude;
@@ -83,6 +85,7 @@ class ODPointPropertiesDialog : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnPointPropertiesClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void onRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }

@@ -76,6 +76,12 @@ ODPropertiesDialogDef( parent )
     
 
 }
+
+void ODPropertiesDialogImpl::OnComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+}
+
 void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
@@ -205,16 +211,18 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
                 break;
             }
         }
-
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
             m_bcomboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
             iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
-        }
+        } 
+        
         
         
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
+        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+        
         icons = NULL;
 
         for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {

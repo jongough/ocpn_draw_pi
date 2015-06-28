@@ -26,6 +26,7 @@
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/textctrl.h>
+#include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
 #include <wx/clrpicker.h>
 #include <wx/notebook.h>
@@ -60,6 +61,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxBoxSizer* m_SizerNameIcon;
 		wxCheckBox* m_checkBoxShowName;
 		wxStaticText* m_staticTextIcon;
+		wxStaticBitmap* m_bitmapPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxStaticText* m_staticTextRangeRingNumber;
@@ -112,9 +114,10 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticText34;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
-		wxButton* m_buttonAApply;
+		wxButton* m_buttonApply;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }
