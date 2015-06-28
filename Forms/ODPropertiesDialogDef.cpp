@@ -104,13 +104,16 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
 	
 	
-	m_SizerNameIcon->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_SizerNameIcon->Add( 0, 0, 1, wxALIGN_CENTER, 5 );
 	
 	m_staticTextIcon = new wxStaticText( m_panelPoint, wxID_ANY, wxT("Icon"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextIcon->Wrap( -1 );
 	m_SizerNameIcon->Add( m_staticTextIcon, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxT("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_bitmapPointBitmap = new wxStaticBitmap( m_panelPoint, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
@@ -399,8 +402,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_buttonCancel = new wxButton( this, wxID_ANY, wxT("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizerOKCancelApply->Add( m_buttonCancel, 0, wxALL, 5 );
 	
-	m_buttonAApply = new wxButton( this, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonAApply, 0, wxALL, 5 );
+	m_buttonApply = new wxButton( this, wxID_ANY, wxT("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizerOKCancelApply->Add( m_buttonApply, 0, wxALL, 5 );
 	
 	
 	m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND, 5 );
@@ -411,16 +414,18 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerProperties->Fit( this );
 	
 	// Connect Events
+	m_bcomboBoxODPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnComboboxSelected ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
-	m_buttonAApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
+	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
 }
 
 ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
+	m_bcomboBoxODPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnComboboxSelected ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
-	m_buttonAApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
+	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
 	
 }
