@@ -575,7 +575,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
     g_pOCPNDrawPropDialog->ShowModal();
 
-    g_pOCPNDrawPropDialog->Destroy();
+    delete g_pOCPNDrawPropDialog;
     g_pOCPNDrawPropDialog = NULL;
 
 }
