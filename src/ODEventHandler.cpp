@@ -296,7 +296,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         case ID_PATH_MENU_MOVE_POINT:
-            g_ocpn_draw_pi->pCurrentCursor = ocpncc1->pCursorCross;
+            g_ocpn_draw_pi->m_pCurrentCursor = ocpncc1->pCursorCross;
             m_pSelectedPath->m_bIsBeingEdited = TRUE;
             g_PathToEdit = m_pSelectedPath;
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
@@ -510,7 +510,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
 void ODEventHandler::PopupMenu( int x, int y, int seltype )
 {
     wxMenu* contextMenu = new wxMenu;
-    wxMenu* menuODPoint = new wxMenu( wxS("ODPoint") );
+    wxMenu* menuODPoint = NULL;
     wxMenu* menuPath = new wxMenu( wxS("Path") );
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
@@ -556,7 +556,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             wxString sType;
             sType.append( wxT("Layer ") );
             sType.append( m_pFoundODPoint->m_sTypeString );
-            menuODPoint->SetTitle( sType );
+            menuODPoint = new wxMenu( sType );
             MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
             //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
@@ -565,7 +565,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         else {
             wxString sType;
             sType.append( m_pFoundODPoint->m_sTypeString );
-            menuODPoint->SetTitle( sType );
+            menuODPoint = new wxMenu( sType );
             MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             sType.clear();
             sType.append( wxS("Move ") );
@@ -621,7 +621,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
     menuFocus = NULL;
     delete contextMenu;
     delete menuPath;
-    delete menuODPoint;
+    if( menuODPoint ) delete menuODPoint;
     
 }
 

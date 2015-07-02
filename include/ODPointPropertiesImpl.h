@@ -110,7 +110,6 @@ protected:
     void OnShowRangeRingsSelect( wxCommandEvent& event );
     void OnRangeRingsStepChange( wxCommandEvent& event );
     void OnDescChangedBasic( wxCommandEvent& event );
-    void OnExtDescriptionClick( wxCommandEvent& event );
     void OnPointPropertiesOKClick( wxCommandEvent& event );
     void OnPointPropertiesCancelClick( wxCommandEvent& event );
     void OnPointPropertiesClose( wxCloseEvent& event );
@@ -140,7 +139,6 @@ private:
       wxString      m_IconName_save;
       bool          m_bShowName_save;
       bool          m_bIsVisible_save;
-    
 };
 
 #endif // __ODPointPropertiesImpl__

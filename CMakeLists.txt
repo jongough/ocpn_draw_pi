@@ -15,9 +15,9 @@ SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
-SET(VERSION_MINOR "3")
-SET(VERSION_PATCH "0300")
-SET(VERSION_DATE "31/05/2015")
+SET(VERSION_MINOR "4")
+SET(VERSION_PATCH "0200")
+SET(VERSION_DATE "02/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -54,12 +54,14 @@ SET(SRCS
         src/ODConfig.cpp
         src/ODEventHandler.cpp
         src/ODNavObjectChanges.cpp
-        src/ODPropertiesDialog.cpp
-        src/ODPropertiesImpl.cpp
+        src/ODPropertiesDialogDef.cpp
+        src/ODPropertiesDialogImpl.cpp
         src/ODPointPropertiesDialog.cpp
         src/ODPointPropertiesImpl.cpp
         src/ODPositionParser.cpp
         src/ODRolloverWin.cpp
+        src/ODToolbarDef.cpp
+        src/ODToolbarImpl.cpp
         src/ODUtils.cpp
         src/ODicons.cpp
         src/TextPoint.cpp
@@ -82,12 +84,14 @@ SET(HDRS
         include/ODConfig.h
         include/ODEventHandler.h
         include/ODNavObjectChanges.h
-        include/ODPropertiesDialog.h
-        include/ODPropertiesImpl.h
+        include/ODPropertiesDialogDef.h
+        include/ODPropertiesDialogImpl.h
         include/ODPointPropertiesDialog.h
         include/ODPointPropertiesImpl.h
         include/ODPositionParser.h
         include/ODRolloverWin.h
+        include/ODToolbarDef.h
+        include/ODToolbarImpl.h
         include/ODUtils.h
         include/ODvector2D.h
         include/ODicons.h
@@ -224,4 +228,3 @@ ADD_DEFINITIONS(-DTIXML_USE_STL)
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")
 INCLUDE("cmake/PluginPackage.cmake")
-

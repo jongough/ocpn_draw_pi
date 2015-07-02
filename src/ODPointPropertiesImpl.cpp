@@ -44,13 +44,14 @@
 #include <wx/menu.h>
 #include <wx/window.h>
 
-extern ODSelect   *g_pODSelect;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PointMan     *g_pODPointMan;
-extern PathMan      *g_pPathMan;
-extern ODConfig  *g_pODConfig;
-extern PathManagerDialog *g_pPathManagerDialog;
-extern PathProp     *g_pPathPropDialog;
+extern ODSelect             *g_pODSelect;
+extern ocpn_draw_pi         *g_ocpn_draw_pi;
+extern PointMan             *g_pODPointMan;
+extern PathMan              *g_pPathMan;
+extern ODConfig             *g_pODConfig;
+extern PathManagerDialog    *g_pPathManagerDialog;
+extern PathProp             *g_pPathPropDialog;
+extern int                  g_iTextPosition;
 
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
@@ -150,11 +151,6 @@ void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
     // TODO: Implement OnDescChangedBasic
 }
 
-void ODPointPropertiesImpl::OnExtDescriptionClick( wxCommandEvent& event )
-{
-    // TODO: Implement OnExtDescriptionClick
-}
-
 void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
 {
     m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
@@ -181,6 +177,8 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     SetClientSize(m_defaultClientSize);
     
     g_ocpn_draw_pi->m_pFoundODPoint = NULL;
+    m_notebookProperties->ChangeSelection( 0 );
+    
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
@@ -211,6 +209,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     SetClientSize(m_defaultClientSize);
 
     g_ocpn_draw_pi->m_pFoundODPoint = NULL;
+    m_notebookProperties->ChangeSelection( 0 );
     
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
@@ -231,11 +230,10 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetODPointArrivalRadius( m_textArrivalRadius->GetValue() );
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
-        if(m_pODPoint->m_sTypeString == wxT("Text Point"))
-            m_pTextPoint->SetMarkDescription( m_textDescription->GetValue() );
-        else
-            m_pODPoint->SetMarkDescription( m_textDescription->GetValue() );
-        
+        if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            m_pTextPoint->m_TextPointText = m_textCtrlExtDescription->GetValue();
+            m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
+        }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
@@ -297,8 +295,11 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     if(pOP->m_sTypeString == wxT("Text Point")) {
         m_pTextPoint = (TextPoint *)pOP;
         m_pODPoint = m_pTextPoint;
-    } else
+        m_panelDescription->Show( true );
+    } else {
         m_pODPoint = pOP;
+        m_panelDescription->Show( false );
+    }
     
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = TRUE;
@@ -315,7 +316,6 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
 bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 {
     if( m_pODPoint ) {
-
         m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
         m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
         m_lat_save = m_pODPoint->m_lat;
@@ -362,7 +362,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_textArrivalRadius->SetValue( s_ArrivalRadius );        
         
         m_textDescription->SetValue( m_pODPoint->m_MarkDescription );
-        m_textCtrlExtDescription->SetValue( m_pODPoint->m_MarkDescription );
+        if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            m_textCtrlExtDescription->SetValue( m_pTextPoint->m_TextPointText );
+            m_choicePosition->SetSelection( m_pTextPoint->m_iTextPosition );
+        }
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );
         m_checkBoxVisible->SetValue( m_pODPoint->m_bIsVisible );
         m_textCtrlGuid->SetValue( m_pODPoint->m_GUID );
@@ -407,7 +410,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
         
         icons = NULL;
-
+        
         wxString caption( wxS("") );
         if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
             caption.append( wxS("OCPN Draw Point") );
@@ -499,3 +502,4 @@ void ODPointPropertiesImpl::ValidateMark( void )
     
     if( !b_found ) m_pODPoint = NULL;
 }
+

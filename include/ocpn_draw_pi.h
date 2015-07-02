@@ -27,7 +27,6 @@
  */
 
 #ifdef DEBUG_BUILD
-//using namespace std;
 #  define DEBUG(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
@@ -141,6 +140,15 @@ enum
     ID_MODE_TEXT_POINT,
     
     ID_LAST_MODE
+};
+
+enum {
+    ID_TEXT_TOP = 0,
+    ID_TEXT_BOTTOM,
+    ID_TEXT_RIGHT,
+    ID_TEXT_LEFT,
+    
+    ID_TEXT_POSTION_LAST
 };
 
 class Boundary;

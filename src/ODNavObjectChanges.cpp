@@ -24,6 +24,7 @@
 **************************************************************************/
 
 #include "ODNavObjectChanges.h"
+#include "ocpn_draw_pi.h"
 #include "ODSelect.h"
 #include "ODConfig.h"
 #include "PointMan.h"
@@ -34,14 +35,14 @@
 #include "ODUtils.h"
 
 extern PathList         *g_pPathList;
-extern ODPointList *    g_pODPointList;
-extern ODSelect       *g_pODSelect;
+extern ODPointList      *g_pODPointList;
+extern ODSelect         *g_pODSelect;
 pugi::xml_node          gpx_path_child;
 pugi::xml_node          gpx_path_root;
-extern ODConfig   *g_pODConfig;
+extern ODConfig         *g_pODConfig;
 extern PointMan         *g_pODPointMan;
 extern PathMan          *g_pPathMan;
-
+extern int              g_iTextPosition;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -83,51 +84,70 @@ void ODNavObjectChanges::RemoveChangesFile( void )
     m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
 }
 
-bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pr, unsigned int flags )
+bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, unsigned int flags )
 {
     wxString s;
     pugi::xml_node child;
     pugi::xml_attribute attr;
+    TextPoint *tp;
+    ODPoint *pp;
     
-    s.Printf(_T("%.9f"), pr->m_lat);
+    if(pop->m_sTypeString == wxT("Text Point")) 
+        tp = (TextPoint *)pop;
+    pp = pop;
+    
+    s.Printf(_T("%.9f"), pp->m_lat);
     node.append_attribute("lat") = s.mb_str();
-    s.Printf(_T("%.9f"), pr->m_lon);
+    s.Printf(_T("%.9f"), pp->m_lon);
     node.append_attribute("lon") = s.mb_str();
 
     if(flags & OUT_TYPE) {
         child = node.append_child("opencpn:type");
-        child.append_child(pugi::node_pcdata).set_value(pr->GetTypeString().mb_str());
+        child.append_child(pugi::node_pcdata).set_value(pp->GetTypeString().mb_str());
     }
     
     if(flags & OUT_TIME) {
             child = node.append_child("time");
-            if( pr->m_timestring.Len() )
-                child.append_child(pugi::node_pcdata).set_value(pr->m_timestring.mb_str());
+            if( pp->m_timestring.Len() )
+                child.append_child(pugi::node_pcdata).set_value(pp->m_timestring.mb_str());
             else {
-                wxString t = pr->GetCreateTime().FormatISODate().Append(_T("T")).Append(pr->GetCreateTime().FormatISOTime()).Append(_T("Z"));
+                wxString t = pp->GetCreateTime().FormatISODate().Append(_T("T")).Append(pp->GetCreateTime().FormatISOTime()).Append(_T("Z"));
                 child.append_child(pugi::node_pcdata).set_value(t.mb_str());
             }
     }
         
-    if ( (!pr->GetName().IsEmpty() && (flags & OUT_NAME)) || (flags & OUT_NAME_FORCE) ) {
-        wxCharBuffer buffer=pr->GetName().ToUTF8();
+    if ( (!pp->GetName().IsEmpty() && (flags & OUT_NAME)) || (flags & OUT_NAME_FORCE) ) {
+        wxCharBuffer buffer=pp->GetName().ToUTF8();
         if(buffer.data()) {
             child = node.append_child("name");
             child.append_child(pugi::node_pcdata).set_value(buffer.data());
         }
     }       
 
-    if ( (!pr->GetDescription().IsEmpty() && (flags & OUT_DESC)) || (flags & OUT_DESC_FORCE) ) {
-        wxCharBuffer buffer=pr->GetDescription().ToUTF8();
+    if ( (!pp->GetDescription().IsEmpty() && (flags & OUT_DESC)) || (flags & OUT_DESC_FORCE) ) {
+        wxCharBuffer buffer=pp->GetDescription().ToUTF8();
         if(buffer.data()) {
             child = node.append_child("desc");
             child.append_child(pugi::node_pcdata).set_value(buffer.data());
         }
     }       
 
+    if(pp->m_sTypeString == wxT("Text Point")) {
+        if ( !tp->GetPointText().IsEmpty() && (flags & OUT_POINTTEXT) ) {
+            wxCharBuffer buffer=tp->GetPointText().ToUTF8();
+            if(buffer.data()) {
+                child = node.append_child("opencpn:text");
+                child.append_child(pugi::node_pcdata).set_value(buffer.data());
+                child = node.append_child(("opencpn:text_position"));
+                s.Printf(_T("%i"), tp->m_iTextPosition);
+                child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+            }
+        }
+    }
+    
     // Hyperlinks
     if(flags & OUT_HYPERLINKS ){
-        HyperlinkList *linklist = pr->m_HyperlinkList;
+        HyperlinkList *linklist = pp->m_HyperlinkList;
         if( linklist && linklist->GetCount() ) {
             wxHyperlinkListNode *linknode = linklist->GetFirst();
             while( linknode ) {
@@ -157,8 +177,8 @@ bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pr, unsigned int flags )
     
     if (flags & OUT_SYM_FORCE) {
         child = node.append_child("sym");
-        if (!pr->GetIconName().IsEmpty()) {
-            child.append_child(pugi::node_pcdata).set_value(pr->GetIconName().mb_str());
+        if (!pp->GetIconName().IsEmpty()) {
+            child.append_child(pugi::node_pcdata).set_value(pp->GetIconName().mb_str());
         }
         else {
             child.append_child("empty");
@@ -170,14 +190,14 @@ bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pr, unsigned int flags )
         
         //pugi::xml_node child_ext = node.append_child("extensions");
         
-        if (!pr->m_GUID.IsEmpty() && (flags & OUT_GUID) ) {
+        if (!pp->m_GUID.IsEmpty() && (flags & OUT_GUID) ) {
             child = node.append_child("opencpn:guid");
-            child.append_child(pugi::node_pcdata).set_value(pr->m_GUID.mb_str());
+            child.append_child(pugi::node_pcdata).set_value(pp->m_GUID.mb_str());
         }
         
         if(flags & OUT_VIZ) {
             child = node.append_child("opencpn:viz");
-            if ( pr->m_bIsVisible )
+            if ( pp->m_bIsVisible )
                 child.append_child(pugi::node_pcdata).set_value("1");
             else
                 child.append_child(pugi::node_pcdata).set_value("0");
@@ -185,44 +205,44 @@ bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pr, unsigned int flags )
             
         if(flags & OUT_VIZ_NAME) {
             child = node.append_child("opencpn:viz_name");
-            if ( pr->m_bShowName )
+            if ( pp->m_bShowName )
                 child.append_child(pugi::node_pcdata).set_value("1");
             else
                 child.append_child(pugi::node_pcdata).set_value("0");
         }
         
-        if((flags & OUT_AUTO_NAME) && pr->m_bDynamicName) {
+        if((flags & OUT_AUTO_NAME) && pp->m_bDynamicName) {
             child = node.append_child("opencpn:auto_name");
             child.append_child(pugi::node_pcdata).set_value("1");
         }
-        if((flags & OUT_SHARED) && pr->m_bKeepXPath) {
+        if((flags & OUT_SHARED) && pp->m_bKeepXPath) {
             child = node.append_child("opencpn:shared");
             child.append_child(pugi::node_pcdata).set_value("1");
         }
         if(flags & OUT_ARRIVAL_RADIUS) {
             child = node.append_child("opencpn:arrival_radius");
-            s.Printf(_T("%.3f"), pr->GetODPointArrivalRadius());
+            s.Printf(_T("%.3f"), pp->GetODPointArrivalRadius());
             child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         }
         if(flags & OUT_OCPNPOINT_RANGE_RINGS) {
             child = node.append_child("opencpn:ODPoint_range_rings");
             pugi::xml_attribute viz = child.append_attribute( "visible" );
-            viz.set_value( pr->m_bShowODPointRangeRings );
+            viz.set_value( pp->m_bShowODPointRangeRings );
             pugi::xml_attribute number = child.append_attribute( "number" );
-            number.set_value( pr->m_iODPointRangeRingsNumber );
+            number.set_value( pp->m_iODPointRangeRingsNumber );
             pugi::xml_attribute step = child.append_attribute( "step" );
-            step.set_value( pr->m_fODPointRangeRingsStep );
+            step.set_value( pp->m_fODPointRangeRingsStep );
             pugi::xml_attribute units = child.append_attribute( "units" );
-            units.set_value( pr->m_iODPointRangeRingsStepUnits );
+            units.set_value( pp->m_iODPointRangeRingsStepUnits );
             pugi::xml_attribute colour = child.append_attribute( "colour" );
-            colour.set_value( pr->m_wxcODPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() ) ;
+            colour.set_value( pp->m_wxcODPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() ) ;
         }
     }
     
     return true;
 }
 
-bool GPXCreatePath( pugi::xml_node node, Path *pPath )
+bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pPath )
 {
     pugi::xml_node child;
     
@@ -298,12 +318,12 @@ bool GPXCreatePath( pugi::xml_node node, Path *pPath )
 
     ODPointList *pODPointList = pPath->m_pODPointList;
     wxODPointListNode *node2 = pODPointList->GetFirst();
-    ODPoint *prp;
+    ODPoint *pop;
     
     while( node2  ) {
-        prp = node2->GetData();
+        pop = node2->GetData();
             
-        GPXCreateODPoint(node.append_child("opencpn:ODPoint"), prp, OPT_OCPNPOINT);
+        GPXCreateODPoint(node.append_child("opencpn:ODPoint"), pop, OPT_OCPNPOINT);
             
         node2 = node2->GetNext();
     }
@@ -407,8 +427,8 @@ bool ODNavObjectChanges::AddGPXODPointsList( ODPointList *pODPoints )
 bool ODNavObjectChanges::CreateNavObjGPXPoints( void )
 {
     
-    //    Iterate over the Routepoint list, creating Nodes for
-    //    Routepoints that are not in any Route
+    //    Iterate over the ODPoint list, creating Nodes for
+    //    points that are not in any Path
     //    as indicated by m_bIsolatedMark == false
     
     if(!g_pODPointMan)
@@ -423,7 +443,7 @@ bool ODNavObjectChanges::CreateNavObjGPXPoints( void )
         
         if( ( pr->m_bIsolatedMark ) && !( pr->m_bIsInLayer ) && !(pr->m_btemp) )
         {
-            GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pr, OPT_WPT);
+            GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pr, OPT_OCPNPOINT);
         }
         node = node->GetNext();
     }
@@ -532,6 +552,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxString SymString = def_symbol_name;       // default icon
     wxString NameString;
     wxString DescString;
+    wxString TextString;
     wxString TypeString;
     wxString GuidString = GUID;         // default
     wxString TimeString;
@@ -548,6 +569,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     float   l_fODPointRangeRingsStep = -1;
     int     l_pODPointRangeRingsStepUnits = -1;
     bool    l_bODPointRangeRingsVisible = false;
+    int     l_iTextPosition = g_iTextPosition;
     wxColour    l_wxcODPointRangeRingsColour;
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
@@ -570,6 +592,17 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         else
         if( !strcmp( pcn, "desc") ) {
             DescString.append( wxString::FromUTF8( child.first_child().value() ) );
+        }
+        
+        if( !strcmp( pcn, "opencpn:text") ) {
+            TextString.append( wxString::FromUTF8( child.first_child().value() ) );
+        }
+        
+        if( !strcmp( pcn, "opencpn:text_position") ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                l_iTextPosition = v;
         }
         
         else
@@ -677,10 +710,11 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         else
             pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
         m_ptODPointList->Append( pOP ); 
-        if( TypeString == "Text Point" )
-            pTP->SetMarkDescription( DescString );
-        else
-            pOP->SetMarkDescription( DescString );
+        if( TypeString == "Text Point" ) {
+            pTP->SetPointText( TextString );
+            pTP->m_iTextPosition = l_iTextPosition;
+        }
+        pOP->SetMarkDescription( DescString );
         //pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
         pOP->m_sTypeString = TypeString;
         pOP->SetODPointArrivalRadius( ArrivalRadius );

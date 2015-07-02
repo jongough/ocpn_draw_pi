@@ -33,28 +33,38 @@ class ODText;
 class TextPoint : public ODPoint
 {
     public:
-    TextPoint();
-    TextPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
-    TextPoint(const TextPoint& other);
-    ~TextPoint();
-    
-    void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
-    void DrawGL( PlugIn_ViewPort &pivp );
-    void SetMarkDescription( wxString sMarkDescription );
-    
+        TextPoint();
+        TextPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
+        TextPoint(const TextPoint& other);
+        ~TextPoint();
+        
+        void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+        void DrawGL( PlugIn_ViewPort &pivp );
+        void SetPointText( wxString sTextPointText );
+        wxString GetPointText( void ) { return m_TextPointText; }
+        void ShowText( void );
+        void HideText( void );
+        
+        wxString            m_TextPointText;
+        int                 m_iTextPosition;
+
     protected:
+        wxFont            *m_pDescriptionFont;
+        
+        
     private:
-        void CalculateDescriptionExtents( void );
+        void CalculateTextExtents( void );
         
         wxStaticText    *m_pstText;
         wxTextCtrl      *m_ptcText;
-        wxSize          m_DescriptionExtents;
-        int             m_DescriptionLocationOffsetX;
-        int             m_DescriptionLocationOffsetY;
+        wxSize          m_TextExtents;
+        int             m_TextLocationOffsetX;
+        int             m_TextLocationOffsetY;
         int             m_iWrapLen;
         
-        unsigned int    m_iTextTexture;
-        int             m_iTextTextureWidth, m_iTextTextureHeight;
+        unsigned int    m_iDescriptionTextTexture;
+        int             m_iDescriptionTextTextureWidth, m_iDescriptionTextTextureHeight;
+        wxWindow        *m_Window;
         
 };
 

@@ -26,9 +26,9 @@
 #include <wx/bmpcbox.h>
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
-#include <wx/button.h>
 #include <wx/panel.h>
 #include <wx/notebook.h>
+#include <wx/button.h>
 #include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -62,7 +62,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxTextCtrl* m_textArrivalRadius;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxBoxSizer* m_SizerODPointRangeRingsSelect;
-		wxStaticText* m_staticTextPointRangeRinngs11;
+		wxStaticText* m_staticTextPointRangeRings;
 		wxChoice* m_choicePointRangeRingsNumber;
 		wxFlexGridSizer* m_SizerPointRangeGrid;
 		wxStaticText* m_staticTextPointRangeRingSteps;
@@ -73,9 +73,11 @@ class ODPointPropertiesDialog : public wxDialog
 		wxColourPickerCtrl* m_colourPickerRangeRingsColour;
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textDescription;
-		wxButton* m_buttonExtDescription;
 		wxPanel* m_panelDescription;
+		wxStaticText* m_staticTextDisplayText;
 		wxTextCtrl* m_textCtrlExtDescription;
+		wxStaticText* m_staticTextPosition;
+		wxChoice* m_choicePosition;
 		wxPanel* m_Extended;
 		wxCheckBox* m_checkBoxVisible;
 		wxStaticText* m_staticText1;
@@ -93,7 +95,6 @@ class ODPointPropertiesDialog : public wxDialog
 		virtual void OnShowRangeRingsSelect( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRangeRingsStepChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDescChangedBasic( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnExtDescriptionClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPointPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPointPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		

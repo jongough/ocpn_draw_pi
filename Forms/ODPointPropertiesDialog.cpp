@@ -126,9 +126,9 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	fgSizerODPointRangeRingsSelect->SetFlexibleDirection( wxBOTH );
 	fgSizerODPointRangeRingsSelect->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPointRangeRinngs11 = new wxStaticText( m_panelBasicProperties, wxID_ANY, wxT("Number of Point Range Rings"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextPointRangeRinngs11->Wrap( -1 );
-	fgSizerODPointRangeRingsSelect->Add( m_staticTextPointRangeRinngs11, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
+	m_staticTextPointRangeRings = new wxStaticText( m_panelBasicProperties, wxID_ANY, wxT("Number of Point Range Rings"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPointRangeRings->Wrap( -1 );
+	fgSizerODPointRangeRingsSelect->Add( m_staticTextPointRangeRings, 0, wxALL|wxALIGN_CENTER_VERTICAL, 2 );
 	
 	wxString m_choicePointRangeRingsNumberChoices[] = { wxT("None"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9"), wxT("10") };
 	int m_choicePointRangeRingsNumberNChoices = sizeof( m_choicePointRangeRingsNumberChoices ) / sizeof( wxString );
@@ -190,9 +190,6 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	bSizerDescriptionExt->Add( m_textDescription, 1, wxALL|wxEXPAND, 2 );
 	
-	m_buttonExtDescription = new wxButton( m_panelBasicProperties, wxID_ANY, wxT("..."), wxDefaultPosition, wxSize( 20,-1 ), 0 );
-	bSizerDescriptionExt->Add( m_buttonExtDescription, 0, wxALL|wxEXPAND, 2 );
-	
 	
 	bSizerDescription->Add( bSizerDescriptionExt, 1, wxEXPAND, 5 );
 	
@@ -214,8 +211,32 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxVERTICAL );
 	
+	m_staticTextDisplayText = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text to Display with Point"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDisplayText->Wrap( -1 );
+	bSizer5->Add( m_staticTextDisplayText, 0, wxALL, 5 );
+	
 	m_textCtrlExtDescription = new wxTextCtrl( m_panelDescription, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP );
 	bSizer5->Add( m_textCtrlExtDescription, 1, wxALL|wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizerPosition;
+	bSizerPosition = new wxBoxSizer( wxHORIZONTAL );
+	
+	bSizerPosition->SetMinSize( wxSize( -1,50 ) ); 
+	m_staticTextPosition = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPosition->Wrap( -1 );
+	bSizerPosition->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	
+	bSizerPosition->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	wxString m_choicePositionChoices[] = { wxT("Top"), wxT("Bottom"), wxT("Right"), wxT("Left") };
+	int m_choicePositionNChoices = sizeof( m_choicePositionChoices ) / sizeof( wxString );
+	m_choicePosition = new wxChoice( m_panelDescription, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePositionNChoices, m_choicePositionChoices, 0 );
+	m_choicePosition->SetSelection( 1 );
+	bSizerPosition->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	
+	bSizer5->Add( bSizerPosition, 0, wxEXPAND, 5 );
 	
 	
 	m_panelDescription->SetSizer( bSizer5 );
@@ -281,7 +302,6 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_textCtrlPointRangeRingsSteps->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
-	m_buttonExtDescription->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnExtDescriptionClick ), NULL, this );
 	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
 	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
 }
@@ -299,7 +319,6 @@ ODPointPropertiesDialog::~ODPointPropertiesDialog()
 	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_textCtrlPointRangeRingsSteps->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
-	m_buttonExtDescription->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnExtDescriptionClick ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
 	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
 	
