@@ -55,6 +55,19 @@ extern wxString     g_sODPointIconName;
 
 extern double       g_n_arrival_circle_radius;
 
+extern wxColour     g_colourDefaultTextColour;
+extern wxColour     g_colourDefaultTextBackgroundColour;
+extern int          g_iTextBackgroundTransparency;
+extern int          g_iTextPosition;
+extern int          g_iTextTopOffsetX;
+extern int          g_iTextTopOffsetY;
+extern int          g_iTextBottomOffsetX;
+extern int          g_iTextBottomOffsetY;
+extern int          g_iTextRightOffsetX;
+extern int          g_iTextRightOffsetY;
+extern int          g_iTextLeftOffsetX;
+extern int          g_iTextLeftOffsetY;
+
 extern bool         g_bConfirmObjectDelete;
 extern int          g_navobjbackups;
 
@@ -149,6 +162,11 @@ void ODPropertiesDialogImpl::SaveChanges()
         g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
         g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
         g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
+        
+        g_iTextPosition = m_choiceTextPosition->GetSelection();
+        g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
+        g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
+        g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
         
         g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
         g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
@@ -252,6 +270,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         }
         m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
         m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
+        
+        m_choiceTextPosition->SetSelection( g_iTextPosition );
+        m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
+        m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
+        m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );
         
         m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
         m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );

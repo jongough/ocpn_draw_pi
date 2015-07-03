@@ -45,6 +45,9 @@ extern PlugIn_ViewPort  *g_pivp;
 extern PointMan     *g_pODPointMan;
 extern ODText       *g_ODText;
 extern int          g_iTextPosition;
+extern wxColour     g_colourDefaultTextColour;
+extern wxColour     g_colourDefaultTextBackgroundColour;
+extern int          g_iTextBackgroundTransparency;
 extern int          g_iTextTopOffsetX;
 extern int          g_iTextTopOffsetY;
 extern int          g_iTextBottomOffsetX;
@@ -79,6 +82,9 @@ TextPoint::TextPoint() : ODPoint()
             break;
     }
     m_iTextPosition = g_iTextPosition;
+    m_iBackgroundTransparency = g_iTextBackgroundTransparency;
+    m_colourTextColour = g_colourDefaultTextColour;
+    m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = 250;
     m_pDescriptionFont = NULL;
 #ifdef ocpnUSE_GL
@@ -94,6 +100,9 @@ TextPoint::TextPoint(const TextPoint& other)
     m_TextLocationOffsetX = other.m_TextLocationOffsetX;
     m_TextLocationOffsetY = other.m_TextLocationOffsetY;
     m_iTextPosition = other.m_iTextPosition;
+    m_iBackgroundTransparency = other.m_iBackgroundTransparency;
+    m_colourTextColour = other.m_colourTextColour;
+    m_colourTextBackgroundColour = other.m_colourTextBackgroundColour;
     m_iWrapLen = 250;
     m_pDescriptionFont = other.m_pDescriptionFont;
 #ifdef ocpnUSE_GL
@@ -128,6 +137,9 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
             break;
     }
     m_iTextPosition = g_iTextPosition;
+    m_iBackgroundTransparency = g_iTextBackgroundTransparency;
+    m_colourTextColour = g_colourDefaultTextColour;
+    m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = 250;
     m_pDescriptionFont = NULL;
 #ifdef ocpnUSE_GL
@@ -169,12 +181,6 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         return;
 
     m_pDescriptionFont = OCPNGetFont( wxS("Marks"), 0 );
-    m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
-    wxColour wxCol;
-    GetGlobalColor( wxT("YELO1"), &wxCol );
-    dc.SetFont( *m_pDescriptionFont );
-    dc.SetTextForeground( wxCol );
-    dc.SetBackground( wxBrush( wxCol ) );
 
     if( m_TextPointText.Len() > 0 ) {
         CalculateTextExtents();
@@ -182,7 +188,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         {
             case ID_TEXT_TOP:
                 m_TextLocationOffsetX = g_iTextTopOffsetX;
-                m_TextLocationOffsetY = g_iTextTopOffsetY - ( m_TextExtents.y / 2 );
+                m_TextLocationOffsetY = g_iTextTopOffsetY - m_TextExtents.y;
                 break;
             case ID_TEXT_BOTTOM:
                 m_TextLocationOffsetX = g_iTextBottomOffsetX;
@@ -193,7 +199,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
                 m_TextLocationOffsetY = g_iTextRightOffsetY;
                 break;
             case ID_TEXT_LEFT:
-                m_TextLocationOffsetX = g_iTextLeftOffsetX - ( m_TextExtents.x / 2 );
+                m_TextLocationOffsetX = g_iTextLeftOffsetX - m_TextExtents.x;
                 m_TextLocationOffsetY = g_iTextLeftOffsetY;
                 break;
         }
@@ -208,54 +214,17 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                     m_TextExtents.y );
             r1.Union( r2 );
-        }
     
-        r.x = r.x + m_TextLocationOffsetX;
-        r.y = r.y + m_TextLocationOffsetY;
+            r.x = r.x + m_TextLocationOffsetX;
+            r.y = r.y + m_TextLocationOffsetY;
         
-        if( m_pDescriptionFont ) {
             dc.SetFont( *m_pDescriptionFont );
-            dc.SetTextForeground( m_FontColor );
+            dc.SetTextForeground( m_colourTextColour );
+            g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
             
-            dc.DrawText( m_TextPointText, r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY );
+            dc.DrawText( m_TextPointText, r.x, r.y );
         }
         
-    /*    m_pstText->SetPosition( r );
-        m_pstText->SetTransparent( wxIMAGE_ALPHA_OPAQUE );
-        m_pstText->SetBackgroundColour( wxCol );
-        m_pstText->ClearBackground();
-        //m_pstText->SetForegroundColour( wxCol );
-        
-        m_pstText->Wrap( m_iWrapLen );
-        
-    //    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-    //SetFont(wxFont(32, wxFONTFAMILY_SWISS,  wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL));
-        //dc.DrawText();
-        if( m_MarkDescription.Len() == 0 )
-            m_pstText->Show( false );
-        else
-            m_pstText->Show( true );
-
-        wxBitmap tbm(m_TextExtents.x, m_TextExtents.y); /* render text on dc */
-    /*    wxMemoryDC wxmdc;
-    //    wxmdc.SetDeviceLocalOrigin( r.x, r.y );
-        wxmdc.SelectObject( tbm );               
-    //    wxBrush wxbrush( *wxWHITE );
-    //    wxbrush.SetStyle( wxTRANSPARENT );
-        wxmdc.SetBackgroundMode( wxTRANSPARENT );
-        wxmdc.Clear();
-        wxmdc.SetFont( *m_pDescriptionFont );
-        wxmdc.SetTextForeground( *wxBLACK );
-        wxmdc.DrawText( m_MarkDescription, 0, 0 );
-        wxRasterOperationMode rom = wxCOPY;
-        wxDC *pdc = dc.GetDC();
-        DEBUGST("r.x: ");
-        DEBUGCONT(r.x);
-        DEBUGCONT(", r.y: ");
-        DEBUGEND(r.y);
-        pdc->Blit( r.x, r.y, m_TextExtents.x, m_TextExtents.y, &wxmdc, 0, 0, rom , true );
-        wxmdc.delete;
-    */    
     }
     ODPoint::Draw( dc, rpn );
 }
@@ -266,95 +235,106 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         return;
     
     m_pDescriptionFont = OCPNGetFont( wxS("Marks"), 0 );
-    m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
-    CalculateTextExtents();
 
-    //    Substitue icon?
-    wxBitmap *pbm;
-    if( m_bIsActive ) pbm = g_pODPointMan->GetIconBitmap(
-        _T ( "activepoint" ) );
-    else
-        pbm = m_pbmIcon;
-    if( m_MarkDescription.Len() > 0 ) {
-        int sx2 = pbm->GetWidth() / 2;
-        int sy2 = pbm->GetHeight() / 2;
+    if( m_TextPointText.Len() > 0 ) {
+        CalculateTextExtents();
+        switch ( m_iTextPosition )
+        {
+            case ID_TEXT_TOP:
+                m_TextLocationOffsetX = g_iTextTopOffsetX;
+                m_TextLocationOffsetY = g_iTextTopOffsetY - m_TextExtents.y;
+                break;
+            case ID_TEXT_BOTTOM:
+                m_TextLocationOffsetX = g_iTextBottomOffsetX;
+                m_TextLocationOffsetY = g_iTextBottomOffsetY;
+                break;
+            case ID_TEXT_RIGHT:
+                m_TextLocationOffsetX = g_iTextRightOffsetX;
+                m_TextLocationOffsetY = g_iTextRightOffsetY;
+                break;
+            case ID_TEXT_LEFT:
+                m_TextLocationOffsetX = g_iTextLeftOffsetX - m_TextExtents.x;
+                m_TextLocationOffsetY = g_iTextLeftOffsetY;
+                break;
+        }
+        int sx2 = m_pbmIcon->GetWidth() / 2;
+        int sy2 = m_pbmIcon->GetHeight() / 2;
         
         //    Calculate the mark drawing extents
         wxPoint r;
-        GetCanvasPixLL( &pivp, &r,  m_lat, m_lon);    
+        GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);    
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
         if( m_pDescriptionFont ) {
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
-                    m_TextExtents.y );
+                       m_TextExtents.y );
             r1.Union( r2 );
-        }
-        
-        r.x = r.x + m_TextLocationOffsetX;
-        r.y = r.y + m_TextLocationOffsetY;
-        
-        //m_pstText->SetPosition( r );
-        
-        m_pDescriptionFont = OCPNGetFont( wxS("Marks"), 0 );
-        m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
-        CalculateTextExtents();
-        if( !m_iDescriptionTextTexture && m_TextExtents.x != 0 && m_TextExtents.y != 0 ) {
-            wxBitmap tbm(m_TextExtents.x, m_TextExtents.y); /* render text on dc */
-            wxMemoryDC dc;
-            dc.SelectObject( tbm );               
-            dc.SetBackground( wxBrush( *wxBLACK ) );
-            dc.Clear();
-            dc.SetFont( *m_pDescriptionFont );
-            dc.SetTextForeground( *wxWHITE );
-            dc.DrawText( m_MarkDescription, 0, 0);
-            dc.SelectObject( wxNullBitmap );
             
-            /* make alpha texture for text */
-            wxImage image = tbm.ConvertToImage();
-            unsigned char *d = image.GetData();
-            unsigned char *e = new unsigned char[m_TextExtents.x * m_TextExtents.y];
-            if(d && e){
-                for( int p = 0; p < m_TextExtents.x*m_TextExtents.y; p++)
-                    e[p] = d[3*p + 0];
+            r.x = r.x + m_TextLocationOffsetX;
+            r.y = r.y + m_TextLocationOffsetY;
+            
+            if( !m_iDescriptionTextTexture && m_TextExtents.x != 0 && m_TextExtents.y != 0 ) {
+                wxBitmap tbm(m_TextExtents.x, m_TextExtents.y); /* render text on dc */
+                wxMemoryDC dc;
+                dc.SelectObject( tbm );               
+                dc.SetBackground( wxBrush( *wxBLACK ) );
+                dc.Clear();
+                dc.SetFont( *m_pDescriptionFont );
+                dc.SetTextForeground(* wxWHITE );
+                dc.DrawText( m_TextPointText, 0, 0);
+                dc.SelectObject( wxNullBitmap );
+                
+                /* make alpha texture for text */
+                wxImage image = tbm.ConvertToImage();
+                unsigned char *d = image.GetData();
+                unsigned char *e = new unsigned char[m_TextExtents.x * m_TextExtents.y];
+                if(d && e){
+                    for( int p = 0; p < m_TextExtents.x*m_TextExtents.y; p++)
+                        e[p] = d[3*p + 0];
+                }
+                /* create texture for rendered text */
+                glGenTextures(1, &m_iDescriptionTextTexture);
+                glBindTexture(GL_TEXTURE_2D, m_iDescriptionTextTexture);
+                
+                glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+                glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+                
+                m_iDescriptionTextTextureWidth = NextPow2(m_TextExtents.x);
+                m_iDescriptionTextTextureHeight = NextPow2(m_TextExtents.y);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, m_iDescriptionTextTextureWidth, m_iDescriptionTextTextureHeight,
+                            0, GL_ALPHA, GL_UNSIGNED_BYTE, NULL);
+                glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_TextExtents.x, m_TextExtents.y,
+                                GL_ALPHA, GL_UNSIGNED_BYTE, e);
+                delete [] e;
             }
-            /* create texture for rendered text */
-            glGenTextures(1, &m_iDescriptionTextTexture);
-            glBindTexture(GL_TEXTURE_2D, m_iDescriptionTextTexture);
             
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-            
-            m_iDescriptionTextTextureWidth = NextPow2(m_TextExtents.x);
-            m_iDescriptionTextTextureHeight = NextPow2(m_TextExtents.y);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, m_iDescriptionTextTextureWidth, m_iDescriptionTextTextureHeight,
-                        0, GL_ALPHA, GL_UNSIGNED_BYTE, NULL);
-            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_TextExtents.x, m_TextExtents.y,
-                            GL_ALPHA, GL_UNSIGNED_BYTE, e);
-            delete [] e;
-            DEBUG("Creating iTexture");
+            if(m_iDescriptionTextTexture) {
+                // Draw backing box
+                ocpnDC ocpndc;
+                g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
+                
+                /* draw texture with text */
+                glBindTexture(GL_TEXTURE_2D, m_iDescriptionTextTexture);
+                
+                glEnable(GL_TEXTURE_2D);
+                glEnable(GL_BLEND);
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                
+                glColor3ub(m_colourTextColour.Red(), m_colourTextColour.Green(), m_colourTextColour.Blue());
+                
+                int x = r.x, y = r.y;
+                float u = (float)m_TextExtents.x/m_iDescriptionTextTextureWidth, v = (float)m_TextExtents.y/m_iDescriptionTextTextureHeight;
+                glBegin(GL_QUADS);
+                glTexCoord2f(0, 0); glVertex2f(x, y);
+                glTexCoord2f(u, 0); glVertex2f(x+m_TextExtents.x, y);
+                glTexCoord2f(u, v); glVertex2f(x+m_TextExtents.x, y+m_TextExtents.y);
+                glTexCoord2f(0, v); glVertex2f(x, y+m_TextExtents.y);
+                glEnd();
+                glDisable(GL_BLEND);
+                glDisable(GL_TEXTURE_2D);
         }
-        
-        if(m_iDescriptionTextTexture) {
-            /* draw texture with text */
-            glBindTexture(GL_TEXTURE_2D, m_iDescriptionTextTexture);
-            
-            glEnable(GL_TEXTURE_2D);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            
-            glColor3ub(m_FontColor.Red(), m_FontColor.Green(), m_FontColor.Blue());
-            
-            int x = r.x + m_TextLocationOffsetX, y = r.y + m_TextLocationOffsetY;
-            float u = (float)m_TextExtents.x/m_iDescriptionTextTextureWidth, v = (float)m_TextExtents.y/m_iDescriptionTextTextureHeight;
-            glBegin(GL_QUADS);
-            glTexCoord2f(0, 0); glVertex2f(x, y);
-            glTexCoord2f(u, 0); glVertex2f(x+m_TextExtents.x, y);
-            glTexCoord2f(u, v); glVertex2f(x+m_TextExtents.x, y+m_TextExtents.y);
-            glTexCoord2f(0, v); glVertex2f(x, y+m_TextExtents.y);
-            glEnd();
-            glDisable(GL_BLEND);
-            glDisable(GL_TEXTURE_2D);
-    }
-    }
+
+        }
+        }
     ODPoint::DrawGL( pivp );
 }
 

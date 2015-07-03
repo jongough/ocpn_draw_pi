@@ -47,6 +47,9 @@ class TextPoint : public ODPoint
         
         wxString            m_TextPointText;
         int                 m_iTextPosition;
+        int                 m_iBackgroundTransparency;
+        wxColour            m_colourTextColour;
+        wxColour            m_colourTextBackgroundColour;
 
     protected:
         wxFont            *m_pDescriptionFont;

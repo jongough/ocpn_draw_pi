@@ -146,6 +146,9 @@ float           g_fODPointRangeRingsStep;
 int             g_iODPointRangeRingsStepUnits;
 wxColour        g_colourODPointRangeRingsColour;
 wxString        g_sODPointIconName;
+wxColour        g_colourDefaultTextColour;
+wxColour        g_colourDefaultTextBackgroundColour;
+int             g_iTextBackgroundTransparency;
 int             g_iTextPosition;
 int             g_iTextTopOffsetX;
 int             g_iTextTopOffsetY;
@@ -725,15 +728,18 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
         pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
         pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
+        pConf->Write( wxS( "DefaultTextColour" ), g_colourDefaultTextColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultTextBackgroundColour" ), g_colourDefaultTextBackgroundColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
         pConf->Write( wxS( "DefaultTextPosition" ), g_iTextPosition );
-        pConf->Write( wxS( "DefaultTextNorthOffsetX" ), g_iTextTopOffsetX );
-        pConf->Write( wxS( "DefaultTextNorthOffsetY" ), g_iTextTopOffsetY );
-        pConf->Write( wxS( "DefaultTextSouthOffsetX" ), g_iTextBottomOffsetX );
-        pConf->Write( wxS( "DefaultTextSouthOffsetY" ), g_iTextBottomOffsetY );
-        pConf->Write( wxS( "DefaultTextEastOffsetX" ), g_iTextRightOffsetX );
-        pConf->Write( wxS( "DefaultTextEastOffsetY" ), g_iTextRightOffsetY );
-        pConf->Write( wxS( "DefaultTextWestOffsetX" ), g_iTextLeftOffsetX );
-        pConf->Write( wxS( "DefaultTextWestOffsetY" ), g_iTextLeftOffsetY );
+        pConf->Write( wxS( "DefaultTextTopOffsetX" ), g_iTextTopOffsetX );
+        pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
+        pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
+        pConf->Write( wxS( "DefaultTextBottomOffsetY" ), g_iTextBottomOffsetY );
+        pConf->Write( wxS( "DefaultTextRightOffsetX" ), g_iTextRightOffsetX );
+        pConf->Write( wxS( "DefaultTextRightOffsetY" ), g_iTextRightOffsetY );
+        pConf->Write( wxS( "DefaultTextLeftOffsetX" ), g_iTextLeftOffsetX );
+        pConf->Write( wxS( "DefaultTextLeftOffsetY" ), g_iTextLeftOffsetY );
         
     }
 }
@@ -784,15 +790,24 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "ToolBarPosX" ), &g_iToolbarPosX, 0);
         pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
         pConf->Read( wxS( "DisplayToolbar" ), &g_iDisplayToolbar, 1 );
+        wxString  l_wxsDefautlTextColour;
+        g_colourDefaultTextColour = wxColour( *wxBLACK );
+        pConf->Read( wxS( "DefaultTextColour" ), &l_wxsDefautlTextColour, wxS( "BLACK" ) );
+        g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextColour );
+        wxString  l_wxsDefautlTextBackgroundColour;
+        g_colourDefaultTextBackgroundColour = wxColour( *wxYELLOW );
+        pConf->Read( wxS( "DefaultTextBackgroundColour" ), &l_wxsDefautlTextBackgroundColour, wxS( "YELLOW" ) );
+        g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextBackgroundColour );
+        pConf->Read( wxS( "DefaultTextBackgroundTransparency" ), &g_iTextBackgroundTransparency, 100 );
         pConf->Read( wxS( "DefaultTextPosition" ), &g_iTextPosition, ID_TEXT_BOTTOM );
-        pConf->Read( wxS( "DefaultTextNorthOffsetX" ), &g_iTextTopOffsetX, -10 );
-        pConf->Read( wxS( "DefaultTextNorthOffsetY" ), &g_iTextTopOffsetY, 0 );
-        pConf->Read( wxS( "DefaultTextSouthOffsetX" ), &g_iTextBottomOffsetX, -10 );
-        pConf->Read( wxS( "DefaultTextSouthOffsetY" ), &g_iTextBottomOffsetY, 8 );
-        pConf->Read( wxS( "DefaultTextEastOffsetX" ), &g_iTextRightOffsetX, 10 );
-        pConf->Read( wxS( "DefaultTextEastOffsetY" ), &g_iTextRightOffsetY, 0 );
-        pConf->Read( wxS( "DefaultTextWestOffsetX" ), &g_iTextLeftOffsetX, -15 );
-        pConf->Read( wxS( "DefaultTextWestOffsetY" ), &g_iTextLeftOffsetY, 0 );
+        pConf->Read( wxS( "DefaultTextTopOffsetX" ), &g_iTextTopOffsetX, -10 );
+        pConf->Read( wxS( "DefaultTextTopOffsetY" ), &g_iTextTopOffsetY, -5 );
+        pConf->Read( wxS( "DefaultTextBottomOffsetX" ), &g_iTextBottomOffsetX, -10 );
+        pConf->Read( wxS( "DefaultTextBottomOffsetY" ), &g_iTextBottomOffsetY, 10 );
+        pConf->Read( wxS( "DefaultTextRightOffsetX" ), &g_iTextRightOffsetX, 10 );
+        pConf->Read( wxS( "DefaultTextRightOffsetY" ), &g_iTextRightOffsetY, -5 );
+        pConf->Read( wxS( "DefaultTextLeftOffsetX" ), &g_iTextLeftOffsetX, -15 );
+        pConf->Read( wxS( "DefaultTextLeftOffsetY" ), &g_iTextLeftOffsetY, -5 );
     }
     
     g_pODPointList = new ODPointList;

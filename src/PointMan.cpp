@@ -558,6 +558,17 @@ wxString *PointMan::GetIconDescription( int index )
     return pret;
 }
 
+wxString *PointMan::GetIconName( int index )
+{
+    wxString *pret = NULL;
+    
+    if( index >= 0 ) {
+        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
+        pret = &pmi->icon_name;
+    }
+    return pret;
+}
+
 wxString *PointMan::GetIconKey( int index )
 {
     wxString *pret = NULL;

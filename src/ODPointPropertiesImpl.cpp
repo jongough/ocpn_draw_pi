@@ -178,6 +178,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     
     g_ocpn_draw_pi->m_pFoundODPoint = NULL;
     m_notebookProperties->ChangeSelection( 0 );
+    m_notebookProperties->Refresh();
     
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
@@ -210,7 +211,8 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
 
     g_ocpn_draw_pi->m_pFoundODPoint = NULL;
     m_notebookProperties->ChangeSelection( 0 );
-    
+    m_notebookProperties->Refresh();
+
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
@@ -233,6 +235,9 @@ void ODPointPropertiesImpl::SaveChanges()
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_pTextPoint->m_TextPointText = m_textCtrlExtDescription->GetValue();
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
+            m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
+            m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
+            m_pTextPoint->m_iBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
         }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
@@ -295,10 +300,8 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     if(pOP->m_sTypeString == wxT("Text Point")) {
         m_pTextPoint = (TextPoint *)pOP;
         m_pODPoint = m_pTextPoint;
-        m_panelDescription->Show( true );
     } else {
         m_pODPoint = pOP;
-        m_panelDescription->Show( false );
     }
     
     if( m_pODPoint ) {
@@ -363,8 +366,12 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_textDescription->SetValue( m_pODPoint->m_MarkDescription );
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            m_textCtrlExtDescription->Clear();
             m_textCtrlExtDescription->SetValue( m_pTextPoint->m_TextPointText );
             m_choicePosition->SetSelection( m_pTextPoint->m_iTextPosition );
+            m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
+            m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
+            m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
         }
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );
         m_checkBoxVisible->SetValue( m_pODPoint->m_bIsVisible );
@@ -376,6 +383,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         buf.Printf( _T("%.3f" ), m_pODPoint->GetODPointRangeRingsStep() );
         m_textCtrlPointRangeRingsSteps->SetValue( buf );
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
+        
         wxCommandEvent eDummy;
         OnShowRangeRingsSelect( eDummy );
         
@@ -387,7 +395,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = g_pODPointMan->GetIconDescription( i );
+                wxString *ps = g_pODPointMan->GetIconName( i );
                 m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
@@ -395,8 +403,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         // find the correct item in the combo box
         int iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == m_pODPoint->GetIconName() )
+            if( *g_pODPointMan->GetIconName( i ) == m_pODPoint->GetIconName() ) {
                 iconToSelect = i;
+                break;
+            }
         }
 
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
@@ -407,7 +417,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         }
         
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
-        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( iconToSelect ) );
         
         icons = NULL;
         
@@ -423,6 +433,12 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
         }
         SetTitle( caption );
+        if( m_pODPoint->m_sTypeString == wxT("Text Point") )
+            m_panelDescription->Show( true );
+        else
+            m_panelDescription->Show( false );
+        m_notebookProperties->InitDialog();
+        
         
     }
 

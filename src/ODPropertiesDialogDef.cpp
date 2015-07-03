@@ -177,6 +177,48 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelPoint );
 	m_notebookProperties->AddPage( m_panelPoint, wxT("OCPN Point"), false );
+	m_panelTextPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizerTextPoint;
+	fgSizerTextPoint = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerTextPoint->SetFlexibleDirection( wxBOTH );
+	fgSizerTextPoint->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextPosition = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPosition->Wrap( -1 );
+	fgSizerTextPoint->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceTextPositionChoices[] = { wxT("Top"), wxT("Bottom"), wxT("Right"), wxT("Left") };
+	int m_choiceTextPositionNChoices = sizeof( m_choiceTextPositionChoices ) / sizeof( wxString );
+	m_choiceTextPosition = new wxChoice( m_panelTextPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceTextPositionNChoices, m_choiceTextPositionChoices, 0 );
+	m_choiceTextPosition->SetSelection( 1 );
+	fgSizerTextPoint->Add( m_choiceTextPosition, 0, wxALL, 5 );
+	
+	m_staticTextColour = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Text Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextColour->Wrap( -1 );
+	fgSizerTextPoint->Add( m_staticTextColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerTextColour = new wxColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerTextPoint->Add( m_colourPickerTextColour, 0, wxALL, 5 );
+	
+	m_staticTextBackgroundColour = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Background Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundColour->Wrap( -1 );
+	fgSizerTextPoint->Add( m_staticTextBackgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerBackgroundColour = new wxColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerTextPoint->Add( m_colourPickerBackgroundColour, 0, wxALL, 5 );
+	
+	m_staticTextBackgroundTransparency = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Background Transparency"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundTransparency->Wrap( -1 );
+	fgSizerTextPoint->Add( m_staticTextBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderBackgroundTransparency = new wxSlider( m_panelTextPoint, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizerTextPoint->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	m_panelTextPoint->SetSizer( fgSizerTextPoint );
+	m_panelTextPoint->Layout();
+	fgSizerTextPoint->Fit( m_panelTextPoint );
+	m_notebookProperties->AddPage( m_panelTextPoint, wxT("Text Point"), false );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerPathSettings;
 	fgSizerPathSettings = new wxFlexGridSizer( 6, 2, 0, 0 );
@@ -320,6 +362,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerBoundarySettings->Fit( m_panelBoundary );
 	m_notebookProperties->AddPage( m_panelBoundary, wxT("Boundary"), false );
 	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* bSizer10;
+	bSizer10 = new wxBoxSizer( wxVERTICAL );
+	
 	wxFlexGridSizer* fgSizer5;
 	fgSizer5 = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizer5->SetFlexibleDirection( wxBOTH );
@@ -386,9 +431,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer5->Add( m_staticText34, 0, wxALL, 5 );
 	
 	
-	m_panelAbout->SetSizer( fgSizer5 );
+	bSizer10->Add( fgSizer5, 1, wxEXPAND, 5 );
+	
+	
+	m_panelAbout->SetSizer( bSizer10 );
 	m_panelAbout->Layout();
-	fgSizer5->Fit( m_panelAbout );
+	bSizer10->Fit( m_panelAbout );
 	m_notebookProperties->AddPage( m_panelAbout, wxT("About"), false );
 	
 	m_SizerProperties->Add( m_notebookProperties, 0, wxALL, 5 );

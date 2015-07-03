@@ -43,6 +43,9 @@ extern ODConfig         *g_pODConfig;
 extern PointMan         *g_pODPointMan;
 extern PathMan          *g_pPathMan;
 extern int              g_iTextPosition;
+extern wxColour         g_colourDefaultTextColour;
+extern wxColour         g_colourDefaultTextBackgroundColour;
+extern int              g_iTextBackgroundTransparency;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -138,10 +141,17 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             if(buffer.data()) {
                 child = node.append_child("opencpn:text");
                 child.append_child(pugi::node_pcdata).set_value(buffer.data());
-                child = node.append_child(("opencpn:text_position"));
+                child = node.append_child("opencpn:text_position");
                 s.Printf(_T("%i"), tp->m_iTextPosition);
                 child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
             }
+            child = node.append_child( "opencpn:text_colour" );
+            child.append_child(pugi::node_pcdata).set_value( tp->m_colourTextColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+            child = node.append_child( "opencpn:background_colour" );
+            child.append_child(pugi::node_pcdata).set_value( tp->m_colourTextBackgroundColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+            child = node.append_child( "opencpn:background_transparency" );
+            s.Printf(_T("%i"), tp->m_iBackgroundTransparency );
+            child.append_child(pugi::node_pcdata).set_value( s.mb_str() );
         }
     }
     
@@ -571,6 +581,10 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     bool    l_bODPointRangeRingsVisible = false;
     int     l_iTextPosition = g_iTextPosition;
     wxColour    l_wxcODPointRangeRingsColour;
+    wxColour    l_colourTextColour = g_colourDefaultTextColour;
+    wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
+    int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
+    
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
     for( pugi::xml_node child = opt_node.first_child(); child != 0; child = child.next_sibling() ) {
@@ -580,37 +594,32 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             SymString.clear();
             SymString.append( wxString::FromUTF8( child.first_child().value() ) );
         }
-        else
-        if( !strcmp( pcn, "time") ) 
+        else if( !strcmp( pcn, "time") ) 
             TimeString.append( wxString::FromUTF8( child.first_child().value() ) );
 
-        else
-        if( !strcmp( pcn, "name") ) {
+        else if( !strcmp( pcn, "name") ) {
             NameString.append( wxString::FromUTF8( child.first_child().value() ) );
-        } 
-        
-        else
-        if( !strcmp( pcn, "desc") ) {
+        } else if( !strcmp( pcn, "desc") ) {
             DescString.append( wxString::FromUTF8( child.first_child().value() ) );
-        }
-        
-        if( !strcmp( pcn, "opencpn:text") ) {
+        } else if( !strcmp( pcn, "opencpn:text") ) {
             TextString.append( wxString::FromUTF8( child.first_child().value() ) );
-        }
-        
-        if( !strcmp( pcn, "opencpn:text_position") ) {
+        } else if( !strcmp( pcn, "opencpn:text_position") ) {
             wxString s = wxString::FromUTF8( child.first_child().value() );
             long v = 0;
             if( s.ToLong( &v ) )
                 l_iTextPosition = v;
-        }
-        
-        else
-        if( !strcmp( pcn, "opencpn:type") ) {
+        } else if( !strcmp( pcn, "opencpn:text_colour") ) {
+            l_colourTextColour.Set( wxString::FromUTF8( child.first_child().value() ) );
+        } else if( !strcmp( pcn, "opencpn:background_colour") ) {
+            l_colourBackgroundColour.Set( wxString::FromUTF8( child.first_child().value() ) );
+        } else if( !strcmp( pcn, "opencpn:background_transparency") ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                l_iBackgroundTransparency = v;
+        } else if( !strcmp( pcn, "opencpn:type") ) {
             TypeString.append( wxString::FromUTF8( child.first_child().value() ) );
-        }
-        
-        else              // Read hyperlink
+        } else              // Read hyperlink
         if( !strcmp( pcn, "link") ) {
             wxString HrefString;
             wxString HrefTextString;
@@ -713,6 +722,9 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         if( TypeString == "Text Point" ) {
             pTP->SetPointText( TextString );
             pTP->m_iTextPosition = l_iTextPosition;
+            pTP->m_colourTextColour = l_colourTextColour;
+            pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
+            pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
         }
         pOP->SetMarkDescription( DescString );
         //pOP->m_bIsolatedMark = bshared;      // This is an isolated mark

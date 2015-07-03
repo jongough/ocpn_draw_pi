@@ -27,6 +27,7 @@
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
 #include <wx/panel.h>
+#include <wx/slider.h>
 #include <wx/notebook.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
@@ -78,6 +79,12 @@ class ODPointPropertiesDialog : public wxDialog
 		wxTextCtrl* m_textCtrlExtDescription;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choicePosition;
+		wxStaticText* m_staticTextColour;
+		wxColourPickerCtrl* m_colourPickerText;
+		wxStaticText* m_staticTextBackgroundColour;
+		wxColourPickerCtrl* m_colourPickerBacgroundColour;
+		wxStaticText* m_staticTextBackgroundTransparency;
+		wxSlider* m_sliderBackgroundTransparency;
 		wxPanel* m_Extended;
 		wxCheckBox* m_checkBoxVisible;
 		wxStaticText* m_staticText1;

@@ -62,7 +62,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALL, 5 );
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
 	bSizer12->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
@@ -218,25 +218,46 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_textCtrlExtDescription = new wxTextCtrl( m_panelDescription, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP );
 	bSizer5->Add( m_textCtrlExtDescription, 1, wxALL|wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerPosition;
-	bSizerPosition = new wxBoxSizer( wxHORIZONTAL );
+	wxFlexGridSizer* fgSizerTextProperties;
+	fgSizerTextProperties = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerTextProperties->SetFlexibleDirection( wxBOTH );
+	fgSizerTextProperties->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	bSizerPosition->SetMinSize( wxSize( -1,50 ) ); 
 	m_staticTextPosition = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPosition->Wrap( -1 );
-	bSizerPosition->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	
-	bSizerPosition->Add( 0, 0, 1, wxEXPAND, 5 );
+	fgSizerTextProperties->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choicePositionChoices[] = { wxT("Top"), wxT("Bottom"), wxT("Right"), wxT("Left") };
 	int m_choicePositionNChoices = sizeof( m_choicePositionChoices ) / sizeof( wxString );
 	m_choicePosition = new wxChoice( m_panelDescription, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePositionNChoices, m_choicePositionChoices, 0 );
 	m_choicePosition->SetSelection( 1 );
-	bSizerPosition->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerTextProperties->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextColour = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextColour->Wrap( -1 );
+	fgSizerTextProperties->Add( m_staticTextColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerText = new wxColourPickerCtrl( m_panelDescription, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerTextProperties->Add( m_colourPickerText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextBackgroundColour = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Background Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundColour->Wrap( -1 );
+	fgSizerTextProperties->Add( m_staticTextBackgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerBacgroundColour = new wxColourPickerCtrl( m_panelDescription, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerTextProperties->Add( m_colourPickerBacgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextBackgroundTransparency = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Background Transparency"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundTransparency->Wrap( -1 );
+	fgSizerTextProperties->Add( m_staticTextBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderBackgroundTransparency = new wxSlider( m_panelDescription, wxID_ANY, 100, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	m_sliderBackgroundTransparency->SetMinSize( wxSize( 100,-1 ) );
+	
+	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
 	
 	
-	bSizer5->Add( bSizerPosition, 0, wxEXPAND, 5 );
+	bSizer5->Add( fgSizerTextProperties, 1, wxEXPAND, 5 );
 	
 	
 	m_panelDescription->SetSizer( bSizer5 );

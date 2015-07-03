@@ -72,6 +72,15 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choiceODPointDistanceUnit;
 		wxStaticText* m_staticTextRangeRingColours;
 		wxColourPickerCtrl* m_colourPickerODPointRangeRingColours;
+		wxPanel* m_panelTextPoint;
+		wxStaticText* m_staticTextPosition;
+		wxChoice* m_choiceTextPosition;
+		wxStaticText* m_staticTextColour;
+		wxColourPickerCtrl* m_colourPickerTextColour;
+		wxStaticText* m_staticTextBackgroundColour;
+		wxColourPickerCtrl* m_colourPickerBackgroundColour;
+		wxStaticText* m_staticTextBackgroundTransparency;
+		wxSlider* m_sliderBackgroundTransparency;
 		wxPanel* m_panelPath;
 		wxStaticText* m_staticTextActivePathLineColour;
 		wxChoice* m_choiceActivePathLineColour;
