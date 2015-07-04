@@ -191,6 +191,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizerDescriptionExt->Add( m_textDescription, 1, wxALL|wxEXPAND, 2 );
 	
 	
+	
 	bSizerDescription->Add( bSizerDescriptionExt, 1, wxEXPAND, 5 );
 	
 	

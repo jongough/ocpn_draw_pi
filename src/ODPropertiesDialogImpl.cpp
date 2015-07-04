@@ -237,6 +237,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         } 
         
         
+        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
+        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
         
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );

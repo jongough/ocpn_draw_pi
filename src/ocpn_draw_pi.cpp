@@ -681,7 +681,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
                 break;
-                
+            
             default:
                 m_Mode = ID_MODE_BOUNDARY;
                 break;
@@ -2340,3 +2340,4 @@ void ocpn_draw_pi::SetToolbarTool( void )
     }
     
 }
+

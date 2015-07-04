@@ -156,6 +156,11 @@ void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
     m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
 }
 
+void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+}
+
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     if( m_pODPoint ) {
