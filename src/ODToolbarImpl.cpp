@@ -43,10 +43,7 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &po
 {
     m_toolBoundary = m_toolBarODToolbar->AddTool( ID_BOUNDARY, wxS("Boundary"), *_img_ocpn_draw_boundary_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
     m_toolODPoint = m_toolBarODToolbar->AddTool( ID_ODPOINT, wxS("Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
-<<<<<<< HEAD
     m_toolTextPoint = m_toolBarODToolbar->AddTool( ID_TEXTPOINT, wxS("Text Point"), *_img_ocpn_draw_textpoint_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
-=======
->>>>>>> origin/master
     m_toolBarODToolbar->SetInitialSize();
     m_toolbarSize = m_toolBarODToolbar->GetSize();
 	m_toolBarODToolbar->Realize();
@@ -69,20 +66,13 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
-<<<<<<< HEAD
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             break;
         }
-=======
-            break;
-        }
-            
->>>>>>> origin/master
         case ID_MODE_POINT: 
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
-<<<<<<< HEAD
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             break;
         }
@@ -91,18 +81,13 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), true );
-=======
->>>>>>> origin/master
             break;
         }
         case ID_NONE:
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
-<<<<<<< HEAD
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
-=======
->>>>>>> origin/master
             break;
         }
         default:
@@ -119,10 +104,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
-<<<<<<< HEAD
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
-=======
->>>>>>> origin/master
             g_ocpn_draw_pi->m_Mode = ID_MODE_BOUNDARY;
             if( g_ocpn_draw_pi->nBoundary_State == 0) g_ocpn_draw_pi->nBoundary_State = 1;
             g_ocpn_draw_pi->SetToolbarTool();
@@ -132,16 +114,12 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
-<<<<<<< HEAD
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
-=======
->>>>>>> origin/master
             g_ocpn_draw_pi->m_Mode = ID_MODE_POINT;
             if( g_ocpn_draw_pi->nPoint_State == 0) g_ocpn_draw_pi->nPoint_State = 1;
             g_ocpn_draw_pi->SetToolbarTool();
             break;
         }
-<<<<<<< HEAD
         case ID_TEXTPOINT:
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
@@ -152,8 +130,6 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             g_ocpn_draw_pi->SetToolbarTool();
             break;
         }
-=======
->>>>>>> origin/master
         default:
             break;
     }
@@ -168,7 +144,6 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
 {
     switch( iTool )
     {
-<<<<<<< HEAD
         case ID_MODE_BOUNDARY:
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
@@ -188,28 +163,13 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), true );
-=======
-        case ID_BOUNDARY:
-        {
-            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), true );
-            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
-            break;
-        }
-        case ID_ODPOINT:
-        {
-            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
-            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
->>>>>>> origin/master
             break;
         }
         case ID_NONE:
         {
             m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
-<<<<<<< HEAD
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
-=======
->>>>>>> origin/master
             break;
         }
         default:
