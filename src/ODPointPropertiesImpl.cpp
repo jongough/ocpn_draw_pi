@@ -242,9 +242,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
-        wxString *icon_name = g_pODPointMan->GetIconKey( m_bcomboBoxODPointIconName->GetSelection() );
-        if(icon_name && icon_name->Length())
-            m_pODPoint->SetIconName( *icon_name );
+        m_pODPoint->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
         m_pODPoint->ReLoadIcon();
 
         // Here is some logic....
@@ -395,7 +393,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = g_pODPointMan->GetIconName( i );
+                wxString *ps = g_pODPointMan->GetIconDescription( i );
                 m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
@@ -408,7 +406,15 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 break;
             }
         }
-
+        if( iconToSelect == -1 ) {
+            for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+                if( *g_pODPointMan->GetIconDescription( i ) == m_pODPoint->GetIconName() ) {
+                    iconToSelect = i;
+                    break;
+                }
+            }
+        }
+        
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    

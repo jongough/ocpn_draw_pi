@@ -44,7 +44,7 @@ public:
       ODPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
       ODPoint( ODPoint* orig );
       ODPoint();
-      ~ODPoint(void);
+      virtual ~ODPoint(void);
       virtual void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
       void ReLoadIcon(void);
 

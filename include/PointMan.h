@@ -82,6 +82,7 @@ class PointMan
       wxBitmap *GetIconBitmap(int index);
       wxString *GetIconDescription(int index);
       wxString *GetIconName( int index );
+      wxString *GetIconName( wxString wxIconDescription );
       wxString *GetIconKey(int index);
 
       wxImageList *Getpmarkicon_image_list(void);

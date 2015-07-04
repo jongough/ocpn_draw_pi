@@ -160,6 +160,7 @@ void ODPropertiesDialogImpl::SaveChanges()
         m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
         g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
         g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
+        
         g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
         g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
         
