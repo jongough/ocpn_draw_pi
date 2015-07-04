@@ -99,7 +99,7 @@ public:
       void  SetODPointRangeRingsStepUnits(int i_ODPointRangeRingsStepUnits) { m_iODPointRangeRingsStepUnits = i_ODPointRangeRingsStepUnits; };
       void  SetODPointRangeRingsColour( wxColour wxc_ODPointRangeRingsColour ) { m_wxcODPointRangeRingsColour = wxc_ODPointRangeRingsColour; };
       void  SetTypeString( wxString sTypeString ) { m_sTypeString = sTypeString; }
-
+      void  SetMarkDescription( wxString sMarkDescription );
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
 

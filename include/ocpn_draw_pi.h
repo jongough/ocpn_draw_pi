@@ -27,7 +27,7 @@
  */
 
 #ifdef DEBUG_BUILD
-#  define DEBUG(x) do { \
+#  define DEBUGSL(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
@@ -47,7 +47,7 @@ std::cout << x ; } while (0)
 #  define DEBUGEND(x) do { \
 std::cout << x << std::endl; } while (0)
 #else
-#  define DEBUG(x) do {} while (0)
+#  define DEBUGSL(x) do {} while (0)
 #  define DEBUGST(x) do {} while (0)
 #  define DEBUGCONT(x) do {} while (0)
 #  define DEBUGEND(x) do {} while (0)
@@ -137,8 +137,18 @@ enum
 {
     ID_MODE_BOUNDARY = 0,
     ID_MODE_POINT,
+    ID_MODE_TEXT_POINT,
     
     ID_LAST_MODE
+};
+
+enum {
+    ID_TEXT_TOP = 0,
+    ID_TEXT_BOTTOM,
+    ID_TEXT_RIGHT,
+    ID_TEXT_LEFT,
+    
+    ID_TEXT_POSTION_LAST
 };
 
 class Boundary;
@@ -172,6 +182,7 @@ public:
     bool            m_bBoundaryEditing;
     bool            m_bPathEditing;
     bool            m_bODPointEditing;
+    bool            m_bTextPointEditing;
     
 
     //    The required PlugIn Methods
@@ -254,8 +265,9 @@ public:
     wxCursor    *pCursorPencil;
     wxCursor    *pCursorArrow;
     wxCursor    *pCursorCross;
+    wxCursor    *m_pTextCursorCross;
     
-    wxCursor    *pCurrentCursor;
+    wxCursor    *m_pCurrentCursor;
     
     int         nConfig_State;
     
@@ -267,6 +279,7 @@ public:
     ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;
     int         nPoint_State;
+    int         nTextPoint_State;
     double      m_dStartLat;
     double      m_dStartLon;
     double      m_cursor_lon, m_cursor_lat;
@@ -306,6 +319,7 @@ private:
 
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
     bool    CreatePointLeftClick( wxMouseEvent &event );
+    bool    CreateTextPointLeftClick( wxMouseEvent &event );
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);

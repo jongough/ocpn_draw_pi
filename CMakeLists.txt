@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0100")
-SET(VERSION_DATE "20/06/2015")
+SET(VERSION_PATCH "0305")
+SET(VERSION_DATE "04/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -62,9 +62,9 @@ SET(SRCS
         src/ODRolloverWin.cpp
         src/ODToolbarDef.cpp
         src/ODToolbarImpl.cpp
-#        src/ODstyles.cpp
         src/ODUtils.cpp
-         src/ODicons.cpp
+        src/ODicons.cpp
+        src/TextPoint.cpp
             src/jsonreader.cpp
             src/jsonval.cpp
             src/jsonwriter.cpp
@@ -95,6 +95,7 @@ SET(HDRS
         include/ODUtils.h
         include/ODvector2D.h
         include/ODicons.h
+        include/TextPoint.h
         include/version.h
 #            include/wx/json_defs.h
             include/wx/jsonreader.h
@@ -227,4 +228,3 @@ ADD_DEFINITIONS(-DTIXML_USE_STL)
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")
 INCLUDE("cmake/PluginPackage.cmake")
-

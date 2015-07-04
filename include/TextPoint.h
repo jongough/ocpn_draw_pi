@@ -1,7 +1,7 @@
 /***************************************************************************
- *
+ * 
  * Project:  OpenCPN
- * Purpose:  OCPN Draw Event Handler Support
+ * Purpose:  Text points 
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -23,59 +23,52 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef OCPNDRAWEVENTHANDLER_H
-#define OCPNDRAWEVENTHANDLER_H
+#ifndef TEXTPOINT_H
+#define TEXTPOINT_H
 
-#include <wx/event.h>
-#include <wx/timer.h>
-#include "ocpn_draw_pi.h"
-#include "ODRolloverWin.h"
+#include "ODPoint.h"
 
-// Forward declarations
-class SelectItem;
-class TextPoint;
+class ODText;
 
-#define TIMER_OD_1 999
-
-enum
-{
-    HEAD_DOG_TIMER  = 1000,
-    ODROPOPUP_TIMER,
-    ROLLOVER_TIMER,
-    OD_TIMER_1,
-    LAST_TIMER
-};
-
-class ODEventHandler : public wxEvtHandler
+class TextPoint : public ODPoint
 {
     public:
-        ODEventHandler(ocpn_draw_pi *parent);
-        ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, ODPoint *selectedODPoint);
-        ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, TextPoint *selectedTextPoint);
-        ~ODEventHandler();
+        TextPoint();
+        TextPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
+        TextPoint(const TextPoint& other);
+        ~TextPoint();
         
-        void OnODTimer1(wxTimerEvent& event);
-        void PopupMenuHandler( wxCommandEvent & event );
-        void OnRolloverPopupTimerEvent( wxTimerEvent &event );
-        void PopupMenu( int x, int y, int seltype );
-        void SetPath( Path *path );
-        void SetPoint ( ODPoint *point );
-        void SetPoint ( TextPoint *point );
-        void SetCanvas( ChartCanvas *canvas );
-        void SetLatLon( double lat, double lon );
+        void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+        void DrawGL( PlugIn_ViewPort &pivp );
+        void SetPointText( wxString sTextPointText );
+        wxString GetPointText( void ) { return m_TextPointText; }
+        void ShowText( void );
+        void HideText( void );
         
+        wxString            m_TextPointText;
+        int                 m_iTextPosition;
+        int                 m_iBackgroundTransparency;
+        wxColour            m_colourTextColour;
+        wxColour            m_colourTextBackgroundColour;
+
     protected:
-    private:
-        ocpn_draw_pi    *m_parent;
-        ChartCanvas     *m_parentcanvas;
-        int             popx, popy;
-        Path            *m_pSelectedPath;
-        ODPoint       *m_pFoundODPoint;
-        double          m_cursor_lat;
-        double          m_cursor_lon;
-        wxTimer         ODTimer1;
+        wxFont            *m_pDescriptionFont;
         
-        DECLARE_EVENT_TABLE();
+        
+    private:
+        void CalculateTextExtents( void );
+        
+        wxStaticText    *m_pstText;
+        wxTextCtrl      *m_ptcText;
+        wxSize          m_TextExtents;
+        int             m_TextLocationOffsetX;
+        int             m_TextLocationOffsetY;
+        int             m_iWrapLen;
+        
+        unsigned int    m_iDescriptionTextTexture;
+        int             m_iDescriptionTextTextureWidth, m_iDescriptionTextTextureHeight;
+        wxWindow        *m_Window;
+        
 };
 
-#endif // OCPNDRAWEVENTHANDLER_H
+#endif // TEXTPOINT_H

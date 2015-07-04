@@ -31,6 +31,7 @@
 #include "PathMan.h"
 #include "ODUtils.h"
 #include "cutil.h"
+#include "TextPoint.h"
 
 #include <wx/dir.h>
 #include <wx/filename.h>
@@ -557,6 +558,17 @@ wxString *PointMan::GetIconDescription( int index )
     return pret;
 }
 
+wxString *PointMan::GetIconName( int index )
+{
+    wxString *pret = NULL;
+    
+    if( index >= 0 ) {
+        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
+        pret = &pmi->icon_name;
+    }
+    return pret;
+}
+
 wxString *PointMan::GetIconKey( int index )
 {
     wxString *pret = NULL;
@@ -686,7 +698,11 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
             && ( ( b_delete_used && prp->m_bKeepXPath )
                         || ( ( !prp->m_bIsInPath ) && !( prp == pAnchorWatchPoint1 ) && !( prp == pAnchorWatchPoint2 ) ) ) ) {
             DestroyODPoint(prp);
-            delete prp;
+            if(prp->m_sTypeString == wxT("ODPoint"))
+                delete prp;
+            else if(prp->m_sTypeString == wxT("Text Point")) {
+                delete (TextPoint *)node->GetData();
+            }
             node = m_pODPointList->GetFirst();
         } else
             node = node->GetNext();

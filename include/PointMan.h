@@ -81,6 +81,7 @@ class PointMan
       bool DoesIconExist(const wxString & icon_key) const;
       wxBitmap *GetIconBitmap(int index);
       wxString *GetIconDescription(int index);
+      wxString *GetIconName( int index );
       wxString *GetIconKey(int index);
 
       wxImageList *Getpmarkicon_image_list(void);

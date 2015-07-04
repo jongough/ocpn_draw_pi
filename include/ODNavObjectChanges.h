@@ -30,8 +30,6 @@
 #include "pugixml.hpp"
 #include "Path.h"
 
-#define OUT_OCPNPOINT_RANGE_RINGS OUT_WAYPOINT_RANGE_RINGS << 1
-
 //      Bitfield definition controlling the GPX nodes output for point objects
 #define         OUT_TYPE        1 << 1          //  Output point type
 #define         OUT_TIME        1 << 2          //  Output time as ISO string
@@ -51,9 +49,10 @@
 #define         OUT_ACTION_UPD  1 << 16
 #define         OUT_EXTENSION   1 << 17
 #define         OUT_ARRIVAL_RADIUS 1 << 18
-#define         OUT_WAYPOINT_RANGE_RINGS 1 << 19
+#define         OUT_OCPNPOINT_RANGE_RINGS 1 << 19
+#define         OUT_POINTTEXT 1 << 20
 
-#define  OPT_WPT        (OUT_TYPE) +\
+#define  OPT_OCPNPOINT  (OUT_TYPE) +\
                         (OUT_TIME) +\
                         (OUT_NAME) +\
                         (OUT_DESC) +\
@@ -65,11 +64,8 @@
                         (OUT_AUTO_NAME) +\
                         (OUT_HYPERLINKS) +\
                         (OUT_ARRIVAL_RADIUS) +\
-                        (OUT_WAYPOINT_RANGE_RINGS)
-
-#define OPT_OCPNPOINT   (OPT_WPT) +\
-                        (OUT_OCPNPOINT_RANGE_RINGS)
-
+                        (OUT_OCPNPOINT_RANGE_RINGS) +\
+                        (OUT_POINTTEXT)
 
 //class ODNavObjectChanges : public NavObjectChanges
 class ODNavObjectChanges : public pugi::xml_document
@@ -88,6 +84,8 @@ class ODNavObjectChanges : public pugi::xml_document
     bool AddGPXPath(Path *pPath);
     bool AddGPXODPoint(ODPoint *pWP );
     bool AddGPXODPointsList( ODPointList *pODPoints );
+    bool GPXCreatePath( pugi::xml_node node, Path *pPath );
+    bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, unsigned int flags );
     bool LoadAllGPXObjects( bool b_full_viz = false);
     int  LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
     //ODPoint * GPXLoadODPoint1( pugi::xml_node &odpt_node, wxString def_symbol_name, wxString GUID, bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id );
