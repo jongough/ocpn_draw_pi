@@ -1064,8 +1064,7 @@ void Path::UpdateSegmentDistances()
 ODPoint *Path::InsertPointBefore( ODPoint *pRP, double rlat, double rlon,
         bool bRenamePoints )
 {
-    ODPoint *newpoint = new ODPoint( rlat, rlon, g_sODPointIconName,
-            GetNewMarkSequenced(), wxT("") );
+    ODPoint *newpoint = new ODPoint( rlat, rlon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
