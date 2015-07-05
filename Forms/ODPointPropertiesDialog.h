@@ -85,7 +85,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxColourPickerCtrl* m_colourPickerBacgroundColour;
 		wxStaticText* m_staticTextBackgroundTransparency;
 		wxSlider* m_sliderBackgroundTransparency;
-		wxPanel* m_Extended;
+		wxPanel* m_panelExtended;
 		wxCheckBox* m_checkBoxVisible;
 		wxStaticText* m_staticText1;
 		wxTextCtrl* m_textCtrlGuid;
