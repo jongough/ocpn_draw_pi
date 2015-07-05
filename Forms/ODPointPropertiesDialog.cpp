@@ -16,7 +16,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_SizerDialogBox = new wxBoxSizer( wxVERTICAL );
 	
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
-	m_panelBasicProperties = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelBasicProperties = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxFULL_REPAINT_ON_RESIZE|wxTAB_TRAVERSAL );
 	m_SizerBasicProperties = new wxBoxSizer( wxVERTICAL );
 	
 	m_staticText2 = new wxStaticText( m_panelBasicProperties, wxID_ANY, wxT("Properties"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -103,17 +103,14 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	bSizer12->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerSpacer;
-	bSizerSpacer = new wxBoxSizer( wxVERTICAL );
-	
-	
-	bSizer12->Add( bSizerSpacer, 0, wxEXPAND|wxALL, 5 );
-	
 	wxBoxSizer* bSizer18;
 	bSizer18 = new wxBoxSizer( wxVERTICAL );
 	
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_panelBasicProperties, wxID_ANY, wxT("Show Point Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	bSizer18->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 0 );
+	bSizer18->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0 );
+	
+	
+	bSizer18->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	
 	bSizer12->Add( bSizer18, 0, wxEXPAND, 2 );
@@ -191,7 +188,6 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizerDescriptionExt->Add( m_textDescription, 1, wxALL|wxEXPAND, 2 );
 	
 	
-	
 	bSizerDescription->Add( bSizerDescriptionExt, 1, wxEXPAND, 5 );
 	
 	
@@ -265,22 +261,22 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDescription->Layout();
 	bSizer5->Fit( m_panelDescription );
 	m_notebookProperties->AddPage( m_panelDescription, wxT("Description"), false );
-	m_Extended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 	
-	m_checkBoxVisible = new wxCheckBox( m_Extended, wxID_ANY, wxT("Show on chart"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_checkBoxVisible = new wxCheckBox( m_panelExtended, wxID_ANY, wxT("Show on chart"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_checkBoxVisible->SetValue(true); 
 	bSizer3->Add( m_checkBoxVisible, 0, wxALL, 5 );
 	
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_staticText1 = new wxStaticText( m_Extended, wxID_ANY, wxT("GUID"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText1 = new wxStaticText( m_panelExtended, wxID_ANY, wxT("GUID"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText1->Wrap( -1 );
 	bSizer4->Add( m_staticText1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlGuid = new wxTextCtrl( m_Extended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlGuid = new wxTextCtrl( m_panelExtended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_textCtrlGuid->SetMaxLength( 0 ); 
 	bSizer4->Add( m_textCtrlGuid, 1, wxALL, 5 );
 	
@@ -288,10 +284,10 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizer3->Add( bSizer4, 0, wxEXPAND, 5 );
 	
 	
-	m_Extended->SetSizer( bSizer3 );
-	m_Extended->Layout();
-	bSizer3->Fit( m_Extended );
-	m_notebookProperties->AddPage( m_Extended, wxT("Extended"), false );
+	m_panelExtended->SetSizer( bSizer3 );
+	m_panelExtended->Layout();
+	bSizer3->Fit( m_panelExtended );
+	m_notebookProperties->AddPage( m_panelExtended, wxT("Extended"), false );
 	
 	m_SizerDialogBox->Add( m_notebookProperties, 1, wxEXPAND | wxALL, 5 );
 	

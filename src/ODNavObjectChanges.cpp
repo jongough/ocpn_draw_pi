@@ -711,7 +711,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     // Check to see if this point already exits
     pOP = tempODPointExists( GuidString );
     if( !pOP ) {
-        TextPoint * tTP;
         if( TypeString == wxT("Text Point") ) {
             pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
             pOP = pTP;
@@ -727,7 +726,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
         }
         pOP->SetMarkDescription( DescString );
-        //pOP->m_bIsolatedMark = bshared;      // This is an isolated mark
         pOP->m_sTypeString = TypeString;
         pOP->SetODPointArrivalRadius( ArrivalRadius );
         pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );

@@ -439,12 +439,18 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
         }
         SetTitle( caption );
-        if( m_pODPoint->m_sTypeString == wxT("Text Point") )
+        if( m_pODPoint->m_sTypeString == wxT("Text Point") ) {
             m_panelDescription->Show( true );
-        else
+            m_panelDescription->Enable();
+        }
+        else {
             m_panelDescription->Show( false );
-        m_notebookProperties->InitDialog();
+            m_panelDescription->Disable();
+        }
         
+        m_notebookProperties->SetSelection(1);
+        m_notebookProperties->SetSelection(0);
+//        m_panelBasicProperties->Refresh( true );
         
     }
 
