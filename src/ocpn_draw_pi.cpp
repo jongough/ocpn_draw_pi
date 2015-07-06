@@ -259,8 +259,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    //    RemovePlugInTool(m_config_button_id);
-    //    RemovePlugInTool(m_draw_button_id);
     if( g_pODConfig ) {
         g_pODConfig->UpdateNavObj();
         SaveConfig();

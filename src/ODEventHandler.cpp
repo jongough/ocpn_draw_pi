@@ -332,7 +332,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             
             if( dlg_return == wxID_YES ) {
-                if( g_pPathMan->GetpActivePath() == m_pSelectedPath ) g_pPathMan->DeactivatePath( m_pSelectedPath );
+                DeletePath();
+/*                if( g_pPathMan->GetpActivePath() == m_pSelectedPath ) g_pPathMan->DeactivatePath( m_pSelectedPath );
                 
                 if( !g_pPathMan->DeletePath( m_pSelectedPath ) )
                     break;
@@ -352,7 +353,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 //m_parent->undo->InvalidateUndo();
                 RequestRefresh( m_parentcanvas );
                 m_pSelectedPath = NULL;
-                
+*/                
             }
             break;
         }
@@ -450,8 +451,12 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             
             if( dlg_return == wxID_YES ) {
-                m_pSelectedPath->DeletePoint( m_pFoundODPoint );
-                if( g_pPathPropDialog && g_pPathPropDialog->IsShown() ) g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+                if(m_pSelectedPath->GetnPoints() <= 3)
+                    DeletePath();
+                else {
+                    m_pSelectedPath->DeletePoint( m_pFoundODPoint );
+                    if( g_pPathPropDialog && g_pPathPropDialog->IsShown() ) g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+                }
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
@@ -625,3 +630,27 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
     
 }
 
+void ODEventHandler::DeletePath( void )
+{
+    if( g_pPathMan->GetpActivePath() == m_pSelectedPath ) g_pPathMan->DeactivatePath( m_pSelectedPath );
+    
+    if( !g_pPathMan->DeletePath( m_pSelectedPath ) )
+        return;
+    if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown()) && (m_pSelectedPath == g_pPathPropDialog->GetPath()) ) {
+        g_pPathPropDialog->Hide();
+    }
+    
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdatePathListCtrl();
+    
+    if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+        g_pODPointPropDialog->ValidateMark();
+        g_pODPointPropDialog->UpdateProperties();
+    }
+    
+    // TODO implement UNDO
+    //m_parent->undo->InvalidateUndo();
+    RequestRefresh( m_parentcanvas );
+    m_pSelectedPath = NULL;
+    
+}

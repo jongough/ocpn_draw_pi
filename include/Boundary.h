@@ -34,8 +34,9 @@ class Boundary : public Path
         virtual ~Boundary();
         void Draw( ocpnDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
+        void DeletePoint( ODPoint *op, bool bRenamePoints );
         
-    int m_itest;
+        int     m_itest;
     
     protected:
     private:

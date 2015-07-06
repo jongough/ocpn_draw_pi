@@ -104,3 +104,17 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 
     #endif
 }
+
+void Boundary::DeletePoint( ODPoint *op, bool bRenamePoints )
+{
+    //    n.b. must delete Selectables  and update config before deleting the point
+    if( op->m_bIsInLayer ) return;
+    
+    if((ODPoint *)m_pODPointList->GetFirst()->GetData() == op) {
+        m_pODPointList->DeleteObject( op );
+        m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
+    }
+    
+    Path::DeletePoint( op, bRenamePoints );
+}
+
