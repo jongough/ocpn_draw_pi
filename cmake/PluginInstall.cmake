@@ -61,8 +61,13 @@ ENDIF(UNIX AND NOT APPLE)
 
 SET(PARENT opencpn)
 
-SET(PREFIX_DATA share)
-SET(PREFIX_LIB lib)
+IF(EXISTS /etc/debian_version)
+    SET(PREFIX_DATA local/share)
+    SET(PREFIX_LIB local/lib)
+ELSE(EXISTS /etc/debian_version)
+    SET(PREFIX_DATA share)
+    SET(PREFIX_LIB lib)
+ENDIF(EXISTS /etc/debian_version)
 
 IF(WIN32)
     MESSAGE (STATUS "Install Prefix: ${CMAKE_INSTALL_PREFIX}")
