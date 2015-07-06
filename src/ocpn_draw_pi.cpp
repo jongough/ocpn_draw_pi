@@ -135,7 +135,6 @@ wxString    g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
-wxString    *g_pNavObjs;
 
 ODEventHandler   *g_ODEventHandler;
 
@@ -240,45 +239,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     
-    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
-    #ifdef __WXMSW__
-    wxString stdDataDir = std_path.GetConfigDir(); // Location of writable data store, win7 = c:\ProgramData\opencpn
-    wxString stdProgDir = std_path.GetDataDir(); // Location of the current excutable, win7 = c:\Program Files\OpenCPN
-    appendOSDirSlash( &stdProgDir );
-    stdProgDir.append( wxT("share") );
-    appendOSDirSlash( &stdProgDir );
-    wxString stdHomeDir = std_path.GetUserDataDir(); // Location of user directory, win7 = c:\User\xxx\AppData\Roaming\opencpn
-    #endif
-    #ifdef __WXGTK__
-    #ifndef NDEBUG
-    // this is for development on linux
-    wxString stdDataDir = std_path.GetResourcesDir();
-    wxString stdProgDir = std_path.GetResourcesDir();
-    wxString stdHomeDir = std_path.GetUserConfigDir();
-    #else
-    wxString stdDataDir = std_path.GetResourcesDir();
-    wxString stdProgDir = std_path.GetUserDataDir();
-    wxString stdHomeDir = std_path.GetUserConfigDir();
-    #endif 
-    #endif
-    #ifdef __WXOSX__
-    wxString stdDataDir = std_path.GetResourcesDir();
-    wxString stdProgDir = std_path.GetUserDataDir();
-    wxString stdHomeDir = std_path.GetUserConfigDir();   // should be ~/Library/Preferences
-    #endif
-    
-    g_pHome_Locn = new wxString();
-    g_pHome_Locn->Append(stdDataDir);
-    //g_pHome_Locn->Append(stdHomeDir);
-    appendOSDirSlash(g_pHome_Locn);
-    
-    g_pHome_Locn->Append(_T("ocpn_draw_pi"));
-    appendOSDirSlash(g_pHome_Locn);
-    //    if(!wxDir::Exists(*g_pHome_Locn))
-    //        wxMkdir(*g_pHome_Locn);
-    
-    g_pData = new wxString();
-    g_pData->append( stdDataDir );
+    g_pData = GetpPrivateApplicationDataLocation();
     appendOSDirSlash( g_pData );
     g_pData->Append(_T("plugins"));
     appendOSDirSlash( g_pData );
@@ -293,17 +254,11 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
     
-    g_pNavObjs = new wxString();
-    g_pNavObjs->append(stdDataDir);
-    appendOSDirSlash(g_pNavObjs);
-    
     initialize_images();
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    //    RemovePlugInTool(m_config_button_id);
-    //    RemovePlugInTool(m_draw_button_id);
     if( g_pODConfig ) {
         g_pODConfig->UpdateNavObj();
         SaveConfig();

@@ -63,6 +63,7 @@ class ODEventHandler : public wxEvtHandler
         void SetPoint ( TextPoint *point );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
+        void DeletePath( void );
         
     protected:
     private:

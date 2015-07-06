@@ -260,7 +260,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDescription->SetSizer( bSizer5 );
 	m_panelDescription->Layout();
 	bSizer5->Fit( m_panelDescription );
-	m_notebookProperties->AddPage( m_panelDescription, wxT("Description"), false );
+	m_notebookProperties->AddPage( m_panelDescription, wxT("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );

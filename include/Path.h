@@ -47,7 +47,7 @@ class Path : public wxObject
 {
 public:
     Path(void);
-    ~Path(void);
+    virtual ~Path(void);
 
     void AddPoint(ODPoint* pNewPoint, 
                   bool b_rename_in_sequence = true,
@@ -66,7 +66,7 @@ public:
     virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);
     virtual void DrawGL( PlugIn_ViewPort &piVP );
     ODPoint *GetLastPoint();
-    void DeletePoint(ODPoint *rp, bool bRenamePoints = false);
+    virtual void DeletePoint(ODPoint *rp, bool bRenamePoints = false);
     void RemovePoint(ODPoint *rp, bool bRenamePoints = false);
     void DeSelectPath();
     void FinalizeForRendering();
