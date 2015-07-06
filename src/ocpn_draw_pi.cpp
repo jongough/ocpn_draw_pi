@@ -259,10 +259,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    if( g_pODConfig ) {
-        g_pODConfig->UpdateNavObj();
-        SaveConfig();
-    }
     
 }
 
@@ -438,6 +434,10 @@ bool ocpn_draw_pi::DeInit(void)
     
     if( m_draw_button_id ) RemovePlugInTool(m_draw_button_id);
     m_draw_button_id = 0;
+    if( g_pODConfig ) {
+        g_pODConfig->UpdateNavObj();
+        SaveConfig();
+    }
     shutdown(false);
     return true;
 }
