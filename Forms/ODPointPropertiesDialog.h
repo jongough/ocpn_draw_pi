@@ -62,6 +62,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textArrivalRadius;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
+		wxCheckBox* m_checkBoxFill;
 		wxBoxSizer* m_SizerODPointRangeRingsSelect;
 		wxStaticText* m_staticTextPointRangeRings;
 		wxChoice* m_choicePointRangeRingsNumber;

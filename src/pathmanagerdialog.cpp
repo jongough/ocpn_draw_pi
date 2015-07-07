@@ -1412,7 +1412,7 @@ void PathManagerDialog::OnODPointNewClick( wxCommandEvent &event )
     ODPoint *pWP = new ODPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString,
             wxT("") );
     pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-    pWP->SetTypeString( wxS("Point") );
+    pWP->SetTypeString( wxS("Boundary Point") );
     g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pWP );
     g_pODConfig->AddNewODPoint( pWP, -1 );    // use auto next num
     RequestRefresh( GetOCPNCanvasWindow() );

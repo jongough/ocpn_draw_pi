@@ -35,6 +35,7 @@
 
 #include "ocpn_draw_pi.h"
 #include "Boundary.h"
+#include "BoundaryPoint.h"
 #include "BoundaryProp.h"
 #include "Path.h"
 #include "PathMan.h"
@@ -259,10 +260,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    if( g_pODConfig ) {
-        g_pODConfig->UpdateNavObj();
-        SaveConfig();
-    }
     
 }
 
@@ -438,6 +435,10 @@ bool ocpn_draw_pi::DeInit(void)
     
     if( m_draw_button_id ) RemovePlugInTool(m_draw_button_id);
     m_draw_button_id = 0;
+    if( g_pODConfig ) {
+        g_pODConfig->UpdateNavObj();
+        SaveConfig();
+    }
     shutdown(false);
     return true;
 }
@@ -1637,6 +1638,8 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ocpnDC& dc, LLBBox& BltBBox )
     
     while( node ) {
         ODPoint *pOP = node->GetData();
+        if(node->GetData()->m_sTypeString == "Boundary Point")
+            pOP = (BoundaryPoint *)node->GetData();
         if( pOP ) {
             if( pOP->m_bIsInRoute || pOP->m_bIsInPath ) {
                 node = node->GetNext();
@@ -1658,16 +1661,18 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     rlon = m_cursor_lon;
     
     //    Check to see if there is a nearby point which may be reused
-    ODPoint *pMousePoint = NULL;
+//    ODPoint *pMousePoint = NULL;
+    BoundaryPoint *pMousePoint = NULL;
     
     //    Calculate meaningful SelectRadius
     int nearby_sel_rad_pix = 8;
     //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
     
-    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon,
-                                                             nearby_radius_meters );
-    if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
+//    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
+    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
+
+    if( pNearbyPoint && ( pNearbyPoint != (BoundaryPoint *)m_prev_pMousePoint )
         && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
@@ -1693,9 +1698,10 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     }
     
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new ODPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+//        pMousePoint = new ODPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+        pMousePoint = new BoundaryPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
-        pMousePoint->SetTypeString( wxS("Point") );
+        pMousePoint->SetTypeString( wxS("Boundary Point") );
         pMousePoint->m_bIsolatedMark = TRUE;
         
         g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
@@ -1792,14 +1798,14 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     }
     
     //    Check to see if there is a nearby point which may be reused
-    ODPoint *pMousePoint = NULL;
+    BoundaryPoint *pMousePoint = NULL;
     
     //    Calculate meaningful SelectRadius
     int nearby_sel_rad_pix = 8;
     //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
     
-    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon,
+    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                                                              nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
         && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
@@ -1827,7 +1833,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     }
     
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new ODPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+        pMousePoint = new BoundaryPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
         pMousePoint->SetTypeString( wxS("Boundary Point") );
         
@@ -1865,8 +1871,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 m_disable_edge_pan = false;
                 
                 if( answer == wxID_YES ) {
-                    ODPoint* gcPoint;
-                    ODPoint* prevGcPoint = m_prev_pMousePoint;
+                    BoundaryPoint* gcPoint;
+                    BoundaryPoint* prevGcPoint = (BoundaryPoint *)m_prev_pMousePoint;
                     wxRealPoint gcCoord;
                     
                     for( int i = 1; i <= segmentCount; i++ ) {
@@ -1875,7 +1881,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                                                      gcBearing, &gcCoord.x, &gcCoord.y, NULL );
                         
                         if( i < segmentCount ) {
-                            gcPoint = new ODPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
+                            gcPoint = new BoundaryPoint( gcCoord.y, gcCoord.x, wxS("xmblue"), wxS(""),
                                                    wxT("") );
                             gcPoint->SetNameShown( false );
                             gcPoint->SetTypeString( wxS("Boundary Point") );

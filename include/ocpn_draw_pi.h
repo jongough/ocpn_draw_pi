@@ -74,7 +74,7 @@ std::cout << x << std::endl; } while (0)
 #include "ODRolloverWin.h"
 
 #include "georef.h"
-#include "statwin.h"
+#include "chartbarwin.h"
 
 #include <wx/aui/aui.h>
 #include <wx/string.h>
@@ -334,7 +334,7 @@ private:
     int                m_config_button_id;
 
     bool              m_bLOGShowIcon;
-    StatWin                   *stats;
+    ChartBarWin                   *stats;
     PI_ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;

@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0320")
-SET(VERSION_DATE "06/07/2015")
+SET(VERSION_PATCH "0355")
+SET(VERSION_DATE "07/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -44,6 +44,7 @@ SET(SRCS
         src/ocpn_draw_pi.cpp
         src/Boundary.cpp
         src/BoundaryProp.cpp
+        src/BoundaryPoint.cpp
         src/PointMan.cpp
         src/ODSelect.cpp
         src/PathMan.cpp
@@ -74,6 +75,7 @@ SET(HDRS
         include/ocpn_draw_pi.h
         include/Boundary.h
         include/BoundaryProp.h
+        include/BoundaryPoint.h
         include/PointMan.h
         include/ODSelect.h
         include/PathMan.h
@@ -123,6 +125,7 @@ SET(OCPNHDRS
         ocpninclude/bbox.h
         ocpninclude/canvasMenu.h
         ocpninclude/chart1.h
+        ocpninclude/chartbarwin.h
         ocpninclude/chartbase.h
         ocpninclude/chartdbs.h
         ocpninclude/chcanv.h
@@ -183,7 +186,6 @@ SET(OCPNHDRS
         ocpninclude/scrollingdialog.h
         ocpninclude/SelectItem.h
         ocpninclude/Sentence.hpp
-        ocpninclude/statwin.h
         ocpninclude/styles.h
         ocpninclude/TexFont.h
         ocpninclude/timers.h

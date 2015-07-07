@@ -238,6 +238,8 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
             m_pTextPoint->m_iBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
+        } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
+            m_pBoundaryPoint->m_bFill = m_checkBoxFill->GetValue();
         }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
@@ -298,6 +300,9 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     if(pOP->m_sTypeString == wxT("Text Point")) {
         m_pTextPoint = (TextPoint *)pOP;
         m_pODPoint = m_pTextPoint;
+    } else if(pOP->m_sTypeString == wxT("Boundary Point")) {
+        m_pBoundaryPoint = (BoundaryPoint *)pOP;
+        m_pODPoint = m_pBoundaryPoint;
     } else {
         m_pODPoint = pOP;
     }
@@ -370,7 +375,12 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
+            m_checkBoxFill->Enable( false );
+        } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
+            m_checkBoxFill->Enable( true );
+            m_checkBoxFill->SetValue( m_pBoundaryPoint->m_bFill );
         }
+        
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );
         m_checkBoxVisible->SetValue( m_pODPoint->m_bIsVisible );
         m_textCtrlGuid->SetValue( m_pODPoint->m_GUID );
