@@ -16,7 +16,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0350")
+SET(VERSION_PATCH "0355")
 SET(VERSION_DATE "07/07/2015")
 
 SET(BUNDLE_DATA FALSE)
@@ -125,6 +125,7 @@ SET(OCPNHDRS
         ocpninclude/bbox.h
         ocpninclude/canvasMenu.h
         ocpninclude/chart1.h
+        ocpninclude/chartbarwin.h
         ocpninclude/chartbase.h
         ocpninclude/chartdbs.h
         ocpninclude/chcanv.h
@@ -185,7 +186,6 @@ SET(OCPNHDRS
         ocpninclude/scrollingdialog.h
         ocpninclude/SelectItem.h
         ocpninclude/Sentence.hpp
-        ocpninclude/statwin.h
         ocpninclude/styles.h
         ocpninclude/TexFont.h
         ocpninclude/timers.h
