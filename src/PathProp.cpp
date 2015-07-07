@@ -71,8 +71,6 @@ extern PlugInManager      *g_OD_pi_manager;
 extern bool                g_bShowMag;
 extern wxString    m_ActiveLineColour;
 extern wxString    m_InActiveLineColour;
-extern wxString    m_ActiveFillColour;
-extern wxString    m_InActiveLineColour;
 
 extern PlugIn_ViewPort  *g_pivp;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
@@ -504,7 +502,7 @@ void PathProp::OnPathPropMenuSelected( wxCommandEvent& event )
             wxString sCaption( wxS("OCPN Draw Remove ") );
             wxString sType( wxS("") );
             if (!op || op->GetTypeString().IsNull() || op->GetTypeString().IsEmpty() )
-                sType.append( wxS("Point") );
+                sType.append( wxS("Boundary Point") );
             else
                 sType.append( op->GetTypeString() );
             sMessage.append( sType );
@@ -1201,6 +1199,7 @@ bool PathProp::SaveChanges( void )
         if( m_chLineColor->GetSelection() == 0 ) m_pPath->m_ActiveFillColour = wxEmptyString;
         else
             m_pPath->m_ActiveFillColour = ::GpxxColorNames[m_chLineColor->GetSelection() - 1];
+        m_pPath->SetActiveColours();
         m_pPath->m_style = ::StyleValues[m_chStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_chWidth->GetSelection()];
 

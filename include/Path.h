@@ -89,6 +89,7 @@ public:
     void ClearHighlights(void);
     void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
+    virtual void SetActiveColours( void );
 
     bool CrossesIDL(){ return m_bcrosses_idl; }
     void SetVisible(bool visible = true, bool includeWpts = true);
@@ -156,7 +157,6 @@ protected:
     double      m_ArrivalRadius;
     bool        m_bcrosses_idl;
     wxColour    m_col;
-    wxColour    m_fillcol;
     
 private:
 

@@ -62,7 +62,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	
 	bSizer12->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
@@ -104,13 +104,14 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizer12->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizer18;
-	bSizer18 = new wxBoxSizer( wxVERTICAL );
+	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_panelBasicProperties, wxID_ANY, wxT("Show Point Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	bSizer18->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0 );
 	
-	
-	bSizer18->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_checkBoxFill = new wxCheckBox( m_panelBasicProperties, wxID_ANY, wxT("Fill Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxFill->SetValue(true); 
+	bSizer18->Add( m_checkBoxFill, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	bSizer12->Add( bSizer18, 0, wxEXPAND, 2 );

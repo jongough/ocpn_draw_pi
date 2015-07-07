@@ -23,6 +23,7 @@
 
 #include "Boundary.h"
 #include "ocpndc.h"
+#include "ocpn_draw_pi.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( BoundaryList );
@@ -42,6 +43,7 @@ Boundary::Boundary() : Path()
     m_ActiveFillColour = g_ActiveBoundaryFillColour;
     m_InActiveLineColour = g_InActiveBoundaryLineColour;
     m_InActiveFillColour = g_InActiveBoundaryFillColour;
+    SetActiveColours();
     
 }
 
@@ -94,15 +96,15 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     glPolygonStipple( slope_cross_hatch );
     glBegin(GL_POLYGON_STIPPLE);
     if ( m_bVisible ) {
-        //dc.SetPen(*wxTRANSPARENT_PEN);
+        //dc.SetPen(*wxTRANSPARENT_PEN); 
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxBDIAGONAL_HATCH ) );
-        if ( m_pODPointList->GetCount() > 1 )
+        if ( m_pODPointList->GetCount() > 2 )
             dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
     }
     glEnd();
     glDisable (GL_POLYGON_STIPPLE);
 
-    #endif
+#endif
 }
 
 void Boundary::DeletePoint( ODPoint *op, bool bRenamePoints )
@@ -118,3 +120,27 @@ void Boundary::DeletePoint( ODPoint *op, bool bRenamePoints )
     Path::DeletePoint( op, bRenamePoints );
 }
 
+void Boundary::SetActiveColours( void )
+{
+    wxString fillcolour;
+    
+    Path::SetActiveColours();
+    
+    if( m_bVisible && m_bPathIsActive ) {
+        fillcolour = m_ActiveFillColour;
+    }
+    else {
+        fillcolour = m_InActiveFillColour;
+    }
+    if( fillcolour.IsNull() ) {
+        fillcolour = m_ActiveFillColour;
+    }
+    
+    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
+        if( fillcolour == ::GpxxColorNames[i] ) {
+            m_fillcol = ::GpxxColors[i];
+            break;
+        }
+    }
+    
+}

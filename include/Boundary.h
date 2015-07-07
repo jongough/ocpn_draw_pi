@@ -35,10 +35,13 @@ class Boundary : public Path
         void Draw( ocpnDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void DeletePoint( ODPoint *op, bool bRenamePoints );
+        void SetActiveColours( void );
         
         int     m_itest;
     
     protected:
+        wxColour    m_fillcol;
+        
     private:
 };
 

@@ -96,7 +96,8 @@ Path::Path( void )
     m_ActiveFillColour = g_ActivePathFillColour;
     m_InActiveLineColour = g_InActivePathLineColour;
     m_InActiveFillColour = g_InActivePathFillColour;
-
+    SetActiveColours();
+    
     m_lastMousePointIndex = 0;
     m_NextLegGreatCircle = false;
     
@@ -198,77 +199,26 @@ void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
     wxColour col;
     wxString colour;
 
-    if( m_bVisible && m_bPathIsActive ) {
-        colour = m_ActiveLineColour;
-    }
-    else if ( m_bVisible && !m_bPathIsActive) {
-        colour = m_InActiveLineColour;
-    }
-
-    if( colour.IsNull() ) {
-        colour = m_ActiveLineColour;
-    } 
-
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( colour == ::GpxxColorNames[i] ) {
-            col = ::GpxxColors[i];
-            break;
-        }
-    }
-    dc.SetPen( *wxThePenList->FindOrCreatePen( col, g_path_line_width, m_style ) );
+    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, g_path_line_width, m_style ) );
 
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }
 
 void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
 {
-    wxString colour, fillcolour;
+    wxString colour;
     int style = wxSOLID;
     int width = g_path_line_width;
 
 
     if( m_nPoints == 0 ) return;
 
-    if( m_bVisible && m_bPathIsActive ) {
-        colour = m_ActiveLineColour;
-        fillcolour = m_ActiveFillColour;
-    }
-    else {
-        colour = m_InActiveLineColour;
-        fillcolour = m_InActiveFillColour;
-        
-    }
-
-    if( colour.IsNull() ) {
-        colour = m_ActiveLineColour;
-    }
-    
-    if( m_bVisible && m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
-        colour = m_InActiveLineColour;
-    
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( colour == ::GpxxColorNames[i] ) {
-            m_col = ::GpxxColors[i];
-            break;
-        }
-    }
-
-    if( fillcolour.IsNull() ) {
-        fillcolour = m_ActiveFillColour;
-    }
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( fillcolour == ::GpxxColorNames[i] ) {
-            m_fillcol = ::GpxxColors[i];
-            break;
-        }
-    }
 
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     if( m_width != STYLE_UNDEFINED ) width = m_width;
 
     if ( m_bVisible ) {
         dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
     }
 
     wxPoint ppt1, ppt2;
@@ -399,45 +349,10 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     /* determine color and width */
     int width = m_width;
     
-    wxString colour, fillcolour;
     
-    if( m_bVisible && m_bPathIsActive ) {
-        colour = m_ActiveLineColour;
-        fillcolour = m_ActiveFillColour;
-    }
-    else {
-        colour = m_InActiveLineColour;
-        fillcolour = m_InActiveFillColour;
-        
-    }
-
-    if( colour.IsNull() ) {
-        colour = m_ActiveLineColour;
-    }
-    if( m_bVisible && m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
-        colour = m_InActiveLineColour;
-
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( colour == ::GpxxColorNames[i] ) {
-            m_col = ::GpxxColors[i];
-            break;
-        }
-    }
-
-    if( fillcolour.IsNull() ) {
-        m_fillcol = m_ActiveFillColour;
-    }
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( fillcolour == ::GpxxColorNames[i] ) {
-            m_fillcol = ::GpxxColors[i];
-            break;
-        }
-    }
-   
     int style = wxSOLID;
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
 
     glColor3ub(m_col.Red(), m_col.Green(), m_col.Blue());
     glLineWidth( wxMax( g_ODGLMinSymbolLineWidth, width ) );
@@ -739,7 +654,7 @@ void Path::RemovePoint( ODPoint *op, bool bRenamePoints )
         op->m_bIsInPath = false;          // Take this point out of this (and only) route
         op->m_bDynamicName = false;
         op->m_bIsolatedMark = true;        // This has become an isolated mark
-        op->SetTypeString (wxT("Point") );
+        op->SetTypeString (wxT("Boundary Point") );
         g_pODConfig->AddNewODPoint( op );
     }
 
@@ -887,7 +802,7 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
         while( node ) {
 
             ODPoint *pOp2 = node->GetData();
-            bool blink_save = pOp2->m_iBlink;
+            int blink_save = pOp2->m_iBlink;
             pOp2->m_iBlink = false;
             ocpnDC odc_boundary( dc_boundary );
             pOp2->Draw( odc_boundary, NULL );
@@ -1161,4 +1076,30 @@ void Path::RemovePointFromPath( ODPoint* point, Path* path )
         g_pPathPropDialog->SetPathAndUpdate( path, true );
     }
 
+}
+
+void Path::SetActiveColours( void )
+{
+    wxString colour;
+    
+    if( m_bVisible && m_bPathIsActive ) {
+        colour = m_ActiveLineColour;
+    }
+    else {
+        colour = m_InActiveLineColour;
+    }
+    
+    if( colour.IsNull() ) {
+        colour = m_ActiveLineColour;
+    }
+    
+    if( m_bVisible && m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
+        colour = m_InActiveLineColour;
+    
+    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
+        if( colour == ::GpxxColorNames[i] ) {
+            m_col = ::GpxxColors[i];
+            break;
+        }
+    }
 }

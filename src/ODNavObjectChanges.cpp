@@ -30,6 +30,7 @@
 #include "PointMan.h"
 #include "PathMan.h"
 #include "ODPoint.h"
+#include "BoundaryPoint.h"
 #include "TextPoint.h"
 #include "Boundary.h"
 #include "ODUtils.h"
@@ -93,10 +94,13 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     pugi::xml_node child;
     pugi::xml_attribute attr;
     TextPoint *tp;
+    BoundaryPoint *bp;
     ODPoint *pp;
     
     if(pop->m_sTypeString == wxT("Text Point")) 
         tp = (TextPoint *)pop;
+    else if(pop->m_sTypeString == wxT("Boundary Point"))
+        bp = (BoundaryPoint *)pop;
     pp = pop;
     
     s.Printf(_T("%.9f"), pp->m_lat);
@@ -153,6 +157,14 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             s.Printf(_T("%i"), tp->m_iBackgroundTransparency );
             child.append_child(pugi::node_pcdata).set_value( s.mb_str() );
         }
+    }
+    
+    if(pp->m_sTypeString == wxT("Boundary Point")) {
+        child = node.append_child("opencpn:fill");
+        if(bp->m_bFill)
+            child.append_child(pugi::node_pcdata).set_value( "1" );
+        else
+            child.append_child(pugi::node_pcdata).set_value( "0" );
     }
     
     // Hyperlinks
@@ -569,6 +581,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxDateTime dt;
     ODPoint *pOP = NULL;
     TextPoint *pTP = NULL;
+    BoundaryPoint *pBP = NULL;
     
     HyperlinkList *linklist = NULL;
 
@@ -584,6 +597,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourTextColour = g_colourDefaultTextColour;
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
+    bool    l_bFill = false;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
@@ -698,6 +712,11 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                 else if ( wxString::FromUTF8(attr.name()) == _T("colour") )
                     l_wxcODPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
             }
+        } else if ( !strcmp( pcn, "opencpn:fill" ) ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                l_bFill = ( v != 0 );
         }
     }   // for
 
@@ -714,9 +733,13 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         if( TypeString == wxT("Text Point") ) {
             pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
             pOP = pTP;
+        } else if( TypeString == wxT("Boundary Point") ) {
+            pBP = new BoundaryPoint( rlat, rlon, SymString, NameString, GuidString, false );
+            pOP = pBP;
         }
         else
             pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
+            
         m_ptODPointList->Append( pOP ); 
         if( TypeString == "Text Point" ) {
             pTP->SetPointText( TextString );
@@ -724,7 +747,9 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_colourTextColour = l_colourTextColour;
             pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
-        }
+        } else if ( TypeString == "Boundary Point" )
+            pBP -> m_bFill = l_bFill;
+        
         pOP->SetMarkDescription( DescString );
         pOP->m_sTypeString = TypeString;
         pOP->SetODPointArrivalRadius( ArrivalRadius );

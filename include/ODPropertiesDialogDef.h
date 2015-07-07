@@ -55,7 +55,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextInitialEdgePan;
 		wxSlider* m_sliderInitialEdgePan;
 		wxStaticText* m_staticTextToolbar;
-		wxPanel* m_panelPoint;
+		wxPanel* m_panelBoundaryPoint;
 		wxStaticText* m_staticText14;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_SizerNameIcon;
@@ -64,6 +64,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticBitmap* m_bitmapPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
+		wxCheckBox* m_checkBoxFill;
 		wxStaticText* m_staticTextRangeRingNumber;
 		wxChoice* m_choiceODPointRangeRingNumber;
 		wxStaticText* m_staticTextRangeRingSteps;
