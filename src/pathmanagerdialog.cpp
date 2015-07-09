@@ -47,7 +47,6 @@
 //#include "navutil.h"
 #include "ODConfig.h"
 #include "Path.h"
-#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "Boundary.h"

@@ -32,7 +32,6 @@
 #include "ODSelect.h"
 #include "PointMan.h"
 #include "PathMan.h"
-#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "ODConfig.h"
 #include "ocpn_draw_pi.h"

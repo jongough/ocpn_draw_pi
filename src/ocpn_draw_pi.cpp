@@ -37,7 +37,6 @@
 #include "Boundary.h"
 #include "BoundaryPoint.h"
 #include "BoundaryProp.h"
-#include "PathProp.h"
 #include "Path.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"

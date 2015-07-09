@@ -49,7 +49,6 @@ SET(SRCS
         src/ODSelect.cpp
         src/PathMan.cpp
         src/pathmanagerdialog.cpp
-#        src/PathProp.cpp
         src/Path.cpp
         src/ODPoint.cpp
         src/ODConfig.cpp
@@ -82,7 +81,6 @@ SET(HDRS
         include/ODSelect.h
         include/PathMan.h
         include/pathmanagerdialog.h
-#        include/PathProp.h
         include/Path.h
         include/ODPoint.h
         include/ODConfig.h

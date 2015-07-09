@@ -37,7 +37,6 @@
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "PathMan.h"
-#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "ODPositionParser.h"
