@@ -30,10 +30,12 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "PathProp.h"
+//#include "PathProp.h"
+#include "ODPathPropertiesDialogImpl.h"
 
 
-class BoundaryProp : public PathProp
+//class BoundaryProp : public PathProp
+class BoundaryProp : public ODPathPropertiesDialogImpl
 {
     public:
         BoundaryProp();

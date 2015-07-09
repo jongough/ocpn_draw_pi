@@ -37,6 +37,7 @@
 #include "Boundary.h"
 #include "BoundaryPoint.h"
 #include "BoundaryProp.h"
+#include "PathProp.h"
 #include "Path.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
@@ -107,7 +108,7 @@ wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 wxString                g_default_ODPoint_icon;
-PathProp                *g_pPathPropDialog;
+ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
@@ -124,12 +125,20 @@ wxString    g_ActiveBoundaryLineColour;
 wxString    g_InActiveBoundaryLineColour;
 wxString    g_ActiveBoundaryFillColour;
 wxString    g_InActiveBoundaryFillColour;
+wxColour    g_colourActiveBoundaryLineColour;
+wxColour    g_colourInActiveBoundaryLineColour;
+wxColour    g_colourActiveBoundaryFillColour;
+wxColour    g_colourInActiveBoundaryFillColour;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
 wxString    g_ActivePathLineColour;
 wxString    g_InActivePathLineColour;
 wxString    g_ActivePathFillColour;
 wxString    g_InActivePathFillColour;
+wxColour    g_colourActivePathLineColour;
+wxColour    g_colourInActivePathLineColour;
+wxColour    g_colourActivePathFillColour;
+wxColour    g_colourInActivePathFillColour;
 int         g_PathLineWidth; 
 int         g_PathLineStyle;
 wxString    g_PrivateDataDir;
@@ -655,10 +664,12 @@ void ocpn_draw_pi::SaveConfig()
     if(pConf)
     {
         pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
-        pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_ActiveBoundaryLineColour );
-        pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_InActiveBoundaryLineColour );
-        pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_ActiveBoundaryFillColour );
-        pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_InActiveBoundaryFillColour );
+        pConf->Write( wxS( "DefaultActivePathLineColour" ), g_colourActivePathLineColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_colourInActivePathLineColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_colourInActiveBoundaryLineColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_colourActiveBoundaryFillColour.GetAsString( wxC2S_HTML_SYNTAX ) );
+        pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_HTML_SYNTAX ) );
         pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
         pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
         pConf->Write( wxS( "DefaultActivePathLineColour" ), g_ActivePathLineColour );
@@ -707,12 +718,21 @@ void ocpn_draw_pi::LoadConfig()
     {
         wxString val;
         pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
-        pConf->Read( wxS( "DefaultActiveBoundaryLineColour" ), &g_ActiveBoundaryLineColour, wxS("Red") );
-        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &g_InActiveBoundaryLineColour, wxS("LightGray") );
-        pConf->Read( wxS( "DefaultActiveBoundaryFillColour" ), &g_ActiveBoundaryFillColour, wxS("Red") );
-        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &g_InActiveBoundaryFillColour, wxS("LightGray") );
+        wxString  l_wxsColour;
+        pConf->Read( wxS( "DefaultActivePathLineColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourActivePathLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultInActivePathLineColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        g_colourInActivePathLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultActiveBoundaryLineColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourActiveBoundaryLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        g_colourInActiveBoundaryLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultActiveBoundaryFillColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourActiveBoundaryFillColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        g_colourInActiveBoundaryFillColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
-        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, 100 );
+        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxSOLID );
         pConf->Read( wxS( "DefaultActivePathLineColour" ), &g_ActivePathLineColour, wxS("Red") );
         pConf->Read( wxS( "DefaultInActivePathLineColour" ), &g_InActivePathLineColour, wxS("LightGray") );
         pConf->Read( wxS( "DefaultActivePathFillColour" ), &g_ActivePathFillColour, wxS("Red") );
@@ -986,12 +1006,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             
             //    Update the PathProperties Dialog, if currently shown
-            if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) {
+            if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) {
                 if( m_pSelectedPath->m_pODPointList ) {
                     for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
                         Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
-                            g_pPathPropDialog->SetPathAndUpdate( pp, true );
+                            g_pODPathPropDialog->SetPathAndUpdate( pp, true );
                         }
                     }
                 }
@@ -1047,7 +1067,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedPath->SetHiLite( 0 );
                     
                     //    Update the PathProperties Dialog, if currently shown
-                    if( ( NULL != g_pPathPropDialog ) && ( g_pPathPropDialog->IsShown() ) ) g_pPathPropDialog->UpdateProperties( m_pSelectedPath );
+                    if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
                     if( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
                     bRefresh = TRUE;
@@ -1543,8 +1563,8 @@ void ocpn_draw_pi::FinishBoundary( void )
         }
         
         
-        if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
-            g_pPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
+        if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown() ) ) {
+            g_pODPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
         }
         
         if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )

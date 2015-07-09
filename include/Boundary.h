@@ -37,8 +37,9 @@ class Boundary : public Path
         void DeletePoint( ODPoint *op, bool bRenamePoints );
         void SetActiveColours( void );
         
-        int     m_itest;
-    
+        wxColour    m_wxcActiveFillColour;
+        wxColour    m_wxcInActiveFillColour;
+        
     protected:
         wxColour    m_fillcol;
         

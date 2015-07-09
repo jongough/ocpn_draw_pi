@@ -34,8 +34,10 @@ BoundaryProp::BoundaryProp()
     //ctor
 }
 
+//BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
+//: PathProp( parent, id, caption, pos, size, style )
 BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
-: PathProp( parent, id, caption, pos, size, style )
+: ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
 }

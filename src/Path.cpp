@@ -33,6 +33,7 @@
 #include "PointMan.h"
 #include "PathMan.h"
 #include "PathProp.h"
+#include "ODPathPropertiesDialogImpl.h"
 #include "ODConfig.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
@@ -49,13 +50,12 @@ extern int g_path_line_width;
 extern ODSelect *g_pODSelect;
 extern ODConfig *g_pODConfig;
 extern float g_ODGLMinSymbolLineWidth;
-extern wxString    g_ActivePathLineColour;
-extern wxString    g_InActivePathLineColour;
-extern wxString    g_ActivePathFillColour;
-extern wxString    g_InActivePathFillColour;
-extern PathProp    *g_pPathPropDialog;
+extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern wxString     g_sODPointIconName;
+extern wxColour    g_colourActivePathLineColour;
+extern wxColour    g_colourInActivePathLineColour;
+
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -92,10 +92,8 @@ Path::Path( void )
     m_LayerID = 0;
     m_bIsInLayer = false;
 
-    m_ActiveLineColour = g_ActivePathLineColour;
-    m_ActiveFillColour = g_ActivePathFillColour;
-    m_InActiveLineColour = g_InActivePathLineColour;
-    m_InActiveFillColour = g_InActivePathFillColour;
+    m_wxcActiveLineColour = g_colourActivePathLineColour;
+    m_wxcInActiveLineColour = g_colourInActivePathLineColour;
     SetActiveColours();
     
     m_lastMousePointIndex = 0;
@@ -1072,8 +1070,8 @@ void Path::RemovePointFromPath( ODPoint* point, Path* path )
     //  Add this point back into the selectables
     g_pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
 
-    if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
-        g_pPathPropDialog->SetPathAndUpdate( path, true );
+    if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown() ) ) {
+        g_pODPathPropDialog->SetPathAndUpdate( path, true );
     }
 
 }
@@ -1082,7 +1080,10 @@ void Path::SetActiveColours( void )
 {
     wxString colour;
     
-    if( m_bVisible && m_bPathIsActive ) {
+    if( m_bVisible && m_bPathIsActive ) m_col = m_wxcActiveLineColour;
+    else m_col = m_wxcInActiveLineColour;
+
+/*    if( m_bVisible && m_bPathIsActive ) {
         colour = m_ActiveLineColour;
     }
     else {
@@ -1102,4 +1103,5 @@ void Path::SetActiveColours( void )
             break;
         }
     }
+*/    
 }

@@ -140,6 +140,8 @@ public:
     wxString    m_ActiveFillColour;
     wxString    m_InActiveLineColour;
     wxString    m_InActiveFillColour;
+    wxColour    m_wxcActiveLineColour;
+    wxColour    m_wxcInActiveLineColour;
     bool        m_btemp;
     int         m_hiliteWidth;
     wxPoint     *m_bpts;

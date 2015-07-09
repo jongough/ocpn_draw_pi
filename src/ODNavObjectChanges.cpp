@@ -264,8 +264,17 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     return true;
 }
 
-bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pPath )
+bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
 {
+    Path *pPath;
+    Boundary * pBoundary = NULL;
+    if(pInPath->m_sTypeString == wxT("Boundary")) {
+        pBoundary = (Boundary *)pInPath;
+        pPath = pBoundary;
+    }
+    else
+        pPath = pInPath;
+    
     pugi::xml_node child;
     
     child = node.append_child("opencpn:type");
@@ -328,13 +337,17 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pPath )
     child = node.append_child("opencpn:style");
     
     pugi::xml_attribute activecolour = child.append_attribute("active_colour");
-    activecolour.set_value( pPath->m_ActiveLineColour.ToAscii() );
-    pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
-    activefillcolour.set_value( pPath->m_ActiveFillColour.ToAscii() );
+    activecolour.set_value( pPath->m_wxcActiveLineColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+    if(pBoundary) {
+        pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
+        activefillcolour.set_value( pBoundary->m_wxcActiveFillColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+    }
     pugi::xml_attribute inactivecolour = child.append_attribute("inactive_colour");
-    inactivecolour.set_value( pPath->m_InActiveLineColour.ToAscii() );
-    pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
-    inactivefillcolour.set_value( pPath->m_InActiveFillColour.ToAscii() );
+    inactivecolour.set_value( pPath->m_wxcInActiveLineColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+    if(pBoundary) {
+        pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
+        inactivefillcolour.set_value( pBoundary->m_wxcInActiveFillColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+    }
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
 
@@ -881,13 +894,13 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
                 {
                     if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
-                        pTentPath->m_ActiveLineColour = wxString::FromUTF8( attr.as_string() );
+                        pTentPath->m_wxcActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) )
-                        pTentPath->m_ActiveFillColour = wxString::FromUTF8( attr.as_string() );
+                        pTentBoundary->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
-                        pTentPath->m_InActiveLineColour = wxString::FromUTF8( attr.as_string() );
+                        pTentPath->m_wxcInActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) )
-                        pTentPath->m_InActiveFillColour = wxString::FromUTF8( attr.as_string() );
+                        pTentBoundary->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
                         pTentPath->m_style = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
@@ -932,6 +945,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
         delete pTentPath->m_HyperlinkList;                    // created in RoutePoint ctor
         pTentPath->m_HyperlinkList = linklist;
     }
+    pTentPath->SetActiveColours();
     pTentPath->UpdateSegmentDistances();
     return pTentPath;
 }

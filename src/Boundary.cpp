@@ -28,21 +28,19 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( BoundaryList );
 
-extern wxString    g_ActiveBoundaryLineColour;
-extern wxString    g_InActiveBoundaryLineColour;
-extern wxString    g_ActiveBoundaryFillColour;
-extern wxString    g_InActiveBoundaryFillColour;
+extern wxColour    g_colourActiveBoundaryLineColour;
+extern wxColour    g_colourInActiveBoundaryLineColour;
+extern wxColour    g_colourActiveBoundaryFillColour;
+extern wxColour    g_colourInActiveBoundaryFillColour;
 
 Boundary::Boundary() : Path()
 {
-    //ctor
-    m_itest = 1;
     m_sTypeString = _T("Boundary");
 
-    m_ActiveLineColour = g_ActiveBoundaryLineColour;
-    m_ActiveFillColour = g_ActiveBoundaryFillColour;
-    m_InActiveLineColour = g_InActiveBoundaryLineColour;
-    m_InActiveFillColour = g_InActiveBoundaryFillColour;
+    m_wxcActiveLineColour = g_colourActiveBoundaryLineColour;
+    m_wxcActiveFillColour = g_colourActiveBoundaryFillColour;
+    m_wxcInActiveLineColour = g_colourInActiveBoundaryLineColour;
+    m_wxcInActiveFillColour = g_colourInActiveBoundaryFillColour;
     SetActiveColours();
     
 }
@@ -126,7 +124,10 @@ void Boundary::SetActiveColours( void )
     
     Path::SetActiveColours();
     
-    if( m_bVisible && m_bPathIsActive ) {
+    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
+    else m_fillcol = m_wxcInActiveFillColour;
+        
+/*    if( m_bVisible && m_bPathIsActive ) {
         fillcolour = m_ActiveFillColour;
     }
     else {
@@ -142,5 +143,6 @@ void Boundary::SetActiveColours( void )
             break;
         }
     }
+*/    
     
 }

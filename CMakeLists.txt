@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0355")
-SET(VERSION_DATE "07/07/2015")
+SET(VERSION_PATCH "0375")
+SET(VERSION_DATE "09/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -49,7 +49,7 @@ SET(SRCS
         src/ODSelect.cpp
         src/PathMan.cpp
         src/pathmanagerdialog.cpp
-        src/PathProp.cpp
+#        src/PathProp.cpp
         src/Path.cpp
         src/ODPoint.cpp
         src/ODConfig.cpp
@@ -57,6 +57,8 @@ SET(SRCS
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
         src/ODPropertiesDialogImpl.cpp
+        src/ODPathPropertiesDialogDef.cpp
+        src/ODPathPropertiesDialogImpl.cpp
         src/ODPointPropertiesDialog.cpp
         src/ODPointPropertiesImpl.cpp
         src/ODPositionParser.cpp
@@ -80,7 +82,7 @@ SET(HDRS
         include/ODSelect.h
         include/PathMan.h
         include/pathmanagerdialog.h
-        include/PathProp.h
+#        include/PathProp.h
         include/Path.h
         include/ODPoint.h
         include/ODConfig.h
@@ -88,6 +90,8 @@ SET(HDRS
         include/ODNavObjectChanges.h
         include/ODPropertiesDialogDef.h
         include/ODPropertiesDialogImpl.h
+        include/ODPathPropertiesDialogDef.h
+        include/ODPathPropertiesDialogImpl.h
         include/ODPointPropertiesDialog.h
         include/ODPointPropertiesImpl.h
         include/ODPositionParser.h

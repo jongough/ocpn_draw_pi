@@ -48,6 +48,7 @@
 #include "ODConfig.h"
 #include "Path.h"
 #include "PathProp.h"
+#include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "Boundary.h"
 #include "BoundaryProp.h"
@@ -133,7 +134,7 @@ enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
 extern LayerList    *pLayerList;
-extern PathProp     *g_pPathPropDialog;
+extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
@@ -921,7 +922,7 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
         m_lastPathItem = -1;
         UpdatePathListCtrl();
 
-        if( g_pPathPropDialog ) g_pPathPropDialog->Hide();
+        if( g_pODPathPropDialog ) g_pODPathPropDialog->Hide();
         // TODO fix up undo
         //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
@@ -942,59 +943,23 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
     if( !path ) return;
 
     ShowPathPropertiesDialog ( path );
-/*    if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
-        g_pPathPropDialog = new PathProp( GetParent() );
-
-    g_pPathPropDialog->SetPathAndUpdate( path );
-    g_pPathPropDialog->UpdateProperties( path );
-    if( !path->m_bIsInLayer ) {
-        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
-            g_pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
-        else {
-            wxString sTitle( path->m_sTypeString );
-            sTitle.append( wxS(" Properties") );
-            g_pPathPropDialog->SetDialogTitle( sTitle );
-        }
-    }
-    else {
-        wxString caption("");
-        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() ) {
-            caption.append( wxS("Path Properties, Layer: ") );
-        }
-        else {
-            caption.append( path->m_sTypeString );
-            caption.append( wxS(" Properties, Layer:") );
-        }
-        caption.append( GetLayerName( path->m_LayerID ) );
-        g_pPathPropDialog->SetDialogTitle( caption );
-        
-    }
-
-    if( !g_pPathPropDialog->IsShown() )
-        g_pPathPropDialog->Show();
-    
-    UpdatePathListCtrl();
-
-    m_bNeedConfigFlush = true;
-*/    
 }
 
 void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
 {
-    if( NULL == g_pPathPropDialog ) {          // There is one global instance of the PathProp Dialog
-        if( path->m_sTypeString == wxS("Path") ) g_pPathPropDialog = new PathProp( GetParent() );
-        else if( path->m_sTypeString == wxS("Boundary") ) g_pPathPropDialog = new BoundaryProp( GetParent() );
+    if( NULL == g_pODPathPropDialog ) {          // There is one global instance of the PathProp Dialog
+        g_pODPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );
     }
 
-    g_pPathPropDialog->SetPathAndUpdate( path );
-    g_pPathPropDialog->UpdateProperties( path );
+    g_pODPathPropDialog->SetPathAndUpdate( path );
+    g_pODPathPropDialog->UpdateProperties( path );
     if( !path->m_bIsInLayer ) {
         if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
-            g_pPathPropDialog->SetDialogTitle( wxS("Path Properties") );
+            g_pODPathPropDialog->SetDialogTitle( wxS("Path Properties") );
         else {
             wxString sTitle( path->m_sTypeString );
             sTitle.append( wxS(" Properties") );
-            g_pPathPropDialog->SetDialogTitle( sTitle );
+            g_pODPathPropDialog->SetDialogTitle( sTitle );
         }
     }
     else {
@@ -1007,12 +972,12 @@ void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
             caption.append( wxS(" Properties, Layer:") );
         }
         caption.append( GetLayerName( path->m_LayerID ) );
-        g_pPathPropDialog->SetDialogTitle( caption );
+        g_pODPathPropDialog->SetDialogTitle( caption );
         
     }
 
-    if( !g_pPathPropDialog->IsShown() )
-        g_pPathPropDialog->Show();
+    if( !g_pODPathPropDialog->IsShown() )
+        g_pODPathPropDialog->Show();
     
     UpdatePathListCtrl();
 
