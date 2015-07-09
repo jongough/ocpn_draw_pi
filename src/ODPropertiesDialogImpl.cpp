@@ -36,12 +36,18 @@ extern wxString     g_ActiveBoundaryLineColour;
 extern wxString     g_InActiveBoundaryLineColour;
 extern wxString     g_ActiveBoundaryFillColour;
 extern wxString     g_InActiveBoundaryFillColour;
+extern wxColour     g_colourActiveBoundaryLineColour;
+extern wxColour     g_colourInActiveBoundaryLineColour;
+extern wxColour     g_colourActiveBoundaryFillColour;
+extern wxColour     g_colourInActiveBoundaryFillColour;
 extern int          g_BoundaryLineWidth; 
 extern int          g_BoundaryLineStyle;
-extern wxString     g_ActivePathLineColour;
-extern wxString     g_InActivePathLineColour;
-extern wxString     g_ActivePathFillColour;
-extern wxString     g_InActivePathFillColour;
+extern wxColour     g_colourActivePathLineColour;
+extern wxColour     g_colourInActivePathLineColour;
+extern wxColour     g_colourActiveBoundaryLineColour;
+extern wxColour     g_colourInActiveBoundaryLineColour;
+extern wxColour     g_colourActiveBoundaryFillColour;
+extern wxColour     g_colourInActiveBoundaryFillColour;
 extern int          g_PathLineWidth; 
 extern int          g_PathLineStyle;
 
@@ -127,52 +133,41 @@ void ODPropertiesDialogImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 
 void ODPropertiesDialogImpl::SaveChanges()
 {
-        if (m_choiceActiveBoundaryLineColour->GetSelection() == 0 ) g_ActiveBoundaryLineColour = wxEmptyString;
-        else g_ActiveBoundaryLineColour = ::GpxxColorNames[m_choiceActiveBoundaryLineColour->GetSelection()];
-        if (m_choiceInActiveBoundaryLineColour->GetSelection() == 0 ) g_InActiveBoundaryLineColour = wxEmptyString;
-        else g_InActiveBoundaryLineColour = ::GpxxColorNames[m_choiceInActiveBoundaryLineColour->GetSelection()];
+    //g_colourActiveBoundaryLineColour = PickerODPointRangeRingColours->GetColour();
+    g_colourActiveBoundaryLineColour = m_colourPickerActiveBoundaryLineColour->GetColour();
+    g_colourActiveBoundaryFillColour = m_colourPickerActiveBoundaryFillColour->GetColour();
+    g_colourInActiveBoundaryLineColour = m_colourPickerInActiveBoundaryLineColour->GetColour();
+    g_colourInActiveBoundaryFillColour = m_colourPickerInActiveBoundaryFillColour->GetColour();
 
-        if (m_choiceActiveBoundaryFillColour->GetSelection() == 0 ) g_ActiveBoundaryFillColour = wxEmptyString;
-        else g_ActiveBoundaryFillColour = ::GpxxColorNames[m_choiceActiveBoundaryFillColour->GetSelection()];
-        if (m_choiceInActiveBoundaryFillColour->GetSelection() == 0 ) g_InActiveBoundaryFillColour = wxEmptyString;
-        else g_InActiveBoundaryFillColour = ::GpxxColorNames[m_choiceInActiveBoundaryFillColour->GetSelection()];
+    g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection() + 1;
+    g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection()];
+    
+    g_colourActivePathLineColour = m_colourPickerActivePathLineColour->GetColour();
+    g_colourInActivePathLineColour = m_colourPickerInActivePathLineColour->GetColour();
 
-        g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection() + 1;
-        g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection()];
-        
-        if (m_choiceActivePathLineColour->GetSelection() == 0 ) g_ActivePathLineColour = wxEmptyString;
-        else g_ActivePathLineColour = ::GpxxColorNames[m_choiceActivePathLineColour->GetSelection()];
-        if (m_choiceInActivePathLineColour->GetSelection() == 0 ) g_InActivePathLineColour = wxEmptyString;
-        else g_InActivePathLineColour = ::GpxxColorNames[m_choiceInActivePathLineColour->GetSelection()];
-
-        if (m_choiceActivePathFillColour->GetSelection() == 0 ) g_ActivePathFillColour = wxEmptyString;
-        else g_ActivePathFillColour = ::GpxxColorNames[m_choiceActivePathFillColour->GetSelection()];
-        if (m_choiceInActivePathFillColour->GetSelection() == 0 ) g_InActivePathFillColour = wxEmptyString;
-        else g_InActivePathFillColour = ::GpxxColorNames[m_choiceInActivePathFillColour->GetSelection()];
-
-        g_PathLineWidth = m_choicePathLineWidth->GetSelection() + 1;
-        g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
-        
-        g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
-        g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
-        g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
-        g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
-        m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
-        g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
-        g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
-        
-        g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
-        g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
-        
-        g_iTextPosition = m_choiceTextPosition->GetSelection();
-        g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
-        g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
-        g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
-        
-        g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
-        g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
-        
-        g_iDisplayToolbar = m_choiceToolbar->GetSelection();
+    g_PathLineWidth = m_choicePathLineWidth->GetSelection() + 1;
+    g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
+    
+    g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
+    g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
+    g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
+    g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
+    m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
+    g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
+    g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
+    
+    g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
+    g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
+    
+    g_iTextPosition = m_choiceTextPosition->GetSelection();
+    g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
+    g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
+    g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
+    
+    g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
+    g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
+    
+    g_iDisplayToolbar = m_choiceToolbar->GetSelection();
 }
 
 void ODPropertiesDialogImpl::SetDialogSize( void )
@@ -246,24 +241,13 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         
         icons = NULL;
 
-        for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-            if( g_ActiveBoundaryLineColour == ::GpxxColorNames[i] )
-                m_choiceActiveBoundaryLineColour->Select( i );
-            if( g_InActiveBoundaryLineColour == ::GpxxColorNames[i] )
-                m_choiceInActiveBoundaryLineColour->Select( i );
-            if( g_ActiveBoundaryFillColour == ::GpxxColorNames[i] )
-                m_choiceActiveBoundaryFillColour->Select( i );
-            if( g_InActiveBoundaryFillColour == ::GpxxColorNames[i] )
-                m_choiceInActiveBoundaryFillColour->Select( i );
-            if( g_ActivePathLineColour == ::GpxxColorNames[i] )
-                m_choiceActivePathLineColour->Select( i );
-            if( g_InActivePathLineColour == ::GpxxColorNames[i] )
-                m_choiceInActivePathLineColour->Select( i );
-            if( g_ActivePathFillColour == ::GpxxColorNames[i] )
-                m_choiceActivePathFillColour->Select( i );
-            if( g_InActivePathFillColour == ::GpxxColorNames[i] )
-                m_choiceInActivePathFillColour->Select( i );
-        }
+        m_colourPickerActiveBoundaryLineColour->SetColour( g_colourActiveBoundaryLineColour );
+        m_colourPickerInActiveBoundaryLineColour->SetColour( g_colourInActiveBoundaryLineColour );
+        m_colourPickerActiveBoundaryFillColour->SetColour( g_colourActiveBoundaryFillColour );
+        m_colourPickerInActiveBoundaryFillColour->SetColour( g_colourInActiveBoundaryFillColour );
+        
+        m_colourPickerActivePathLineColour->SetColour( g_colourActivePathLineColour );
+        m_colourPickerInActivePathLineColour->SetColour( g_colourInActivePathLineColour );
         
         for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
             if( g_BoundaryLineStyle == ::StyleValues[i] )

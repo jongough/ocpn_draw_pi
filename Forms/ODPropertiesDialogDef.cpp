@@ -27,7 +27,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_checkBoxConfirmObjectDelete = new wxCheckBox( m_panelGeneral, wxID_ANY, wxT("Confirm Object Delete"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_checkBoxConfirmObjectDelete->SetValue(true); 
-	fgSizer4->Add( m_checkBoxConfirmObjectDelete, 0, wxALL, 5 );
+	fgSizer4->Add( m_checkBoxConfirmObjectDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxBoxSizer* bSizerFiller1;
 	bSizerFiller1 = new wxBoxSizer( wxVERTICAL );
@@ -81,9 +81,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizerArrivalRadius;
 	bSizerArrivalRadius = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_staticText14 = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, wxT("Arrival Radius"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticText14->Wrap( -1 );
-	bSizerArrivalRadius->Add( m_staticText14, 1, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
+	m_staticTextArrivalRadius = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, wxT("Arrival Radius"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextArrivalRadius->Wrap( -1 );
+	bSizerArrivalRadius->Add( m_staticTextArrivalRadius, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	m_textCtrlODPointArrivalRadius = new wxTextCtrl( m_panelBoundaryPoint, wxID_ANY, wxT("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_textCtrlODPointArrivalRadius->SetMaxLength( 0 ); 
@@ -92,16 +92,10 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	bSizerOCPNPoint->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerShowRangeRings;
-	bSizerShowRangeRings = new wxBoxSizer( wxHORIZONTAL );
-	
-	
-	bSizerOCPNPoint->Add( bSizerShowRangeRings, 0, 0, 5 );
-	
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkBoxShowName = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, wxT("Show Name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER|wxALL|wxEXPAND, 5 );
+	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	
 	m_SizerNameIcon->Add( 0, 0, 1, wxALIGN_CENTER, 5 );
@@ -114,7 +108,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBoundaryPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_RIGHT|wxALL, 5 );
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
@@ -126,7 +120,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerRingsShow->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, wxT("Show Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	fgSizerRingsShow->Add( m_checkBoxShowODPointRangeRings, 0, wxALL, 5 );
+	fgSizerRingsShow->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkBoxFill = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, wxT("Fill Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_checkBoxFill->SetValue(true); 
@@ -149,7 +143,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	int m_choiceODPointRangeRingNumberNChoices = sizeof( m_choiceODPointRangeRingNumberChoices ) / sizeof( wxString );
 	m_choiceODPointRangeRingNumber = new wxChoice( m_panelBoundaryPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceODPointRangeRingNumberNChoices, m_choiceODPointRangeRingNumberChoices, 0 );
 	m_choiceODPointRangeRingNumber->SetSelection( 0 );
-	fgSizerRingsDetail->Add( m_choiceODPointRangeRingNumber, 0, wxALIGN_RIGHT|wxALL, 5 );
+	fgSizerRingsDetail->Add( m_choiceODPointRangeRingNumber, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextRangeRingSteps = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, wxT("Distance Between Range Rings"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextRangeRingSteps->Wrap( -1 );
@@ -157,7 +151,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_textCtrlODPointRangeRingSteps = new wxTextCtrl( m_panelBoundaryPoint, wxID_ANY, wxT("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_textCtrlODPointRangeRingSteps->SetMaxLength( 0 ); 
-	fgSizerRingsDetail->Add( m_textCtrlODPointRangeRingSteps, 0, wxALL|wxALIGN_RIGHT, 5 );
+	fgSizerRingsDetail->Add( m_textCtrlODPointRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextDistanceUnit = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, wxT("Distance Unit"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDistanceUnit->Wrap( -1 );
@@ -167,7 +161,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	int m_choiceODPointDistanceUnitNChoices = sizeof( m_choiceODPointDistanceUnitChoices ) / sizeof( wxString );
 	m_choiceODPointDistanceUnit = new wxChoice( m_panelBoundaryPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceODPointDistanceUnitNChoices, m_choiceODPointDistanceUnitChoices, 0 );
 	m_choiceODPointDistanceUnit->SetSelection( 0 );
-	fgSizerRingsDetail->Add( m_choiceODPointDistanceUnit, 0, wxALL|wxALIGN_RIGHT, 5 );
+	fgSizerRingsDetail->Add( m_choiceODPointDistanceUnit, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextRangeRingColours = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, wxT("Range Ring Colours"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextRangeRingColours->Wrap( -1 );
@@ -214,7 +208,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_colourPickerBackgroundColour = new wxColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizerTextPoint->Add( m_colourPickerBackgroundColour, 0, wxALL, 5 );
 	
-	m_staticTextBackgroundTransparency = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Background Transparency"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundTransparency = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Background Density"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBackgroundTransparency->Wrap( -1 );
 	fgSizerTextPoint->Add( m_staticTextBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
@@ -236,25 +230,19 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextActivePathLineColour->Wrap( -1 );
 	fgSizerPathSettings->Add( m_staticTextActivePathLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceActivePathLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceActivePathLineColourNChoices = sizeof( m_choiceActivePathLineColourChoices ) / sizeof( wxString );
-	m_choiceActivePathLineColour = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceActivePathLineColourNChoices, m_choiceActivePathLineColourChoices, 0 );
-	m_choiceActivePathLineColour->SetSelection( 9 );
-	fgSizerPathSettings->Add( m_choiceActivePathLineColour, 0, wxALL, 5 );
+	m_colourPickerActivePathLineColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerPathSettings->Add( m_colourPickerActivePathLineColour, 0, wxALL, 5 );
 	
 	m_staticTextInactivePathLineColour = new wxStaticText( m_panelPath, wxID_ANY, wxT("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactivePathLineColour->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextInactivePathLineColour, 0, wxALL, 5 );
+	fgSizerPathSettings->Add( m_staticTextInactivePathLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceInActivePathLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceInActivePathLineColourNChoices = sizeof( m_choiceInActivePathLineColourChoices ) / sizeof( wxString );
-	m_choiceInActivePathLineColour = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActivePathLineColourNChoices, m_choiceInActivePathLineColourChoices, 0 );
-	m_choiceInActivePathLineColour->SetSelection( 7 );
-	fgSizerPathSettings->Add( m_choiceInActivePathLineColour, 0, wxALL, 5 );
+	m_colourPickerInActivePathLineColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerPathSettings->Add( m_colourPickerInActivePathLineColour, 0, wxALL, 5 );
 	
 	m_staticTextPathLineWidth = new wxStaticText( m_panelPath, wxID_ANY, wxT("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPathLineWidth->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextPathLineWidth, 0, wxALL, 5 );
+	fgSizerPathSettings->Add( m_staticTextPathLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choicePathLineWidthChoices[] = { wxT("1 Pixel"), wxT("2 Pixels"), wxT("3 Pixels"), wxT("4 Pixels"), wxT("5 Pixels"), wxT("6 Pixels"), wxT("7 Pixels"), wxT("8 Pixels"), wxT("9 Pixels"), wxT("10 Pixels") };
 	int m_choicePathLineWidthNChoices = sizeof( m_choicePathLineWidthChoices ) / sizeof( wxString );
@@ -264,7 +252,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticTextPathLineStyle = new wxStaticText( m_panelPath, wxID_ANY, wxT("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPathLineStyle->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextPathLineStyle, 0, wxALL, 5 );
+	fgSizerPathSettings->Add( m_staticTextPathLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choicePathLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash") };
 	int m_choicePathLineStyleNChoices = sizeof( m_choicePathLineStyleChoices ) / sizeof( wxString );
@@ -274,23 +262,17 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticTextActivePathFillColour = new wxStaticText( m_panelPath, wxID_ANY, wxT("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActivePathFillColour->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextActivePathFillColour, 0, wxALL, 5 );
+	fgSizerPathSettings->Add( m_staticTextActivePathFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceActivePathFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceActivePathFillColourNChoices = sizeof( m_choiceActivePathFillColourChoices ) / sizeof( wxString );
-	m_choiceActivePathFillColour = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceActivePathFillColourNChoices, m_choiceActivePathFillColourChoices, 0 );
-	m_choiceActivePathFillColour->SetSelection( 9 );
-	fgSizerPathSettings->Add( m_choiceActivePathFillColour, 0, wxALL, 5 );
+	m_colourPickerActivePathFillColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerPathSettings->Add( m_colourPickerActivePathFillColour, 0, wxALL, 5 );
 	
 	m_staticTextInactivePathFillColour = new wxStaticText( m_panelPath, wxID_ANY, wxT("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactivePathFillColour->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextInactivePathFillColour, 0, wxALL, 5 );
+	fgSizerPathSettings->Add( m_staticTextInactivePathFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceInActivePathFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceInActivePathFillColourNChoices = sizeof( m_choiceInActivePathFillColourChoices ) / sizeof( wxString );
-	m_choiceInActivePathFillColour = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActivePathFillColourNChoices, m_choiceInActivePathFillColourChoices, 0 );
-	m_choiceInActivePathFillColour->SetSelection( 7 );
-	fgSizerPathSettings->Add( m_choiceInActivePathFillColour, 0, wxALL, 5 );
+	m_colourPickerInActivePathFillColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerPathSettings->Add( m_colourPickerInActivePathFillColour, 0, wxALL, 5 );
 	
 	
 	m_panelPath->SetSizer( fgSizerPathSettings );
@@ -305,27 +287,21 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticTextActiveBoundayLineColour = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Active Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActiveBoundayLineColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextActiveBoundayLineColour, 0, wxALL, 5 );
+	fgSizerBoundarySettings->Add( m_staticTextActiveBoundayLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceActiveBoundaryLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceActiveBoundaryLineColourNChoices = sizeof( m_choiceActiveBoundaryLineColourChoices ) / sizeof( wxString );
-	m_choiceActiveBoundaryLineColour = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceActiveBoundaryLineColourNChoices, m_choiceActiveBoundaryLineColourChoices, 0 );
-	m_choiceActiveBoundaryLineColour->SetSelection( 9 );
-	fgSizerBoundarySettings->Add( m_choiceActiveBoundaryLineColour, 0, wxALL, 5 );
+	m_colourPickerActiveBoundaryLineColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerBoundarySettings->Add( m_colourPickerActiveBoundaryLineColour, 0, wxALL, 5 );
 	
 	m_staticTextInactiveBoundaryLineColour = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveBoundaryLineColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryLineColour, 0, wxALL, 5 );
+	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceInActiveBoundaryLineColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceInActiveBoundaryLineColourNChoices = sizeof( m_choiceInActiveBoundaryLineColourChoices ) / sizeof( wxString );
-	m_choiceInActiveBoundaryLineColour = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActiveBoundaryLineColourNChoices, m_choiceInActiveBoundaryLineColourChoices, 0 );
-	m_choiceInActiveBoundaryLineColour->SetSelection( 7 );
-	fgSizerBoundarySettings->Add( m_choiceInActiveBoundaryLineColour, 0, wxALL, 5 );
+	m_colourPickerInActiveBoundaryLineColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerBoundarySettings->Add( m_colourPickerInActiveBoundaryLineColour, 0, wxALL, 5 );
 	
 	m_staticTextBoundaryLineWidth = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBoundaryLineWidth->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextBoundaryLineWidth, 0, wxALL, 5 );
+	fgSizerBoundarySettings->Add( m_staticTextBoundaryLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choiceBoundaryLineWidthChoices[] = { wxT("1 Pixel"), wxT("2 Pixels"), wxT("3 Pixels"), wxT("4 Pixels"), wxT("5 Pixels"), wxT("6 Pixels"), wxT("7 Pixels"), wxT("8 Pixels"), wxT("9 Pixels"), wxT("10 Pixels") };
 	int m_choiceBoundaryLineWidthNChoices = sizeof( m_choiceBoundaryLineWidthChoices ) / sizeof( wxString );
@@ -335,7 +311,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticTextBoundaryLineStyle = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBoundaryLineStyle->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextBoundaryLineStyle, 0, wxALL, 5 );
+	fgSizerBoundarySettings->Add( m_staticTextBoundaryLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choiceBoundaryLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash") };
 	int m_choiceBoundaryLineStyleNChoices = sizeof( m_choiceBoundaryLineStyleChoices ) / sizeof( wxString );
@@ -345,23 +321,17 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticTextActiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActiveBoundaryFillColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextActiveBoundaryFillColour, 0, wxALL, 5 );
+	fgSizerBoundarySettings->Add( m_staticTextActiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceActiveBoundaryFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceActiveBoundaryFillColourNChoices = sizeof( m_choiceActiveBoundaryFillColourChoices ) / sizeof( wxString );
-	m_choiceActiveBoundaryFillColour = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceActiveBoundaryFillColourNChoices, m_choiceActiveBoundaryFillColourChoices, 0 );
-	m_choiceActiveBoundaryFillColour->SetSelection( 9 );
-	fgSizerBoundarySettings->Add( m_choiceActiveBoundaryFillColour, 0, wxALL, 5 );
+	m_colourPickerActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerBoundarySettings->Add( m_colourPickerActiveBoundaryFillColour, 0, wxALL, 5 );
 	
 	m_staticTextInactiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveBoundaryFillColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryFillColour, 0, wxALL, 5 );
+	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceInActiveBoundaryFillColourChoices[] = { wxT("Black"), wxT("Dark Red"), wxT("Dark Green"), wxT("Dark Yellow"), wxT("Dark Blue"), wxT("Dark Magenta"), wxT("Dark Cyan"), wxT("Light Gray"), wxT("Dark Gray"), wxT("Red"), wxT("Green"), wxT("Yellow"), wxT("Blue"), wxT("Magenta"), wxT("Cyan"), wxT("White") };
-	int m_choiceInActiveBoundaryFillColourNChoices = sizeof( m_choiceInActiveBoundaryFillColourChoices ) / sizeof( wxString );
-	m_choiceInActiveBoundaryFillColour = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceInActiveBoundaryFillColourNChoices, m_choiceInActiveBoundaryFillColourChoices, 0 );
-	m_choiceInActiveBoundaryFillColour->SetSelection( 7 );
-	fgSizerBoundarySettings->Add( m_choiceInActiveBoundaryFillColour, 0, wxALL, 5 );
+	m_colourPickerInActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerBoundarySettings->Add( m_colourPickerInActiveBoundaryFillColour, 0, wxALL, 5 );
 	
 	
 	m_panelBoundary->SetSizer( fgSizerBoundarySettings );

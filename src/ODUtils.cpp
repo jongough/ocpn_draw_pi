@@ -32,6 +32,17 @@
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
 
+/*!
+ * Helper stuff for calculating Path
+ */
+
+#define    pi        (4.*atan(1.0))
+#define    tpi        (2.*pi)
+#define    twopi    (2.*pi)
+#define    degs    (180./pi)
+#define    rads    (pi/180.)
+
+
 // This function parses a string containing a GPX time representation
 // and returns a wxDateTime containing the UTC corresponding to the
 // input. The function return value is a pointer past the last valid
@@ -191,3 +202,39 @@ void MenuAppend( wxMenu *menu, int id, wxString label)
     menu->Append(item);
 }
 
+
+double sign( double x )
+{
+    if( x < 0. ) return -1.;
+    else
+        return 1.;
+}
+
+double FNipart( double x )
+{
+    return ( sign( x ) * (int) ( fabs( x ) ) );
+}
+
+double FNday( int y, int m, int d, int h )
+{
+    long fd = ( 367 * y - 7 * ( y + ( m + 9 ) / 12 ) / 4 + 275 * m / 9 + d );
+    return ( (double) fd - 730531.5 + h / 24. );
+}
+
+double FNrange( double x )
+{
+    double b = x / tpi;
+    double a = tpi * ( b - FNipart( b ) );
+    if( a < 0. ) a = tpi + a;
+    return ( a );
+}
+
+double getLMT( double ut, double lon )
+{
+    double t = ut + lon / 15.;
+    if( t >= 0. ) if( t <= 24. ) return ( t );
+    else
+        return ( t - 24. );
+    else
+        return ( t + 24. );
+}

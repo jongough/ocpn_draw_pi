@@ -34,7 +34,7 @@
 #include "ocpn_plugin.h"
 #include "ODSelect.h"
 #include "PathMan.h"
-#include "PathProp.h"
+#include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "ODRolloverWin.h"
 #include "ODUtils.h"
@@ -49,7 +49,7 @@ extern ODSelect         *g_pODSelect;
 extern ODConfig         *g_pODConfig;
 extern PlugIn_ViewPort *g_pivp;
 extern ChartCanvas     *ocpncc1;
-extern PathProp         *g_pPathPropDialog;
+extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern PathMan          *g_pPathMan;
 
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
@@ -137,7 +137,7 @@ void ODEventHandler::OnODTimer1( wxTimerEvent& event )
     g_ocpn_draw_pi->nBlinkerTick++; 
     if( ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
         ( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) ||
-        ( g_pPathPropDialog && g_pPathPropDialog->IsShown() ) )
+        ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) )
         RequestRefresh( m_parentcanvas );
 }
 
@@ -314,8 +314,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath->RebuildGUIDList();          // ensure the GUID list is intact and good
             g_pODConfig->UpdatePath( m_pSelectedPath );
             
-            if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown() ) ) {
-                g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+            if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown() ) ) {
+                g_pODPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
             }
             
             break;
@@ -333,27 +333,6 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             if( dlg_return == wxID_YES ) {
                 DeletePath();
-/*                if( g_pPathMan->GetpActivePath() == m_pSelectedPath ) g_pPathMan->DeactivatePath( m_pSelectedPath );
-                
-                if( !g_pPathMan->DeletePath( m_pSelectedPath ) )
-                    break;
-                if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown()) && (m_pSelectedPath == g_pPathPropDialog->GetPath()) ) {
-                    g_pPathPropDialog->Hide();
-                }
-                
-                if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-                    g_pPathManagerDialog->UpdatePathListCtrl();
-                
-                if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
-                    g_pODPointPropDialog->ValidateMark();
-                    g_pODPointPropDialog->UpdateProperties();
-                }
-                
-                // TODO implement UNDO
-                //m_parent->undo->InvalidateUndo();
-                RequestRefresh( m_parentcanvas );
-                m_pSelectedPath = NULL;
-*/                
             }
             break;
         }
@@ -455,7 +434,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     DeletePath();
                 else {
                     m_pSelectedPath->DeletePoint( m_pFoundODPoint );
-                    if( g_pPathPropDialog && g_pPathPropDialog->IsShown() ) g_pPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
+                    if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) g_pODPathPropDialog->SetPathAndUpdate( m_pSelectedPath, true );
                 }
             }
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
@@ -636,8 +615,8 @@ void ODEventHandler::DeletePath( void )
     
     if( !g_pPathMan->DeletePath( m_pSelectedPath ) )
         return;
-    if( g_pPathPropDialog && ( g_pPathPropDialog->IsShown()) && (m_pSelectedPath == g_pPathPropDialog->GetPath()) ) {
-        g_pPathPropDialog->Hide();
+    if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown()) && (m_pSelectedPath == g_pODPathPropDialog->GetPath()) ) {
+        g_pODPathPropDialog->Hide();
     }
     
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )

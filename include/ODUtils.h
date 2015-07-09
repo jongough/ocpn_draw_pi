@@ -33,5 +33,9 @@
  int            GetRandomNumber(int range_min, int range_max); 
  void           MenuPrepend( wxMenu *menu, int id, wxString label);
  void           MenuAppend( wxMenu *menu, int id, wxString label);
- 
+ static double  sign( double x );
+ static double  FNipart( double x );
+ static double  FNday( int y, int m, int d, int h );
+ static double  FNrange( double x );
+ static double  getLMT( double ut, double lon );
 #endif

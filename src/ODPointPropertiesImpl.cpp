@@ -37,7 +37,7 @@
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "PathMan.h"
-#include "PathProp.h"
+#include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "ODPositionParser.h"
 #include <wx/clipbrd.h>
@@ -50,7 +50,7 @@ extern PointMan             *g_pODPointMan;
 extern PathMan              *g_pPathMan;
 extern ODConfig             *g_pODConfig;
 extern PathManagerDialog    *g_pPathManagerDialog;
-extern PathProp             *g_pPathPropDialog;
+extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern int                  g_iTextPosition;
 
 
@@ -171,8 +171,8 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
         g_pPathManagerDialog->UpdateODPointsListCtrl();
         
-    if( g_pPathPropDialog && g_pPathPropDialog->IsShown() )
-        g_pPathPropDialog->UpdateProperties();
+    if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() )
+        g_pODPathPropDialog->UpdateProperties();
 
     SetClientSize(m_defaultClientSize);
     

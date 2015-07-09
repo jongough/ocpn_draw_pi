@@ -850,7 +850,7 @@ void ocpnDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, w
 #ifdef ocpnUSE_GL
     else {
 # ifndef ocpnUSE_GLES  // tessalator in glues is broken
-        //if( n < 5 )
+        if( n < 5 )
 # endif
         {
             DrawPolygon( n, points, xoffset, yoffset );
