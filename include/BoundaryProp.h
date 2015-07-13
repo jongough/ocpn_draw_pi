@@ -42,7 +42,14 @@ class BoundaryProp : public ODPathPropertiesDialogImpl
         BoundaryProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
                         const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
         virtual ~BoundaryProp();
+        
+        bool UpdateProperties( Boundary *pInBoundary );
+        
     protected:
+        bool SaveChanges( void );
+        
+        unsigned int    m_uiFillTransparency;
+        
     private:
 };
 

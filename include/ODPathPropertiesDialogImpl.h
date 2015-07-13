@@ -79,7 +79,7 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
 		void OnCancel( wxCommandEvent& event );
         
         void InitializeList( void );
-        bool SaveChanges( void );
+        virtual bool SaveChanges( void );
         void SetPointsListHeadings();
         
         int         m_nSelected; // index of point selected in Properties dialog row
@@ -94,8 +94,8 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
         ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style );
 	//// end generated class members
         void SetPathAndUpdate( Path *pB, bool only_points = false );
-        bool UpdateProperties( Path *pPath );
-        bool UpdateProperties( void );
+        virtual bool UpdateProperties( Path *pPath );
+        virtual bool UpdateProperties( void );
         void SetDialogTitle( const wxString &sTitle );
         Path *GetPath(void) {return m_pPath;}
         

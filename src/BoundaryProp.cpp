@@ -26,7 +26,10 @@
 #include "BoundaryProp.h"
 #include "Boundary.h"
 
-extern BoundaryList       *g_pBoundaryList;
+extern BoundaryList         *g_pBoundaryList;
+extern wxColour             g_colourActivePathFillColour;
+extern wxColour             g_colourInActivePathFillColour;
+extern unsigned int         g_uiFillTransparency;
 
 
 BoundaryProp::BoundaryProp()
@@ -40,6 +43,16 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_staticTextFillColour->Show();
+    m_staticTextFillColour->Enable( true );
+    m_colourPickerFillColour->Show();
+    m_colourPickerFillColour->Enable( true );
+    m_staticTextFillTransparency->Show();
+    m_staticTextFillTransparency->Enable( true );
+    m_sliderFillTransparency->Show();
+    m_sliderFillTransparency->Enable( true );
+    
+    m_uiFillTransparency = g_uiFillTransparency;
 }
 
 
@@ -47,3 +60,25 @@ BoundaryProp::~BoundaryProp()
 {
     //dtor
 }
+
+bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
+{
+    m_colourPickerFillColour->SetColour( m_pBoundary->m_wxcActiveFillColour );
+    m_sliderFillTransparency->SetValue( m_pBoundary->m_uiFillTransparency );
+    
+    ODPathPropertiesDialogImpl::UpdateProperties( pBoundary );
+    
+    return true;
+}
+
+bool BoundaryProp::SaveChanges( void )
+{
+    if( m_pPath && !m_pPath->m_bIsInLayer ) {
+        m_pBoundary->m_wxcActiveFillColour = m_colourPickerFillColour->GetColour();    
+        m_pBoundary->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
+    }
+    ODPathPropertiesDialogImpl::SaveChanges();
+
+    return true;
+}
+

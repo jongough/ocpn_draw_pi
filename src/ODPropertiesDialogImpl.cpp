@@ -50,6 +50,7 @@ extern wxColour     g_colourActiveBoundaryFillColour;
 extern wxColour     g_colourInActiveBoundaryFillColour;
 extern int          g_PathLineWidth; 
 extern int          g_PathLineStyle;
+extern unsigned int g_uiFillTransparency;
 
 extern bool         g_bODPointShowName;
 extern bool         g_bODPointShowRangeRings;
@@ -141,6 +142,7 @@ void ODPropertiesDialogImpl::SaveChanges()
 
     g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection() + 1;
     g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection()];
+    g_uiFillTransparency = m_sliderFillTransparency->GetValue();
     
     g_colourActivePathLineColour = m_colourPickerActivePathLineColour->GetColour();
     g_colourInActivePathLineColour = m_colourPickerInActivePathLineColour->GetColour();
@@ -257,6 +259,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         }
         m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
         m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
+        m_sliderFillTransparency->SetValue( g_uiFillTransparency );
         
         m_choiceTextPosition->SetSelection( g_iTextPosition );
         m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
