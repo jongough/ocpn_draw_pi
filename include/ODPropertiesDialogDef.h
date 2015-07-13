@@ -108,6 +108,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerActiveBoundaryFillColour;
 		wxStaticText* m_staticTextInactiveBoundaryFillColour;
 		wxColourPickerCtrl* m_colourPickerInActiveBoundaryFillColour;
+		wxStaticText* m_staticTextFillTransparency;
+		wxSlider* m_sliderFillTransparency;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;

@@ -66,6 +66,14 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
     int char_size = GetCharWidth();
     m_pPath = NULL;
     SetPointsListHeadings();
+    m_staticTextFillColour->Hide();
+    m_staticTextFillColour->Enable( false );
+    m_colourPickerFillColour->Hide();
+    m_colourPickerFillColour->Enable( false );
+    m_staticTextFillTransparency->Hide();
+    m_staticTextFillTransparency->Enable( false );
+    m_sliderFillTransparency->Hide();
+    m_sliderFillTransparency->Enable( false );
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
@@ -370,11 +378,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
 //    if( pPath->m_ActiveLineColour == wxEmptyString ) m_colourPickerLineColour->SetColour( g_colourActivePathLineColour );
     m_colourPickerLineColour->SetColour( pPath->m_wxcActiveLineColour );
 
-    if(pBoundary) {
-//        if( pBoundary->m_ActiveFillColour == wxEmptyString ) m_colourPickerFillColour->SetColour( g_colourActivePathFillColour );
-        m_colourPickerFillColour->SetColour( pBoundary->m_wxcActiveFillColour );
-    }
-    
     for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
         if( pPath->m_style == ::StyleValues[i] ) {
             m_choiceLineStyle->Select( i );
@@ -485,11 +488,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     //    if( pPath->m_ActiveLineColour == wxEmptyString ) m_colourPickerLineColour->SetColour( g_colourActivePathLineColour );
     m_colourPickerLineColour->SetColour( m_pPath->m_wxcActiveLineColour );
     
-    if(m_pBoundary) {
-        //        if( pBoundary->m_ActiveFillColour == wxEmptyString ) m_colourPickerFillColour->SetColour( g_colourActivePathFillColour );
-        m_colourPickerFillColour->SetColour( m_pBoundary->m_wxcActiveFillColour );
-    }
-    
     for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
         if( m_pPath->m_style == ::StyleValues[i] ) {
             m_choiceLineStyle->Select( i );
@@ -524,15 +522,6 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         m_pPath->m_bPathIsActive = m_checkBoxActive->GetValue();
         
         m_pPath->m_wxcActiveLineColour = m_colourPickerLineColour->GetColour();
-        if(m_pPath->m_sTypeString == wxT("Boundary"))
-            m_pBoundary->m_wxcActiveFillColour = m_colourPickerFillColour->GetColour();
-/*        if( m_colourPickerLineColour->GetSelection() == 0 ) m_pPath->m_ActiveLineColour = wxEmptyString;
-        else
-            m_pPath->m_ActiveLineColour = ::GpxxColorNames[m_chColor->GetSelection() - 1];
-        if( m_chLineColor->GetSelection() == 0 ) m_pPath->m_ActiveFillColour = wxEmptyString;
-        else
-            m_pPath->m_ActiveFillColour = ::GpxxColorNames[m_chLineColor->GetSelection() - 1];
-        */
         m_pPath->SetActiveColours();
         m_pPath->m_style = ::StyleValues[m_choiceLineStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_choiceLineWidth->GetSelection()];

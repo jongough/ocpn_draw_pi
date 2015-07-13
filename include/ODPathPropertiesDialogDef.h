@@ -18,9 +18,10 @@
 #include <wx/settings.h>
 #include <wx/textctrl.h>
 #include <wx/sizer.h>
+#include <wx/checkbox.h>
 #include <wx/clrpicker.h>
 #include <wx/choice.h>
-#include <wx/checkbox.h>
+#include <wx/slider.h>
 #include <wx/listctrl.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
@@ -39,17 +40,19 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlName;
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textCtrlDesctiption;
+		wxCheckBox* m_checkBoxActive;
+		wxStaticText* m_staticTextTotalLength;
+		wxTextCtrl* m_textCtrlTotalLength;
 		wxStaticText* m_staticTextLineColour;
 		wxColourPickerCtrl* m_colourPickerLineColour;
-		wxStaticText* m_staticTextFillColour;
-		wxColourPickerCtrl* m_colourPickerFillColour;
 		wxStaticText* m_staticTextLineStyle;
 		wxChoice* m_choiceLineStyle;
 		wxStaticText* m_staticTextLineWidth;
 		wxChoice* m_choiceLineWidth;
-		wxStaticText* m_staticTextTotalLength;
-		wxTextCtrl* m_textCtrlTotalLength;
-		wxCheckBox* m_checkBoxActive;
+		wxStaticText* m_staticTextFillColour;
+		wxColourPickerCtrl* m_colourPickerFillColour;
+		wxStaticText* m_staticTextFillTransparency;
+		wxSlider* m_sliderFillTransparency;
 		wxStaticText* m_staticTextODPoints;
 		wxListCtrl* m_listCtrlODPoints;
 		wxButton* m_buttonOK;

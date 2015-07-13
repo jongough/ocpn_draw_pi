@@ -41,62 +41,80 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	fgSizer1->Add( bSizerNameDescription, 1, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerColour;
-	bSizerColour = new wxBoxSizer( wxHORIZONTAL );
+	wxFlexGridSizer* fgSizer3;
+	fgSizer3 = new wxFlexGridSizer( 0, 6, 0, 0 );
+	fgSizer3->SetFlexibleDirection( wxBOTH );
+	fgSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_checkBoxActive = new wxCheckBox( this, wxID_ANY, wxT("Active"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxActive->SetValue(true); 
+	fgSizer3->Add( m_checkBoxActive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_staticTextTotalLength = new wxStaticText( this, wxID_ANY, wxT("Total Length"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTotalLength->Wrap( -1 );
+	fgSizer3->Add( m_staticTextTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlTotalLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer3->Add( m_textCtrlTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	
+	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	m_staticTextLineColour = new wxStaticText( this, wxID_ANY, wxT("Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineColour->Wrap( -1 );
-	bSizerColour->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer3->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_colourPickerLineColour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	bSizerColour->Add( m_colourPickerLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	m_staticTextFillColour = new wxStaticText( this, wxID_ANY, wxT("Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextFillColour->Wrap( -1 );
-	bSizerColour->Add( m_staticTextFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	m_colourPickerFillColour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	bSizerColour->Add( m_colourPickerFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer3->Add( m_colourPickerLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_staticTextLineStyle = new wxStaticText( this, wxID_ANY, wxT("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineStyle->Wrap( -1 );
-	bSizerColour->Add( m_staticTextLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer3->Add( m_staticTextLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choiceLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash"), wxEmptyString };
 	int m_choiceLineStyleNChoices = sizeof( m_choiceLineStyleChoices ) / sizeof( wxString );
 	m_choiceLineStyle = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceLineStyleNChoices, m_choiceLineStyleChoices, 0 );
 	m_choiceLineStyle->SetSelection( 0 );
-	bSizerColour->Add( m_choiceLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer3->Add( m_choiceLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_staticTextLineWidth = new wxStaticText( this, wxID_ANY, wxT("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineWidth->Wrap( -1 );
-	bSizerColour->Add( m_staticTextLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer3->Add( m_staticTextLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choiceLineWidthChoices[] = { wxT("1 pixel"), wxT("2 pixels"), wxT("3 pixels"), wxT("4 pixels"), wxT("5 pixels"), wxT("6 pixels"), wxT("7 pixels"), wxT("8 pixels"), wxT("9 pixels"), wxT("10 pixels"), wxEmptyString };
 	int m_choiceLineWidthNChoices = sizeof( m_choiceLineWidthChoices ) / sizeof( wxString );
 	m_choiceLineWidth = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceLineWidthNChoices, m_choiceLineWidthChoices, 0 );
 	m_choiceLineWidth->SetSelection( 1 );
-	bSizerColour->Add( m_choiceLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer3->Add( m_choiceLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxBoxSizer* bSizerExtra;
-	bSizerExtra = new wxBoxSizer( wxHORIZONTAL );
+	m_staticTextFillColour = new wxStaticText( this, wxID_ANY, wxT("Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFillColour->Wrap( -1 );
+	fgSizer3->Add( m_staticTextFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticTextTotalLength = new wxStaticText( this, wxID_ANY, wxT("Total Length"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextTotalLength->Wrap( -1 );
-	bSizerExtra->Add( m_staticTextTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_colourPickerFillColour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer3->Add( m_colourPickerFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlTotalLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerExtra->Add( m_textCtrlTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextFillTransparency = new wxStaticText( this, wxID_ANY, wxT("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFillTransparency->Wrap( -1 );
+	fgSizer3->Add( m_staticTextFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkBoxActive = new wxCheckBox( this, wxID_ANY, wxT("Active"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_checkBoxActive->SetValue(true); 
-	bSizerExtra->Add( m_checkBoxActive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	
-	bSizerColour->Add( bSizerExtra, 1, wxEXPAND, 5 );
+	m_sliderFillTransparency = new wxSlider( this, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizer3->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 	
 	
-	fgSizer1->Add( bSizerColour, 1, wxEXPAND, 5 );
+	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizerFillColour;
+	bSizerFillColour = new wxBoxSizer( wxHORIZONTAL );
+	
+	
+	fgSizer1->Add( bSizerFillColour, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerPathPoints;
 	bSizerPathPoints = new wxBoxSizer( wxVERTICAL );

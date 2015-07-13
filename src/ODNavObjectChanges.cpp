@@ -350,6 +350,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
     }
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
+    if(pBoundary) child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
 
     ODPointList *pODPointList = pPath->m_pODPointList;
     wxODPointListNode *node2 = pODPointList->GetFirst();
@@ -905,6 +906,8 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                         pTentPath->m_style = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
                         pTentPath->m_width = attr.as_int();
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
+                        pTentBoundary->m_uiFillTransparency = attr.as_uint();
                 }
             }
             

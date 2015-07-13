@@ -333,6 +333,13 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_colourPickerInActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizerBoundarySettings->Add( m_colourPickerInActiveBoundaryFillColour, 0, wxALL, 5 );
 	
+	m_staticTextFillTransparency = new wxStaticText( m_panelBoundary, wxID_ANY, wxT("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFillTransparency->Wrap( -1 );
+	fgSizerBoundarySettings->Add( m_staticTextFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderFillTransparency = new wxSlider( m_panelBoundary, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizerBoundarySettings->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
+	
 	
 	m_panelBoundary->SetSizer( fgSizerBoundarySettings );
 	m_panelBoundary->Layout();

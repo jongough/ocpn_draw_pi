@@ -26,12 +26,16 @@
 #include "ocpn_draw_pi.h"
 
 #include <wx/listimpl.cpp>
+#include <wx/graphics.h>
+
 WX_DEFINE_LIST ( BoundaryList );
 
 extern wxColour    g_colourActiveBoundaryLineColour;
 extern wxColour    g_colourInActiveBoundaryLineColour;
 extern wxColour    g_colourActiveBoundaryFillColour;
 extern wxColour    g_colourInActiveBoundaryFillColour;
+extern ocpn_draw_pi *g_ocpn_draw_pi;
+extern unsigned int g_uiFillTransparency;
 
 Boundary::Boundary() : Path()
 {
@@ -41,6 +45,7 @@ Boundary::Boundary() : Path()
     m_wxcActiveFillColour = g_colourActiveBoundaryFillColour;
     m_wxcInActiveLineColour = g_colourInActiveBoundaryLineColour;
     m_wxcInActiveFillColour = g_colourInActiveBoundaryFillColour;
+    m_uiFillTransparency = g_uiFillTransparency;
     SetActiveColours();
     
 }
@@ -56,9 +61,31 @@ void Boundary::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
     
     // fill boundary with hatching
     if ( m_bVisible ) {
-        dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
-        dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0);
+        wxGraphicsContext *wxGC = NULL;
+        wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
+        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        else {
+            wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
+            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+        }
+        
+        wxGC->SetPen(*wxTRANSPARENT_PEN);
+        wxColour tCol;
+        tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+        wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
+        wxGraphicsPath path = wxGC->CreatePath();
+        path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
+        for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
+        {
+            path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
+        }
+        path.CloseSubpath();
+        wxGC->StrokePath(path);
+        wxGC->FillPath( path );
+        delete wxGC;
+        //dc.SetPen(*wxTRANSPARENT_PEN);
+        //dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
+        //dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0);
     }
 
 }
@@ -71,6 +98,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     ocpnDC dc;
     
     glEnable( GL_POLYGON_STIPPLE );
+    glEnable( GL_BLEND );
     GLubyte slope_cross_hatch[] = {
         0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
         0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
@@ -95,11 +123,14 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     glBegin(GL_POLYGON_STIPPLE);
     if ( m_bVisible ) {
         //dc.SetPen(*wxTRANSPARENT_PEN); 
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxBDIAGONAL_HATCH ) );
+        wxColour tCol;
+        tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBDIAGONAL_HATCH ) );
         if ( m_pODPointList->GetCount() > 2 )
             dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
     }
     glEnd();
+    glDisable( GL_BLEND );
     glDisable (GL_POLYGON_STIPPLE);
 
 #endif

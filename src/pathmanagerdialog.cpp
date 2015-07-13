@@ -134,6 +134,7 @@ extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
 extern LayerList    *pLayerList;
 extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
+extern BoundaryProp *g_pBoundaryPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
@@ -944,33 +945,46 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
     ShowPathPropertiesDialog ( path );
 }
 
-void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
+void PathManagerDialog::ShowPathPropertiesDialog ( Path *inpath )
 {
-    if( NULL == g_pODPathPropDialog ) {          // There is one global instance of the PathProp Dialog
-        g_pODPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );
+    Path *l_pPath = NULL;;
+    Boundary *l_pBoundary = NULL;
+    if(inpath->m_sTypeString == wxT( "Boundary") ) {
+        if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the PathProp Dialog
+            g_pBoundaryPropDialog = new BoundaryProp( GetParent() );
+        g_pODPathPropDialog = g_pBoundaryPropDialog;
+        l_pBoundary = (Boundary *) inpath;
+        l_pPath = l_pBoundary;
+        g_pBoundaryPropDialog->SetPathAndUpdate( l_pBoundary );
+        g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
+    }
+    else {
+        if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
+            g_pODPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );
+        l_pPath = inpath;
+        g_pODPathPropDialog->SetPathAndUpdate( l_pPath );
+        g_pODPathPropDialog->UpdateProperties( l_pPath );
     }
 
-    g_pODPathPropDialog->SetPathAndUpdate( path );
-    g_pODPathPropDialog->UpdateProperties( path );
-    if( !path->m_bIsInLayer ) {
-        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() )
+    if( !l_pPath->m_bIsInLayer ) {
+        if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() )
             g_pODPathPropDialog->SetDialogTitle( wxS("Path Properties") );
         else {
-            wxString sTitle( path->m_sTypeString );
+            wxString sTitle( l_pPath->m_sTypeString );
             sTitle.append( wxS(" Properties") );
             g_pODPathPropDialog->SetDialogTitle( sTitle );
         }
     }
     else {
         wxString caption( wxS("") );
-        if ( path->m_sTypeString.IsNull() || path->m_sTypeString.IsEmpty() ) {
+        if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() ) {
             caption.append( wxS("Path Properties, Layer: ") );
         }
         else {
-            caption.append( path->m_sTypeString );
+            caption.append( l_pPath->m_sTypeString );
             caption.append( wxS(" Properties, Layer:") );
         }
-        caption.append( GetLayerName( path->m_LayerID ) );
+        caption.append( GetLayerName( l_pPath->m_LayerID ) );
         g_pODPathPropDialog->SetDialogTitle( caption );
         
     }
@@ -982,6 +996,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( Path *path )
 
     m_bNeedConfigFlush = true;
 }
+
 void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
 {
 //      if (ocpncc1->m_bFollow)
@@ -2072,7 +2087,7 @@ void PathManagerDialog::DeSelectPaths( void )
     {
         selected_item = m_pPathListCtrl->GetNextItem( selected_item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
         if( selected_item == -1 ) break;
-        Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( selected_item ) )->GetData();
+        //Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( selected_item ) )->GetData();
         m_pPathListCtrl->SetItemState( selected_item, 0, wxLIST_STATE_SELECTED );
     }
     Show( false );
@@ -2086,7 +2101,7 @@ void PathManagerDialog::DeSelectODPoints( void )
     {
         selected_item = m_pODPointListCtrl->GetNextItem( selected_item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
         if( selected_item == -1 ) break;
-        ODPoint *point = (ODPoint *)m_pODPointListCtrl->GetItemData( selected_item );
+        //ODPoint *point = (ODPoint *)m_pODPointListCtrl->GetItemData( selected_item );
         m_pODPointListCtrl->SetItemState( selected_item, 0, wxLIST_STATE_SELECTED );
     }
     Show( false );

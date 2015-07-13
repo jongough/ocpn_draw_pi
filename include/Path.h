@@ -136,10 +136,6 @@ public:
     ODPointList     *m_pODPointList;
 
     wxRect      active_pt_rect;
-    wxString    m_ActiveLineColour;
-    wxString    m_ActiveFillColour;
-    wxString    m_InActiveLineColour;
-    wxString    m_InActiveFillColour;
     wxColour    m_wxcActiveLineColour;
     wxColour    m_wxcInActiveLineColour;
     bool        m_btemp;
