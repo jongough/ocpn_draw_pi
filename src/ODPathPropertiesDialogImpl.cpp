@@ -260,7 +260,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     Path *pPath;
     Boundary *pBoundary = NULL;
     
-    if( NULL == pPath ) return false;
+    if( NULL == pInPath ) return false;
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
