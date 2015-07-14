@@ -109,6 +109,7 @@ bool PathMan::ActivatePath(Path *pPathToActivate )
     SendPluginMessage( msg_id, msg );
 
     pPathToActivate->m_bPathIsActive = true;
+    pPathToActivate->SetActiveColours();
 
     return true;
 }
@@ -124,6 +125,7 @@ bool PathMan::DeactivatePath( Path *pPathToDeactivate )
     SendPluginMessage( msg_id, msg );
 
     pPathToDeactivate->m_bPathIsActive = false;
+    pPathToDeactivate->SetActiveColours();
 //    console->pCDI->ClearBackground();
 
 //    m_bDataValid = false;
