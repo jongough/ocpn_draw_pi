@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0382")
-SET(VERSION_DATE "14/07/2015")
+SET(VERSION_PATCH "0400")
+SET(VERSION_DATE "16/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -43,6 +43,7 @@ ADD_DEFINITIONS(-DUSE_S57)
 SET(SRCS
         src/ocpn_draw_pi.cpp
         src/Boundary.cpp
+        src/BoundaryMan.cpp
         src/BoundaryProp.cpp
         src/BoundaryPoint.cpp
         src/PointMan.cpp
@@ -75,6 +76,7 @@ SET(SRCS
 SET(HDRS
         include/ocpn_draw_pi.h
         include/Boundary.h
+        include/BoundaryMan.h
         include/BoundaryProp.h
         include/BoundaryPoint.h
         include/PointMan.h

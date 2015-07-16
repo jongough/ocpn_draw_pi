@@ -354,6 +354,10 @@ private:
 };
 
 
+extern DECL_EXP bool FindPointInBoundary( double lat, double lon );
+extern DECL_EXP bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon);
+extern DECL_EXP Boundary *GetBoundaryWithPointInBoundary( double lat, double lon );
+
 #endif
 
 
