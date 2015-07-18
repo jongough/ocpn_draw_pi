@@ -1117,6 +1117,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
+            bool bFoundPinB = FindPointInBoundary( m_cursor_lat, m_cursor_lon );
             FindSelectedObject();
             
             if( 0 != m_seltype ) {
@@ -2316,7 +2317,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
     
 }
 
-Boundary *GetBoundaryWithPointInBoundary( double lat, double lon )
+wxString GetBoundaryWithPointInBoundary( double lat, double lon )
 {
     return g_pBoundaryMan->FindPointInBoundary( lat, lon );
 }
@@ -2324,7 +2325,7 @@ Boundary *GetBoundaryWithPointInBoundary( double lat, double lon )
 
 bool FindPointInBoundary( double lat, double lon )
 {
-    if(g_pBoundaryMan->FindPointInBoundary( lat, lon )) return true;
+    if(g_pBoundaryMan->FindPointInBoundary( lat, lon ).length() > 0 ) return true;
     else return false;
 }
 

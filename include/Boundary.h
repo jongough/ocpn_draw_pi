@@ -26,7 +26,6 @@
 
 #include <Path.h>
 
-
 class Boundary : public Path
 {
     public:
@@ -44,7 +43,9 @@ class Boundary : public Path
     protected:
         wxColour    m_fillcol;
         
+        
     private:
+        
 };
 
 WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Path as list member

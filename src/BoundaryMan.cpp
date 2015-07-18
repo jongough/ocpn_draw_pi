@@ -26,26 +26,31 @@
 
 #include "BoundaryMan.h"
 #include "Boundary.h"
+#include "ocpn_draw_pi.h"
 
 #include "math.h"
 
 extern PathList         *g_pPathList;
 extern BoundaryList     *g_pBoundaryList;
 
-Boundary *BoundaryMan::FindPointInBoundary( double lat, double lon )
+wxString BoundaryMan::FindPointInBoundary( double lat, double lon )
 {
     wxPathListNode *boundary_node = g_pPathList->GetFirst();
     Boundary *pboundary = NULL;
     bool bInPoly;
     ODPoint *pop;
+    int k = 0;
     
     while( boundary_node ) {
         pboundary = (Boundary *)boundary_node->GetData();
         
+        k++;
         int i, j;
         j = pboundary->m_pODPointList->GetCount();
-        float polyX[j];
-        float polyY[j];
+        float *polyX;
+        float *polyY;
+        polyX = new float[j];
+        polyY = new float[j];
         
         wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
         wxODPointListNode *OCPNpoint_last_node = ( pboundary->m_pODPointList )->GetLast();
@@ -58,13 +63,15 @@ Boundary *BoundaryMan::FindPointInBoundary( double lat, double lon )
             OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
             if(OCPNpoint_node == OCPNpoint_last_node) break;
         }
-        bInPoly = pointInPolygon(j, polyX, polyY, lon, lat);
+        bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
         if(bInPoly) break;
         boundary_node = boundary_node->GetNext();                         // next boundary
+        delete [] polyX;
+        delete [] polyY;
     }
     
-    if(bInPoly) return pboundary;
-    else return NULL;
+    if(bInPoly) return pboundary->m_GUID;
+    else return wxT("");
 }
 
 bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double lon )
@@ -72,13 +79,14 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
     bool bInPoly;
     int i, j;
     j = pBoundary->m_pODPointList->GetCount();
-    float polyX[j];
-    float polyY[j];
+    float *polyX;
+    float *polyY;
+    polyX = new float[j];
+    polyY = new float[j];
     
     wxODPointListNode *OCPNpoint_node = ( pBoundary->m_pODPointList )->GetFirst();
     wxODPointListNode *OCPNpoint_last_node = ( pBoundary->m_pODPointList )->GetLast();
     i = 0;
-    ODPoint *pfop = OCPNpoint_node->GetData();
     while( OCPNpoint_node ) {
         ODPoint *pop = OCPNpoint_node->GetData();
         polyX[i] = (float)pop->m_lon;
@@ -87,7 +95,10 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
         OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
         if(OCPNpoint_node == OCPNpoint_last_node) break;
     }
-    bInPoly = pointInPolygon(j, polyX, polyY, lon, lat);
+    bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
+
+    delete [] polyX;
+    delete [] polyY;
     
     return bInPoly;
 }
@@ -106,17 +117,20 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
 //  Note that division by zero is avoided because the division is protected
 //  by the "if" clause which surrounds it.
 
-bool BoundaryMan::pointInPolygon(int polyCorners, float polyX[], float polyY[], float x, float y) {
+bool BoundaryMan::pointInPolygon(int polyCorners, float *polyX, float *polyY, float x, float y) {
     
     int   i, j=polyCorners-1 ;
     bool  oddNodes=false      ;
     
     for (i=0; i<polyCorners; i++) {
-        if ((((polyY[i]< y) && (polyY[j]>=y))
-            ||   ((polyY[j]< y) && (polyY[i]>=y)))
-            &&  (((polyX[i]<=x) || (polyX[j]<=x)))) {
+        if (((polyY[i]< y && polyY[j]>=y)
+            ||   (polyY[j]< y && polyY[i]>=y))
+            &&  (polyX[i]<=x || polyX[j]<=x)) {
             oddNodes^=(polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x); }
-            j=i; }
+            j=i; 
+        
+    }
             
-            return oddNodes; 
+    return oddNodes; 
+        
 }

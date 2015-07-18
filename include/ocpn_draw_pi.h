@@ -160,6 +160,10 @@ const wxColour GpxxColors[] = { wxColour(0x00, 0x00, 0x00), wxColour(0x60, 0x00,
 const int StyleValues[] = { wxSOLID, wxDOT, wxLONG_DASH, wxSHORT_DASH, wxDOT_DASH };
 const int WidthValues[] = { -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
+extern DECL_EXP bool FindPointInBoundary( double lat, double lon );
+extern DECL_EXP bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon);
+extern DECL_EXP wxString GetBoundaryWithPointInBoundary( double lat, double lon );
+
 class ocpn_draw_pi : public opencpn_plugin_113
 {
 public:
@@ -352,11 +356,6 @@ private:
     
     int         m_seltype;
 };
-
-
-extern DECL_EXP bool FindPointInBoundary( double lat, double lon );
-extern DECL_EXP bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon);
-extern DECL_EXP Boundary *GetBoundaryWithPointInBoundary( double lat, double lon );
 
 #endif
 

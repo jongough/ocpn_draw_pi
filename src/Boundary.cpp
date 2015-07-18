@@ -25,9 +25,29 @@
 #include "ocpndc.h"
 #include "ocpn_draw_pi.h"
 
-#include <wx/listimpl.cpp>
+#ifdef __WXMSW__
+#include "GL/gl.h"            // local copy for Windows
+#include <GL/glu.h>
+#else
+
+#ifndef __OCPN__ANDROID__
+#include <GL/gl.h>
+#include <GL/glu.h>
+#else
+#include "qopengl.h"                  // this gives us the qt runtime gles2.h
+#include "GL/gl_private.h"
+#endif
+
+#endif
+
+#ifdef ocpnUSE_GL
+#include <wx/glcanvas.h>
+#endif
+
+
 #include <wx/graphics.h>
 
+#include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( BoundaryList );
 
 extern wxColour    g_colourActiveBoundaryLineColour;
@@ -96,7 +116,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     Path::DrawGL( piVP );
     
     ocpnDC dc;
-    
+
     glEnable( GL_POLYGON_STIPPLE );
     glEnable( GL_BLEND );
     GLubyte slope_cross_hatch[] = {
@@ -121,18 +141,20 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     };    
     glPolygonStipple( slope_cross_hatch );
     glBegin(GL_POLYGON_STIPPLE);
-    if ( m_bVisible ) {
-        //dc.SetPen(*wxTRANSPARENT_PEN); 
+    //if ( m_bVisible ) {
+        dc.SetPen(*wxTRANSPARENT_PEN); 
         wxColour tCol;
         tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBDIAGONAL_HATCH ) );
-        if ( m_pODPointList->GetCount() > 2 )
+        if ( m_pODPointList->GetCount() > 2 ) {
             dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
-    }
+            
+        }
+    //}
     glEnd();
     glDisable( GL_BLEND );
     glDisable (GL_POLYGON_STIPPLE);
-
+    
 #endif
 }
 
