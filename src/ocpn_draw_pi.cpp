@@ -35,6 +35,7 @@
 
 #include "ocpn_draw_pi.h"
 #include "Boundary.h"
+#include "BoundaryMan.h"
 #include "BoundaryPoint.h"
 #include "BoundaryProp.h"
 #include "Path.h"
@@ -106,6 +107,7 @@ float                   g_ODGLMinSymbolLineWidth;
 wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
+BoundaryMan             *g_pBoundaryMan;
 wxString                g_default_ODPoint_icon;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
@@ -390,6 +392,8 @@ int ocpn_draw_pi::Init(void)
     
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
+    g_pBoundaryMan = new BoundaryMan();
+    
     
     g_pODConfig->LoadNavObjects();
     
@@ -1113,6 +1117,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
+            bool bFoundPinB = FindPointInBoundary( m_cursor_lat, m_cursor_lon );
             FindSelectedObject();
             
             if( 0 != m_seltype ) {
@@ -1128,7 +1133,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             } else bret = FALSE;
             
             //end           
-        }
+        } 
     }
     
     //      Check to see if there is a path under the cursor
@@ -2312,3 +2317,19 @@ void ocpn_draw_pi::SetToolbarTool( void )
     
 }
 
+wxString GetBoundaryWithPointInBoundary( double lat, double lon )
+{
+    return g_pBoundaryMan->FindPointInBoundary( lat, lon );
+}
+
+
+bool FindPointInBoundary( double lat, double lon )
+{
+    if(g_pBoundaryMan->FindPointInBoundary( lat, lon ).length() > 0 ) return true;
+    else return false;
+}
+
+bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon )
+{
+    return g_pBoundaryMan->FindPointInBoundary( pBoundary, lat, lon );
+}

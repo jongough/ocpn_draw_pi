@@ -1,9 +1,11 @@
 /***************************************************************************
  * 
  * Project:  OpenCPN
+ * Purpose:  Boundary Manager
+ * Author:   Jon Gough
  *
  ***************************************************************************
- *   Copyright (C) 2013 by David S. Register                               *
+ *   Copyright (C) 2010 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -21,33 +23,22 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef BOUNDARY_H
-#define BOUNDARY_H
 
-#include <Path.h>
+#ifndef BOUNDARYMAN_H
+#define BOUNDARYMAN_H
 
-class Boundary : public Path
+#include "PathMan.h"
+
+class Boundary;
+
+class BoundaryMan :  PathMan
 {
     public:
-        Boundary();
-        virtual ~Boundary();
-        void Draw( ocpnDC& dc, PlugIn_ViewPort &VP );
-        void DrawGL( PlugIn_ViewPort &piVP );
-        void DeletePoint( ODPoint *op, bool bRenamePoints );
-        void SetActiveColours( void );
-        
-        wxColour        m_wxcActiveFillColour;
-        wxColour        m_wxcInActiveFillColour;
-        unsigned int    m_uiFillTransparency;
-        
-    protected:
-        wxColour    m_fillcol;
-        
+        wxString FindPointInBoundary( double lat, double lon );
+        bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
         
     private:
-        
+        bool pointInPolygon(int polyCorners, float *polyX, float *polyY, float x, float y);
 };
 
-WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Path as list member
-
-#endif // BOUNDARY_H
+#endif // BOUNDARYMAN_H
