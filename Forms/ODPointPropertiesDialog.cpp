@@ -205,63 +205,80 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
 	m_notebookProperties->AddPage( m_panelBasicProperties, wxT("Basic"), true );
-	m_panelDescription = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer5;
 	bSizer5 = new wxBoxSizer( wxVERTICAL );
 	
-	m_staticTextDisplayText = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text to Display with Point"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDisplayText = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Text to Display with Point"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDisplayText->Wrap( -1 );
 	bSizer5->Add( m_staticTextDisplayText, 0, wxALL, 5 );
 	
-	m_textCtrlExtDescription = new wxTextCtrl( m_panelDescription, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP );
-	bSizer5->Add( m_textCtrlExtDescription, 1, wxALL|wxEXPAND, 5 );
+	m_textDisplayText = new wxTextCtrl( m_panelDisplayText, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP );
+	bSizer5->Add( m_textDisplayText, 1, wxALL|wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizerTextProperties;
 	fgSizerTextProperties = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizerTextProperties->SetFlexibleDirection( wxBOTH );
 	fgSizerTextProperties->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPosition = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPosition = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPosition->Wrap( -1 );
 	fgSizerTextProperties->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choicePositionChoices[] = { wxT("Top"), wxT("Bottom"), wxT("Right"), wxT("Left") };
 	int m_choicePositionNChoices = sizeof( m_choicePositionChoices ) / sizeof( wxString );
-	m_choicePosition = new wxChoice( m_panelDescription, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePositionNChoices, m_choicePositionChoices, 0 );
+	m_choicePosition = new wxChoice( m_panelDisplayText, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePositionNChoices, m_choicePositionChoices, 0 );
 	m_choicePosition->SetSelection( 1 );
 	fgSizerTextProperties->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_staticTextColour = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Text Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextColour = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Text Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextColour->Wrap( -1 );
 	fgSizerTextProperties->Add( m_staticTextColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerText = new wxColourPickerCtrl( m_panelDescription, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerText = new wxColourPickerCtrl( m_panelDisplayText, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizerTextProperties->Add( m_colourPickerText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_staticTextBackgroundColour = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Background Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundColour = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Background Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBackgroundColour->Wrap( -1 );
 	fgSizerTextProperties->Add( m_staticTextBackgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerBacgroundColour = new wxColourPickerCtrl( m_panelDescription, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerBacgroundColour = new wxColourPickerCtrl( m_panelDisplayText, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizerTextProperties->Add( m_colourPickerBacgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_staticTextBackgroundTransparency = new wxStaticText( m_panelDescription, wxID_ANY, wxT("Background Transparency"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBackgroundTransparency = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Background Transparency"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBackgroundTransparency->Wrap( -1 );
 	fgSizerTextProperties->Add( m_staticTextBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_sliderBackgroundTransparency = new wxSlider( m_panelDescription, wxID_ANY, 100, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	m_sliderBackgroundTransparency = new wxSlider( m_panelDisplayText, wxID_ANY, 100, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_sliderBackgroundTransparency->SetMinSize( wxSize( 100,-1 ) );
 	
 	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
+	
+	wxBoxSizer* bSizerFontFace;
+	bSizerFontFace = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticTextFont = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Text Font"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFont->Wrap( -1 );
+	bSizerFontFace->Add( m_staticTextFont, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_staticTextFontFaceExample = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Example"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_staticTextFontFaceExample->Wrap( -1 );
+	bSizerFontFace->Add( m_staticTextFontFaceExample, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	fgSizerTextProperties->Add( bSizerFontFace, 1, wxEXPAND, 5 );
+	
+	m_buttonFontButton = new wxButton( m_panelDisplayText, wxID_ANY, wxT("Fonts"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerTextProperties->Add( m_buttonFontButton, 0, wxALL, 5 );
 	
 	
 	bSizer5->Add( fgSizerTextProperties, 1, wxEXPAND, 5 );
 	
 	
-	m_panelDescription->SetSizer( bSizer5 );
-	m_panelDescription->Layout();
-	bSizer5->Fit( m_panelDescription );
-	m_notebookProperties->AddPage( m_panelDescription, wxT("Display text"), false );
+	m_panelDisplayText->SetSizer( bSizer5 );
+	m_panelDisplayText->Layout();
+	bSizer5->Fit( m_panelDisplayText );
+	m_notebookProperties->AddPage( m_panelDisplayText, wxT("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -321,6 +338,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_textCtrlPointRangeRingsSteps->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
+	m_buttonFontButton->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );
 	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
 	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
 }
@@ -338,6 +356,7 @@ ODPointPropertiesDialog::~ODPointPropertiesDialog()
 	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_textCtrlPointRangeRingsSteps->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
+	m_buttonFontButton->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );
 	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
 	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
 	

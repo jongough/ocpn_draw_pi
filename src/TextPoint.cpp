@@ -46,6 +46,8 @@ extern PointMan     *g_pODPointMan;
 extern ODText       *g_ODText;
 extern int          g_iTextPosition;
 extern wxColour     g_colourDefaultTextColour;
+extern wxFont       g_DisplayTextFont;
+extern int          g_DisplayTextFontPointSize;
 extern wxColour     g_colourDefaultTextBackgroundColour;
 extern int          g_iTextBackgroundTransparency;
 extern int          g_iTextTopOffsetX;
@@ -86,9 +88,9 @@ TextPoint::TextPoint() : ODPoint()
     m_colourTextColour = g_colourDefaultTextColour;
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = 250;
-    m_pDescriptionFont = NULL;
+    m_DisplayTextFont = g_DisplayTextFont;
 #ifdef ocpnUSE_GL
-    m_iDescriptionTextTexture = 0;
+    m_iDisplayTextTexture = 0;
 #endif
     
     //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
@@ -104,9 +106,9 @@ TextPoint::TextPoint(const TextPoint& other)
     m_colourTextColour = other.m_colourTextColour;
     m_colourTextBackgroundColour = other.m_colourTextBackgroundColour;
     m_iWrapLen = 250;
-    m_pDescriptionFont = other.m_pDescriptionFont;
+    m_DisplayTextFont = other.m_DisplayTextFont;
 #ifdef ocpnUSE_GL
-    m_iDescriptionTextTexture = other.m_iDescriptionTextTexture;
+    m_iDisplayTextTexture = other.m_iDisplayTextTexture;
 #endif
     
     //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
@@ -141,9 +143,9 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     m_colourTextColour = g_colourDefaultTextColour;
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = 250;
-    m_pDescriptionFont = NULL;
+    if(g_DisplayTextFont.IsOk()) m_DisplayTextFont = g_DisplayTextFont;
 #ifdef ocpnUSE_GL
-    m_iDescriptionTextTexture = 0;
+    m_iDisplayTextTexture = 0;
 #endif
     
     m_pstText = NULL;
@@ -180,7 +182,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
     if( !m_bIsVisible )
         return;
 
-    m_pDescriptionFont = OCPNGetFont( wxS("Marks"), 0 );
+    //if(!m_pDisplayTextFont) m_pDisplayTextFont = OCPNGetFont( wxS("Marks"), 0 );
 
     if( m_TextPointText.Len() > 0 ) {
         CalculateTextExtents();
@@ -210,7 +212,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         wxPoint r;
         GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);    
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
-        if( m_pDescriptionFont ) {
+        if( m_DisplayTextFont.IsOk() ) {
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                     m_TextExtents.y );
             r1.Union( r2 );
@@ -218,7 +220,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
             r.x = r.x + m_TextLocationOffsetX;
             r.y = r.y + m_TextLocationOffsetY;
         
-            dc.SetFont( *m_pDescriptionFont );
+            dc.SetFont( m_DisplayTextFont );
             dc.SetTextForeground( m_colourTextColour );
             g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
             
@@ -234,7 +236,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( !m_bIsVisible )
         return;
     
-    m_pDescriptionFont = OCPNGetFont( wxS("Marks"), 0 );
+    //if(!m_pDisplayTextFont)  m_pDisplayTextFont = OCPNGetFont( wxS("Marks"), 0 );
 
     if( m_TextPointText.Len() > 0 ) {
         CalculateTextExtents();
@@ -264,7 +266,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxPoint r;
         GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);    
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
-        if( m_pDescriptionFont ) {
+        if( m_DisplayTextFont.IsOk() ) {
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                        m_TextExtents.y );
             r1.Union( r2 );
@@ -272,13 +274,13 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
             r.x = r.x + m_TextLocationOffsetX;
             r.y = r.y + m_TextLocationOffsetY;
             
-            if( !m_iDescriptionTextTexture && m_TextExtents.x != 0 && m_TextExtents.y != 0 ) {
+            if( !m_iDisplayTextTexture && m_TextExtents.x != 0 && m_TextExtents.y != 0 ) {
                 wxBitmap tbm(m_TextExtents.x, m_TextExtents.y); /* render text on dc */
                 wxMemoryDC dc;
                 dc.SelectObject( tbm );               
                 dc.SetBackground( wxBrush( *wxBLACK ) );
                 dc.Clear();
-                dc.SetFont( *m_pDescriptionFont );
+                dc.SetFont( m_DisplayTextFont );
                 dc.SetTextForeground(* wxWHITE );
                 dc.DrawText( m_TextPointText, 0, 0);
                 dc.SelectObject( wxNullBitmap );
@@ -292,28 +294,28 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         e[p] = d[3*p + 0];
                 }
                 /* create texture for rendered text */
-                glGenTextures(1, &m_iDescriptionTextTexture);
-                glBindTexture(GL_TEXTURE_2D, m_iDescriptionTextTexture);
+                glGenTextures(1, &m_iDisplayTextTexture);
+                glBindTexture(GL_TEXTURE_2D, m_iDisplayTextTexture);
                 
                 glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
                 glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
                 
-                m_iDescriptionTextTextureWidth = NextPow2(m_TextExtents.x);
-                m_iDescriptionTextTextureHeight = NextPow2(m_TextExtents.y);
-                glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, m_iDescriptionTextTextureWidth, m_iDescriptionTextTextureHeight,
+                m_iDisplayTextTextureWidth = NextPow2(m_TextExtents.x);
+                m_iDisplayTextTextureHeight = NextPow2(m_TextExtents.y);
+                glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, m_iDisplayTextTextureWidth, m_iDisplayTextTextureHeight,
                             0, GL_ALPHA, GL_UNSIGNED_BYTE, NULL);
                 glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, m_TextExtents.x, m_TextExtents.y,
                                 GL_ALPHA, GL_UNSIGNED_BYTE, e);
                 delete [] e;
             }
             
-            if(m_iDescriptionTextTexture) {
+            if(m_iDisplayTextTexture) {
                 // Draw backing box
                 ocpnDC ocpndc;
                 g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
                 
                 /* draw texture with text */
-                glBindTexture(GL_TEXTURE_2D, m_iDescriptionTextTexture);
+                glBindTexture(GL_TEXTURE_2D, m_iDisplayTextTexture);
                 
                 glEnable(GL_TEXTURE_2D);
                 glEnable(GL_BLEND);
@@ -322,7 +324,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                 glColor3ub(m_colourTextColour.Red(), m_colourTextColour.Green(), m_colourTextColour.Blue());
                 
                 int x = r.x, y = r.y;
-                float u = (float)m_TextExtents.x/m_iDescriptionTextTextureWidth, v = (float)m_TextExtents.y/m_iDescriptionTextTextureHeight;
+                float u = (float)m_TextExtents.x/m_iDisplayTextTextureWidth, v = (float)m_TextExtents.y/m_iDisplayTextTextureHeight;
                 glBegin(GL_QUADS);
                 glTexCoord2f(0, 0); glVertex2f(x, y);
                 glTexCoord2f(u, 0); glVertex2f(x+m_TextExtents.x, y);
@@ -340,10 +342,10 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
 
 void TextPoint::CalculateTextExtents( void )
 {
-    if( m_pDescriptionFont ) {
+    if( m_DisplayTextFont.IsOk() ) {
         wxScreenDC dc;
         
-        dc.SetFont( *m_pDescriptionFont );
+        dc.SetFont( m_DisplayTextFont );
         m_TextExtents = dc.GetMultiLineTextExtent( m_TextPointText );
     } else
         m_TextExtents = wxSize( 0, 0 );
@@ -359,7 +361,7 @@ void TextPoint::CalculateTextExtents( void )
     if (!bMarkup)
         m_pstText->SetLabel( sMarkDescription );
     ShowText();
-    m_iDescriptionTextTexture = 0;
+    m_iDisplayTextTexture = 0;
 }
 */
 void TextPoint::SetPointText( wxString sTextPointText )
@@ -371,7 +373,7 @@ void TextPoint::SetPointText( wxString sTextPointText )
     if (!bMarkup)
         m_pstText->SetLabel( sTextPointText );
     ShowText();
-    m_iDescriptionTextTexture = 0;
+    m_iDisplayTextTexture = 0;
 }
 
 void TextPoint::ShowText( void )
