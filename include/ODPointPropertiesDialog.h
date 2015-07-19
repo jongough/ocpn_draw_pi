@@ -88,7 +88,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxSlider* m_sliderBackgroundTransparency;
 		wxStaticText* m_staticTextFont;
 		wxStaticText* m_staticTextFontFaceExample;
-		wxButton* m_buttonFontButton;
+		wxButton* m_buttonTextFont;
 		wxPanel* m_panelExtended;
 		wxCheckBox* m_checkBoxVisible;
 		wxStaticText* m_staticText1;

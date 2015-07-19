@@ -707,6 +707,8 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultTextPointFontFamily" ), (int)g_DisplayTextFont.GetFamily() );
         pConf->Write( wxS( "DefaultTextPointFontStyle" ), (int)g_DisplayTextFont.GetStyle() );
         pConf->Write( wxS( "DefaultTextPointFontWeight" ), (int)g_DisplayTextFont.GetWeight() );
+        pConf->Write( wxS( "DefaultTextPointFontUnderline" ), g_DisplayTextFont.GetUnderlined() );
+        pConf->Write( wxS( "DefaultTextPointFontStrikethrough" ), g_DisplayTextFont.GetStrikethrough() );
         pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
         pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
         
@@ -786,18 +788,25 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextLeftOffsetX" ), &g_iTextLeftOffsetX, -15 );
         pConf->Read( wxS( "DefaultTextLeftOffsetY" ), &g_iTextLeftOffsetY, -5 );
         int l_fontInfo;
-        pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, 10 );
+        bool l_bfontInfo;
+        wxString l_wxsfontInfo;
+        wxFont *l_pDisplayTextFont = OCPNGetFont( wxS("Marks"), 0 );
+        pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, (int)l_pDisplayTextFont->GetPointSize() );
         g_DisplayTextFont.SetPointSize( l_fontInfo );
-        pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, 70 );
+        pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, (int)l_pDisplayTextFont->GetFamily() );
         g_DisplayTextFont.SetFamily( l_fontInfo );
-        pConf->Read( wxS( "DefaultTextPointFontStyle" ), &l_fontInfo, 90 );
+        pConf->Read( wxS( "DefaultTextPointFontStyle" ), &l_fontInfo, (int)l_pDisplayTextFont->GetStyle() );
         g_DisplayTextFont.SetStyle( l_fontInfo );
-        pConf->Read( wxS( "DefaultTextPointFontWeight" ), &l_fontInfo, 90 );
+        pConf->Read( wxS( "DefaultTextPointFontWeight" ), &l_fontInfo, (int)l_pDisplayTextFont->GetWeight() );
         g_DisplayTextFont.SetWeight( l_fontInfo );
+        pConf->Read( wxS( "DefaultTextPointFontUnderline" ), &l_bfontInfo, false );
+        g_DisplayTextFont.SetUnderlined( l_bfontInfo );
+        pConf->Read( wxS( "DefaultTextPointFontStrikethrough" ), &l_bfontInfo, false );
+        g_DisplayTextFont.SetStrikethrough( l_bfontInfo );
         wxString l_wxsFaceName;
-        pConf->Read( wxS( "DefaultTextPointFaceName" ), &l_wxsFaceName, wxT("Sans") );
+        pConf->Read( wxS( "DefaultTextPointFaceName" ), &l_wxsFaceName, l_pDisplayTextFont->GetFaceName() );
         g_DisplayTextFont.SetFaceName( l_wxsFaceName );
-        pConf->Read( wxS( "DefaultTextPointFontEncoding" ), &l_fontInfo, 43 );
+        pConf->Read( wxS( "DefaultTextPointFontEncoding" ), &l_fontInfo, (int)l_pDisplayTextFont->GetEncoding() );
         g_DisplayTextFont.SetEncoding( (wxFontEncoding)l_fontInfo );
     }
     

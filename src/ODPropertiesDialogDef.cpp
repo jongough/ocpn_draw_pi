@@ -215,6 +215,23 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_sliderBackgroundTransparency = new wxSlider( m_panelTextPoint, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizerTextPoint->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
 	
+	wxBoxSizer* bSizerTextFont;
+	bSizerTextFont = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_staticTextTextFont = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Text Font"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTextFont->Wrap( -1 );
+	bSizerTextFont->Add( m_staticTextTextFont, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_staticTextFontFaceExample = new wxStaticText( m_panelTextPoint, wxID_ANY, wxT("Example"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFontFaceExample->Wrap( -1 );
+	bSizerTextFont->Add( m_staticTextFontFaceExample, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	
+	fgSizerTextPoint->Add( bSizerTextFont, 1, wxEXPAND, 5 );
+	
+	m_buttonTextFont = new wxButton( m_panelTextPoint, wxID_ANY, wxT("Fonts"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerTextPoint->Add( m_buttonTextFont, 0, wxALL, 5 );
+	
 	
 	m_panelTextPoint->SetSizer( fgSizerTextPoint );
 	m_panelTextPoint->Layout();
@@ -447,6 +464,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	// Connect Events
 	m_bcomboBoxODPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnComboboxSelected ), NULL, this );
+	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
@@ -456,6 +474,7 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
 	m_bcomboBoxODPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnComboboxSelected ), NULL, this );
+	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );

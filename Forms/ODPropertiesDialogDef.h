@@ -29,8 +29,8 @@
 #include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
 #include <wx/clrpicker.h>
-#include <wx/notebook.h>
 #include <wx/button.h>
+#include <wx/notebook.h>
 #include <wx/dialog.h>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -82,6 +82,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerBackgroundColour;
 		wxStaticText* m_staticTextBackgroundTransparency;
 		wxSlider* m_sliderBackgroundTransparency;
+		wxStaticText* m_staticTextTextFont;
+		wxStaticText* m_staticTextFontFaceExample;
+		wxButton* m_buttonTextFont;
 		wxPanel* m_panelPath;
 		wxStaticText* m_staticTextActivePathLineColour;
 		wxColourPickerCtrl* m_colourPickerActivePathLineColour;
@@ -130,6 +133,7 @@ class ODPropertiesDialogDef : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }
