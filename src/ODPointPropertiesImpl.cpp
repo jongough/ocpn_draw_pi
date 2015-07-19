@@ -40,9 +40,11 @@
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "ODPositionParser.h"
+#include "FontMgr.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/window.h>
+#include <wx/fontdlg.h>
 
 extern ODSelect             *g_pODSelect;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
@@ -69,8 +71,8 @@ ODPointPropertiesDialog( parent )
     
     DimeWindow( this );
 
-    // TODO check if wxFrameBuilder supports BitmapComboBox. This code is to handle the case when it does not
     m_pODPoint = NULL;
+    m_pfdDialog = NULL;
 
 }
 
@@ -156,6 +158,23 @@ void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
     m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
 }
 
+void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
+{
+    if(m_pfdDialog) delete m_pfdDialog;
+
+    wxFontData l_FontData;
+    l_FontData.SetInitialFont( m_pTextPoint->m_DisplayTextFont );
+    m_pfdDialog = new wxFontDialog( this, l_FontData );
+    m_pfdDialog->Centre( wxBOTH );
+
+    int iRet = m_pfdDialog->ShowModal();
+    if(iRet == wxID_OK) {
+        //wxFontData wsfdData = m_pfdDialog->GetFontData();
+        m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
+    }
+    
+}
+
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     if( m_pODPoint ) {
@@ -233,11 +252,16 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
-            m_pTextPoint->m_TextPointText = m_textCtrlExtDescription->GetValue();
+            m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
             m_pTextPoint->m_iBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
+            if(m_pfdDialog){
+                wxFontData twxfdData = m_pfdDialog->GetFontData();
+                wxFont twxfFont = twxfdData.GetChosenFont();
+                m_pTextPoint->m_DisplayTextFont = twxfdData.m_chosenFont;
+            }
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
             m_pBoundaryPoint->m_bFill = m_checkBoxFill->GetValue();
         }
@@ -333,7 +357,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         if( m_pODPoint->m_bIsInLayer ) {
             m_textName->SetEditable( false );
             m_textDescription->SetEditable( false );
-            m_textCtrlExtDescription->SetEditable( false );
+            m_textDisplayText->SetEditable( false );
             m_textLatitude->SetEditable( false );
             m_textLongitude->SetEditable( false );
             m_bcomboBoxODPointIconName->Enable( false );
@@ -348,7 +372,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         } else {
             m_textName->SetEditable( true );
             m_textDescription->SetEditable( true );
-            m_textCtrlExtDescription->SetEditable( true );
+            m_textDisplayText->SetEditable( true );
             m_textLatitude->SetEditable( true );
             m_textLongitude->SetEditable( true );
             m_bcomboBoxODPointIconName->Enable( true );
@@ -369,13 +393,14 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_textDescription->SetValue( m_pODPoint->m_MarkDescription );
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
-            m_textCtrlExtDescription->Clear();
-            m_textCtrlExtDescription->SetValue( m_pTextPoint->m_TextPointText );
+            m_textDisplayText->Clear();
+            m_textDisplayText->SetValue( m_pTextPoint->m_TextPointText );
             m_choicePosition->SetSelection( m_pTextPoint->m_iTextPosition );
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
             m_checkBoxFill->Enable( false );
+            m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             m_checkBoxFill->Enable( true );
             m_checkBoxFill->SetValue( m_pBoundaryPoint->m_bFill );
@@ -450,12 +475,12 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         }
         SetTitle( caption );
         if( m_pODPoint->m_sTypeString == wxT("Text Point") ) {
-            m_panelDescription->Show( true );
-            m_panelDescription->Enable();
+            m_panelDisplayText->Show( true );
+            m_panelDisplayText->Enable();
         }
         else {
-            m_panelDescription->Show( false );
-            m_panelDescription->Disable();
+            m_panelDisplayText->Show( false );
+            m_panelDisplayText->Disable();
         }
         
         m_notebookProperties->SetSelection(1);

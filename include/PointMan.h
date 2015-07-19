@@ -49,6 +49,7 @@
 class Path;
 class ODPoint;
 class ODPointList;
+class wxFontEnumerator;
 
 //    List definitions for Point Manager Icons
 
@@ -92,6 +93,9 @@ class PointMan
       ODPointList *GetODPointList(void) { return m_pODPointList; }
 
       void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
+      
+      wxArrayString     m_wxasFontFacenames;
+      wxFontEnumerator  *m_pFontEnumerator;
 protected:
 private:
       //void ProcessUserIcons( ocpnStyle::Style* style );
@@ -104,6 +108,8 @@ private:
       wxArrayPtrVoid    *m_pIconArray;
 
       int         m_nGUID;
+      
+      wxArrayString     m_asFacenames;
 };
 
 #endif // POINTMAN_H

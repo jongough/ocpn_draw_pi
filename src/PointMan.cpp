@@ -37,6 +37,7 @@
 #include <wx/filename.h>
 #include <wx/stdpaths.h>
 #include <wx/apptrait.h>
+#include <wx/fontenum.h>
 
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern wxString                 g_PrivateDataDir;
@@ -62,7 +63,12 @@ PointMan::PointMan()
     m_pIconArray = new wxArrayPtrVoid();
     ProcessIcons();
 
+    m_pFontEnumerator = new wxFontEnumerator();
+    bool bEF = m_pFontEnumerator->EnumerateFacenames();
+    m_wxasFontFacenames = wxFontEnumerator::GetFacenames();
+
     m_nGUID = 0;
+    
 }
 
 PointMan::~PointMan()
@@ -168,51 +174,6 @@ void PointMan::ProcessUserIcons( )
 
 void PointMan::ProcessIcons( )
 {
-/*    ProcessIcon( style->GetIcon( _T("empty") ), _T("empty"), _T("Empty") );
-    ProcessIcon( style->GetIcon( _T("airplane") ), _T("airplane"), _T("Airplane") );
-    ProcessIcon( style->GetIcon( _T("anchorage") ), _T("anchorage"), _T("Anchorage") );
-    ProcessIcon( style->GetIcon( _T("anchor") ), _T("anchor"), _T("Anchor") );
-    ProcessIcon( style->GetIcon( _T("boarding") ), _T("boarding"), _T("Boarding Location") );
-    ProcessIcon( style->GetIcon( _T("boundary") ), _T("boundary"), _T("Boundary Mark") );
-    ProcessIcon( style->GetIcon( _T("bouy1") ), _T("bouy1"), _T("Bouy Type A") );
-    ProcessIcon( style->GetIcon( _T("bouy2") ), _T("bouy2"), _T("Bouy Type B") );
-    ProcessIcon( style->GetIcon( _T("campfire") ), _T("campfire"), _T("Campfire") );
-    ProcessIcon( style->GetIcon( _T("camping") ), _T("camping"), _T("Camping Spot") );
-    ProcessIcon( style->GetIcon( _T("coral") ), _T("coral"), _T("Coral") );
-    ProcessIcon( style->GetIcon( _T("fishhaven") ), _T("fishhaven"), _T("Fish Haven") );
-    ProcessIcon( style->GetIcon( _T("fishing") ), _T("fishing"), _T("Fishing Spot") );
-    ProcessIcon( style->GetIcon( _T("fish") ), _T("fish"), _T("Fish") );
-    ProcessIcon( style->GetIcon( _T("float") ), _T("float"), _T("Float") );
-    ProcessIcon( style->GetIcon( _T("food") ), _T("food"), _T("Food") );
-    ProcessIcon( style->GetIcon( _T("fuel") ), _T("fuel"), _T("Fuel") );
-    ProcessIcon( style->GetIcon( _T("greenlite") ), _T("greenlite"), _T("Green Light") );
-    ProcessIcon( style->GetIcon( _T("kelp") ), _T("kelp"), _T("Kelp") );
-    ProcessIcon( style->GetIcon( _T("light") ), _T("light1"), _T("Light Type A") );
-    ProcessIcon( style->GetIcon( _T("light1") ), _T("light"), _T("Light Type B") );
-    ProcessIcon( style->GetIcon( _T("litevessel") ), _T("litevessel"), _T("Light Vessel") );
-    ProcessIcon( style->GetIcon( _T("mob") ), _T("mob"), _T("MOB") );
-    ProcessIcon( style->GetIcon( _T("mooring") ), _T("mooring"), _T("Mooring Bouy") );
-    ProcessIcon( style->GetIcon( _T("oilbouy") ), _T("oilbouy"), _T("Oil Bouy") );
-    ProcessIcon( style->GetIcon( _T("platform") ), _T("platform"), _T("Platform") );
-    ProcessIcon( style->GetIcon( _T("redgreenlite") ), _T("redgreenlite"), _T("Red/Green Light") );
-    ProcessIcon( style->GetIcon( _T("redlite") ), _T("redlite"), _T("Red Light") );
-    ProcessIcon( style->GetIcon( _T("rock1") ), _T("rock1"), _T("Rock (exposed)") );
-    ProcessIcon( style->GetIcon( _T("rock2") ), _T("rock2"), _T("Rock, (awash)") );
-    ProcessIcon( style->GetIcon( _T("sand") ), _T("sand"), _T("Sand") );
-    ProcessIcon( style->GetIcon( _T("scuba") ), _T("scuba"), _T("Scuba") );
-    ProcessIcon( style->GetIcon( _T("shoal") ), _T("shoal"), _T("Shoal") );
-    ProcessIcon( style->GetIcon( _T("snag") ), _T("snag"), _T("Snag") );
-    ProcessIcon( style->GetIcon( _T("square") ), _T("square"), _T("Square") );
-    ProcessIcon( style->GetIcon( _T("triangle") ), _T("triangle"), _T("Triangle") );
-    ProcessIcon( style->GetIcon( _T("diamond") ), _T("diamond"), _T("Diamond") );
-    ProcessIcon( style->GetIcon( _T("circle") ), _T("circle"), _T("Circle") );
-    ProcessIcon( style->GetIcon( _T("wreck1") ), _T("wreck1"), _T("Wreck A") );
-    ProcessIcon( style->GetIcon( _T("wreck2") ), _T("wreck2"), _T("Wreck B") );
-    ProcessIcon( style->GetIcon( _T("xmblue") ), _T("xmblue"), _T("Blue X") );
-    ProcessIcon( style->GetIcon( _T("xmgreen") ), _T("xmgreen"), _T("Green X") );
-    ProcessIcon( style->GetIcon( _T("xmred") ), _T("xmred"), _T("Red X") );
-    ProcessIcon( style->GetIcon( _T("activepoint") ), _T("activepoint"), _T("Active WP") );
-*/    
     ProcessIcon( GetIcon_PlugIn( _T("empty") ), _T("empty"), _T("Empty") );
     ProcessIcon( GetIcon_PlugIn( _T("airplane") ), _T("airplane"), _T("Airplane") );
     ProcessIcon( GetIcon_PlugIn( _T("anchorage") ), _T("anchorage"), _T("Anchorage") );

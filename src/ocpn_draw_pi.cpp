@@ -101,8 +101,8 @@ double                  g_dLat;
 double                  g_dLon;
 int                     g_cursor_x;
 int                     g_cursor_y;
-ODSelect              *g_pODSelect;
-ODConfig          *g_pODConfig;
+ODSelect                *g_pODSelect;
+ODConfig                *g_pODConfig;
 float                   g_ODGLMinSymbolLineWidth;
 wxString                *g_SData_Locn;
 void                    *g_ppimgr;
@@ -115,9 +115,8 @@ PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PlugInManager           *g_OD_pi_manager;
-//ocpnStyle::StyleManager *g_ODStyleManager;
 BoundaryList            *g_pBoundaryList;
-ODPointList           *g_pODPointList;
+ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 Path                    *g_PathToEdit;
 ODRolloverWin           *g_pPathRolloverWin;
@@ -151,6 +150,8 @@ int             g_iODPointRangeRingsStepUnits;
 wxColour        g_colourODPointRangeRingsColour;
 wxString        g_sODPointIconName;
 wxColour        g_colourDefaultTextColour;
+wxFont          g_DisplayTextFont;
+int             g_DisplayTextFontPointSize;
 wxColour        g_colourDefaultTextBackgroundColour;
 int             g_iTextBackgroundTransparency;
 int             g_iTextPosition;
@@ -702,6 +703,12 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultTextRightOffsetY" ), g_iTextRightOffsetY );
         pConf->Write( wxS( "DefaultTextLeftOffsetX" ), g_iTextLeftOffsetX );
         pConf->Write( wxS( "DefaultTextLeftOffsetY" ), g_iTextLeftOffsetY );
+        pConf->Write( wxS( "DefaultTextPointPointSize" ), g_DisplayTextFont.GetPointSize() );
+        pConf->Write( wxS( "DefaultTextPointFontFamily" ), (int)g_DisplayTextFont.GetFamily() );
+        pConf->Write( wxS( "DefaultTextPointFontStyle" ), (int)g_DisplayTextFont.GetStyle() );
+        pConf->Write( wxS( "DefaultTextPointFontWeight" ), (int)g_DisplayTextFont.GetWeight() );
+        pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
+        pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
         
     }
 }
@@ -778,6 +785,20 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextRightOffsetY" ), &g_iTextRightOffsetY, -5 );
         pConf->Read( wxS( "DefaultTextLeftOffsetX" ), &g_iTextLeftOffsetX, -15 );
         pConf->Read( wxS( "DefaultTextLeftOffsetY" ), &g_iTextLeftOffsetY, -5 );
+        int l_fontInfo;
+        pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, 10 );
+        g_DisplayTextFont.SetPointSize( l_fontInfo );
+        pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, 70 );
+        g_DisplayTextFont.SetFamily( l_fontInfo );
+        pConf->Read( wxS( "DefaultTextPointFontStyle" ), &l_fontInfo, 90 );
+        g_DisplayTextFont.SetStyle( l_fontInfo );
+        pConf->Read( wxS( "DefaultTextPointFontWeight" ), &l_fontInfo, 90 );
+        g_DisplayTextFont.SetWeight( l_fontInfo );
+        wxString l_wxsFaceName;
+        pConf->Read( wxS( "DefaultTextPointFaceName" ), &l_wxsFaceName, wxT("Sans") );
+        g_DisplayTextFont.SetFaceName( l_wxsFaceName );
+        pConf->Read( wxS( "DefaultTextPointFontEncoding" ), &l_fontInfo, 43 );
+        g_DisplayTextFont.SetEncoding( (wxFontEncoding)l_fontInfo );
     }
     
     g_pODPointList = new ODPointList;

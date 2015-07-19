@@ -141,7 +141,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     };    
     glPolygonStipple( slope_cross_hatch );
     glBegin(GL_POLYGON_STIPPLE);
-    //if ( m_bVisible ) {
+    if ( m_bVisible ) {
         dc.SetPen(*wxTRANSPARENT_PEN); 
         wxColour tCol;
         tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
@@ -150,7 +150,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
             
         }
-    //}
+    }
     glEnd();
     glDisable( GL_BLEND );
     glDisable (GL_POLYGON_STIPPLE);
