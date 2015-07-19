@@ -169,10 +169,8 @@ void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
 
     int iRet = m_pfdDialog->ShowModal();
     if(iRet == wxID_OK) {
-        //wxFontData wsfdData = m_pfdDialog->GetFontData();
         m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
     }
-    
 }
 
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )

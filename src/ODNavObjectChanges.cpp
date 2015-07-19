@@ -168,9 +168,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             pugi::xml_attribute weight = child.append_attribute( "weight" );
             weight.set_value( tp->m_DisplayTextFont.GetWeight() );
             pugi::xml_attribute underline = child.append_attribute( "underline" );
-            // TODO Fix up underlining in dialog box to make this work
-            //if(tp->m_DisplayTextFont.GetUnderlined()) underline.set_value( wxT("true") );
-            //else underline.set_value( wxT("false") );
+            underline.set_value( tp->m_DisplayTextFont.GetUnderlined() );
+            pugi::xml_attribute strikethrough = child.append_attribute( "strikethrough" );
+            strikethrough.set_value( tp->m_DisplayTextFont.GetStrikethrough() );
             pugi::xml_attribute face = child.append_attribute( "face" );
             face.set_value( tp->m_DisplayTextFont.GetFaceName().ToUTF8() );
             pugi::xml_attribute encoding = child.append_attribute( "encoding" );
@@ -626,7 +626,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     int     l_iTextPointFontFamily = g_DisplayTextFont.GetFamily();
     int     l_iTextPointFontStyle = g_DisplayTextFont.GetStyle();
     int     l_iTextPointFontWeight = g_DisplayTextFont.GetWeight();
-    bool    l_bTextPointFontUnderline;
+    bool    l_bTextPointFontUnderline = g_DisplayTextFont.GetUnderlined();
+    bool    l_bTextPointFontStrikethrough = g_DisplayTextFont.GetStrikethrough();
     wxString    l_wxsTextPointFontFace = g_DisplayTextFont.GetFaceName();
     int     l_iTextPointFontEncoding = g_DisplayTextFont.GetEncoding();
     int     l_iODPointRangeRingsNumber = -1;
@@ -678,6 +679,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                         l_iTextPointFontWeight = attr.as_int();
                     else if ( wxString::FromUTF8(attr.name()) == _T("underline") )
                         l_bTextPointFontUnderline =  attr.as_bool();
+                    else if ( wxString::FromUTF8(attr.name()) == _T("strikethrough") )
+                        l_bTextPointFontStrikethrough =  attr.as_bool();
                     else if ( wxString::FromUTF8(attr.name()) == _T("face") ) {
                         l_wxsTextPointFontFace.clear();
                         l_wxsTextPointFontFace.Append( wxString::FromUTF8( attr.as_string() ) );
@@ -812,6 +815,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_DisplayTextFont.SetStyle( l_iTextPointFontStyle );
             pTP->m_DisplayTextFont.SetWeight( l_iTextPointFontWeight );
             pTP->m_DisplayTextFont.SetUnderlined( l_bTextPointFontUnderline );
+            pTP->m_DisplayTextFont.SetStrikethrough( l_bTextPointFontStrikethrough );
             pTP->m_DisplayTextFont.SetFaceName( l_wxsTextPointFontFace );
             pTP->m_DisplayTextFont.SetEncoding( (wxFontEncoding)l_iTextPointFontEncoding );
             pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;

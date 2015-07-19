@@ -27,6 +27,7 @@
 #include "ocpn_draw_pi.h"
 #include "PointMan.h"
 #include "version.h"
+#include <wx/fontdlg.h>
 
 extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
@@ -65,6 +66,7 @@ extern double       g_n_arrival_circle_radius;
 extern wxColour     g_colourDefaultTextColour;
 extern wxColour     g_colourDefaultTextBackgroundColour;
 extern int          g_iTextBackgroundTransparency;
+extern wxFont       g_DisplayTextFont;
 extern int          g_iTextPosition;
 extern int          g_iTextTopOffsetX;
 extern int          g_iTextTopOffsetY;
@@ -94,12 +96,29 @@ ODPropertiesDialogDef( parent )
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
     m_staticTextDateVal->SetLabel(PLUGIN_VERSION_DATE);
     
+    m_pfdDialog = NULL;
 
 }
 
 void ODPropertiesDialogImpl::OnComboboxSelected( wxCommandEvent& event )
 {
     m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+}
+
+void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
+{
+    if(m_pfdDialog) delete m_pfdDialog;
+    
+    wxFontData l_FontData;
+    l_FontData.SetInitialFont( g_DisplayTextFont );
+    m_pfdDialog = new wxFontDialog( this, l_FontData );
+    m_pfdDialog->Centre( wxBOTH );
+    
+    int iRet = m_pfdDialog->ShowModal();
+    if(iRet == wxID_OK) {
+        //wxFontData wsfdData = m_pfdDialog->GetFontData();
+        m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
+    }
 }
 
 void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
@@ -165,6 +184,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
     g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
+    g_DisplayTextFont = m_pfdDialog->GetFontData().GetChosenFont();
     
     g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
     g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
@@ -265,6 +285,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
         m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
         m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );
+        m_staticTextFontFaceExample->SetFont( g_DisplayTextFont );
         
         m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
         m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
