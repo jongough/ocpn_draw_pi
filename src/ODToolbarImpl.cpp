@@ -41,12 +41,14 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent )
 {
-    m_toolBoundary = m_toolBarODToolbar->AddTool( ID_BOUNDARY, wxS("Boundary"), *_img_ocpn_draw_boundary_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
-    m_toolODPoint = m_toolBarODToolbar->AddTool( ID_ODPOINT, wxS("Boundary Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
-    m_toolTextPoint = m_toolBarODToolbar->AddTool( ID_TEXTPOINT, wxS("Text Point"), *_img_ocpn_draw_textpoint_gray, wxNullBitmap, wxITEM_CHECK, wxEmptyString, wxEmptyString );
+    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_BOUNDARY, wxS("Boundary"), *_img_ocpn_draw_boundary_gray, wxNullBitmap, wxS("Create Boundary"), wxEmptyString );
+    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_ODPOINT, wxS("Boundary Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxS("Create Boundary Point"), wxEmptyString );
+    m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_TEXTPOINT, wxS("Text Point"), *_img_ocpn_draw_textpoint_gray, wxNullBitmap, wxS("Create Text Point"), wxEmptyString );
     m_toolBarODToolbar->SetInitialSize();
     m_toolbarSize = m_toolBarODToolbar->GetSize();
 	m_toolBarODToolbar->Realize();
+    // this is to ensure the toolbar is the correct size to show icons
+    this->GetSizer()->Fit(this);
     
     Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
 }

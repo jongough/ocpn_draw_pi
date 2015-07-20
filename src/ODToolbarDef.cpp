@@ -11,7 +11,7 @@
 
 ODToolbarDialog::ODToolbarDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
-	this->SetSizeHints( wxSize( 125,74 ), wxDefaultSize );
+	this->SetSizeHints( wxSize( -1,-1 ), wxDefaultSize );
 	
 	wxBoxSizer* bSizerToolbar;
 	bSizerToolbar = new wxBoxSizer( wxVERTICAL );
@@ -25,6 +25,7 @@ ODToolbarDialog::ODToolbarDialog( wxWindow* parent, wxWindowID id, const wxStrin
 	
 	this->SetSizer( bSizerToolbar );
 	this->Layout();
+	bSizerToolbar->Fit( this );
 	
 	// Connect Events
 	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( ODToolbarDialog::OnActivate ) );
