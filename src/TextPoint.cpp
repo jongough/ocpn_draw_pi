@@ -54,6 +54,7 @@ extern int          g_iTextTopOffsetX;
 extern int          g_iTextTopOffsetY;
 extern int          g_iTextBottomOffsetX;
 extern int          g_iTextBottomOffsetY;
+extern int          g_iTextBottomNameExtraOffsetY;
 extern int          g_iTextRightOffsetX;
 extern int          g_iTextRightOffsetY;
 extern int          g_iTextLeftOffsetX;
@@ -195,6 +196,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
             case ID_TEXT_BOTTOM:
                 m_TextLocationOffsetX = g_iTextBottomOffsetX;
                 m_TextLocationOffsetY = g_iTextBottomOffsetY;
+                if(m_bShowName) m_TextLocationOffsetY += g_iTextBottomNameExtraOffsetY;
                 break;
             case ID_TEXT_RIGHT:
                 m_TextLocationOffsetX = g_iTextRightOffsetX;
@@ -249,6 +251,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
             case ID_TEXT_BOTTOM:
                 m_TextLocationOffsetX = g_iTextBottomOffsetX;
                 m_TextLocationOffsetY = g_iTextBottomOffsetY;
+                if(m_bShowName) m_TextLocationOffsetY += g_iTextBottomNameExtraOffsetY;
                 break;
             case ID_TEXT_RIGHT:
                 m_TextLocationOffsetX = g_iTextRightOffsetX;

@@ -159,6 +159,7 @@ int             g_iTextTopOffsetX;
 int             g_iTextTopOffsetY;
 int             g_iTextBottomOffsetX;
 int             g_iTextBottomOffsetY;
+int             g_iTextBottomNameExtraOffsetY;
 int             g_iTextRightOffsetX;
 int             g_iTextRightOffsetY;
 int             g_iTextLeftOffsetX;
@@ -700,6 +701,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
         pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
         pConf->Write( wxS( "DefaultTextBottomOffsetY" ), g_iTextBottomOffsetY );
+        pConf->Write( wxS( "DefaultTextBottomNameExtraOffsetY"), g_iTextBottomNameExtraOffsetY );
         pConf->Write( wxS( "DefaultTextRightOffsetX" ), g_iTextRightOffsetX );
         pConf->Write( wxS( "DefaultTextRightOffsetY" ), g_iTextRightOffsetY );
         pConf->Write( wxS( "DefaultTextLeftOffsetX" ), g_iTextLeftOffsetX );
@@ -784,6 +786,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextTopOffsetY" ), &g_iTextTopOffsetY, -5 );
         pConf->Read( wxS( "DefaultTextBottomOffsetX" ), &g_iTextBottomOffsetX, -10 );
         pConf->Read( wxS( "DefaultTextBottomOffsetY" ), &g_iTextBottomOffsetY, 10 );
+        pConf->Read( wxS( "DefaultTextBottomNameExtraOffsetY"), &g_iTextBottomNameExtraOffsetY, 10 );
         pConf->Read( wxS( "DefaultTextRightOffsetX" ), &g_iTextRightOffsetX, 10 );
         pConf->Read( wxS( "DefaultTextRightOffsetY" ), &g_iTextRightOffsetY, -5 );
         pConf->Read( wxS( "DefaultTextLeftOffsetX" ), &g_iTextLeftOffsetX, -15 );

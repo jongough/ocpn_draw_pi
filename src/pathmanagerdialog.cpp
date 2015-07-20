@@ -1184,12 +1184,12 @@ void PathManagerDialog::OnPathDefaultAction( wxListEvent &event )
     OnPathPropertiesClick( evt );
 }
 
-void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *rp_select, bool b_retain_sort )
+void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retain_sort )
 {
     long selected_id = -1;
     long item = -1;
 
-    if( NULL == rp_select ) {
+    if( NULL == op_select ) {
         // if an item was selected, make it selected again if it still exists
         item = m_pODPointListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
 
@@ -1205,10 +1205,10 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *rp_select, bool b_retai
 
     int index = 0;
     while( node ) {
-        ODPoint *rp = node->GetData();
-        if( rp && rp->IsListed() ) {
-            if( rp->m_bIsInPath ) {
-                if( !rp->m_bKeepXPath ) {
+        ODPoint *op = node->GetData();
+        if( op && op->IsListed() ) {
+            if( op->m_bIsInPath ) {
+                if( !op->m_bKeepXPath ) {
                     node = node->GetNext();
                     continue;
                 }
@@ -1216,23 +1216,26 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *rp_select, bool b_retai
 
             wxListItem li;
             li.SetId( index );
-            li.SetImage( rp->IsVisible() ? g_pODPointMan->GetIconIndex( rp->GetIconBitmap() )
-                                    : g_pODPointMan->GetXIconIndex( rp->GetIconBitmap() ) );
-            li.SetData( rp );
+            li.SetImage( op->IsVisible() ? g_pODPointMan->GetIconIndex( op->GetIconBitmap() )
+                                    : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
+            li.SetData( op );
             li.SetText( _T("") );
             long idx = m_pODPointListCtrl->InsertItem( li );
 
-            wxString name = rp->GetName();
-            if( name.IsEmpty() ) name = _("(Unnamed OCPN Point)");
+            wxString name = op->GetName();
+            if( name.IsEmpty() ) {
+                name.append( wxT("(Unnamed) ") );
+                name.append( op->m_sTypeString );
+            }
             m_pODPointListCtrl->SetItem( idx, colOCPNPOINTNAME, name );
 
             double dst;
-            DistanceBearingMercator_Plugin( rp->m_lat, rp->m_lon, g_dLat, g_dLon, NULL, &dst );
+            DistanceBearingMercator_Plugin( op->m_lat, op->m_lon, g_dLat, g_dLon, NULL, &dst );
             wxString dist;
             dist.Printf( _T("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( dst ) );
             m_pODPointListCtrl->SetItem( idx, colOCPNPOINTDIST, dist );
 
-            if( rp == rp_select ) selected_id = (long) rp_select; //index; //m_pWptListCtrl->GetItemData(item);
+            if( op == op_select ) selected_id = (long) op_select; //index; //m_pWptListCtrl->GetItemData(item);
 
             index++;
         }
