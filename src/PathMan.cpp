@@ -303,6 +303,17 @@ Path *PathMan::FindPathContainingODPoint( ODPoint *pWP )
     return NULL;                              // not found
 }
 
+Path *PathMan::FindPathByGUID( wxString guid )
+{
+    wxPathListNode *node = g_pPathList->GetFirst();
+    while( node ) {
+        Path *ppath = node->GetData();
+        node = node->GetNext();
+    }
+    
+    return NULL;                              // not found
+}
+
 void PathMan::SetColorScheme( PI_ColorScheme cs )
 {
     // Re-Create the pens and colors

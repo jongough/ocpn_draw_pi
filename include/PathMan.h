@@ -40,7 +40,7 @@ class PathMan
 
         bool IsPathValid(Path *pRoute);
 
-        Path *FindPathByGUID(wxString &guid);
+        virtual Path *FindPathByGUID(wxString guid);
         Path *FindPathContainingODPoint(ODPoint *pWP);
         wxArrayPtrVoid *GetPathArrayContaining(ODPoint *pWP);
         bool DoesPathContainSharedPoints( Path *pPath );
