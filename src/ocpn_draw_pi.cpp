@@ -349,7 +349,8 @@ int ocpn_draw_pi::Init(void)
     wxpToolbarPos.y = g_iToolbarPosY;
     g_pODToolbar->SetPosition( wxpToolbarPos );
     g_pODToolbar->Fit();
-    g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
+    g_pODToolbar->SetInitialSize();
+    //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
     if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
     if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
     g_pODToolbar->SetToolbarTool( m_Mode );
