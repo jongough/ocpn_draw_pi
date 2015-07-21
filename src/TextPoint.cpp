@@ -34,7 +34,6 @@
 #include "FontMgr.h"
 #include "ocpndc.h"
 #include "PointMan.h"
-#include "TextPoint.h"
 #include "cutil.h"
 
 #include <wx/stattext.h>
@@ -90,6 +89,7 @@ TextPoint::TextPoint() : ODPoint()
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = 250;
     m_DisplayTextFont = g_DisplayTextFont;
+    m_bTextChanged = true;
 #ifdef ocpnUSE_GL
     m_iDisplayTextTexture = 0;
 #endif
@@ -108,7 +108,8 @@ TextPoint::TextPoint(const TextPoint& other)
     m_colourTextBackgroundColour = other.m_colourTextBackgroundColour;
     m_iWrapLen = 250;
     m_DisplayTextFont = other.m_DisplayTextFont;
-#ifdef ocpnUSE_GL
+    m_bTextChanged = true;
+    #ifdef ocpnUSE_GL
     m_iDisplayTextTexture = other.m_iDisplayTextTexture;
 #endif
     
@@ -145,6 +146,7 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = 250;
     if(g_DisplayTextFont.IsOk()) m_DisplayTextFont = g_DisplayTextFont;
+    m_bTextChanged = true;
 #ifdef ocpnUSE_GL
     m_iDisplayTextTexture = 0;
 #endif
@@ -153,24 +155,9 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     wxSize tSize;
     tSize.x = 250;
     tSize.y = 75;
-//    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize ,wxTE_MULTILINE | wxTE_READONLY | wxBORDER_NONE );
-//    m_pstText = new wxTextCtrl( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT("text"), wxDefaultPosition, wxDefaultSize ,wxTE_MULTILINE | wxTE_READONLY | wxBORDER_NONE );
-    //m_pstText = new wxTextCtrl();
-    //m_pstText->SetBackgroundStyle( wxBG_STYLE_TRANSPARENT );
-    //m_pstText->Create( g_ODText, wxID_ANY, wxT("test"), wxPoint( 0, 0 ), tSize, wxTE_MULTILINE );
     
-    //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT("test"), wxDefaultPosition, tSize, wxALIGN_LEFT );
     wxColour wxCol;
     GetGlobalColor( wxT("YELO1"), &wxCol );
-    //m_pstText->SetBackgroundColour( wxCol );
-//    bool btrans;
-//    wxString *reason;
-//    btrans = m_pstText->IsTransparentBackgroundSupported( reason );
-//    btrans = m_pstText->HasTransparentBackground();
-//    btrans = m_pstText->CanSetTransparent();
-//    btrans = false;
-//    btrans = m_pstText->IsTransparentBackgroundSupported();
-//    m_pstText->SetTransparent( 0 );
 }
 TextPoint::~TextPoint()
 {
@@ -182,8 +169,6 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
 {
     if( !m_bIsVisible )
         return;
-
-    //if(!m_pDisplayTextFont) m_pDisplayTextFont = OCPNGetFont( wxS("Marks"), 0 );
 
     if( m_TextPointText.Len() > 0 ) {
         CalculateTextExtents();
@@ -238,8 +223,6 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( !m_bIsVisible )
         return;
     
-    //if(!m_pDisplayTextFont)  m_pDisplayTextFont = OCPNGetFont( wxS("Marks"), 0 );
-
     if( m_TextPointText.Len() > 0 ) {
         CalculateTextExtents();
         switch ( m_iTextPosition )
@@ -270,6 +253,8 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);    
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
         if( m_DisplayTextFont.IsOk() ) {
+            // Added to help with display of text (stops end clipping)
+            m_TextExtents.x += 15;
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                        m_TextExtents.y );
             r1.Union( r2 );
@@ -277,7 +262,8 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
             r.x = r.x + m_TextLocationOffsetX;
             r.y = r.y + m_TextLocationOffsetY;
             
-            if( !m_iDisplayTextTexture && m_TextExtents.x != 0 && m_TextExtents.y != 0 ) {
+            if( m_bTextChanged || ( !m_iDisplayTextTexture && m_TextExtents.x != 0 && m_TextExtents.y != 0 ) ) {
+                m_bTextChanged = false;
                 wxBitmap tbm(m_TextExtents.x, m_TextExtents.y); /* render text on dc */
                 wxMemoryDC dc;
                 dc.SelectObject( tbm );               
@@ -285,7 +271,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                 dc.Clear();
                 dc.SetFont( m_DisplayTextFont );
                 dc.SetTextForeground(* wxWHITE );
-                dc.DrawText( m_TextPointText, 0, 0);
+                dc.DrawText( m_TextPointText, 5, 0);
                 dc.SelectObject( wxNullBitmap );
                 
                 /* make alpha texture for text */

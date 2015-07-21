@@ -170,6 +170,7 @@ void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
     int iRet = m_pfdDialog->ShowModal();
     if(iRet == wxID_OK) {
         m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
+        this->GetSizer()->Fit(this);
     }
 }
 
@@ -251,6 +252,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
+            m_pTextPoint->m_bTextChanged = true;
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
@@ -399,6 +401,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
             m_checkBoxFill->Enable( false );
             m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
+            this->GetSizer()->Fit(this);
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             m_checkBoxFill->Enable( true );
             m_checkBoxFill->SetValue( m_pBoundaryPoint->m_bFill );
@@ -483,8 +486,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_notebookProperties->SetSelection(1);
         m_notebookProperties->SetSelection(0);
-//        m_panelBasicProperties->Refresh( true );
-        
     }
 
     return true;
