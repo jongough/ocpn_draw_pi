@@ -31,7 +31,7 @@
 
 class Boundary;
 
-class BoundaryMan :  PathMan
+class BoundaryMan : public PathMan
 {
     public:
         wxString FindPointInBoundary( double lat, double lon );

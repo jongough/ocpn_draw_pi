@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0420")
-SET(VERSION_DATE "20/07/2015")
+SET(VERSION_PATCH "0440")
+SET(VERSION_DATE "21/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -68,9 +68,9 @@ SET(SRCS
         src/ODUtils.cpp
         src/ODicons.cpp
         src/TextPoint.cpp
-            src/jsonreader.cpp
-            src/jsonval.cpp
-            src/jsonwriter.cpp
+            src/wxJSON/jsonreader.cpp
+            src/wxJSON/jsonval.cpp
+            src/wxJSON/jsonwriter.cpp
      )
 
 SET(HDRS
