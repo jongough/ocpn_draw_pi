@@ -143,7 +143,10 @@ enum
 
 enum {
     ID_TEXT_TOP = 0,
+    ID_TEXT_CENTRE_TOP,
     ID_TEXT_BOTTOM,
+    ID_TEXT_CENTRE_BOTTOM,
+    ID_TEXT_CENTRE,
     ID_TEXT_RIGHT,
     ID_TEXT_LEFT,
     
