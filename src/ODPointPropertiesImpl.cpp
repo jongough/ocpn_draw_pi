@@ -473,12 +473,11 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //    Get an array of all paths using this point
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
         if( ppath_array ) {
-            //m_bSizerChangeAllPointIcons->Show( true );
             m_checkBoxChangeAllPointIcons->Enable();
         } else {
-            //m_bSizerChangeAllPointIcons->Show( false );
             m_checkBoxChangeAllPointIcons->Disable();
         }
+        m_checkBoxChangeAllPointIcons->SetValue( false );
         //this->Layout();
         //this->GetSizer()->Fit(this);
         

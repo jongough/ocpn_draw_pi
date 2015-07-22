@@ -200,6 +200,8 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);    
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
         if( m_DisplayTextFont.IsOk() ) {
+            // Added to help with display of text (stops end clipping)
+            m_TextExtents.x += 15;
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                     m_TextExtents.y );
             r1.Union( r2 );
@@ -211,7 +213,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
             dc.SetTextForeground( m_colourTextColour );
             g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
             
-            dc.DrawText( m_TextPointText, r.x, r.y );
+            dc.DrawText( m_TextPointText, r.x + 5, r.y );
         }
         
     }
