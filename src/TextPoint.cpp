@@ -54,6 +54,8 @@ extern int          g_iTextTopOffsetY;
 extern int          g_iTextBottomOffsetX;
 extern int          g_iTextBottomOffsetY;
 extern int          g_iTextBottomNameExtraOffsetY;
+extern int          g_iTextCentreOffsetX;
+extern int          g_iTextCentreOffsetY;
 extern int          g_iTextRightOffsetX;
 extern int          g_iTextRightOffsetY;
 extern int          g_iTextLeftOffsetX;
@@ -67,12 +69,18 @@ TextPoint::TextPoint() : ODPoint()
     switch ( g_iTextPosition )
     {
         case ID_TEXT_TOP:
+        case ID_TEXT_CENTRE_TOP:
             m_TextLocationOffsetX = g_iTextTopOffsetX;
             m_TextLocationOffsetY = g_iTextTopOffsetY;
             break;
         case ID_TEXT_BOTTOM:
+        case ID_TEXT_CENTRE_BOTTOM:
             m_TextLocationOffsetX = g_iTextBottomOffsetX;
             m_TextLocationOffsetY = g_iTextBottomOffsetY;
+            break;
+        case ID_TEXT_CENTRE:
+            m_TextLocationOffsetX = g_iTextCentreOffsetX;
+            m_TextLocationOffsetY = g_iTextCentreOffsetY;
             break;
         case ID_TEXT_RIGHT:
             m_TextLocationOffsetX = g_iTextRightOffsetX;
@@ -124,12 +132,18 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     switch ( g_iTextPosition )
     {
         case ID_TEXT_TOP:
+        case ID_TEXT_CENTRE_TOP:
             m_TextLocationOffsetX = g_iTextTopOffsetX;
             m_TextLocationOffsetY = g_iTextTopOffsetY;
             break;
         case ID_TEXT_BOTTOM:
+        case ID_TEXT_CENTRE_BOTTOM:
             m_TextLocationOffsetX = g_iTextBottomOffsetX;
             m_TextLocationOffsetY = g_iTextBottomOffsetY;
+            break;
+        case ID_TEXT_CENTRE:
+            m_TextLocationOffsetX = g_iTextCentreOffsetX;
+            m_TextLocationOffsetY = g_iTextCentreOffsetY;
             break;
         case ID_TEXT_RIGHT:
             m_TextLocationOffsetX = g_iTextRightOffsetX;
@@ -178,10 +192,22 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
                 m_TextLocationOffsetX = g_iTextTopOffsetX;
                 m_TextLocationOffsetY = g_iTextTopOffsetY - m_TextExtents.y;
                 break;
+            case ID_TEXT_CENTRE_TOP:
+                m_TextLocationOffsetX = g_iTextTopOffsetX - (m_TextExtents.x / 2);
+                m_TextLocationOffsetY = g_iTextTopOffsetY - m_TextExtents.y;
+                break;
             case ID_TEXT_BOTTOM:
                 m_TextLocationOffsetX = g_iTextBottomOffsetX;
                 m_TextLocationOffsetY = g_iTextBottomOffsetY;
                 if(m_bShowName) m_TextLocationOffsetY += g_iTextBottomNameExtraOffsetY;
+                break;
+            case ID_TEXT_CENTRE_BOTTOM:
+                m_TextLocationOffsetX = g_iTextBottomOffsetX - (m_TextExtents.x / 2);
+                m_TextLocationOffsetY = g_iTextBottomOffsetY;
+                break;
+            case ID_TEXT_CENTRE:
+                m_TextLocationOffsetX = g_iTextCentreOffsetX - (m_TextExtents.x / 2);
+                m_TextLocationOffsetY = g_iTextCentreOffsetY - (m_TextExtents.y / 2);
                 break;
             case ID_TEXT_RIGHT:
                 m_TextLocationOffsetX = g_iTextRightOffsetX;
@@ -233,10 +259,22 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                 m_TextLocationOffsetX = g_iTextTopOffsetX;
                 m_TextLocationOffsetY = g_iTextTopOffsetY - m_TextExtents.y;
                 break;
+            case ID_TEXT_CENTRE_TOP:
+                m_TextLocationOffsetX = g_iTextTopOffsetX - (m_TextExtents.x / 2);
+                m_TextLocationOffsetY = g_iTextTopOffsetY - m_TextExtents.y;
+                break;
             case ID_TEXT_BOTTOM:
                 m_TextLocationOffsetX = g_iTextBottomOffsetX;
                 m_TextLocationOffsetY = g_iTextBottomOffsetY;
                 if(m_bShowName) m_TextLocationOffsetY += g_iTextBottomNameExtraOffsetY;
+                break;
+            case ID_TEXT_CENTRE_BOTTOM:
+                m_TextLocationOffsetX = g_iTextBottomOffsetX - (m_TextExtents.x / 2);
+                m_TextLocationOffsetY = g_iTextBottomOffsetY;
+                break;
+            case ID_TEXT_CENTRE:
+                m_TextLocationOffsetX = g_iTextCentreOffsetX - (m_TextExtents.x / 2);
+                m_TextLocationOffsetY = g_iTextCentreOffsetY - (m_TextExtents.y / 2);
                 break;
             case ID_TEXT_RIGHT:
                 m_TextLocationOffsetX = g_iTextRightOffsetX;

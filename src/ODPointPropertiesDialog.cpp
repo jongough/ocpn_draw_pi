@@ -233,10 +233,10 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_staticTextPosition->Wrap( -1 );
 	fgSizerTextProperties->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choicePositionChoices[] = { wxT("Top"), wxT("Bottom"), wxT("Right"), wxT("Left") };
+	wxString m_choicePositionChoices[] = { wxT("Top"), wxT("Top Centre"), wxT("Bottom"), wxT("Bottom Centre"), wxT("Centre"), wxT("Right"), wxT("Left") };
 	int m_choicePositionNChoices = sizeof( m_choicePositionChoices ) / sizeof( wxString );
 	m_choicePosition = new wxChoice( m_panelDisplayText, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePositionNChoices, m_choicePositionChoices, 0 );
-	m_choicePosition->SetSelection( 1 );
+	m_choicePosition->SetSelection( 0 );
 	fgSizerTextProperties->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextColour = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Text Colour"), wxDefaultPosition, wxDefaultSize, 0 );

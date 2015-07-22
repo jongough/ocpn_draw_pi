@@ -68,9 +68,6 @@ SET(SRCS
         src/ODUtils.cpp
         src/ODicons.cpp
         src/TextPoint.cpp
-            src/wxJSON/jsonreader.cpp
-            src/wxJSON/jsonval.cpp
-            src/wxJSON/jsonwriter.cpp
      )
 
 SET(HDRS
@@ -103,10 +100,6 @@ SET(HDRS
         include/ODicons.h
         include/TextPoint.h
         include/version.h
-#            include/wx/json_defs.h
-            include/wx/jsonreader.h
-            include/wx/jsonval.h
-            include/wx/jsonwriter.h
 )
 
 SET(OCPNSRC 
@@ -121,6 +114,9 @@ SET(OCPNSRC
         ocpnsrc/ocpndc.cpp
         ocpnsrc/pugixml.cpp
         ocpnsrc/SelectItem.cpp
+        ocpnsrc/wxJSON/jsonreader.cpp
+        ocpnsrc/wxJSON/jsonval.cpp
+        ocpnsrc/wxJSON/jsonwriter.cpp
 )
 SET(OCPNHDRS
         ocpninclude/AISTargetAlertDialog.h
@@ -199,6 +195,10 @@ SET(OCPNHDRS
         ocpninclude/vtg.hpp
         ocpninclude/wpl.hpp
         ocpninclude/xte.hpp
+        ocpninclude/wx/json_defs.h
+        ocpninclude/wx/jsonreader.h
+        ocpninclude/wx/jsonval.h
+        ocpninclude/wx/jsonwriter.h
 )
 
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
