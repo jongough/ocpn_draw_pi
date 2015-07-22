@@ -195,6 +195,10 @@ SET(OCPNHDRS
         ocpninclude/vtg.hpp
         ocpninclude/wpl.hpp
         ocpninclude/xte.hpp
+        ocpninclude/GL/gl.h
+        ocpninclude/GL/gl_private.h
+        ocpninclude/GL/glext.h
+        ocpninclude/GL/glu.h
         ocpninclude/wx/json_defs.h
         ocpninclude/wx/jsonreader.h
         ocpninclude/wx/jsonval.h
