@@ -297,7 +297,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     double slat = g_dLat;
     double slon = g_dLon;
     
-    int colcount = m_listCtrlODPoints->GetColumnCount();
     wxString nullify = _T("----");
     long item_line_index = 0;
     wxString wxsLastPoint = wxT("Boat");
@@ -407,7 +406,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     double brgFromBoat = 0.;
     double distanceFromBoat = 0.;
     
-    int colcount = m_listCtrlODPoints->GetColumnCount();
     wxString nullify = _T("----");
     long item_line_index = 0;
     wxString wxsLastPoint = wxT("Boat");

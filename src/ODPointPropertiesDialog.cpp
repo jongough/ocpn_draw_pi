@@ -67,6 +67,14 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	bSizer12->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
 	
+	m_bSizerChangeAllPointIcons = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkBoxChangeAllPointIcons = new wxCheckBox( m_panelBasicProperties, wxID_ANY, wxT("Change all Path Point Icons"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_bSizerChangeAllPointIcons->Add( m_checkBoxChangeAllPointIcons, 0, wxALL, 5 );
+	
+	
+	bSizer12->Add( m_bSizerChangeAllPointIcons, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+	
 	wxBoxSizer* bSizerLatLon;
 	bSizerLatLon = new wxBoxSizer( wxHORIZONTAL );
 	

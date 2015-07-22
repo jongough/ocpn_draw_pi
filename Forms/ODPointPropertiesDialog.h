@@ -55,6 +55,8 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextIcon;
 		wxStaticBitmap* m_bitmapPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxODPointIconName;
+		wxBoxSizer* m_bSizerChangeAllPointIcons;
+		wxCheckBox* m_checkBoxChangeAllPointIcons;
 		wxStaticText* m_staticTextLatitude;
 		wxTextCtrl* m_textLatitude;
 		wxStaticText* m_staticTextLogitude;

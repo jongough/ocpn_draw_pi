@@ -91,7 +91,6 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    
 }
 
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
@@ -170,6 +169,7 @@ void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
     int iRet = m_pfdDialog->ShowModal();
     if(iRet == wxID_OK) {
         m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
+        this->GetSizer()->Fit(this);
     }
 }
 
@@ -197,7 +197,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
     
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
 }
@@ -230,7 +230,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
 
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
 }
@@ -251,6 +251,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
+            m_pTextPoint->m_bTextChanged = true;
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
@@ -299,6 +300,16 @@ void ODPointPropertiesImpl::SaveChanges()
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
+                    if(m_checkBoxChangeAllPointIcons->IsChecked()) {
+                        wxODPointListNode *pnode = ( pp->m_pODPointList )->GetFirst();
+                        while( pnode ) {
+                            ODPoint *pop = pnode->GetData();
+                            pop->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
+                            pop->ReLoadIcon();
+                            pnode = pnode->GetNext();
+                        }
+                    }
+                    
                     g_pODConfig->UpdatePath( pp );
                 }
                 delete pEditPathArray;
@@ -306,7 +317,7 @@ void ODPointPropertiesImpl::SaveChanges()
         } else
             g_pODConfig->UpdateODPoint( m_pODPoint );
 
-        // No general settings need be saved pConfig->UpdateSettings();
+            // No general settings need be saved pConfig->UpdateSettings();
     }
     return;
 }
@@ -361,6 +372,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bcomboBoxODPointIconName->Enable( false );
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
+            m_checkBoxChangeAllPointIcons->Enable( false );
             m_textArrivalRadius->SetEditable ( false );
             m_checkBoxShowODPointRangeRings->Enable( false );
             m_choiceDistanceUnitsString->Enable( false );
@@ -458,6 +470,18 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( iconToSelect ) );
         
+        //    Get an array of all paths using this point
+        wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
+        if( ppath_array ) {
+            //m_bSizerChangeAllPointIcons->Show( true );
+            m_checkBoxChangeAllPointIcons->Enable();
+        } else {
+            //m_bSizerChangeAllPointIcons->Show( false );
+            m_checkBoxChangeAllPointIcons->Disable();
+        }
+        //this->Layout();
+        //this->GetSizer()->Fit(this);
+        
         icons = NULL;
         
         wxString caption( wxS("") );
@@ -483,8 +507,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_notebookProperties->SetSelection(1);
         m_notebookProperties->SetSelection(0);
-//        m_panelBasicProperties->Refresh( true );
         
+        //this->GetSizer()->Fit(this);
     }
 
     return true;

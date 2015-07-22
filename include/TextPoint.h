@@ -53,6 +53,7 @@ class TextPoint : public ODPoint
         wxFont          *m_pDisplayTextFont;
         wxFont          m_DisplayTextFont;
         int             m_DisplayTextFontPointSize;
+        bool            m_bTextChanged;
         
     protected:
         
