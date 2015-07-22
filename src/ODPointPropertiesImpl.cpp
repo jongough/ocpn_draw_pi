@@ -91,7 +91,6 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    
 }
 
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
@@ -198,7 +197,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
     
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
 }
@@ -231,7 +230,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
 
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
 }
@@ -301,6 +300,16 @@ void ODPointPropertiesImpl::SaveChanges()
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
+                    if(m_checkBoxChangeAllPointIcons->IsChecked()) {
+                        wxODPointListNode *pnode = ( pp->m_pODPointList )->GetFirst();
+                        while( pnode ) {
+                            ODPoint *pop = pnode->GetData();
+                            pop->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
+                            pop->ReLoadIcon();
+                            pnode = pnode->GetNext();
+                        }
+                    }
+                    
                     g_pODConfig->UpdatePath( pp );
                 }
                 delete pEditPathArray;
@@ -308,7 +317,7 @@ void ODPointPropertiesImpl::SaveChanges()
         } else
             g_pODConfig->UpdateODPoint( m_pODPoint );
 
-        // No general settings need be saved pConfig->UpdateSettings();
+            // No general settings need be saved pConfig->UpdateSettings();
     }
     return;
 }
@@ -363,6 +372,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bcomboBoxODPointIconName->Enable( false );
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
+            m_checkBoxChangeAllPointIcons->Enable( false );
             m_textArrivalRadius->SetEditable ( false );
             m_checkBoxShowODPointRangeRings->Enable( false );
             m_choiceDistanceUnitsString->Enable( false );
@@ -401,7 +411,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
             m_checkBoxFill->Enable( false );
             m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
-            this->GetSizer()->Fit(this);
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             m_checkBoxFill->Enable( true );
             m_checkBoxFill->SetValue( m_pBoundaryPoint->m_bFill );
@@ -461,6 +470,18 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( iconToSelect ) );
         
+        //    Get an array of all paths using this point
+        wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
+        if( ppath_array ) {
+            //m_bSizerChangeAllPointIcons->Show( true );
+            m_checkBoxChangeAllPointIcons->Enable();
+        } else {
+            //m_bSizerChangeAllPointIcons->Show( false );
+            m_checkBoxChangeAllPointIcons->Disable();
+        }
+        //this->Layout();
+        //this->GetSizer()->Fit(this);
+        
         icons = NULL;
         
         wxString caption( wxS("") );
@@ -486,6 +507,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_notebookProperties->SetSelection(1);
         m_notebookProperties->SetSelection(0);
+        
+        //this->GetSizer()->Fit(this);
     }
 
     return true;

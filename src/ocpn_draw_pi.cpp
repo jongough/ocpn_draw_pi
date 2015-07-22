@@ -1263,7 +1263,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nBoundary_State == 0 ) {
-            bool bFoundPinB = FindPointInBoundary( m_cursor_lat, m_cursor_lon );
             FindSelectedObject();
             
             if( 0 != m_seltype ) {
