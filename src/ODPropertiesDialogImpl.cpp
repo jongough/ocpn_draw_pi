@@ -184,7 +184,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
     g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
-    g_DisplayTextFont = m_pfdDialog->GetFontData().GetChosenFont();
+    if(m_pfdDialog) g_DisplayTextFont = m_pfdDialog->GetFontData().GetChosenFont();
     
     g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
     g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();

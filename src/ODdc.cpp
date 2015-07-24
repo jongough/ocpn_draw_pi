@@ -60,6 +60,7 @@
 
 #include <vector>
 
+#include "ocpn_draw_pi.h"
 #include "ODdc.h"
 #include "wx28compat.h"
 
@@ -790,7 +791,7 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
 #ifdef ocpnUSE_GL
 
 typedef union {
-    GLdouble data[6];
+    GLdouble data[7];
     struct sGLvertex {
         GLdouble x;
         GLdouble y;
@@ -798,11 +799,11 @@ typedef union {
         GLdouble r;
         GLdouble g;
         GLdouble b;
+        GLdouble a;
     } info;
 } GLvertex;
 
-void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4],
-        GLdouble **dataOut )
+void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4],GLdouble **dataOut )
 {
     GLvertex *vertex;
 
@@ -839,8 +840,11 @@ void APIENTRY ODDCvertexCallback( GLvoid* arg )
 {
     GLvertex* vertex;
     vertex = (GLvertex*) arg;
-//    glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
-    glVertex3d( vertex->info.x, vertex->info.y, vertex->info.z );
+	const GLdouble *ptr = (const GLdouble*)arg;
+    glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
+    //glVertex3d( vertex->info.x, vertex->info.y, vertex->info.z );
+	//glColor3dv(ptr + 3);
+//	glVertex3dv(ptr);
 }
 
 void APIENTRY ODDCerrorCallback( GLenum errorCode )
@@ -868,9 +872,9 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 #ifdef ocpnUSE_GL
     else {
 # ifndef ocpnUSE_GLES  // tessalator in glues is broken
-#ifndef __WXMSW__
+//#ifndef __WXMSW__
 //        if( n < 5 )
-#endif            
+//#endif            
 # endif
 
 //        {
@@ -878,43 +882,35 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 //            return;
 //        }
 
-        static GLUtesselator *tobj1 = NULL;
-        if( ! tobj1 ) tobj1 = gluNewTess();
+        GLUtesselator *tobj = gluNewTess();
 
-        gluTessCallback( tobj1, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
-        gluTessCallback( tobj1, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
-        gluTessCallback( tobj1, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
-        gluTessCallback( tobj1, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
-        gluTessCallback( tobj1, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
+        gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
+        gluTessCallback( tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
+        gluTessCallback( tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
+        gluTessCallback( tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
+        gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
 
-        //gluTessNormal( tobj1, 0, 0, 1);
-		gluTessNormal( tobj1, 0, 0, 0);
-		gluTessProperty(tobj1, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
-        //gluTessProperty( tobj1, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_POSITIVE );
-        
+        //gluTessNormal( tobj, 0, 0, 1);
+		//gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_TRUE);
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
+//		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
+
         if( ConfigureBrush() ) {
 			glColor3ub(100, 100, 100);
-            gluTessBeginPolygon( tobj1, NULL );
-            gluTessBeginContour( tobj1 );
+/*            gluTessBeginPolygon( tobj, NULL );
+            gluTessBeginContour( tobj );
                 GLdouble tri[3][3] = {75.0, 75.0, 0.0,
                                         125.0, 175.0, 0.0,
                                         175.0, 75.0, 0.0};
-                gluTessVertex(tobj1, tri[0], tri[0]);
-                gluTessVertex(tobj1, tri[1], tri[1]);
-                gluTessVertex(tobj1, tri[2], tri[2]);
-            gluTessEndContour( tobj1 );
-/*            gluTessBeginContour( tobj1 );
-                GLdouble rect[4][3] = {250.0, 250.0, 0.0,
-                    400.0, 250.0, 0.0,
-                    400.0, 400.0, 0.0,
-                    250.0, 400.0, 0.0};
-                gluTessVertex(tobj1, rect[0], rect[0]);
-                gluTessVertex(tobj1, rect[1], rect[1]);
-                gluTessVertex(tobj1, rect[2], rect[2]);
-                gluTessVertex(tobj1, rect[3], rect[3]);
-            gluTessEndContour( tobj1 );
-*/            gluTessBeginContour( tobj1 );
-                GLdouble star[5][6] = {250.0, 50.0, 0.0, 1.0, 0.0, 1.0,
+                gluTessVertex(tobj, tri[0], tri[0]);
+                gluTessVertex(tobj, tri[1], tri[1]);
+                gluTessVertex(tobj, tri[2], tri[2]);
+            gluTessEndContour( tobj );
+			gluTessEndPolygon(tobj);
+			gluTessBeginPolygon(tobj, NULL);
+			gluTessBeginContour(tobj);
+			GLdouble star[5][6] = { 250.0, 50.0, 0.0, 1.0, 0.0, 1.0,
                     325.0, 200.0, 0.0, 1.0, 1.0, 0.0,
                     400.0, 50.0, 0.0, 0.0, 1.0, 1.0,
                     250.0, 150.0, 0.0, 1.0, 0.0, 0.0,
@@ -924,27 +920,22 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
                         400.0, 50.0, 0.0,
                         250.0, 150.0, 0.0,
                         400.0, 150.0, 0.0};
-/*                        gluTessVertex(tobj1, star1[0], star1[0]);
-                    gluTessVertex(tobj1, star1[1], star1[1]);
-                    gluTessVertex(tobj1, star1[2], star1[2]);
-                    gluTessVertex(tobj1, star1[3], star1[3]);
-                    gluTessVertex(tobj1, star1[4], star1[4]);
-*/                    
                     for( int i = 0; i < 5; i++ ) {
                         GLvertex* vertex = new GLvertex();
                         gTesselatorVertices.Add( vertex );
-                        vertex->info.x = star[i][0];
-                        vertex->info.y = star[i][1];
-                        vertex->info.z = star[i][2];
-                        vertex->info.r = star[i][3];
-                        vertex->info.g = star[i][4];
-                        vertex->info.b = star[i][5];
-                        gluTessVertex( tobj1, (GLdouble*)vertex, (GLdouble*)vertex );
+                        vertex->info.x = star1[i][0];
+                        vertex->info.y = star1[i][1];
+                        vertex->info.z = star1[i][2];
+                        vertex->info.r = star1[i][3];
+                        vertex->info.g = star1[i][4];
+                        vertex->info.b = star1[i][5];
+                        gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
                     }
                     
-            gluTessEndContour( tobj1 );
-
-            gluTessBeginContour( tobj1 );
+            gluTessEndContour( tobj );
+			gluTessEndPolygon(tobj);
+*/			gluTessBeginPolygon(tobj, NULL);
+			gluTessBeginContour(tobj);
             
             for( int i = 0; i < n; i++ ) {
                 GLvertex* vertex = new GLvertex();
@@ -955,16 +946,17 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
                 vertex->info.r = (GLdouble) 0.0;
                 vertex->info.g = (GLdouble) 0.0;
                 vertex->info.b = (GLdouble) 0.0;
-                gluTessVertex( tobj1, (GLdouble*)vertex, (GLdouble*)vertex );
+                gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
             }
-            gluTessEndContour( tobj1 );
-			gluTessEndPolygon(tobj1);
-        }
+            gluTessEndContour( tobj );
+			gluTessEndPolygon(tobj);
+		}
 
-        for( unsigned int i=0; i<gTesselatorVertices.Count(); i++ )
+		gluDeleteTess(tobj);
+		for (unsigned int i = 0; i<gTesselatorVertices.Count(); i++)
             delete (GLvertex*)gTesselatorVertices.Item(i);
         gTesselatorVertices.Clear();
-        //gluDeleteTess(tobj1);
+
         
     }
 #endif    

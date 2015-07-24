@@ -1009,6 +1009,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
     }
     pTentPath->SetActiveColours();
     pTentPath->UpdateSegmentDistances();
+    pTentPath->m_bIsBeingCreated = false;
     return pTentPath;
 }
 

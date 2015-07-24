@@ -34,7 +34,7 @@
 #include "cutil.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 
 extern PointMan     *g_pODPointMan;
 extern bool         g_bODIsNewLayer;
@@ -305,7 +305,7 @@ void ODPoint::ReLoadIcon( void )
 #endif
 }
 
-void ODPoint::Draw( ocpnDC& dc, wxPoint *rpn )
+void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 {
     wxPoint r;
     wxRect hilitebox;
@@ -544,7 +544,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         m_wpBBox_rotation = pivp.rotation;
     }
 
-    ocpnDC dc;
+    ODDC dc;
 
     //  Highlite any selected point
     if( m_bPtIsSelected ) {
@@ -704,7 +704,7 @@ void ODPoint::CalculateDCRect( wxDC& dc, wxRect *prect )
     dc.DestroyClippingRegion();
 
     // Draw the mark on the dc
-    ocpnDC odc( dc );
+    ODDC odc( dc );
     Draw( odc, NULL );
 
     //  Retrieve the drawing extents

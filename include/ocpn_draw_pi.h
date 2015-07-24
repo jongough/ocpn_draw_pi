@@ -74,7 +74,7 @@ std::cout << x << std::endl; } while (0)
 #include "ODRolloverWin.h"
 
 #include "georef.h"
-#include "chartbarwin.h"
+//#include "chartbarwin.h"
 
 #include <wx/aui/aui.h>
 #include <wx/string.h>
@@ -105,6 +105,7 @@ enum
     ID_PATH_MENU_ACTIVATE,
     ID_PATH_MENU_DEACTIVATE,
     ID_PATH_MENU_MOVE_POINT,
+    ID_PATH_MENU_MOVE_PATH,
     ID_PATH_MENU_INSERT,
     ID_PATH_MENU_APPEND,
     ID_PATH_MENU_COPY,
@@ -213,6 +214,7 @@ public:
     void OnContextMenuItemCallback(int id);
     void latlong_to_chartpix(double lat, double lon, double &pixx, double &pixy);
     void SetColorScheme(PI_ColorScheme cs);
+    void SendVectorChartObjectInfo(wxString &chart, wxString &feature, wxString &objname, double lat, double lon, double scale, int nativescale) ;
 
     //    The required override PlugIn Methods
     //     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
@@ -238,13 +240,13 @@ public:
     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
     wxString FormatDistanceAdaptive( double distance );
-    void DrawAllPathsInBBox(ocpnDC &dc,  LLBBox& BltBBox);
+    void DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp );
-    void DrawAllODPointsInBBox( ocpnDC &dc, LLBBox& BltBBox );
+    void DrawAllODPointsInBBox( ODDC &dc, LLBBox& BltBBox );
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
     
-    void RenderPathLegs( ocpnDC &dc );
+    void RenderPathLegs( ODDC &dc );
     
     // OD Methods
     void    ProcessTimerEvent(wxTimerEvent& ev);
@@ -252,7 +254,7 @@ public:
     
     void    SaveConfig();
     
-    void    AlphaBlending( ocpnDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
+    void    AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
 
     void    DimeControl( wxWindow* ctrl );
     void    DimeControl( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
@@ -315,7 +317,7 @@ private:
     void    OnTimer(wxTimerEvent& ev);
 
     void    LoadConfig();
-    void    RenderExtraBoundaryLegInfo(ocpnDC &dc, wxPoint ref_point, wxString s );
+    void    RenderExtraBoundaryLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
     void    FinishBoundary();
 //    ArrayOfGridColWidth    readCols(ArrayOfGridColWidth ar, wxString str);
 //    void                    writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
@@ -340,7 +342,6 @@ private:
     int                m_config_button_id;
 
     bool              m_bLOGShowIcon;
-    ChartBarWin                   *stats;
     PI_ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;
@@ -357,6 +358,9 @@ private:
     int         m_rollover_popup_timer_msec;
     
     int         m_seltype;
+    
+    double      m_PathMove_cursor_start_lat;
+    double      m_PathMove_cursor_start_lon;
 };
 
 #endif

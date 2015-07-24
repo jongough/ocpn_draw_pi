@@ -30,7 +30,7 @@
 
 #include "BoundaryPoint.h"
 #include "georef.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 #include "ocpn_draw_pi.h"
 
 extern PlugIn_ViewPort  *g_pivp;
@@ -58,7 +58,7 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
     m_bFill = false;
 }
 
-void BoundaryPoint::Draw(ocpnDC& dc, wxPoint* rpn)
+void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
 {
     ODPoint::Draw( dc, rpn );
     
@@ -97,7 +97,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 #ifdef ocpnUSE_GL
     ODPoint::DrawGL( pivp );
     
-    ocpnDC dc;
+    ODDC dc;
     
     wxPoint r;
     GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);

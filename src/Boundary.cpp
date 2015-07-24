@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #include "Boundary.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 #include "ocpn_draw_pi.h"
 
 #ifdef __WXMSW__
@@ -75,7 +75,7 @@ Boundary::~Boundary()
     //dtor
 }
 
-void Boundary::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
+void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
     Path::Draw( dc, VP );
     
@@ -115,8 +115,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 #ifdef ocpnUSE_GL
     Path::DrawGL( piVP );
     
-    ocpnDC dc;
-
+    ODDC dc;
+    
     glEnable( GL_POLYGON_STIPPLE );
     glEnable( GL_BLEND );
     GLubyte slope_cross_hatch[] = {
@@ -147,7 +147,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBDIAGONAL_HATCH ) );
         if ( m_pODPointList->GetCount() > 2 ) {
-            dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
+            if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
+            else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
             
         }
     }
@@ -198,4 +199,19 @@ void Boundary::SetActiveColours( void )
     }
 */    
     
+}
+
+void Boundary::MoveAllPoints( double inc_lat, double inc_lon )
+{
+    wxODPointListNode *node = m_pODPointList->GetFirst();
+    int nodeCount = m_pODPointList->GetCount();
+    int i = 1;
+    while(node) {
+        if(i == nodeCount) break;
+        ODPoint *bp = (ODPoint *)node->GetData();
+        bp->m_lat -= inc_lat;
+        bp->m_lon -= inc_lon;
+        node = node->GetNext();
+        i++;
+    }
 }

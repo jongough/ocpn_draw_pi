@@ -31,10 +31,11 @@ class Boundary : public Path
     public:
         Boundary();
         virtual ~Boundary();
-        void Draw( ocpnDC& dc, PlugIn_ViewPort &VP );
+        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void DeletePoint( ODPoint *op, bool bRenamePoints );
         void SetActiveColours( void );
+        void MoveAllPoints( double inc_lat, double inc_lon );
         
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;

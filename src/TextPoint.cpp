@@ -32,7 +32,7 @@
 #include "TextPoint.h"
 #include "ocpn_draw_pi.h"
 #include "FontMgr.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 #include "PointMan.h"
 #include "cutil.h"
 
@@ -179,7 +179,7 @@ TextPoint::~TextPoint()
 
 }
 
-void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
+void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
 {
     if( !m_bIsVisible )
         return;
@@ -227,7 +227,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
         if( m_DisplayTextFont.IsOk() ) {
             // Added to help with display of text (stops end clipping)
-            m_TextExtents.x += 15;
+            m_TextExtents.x += 20;
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                     m_TextExtents.y );
             r1.Union( r2 );
@@ -239,7 +239,7 @@ void TextPoint::Draw( ocpnDC& dc, wxPoint *rpn )
             dc.SetTextForeground( m_colourTextColour );
             g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
             
-            dc.DrawText( m_TextPointText, r.x + 5, r.y );
+            dc.DrawText( m_TextPointText, r.x + 10, r.y );
         }
         
     }
@@ -294,7 +294,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
         if( m_DisplayTextFont.IsOk() ) {
             // Added to help with display of text (stops end clipping)
-            m_TextExtents.x += 15;
+            m_TextExtents.x += 20;
             wxRect r2( r.x + m_TextLocationOffsetX, r.y + m_TextLocationOffsetY, m_TextExtents.x,
                        m_TextExtents.y );
             r1.Union( r2 );
@@ -311,7 +311,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                 dc.Clear();
                 dc.SetFont( m_DisplayTextFont );
                 dc.SetTextForeground(* wxWHITE );
-                dc.DrawText( m_TextPointText, 5, 0);
+                dc.DrawText( m_TextPointText, 10, 0);
                 dc.SelectObject( wxNullBitmap );
                 
                 /* make alpha texture for text */
@@ -340,7 +340,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
             
             if(m_iDisplayTextTexture) {
                 // Draw backing box
-                ocpnDC ocpndc;
+                ODDC ocpndc;
                 g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
                 
                 /* draw texture with text */
