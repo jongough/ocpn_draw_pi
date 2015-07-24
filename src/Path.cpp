@@ -27,7 +27,7 @@
 
 #include "Path.h"
 #include "georef.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 #include "cutil.h"
 #include "ODSelect.h"
 #include "PointMan.h"
@@ -37,7 +37,7 @@
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 #include "bbox.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 #include "dychart.h"
 #include <wx/gdicmn.h>
 
@@ -66,7 +66,7 @@ Path::Path( void )
     m_bPathIsActive = true;
     m_pPathActivePoint = NULL;
     m_bIsBeingEdited = false;
-    m_bIsBeingCreated = false;
+    m_bIsBeingCreated = true;
     m_nPoints = 0;
     m_nm_sequence = 1;
     m_path_length = 0.0;
@@ -179,13 +179,13 @@ ODPoint *Path::GetPoint( const wxString &guid )
     return ( NULL );
 }
 
-void Path::DrawPointWhich( ocpnDC& dc, int iPoint, wxPoint *rpn )
+void Path::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *rpn )
 {
     if( iPoint <= GetnPoints() )
         GetPoint( iPoint )->Draw( dc, rpn );
 }
 
-void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
+void Path::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
     else
@@ -201,7 +201,7 @@ void Path::DrawSegment( ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }
 
-void Path::Draw( ocpnDC& dc, PlugIn_ViewPort &VP )
+void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
     wxString colour;
     int style = wxSOLID;
@@ -307,7 +307,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     if( m_nPoints < 1 || !m_bVisible ) return;
     //  Hiliting first
     //  Being special case to draw something for a 1 point route....
-    ocpnDC dc;
+    ODDC dc;
     if(m_hiliteWidth){
         wxColour y;
         GetGlobalColor( wxS( "YELO1" ), &y );
@@ -420,7 +420,7 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 
 static int s_arrow_icon[] = { 0, 0, 5, 2, 18, 6, 12, 0, 18, -6, 5, -2, 0, 0 };
 
-void Path::RenderSegment( ocpnDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP,
+void Path::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP,
         bool bdraw_arrow, int hilite_width )
 {
     //    Get the dc boundary
@@ -801,7 +801,7 @@ void Path::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &V
             ODPoint *pOp2 = node->GetData();
             int blink_save = pOp2->m_iBlink;
             pOp2->m_iBlink = false;
-            ocpnDC odc_boundary( dc_boundary );
+            ODDC odc_boundary( dc_boundary );
             pOp2->Draw( odc_boundary, NULL );
             pOp2->m_iBlink = blink_save;
 
@@ -1103,4 +1103,15 @@ void Path::SetActiveColours( void )
         }
     }
 */    
+}
+
+void Path::MoveAllPoints( double inc_lat, double inc_lon )
+{
+    wxODPointListNode *node = m_pODPointList->GetFirst();
+    while(node) {
+        ODPoint *op = (ODPoint *)node->GetData();
+        op->m_lat -= inc_lat;
+        op->m_lon -= inc_lon;
+        node = node->GetNext();
+    }
 }

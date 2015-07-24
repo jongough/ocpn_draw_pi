@@ -31,7 +31,7 @@
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODRolloverWin.h"
-#include "ocpndc.h"
+#include "ODdc.h"
 #include "timers.h"
 #include "chart1.h"
 //#include "navutil.h"
@@ -94,7 +94,7 @@ void ODRolloverWin::SetBitmap( int rollover )
               m_position.y + canvasPos.y );
     delete cdc;
 
-    ocpnDC dc( mdc );
+    ODDC dc( mdc );
 
     switch( rollover ) {
         default:

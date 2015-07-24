@@ -296,7 +296,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         case ID_PATH_MENU_MOVE_POINT:
-            g_ocpn_draw_pi->m_pCurrentCursor = ocpncc1->pCursorCross;
+            m_pSelectedPath->m_bIsBeingEdited = TRUE;
+            g_PathToEdit = m_pSelectedPath;
+            g_ocpn_draw_pi->m_bPathEditing = TRUE;
+            break;
+        case ID_PATH_MENU_MOVE_PATH:
+            //g_ocpn_draw_pi->m_pFoundODPoint = NULL; // Make sure we dont process a single point
+            //m_pFoundODPoint = NULL;
             m_pSelectedPath->m_bIsBeingEdited = TRUE;
             g_PathToEdit = m_pSelectedPath;
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
@@ -518,6 +524,11 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         else {
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
+            sType.clear();
+            sType.append( wxT("Move ") );
+            sType.append( m_pSelectedPath->m_sTypeString );
+            MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sType );
+            sType.clear();
             sType.append( wxS("Insert ") );
             sType.append(m_pSelectedPath->m_sTypeString);
             sType.append( wxT(" Point") );

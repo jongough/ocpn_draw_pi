@@ -35,7 +35,7 @@
 #include "OCPNRegion.h"
 #include "viewport.h"
 
-class ocpnDC;
+class ODDC;
 class wxDC;
 
 class ODPoint
@@ -45,7 +45,7 @@ public:
       ODPoint( ODPoint* orig );
       ODPoint();
       virtual ~ODPoint(void);
-      virtual void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
+      virtual void Draw(ODDC& dc, wxPoint *rpn = NULL);
       void ReLoadIcon(void);
 
       wxDateTime GetCreateTime(void);

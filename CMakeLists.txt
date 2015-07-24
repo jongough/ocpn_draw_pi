@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0450")
-SET(VERSION_DATE "22/07/2015")
+SET(VERSION_PATCH "0460")
+SET(VERSION_DATE "24/07/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -53,6 +53,7 @@ SET(SRCS
         src/Path.cpp
         src/ODPoint.cpp
         src/ODConfig.cpp
+        src/ODdc.cpp
         src/ODEventHandler.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
@@ -83,6 +84,7 @@ SET(HDRS
         include/Path.h
         include/ODPoint.h
         include/ODConfig.h
+        include/ODdc.h
         include/ODEventHandler.h
         include/ODNavObjectChanges.h
         include/ODPropertiesDialogDef.h
@@ -111,7 +113,6 @@ SET(OCPNSRC
         ocpnsrc/georef.cpp
         ocpnsrc/Hyperlink.cpp
         ocpnsrc/Layer.cpp
-        ocpnsrc/ocpndc.cpp
         ocpnsrc/pugixml.cpp
         ocpnsrc/SelectItem.cpp
         ocpnsrc/wxJSON/jsonreader.cpp
@@ -159,7 +160,6 @@ SET(OCPNHDRS
         ocpninclude/nmea0183.h
         ocpninclude/nmea0183.hpp
         ocpninclude/ocpCursor.h
-        ocpninclude/ocpndc.h
         ocpninclude/OCPNPlatform.h
         ocpninclude/OCPNRegion.h
         ocpninclude/ocpn_plugin.h

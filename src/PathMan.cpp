@@ -308,6 +308,7 @@ Path *PathMan::FindPathByGUID( wxString guid )
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         Path *ppath = node->GetData();
+        if(ppath->m_GUID == guid) return ppath;
         node = node->GetNext();
     }
     

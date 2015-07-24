@@ -41,7 +41,7 @@
 #define RTE_TIME_DISP_LOCAL _T("LOCAL")
 #define RTE_UNDEF_DEPARTURE wxInvalidDateTime
 
-class ocpnDC;
+class ODDC;
 
 class Path : public wxObject
 {
@@ -61,9 +61,9 @@ public:
     ODPoint *InsertPointBefore(ODPoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
     ODPoint *InsertPointAfter(ODPoint *pOP, double rlat, double rlon, bool bRenamePoints = false);
     void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
-    void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
-    void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
-    virtual void Draw(ocpnDC& dc, PlugIn_ViewPort &pVP);
+    void DrawPointWhich(ODDC& dc, int iPoint, wxPoint *rpn);
+    void DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
+    virtual void Draw(ODDC& dc, PlugIn_ViewPort &pVP);
     virtual void DrawGL( PlugIn_ViewPort &piVP );
     ODPoint *GetLastPoint();
     virtual void DeletePoint(ODPoint *rp, bool bRenamePoints = false);
@@ -87,7 +87,7 @@ public:
     void ClonePath(Path *psourceboundary, int start_nPoint, int end_nPoint, const wxString & suffix);
     void CloneAddedODPoint(ODPoint *ptargetpoint, ODPoint *psourcepoint);
     void ClearHighlights(void);
-    void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
+    void RenderSegment(ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
     virtual void SetActiveColours( void );
 
@@ -105,6 +105,7 @@ public:
     void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
     
     void RemovePointFromPath( ODPoint* point, Path* path );
+    virtual void MoveAllPoints( double inc_lat, double inc_lon );
 
     int         m_ConfigPathNum;
     bool        m_bPathIsSelected;
