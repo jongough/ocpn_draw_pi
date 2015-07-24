@@ -606,6 +606,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     SetToolbarItemState( m_draw_button_id, true );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
+                    m_iCallerId = 0;
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
@@ -626,6 +627,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     SetToolbarItemState( m_draw_button_id, true );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
+                    m_iCallerId = 0;
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
@@ -639,6 +641,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 
             case ID_MODE_TEXT_POINT:
                 if( 0 == nTextPoint_State ){
+                    m_iCallerId = 0;
                     nTextPoint_State = 1;
                     m_pCurrentCursor = m_pTextCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -1023,6 +1026,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else bret = FALSE;
+                m_iCallerId = 0;
                 g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                 if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 break;
@@ -1099,17 +1103,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if( m_bPathEditing ) {
             m_pCurrentCursor = ocpncc1->pCursorCross;
             if( !m_pFoundODPoint ) {
-                SelectItem *pFindPP;
+/*                SelectItem *pFindPP;
                 pFindPP = g_pODSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
                 if( pFindPP ) {
                     m_pFoundODPoint = (ODPoint *)pFindPP->m_pData1;
                 }
                 bret = TRUE;
-            } else {
-                m_PathMove_cursor_start_lat = m_cursor_lat;
+                */m_PathMove_cursor_start_lat = m_cursor_lat;
                 m_PathMove_cursor_start_lon = m_cursor_lon;
-                m_pFoundODPoint->m_bIsBeingEdited = false;
-                m_pFoundODPoint = NULL;
+            } else {
+//                m_PathMove_cursor_start_lat = m_cursor_lat;
+//                m_PathMove_cursor_start_lon = m_cursor_lon;
+//                m_pFoundODPoint->m_bIsBeingEdited = false;
+//                m_pFoundODPoint = NULL;
             }
             bRefresh = TRUE;
         } else if ( m_bODPointEditing ) {
@@ -1264,6 +1270,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->SetToolbarTool( m_Mode );
             bret = TRUE;
         } else if ( nBoundary_State > 1 ) {
+            m_iCallerId = 0;
             nBoundary_State = 0;
             FinishBoundary();
             m_pCurrentCursor = NULL;
@@ -1273,6 +1280,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bRefresh = TRUE;
             bret = TRUE;
         } else if ( nPoint_State > 1) {
+            m_iCallerId = 0;
             nPoint_State = 0;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
@@ -1282,6 +1290,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         } else if ( nTextPoint_State > 1) {
+            m_iCallerId = 0;
             nTextPoint_State = 0;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );

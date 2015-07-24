@@ -814,7 +814,7 @@ void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4],
     vertex->info.y = coords[1];
     vertex->info.z = coords[2];
 
-    for( int i = 3; i < 6; i++ ) {
+    for( int i = 3; i < 7; i++ ) {
         vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
     }
 
@@ -897,7 +897,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 //		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
 
         if( ConfigureBrush() ) {
-			glColor3ub(100, 100, 100);
+//			glColor3ub(100, 100, 100);
 /*            gluTessBeginPolygon( tobj, NULL );
             gluTessBeginContour( tobj );
                 GLdouble tri[3][3] = {75.0, 75.0, 0.0,
@@ -946,6 +946,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
                 vertex->info.r = (GLdouble) 0.0;
                 vertex->info.g = (GLdouble) 0.0;
                 vertex->info.b = (GLdouble) 0.0;
+                vertex->info.a = (GLdouble) 0.0;
                 gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
             }
             gluTessEndContour( tobj );
