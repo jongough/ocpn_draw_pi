@@ -301,8 +301,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
             break;
         case ID_PATH_MENU_MOVE_PATH:
-            //g_ocpn_draw_pi->m_pFoundODPoint = NULL; // Make sure we dont process a single point
-            //m_pFoundODPoint = NULL;
+            g_ocpn_draw_pi->m_pFoundODPoint = NULL; // Make sure we dont process a single point
+            m_pFoundODPoint = NULL;
             m_pSelectedPath->m_bIsBeingEdited = TRUE;
             g_PathToEdit = m_pSelectedPath;
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
