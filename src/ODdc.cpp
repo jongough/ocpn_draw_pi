@@ -64,6 +64,11 @@
 #include "ODdc.h"
 #include "wx28compat.h"
 
+#ifdef __WXMSW__
+#define __CALL_CONVENTION __stdcall
+#else
+#define __CALL_CONVENTION
+#endif
 extern float g_GLMinSymbolLineWidth;
 wxArrayPtrVoid gTesselatorVertices;
 
@@ -803,7 +808,7 @@ typedef union {
     } info;
 } GLvertex;
 
-void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4],GLdouble **dataOut )
+void __CALL_CONVENTION ODDCcombineCallback(GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4], GLdouble **dataOut)
 {
     GLvertex *vertex;
 
@@ -819,47 +824,32 @@ void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4],
     }
 
     *dataOut = &(vertex->data[0]);
-
-/*    GLdouble *vertex;
-    int i;
-
-    vertex = (GLdouble *) malloc(6 * sizeof(GLdouble));
-    vertex[0] = coords[0];
-    vertex[1] = coords[1];
-    vertex[2] = coords[2];
-    for (i = 3; i < 7; i++)
-        vertex[i] = weight[0] * vertex_data[0][i] 
-        + weight[1] * vertex_data[1][i]
-        + weight[2] * vertex_data[2][i] 
-        + weight[3] * vertex_data[3][i];
-    *dataOut = vertex;
-*/
 }
 
-void APIENTRY ODDCvertexCallback( GLvoid* arg )
+void __CALL_CONVENTION ODDCvertexCallback(GLvoid* arg)
 {
     GLvertex* vertex;
     vertex = (GLvertex*) arg;
 	const GLdouble *ptr = (const GLdouble*)arg;
-    glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
-    //glVertex3d( vertex->info.x, vertex->info.y, vertex->info.z );
+//    glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
+    glVertex2d( vertex->info.x, vertex->info.y );
 	//glColor3dv(ptr + 3);
-//	glVertex3dv(ptr);
+	//glVertex3dv(ptr);
 }
 
-void APIENTRY ODDCerrorCallback( GLenum errorCode )
+void __CALL_CONVENTION ODDCerrorCallback(GLenum errorCode)
 {
    const GLubyte *estring;
    estring = gluErrorString(errorCode);
    wxLogMessage( _T("OpenGL Tessellation Error: %s"), estring );
 }
 
-void APIENTRY ODDCbeginCallback( GLenum type )
+void __CALL_CONVENTION ODDCbeginCallback(GLenum type)
 {
     glBegin( type );
 }
 
-void APIENTRY ODDCendCallback()
+void __CALL_CONVENTION ODDCendCallback()
 {
     glEnd();
 }
@@ -881,7 +871,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 //            DrawPolygon( n, points, xoffset, yoffset );
 //            return;
 //        }
-
+		if(n < 3) return;
         GLUtesselator *tobj = gluNewTess();
 
         gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
@@ -890,51 +880,29 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         gluTessCallback( tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
         gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
 
-        //gluTessNormal( tobj, 0, 0, 1);
-		//gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_TRUE);
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        gluTessNormal( tobj, 0, 0, 1);
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
-//		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
+        
+#ifdef WIN32        
+        // TODO fix this cludge for windows
+        // Draw a triangle that will not show just to get the winding correct. Without this there is no fill displayed in opengl under windows
+        gluTessBeginPolygon(tobj, NULL);
+        gluTessBeginContour(tobj);
+        GLdouble tri[3][7] = { 
+            4.0, 3.0, 0.0, 0.0, 0.0, 255.0, 0,
+            2.0, 1.0, 0.0, 0.0, 255.0, 0.0, 0,
+            2.0, 2.0, 0.0, 255.0, 0.0, 0.0, 0
+        };
+        gluTessVertex(tobj, tri[0], tri[0]);
+        gluTessVertex(tobj, tri[1], tri[1]);
+        gluTessVertex(tobj, tri[2], tri[2]);
+        gluTessEndContour(tobj);
+        gluTessEndPolygon(tobj);
+#endif            
 
         if( ConfigureBrush() ) {
-//			glColor3ub(100, 100, 100);
-/*            gluTessBeginPolygon( tobj, NULL );
-            gluTessBeginContour( tobj );
-                GLdouble tri[3][3] = {75.0, 75.0, 0.0,
-                                        125.0, 175.0, 0.0,
-                                        175.0, 75.0, 0.0};
-                gluTessVertex(tobj, tri[0], tri[0]);
-                gluTessVertex(tobj, tri[1], tri[1]);
-                gluTessVertex(tobj, tri[2], tri[2]);
-            gluTessEndContour( tobj );
-			gluTessEndPolygon(tobj);
 			gluTessBeginPolygon(tobj, NULL);
-			gluTessBeginContour(tobj);
-			GLdouble star[5][6] = { 250.0, 50.0, 0.0, 1.0, 0.0, 1.0,
-                    325.0, 200.0, 0.0, 1.0, 1.0, 0.0,
-                    400.0, 50.0, 0.0, 0.0, 1.0, 1.0,
-                    250.0, 150.0, 0.0, 1.0, 0.0, 0.0,
-                    400.0, 150.0, 0.0, 0.0, 1.0, 0.0};
-                    GLdouble star1[5][3] = {250.0, 50.0, 0.0,
-                        325.0, 200.0, 0.0, 
-                        400.0, 50.0, 0.0,
-                        250.0, 150.0, 0.0,
-                        400.0, 150.0, 0.0};
-                    for( int i = 0; i < 5; i++ ) {
-                        GLvertex* vertex = new GLvertex();
-                        gTesselatorVertices.Add( vertex );
-                        vertex->info.x = star1[i][0];
-                        vertex->info.y = star1[i][1];
-                        vertex->info.z = star1[i][2];
-                        vertex->info.r = star1[i][3];
-                        vertex->info.g = star1[i][4];
-                        vertex->info.b = star1[i][5];
-                        gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
-                    }
-                    
-            gluTessEndContour( tobj );
-			gluTessEndPolygon(tobj);
-*/			gluTessBeginPolygon(tobj, NULL);
 			gluTessBeginContour(tobj);
             
             for( int i = 0; i < n; i++ ) {
