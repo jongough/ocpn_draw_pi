@@ -38,6 +38,7 @@
 #include "BoundaryMan.h"
 #include "BoundaryPoint.h"
 #include "BoundaryProp.h"
+#include "EBL.h"
 #include "Path.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
@@ -203,6 +204,8 @@ int             g_iDisplayToolbar;
 double          g_dScale;
 int             g_iNSScale;
 
+PlugIn_Position_Fix_Ex  g_pfFix;
+
 wxImage ICursorLeft;
 wxImage ICursorRight;
 wxImage ICursorUp;
@@ -219,7 +222,8 @@ wxBitmap *_img_ocpn_draw_point;
 wxBitmap *_img_ocpn_draw_point_gray;
 wxBitmap *_img_ocpn_draw_textpoint;
 wxBitmap *_img_ocpn_draw_textpoint_gray;
-const wxBitmap *_img_Bullet_green;
+wxBitmap *_img_ocpn_draw_ebl;
+wxBitmap *_img_ocpn_draw_ebl_gray;const wxBitmap *_img_Bullet_green;
 const wxBitmap *_img_Bullet_red;
 const wxBitmap *_img_Bullet_yellow;
 
@@ -563,6 +567,12 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     g_pOCPNDrawPropDialog = NULL;
     
 }
+
+void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
+{
+    g_pfFix = pfix;
+}
+
 void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     m_iCallerId = id;
@@ -610,6 +620,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
+                    nEBL_State = 0;
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -631,6 +642,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
+                    nEBL_State = 0;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -651,6 +663,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
+                    nEBL_State = 0;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -659,6 +672,27 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 }
                 break;
             
+            case ID_MODE_EBL:
+                if( 0 == nTextPoint_State ){
+                    m_iCallerId = 0;
+                    nEBL_State = 1;
+                    m_pCurrentCursor = m_pTextCursorCross;
+                    SetCursor_PlugIn( m_pCurrentCursor );
+                    SetToolbarItemState( m_draw_button_id, true );
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
+                } else {
+                    nBoundary_State = 0;
+                    nPoint_State = 0;
+                    nTextPoint_State = 0;
+                    nEBL_State = 0;
+                    m_pCurrentCursor = NULL;
+                    SetCursor_PlugIn( m_pCurrentCursor );
+                    SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                    if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+                }
+                break;
+                
             default:
                 m_Mode = ID_MODE_BOUNDARY;
                 break;
@@ -1025,6 +1059,12 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
+                } else if( nEBL_State > 0 ){
+                    nEBL_State = 0;
+                    m_pCurrentCursor = NULL;
+                    SetToolbarItemState( m_draw_button_id, false );
+                    RequestRefresh( m_parent_window );
+                    bret = TRUE;
                 } else bret = FALSE;
                 m_iCallerId = 0;
                 g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
@@ -1098,34 +1138,36 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             } else if ( nPoint_State > 0) {
                 bret = CreatePointLeftClick( event );
             } else if ( nTextPoint_State > 0 ) {
-            bret = CreateTextPointLeftClick( event );
+                bret = CreateTextPointLeftClick( event );
+            } else if ( nEBL_State > 0 ) {
+                bret = CreateEBLLeftClick( event );
             }
-        } else if( m_bPathEditing ) {
-            m_pCurrentCursor = ocpncc1->pCursorCross;
-            if( !m_pFoundODPoint ) {
-/*                SelectItem *pFindPP;
-                pFindPP = g_pODSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
-                if( pFindPP ) {
-                    m_pFoundODPoint = (ODPoint *)pFindPP->m_pData1;
-                }
-                bret = TRUE;
-                */m_PathMove_cursor_start_lat = m_cursor_lat;
-                m_PathMove_cursor_start_lon = m_cursor_lon;
-            } else {
-//                m_PathMove_cursor_start_lat = m_cursor_lat;
-//                m_PathMove_cursor_start_lon = m_cursor_lon;
-//                m_pFoundODPoint->m_bIsBeingEdited = false;
-//                m_pFoundODPoint = NULL;
-            }
-            bRefresh = TRUE;
-        } else if ( m_bODPointEditing ) {
-            m_pCurrentCursor = ocpncc1->pCursorCross;
-            bret = TRUE;
-        } else if ( m_bTextPointEditing ) {
-            m_pCurrentCursor = m_pTextCursorCross;
-            bret = TRUE;
         }
-    } 
+    } else if( m_bPathEditing ) {
+        m_pCurrentCursor = ocpncc1->pCursorCross;
+        if( !m_pFoundODPoint ) {
+/*            SelectItem *pFindPP;
+            pFindPP = g_pODSelect->FindSelection( m_cursor_lat, m_cursor_lon, SELTYPE_OCPNPOINT );
+            if( pFindPP ) {
+                m_pFoundODPoint = (ODPoint *)pFindPP->m_pData1;
+            }
+            bret = TRUE;
+            */m_PathMove_cursor_start_lat = m_cursor_lat;
+            m_PathMove_cursor_start_lon = m_cursor_lon;
+        } else {
+//            m_PathMove_cursor_start_lat = m_cursor_lat;
+//            m_PathMove_cursor_start_lon = m_cursor_lon;
+//            m_pFoundODPoint->m_bIsBeingEdited = false;
+//            m_pFoundODPoint = NULL;
+        }
+        bRefresh = TRUE;
+    } else if ( m_bODPointEditing ) {
+        m_pCurrentCursor = ocpncc1->pCursorCross;
+        bret = TRUE;
+    } else if ( m_bTextPointEditing ) {
+        m_pCurrentCursor = m_pTextCursorCross;
+        bret = TRUE;
+    }
     
     if( event.LeftUp() ) {
         if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0) ) {
@@ -2127,6 +2169,70 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     
     return TRUE;
 } 
+
+bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
+{
+/*
+    double rlat, rlon;
+    
+    rlat = m_cursor_lat;
+    rlon = m_cursor_lon;
+    
+    //    Check to see if there is a nearby point which may be reused
+    //    ODPoint *pMousePoint = NULL;
+    EBL *pMousePoint = NULL;
+    
+    //    Calculate meaningful SelectRadius
+    int nearby_sel_rad_pix = 8;
+    //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
+    double nearby_radius_meters = nearby_sel_rad_pix / 1;
+    
+    //    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
+    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
+    
+    if( pNearbyPoint && ( pNearbyPoint != (BoundaryPoint *)m_prev_pMousePoint )
+        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+    {
+        int dlg_return;
+        #ifndef __WXOSX__
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, wxS("Use nearby Pointoint?"),
+                                            wxS("OpenCPN Point Create"),
+                                            (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+        #else
+        dlg_return = wxID_YES;
+        #endif
+        if( dlg_return == wxID_YES ) {
+            pMousePoint = pNearbyPoint;
+            
+            // Using existing OCPNpoint, so nothing to delete for undo.
+            //if( nBoundary_State > 1 )
+            // TODO fix up undo
+            //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
+            
+            // check all other boundaries and routes to see if this point appears in any other route
+            // If it appears in NO other route, then it should e considered an isolated mark
+            if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
+        }
+    }
+    
+    if( NULL == pMousePoint ) {                 // need a new point
+        //        pMousePoint = new ODPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+        pMousePoint = new BoundaryPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+        pMousePoint->SetNameShown( false );
+        pMousePoint->SetTypeString( wxS("Boundary Point") );
+        pMousePoint->m_bIsolatedMark = TRUE;
+        
+        g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
+        g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
+        
+    }
+    
+    nPoint_State++;
+    
+    RequestRefresh( m_parent_window );
+*/    
+    return TRUE;
+}
 
 void ocpn_draw_pi::OnTimer(wxTimerEvent& ev)
 {

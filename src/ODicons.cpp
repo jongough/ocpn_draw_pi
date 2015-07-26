@@ -67,7 +67,12 @@ void initialize_images(void)
     fn.SetFullName(_T("textpointbuttongray.png"));
     _img_ocpn_draw_textpoint_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
-
+    fn.SetFullName(_T("ebl.png"));
+    _img_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(_T("eblgray.png"));
+    _img_ocpn_draw_ebl_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    
+    
 static unsigned char Bullet_green[] = {
 0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d, 
 0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x00, 0x0a, 0x00, 0x00, 0x00, 0x0a, 
