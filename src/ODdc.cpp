@@ -841,7 +841,7 @@ void __CALL_CONVENTION ODDCerrorCallback(GLenum errorCode)
 {
    const GLubyte *estring;
    estring = gluErrorString(errorCode);
-   wxLogMessage( _T("OpenGL Tessellation Error: %s"), estring );
+   wxLogMessage( _T("OpenGL Tessellation Error: %s"), (char *)estring );
 }
 
 void __CALL_CONVENTION ODDCbeginCallback(GLenum type)
@@ -905,11 +905,11 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         gluTessVertex(tobj, star[4], star[4]);
         gluTessEndContour(tobj);
         gluTessEndPolygon(tobj);
-        gluTessBeginPolygon(tobj, NULL);
-        gluTessBeginContour(tobj);
 #endif            
 
         if( ConfigureBrush() ) {
+            gluTessBeginPolygon(tobj, NULL);
+            gluTessBeginContour(tobj);
             for( int i = 0; i < n; i++ ) {
                 GLvertex* vertex = new GLvertex();
                 gTesselatorVertices.Add( vertex );
