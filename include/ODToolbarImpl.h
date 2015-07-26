@@ -41,6 +41,7 @@ public:
     wxToolBarToolBase *m_toolBoundary;
     wxToolBarToolBase *m_toolODPoint;
     wxToolBarToolBase *m_toolTextPoint;
+    wxToolBarToolBase *m_toolEBL;
     
 private:
     wxSize m_toolbarSize;

@@ -138,6 +138,7 @@ enum
     ID_MODE_BOUNDARY = 0,
     ID_MODE_POINT,
     ID_MODE_TEXT_POINT,
+    ID_MODE_EBL,
     
     ID_LAST_MODE
 };
@@ -289,6 +290,7 @@ public:
     wxPoint     r_rband;
     int         nPoint_State;
     int         nTextPoint_State;
+    int         nEBL_State;
     double      m_dStartLat;
     double      m_dStartLon;
     double      m_cursor_lon, m_cursor_lat;
@@ -329,6 +331,7 @@ private:
     bool    CreateBoundaryLeftClick(wxMouseEvent &event);
     bool    CreatePointLeftClick( wxMouseEvent &event );
     bool    CreateTextPointLeftClick( wxMouseEvent &event );
+    bool    CreateEBLLeftClick( wxMouseEvent &event );
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);

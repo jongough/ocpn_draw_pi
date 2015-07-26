@@ -16,7 +16,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0461")
+SET(VERSION_PATCH "0465")
 SET(VERSION_DATE "26/07/2015")
 
 SET(BUNDLE_DATA FALSE)
@@ -46,6 +46,7 @@ SET(SRCS
         src/BoundaryMan.cpp
         src/BoundaryProp.cpp
         src/BoundaryPoint.cpp
+        src/EBL.cpp
         src/PointMan.cpp
         src/ODSelect.cpp
         src/PathMan.cpp
@@ -77,6 +78,7 @@ SET(HDRS
         include/BoundaryMan.h
         include/BoundaryProp.h
         include/BoundaryPoint.h
+        include/EBL.h
         include/PointMan.h
         include/ODSelect.h
         include/PathMan.h
