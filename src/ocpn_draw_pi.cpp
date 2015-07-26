@@ -203,6 +203,8 @@ int             g_iDisplayToolbar;
 double          g_dScale;
 int             g_iNSScale;
 
+PlugIn_Position_Fix_Ex  g_pfFix;
+
 wxImage ICursorLeft;
 wxImage ICursorRight;
 wxImage ICursorUp;
@@ -563,6 +565,12 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     g_pOCPNDrawPropDialog = NULL;
     
 }
+
+void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
+{
+    g_pfFix = pfix;
+}
+
 void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     m_iCallerId = id;
