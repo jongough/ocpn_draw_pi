@@ -245,6 +245,7 @@ public:
     void DrawAllODPointsInBBox( ODDC &dc, LLBBox& BltBBox );
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
+    void SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix );
     
     void RenderPathLegs( ODDC &dc );
     
