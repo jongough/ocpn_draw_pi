@@ -14,6 +14,7 @@ enum {
     ID_ODPOINT,
     ID_TEXTPOINT,
     ID_TOOLBARPANEL,
+    ID_EBL,
     
     ID_TOOL_DEF_LAST
 };

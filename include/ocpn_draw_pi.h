@@ -157,6 +157,7 @@ enum {
 
 class Boundary;
 class BoundaryProp;
+class EBL;
 class SelectItem;
 
 const wxString GpxxColorNames[] = { _("Black"), _("DarkRed"), _("DarkGreen"), _("DarkYellow"), _("DarkBlue"), _("DarkMagenta"), _("DarkCyan"), _("LightGray"), _("DarkGray"), _("Red"), _("Green"), _("Yellow"), _("Blue"), _("Magenta"), _("Cyan"), _("White") };//The last color defined by Garmin is transparent - we ignore it
@@ -191,6 +192,7 @@ public:
     bool            m_bPathEditing;
     bool            m_bODPointEditing;
     bool            m_bTextPointEditing;
+    bool            m_bEBLEditing;
     
 
     //    The required PlugIn Methods
@@ -284,6 +286,8 @@ public:
     int         nPath_State;
     int         nBoundary_State;
     Boundary    *m_pMouseBoundary;
+    EBL         *m_pMouseEBL;
+    ODPoint     *m_pEBLBoatPoint;
     Path        *m_pSelectedPath;
     ODPoint   *m_pFoundODPoint;
     ODPoint   *m_pFoundODPointSecond;
@@ -365,6 +369,9 @@ private:
     
     double      m_PathMove_cursor_start_lat;
     double      m_PathMove_cursor_start_lon;
+    
+    wxDateTime  m_LastFixTime;
+    
 };
 
 #endif

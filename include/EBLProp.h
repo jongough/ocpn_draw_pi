@@ -33,6 +33,7 @@
 //#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
+class EBL;
 
 class EBLProp : public ODPathPropertiesDialogImpl
 {
@@ -41,6 +42,8 @@ class EBLProp : public ODPathPropertiesDialogImpl
         EBLProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
                         const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
         virtual ~EBLProp();
+        
+        bool UpdateProperties( EBL *pInEBL );
         
     protected:
         

@@ -33,9 +33,12 @@
 #include "BoundaryPoint.h"
 #include "TextPoint.h"
 #include "Boundary.h"
+#include "EBL.h"
 #include "ODUtils.h"
 
 extern PathList         *g_pPathList;
+extern BoundaryList     *g_pBoundaryList;
+extern EBLList          *g_pEBLList;
 extern ODPointList      *g_pODPointList;
 extern ODSelect         *g_pODSelect;
 pugi::xml_node          gpx_path_child;
@@ -581,6 +584,10 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                         Path *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
+                    if ( !TypeString.compare( wxS("EBL") ) ) {
+                        Path *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
+                        InsertPathA( pPath );
+                    }
                 }
                 
                 
@@ -882,6 +889,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
     bool b_viz = true;
     bool b_active = false;
     Boundary    *pTentBoundary = NULL;
+    EBL         *pTentEBL = NULL;
     Path        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
     
@@ -890,7 +898,11 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
         if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
             pTentBoundary = new Boundary();
             pTentPath = pTentBoundary;
-        } else pTentPath = new Path();
+        } else if (!strcmp(pPathType->mb_str(), "EBL" ) ) {
+            pTentEBL = new EBL();
+            pTentPath = pTentEBL;
+        } else 
+            pTentPath = new Path();
         
         m_ptODPointList->clear();
         for( pugi::xml_node tschild = wpt_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
@@ -900,7 +912,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
                 
                 pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
-                tpOp->m_bIsInBoundary = true;                      // Hack
+                if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
             }
             else
             if( ChildName == _T ( "name" ) ) {
@@ -973,13 +985,13 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
             else
             if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
-                pTentBoundary->m_GUID.clear();
-                pTentBoundary->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
+                pTentPath->m_GUID.clear();
+                pTentPath->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
             }
             
             else
             if( ChildName == _T ( "opencpn:time_display" ) ) {
-                pTentBoundary->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
+                pTentPath->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
             }
         }
                     
@@ -1093,6 +1105,9 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
         }
             
         g_pPathList->Append( pTentPath );
+        if(pTentPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->Append( (Boundary *)pTentPath );
+        if(pTentPath->m_sTypeString == wxT("EBL")) g_pEBLList->Append( (EBL *)pTentPath );
+        
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
         
                 

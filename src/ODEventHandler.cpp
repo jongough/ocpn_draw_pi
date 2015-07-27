@@ -501,7 +501,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
 {
     wxMenu* contextMenu = new wxMenu;
     wxMenu* menuODPoint = NULL;
-    wxMenu* menuPath = new wxMenu( wxS("Path") );
+    wxMenu* menuPath = NULL;
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
     
@@ -517,25 +517,31 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             blay = true;
         
         if( blay ) {
-            delete menuPath;
-            menuPath = new wxMenu( _("Layer Path") );
+            wxString  tName;
+            tName.Append( wxT("Layer ") );
+            tName.Append( m_pSelectedPath->m_sTypeString );
+            menuPath = new wxMenu( tName );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
         }
         else {
+            menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
-            sType.clear();
-            sType.append( wxT("Move ") );
-            sType.append( m_pSelectedPath->m_sTypeString );
-            MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sType );
-            sType.clear();
-            sType.append( wxS("Insert ") );
-            sType.append(m_pSelectedPath->m_sTypeString);
-            sType.append( wxT(" Point") );
-            MenuAppend( menuPath, ID_PATH_MENU_INSERT, sType );
+            if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
+                sType.clear();
+                sType.append( wxT("Move ") );
+                sType.append( m_pSelectedPath->m_sTypeString );
+                MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sType );
+                sType.clear();
+                sType.append( wxS("Insert ") );
+                sType.append(m_pSelectedPath->m_sTypeString);
+                sType.append( wxT(" Point") );
+                MenuAppend( menuPath, ID_PATH_MENU_INSERT, sType );
+            }
             MenuAppend( menuPath, ID_PATH_MENU_DELETE, _( "Delete..." ) );
-            if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
-            else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
+            if(m_pSelectedPath->m_sTypeString != wxT("EBL")) 
+                if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
+                else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
         }
         
         //      Set this menu as the "focused context menu"
@@ -615,7 +621,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
     //m_pFoundODPointSecond = NULL;
     menuFocus = NULL;
     delete contextMenu;
-    delete menuPath;
+    if(menuPath) delete menuPath;
     if( menuODPoint ) delete menuODPoint;
     
 }

@@ -49,7 +49,7 @@ public:
     Path(void);
     virtual ~Path(void);
 
-    void AddPoint(ODPoint* pNewPoint, 
+    virtual void AddPoint(ODPoint* pNewPoint, 
                   bool b_rename_in_sequence = true,
                   bool b_deferBoxCalc = false,
                   bool b_isLoading = false);

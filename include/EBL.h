@@ -33,10 +33,8 @@ class EBL : public Path
         virtual ~EBL();
         void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
-        void DeletePoint( ODPoint *op, bool bRenamePoints );
-        void SetActiveColours( void );
-        void MoveAllPoints( double inc_lat, double inc_lon );
-        
+        void MovePoint( double inc_lat, double inc_lon );
+        void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
         
     protected:
         

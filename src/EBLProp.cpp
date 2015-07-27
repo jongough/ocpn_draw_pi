@@ -58,4 +58,16 @@ EBLProp::~EBLProp()
     //dtor
 }
 
+bool EBLProp::UpdateProperties( EBL *pInEBL )
+{
+    m_staticTextFillColour->Hide();
+    m_staticTextFillColour->Enable( false );
+    m_colourPickerFillColour->Hide();
+    m_colourPickerFillColour->Enable( false );
+    m_staticTextFillTransparency->Hide();
+    m_staticTextFillTransparency->Enable( false );
+    m_sliderFillTransparency->Hide();
+    m_sliderFillTransparency->Enable( false );
 
+    return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
+}

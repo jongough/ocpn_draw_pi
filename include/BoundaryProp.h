@@ -33,6 +33,7 @@
 //#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
+class Boundary;
 
 //class BoundaryProp : public PathProp
 class BoundaryProp : public ODPathPropertiesDialogImpl

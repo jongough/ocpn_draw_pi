@@ -48,6 +48,8 @@
 #include "cutil.h"
 #include "ODSelect.h"
 #include "ODConfig.h"
+#include "Boundary.h"
+#include "EBL.h"
 
 #include <wx/dir.h>
 #include <wx/filename.h>
@@ -66,6 +68,8 @@ WX_DEFINE_LIST(markicon_key_list_type);
 WX_DEFINE_LIST(markicon_description_list_type);
 
 extern PathList     *g_pPathList;
+extern BoundaryList *g_pBoundaryList;
+extern EBLList      *g_pEBLList;
 extern ODConfig  *g_pODConfig;
 extern ODSelect      *g_pODSelect;
 extern PlugInManager  *g_OD_pi_manager;
@@ -147,6 +151,8 @@ bool PathMan::DeletePath( Path *pPath )
         //    Remove the path from associated lists
         g_pODSelect->DeleteAllSelectablePathSegments( pPath );
         g_pPathList->DeleteObject( pPath );
+        if(pPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->DeleteObject( (Boundary *)pPath );
+        if(pPath->m_sTypeString == wxT("EBL")) g_pEBLList->DeleteObject( (EBL *)pPath );
 
         // walk the path, tentatively deleting/marking points used only by this route
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();

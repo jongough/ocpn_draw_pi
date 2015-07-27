@@ -34,6 +34,7 @@
 #include "Path.h"
 #include "Boundary.h"
 #include "BoundaryPoint.h"
+#include "EBL.h"
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 
@@ -259,14 +260,17 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
 {
     Path *pPath;
     Boundary *pBoundary = NULL;
+    EBL *pEBL = NULL;
     
     if( NULL == pInPath ) return false;
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
         pPath = pBoundary;
-    }
-    else
+    } else if(pInPath->m_sTypeString == wxT("EBL")) {
+        pEBL = (EBL *)pInPath;
+        pPath = pEBL;
+    } else
         pPath = pInPath;
         
     ::wxBeginBusyCursor();

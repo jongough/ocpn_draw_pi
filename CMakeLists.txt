@@ -47,6 +47,7 @@ SET(SRCS
         src/BoundaryProp.cpp
         src/BoundaryPoint.cpp
         src/EBL.cpp
+        src/EBLProp.cpp
         src/PointMan.cpp
         src/ODSelect.cpp
         src/PathMan.cpp
@@ -79,6 +80,7 @@ SET(HDRS
         include/BoundaryProp.h
         include/BoundaryPoint.h
         include/EBL.h
+        include/EBLProp.h
         include/PointMan.h
         include/ODSelect.h
         include/PathMan.h
