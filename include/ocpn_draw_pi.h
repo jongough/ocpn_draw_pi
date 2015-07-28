@@ -319,6 +319,9 @@ public:
     
     void    appendOSDirSlash(wxString* pString);  
     
+    double  m_chart_scale;
+    double  m_view_scale;
+    
 
 private:
     void    OnTimer(wxTimerEvent& ev);

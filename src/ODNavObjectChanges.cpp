@@ -160,6 +160,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             child = node.append_child( "opencpn:background_transparency" );
             s.Printf(_T("%i"), tp->m_iBackgroundTransparency );
             child.append_child(pugi::node_pcdata).set_value( s.mb_str() );
+            child = node.append_child( "opencpn:natural_scale" );
+            s.Printf(_T("%f"), tp->m_natural_scale );
+            child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
             
             child = node.append_child("opencpn:font_info");
             pugi::xml_attribute size = child.append_attribute( "size" );
@@ -647,6 +650,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
     bool    l_bFill = false;
+    double  l_natural_scale;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
@@ -789,6 +793,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             long v = 0;
             if( s.ToLong( &v ) )
                 l_bFill = ( v != 0 );
+        }else if ( !strcmp( pcn, "opencpn:natural_scale" ) ){
+            wxString::FromUTF8(child.first_child().value()).ToDouble( &l_natural_scale );
         }
     }   // for
 
@@ -828,6 +834,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_DisplayTextFont.SetEncoding( (wxFontEncoding)l_iTextPointFontEncoding );
             pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
+            pTP->m_natural_scale = l_natural_scale;
         } else if ( TypeString == "Boundary Point" )
             pBP -> m_bFill = l_bFill;
         
