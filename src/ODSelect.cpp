@@ -135,7 +135,7 @@ bool ODSelect::DeleteAllSelectableODPoints( Path *pr )
         if( pFindSel->m_seltype == SELTYPE_OCPNPOINT ) {
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
-            //    inner loop iterates on the route's point list
+            //    inner loop iterates on the path's point list
             wxODPointListNode *pnode = ( pr->m_pODPointList )->GetFirst();
             while( pnode ) {
                 ODPoint *prp = pnode->GetData();

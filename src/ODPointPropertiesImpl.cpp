@@ -473,7 +473,11 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //    Get an array of all paths using this point
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
         if( ppath_array ) {
-            m_checkBoxChangeAllPointIcons->Enable();
+            Path *path = (Path *)ppath_array->front();
+            if(path->m_sTypeString == wxT("EBL"))
+                m_checkBoxChangeAllPointIcons->Disable();
+            else
+                m_checkBoxChangeAllPointIcons->Enable();
         } else {
             m_checkBoxChangeAllPointIcons->Disable();
         }

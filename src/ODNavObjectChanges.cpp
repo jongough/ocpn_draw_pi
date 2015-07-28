@@ -801,6 +801,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
 
     // Check to see if this point already exits
     pOP = tempODPointExists( GuidString );
+    if(!pOP) pOP = ODPointExists( GuidString );
     if( !pOP ) {
         if( TypeString == wxT("Text Point") ) {
             pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
@@ -893,6 +894,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
     Path        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
     
+    //m_ptODPointList->clear();
     wxString Name = wxString::FromUTF8( wpt_node.name() );
     if( Name == _T ( "opencpn:path" ) ) {
         if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
@@ -904,7 +906,6 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
         } else 
             pTentPath = new Path();
         
-        m_ptODPointList->clear();
         for( pugi::xml_node tschild = wpt_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
             wxString ChildName = wxString::FromUTF8( tschild.name() );
 

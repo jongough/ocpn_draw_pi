@@ -113,6 +113,7 @@ PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
 wxString                g_default_ODPoint_icon;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
+ODPathPropertiesDialogImpl   *g_pPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
 PathManagerDialog       *g_pPathManagerDialog;
@@ -292,7 +293,6 @@ int ocpn_draw_pi::Init(void)
     m_bODPointEditing = false;
     m_bTextPointEditing = false;
     m_bEBLEditing = false;
-    nBoundary_State = 0;
     nConfig_State = 0;
     m_pMouseBoundary = NULL;
     m_pEBLBoatPoint = NULL;
@@ -303,6 +303,7 @@ int ocpn_draw_pi::Init(void)
     nPoint_State = 0;
     nTextPoint_State = 0;
     nPath_State = 0;
+    nEBL_State = 0;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -589,19 +590,22 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
         double incLat, incLon;
         incLat = m_pEBLBoatPoint->m_lat - g_pfFix.Lat;
         incLon = m_pEBLBoatPoint->m_lon - g_pfFix.Lon;
-        m_pEBLBoatPoint->m_lat = g_pfFix.Lat;
-        m_pEBLBoatPoint->m_lon = g_pfFix.Lon;
-        wxEBLListNode *node = g_pEBLList->GetFirst();
-        for(int i = 0; i < g_pEBLList->GetCount(); i++) {
-            EBL *ebl = (EBL *)node->GetData();
-            ebl->MovePoint( incLat, incLon );
-            ebl->FinalizeForRendering();  // Ensure full EBL is redrawn when boat moves
-            g_pODSelect->DeleteAllSelectablePathSegments( ebl );
-            g_pODSelect->DeleteAllSelectableODPoints( ebl );
-            g_pODSelect->AddAllSelectablePathSegments( ebl );
-            g_pODSelect->AddAllSelectableODPoints( ebl );
+        if(incLat && incLon) {
+            m_pEBLBoatPoint->m_lat = g_pfFix.Lat;
+            m_pEBLBoatPoint->m_lon = g_pfFix.Lon;
+            wxEBLListNode *node = g_pEBLList->GetFirst();
+            for(int i = 0; i < g_pEBLList->GetCount(); i++) {
+                EBL *ebl = (EBL *)node->GetData();
+                ebl->MovePoint( incLat, incLon );
+                ebl->FinalizeForRendering();  // Ensure full EBL is redrawn when boat moves
+                g_pODSelect->DeleteAllSelectablePathSegments( ebl );
+                g_pODSelect->DeleteAllSelectableODPoints( ebl );
+                g_pODSelect->AddAllSelectablePathSegments( ebl );
+                g_pODSelect->AddAllSelectableODPoints( ebl );
+                node = node->GetNext();
+            }
+            RequestRefresh( m_parent_window );
         }
-        RequestRefresh( m_parent_window );
     }
 }
 
@@ -685,13 +689,13 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 
             case ID_MODE_TEXT_POINT:
                 if( 0 == nTextPoint_State ){
-                    m_iCallerId = 0;
                     nTextPoint_State = 1;
                     m_pCurrentCursor = m_pTextCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
+                    m_iCallerId = 0;
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
@@ -706,13 +710,13 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             
             case ID_MODE_EBL:
                 if( 0 == nEBL_State ){
-                    m_iCallerId = 0;
                     nEBL_State = 1;
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
+                    m_iCallerId = 0;
                     nBoundary_State = 0;
                     nPoint_State = 0;
                     nTextPoint_State = 0;
@@ -972,8 +976,19 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
             wxLogMessage( wxS("No MsgId found in message") );
             bFail = true;
         }
-            
-        if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
+
+        if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
+            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+            jMsg[wxT("Msg")] = root[wxT("Msg")];
+            jMsg[wxT("Type")] = wxT("Response");
+            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+            jMsg[wxS("Major")] = PLUGIN_VERSION_MAJOR;
+            jMsg[wxS("Minor")] = PLUGIN_VERSION_MINOR;
+            jMsg[wxS("Patch")] = PLUGIN_VERSION_PATCH;
+            jMsg[wxS("Date")] = PLUGIN_VERSION_DATE;
+            writer.Write( jMsg, MsgString );
+            SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
             if(!root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
@@ -1135,7 +1150,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
         
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 
-        || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || nEBL_State == 1 ) {
+        || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || nEBL_State > 0 ) {
         CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2 );
         bRefresh = TRUE;
     }
@@ -1395,7 +1410,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bRefresh = TRUE;
             RequestRefresh( m_parent_window );
             bret = TRUE;
-        } else if ( nEBL_State > 1) {
+        } else if ( nEBL_State > 1 ) {
             m_iCallerId = 0;
             nEBL_State = 0;
             m_pCurrentCursor = NULL;
@@ -1781,7 +1796,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         s0 += FormatDistanceAdaptive( boundary->m_path_length + dist );
         
         RenderExtraBoundaryLegInfo( tdc, r_rband, s0 );
-    } else if( nEBL_State == 1 ) {
+    } else if( nEBL_State > 0 ) {
         EBL *ebl = new EBL();
         wxPoint tpoint;
         GetCanvasPixLL( g_pivp, &tpoint, g_pfFix.Lat, g_pfFix.Lon );
@@ -2312,7 +2327,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_dStartLon = g_pfFix.Lon;
 
     if(!m_pEBLBoatPoint) {
-        m_pEBLBoatPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sODPointIconName, wxS("Boat"), wxT(" ") );
+        m_pEBLBoatPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sODPointIconName, wxS("Boat"), wxT("") );
         m_pEBLBoatPoint->SetNameShown( false );
         m_pEBLBoatPoint->SetTypeString( wxT("EBL Point"));
     }
