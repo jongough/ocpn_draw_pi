@@ -23,8 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef BOUNDARYPROP_H
-#define BOUNDARYPROP_H
+#ifndef EBLPROP_H
+#define EBLPROP_H
 
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
@@ -33,25 +33,21 @@
 //#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
-class Boundary;
+class EBL;
 
-//class BoundaryProp : public PathProp
-class BoundaryProp : public ODPathPropertiesDialogImpl
+class EBLProp : public ODPathPropertiesDialogImpl
 {
     public:
-        BoundaryProp();
-        BoundaryProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
+        EBLProp();
+        EBLProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
                         const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
-        virtual ~BoundaryProp();
+        virtual ~EBLProp();
         
-        bool UpdateProperties( Boundary *pInBoundary );
+        bool UpdateProperties( EBL *pInEBL );
         
     protected:
-        bool SaveChanges( void );
-        
-        unsigned int    m_uiFillTransparency;
         
     private:
 };
 
-#endif // BOUNDARYPROP_H
+#endif // EBLPROP_H

@@ -51,6 +51,8 @@
 #include "ODPointPropertiesImpl.h"
 #include "Boundary.h"
 #include "BoundaryProp.h"
+#include "EBL.h"
+#include "EBLProp.h"
 #include "PathMan.h"
 #include "PointMan.h"
 #include "ODPoint.h"
@@ -134,7 +136,9 @@ extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
 extern LayerList    *pLayerList;
 extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
+extern ODPathPropertiesDialogImpl     *g_pPathPropDialog;
 extern BoundaryProp *g_pBoundaryPropDialog;
+extern EBLProp      *g_pEBLPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
@@ -949,18 +953,27 @@ void PathManagerDialog::ShowPathPropertiesDialog ( Path *inpath )
 {
     Path *l_pPath = NULL;;
     Boundary *l_pBoundary = NULL;
+    EBL *l_pEBL = NULL;
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
-        if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the PathProp Dialog
+        if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
             g_pBoundaryPropDialog = new BoundaryProp( GetParent() );
         g_pODPathPropDialog = g_pBoundaryPropDialog;
         l_pBoundary = (Boundary *) inpath;
         l_pPath = l_pBoundary;
         g_pBoundaryPropDialog->SetPathAndUpdate( l_pBoundary );
         g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
-    }
-    else {
-        if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
-            g_pODPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );
+    } else if(inpath->m_sTypeString == wxT("EBL")) {
+        if( NULL == g_pEBLPropDialog )          // There is one global instance of the ELBProp Dialog
+            g_pEBLPropDialog = new EBLProp( GetParent() );
+        g_pODPathPropDialog = g_pEBLPropDialog;
+        l_pEBL = (EBL *) inpath;
+        l_pPath = l_pEBL;
+        g_pEBLPropDialog->SetPathAndUpdate( l_pEBL );
+        g_pEBLPropDialog->UpdateProperties( l_pEBL );
+    } else {
+        if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
+            g_pPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );
+        g_pODPathPropDialog = g_pPathPropDialog;
         l_pPath = inpath;
         g_pODPathPropDialog->SetPathAndUpdate( l_pPath );
         g_pODPathPropDialog->UpdateProperties( l_pPath );

@@ -1,11 +1,9 @@
 /***************************************************************************
- *
+ * 
  * Project:  OpenCPN
- * Purpose:  Path Properties
- * Author:   Jon Gough
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register                               *
+ *   Copyright (C) 2013 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,35 +21,28 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef BOUNDARYPROP_H
-#define BOUNDARYPROP_H
+#ifndef EBL_H
+#define EBL_H
 
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
+#include <Path.h>
 
-//#include "PathProp.h"
-#include "ODPathPropertiesDialogImpl.h"
-
-class Boundary;
-
-//class BoundaryProp : public PathProp
-class BoundaryProp : public ODPathPropertiesDialogImpl
+class EBL : public Path
 {
     public:
-        BoundaryProp();
-        BoundaryProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
-                        const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
-        virtual ~BoundaryProp();
-        
-        bool UpdateProperties( Boundary *pInBoundary );
+        EBL();
+        virtual ~EBL();
+        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
+        void DrawGL( PlugIn_ViewPort &piVP );
+        void MovePoint( double inc_lat, double inc_lon );
+        void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
         
     protected:
-        bool SaveChanges( void );
-        
-        unsigned int    m_uiFillTransparency;
         
     private:
+        wxColour   m_wxcLineColour;
+        
 };
 
-#endif // BOUNDARYPROP_H
+WX_DECLARE_LIST(EBL, EBLList); // establish class Path as list member
+
+#endif // BOUNDARY_H

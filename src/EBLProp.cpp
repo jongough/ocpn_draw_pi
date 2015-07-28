@@ -23,35 +23,51 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef BOUNDARYPROP_H
-#define BOUNDARYPROP_H
+#include "EBLProp.h"
+#include "EBL.h"
 
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
+extern EBLList         *g_pEBLList;
+extern wxColour             g_colourActivePathFillColour;
+extern wxColour             g_colourInActivePathFillColour;
+extern unsigned int         g_uiFillTransparency;
 
-//#include "PathProp.h"
-#include "ODPathPropertiesDialogImpl.h"
 
-class Boundary;
-
-//class BoundaryProp : public PathProp
-class BoundaryProp : public ODPathPropertiesDialogImpl
+EBLProp::EBLProp()
 {
-    public:
-        BoundaryProp();
-        BoundaryProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
-                        const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
-        virtual ~BoundaryProp();
-        
-        bool UpdateProperties( Boundary *pInBoundary );
-        
-    protected:
-        bool SaveChanges( void );
-        
-        unsigned int    m_uiFillTransparency;
-        
-    private:
-};
+    //ctor
+}
 
-#endif // BOUNDARYPROP_H
+EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
+: ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
+{
+    //ctor
+    m_staticTextFillColour->Hide();
+    m_staticTextFillColour->Enable( false );
+    m_colourPickerFillColour->Hide();
+    m_colourPickerFillColour->Enable( false );
+    m_staticTextFillTransparency->Hide();
+    m_staticTextFillTransparency->Enable( false );
+    m_sliderFillTransparency->Hide();
+    m_sliderFillTransparency->Enable( false );
+    
+}
+
+
+EBLProp::~EBLProp()
+{
+    //dtor
+}
+
+bool EBLProp::UpdateProperties( EBL *pInEBL )
+{
+    m_staticTextFillColour->Hide();
+    m_staticTextFillColour->Enable( false );
+    m_colourPickerFillColour->Hide();
+    m_colourPickerFillColour->Enable( false );
+    m_staticTextFillTransparency->Hide();
+    m_staticTextFillTransparency->Enable( false );
+    m_sliderFillTransparency->Hide();
+    m_sliderFillTransparency->Enable( false );
+
+    return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
+}
