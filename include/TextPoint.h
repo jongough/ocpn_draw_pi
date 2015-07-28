@@ -54,6 +54,7 @@ class TextPoint : public ODPoint
         wxFont          m_DisplayTextFont;
         int             m_DisplayTextFontPointSize;
         bool            m_bTextChanged;
+        double          m_natural_scale;
         
     protected:
         
@@ -70,6 +71,7 @@ class TextPoint : public ODPoint
         unsigned int    m_iDisplayTextTexture;
         int             m_iDisplayTextTextureWidth, m_iDisplayTextTextureHeight;
         wxWindow        *m_Window;
+        double          m_scale_factor;
         
 };
 

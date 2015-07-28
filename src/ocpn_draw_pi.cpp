@@ -304,6 +304,7 @@ int ocpn_draw_pi::Init(void)
     nTextPoint_State = 0;
     nPath_State = 0;
     nEBL_State = 0;
+    m_chart_scale = 0.;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -1645,10 +1646,12 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
     m_pixy = pixy;
 }
 
-bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp)
+bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 {
-    m_vp = vp;
-    g_pivp = vp;
+    m_vp = pivp;
+    g_pivp = pivp;
+    m_chart_scale = pivp->chart_scale;
+    m_view_scale = pivp->view_scale_ppm;
     
     ODDC ocpnmdc( *pmdc );
     
@@ -1660,6 +1663,9 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
     m_vp = pivp;
     g_pivp = pivp;
+    m_chart_scale = pivp->chart_scale;
+    m_view_scale = pivp->view_scale_ppm;
+    
     g_pDC = new ODDC( dc );
     LLBBox llbb;
     llbb.SetMin( pivp->lon_min, pivp->lat_min );
@@ -1677,6 +1683,8 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     m_pcontext = pcontext;
     m_vp = pivp;
     g_pivp = pivp;
+    m_chart_scale = pivp->chart_scale;
+    m_view_scale = pivp->view_scale_ppm;
     
     g_pDC = new ODDC();
     LLBBox llbb;
