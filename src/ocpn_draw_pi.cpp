@@ -106,7 +106,6 @@ int                     g_cursor_x;
 int                     g_cursor_y;
 ODSelect                *g_pODSelect;
 ODConfig                *g_pODConfig;
-float                   g_ODGLMinSymbolLineWidth;
 wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
@@ -132,10 +131,13 @@ wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
 wxColour    g_colourActiveBoundaryFillColour;
 wxColour    g_colourInActiveBoundaryFillColour;
-wxColour    g_colourEBLLineColour;
 unsigned int g_uiFillTransparency;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
+wxString    g_sEBLEndIconName;
+wxColour    g_colourEBLLineColour;
+bool        g_bEBLFixedEndPosition;
+int         g_EBLPersistenceType;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
 wxColour    g_colourActivePathLineColour;
@@ -144,6 +146,7 @@ wxColour    g_colourActivePathFillColour;
 wxColour    g_colourInActivePathFillColour;
 int         g_PathLineWidth; 
 int         g_PathLineStyle;
+
 wxString    g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
@@ -595,9 +598,9 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
             m_pEBLBoatPoint->m_lat = g_pfFix.Lat;
             m_pEBLBoatPoint->m_lon = g_pfFix.Lon;
             wxEBLListNode *node = g_pEBLList->GetFirst();
-            for(int i = 0; i < g_pEBLList->GetCount(); i++) {
+            for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
                 EBL *ebl = (EBL *)node->GetData();
-                ebl->MovePoint( incLat, incLon );
+                if(!ebl->m_bFixedEndPosition) ebl->MovePoint( incLat, incLon );
                 ebl->FinalizeForRendering();  // Ensure full EBL is redrawn when boat moves
                 g_pODSelect->DeleteAllSelectablePathSegments( ebl );
                 g_pODSelect->DeleteAllSelectableODPoints( ebl );
@@ -756,11 +759,14 @@ void ocpn_draw_pi::SaveConfig()
         long l_longFillTransparency = g_uiFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
         pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
         pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
         pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
         pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
+        pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
+        pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
         pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
         pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
@@ -835,8 +841,11 @@ void ocpn_draw_pi::LoadConfig()
         g_uiFillTransparency = l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
         pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("triangle") );
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
+        pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
         pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 100 );
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
@@ -885,7 +894,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextCentreOffsetY" ), &g_iTextCentreOffsetY, 0 );
         pConf->Read( wxS( "DefaultTextRightOffsetX" ), &g_iTextRightOffsetX, 10 );
         pConf->Read( wxS( "DefaultTextRightOffsetY" ), &g_iTextRightOffsetY, -5 );
-        pConf->Read( wxS( "DefaultTextLeftOffsetX" ), &g_iTextLeftOffsetX, -15 );
+        pConf->Read( wxS( "DefaultTextLeftOffsetX" ), &g_iTextLeftOffsetX, -25 );
         pConf->Read( wxS( "DefaultTextLeftOffsetY" ), &g_iTextLeftOffsetY, -5 );
         int l_fontInfo;
         bool l_bfontInfo;
@@ -2329,8 +2338,6 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL = new EBL();
     g_pEBLList->Append( m_pMouseEBL );
     g_pPathList->Append( m_pMouseEBL );
-    m_pMouseEBL->m_width = g_EBLLineWidth;
-    m_pMouseEBL->m_style = g_EBLLineStyle;
     m_dStartLat = g_pfFix.Lat;
     m_dStartLon = g_pfFix.Lon;
 
@@ -2338,11 +2345,13 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
         m_pEBLBoatPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sODPointIconName, wxS("Boat"), wxT("") );
         m_pEBLBoatPoint->SetNameShown( false );
         m_pEBLBoatPoint->SetTypeString( wxT("EBL Point"));
+        m_pEBLBoatPoint->SetIconName( wxEmptyString );
+        m_pEBLBoatPoint->ReLoadIcon();
     }
     
     m_pMouseEBL->AddPoint( m_pEBLBoatPoint, false );
     
-    pMousePoint = new ODPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+    pMousePoint = new ODPoint( rlat, rlon, g_sEBLEndIconName, wxS(""), wxT("") );
     
     pMousePoint->SetNameShown( false );
     pMousePoint->SetTypeString( wxS("EBL Point") );

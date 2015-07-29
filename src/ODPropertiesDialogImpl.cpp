@@ -77,6 +77,13 @@ extern int          g_iTextRightOffsetY;
 extern int          g_iTextLeftOffsetX;
 extern int          g_iTextLeftOffsetY;
 
+extern wxString     g_sEBLEndIconName;
+extern wxColour     g_colourEBLLineColour;
+extern bool         g_bEBLFixedEndPosition;
+extern int          g_EBLPersistenceType;
+extern int          g_EBLLineWidth;
+extern int          g_EBLLineStyle;
+
 extern bool         g_bConfirmObjectDelete;
 extern int          g_navobjbackups;
 
@@ -100,9 +107,14 @@ ODPropertiesDialogDef( parent )
 
 }
 
-void ODPropertiesDialogImpl::OnComboboxSelected( wxCommandEvent& event )
+void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )
 {
     m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+}
+
+void ODPropertiesDialogImpl::OnEBLEndIconComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
@@ -169,6 +181,13 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_PathLineWidth = m_choicePathLineWidth->GetSelection() + 1;
     g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
     
+    g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
+    g_EBLLineWidth = m_choiceEBLLineWidth->GetSelection() + 1;
+    g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection()];
+    g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
+    g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
+    g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
+
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
     g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
     g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
@@ -225,6 +244,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
 
         m_bcomboBoxODPointIconName->Clear();
+        m_bcomboBoxEBLEndIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
         if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
         
@@ -235,6 +255,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
                 m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
+                m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
@@ -260,6 +281,27 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
         
+        iconToSelect = -1;
+        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+            if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLEndIconName ) {
+                iconToSelect = i;
+                break;
+            }
+        }
+        //  not found, so add  it to the list, with a generic bitmap and using the name as description
+        // n.b.  This should never happen...
+        if( -1 == iconToSelect){    
+            m_bcomboBoxEBLEndIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxEBLEndIconName->GetCount() - 1;
+        } 
+        
+        
+        m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
+        m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
+        
+        m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
+        m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
+        
         icons = NULL;
 
         m_colourPickerActiveBoundaryLineColour->SetColour( g_colourActiveBoundaryLineColour );
@@ -275,10 +317,17 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
                 m_choiceBoundaryLineStyle->Select( i );
             if( g_PathLineStyle == ::StyleValues[i] )
                 m_choicePathLineStyle->Select( i );
+            if( g_EBLLineStyle == ::StyleValues[i] )
+                m_choiceEBLLineStyle->Select( i );
         }
         m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
         m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
         m_sliderFillTransparency->SetValue( g_uiFillTransparency );
+        
+        m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
+        m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
+        m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
+        m_choiceEBLLineWidth->SetSelection( g_EBLLineWidth - 1 );
         
         m_choiceTextPosition->SetSelection( g_iTextPosition );
         m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );

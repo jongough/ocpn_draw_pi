@@ -69,6 +69,7 @@
 #else
 #define __CALL_CONVENTION
 #endif
+
 extern float g_GLMinSymbolLineWidth;
 wxArrayPtrVoid gTesselatorVertices;
 
@@ -830,11 +831,7 @@ void __CALL_CONVENTION ODDCvertexCallback(GLvoid* arg)
 {
     GLvertex* vertex;
     vertex = (GLvertex*) arg;
-	const GLdouble *ptr = (const GLdouble*)arg;
-    //glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
     glVertex2d( vertex->info.x, vertex->info.y );
-//  glColor4dv(ptr + 3);
-//    glVertex3dv(ptr);
 }
 
 void __CALL_CONVENTION ODDCerrorCallback(GLenum errorCode)
@@ -861,17 +858,11 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
     else {
-# ifndef ocpnUSE_GLES  // tessalator in glues is broken
-//#ifndef __WXMSW__
-//        if( n < 5 )
-//#endif            
-# endif
 
-//        {
-//            DrawPolygon( n, points, xoffset, yoffset );
-//            return;
-//        }
-		if(n < 3) return;
+        if(n < 3) return;
+
+        SetGLAttrs( true );
+
         GLUtesselator *tobj = gluNewTess();
 
         gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
@@ -882,31 +873,8 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 
         gluTessNormal( tobj, 0, 0, 1);
 		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
-        //gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_POSITIVE);
-        //gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
-
-#ifdef WIN32        
-        // TODO fix this cludge for windows
-        // Draw a triangle that will not show just to get the winding correct. Without this there is no fill displayed in opengl under windows
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
-        glColor4ub(0,0,0,0);
-        gluTessBeginPolygon(tobj, NULL);                   // with NULL data
-        gluTessBeginContour(tobj);
-        GLdouble star[5][7] = { 2.0, 2.0, 0.0, 255.0, 0.0, 0.0, 0,
-            3.0, 2.0, 0.0, 255.0, 0.0, 0.0, 0,
-            4.0, .0, 0.0, 255.0, 0.0, 0.0, 0,
-            250.0, 150.0, 0.0, 255.0, 0.0, 0.0, 0,
-            400.0, 150.0, 0.0, 255.0, 0.0, 0.0, 0};
-        gluTessVertex(tobj, star[0], star[0]);
-        gluTessVertex(tobj, star[1], star[1]);
-        gluTessVertex(tobj, star[2], star[2]);
-        gluTessVertex(tobj, star[3], star[3]);
-        gluTessVertex(tobj, star[4], star[4]);
-        gluTessEndContour(tobj);
-        gluTessEndPolygon(tobj);
-#endif            
-
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
         if( ConfigureBrush() ) {
             gluTessBeginPolygon(tobj, NULL);
             gluTessBeginContour(tobj);
@@ -920,10 +888,6 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
                 vertex->info.g = (GLdouble) 0.0;
                 vertex->info.b = (GLdouble) 0.0;
                 vertex->info.a = (GLdouble) 0.0;
-                //vertex->info.r = (GLdouble) m_brush.GetColour().Red();
-                //vertex->info.g = (GLdouble) m_brush.GetColour().Green();
-                //vertex->info.b = (GLdouble) m_brush.GetColour().Blue();
-                //vertex->info.a = (GLdouble) m_brush.GetColour().Alpha();
                 gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
             }
             gluTessEndContour( tobj );
@@ -934,7 +898,6 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 		for (unsigned int i = 0; i<gTesselatorVertices.Count(); i++)
             delete (GLvertex*)gTesselatorVertices.Item(i);
         gTesselatorVertices.Clear();
-
         
     }
 #endif    
@@ -1157,7 +1120,7 @@ bool ODDC::ConfigurePen()
     int width = m_pen.GetWidth();
 #ifdef ocpnUSE_GL
     glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
-    glLineWidth( wxMax(g_GLMinSymbolLineWidth, width) );
+    glLineWidth( width );
 #endif    
     return true;
 }
@@ -1169,6 +1132,7 @@ bool ODDC::ConfigureBrush()
 #ifdef ocpnUSE_GL
     wxColour c = m_brush.GetColour();
     glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
+    glLineWidth( 1 );
 #endif    
     return true;
 }

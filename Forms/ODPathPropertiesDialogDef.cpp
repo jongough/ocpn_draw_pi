@@ -77,7 +77,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_staticTextLineStyle->Wrap( -1 );
 	fgSizer3->Add( m_staticTextLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash"), wxEmptyString };
+	wxString m_choiceLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash") };
 	int m_choiceLineStyleNChoices = sizeof( m_choiceLineStyleChoices ) / sizeof( wxString );
 	m_choiceLineStyle = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceLineStyleNChoices, m_choiceLineStyleChoices, 0 );
 	m_choiceLineStyle->SetSelection( 0 );
@@ -87,7 +87,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_staticTextLineWidth->Wrap( -1 );
 	fgSizer3->Add( m_staticTextLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceLineWidthChoices[] = { wxT("1 pixel"), wxT("2 pixels"), wxT("3 pixels"), wxT("4 pixels"), wxT("5 pixels"), wxT("6 pixels"), wxT("7 pixels"), wxT("8 pixels"), wxT("9 pixels"), wxT("10 pixels"), wxEmptyString };
+	wxString m_choiceLineWidthChoices[] = { wxT("1 pixel"), wxT("2 pixels"), wxT("3 pixels"), wxT("4 pixels"), wxT("5 pixels"), wxT("6 pixels"), wxT("7 pixels"), wxT("8 pixels"), wxT("9 pixels"), wxT("10 pixels") };
 	int m_choiceLineWidthNChoices = sizeof( m_choiceLineWidthChoices ) / sizeof( wxString );
 	m_choiceLineWidth = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceLineWidthNChoices, m_choiceLineWidthChoices, 0 );
 	m_choiceLineWidth->SetSelection( 1 );
@@ -110,11 +110,19 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerFillColour;
-	bSizerFillColour = new wxBoxSizer( wxHORIZONTAL );
+	m_bSizerEBL = new wxBoxSizer( wxHORIZONTAL );
+	
+	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, wxT("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_bSizerEBL->Add( m_checkBoxEBLFixedEndPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_radioBoxEBLPersistenceChoices[] = { wxT("Persistent"), wxT("Persistent over Crash"), wxT("Never") };
+	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
+	m_radioBoxEBLPersistence = new wxRadioBox( this, wxID_ANY, wxT("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 3, wxRA_SPECIFY_COLS );
+	m_radioBoxEBLPersistence->SetSelection( 0 );
+	m_bSizerEBL->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
 	
 	
-	fgSizer1->Add( bSizerFillColour, 1, wxEXPAND, 5 );
+	fgSizer1->Add( m_bSizerEBL, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerPathPoints;
 	bSizerPathPoints = new wxBoxSizer( wxVERTICAL );

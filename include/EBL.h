@@ -24,7 +24,15 @@
 #ifndef EBL_H
 #define EBL_H
 
-#include <Path.h>
+#include "Path.h"
+
+enum {
+    ID_EBL_PERSISTENT = 1,
+    ID_EBL_PERSISTNT_CRASH,
+    ID_EBL_NOT_PERSISTENT,
+    
+    ID_EBL_PERSISTENT_LAST
+};
 
 class EBL : public Path
 {
@@ -35,6 +43,9 @@ class EBL : public Path
         void DrawGL( PlugIn_ViewPort &piVP );
         void MovePoint( double inc_lat, double inc_lon );
         void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
+
+        bool        m_bFixedEndPosition;
+        int         m_PersistenceType;
         
     protected:
         
@@ -45,4 +56,4 @@ class EBL : public Path
 
 WX_DECLARE_LIST(EBL, EBLList); // establish class Path as list member
 
-#endif // BOUNDARY_H
+#endif // EBL_H

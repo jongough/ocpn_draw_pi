@@ -64,7 +64,6 @@ extern wxColour             g_colourInActivePathFillColour;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
-    int char_size = GetCharWidth();
     m_pPath = NULL;
     SetPointsListHeadings();
     m_staticTextFillColour->Hide();
@@ -79,7 +78,6 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
 {
-    int char_size = GetCharWidth();
     m_pPath = NULL;
     SetPointsListHeadings();    
 }
@@ -102,8 +100,6 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
     wxFont *qFont = OCPNGetFont(_("Dialog"), 0);
     SetFont( *qFont );
     
-    int char_size = GetCharWidth();
-
     SetPointsListHeadings();
     
     //  Make an estimate of the dialog size, without scrollbars showing
@@ -235,6 +231,7 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( Path *pB, bool only_points )
         }
         m_pPath = pB;
         if(m_pPath->m_sTypeString == wxT("Boundary")) m_pBoundary = (Boundary *)pB;
+        if(m_pPath->m_sTypeString == wxT("EBL")) m_pEBL = (EBL *)pB;
         m_pPath->m_iBlink++;
         if(m_pPath->m_iBlink > 2) m_pPath->m_iBlink = 2;
         

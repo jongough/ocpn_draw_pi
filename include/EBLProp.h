@@ -44,6 +44,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
         virtual ~EBLProp();
         
         bool UpdateProperties( EBL *pInEBL );
+        bool SaveChanges( void );
         
     protected:
         

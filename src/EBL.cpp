@@ -51,13 +51,23 @@
 WX_DEFINE_LIST ( EBLList );
 
 extern wxColour    g_colourEBLLineColour;
+extern bool        g_bEBLFixedEndPosition;
+extern int         g_EBLPersistenceType;
+extern int         g_EBLLineWidth; 
+extern int         g_EBLLineStyle;
+
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern EBLList      *g_pEBLList;
 
 EBL::EBL() : Path()
 {
     m_sTypeString = _T("EBL");
-    m_wxcLineColour = g_colourEBLLineColour;
+    m_wxcActiveLineColour = g_colourEBLLineColour;
+    m_width = g_EBLLineWidth;
+    m_style = g_EBLLineStyle;
+    m_bFixedEndPosition = g_bEBLFixedEndPosition;
+    m_PersistenceType = g_EBLPersistenceType;
+    
 }
 
 EBL::~EBL()

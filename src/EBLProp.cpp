@@ -49,7 +49,14 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_staticTextFillTransparency->Enable( false );
     m_sliderFillTransparency->Hide();
     m_sliderFillTransparency->Enable( false );
-    
+
+    m_bSizerEBL->ShowItems( true );
+    m_checkBoxEBLFixedEndPosition->Show();
+    m_checkBoxEBLFixedEndPosition->Enable( true );
+    m_radioBoxEBLPersistence->Show();
+    m_radioBoxEBLPersistence->Enable( true );
+
+    this->GetSizer()->Fit( this );
 }
 
 
@@ -60,14 +67,14 @@ EBLProp::~EBLProp()
 
 bool EBLProp::UpdateProperties( EBL *pInEBL )
 {
-    m_staticTextFillColour->Hide();
-    m_staticTextFillColour->Enable( false );
-    m_colourPickerFillColour->Hide();
-    m_colourPickerFillColour->Enable( false );
-    m_staticTextFillTransparency->Hide();
-    m_staticTextFillTransparency->Enable( false );
-    m_sliderFillTransparency->Hide();
-    m_sliderFillTransparency->Enable( false );
-
+    m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
+    m_radioBoxEBLPersistence->SetSelection( pInEBL->m_PersistenceType );
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
+}
+
+bool EBLProp::SaveChanges( void )
+{
+    m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
+    m_pEBL->m_PersistenceType = m_radioBoxEBLPersistence->GetSelection();
+    return ODPathPropertiesDialogImpl::SaveChanges();
 }

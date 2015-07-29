@@ -362,6 +362,81 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelBoundary->Layout();
 	fgSizerBoundarySettings->Fit( m_panelBoundary );
 	m_notebookProperties->AddPage( m_panelBoundary, wxT("Boundary"), false );
+	m_panelEBL = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizerEBLSettings;
+	fgSizerEBLSettings = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerEBLSettings->SetFlexibleDirection( wxBOTH );
+	fgSizerEBLSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextIcon1 = new wxStaticText( m_panelEBL, wxID_ANY, wxT("Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextIcon1->Wrap( -1 );
+	fgSizerEBLSettings->Add( m_staticTextIcon1, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxFlexGridSizer* fgSizerEBLIcon;
+	fgSizerEBLIcon = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerEBLIcon->SetFlexibleDirection( wxBOTH );
+	fgSizerEBLIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_bitmapEBLEndBitmap = new wxStaticBitmap( m_panelEBL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerEBLIcon->Add( m_bitmapEBLEndBitmap, 0, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
+	
+	m_bcomboBoxEBLEndIconName = new wxBitmapComboBox( m_panelEBL, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerEBLIcon->Add( m_bcomboBoxEBLEndIconName, 0, wxALL, 5 );
+	
+	
+	fgSizerEBLSettings->Add( fgSizerEBLIcon, 1, 0, 5 );
+	
+	m_staticTextActiveEBLLineColour = new wxStaticText( m_panelEBL, wxID_ANY, wxT("Active EBL Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextActiveEBLLineColour->Wrap( -1 );
+	fgSizerEBLSettings->Add( m_staticTextActiveEBLLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerEBLLineColour = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerEBLSettings->Add( m_colourPickerEBLLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_staticTextInactiveEBLLineColour1 = new wxStaticText( m_panelEBL, wxID_ANY, wxT("Inactive EBL Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInactiveEBLLineColour1->Wrap( -1 );
+	fgSizerEBLSettings->Add( m_staticTextInactiveEBLLineColour1, 0, wxALL, 5 );
+	
+	m_colourPickerInActiveEBLLineColour1 = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerEBLSettings->Add( m_colourPickerInActiveEBLLineColour1, 0, wxALL, 5 );
+	
+	m_staticTextEBLLineWidth = new wxStaticText( m_panelEBL, wxID_ANY, wxT("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextEBLLineWidth->Wrap( -1 );
+	fgSizerEBLSettings->Add( m_staticTextEBLLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceEBLLineWidthChoices[] = { wxT("1 Pixel"), wxT("2 Pixels"), wxT("3 Pixels"), wxT("4 Pixels"), wxT("5 Pixels"), wxT("6 Pixels"), wxT("7 Pixels"), wxT("8 Pixels"), wxT("9 Pixels"), wxT("10 Pixels") };
+	int m_choiceEBLLineWidthNChoices = sizeof( m_choiceEBLLineWidthChoices ) / sizeof( wxString );
+	m_choiceEBLLineWidth = new wxChoice( m_panelEBL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceEBLLineWidthNChoices, m_choiceEBLLineWidthChoices, 0 );
+	m_choiceEBLLineWidth->SetSelection( 0 );
+	fgSizerEBLSettings->Add( m_choiceEBLLineWidth, 0, wxALL, 5 );
+	
+	m_staticTextEBLLineStyle = new wxStaticText( m_panelEBL, wxID_ANY, wxT("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextEBLLineStyle->Wrap( -1 );
+	fgSizerEBLSettings->Add( m_staticTextEBLLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceEBLLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash") };
+	int m_choiceEBLLineStyleNChoices = sizeof( m_choiceEBLLineStyleChoices ) / sizeof( wxString );
+	m_choiceEBLLineStyle = new wxChoice( m_panelEBL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceEBLLineStyleNChoices, m_choiceEBLLineStyleChoices, 0 );
+	m_choiceEBLLineStyle->SetSelection( 0 );
+	fgSizerEBLSettings->Add( m_choiceEBLLineStyle, 0, wxALL, 5 );
+	
+	m_checkBoxEBLFixedEndPosition = new wxCheckBox( m_panelEBL, wxID_ANY, wxT("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizerEBLSettings->Add( m_checkBoxEBLFixedEndPosition, 0, wxALL, 5 );
+	
+	
+	fgSizerEBLSettings->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	wxString m_radioBoxEBLPersistenceChoices[] = { wxT("Persistent"), wxT("Persistent over Crash"), wxT("Never") };
+	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
+	m_radioBoxEBLPersistence = new wxRadioBox( m_panelEBL, wxID_ANY, wxT("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxEBLPersistence->SetSelection( 0 );
+	fgSizerEBLSettings->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
+	
+	
+	m_panelEBL->SetSizer( fgSizerEBLSettings );
+	m_panelEBL->Layout();
+	fgSizerEBLSettings->Fit( m_panelEBL );
+	m_notebookProperties->AddPage( m_panelEBL, wxT("EBL"), false );
 	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerAbout;
 	bSizerAbout = new wxBoxSizer( wxVERTICAL );
@@ -463,8 +538,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerProperties->Fit( this );
 	
 	// Connect Events
-	m_bcomboBoxODPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnComboboxSelected ), NULL, this );
+	m_bcomboBoxODPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnODPointComboboxSelected ), NULL, this );
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
+	m_bcomboBoxEBLEndIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
@@ -473,8 +549,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
-	m_bcomboBoxODPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnComboboxSelected ), NULL, this );
+	m_bcomboBoxODPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnODPointComboboxSelected ), NULL, this );
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
+	m_bcomboBoxEBLEndIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
