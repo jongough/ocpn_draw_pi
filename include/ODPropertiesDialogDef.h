@@ -30,6 +30,7 @@
 #include <wx/bmpcbox.h>
 #include <wx/clrpicker.h>
 #include <wx/button.h>
+#include <wx/radiobox.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
@@ -113,6 +114,20 @@ class ODPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerInActiveBoundaryFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
+		wxPanel* m_panelEBL;
+		wxStaticText* m_staticTextIcon1;
+		wxStaticBitmap* m_bitmapEBLEndBitmap;
+		wxBitmapComboBox* m_bcomboBoxEBLEndIconName;
+		wxStaticText* m_staticTextActiveEBLLineColour;
+		wxColourPickerCtrl* m_colourPickerEBLLineColour;
+		wxStaticText* m_staticTextInactiveEBLLineColour1;
+		wxColourPickerCtrl* m_colourPickerInActiveEBLLineColour1;
+		wxStaticText* m_staticTextEBLLineWidth;
+		wxChoice* m_choiceEBLLineWidth;
+		wxStaticText* m_staticTextEBLLineStyle;
+		wxChoice* m_choiceEBLLineStyle;
+		wxCheckBox* m_checkBoxEBLFixedEndPosition;
+		wxRadioBox* m_radioBoxEBLPersistence;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;
@@ -132,8 +147,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonApply;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }

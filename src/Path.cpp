@@ -48,7 +48,6 @@ extern PathMan *g_pPathMan;
 extern int g_path_line_width;
 extern ODSelect *g_pODSelect;
 extern ODConfig *g_pODConfig;
-extern float g_ODGLMinSymbolLineWidth;
 extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern wxString     g_sODPointIconName;
@@ -196,7 +195,7 @@ void Path::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &V
     wxColour col;
     wxString colour;
 
-    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, g_path_line_width, m_style ) );
+//    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width, m_style ) );
 
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }
@@ -207,9 +206,7 @@ void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     int style = wxSOLID;
     int width = g_path_line_width;
 
-
     if( m_nPoints == 0 ) return;
-
 
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     if( m_width != STYLE_UNDEFINED ) width = m_width;
@@ -344,15 +341,16 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 //        return;
     
     /* determine color and width */
-    int width = m_width;
-    
-    
     int style = wxSOLID;
+    int width = g_path_line_width;
+    
     if( m_style != STYLE_UNDEFINED ) style = m_style;
+    if( m_width != STYLE_UNDEFINED ) width = m_width;
+    
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
 
     glColor3ub(m_col.Red(), m_col.Green(), m_col.Blue());
-    glLineWidth( wxMax( g_ODGLMinSymbolLineWidth, width ) );
+    glLineWidth( width );
     
     dc.SetGLStipple();
 

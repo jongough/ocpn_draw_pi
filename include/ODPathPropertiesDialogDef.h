@@ -22,6 +22,7 @@
 #include <wx/clrpicker.h>
 #include <wx/choice.h>
 #include <wx/slider.h>
+#include <wx/radiobox.h>
 #include <wx/listctrl.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
@@ -53,6 +54,9 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
+		wxBoxSizer* m_bSizerEBL;
+		wxCheckBox* m_checkBoxEBLFixedEndPosition;
+		wxRadioBox* m_radioBoxEBLPersistence;
 		wxStaticText* m_staticTextODPoints;
 		wxListCtrl* m_listCtrlODPoints;
 		wxButton* m_buttonOK;
