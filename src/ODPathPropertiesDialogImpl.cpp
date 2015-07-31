@@ -260,6 +260,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     EBL *pEBL = NULL;
     
     if( NULL == pInPath ) return false;
+    ::wxBeginBusyCursor();
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
@@ -270,10 +271,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     } else
         pPath = pInPath;
         
-    ::wxBeginBusyCursor();
-    
     m_textCtrlName->SetValue( pPath->m_PathNameString );
     m_textCtrlDesctiption->SetValue( pPath->m_PathDescription);
+    m_textCtrlGUID->SetValue( pPath->m_GUID );
     m_checkBoxActive->SetValue( pPath->IsActive() );
     
     double brgFromBoat = 0.;
@@ -399,6 +399,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
 
 bool ODPathPropertiesDialogImpl::UpdateProperties( void )
 {
+    ::wxBeginBusyCursor();
+    
     //  Iterate on Path Points
     wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
     

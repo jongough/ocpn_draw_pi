@@ -41,6 +41,8 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlName;
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textCtrlDesctiption;
+		wxStaticText* m_staticTextGUID;
+		wxTextCtrl* m_textCtrlGUID;
 		wxCheckBox* m_checkBoxActive;
 		wxStaticText* m_staticTextTotalLength;
 		wxTextCtrl* m_textCtrlTotalLength;

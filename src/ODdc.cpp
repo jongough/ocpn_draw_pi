@@ -875,6 +875,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+        ConfigurePen();
         if( ConfigureBrush() ) {
             gluTessBeginPolygon(tobj, NULL);
             gluTessBeginContour(tobj);
@@ -1113,13 +1114,19 @@ void ODDC::CalcBoundingBox( wxCoord x, wxCoord y )
 
 bool ODDC::ConfigurePen()
 {
-    if( !m_pen.IsOk() ) return false;
-    if( m_pen == *wxTRANSPARENT_PEN ) return false;
+    wxColour c = wxNullColour;
+    int width = 0;
 
-    wxColour c = m_pen.GetColour();
-    int width = m_pen.GetWidth();
+    if( !m_pen.IsOk() ) return false;
+    if( m_pen == *wxTRANSPARENT_PEN ) 
+        width = 0;
+    else {
+        c = m_pen.GetColour();
+        width = m_pen.GetWidth();
+    }
 #ifdef ocpnUSE_GL
-    glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
+    if(c != wxNullColour)
+        glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
     glLineWidth( width );
 #endif    
     return true;
@@ -1132,7 +1139,6 @@ bool ODDC::ConfigureBrush()
 #ifdef ocpnUSE_GL
     wxColour c = m_brush.GetColour();
     glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
-    glLineWidth( 1 );
 #endif    
     return true;
 }

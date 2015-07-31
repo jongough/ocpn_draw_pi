@@ -91,6 +91,8 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
+    this->Layout();
+    this->GetSizer()->Fit(this);
 }
 
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
@@ -482,8 +484,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_checkBoxChangeAllPointIcons->Disable();
         }
         m_checkBoxChangeAllPointIcons->SetValue( false );
-        //this->Layout();
-        //this->GetSizer()->Fit(this);
+        this->Layout();
+        this->GetSizer()->Fit(this);
         
         icons = NULL;
         

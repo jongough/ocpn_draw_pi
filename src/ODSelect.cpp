@@ -23,6 +23,7 @@
  */
 
 #include "ODSelect.h"
+#include "ocpn_draw_pi.h"
 #include "georef.h"
 #include "vector2D.h"
 //#include "navutil.h"
@@ -30,6 +31,7 @@
 #include "Path.h"
 
 extern ChartCanvas *ocpncc1;
+extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 ODSelect::ODSelect()
 {

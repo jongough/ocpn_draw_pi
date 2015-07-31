@@ -51,7 +51,7 @@
             <property name="tooltip"></property>
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
-            <property name="window_style">wxVSCROLL</property>
+            <property name="window_style"></property>
             <event name="OnActivate"></event>
             <event name="OnActivateApp"></event>
             <event name="OnAuiFindManager"></event>
@@ -567,7 +567,7 @@
                                                             <object class="sizeritem" expanded="0">
                                                                 <property name="border">2</property>
                                                                 <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
-                                                                <property name="proportion">1</property>
+                                                                <property name="proportion">0</property>
                                                                 <object class="wxCheckBox" expanded="0">
                                                                     <property name="BottomDockable">1</property>
                                                                     <property name="LeftDockable">1</property>
@@ -819,7 +819,7 @@
                                                             <object class="sizeritem" expanded="0">
                                                                 <property name="border">5</property>
                                                                 <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</property>
-                                                                <property name="proportion">0</property>
+                                                                <property name="proportion">2</property>
                                                                 <object class="wxBitmapComboBox" expanded="0">
                                                                     <property name="BottomDockable">1</property>
                                                                     <property name="LeftDockable">1</property>
@@ -878,7 +878,7 @@
                                                                     <property name="value"></property>
                                                                     <property name="window_extra_style"></property>
                                                                     <property name="window_name"></property>
-                                                                    <property name="window_style"></property>
+                                                                    <property name="window_style">wxVSCROLL</property>
                                                                     <event name="OnChar"></event>
                                                                     <event name="OnCombobox">OnComboboxSelected</event>
                                                                     <event name="OnEnterWindow"></event>

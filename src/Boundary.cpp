@@ -120,6 +120,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     glEnable( GL_POLYGON_STIPPLE );
     glEnable( GL_BLEND );
     if ( m_bVisible ) {
+        dc.SetPen( *wxTRANSPARENT_PEN);
         wxColour tCol;
         tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );

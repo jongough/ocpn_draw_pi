@@ -24,19 +24,35 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	wxBoxSizer* bSizerNameDescription;
 	bSizerNameDescription = new wxBoxSizer( wxVERTICAL );
 	
+	wxFlexGridSizer* fgSizerDescription;
+	fgSizerDescription = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerDescription->AddGrowableCol( 1 );
+	fgSizerDescription->SetFlexibleDirection( wxBOTH );
+	fgSizerDescription->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
 	m_staticTextName = new wxStaticText( this, wxID_ANY, wxT("Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextName->Wrap( -1 );
-	bSizerNameDescription->Add( m_staticTextName, 0, wxALL, 5 );
+	fgSizerDescription->Add( m_staticTextName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerNameDescription->Add( m_textCtrlName, 0, wxALL|wxEXPAND, 5 );
+	fgSizerDescription->Add( m_textCtrlName, 0, wxALL|wxEXPAND, 5 );
 	
 	m_staticTextDescription = new wxStaticText( this, wxID_ANY, wxT("Description"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDescription->Wrap( -1 );
-	bSizerNameDescription->Add( m_staticTextDescription, 0, wxALL, 5 );
+	fgSizerDescription->Add( m_staticTextDescription, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlDesctiption = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerNameDescription->Add( m_textCtrlDesctiption, 0, wxALL|wxEXPAND, 5 );
+	fgSizerDescription->Add( m_textCtrlDesctiption, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticTextGUID = new wxStaticText( this, wxID_ANY, wxT("GUID"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGUID->Wrap( -1 );
+	fgSizerDescription->Add( m_staticTextGUID, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlGUID = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	fgSizerDescription->Add( m_textCtrlGUID, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	bSizerNameDescription->Add( fgSizerDescription, 1, wxEXPAND, 5 );
 	
 	
 	fgSizer1->Add( bSizerNameDescription, 1, wxEXPAND, 5 );
