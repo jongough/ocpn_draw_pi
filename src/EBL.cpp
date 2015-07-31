@@ -66,25 +66,12 @@ EBL::EBL() : Path()
     m_width = g_EBLLineWidth;
     m_style = g_EBLLineStyle;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
-    m_PersistenceType = g_EBLPersistenceType;
-    
+    SetPersistence( g_EBLPersistenceType );
 }
 
 EBL::~EBL()
 {
     //dtor
-}
-
-void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
-{
-    Path::Draw( dc, VP );
-}
-
-void EBL::DrawGL( PlugIn_ViewPort &piVP )
-{
-#ifdef ocpnUSE_GL
-    Path::DrawGL( piVP );
-#endif
 }
 
 void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
@@ -102,4 +89,13 @@ void EBL::MovePoint( double inc_lat, double inc_lon )
     bp->m_lon -= inc_lon;
     node = m_pODPointList->GetFirst();
     bp = (ODPoint *)node->GetData();
+}
+
+void EBL::SetPersistence( int PersistenceType )
+{
+    m_PersistenceType = PersistenceType;
+    if(PersistenceType == ID_EBL_NOT_PERSISTENT || PersistenceType == ID_EBL_PERSISTENT_CRASH)
+        m_btemp = true;
+    else
+        m_btemp = false;
 }

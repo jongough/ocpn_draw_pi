@@ -226,6 +226,8 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
+    this->Layout();
+    this->GetSizer()->Fit(this);
 }
 
 void ODPropertiesDialogImpl::UpdateProperties( void )

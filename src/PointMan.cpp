@@ -40,13 +40,13 @@
 #include <wx/fontenum.h>
 
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern wxString                 g_PrivateDataDir;
-extern ODPoint                *pAnchorWatchPoint1;
-extern ODPoint                *pAnchorWatchPoint2;
-extern ODConfig           *g_pODConfig;
-extern PathMan                  *g_pPathMan;
-extern ODSelect               *g_pODSelect;
-extern ocpn_draw_pi             *g_ocpn_draw_pi;
+extern wxString         *g_PrivateDataDir;
+extern ODPoint          *pAnchorWatchPoint1;
+extern ODPoint          *pAnchorWatchPoint2;
+extern ODConfig         *g_pODConfig;
+extern PathMan          *g_pPathMan;
+extern ODSelect         *g_pODSelect;
+extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
@@ -137,18 +137,18 @@ bool PointMan::RemoveODPoint(ODPoint *prp)
 
 void PointMan::ProcessUserIcons( )
 {
-    wxString UserIconPath = g_PrivateDataDir;
+    wxString *UserIconPath = g_PrivateDataDir;
     wxChar sep = wxFileName::GetPathSeparator();
-    if ( UserIconPath.IsNull() ) return;
+    if ( UserIconPath->IsNull() ) return;
     
-    if( UserIconPath.Last() != sep ) UserIconPath.Append( sep );
-    UserIconPath.Append( _T("UserIcons") );
+    if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
+    UserIconPath->Append( _T("UserIcons") );
     
-    if( wxDir::Exists( UserIconPath ) ) {
+    if( wxDir::Exists( *UserIconPath ) ) {
         wxArrayString FileList;
         
-        wxDir dir( UserIconPath );
-        int n_files = dir.GetAllFiles( UserIconPath, &FileList );
+        wxDir dir( *UserIconPath );
+        int n_files = dir.GetAllFiles( *UserIconPath, &FileList );
         
         for( int ifile = 0; ifile < n_files; ifile++ ) {
             wxString name = FileList.Item( ifile );

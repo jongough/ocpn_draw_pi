@@ -206,14 +206,14 @@ void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     int style = wxSOLID;
     int width = g_path_line_width;
 
-    if( m_nPoints == 0 ) return;
+    if( m_nPoints == 0 || !m_bVisible ) return;
 
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     if( m_width != STYLE_UNDEFINED ) width = m_width;
 
-    if ( m_bVisible ) {
-        dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-    }
+    SetActiveColours();
+    
+    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
 
     wxPoint ppt1, ppt2;
     m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
@@ -302,43 +302,8 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
-    //  Hiliting first
-    //  Being special case to draw something for a 1 point route....
+
     ODDC dc;
-    if(m_hiliteWidth){
-        wxColour y;
-        GetGlobalColor( wxS( "YELO1" ), &y );
-        wxColour hilt( y.Red(), y.Green(), y.Blue(), 128 );
-        wxPen HiPen( hilt, m_hiliteWidth, wxSOLID );
-        dc.SetPen( HiPen );
-        
-        wxODPointListNode *node = m_pODPointList->GetFirst();
-        ODPoint *pOp0 = node->GetData();
-        wxPoint r0;
-        GetCanvasPixLL( &piVP, &r0, pOp0->m_lat, pOp0->m_lon );
-
-        if( m_nPoints == 1 ) {
-            dc.StrokeLine( r0.x, r0.y, r0.x + 2, r0.y + 2 );
-//            return;
-        }
-            
-        node = node->GetNext();
-    
-        while( node ){
-            
-            ODPoint *pOp = node->GetData();
-            wxPoint r1;
-            GetCanvasPixLL( &piVP, &r1, pOp->m_lat, pOp->m_lon );
-
-            dc.StrokeLine( r0.x, r0.y, r1.x, r1.y );
-                    
-            r0 = r1;
-            node = node->GetNext();
-        }
-    }
-    
-//    if( m_nPoints < 2  )
-//        return;
     
     /* determine color and width */
     int style = wxSOLID;
@@ -347,6 +312,8 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     if( m_width != STYLE_UNDEFINED ) width = m_width;
     
+    SetActiveColours();
+
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
 
     glColor3ub(m_col.Red(), m_col.Green(), m_col.Blue());
@@ -1077,8 +1044,18 @@ void Path::SetActiveColours( void )
 {
     wxString colour;
     
-    if( m_bVisible && m_bPathIsActive ) m_col = m_wxcActiveLineColour;
-    else m_col = m_wxcInActiveLineColour;
+    if( m_bVisible && m_bPathIsActive ) {
+        if(m_iBlink && (g_ocpn_draw_pi->nBlinkerTick & 1))
+            m_col= m_wxcInActiveLineColour;
+        else
+            m_col = m_wxcActiveLineColour;
+    }
+    else {
+        if(m_iBlink && (g_ocpn_draw_pi->nBlinkerTick & 1))
+            m_col= m_wxcActiveLineColour;
+        else
+            m_col = m_wxcInActiveLineColour;
+    }
 
 /*    if( m_bVisible && m_bPathIsActive ) {
         colour = m_ActiveLineColour;

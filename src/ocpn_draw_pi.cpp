@@ -147,7 +147,7 @@ wxColour    g_colourInActivePathFillColour;
 int         g_PathLineWidth; 
 int         g_PathLineStyle;
 
-wxString    g_PrivateDataDir;
+wxString    *g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
@@ -276,6 +276,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
+    g_PrivateDataDir = new wxString;
+    g_PrivateDataDir->Append(*g_pData);
     g_pData->append( wxS("data") );
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
@@ -2358,7 +2360,8 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     pMousePoint->m_bIsolatedMark = FALSE;
     m_pMouseEBL->AddPoint( pMousePoint );
 
-    // g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // don't save over restart
+    if(m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT || ID_EBL_PERSISTENT_CRASH)
+        g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, m_pEBLBoatPoint, pMousePoint, m_pMouseEBL );
         

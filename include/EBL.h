@@ -27,8 +27,8 @@
 #include "Path.h"
 
 enum {
-    ID_EBL_PERSISTENT = 1,
-    ID_EBL_PERSISTNT_CRASH,
+    ID_EBL_PERSISTENT = 0,
+    ID_EBL_PERSISTENT_CRASH,
     ID_EBL_NOT_PERSISTENT,
     
     ID_EBL_PERSISTENT_LAST
@@ -39,10 +39,10 @@ class EBL : public Path
     public:
         EBL();
         virtual ~EBL();
-        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
-        void DrawGL( PlugIn_ViewPort &piVP );
         void MovePoint( double inc_lat, double inc_lon );
         void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
+        
+        void SetPersistence( int PersistenceType );
 
         bool        m_bFixedEndPosition;
         int         m_PersistenceType;

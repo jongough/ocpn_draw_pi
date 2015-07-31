@@ -294,11 +294,15 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
 {
     Path *pPath;
     Boundary * pBoundary = NULL;
+    EBL * pEBL = NULL;
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
         pPath = pBoundary;
-    }
-    else
+    } else if(pInPath->m_sTypeString == wxT("EBL")) {
+        pEBL = (EBL *)pInPath;
+        pPath = pEBL;
+        
+    } else
         pPath = pInPath;
     
     pugi::xml_node child;
@@ -377,6 +381,12 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
     if(pBoundary) child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
+    if(pEBL) {
+        child = node.append_child("opencpn:persistence");
+        wxString s;
+        s.Printf(_T("%1i"), pEBL->m_PersistenceType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+    }
 
     ODPointList *pODPointList = pPath->m_pODPointList;
     wxODPointListNode *node2 = pODPointList->GetFirst();
@@ -519,11 +529,21 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     // Paths
     wxPathListNode *node1 = g_pPathList->GetFirst();
 //    child_ext = m_gpx_root.append_child("extensions");
+    Path *pPath = NULL;
+    Boundary *pBoundary = NULL;
+    EBL *pEBL = NULL;
     while( node1 ) {
-        Path *pBoundary = node1->GetData();
+        pPath = (Path *)node1->GetData();
+        if(pPath->m_sTypeString == wxT("Boundary")) {
+            pBoundary = (Boundary *)node1->GetData();
+            pPath = pBoundary;
+        } else if(pPath->m_sTypeString == wxT("EBL")) {
+            pEBL = (EBL *)node1->GetData();
+            pPath = pEBL;
+        }
         
-        if( !pBoundary->m_bIsInLayer && !pBoundary->m_btemp )
-            GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pBoundary);
+        if( !pPath->m_bIsInLayer && !pPath->m_btemp )
+            GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         node1 = node1->GetNext();
     }
     
@@ -968,7 +988,6 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                         wxString active = wxString::FromUTF8(tschild.first_child().value());
                         b_active = ( active == _T("1") );
             }
-            
             else
             if( ChildName == _T ( "opencpn:style" ) ) {
                 for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
@@ -988,18 +1007,17 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                     else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
                         pTentBoundary->m_uiFillTransparency = attr.as_uint();
                 }
-            }
-            
-            else
-            if( ChildName == _T ( "opencpn:guid" ) ) {
+            } else if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
                 pTentPath->m_GUID.clear();
                 pTentPath->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
-            }
-            
-            else
-            if( ChildName == _T ( "opencpn:time_display" ) ) {
+            } else if( ChildName == _T ( "opencpn:time_display" ) ) {
                 pTentPath->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
+            } else if( ChildName == _T ( "opencpn:persistence" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                long v = 0;
+                if( s.ToLong( &v ) )
+                    pTentEBL->SetPersistence( v );
             }
         }
                     
