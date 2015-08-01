@@ -113,28 +113,62 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
-    Path::DrawGL( piVP );
+    //Path::DrawGL( piVP );
     
     ODDC dc;
     
+    int j = 0;
+    m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+    wxPoint r;
+    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
+        m_bpts[ j++ ] = r;
+    }
+    
+    GLubyte slope_cross_hatch[] = {
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55,
+        0x88, 0x88, 0x88, 0x88, 0x55, 0x55, 0x55, 0x55,
+        0x22, 0x22, 0x22, 0x22, 0x55, 0x55, 0x55, 0x55
+    };  
     glEnable( GL_POLYGON_STIPPLE );
     glEnable( GL_BLEND );
+    glPolygonStipple( slope_cross_hatch );
     if ( m_bVisible ) {
-        dc.SetPen( *wxTRANSPARENT_PEN);
         wxColour tCol;
         tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
+        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSS_HATCH ) );
         if ( m_pODPointList->GetCount() > 2 ) {
             glEnable(GL_LINE_STIPPLE);
-            glLineWidth( 0 );
             if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
             else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
             glDisable(GL_LINE_STIPPLE);
-            
         }
     }
     glDisable( GL_BLEND );
     glDisable (GL_POLYGON_STIPPLE);
+
+//    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxBRUSHSTYLE_TRANSPARENT ) );
+//    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width, m_style ) );
+//    dc.SetGLStipple();
+//    dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0 );
+    
+    Path::DrawGL( piVP );
     
 #endif
 }
