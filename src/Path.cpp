@@ -314,65 +314,22 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     
     SetActiveColours();
 
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_TRANSPARENT ) );
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-
-    glColor3ub(m_col.Red(), m_col.Green(), m_col.Blue());
-    glLineWidth( width );
-    
     dc.SetGLStipple();
-
-    glBegin(GL_LINE_STRIP);
-    float lastlon = 0;
-    float lastlat = 0;
-    unsigned short int FromSegNo = 1;
-
+    
     int j = 0;
-
+    wxPoint r;
+    
     m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
-
-    for(wxODPointListNode *node = m_pODPointList->GetFirst();
-        node; node = node->GetNext()) {
+    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();
-        unsigned short int ToSegNo = pOp->m_GPXTrkSegNo;
-        
-        /* crosses IDL? if so break up into two segments */
-        int dir = 0;
-        if(pOp->m_lon > 150 && lastlon < -150)
-            dir = -1;
-        else if(pOp->m_lon < -150 && lastlon > 150)
-            dir = 1;
-        
-        wxPoint r;
-        if (FromSegNo != ToSegNo)
-        {
-            glEnd();
-            FromSegNo = ToSegNo;
-            glBegin(GL_LINE_STRIP);
-        }
-        if(dir)
-        {
-            double crosslat = lat_rl_crosses_meridian(lastlat, lastlon, pOp->m_lat, pOp->m_lon, 180.0);
-            GetCanvasPixLL( &piVP, &r, crosslat, dir*180 );
-            glVertex2i(r.x, r.y);
-            glEnd();
-            glBegin(GL_LINE_STRIP);
-            GetCanvasPixLL( &piVP, &r, crosslat, -dir*180 );
-            glVertex2i(r.x, r.y);
-        }
-        lastlat=pOp->m_lat;
-        lastlon=pOp->m_lon;
-        
         GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
-        glVertex2i(r.x, r.y);
-
-        //if ( m_bVisible || pOp->m_bKeepXPath )
-        //    pOp->DrawGL( piVP );
-
         m_bpts[ j++ ] = r;
     }
-    glEnd();
-    glDisable (GL_LINE_STIPPLE);
-
+    
+    dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0 );
+    
     /*  ODPoints  */
     for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();

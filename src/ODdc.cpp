@@ -226,22 +226,22 @@ void ODDC::SetGLStipple() const
     
     switch( m_pen.GetStyle() ) {
         case wxDOT: {
-            glLineStipple( 1, 0x3333 );
+            glLineStipple( 1, 0xF8F8 );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
         case wxLONG_DASH: {
-            glLineStipple( 1, 0xFFF8 );
+            glLineStipple( 2, 0x3FFF );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
         case wxSHORT_DASH: {
-            glLineStipple( 1, 0x3F3F );
+            glLineStipple( 1, 0x0FFF );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
         case wxDOT_DASH: {
-            glLineStipple( 1, 0x8FF1 );
+            glLineStipple( 2, 0xDEDE );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
