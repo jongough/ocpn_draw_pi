@@ -404,7 +404,7 @@ int ocpn_draw_pi::Init(void)
     
     m_RolloverPopupTimer.SetOwner( ocpncc1, ODROPOPUP_TIMER );
     m_rollover_popup_timer_msec = 20;
-    ocpncc1->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
+    m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
     //    m_pCurrentCursor = ocpncc1->pCursorArrow;
     m_pCurrentCursor = NULL;
@@ -1708,6 +1708,12 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp );
     
     DrawAllPathsAndODPoints( *pivp );
+
+    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() && g_pPathRolloverWin->GetBitmap() != NULL ) {
+        g_pDC->DrawBitmap( *(g_pPathRolloverWin->GetBitmap()),
+                       g_pPathRolloverWin->GetPosition().x,
+                       g_pPathRolloverWin->GetPosition().y, false );
+    }
     
     return TRUE;
 }

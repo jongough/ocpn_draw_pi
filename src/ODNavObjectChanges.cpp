@@ -670,7 +670,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
     bool    l_bFill = false;
-    double  l_natural_scale;
+    double  l_natural_scale = NULL;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
