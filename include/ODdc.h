@@ -111,6 +111,8 @@ public:
      void DestroyClippingRegion() {}
 
      wxDC *GetDC() const { return dc; }
+     
+     void SetTextureSize( int width, int height );
 
 protected:
      bool ConfigurePen();

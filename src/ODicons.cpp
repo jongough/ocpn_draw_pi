@@ -70,9 +70,9 @@ void initialize_images(void)
     fn.SetFullName(wxT("textpointbuttongray.png"));
     _img_ocpn_draw_textpoint_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
-    fn.SetFullName(wxT("ebl.png"));
+    fn.SetFullName(wxT("EBL.png"));
     _img_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("eblgray.png"));
+    fn.SetFullName(wxT("EBLgray.png"));
     _img_ocpn_draw_ebl_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     
