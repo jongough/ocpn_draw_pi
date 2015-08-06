@@ -77,7 +77,6 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
     m_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
     ODTimer1.SetOwner( this );
     ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
-    
 }
 
 

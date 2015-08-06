@@ -73,6 +73,11 @@
 extern float g_GLMinSymbolLineWidth;
 wxArrayPtrVoid gTesselatorVertices;
 
+// These are only global to this module to allow tessellation callbacks to access them. Tessellation does not handle classes and methods
+bool        g_bTexture2D;
+int         g_iTextureHeight;
+int         g_iTextureWidth;
+
 //----------------------------------------------------------------------------
 /* pass the dc to the constructor, or NULL to use opengl */
 ODDC::ODDC( wxGLCanvas &canvas ) :
@@ -83,6 +88,7 @@ ODDC::ODDC( wxGLCanvas &canvas ) :
 #endif
 #ifdef ocpnUSE_GL
     m_textforegroundcolour = wxColour( 0, 0, 0 );
+    g_bTexture2D = false;
 #endif    
 }
 
@@ -99,6 +105,8 @@ ODDC::ODDC( wxDC &pdc ) :
     }
 #endif
     m_textforegroundcolour = wxColour( 0, 0, 0 );
+    g_bTexture2D = false;
+    
 }
 
 ODDC::ODDC() :
@@ -107,6 +115,7 @@ ODDC::ODDC() :
 #if wxUSE_GRAPHICS_CONTEXT
     pgc = NULL;
 #endif
+    g_bTexture2D = false;
 }
 
 ODDC::~ODDC()
@@ -820,7 +829,7 @@ void __CALL_CONVENTION ODDCcombineCallback(GLdouble coords[3], GLdouble *vertex_
     vertex->info.y = coords[1];
     vertex->info.z = coords[2];
 
-    for( int i = 3; i < 6; i++ ) {
+    for( int i = 3; i < 7; i++ ) {
         vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
     }
 
@@ -831,6 +840,7 @@ void __CALL_CONVENTION ODDCvertexCallback(GLvoid* arg)
 {
     GLvertex* vertex;
     vertex = (GLvertex*) arg;
+    if(g_bTexture2D) glTexCoord2d( vertex->info.x / g_iTextureWidth, vertex->info.y / g_iTextureHeight );
     glVertex2d( vertex->info.x, vertex->info.y );
 }
 
@@ -859,10 +869,6 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 #ifdef ocpnUSE_GL
     else {
 
-        if(n < 3) return;
-
-        SetGLAttrs( true );
-
         GLUtesselator *tobj = gluNewTess();
 
         gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
@@ -875,6 +881,10 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+
+        if(glIsEnabled(GL_TEXTURE_2D)) g_bTexture2D = true;
+        else g_bTexture2D = false;
+
         ConfigurePen();
         if( ConfigureBrush() ) {
             gluTessBeginPolygon(tobj, NULL);
@@ -894,7 +904,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
             gluTessEndContour( tobj );
 			gluTessEndPolygon(tobj);
 		}
-
+        
 		gluDeleteTess(tobj);
 		for (unsigned int i = 0; i<gTesselatorVertices.Count(); i++)
             delete (GLvertex*)gTesselatorVertices.Item(i);
@@ -1154,4 +1164,10 @@ void ODDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int form
     glPixelZoom( 1, 1 );
     glDisable( GL_BLEND );
 #endif
+}
+
+void ODDC::SetTextureSize( int width, int height )
+{
+    g_iTextureWidth = width;
+    g_iTextureHeight = height;
 }
