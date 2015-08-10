@@ -277,7 +277,6 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         CalculateTextExtents();
         int teX, teY;
         int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_natural_scale);
-        int l_w, l_h;
         
         if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2) ) {
             teX = m_TextExtents.x;

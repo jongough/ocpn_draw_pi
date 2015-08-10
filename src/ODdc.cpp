@@ -848,7 +848,7 @@ void __CALL_CONVENTION ODDCerrorCallback(GLenum errorCode)
 {
    const GLubyte *estring;
    estring = gluErrorString(errorCode);
-   wxLogMessage( _T("OpenGL Tessellation Error: %s"), (char *)estring );
+   wxLogMessage( wxT("OpenGL Tessellation Error: %s"), (char *)estring );
 }
 
 void __CALL_CONVENTION ODDCbeginCallback(GLenum type)

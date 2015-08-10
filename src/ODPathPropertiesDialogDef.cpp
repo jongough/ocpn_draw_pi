@@ -30,21 +30,21 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	fgSizerDescription->SetFlexibleDirection( wxBOTH );
 	fgSizerDescription->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextName = new wxStaticText( this, wxID_ANY, wxT("Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextName = new wxStaticText( this, wxID_ANY, _("Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextName->Wrap( -1 );
 	fgSizerDescription->Add( m_staticTextName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizerDescription->Add( m_textCtrlName, 0, wxALL|wxEXPAND, 5 );
 	
-	m_staticTextDescription = new wxStaticText( this, wxID_ANY, wxT("Description"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDescription = new wxStaticText( this, wxID_ANY, _("Description"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDescription->Wrap( -1 );
 	fgSizerDescription->Add( m_staticTextDescription, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlDesctiption = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizerDescription->Add( m_textCtrlDesctiption, 0, wxALL|wxEXPAND, 5 );
 	
-	m_staticTextGUID = new wxStaticText( this, wxID_ANY, wxT("GUID"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGUID = new wxStaticText( this, wxID_ANY, _("GUID"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextGUID->Wrap( -1 );
 	fgSizerDescription->Add( m_staticTextGUID, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
@@ -62,11 +62,11 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	fgSizer3->SetFlexibleDirection( wxBOTH );
 	fgSizer3->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_checkBoxActive = new wxCheckBox( this, wxID_ANY, wxT("Active"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxActive = new wxCheckBox( this, wxID_ANY, _("Active"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_checkBoxActive->SetValue(true); 
 	fgSizer3->Add( m_checkBoxActive, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticTextTotalLength = new wxStaticText( this, wxID_ANY, wxT("Total Length"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTotalLength = new wxStaticText( this, wxID_ANY, _("Total Length"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextTotalLength->Wrap( -1 );
 	fgSizer3->Add( m_staticTextTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
@@ -82,41 +82,41 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_staticTextLineColour = new wxStaticText( this, wxID_ANY, wxT("Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextLineColour = new wxStaticText( this, wxID_ANY, _("Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineColour->Wrap( -1 );
 	fgSizer3->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_colourPickerLineColour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizer3->Add( m_colourPickerLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticTextLineStyle = new wxStaticText( this, wxID_ANY, wxT("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextLineStyle = new wxStaticText( this, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineStyle->Wrap( -1 );
 	fgSizer3->Add( m_staticTextLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceLineStyleChoices[] = { wxT("Solid"), wxT("Dot"), wxT("Long Dash"), wxT("Short Dash"), wxT("Dot Dash") };
+	wxString m_choiceLineStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
 	int m_choiceLineStyleNChoices = sizeof( m_choiceLineStyleChoices ) / sizeof( wxString );
 	m_choiceLineStyle = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceLineStyleNChoices, m_choiceLineStyleChoices, 0 );
 	m_choiceLineStyle->SetSelection( 0 );
 	fgSizer3->Add( m_choiceLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticTextLineWidth = new wxStaticText( this, wxID_ANY, wxT("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextLineWidth = new wxStaticText( this, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineWidth->Wrap( -1 );
 	fgSizer3->Add( m_staticTextLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceLineWidthChoices[] = { wxT("1 pixel"), wxT("2 pixels"), wxT("3 pixels"), wxT("4 pixels"), wxT("5 pixels"), wxT("6 pixels"), wxT("7 pixels"), wxT("8 pixels"), wxT("9 pixels"), wxT("10 pixels") };
+	wxString m_choiceLineWidthChoices[] = { _("1 pixel"), _("2 pixels"), _("3 pixels"), _("4 pixels"), _("5 pixels"), _("6 pixels"), _("7 pixels"), _("8 pixels"), _("9 pixels"), _("10 pixels") };
 	int m_choiceLineWidthNChoices = sizeof( m_choiceLineWidthChoices ) / sizeof( wxString );
 	m_choiceLineWidth = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceLineWidthNChoices, m_choiceLineWidthChoices, 0 );
 	m_choiceLineWidth->SetSelection( 1 );
 	fgSizer3->Add( m_choiceLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticTextFillColour = new wxStaticText( this, wxID_ANY, wxT("Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFillColour = new wxStaticText( this, wxID_ANY, _("Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextFillColour->Wrap( -1 );
 	fgSizer3->Add( m_staticTextFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_colourPickerFillColour = new wxColourPickerCtrl( this, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizer3->Add( m_colourPickerFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_staticTextFillTransparency = new wxStaticText( this, wxID_ANY, wxT("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextFillTransparency = new wxStaticText( this, wxID_ANY, _("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextFillTransparency->Wrap( -1 );
 	fgSizer3->Add( m_staticTextFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
@@ -130,12 +130,12 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	m_bSizerPersistence = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, wxT("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, _("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_bSizerPersistence->Add( m_checkBoxEBLFixedEndPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_radioBoxEBLPersistenceChoices[] = { wxT("Persistent"), wxT("Persistent over Crash"), wxT("Never") };
+	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
-	m_radioBoxEBLPersistence = new wxRadioBox( this, wxID_ANY, wxT("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 3, wxRA_SPECIFY_COLS );
+	m_radioBoxEBLPersistence = new wxRadioBox( this, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 3, wxRA_SPECIFY_COLS );
 	m_radioBoxEBLPersistence->SetSelection( 0 );
 	m_bSizerPersistence->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
 	
@@ -148,7 +148,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	wxBoxSizer* bSizerPathPoints;
 	bSizerPathPoints = new wxBoxSizer( wxVERTICAL );
 	
-	m_staticTextODPoints = new wxStaticText( this, wxID_ANY, wxT("Points"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextODPoints = new wxStaticText( this, wxID_ANY, _("Points"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextODPoints->Wrap( -1 );
 	bSizerPathPoints->Add( m_staticTextODPoints, 0, wxALL, 5 );
 	
@@ -161,11 +161,11 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	wxBoxSizer* bSizerOKCancel;
 	bSizerOKCancel = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_buttonOK = new wxButton( this, wxID_ANY, wxT("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonOK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_buttonOK->SetDefault(); 
 	bSizerOKCancel->Add( m_buttonOK, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_buttonCancel = new wxButton( this, wxID_ANY, wxT("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonCancel = new wxButton( this, wxID_ANY, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
 	bSizerOKCancel->Add( m_buttonCancel, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	

@@ -337,11 +337,11 @@ int ocpn_draw_pi::Init(void)
     
     LoadConfig();
     if(m_bLOGShowIcon) {
-        m_config_button_id  = InsertPlugInTool(wxS("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
-                                               wxS("OCPN Draw Manager"), wxS(""), NULL,
+        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
+                                               _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
-        m_draw_button_id  = InsertPlugInTool(wxS("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray, wxITEM_CHECK,
-                                             wxS("OCPN Draw"), wxS(""), NULL,
+        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray, wxITEM_CHECK,
+                                             _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);
     }
     
@@ -1493,10 +1493,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FindSelectedObject();
             
             if( 0 != m_seltype ) {
+                if(m_pSelectedPath) {
                 if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
                     m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
                 else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                     m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                }
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
@@ -1874,9 +1876,9 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         wxString s0;
         if ( nBoundary_State >= 2 ) {
             if( !boundary->m_bIsInLayer )
-                s0.Append( wxS("Boundary: ") );
+                s0.Append( _("Boundary: ") );
             else
-                s0.Append( wxS("Layer Boundary: ") );
+                s0.Append( _("Layer Boundary: ") );
         }
         
         s0 += FormatDistanceAdaptive( boundary->m_path_length + dist );
@@ -1886,7 +1888,6 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         EBL *ebl = new EBL();
         wxPoint tpoint;
         if(m_bEBLMoveOrigin) {
-            wxODPointListNode *node = ( m_pSelectedEBL->m_pODPointList )->GetLast();
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
             GetCanvasPixLL( g_pivp, &tpoint, tp->m_lat, tp->m_lon );
             ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_vp, false );
@@ -2151,8 +2152,8 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
         #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, wxS("Use nearby Pointoint?"),
-                                            wxS("OpenCPN Point Create"),
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Point?"),
+                                            _("OpenCPN Point Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else
         dlg_return = wxID_YES;
@@ -2212,8 +2213,8 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
         #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, wxS("Use nearby Pointoint?"),
-                                            wxS("OpenCPN Point Create"),
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Pointoint?"),
+                                            _("OpenCPN Point Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else
         dlg_return = wxID_YES;
@@ -2286,8 +2287,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
         #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, wxS("Use nearby waypoint?"),
-                                            wxS("OpenCPN Boundary Create"),
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby waypoint?"),
+                                            _("OpenCPN Boundary Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else
         dlg_return = wxID_YES;
@@ -2334,13 +2335,13 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 int segmentCount = (3.0 + (rhumbDist - gcDistNM)) / pow(rhumbDist-gcDistNM-1, 0.5 );
                 
                 wxString msg;
-                msg << wxS("For this leg the Great Circle boundary is ")
-                << FormatDistanceAdaptive( rhumbDist - gcDistNM ) << wxS(" shorter than rhumbline.\n\n")
-                << wxS("Would you like include the Great Circle boundary points for this leg?");
+                msg << _("For this leg the Great Circle boundary is ")
+                << FormatDistanceAdaptive( rhumbDist - gcDistNM ) << _(" shorter than rhumbline.\n\n")
+                << _("Would you like include the Great Circle boundary points for this leg?");
                 
                 m_disable_edge_pan = true;  // This helps on OS X if MessageBox does not fully capture mouse
                 
-                int answer = OCPNMessageBox_PlugIn( m_parent_window, msg, wxS("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
+                int answer = OCPNMessageBox_PlugIn( m_parent_window, msg, _("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
                 
                 m_disable_edge_pan = false;
                 

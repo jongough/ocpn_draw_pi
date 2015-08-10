@@ -181,13 +181,13 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
             sPropertiesType.append( wxS("OCPN Draw Point") );
         else {
             sPropertiesType.append( m_pPath->m_sTypeString );
-            sPropertiesType.append( wxT(" Point") );
+            sPropertiesType.append( _(" Point") );
         }
-        sPropertiesType.append( wxS(" &Properties...") );
+        sPropertiesType.append( _(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
         
-        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, wxS("&Remove Selected") );
+        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, _("&Remove Selected") );
         delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 && m_listCtrlODPoints->GetItemCount() > 2 );
     }
     
@@ -498,6 +498,15 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
             break;
         }
     }
+
+    // Set column width correctly for data
+    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
+#ifdef WIN32
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+#else WIN32        
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
+#endif WIN32        
+    }
     
     ::wxEndBusyCursor();
     
@@ -563,20 +572,20 @@ void ODPathPropertiesDialogImpl::InitializeList()
 
 void ODPathPropertiesDialogImpl::SetPointsListHeadings()
 {
-    m_listCtrlODPoints->InsertColumn( ID_FROM_POINT, wxS("From Point"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_TO_POINT, wxS("To Point"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_DISTANCE_FROM_BOAT, wxS("Distance From Boat"), wxLIST_FORMAT_RIGHT );
+    m_listCtrlODPoints->InsertColumn( ID_FROM_POINT, _("From Point"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_TO_POINT, _("To Point"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_DISTANCE_FROM_BOAT, _("Distance From Boat"), wxLIST_FORMAT_RIGHT );
     
     if(g_bShowMag)
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, wxS("Bearing (M)"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, _("Bearing (M)"), wxLIST_FORMAT_LEFT );
     else
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, wxS("Bearing"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, _("Bearing"), wxLIST_FORMAT_LEFT );
     
-    m_listCtrlODPoints->InsertColumn( ID_LATITUDE, wxS("Latitude"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_LONGITUDE, wxS("Longitude"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_LATITUDE, _("Latitude"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_LONGITUDE, _("Longitude"), wxLIST_FORMAT_LEFT );
     if(g_bShowMag)
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, wxS("Bearing From-To (M)"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, _("Bearing From-To (M)"), wxLIST_FORMAT_LEFT );
     else
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, wxS("Bearing From-To"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_DESCRIPTION, wxS("Description"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, _("Bearing From-To"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_DESCRIPTION, _("Description"), wxLIST_FORMAT_LEFT );
 }
