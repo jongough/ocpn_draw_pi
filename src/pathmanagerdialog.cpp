@@ -2060,6 +2060,14 @@ void PathManagerDialog::UpdateLayListCtrl()
         m_pLayListCtrl->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
     }
     UpdateLayButtons();
+
+    for(int i = 0; i < m_pLayListCtrl->GetColumnCount(); i++) {
+#ifdef WIN32
+        m_pLayListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+#else WIN32        
+        m_pLayListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
+#endif WIN32        
+    }
 }
 
 void PathManagerDialog::OnImportClick( wxCommandEvent &event )
