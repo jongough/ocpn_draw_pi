@@ -224,19 +224,19 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     }
                     else {
                         wxString wxsText;
-                        wxsText.append( wxT("Layer ") );
+                        wxsText.append( _("Layer ") );
                         wxsText.append( pp->m_sTypeString );
                         wxsText.append( wxT(": ") );
                         s.Append( wxsText );
                     }
                     
-                    if( pp->m_PathNameString.IsEmpty() ) s.Append( wxT("(unnamed)") );
+                    if( pp->m_PathNameString.IsEmpty() ) s.Append( _("(unnamed)") );
                     else
                         s.Append( pp->m_PathNameString );
                     
-                    s << _T("\n") << wxT("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
-                    << _T("\n") << wxT("Leg: from ") << segShow_point_a->GetName()
-                    << wxT(" to ") << segShow_point_b->GetName()
+                    s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
+                    << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
+                    << _(" to ") << segShow_point_b->GetName()
                     << _T("\n");
                     
                     if( g_bShowMag )
@@ -363,12 +363,12 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_DELETE: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sTypeLong = wxT("Are you sure you want to delete this ");
+                wxString sTypeLong = _("Are you sure you want to delete this ");
                 sTypeLong.append( m_pSelectedPath->m_sTypeString );
                 sTypeLong.append( wxT("?") );
                 wxString sTypeShort = wxT("OpenCPN ");
                 sTypeShort.append( m_pSelectedPath->m_sTypeString );
-                sTypeShort.append( wxT(" Delete") );
+                sTypeShort.append( _(" Delete") );
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
             
@@ -426,11 +426,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_REMPOINT: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sMessage( wxS("Are you sure you want to remove this ") );
-                wxString sCaption( wxS("OCPN Draw Remove ") );
+                wxString sMessage( _("Are you sure you want to remove this ") );
+                wxString sCaption( _("OCPN Draw Remove ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( wxS("OCPN Point") );
+                    sType.append( _("OCPN Point") );
                 else
                     sType.append( m_pFoundODPoint->GetTypeString() );
                 sMessage.append( sType );
@@ -466,8 +466,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_DELPOINT: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sMessage( wxS("Are you sure you want to delete this ") );
-                wxString sCaption( wxS("OCPN Draw Delete ") );
+                wxString sMessage( _("Are you sure you want to delete this ") );
+                wxString sCaption( _("OCPN Draw Delete ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( wxS("OCPN Point") );
@@ -497,8 +497,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_OCPNPOINT_MENU_DELPOINT: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sMessage( wxS("Are you sure you want to delete this ") );
-                wxString sCaption( wxS("OCPN Draw Delete ") );
+                wxString sMessage( _("Are you sure you want to delete this ") );
+                wxString sCaption( _("OCPN Draw Delete ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( wxS("OCPN Point") );
@@ -563,37 +563,37 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         
         if( blay ) {
             wxString  tName;
-            tName.Append( wxT("Layer ") );
+            tName.Append( _("Layer ") );
             tName.Append( m_pSelectedPath->m_sTypeString );
             menuPath = new wxMenu( tName );
-            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, wxT( "Properties..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
         }
         else {
             menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
-            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, wxT( "Properties..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                 if(m_pSelectedPath->GetPoint( 1 ) != g_ocpn_draw_pi->m_pEBLBoatPoint) {
-                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, wxT("Centre on moving boat") );
-                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, wxT("Centre on boat lat lon") );
+                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, _("Centre on moving boat") );
+                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Centre on boat lat lon") );
                 } else
-                    MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, wxT("Pick a new start point") );
+                    MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
             }
             else {
                 sType.clear();
-                sType.append( wxT("Move ") );
+                sType.append( _("Move ") );
                 sType.append( m_pSelectedPath->m_sTypeString );
                 MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sType );
                 sType.clear();
-                sType.append( wxS("Insert ") );
+                sType.append( _("Insert ") );
                 sType.append(m_pSelectedPath->m_sTypeString);
-                sType.append( wxT(" Point") );
+                sType.append( _(" Point") );
                 MenuAppend( menuPath, ID_PATH_MENU_INSERT, sType );
             }
-            MenuAppend( menuPath, ID_PATH_MENU_DELETE, wxT( "Delete..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_DELETE, _( "Delete..." ) );
             if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
-                if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, wxT( "Deactivate") );
-                else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, wxT( "Activate" ) );
+                if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
+                else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
             }
         }
         
@@ -608,43 +608,43 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         
         if( blay ){
             wxString sType;
-            sType.append( wxT("Layer ") );
+            sType.append( _("Layer ") );
             sType.append( m_pFoundODPoint->m_sTypeString );
             menuODPoint = new wxMenu( sType );
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, wxT( "Properties..." ) );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
             //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
-            //    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, wxT( "Activate" ) );
+            //    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
         }
         else {
             wxString sType;
             sType.append( m_pFoundODPoint->m_sTypeString );
             menuODPoint = new wxMenu( sType );
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, wxT( "Properties..." ) );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             sType.clear();
-            sType.append( wxS("Move ") );
+            sType.append( _("Move ") );
             sType.append(m_pFoundODPoint->m_sTypeString);
             MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_MOVE, sType );
 
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
 //                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundODPoint )
-//                    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, wxT( "Activate" ) );
+//                    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
 //            }
             
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
 //                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundODPoint ) {
 //                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
 //                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
-//                        MenuAppend( menuODPoint, ID_PATH_MENU_ACTNXTPOINT, wxT( "Activate Next ODPoint" ) );
+//                        MenuAppend( menuODPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next ODPoint" ) );
 //                }
 //            }
             if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
-                MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, wxT( "Remove Point from Path" ) );
+                MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
             
             if( m_pSelectedPath )
-                MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  wxT( "Delete" ) );
+                MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
             else
-                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  wxT( "Delete" ) );
+                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
             
         }
         //      Set this menu as the "focused context menu"

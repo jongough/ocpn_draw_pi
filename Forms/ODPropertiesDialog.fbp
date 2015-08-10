@@ -14,7 +14,7 @@
         <property name="file">ODPropertiesDialogDef</property>
         <property name="first_id">1000</property>
         <property name="help_provider">none</property>
-        <property name="internationalize">0</property>
+        <property name="internationalize">1</property>
         <property name="name">ODPropertiesDialog</property>
         <property name="namespace"></property>
         <property name="path">/data/public/working area/opencpn/remote/jongough/plugins/ocpn_draw_pi/Forms</property>
@@ -179,7 +179,7 @@
                             <property name="bitmap"></property>
                             <property name="label">General</property>
                             <property name="select">1</property>
-                            <object class="wxPanel" expanded="0">
+                            <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -253,16 +253,16 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">bSizerGeneral</property>
                                     <property name="orient">wxVERTICAL</property>
                                     <property name="permission">none</property>
-                                    <object class="sizeritem" expanded="0">
+                                    <object class="sizeritem" expanded="1">
                                         <property name="border">5</property>
                                         <property name="flag">wxEXPAND</property>
                                         <property name="proportion">1</property>
-                                        <object class="wxFlexGridSizer" expanded="0">
+                                        <object class="wxFlexGridSizer" expanded="1">
                                             <property name="cols">2</property>
                                             <property name="flexible_direction">wxBOTH</property>
                                             <property name="growablecols">0</property>
@@ -1196,7 +1196,7 @@
                                             <property name="permission">none</property>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
-                                                <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</property>
+                                                <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
                                                 <property name="proportion">1</property>
                                                 <object class="wxStaticText" expanded="0">
                                                     <property name="BottomDockable">1</property>
@@ -1381,7 +1381,7 @@
                                             <property name="permission">protected</property>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
-                                                <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND</property>
+                                                <property name="flag">wxALIGN_CENTER_VERTICAL|wxALL</property>
                                                 <property name="proportion">0</property>
                                                 <object class="wxCheckBox" expanded="0">
                                                     <property name="BottomDockable">1</property>
@@ -6293,7 +6293,7 @@
                                         <property name="border">5</property>
                                         <property name="flag">wxALIGN_RIGHT</property>
                                         <property name="proportion">1</property>
-                                        <object class="wxFlexGridSizer" expanded="0">
+                                        <object class="wxFlexGridSizer" expanded="1">
                                             <property name="cols">3</property>
                                             <property name="flexible_direction">wxBOTH</property>
                                             <property name="growablecols">1</property>
@@ -6307,8 +6307,8 @@
                                             <property name="vgap">0</property>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
-                                                <property name="flag">wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL|wxEXPAND</property>
-                                                <property name="proportion">0</property>
+                                                <property name="flag">wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL</property>
+                                                <property name="proportion">1</property>
                                                 <object class="wxStaticBitmap" expanded="0">
                                                     <property name="BottomDockable">1</property>
                                                     <property name="LeftDockable">1</property>
@@ -6388,7 +6388,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
-                                                <property name="flag">wxALIGN_RIGHT|wxALL|wxEXPAND</property>
+                                                <property name="flag">wxALIGN_RIGHT|wxALL</property>
                                                 <property name="proportion">1</property>
                                                 <object class="wxBitmapComboBox" expanded="0">
                                                     <property name="BottomDockable">1</property>
@@ -6661,7 +6661,7 @@
                                             </object>
                                             <object class="sizeritem" expanded="0">
                                                 <property name="border">5</property>
-                                                <property name="flag">wxALIGN_RIGHT|wxALL|wxEXPAND</property>
+                                                <property name="flag">wxALIGN_RIGHT|wxALL</property>
                                                 <property name="proportion">1</property>
                                                 <object class="wxBitmapComboBox" expanded="0">
                                                     <property name="BottomDockable">1</property>

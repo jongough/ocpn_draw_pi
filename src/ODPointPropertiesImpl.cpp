@@ -98,10 +98,10 @@ void ODPointPropertiesImpl::SetDialogSize( void )
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
 {
     wxMenu* popup = new wxMenu();
-    popup->Append( ID_RCLK_MENU_COPY, wxT("Copy") );
-    popup->Append( ID_RCLK_MENU_COPY_LL, wxT("Copy lat/long") );
-    popup->Append( ID_RCLK_MENU_PASTE, wxT("Paste") );
-    popup->Append( ID_RCLK_MENU_PASTE_LL, wxT("Paste lat/long") );
+    popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
+    popup->Append( ID_RCLK_MENU_COPY_LL, _("Copy lat/long") );
+    popup->Append( ID_RCLK_MENU_PASTE, _("Paste") );
+    popup->Append( ID_RCLK_MENU_PASTE_LL, _("Paste lat/long") );
     m_contextObject = event.GetEventObject();
     PopupMenu( popup );
     delete popup;
@@ -494,10 +494,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             caption.append( wxS("OCPN Draw Point") );
         else
             caption.append( m_pODPoint->GetTypeString() );
-        caption.append( wxS(" Properties") );
+        caption.append( _(" Properties") );
         
         if( m_pODPoint->m_bIsInLayer ) {
-            caption.append( wxS(", Layer: ") );
+            caption.append( _(", Layer: ") );
             caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
         }
         SetTitle( caption );
