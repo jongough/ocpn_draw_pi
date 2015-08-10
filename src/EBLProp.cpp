@@ -77,9 +77,9 @@ bool EBLProp::SaveChanges( void )
     m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     m_pEBL->m_PersistenceType = m_radioBoxEBLPersistence->GetSelection();
     if(m_pEBL->m_PersistenceType == ID_EBL_NOT_PERSISTENT || m_pEBL->m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
-        m_pEBL->m_btemp = true;
+        m_pEBL->m_bTemporary = true;
     else
-        m_pEBL->m_btemp = false;
+        m_pEBL->m_bTemporary = false;
     
     return ODPathPropertiesDialogImpl::SaveChanges();
 }

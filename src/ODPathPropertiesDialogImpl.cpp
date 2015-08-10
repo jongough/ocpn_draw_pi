@@ -92,12 +92,8 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
     
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
-    #ifdef __WXOSX__
-    style |= wxSTAY_ON_TOP;
-    #endif
     
-    
-    wxFont *qFont = OCPNGetFont(_("Dialog"), 0);
+    wxFont *qFont = OCPNGetFont(wxT("Dialog"), 0);
     SetFont( *qFont );
     
     SetPointsListHeadings();
@@ -567,20 +563,20 @@ void ODPathPropertiesDialogImpl::InitializeList()
 
 void ODPathPropertiesDialogImpl::SetPointsListHeadings()
 {
-    m_listCtrlODPoints->InsertColumn( ID_FROM_POINT, _("From Point"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_TO_POINT, _("To Point"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_DISTANCE_FROM_BOAT, _("Distance From Boat"), wxLIST_FORMAT_RIGHT );
+    m_listCtrlODPoints->InsertColumn( ID_FROM_POINT, wxS("From Point"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_TO_POINT, wxS("To Point"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_DISTANCE_FROM_BOAT, wxS("Distance From Boat"), wxLIST_FORMAT_RIGHT );
     
     if(g_bShowMag)
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, _("Bearing (M)"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, wxS("Bearing (M)"), wxLIST_FORMAT_LEFT );
     else
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, _("Bearing"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_BOAT, wxS("Bearing"), wxLIST_FORMAT_LEFT );
     
-    m_listCtrlODPoints->InsertColumn( ID_LATITUDE, _("Latitude"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_LONGITUDE, _("Longitude"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_LATITUDE, wxS("Latitude"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_LONGITUDE, wxS("Longitude"), wxLIST_FORMAT_LEFT );
     if(g_bShowMag)
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, _("Bearing From-To (M)"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, wxS("Bearing From-To (M)"), wxLIST_FORMAT_LEFT );
     else
-        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, _("Bearing From-To"), wxLIST_FORMAT_LEFT );
-    m_listCtrlODPoints->InsertColumn( ID_DESCRIPTION, _("Description"), wxLIST_FORMAT_LEFT );
+        m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, wxS("Bearing From-To"), wxLIST_FORMAT_LEFT );
+    m_listCtrlODPoints->InsertColumn( ID_DESCRIPTION, wxS("Description"), wxLIST_FORMAT_LEFT );
 }

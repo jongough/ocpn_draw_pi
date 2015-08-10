@@ -508,14 +508,14 @@ bool ODNavObjectChanges::CreateNavObjGPXPoints( void )
     
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     
-    ODPoint *pr;
+    ODPoint *pOP;
     
     while( node ) {
-        pr = node->GetData();
+        pOP = node->GetData();
         
-        if( ( pr->m_bIsolatedMark ) && !( pr->m_bIsInLayer ) && !(pr->m_btemp) )
+        if( ( pOP->m_bIsolatedMark ) && !( pOP->m_bIsInLayer ) && !(pOP->m_btemp) )
         {
-            GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pr, OPT_OCPNPOINT);
+            GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pOP, OPT_OCPNPOINT);
         }
         node = node->GetNext();
     }
@@ -540,9 +540,10 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
         } else if(pPath->m_sTypeString == wxT("EBL")) {
             pEBL = (EBL *)node1->GetData();
             pPath = pEBL;
+            if(pEBL->m_PersistenceType == ID_EBL_NOT_PERSISTENT) return true;
         }
         
-        if( !pPath->m_bIsInLayer && !pPath->m_btemp )
+        if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
             GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         node1 = node1->GetNext();
     }
@@ -670,7 +671,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
     bool    l_bFill = false;
-    double  l_natural_scale = NULL;
+    double  l_natural_scale = 0.0;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 

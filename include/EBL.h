@@ -39,10 +39,16 @@ class EBL : public Path
     public:
         EBL();
         virtual ~EBL();
+        void RemovePoint( ODPoint *op, bool bRenamePoints = false );
         void MovePoint( double inc_lat, double inc_lon );
         void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
+        ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
+        ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
+        void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
         
         void SetPersistence( int PersistenceType );
+        void CentreOnBoat( void );
+        void CentreOnLatLon( double lat, double lon );
 
         bool        m_bFixedEndPosition;
         int         m_PersistenceType;

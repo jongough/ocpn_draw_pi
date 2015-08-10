@@ -143,7 +143,7 @@ bool ODConfig::DeleteODPoint( ODPoint *pWP )
 
 bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxString suggestedName )
 {
-    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, suggestedName,
+    wxFileDialog saveDialog( NULL, wxT( "Export GPX file" ), m_gpx_path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
 
 #ifdef __WXOSX__
@@ -166,7 +166,7 @@ bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxStrin
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _T("Confirm"),
+            int answer = OCPNMessageBox_PlugIn( NULL, wxT("Overwrite existing file?"), _T("Confirm"),
                     wxICON_QUESTION | wxYES_NO | wxCANCEL );
             if( answer != wxID_YES ) return false;
         }
@@ -183,7 +183,7 @@ bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxStrin
 
 bool ODConfig::ExportGPXODPoints( wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName )
 {
-    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, suggestedName,
+    wxFileDialog saveDialog( NULL, wxT( "Export GPX file" ), m_gpx_path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
 
     int response = saveDialog.ShowModal();
@@ -196,7 +196,7 @@ bool ODConfig::ExportGPXODPoints( wxWindow* parent, ODPointList *pODPoints, cons
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn(NULL,  _("Overwrite existing file?"), _T("Confirm"),
+            int answer = OCPNMessageBox_PlugIn(NULL,  wxT("Overwrite existing file?"), _T("Confirm"),
                     wxICON_QUESTION | wxYES_NO | wxCANCEL );
             if( answer != wxID_YES ) return false;
         }
@@ -280,7 +280,7 @@ void ODConfig::LoadNavObjects()
 
 void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 {
-    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, wxT ( "" ),
+    wxFileDialog saveDialog( NULL, wxT( "Export GPX file" ), m_gpx_path, wxT ( "" ),
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
 
     int response = saveDialog.ShowModal();
@@ -293,7 +293,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _T("Confirm"),
+            int answer = OCPNMessageBox_PlugIn( NULL, wxT("Overwrite existing file?"), _T("Confirm"),
                     wxICON_QUESTION | wxYES_NO | wxCANCEL );
             if( answer != wxID_YES ) return;
         }
@@ -305,7 +305,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         wxProgressDialog *pprog = NULL;
         int count = g_pODPointMan->GetODPointList()->GetCount();
         if( count > 200) {
-            pprog = new wxProgressDialog( _("Export GPX file"), _T("0/0"), count, NULL,
+            pprog = new wxProgressDialog( wxT("Export GPX file"), _T("0/0"), count, NULL,
                                           wxPD_APP_MODAL | wxPD_SMOOTH |
                                           wxPD_ELAPSED_TIME | wxPD_ESTIMATED_TIME | wxPD_REMAINING_TIME );
             pprog->SetSize( 400, wxDefaultCoord );
@@ -377,7 +377,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
     Layer *l = NULL;
 
     if( !islayer || dirpath.IsSameAs( _T("") ) ) {
-        wxFileDialog openDialog( NULL, _( "Import GPX file" ), m_gpx_path, wxT ( "" ),
+        wxFileDialog openDialog( NULL, wxT( "Import GPX file" ), m_gpx_path, wxT ( "" ),
                 wxT ( "GPX files (*.gpx)|*.gpx|All files (*.*)|*.*" ),
                 wxFD_OPEN | wxFD_MULTIPLE );
         openDialog.Centre();

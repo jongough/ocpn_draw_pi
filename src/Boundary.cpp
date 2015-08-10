@@ -200,24 +200,6 @@ void Boundary::SetActiveColours( void )
     if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
     else m_fillcol = m_wxcInActiveFillColour;
         
-/*    if( m_bVisible && m_bPathIsActive ) {
-        fillcolour = m_ActiveFillColour;
-    }
-    else {
-        fillcolour = m_InActiveFillColour;
-    }
-    if( fillcolour.IsNull() ) {
-        fillcolour = m_ActiveFillColour;
-    }
-    
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( fillcolour == ::GpxxColorNames[i] ) {
-            m_fillcol = ::GpxxColors[i];
-            break;
-        }
-    }
-*/    
-    
 }
 
 void Boundary::MoveAllPoints( double inc_lat, double inc_lon )

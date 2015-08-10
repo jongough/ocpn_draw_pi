@@ -435,11 +435,8 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
         if( pFindSel->m_seltype == fseltype ) {
             switch( fseltype ){
                 case SELTYPE_OCPNPOINT:
-                    a = fabs( slat - pFindSel->m_slat );
-                    b = fabs( slon - pFindSel->m_slon );
-
                     if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
-                            && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) goto find_ok;
+                            && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) return pFindSel;
                     break;
                 case SELTYPE_PATHSEGMENT: 
                     a = pFindSel->m_slat;
@@ -447,7 +444,6 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
                     c = pFindSel->m_slon;
                     d = pFindSel->m_slon2;
 
-//                    if( IsSegmentSelected( a, b, c, d, slat, slon ) ) goto find_ok;
                     if( IsSegmentSelected( a, b, c, d, slat, slon ) ) return pFindSel;
                     break;
                 default:
@@ -459,7 +455,6 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
     }
 
     return NULL;
-    find_ok: return pFindSel;
 }
 
 bool ODSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel )

@@ -77,16 +77,16 @@ wxString UndoAction::Description()
     wxString descr;
     switch( type ){
         case Undo_CreateODPoint:
-            descr = _("Create ODPoint");
+            descr = wxT("Create ODPoint");
             break;
         case Undo_DeleteODPoint:
-            descr = _("Delete ODPoint");
+            descr = wxT("Delete ODPoint");
             break;
         case Undo_MoveODPoint:
-            descr = _("Move ODPoint");
+            descr = wxT("Move ODPoint");
             break;
         case Undo_AppendODPoint:
-            descr = _("Append ODPoint");
+            descr = wxT("Append ODPoint");
             break;
     default:
             descr = _T("");
