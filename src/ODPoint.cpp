@@ -502,8 +502,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     wxRect r3 = r1;
     if( m_bShowName ) {
         if( !m_pMarkFont ) {
-            m_pMarkFont = FontMgr::Get().GetFont( _( "Marks" ) );
-            m_FontColor = FontMgr::Get().GetFontColor( _( "Marks" ) );
+            m_pMarkFont = FontMgr::Get().GetFont( wxT( "Marks" ) );
+            m_FontColor = FontMgr::Get().GetFontColor( wxT( "Marks" ) );
             CalculateNameExtents();
         }
 
@@ -728,25 +728,6 @@ bool ODPoint::IsSame( ODPoint *pOtherRP )
 
 bool ODPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
 {
-  /*
-    int result = 0;
-    if( g_pODMUX )
-        result = g_pODMUX->SendointToGPS( this, com_name, pProgress );
-
-    wxString msg;
-    if( 0 == result )
-        msg = _("Waypoint(s) Transmitted.");
-    else{
-        if( result == ERR_GARMIN_INITIALIZE )
-            msg = _("Error on Waypoint Upload.  Garmin GPS not connected");
-        else               
-            msg = _("Error on Waypoint Upload.  Please check logfiles...");
-    }
-
-    OCPNMessageBox( NULL, msg, _("OpenCPN Info"), wxOK | wxICON_INFORMATION );
-
-    return (result == 0);
-    */
     return TRUE;
 }
 

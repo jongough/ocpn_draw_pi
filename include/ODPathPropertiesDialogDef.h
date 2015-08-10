@@ -57,6 +57,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
 		wxBoxSizer* m_bSizerEBL;
+		wxBoxSizer* m_bSizerPersistence;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxStaticText* m_staticTextODPoints;

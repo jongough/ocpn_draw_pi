@@ -23,31 +23,21 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_staticText2->Wrap( -1 );
 	m_SizerBasicProperties->Add( m_staticText2, 0, wxALL|wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerInnerProperties;
-	bSizerInnerProperties = new wxBoxSizer( wxHORIZONTAL );
-	
-	wxBoxSizer* bColSpacer;
-	bColSpacer = new wxBoxSizer( wxVERTICAL );
-	
-	bColSpacer->SetMinSize( wxSize( 20,-1 ) ); 
-	
-	bSizerInnerProperties->Add( bColSpacer, 0, wxEXPAND, 5 );
-	
-	wxBoxSizer* bSizer12;
-	bSizer12 = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* bSizerOuterProperties;
+	bSizerOuterProperties = new wxBoxSizer( wxVERTICAL );
 	
 	wxBoxSizer* bSizerName;
 	bSizerName = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_staticText3 = new wxStaticText( m_panelBasicProperties, wxID_ANY, wxT("Name"), wxPoint( 20,-1 ), wxDefaultSize, 0 );
-	m_staticText3->Wrap( -1 );
-	bSizerName->Add( m_staticText3, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_staticTextName = new wxStaticText( m_panelBasicProperties, wxID_ANY, wxT("Name"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextName->Wrap( -1 );
+	bSizerName->Add( m_staticTextName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textName = new wxTextCtrl( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerName->Add( m_textName, 1, wxALL, 2 );
+	bSizerName->Add( m_textName, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	
-	bSizer12->Add( bSizerName, 0, wxEXPAND, 5 );
+	bSizerOuterProperties->Add( bSizerName, 0, wxEXPAND, 5 );
 	
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 	
@@ -62,10 +52,10 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0|wxVSCROLL ); 
-	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 2, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 2, wxALL|wxEXPAND, 5 );
 	
 	
-	bSizer12->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
+	bSizerOuterProperties->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
 	
 	m_bSizerChangeAllPointIcons = new wxBoxSizer( wxHORIZONTAL );
 	
@@ -73,7 +63,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_bSizerChangeAllPointIcons->Add( m_checkBoxChangeAllPointIcons, 0, wxALL, 5 );
 	
 	
-	bSizer12->Add( m_bSizerChangeAllPointIcons, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+	bSizerOuterProperties->Add( m_bSizerChangeAllPointIcons, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerLatLon;
 	bSizerLatLon = new wxBoxSizer( wxHORIZONTAL );
@@ -95,7 +85,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizerLatLon->Add( m_textLongitude, 1, wxALL, 2 );
 	
 	
-	bSizer12->Add( bSizerLatLon, 0, wxALIGN_CENTER_VERTICAL|wxEXPAND, 5 );
+	bSizerOuterProperties->Add( bSizerLatLon, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerArrivalRadius;
 	bSizerArrivalRadius = new wxBoxSizer( wxHORIZONTAL );
@@ -109,20 +99,20 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizerArrivalRadius->Add( m_textArrivalRadius, 1, wxALL, 2 );
 	
 	
-	bSizer12->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
+	bSizerOuterProperties->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizer18;
-	bSizer18 = new wxBoxSizer( wxHORIZONTAL );
+	wxBoxSizer* bSizerRangeRingsControl;
+	bSizerRangeRingsControl = new wxBoxSizer( wxHORIZONTAL );
 	
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_panelBasicProperties, wxID_ANY, wxT("Show Point Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	bSizer18->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0 );
+	bSizerRangeRingsControl->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0 );
 	
 	m_checkBoxFill = new wxCheckBox( m_panelBasicProperties, wxID_ANY, wxT("Fill Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_checkBoxFill->SetValue(true); 
-	bSizer18->Add( m_checkBoxFill, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	bSizerRangeRingsControl->Add( m_checkBoxFill, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
-	bSizer12->Add( bSizer18, 0, wxEXPAND, 2 );
+	bSizerOuterProperties->Add( bSizerRangeRingsControl, 0, wxEXPAND, 2 );
 	
 	m_SizerODPointRangeRingsSelect = new wxBoxSizer( wxVERTICAL );
 	
@@ -143,7 +133,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	fgSizerODPointRangeRingsSelect->Add( m_choicePointRangeRingsNumber, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
-	m_SizerODPointRangeRingsSelect->Add( fgSizerODPointRangeRingsSelect, 0, wxALIGN_RIGHT|wxEXPAND, 2 );
+	m_SizerODPointRangeRingsSelect->Add( fgSizerODPointRangeRingsSelect, 0, wxEXPAND, 2 );
 	
 	m_SizerPointRangeGrid = new wxFlexGridSizer( 3, 2, 0, 0 );
 	m_SizerPointRangeGrid->AddGrowableCol( 0 );
@@ -179,7 +169,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_SizerODPointRangeRingsSelect->Add( m_SizerPointRangeGrid, 0, wxEXPAND, 2 );
 	
 	
-	bSizer12->Add( m_SizerODPointRangeRingsSelect, 1, wxEXPAND, 5 );
+	bSizerOuterProperties->Add( m_SizerODPointRangeRingsSelect, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerDescription;
 	bSizerDescription = new wxBoxSizer( wxVERTICAL );
@@ -200,13 +190,10 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizerDescription->Add( bSizerDescriptionExt, 1, wxEXPAND, 5 );
 	
 	
-	bSizer12->Add( bSizerDescription, 0, wxEXPAND, 5 );
+	bSizerOuterProperties->Add( bSizerDescription, 0, wxEXPAND, 5 );
 	
 	
-	bSizerInnerProperties->Add( bSizer12, 1, wxEXPAND, 5 );
-	
-	
-	m_SizerBasicProperties->Add( bSizerInnerProperties, 0, wxEXPAND, 5 );
+	m_SizerBasicProperties->Add( bSizerOuterProperties, 0, wxEXPAND, 5 );
 	
 	
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
@@ -260,7 +247,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_sliderBackgroundTransparency = new wxSlider( m_panelDisplayText, wxID_ANY, 100, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_sliderBackgroundTransparency->SetMinSize( wxSize( 100,-1 ) );
 	
-	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
+	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerFontFace;
 	bSizerFontFace = new wxBoxSizer( wxHORIZONTAL );
@@ -271,7 +258,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	m_staticTextFontFaceExample = new wxStaticText( m_panelDisplayText, wxID_ANY, wxT("Example"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_staticTextFontFaceExample->Wrap( -1 );
-	bSizerFontFace->Add( m_staticTextFontFaceExample, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	bSizerFontFace->Add( m_staticTextFontFaceExample, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
 	fgSizerTextProperties->Add( bSizerFontFace, 1, wxEXPAND, 5 );

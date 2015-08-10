@@ -75,6 +75,10 @@ class ODEventHandler : public wxEvtHandler
         double          m_cursor_lat;
         double          m_cursor_lon;
         wxTimer         ODTimer1;
+        Boundary        *m_pBoundary;
+        EBL             *m_pEBL;
+        
+        
         
         DECLARE_EVENT_TABLE();
 };

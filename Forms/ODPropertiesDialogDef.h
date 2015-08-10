@@ -115,7 +115,10 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
 		wxPanel* m_panelEBL;
-		wxStaticText* m_staticTextIcon1;
+		wxStaticText* m_staticTextStartPointIcon;
+		wxStaticBitmap* m_bitmapEBLStartBitmap;
+		wxBitmapComboBox* m_bcomboBoxEBLStartIconName;
+		wxStaticText* m_staticTextEndPointIcon;
 		wxStaticBitmap* m_bitmapEBLEndBitmap;
 		wxBitmapComboBox* m_bcomboBoxEBLEndIconName;
 		wxStaticText* m_staticTextActiveEBLLineColour;
@@ -149,6 +152,7 @@ class ODPropertiesDialogDef : public wxDialog
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEBLStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
@@ -158,7 +162,7 @@ class ODPropertiesDialogDef : public wxDialog
 	public:
 		wxChoice* m_choiceToolbar;
 		
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,461 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
 		~ODPropertiesDialogDef();
 	
 };

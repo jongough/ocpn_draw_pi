@@ -40,6 +40,8 @@
 #include "ODUtils.h"
 #include "chcanv.h"
 #include "PointMan.h"
+#include "Boundary.h"
+#include "EBL.h"
 #include "TextPoint.h"
 #include <wx/window.h>
 
@@ -61,6 +63,7 @@ extern ODRolloverWin    *g_pPathRolloverWin;
 extern SelectItem       *g_pRolloverPathSeg;
 extern int              g_cursor_x;
 extern int              g_cursor_y;
+extern PlugIn_Position_Fix_Ex  g_pfFix;
 
 // Event Handler implementation 
 
@@ -84,8 +87,18 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent,
                           Path *selectedPath,
                           ODPoint *selectedODPoint)
 {
+    m_pBoundary = NULL;
+    m_pEBL = NULL;
+    
     m_parentcanvas = parent;
-    m_pSelectedPath = selectedPath;
+    if(selectedPath->m_sTypeString == wxT("Boundary")) {
+        m_pBoundary = (Boundary *)selectedPath;
+        m_pSelectedPath = m_pBoundary;
+    } else if(selectedPath->m_sTypeString == wxT("EBL")) {
+        m_pEBL = (EBL *)selectedPath;
+        m_pSelectedPath = m_pEBL;
+    } else
+        m_pSelectedPath = selectedPath;
     m_pFoundODPoint = selectedODPoint;
 }
 
@@ -93,14 +106,37 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent,
                                Path *selectedPath,
                                TextPoint *selectedTextPoint)
 {
+    m_pBoundary = NULL;
+    m_pEBL = NULL;
+    
     m_parentcanvas = parent;
+    if(selectedPath->m_sTypeString == wxT("Boundary")) {
+        m_pBoundary = (Boundary *)selectedPath;
+        m_pSelectedPath = m_pBoundary;
+    } else if(selectedPath->m_sTypeString == wxT("EBL")) {
+        m_pEBL = (EBL *)selectedPath;
+        m_pSelectedPath = m_pEBL;
+    } else
+        m_pSelectedPath = selectedPath;
     m_pSelectedPath = selectedPath;
     m_pFoundODPoint = selectedTextPoint;
 }
 
 void ODEventHandler::SetPath( Path *path )
 {
-    m_pSelectedPath = path;
+    m_pBoundary = NULL;
+    m_pEBL = NULL;
+    m_pSelectedPath = NULL;
+    if(path) {
+        if(path->m_sTypeString == wxT("Boundary")) {
+            m_pBoundary = (Boundary *)path;
+            m_pSelectedPath = m_pBoundary;
+        } else if(path->m_sTypeString == wxT("EBL")) {
+            m_pEBL = (EBL *)path;
+            m_pSelectedPath = m_pEBL;
+        } else
+            m_pSelectedPath = path;
+    }
 }
 
 void ODEventHandler::SetPoint( ODPoint* point )
@@ -194,13 +230,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         s.Append( wxsText );
                     }
                     
-                    if( pp->m_PathNameString.IsEmpty() ) s.Append( _("(unnamed)") );
+                    if( pp->m_PathNameString.IsEmpty() ) s.Append( wxT("(unnamed)") );
                     else
                         s.Append( pp->m_PathNameString );
                     
-                    s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
-                    << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
-                    << _(" to ") << segShow_point_b->GetName()
+                    s << _T("\n") << wxT("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
+                    << _T("\n") << wxT("Leg: from ") << segShow_point_a->GetName()
+                    << wxT(" to ") << segShow_point_b->GetName()
                     << _T("\n");
                     
                     if( g_bShowMag )
@@ -367,6 +403,16 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         }
+        case ID_EBL_MENU_CENTRE_ON_BOAT:
+            m_pEBL->CentreOnBoat();
+            break;
+        case ID_EBL_MENU_CENTRE_ON_BOAT_LATLON:
+            m_pEBL->CentreOnLatLon( g_pfFix.Lat, g_pfFix.Lon );
+            break;
+        case ID_EBL_MENU_PICK_NEW_START:
+            g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
+            g_ocpn_draw_pi->m_pCurrentCursor = ocpncc1->pCursorCross;
+            break;
         case ID_OCPNPOINT_MENU_PROPERTIES:
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
@@ -520,13 +566,20 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             tName.Append( wxT("Layer ") );
             tName.Append( m_pSelectedPath->m_sTypeString );
             menuPath = new wxMenu( tName );
-            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, wxT( "Properties..." ) );
         }
         else {
             menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
-            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, wxT( "Properties..." ) );
             wxString sType;
-            if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
+            if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                if(m_pSelectedPath->GetPoint( 1 ) != g_ocpn_draw_pi->m_pEBLBoatPoint) {
+                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, wxT("Centre on moving boat") );
+                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, wxT("Centre on boat lat lon") );
+                } else
+                    MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, wxT("Pick a new start point") );
+            }
+            else {
                 sType.clear();
                 sType.append( wxT("Move ") );
                 sType.append( m_pSelectedPath->m_sTypeString );
@@ -537,10 +590,10 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
                 sType.append( wxT(" Point") );
                 MenuAppend( menuPath, ID_PATH_MENU_INSERT, sType );
             }
-            MenuAppend( menuPath, ID_PATH_MENU_DELETE, _( "Delete..." ) );
+            MenuAppend( menuPath, ID_PATH_MENU_DELETE, wxT( "Delete..." ) );
             if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
-                if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
-                else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
+                if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, wxT( "Deactivate") );
+                else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, wxT( "Activate" ) );
             }
         }
         
@@ -558,16 +611,16 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             sType.append( wxT("Layer ") );
             sType.append( m_pFoundODPoint->m_sTypeString );
             menuODPoint = new wxMenu( sType );
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, wxT( "Properties..." ) );
             
             //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
-            //    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+            //    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, wxT( "Activate" ) );
         }
         else {
             wxString sType;
             sType.append( m_pFoundODPoint->m_sTypeString );
             menuODPoint = new wxMenu( sType );
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, wxT( "Properties..." ) );
             sType.clear();
             sType.append( wxS("Move ") );
             sType.append(m_pFoundODPoint->m_sTypeString);
@@ -575,23 +628,23 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
 
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
 //                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundODPoint )
-//                    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
+//                    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, wxT( "Activate" ) );
 //            }
             
 //            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
 //                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundODPoint ) {
 //                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
 //                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
-//                        MenuAppend( menuODPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next ODPoint" ) );
+//                        MenuAppend( menuODPoint, ID_PATH_MENU_ACTNXTPOINT, wxT( "Activate Next ODPoint" ) );
 //                }
 //            }
             if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
-                MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
+                MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, wxT( "Remove Point from Path" ) );
             
             if( m_pSelectedPath )
-                MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
+                MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  wxT( "Delete" ) );
             else
-                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
+                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  wxT( "Delete" ) );
             
         }
         //      Set this menu as the "focused context menu"

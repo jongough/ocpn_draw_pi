@@ -120,6 +120,9 @@ enum
     ID_PATH_MENU_ACTNXTPOINT,
     ID_PATH_MENU_REMPOINT,
     ID_PATH_MENU_PROPERTIES,
+    ID_EBL_MENU_CENTRE_ON_BOAT,
+    ID_EBL_MENU_CENTRE_ON_BOAT_LATLON,
+    ID_EBL_MENU_PICK_NEW_START,
 
     ID_UNDO,
     ID_REDO,
@@ -160,8 +163,6 @@ class BoundaryProp;
 class EBL;
 class SelectItem;
 
-const wxString GpxxColorNames[] = { _("Black"), _("DarkRed"), _("DarkGreen"), _("DarkYellow"), _("DarkBlue"), _("DarkMagenta"), _("DarkCyan"), _("LightGray"), _("DarkGray"), _("Red"), _("Green"), _("Yellow"), _("Blue"), _("Magenta"), _("Cyan"), _("White") };//The last color defined by Garmin is transparent - we ignore it
-const wxColour GpxxColors[] = { wxColour(0x00, 0x00, 0x00), wxColour(0x60, 0x00, 0x00), wxColour(0x00, 0x60, 0x00), wxColour(0x80, 0x80, 0x00), wxColour(0x00, 0x00, 0x60), wxColour(0x60, 0x00, 0x60), wxColour(0x00, 0x80, 0x80), wxColour(0xC0, 0xC0, 0xC0), wxColour(0x60, 0x60, 0x60), wxColour(0xFF, 0x00, 0x00), wxColour(0x00, 0xFF, 0x00), wxColour(0xF0, 0xF0, 0x00), wxColour(0x00, 0x00, 0xFF), wxColour(0xFE, 0x00, 0xFE), wxColour(0x00, 0xFF, 0xFF), wxColour(0xFF, 0xFF, 0xFF) };
 const int StyleValues[] = { wxSOLID, wxDOT, wxLONG_DASH, wxSHORT_DASH, wxDOT_DASH };
 const int WidthValues[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
@@ -193,6 +194,7 @@ public:
     bool            m_bODPointEditing;
     bool            m_bTextPointEditing;
     bool            m_bEBLEditing;
+    bool            m_bEBLMoveOrigin;
     
 
     //    The required PlugIn Methods
@@ -356,6 +358,7 @@ private:
     PI_ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;
+    EBL         *m_pSelectedEBL;
     
     bool        m_bDrawingBoundary;
     

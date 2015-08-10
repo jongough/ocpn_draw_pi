@@ -16,8 +16,8 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/sizer.h>
 #include <wx/textctrl.h>
+#include <wx/sizer.h>
 #include <wx/checkbox.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -48,7 +48,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxPanel* m_panelBasicProperties;
 		wxBoxSizer* m_SizerBasicProperties;
 		wxStaticText* m_staticText2;
-		wxStaticText* m_staticText3;
+		wxStaticText* m_staticTextName;
 		wxTextCtrl* m_textName;
 		wxBoxSizer* m_SizerNameIcon;
 		wxCheckBox* m_checkBoxShowName;

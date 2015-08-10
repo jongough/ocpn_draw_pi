@@ -81,7 +81,7 @@ Path::Path( void )
     m_pLastAddedPoint = NULL;
     m_pFirstAddedPoint = NULL;
     m_GUID = GetUUID();
-    m_btemp = false;
+    m_bTemporary = false;
     
     m_bNeedsUpdateBBox = true;
     RBBox.Reset();
@@ -609,10 +609,10 @@ void Path::ReloadPathPointIcons()
 {
     wxODPointListNode *node = m_pODPointList->GetFirst();
 
-    ODPoint *rp;
+    ODPoint *op;
     while( node ) {
-        rp = node->GetData();
-        rp->ReLoadIcon();
+        op = node->GetData();
+        op->ReLoadIcon();
 
         node = node->GetNext();
     }
@@ -886,8 +886,6 @@ void Path::UpdateSegmentDistances()
             slat1 = slat2;
             slon1 = slon2;
 
-            pOp0 = pOp;
-
             node = node->GetNext();
         }
     }
@@ -895,25 +893,24 @@ void Path::UpdateSegmentDistances()
     m_path_length = path_len;
 }
 
-ODPoint *Path::InsertPointBefore( ODPoint *pRP, double rlat, double rlon,
-        bool bRenamePoints )
+ODPoint *Path::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
-    ODPoint *newpoint = new ODPoint( rlat, rlon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
+    ODPoint *newpoint = new ODPoint( lat, lon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
     
-    int nRP = m_pODPointList->IndexOf( pRP );
-    if ( nRP == 0 ) {
+    int nOP = m_pODPointList->IndexOf( pOP );
+    if ( nOP == 0 ) {
         m_pODPointList->Insert( m_pODPointList->GetCount() - 1, newpoint );
-        nRP = m_pODPointList->GetCount();
+        nOP = m_pODPointList->GetCount();
     }
     else {
-        m_pODPointList->Insert( nRP, newpoint );
+        m_pODPointList->Insert( nOP, newpoint );
     }
 
-    ODPointGUIDList.Insert( pRP->m_GUID, nRP );
+    ODPointGUIDList.Insert( pOP->m_GUID, nOP );
 
     m_nPoints++;
 
@@ -925,14 +922,14 @@ ODPoint *Path::InsertPointBefore( ODPoint *pRP, double rlat, double rlon,
     return ( newpoint );
 }
 
-ODPoint *Path::InsertPointAfter( ODPoint *pOP, double rlat, double rlon, bool bRenamePoints )
+ODPoint *Path::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
     int nOP = m_pODPointList->IndexOf( pOP );
     if( nOP >= m_nPoints - 1 )
         return NULL;
     nOP++;
     
-    ODPoint *newpoint = new ODPoint( rlat, rlon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
+    ODPoint *newpoint = new ODPoint( lat, lon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
@@ -1013,28 +1010,6 @@ void Path::SetActiveColours( void )
         else
             m_col = m_wxcInActiveLineColour;
     }
-
-/*    if( m_bVisible && m_bPathIsActive ) {
-        colour = m_ActiveLineColour;
-    }
-    else {
-        colour = m_InActiveLineColour;
-    }
-    
-    if( colour.IsNull() ) {
-        colour = m_ActiveLineColour;
-    }
-    
-    if( m_bVisible && m_iBlink && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) )
-        colour = m_InActiveLineColour;
-    
-    for( unsigned int i = 0; i < sizeof( ::GpxxColorNames ) / sizeof(wxString); i++ ) {
-        if( colour == ::GpxxColorNames[i] ) {
-            m_col = ::GpxxColors[i];
-            break;
-        }
-    }
-*/    
 }
 
 void Path::MoveAllPoints( double inc_lat, double inc_lon )
