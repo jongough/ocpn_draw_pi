@@ -139,6 +139,7 @@ wxString    g_sEBLStartIconName;
 wxColour    g_colourEBLLineColour;
 bool        g_bEBLFixedEndPosition;
 int         g_EBLPersistenceType;
+bool        g_bEBLShowArrow;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
 wxColour    g_colourActivePathLineColour;
@@ -770,6 +771,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
         pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
+        pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
@@ -850,6 +852,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLStartIcon" ), &g_sEBLStartIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );

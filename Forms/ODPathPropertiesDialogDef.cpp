@@ -142,6 +142,15 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	m_bSizerEBL->Add( m_bSizerPersistence, 0, wxEXPAND, 5 );
 	
+	wxBoxSizer* bSizer7;
+	bSizer7 = new wxBoxSizer( wxVERTICAL );
+	
+	m_checkBoxEBLShowArrow = new wxCheckBox( this, wxID_ANY, _("Show EBL Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	bSizer7->Add( m_checkBoxEBLShowArrow, 0, wxALL, 5 );
+	
+	
+	m_bSizerEBL->Add( bSizer7, 1, wxEXPAND, 5 );
+	
 	
 	fgSizer1->Add( m_bSizerEBL, 1, wxEXPAND, 5 );
 	

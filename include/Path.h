@@ -143,6 +143,7 @@ public:
     int         m_hiliteWidth;
     wxPoint     *m_bpts;
     int         m_iBlink;
+    bool        m_bDrawArrow;
     
 protected:    
     bool m_bNeedsUpdateBBox;

@@ -386,6 +386,8 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
         wxString s;
         s.Printf(_T("%1i"), pEBL->m_PersistenceType);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:show_arrow");
+        child.append_child(pugi::node_pcdata).set_value( pEBL->m_bDrawArrow == true ? "1" : "0" );
     }
 
     ODPointList *pODPointList = pPath->m_pODPointList;
@@ -979,15 +981,15 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
             
             else
             if( ChildName == _T ( "opencpn:viz" ) ) {
-                        wxString viz = wxString::FromUTF8(tschild.first_child().value());
-                        b_propviz = true;
-                        b_viz = ( viz == _T("1") );
+                wxString viz = wxString::FromUTF8(tschild.first_child().value());
+                b_propviz = true;
+                b_viz = ( viz == _T("1") );
             }
             
             else
             if( ChildName == _T ( "opencpn:active" ) ) {
-                        wxString active = wxString::FromUTF8(tschild.first_child().value());
-                        b_active = ( active == _T("1") );
+                wxString active = wxString::FromUTF8(tschild.first_child().value());
+                b_active = ( active == _T("1") );
             }
             else
             if( ChildName == _T ( "opencpn:style" ) ) {
@@ -1019,6 +1021,9 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 long v = 0;
                 if( s.ToLong( &v ) )
                     pTentEBL->SetPersistence( v );
+            } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                pTentEBL->m_bDrawArrow = ( s == wxT("1") );
             }
         }
                     

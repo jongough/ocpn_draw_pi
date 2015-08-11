@@ -131,6 +131,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextEBLLineStyle;
 		wxChoice* m_choiceEBLLineStyle;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
+		wxCheckBox* m_checkBoxEBLShowArrow;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;

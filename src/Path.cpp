@@ -66,6 +66,7 @@ Path::Path( void )
     m_pPathActivePoint = NULL;
     m_bIsBeingEdited = false;
     m_bIsBeingCreated = true;
+    m_bDrawArrow = false;
     m_nPoints = 0;
     m_nm_sequence = 1;
     m_path_length = 0.0;
@@ -214,6 +215,7 @@ void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     SetActiveColours();
     
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
 
     wxPoint ppt1, ppt2;
     m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
@@ -250,7 +252,7 @@ void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
             bool b_1_on = llbb.PointInBox( pOp1->m_lon, pOp1->m_lat, 0 );
 
             //Simple case
-            if( b_1_on && b_2_on ) RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x, ppt2.y, VP, false, m_hiliteWidth ); // with no arrows
+            if( b_1_on && b_2_on ) RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth ); // with no arrows
 
             //    In the cases where one point is on, and one off
             //    we must decide which way to go in longitude
@@ -271,7 +273,7 @@ void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 
                 if( dp < dtest ) adder = 0;
 
-                RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x + adder, ppt2.y, VP, false, m_hiliteWidth );
+                RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x + adder, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth );
             } else
                 if( !b_1_on ) {
                     if( ppt1.x < ppt2.x ) adder = (int) pix_full_circle;
@@ -284,7 +286,7 @@ void Path::Draw( ODDC& dc, PlugIn_ViewPort &VP )
                     
                     if( dp < dtest ) adder = 0;
 
-                    RenderSegment( dc, ppt1.x + adder, ppt1.y, ppt2.x, ppt2.y, VP, false, m_hiliteWidth );
+                    RenderSegment( dc, ppt1.x + adder, ppt1.y, ppt2.x, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth );
                 }
         }
 
@@ -314,13 +316,9 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
     
     SetActiveColours();
 
-    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_TRANSPARENT ) );
-    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-    dc.SetGLStipple();
-    
     int j = 0;
     wxPoint r;
-    
+
     m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
     for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();
@@ -328,7 +326,22 @@ void Path::DrawGL( PlugIn_ViewPort &piVP )
         m_bpts[ j++ ] = r;
     }
     
-    dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0 );
+    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_TRANSPARENT ) );
+    dc.SetGLStipple();
+    
+    if(m_pODPointList->GetCount() == 2)
+        dc.DrawLine(m_bpts[0].x, m_bpts[0].y, m_bpts[1].x, m_bpts[1].y);
+    else
+        dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0 );
+    glDisable( GL_LINE_STIPPLE );
+
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
+    
+    for(size_t i = 1; i < m_pODPointList->GetCount(); i++) {
+        if(m_bDrawArrow)
+            RenderSegmentArrowsGL( m_bpts[i - 1].x, m_bpts[i - 1].y, m_bpts[i].x, m_bpts[i].y, piVP );
+    }
     
     /*  ODPoints  */
     for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
@@ -408,6 +421,9 @@ void Path::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewP
         if( icon_size > ( lpp * max_arrow_to_leg ) ) icon_scale_factor = ( lpp * max_arrow_to_leg )
                 / nom_arrow_size;
 
+        int xc, yc; // move the pointer back from the icon
+        xc = xb - ( ( xb - xa ) / 20 );
+        yc = yb - ( ( yb - ya ) / 20 );
         for( int i = 0; i < 7; i++ ) {
             int j = i * 2;
             double pxa = (double) ( s_arrow_icon[j] );
@@ -419,8 +435,8 @@ void Path::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewP
             double px = ( pxa * sin( theta ) ) + ( pya * cos( theta ) );
             double py = ( pya * sin( theta ) ) - ( pxa * cos( theta ) );
 
-            icon[i].x = (int) ( px ) + xb;
-            icon[i].y = (int) ( py ) + yb;
+            icon[i].x = (int) ( px ) + xc;
+            icon[i].y = (int) ( py ) + yc;
         }
         wxPen savePen = dc.GetPen();
         dc.SetPen( *wxTRANSPARENT_PEN );
@@ -452,7 +468,10 @@ void Path::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPor
     theta -= (float)PI;
 
     glPushMatrix();
-    glTranslatef(xb, yb, 0);
+    int xc, yc; // move the pointer back from the icon
+    xc = xb - ( ( xb - xa ) / 20 );
+    yc = yb - ( ( yb - ya ) / 20 );
+    glTranslatef(xc, yc, 0);
     glScalef(icon_scale_factor, icon_scale_factor, 1);
     glRotatef(theta * 180/PI, 0, 0, 1);
 

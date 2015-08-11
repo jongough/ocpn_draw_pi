@@ -71,6 +71,7 @@ extern PlugIn_Position_Fix_Ex  g_pfFix;
 extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
+extern bool         g_bEBLShowArrow;
 
 EBL::EBL() : Path()
 {
@@ -78,6 +79,7 @@ EBL::EBL() : Path()
     m_wxcActiveLineColour = g_colourEBLLineColour;
     m_width = g_EBLLineWidth;
     m_style = g_EBLLineStyle;
+    m_bDrawArrow = g_bEBLShowArrow;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
     SetPersistence( g_EBLPersistenceType );
 }

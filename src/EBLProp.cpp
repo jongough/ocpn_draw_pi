@@ -53,6 +53,8 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_bSizerEBL->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
+    m_checkBoxEBLShowArrow->Show();
+    m_checkBoxEBLShowArrow->Enable( true );
     m_radioBoxEBLPersistence->Show();
     m_radioBoxEBLPersistence->Enable( true );
 
@@ -69,6 +71,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
 {
     m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
     m_radioBoxEBLPersistence->SetSelection( pInEBL->m_PersistenceType );
+    m_checkBoxEBLShowArrow->SetValue( pInEBL->m_bDrawArrow );
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
 }
 
@@ -80,6 +83,7 @@ bool EBLProp::SaveChanges( void )
         m_pEBL->m_bTemporary = true;
     else
         m_pEBL->m_bTemporary = false;
+    m_pEBL->m_bDrawArrow = m_checkBoxEBLShowArrow->GetValue();
     
     return ODPathPropertiesDialogImpl::SaveChanges();
 }

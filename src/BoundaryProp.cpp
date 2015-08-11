@@ -55,6 +55,8 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_bSizerEBL->ShowItems( false );
     m_checkBoxEBLFixedEndPosition->Hide();
     m_checkBoxEBLFixedEndPosition->Enable( false );
+    m_checkBoxEBLShowArrow->Hide();
+    m_checkBoxEBLShowArrow->Enable( false );
     m_radioBoxEBLPersistence->Hide();
     m_radioBoxEBLPersistence->Enable( false );
     
