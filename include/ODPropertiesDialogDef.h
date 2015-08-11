@@ -133,6 +133,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxEBLShowArrow;
 		wxRadioBox* m_radioBoxEBLPersistence;
+		wxCheckBox* m_checkBoxShowVRM;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;

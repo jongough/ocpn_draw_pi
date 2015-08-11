@@ -573,7 +573,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             wxString sType;
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
-                if(m_pSelectedPath->GetPoint( 1 ) != g_ocpn_draw_pi->m_pEBLBoatPoint) {
+                if(!m_pEBL->m_bCentreOnBoat) {
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, _("Centre on moving boat") );
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Centre on boat lat lon") );
                 } else

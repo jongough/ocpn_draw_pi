@@ -72,6 +72,7 @@ extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
 extern bool         g_bEBLShowArrow;
+extern bool         g_bEBLVRM;
 
 EBL::EBL() : Path()
 {
@@ -80,6 +81,9 @@ EBL::EBL() : Path()
     m_width = g_EBLLineWidth;
     m_style = g_EBLLineStyle;
     m_bDrawArrow = g_bEBLShowArrow;
+    m_bVRM = g_bEBLVRM;
+    m_bVRM = true;
+    m_bCentreOnBoat = true;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
     SetPersistence( g_EBLPersistenceType );
 }
@@ -92,16 +96,27 @@ EBL::~EBL()
 void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
 {
     Path::AddPoint( pNewPoint, b_rename_in_sequence, b_deferBoxCalc, b_isLoading );
-    
-    if(pNewPoint->GetName() == wxT("Boat")) g_ocpn_draw_pi->m_pEBLBoatPoint = pNewPoint;
+    if(m_bVRM) {
+        if(pNewPoint->m_MarkName == _("Start") || pNewPoint->m_MarkName == _("Boat")) {
+            pNewPoint->m_bShowODPointRangeRings = true;
+            pNewPoint->SetODPointRangeRingsNumber( 1 );
+            pNewPoint->SetODPointRangeRingsStep( 0 );
+        } else if(pNewPoint->m_MarkName == _("End")) {
+            ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
+            pFirstPoint->SetODPointRangeRingsStep( pNewPoint->m_seg_len );
+        }
+    }
 }
 
-void EBL::MovePoint( double inc_lat, double inc_lon )
+void EBL::MoveEndPoint( double inc_lat, double inc_lon )
 {
-    wxODPointListNode *node = m_pODPointList->GetLast();
-    ODPoint *bp = (ODPoint *)node->GetData();
-    bp->m_lat -= inc_lat;
-    bp->m_lon -= inc_lon;
+    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    pEndPoint->m_lat -= inc_lat;
+    pEndPoint->m_lon -= inc_lon;
+    if(m_bVRM) {
+        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
+    }
 }
 
 void EBL::SetPersistence( int PersistenceType )
@@ -115,57 +130,19 @@ void EBL::SetPersistence( int PersistenceType )
 
 void EBL::CentreOnBoat( void )
 {
-    ODPoint *pNewPoint;
-    if(!g_ocpn_draw_pi->m_pEBLBoatPoint) {
-        pNewPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sODPointIconName, wxS("Boat"), wxT("") );
-        pNewPoint->SetNameShown( false );
-        pNewPoint->SetTypeString( wxT("EBL Point"));
-        pNewPoint->SetIconName( wxEmptyString );
-        pNewPoint->ReLoadIcon();
-        g_ocpn_draw_pi->m_pEBLBoatPoint = pNewPoint;
-    } else 
-        pNewPoint = g_ocpn_draw_pi->m_pEBLBoatPoint;
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    pStartPoint->m_lat = g_pfFix.Lat;
+    pStartPoint->m_lon = g_pfFix.Lon;
+
+    m_bCentreOnBoat = true;
     
-    InsertPointAfter( (ODPoint *)m_pODPointList->GetFirst()->GetData(), pNewPoint );
-    RemovePoint( m_pODPointList->GetFirst()->GetData() );
-    
-    g_pODSelect->DeleteAllSelectablePathSegments( this );
-    g_pODSelect->DeleteAllSelectableODPoints( this );
-    g_pODSelect->AddAllSelectablePathSegments( this );
-    g_pODSelect->AddAllSelectableODPoints( this );
-    
-    FinalizeForRendering();
-    UpdateSegmentDistances();
-    bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
-    g_pODConfig->m_bSkipChangeSetUpdate = false;
-    if(m_PersistenceType == ID_EBL_PERSISTENT || m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
-        g_pODConfig->UpdatePath( this ); 
-    g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
-    
-    for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-        Path *pp = (Path *) m_pODPointList->Item( ip );
-        if( g_pPathMan->IsPathValid(pp) ) {
-            pp->FinalizeForRendering();
-            pp->UpdateSegmentDistances();
-            pp->m_bIsBeingEdited = false;
-            
-            g_pODConfig->UpdatePath( pp );
-            
-            pp->SetHiLite( 0 );
-        }
+    UpdateEBL();
+    if(m_bVRM) {
+        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
     
-    //    Update the PathProperties Dialog, if currently shown
-    if( ( NULL != g_pEBLPropDialog ) && ( g_pEBLPropDialog->IsShown() ) ) {
-        if( m_pODPointList ) {
-            for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-                Path *pp = (Path *) m_pODPointList->Item( ip );
-                if( g_pPathMan->IsPathValid(pp) ) {
-                    g_pEBLPropDialog->SetPathAndUpdate( pp, true );
-                }
-            }
-        }
-    }
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     return;
@@ -173,15 +150,16 @@ void EBL::CentreOnBoat( void )
 
 void EBL::CentreOnLatLon( double lat, double lon )
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *fp = (ODPoint *)node->GetData();
+    ODPoint *fp = m_pODPointList->GetFirst()->GetData();
     fp->m_lat = lat;
     fp->m_lon = lon;
-    g_pODSelect->DeleteAllSelectableODPoints( this );
-    g_pODSelect->DeleteAllSelectablePathSegments( this );
+    if(fp->GetIconName() != wxEmptyString) {
+        fp->SetIconName( g_sEBLStartIconName );
+        fp->ReLoadIcon();
+    }
+    m_bCentreOnBoat = false;
     
-    g_pODSelect->AddAllSelectablePathSegments( this );
-    g_pODSelect->AddAllSelectableODPoints( this );
+    UpdateEBL();
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     return;
 }
@@ -236,4 +214,65 @@ ODPoint *EBL::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRena
 void EBL::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
 {
     Path::InsertPointAfter( pOP, pnOP );
+}
+
+void EBL::UpdateEBL( void )
+{
+    g_pODSelect->DeleteAllSelectablePathSegments( this );
+    g_pODSelect->DeleteAllSelectableODPoints( this );
+    g_pODSelect->AddAllSelectablePathSegments( this );
+    g_pODSelect->AddAllSelectableODPoints( this );
+    
+    FinalizeForRendering();
+    UpdateSegmentDistances();
+    bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
+    g_pODConfig->m_bSkipChangeSetUpdate = false;
+    if(m_PersistenceType == ID_EBL_PERSISTENT || m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
+        g_pODConfig->UpdatePath( this ); 
+    g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
+    
+    for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
+        Path *pp = (Path *) m_pODPointList->Item( ip );
+        if( g_pPathMan->IsPathValid(pp) ) {
+            pp->FinalizeForRendering();
+            pp->UpdateSegmentDistances();
+            pp->m_bIsBeingEdited = false;
+            
+            g_pODConfig->UpdatePath( pp );
+            
+            pp->SetHiLite( 0 );
+        }
+    }
+    
+    //    Update the PathProperties Dialog, if currently shown
+    if( ( NULL != g_pEBLPropDialog ) && ( g_pEBLPropDialog->IsShown() ) ) {
+        if( m_pODPointList ) {
+            for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
+                Path *pp = (Path *) m_pODPointList->Item( ip );
+                if( g_pPathMan->IsPathValid(pp) ) {
+                    g_pEBLPropDialog->SetPathAndUpdate( pp, true );
+                }
+            }
+        }
+    }
+}
+
+void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
+{
+    if(m_bVRM) {
+        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
+    }
+    Path::Draw( dc, VP );
+}
+    
+void EBL::DrawGL( PlugIn_ViewPort &piVP )
+{
+    if(m_bVRM) {
+        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
+    }
+    Path::DrawGL( piVP );
 }

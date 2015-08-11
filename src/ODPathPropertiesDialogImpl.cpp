@@ -388,6 +388,15 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
         }
     }
     
+    // Set column width correctly for data
+    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
+#ifdef WIN32
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+#else WIN32        
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
+#endif WIN32        
+    }
+    
     ::wxEndBusyCursor();
     
     return true;

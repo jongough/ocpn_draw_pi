@@ -62,6 +62,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxCheckBox* m_checkBoxEBLShowArrow;
+		wxCheckBox* m_checkBoxShowVRM;
 		wxStaticText* m_staticTextODPoints;
 		wxListCtrl* m_listCtrlODPoints;
 		wxButton* m_buttonOK;
