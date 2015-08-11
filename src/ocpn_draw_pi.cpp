@@ -140,6 +140,7 @@ wxColour    g_colourEBLLineColour;
 bool        g_bEBLFixedEndPosition;
 int         g_EBLPersistenceType;
 bool        g_bEBLShowArrow;
+bool        g_bEBLVRM;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
 wxColour    g_colourActivePathLineColour;
@@ -590,30 +591,26 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
 void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 {
+    double incLat, incLon;
+    
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
+    incLat = g_pfFix.Lat - pfix.Lat;
+    incLon = g_pfFix.Lon - pfix.Lon;
+
     g_pfFix = pfix;
     
-    if(m_pEBLBoatPoint && g_pEBLList->GetCount() > 0) {
-        double incLat, incLon;
-        incLat = m_pEBLBoatPoint->m_lat - g_pfFix.Lat;
-        incLon = m_pEBLBoatPoint->m_lon - g_pfFix.Lon;
-        if(incLat && incLon) {
-            m_pEBLBoatPoint->m_lat = g_pfFix.Lat;
-            m_pEBLBoatPoint->m_lon = g_pfFix.Lon;
-            wxEBLListNode *node = g_pEBLList->GetFirst();
-            for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
-                EBL *ebl = (EBL *)node->GetData();
-                if(!ebl->m_bFixedEndPosition) ebl->MovePoint( incLat, incLon );
-                ebl->FinalizeForRendering();  // Ensure full EBL is redrawn when boat moves
-                g_pODSelect->DeleteAllSelectablePathSegments( ebl );
-                g_pODSelect->DeleteAllSelectableODPoints( ebl );
-                g_pODSelect->AddAllSelectablePathSegments( ebl );
-                g_pODSelect->AddAllSelectableODPoints( ebl );
-                node = node->GetNext();
+    if(incLat || incLon) {
+        wxEBLListNode *node = g_pEBLList->GetFirst();
+        for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
+            EBL *ebl = (EBL *)node->GetData();
+            if(ebl->m_bCentreOnBoat)  {
+                if(!ebl->m_bFixedEndPosition)
+                    ebl->MoveEndPoint( incLat, incLon );
+                ebl->CentreOnBoat();
             }
-            RequestRefresh( m_parent_window );
+            node = node->GetNext();
         }
     }
 }
@@ -772,6 +769,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
         pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
+        pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
@@ -853,6 +851,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxSOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
+        pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
@@ -1243,57 +1242,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if (m_bEBLMoveOrigin) {
             m_bEBLMoveOrigin = false;
             m_pSelectedEBL = (EBL *)m_pSelectedPath;
-            ODPoint *pFirst;
-            ODPoint *pOld = (ODPoint *)m_pSelectedPath->m_pODPointList->GetFirst()->GetData();
-            pFirst = m_pSelectedEBL->InsertPointAfter( pOld, m_cursor_lat, m_cursor_lon );
-            //pFirst = m_pSelectedEBL->InsertPointBefore( m_pSelectedEBL->m_pODPointList->GetLast()->GetData(), m_cursor_lat, m_cursor_lon);
-            //pFirst = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
-            m_pSelectedEBL->RemovePoint( pOld );
+            m_pSelectedEBL->CentreOnLatLon( m_cursor_lat, m_cursor_lon );
             m_bPathEditing = FALSE;
             m_bODPointEditing = FALSE;
             m_pCurrentCursor = NULL;
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
-            
-            g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
-            g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-            g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
-            
-            m_pSelectedPath->FinalizeForRendering();
-            m_pSelectedPath->UpdateSegmentDistances();
-            bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
-            g_pODConfig->m_bSkipChangeSetUpdate = false;
-            if(m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
-                g_pODConfig->UpdatePath( m_pSelectedEBL ); 
-            g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
-            
-            if( m_pSelectedPath->m_pODPointList ) {
-                for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
-                    Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
-                    if( g_pPathMan->IsPathValid(pp) ) {
-                        pp->FinalizeForRendering();
-                        pp->UpdateSegmentDistances();
-                        pp->m_bIsBeingEdited = false;
-                        
-                        g_pODConfig->UpdatePath( pp );
-                        
-                        pp->SetHiLite( 0 );
-                    }
-                }
-                bRefresh = TRUE;
-            }
-            
-            //    Update the PathProperties Dialog, if currently shown
-            if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) {
-                if( m_pSelectedPath->m_pODPointList ) {
-                    for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
-                        Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
-                        if( g_pPathMan->IsPathValid(pp) ) {
-                            g_pODPathPropDialog->SetPathAndUpdate( pp, true );
-                        }
-                    }
-                }
-            }
             
             // TODO reimplement undo
             //undo->AfterUndoableAction( m_pRoutePointEditTarget );
@@ -2419,18 +2372,15 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL = new EBL();
     g_pEBLList->Append( m_pMouseEBL );
     g_pPathList->Append( m_pMouseEBL );
+    m_pMouseEBL->m_PathNameString << g_pEBLList->GetCount();
     m_dStartLat = g_pfFix.Lat;
     m_dStartLon = g_pfFix.Lon;
 
-    if(!m_pEBLBoatPoint) {
-        m_pEBLBoatPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sODPointIconName, wxS("Boat"), wxT("") );
-        m_pEBLBoatPoint->SetNameShown( false );
-        m_pEBLBoatPoint->SetTypeString( wxT("EBL Point"));
-        m_pEBLBoatPoint->SetIconName( wxEmptyString );
-        m_pEBLBoatPoint->ReLoadIcon();
-    }
-    
-    m_pMouseEBL->AddPoint( m_pEBLBoatPoint, false );
+    ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, wxEmptyString, wxS("Boat"), wxT("") );
+    beginPoint->SetNameShown( false );
+    beginPoint->SetTypeString( wxT("EBL Point"));
+    beginPoint->m_bIsolatedMark = false;
+    m_pMouseEBL->AddPoint( beginPoint, false );
     
     pMousePoint = new ODPoint( rlat, rlon, g_sEBLEndIconName, wxS("End"), wxT("") );
     
@@ -2438,11 +2388,12 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     pMousePoint->SetTypeString( wxS("EBL Point") );
     pMousePoint->m_bIsolatedMark = FALSE;
     m_pMouseEBL->AddPoint( pMousePoint );
+    m_pMouseEBL->m_bCentreOnBoat = true;
 
     if(m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
-    g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, m_pEBLBoatPoint, pMousePoint, m_pMouseEBL );
+    g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMouseEBL );
     
     m_pMouseEBL->RebuildGUIDList();
     

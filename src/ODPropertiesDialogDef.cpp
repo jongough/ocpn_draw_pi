@@ -124,7 +124,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerRingsShow->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkBoxFill = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, _("Fill Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_checkBoxFill->SetValue(true); 
 	fgSizerRingsShow->Add( m_checkBoxFill, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	
@@ -453,6 +452,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_radioBoxEBLPersistence = new wxRadioBox( m_panelEBL, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 2, wxRA_SPECIFY_ROWS );
 	m_radioBoxEBLPersistence->SetSelection( 0 );
 	fgSizerEBLSettings->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
+	
+	m_checkBoxShowVRM = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizerEBLSettings->Add( m_checkBoxShowVRM, 0, wxALL, 5 );
 	
 	
 	m_panelEBL->SetSizer( fgSizerEBLSettings );

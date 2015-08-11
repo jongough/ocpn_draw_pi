@@ -72,6 +72,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
     m_radioBoxEBLPersistence->SetSelection( pInEBL->m_PersistenceType );
     m_checkBoxEBLShowArrow->SetValue( pInEBL->m_bDrawArrow );
+    m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
 }
 
@@ -84,6 +85,7 @@ bool EBLProp::SaveChanges( void )
     else
         m_pEBL->m_bTemporary = false;
     m_pEBL->m_bDrawArrow = m_checkBoxEBLShowArrow->GetValue();
+    m_pEBL->m_bVRM = m_checkBoxShowVRM->GetValue();
     
     return ODPathPropertiesDialogImpl::SaveChanges();
 }

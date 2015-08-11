@@ -39,8 +39,10 @@ class EBL : public Path
     public:
         EBL();
         virtual ~EBL();
+        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
+        void DrawGL( PlugIn_ViewPort &piVP );
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
-        void MovePoint( double inc_lat, double inc_lon );
+        void MoveEndPoint( double inc_lat, double inc_lon );
         void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
         ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
         ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
@@ -52,12 +54,14 @@ class EBL : public Path
 
         bool        m_bFixedEndPosition;
         int         m_PersistenceType;
+        bool        m_bVRM;
+        bool        m_bCentreOnBoat;
         
     protected:
+        void        UpdateEBL( void );
         
     private:
-        wxColour   m_wxcLineColour;
-        
+        wxColour    m_wxcLineColour;
 };
 
 WX_DECLARE_LIST(EBL, EBLList); // establish class Path as list member
