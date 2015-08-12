@@ -1540,11 +1540,6 @@ void PathManagerDialog::OnODPointDeleteClick( wxCommandEvent &event )
         UpdatePathListCtrl();
         UpdateODPointsListCtrl( wp_next, true );
 
-/*        if( pMarkPropDialog ) {
-            pMarkPropDialog->SetRoutePoint( NULL );
-            pMarkPropDialog->UpdateProperties();
-        }
-*/
         // TODO fix up undo
         //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
@@ -1657,11 +1652,6 @@ void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
     if ( answer == wxID_NO && type == 2 )
         g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OCPN points
 
-/*    if( pMarkPropDialog ) {
-        pMarkPropDialog->SetODPoint( NULL );
-        pMarkPropDialog->UpdateProperties();
-    }
-*/
     m_lastODPointItem = -1;
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
@@ -1804,17 +1794,6 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
         node2 = NULL;
     }
 
-    //m_pSelectedRoute = NULL;
-    //m_pSelectedTrack = NULL;
-    //m_pFoundRoutePoint = NULL;
-    //m_pFoundRoutePointSecond = NULL;
-
-    //if ( pRoutePropDialog )
-    //{
-    //      //pRoutePropDialog->SetRouteAndUpdate ( track );
-    //      pRoutePropDialog->UpdateProperties();
-    //}
-
     // Process waypoints in this layer
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     wxODPointListNode *node3;
@@ -1832,11 +1811,6 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
         node3 = NULL;
     }
 
-/*    if( pMarkPropDialog ) {
-        pMarkPropDialog->SetODPoint( NULL );
-        pMarkPropDialog->UpdateProperties();
-    }
-*/
     pLayerList->DeleteObject( layer );
 
     UpdatePathListCtrl();

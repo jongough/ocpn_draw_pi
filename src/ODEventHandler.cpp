@@ -213,7 +213,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     ODPoint *segShow_point_b = (ODPoint *) g_pRolloverPathSeg->m_pData2;
                     
                     double brg, dist;
-                    DistanceBearingMercator( segShow_point_b->m_lat, segShow_point_b->m_lon,
+                    DistanceBearingMercator_Plugin( segShow_point_b->m_lat, segShow_point_b->m_lon,
                                              segShow_point_a->m_lat, segShow_point_a->m_lon, &brg, &dist );
                     
                     if( !pp->m_bIsInLayer ) {

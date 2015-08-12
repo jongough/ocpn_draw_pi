@@ -76,6 +76,11 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
 }
 
+bool EBLProp::UpdateProperties( void )
+{
+    return ODPathPropertiesDialogImpl::UpdateProperties();
+}
+
 bool EBLProp::SaveChanges( void )
 {
     m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
