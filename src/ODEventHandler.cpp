@@ -413,6 +413,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
             g_ocpn_draw_pi->m_pCurrentCursor = ocpncc1->pCursorCross;
             break;
+        case ID_EBL_MENU_VRM_MATCH_EBL_COLOUR: {
+            ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+            pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
+            break;
+        }
         case ID_OCPNPOINT_MENU_PROPERTIES:
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
@@ -578,6 +583,9 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Centre on boat lat lon") );
                 } else
                     MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
+                ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+                if(m_pEBL->GetCurrentColour() != pFirstPoint->GetODPointRangeRingsColour())
+                    MenuAppend( menuPath, ID_EBL_MENU_VRM_MATCH_EBL_COLOUR, _("Match VRM colour to EBL colour"));
             }
             else {
                 sType.clear();

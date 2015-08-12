@@ -42,6 +42,7 @@ class EBL : public Path
         void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
+        void ResizeVRM( double lat, double lon );
         void MoveEndPoint( double inc_lat, double inc_lon );
         void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
         ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);

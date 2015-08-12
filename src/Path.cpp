@@ -1031,6 +1031,12 @@ void Path::SetActiveColours( void )
     }
 }
 
+wxColour Path::GetCurrentColour(void)
+{
+    return m_col;
+}
+
+
 void Path::MoveAllPoints( double inc_lat, double inc_lon )
 {
     wxODPointListNode *node = m_pODPointList->GetFirst();

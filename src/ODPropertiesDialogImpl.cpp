@@ -83,6 +83,7 @@ extern wxColour     g_colourEBLLineColour;
 extern bool         g_bEBLFixedEndPosition;
 extern int          g_EBLPersistenceType;
 extern bool         g_bEBLShowArrow;
+extern bool         g_bEBLVRM;
 extern int          g_EBLLineWidth;
 extern int          g_EBLLineStyle;
 
@@ -192,6 +193,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_EBLLineWidth = m_choiceEBLLineWidth->GetSelection() + 1;
     g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection()];
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
+    g_bEBLVRM = m_checkBoxShowVRM->GetValue();
     g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
@@ -351,6 +353,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
         m_choiceEBLLineWidth->SetSelection( g_EBLLineWidth - 1 );
         m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
+        m_checkBoxShowVRM->SetValue( g_bEBLVRM );
         
         m_choiceTextPosition->SetSelection( g_iTextPosition );
         m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
