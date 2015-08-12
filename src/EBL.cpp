@@ -82,10 +82,11 @@ EBL::EBL() : Path()
     m_style = g_EBLLineStyle;
     m_bDrawArrow = g_bEBLShowArrow;
     m_bVRM = g_bEBLVRM;
-    m_bVRM = true;
+    m_bVRM = g_bEBLVRM;
     m_bCentreOnBoat = true;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
     SetPersistence( g_EBLPersistenceType );
+    SetActiveColours();
 }
 
 EBL::~EBL()
@@ -96,16 +97,32 @@ EBL::~EBL()
 void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
 {
     Path::AddPoint( pNewPoint, b_rename_in_sequence, b_deferBoxCalc, b_isLoading );
-    if(m_bVRM) {
-        if(pNewPoint->m_MarkName == _("Start") || pNewPoint->m_MarkName == _("Boat")) {
+    if(pNewPoint->m_MarkName == _("Start") || pNewPoint->m_MarkName == _("Boat")) {
+        pNewPoint->SetODPointRangeRingsNumber( 1 );
+        pNewPoint->SetODPointRangeRingsStep( 0 );
+        pNewPoint->SetODPointRangeRingsColour( GetCurrentColour() );
+        if(m_bVRM)
             pNewPoint->m_bShowODPointRangeRings = true;
-            pNewPoint->SetODPointRangeRingsNumber( 1 );
-            pNewPoint->SetODPointRangeRingsStep( 0 );
-        } else if(pNewPoint->m_MarkName == _("End")) {
-            ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
-            pFirstPoint->SetODPointRangeRingsStep( pNewPoint->m_seg_len );
-        }
+        else
+            pNewPoint->m_bShowODPointRangeRings = false;
+    } else if(pNewPoint->m_MarkName == _("End")) {
+        ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
+        pFirstPoint->SetODPointRangeRingsStep( pNewPoint->m_seg_len );
     }
+}
+
+void EBL::ResizeVRM( double lat, double lon )
+{
+    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    pEndPoint->m_lat = lat;
+    pEndPoint->m_lon = lon;
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    double brg, dd;
+    DistanceBearingMercator_Plugin( lat, lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dd );
+    pEndPoint->m_seg_len = dd;
+
+    if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
+        g_pEBLPropDialog->UpdateProperties();
 }
 
 void EBL::MoveEndPoint( double inc_lat, double inc_lon )

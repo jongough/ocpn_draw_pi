@@ -90,6 +90,7 @@ public:
     void RenderSegment(ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
     virtual void SetActiveColours( void );
+    virtual wxColour GetCurrentColour( void );
 
     bool CrossesIDL(){ return m_bcrosses_idl; }
     void SetVisible(bool visible = true, bool includeWpts = true);

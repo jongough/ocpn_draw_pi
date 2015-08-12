@@ -365,6 +365,11 @@ int ocpn_draw_pi::Init(void)
             SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint, _img_ocpn_draw_textpoint_gray);
             break;
             
+        case ID_MODE_EBL:
+            // EBL
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_gray);
+            break;
+            
         default:
             // Boundary
             m_Mode = ID_MODE_BOUNDARY;
@@ -1361,8 +1366,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 } else if ( m_bODPointEditing ) {
-                    m_pFoundODPoint->m_lat = m_cursor_lat;
-                    m_pFoundODPoint->m_lon = m_cursor_lon;
+                    
+                    if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                        EBL *m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                        m_pSelectedEBL->ResizeVRM( m_cursor_lat, m_cursor_lon );
+                    } else {
+                        m_pFoundODPoint->m_lat = m_cursor_lat;
+                        m_pFoundODPoint->m_lon = m_cursor_lon;
+                    }
                     
                     if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
@@ -1450,10 +1461,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             if( 0 != m_seltype ) {
                 if(m_pSelectedPath) {
-                if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
-                    m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
-                else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
-                    m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                    m_pSelectedBoundary = NULL;
+                    m_pSelectedEBL = NULL;
+                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                        m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
                 }
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );

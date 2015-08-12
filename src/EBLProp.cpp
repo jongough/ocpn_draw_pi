@@ -83,6 +83,15 @@ bool EBLProp::UpdateProperties( void )
 
 bool EBLProp::SaveChanges( void )
 {
+    wxColour l_EBLOrigColour = m_pEBL->GetCurrentColour();
+    ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+    ODPoint *pEndPoint = m_pEBL->m_pODPointList->GetLast()->GetData();
+
+    bool ret = ODPathPropertiesDialogImpl::SaveChanges();
+
+    if(pFirstPoint->GetODPointRangeRingsColour() == l_EBLOrigColour)
+        pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
+
     m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     m_pEBL->m_PersistenceType = m_radioBoxEBLPersistence->GetSelection();
     if(m_pEBL->m_PersistenceType == ID_EBL_NOT_PERSISTENT || m_pEBL->m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
@@ -91,6 +100,10 @@ bool EBLProp::SaveChanges( void )
         m_pEBL->m_bTemporary = false;
     m_pEBL->m_bDrawArrow = m_checkBoxEBLShowArrow->GetValue();
     m_pEBL->m_bVRM = m_checkBoxShowVRM->GetValue();
+    if(m_pEBL->m_bVRM) {
+        pFirstPoint->m_bShowODPointRangeRings = true;
+    } else
+        pFirstPoint->m_bShowODPointRangeRings = false;
     
-    return ODPathPropertiesDialogImpl::SaveChanges();
+    return ret;
 }
