@@ -54,6 +54,7 @@ enum {
 extern bool                 g_bShowMag;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern double               g_dLat, g_dLon, gSog, gCog;
+extern PlugIn_Position_Fix_Ex  g_pfFix;
 extern PathList             *g_pPathList;
 extern PathManagerDialog    *g_pPathManagerDialog;
 extern ODConfig             *g_pODConfig;
@@ -274,10 +275,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     
     double brgFromBoat = 0.;
     double distanceFromBoat = 0.;
-    ODPoint *first_point = pPath->GetPoint( 1 );
-    if( first_point )
-        DistanceBearingMercator_Plugin(  g_dLat, g_dLon, first_point->m_lat, first_point->m_lon, &brgFromBoat, &distanceFromBoat );
-    
+
     //  Total length
     double total_length = pPath->m_path_length;
     
@@ -290,62 +288,57 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     
     //  Iterate on Path Points
     wxODPointListNode *node = pPath->m_pODPointList->GetFirst();
-    
-    double slat = g_dLat;
-    double slon = g_dLon;
-    
+    double slat, slon;
+    slat = g_pfFix.Lat;
+    slon = g_pfFix.Lon;
     wxString nullify = _T("----");
     long item_line_index = 0;
-    wxString wxsLastPoint = wxT("Boat");
+    wxString wxsLastPoint = _("Boat");
     while( node ) {
-        ODPoint *prp = node->GetData();
-        
-        //  Leg
+        ODPoint *pOp = node->GetData();
         wxString t;
+        //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
         
+        if(pOp->m_MarkName != _("Boat")) {
         //  ODPoint Name
-        m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, prp->GetName() );
-        wxsLastPoint = prp->GetName();
-        // Store Description
-        m_listCtrlODPoints->SetItem( item_line_index, ID_DESCRIPTION, prp->GetDescription() );
-        
-        //  Distance
-        //  Note that Distance/Bearing for Leg 000 is as from current position
-        
-        double brg, leg_dist;
-        
-        DistanceBearingMercator_Plugin( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
-        
-        //prp->SetCourse(course); // save the course to the next waypoint for printing.
-        // end of calculation
-        
-        DistanceBearingMercator_Plugin(  g_dLat, g_dLon, prp->m_lat, prp->m_lon, &brgFromBoat, &distanceFromBoat );
-        
-        t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( distanceFromBoat ) );
-        m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, t );
-        prp->SetDistance( distanceFromBoat ); // save the course to the next point for printing.
-        
-        //  Bearing
-        if( g_bShowMag )
-            t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
-        else
-            t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
-        
-        m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_BOAT, t );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, pOp->GetName() );
+            wxsLastPoint = pOp->GetName();
+            // Store Description
+            m_listCtrlODPoints->SetItem( item_line_index, ID_DESCRIPTION, pOp->GetDescription() );
+            
+            //  Distance
+            //  Note that Distance/Bearing for Leg 000 is as from current position
+            DistanceBearingMercator_Plugin( pOp->m_lat, pOp->m_lon, slat, slon, &brgFromBoat, &distanceFromBoat );
+            
+            t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( distanceFromBoat ) );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, t );
+            pOp->SetDistance( distanceFromBoat ); // save the course to the next point for printing.
+            //  Bearing
+            if( g_bShowMag )
+                t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
+            else
+                t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
+            
+            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_BOAT, t );
+        } else {
+            m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, wxT("") );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, wxT("") );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_BOAT, wxT("") );
+        }
         
         // calculation of bearging from current point to next point.
         double brgFromTo, tmp_leg_dist;
         wxODPointListNode *next_node = node->GetNext();
-        ODPoint * _next_prp = (next_node)? next_node->GetData(): NULL;
-        if (_next_prp ) {
-            DistanceBearingMercator_Plugin( prp->m_lat, prp->m_lon, _next_prp->m_lat, _next_prp->m_lon, &brgFromTo, &tmp_leg_dist );
+        ODPoint * p_next_pOp = (next_node)? next_node->GetData(): NULL;
+        if ( p_next_pOp ) {
+            DistanceBearingMercator_Plugin( p_next_pOp->m_lat, p_next_pOp->m_lon, pOp->m_lat, pOp->m_lon, &brgFromTo, &tmp_leg_dist );
         }else {
             brgFromTo = 0.0;
             tmp_leg_dist = 0.0;
         }
         
-        if (_next_prp){
+        if (p_next_pOp){
             if( g_bShowMag )
                 t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
             else
@@ -356,17 +349,14 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
             m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
         
         //  Lat/Lon
-        wxString tlat = toSDMM_PlugIn( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
+        wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
         m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
         
-        wxString tlon = toSDMM_PlugIn( 2, prp->m_lon, prp->m_bIsInTrack );
+        wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
         m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         
-        //  Save for iterating distance/bearing calculation
-        slat = prp->m_lat;
-        slon = prp->m_lon;
-        
         item_line_index++;
+
         node = node->GetNext();
         
     }
@@ -409,8 +399,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     //  Iterate on Path Points
     wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
     
-    double slat = g_dLat;
-    double slon = g_dLon;
+    double slat = g_pfFix.Lat;
+    double slon = g_pfFix.Lon;
     double brgFromBoat = 0.;
     double distanceFromBoat = 0.;
     
@@ -418,54 +408,50 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     long item_line_index = 0;
     wxString wxsLastPoint = wxT("Boat");
     while( node ) {
-        ODPoint *prp = node->GetData();
-        
-        //  Leg
+        ODPoint *pOp = node->GetData();
         wxString t;
+        //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
-        
-        //  ODPoint Name
-        m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, prp->GetName() );
-        wxsLastPoint = prp->GetName();
-        // Store Description
-        m_listCtrlODPoints->SetItem( item_line_index, ID_DESCRIPTION, prp->GetDescription() );
-        
-        //  Distance
-        //  Note that Distance/Bearing for Leg 000 is as from current position
-        
-        double brg, leg_dist;
-        
-        DistanceBearingMercator_Plugin( prp->m_lat, prp->m_lon, slat, slon, &brg, &leg_dist );
-        
-        //prp->SetCourse(course); // save the course to the next waypoint for printing.
-        // end of calculation
-        
-        DistanceBearingMercator_Plugin(  g_dLat, g_dLon, prp->m_lat, prp->m_lon, &brgFromBoat, &distanceFromBoat );
-        
-        t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( distanceFromBoat ) );
-        m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, t );
-        prp->SetDistance( distanceFromBoat ); // save the course to the next point for printing.
-        
-        //  Bearing
-        if( g_bShowMag )
-            t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
-        else
-            t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
-        
-        m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_BOAT, t );
+
+        if(pOp->m_MarkName != _("Boat")) {
+            //  ODPoint Name
+            m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, pOp->GetName() );
+            wxsLastPoint = pOp->GetName();
+            // Store Description
+            m_listCtrlODPoints->SetItem( item_line_index, ID_DESCRIPTION, pOp->GetDescription() );
+            
+            //  Distance
+            //  Note that Distance/Bearing for Leg 000 is as from current position
+            DistanceBearingMercator_Plugin(  g_dLat, g_dLon, pOp->m_lat, pOp->m_lon, &brgFromBoat, &distanceFromBoat );
+            
+            t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( distanceFromBoat ) );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, t );
+            pOp->SetDistance( distanceFromBoat ); // save the course to the next point for printing.
+            //  Bearing
+            if( g_bShowMag )
+                t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
+            else
+                t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromBoat ) );
+            
+            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_BOAT, t );
+        } else {
+            m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, wxT("") );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, wxT("") );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_BOAT, wxT("") );
+        }
         
         // calculation of bearging from current point to next point.
         double brgFromTo, tmp_leg_dist;
         wxODPointListNode *next_node = node->GetNext();
-        ODPoint * _next_prp = (next_node)? next_node->GetData(): NULL;
-        if (_next_prp ) {
-            DistanceBearingMercator_Plugin( prp->m_lat, prp->m_lon, _next_prp->m_lat, _next_prp->m_lon, &brgFromTo, &tmp_leg_dist );
+        ODPoint * _next_pOp = (next_node)? next_node->GetData(): NULL;
+        if (_next_pOp ) {
+            DistanceBearingMercator_Plugin( pOp->m_lat, pOp->m_lon, _next_pOp->m_lat, _next_pOp->m_lon, &brgFromTo, &tmp_leg_dist );
         }else {
             brgFromTo = 0.0;
             tmp_leg_dist = 0.0;
         }
         
-        if (_next_prp){
+        if (_next_pOp){
             if( g_bShowMag )
                 t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
             else
@@ -476,15 +462,11 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
             m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
         
         //  Lat/Lon
-        wxString tlat = toSDMM_PlugIn( 1, prp->m_lat, prp->m_bIsInTrack );  // low precision for routes
+        wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
         m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
         
-        wxString tlon = toSDMM_PlugIn( 2, prp->m_lon, prp->m_bIsInTrack );
+        wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
         m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
-        
-        //  Save for iterating distance/bearing calculation
-        slat = prp->m_lat;
-        slon = prp->m_lon;
         
         item_line_index++;
         node = node->GetNext();

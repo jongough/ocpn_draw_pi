@@ -117,6 +117,9 @@ void EBL::MoveEndPoint( double inc_lat, double inc_lon )
         ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
+    if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
+        g_pEBLPropDialog->UpdateProperties();
+    
 }
 
 void EBL::SetPersistence( int PersistenceType )
@@ -133,7 +136,7 @@ void EBL::CentreOnBoat( void )
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     pStartPoint->m_lat = g_pfFix.Lat;
     pStartPoint->m_lon = g_pfFix.Lon;
-
+    pStartPoint->m_MarkName = _("Boat");
     m_bCentreOnBoat = true;
     
     UpdateEBL();
@@ -143,6 +146,9 @@ void EBL::CentreOnBoat( void )
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
     
+    if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
+        g_pEBLPropDialog->UpdateProperties();
+
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     return;
@@ -150,16 +156,20 @@ void EBL::CentreOnBoat( void )
 
 void EBL::CentreOnLatLon( double lat, double lon )
 {
-    ODPoint *fp = m_pODPointList->GetFirst()->GetData();
-    fp->m_lat = lat;
-    fp->m_lon = lon;
-    if(fp->GetIconName() != wxEmptyString) {
-        fp->SetIconName( g_sEBLStartIconName );
-        fp->ReLoadIcon();
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    pStartPoint->m_lat = lat;
+    pStartPoint->m_lon = lon;
+    pStartPoint->m_MarkName = _("Start");
+    if(pStartPoint->GetIconName() != wxEmptyString) {
+        pStartPoint->SetIconName( g_sEBLStartIconName );
+        pStartPoint->ReLoadIcon();
     }
     m_bCentreOnBoat = false;
     
     UpdateEBL();
+    if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
+        g_pEBLPropDialog->UpdateProperties();
+    
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     return;
 }
