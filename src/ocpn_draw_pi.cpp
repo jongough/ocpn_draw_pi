@@ -307,6 +307,11 @@ int ocpn_draw_pi::Init(void)
     m_pEBLBoatPoint = NULL;
     m_bDrawingBoundary = NULL;
     m_pFoundODPoint = NULL;
+    m_pSelectedPath = NULL;
+    m_pSelectedBoundary = NULL;
+    m_pMouseBoundary = NULL;
+    m_pSelectedEBL = NULL;
+    m_pMouseEBL = NULL;
     g_dVar = NAN;
     nBoundary_State = 0;
     nPoint_State = 0;
@@ -1145,6 +1150,11 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
+                } else if( m_bODPointEditing ) {
+                    m_bODPointEditing = false;
+                    m_pCurrentCursor = NULL;
+                    m_pFoundODPoint->m_bIsBeingEdited = false;
+                    RequestRefresh( m_parent_window );
                 } else bret = FALSE;
                 m_iCallerId = 0;
                 g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
@@ -1408,6 +1418,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     }
     if ( event.RightDown() ) {
+        if(m_bODPointEditing) {
+            m_bODPointEditing = false;
+            m_pCurrentCursor = NULL;
+            m_pFoundODPoint->m_bIsBeingEdited = false;
+            RequestRefresh( m_parent_window );
+            bret = TRUE;
+        }
         if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 ) {
             m_Mode++;
             SetToolbarTool();
@@ -1806,71 +1823,83 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
                 boundary->DrawSegment( tdc, &rpn , &r_rband, *m_vp, false );
             }
         }
-        //        }
         
-        wxString pathInfo;
-        if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
-        else
-            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
-        
-        pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
-        
-        wxFont *dFont;
-        dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
-        tdc.SetFont( *dFont );
-        
-        int w, h;
-        int xp, yp;
-        int hilite_offset = 3;
-        #ifdef __WXMAC__
-        wxScreenDC sdc;
-        sdc.GetTextExtent( pathInfo, &w, &h, NULL, NULL, dFont );
-        #else
-        tdc.GetTextExtent( pathInfo, &w, &h );
-        #endif
-        xp = r_rband.x - w;
-        yp = r_rband.y;
-        yp += hilite_offset;
-        
-        wxColour tColour;
-        GetGlobalColor( wxS("YELO1"), &tColour );
-        AlphaBlending( tdc, xp, yp, w, h, 0.0, tColour, 172 );
-        
-        GetGlobalColor( wxS("UBLCK"), &tColour );
-        tdc.SetTextForeground( tColour );
-        tdc.SetPen( wxPen( tColour ) );
-        tdc.DrawText( pathInfo, xp, yp );
-        
-        wxString s0;
-        if ( nBoundary_State >= 2 ) {
-            if( !boundary->m_bIsInLayer )
-                s0.Append( _("Boundary: ") );
-            else
-                s0.Append( _("Layer Boundary: ") );
-        }
-        
-        s0 += FormatDistanceAdaptive( boundary->m_path_length + dist );
-        
-        RenderExtraBoundaryLegInfo( tdc, r_rband, s0 );
+        wxString info = CreateExtraPathLegInfo(tdc, boundary, brg, dist, m_cursorPoint);
+        RenderExtraPathLegInfo( tdc, r_rband, info );
     } else if( nEBL_State > 0 || m_bEBLMoveOrigin ) {
         EBL *ebl = new EBL();
+        double brg, dist;
         wxPoint tpoint;
         if(m_bEBLMoveOrigin) {
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
             GetCanvasPixLL( g_pivp, &tpoint, tp->m_lat, tp->m_lon );
+            DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
             ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_vp, false );
         } else {
             GetCanvasPixLL( g_pivp, &tpoint, g_pfFix.Lat, g_pfFix.Lon );
+            DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
             ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_vp, false );
         }
+        wxString info = CreateExtraPathLegInfo(tdc, ebl, brg, dist, m_cursorPoint);
+        if(info.length() > 0)
+            RenderExtraPathLegInfo( tdc, m_cursorPoint, info );
         delete ebl;
     }
         
         
 }
 
-void ocpn_draw_pi::RenderExtraBoundaryLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
+wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, Path *path, double brg, double dist, wxPoint ref_point)
+{
+    wxString pathInfo;
+    if( g_bShowMag )
+        pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+    else
+        pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+    
+    pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
+    
+    wxFont *dFont;
+    dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
+    dc.SetFont( *dFont );
+    
+    int w, h;
+    int xp, yp;
+    int hilite_offset = 3;
+    #ifdef __WXMAC__
+    wxScreenDC sdc;
+    sdc.GetTextExtent( pathInfo, &w, &h, NULL, NULL, dFont );
+    #else
+    dc.GetTextExtent( pathInfo, &w, &h );
+    #endif
+    xp = ref_point.x - w;
+    yp = ref_point.y;
+    yp += hilite_offset;
+    
+    wxColour tColour;
+    GetGlobalColor( wxS("YELO1"), &tColour );
+    AlphaBlending( dc, xp, yp, w, h, 0.0, tColour, 172 );
+    
+    GetGlobalColor( wxS("UBLCK"), &tColour );
+    dc.SetTextForeground( tColour );
+    dc.SetPen( wxPen( tColour ) );
+    dc.DrawText( pathInfo, xp, yp );
+    
+    wxString s0;
+    if(path->m_sTypeString == wxT("Boundary")) {
+        if ( nBoundary_State >= 2 ) {
+            if( !path->m_bIsInLayer )
+                s0.Append( _("Boundary: ") );
+            else
+                s0.Append( _("Layer Boundary: ") );
+        }
+        s0 += FormatDistanceAdaptive( path->m_path_length + dist );
+    } 
+    
+    return s0;
+}
+
+void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
 {
     wxFont *dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
@@ -2064,6 +2093,17 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                         pEBLDraw->Draw( dc, *m_vp );
                     }
                 }
+            }
+            if(pEBLDraw == m_pSelectedEBL && m_bODPointEditing) {
+                double brg, dist;
+                wxPoint destPoint;
+                ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
+                ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+                DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
+                GetCanvasPixLL( m_vp, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+                wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
+                if(info.length() > 0)
+                    RenderExtraPathLegInfo( dc, destPoint, info );
             }
         }
         

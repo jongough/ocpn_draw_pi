@@ -330,7 +330,8 @@ private:
     void    OnTimer(wxTimerEvent& ev);
 
     void    LoadConfig();
-    void    RenderExtraBoundaryLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
+    void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
+    wxString CreateExtraPathLegInfo(ODDC &dc, Path *path, double brg, double dist, wxPoint ref_point);
     void    FinishBoundary();
 //    ArrayOfGridColWidth    readCols(ArrayOfGridColWidth ar, wxString str);
 //    void                    writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);
