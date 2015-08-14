@@ -2478,54 +2478,65 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 
 void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 {
-    for(wxPathListNode *node = g_pPathList->GetFirst();
-        node; node = node->GetNext() ) {
+    for(wxPathListNode *node = g_pPathList->GetFirst(); node; node = node->GetNext() ) {
         Path *pPathDraw = node->GetData();
-    if( !pPathDraw )
-        continue;
-    
-    /* defer rendering active routes until later */ 
-    //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
-    //            continue;
-    
-    /* this routine is called very often, so rather than using the
-     *       wxBoundingBox::Intersect routine, do the comparisons directly
-     *       to reduce the number of floating point comparisons */
-    
-    //        const wxBoundingBox &vp_box = vp.GetBBox(), &test_box = pPathDraw->GetBBox();
-    const wxBoundingBox &test_box = pPathDraw->GetBBox();
-    double test_miny = test_box.GetMinY(), test_maxy = test_box.GetMaxY();
-    
-    if(test_maxy < pivp.lat_min)
-        continue;
-    
-    if(test_miny > pivp.lat_max)
-        continue;
-    
-    double test_minx = test_box.GetMinX(), test_maxx = test_box.GetMaxX();
-    
-    // Path is not wholly outside viewport
-    if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {
-        pPathDraw->DrawGL( pivp );
-    } else if( pivp.lat_max > 180. ) {
-        if(test_minx + 360 <= pivp.lon_max && test_maxx + 360 >= pivp.lon_min)
+        if( !pPathDraw )
+            continue;
+        
+        /* defer rendering active routes until later */ 
+        //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
+        //            continue;
+        
+        /* this routine is called very often, so rather than using the
+        *       wxBoundingBox::Intersect routine, do the comparisons directly
+        *       to reduce the number of floating point comparisons */
+        
+        //        const wxBoundingBox &vp_box = vp.GetBBox(), &test_box = pPathDraw->GetBBox();
+        const wxBoundingBox &test_box = pPathDraw->GetBBox();
+        double test_miny = test_box.GetMinY(), test_maxy = test_box.GetMaxY();
+        
+        if(test_maxy < pivp.lat_min)
+            continue;
+        
+        if(test_miny > pivp.lat_max)
+            continue;
+        
+        double test_minx = test_box.GetMinX(), test_maxx = test_box.GetMaxX();
+        
+        // Path is not wholly outside viewport
+        if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {
             pPathDraw->DrawGL( pivp );
-    } else if( pPathDraw->CrossesIDL() || pivp.lon_min < -180. ) {
-        if(test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
-            pPathDraw->DrawGL( pivp );
-    }
-    
+        } else if( pivp.lat_max > 180. ) {
+            if(test_minx + 360 <= pivp.lon_max && test_maxx + 360 >= pivp.lon_min)
+                pPathDraw->DrawGL( pivp );
+        } else if( pPathDraw->CrossesIDL() || pivp.lon_min < -180. ) {
+            if(test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
+                pPathDraw->DrawGL( pivp );
+        }
+        if(pPathDraw == m_pSelectedEBL && m_bODPointEditing) {
+            ODDC dc;
+            double brg, dist;
+            wxPoint destPoint;
+            ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
+            ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+            DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
+            GetCanvasPixLL( m_vp, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+            wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
+            if(info.length() > 0)
+                RenderExtraPathLegInfo( dc, destPoint, info );
         }
         
-        /* ODPoints not drawn as part of routes */
-        ViewPort vp = (ViewPort &)pivp;
-        if( pivp.bValid && g_pODPointList ) {
-            for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
-                ODPoint *pOP = pnode->GetData();
-                if( ( pOP->m_lon >= pivp.lon_min && pOP->m_lon <= pivp.lon_max ) && ( pOP->m_lat >= pivp.lat_min && pOP->m_lat <= pivp.lat_max ) )
-                    pOP->DrawGL( pivp );
-            }
+    }
+        
+    /* ODPoints not drawn as part of routes */
+    ViewPort vp = (ViewPort &)pivp;
+    if( pivp.bValid && g_pODPointList ) {
+        for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
+            ODPoint *pOP = pnode->GetData();
+            if( ( pOP->m_lon >= pivp.lon_min && pOP->m_lon <= pivp.lon_max ) && ( pOP->m_lat >= pivp.lat_min && pOP->m_lat <= pivp.lat_max ) )
+                pOP->DrawGL( pivp );
         }
+    }
         
 }
 
