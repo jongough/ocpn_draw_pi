@@ -59,6 +59,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_radioBoxEBLPersistence->Enable( true );
 
     this->GetSizer()->Fit( this );
+    this->Layout();
 }
 
 
