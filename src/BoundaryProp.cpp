@@ -61,6 +61,7 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_radioBoxEBLPersistence->Enable( false );
     
     this->GetSizer()->Fit( this );
+    this->Layout();
     m_uiFillTransparency = g_uiFillTransparency;
 }
 
