@@ -1958,6 +1958,7 @@ void ocpn_draw_pi::FinishBoundary( void )
         if( m_pMouseBoundary ){
             m_pMouseBoundary->RebuildGUIDList(); // ensure the GUID list is intact and good
             m_pMouseBoundary->SetHiLite(0);
+            m_pMouseBoundary->m_bIsBeingCreated = false;
         }
         
         
@@ -1967,8 +1968,6 @@ void ocpn_draw_pi::FinishBoundary( void )
         
         if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
             g_pPathManagerDialog->UpdatePathListCtrl();
-        
-        m_pMouseBoundary->m_bIsBeingCreated = false;
     }
     
     m_pMouseBoundary = NULL;
