@@ -1377,7 +1377,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 } else if ( m_bODPointEditing ) {
                     
-                    if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                    if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                         EBL *m_pSelectedEBL = (EBL *)m_pSelectedPath;
                         m_pSelectedEBL->ResizeVRM( m_cursor_lat, m_cursor_lon );
                     } else {
