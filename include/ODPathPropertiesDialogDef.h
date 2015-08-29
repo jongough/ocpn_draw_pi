@@ -57,10 +57,10 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
-		wxBoxSizer* m_bSizerEBL;
 		wxBoxSizer* m_bSizerPersistence;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxRadioBox* m_radioBoxEBLPersistence;
+		wxBoxSizer* m_bSizerEBL;
 		wxCheckBox* m_checkBoxEBLShowArrow;
 		wxCheckBox* m_checkBoxShowVRM;
 		wxStaticText* m_staticTextODPoints;
@@ -70,6 +70,9 @@ class ODPathPropertiesDialogDef : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
+		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnChoiceLineWidth( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
