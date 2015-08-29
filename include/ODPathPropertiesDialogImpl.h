@@ -78,6 +78,9 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
         void OnRightClick( wxMouseEvent& event );
         void OnOK( wxCommandEvent& event );
 		void OnCancel( wxCommandEvent& event );
+        void OnColourChangedLineColour( wxColourPickerEvent& event );
+        void OnChoiceLineStyle( wxCommandEvent& event );
+        void OnChoiceLineWidth( wxCommandEvent& event );
         
         void InitializeList( void );
         virtual bool SaveChanges( void );
@@ -87,6 +90,10 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
         ODPoint     *m_pEnroutePoint;
         bool        m_bStartNow;
         int         m_tz_selection;
+	
+        bool        l_bLineColour;
+        bool        l_bLineStyle;
+        bool        l_bLineWidth;
         
 	public:
 		/** Constructor */
