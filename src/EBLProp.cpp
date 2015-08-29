@@ -50,7 +50,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_sliderFillTransparency->Hide();
     m_sliderFillTransparency->Enable( false );
 
-    m_bSizerEBL->ShowItems( true );
+    m_fgSizerEBL->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
     m_checkBoxEBLShowArrow->Show();

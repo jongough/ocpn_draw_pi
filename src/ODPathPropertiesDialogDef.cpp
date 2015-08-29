@@ -123,39 +123,39 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_sliderFillTransparency = new wxSlider( this, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer3->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 	
-	m_bSizerPersistence = new wxBoxSizer( wxHORIZONTAL );
+	
+	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
+	
+	m_fgSizerEBL = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerEBL->SetFlexibleDirection( wxBOTH );
+	m_fgSizerEBL->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, _("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_bSizerPersistence->Add( m_checkBoxEBLFixedEndPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerEBL->Add( m_checkBoxEBLFixedEndPosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
 	m_radioBoxEBLPersistence = new wxRadioBox( this, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 3, wxRA_SPECIFY_COLS );
 	m_radioBoxEBLPersistence->SetSelection( 0 );
-	m_bSizerPersistence->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
-	
-	
-	fgSizer3->Add( m_bSizerPersistence, 0, wxEXPAND, 5 );
-	
-	
-	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
-	
-	m_bSizerEBL = new wxBoxSizer( wxVERTICAL );
-	
-	wxBoxSizer* bSizer7;
-	bSizer7 = new wxBoxSizer( wxHORIZONTAL );
+	m_fgSizerEBL->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
 	
 	m_checkBoxEBLShowArrow = new wxCheckBox( this, wxID_ANY, _("Show EBL Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	bSizer7->Add( m_checkBoxEBLShowArrow, 0, wxALL, 5 );
-	
-	m_checkBoxShowVRM = new wxCheckBox( this, wxID_ANY, _("ShowVRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	bSizer7->Add( m_checkBoxShowVRM, 0, wxALL, 5 );
+	m_fgSizerEBL->Add( m_checkBoxEBLShowArrow, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
-	m_bSizerEBL->Add( bSizer7, 1, wxEXPAND, 5 );
+	m_fgSizerEBL->Add( 0, 0, 0, wxEXPAND, 5 );
+	
+	m_checkBoxShowVRM = new wxCheckBox( this, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerEBL->Add( m_checkBoxShowVRM, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
-	fgSizer1->Add( m_bSizerEBL, 1, wxEXPAND, 5 );
+	fgSizer1->Add( m_fgSizerEBL, 0, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerPathPoints;
 	bSizerPathPoints = new wxBoxSizer( wxVERTICAL );
