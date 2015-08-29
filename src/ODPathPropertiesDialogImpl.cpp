@@ -75,18 +75,12 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
     m_staticTextFillTransparency->Enable( false );
     m_sliderFillTransparency->Hide();
     m_sliderFillTransparency->Enable( false );
-    l_bLineColour = false;
-    l_bLineStyle = false;
-    l_bLineWidth = false;
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
 {
     m_pPath = NULL;
     SetPointsListHeadings();    
-    l_bLineColour = false;
-    l_bLineStyle = false;
-    l_bLineWidth = false;
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
@@ -96,9 +90,6 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
     m_pPath = NULL;
-    l_bLineColour = false;
-    l_bLineStyle = false;
-    l_bLineWidth = false;
     
     m_pEnroutePoint = NULL;
     m_bStartNow = false;
@@ -217,21 +208,6 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     if( !op ) return;
     
     PathManagerDialog::ODPointShowPropertiesDialog( op, this );
-}
-
-void ODPathPropertiesDialogImpl::OnColourChangedLineColour( wxColourPickerEvent& event ) 
-{ 
-    l_bLineColour = true;
-}
-
-void ODPathPropertiesDialogImpl::OnChoiceLineStyle( wxCommandEvent& event )
-{ 
-    l_bLineStyle = true;
-}
-
-void ODPathPropertiesDialogImpl::OnChoiceLineWidth( wxCommandEvent& event )
-{ 
-    l_bLineWidth = true; 
 }
 
 void ODPathPropertiesDialogImpl::SetPathAndUpdate( Path *pB, bool only_points )
@@ -386,24 +362,19 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
     }
     
 //    if( pPath->m_ActiveLineColour == wxEmptyString ) m_colourPickerLineColour->SetColour( g_colourActivePathLineColour );
-    if(!l_bLineColour)
-        m_colourPickerLineColour->SetColour( pPath->m_wxcActiveLineColour );
+    m_colourPickerLineColour->SetColour( pPath->m_wxcActiveLineColour );
 
-    if(!l_bLineStyle) {
-        for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
-            if( pPath->m_style == ::StyleValues[i] ) {
-                m_choiceLineStyle->Select( i );
-                break;
-            }
+    for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
+        if( pPath->m_style == ::StyleValues[i] ) {
+            m_choiceLineStyle->Select( i );
+            break;
         }
     }
     
-    if(!l_bLineWidth) {
-        for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
-            if( pPath->m_width == ::WidthValues[i] ) {
-                m_choiceLineWidth->Select( i );
-                break;
-            }
+    for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+        if( pPath->m_width == ::WidthValues[i] ) {
+            m_choiceLineWidth->Select( i );
+            break;
         }
     }
     
@@ -500,28 +471,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
         item_line_index++;
         node = node->GetNext();
         
-    }
-    
-    //    if( pPath->m_ActiveLineColour == wxEmptyString ) m_colourPickerLineColour->SetColour( g_colourActivePathLineColour );
-    if(!l_bLineColour)
-        m_colourPickerLineColour->SetColour( m_pPath->m_wxcActiveLineColour );
-    
-    if(!l_bLineStyle) {
-        for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
-            if( m_pPath->m_style == ::StyleValues[i] ) {
-                m_choiceLineStyle->Select( i );
-                break;
-            }
-        }
-    }
-    
-    if(!l_bLineWidth) {
-        for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
-            if( m_pPath->m_width == ::WidthValues[i] ) {
-                m_choiceLineWidth->Select( i );
-                break;
-            }
-        }
     }
 
     // Set column width correctly for data

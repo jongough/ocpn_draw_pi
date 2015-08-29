@@ -367,16 +367,16 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
     child = node.append_child("opencpn:style");
     
     pugi::xml_attribute activecolour = child.append_attribute("active_colour");
-    activecolour.set_value( pPath->m_wxcActiveLineColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+    activecolour.set_value( pPath->m_wxcActiveLineColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     if(pBoundary) {
         pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
-        activefillcolour.set_value( pBoundary->m_wxcActiveFillColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+        activefillcolour.set_value( pBoundary->m_wxcActiveFillColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     }
     pugi::xml_attribute inactivecolour = child.append_attribute("inactive_colour");
-    inactivecolour.set_value( pPath->m_wxcInActiveLineColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+    inactivecolour.set_value( pPath->m_wxcInActiveLineColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     if(pBoundary) {
         pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
-        inactivefillcolour.set_value( pBoundary->m_wxcInActiveFillColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
+        inactivefillcolour.set_value( pBoundary->m_wxcInActiveFillColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     }
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
@@ -538,17 +538,19 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     EBL *pEBL = NULL;
     while( node1 ) {
         pPath = (Path *)node1->GetData();
+        pBoundary = NULL;
+        pEBL = NULL;
         if(pPath->m_sTypeString == wxT("Boundary")) {
             pBoundary = (Boundary *)node1->GetData();
             pPath = pBoundary;
         } else if(pPath->m_sTypeString == wxT("EBL")) {
             pEBL = (EBL *)node1->GetData();
             pPath = pEBL;
-            if(pEBL->m_PersistenceType == ID_EBL_NOT_PERSISTENT) return true;
         }
-        
-        if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
-            GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+        if(!pEBL || pEBL->m_PersistenceType != ID_EBL_NOT_PERSISTENT) {
+            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+        }
         node1 = node1->GetNext();
     }
     
