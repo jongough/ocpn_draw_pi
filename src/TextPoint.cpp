@@ -62,6 +62,19 @@ extern int          g_iTextLeftOffsetX;
 extern int          g_iTextLeftOffsetY;
 
 //extern ChartCanvas  *ocpncc1;
+// Fix for VS2010 not having the round function
+#if defined (_WIN32)
+#if _MSC_VER < 1700
+int round (double x) {
+    int i = (int) x;
+    if (x >= 0.0) {
+        return ((x-i) >= 0.5) ? (i + 1) : (i);
+    } else {
+        return (-x+i >= 0.5) ? (i - 1) : (i);
+    }
+}
+#endif
+#endif
 
 TextPoint::TextPoint() : ODPoint()
 {
