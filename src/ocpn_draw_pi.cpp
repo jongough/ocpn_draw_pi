@@ -1093,7 +1093,29 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 }
             }
         }
+    } else if(message_id == _T("WMM_VARIATION_BOAT")) {
+
+    // construct the JSON root object
+        wxJSONValue  root;
+    // construct a JSON parser
+        wxJSONReader reader;
+
+    // now read the JSON text and store it in the 'root' structure
+    // check for errors before retreiving values...
+        int numErrors = reader.Parse( message_body, &root );
+        if ( numErrors > 0 )  {
+//              const wxArrayString& errors = reader.GetErrors();
+            return;
+        }
+
+        // get the DECL value from the JSON message
+        wxString decl = root[_T("Decl")].AsString();
+        double decl_val;
+        decl.ToDouble(&decl_val);
+
+        g_dVar = decl_val;
     }
+    
     return;
 }
 

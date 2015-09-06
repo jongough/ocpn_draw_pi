@@ -247,7 +247,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                             s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
                         else
                             s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
-                        s << _(", To: ");
+                        s << _(" To: ");
                         if( g_bShowMag )
                             s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgTo ) );
                         else
