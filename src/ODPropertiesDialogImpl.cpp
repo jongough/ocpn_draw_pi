@@ -88,6 +88,7 @@ extern int          g_EBLLineWidth;
 extern int          g_EBLLineStyle;
 
 extern bool         g_bConfirmObjectDelete;
+extern bool         g_bShowMag;
 extern int          g_navobjbackups;
 
 extern int          g_EdgePanSensitivity;
@@ -208,6 +209,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
     
     g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
+    g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
     g_iTextPosition = m_choiceTextPosition->GetSelection();
@@ -362,6 +364,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_staticTextFontFaceExample->SetFont( g_DisplayTextFont );
         
         m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
+        m_checkBoxShowMagBearings->SetValue( g_bShowMag );
         m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
         m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
         m_sliderEdgePan->SetValue( g_EdgePanSensitivity );

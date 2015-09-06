@@ -17,11 +17,11 @@
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/sizer.h>
 #include <wx/stattext.h>
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
+#include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
@@ -50,6 +50,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxNotebook* m_notebookProperties;
 		wxPanel* m_panelGeneral;
 		wxCheckBox* m_checkBoxConfirmObjectDelete;
+		wxCheckBox* m_checkBoxShowMagBearings;
 		wxStaticText* m_staticTextNavObjBackups;
 		wxSpinCtrl* m_spinCtrlNavObjBackups;
 		wxStaticText* m_staticTextEdgePan;

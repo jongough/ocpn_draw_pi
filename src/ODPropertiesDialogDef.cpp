@@ -30,11 +30,14 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxConfirmObjectDelete->SetValue(true); 
 	fgSizer4->Add( m_checkBoxConfirmObjectDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxBoxSizer* bSizerFiller1;
-	bSizerFiller1 = new wxBoxSizer( wxVERTICAL );
+	
+	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_checkBoxShowMagBearings = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Show Magnetic Bearings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_checkBoxShowMagBearings, 0, wxALL, 5 );
 	
 	
-	fgSizer4->Add( bSizerFiller1, 1, wxEXPAND, 5 );
+	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, _("Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextNavObjBackups->Wrap( -1 );
