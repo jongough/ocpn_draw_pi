@@ -49,9 +49,11 @@
 extern "C" void MyCPLErrorHandler( CPLErr eErrClass, int nError,
                              const char * pszErrorMsg );
 
-wxFont *GetOCPNScaledFont( wxString item, int default_size = 0 );
 
 #endif
+
+wxFont *GetOCPNScaledFont( wxString item, int default_size = 0 );
+wxFont GetOCPNGUIScaledFont( wxString item );
 
 wxArrayString *EnumerateSerialPorts(void);
 wxColour GetGlobalColor(wxString colorName);
@@ -64,7 +66,7 @@ wxString _menuText(wxString name, wxString shortcut);
 // The point for anchor watch should really be a class...
 double AnchorDistFix( double const d, double const AnchorPointMinDist, double const AnchorPointMaxDist);   //  pjotrc 2010.02.22
 
-bool TestGLCanvas(wxString &prog_dir);
+bool TestGLCanvas(wxString prog_dir);
 bool ReloadLocale();
 
 void LoadS57();
@@ -109,15 +111,15 @@ enum
     ID_ENC_TEXT,
     ID_CURRENT,
     ID_TIDE,
-    ID_ABOUT,
-    ID_TBEXIT,
-    ID_TBSTAT,
     ID_PRINT,
-    ID_COLSCHEME,
     ID_ROUTEMANAGER,
     ID_TRACK,
-    ID_TBSTATBOX,
+    ID_COLSCHEME,
+    ID_ABOUT,
     ID_MOB,
+    ID_TBEXIT,
+    ID_TBSTAT,
+    ID_TBSTATBOX,
 
     ID_PLUGIN_BASE // This MUST be the last item in the enum
 };
@@ -192,13 +194,16 @@ enum
     
     ID_CMD_SELECT_CHART_TYPE,
     ID_CMD_SELECT_CHART_FAMILY,
+    ID_CMD_INVALIDATE,
     
 };
 
 //      Command identifiers for wxCommandEvents coming from the outside world.
 //      Removed from enum to facilitate constant definition
 #define ID_CMD_APPLY_SETTINGS 300
-
+#define ID_CMD_NULL_REFRESH 301
+#define ID_CMD_TRIGGER_RESIZE 302
+#define ID_CMD_SETVP 303
 
 
 #define N_STATUS_BAR_FIELDS_MAX     20
@@ -340,6 +345,7 @@ class MyFrame: public wxFrame
     void DoStackDown(void);
     void selectChartDisplay( int type, int family);
     void applySettingsString( wxString settings);
+    void setStringVP(wxString VPS);
     
     void DoStackDelta( int direction );
     void DoSettings( void );
@@ -364,7 +370,6 @@ class MyFrame: public wxFrame
     int  DoOptionsDialog();
     int  ProcessOptionsDialog(int resultFlags, ArrayOfCDI *pNewDirArray );
     void DoPrint(void);
-    void LaunchLocalHelp(void);
     void StopSockets(void);
     void ResumeSockets(void);
     void TogglebFollow(void);

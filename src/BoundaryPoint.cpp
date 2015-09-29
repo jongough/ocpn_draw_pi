@@ -33,6 +33,8 @@
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 
+#include "GL/gl.h"
+
 extern PlugIn_ViewPort  *g_pivp;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 

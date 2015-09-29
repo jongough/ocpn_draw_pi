@@ -314,7 +314,7 @@ public:
     PlugIn_ViewPort *m_vp;
     wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
-    wxGLCanvas      *m_glcc;
+//    wxGLCanvas      *m_glcc;
     
     int         nBlinkerTick;
     int         m_Mode;

@@ -39,6 +39,8 @@
 #include <wx/stattext.h>
 #include <wx/dc.h>
 
+#include "GL/gl.h"
+
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 extern PlugIn_ViewPort  *g_pivp;
 extern PointMan     *g_pODPointMan;

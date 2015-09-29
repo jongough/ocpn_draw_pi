@@ -36,6 +36,8 @@
 #include "ODUtils.h"
 #include "ODdc.h"
 
+#include "GL/gl.h"
+
 extern PointMan     *g_pODPointMan;
 extern bool         g_bODIsNewLayer;
 extern int          g_ODLayerIdx;
