@@ -39,6 +39,8 @@
 #include <wx/apptrait.h>
 #include <wx/fontenum.h>
 
+#include "GL/gl.h"
+
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern wxString         *g_PrivateDataDir;
 extern ODPoint          *pAnchorWatchPoint1;

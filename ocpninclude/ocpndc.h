@@ -39,14 +39,10 @@
 #ifdef __WXMSW__
 #  define DECL_EXP     __declspec(dllexport)
 #else
-#  define DECL_EXP
+# ifdef __GNUC__
+#  define DECL_EXP       __attribute__((visibility("default")))
+# endif
 #endif
-#endif
-
-
-#ifdef __GNUC__
-#undef  DECL_EXP
-#define DECL_EXP       __attribute__((visibility("default")))
 #endif
 
 void DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_hiqual );
@@ -71,7 +67,7 @@ public:
      void SetBrush( const wxBrush &brush);
      void SetTextForeground(const wxColour &colour);
      void SetFont(const wxFont& font);
-     static void SetGLAttrs( bool highQuality );
+     static void SetGLAttrs( bool highQuality ); 
      void SetGLStipple() const;
 
      const wxPen& GetPen() const;
