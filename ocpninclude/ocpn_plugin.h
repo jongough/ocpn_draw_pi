@@ -38,7 +38,6 @@
 
 
 #include <wx/xml/xml.h>
-#include <wx/dialog.h>
 
 class wxGLContext;
 

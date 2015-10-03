@@ -21,9 +21,14 @@
 *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
 **************************************************************************/
 
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
+#include "wx/wxprec.h"
+
 #include <wx/tokenzr.h>
 #include <wx/regex.h>
-#include <wx/dcmemory.h>
 
 #include "ODPositionParser.h"
 #include "ocpn_plugin.h"
