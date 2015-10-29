@@ -1572,13 +1572,13 @@ void ocpn_draw_pi::FindSelectedObject()
         Path *pSelectedVizPath = NULL;
         
         //There is at least one OCPNpoint, so get the whole list
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
-                                                                     SELTYPE_OCPNPOINT );
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_OCPNPOINT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
             
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
+            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_MarkName == _("Boat") ) continue;
             
             //    Get an array of all paths using this point
             wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );
