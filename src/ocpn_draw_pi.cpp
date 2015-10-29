@@ -1399,12 +1399,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 } else if ( m_bODPointEditing ) {
                     
+                    m_pFoundODPoint->m_lat = m_cursor_lat;
+                    m_pFoundODPoint->m_lon = m_cursor_lon;
                     if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                         EBL *m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                        m_pSelectedEBL->ResizeVRM( m_cursor_lat, m_cursor_lon );
-                    } else {
-                        m_pFoundODPoint->m_lat = m_cursor_lat;
-                        m_pFoundODPoint->m_lon = m_cursor_lon;
+                        m_pSelectedEBL->ResizeVRM( );
                     }
                     
                     if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
@@ -1572,13 +1571,13 @@ void ocpn_draw_pi::FindSelectedObject()
         Path *pSelectedVizPath = NULL;
         
         //There is at least one OCPNpoint, so get the whole list
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
-                                                                     SELTYPE_OCPNPOINT );
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_OCPNPOINT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
             
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
+            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_MarkName == _("Boat") ) continue;
             
             //    Get an array of all paths using this point
             wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );

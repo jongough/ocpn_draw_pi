@@ -125,6 +125,18 @@ void EBL::ResizeVRM( double lat, double lon )
         g_pEBLPropDialog->UpdateProperties();
 }
 
+void EBL::ResizeVRM( void )
+{
+    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    double brg, dd;
+    DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dd );
+    pEndPoint->m_seg_len = dd;
+
+    if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
+        g_pEBLPropDialog->UpdateProperties();
+}
+
 void EBL::MoveEndPoint( double inc_lat, double inc_lon )
 {
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
