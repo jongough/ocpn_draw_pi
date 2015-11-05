@@ -1,0 +1,99 @@
+#!/bin/sh
+#cp ~/opencpn/clean/include/
+# ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+
+cp ~/opencpn/clean/src/bbox.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/cutil.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/FontDesc.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/FontMgr.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/geodesic.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/georef.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/Hyperlink.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/Layer.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/ocpndc.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/pugixml.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+cp ~/opencpn/clean/src/SelectItem.cpp ~/opencpn/plugins/ocpn_draw_pi/ocpnsrc/.
+
+cp ~/opencpn/clean/include/AISTargetAlertDialog.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/AISTargetQueryDialog.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/apb.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/bbox.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/canvasMenu.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/chart1.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/chartbarwin.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/chartbase.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/chartdbs.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/chartimg.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/chcanv.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/CM93DSlide.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/ConnectionParams.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/cutil.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/datastream.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/dsPortType.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/dychart.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/emboss_data.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/FontDesc.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/FontMgr.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/geodesic.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/georef.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/gga.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/gll.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/GoToPositionDialog.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/GPwpl.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/gpxdocument.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/gsv.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/hdg.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/hdm.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/hdt.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/Hyperlink.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/IDX_entry.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/LatLong.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/Layer.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/LinkPropDlg.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/LLRegion.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/MarkIcon.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/navutil.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/nmea0183.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/nmea0183.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/ocpCursor.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/ocpndc.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/OCPNPlatform.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/ocpn_plugin.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/OCPNRegion.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/ocpn_types.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/pluginmanager.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/pugiconfig.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/pugixml.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/Quilt.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/Response.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/RMB.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/RMC.HPP ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/RolloverWin.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/Route.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/RoutePoint.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/routeprop.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/rte.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/s52s57.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/s57chart.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/S57ClassRegistrar.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/S57Light.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/S57QueryDialog.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/s57RegistrarMgr.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/S57Sector.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/scrollingdialog.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/SelectItem.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/Sentence.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/styles.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/TexFont.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/timers.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/undo.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/vector2D.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/viewport.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/vtg.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/wpl.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/include/wx28compat.h ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+cp ~/opencpn/clean/src/nmea0183/xte.hpp ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/.
+
+cp -R ~/opencpn/clean/src/wxcurl/include ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/wxcurl/.
+cp -R ~/opencpn/clean/src/wxcurl/wx ~/opencpn/plugins/ocpn_draw_pi/ocpninclude/wxcurl/.
+
