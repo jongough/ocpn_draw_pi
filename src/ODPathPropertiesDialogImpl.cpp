@@ -62,6 +62,8 @@ extern wxColour             g_colourActivePathLineColour;
 extern wxColour             g_colourInActivePathLineColour;
 extern wxColour             g_colourActivePathFillColour;
 extern wxColour             g_colourInActivePathFillColour;
+extern bool                 g_bExclusionBoundary;
+extern bool                 g_bInclusionBoundary;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
@@ -75,6 +77,8 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
     m_staticTextFillTransparency->Enable( false );
     m_sliderFillTransparency->Hide();
     m_sliderFillTransparency->Enable( false );
+    m_radioBoxBoundaryType->Hide();
+    m_radioBoxBoundaryType->Enable( false );
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )

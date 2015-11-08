@@ -57,6 +57,8 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
+		wxBoxSizer* m_bSizerBoundaryType;
+		wxRadioBox* m_radioBoxBoundaryType;
 		wxFlexGridSizer* m_fgSizerEBL;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxRadioBox* m_radioBoxEBLPersistence;

@@ -59,12 +59,11 @@ std::cout << x << std::endl; } while (0)
 #ifndef _OCPNDRAWPI_H_
 #define _OCPNDRAWPI_H_
 
-#include "wx/wxprec.h"
-
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
 #endif //precompiled headers
 
+#include "wx/wxprec.h"
 
 #include "ocpn_plugin.h"
 #include "undo.h"
@@ -157,6 +156,15 @@ enum {
     ID_TEXT_LEFT,
     
     ID_TEXT_POSTION_LAST
+};
+
+// Boundary types
+enum {
+    ID_BOUNDARY_EXCLUSION = 0,
+    ID_BOUNDARY_INCLUSION,
+    ID_BOUNDARY_NONE,
+    
+    ID_BOUNDARY_TYPE_LAST
 };
 
 class Boundary;

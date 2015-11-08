@@ -131,6 +131,8 @@ wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
 wxColour    g_colourActiveBoundaryFillColour;
 wxColour    g_colourInActiveBoundaryFillColour;
+bool        g_bExclusionBoundary;
+bool        g_bInclusionBoundary;
 unsigned int g_uiFillTransparency;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
@@ -768,6 +770,12 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_colourInActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_colourActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        int l_BoundaryType;
+        if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+        else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+        else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NONE;
+        else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+        pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
         long l_longFillTransparency = g_uiFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
         pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
@@ -849,6 +857,26 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
         g_colourInActiveBoundaryFillColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        int l_BoundaryType;
+        pConf->Read( wxS( "DefaultBoundaryType" ), &l_BoundaryType, ID_BOUNDARY_EXCLUSION );
+        switch (l_BoundaryType) {
+            case ID_BOUNDARY_EXCLUSION:
+                g_bExclusionBoundary = true;
+                g_bInclusionBoundary = false;
+                break;
+            case ID_BOUNDARY_INCLUSION:
+                g_bExclusionBoundary = false;
+                g_bInclusionBoundary = true;
+                break;
+            case ID_BOUNDARY_NONE:
+                g_bExclusionBoundary = false;
+                g_bInclusionBoundary = false;
+                break;
+            default:
+                g_bExclusionBoundary = true;
+                g_bInclusionBoundary = false;
+                break;
+        }
         pConf->Read( wxS( "DefaultEBLLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourEBLLineColour.Set( l_wxsColour );
         long l_longFillTransparency;

@@ -25,6 +25,7 @@
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 #include "cutil.h"
+#include "clipper.hpp"
 
 #ifdef __WXMSW__
 #include "GL/gl.h"            // local copy for Windows
@@ -49,12 +50,18 @@
 #include <wx/graphics.h>
 
 #include <wx/listimpl.cpp>
+
+using namespace std;
+using namespace ClipperLib;
+
 WX_DEFINE_LIST ( BoundaryList );
 
-extern wxColour    g_colourActiveBoundaryLineColour;
-extern wxColour    g_colourInActiveBoundaryLineColour;
-extern wxColour    g_colourActiveBoundaryFillColour;
-extern wxColour    g_colourInActiveBoundaryFillColour;
+extern wxColour     g_colourActiveBoundaryLineColour;
+extern wxColour     g_colourInActiveBoundaryLineColour;
+extern wxColour     g_colourActiveBoundaryFillColour;
+extern wxColour     g_colourInActiveBoundaryFillColour;
+extern bool         g_bExclusionBoundary;
+extern bool         g_bInclusionBoundary;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern unsigned int g_uiFillTransparency;
 
@@ -67,6 +74,8 @@ Boundary::Boundary() : Path()
     m_wxcInActiveLineColour = g_colourInActiveBoundaryLineColour;
     m_wxcInActiveFillColour = g_colourInActiveBoundaryFillColour;
     m_uiFillTransparency = g_uiFillTransparency;
+    m_bExclusionBoundary = g_bExclusionBoundary;
+    m_bInclusionBoundary = g_bInclusionBoundary;
     SetActiveColours();
     
 }
@@ -82,31 +91,59 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     
     // fill boundary with hatching
     if ( m_bVisible ) {
-        wxGraphicsContext *wxGC = NULL;
-        wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
-        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
-        else {
-            wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
-            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+        if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
+            wxGraphicsContext *wxGC = NULL;
+            wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
+            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+            else {
+                wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
+                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+            }
+            
+            wxGC->SetPen(*wxTRANSPARENT_PEN);
+            wxColour tCol;
+            tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
+            wxGraphicsPath path = wxGC->CreatePath();
+            path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
+            for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
+            {
+                path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
+            }
+            path.CloseSubpath();
+            wxGC->StrokePath(path);
+            wxGC->FillPath( path );
+            delete wxGC;
+        } else if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
+            wxGraphicsContext *wxGC = NULL;
+            wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
+            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+            else {
+                wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
+                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+            }
+            // Attempt to use clipper to manage Pollygon 
+            // Need to resolve path 
+            //const Path poly;
+            //ClipperOffset co;
+            //co.AddPath( poly, jtMiter, etClosedPolygon );
+            // Attempt to use clipper to manage Pollygon 
+            
+/*            wxGC->SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width * 3, m_style ) );
+            wxColour tCol;
+            tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
+            wxGraphicsPath path = wxGC->CreatePath();
+            path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
+            for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
+            {
+                path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
+            }
+            path.CloseSubpath();
+            wxGC->StrokePath(path);
+//            wxGC->FillPath( path );
+*/            delete wxGC;
         }
-        
-        wxGC->SetPen(*wxTRANSPARENT_PEN);
-        wxColour tCol;
-        tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-        wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
-        wxGraphicsPath path = wxGC->CreatePath();
-        path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
-        for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
-        {
-            path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
-        }
-        path.CloseSubpath();
-        wxGC->StrokePath(path);
-        wxGC->FillPath( path );
-        delete wxGC;
-        //dc.SetPen(*wxTRANSPARENT_PEN);
-        //dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_fillcol, wxCROSSDIAG_HATCH ) );
-        //dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0);
     }
 
 }
@@ -119,59 +156,61 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 
     ODDC dc;
     
-    int j = 0;
-    m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
-    wxPoint r;
-    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-        ODPoint *pOp = node->GetData();
-        GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
-        m_bpts[ j++ ] = r;
-    }
-    
-    // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
-    GLubyte slope_cross_hatch[] = {
-        0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
-        0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-        0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-        0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-        0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
-        0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-        0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
-        0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-        0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
-        0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-        0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-        0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
-    };        
+    if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
+        int j = 0;
+        m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+        wxPoint r;
+        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+            ODPoint *pOp = node->GetData();
+            GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
+            m_bpts[ j++ ] = r;
+        }
+        
+        // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
+        GLubyte slope_cross_hatch[] = {
+            0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
+            0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
+            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
+        };        
 
-    GLuint textureID;
-    glGenTextures(1, &textureID);
-    glBindTexture( GL_TEXTURE_2D, textureID );
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-    glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-    glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
-    dc.SetTextureSize( 16, 16 );
-    glEnable( GL_TEXTURE_2D );
-    glEnable( GL_BLEND );
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-    wxColour tCol;
-    tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxSOLID ) );
-    if ( m_pODPointList->GetCount() > 2 ) {
-        if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
-        else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
+        GLuint textureID;
+        glGenTextures(1, &textureID);
+        glBindTexture( GL_TEXTURE_2D, textureID );
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+        glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
+        dc.SetTextureSize( 16, 16 );
+        glEnable( GL_TEXTURE_2D );
+        glEnable( GL_BLEND );
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+        wxColour tCol;
+        tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxSOLID ) );
+        if ( m_pODPointList->GetCount() > 2 ) {
+            if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
+            else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
+        }
+        glDisable( GL_BLEND );
+        glDisable( GL_TEXTURE_2D );
+        glDeleteTextures(1, &textureID);
     }
-    glDisable( GL_BLEND );
-    glDisable( GL_TEXTURE_2D );
-    glDeleteTextures(1, &textureID);
     
     Path::DrawGL( piVP );
     

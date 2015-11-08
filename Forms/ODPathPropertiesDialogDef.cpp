@@ -120,17 +120,22 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_staticTextFillTransparency->Wrap( -1 );
 	fgSizer3->Add( m_staticTextFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_sliderFillTransparency = new wxSlider( this, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	m_sliderFillTransparency = new wxSlider( this, wxID_ANY, 150, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer3->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 	
 	
-	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
-	
-	
-	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
-	
-	
 	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
+	
+	m_bSizerBoundaryType = new wxBoxSizer( wxVERTICAL );
+	
+	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Niether") };
+	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
+	m_radioBoxBoundaryType = new wxRadioBox( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxBoundaryType->SetSelection( 0 );
+	m_bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL, 5 );
+	
+	
+	fgSizer1->Add( m_bSizerBoundaryType, 1, wxEXPAND, 5 );
 	
 	m_fgSizerEBL = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerEBL->SetFlexibleDirection( wxBOTH );
@@ -142,7 +147,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
 	m_radioBoxEBLPersistence = new wxRadioBox( this, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 3, wxRA_SPECIFY_COLS );
-	m_radioBoxEBLPersistence->SetSelection( 0 );
+	m_radioBoxEBLPersistence->SetSelection( 2 );
 	m_fgSizerEBL->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
 	
 	m_checkBoxEBLShowArrow = new wxCheckBox( this, wxID_ANY, _("Show EBL Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );

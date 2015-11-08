@@ -25,6 +25,7 @@
 
 #include "BoundaryProp.h"
 #include "Boundary.h"
+#include "ocpn_draw_pi.h"
 
 extern BoundaryList         *g_pBoundaryList;
 extern wxColour             g_colourActivePathFillColour;
@@ -52,6 +53,9 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_sliderFillTransparency->Show();
     m_sliderFillTransparency->Enable( true );
     
+    m_radioBoxBoundaryType->Show();
+    m_radioBoxBoundaryType->Enable( true );
+    
     m_fgSizerEBL->ShowItems( false );
     m_checkBoxEBLFixedEndPosition->Hide();
     m_checkBoxEBLFixedEndPosition->Enable( false );
@@ -75,6 +79,10 @@ bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
 {
     m_colourPickerFillColour->SetColour( m_pBoundary->m_wxcActiveFillColour );
     m_sliderFillTransparency->SetValue( m_pBoundary->m_uiFillTransparency );
+    if(m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
+    else if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
+    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NONE );
+    else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     
     ODPathPropertiesDialogImpl::UpdateProperties( pBoundary );
     
@@ -86,6 +94,24 @@ bool BoundaryProp::SaveChanges( void )
     if( m_pPath && !m_pPath->m_bIsInLayer ) {
         m_pBoundary->m_wxcActiveFillColour = m_colourPickerFillColour->GetColour();    
         m_pBoundary->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
+        switch (m_radioBoxBoundaryType->GetSelection()) {
+            case ID_BOUNDARY_EXCLUSION:
+                m_pBoundary->m_bExclusionBoundary = true;
+                m_pBoundary->m_bInclusionBoundary = false;
+                break;
+            case ID_BOUNDARY_INCLUSION:
+                m_pBoundary->m_bExclusionBoundary = false;
+                m_pBoundary->m_bInclusionBoundary = true;
+                break;
+            case ID_BOUNDARY_NONE:
+                m_pBoundary->m_bExclusionBoundary = false;
+                m_pBoundary->m_bInclusionBoundary = false;
+                break;
+            default:
+                m_pBoundary->m_bExclusionBoundary = true;
+                m_pBoundary->m_bInclusionBoundary = false;
+                break;
+        }
     }
     ODPathPropertiesDialogImpl::SaveChanges();
 

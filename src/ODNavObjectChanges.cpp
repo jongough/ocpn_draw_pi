@@ -381,6 +381,16 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
     if(pBoundary) child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
+    if(pBoundary) {
+        child = node.append_child("opencpn:boundary_type");
+        if( pBoundary->m_bExclusionBoundary && !pBoundary->m_bInclusionBoundary )
+            child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
+        else if( !pBoundary->m_bExclusionBoundary && pBoundary->m_bInclusionBoundary )
+            child.append_child(pugi::node_pcdata).set_value( "Inclusion" );
+        else if( !pBoundary->m_bExclusionBoundary && !pBoundary->m_bInclusionBoundary )
+            child.append_child(pugi::node_pcdata).set_value( "None" );
+        else child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
+    }
     if(pEBL) {
         child = node.append_child("opencpn:persistence");
         wxString s;
@@ -949,17 +959,14 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
                 if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
             }
-            else
-            if( ChildName == _T ( "name" ) ) {
+            else if( ChildName == _T ( "name" ) ) {
                 PathName.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
-            else
-            if( ChildName == _T ( "desc" ) ) {
+            else if( ChildName == _T ( "desc" ) ) {
                 DescString.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
                 
-            else
-            if( ChildName == _T ( "link") ) {
+            else if( ChildName == _T ( "link") ) {
                 wxString HrefString;
                 wxString HrefTextString;
                 wxString HrefTypeString;
@@ -983,20 +990,17 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 linklist->Append( link );
             }
             
-            else
-            if( ChildName == _T ( "opencpn:viz" ) ) {
+            else if( ChildName == _T ( "opencpn:viz" ) ) {
                 wxString viz = wxString::FromUTF8(tschild.first_child().value());
                 b_propviz = true;
                 b_viz = ( viz == _T("1") );
             }
             
-            else
-            if( ChildName == _T ( "opencpn:active" ) ) {
+            else if( ChildName == _T ( "opencpn:active" ) ) {
                 wxString active = wxString::FromUTF8(tschild.first_child().value());
                 b_active = ( active == _T("1") );
             }
-            else
-            if( ChildName == _T ( "opencpn:style" ) ) {
+            else if( ChildName == _T ( "opencpn:style" ) ) {
                 for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
                 {
                     if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
@@ -1014,6 +1018,18 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                     else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
                         pTentBoundary->m_uiFillTransparency = attr.as_uint();
                 }
+            } else if( ChildName == _T( "opencpn:boundary_type") ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                if( s == "Exclusion" ) {
+                    pTentBoundary->m_bExclusionBoundary = true;
+                    pTentBoundary->m_bInclusionBoundary = false;
+                } else if( s == "Inclusion" ) {
+                    pTentBoundary->m_bExclusionBoundary = false;
+                    pTentBoundary->m_bInclusionBoundary = true;
+                } else if( s == "None" ) {
+                    pTentBoundary->m_bExclusionBoundary = false;
+                    pTentBoundary->m_bInclusionBoundary = false;
+                } else pTentBoundary->m_bExclusionBoundary = false;
             } else if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
                 pTentPath->m_GUID.clear();
