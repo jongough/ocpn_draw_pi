@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "520")
-SET(VERSION_DATE "04/11/2015")
+SET(VERSION_PATCH "525")
+SET(VERSION_DATE "09/11/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -53,7 +53,7 @@ SET(SRCS
         src/ODSelect.cpp
         src/PathMan.cpp
         src/pathmanagerdialog.cpp
-        src/Path.cpp
+        src/ODPath.cpp
         src/ODPoint.cpp
         src/ODConfig.cpp
         src/ODdc.cpp
@@ -87,7 +87,7 @@ SET(HDRS
         include/ODSelect.h
         include/PathMan.h
         include/pathmanagerdialog.h
-        include/Path.h
+        include/ODPath.h
         include/ODPoint.h
         include/ODConfig.h
         include/ODdc.h

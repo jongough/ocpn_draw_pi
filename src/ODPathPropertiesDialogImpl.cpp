@@ -1,7 +1,7 @@
 /**************************************************************************
  * 
  * Project:  OpenCPN
- * Purpose:  Path Properties Support
+ * Purpose:  ODPath Properties Support
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -31,7 +31,7 @@
 
 #include "ODPathPropertiesDialogImpl.h"
 #include "pathmanagerdialog.h"
-#include "Path.h"
+#include "ODPath.h"
 #include "Boundary.h"
 #include "BoundaryPoint.h"
 #include "EBL.h"
@@ -125,7 +125,7 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *pPath = node->GetData();
+        ODPath *pPath = node->GetData();
         
         if( pPath == m_pPath ) {
             m_pPath->m_iBlink--;
@@ -157,7 +157,7 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *pPath = node->GetData();
+        ODPath *pPath = node->GetData();
         
         if( pPath == m_pPath ) {
             m_pPath->m_iBlink--;
@@ -214,7 +214,7 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     PathManagerDialog::ODPointShowPropertiesDialog( op, this );
 }
 
-void ODPathPropertiesDialogImpl::SetPathAndUpdate( Path *pB, bool only_points )
+void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pB, bool only_points )
 {
     if( NULL == pB )
         return;
@@ -254,9 +254,9 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( Path *pB, bool only_points )
 
 }
 
-bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
+bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
 {
-    Path *pPath;
+    ODPath *pPath;
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
     

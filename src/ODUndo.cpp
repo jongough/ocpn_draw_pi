@@ -116,7 +116,7 @@ void doUndoMoveODPoint( UndoAction* action ) {
     wxArrayPtrVoid* pathArray = g_pPathMan->GetPathArrayContaining( currentPoint );
     if( pathArray ) {
         for( unsigned int ir = 0; ir < pathArray->GetCount(); ir++ ) {
-            Path *pp = (Path *) pathArray->Item( ir );
+            ODPath *pp = (ODPath *) pathArray->Item( ir );
             pp->FinalizeForRendering();
             pp->UpdateSegmentDistances();
             g_pODConfig->UpdatePath( pp );
@@ -146,7 +146,7 @@ void doRedoDeleteODPoint( UndoAction* action )
 void doUndoAppenODPoint( UndoAction* action )
 {
     ODPoint* point = (ODPoint*) action->before[0];
-    Path* path = (Path*) action->after[0];
+    ODPath* path = (ODPath*) action->after[0];
 
     bool noPathLeftToRedo = false;
     if( (path->GetnPoints() == 2) && (gFrame->nPath_State == 0) )
@@ -178,14 +178,14 @@ void doUndoAppenODPoint( UndoAction* action )
 void doRedoAppendWaypoint( UndoAction* action )
 {
     ODPoint* point = (ODPoint*) action->before[0];
-    Path* path = (Path*) action->after[0];
+    ODPath* path = (ODPath*) action->after[0];
 
     if( action->beforeType[0] == Undo_IsOrphanded ) {
         pConfig->AddNewODPoint( point, -1 );
         pSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
     }
 
-    ODPoint* prevpoint = Path->GetLastPoint();
+    ODPoint* prevpoint = ODPath->GetLastPoint();
 
     path->AddPoint( point );
     pSelect->AddSelectablePathSegment( prevpoint->m_lat, prevpoint->m_lon,

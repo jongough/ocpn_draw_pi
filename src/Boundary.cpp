@@ -65,7 +65,7 @@ extern bool         g_bInclusionBoundary;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern unsigned int g_uiFillTransparency;
 
-Boundary::Boundary() : Path()
+Boundary::Boundary() : ODPath()
 {
     m_sTypeString = _T("Boundary");
 
@@ -87,7 +87,7 @@ Boundary::~Boundary()
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
-    Path::Draw( dc, VP );
+    ODPath::Draw( dc, VP );
     
     // fill boundary with hatching
     if ( m_bVisible ) {
@@ -212,7 +212,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         glDeleteTextures(1, &textureID);
     }
     
-    Path::DrawGL( piVP );
+    ODPath::DrawGL( piVP );
     
 #endif
 }
@@ -227,14 +227,14 @@ void Boundary::DeletePoint( ODPoint *op, bool bRenamePoints )
         m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
     }
     
-    Path::DeletePoint( op, bRenamePoints );
+    ODPath::DeletePoint( op, bRenamePoints );
 }
 
 void Boundary::SetActiveColours( void )
 {
     wxString fillcolour;
     
-    Path::SetActiveColours();
+    ODPath::SetActiveColours();
     
     if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
     else m_fillcol = m_wxcInActiveFillColour;

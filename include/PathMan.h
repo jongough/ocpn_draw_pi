@@ -26,7 +26,7 @@
 #ifndef PATHMAN_H
 #define PATHMAN_H
 
-#include "Path.h"
+#include "ODPath.h"
 
 
 class PathMan
@@ -35,28 +35,28 @@ class PathMan
         PathMan();
         virtual ~PathMan();
 
-        bool DeletePath(Path *pPath);
+        bool DeletePath(ODPath *pPath);
         void DeleteAllPaths(void);
 
-        bool IsPathValid(Path *pRoute);
+        bool IsPathValid(ODPath *pRoute);
 
-        virtual Path *FindPathByGUID(wxString guid);
-        Path *FindPathContainingODPoint(ODPoint *pWP);
+        virtual ODPath *FindPathByGUID(wxString guid);
+        ODPath *FindPathContainingODPoint(ODPoint *pWP);
         wxArrayPtrVoid *GetPathArrayContaining(ODPoint *pWP);
-        bool DoesPathContainSharedPoints( Path *pPath );
+        bool DoesPathContainSharedPoints( ODPath *pPath );
 
-        bool ActivatePath(Path *pPathToActivate);
-        bool ActivateODPoint(Path *pA, ODPoint *pRP);
-        bool ActivateODPoint(Path *pr, bool skipped);
-        ODPoint *FindBestActivatePoint(Path *pR, double lat, double lon, double cog, double sog);
+        bool ActivatePath(ODPath *pPathToActivate);
+        bool ActivateODPoint(ODPath *pA, ODPoint *pRP);
+        bool ActivateODPoint(ODPath *pr, bool skipped);
+        ODPoint *FindBestActivatePoint(ODPath *pR, double lat, double lon, double cog, double sog);
 
         bool UpdateProgress();
         bool UpdateAutopilot();
-        bool DeactivatePath( Path *pPathToDeactivate );
+        bool DeactivatePath( ODPath *pPathToDeactivate );
         bool IsAnyPathActive(void){ return (pActivePath != NULL); }
         void SetColorScheme(PI_ColorScheme cs);
 
-        Path *GetpActivePath(){ return pActivePath;}
+        ODPath *GetpActivePath(){ return pActivePath;}
         ODPoint *GetpActivePoint(){ return pActivePoint;}
         double GetCurrentRngToActivePoint(){ return CurrentRngToActivePoint;}
         double GetCurrentBrgToActivePoint(){ return CurrentBrgToActivePoint;}
@@ -85,19 +85,19 @@ class PathMan
         void DoAdvance(void);
 
         MyApp       *m_pparent_app;
-        Path        *pActivePath;
-        ODPoint   *pActivePoint;
-        double       PathBrgToActivePoint;        //TODO all these need to be doubles
-        double       CurrentSegmentBeginLat;
-        double       CurrentSegmentBeginLon;
-        double       CurrentRngToActivePoint;
-        double       CurrentBrgToActivePoint;
-        double       CurrentXTEToActivePoint;
-        double       CourseToPathSegment;
-        double       CurrentRangeToActiveNormalCrossing;
-        ODPoint   *pActivePathSegmentBeginPoint;
-        ODPoint   *pPathActivatePoint;
-        double       CurrentSegmentCourse;
+        ODPath      *pActivePath;
+        ODPoint     *pActivePoint;
+        double      PathBrgToActivePoint;        //TODO all these need to be doubles
+        double      CurrentSegmentBeginLat;
+        double      CurrentSegmentBeginLon;
+        double      CurrentRngToActivePoint;
+        double      CurrentBrgToActivePoint;
+        double      CurrentXTEToActivePoint;
+        double      CourseToPathSegment;
+        double      CurrentRangeToActiveNormalCrossing;
+        ODPoint     *pActivePathSegmentBeginPoint;
+        ODPoint     *pPathActivatePoint;
+        double      CurrentSegmentCourse;
         int         XTEDir;
         bool        m_bArrival;
         wxPen       *m_pPathPen;

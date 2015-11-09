@@ -50,15 +50,15 @@ class ODEventHandler : public wxEvtHandler
 {
     public:
         ODEventHandler(ocpn_draw_pi *parent);
-        ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, ODPoint *selectedODPoint);
-        ODEventHandler(ChartCanvas *parentCanvas, Path *selectedPath, TextPoint *selectedTextPoint);
+        ODEventHandler(ChartCanvas *parentCanvas, ODPath *selectedPath, ODPoint *selectedODPoint);
+        ODEventHandler(ChartCanvas *parentCanvas, ODPath *selectedPath, TextPoint *selectedTextPoint);
         ~ODEventHandler();
         
         void OnODTimer1(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
         void PopupMenu( int x, int y, int seltype );
-        void SetPath( Path *path );
+        void SetPath( ODPath *path );
         void SetPoint ( ODPoint *point );
         void SetPoint ( TextPoint *point );
         void SetCanvas( ChartCanvas *canvas );
@@ -70,7 +70,7 @@ class ODEventHandler : public wxEvtHandler
         ocpn_draw_pi    *m_parent;
         ChartCanvas     *m_parentcanvas;
         int             popx, popy;
-        Path            *m_pSelectedPath;
+        ODPath            *m_pSelectedPath;
         ODPoint       *m_pFoundODPoint;
         double          m_cursor_lat;
         double          m_cursor_lon;

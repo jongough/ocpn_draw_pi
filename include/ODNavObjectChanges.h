@@ -28,7 +28,7 @@
 
 //#include <NavObjectCollection.h>
 #include "pugixml.hpp"
-#include "Path.h"
+#include "ODPath.h"
 
 //      Bitfield definition controlling the GPX nodes output for point objects
 #define         OUT_TYPE        1 << 1          //  Output point type
@@ -78,13 +78,13 @@ class ODNavObjectChanges : public pugi::xml_document
     bool CreateNavObjGPXPaths(void);
     bool CreateNavObjGPXPoints( void );    
     
-    bool AddPath ( Path *pb, const char *action );
+    bool AddPath ( ODPath *pb, const char *action );
     bool AddODPoint( ODPoint *pr, const char *action );
     bool AddGPXPathsList( PathList *pPaths );
-    bool AddGPXPath(Path *pPath);
+    bool AddGPXPath(ODPath *pPath);
     bool AddGPXODPoint(ODPoint *pWP );
     bool AddGPXODPointsList( ODPointList *pODPoints );
-    bool GPXCreatePath( pugi::xml_node node, Path *pPath );
+    bool GPXCreatePath( pugi::xml_node node, ODPath *pPath );
     bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, unsigned int flags );
     bool LoadAllGPXObjects( bool b_full_viz = false);
     int  LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
@@ -113,15 +113,15 @@ class ODNavObjectChanges : public pugi::xml_document
                                bool b_layerviz,
                                int layer_id
                              );
-        Path *GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
+        ODPath *GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
                       bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );
         ODPoint *ODPointExists( const wxString& guid );
         ODPoint *ODPointExists( const wxString& name, double lat, double lon );
         ODPoint *tempODPointExists( const wxString& guid );
-        void InsertPathA( Path *pTentPath );
-        void UpdatePathA( Path *pTentPath );
-        Path *PathExists( const wxString& guid);
-        Path *PathExists( Path * pTentPath );
+        void InsertPathA( ODPath *pTentPath );
+        void UpdatePathA( ODPath *pTentPath );
+        ODPath *PathExists( const wxString& guid);
+        ODPath *PathExists( ODPath * pTentPath );
         wxString m_ODfilename;
         ODPointList *m_ptODPointList;
 

@@ -25,7 +25,7 @@
 #define __ODSELECT_H__
 
 #include "SelectItem.h"
-#include "Path.h"
+#include "ODPath.h"
 #include "ODvector2D.h"
 
 #define SELTYPE_UNKNOWN              0x0001
@@ -43,15 +43,15 @@ public:
 
     bool AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd );
     bool AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
-            ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, Path *pPath );
+            ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath );
 
     SelectItem *FindSelection( float slat, float slon, int fseltype );
     SelectableItemList FindSelectionList( float slat, float slon, int fseltype );
 
-    bool DeleteAllSelectablePathSegments( Path * );
-    bool DeleteAllSelectableODPoints( Path * );
-    bool AddAllSelectablePathSegments( Path *pr );
-    bool AddAllSelectableODPoints( Path *pr );
+    bool DeleteAllSelectablePathSegments( ODPath * );
+    bool DeleteAllSelectableODPoints( ODPath * );
+    bool AddAllSelectablePathSegments( ODPath *pr );
+    bool AddAllSelectableODPoints( ODPath *pr );
     bool UpdateSelectablePathSegments( ODPoint *prp );
     bool IsSegmentSelected( float a, float b, float c, float d, float slat, float slon );
     bool IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel );

@@ -24,7 +24,7 @@
 #ifndef EBL_H
 #define EBL_H
 
-#include "Path.h"
+#include "ODPath.h"
 
 enum {
     ID_EBL_PERSISTENT = 0,
@@ -34,7 +34,7 @@ enum {
     ID_EBL_PERSISTENT_LAST
 };
 
-class EBL : public Path
+class EBL : public ODPath
 {
     public:
         EBL();
@@ -66,6 +66,6 @@ class EBL : public Path
         wxColour    m_wxcLineColour;
 };
 
-WX_DECLARE_LIST(EBL, EBLList); // establish class Path as list member
+WX_DECLARE_LIST(EBL, EBLList); // establish class EBL list member
 
 #endif // EBL_H

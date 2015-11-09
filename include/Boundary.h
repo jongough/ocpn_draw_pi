@@ -24,9 +24,9 @@
 #ifndef BOUNDARY_H
 #define BOUNDARY_H
 
-#include "Path.h"
+#include "ODPath.h"
 
-class Boundary : public Path
+class Boundary : public ODPath
 {
     public:
         Boundary();
@@ -51,6 +51,6 @@ class Boundary : public Path
         
 };
 
-WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Path as list member
+WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Boundary as list member
 
 #endif // BOUNDARY_H
