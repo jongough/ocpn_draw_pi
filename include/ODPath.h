@@ -43,11 +43,11 @@
 
 class ODDC;
 
-class Path : public wxObject
+class ODPath : public wxObject
 {
 public:
-    Path(void);
-    virtual ~Path(void);
+    ODPath(void);
+    virtual ~ODPath(void);
 
     virtual void AddPoint(ODPoint* pNewPoint, 
                   bool b_rename_in_sequence = true,
@@ -83,8 +83,8 @@ public:
     void ReloadPathPointIcons();
     wxString GetNewMarkSequenced(void);
     void AssemblePath();
-    bool IsEqualTo(Path *ptargetboundary);
-    void ClonePath(Path *psourceboundary, int start_nPoint, int end_nPoint, const wxString & suffix);
+    bool IsEqualTo(ODPath *ptargetboundary);
+    void ClonePath(ODPath *psourceboundary, int start_nPoint, int end_nPoint, const wxString & suffix);
     void CloneAddedODPoint(ODPoint *ptargetpoint, ODPoint *psourcepoint);
     void ClearHighlights(void);
     void RenderSegment(ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
@@ -105,7 +105,7 @@ public:
     double GetRouteArrivalRadius(void){ return m_ArrivalRadius;}
     void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
     
-    void RemovePointFromPath( ODPoint* point, Path* path );
+    void RemovePointFromPath( ODPoint* point, ODPath* path );
     virtual void MoveAllPoints( double inc_lat, double inc_lon );
 
     int         m_ConfigPathNum;
@@ -164,6 +164,6 @@ private:
     
 };
 
-WX_DECLARE_LIST(Path, PathList); // establish class Path as list member
+WX_DECLARE_LIST(ODPath, PathList); // establish class Path as list member
 
 #endif

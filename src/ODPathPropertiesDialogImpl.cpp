@@ -1,7 +1,7 @@
 /**************************************************************************
  * 
  * Project:  OpenCPN
- * Purpose:  Path Properties Support
+ * Purpose:  ODPath Properties Support
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -31,7 +31,7 @@
 
 #include "ODPathPropertiesDialogImpl.h"
 #include "pathmanagerdialog.h"
-#include "Path.h"
+#include "ODPath.h"
 #include "Boundary.h"
 #include "BoundaryPoint.h"
 #include "EBL.h"
@@ -62,6 +62,9 @@ extern wxColour             g_colourActivePathLineColour;
 extern wxColour             g_colourInActivePathLineColour;
 extern wxColour             g_colourActivePathFillColour;
 extern wxColour             g_colourInActivePathFillColour;
+extern bool                 g_bExclusionBoundary;
+extern bool                 g_bInclusionBoundary;
+extern int                  g_iInclusionBoundarySize;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
@@ -75,6 +78,10 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
     m_staticTextFillTransparency->Enable( false );
     m_sliderFillTransparency->Hide();
     m_sliderFillTransparency->Enable( false );
+    m_sliderInclusionBoundarySize->Hide();
+    m_sliderInclusionBoundarySize->Enable( false );
+    m_radioBoxBoundaryType->Hide();
+    m_radioBoxBoundaryType->Enable( false );
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
@@ -121,7 +128,7 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *pPath = node->GetData();
+        ODPath *pPath = node->GetData();
         
         if( pPath == m_pPath ) {
             m_pPath->m_iBlink--;
@@ -153,7 +160,7 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *pPath = node->GetData();
+        ODPath *pPath = node->GetData();
         
         if( pPath == m_pPath ) {
             m_pPath->m_iBlink--;
@@ -210,7 +217,7 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     PathManagerDialog::ODPointShowPropertiesDialog( op, this );
 }
 
-void ODPathPropertiesDialogImpl::SetPathAndUpdate( Path *pB, bool only_points )
+void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pB, bool only_points )
 {
     if( NULL == pB )
         return;
@@ -250,9 +257,9 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( Path *pB, bool only_points )
 
 }
 
-bool ODPathPropertiesDialogImpl::UpdateProperties( Path *pInPath )
+bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
 {
-    Path *pPath;
+    ODPath *pPath;
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
     

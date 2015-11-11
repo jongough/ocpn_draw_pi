@@ -40,7 +40,7 @@
 #include "BoundaryProp.h"
 #include "EBL.h"
 #include "EBLProp.h"
-#include "Path.h"
+#include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
 #include "PointMan.h"
@@ -123,7 +123,7 @@ BoundaryList            *g_pBoundaryList;
 EBLList                 *g_pEBLList;
 ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
-Path                    *g_PathToEdit;
+ODPath                  *g_PathToEdit;
 ODRolloverWin           *g_pPathRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
 
@@ -131,9 +131,12 @@ wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
 wxColour    g_colourActiveBoundaryFillColour;
 wxColour    g_colourInActiveBoundaryFillColour;
+bool        g_bExclusionBoundary;
+bool        g_bInclusionBoundary;
 unsigned int g_uiFillTransparency;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
+int         g_iInclusionBoundarySize;
 wxString    g_sEBLEndIconName;
 wxString    g_sEBLStartIconName;
 wxColour    g_colourEBLLineColour;
@@ -768,8 +771,15 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_colourInActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_colourActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        int l_BoundaryType;
+        if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+        else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+        else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NONE;
+        else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+        pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
         long l_longFillTransparency = g_uiFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
+        pConf->Write( wxS( "DefaultInclusionBoundarySize" ), g_iInclusionBoundarySize );
         pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
         pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
@@ -849,11 +859,32 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
         g_colourInActiveBoundaryFillColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        int l_BoundaryType;
+        pConf->Read( wxS( "DefaultBoundaryType" ), &l_BoundaryType, ID_BOUNDARY_EXCLUSION );
+        switch (l_BoundaryType) {
+            case ID_BOUNDARY_EXCLUSION:
+                g_bExclusionBoundary = true;
+                g_bInclusionBoundary = false;
+                break;
+            case ID_BOUNDARY_INCLUSION:
+                g_bExclusionBoundary = false;
+                g_bInclusionBoundary = true;
+                break;
+            case ID_BOUNDARY_NONE:
+                g_bExclusionBoundary = false;
+                g_bInclusionBoundary = false;
+                break;
+            default:
+                g_bExclusionBoundary = true;
+                g_bInclusionBoundary = false;
+                break;
+        }
         pConf->Read( wxS( "DefaultEBLLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourEBLLineColour.Set( l_wxsColour );
         long l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryFillTransparency" ), &l_longFillTransparency, 175 );
         g_uiFillTransparency = l_longFillTransparency;
+        pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
         pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxSOLID );
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
@@ -1315,7 +1346,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             if( m_pSelectedPath->m_pODPointList ) {
                 for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
-                    Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
+                    ODPath *pp = (ODPath *) m_pSelectedPath->m_pODPointList->Item( ip );
                     if( g_pPathMan->IsPathValid(pp) ) {
                         pp->FinalizeForRendering();
                         pp->UpdateSegmentDistances();
@@ -1333,7 +1364,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) {
                 if( m_pSelectedPath->m_pODPointList ) {
                     for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
-                        Path *pp = (Path *) m_pSelectedPath->m_pODPointList->Item( ip );
+                        ODPath *pp = (ODPath *) m_pSelectedPath->m_pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
                             g_pODPathPropDialog->SetPathAndUpdate( pp, true );
                         }
@@ -1530,7 +1561,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         while( node ) {
             SelectItem *pFindSel = node->GetData();
             
-            Path *pp= (Path *) pFindSel->m_pData3;        //candidate
+            ODPath *pp= (ODPath *) pFindSel->m_pData3;        //candidate
             
             if( pp && pp->IsVisible() ){
                 b_start_rollover = true;
@@ -1567,8 +1598,8 @@ void ocpn_draw_pi::FindSelectedObject()
         ODPoint *pFirstVizPoint = NULL;
         ODPoint *pFoundActiveODPoint = NULL;
         ODPoint *pFoundVizODPoint = NULL;
-        Path *pSelectedActivePath = NULL;
-        Path *pSelectedVizPath = NULL;
+        ODPath *pSelectedActivePath = NULL;
+        ODPath *pSelectedVizPath = NULL;
         
         //There is at least one OCPNpoint, so get the whole list
         SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_OCPNPOINT );
@@ -1586,7 +1617,7 @@ void ocpn_draw_pi::FindSelectedObject()
             bool bop_viz = false;
             if( ppath_array ) {
                 for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                    Path *pp = (Path *) ppath_array->Item( ip );
+                    ODPath *pp = (ODPath *) ppath_array->Item( ip );
                     if( pp->IsVisible() ) {
                         bop_viz = true;
                         break;
@@ -1604,7 +1635,7 @@ void ocpn_draw_pi::FindSelectedObject()
                 // Give preference to any active path, otherwise select the first visible path in the array for this point
                 if( ppath_array ) {
                     for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                        Path *pp = (Path *) ppath_array->Item( ip );
+                        ODPath *pp = (ODPath *) ppath_array->Item( ip );
                         if( pp->m_bPathIsActive ) {
                             pSelectedActivePath = pp;
                             pFoundActiveODPoint = pop;
@@ -1614,7 +1645,7 @@ void ocpn_draw_pi::FindSelectedObject()
                     
                     if( NULL == pSelectedVizPath ) {
                         for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                            Path *pp = (Path *) ppath_array->Item( ip );
+                            ODPath *pp = (ODPath *) ppath_array->Item( ip );
                             if( pp->IsVisible() ) {
                                 pSelectedVizPath = pp;
                                 pFoundVizODPoint = pop;
@@ -1660,7 +1691,7 @@ void ocpn_draw_pi::FindSelectedObject()
             while( node ) {
                 SelectItem *pFindSel = node->GetData();
                 
-                Path *pp = (Path *) pFindSel->m_pData3;
+                ODPath *pp = (ODPath *) pFindSel->m_pData3;
                 if( pp->IsVisible() ) {
                     m_pSelectedPath = pp;
                     break;
@@ -1870,7 +1901,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         
 }
 
-wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, Path *path, double brg, double dist, wxPoint ref_point)
+wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point)
 {
     wxString pathInfo;
     if( g_bShowMag )
@@ -2499,7 +2530,7 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 {
     for(wxPathListNode *node = g_pPathList->GetFirst(); node; node = node->GetNext() ) {
-        Path *pPathDraw = node->GetData();
+        ODPath *pPathDraw = node->GetData();
         if( !pPathDraw )
             continue;
         
@@ -2523,7 +2554,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         
         double test_minx = test_box.GetMinX(), test_maxx = test_box.GetMaxX();
         
-        // Path is not wholly outside viewport
+        // is not wholly outside viewport
         if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {
             pPathDraw->DrawGL( pivp );
         } else if( pivp.lat_max > 180. ) {

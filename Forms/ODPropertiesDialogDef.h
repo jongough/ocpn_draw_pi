@@ -11,18 +11,18 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
-#include <wx/string.h>
-#include <wx/checkbox.h>
+#include <wx/panel.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
+#include <wx/string.h>
+#include <wx/sizer.h>
+#include <wx/checkbox.h>
 #include <wx/stattext.h>
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
-#include <wx/sizer.h>
-#include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
@@ -37,6 +37,22 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
+
+///////////////////////////////////////////////////////////////////////////////
+/// Class MyPanel1
+///////////////////////////////////////////////////////////////////////////////
+class MyPanel1 : public wxPanel 
+{
+	private:
+	
+	protected:
+	
+	public:
+		
+		MyPanel1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxTAB_TRAVERSAL ); 
+		~MyPanel1();
+	
+};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODPropertiesDialogDef
@@ -104,18 +120,21 @@ class ODPropertiesDialogDef : public wxDialog
 		wxPanel* m_panelBoundary;
 		wxStaticText* m_staticTextActiveBoundayLineColour;
 		wxColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
+		wxStaticText* m_staticTextActiveBoundaryFillColour;
+		wxColourPickerCtrl* m_colourPickerActiveBoundaryFillColour;
 		wxStaticText* m_staticTextInactiveBoundaryLineColour;
 		wxColourPickerCtrl* m_colourPickerInActiveBoundaryLineColour;
+		wxStaticText* m_staticTextInactiveBoundaryFillColour;
+		wxColourPickerCtrl* m_colourPickerInActiveBoundaryFillColour;
 		wxStaticText* m_staticTextBoundaryLineWidth;
 		wxChoice* m_choiceBoundaryLineWidth;
 		wxStaticText* m_staticTextBoundaryLineStyle;
 		wxChoice* m_choiceBoundaryLineStyle;
-		wxStaticText* m_staticTextActiveBoundaryFillColour;
-		wxColourPickerCtrl* m_colourPickerActiveBoundaryFillColour;
-		wxStaticText* m_staticTextInactiveBoundaryFillColour;
-		wxColourPickerCtrl* m_colourPickerInActiveBoundaryFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
+		wxStaticText* m_staticTextInclusionBoundarySize;
+		wxSlider* m_sliderInclusionBoundarySize;
+		wxRadioBox* m_radioBoxBoundaryType;
 		wxPanel* m_panelEBL;
 		wxStaticText* m_staticTextStartPointIcon;
 		wxStaticBitmap* m_bitmapEBLStartBitmap;
@@ -152,6 +171,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonApply;
+		wxStaticText* m_staticTextBoundaryType;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }

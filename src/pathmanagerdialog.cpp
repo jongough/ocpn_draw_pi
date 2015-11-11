@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  OCPN Draw Path Manager Dialog support
+ * Purpose:  OCPN Draw ODPath Manager Dialog support
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -46,7 +46,7 @@
 #include "dychart.h"
 //#include "navutil.h"
 #include "ODConfig.h"
-#include "Path.h"
+#include "ODPath.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "Boundary.h"
@@ -805,7 +805,7 @@ void PathManagerDialog::UpdatePathButtons()
     btnPathDeleteAll->Enable( true );
 
     // set activate button text
-    Path *path = NULL;
+    ODPath *path = NULL;
     if( enable1 ) {
         path = g_pPathList->Item( m_pPathListCtrl->GetItemData( selected_index_index ) )->GetData();
         if ( path ) {
@@ -834,7 +834,7 @@ void PathManagerDialog::MakeAllPathsInvisible()
     }
 }
 
-void PathManagerDialog::ZoomtoPath( Path *path )
+void PathManagerDialog::ZoomtoPath( ODPath *path )
 {
 
     // Calculate bbox center
@@ -895,7 +895,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
         if ( item == -1 )
             break;
 
-        Path *ppath_to_delete = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
+        ODPath *ppath_to_delete = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
 
         if( ppath_to_delete )
             list.Append( ppath_to_delete );
@@ -904,7 +904,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
     if( busy ) {
 
         for(unsigned int i=0 ; i < list.GetCount() ; i++) {
-            Path *path = list.Item(i)->GetData();
+            ODPath *path = list.Item(i)->GetData();
             if( path ) {
                 g_pODConfig->DeleteConfigPath( path );
                 g_pPathMan->DeletePath( path );
@@ -952,16 +952,16 @@ void PathManagerDialog::OnPathPropertiesClick( wxCommandEvent &event )
     item = m_pPathListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
+    ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
 
     if( !path ) return;
 
     ShowPathPropertiesDialog ( path );
 }
 
-void PathManagerDialog::ShowPathPropertiesDialog ( Path *inpath )
+void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
 {
-    Path *l_pPath = NULL;;
+    ODPath *l_pPath = NULL;;
     Boundary *l_pBoundary = NULL;
     EBL *l_pEBL = NULL;
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
@@ -1033,7 +1033,7 @@ void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
     // optionally make this route exclusively visible
     if( m_bCtrlDown ) MakeAllPathsInvisible();
 
-    Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
+    ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
 
     if( !path ) return;
 
@@ -1060,7 +1060,7 @@ void PathManagerDialog::OnPathExportClick( wxCommandEvent &event )
         if ( item == -1 )
             break;
 
-        Path *ppath_to_export = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
+        ODPath *ppath_to_export = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
 
         if( ppath_to_export ) {
             list.Append( ppath_to_export );
@@ -1081,7 +1081,7 @@ void PathManagerDialog::OnPathActivateClick( wxCommandEvent &event )
 
     if( m_bCtrlDown ) MakeAllPathsInvisible();
 
-    Path *ppath = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
+    ODPath *ppath = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
 
     if( !ppath ) return;
 
@@ -1093,7 +1093,7 @@ void PathManagerDialog::OnPathActivateClick( wxCommandEvent &event )
 
         ZoomtoPath( ppath );
 
-        g_pPathMan->ActivatePath( (Path *) ppath );
+        g_pPathMan->ActivatePath( (ODPath *) ppath );
         btnPathActivate->SetLabel( _T("&Deactivate") );
     } else {
         g_pPathMan->DeactivatePath( ppath );
@@ -1120,7 +1120,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
     //    Clicking Visibility column?
     if( clicked_index > -1 && event.GetX() < m_pPathListCtrl->GetColumnWidth( colPATHVISIBLE ) ) {
         // Process the clicked item
-        Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
+        ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
 
         int ODPoints_set_viz = wxID_YES;
         bool togglesharedODPoints = true;
@@ -1160,7 +1160,7 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
 {
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
-    Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
+    ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
     path->m_iBlink++;
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
@@ -1176,7 +1176,7 @@ void PathManagerDialog::OnPathDeSelected( wxListEvent &event )
 {
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
-    Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
+    ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
     path->m_iBlink--;
     if( path->m_iBlink < 0 ) path->m_iBlink = 0;
     
@@ -1562,7 +1562,7 @@ void PathManagerDialog::OnODPointGoToClick( wxCommandEvent &event )
             GPX_EMPTY_STRING );
     g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pWP_src );
 
-    Path *temp_path = new Path();
+    ODPath *temp_path = new ODPath();
     g_pPathList->Append( temp_path );
 
     temp_path->AddPoint( pWP_src );
@@ -1783,7 +1783,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     wxPathListNode *node1 = g_pPathList->GetFirst();
     wxPathListNode *node2;
     while( node1 ) {
-        Path *pPath = node1->GetData();
+        ODPath *pPath = node1->GetData();
         node2 = node1->GetNext();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
             pPath->m_bIsInLayer = false;
@@ -1844,7 +1844,7 @@ void PathManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
     // Process Paths in this layer
     wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
-        Path *pPath = node1->GetData();
+        ODPath *pPath = node1->GetData();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
             pPath->SetVisible( layer->IsVisibleOnChart() );
             g_pODConfig->UpdatePath( pPath );
@@ -1893,7 +1893,7 @@ void PathManagerDialog::ToggleLayerContentsNames( Layer *layer )
     // Process Paths in this layer
     wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
-        Path *pPath = node1->GetData();
+        ODPath *pPath = node1->GetData();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
             wxODPointListNode *node = pPath->m_pODPointList->GetFirst();
             ODPoint *prp1 = node->GetData();
@@ -1945,7 +1945,7 @@ void PathManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
     // Process Paths in this layer
     wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
-        Path *pPath = node1->GetData();
+        ODPath *pPath = node1->GetData();
         if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
             pPath->SetListed( layer->IsVisibleOnListing() );
             g_pODConfig->UpdatePath(pPath);
@@ -2105,7 +2105,7 @@ void PathManagerDialog::DeSelectPaths( void )
     {
         selected_item = m_pPathListCtrl->GetNextItem( selected_item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
         if( selected_item == -1 ) break;
-        //Path *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( selected_item ) )->GetData();
+        //ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( selected_item ) )->GetData();
         m_pPathListCtrl->SetItemState( selected_item, 0, wxLIST_STATE_SELECTED );
     }
     Show( false );

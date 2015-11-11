@@ -699,7 +699,7 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pRp );
         if( ppath_array ) {
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
-                Path *pb = (Path *) ppath_array->Item( ib );
+                ODPath *pb = (ODPath *) ppath_array->Item( ib );
 
                 pb->RemovePoint( pRp );
 
@@ -707,7 +707,7 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
 
             //    Scrub the paths, looking for one-point routes
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
-                Path *pb = (Path *) ppath_array->Item( ib );
+                ODPath *pb = (ODPath *) ppath_array->Item( ib );
                 if( pb->GetnPoints() < 2 ) {
                     bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
                     g_pODConfig->m_bSkipChangeSetUpdate = true;

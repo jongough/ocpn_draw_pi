@@ -1,4 +1,7 @@
 /***************************************************************************
+ * Project:  OpenCPN
+ * Purpose:  EBL Properties
+ * Author:   Jon Gough
  *
  * Project:  OpenCPN
  *
@@ -74,7 +77,7 @@ extern EBLProp      *g_pEBLPropDialog;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
 
-EBL::EBL() : Path()
+EBL::EBL() : ODPath()
 {
     m_sTypeString = _T("EBL");
     m_wxcActiveLineColour = g_colourEBLLineColour;
@@ -96,7 +99,7 @@ EBL::~EBL()
 
 void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
 {
-    Path::AddPoint( pNewPoint, b_rename_in_sequence, b_deferBoxCalc, b_isLoading );
+    ODPath::AddPoint( pNewPoint, b_rename_in_sequence, b_deferBoxCalc, b_isLoading );
     if(pNewPoint->m_MarkName == _("Start") || pNewPoint->m_MarkName == _("Boat")) {
         pNewPoint->SetODPointRangeRingsNumber( 1 );
         pNewPoint->SetODPointRangeRingsStep( 0 );
@@ -212,7 +215,7 @@ void EBL::RemovePoint( ODPoint *op, bool bRenamePoints )
     if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove( op->m_GUID );
     
     // check all other routes to see if this point appears in any other route
-    Path *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
+    ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
     
     if( pcontainer_path == NULL ) {
         op->m_bIsInPath = false;
@@ -231,7 +234,7 @@ void EBL::RemovePoint( ODPoint *op, bool bRenamePoints )
 
 ODPoint *EBL::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
-    ODPoint *newpoint = Path::InsertPointBefore( pOP, lat, lon );
+    ODPoint *newpoint = ODPath::InsertPointBefore( pOP, lat, lon );
     newpoint->m_IconName = g_sEBLStartIconName;
     newpoint->m_sTypeString = wxT("EBL Point");
     newpoint->m_MarkName = wxT("Start");
@@ -241,7 +244,7 @@ ODPoint *EBL::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRen
 
 ODPoint *EBL::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
-    ODPoint *newpoint = Path::InsertPointAfter( pOP, lat, lon );
+    ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon );
     newpoint->m_IconName = g_sEBLStartIconName;
     newpoint->m_sTypeString = wxT("EBL Point");
     newpoint->m_MarkName = wxT("Start");
@@ -252,7 +255,7 @@ ODPoint *EBL::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRena
 
 void EBL::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
 {
-    Path::InsertPointAfter( pOP, pnOP );
+    ODPath::InsertPointAfter( pOP, pnOP );
 }
 
 void EBL::UpdateEBL( void )
@@ -271,7 +274,7 @@ void EBL::UpdateEBL( void )
     g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
     
     for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-        Path *pp = (Path *) m_pODPointList->Item( ip );
+        ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
         if( g_pPathMan->IsPathValid(pp) ) {
             pp->FinalizeForRendering();
             pp->UpdateSegmentDistances();
@@ -287,7 +290,7 @@ void EBL::UpdateEBL( void )
     if( ( NULL != g_pEBLPropDialog ) && ( g_pEBLPropDialog->IsShown() ) ) {
         if( m_pODPointList ) {
             for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-                Path *pp = (Path *) m_pODPointList->Item( ip );
+                ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
                 if( g_pPathMan->IsPathValid(pp) ) {
                     g_pEBLPropDialog->SetPathAndUpdate( pp, true );
                 }
@@ -303,7 +306,7 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
-    Path::Draw( dc, VP );
+    ODPath::Draw( dc, VP );
 }
     
 void EBL::DrawGL( PlugIn_ViewPort &piVP )
@@ -313,5 +316,5 @@ void EBL::DrawGL( PlugIn_ViewPort &piVP )
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
-    Path::DrawGL( piVP );
+    ODPath::DrawGL( piVP );
 }

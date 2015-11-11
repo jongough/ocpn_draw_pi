@@ -65,7 +65,7 @@ ODConfig::~ODConfig()
     //dtor
 }
 
-bool ODConfig::AddNewPath( Path *pb, int crm )
+bool ODConfig::AddNewPath( ODPath *pb, int crm )
 {
     if( pb->m_bIsInLayer )
         return true;
@@ -78,7 +78,7 @@ bool ODConfig::AddNewPath( Path *pb, int crm )
     return true;
 }
 
-bool ODConfig::UpdatePath( Path *pb )
+bool ODConfig::UpdatePath( ODPath *pb )
 {
     if( pb->m_bIsInLayer ) return true;
 
@@ -91,7 +91,7 @@ bool ODConfig::UpdatePath( Path *pb )
     return true;
 }
 
-bool ODConfig::DeleteConfigPath( Path *pb )
+bool ODConfig::DeleteConfigPath( ODPath *pb )
 {
     if( pb->m_bIsInLayer ) return true;
     
@@ -344,7 +344,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         //Paths
         wxPathListNode *node1 = g_pPathList->GetFirst();
         while( node1 ) {
-            Path *pPath = node1->GetData();
+            ODPath *pPath = node1->GetData();
 
             bool b_add = true;
 
@@ -507,7 +507,7 @@ bool ODConfig::ODPointIsInPathList( ODPoint *pr )
 
     wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
-        Path *pPath = node1->GetData();
+        ODPath *pPath = node1->GetData();
         ODPointList *pODPointList = pPath->m_pODPointList;
 
         wxODPointListNode *node2 = pODPointList->GetFirst();

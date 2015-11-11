@@ -40,9 +40,9 @@ class ODConfig
         ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName);
         virtual ~ODConfig();
 
-        virtual bool AddNewPath(Path *pr, int ConfigRouteNum = -1);
-        virtual bool UpdatePath(Path *pr);
-        virtual bool DeleteConfigPath(Path *pr);
+        virtual bool AddNewPath(ODPath *pr, int ConfigRouteNum = -1);
+        virtual bool UpdatePath(ODPath *pr);
+        virtual bool DeleteConfigPath(ODPath *pr);
         
         virtual bool AddNewODPoint(ODPoint *pWP, int ConfigRouteNum = -1);
         virtual bool UpdateODPoint(ODPoint *pWP);

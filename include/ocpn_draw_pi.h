@@ -59,12 +59,11 @@ std::cout << x << std::endl; } while (0)
 #ifndef _OCPNDRAWPI_H_
 #define _OCPNDRAWPI_H_
 
-#include "wx/wxprec.h"
-
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
 #endif //precompiled headers
 
+#include "wx/wxprec.h"
 
 #include "ocpn_plugin.h"
 #include "undo.h"
@@ -157,6 +156,15 @@ enum {
     ID_TEXT_LEFT,
     
     ID_TEXT_POSTION_LAST
+};
+
+// Boundary types
+enum {
+    ID_BOUNDARY_EXCLUSION = 0,
+    ID_BOUNDARY_INCLUSION,
+    ID_BOUNDARY_NONE,
+    
+    ID_BOUNDARY_TYPE_LAST
 };
 
 class Boundary;
@@ -291,7 +299,7 @@ public:
     Boundary    *m_pMouseBoundary;
     EBL         *m_pMouseEBL;
     ODPoint     *m_pEBLBoatPoint;
-    Path        *m_pSelectedPath;
+    ODPath        *m_pSelectedPath;
     ODPoint   *m_pFoundODPoint;
     ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;
@@ -331,7 +339,7 @@ private:
 
     void    LoadConfig();
     void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
-    wxString CreateExtraPathLegInfo(ODDC &dc, Path *path, double brg, double dist, wxPoint ref_point);
+    wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
     void    FinishBoundary();
 //    ArrayOfGridColWidth    readCols(ArrayOfGridColWidth ar, wxString str);
 //    void                    writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);

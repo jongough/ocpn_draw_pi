@@ -290,9 +290,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     return true;
 }
 
-bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
+bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
 {
-    Path *pPath;
+    ODPath *pPath;
     Boundary * pBoundary = NULL;
     EBL * pEBL = NULL;
     if(pInPath->m_sTypeString == wxT("Boundary")) {
@@ -381,6 +381,16 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
     if(pBoundary) child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
+    if(pBoundary) {
+        child = node.append_child("opencpn:boundary_type");
+        if( pBoundary->m_bExclusionBoundary && !pBoundary->m_bInclusionBoundary )
+            child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
+        else if( !pBoundary->m_bExclusionBoundary && pBoundary->m_bInclusionBoundary )
+            child.append_child(pugi::node_pcdata).set_value( "Inclusion" );
+        else if( !pBoundary->m_bExclusionBoundary && !pBoundary->m_bInclusionBoundary )
+            child.append_child(pugi::node_pcdata).set_value( "None" );
+        else child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
+    }
     if(pEBL) {
         child = node.append_child("opencpn:persistence");
         wxString s;
@@ -407,7 +417,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, Path *pInPath )
     return true;
 }
                     
-bool ODNavObjectChanges::AddPath( Path *pb, const char *action )
+bool ODNavObjectChanges::AddPath( ODPath *pb, const char *action )
 {
     if( !m_ODchanges_file )
         return false;
@@ -461,7 +471,7 @@ bool ODNavObjectChanges::AddGPXPathsList( PathList *pPaths )
     m_bFirstPath = true;
     wxPathListNode* pPath = pPaths->GetFirst();
     while (pPath) {
-        Path* pPData = pPath->GetData();
+        ODPath* pPData = pPath->GetData();
         AddGPXPath( pPData);
         pPath = pPath->GetNext();
     }
@@ -469,7 +479,7 @@ bool ODNavObjectChanges::AddGPXPathsList( PathList *pPaths )
     return true;
 }
 
-bool ODNavObjectChanges::AddGPXPath(Path *pPath)
+bool ODNavObjectChanges::AddGPXPath(ODPath *pPath)
 {
     SetRootGPXNode();
     if ( m_bFirstPath ) {
@@ -533,11 +543,11 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     // Paths
     wxPathListNode *node1 = g_pPathList->GetFirst();
 //    child_ext = m_gpx_root.append_child("extensions");
-    Path *pPath = NULL;
+    ODPath *pPath = NULL;
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
     while( node1 ) {
-        pPath = (Path *)node1->GetData();
+        pPath = (ODPath *)node1->GetData();
         pBoundary = NULL;
         pEBL = NULL;
         if(pPath->m_sTypeString == wxT("Boundary")) {
@@ -611,11 +621,11 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                         }
                     }
                     if ( !TypeString.compare( wxS("Boundary") ) ) {
-                        Path *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
+                        ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
                     if ( !TypeString.compare( wxS("EBL") ) ) {
-                        Path *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
+                        ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
                 }
@@ -913,7 +923,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     return ( pOP );
 }
 
-Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
+ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
                     bool b_layer,
                     bool b_layerviz,
                     int layer_id, wxString *pPathType )
@@ -925,7 +935,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
     bool b_active = false;
     Boundary    *pTentBoundary = NULL;
     EBL         *pTentEBL = NULL;
-    Path        *pTentPath = NULL;
+    ODPath        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
     
     //m_ptODPointList->clear();
@@ -938,7 +948,7 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
             pTentEBL = new EBL();
             pTentPath = pTentEBL;
         } else 
-            pTentPath = new Path();
+            pTentPath = new ODPath();
         
         for( pugi::xml_node tschild = wpt_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
             wxString ChildName = wxString::FromUTF8( tschild.name() );
@@ -949,17 +959,14 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
                 if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
             }
-            else
-            if( ChildName == _T ( "name" ) ) {
+            else if( ChildName == _T ( "name" ) ) {
                 PathName.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
-            else
-            if( ChildName == _T ( "desc" ) ) {
+            else if( ChildName == _T ( "desc" ) ) {
                 DescString.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
                 
-            else
-            if( ChildName == _T ( "link") ) {
+            else if( ChildName == _T ( "link") ) {
                 wxString HrefString;
                 wxString HrefTextString;
                 wxString HrefTypeString;
@@ -983,20 +990,17 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                 linklist->Append( link );
             }
             
-            else
-            if( ChildName == _T ( "opencpn:viz" ) ) {
+            else if( ChildName == _T ( "opencpn:viz" ) ) {
                 wxString viz = wxString::FromUTF8(tschild.first_child().value());
                 b_propviz = true;
                 b_viz = ( viz == _T("1") );
             }
             
-            else
-            if( ChildName == _T ( "opencpn:active" ) ) {
+            else if( ChildName == _T ( "opencpn:active" ) ) {
                 wxString active = wxString::FromUTF8(tschild.first_child().value());
                 b_active = ( active == _T("1") );
             }
-            else
-            if( ChildName == _T ( "opencpn:style" ) ) {
+            else if( ChildName == _T ( "opencpn:style" ) ) {
                 for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
                 {
                     if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
@@ -1014,6 +1018,18 @@ Path *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz
                     else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
                         pTentBoundary->m_uiFillTransparency = attr.as_uint();
                 }
+            } else if( ChildName == _T( "opencpn:boundary_type") ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                if( s == "Exclusion" ) {
+                    pTentBoundary->m_bExclusionBoundary = true;
+                    pTentBoundary->m_bInclusionBoundary = false;
+                } else if( s == "Inclusion" ) {
+                    pTentBoundary->m_bExclusionBoundary = false;
+                    pTentBoundary->m_bInclusionBoundary = true;
+                } else if( s == "None" ) {
+                    pTentBoundary->m_bExclusionBoundary = false;
+                    pTentBoundary->m_bInclusionBoundary = false;
+                } else pTentBoundary->m_bExclusionBoundary = false;
             } else if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
                 pTentPath->m_GUID.clear();
@@ -1119,7 +1135,7 @@ ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
     return NULL;
 }
 
-void ODNavObjectChanges::InsertPathA( Path *pTentPath )
+void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
 {
     if( !pTentPath )
         return;
@@ -1185,7 +1201,7 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
             ODPoint *pop = pnode->GetData();
             
             // check all other paths to see if this point appears in any other path
-            Path *pcontainer_path = g_pPathMan->FindPathContainingODPoint( pop );
+            ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( pop );
             
             if( pcontainer_path == NULL ) {
                 pop->m_bIsInPath = false; // Take this point out of this (and only) track/route
@@ -1204,12 +1220,12 @@ void ODNavObjectChanges::InsertPathA( Path *pTentPath )
     }
 }
                     
-Path *ODNavObjectChanges::PathExists( const wxString& guid )
+ODPath *ODNavObjectChanges::PathExists( const wxString& guid )
 {
     wxPathListNode *path_node = g_pPathList->GetFirst();
 
     while( path_node ) {
-        Path *ppath = path_node->GetData();
+        ODPath *ppath = path_node->GetData();
 
         if( guid == ppath->m_GUID ) return ppath;
 
@@ -1218,11 +1234,11 @@ Path *ODNavObjectChanges::PathExists( const wxString& guid )
     return NULL;
 }
 
-Path *ODNavObjectChanges::PathExists( Path * pTentPath )
+ODPath *ODNavObjectChanges::PathExists( ODPath * pTentPath )
 {
     wxPathListNode *path_node = g_pPathList->GetFirst();
     while( path_node ) {
-        Path *ppath = path_node->GetData();
+        ODPath *ppath = path_node->GetData();
 
         if( ppath->IsEqualTo( pTentPath ) ) {
             return ppath;
@@ -1282,7 +1298,7 @@ bool ODNavObjectChanges::ApplyChanges(void)
             if( !strcmp(object.name(), "opencpn:path") ) {
                 pugi::xml_node typesearch = object.child("opencpn:type");
                 wxString wxsType = wxString::FromUTF8( typesearch.first_child().value() );
-                Path *pPath = GPXLoadPath1( object, false, false, false, 0 , &wxsType );
+                ODPath *pPath = GPXLoadPath1( object, false, false, false, 0 , &wxsType );
                 
                 if(pPath && g_pPathMan) {
                     pugi::xml_node child = object.child("opencpn:action");
@@ -1296,7 +1312,7 @@ bool ODNavObjectChanges::ApplyChanges(void)
                     }
                 
                     else if(!strcmp(child.first_child().value(), "delete") ){
-                        Path *pExisting = PathExists( pPath->m_GUID );
+                        ODPath *pExisting = PathExists( pPath->m_GUID );
                         if(pExisting){
                             g_pODConfig->m_bSkipChangeSetUpdate = true;
                             g_pPathMan->DeletePath( pExisting );
@@ -1349,7 +1365,7 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
                     }
                 }
                 if ( !TypeString.compare( wxS("Boundary") ) ) {
-                    Path *pPath = GPXLoadPath1( object, true, true, b_layerviz, layer_id, &TypeString );
+                    ODPath *pPath = GPXLoadPath1( object, true, true, b_layerviz, layer_id, &TypeString );
                     n_obj++;
                     InsertPathA( pPath );
                 }
@@ -1360,9 +1376,9 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
     return n_obj;
 }
 
-void ODNavObjectChanges::UpdatePathA( Path *pTentPath )
+void ODNavObjectChanges::UpdatePathA( ODPath *pTentPath )
 {
-    Path * path = PathExists( pTentPath->m_GUID );
+    ODPath * path = PathExists( pTentPath->m_GUID );
 
     if( path ) {
         if ( pTentPath->GetnPoints() < path->GetnPoints() ) {

@@ -95,7 +95,7 @@ PathMan::~PathMan()
     if( pPathActivatePoint ) delete pPathActivatePoint;
 }
 
-bool PathMan::IsPathValid( Path *pPath )
+bool PathMan::IsPathValid( ODPath *pPath )
 {
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
@@ -105,7 +105,7 @@ bool PathMan::IsPathValid( Path *pPath )
     return false;
 }
 
-bool PathMan::ActivatePath(Path *pPathToActivate )
+bool PathMan::ActivatePath(ODPath *pPathToActivate )
 {
     wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
     wxString msg;
@@ -121,7 +121,7 @@ bool PathMan::ActivatePath(Path *pPathToActivate )
     return true;
 }
 
-bool PathMan::DeactivatePath( Path *pPathToDeactivate )
+bool PathMan::DeactivatePath( ODPath *pPathToDeactivate )
 {
     wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
     wxString msg;
@@ -140,7 +140,7 @@ bool PathMan::DeactivatePath( Path *pPathToDeactivate )
     return true;
 }
 
-bool PathMan::DeletePath( Path *pPath )
+bool PathMan::DeletePath( ODPath *pPath )
 {
     if( pPath ) {
 
@@ -163,7 +163,7 @@ bool PathMan::DeletePath( Path *pPath )
             ODPoint *prp = pnode->GetData();
 
             // check all other paths to see if this point appears in any other route
-            Path *pcontainer_path = FindPathContainingODPoint( prp );
+            ODPath *pcontainer_path = FindPathContainingODPoint( prp );
 
             if( pcontainer_path == NULL && prp->m_bIsInPath ) {
                 prp->m_bIsInPath = false;          // Take this point out of this (and only) path
@@ -203,7 +203,7 @@ bool PathMan::DeletePath( Path *pPath )
     return true;
 }
 
-bool PathMan::DoesPathContainSharedPoints( Path *pPath )
+bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
 {
     if( pPath ) {
         // walk the route, looking at each point to see if it is used by another route
@@ -217,7 +217,7 @@ bool PathMan::DoesPathContainSharedPoints( Path *pPath )
             
              if( pRA ) {
                  for( unsigned int ir = 0; ir < pRA->GetCount(); ir++ ) {
-                    Path *pb = (Path *) pRA->Item( ir );
+                    ODPath *pb = (ODPath *) pRA->Item( ir );
                     if( pb == pPath)
                         continue;               // self
                     else 
@@ -248,7 +248,7 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
 
     wxPathListNode *path_node = g_pPathList->GetFirst();
     while( path_node ) {
-        Path *ppath = path_node->GetData();
+        ODPath *ppath = path_node->GetData();
 
         wxODPointListNode *OCPNpoint_node = ( ppath->m_pODPointList )->GetFirst();
         while( OCPNpoint_node ) {
@@ -277,7 +277,7 @@ void PathMan::DeleteAllPaths( void )
     //    Iterate on the RouteList
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *ppath = node->GetData();
+        ODPath *ppath = node->GetData();
         if( ppath->m_bIsInLayer ) {
             node = node->GetNext();
             continue;
@@ -294,11 +294,11 @@ void PathMan::DeleteAllPaths( void )
 
 }
 
-Path *PathMan::FindPathContainingODPoint( ODPoint *pWP )
+ODPath *PathMan::FindPathContainingODPoint( ODPoint *pWP )
 {
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *ppath = node->GetData();
+        ODPath *ppath = node->GetData();
 
         wxODPointListNode *pnode = ( ppath->m_pODPointList )->GetFirst();
         while( pnode ) {
@@ -313,11 +313,11 @@ Path *PathMan::FindPathContainingODPoint( ODPoint *pWP )
     return NULL;                              // not found
 }
 
-Path *PathMan::FindPathByGUID( wxString guid )
+ODPath *PathMan::FindPathByGUID( wxString guid )
 {
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
-        Path *ppath = node->GetData();
+        ODPath *ppath = node->GetData();
         if(ppath->m_GUID == guid) return ppath;
         node = node->GetNext();
     }

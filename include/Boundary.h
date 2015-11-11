@@ -24,9 +24,9 @@
 #ifndef BOUNDARY_H
 #define BOUNDARY_H
 
-#include "Path.h"
+#include "ODPath.h"
 
-class Boundary : public Path
+class Boundary : public ODPath
 {
     public:
         Boundary();
@@ -40,6 +40,9 @@ class Boundary : public Path
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;
         unsigned int    m_uiFillTransparency;
+        int             m_iInclusionBoundarySize;
+        bool            m_bExclusionBoundary;
+        bool            m_bInclusionBoundary;
         
     protected:
         wxColour    m_fillcol;
@@ -49,6 +52,6 @@ class Boundary : public Path
         
 };
 
-WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Path as list member
+WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Boundary as list member
 
 #endif // BOUNDARY_H

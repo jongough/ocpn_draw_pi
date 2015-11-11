@@ -9,11 +9,27 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
+MyPanel1::MyPanel1( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style )
+{
+}
+
+MyPanel1::~MyPanel1()
+{
+}
+
 ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 	
 	m_SizerProperties = new wxBoxSizer( wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizer12;
+	fgSizer12 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer12->SetFlexibleDirection( wxBOTH );
+	fgSizer12->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	
+	m_SizerProperties->Add( fgSizer12, 1, wxEXPAND, 5 );
 	
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelGeneral = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -301,64 +317,93 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_notebookProperties->AddPage( m_panelPath, _("Path"), false );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
-	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 2, 0, 0 );
-	fgSizerBoundarySettings->SetFlexibleDirection( wxBOTH );
+	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
+	fgSizerBoundarySettings->SetFlexibleDirection( wxVERTICAL );
 	fgSizerBoundarySettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxFlexGridSizer* fgSizerBoundarySettingsColours;
+	fgSizerBoundarySettingsColours = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizerBoundarySettingsColours->SetFlexibleDirection( wxBOTH );
+	fgSizerBoundarySettingsColours->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_staticTextActiveBoundayLineColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Active Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActiveBoundayLineColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextActiveBoundayLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextActiveBoundayLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_colourPickerActiveBoundaryLineColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerBoundarySettings->Add( m_colourPickerActiveBoundaryLineColour, 0, wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_colourPickerActiveBoundaryLineColour, 0, wxALL, 5 );
+	
+	m_staticTextActiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextActiveBoundaryFillColour->Wrap( -1 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextActiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerBoundarySettingsColours->Add( m_colourPickerActiveBoundaryFillColour, 0, wxALL, 5 );
 	
 	m_staticTextInactiveBoundaryLineColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveBoundaryLineColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextInactiveBoundaryLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_colourPickerInActiveBoundaryLineColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerBoundarySettings->Add( m_colourPickerInActiveBoundaryLineColour, 0, wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_colourPickerInActiveBoundaryLineColour, 0, wxALL, 5 );
+	
+	m_staticTextInactiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInactiveBoundaryFillColour->Wrap( -1 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextInactiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerInActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerBoundarySettingsColours->Add( m_colourPickerInActiveBoundaryFillColour, 0, wxALL, 5 );
 	
 	m_staticTextBoundaryLineWidth = new wxStaticText( m_panelBoundary, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBoundaryLineWidth->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextBoundaryLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextBoundaryLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choiceBoundaryLineWidthChoices[] = { _("1 Pixel"), _("2 Pixels"), _("3 Pixels"), _("4 Pixels"), _("5 Pixels"), _("6 Pixels"), _("7 Pixels"), _("8 Pixels"), _("9 Pixels"), _("10 Pixels") };
 	int m_choiceBoundaryLineWidthNChoices = sizeof( m_choiceBoundaryLineWidthChoices ) / sizeof( wxString );
 	m_choiceBoundaryLineWidth = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceBoundaryLineWidthNChoices, m_choiceBoundaryLineWidthChoices, 0 );
 	m_choiceBoundaryLineWidth->SetSelection( 0 );
-	fgSizerBoundarySettings->Add( m_choiceBoundaryLineWidth, 0, wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_choiceBoundaryLineWidth, 0, wxALL, 5 );
 	
 	m_staticTextBoundaryLineStyle = new wxStaticText( m_panelBoundary, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBoundaryLineStyle->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextBoundaryLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextBoundaryLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_choiceBoundaryLineStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
 	int m_choiceBoundaryLineStyleNChoices = sizeof( m_choiceBoundaryLineStyleChoices ) / sizeof( wxString );
 	m_choiceBoundaryLineStyle = new wxChoice( m_panelBoundary, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceBoundaryLineStyleNChoices, m_choiceBoundaryLineStyleChoices, 0 );
 	m_choiceBoundaryLineStyle->SetSelection( 0 );
-	fgSizerBoundarySettings->Add( m_choiceBoundaryLineStyle, 0, wxALL, 5 );
-	
-	m_staticTextActiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextActiveBoundaryFillColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextActiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	m_colourPickerActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerBoundarySettings->Add( m_colourPickerActiveBoundaryFillColour, 0, wxALL, 5 );
-	
-	m_staticTextInactiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextInactiveBoundaryFillColour->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextInactiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	m_colourPickerInActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerBoundarySettings->Add( m_colourPickerInActiveBoundaryFillColour, 0, wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_choiceBoundaryLineStyle, 0, wxALL, 5 );
 	
 	m_staticTextFillTransparency = new wxStaticText( m_panelBoundary, wxID_ANY, _("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextFillTransparency->Wrap( -1 );
-	fgSizerBoundarySettings->Add( m_staticTextFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_sliderFillTransparency = new wxSlider( m_panelBoundary, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
-	fgSizerBoundarySettings->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
+	fgSizerBoundarySettingsColours->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticTextInclusionBoundarySize = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inclusion Boundary Size"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInclusionBoundarySize->Wrap( -1 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextInclusionBoundarySize, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderInclusionBoundarySize = new wxSlider( m_panelBoundary, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizerBoundarySettingsColours->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
+	
+	
+	fgSizerBoundarySettings->Add( fgSizerBoundarySettingsColours, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerBoundaryType;
+	fgSizerBoundaryType = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerBoundaryType->SetFlexibleDirection( wxBOTH );
+	fgSizerBoundaryType->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
+	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
+	m_radioBoxBoundaryType = new wxRadioBox( m_panelBoundary, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxBoundaryType->SetSelection( 0 );
+	fgSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL, 5 );
+	
+	
+	fgSizerBoundarySettings->Add( fgSizerBoundaryType, 1, wxEXPAND, 5 );
 	
 	
 	m_panelBoundary->SetSizer( fgSizerBoundarySettings );
@@ -558,6 +603,10 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	
 	m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND, 5 );
+	
+	m_staticTextBoundaryType = new wxStaticText( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBoundaryType->Wrap( -1 );
+	m_SizerProperties->Add( m_staticTextBoundaryType, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
 	this->SetSizer( m_SizerProperties );

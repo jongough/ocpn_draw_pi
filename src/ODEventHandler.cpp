@@ -55,7 +55,7 @@ extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern PathMan          *g_pPathMan;
 
 extern ODPointPropertiesImpl    *g_pODPointPropDialog;
-extern Path             *g_PathToEdit;
+extern ODPath             *g_PathToEdit;
 extern PointMan         *g_pODPointMan;
 extern bool             g_bShowMag;
 extern bool             g_bConfirmObjectDelete;
@@ -83,9 +83,7 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 }
 
 
-ODEventHandler::ODEventHandler(ChartCanvas *parent,
-                          Path *selectedPath,
-                          ODPoint *selectedODPoint)
+ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoint *selectedODPoint)
 {
     m_pBoundary = NULL;
     m_pEBL = NULL;
@@ -102,9 +100,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent,
     m_pFoundODPoint = selectedODPoint;
 }
 
-ODEventHandler::ODEventHandler(ChartCanvas *parent,
-                               Path *selectedPath,
-                               TextPoint *selectedTextPoint)
+ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPoint *selectedTextPoint)
 {
     m_pBoundary = NULL;
     m_pEBL = NULL;
@@ -122,7 +118,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent,
     m_pFoundODPoint = selectedTextPoint;
 }
 
-void ODEventHandler::SetPath( Path *path )
+void ODEventHandler::SetPath( ODPath *path )
 {
     m_pBoundary = NULL;
     m_pEBL = NULL;
@@ -196,7 +192,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         while( node ) {
             SelectItem *pFindSel = node->GetData();
             
-            Path *pp = (Path *) pFindSel->m_pData3;        //candidate
+            ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
             
             if( pp && pp->IsVisible() ) {
                 g_pRolloverPathSeg = pFindSel;

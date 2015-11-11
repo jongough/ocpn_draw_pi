@@ -46,7 +46,7 @@
 //    forward class declarations
 //----------------------------------------------------------------------------
 
-class Path;
+class ODPath;
 class ODPoint;
 class ODPointList;
 class wxFontEnumerator;

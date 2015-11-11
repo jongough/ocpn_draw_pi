@@ -28,7 +28,7 @@
 #include "vector2D.h"
 //#include "navutil.h"
 #include "chcanv.h"
-#include "Path.h"
+#include "ODPath.h"
 
 extern ChartCanvas *ocpncc1;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
@@ -75,7 +75,7 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
 }
 
 bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
-        ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, Path *pPath )
+        ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath )
 {
     SelectItem *pSelItem = new SelectItem;
     pSelItem->m_slat = slat1;
@@ -95,7 +95,7 @@ bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, 
     return true;
 }
 
-bool ODSelect::DeleteAllSelectablePathSegments( Path *pr )
+bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
 {
     SelectItem *pFindSel;
 
@@ -109,7 +109,7 @@ bool ODSelect::DeleteAllSelectablePathSegments( Path *pr )
 //                  RoutePoint *ps1 = (RoutePoint *)pFindSel->m_pData1;
 //                  RoutePoint *ps2 = (RoutePoint *)pFindSel->m_pData2;
 
-            if( (Path *) pFindSel->m_pData3 == pr ) {
+            if( (ODPath *) pFindSel->m_pData3 == pr ) {
                 delete pFindSel;
                 pSelectList->DeleteNode( node );   //delete node;
 
@@ -126,7 +126,7 @@ bool ODSelect::DeleteAllSelectablePathSegments( Path *pr )
     return true;
 }
 
-bool ODSelect::DeleteAllSelectableODPoints( Path *pr )
+bool ODSelect::DeleteAllSelectableODPoints( ODPath *pr )
 {
     SelectItem *pFindSel;
 
@@ -162,7 +162,7 @@ got_next_outer_node: continue;
     return true;
 }
 
-bool ODSelect::AddAllSelectableODPoints( Path *pr )
+bool ODSelect::AddAllSelectableODPoints( ODPath *pr )
 {
     if( pr->m_pODPointList->GetCount() ) {
         wxODPointListNode *node = ( pr->m_pODPointList )->GetFirst();
@@ -177,7 +177,7 @@ bool ODSelect::AddAllSelectableODPoints( Path *pr )
         return false;
 }
 
-bool ODSelect::AddAllSelectablePathSegments( Path *pr )
+bool ODSelect::AddAllSelectablePathSegments( ODPath *pr )
 {
     wxPoint rpt, rptn;
     float slat1, slon1, slat2, slon2;

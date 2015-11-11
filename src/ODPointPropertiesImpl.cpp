@@ -298,7 +298,7 @@ void ODPointPropertiesImpl::SaveChanges()
 
             if( pEditPathArray ) {
                 for( unsigned int ip = 0; ip < pEditPathArray->GetCount(); ip++ ) {
-                    Path *pp = (Path *) pEditPathArray->Item( ip );
+                    ODPath *pp = (ODPath *) pEditPathArray->Item( ip );
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
@@ -475,7 +475,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //    Get an array of all paths using this point
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
         if( ppath_array ) {
-            Path *path = (Path *)ppath_array->front();
+            ODPath *path = (ODPath *)ppath_array->front();
             if(path->m_sTypeString == wxT("EBL"))
                 m_checkBoxChangeAllPointIcons->Disable();
             else
