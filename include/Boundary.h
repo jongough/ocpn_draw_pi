@@ -40,6 +40,7 @@ class Boundary : public ODPath
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;
         unsigned int    m_uiFillTransparency;
+        int             m_iInclusionBoundarySize;
         bool            m_bExclusionBoundary;
         bool            m_bInclusionBoundary;
         

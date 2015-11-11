@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "525")
-SET(VERSION_DATE "09/11/2015")
+SET(VERSION_PATCH "530")
+SET(VERSION_DATE "11/11/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -46,7 +46,6 @@ SET(SRCS
         src/BoundaryMan.cpp
         src/BoundaryProp.cpp
         src/BoundaryPoint.cpp
-#        src/clipper.cpp
         src/EBL.cpp
         src/EBLProp.cpp
         src/PointMan.cpp
@@ -80,7 +79,6 @@ SET(HDRS
         include/BoundaryMan.h
         include/BoundaryProp.h
         include/BoundaryPoint.h
-#        include/clipper.hpp
         include/EBL.h
         include/EBLProp.h
         include/PointMan.h
@@ -211,14 +209,24 @@ SET(OCPNHDRS
         ocpninclude/wx/jsonwriter.h
 )
 
+SET(EXTSRC 
+    extsrc/clipper.cpp
+)
+
+SET(EXTINCLUDE 
+    extinclude/clipper.hpp
+)
+
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
 #INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/../../include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/extinclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxcurl)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxcurl/include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/bitmaps)
+
 
 IF(UNIX)
  INCLUDE("cmake/FindTinyXML.cmake")
@@ -228,7 +236,7 @@ ENDIF(UNIX)
 IF(TINYXML_FOUND)
  message (STATUS "Building with system tinyxml")
  INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
- ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC})
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC})
  TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
 ELSE(TINYXML_FOUND)
  message (STATUS "Building with embedded tinyxml")
@@ -238,7 +246,7 @@ ELSE(TINYXML_FOUND)
             src/tinyxml/tinyxmlparser.cpp
             src/tinyxml/tinyxmlerror.cpp
  )
- ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${SRC_LTINYXML})
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
 ENDIF(TINYXML_FOUND)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
 

@@ -381,6 +381,13 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_sliderFillTransparency = new wxSlider( m_panelBoundary, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizerBoundarySettingsColours->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 	
+	m_staticTextInclusionBoundarySize = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inclusion Boundary Size"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInclusionBoundarySize->Wrap( -1 );
+	fgSizerBoundarySettingsColours->Add( m_staticTextInclusionBoundarySize, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderInclusionBoundarySize = new wxSlider( m_panelBoundary, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizerBoundarySettingsColours->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
+	
 	
 	fgSizerBoundarySettings->Add( fgSizerBoundarySettingsColours, 1, wxEXPAND, 5 );
 	

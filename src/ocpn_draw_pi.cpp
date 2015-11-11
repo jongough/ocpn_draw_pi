@@ -136,6 +136,7 @@ bool        g_bInclusionBoundary;
 unsigned int g_uiFillTransparency;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
+int         g_iInclusionBoundarySize;
 wxString    g_sEBLEndIconName;
 wxString    g_sEBLStartIconName;
 wxColour    g_colourEBLLineColour;
@@ -778,6 +779,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
         long l_longFillTransparency = g_uiFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
+        pConf->Write( wxS( "DefaultInclusionBoundarySize" ), g_iInclusionBoundarySize );
         pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
         pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
@@ -882,6 +884,7 @@ void ocpn_draw_pi::LoadConfig()
         long l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryFillTransparency" ), &l_longFillTransparency, 175 );
         g_uiFillTransparency = l_longFillTransparency;
+        pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
         pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxSOLID );
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );

@@ -64,6 +64,7 @@ extern bool         g_bExclusionBoundary;
 extern bool         g_bInclusionBoundary;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern unsigned int g_uiFillTransparency;
+extern int          g_iInclusionBoundarySize;
 
 Boundary::Boundary() : ODPath()
 {
@@ -76,6 +77,7 @@ Boundary::Boundary() : ODPath()
     m_uiFillTransparency = g_uiFillTransparency;
     m_bExclusionBoundary = g_bExclusionBoundary;
     m_bInclusionBoundary = g_bInclusionBoundary;
+    m_iInclusionBoundarySize = g_iInclusionBoundarySize;
     SetActiveColours();
     
 }
@@ -89,9 +91,10 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
     ODPath::Draw( dc, VP );
     
-    // fill boundary with hatching
     if ( m_bVisible ) {
+        if(m_pODPointList->GetCount() < 3 ) return; // Nothing to fill at this point
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
+            // fill boundary with hatching
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -115,34 +118,46 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
             wxGC->FillPath( path );
             delete wxGC;
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
-            wxGraphicsContext *wxGC = NULL;
-            wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
-            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
-            else {
-                wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
-                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+            // surround boundary with hatching
+            // Use ClipperLib to manage Pollygon 
+            Path poly;
+            for( size_t i = 0; i < m_pODPointList->GetCount(); i++ ) {
+                poly << IntPoint( m_bpts[i].x, m_bpts[i].y );
             }
-            // Attempt to use clipper to manage Pollygon 
-            // Need to resolve path 
-            //const Path poly;
-            //ClipperOffset co;
-            //co.AddPath( poly, jtMiter, etClosedPolygon );
-            // Attempt to use clipper to manage Pollygon 
+            ClipperOffset co;
+            Paths ExpandedBoundaries;
+            co.AddPath( poly, jtSquare, etClosedPolygon );
+            co.Execute( ExpandedBoundaries, +15.0 );
             
-/*            wxGC->SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width * 3, m_style ) );
+            wxPoint *l_InclusionBoundary = new wxPoint[ ExpandedBoundaries[0].size() + 1 ];
+            for( size_t i = 0; i < ExpandedBoundaries[0].size(); i++ )
+            {
+                l_InclusionBoundary[i].x = ExpandedBoundaries[0][i].X;
+                l_InclusionBoundary[i].y = ExpandedBoundaries[0][i].Y;
+            }
+            // need to add first point to end to ensure the polygon is closed
+            l_InclusionBoundary[ ExpandedBoundaries[0].size()].x = ExpandedBoundaries[0][0].X;
+            l_InclusionBoundary[ ExpandedBoundaries[0].size()].y = ExpandedBoundaries[0][0].Y;
+
+            int *l_iPolygonPointCount = new int[2];
+            l_iPolygonPointCount[0] = m_pODPointList->GetCount();
+            l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
+            
+            // Create one array containing the original polygon and the expanded polygon to allow filling
+            wxPoint *l_AllPoints = new wxPoint[ l_iPolygonPointCount[0] + l_iPolygonPointCount[1] ];
+            for( size_t i = 0; i < l_iPolygonPointCount[0]; i++ ) {
+                l_AllPoints[i] = m_bpts[i];
+            }
+            for( size_t i = 0; i < l_iPolygonPointCount[1]; i++ ) {
+                l_AllPoints[ i + l_iPolygonPointCount[0] ] += l_InclusionBoundary[i];
+            }
+            
+            dc.SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
-            wxGraphicsPath path = wxGC->CreatePath();
-            path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
-            for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
-            {
-                path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
-            }
-            path.CloseSubpath();
-            wxGC->StrokePath(path);
-//            wxGC->FillPath( path );
-*/            delete wxGC;
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
+            dc.GetDC()->DrawPolyPolygon( 2, l_iPolygonPointCount, l_AllPoints, 0, 0, wxODDEVEN_RULE );
+            ExpandedBoundaries.clear();
         }
     }
 

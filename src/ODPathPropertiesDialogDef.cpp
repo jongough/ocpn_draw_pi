@@ -123,20 +123,26 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_sliderFillTransparency = new wxSlider( this, wxID_ANY, 150, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer3->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 	
+	m_staticTextIncluseionBoundarySize = new wxStaticText( this, wxID_ANY, _("Inclusion Boundary\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextIncluseionBoundarySize->Wrap( -1 );
+	fgSizer3->Add( m_staticTextIncluseionBoundarySize, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderInclusionBoundarySize = new wxSlider( this, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizer3->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
+	
 	
 	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
 	
-	wxBoxSizer* bSizerBoundaryType;
-	bSizerBoundaryType = new wxBoxSizer( wxVERTICAL );
+	m_bSizerBoundaryType = new wxBoxSizer( wxVERTICAL );
 	
 	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Niether") };
 	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryType = new wxRadioBox( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxBoundaryType->SetSelection( 0 );
-	bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL, 5 );
+	m_bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL, 5 );
 	
 	
-	fgSizer1->Add( bSizerBoundaryType, 1, wxEXPAND, 5 );
+	fgSizer1->Add( m_bSizerBoundaryType, 1, wxEXPAND, 5 );
 	
 	m_fgSizerEBL = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerEBL->SetFlexibleDirection( wxBOTH );

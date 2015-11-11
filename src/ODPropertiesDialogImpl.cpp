@@ -54,6 +54,7 @@ extern bool         g_bInclusionBoundary;
 extern int          g_PathLineWidth; 
 extern int          g_PathLineStyle;
 extern unsigned int g_uiFillTransparency;
+extern int          g_iInclusionBoundarySize;
 
 extern bool         g_bODPointShowName;
 extern bool         g_bODPointShowRangeRings;
@@ -185,6 +186,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection() + 1;
     g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection()];
     g_uiFillTransparency = m_sliderFillTransparency->GetValue();
+    g_iInclusionBoundarySize = m_sliderInclusionBoundarySize->GetValue();
     
     int l_BoundaryType;
     l_BoundaryType = m_radioBoxBoundaryType->GetSelection();
@@ -372,6 +374,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
         m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
         m_sliderFillTransparency->SetValue( g_uiFillTransparency );
+        m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
         if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
         else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
         else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NONE );

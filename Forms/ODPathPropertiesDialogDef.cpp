@@ -123,6 +123,13 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_sliderFillTransparency = new wxSlider( this, wxID_ANY, 150, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer3->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 	
+	m_staticTextIncluseionBoundarySize = new wxStaticText( this, wxID_ANY, _("Inclusion Boundary\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextIncluseionBoundarySize->Wrap( -1 );
+	fgSizer3->Add( m_staticTextIncluseionBoundarySize, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderInclusionBoundarySize = new wxSlider( this, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizer3->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
+	
 	
 	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
 	

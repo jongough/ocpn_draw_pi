@@ -132,6 +132,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choiceBoundaryLineStyle;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
+		wxStaticText* m_staticTextInclusionBoundarySize;
+		wxSlider* m_sliderInclusionBoundarySize;
 		wxRadioBox* m_radioBoxBoundaryType;
 		wxPanel* m_panelEBL;
 		wxStaticText* m_staticTextStartPointIcon;
