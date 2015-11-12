@@ -118,7 +118,17 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
             wxGC->FillPath( path );
             delete wxGC;
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
-            // surround boundary with hatching
+            // surround boundary with hatching if there is more than 10 pixels different between points
+            int l_imaxpointdiffX = 0;
+            int l_imaxpointdiffY = 0;
+            for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ) {
+                int l_ipointdiffX = abs(m_bpts[0].x - m_bpts[i].x);
+                int l_ipointdiffY = abs(m_bpts[0].y - m_bpts[i].y);
+                if(l_ipointdiffX > l_imaxpointdiffX) l_imaxpointdiffX = l_ipointdiffX;
+                if(l_ipointdiffY > l_imaxpointdiffY) l_imaxpointdiffY = l_ipointdiffY;
+            }
+            if(l_imaxpointdiffX < 10 && l_imaxpointdiffY < 10 ) return;
+
             // Use ClipperLib to manage Pollygon 
             Path poly;
             for( size_t i = 0; i < m_pODPointList->GetCount(); i++ ) {
@@ -186,7 +196,17 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             }
             
             if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
-                // surround boundary with hatching
+                // surround boundary with hatching if there is more than 10 pixels different between points
+                int l_imaxpointdiffX = 0;
+                int l_imaxpointdiffY = 0;
+                for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ) {
+                    int l_ipointdiffX = abs(m_bpts[0].x - m_bpts[i].x);
+                    int l_ipointdiffY = abs(m_bpts[0].y - m_bpts[i].y);
+                    if(l_ipointdiffX > l_imaxpointdiffX) l_imaxpointdiffX = l_ipointdiffX;
+                    if(l_ipointdiffY > l_imaxpointdiffY) l_imaxpointdiffY = l_ipointdiffY;
+                }
+
+                if(l_imaxpointdiffX < 10 && l_imaxpointdiffY < 10 ) return;
                 // Use ClipperLib to manage Pollygon 
                 Path poly;
                 for( int i = 0; i < l_iBoundaryPointCount; i++ ) {
