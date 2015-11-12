@@ -380,7 +380,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     }
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
-    if(pBoundary) child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
+    if(pBoundary) {
+        child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
+        child.append_attribute("inclusion_boundary_size") =pBoundary->m_iInclusionBoundarySize;
+    }
     if(pBoundary) {
         child = node.append_child("opencpn:boundary_type");
         if( pBoundary->m_bExclusionBoundary && !pBoundary->m_bInclusionBoundary )
@@ -1017,6 +1020,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
                         pTentPath->m_width = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
                         pTentBoundary->m_uiFillTransparency = attr.as_uint();
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("inclusion_boundary_size") )
+                        pTentBoundary->m_iInclusionBoundarySize = attr.as_uint();
                 }
             } else if( ChildName == _T( "opencpn:boundary_type") ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );

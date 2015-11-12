@@ -127,7 +127,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
             ClipperOffset co;
             Paths ExpandedBoundaries;
             co.AddPath( poly, jtSquare, etClosedPolygon );
-            co.Execute( ExpandedBoundaries, +15.0 );
+            co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
             
             wxPoint *l_InclusionBoundary = new wxPoint[ ExpandedBoundaries[0].size() + 1 ];
             for( size_t i = 0; i < ExpandedBoundaries[0].size(); i++ )
@@ -145,10 +145,10 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
             
             // Create one array containing the original polygon and the expanded polygon to allow filling
             wxPoint *l_AllPoints = new wxPoint[ l_iPolygonPointCount[0] + l_iPolygonPointCount[1] ];
-            for( size_t i = 0; i < l_iPolygonPointCount[0]; i++ ) {
+            for( int i = 0; i < l_iPolygonPointCount[0]; i++ ) {
                 l_AllPoints[i] = m_bpts[i];
             }
-            for( size_t i = 0; i < l_iPolygonPointCount[1]; i++ ) {
+            for( int i = 0; i < l_iPolygonPointCount[1]; i++ ) {
                 l_AllPoints[ i + l_iPolygonPointCount[0] ] += l_InclusionBoundary[i];
             }
             
@@ -168,63 +168,109 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 #ifdef ocpnUSE_GL
     //Path::DrawGL( piVP );
     if ( !m_bVisible ) return;
-
+    
     ODDC dc;
     
-    if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
-        int j = 0;
-        m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
-        wxPoint r;
-        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-            ODPoint *pOp = node->GetData();
-            GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
-            m_bpts[ j++ ] = r;
-        }
-        
-        // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
-        GLubyte slope_cross_hatch[] = {
-            0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
-            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
-            0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
-            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
-            0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
-            0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-            0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
-        };        
+    if(m_pODPointList->GetCount() > 2 ) {
+        if( m_bExclusionBoundary || m_bInclusionBoundary ) {
+            wxPoint *l_AllPoints;
+            int     l_iAllPointsSizes[2];
+            wxPoint *l_InclusionBoundary;
+            int l_iBoundaryPointCount = 0;
+            m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+            wxPoint r;
+            for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+                ODPoint *pOp = node->GetData();
+                GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
+                m_bpts[ l_iBoundaryPointCount++ ] = r;
+            }
+            
+            if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
+                // surround boundary with hatching
+                // Use ClipperLib to manage Pollygon 
+                Path poly;
+                for( int i = 0; i < l_iBoundaryPointCount; i++ ) {
+                    poly << IntPoint( m_bpts[i].x, m_bpts[i].y );
+                }
+                ClipperOffset co;
+                Paths ExpandedBoundaries;
+                co.AddPath( poly, jtSquare, etClosedPolygon );
+                co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
+                
+                int l_iInclusionBoundarySize = ExpandedBoundaries[0].size();
+                l_InclusionBoundary = new wxPoint[ l_iInclusionBoundarySize + 1 ];
+                for( int i = 0; i < l_iInclusionBoundarySize; i++ )
+                {
+                    l_InclusionBoundary[i].x = ExpandedBoundaries[0][i].X;
+                    l_InclusionBoundary[i].y = ExpandedBoundaries[0][i].Y;
+                }
+                // need to add first point to end to ensure the polygon is closed
+                l_InclusionBoundary[ l_iInclusionBoundarySize ].x = ExpandedBoundaries[0][0].X;
+                l_InclusionBoundary[ l_iInclusionBoundarySize ].y = ExpandedBoundaries[0][0].Y;
 
-        GLuint textureID;
-        glGenTextures(1, &textureID);
-        glBindTexture( GL_TEXTURE_2D, textureID );
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-        glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-        glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
-        dc.SetTextureSize( 16, 16 );
-        glEnable( GL_TEXTURE_2D );
-        glEnable( GL_BLEND );
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-        wxColour tCol;
-        tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxSOLID ) );
-        if ( m_pODPointList->GetCount() > 2 ) {
-            if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
-            else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
-        }
-        glDisable( GL_BLEND );
-        glDisable( GL_TEXTURE_2D );
-        glDeleteTextures(1, &textureID);
+                // Create one array containing the original polygon joined to the expanded polygon to allow filling
+                l_iAllPointsSizes[0] = l_iBoundaryPointCount;
+                l_iAllPointsSizes[1] = l_iInclusionBoundarySize;
+                l_AllPoints = new wxPoint[ l_iBoundaryPointCount + l_iInclusionBoundarySize + 1 ];
+                for( int i = 0; i < l_iBoundaryPointCount; i++ ) {
+                    l_AllPoints[i] = m_bpts[ i ];
+                }
+                for( int i = 0; i < l_iInclusionBoundarySize; i++ ) {
+                    l_AllPoints[ i + l_iBoundaryPointCount ] = l_InclusionBoundary[i];
+                }
+                ExpandedBoundaries.clear();
+            }
+            
+            // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
+            GLubyte slope_cross_hatch[] = {
+                0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+                0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+                0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+                0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
+                0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
+                0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+                0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
+                0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
+                0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
+                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
+            };        
+
+            GLuint textureID;
+            glGenTextures(1, &textureID);
+            glBindTexture( GL_TEXTURE_2D, textureID );
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
+            dc.SetTextureSize( 16, 16 );
+            glEnable( GL_TEXTURE_2D );
+            glEnable( GL_BLEND );
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+            wxColour tCol;
+            tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxSOLID ) );
+
+            if( m_bExclusionBoundary ) {
+                if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
+                else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
+            } else if( m_bInclusionBoundary ) {
+                dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
+            }
+
+            glDisable( GL_BLEND );
+            glDisable( GL_TEXTURE_2D );
+            glDeleteTextures(1, &textureID);
+        } 
+        
     }
     
     ODPath::DrawGL( piVP );

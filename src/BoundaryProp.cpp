@@ -98,7 +98,7 @@ bool BoundaryProp::SaveChanges( void )
     if( m_pPath && !m_pPath->m_bIsInLayer ) {
         m_pBoundary->m_wxcActiveFillColour = m_colourPickerFillColour->GetColour();    
         m_pBoundary->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
-        m_pBoundary->m_iInclusionBoundarySize = m_sliderFillTransparency->GetValue();
+        m_pBoundary->m_iInclusionBoundarySize = m_sliderInclusionBoundarySize->GetValue();
         switch (m_radioBoxBoundaryType->GetSelection()) {
             case ID_BOUNDARY_EXCLUSION:
                 m_pBoundary->m_bExclusionBoundary = true;
