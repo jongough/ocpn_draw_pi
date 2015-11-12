@@ -105,7 +105,7 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
 
 bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
 {
-    bool bInPoly;
+    bool bInPoly = false;
     bool bBoundaryFound = false;
     int i, j;
     float *polyX;
