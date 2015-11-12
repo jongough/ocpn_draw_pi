@@ -103,6 +103,47 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
     return bInPoly;
 }
 
+bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
+{
+    bool bInPoly;
+    bool bBoundaryFound = false;
+    int i, j;
+    float *polyX;
+    float *polyY;
+    polyX = new float[j];
+    polyY = new float[j];
+    Boundary *pboundary = NULL;
+    
+    wxBoundaryListNode *pboundary_node = g_pBoundaryList->GetFirst();
+    while( pboundary_node ) {
+        pboundary = (Boundary *)pboundary_node->GetData();
+        if(pboundary->m_GUID == l_GUID) {
+            bBoundaryFound = true;
+            break;
+        }
+        pboundary = (Boundary *)pboundary_node->GetNext();
+    }
+    if(!pboundary) return bInPoly;
+    
+    wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
+    wxODPointListNode *OCPNpoint_last_node = ( pboundary->m_pODPointList )->GetLast();
+    i = 0;
+    while( OCPNpoint_node ) {
+        ODPoint *pop = OCPNpoint_node->GetData();
+        polyX[i] = (float)pop->m_lon;
+        polyY[i] = (float)pop->m_lat;
+        i++;
+        OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
+        if(OCPNpoint_node == OCPNpoint_last_node) break;
+    }
+    bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
+    
+    delete [] polyX;
+    delete [] polyY;
+    
+    return bInPoly;
+}
+
 //  Parameters for this function:
 //
 //  int    polyCorners  =  how many corners the polygon has

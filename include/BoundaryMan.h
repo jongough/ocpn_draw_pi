@@ -35,10 +35,11 @@ class BoundaryMan : public PathMan
 {
     public:
         wxString FindPointInBoundary( double lat, double lon );
-        bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
+        bool    FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
+        bool    FindPointInBoundary( wxString l_GUID, double lat, double lon );
         
     private:
-        bool pointInPolygon(int polyCorners, float *polyX, float *polyY, float x, float y);
+        bool    pointInPolygon(int polyCorners, float *polyX, float *polyY, float x, float y);
 };
 
 #endif // BOUNDARYMAN_H

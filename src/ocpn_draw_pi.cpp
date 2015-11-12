@@ -990,6 +990,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
     wxString    l_sMsg;
     double      l_dLat;
     double      l_dLon;
+    wxString    l_GUID;
     bool        bFail = false;
     
     if(message_id == wxS("OCPN_DRAW_PI")) {
@@ -1082,29 +1083,56 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         writer.Write( jMsg, MsgString );
                         SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
                         return;
-                    } else
+                    }
+                }
+            }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInBoundary")) {
+            if(!root.HasMember( wxS("GUID"))) {
+                wxLogMessage( wxS("No GUID found in message") );
+                bFail = true;
+            }
+            
+            if(!root.HasMember( wxS("lat"))) {
+                wxLogMessage( wxS("No Latitude found in message") );
+                bFail = true;
+            }
+            
+            if(!root.HasMember( wxS("lon"))) {
+                wxLogMessage( wxS("No Longitude found in message") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                wxString l_sGUID = root[wxS("GUID")].AsString();
+                l_dLat = root[wxS("lat")].AsDouble();
+                l_dLon = root[wxS("lon")].AsDouble();
+                
+                l_sType = root[wxS("Type")].AsString();
+                l_sMsg = root[wxT("Msg")].AsString();
+                
+                if(l_sType == wxS("Request")) {
+                    Boundary *l_boundary;
                     if(l_sMsg == wxS("FindPointInBoundary")) {
                         l_dLat = root[wxS("lat")].AsDouble();
                         l_dLon = root[wxS("lon")].AsDouble();
-                
-                        if(!root.HasMember( wxS("boundary"))) {
-                            wxLogMessage( wxS("No boundary found in message") );
-                            return;
-                        }
                         
-                        if(!root.HasMember( wxS("guid"))) {
-                            wxLogMessage( wxS("No GUID found") );
-                            return;
-                        }
-                        
-                        Boundary *l_boundary;
-                        l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( root[wxS("guid")].AsString() );
+                        l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( root[wxS("GUID")].AsString() );
                         if(!l_boundary) {
                             wxString l_msg;
                             l_msg.append( wxS("Boundary, with GUID: ") );
-                            l_msg.append(root[wxS("guid")].AsString());
+                            l_msg.append(root[wxS("GUID")].AsString());
                             l_msg.append( wxS(", not found") );
                             wxLogMessage( l_msg );
+                            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                            jMsg[wxT("Msg")] = root[wxT("Msg")];
+                            jMsg[wxT("Type")] = wxT("Response");
+                            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                            jMsg[wxS("Found")] = false;
+                            jMsg[wxS("lat")] = l_dLat;
+                            jMsg[wxS("lon")] = l_dLon;
+                            jMsg[wxS("GUID")] = root[wxS("GUID")];
+                            writer.Write( jMsg, MsgString );
+                            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                             return;
                         }
                         
@@ -1116,7 +1144,15 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         jMsg[wxS("Found")] = l_bFound;
                         jMsg[wxS("lat")] = l_dLat;
                         jMsg[wxS("lon")] = l_dLon;
-                        jMsg[wxS("guid")] = root[wxS("guid")];
+                        jMsg[wxS("GUID")] = root[wxS("GUID")];
+                        if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
+                        else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
+                        else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Neither");
+                        else
+                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
                         writer.Write( jMsg, MsgString );
                         SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                         return;
@@ -1124,6 +1160,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 }
             }
         }
+        
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
 
     // construct the JSON root object
@@ -2923,3 +2960,4 @@ bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon )
 {
     return g_pBoundaryMan->FindPointInBoundary( pBoundary, lat, lon );
 }
+
