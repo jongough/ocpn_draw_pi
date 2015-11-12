@@ -914,6 +914,67 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 #endif    
 }
 
+void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCoord xoffset, wxCoord yoffset )
+{
+    if( dc ) {
+        int prev = 0;
+        for( int i = 0; i < n; i++ ) {
+            dc->DrawPolygon( npoints[i], &points[i + prev], xoffset, yoffset );
+            prev += npoints[i];
+        }
+    }
+    #ifdef ocpnUSE_GL
+    else {
+        
+        GLUtesselator *tobj = gluNewTess();
+        
+        gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
+        gluTessCallback( tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
+        gluTessCallback( tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
+        gluTessCallback( tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
+        gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
+        
+        gluTessNormal( tobj, 0, 0, 1);
+        gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+        
+        if(glIsEnabled(GL_TEXTURE_2D)) g_bTexture2D = true;
+        else g_bTexture2D = false;
+        
+        ConfigurePen();
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon(tobj, NULL);
+            int prev = 0;
+            for( int j = 0; j < n; j++ ) {
+                gluTessBeginContour(tobj);
+                for( int i = 0; i < npoints[j]; i++ ) {
+                    GLvertex* vertex = new GLvertex();
+                    gTesselatorVertices.Add( vertex );
+                    vertex->info.x = (GLdouble) points[i + prev].x;
+                    vertex->info.y = (GLdouble) points[i + prev].y;
+                    vertex->info.z = (GLdouble) 0.0;
+                    vertex->info.r = (GLdouble) 0.0;
+                    vertex->info.g = (GLdouble) 0.0;
+                    vertex->info.b = (GLdouble) 0.0;
+                    vertex->info.a = (GLdouble) 0.0;
+                    gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+                }
+                gluTessEndContour( tobj );
+                prev += npoints[j];
+            }
+            gluTessEndPolygon(tobj);
+        }
+        
+        gluDeleteTess(tobj);
+        for (unsigned int i = 0; i<gTesselatorVertices.Count(); i++)
+            delete (GLvertex*)gTesselatorVertices.Item(i);
+        gTesselatorVertices.Clear();
+        
+    }
+    #endif    
+}
+
 void ODDC::StrokePolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale )
 {
 #if wxUSE_GRAPHICS_CONTEXT
