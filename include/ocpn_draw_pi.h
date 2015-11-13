@@ -179,6 +179,13 @@ extern DECL_EXP bool FindPointInBoundary( double lat, double lon );
 extern DECL_EXP bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon);
 extern DECL_EXP wxString GetBoundaryWithPointInBoundary( double lat, double lon );
 
+class  ODPlugIn_Position_Fix_Ex : public PlugIn_Position_Fix_Ex
+{
+public:
+    bool    valid;
+};
+
+
 class ocpn_draw_pi : public opencpn_plugin_113
 {
 public:

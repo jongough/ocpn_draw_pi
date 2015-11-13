@@ -403,6 +403,8 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bDrawArrow == true ? "1" : "0" );
         child = node.append_child("opencpn:VRM");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bVRM == true ? "1" : "0" );
+        child = node.append_child("opencpn:fixed_end_position");
+        child.append_child(pugi::node_pcdata).set_value( pEBL->m_bFixedEndPosition == true ? "1" : "0" );
     }
 
     ODPointList *pODPointList = pPath->m_pODPointList;
@@ -1052,6 +1054,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
             } else if( ChildName == _T ( "opencpn:VRM" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bVRM = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:fixed_end_position" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
             }
         }
                     

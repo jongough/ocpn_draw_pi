@@ -220,7 +220,7 @@ int             g_iDisplayToolbar;
 double          g_dScale;
 int             g_iNSScale;
 
-PlugIn_Position_Fix_Ex  g_pfFix;
+ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -322,6 +322,7 @@ int ocpn_draw_pi::Init(void)
     nPath_State = 0;
     nEBL_State = 0;
     m_chart_scale = 0.;
+    g_pfFix.valid = false;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -611,8 +612,20 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 
     incLat = g_pfFix.Lat - pfix.Lat;
     incLon = g_pfFix.Lon - pfix.Lon;
-
-    g_pfFix = pfix;
+    
+    g_pfFix.Lat = pfix.Lat;
+    g_pfFix.Lon = pfix.Lon;
+    g_pfFix.Cog = pfix.Cog;
+    g_pfFix.Sog = pfix.Sog;
+    g_pfFix.Var = pfix.Var;
+    g_pfFix.Hdm = pfix.Hdm;
+    g_pfFix.Hdt = pfix.Hdt;
+    g_pfFix.FixTime = pfix.FixTime;
+    g_pfFix.nSats = pfix.nSats;
+    if(!g_pfFix.valid) {
+        g_pfFix.valid = true;
+        return;
+    }
     
     if(incLat || incLon) {
         wxEBLListNode *node = g_pEBLList->GetFirst();

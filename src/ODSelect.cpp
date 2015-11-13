@@ -32,7 +32,7 @@
 
 extern ChartCanvas *ocpncc1;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern PlugIn_Position_Fix_Ex  g_pfFix;
+extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 ODSelect::ODSelect()
 {
