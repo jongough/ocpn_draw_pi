@@ -63,7 +63,7 @@ extern ODRolloverWin    *g_pPathRolloverWin;
 extern SelectItem       *g_pRolloverPathSeg;
 extern int              g_cursor_x;
 extern int              g_cursor_y;
-extern PlugIn_Position_Fix_Ex  g_pfFix;
+extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 // Event Handler implementation 
 

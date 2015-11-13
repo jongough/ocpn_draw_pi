@@ -54,7 +54,7 @@ enum {
 extern bool                 g_bShowMag;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern double               g_dLat, g_dLon, gSog, gCog;
-extern PlugIn_Position_Fix_Ex  g_pfFix;
+extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern PathList             *g_pPathList;
 extern PathManagerDialog    *g_pPathManagerDialog;
 extern ODConfig             *g_pODConfig;

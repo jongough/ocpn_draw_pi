@@ -70,7 +70,7 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern EBLList      *g_pEBLList;
 extern ODSelect     *g_pODSelect;
 extern PathMan      *g_pPathMan;
-extern PlugIn_Position_Fix_Ex  g_pfFix;
+extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
