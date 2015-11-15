@@ -142,6 +142,7 @@ enum
     ID_MODE_POINT,
     ID_MODE_TEXT_POINT,
     ID_MODE_EBL,
+    ID_MODE_DR,
     
     ID_LAST_MODE
 };
@@ -313,6 +314,7 @@ public:
     int         nPoint_State;
     int         nTextPoint_State;
     int         nEBL_State;
+    int         nDR_State;
     double      m_dStartLat;
     double      m_dStartLon;
     double      m_cursor_lon, m_cursor_lat;

@@ -1,7 +1,7 @@
 /***************************************************************************
- * 
+ *
  * Project:  OpenCPN
- * Purpose:  ODicons
+ * Purpose:  DR Properties
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -23,31 +23,52 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef ODICONS_H
-#define ODICONS_H 1
+#include "DRProp.h"
+#include "DR.h"
+#include "ocpn_draw_pi.h"
 
-#include <wx/wxprec.h>
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
+DRProp::DRProp()
+{
+    //ctor
+}
 
-extern void initialize_images(void);
+DRProp::DRProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
+: ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
+{
+    //ctor
+    
+    m_fgSizerPath->ShowItems();
+    
+    m_checkBoxPathShowArrow->Show();
+    m_checkBoxPathShowArrow->Enable( true );
+    m_radioBoxPathPersistence->Show();
+    m_radioBoxPathPersistence->Enable( false );
+    
+    this->GetSizer()->Fit( this );
+    this->Layout();
+}
 
-extern void *g_ppimgr;
-extern wxBitmap *_img_ocpn_draw_pi;
-extern wxBitmap *_img_ocpn_draw_gray_pi;
-extern wxBitmap *_img_ocpn_draw;
-extern wxBitmap *_img_ocpn_draw_boundary;
-extern wxBitmap *_img_ocpn_draw_boundary_gray;
-extern wxBitmap *_img_ocpn_draw_point;
-extern wxBitmap *_img_ocpn_draw_point_gray;
-extern wxBitmap *_img_ocpn_draw_textpoint;
-extern wxBitmap *_img_ocpn_draw_textpoint_gray;
-extern wxBitmap *_img_ocpn_draw_ebl;
-extern wxBitmap *_img_ocpn_draw_ebl_gray;
-extern wxBitmap *_img_ocpn_draw_dr;
-extern wxBitmap *_img_ocpn_draw_dr_gray;
-extern const wxBitmap *_img_Bullet_green;
-extern const wxBitmap *_img_Bullet_red;
-extern const wxBitmap *_img_Bullet_yellow;
-#endif /* ODICONS_H */
+
+DRProp::~DRProp()
+{
+    //dtor
+}
+
+bool DRProp::UpdateProperties( DR *pDR )
+{
+    m_checkBoxPathShowArrow->SetValue( m_pDR->m_bDrawArrow );
+    m_radioBoxPathPersistence->SetSelection( m_pDR->m_iPersistenceType);
+    
+    return ODPathPropertiesDialogImpl::UpdateProperties( pDR );
+    
+}
+
+bool DRProp::SaveChanges( void )
+{
+    m_pDR->m_bDrawArrow = m_checkBoxPathShowArrow->GetValue();
+    m_pDR->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
+    ODPathPropertiesDialogImpl::SaveChanges();
+
+    return true;
+}
+

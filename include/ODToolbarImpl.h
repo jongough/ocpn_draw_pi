@@ -15,6 +15,7 @@ enum {
     ID_TEXTPOINT,
     ID_TOOLBARPANEL,
     ID_EBL,
+    ID_DR,
     
     ID_TOOL_DEF_LAST
 };
@@ -43,6 +44,7 @@ public:
     wxToolBarToolBase *m_toolODPoint;
     wxToolBarToolBase *m_toolTextPoint;
     wxToolBarToolBase *m_toolEBL;
+    wxToolBarToolBase *m_toolDR;
     
 private:
     wxSize m_toolbarSize;

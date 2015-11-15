@@ -239,7 +239,10 @@ wxBitmap *_img_ocpn_draw_point_gray;
 wxBitmap *_img_ocpn_draw_textpoint;
 wxBitmap *_img_ocpn_draw_textpoint_gray;
 wxBitmap *_img_ocpn_draw_ebl;
-wxBitmap *_img_ocpn_draw_ebl_gray;const wxBitmap *_img_Bullet_green;
+wxBitmap *_img_ocpn_draw_ebl_gray;
+wxBitmap *_img_ocpn_draw_dr;
+wxBitmap *_img_ocpn_draw_dr_gray;
+const wxBitmap *_img_Bullet_green;
 const wxBitmap *_img_Bullet_red;
 const wxBitmap *_img_Bullet_yellow;
 
@@ -762,6 +765,26 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                 }
                 break;
                 
+            case ID_MODE_DR:
+                if( 0 == nDR_State ){
+                    nDR_State = 1;
+                    // Need to show DR dialog box here
+                    nDR_State = 0;
+                } else {
+                    m_iCallerId = 0;
+                    nBoundary_State = 0;
+                    nPoint_State = 0;
+                    nTextPoint_State = 0;
+                    nEBL_State = 0;
+                    nDR_State = 0;
+                    m_pCurrentCursor = NULL;
+                    SetCursor_PlugIn( m_pCurrentCursor );
+                    SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                    if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+                    RequestRefresh( m_parent_window );
+                }
+                break;
             default:
                 m_Mode = ID_MODE_BOUNDARY;
                 break;
@@ -1962,7 +1985,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
     
     wxFont *dFont;
-    dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
+    dFont = OCPNGetFont( wxS("RouteLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;
@@ -2003,7 +2026,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
 
 void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
 {
-    wxFont *dFont = OCPNGetFont( wxS("BoundaryLegInfoRollover"), 0 );
+    wxFont *dFont = OCPNGetFont( wxS("RouteLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;
