@@ -952,7 +952,7 @@ ODPoint *ODPath::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bR
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
-    newpoint->SetTypeString( wxT("Boundary Point") );
+    newpoint->SetTypeString( wxT("OD Point") );
     
     m_pODPointList->Insert( nOP, newpoint );
     

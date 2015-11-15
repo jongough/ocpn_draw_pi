@@ -46,6 +46,8 @@ protected:
     void OnODPointComboboxSelected( wxCommandEvent& event );
     void OnEBLEndIconComboboxSelected( wxCommandEvent& event );
     void OnEBLStartIconComboboxSelected( wxCommandEvent& event );
+    void OnDREndIconComboboxSelected( wxCommandEvent& event );
+    void OnDRStartIconComboboxSelected( wxCommandEvent& event );
     void OnButtonClickFonts( wxCommandEvent& event );
     void OnDrawPropertiesOKClick( wxCommandEvent& event );
     void OnDrawPropertiesCancelClick( wxCommandEvent& event );

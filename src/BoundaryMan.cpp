@@ -121,7 +121,7 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
         }
         pboundary = (Boundary *)pboundary_node->GetNext();
     }
-    if(!pboundary) return bInPoly;
+    if(!pboundary || !bBoundaryFound) return bInPoly;
     
     polyX = new float[pboundary->m_pODPointList->GetCount()];
     polyY = new float[pboundary->m_pODPointList->GetCount()];

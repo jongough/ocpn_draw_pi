@@ -37,12 +37,12 @@ DRProp::DRProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
 {
     //ctor
     
-    m_fgSizerPath->ShowItems();
+    m_fgSizerPath->ShowItems( true );
     
     m_checkBoxPathShowArrow->Show();
     m_checkBoxPathShowArrow->Enable( true );
     m_radioBoxPathPersistence->Show();
-    m_radioBoxPathPersistence->Enable( false );
+    m_radioBoxPathPersistence->Enable( true );
     
     this->GetSizer()->Fit( this );
     this->Layout();

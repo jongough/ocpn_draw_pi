@@ -55,7 +55,7 @@ class EBL : public ODPath
         void CentreOnLatLon( double lat, double lon );
 
         bool        m_bFixedEndPosition;
-        int         m_PersistenceType;
+        int         m_iPersistenceType;
         bool        m_bVRM;
         bool        m_bCentreOnBoat;
         

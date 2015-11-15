@@ -27,10 +27,6 @@
 #include "EBL.h"
 
 extern EBLList         *g_pEBLList;
-extern wxColour             g_colourActivePathFillColour;
-extern wxColour             g_colourInActivePathFillColour;
-extern unsigned int         g_uiFillTransparency;
-
 
 EBLProp::EBLProp()
 {
@@ -53,10 +49,13 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_fgSizerEBL->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
-    m_checkBoxEBLShowArrow->Show();
-    m_checkBoxEBLShowArrow->Enable( true );
-    m_radioBoxEBLPersistence->Show();
-    m_radioBoxEBLPersistence->Enable( true );
+    
+    m_fgSizerPath->ShowItems( true );
+    m_checkBoxPathShowArrow->Show();
+    m_checkBoxPathShowArrow->Enable( true );
+    m_radioBoxPathPersistence->Show();
+    m_radioBoxPathPersistence->Enable( true );
+    m_radioBoxPathPersistence->SetLabel( _("EBL Persistence") );
 
     this->GetSizer()->Fit( this );
     this->Layout();
@@ -71,8 +70,8 @@ EBLProp::~EBLProp()
 bool EBLProp::UpdateProperties( EBL *pInEBL )
 {
     m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
-    m_radioBoxEBLPersistence->SetSelection( pInEBL->m_PersistenceType );
-    m_checkBoxEBLShowArrow->SetValue( pInEBL->m_bDrawArrow );
+    m_radioBoxPathPersistence->SetSelection( pInEBL->m_iPersistenceType );
+    m_checkBoxPathShowArrow->SetValue( pInEBL->m_bDrawArrow );
     m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
 }
@@ -94,12 +93,12 @@ bool EBLProp::SaveChanges( void )
         pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
 
     m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
-    m_pEBL->m_PersistenceType = m_radioBoxEBLPersistence->GetSelection();
-    if(m_pEBL->m_PersistenceType == ID_EBL_NOT_PERSISTENT || m_pEBL->m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
+    m_pEBL->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
+    if(m_pEBL->m_iPersistenceType == ID_EBL_NOT_PERSISTENT || m_pEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         m_pEBL->m_bTemporary = true;
     else
         m_pEBL->m_bTemporary = false;
-    m_pEBL->m_bDrawArrow = m_checkBoxEBLShowArrow->GetValue();
+    m_pEBL->m_bDrawArrow = m_checkBoxPathShowArrow->GetValue();
     m_pEBL->m_bVRM = m_checkBoxShowVRM->GetValue();
     if(m_pEBL->m_bVRM) {
         pFirstPoint->m_bShowODPointRangeRings = true;

@@ -42,6 +42,7 @@
 #include "PointMan.h"
 #include "Boundary.h"
 #include "EBL.h"
+#include "DR.h"
 #include "TextPoint.h"
 #include <wx/window.h>
 
@@ -87,6 +88,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
 {
     m_pBoundary = NULL;
     m_pEBL = NULL;
+    m_pDR = NULL;
     
     m_parentcanvas = parent;
     if(selectedPath->m_sTypeString == wxT("Boundary")) {
@@ -95,6 +97,9 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     } else if(selectedPath->m_sTypeString == wxT("EBL")) {
         m_pEBL = (EBL *)selectedPath;
         m_pSelectedPath = m_pEBL;
+    } else if(selectedPath->m_sTypeString == wxT("DR")) {
+        m_pDR = (DR *)selectedPath;
+        m_pSelectedPath = m_pDR;
     } else
         m_pSelectedPath = selectedPath;
     m_pFoundODPoint = selectedODPoint;
@@ -112,6 +117,9 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     } else if(selectedPath->m_sTypeString == wxT("EBL")) {
         m_pEBL = (EBL *)selectedPath;
         m_pSelectedPath = m_pEBL;
+    } else if(selectedPath->m_sTypeString == wxT("DR")) {
+        m_pDR = (DR *)selectedPath;
+        m_pSelectedPath = m_pDR;
     } else
         m_pSelectedPath = selectedPath;
     m_pSelectedPath = selectedPath;
@@ -130,6 +138,9 @@ void ODEventHandler::SetPath( ODPath *path )
         } else if(path->m_sTypeString == wxT("EBL")) {
             m_pEBL = (EBL *)path;
             m_pSelectedPath = m_pEBL;
+        } else if(path->m_sTypeString == wxT("DR")) {
+            m_pDR = (DR *)path;
+            m_pSelectedPath = m_pDR;
         } else
             m_pSelectedPath = path;
     }
@@ -599,7 +610,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
                 if(m_pEBL->GetCurrentColour() != pFirstPoint->GetODPointRangeRingsColour())
                     MenuAppend( menuPath, ID_EBL_MENU_VRM_MATCH_EBL_COLOUR, _("Match VRM colour to EBL colour"));
             }
-            else {
+            else if(m_pSelectedPath->m_sTypeString != wxT("DR")) {
                 sType.clear();
                 sType.append( _("Move ") );
                 sType.append( m_pSelectedPath->m_sTypeString );
@@ -646,26 +657,15 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             sType.append(m_pFoundODPoint->m_sTypeString);
             MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_MOVE, sType );
 
-//            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
-//                if(m_pSelectedPath->m_pPathActivePoint != m_pFoundODPoint )
-//                    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
-//            }
-            
-//            if( m_pSelectedPath && m_pSelectedPath->IsActive() ) {
-//                if(m_pSelectedPath->m_pPathActivePoint == m_pFoundODPoint ) {
-//                    int indexActive = m_pSelectedPath->GetIndexOf( m_pSelectedPath->m_pPathActivePoint );
-//                    if( ( indexActive + 1 ) <= m_pSelectedPath->GetnPoints() )
-//                        MenuAppend( menuODPoint, ID_PATH_MENU_ACTNXTPOINT, _( "Activate Next ODPoint" ) );
-//                }
-//            }
-            if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
-                MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
-            
-            if( m_pSelectedPath )
-                MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
-            else
-                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
-            
+            if( m_pSelectedPath->m_sTypeString != wxT("DR") ) {
+                if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
+                    MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
+                
+                if( m_pSelectedPath )
+                    MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
+                else
+                    MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
+            }
         }
         //      Set this menu as the "focused context menu"
         menuFocus = menuODPoint;

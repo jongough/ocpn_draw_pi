@@ -27,9 +27,9 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-/// Class MyDialogDR
+/// Class ODDRDialogDef
 ///////////////////////////////////////////////////////////////////////////////
-class MyDialogDR : public wxDialog 
+class ODDRDialogDef : public wxDialog 
 {
 	private:
 	
@@ -40,11 +40,11 @@ class MyDialogDR : public wxDialog
 		wxTextCtrl* m_textCtrlCOG;
 		wxStaticText* m_staticTextLength;
 		wxTextCtrl* m_textCtrlLength;
-		wxStaticText* m_staticTextWaypointInterval;
-		wxTextCtrl* m_textCtrlWaypointInterval;
+		wxStaticText* m_staticTextDRPointInterval;
+		wxTextCtrl* m_textCtrlDRPointInterval;
 		wxRadioBox* m_radioBoxLengthType;
 		wxRadioBox* m_radioBoxIntervalType;
-		wxRadioBox* m_radioBoxDistance;
+		wxRadioBox* m_radioBoxDistanceUnits;
 		wxRadioBox* m_radioBoxTimeUnits;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
@@ -56,8 +56,8 @@ class MyDialogDR : public wxDialog
 	
 	public:
 		
-		MyDialogDR( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Dead Reckoning"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
-		~MyDialogDR();
+		ODDRDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Dead Reckoning"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+		~ODDRDialogDef();
 	
 };
 

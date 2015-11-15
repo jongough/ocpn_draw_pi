@@ -38,14 +38,18 @@
 #include "BoundaryMan.h"
 #include "BoundaryPoint.h"
 #include "BoundaryProp.h"
+#include "DR.h"
 #include "EBL.h"
 #include "EBLProp.h"
+#include "DR.h"
+#include "DRProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
 #include "PointMan.h"
 #include "ODConfig.h"
 #include "ODdc.h"
+#include "ODDRDialogImpl.h"
 #include "ODEventHandler.h"
 #include "ODPropertiesDialogImpl.h"
 #include "ODicons.h"
@@ -115,12 +119,15 @@ ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 ODPathPropertiesDialogImpl   *g_pPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
+DRProp                  *g_pDRPropDialog;
 PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
+ODDRDialogImpl          *g_pODDRDialog;
 PlugInManager           *g_OD_pi_manager;
 BoundaryList            *g_pBoundaryList;
 EBLList                 *g_pEBLList;
+DRList                  *g_pDRList;
 ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
@@ -146,10 +153,16 @@ bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
+wxString    g_sDREndIconName;
+wxString    g_sDRStartIconName;
+wxColour    g_colourDRLineColour;
+wxColour    g_colourInActiveDRLineColour;
+int         g_DRPersistenceType;
+bool        g_bDRShowArrow;
+int         g_DRLineWidth;
+int         g_DRLineStyle;
 wxColour    g_colourActivePathLineColour;
 wxColour    g_colourInActivePathLineColour;
-wxColour    g_colourActivePathFillColour;
-wxColour    g_colourInActivePathFillColour;
 int         g_PathLineWidth; 
 int         g_PathLineStyle;
 
@@ -219,6 +232,17 @@ int             g_iDisplayToolbar;
 
 double          g_dScale;
 int             g_iNSScale;
+
+double          g_dDRSOG;
+int             g_iDRCOG;
+double          g_dDRLength;
+double          g_dDRPointInterval;
+int             g_iDRLengthType;
+int             g_iDRIntervalType;
+int             g_iDRDistanceUnits;
+int             g_iDRTimeUnits;
+int             g_iDRPersistenceType;
+
 
 ODPlugIn_Position_Fix_Ex  g_pfFix;
 
@@ -324,12 +348,13 @@ int ocpn_draw_pi::Init(void)
     nTextPoint_State = 0;
     nPath_State = 0;
     nEBL_State = 0;
+    nDR_State = 0;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
     
     // Drawing modes from toolbar
     m_Mode = 0;
-    m_numModes = ID_LAST_MODE - 1;
+    m_numModes = ID_MODE_LAST - 1;
     
     // Not sure what this is
     AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
@@ -443,6 +468,7 @@ int ocpn_draw_pi::Init(void)
     g_pODPathPropDialog = NULL;
     g_pBoundaryPropDialog = NULL;
     g_pEBLPropDialog = NULL;
+    g_pDRPropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
     
@@ -692,6 +718,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPoint_State = 0;
                     nTextPoint_State = 0;
                     nEBL_State = 0;
+                    nDR_State = 0;
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -714,6 +741,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPoint_State = 0;
                     nTextPoint_State = 0;
                     nEBL_State = 0;
+                    nDR_State = 0;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -735,6 +763,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPoint_State = 0;
                     nTextPoint_State = 0;
                     nEBL_State = 0;
+                    nDR_State = 0;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -756,6 +785,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPoint_State = 0;
                     nTextPoint_State = 0;
                     nEBL_State = 0;
+                    nDR_State = 0;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -768,8 +798,10 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             case ID_MODE_DR:
                 if( 0 == nDR_State ){
                     nDR_State = 1;
-                    // Need to show DR dialog box here
-                    nDR_State = 0;
+                    m_pCurrentCursor = ocpncc1->pCursorCross;
+                    SetCursor_PlugIn( m_pCurrentCursor );
+                    SetToolbarItemState( m_draw_button_id, true );
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     m_iCallerId = 0;
                     nBoundary_State = 0;
@@ -828,6 +860,20 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
+        pConf->Write( wxS( "DefaultDRStartIcon" ), g_sDRStartIconName );
+        pConf->Write( wxS( "DefaultDREndIcon" ), g_sDREndIconName );
+        pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
+        pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
+        pConf->Write( wxS( "DefaultDRSOG" ), g_dDRSOG );
+        pConf->Write( wxS( "DefaultDRCOG" ), g_iDRCOG );
+        pConf->Write( wxS( "DefaultDRLength" ), g_dDRLength );
+        pConf->Write( wxS( "DefaultDRPointInterval" ), g_dDRPointInterval );
+        pConf->Write( wxS( "DefaultDRLengthType" ), g_iDRLengthType );
+        pConf->Write( wxS( "DefaultDRIntervalType" ), g_iDRIntervalType );
+        pConf->Write( wxS( "DefaultDRDistanceUnits" ), g_iDRDistanceUnits );
+        pConf->Write( wxS( "DefaultDRTimeUnits" ), g_iDRTimeUnits );
+        pConf->Write( wxS( "DefaultDRPersistenceType" ), g_iDRPersistenceType );
         pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
         pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
         pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
@@ -931,6 +977,22 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
+        pConf->Read( wxS( "DefaultDREndIcon" ), &g_sDREndIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultDRStartIcon" ), &g_sDRStartIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultDRLineColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourDRLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultDRLineWidth" ), &g_DRLineWidth, 2  );
+        pConf->Read( wxS( "DefaultDRLineStyle" ), &g_DRLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultDRSOG" ), &val, wxS("5.0") );
+        g_dDRSOG = atof( val.mb_str() );
+        pConf->Read( wxS( "DefaultDRCOG" ), &g_iDRCOG, 0 );
+        pConf->Read( wxS( "DefaultDRLength" ), &g_dDRLength, 5 );
+        pConf->Read( wxS( "DefaultDRPointInterval" ), &g_dDRPointInterval, 1 );
+        pConf->Read( wxS( "DefaultDRLengthType" ), &g_iDRLengthType, 1 );
+        pConf->Read( wxS( "DefaultDRIntervalType" ), &g_iDRIntervalType, 1 );
+        pConf->Read( wxS( "DefaultDRDistanceUnits" ), &g_iDRDistanceUnits, 1 );
+        pConf->Read( wxS( "DefaultDRTimeUnits" ), &g_iDRTimeUnits, 0 );
+        pConf->Read( wxS( "DefaultDRPersistenceType" ), &g_iDRPersistenceType, 2 );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
         pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 100 );
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
@@ -1007,6 +1069,7 @@ void ocpn_draw_pi::LoadConfig()
     g_pODPointList = new ODPointList;
     g_pBoundaryList = new BoundaryList;
     g_pEBLList = new EBLList;
+    g_pDRList = new DRList;
     g_pPathList = new PathList;
     //    Layers
     pLayerList = new LayerList;
@@ -1276,6 +1339,12 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     SetToolbarItemState( m_draw_button_id, false );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
+                } else if( nDR_State > 0 ){
+                    nDR_State = 0;
+                    m_pCurrentCursor = NULL;
+                    SetToolbarItemState( m_draw_button_id, false );
+                    RequestRefresh( m_parent_window );
+                    bret = TRUE;
                 } else if( m_bODPointEditing ) {
                     m_bODPointEditing = false;
                     m_pCurrentCursor = NULL;
@@ -1359,6 +1428,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = CreateTextPointLeftClick( event );
             } else if ( nEBL_State > 0 ) {
                 bret = CreateEBLLeftClick( event );
+            } else if ( nDR_State > 0 ) {
+                bret = CreateDRLeftClick( event );
             }
         } else if( m_bPathEditing ) {
             m_pCurrentCursor = ocpncc1->pCursorCross;
@@ -1377,7 +1448,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
     
     if( event.LeftUp() ) {
-        if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0 || nEBL_State > 0 ) ) {
+        if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0 || nEBL_State > 0 || nDR_State > 0 ) ) {
             bret = true;
         }
         if (m_bEBLMoveOrigin) {
@@ -1550,8 +1621,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         }
-        if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 ) {
+        if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 ) {
             m_Mode++;
+            if(m_Mode >= ID_MODE_BOUNDARY)
             SetToolbarTool();
             g_pODToolbar->SetToolbarTool( m_Mode );
             bret = TRUE;
@@ -1593,12 +1665,21 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
             bret = TRUE;
+        } else if ( nDR_State > 1 ) {
+            m_iCallerId = 0;
+            nDR_State = 0;
+            m_pCurrentCursor = NULL;
+            SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+            if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+            bRefresh = TRUE;
+            bret = TRUE;
         } else if ( m_bEBLMoveOrigin ) {
             m_bEBLMoveOrigin = false;
             m_pCurrentCursor = NULL;
             bRefresh = TRUE;
             bret = TRUE;
-        } else if ( nBoundary_State == 0 ) {
+        } else if ( nBoundary_State == 0 && nPoint_State == 0 && nTextPoint_State == 0 && nEBL_State == 0 && nDR_State == 0 ) {
             FindSelectedObject();
             
             if( 0 != m_seltype ) {
@@ -1609,6 +1690,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
+                        m_pSelectedDR = (DR *)m_pSelectedPath;
                 }
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
@@ -2567,7 +2650,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL->AddPoint( pMousePoint );
     m_pMouseEBL->m_bCentreOnBoat = true;
 
-    if(m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMouseEBL );
@@ -2579,6 +2662,28 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     RequestRefresh( m_parent_window );
     
     return TRUE;
+}
+
+bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
+{
+    if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
+        g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
+    
+    DimeWindow( g_pODDRDialog );
+    g_pODDRDialog->Show();
+    
+    
+    //    Required if RMDialog is not STAY_ON_TOP
+    #ifdef __WXOSX__
+    g_pODDRDialog->Centre();
+    g_pODDRDialog->Raise();
+    #endif
+    
+    nDR_State++;
+    
+    RequestRefresh( m_parent_window );
+    
+    return true;
 }
 
 void ocpn_draw_pi::OnTimer(wxTimerEvent& ev)
@@ -2914,7 +3019,7 @@ void ocpn_draw_pi::DimeControl( wxWindow* ctrl, wxColour col, wxColour window_ba
 
 void ocpn_draw_pi::SetToolbarTool( void )
 {
-    if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 ) {
+    if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 ) {
         if (m_Mode > m_numModes ) m_Mode = 0;
         switch (m_Mode)
         {
@@ -2927,6 +3032,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nPoint_State = 0;
                 nTextPoint_State = 0;
                 nEBL_State = 0;
+                nDR_State = 0;
                 break;
                 
             case ID_MODE_POINT:
@@ -2938,6 +3044,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nPoint_State = 1;
                 nTextPoint_State = 0;
                 nEBL_State = 0;
+                nDR_State = 0;
                 break;
                 
             case ID_MODE_TEXT_POINT:
@@ -2949,6 +3056,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nBoundary_State = 0;
                 nTextPoint_State = 1;
                 nEBL_State = 0;
+                nDR_State = 0;
                 break;
                 
             case ID_MODE_EBL:
@@ -2960,6 +3068,20 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nBoundary_State = 0;
                 nTextPoint_State = 0;
                 nEBL_State = 1;
+                nDR_State = 0;
+                RequestRefresh( m_parent_window );
+                break;
+                
+            case ID_MODE_DR:
+                // EBL
+                m_pCurrentCursor = ocpncc1->pCursorCross;
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr, _img_ocpn_draw_dr_gray);
+                SetToolbarItemState( m_draw_button_id, true );
+                nPoint_State = 0;
+                nBoundary_State = 0;
+                nTextPoint_State = 0;
+                nEBL_State = 0;
+                nDR_State = 1;
                 RequestRefresh( m_parent_window );
                 break;
                 

@@ -24,8 +24,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef EBL_H
-#define EBL_H
+#ifndef DR_H
+#define DR_H
 
 #include "ODPath.h"
 
@@ -58,32 +58,34 @@ enum {
     ID_TU_LAST
 };
 
+enum {
+    ID_DR_PERSISTENT = 0,
+    ID_DR_PERSISTENT_CRASH,
+    ID_DR_NOT_PERSISTENT,
+    
+    ID_DR_PERSISTENT_LAST
+};
+
 class DR : public ODPath
 {
     public:
         DR();
         virtual ~DR();
-        void RemovePoint( ODPoint *op, bool bRenamePoints = false );
-        void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
         ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
         ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
         void SetPersistence( int PersistenceType );
         
-        int         m_PersistenceType;
-        float       m_fSoG;
+        int         m_iPersistenceType;
+        double      m_dSoG;
         int         m_iCoG;
-        float       m_fLength;
-        float       m_fTotalLengthNM;
-        float       m_fWaypointInterval;
-        float       m_fWaypointIntervalNM;
+        double      m_dDRPathLength;
+        double      m_dTotalLengthNM;
+        double      m_dDRPointInterval;
+        double      m_dDRPointIntervalNM;
         int         m_iLengthType;
         int         m_iIntervalType;
         int         m_iDistanceUnits;
         int         m_iTimeUnits;
-        float       m_fStartLat;
-        float       m_fStartLon;
-        float       m_fEndLat;
-        float       m_fEndLon;
         
     protected:
         
@@ -91,6 +93,6 @@ class DR : public ODPath
         wxColour    m_wxcLineColour;
 };
 
-WX_DECLARE_LIST(DR, DRList); // establish class EBL list member
+WX_DECLARE_LIST(DR, DRList); // establish class DR list member
 
-#endif // EBL_H
+#endif // DR_H

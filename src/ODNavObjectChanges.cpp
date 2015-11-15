@@ -34,6 +34,7 @@
 #include "TextPoint.h"
 #include "Boundary.h"
 #include "EBL.h"
+#include "DR.h"
 #include "ODUtils.h"
 
 extern PathList         *g_pPathList;
@@ -295,13 +296,17 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     ODPath *pPath;
     Boundary * pBoundary = NULL;
     EBL * pEBL = NULL;
+    DR  *pDR = NULL;
+    
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
         pPath = pBoundary;
     } else if(pInPath->m_sTypeString == wxT("EBL")) {
         pEBL = (EBL *)pInPath;
         pPath = pEBL;
-        
+    } else if(pInPath->m_sTypeString == wxT("DR")) {
+        pDR = (DR *)pInPath;
+        pPath = pDR;
     } else
         pPath = pInPath;
     
@@ -397,7 +402,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     if(pEBL) {
         child = node.append_child("opencpn:persistence");
         wxString s;
-        s.Printf(_T("%1i"), pEBL->m_PersistenceType);
+        s.Printf(_T("%1i"), pEBL->m_iPersistenceType);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:show_arrow");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bDrawArrow == true ? "1" : "0" );
@@ -406,7 +411,43 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child = node.append_child("opencpn:fixed_end_position");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bFixedEndPosition == true ? "1" : "0" );
     }
-
+    if(pDR) {
+        child = node.append_child("opencpn:persistence");
+        wxString s;
+        s.Printf(_T("%1i"), pDR->m_iPersistenceType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRSOG");
+        s.Printf(_T("%0.3f"), pDR->m_dSoG);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRCOG");
+        s.Printf(_T("%i"), pDR->m_iCoG);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRLength");
+        s.Printf(_T("%0.3f"), pDR->m_dDRPathLength);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRLengthNM");
+        s.Printf(_T("%0.3f"), pDR->m_dTotalLengthNM);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRPointIterval");
+        s.Printf(_T("%0.3f"), pDR->m_dDRPointInterval);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRPointItervalNM");
+        s.Printf(_T("%0.3f"), pDR->m_dDRPointIntervalNM);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRLengthType");
+        s.Printf(_T("%i"), pDR->m_iLengthType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRIntervalType");
+        s.Printf(_T("%i"), pDR->m_iIntervalType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRDistanceUnits");
+        s.Printf(_T("%i"), pDR->m_iDistanceUnits);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:DRTimeUnits");
+        s.Printf(_T("%i"), pDR->m_iTimeUnits);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+    }
+    
     ODPointList *pODPointList = pPath->m_pODPointList;
     wxODPointListNode *node2 = pODPointList->GetFirst();
     ODPoint *pop;
@@ -562,7 +603,7 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
             pEBL = (EBL *)node1->GetData();
             pPath = pEBL;
         }
-        if(!pEBL || pEBL->m_PersistenceType != ID_EBL_NOT_PERSISTENT) {
+        if(!pEBL || pEBL->m_iPersistenceType != ID_EBL_NOT_PERSISTENT) {
             if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
                 GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         }
@@ -625,11 +666,7 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                                 break;
                         }
                     }
-                    if ( !TypeString.compare( wxS("Boundary") ) ) {
-                        ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
-                        InsertPathA( pPath );
-                    }
-                    if ( !TypeString.compare( wxS("EBL") ) ) {
+                    if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || !TypeString.compare( wxS("DR") ) ) {
                         ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
@@ -940,6 +977,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
     bool b_active = false;
     Boundary    *pTentBoundary = NULL;
     EBL         *pTentEBL = NULL;
+    DR          *pTentDR = NULL;
     ODPath        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
     
@@ -952,6 +990,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
         } else if (!strcmp(pPathType->mb_str(), "EBL" ) ) {
             pTentEBL = new EBL();
             pTentPath = pTentEBL;
+        } else if (!strcmp(pPathType->mb_str(), "DR" ) ) {
+            pTentDR = new DR();
+            pTentPath = pTentDR;
         } else 
             pTentPath = new ODPath();
         
@@ -1046,8 +1087,12 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
             } else if( ChildName == _T ( "opencpn:persistence" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 long v = 0;
-                if( s.ToLong( &v ) )
-                    pTentEBL->SetPersistence( v );
+                if( s.ToLong( &v ) ) {
+                    if (!strcmp(pPathType->mb_str(), "EBL" ) )
+                        pTentEBL->SetPersistence( v );
+                    else if (!strcmp(pPathType->mb_str(), "DR" ) )
+                        pTentDR->SetPersistence( v );
+                }
             } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bDrawArrow = ( s == wxT("1") );
@@ -1057,9 +1102,28 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
             } else if( ChildName == _T ( "opencpn:fixed_end_position" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:DRSOG" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dSoG );
+            } else if( ChildName == _T ( "opencpn:DRCOG" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iCoG );
+            } else if( ChildName == _T ( "opencpn:DRLength" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPathLength );
+            } else if( ChildName == _T ( "opencpn:DRLengthNM" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dTotalLengthNM );
+            } else if( ChildName == _T ( "opencpn:DRPointIterval" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPointInterval );
+            } else if( ChildName == _T ( "opencpn:DRPointItervalNM" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPointIntervalNM );
+            } else if( ChildName == _T ( "opencpn:DRLengthType" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iLengthType );
+            } else if( ChildName == _T ( "opencpn:DRIntervalType" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iIntervalType );
+            } else if( ChildName == _T ( "opencpn:DRDistanceUnits" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iDistanceUnits );
+            } else if( ChildName == _T ( "opencpn:DRTimeUnits" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iTimeUnits );
             }
-        }
-                    
+        }   
         pTentPath->m_PathNameString = PathName;
         pTentPath->m_PathDescription = DescString;
 

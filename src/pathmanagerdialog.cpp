@@ -53,6 +53,8 @@
 #include "BoundaryProp.h"
 #include "EBL.h"
 #include "EBLProp.h"
+#include "DR.h"
+#include "DRProp.h"
 #include "PathMan.h"
 #include "PointMan.h"
 #include "ODPoint.h"
@@ -140,6 +142,7 @@ extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
 extern ODPathPropertiesDialogImpl     *g_pPathPropDialog;
 extern BoundaryProp *g_pBoundaryPropDialog;
 extern EBLProp      *g_pEBLPropDialog;
+extern DRProp       *g_pDRPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
@@ -964,6 +967,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
     ODPath *l_pPath = NULL;;
     Boundary *l_pBoundary = NULL;
     EBL *l_pEBL = NULL;
+    DR  *l_pDR = NULL;
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
         if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
             g_pBoundaryPropDialog = new BoundaryProp( g_ocpn_draw_pi->m_parent_window );
@@ -980,6 +984,14 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         l_pPath = l_pEBL;
         g_pEBLPropDialog->SetPathAndUpdate( l_pEBL );
         g_pEBLPropDialog->UpdateProperties( l_pEBL );
+    } else if(inpath->m_sTypeString == wxT("DR")) {
+        if( NULL == g_pDRPropDialog )          // There is one global instance of the DRProp Dialog
+            g_pDRPropDialog = new DRProp( GetParent() );
+        g_pODPathPropDialog = g_pDRPropDialog;
+        l_pDR = (DR *) inpath;
+        l_pPath = l_pDR;
+        g_pDRPropDialog->SetPathAndUpdate( l_pDR );
+        g_pDRPropDialog->UpdateProperties( l_pDR );
     } else {
         if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
             g_pPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );

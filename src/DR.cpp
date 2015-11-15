@@ -58,65 +58,45 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( DRList );
 
-extern wxColour    g_colourEBLLineColour;
-extern wxString    g_sEBLEndIconName;
-extern wxString    g_sEBLStartIconName;
-extern bool        g_bEBLFixedEndPosition;
-extern int         g_EBLPersistenceType;
-extern int         g_EBLLineWidth; 
-extern int         g_EBLLineStyle;
+extern wxColour    g_colourDRLineColour;
+extern wxString    g_sDREndIconName;
+extern wxString    g_sDRStartIconName;
+extern int         g_DRPersistenceType;
+extern bool        g_bDRShowArrow;
+extern int         g_DRLineWidth; 
+extern int         g_DRLineStyle;
 
 extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern EBLList      *g_pEBLList;
+extern DRList       *g_pDRList;
 extern ODSelect     *g_pODSelect;
 extern PathMan      *g_pPathMan;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
-extern bool         g_bEBLShowArrow;
-extern bool         g_bEBLVRM;
 
 DR::DR() : ODPath()
 {
-    m_sTypeString = _T("EBL");
-    m_wxcActiveLineColour = g_colourEBLLineColour;
-    m_width = g_EBLLineWidth;
-    m_style = g_EBLLineStyle;
-    m_bDrawArrow = g_bEBLShowArrow;
-    m_bVRM = g_bEBLVRM;
-    m_bVRM = g_bEBLVRM;
-    m_bCentreOnBoat = true;
-    m_bFixedEndPosition = g_bEBLFixedEndPosition;
-    SetPersistence( g_EBLPersistenceType );
+    m_sTypeString = _T("DR");
+    m_wxcActiveLineColour = g_colourDRLineColour;
+    m_width = g_DRLineWidth;
+    m_style = g_DRLineStyle;
+    m_bDrawArrow = g_bDRShowArrow;
+    SetPersistence( g_DRPersistenceType );
     SetActiveColours();
 }
 
-DR::~EBL()
+DR::~DR()
 {
     //dtor
-}
-
-void DR::MoveEndPoint( double inc_lat, double inc_lon )
-{
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    pEndPoint->m_lat -= inc_lat;
-    pEndPoint->m_lon -= inc_lon;
-    if(m_bVRM) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-        pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
-    }
-    if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
-        g_pEBLPropDialog->UpdateProperties();
-    
 }
 
 ODPoint *DR::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
     ODPoint *newpoint = ODPath::InsertPointBefore( pOP, lat, lon );
-    newpoint->m_IconName = g_sEBLStartIconName;
-    newpoint->m_sTypeString = wxT("EBL Point");
-    newpoint->m_MarkName = wxT("Start");
+    newpoint->m_IconName = g_sODPointIconName;
+    newpoint->m_sTypeString = wxT("DR Point");
+    newpoint->m_MarkName = wxT("");
     FinalizeForRendering();
     return newpoint;
 }
@@ -124,9 +104,9 @@ ODPoint *DR::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRena
 ODPoint *DR::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
     ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon );
-    newpoint->m_IconName = g_sEBLStartIconName;
-    newpoint->m_sTypeString = wxT("EBL Point");
-    newpoint->m_MarkName = wxT("Start");
+    newpoint->m_IconName = g_sODPointIconName;
+    newpoint->m_sTypeString = wxT("DR Point");
+    newpoint->m_MarkName = wxT("");
     ReloadPathPointIcons();
     FinalizeForRendering();
     return newpoint;
@@ -134,8 +114,8 @@ ODPoint *DR::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenam
 
 void DR::SetPersistence( int PersistenceType )
 {
-    m_PersistenceType = PersistenceType;
-    if(PersistenceType == ID_EBL_NOT_PERSISTENT || PersistenceType == ID_EBL_PERSISTENT_CRASH)
+    m_iPersistenceType = PersistenceType;
+    if(PersistenceType == ID_DR_NOT_PERSISTENT || PersistenceType == ID_DR_PERSISTENT_CRASH)
         m_bTemporary = true;
     else
         m_bTemporary = false;

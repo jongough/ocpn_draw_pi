@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "544")
-SET(VERSION_DATE "13/11/2015")
+SET(VERSION_PATCH "550")
+SET(VERSION_DATE "15/11/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -46,6 +46,8 @@ SET(SRCS
         src/BoundaryMan.cpp
         src/BoundaryProp.cpp
         src/BoundaryPoint.cpp
+        src/DR.cpp
+        src/DRProp.cpp
         src/EBL.cpp
         src/EBLProp.cpp
         src/PointMan.cpp
@@ -56,6 +58,8 @@ SET(SRCS
         src/ODPoint.cpp
         src/ODConfig.cpp
         src/ODdc.cpp
+        src/ODDRDialogDef.cpp
+        src/ODDRDialogImpl.cpp
         src/ODEventHandler.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
@@ -79,6 +83,8 @@ SET(HDRS
         include/BoundaryMan.h
         include/BoundaryProp.h
         include/BoundaryPoint.h
+        include/DR.h
+        include/DRProp.h
         include/EBL.h
         include/EBLProp.h
         include/PointMan.h
@@ -89,6 +95,8 @@ SET(HDRS
         include/ODPoint.h
         include/ODConfig.h
         include/ODdc.h
+        include/ODDRDialogDef.h
+        include/ODDRDialogImpl.h
         include/ODEventHandler.h
         include/ODNavObjectChanges.h
         include/ODPropertiesDialogDef.h

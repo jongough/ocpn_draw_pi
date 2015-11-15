@@ -113,10 +113,6 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choicePathLineWidth;
 		wxStaticText* m_staticTextPathLineStyle;
 		wxChoice* m_choicePathLineStyle;
-		wxStaticText* m_staticTextActivePathFillColour;
-		wxColourPickerCtrl* m_colourPickerActivePathFillColour;
-		wxStaticText* m_staticTextInactivePathFillColour;
-		wxColourPickerCtrl* m_colourPickerInActivePathFillColour;
 		wxPanel* m_panelBoundary;
 		wxStaticText* m_staticTextActiveBoundayLineColour;
 		wxColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
@@ -144,8 +140,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxBitmapComboBox* m_bcomboBoxEBLEndIconName;
 		wxStaticText* m_staticTextActiveEBLLineColour;
 		wxColourPickerCtrl* m_colourPickerEBLLineColour;
-		wxStaticText* m_staticTextInactiveEBLLineColour1;
-		wxColourPickerCtrl* m_colourPickerInActiveEBLLineColour1;
+		wxStaticText* m_staticTextInactiveEBLLineColour;
+		wxColourPickerCtrl* m_colourPickerInActiveEBLLineColour;
 		wxStaticText* m_staticTextEBLLineWidth;
 		wxChoice* m_choiceEBLLineWidth;
 		wxStaticText* m_staticTextEBLLineStyle;
@@ -154,6 +150,35 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLShowArrow;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxCheckBox* m_checkBoxShowVRM;
+		wxPanel* m_panelDR;
+		wxStaticText* m_staticTextDRStartPointIcon;
+		wxStaticBitmap* m_bitmapDRStartBitmap;
+		wxBitmapComboBox* m_bcomboBoxDRStartIconName;
+		wxStaticText* m_staticTextDREndPointIcon;
+		wxStaticBitmap* m_bitmapDREndBitmap;
+		wxBitmapComboBox* m_bcomboBoxDREndIconName;
+		wxStaticText* m_staticTextActiveDRLineColour;
+		wxColourPickerCtrl* m_colourPickerDRLineColour;
+		wxStaticText* m_staticTextInactiveDRLineColour;
+		wxColourPickerCtrl* m_colourPickerInActiveDRLineColour;
+		wxStaticText* m_staticTextDRLineWidth;
+		wxChoice* m_choiceDRLineWidth;
+		wxStaticText* m_staticTextDRLineStyle;
+		wxChoice* m_choiceDRLineStyle;
+		wxStaticText* m_staticTextDefaultSoG;
+		wxTextCtrl* m_textCtrlSOG;
+		wxStaticText* m_staticTextCOG;
+		wxTextCtrl* m_textCtrlCOG;
+		wxStaticText* m_staticTextDRLength;
+		wxTextCtrl* m_textCtrlDRPathLength;
+		wxStaticText* m_staticTextDRPointInterval;
+		wxTextCtrl* m_textCtrlDRPointInterval;
+		wxRadioBox* m_radioBoxDRLengthType;
+		wxRadioBox* m_radioBoxDRIntervalType;
+		wxRadioBox* m_radioBoxDRDistanceUnits;
+		wxRadioBox* m_radioBoxDRTimeUnits;
+		wxCheckBox* m_checkBoxDRShowArrow;
+		wxRadioBox* m_radioBoxDRPersistence;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;
@@ -171,13 +196,14 @@ class ODPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonApply;
-		wxStaticText* m_staticTextBoundaryType;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDRStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDREndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }
@@ -186,7 +212,7 @@ class ODPropertiesDialogDef : public wxDialog
 	public:
 		wxChoice* m_choiceToolbar;
 		
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,461 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 530,567 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
 		~ODPropertiesDialogDef();
 	
 };

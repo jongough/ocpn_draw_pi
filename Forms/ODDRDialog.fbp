@@ -42,7 +42,7 @@
             <property name="id">wxID_ANY</property>
             <property name="maximum_size"></property>
             <property name="minimum_size"></property>
-            <property name="name">MyDialogDR</property>
+            <property name="name">ODDRDialogDef</property>
             <property name="pos"></property>
             <property name="size"></property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
@@ -322,7 +322,7 @@
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Course over Ground</property>
+                                <property name="label">Course over Ground (M)</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size"></property>
@@ -496,7 +496,7 @@
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Length</property>
+                                <property name="label">DR Path Length</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size"></property>
@@ -670,7 +670,7 @@
                                 <property name="gripper">0</property>
                                 <property name="hidden">0</property>
                                 <property name="id">wxID_ANY</property>
-                                <property name="label">Waypoint Interval</property>
+                                <property name="label">DR Point Interval</property>
                                 <property name="max_size"></property>
                                 <property name="maximize_button">0</property>
                                 <property name="maximum_size"></property>
@@ -678,7 +678,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_staticTextWaypointInterval</property>
+                                <property name="name">m_staticTextDRPointInterval</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
@@ -761,7 +761,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_textCtrlWaypointInterval</property>
+                                <property name="name">m_textCtrlDRPointInterval</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
@@ -862,7 +862,7 @@
                                 <property name="pin_button">1</property>
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
-                                <property name="selection">0</property>
+                                <property name="selection">1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
                                 <property name="style"></property>
@@ -952,7 +952,7 @@
                                 <property name="pin_button">1</property>
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
-                                <property name="selection">0</property>
+                                <property name="selection">1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
                                 <property name="style">wxRA_SPECIFY_ROWS</property>
@@ -1028,7 +1028,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices">&quot;Feet&quot; &quot;Meters&quot; &quot;Kilometers&quot; &quot;Statute Miles&quot; &quot;Nautical Miles&quot;</property>
+                                <property name="choices">&quot;Kilometers&quot; &quot;Nautical Miles&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -1052,7 +1052,7 @@
                                 <property name="minimize_button">0</property>
                                 <property name="minimum_size"></property>
                                 <property name="moveable">1</property>
-                                <property name="name">m_radioBoxDistance</property>
+                                <property name="name">m_radioBoxDistanceUnits</property>
                                 <property name="pane_border">1</property>
                                 <property name="pane_position"></property>
                                 <property name="pane_size"></property>
@@ -1060,7 +1060,7 @@
                                 <property name="pin_button">1</property>
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
-                                <property name="selection">4</property>
+                                <property name="selection">1</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
                                 <property name="style">wxRA_SPECIFY_ROWS</property>
@@ -1118,7 +1118,7 @@
                                 <property name="caption"></property>
                                 <property name="caption_visible">1</property>
                                 <property name="center_pane">0</property>
-                                <property name="choices">&quot;Seconds&quot; &quot;Minutes&quot; &quot;Hours&quot; &quot;Days&quot;</property>
+                                <property name="choices">&quot;Minutes&quot; &quot;Hours&quot; &quot;Days&quot;</property>
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
@@ -1150,7 +1150,7 @@
                                 <property name="pin_button">1</property>
                                 <property name="pos"></property>
                                 <property name="resize">Resizable</property>
-                                <property name="selection">1</property>
+                                <property name="selection">0</property>
                                 <property name="show">1</property>
                                 <property name="size"></property>
                                 <property name="style">wxRA_SPECIFY_ROWS</property>

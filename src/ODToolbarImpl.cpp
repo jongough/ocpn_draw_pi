@@ -117,6 +117,7 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         default:

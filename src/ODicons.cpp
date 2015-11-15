@@ -49,6 +49,7 @@ void initialize_images(void)
     fn.AppendDir( wxT("plugins") );
     fn.AppendDir(wxT("ocpn_draw_pi"));
     fn.AppendDir(wxT("data"));
+    wxLogMessage( _("ocpn_draw_pi data location: %s"), fn.GetFullPath());
 
     fn.SetFullName(wxT("OCPNDrawManager.png"));
     _img_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );

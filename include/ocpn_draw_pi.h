@@ -144,7 +144,7 @@ enum
     ID_MODE_EBL,
     ID_MODE_DR,
     
-    ID_LAST_MODE
+    ID_MODE_LAST
 };
 
 enum {
@@ -168,9 +168,12 @@ enum {
     ID_BOUNDARY_TYPE_LAST
 };
 
+//#define PI 3.14159265
+
 class Boundary;
 class BoundaryProp;
 class EBL;
+class DR;
 class SelectItem;
 
 const int StyleValues[] = { wxSOLID, wxDOT, wxLONG_DASH, wxSHORT_DASH, wxDOT_DASH };
@@ -360,6 +363,7 @@ private:
     bool    CreatePointLeftClick( wxMouseEvent &event );
     bool    CreateTextPointLeftClick( wxMouseEvent &event );
     bool    CreateEBLLeftClick( wxMouseEvent &event );
+    bool    CreateDRLeftClick( wxMouseEvent &event );
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
@@ -378,6 +382,7 @@ private:
     
     Boundary    *m_pSelectedBoundary;
     EBL         *m_pSelectedEBL;
+    DR          *m_pSelectedDR;
     
     bool        m_bDrawingBoundary;
     

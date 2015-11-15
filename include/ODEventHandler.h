@@ -33,7 +33,10 @@
 
 // Forward declarations
 class SelectItem;
+class Boundary;
 class TextPoint;
+class EBL;
+class DR;
 
 #define TIMER_OD_1 999
 
@@ -77,6 +80,7 @@ class ODEventHandler : public wxEvtHandler
         wxTimer         ODTimer1;
         Boundary        *m_pBoundary;
         EBL             *m_pEBL;
+        DR              *m_pDR;
         
         
         

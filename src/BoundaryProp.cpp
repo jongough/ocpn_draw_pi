@@ -28,8 +28,6 @@
 #include "ocpn_draw_pi.h"
 
 extern BoundaryList         *g_pBoundaryList;
-extern wxColour             g_colourActivePathFillColour;
-extern wxColour             g_colourInActivePathFillColour;
 extern unsigned int         g_uiFillTransparency;
 extern int                  g_iInclusionBoundarySize;
 
@@ -58,14 +56,6 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     
     m_radioBoxBoundaryType->Show();
     m_radioBoxBoundaryType->Enable( true );
-    
-    m_fgSizerEBL->ShowItems( false );
-    m_checkBoxEBLFixedEndPosition->Hide();
-    m_checkBoxEBLFixedEndPosition->Enable( false );
-    m_checkBoxEBLShowArrow->Hide();
-    m_checkBoxEBLShowArrow->Enable( false );
-    m_radioBoxEBLPersistence->Hide();
-    m_radioBoxEBLPersistence->Enable( false );
     
     this->GetSizer()->Fit( this );
     this->Layout();

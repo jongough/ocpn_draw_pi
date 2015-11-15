@@ -135,7 +135,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	m_bSizerBoundaryType = new wxBoxSizer( wxVERTICAL );
 	
-	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Niether") };
+	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
 	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryType = new wxRadioBox( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxBoundaryType->SetSelection( 0 );
@@ -144,30 +144,34 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	fgSizer1->Add( m_bSizerBoundaryType, 1, wxEXPAND, 5 );
 	
-	m_fgSizerEBL = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerEBL = new wxFlexGridSizer( 0, 3, 0, 0 );
 	m_fgSizerEBL->SetFlexibleDirection( wxBOTH );
 	m_fgSizerEBL->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, _("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBL->Add( m_checkBoxEBLFixedEndPosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
-	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
-	m_radioBoxEBLPersistence = new wxRadioBox( this, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 3, wxRA_SPECIFY_COLS );
-	m_radioBoxEBLPersistence->SetSelection( 2 );
-	m_fgSizerEBL->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
-	
-	m_checkBoxEBLShowArrow = new wxCheckBox( this, wxID_ANY, _("Show EBL Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_fgSizerEBL->Add( m_checkBoxEBLShowArrow, 0, wxALIGN_RIGHT|wxALL, 5 );
-	
-	
-	m_fgSizerEBL->Add( 0, 0, 0, wxEXPAND, 5 );
-	
 	m_checkBoxShowVRM = new wxCheckBox( this, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBL->Add( m_checkBoxShowVRM, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	fgSizer1->Add( m_fgSizerEBL, 0, wxEXPAND, 5 );
+	
+	m_fgSizerPath = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerPath->SetFlexibleDirection( wxBOTH );
+	m_fgSizerPath->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_checkBoxPathShowArrow = new wxCheckBox( this, wxID_ANY, _("Show Path Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerPath->Add( m_checkBoxPathShowArrow, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	wxString m_radioBoxPathPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
+	int m_radioBoxPathPersistenceNChoices = sizeof( m_radioBoxPathPersistenceChoices ) / sizeof( wxString );
+	m_radioBoxPathPersistence = new wxRadioBox( this, wxID_ANY, _("Path Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxPathPersistenceNChoices, m_radioBoxPathPersistenceChoices, 3, wxRA_SPECIFY_COLS );
+	m_radioBoxPathPersistence->SetSelection( 2 );
+	m_fgSizerPath->Add( m_radioBoxPathPersistence, 0, wxALL, 5 );
+	
+	
+	fgSizer1->Add( m_fgSizerPath, 1, wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerPathPoints;
 	bSizerPathPoints = new wxBoxSizer( wxVERTICAL );
