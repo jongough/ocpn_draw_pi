@@ -258,7 +258,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerPathSettings;
-	fgSizerPathSettings = new wxFlexGridSizer( 6, 2, 0, 0 );
+	fgSizerPathSettings = new wxFlexGridSizer( 6, 4, 0, 0 );
 	fgSizerPathSettings->SetFlexibleDirection( wxBOTH );
 	fgSizerPathSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -295,20 +295,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_choicePathLineStyle = new wxChoice( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePathLineStyleNChoices, m_choicePathLineStyleChoices, 0 );
 	m_choicePathLineStyle->SetSelection( 1 );
 	fgSizerPathSettings->Add( m_choicePathLineStyle, 0, wxALL, 5 );
-	
-	m_staticTextActivePathFillColour = new wxStaticText( m_panelPath, wxID_ANY, _("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextActivePathFillColour->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextActivePathFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	m_colourPickerActivePathFillColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerPathSettings->Add( m_colourPickerActivePathFillColour, 0, wxALL, 5 );
-	
-	m_staticTextInactivePathFillColour = new wxStaticText( m_panelPath, wxID_ANY, _("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextInactivePathFillColour->Wrap( -1 );
-	fgSizerPathSettings->Add( m_staticTextInactivePathFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
-	m_colourPickerInActivePathFillColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerPathSettings->Add( m_colourPickerInActivePathFillColour, 0, wxALL, 5 );
 	
 	
 	m_panelPath->SetSizer( fgSizerPathSettings );
@@ -462,12 +448,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_colourPickerEBLLineColour = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizerEBLSettings->Add( m_colourPickerEBLLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_staticTextInactiveEBLLineColour1 = new wxStaticText( m_panelEBL, wxID_ANY, _("Inactive EBL Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextInactiveEBLLineColour1->Wrap( -1 );
-	fgSizerEBLSettings->Add( m_staticTextInactiveEBLLineColour1, 0, wxALL, 5 );
+	m_staticTextInactiveEBLLineColour = new wxStaticText( m_panelEBL, wxID_ANY, _("Inactive EBL Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInactiveEBLLineColour->Wrap( -1 );
+	fgSizerEBLSettings->Add( m_staticTextInactiveEBLLineColour, 0, wxALL, 5 );
 	
-	m_colourPickerInActiveEBLLineColour1 = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerEBLSettings->Add( m_colourPickerInActiveEBLLineColour1, 0, wxALIGN_RIGHT|wxALL, 5 );
+	m_colourPickerInActiveEBLLineColour = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerEBLSettings->Add( m_colourPickerInActiveEBLLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextEBLLineWidth = new wxStaticText( m_panelEBL, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextEBLLineWidth->Wrap( -1 );
@@ -509,6 +495,170 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelEBL->Layout();
 	fgSizerEBLSettings->Fit( m_panelEBL );
 	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), false );
+	m_panelDR = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizerDRSettings;
+	fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
+	fgSizerDRSettings->SetFlexibleDirection( wxBOTH );
+	fgSizerDRSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxFlexGridSizer* fgSizerEBLEndPointIcon1;
+	fgSizerEBLEndPointIcon1 = new wxFlexGridSizer( 0, 3, 0, 0 );
+	fgSizerEBLEndPointIcon1->AddGrowableCol( 1 );
+	fgSizerEBLEndPointIcon1->SetFlexibleDirection( wxBOTH );
+	fgSizerEBLEndPointIcon1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextDRStartPointIcon = new wxStaticText( m_panelDR, wxID_ANY, _("Start Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRStartPointIcon->Wrap( -1 );
+	fgSizerEBLEndPointIcon1->Add( m_staticTextDRStartPointIcon, 0, wxALL, 5 );
+	
+	m_bitmapDRStartBitmap = new wxStaticBitmap( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerEBLEndPointIcon1->Add( m_bitmapDRStartBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_bcomboBoxDRStartIconName = new wxBitmapComboBox( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerEBLEndPointIcon1->Add( m_bcomboBoxDRStartIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	fgSizerDRSettings->Add( fgSizerEBLEndPointIcon1, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerEBLStartPointIcon1;
+	fgSizerEBLStartPointIcon1 = new wxFlexGridSizer( 0, 3, 0, 0 );
+	fgSizerEBLStartPointIcon1->AddGrowableCol( 1 );
+	fgSizerEBLStartPointIcon1->SetFlexibleDirection( wxBOTH );
+	fgSizerEBLStartPointIcon1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextDREndPointIcon = new wxStaticText( m_panelDR, wxID_ANY, _("End Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDREndPointIcon->Wrap( -1 );
+	fgSizerEBLStartPointIcon1->Add( m_staticTextDREndPointIcon, 0, wxALL, 5 );
+	
+	m_bitmapDREndBitmap = new wxStaticBitmap( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerEBLStartPointIcon1->Add( m_bitmapDREndBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_bcomboBoxDREndIconName = new wxBitmapComboBox( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerEBLStartPointIcon1->Add( m_bcomboBoxDREndIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	fgSizerDRSettings->Add( fgSizerEBLStartPointIcon1, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerDRDefaultSizes;
+	fgSizerDRDefaultSizes = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizerDRDefaultSizes->SetFlexibleDirection( wxBOTH );
+	fgSizerDRDefaultSizes->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextActiveDRLineColour = new wxStaticText( m_panelDR, wxID_ANY, _("Active DR Line\nColour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextActiveDRLineColour->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextActiveDRLineColour, 0, wxALL, 5 );
+	
+	m_colourPickerDRLineColour = new wxColourPickerCtrl( m_panelDR, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerDRDefaultSizes->Add( m_colourPickerDRLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextInactiveDRLineColour = new wxStaticText( m_panelDR, wxID_ANY, _("Inactive DR Line\nColour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInactiveDRLineColour->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextInactiveDRLineColour, 0, wxALL, 5 );
+	
+	m_colourPickerInActiveDRLineColour = new wxColourPickerCtrl( m_panelDR, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerDRDefaultSizes->Add( m_colourPickerInActiveDRLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextDRLineWidth = new wxStaticText( m_panelDR, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRLineWidth->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextDRLineWidth, 0, wxALL, 5 );
+	
+	wxString m_choiceDRLineWidthChoices[] = { _("1 Pixel"), _("2 Pixels"), _("3 Pixels"), _("4 Pixels"), _("5 Pixels"), _("6 Pixels"), _("7 Pixels"), _("8 Pixels"), _("9 Pixels"), _("10 Pixels") };
+	int m_choiceDRLineWidthNChoices = sizeof( m_choiceDRLineWidthChoices ) / sizeof( wxString );
+	m_choiceDRLineWidth = new wxChoice( m_panelDR, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDRLineWidthNChoices, m_choiceDRLineWidthChoices, 0 );
+	m_choiceDRLineWidth->SetSelection( 0 );
+	fgSizerDRDefaultSizes->Add( m_choiceDRLineWidth, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextDRLineStyle = new wxStaticText( m_panelDR, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRLineStyle->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextDRLineStyle, 0, wxALL, 5 );
+	
+	wxString m_choiceDRLineStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
+	int m_choiceDRLineStyleNChoices = sizeof( m_choiceDRLineStyleChoices ) / sizeof( wxString );
+	m_choiceDRLineStyle = new wxChoice( m_panelDR, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDRLineStyleNChoices, m_choiceDRLineStyleChoices, 0 );
+	m_choiceDRLineStyle->SetSelection( 0 );
+	fgSizerDRDefaultSizes->Add( m_choiceDRLineStyle, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextDefaultSoG = new wxStaticText( m_panelDR, wxID_ANY, _("Speed over Ground"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDefaultSoG->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextDefaultSoG, 0, wxALL, 5 );
+	
+	m_textCtrlSOG = new wxTextCtrl( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerDRDefaultSizes->Add( m_textCtrlSOG, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextCOG = new wxStaticText( m_panelDR, wxID_ANY, _("Course over Ground"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextCOG->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextCOG, 0, wxALL, 5 );
+	
+	m_textCtrlCOG = new wxTextCtrl( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerDRDefaultSizes->Add( m_textCtrlCOG, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextDRLength = new wxStaticText( m_panelDR, wxID_ANY, _("DR Path Length"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRLength->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextDRLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlDRPathLength = new wxTextCtrl( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerDRDefaultSizes->Add( m_textCtrlDRPathLength, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextDRPointInterval = new wxStaticText( m_panelDR, wxID_ANY, _("DR Point Interval"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRPointInterval->Wrap( -1 );
+	fgSizerDRDefaultSizes->Add( m_staticTextDRPointInterval, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlDRPointInterval = new wxTextCtrl( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerDRDefaultSizes->Add( m_textCtrlDRPointInterval, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	fgSizerDRSettings->Add( fgSizerDRDefaultSizes, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizer16;
+	fgSizer16 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer16->SetFlexibleDirection( wxBOTH );
+	fgSizer16->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxString m_radioBoxDRLengthTypeChoices[] = { _("Time"), _("Distance") };
+	int m_radioBoxDRLengthTypeNChoices = sizeof( m_radioBoxDRLengthTypeChoices ) / sizeof( wxString );
+	m_radioBoxDRLengthType = new wxRadioBox( m_panelDR, wxID_ANY, _("Length Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxDRLengthTypeNChoices, m_radioBoxDRLengthTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxDRLengthType->SetSelection( 1 );
+	fgSizer16->Add( m_radioBoxDRLengthType, 0, wxALL, 5 );
+	
+	wxString m_radioBoxDRIntervalTypeChoices[] = { _("Time"), _("Distance") };
+	int m_radioBoxDRIntervalTypeNChoices = sizeof( m_radioBoxDRIntervalTypeChoices ) / sizeof( wxString );
+	m_radioBoxDRIntervalType = new wxRadioBox( m_panelDR, wxID_ANY, _("Interval Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxDRIntervalTypeNChoices, m_radioBoxDRIntervalTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxDRIntervalType->SetSelection( 1 );
+	fgSizer16->Add( m_radioBoxDRIntervalType, 0, wxALL, 5 );
+	
+	wxString m_radioBoxDRDistanceUnitsChoices[] = { _("Kilometers"), _("Nautical Miles") };
+	int m_radioBoxDRDistanceUnitsNChoices = sizeof( m_radioBoxDRDistanceUnitsChoices ) / sizeof( wxString );
+	m_radioBoxDRDistanceUnits = new wxRadioBox( m_panelDR, wxID_ANY, _("Distance Units"), wxDefaultPosition, wxDefaultSize, m_radioBoxDRDistanceUnitsNChoices, m_radioBoxDRDistanceUnitsChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxDRDistanceUnits->SetSelection( 1 );
+	fgSizer16->Add( m_radioBoxDRDistanceUnits, 0, wxALL, 5 );
+	
+	wxString m_radioBoxDRTimeUnitsChoices[] = { _("Minutes"), _("Hours"), _("Days") };
+	int m_radioBoxDRTimeUnitsNChoices = sizeof( m_radioBoxDRTimeUnitsChoices ) / sizeof( wxString );
+	m_radioBoxDRTimeUnits = new wxRadioBox( m_panelDR, wxID_ANY, _("Time Units"), wxDefaultPosition, wxDefaultSize, m_radioBoxDRTimeUnitsNChoices, m_radioBoxDRTimeUnitsChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxDRTimeUnits->SetSelection( 0 );
+	fgSizer16->Add( m_radioBoxDRTimeUnits, 0, wxALL, 5 );
+	
+	m_checkBoxDRShowArrow = new wxCheckBox( m_panelDR, wxID_ANY, _("Show DR Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxDRShowArrow->SetValue(true); 
+	fgSizer16->Add( m_checkBoxDRShowArrow, 0, wxALL, 5 );
+	
+	
+	fgSizer16->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	wxString m_radioBoxDRPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
+	int m_radioBoxDRPersistenceNChoices = sizeof( m_radioBoxDRPersistenceChoices ) / sizeof( wxString );
+	m_radioBoxDRPersistence = new wxRadioBox( m_panelDR, wxID_ANY, _("DR Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxDRPersistenceNChoices, m_radioBoxDRPersistenceChoices, 2, wxRA_SPECIFY_ROWS );
+	m_radioBoxDRPersistence->SetSelection( 2 );
+	fgSizer16->Add( m_radioBoxDRPersistence, 0, wxALL, 5 );
+	
+	
+	fgSizerDRSettings->Add( fgSizer16, 1, wxEXPAND, 5 );
+	
+	
+	m_panelDR->SetSizer( fgSizerDRSettings );
+	m_panelDR->Layout();
+	fgSizerDRSettings->Fit( m_panelDR );
+	m_notebookProperties->AddPage( m_panelDR, _("DR"), false );
 	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerAbout;
 	bSizerAbout = new wxBoxSizer( wxVERTICAL );
@@ -604,10 +754,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND, 5 );
 	
-	m_staticTextBoundaryType = new wxStaticText( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextBoundaryType->Wrap( -1 );
-	m_SizerProperties->Add( m_staticTextBoundaryType, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-	
 	
 	this->SetSizer( m_SizerProperties );
 	this->Layout();
@@ -617,6 +763,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_bcomboBoxEBLStartIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLStartIconComboboxSelected ), NULL, this );
 	m_bcomboBoxEBLEndIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
+	m_bcomboBoxDRStartIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRStartIconComboboxSelected ), NULL, this );
+	m_bcomboBoxDREndIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDREndIconComboboxSelected ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
@@ -629,6 +777,8 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_bcomboBoxEBLStartIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLStartIconComboboxSelected ), NULL, this );
 	m_bcomboBoxEBLEndIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
+	m_bcomboBoxDRStartIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRStartIconComboboxSelected ), NULL, this );
+	m_bcomboBoxDREndIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDREndIconComboboxSelected ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );

@@ -35,6 +35,7 @@
 #include "Boundary.h"
 #include "BoundaryPoint.h"
 #include "EBL.h"
+#include "DR.h"
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 
@@ -60,34 +61,20 @@ extern PathManagerDialog    *g_pPathManagerDialog;
 extern ODConfig             *g_pODConfig;
 extern wxColour             g_colourActivePathLineColour;
 extern wxColour             g_colourInActivePathLineColour;
-extern wxColour             g_colourActivePathFillColour;
-extern wxColour             g_colourInActivePathFillColour;
 extern bool                 g_bExclusionBoundary;
 extern bool                 g_bInclusionBoundary;
 extern int                  g_iInclusionBoundarySize;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
-    m_pPath = NULL;
-    SetPointsListHeadings();
-    m_staticTextFillColour->Hide();
-    m_staticTextFillColour->Enable( false );
-    m_colourPickerFillColour->Hide();
-    m_colourPickerFillColour->Enable( false );
-    m_staticTextFillTransparency->Hide();
-    m_staticTextFillTransparency->Enable( false );
-    m_sliderFillTransparency->Hide();
-    m_sliderFillTransparency->Enable( false );
-    m_sliderInclusionBoundarySize->Hide();
-    m_sliderInclusionBoundarySize->Enable( false );
-    m_radioBoxBoundaryType->Hide();
-    m_radioBoxBoundaryType->Enable( false );
+    SetViewableItems();
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
 {
     m_pPath = NULL;
     SetPointsListHeadings();    
+    SetViewableItems();
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
@@ -98,20 +85,12 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
     m_bStartNow = false;
     m_pPath = NULL;
     
-    m_pEnroutePoint = NULL;
-    m_bStartNow = false;
-    
     wxFont *qFont = OCPNGetFont(wxT("Dialog"), 0);
     SetFont( *qFont );
     
     SetPointsListHeadings();
+    SetViewableItems();
     
-    //  Make an estimate of the dialog size, without scrollbars showing
-/*    wxSize esize;
-    esize.x = GetCharWidth() * 110;
-    esize.y = GetCharHeight() * 40;
-    SetSize( esize );
-*/    
     Centre();
 }
 
@@ -217,9 +196,9 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     PathManagerDialog::ODPointShowPropertiesDialog( op, this );
 }
 
-void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pB, bool only_points )
+void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points )
 {
-    if( NULL == pB )
+    if( NULL == pP )
         return;
     
     //  Fetch any config file values
@@ -233,9 +212,10 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pB, bool only_points 
             if(m_pPath->m_iBlink < 0 ) 
                 m_pPath->m_iBlink = 0;
         }
-        m_pPath = pB;
-        if(m_pPath->m_sTypeString == wxT("Boundary")) m_pBoundary = (Boundary *)pB;
-        if(m_pPath->m_sTypeString == wxT("EBL")) m_pEBL = (EBL *)pB;
+        m_pPath = pP;
+        if(m_pPath->m_sTypeString == wxT("Boundary")) m_pBoundary = (Boundary *)pP;
+        if(m_pPath->m_sTypeString == wxT("EBL")) m_pEBL = (EBL *)pP;
+        if(m_pPath->m_sTypeString == wxT("DR")) m_pDR = (DR *)pP;
         m_pPath->m_iBlink++;
         if(m_pPath->m_iBlink > 2) m_pPath->m_iBlink = 2;
         
@@ -248,7 +228,7 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pB, bool only_points 
 
     InitializeList();
 
-    UpdateProperties( pB );
+    UpdateProperties( pP );
 
     if( m_pPath )
         m_listCtrlODPoints->Show();
@@ -262,6 +242,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     ODPath *pPath;
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
+    DR *pDR = NULL;
     
     if( NULL == pInPath ) return false;
     ::wxBeginBusyCursor();
@@ -272,6 +253,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("EBL")) {
         pEBL = (EBL *)pInPath;
         pPath = pEBL;
+    } else if(pInPath->m_sTypeString == wxT("DR")) {
+        pDR = (DR *)pInPath;
+        pPath = pDR;
     } else
         pPath = pInPath;
         
@@ -553,6 +537,7 @@ void ODPathPropertiesDialogImpl::InitializeList()
 
 void ODPathPropertiesDialogImpl::SetPointsListHeadings()
 {
+    m_listCtrlODPoints->DeleteAllColumns();
     m_listCtrlODPoints->InsertColumn( ID_FROM_POINT, _("From Point"), wxLIST_FORMAT_LEFT );
     m_listCtrlODPoints->InsertColumn( ID_TO_POINT, _("To Point"), wxLIST_FORMAT_LEFT );
     m_listCtrlODPoints->InsertColumn( ID_DISTANCE_FROM_BOAT, _("Distance From Boat"), wxLIST_FORMAT_RIGHT );
@@ -569,4 +554,36 @@ void ODPathPropertiesDialogImpl::SetPointsListHeadings()
     else
         m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, _("Bearing From-To"), wxLIST_FORMAT_LEFT );
     m_listCtrlODPoints->InsertColumn( ID_DESCRIPTION, _("Description"), wxLIST_FORMAT_LEFT );
+}
+
+void ODPathPropertiesDialogImpl::SetViewableItems()
+{
+    m_pPath = NULL;
+    SetPointsListHeadings();
+    m_staticTextFillColour->Hide();
+    m_staticTextFillColour->Enable( false );
+    m_colourPickerFillColour->Hide();
+    m_colourPickerFillColour->Enable( false );
+    m_staticTextFillTransparency->Hide();
+    m_staticTextFillTransparency->Enable( false );
+    m_sliderFillTransparency->Hide();
+    m_sliderFillTransparency->Enable( false );
+    m_staticTextIncluseionBoundarySize->Hide();
+    m_sliderInclusionBoundarySize->Hide();
+    m_sliderInclusionBoundarySize->Enable( false );
+    m_bSizerBoundaryType->ShowItems( false );
+    m_radioBoxBoundaryType->Hide();
+    m_radioBoxBoundaryType->Enable( false );
+    m_fgSizerPath->ShowItems( false );
+    m_radioBoxPathPersistence->Hide();
+    m_radioBoxPathPersistence->Enable( false );
+    m_fgSizerEBL->ShowItems( false );
+    m_checkBoxEBLFixedEndPosition->Hide();
+    m_checkBoxEBLFixedEndPosition->Enable( false );
+    m_checkBoxPathShowArrow->Hide();
+    m_checkBoxPathShowArrow->Enable( false );
+    m_radioBoxPathPersistence->Hide();
+    m_radioBoxPathPersistence->Enable( false );
+    
+    return;
 }

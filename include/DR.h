@@ -1,5 +1,8 @@
 /***************************************************************************
- * 
+ * Project:  OpenCPN
+ * Purpose:  DR
+ * Author:   Jon Gough
+ *
  * Project:  OpenCPN
  *
  ***************************************************************************
@@ -21,51 +24,75 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef EBL_H
-#define EBL_H
+#ifndef DR_H
+#define DR_H
 
 #include "ODPath.h"
 
 enum {
-    ID_EBL_PERSISTENT = 0,
-    ID_EBL_PERSISTENT_CRASH,
-    ID_EBL_NOT_PERSISTENT,
+    ID_IT_TIME = 0,
+    ID_IT_DISTANCE,
     
-    ID_EBL_PERSISTENT_LAST
+    ID_IT_LAST
 };
 
-class EBL : public ODPath
+enum {
+    ID_LT_TIME = 0,
+    ID_LT_DISTANCE,
+    
+    ID_LT_LAST
+};
+
+enum {
+    ID_DU_KILOMETERS = 0,
+    ID_DU_NAUTICAL_MILES,
+    
+    ID_DU_LAST
+};
+
+enum {
+    ID_TU_MINUTES = 0,
+    ID_TU_HOURS,
+    ID_TU_DAYS,
+    
+    ID_TU_LAST
+};
+
+enum {
+    ID_DR_PERSISTENT = 0,
+    ID_DR_PERSISTENT_CRASH,
+    ID_DR_NOT_PERSISTENT,
+    
+    ID_DR_PERSISTENT_LAST
+};
+
+class DR : public ODPath
 {
     public:
-        EBL();
-        virtual ~EBL();
-        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
-        void DrawGL( PlugIn_ViewPort &piVP );
-        void RemovePoint( ODPoint *op, bool bRenamePoints = false );
-        void ResizeVRM( double lat, double lon );
-        void ResizeVRM( void );
-        void MoveEndPoint( double inc_lat, double inc_lon );
-        void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
+        DR();
+        virtual ~DR();
         ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
         ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
-        void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
-        
         void SetPersistence( int PersistenceType );
-        void CentreOnBoat( void );
-        void CentreOnLatLon( double lat, double lon );
-
-        bool        m_bFixedEndPosition;
+        
         int         m_iPersistenceType;
-        bool        m_bVRM;
-        bool        m_bCentreOnBoat;
+        double      m_dSoG;
+        int         m_iCoG;
+        double      m_dDRPathLength;
+        double      m_dTotalLengthNM;
+        double      m_dDRPointInterval;
+        double      m_dDRPointIntervalNM;
+        int         m_iLengthType;
+        int         m_iIntervalType;
+        int         m_iDistanceUnits;
+        int         m_iTimeUnits;
         
     protected:
-        void        UpdateEBL( void );
         
     private:
         wxColour    m_wxcLineColour;
 };
 
-WX_DECLARE_LIST(EBL, EBLList); // establish class EBL list member
+WX_DECLARE_LIST(DR, DRList); // establish class DR list member
 
-#endif // EBL_H
+#endif // DR_H

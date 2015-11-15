@@ -45,6 +45,7 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &po
     m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_ODPOINT, wxS("Boundary Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxS("Create Boundary Point"), wxEmptyString );
     m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_TEXTPOINT, wxS("Text Point"), *_img_ocpn_draw_textpoint_gray, wxNullBitmap, wxS("Create Text Point"), wxEmptyString );
     m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_EBL, wxS("Electronic Bearing Line"), *_img_ocpn_draw_ebl_gray, wxNullBitmap, wxS("Create EBL"), wxEmptyString );
+    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_DR, wxS("Dead Reckoning"), *_img_ocpn_draw_dr_gray, wxNullBitmap, wxS("Create DR"), wxEmptyString );
     m_toolBarODToolbar->SetInitialSize();
     m_toolbarSize = m_toolBarODToolbar->GetSize();
 	m_toolBarODToolbar->Realize();
@@ -71,6 +72,7 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         case ID_MODE_POINT: 
@@ -79,6 +81,7 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         case ID_MODE_TEXT_POINT: 
@@ -87,6 +90,7 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         case ID_MODE_EBL: 
@@ -95,6 +99,16 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
+            break;
+        }
+        case ID_MODE_DR: 
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), true );
             break;
         }
         case ID_NONE:
@@ -103,6 +117,7 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         default:
@@ -121,6 +136,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_BOUNDARY;
             if( g_ocpn_draw_pi->nBoundary_State == 0) g_ocpn_draw_pi->nBoundary_State = 1;
             g_ocpn_draw_pi->SetToolbarTool();
@@ -132,6 +148,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_POINT;
             if( g_ocpn_draw_pi->nPoint_State == 0) g_ocpn_draw_pi->nPoint_State = 1;
             g_ocpn_draw_pi->SetToolbarTool();
@@ -143,6 +160,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_TEXT_POINT;
             if( g_ocpn_draw_pi->nTextPoint_State == 0) g_ocpn_draw_pi->nTextPoint_State = 1;
             g_ocpn_draw_pi->SetToolbarTool();
@@ -154,7 +172,20 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_EBL;
+            if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
+            g_ocpn_draw_pi->SetToolbarTool();
+            break;
+        }
+        case ID_DR:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), true );
+            g_ocpn_draw_pi->m_Mode = ID_MODE_DR;
             if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
             g_ocpn_draw_pi->SetToolbarTool();
             break;
@@ -179,6 +210,7 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         case ID_MODE_POINT:
@@ -187,6 +219,7 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         case ID_MODE_TEXT_POINT:
@@ -195,6 +228,7 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         case ID_MODE_EBL:
@@ -203,6 +237,16 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
+            break;
+        }
+        case ID_MODE_DR:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), true );
             break;
         }
         case ID_NONE:
@@ -211,6 +255,7 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             break;
         }
         default:

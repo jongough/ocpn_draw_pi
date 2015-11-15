@@ -1,6 +1,6 @@
 /***************************************************************************
  * Project:  OpenCPN
- * Purpose:  EBL Properties
+ * Purpose:  EBL
  * Author:   Jon Gough
  *
  * Project:  OpenCPN
@@ -156,7 +156,7 @@ void EBL::MoveEndPoint( double inc_lat, double inc_lon )
 
 void EBL::SetPersistence( int PersistenceType )
 {
-    m_PersistenceType = PersistenceType;
+    m_iPersistenceType = PersistenceType;
     if(PersistenceType == ID_EBL_NOT_PERSISTENT || PersistenceType == ID_EBL_PERSISTENT_CRASH)
         m_bTemporary = true;
     else
@@ -269,7 +269,7 @@ void EBL::UpdateEBL( void )
     UpdateSegmentDistances();
     bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
     g_pODConfig->m_bSkipChangeSetUpdate = false;
-    if(m_PersistenceType == ID_EBL_PERSISTENT || m_PersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(m_iPersistenceType == ID_EBL_PERSISTENT || m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->UpdatePath( this ); 
     g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
     
