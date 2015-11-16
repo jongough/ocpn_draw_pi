@@ -465,8 +465,8 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
                     
 bool ODNavObjectChanges::AddPath( ODPath *pb, const char *action )
 {
-    if( !m_ODchanges_file )
-        return false;
+    if( !m_ODchanges_file ) return false;
+
     SetRootGPXNode();
 
     pugi::xml_node object = m_gpx_root.append_child("opencpn:path");

@@ -77,6 +77,7 @@ ODPath::ODPath( void )
     m_width = STYLE_UNDEFINED;
     m_style = STYLE_UNDEFINED;
     m_hiliteWidth = 0;
+    m_bSaveUpdates = true;
 
     m_pODPointList = new ODPointList;
     m_pLastAddedPoint = NULL;
@@ -330,10 +331,10 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_TRANSPARENT ) );
     dc.SetGLStipple();
     
-    if(m_pODPointList->GetCount() == 2)
-        dc.DrawLine(m_bpts[0].x, m_bpts[0].y, m_bpts[1].x, m_bpts[1].y);
-    else
-        dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts, 0, 0 );
+    for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ){
+        dc.DrawLine(m_bpts[i-1].x, m_bpts[i - 1].y, m_bpts[i].x, m_bpts[i].y);
+    }
+    
     glDisable( GL_LINE_STIPPLE );
 
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
