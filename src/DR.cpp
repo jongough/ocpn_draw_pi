@@ -59,6 +59,7 @@
 WX_DEFINE_LIST ( DRList );
 
 extern wxColour    g_colourDRLineColour;
+extern wxColour    g_colourInActiveDRLineColour;
 extern wxString    g_sDREndIconName;
 extern wxString    g_sDRStartIconName;
 extern int         g_DRPersistenceType;
@@ -79,6 +80,7 @@ DR::DR() : ODPath()
 {
     m_sTypeString = _T("DR");
     m_wxcActiveLineColour = g_colourDRLineColour;
+    m_wxcInActiveLineColour = g_colourInActiveDRLineColour;
     m_width = g_DRLineWidth;
     m_style = g_DRLineStyle;
     m_bDrawArrow = g_bDRShowArrow;

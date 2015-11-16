@@ -53,33 +53,33 @@ void initialize_images(void)
 
     fn.SetFullName(wxT("OCPNDrawManager.png"));
     _img_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("OCPNDrawManagerGray.png"));
-    _img_ocpn_draw_gray_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(wxT("OCPNDrawManagerGrey.png"));
+    _img_ocpn_draw_grey_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
-    fn.SetFullName(wxT("button1.png"));
+    fn.SetFullName(wxT("boundary.png"));
     _img_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("button2.png"));
-    _img_ocpn_draw_boundary_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(wxT("boundarygrey.png"));
+    _img_ocpn_draw_boundary_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("pointbutton.png"));
     _img_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("pointbuttongray.png"));
-    _img_ocpn_draw_point_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(wxT("pointbuttongrey.png"));
+    _img_ocpn_draw_point_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("textpointbutton.png"));
     _img_ocpn_draw_textpoint = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("textpointbuttongray.png"));
+    fn.SetFullName(wxT("textpointbuttongrey.png"));
     _img_ocpn_draw_textpoint_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("EBL.png"));
     _img_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("EBLgray.png"));
-    _img_ocpn_draw_ebl_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(wxT("EBLgrey.png"));
+    _img_ocpn_draw_ebl_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("DR.png"));
     _img_ocpn_draw_dr = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("DRgray.png"));
-    _img_ocpn_draw_dr_gray = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(wxT("DRgrey.png"));
+    _img_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     
 static unsigned char Bullet_green[] = {

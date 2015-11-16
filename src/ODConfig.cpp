@@ -82,9 +82,9 @@ bool ODConfig::UpdatePath( ODPath *pb )
 {
     if( pb->m_bIsInLayer ) return true;
 
-
     if( !m_bSkipChangeSetUpdate ) {
-        m_pODNavObjectChangesSet->AddPath( pb, "update" );
+        if(pb->m_bSaveUpdates)
+            m_pODNavObjectChangesSet->AddPath( pb, "update" );
 
     }
 

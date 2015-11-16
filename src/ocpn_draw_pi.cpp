@@ -39,10 +39,9 @@
 #include "BoundaryPoint.h"
 #include "BoundaryProp.h"
 #include "DR.h"
+#include "DRProp.h"
 #include "EBL.h"
 #include "EBLProp.h"
-#include "DR.h"
-#include "DRProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
@@ -254,18 +253,18 @@ wxImage ICursorPencil;
 wxImage ICursorCross;
 
 wxBitmap *_img_ocpn_draw_pi;
-wxBitmap *_img_ocpn_draw_gray_pi;
+wxBitmap *_img_ocpn_draw_grey_pi;
 wxBitmap *_img_ocpn_draw;
 wxBitmap *_img_ocpn_draw_boundary;
-wxBitmap *_img_ocpn_draw_boundary_gray;
+wxBitmap *_img_ocpn_draw_boundary_grey;
 wxBitmap *_img_ocpn_draw_point;
-wxBitmap *_img_ocpn_draw_point_gray;
+wxBitmap *_img_ocpn_draw_point_grey;
 wxBitmap *_img_ocpn_draw_textpoint;
 wxBitmap *_img_ocpn_draw_textpoint_gray;
 wxBitmap *_img_ocpn_draw_ebl;
-wxBitmap *_img_ocpn_draw_ebl_gray;
+wxBitmap *_img_ocpn_draw_ebl_grey;
 wxBitmap *_img_ocpn_draw_dr;
-wxBitmap *_img_ocpn_draw_dr_gray;
+wxBitmap *_img_ocpn_draw_dr_grey;
 const wxBitmap *_img_Bullet_green;
 const wxBitmap *_img_Bullet_red;
 const wxBitmap *_img_Bullet_yellow;
@@ -376,10 +375,10 @@ int ocpn_draw_pi::Init(void)
     
     LoadConfig();
     if(m_bLOGShowIcon) {
-        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_gray_pi, wxITEM_NORMAL,
+        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_grey_pi, wxITEM_NORMAL,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
-        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray, wxITEM_CHECK,
+        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_grey, wxITEM_CHECK,
                                              _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);
     }
@@ -389,12 +388,12 @@ int ocpn_draw_pi::Init(void)
     {
         case ID_MODE_BOUNDARY:
             // Boundary
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
             break;
             
         case ID_MODE_POINT:
             // Point
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_gray, _img_ocpn_draw_point);
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_grey, _img_ocpn_draw_point);
             break;
             
         case ID_MODE_TEXT_POINT:
@@ -404,13 +403,13 @@ int ocpn_draw_pi::Init(void)
             
         case ID_MODE_EBL:
             // EBL
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_gray);
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_grey);
             break;
             
         default:
             // Boundary
             m_Mode = ID_MODE_BOUNDARY;
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
             break;
     }
     
@@ -663,7 +662,10 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
             if(ebl->m_bCentreOnBoat)  {
                 if(!ebl->m_bFixedEndPosition)
                     ebl->MoveEndPoint( incLat, incLon );
+                bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
+                ebl->m_bSaveUpdates = false;
                 ebl->CentreOnBoat();
+                ebl->m_bSaveUpdates = l_bSaveUpdatesState;
             }
             node = node->GetNext();
         }
@@ -1302,7 +1304,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
                     m_Mode = ID_MODE_BOUNDARY;
-                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_gray);
+                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_grey);
                     m_iCallerId = m_draw_button_id;
                     m_pCurrentCursor = ocpncc1->pCursorPencil;
                     bret = TRUE;
@@ -1485,7 +1487,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pSelectedPath->UpdateSegmentDistances();
             bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
             g_pODConfig->m_bSkipChangeSetUpdate = false;
-            g_pODConfig->UpdatePath( m_pSelectedPath );
+            if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                // Save changes done by user
+                bool l_bSaveUpdatesState = m_pSelectedPath->m_bSaveUpdates;
+                m_pSelectedPath->m_bSaveUpdates = true;
+                g_pODConfig->UpdatePath( m_pSelectedPath );
+                m_pSelectedPath->m_bSaveUpdates = l_bSaveUpdatesState;
+            } else
+                g_pODConfig->UpdatePath( m_pSelectedPath );
             g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
             
             if( m_pSelectedPath->m_pODPointList ) {
@@ -2192,36 +2201,47 @@ void ocpn_draw_pi::FinishBoundary( void )
 
 void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
 {
-    Boundary *active_boundary = NULL;
-    
-//    wxBoundaryListNode *pnode = (wxBoundaryListNode *)g_pPathList->GetFirst();
-    wxBoundaryListNode *pnode = g_pBoundaryList->GetFirst();
+    wxPathListNode *pnode = g_pPathList->GetFirst();
     while( pnode ) {
         bool b_run = false;
         bool b_drawn = false;
-        Boundary *pBoundaryDraw = pnode->GetData();
-        if( pBoundaryDraw ) {
+        ODPath *pPath = pnode->GetData();
+        ODPath *pPathDraw = NULL;
+        Boundary *pBoundaryDraw = NULL;
+        EBL *pEBLDraw = NULL;
+        DR *pDRDraw = NULL;
+        
+        if(pPath->m_sTypeString == wxT("Boundary")){
+            pBoundaryDraw = (Boundary *) pPath;
+            pPathDraw = pBoundaryDraw;
+        } else if(pPath->m_sTypeString == wxT("EBL")) {
+            pEBLDraw = (EBL *) pPath;
+            pPathDraw = pEBLDraw;
+        } else if(pPath->m_sTypeString == wxT("DR")) {
+            pDRDraw = (DR *) pPath;
+            pPathDraw = pDRDraw;
+        }
+
+        if( pPathDraw ) {
             
-            wxBoundingBox test_box = pBoundaryDraw->GetBBox();
+            wxBoundingBox test_box = pPathDraw->GetBBox();
             
             if( b_run ) test_box.Expand( m_lon, m_lat );
             
-            if( !BltBBox.IntersectOut( test_box ) ) // Boundary is not wholly outside window
+            if( !BltBBox.IntersectOut( test_box ) ) // Path is not wholly outside window
             {
                 b_drawn = true;
-                
-                if( ( pBoundaryDraw != active_boundary ) )
-                    pBoundaryDraw->Draw( dc, *m_vp );
-            } else if( pBoundaryDraw->CrossesIDL() ) {
+                pPathDraw->Draw( dc, *m_vp );
+            } else if( pPathDraw->CrossesIDL() ) {
                 wxPoint2DDouble xlate( -360., 0. );
-                wxBoundingBox test_box1 = pBoundaryDraw->GetBBox();
+                wxBoundingBox test_box1 = pPathDraw->GetBBox();
                 test_box1.Translate( xlate );
                 if( b_run ) test_box1.Expand( m_lon, m_lat );
                 
                 if( !BltBBox.IntersectOut( test_box1 ) ) // Boundary is not wholly outside window
                 {
                     b_drawn = true;
-                    if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, *m_vp );
+                    pPathDraw->Draw( dc, *m_vp );
                 }
             }
             
@@ -2229,94 +2249,27 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
             if( !b_drawn ) {
                 if( ( BltBBox.GetMinX() < -180. ) && ( BltBBox.GetMaxX() > -180. ) ) {
                     wxPoint2DDouble xlate( -360., 0. );
-                    wxBoundingBox test_box2 = pBoundaryDraw->GetBBox();
+                    wxBoundingBox test_box2 = pPathDraw->GetBBox();
                     test_box2.Translate( xlate );
                     if( !BltBBox.IntersectOut( test_box2 ) ) // Boundary is not wholly outside window
                     {
                         b_drawn = true;
-                        if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, *m_vp );
+                        pPathDraw->Draw( dc, *m_vp );
                     }
                 } else if( !b_drawn && ( BltBBox.GetMinX() < 180. ) && ( BltBBox.GetMaxX() > 180. ) ) {
                     wxPoint2DDouble xlate( 360., 0. );
-                    wxBoundingBox test_box3 = pBoundaryDraw->GetBBox();
+                    wxBoundingBox test_box3 = pPathDraw->GetBBox();
                     test_box3.Translate( xlate );
                     if( !BltBBox.IntersectOut( test_box3 ) ) // Boundary is not wholly outside window
                     {
                         b_drawn = true;
-                        if( ( pBoundaryDraw != active_boundary ) ) pBoundaryDraw->Draw( dc, *m_vp );
+                        pPathDraw->Draw( dc, *m_vp );
                     }
                 }
             }
         }
-        
         pnode = pnode->GetNext();
     }
-    
-    //  Draw any active or selected route, boundary or track last, so that is is always on top
-    if( active_boundary ) active_boundary->Draw( dc, *m_vp );
-    
-    wxEBLListNode *pEBLNode = g_pEBLList->GetFirst();
-    while( pEBLNode ) {
-        bool b_drawn = false;
-        EBL *pEBLDraw = pEBLNode->GetData();
-        if( pEBLDraw ) {
-            
-            wxBoundingBox test_box = pEBLDraw->GetBBox();
-            
-            if( !BltBBox.IntersectOut( test_box ) ) // Boundary is not wholly outside window
-            {
-                b_drawn = true;
-                pEBLDraw->Draw( dc, *m_vp );
-            } else if( pEBLDraw->CrossesIDL() ) {
-                wxPoint2DDouble xlate( -360., 0. );
-                wxBoundingBox test_box1 = pEBLDraw->GetBBox();
-                test_box1.Translate( xlate );
-                
-                if( !BltBBox.IntersectOut( test_box1 ) ) // Boundary is not wholly outside window
-                {
-                    b_drawn = true;
-                    pEBLDraw->Draw( dc, *m_vp );
-                }
-            }
-            
-            //      Need to quick check for the case where VP crosses IDL
-            if( !b_drawn ) {
-                if( ( BltBBox.GetMinX() < -180. ) && ( BltBBox.GetMaxX() > -180. ) ) {
-                    wxPoint2DDouble xlate( -360., 0. );
-                    wxBoundingBox test_box2 = pEBLDraw->GetBBox();
-                    test_box2.Translate( xlate );
-                    if( !BltBBox.IntersectOut( test_box2 ) ) // Boundary is not wholly outside window
-                    {
-                        b_drawn = true;
-                        pEBLDraw->Draw( dc, *m_vp );
-                    }
-                } else if( !b_drawn && ( BltBBox.GetMinX() < 180. ) && ( BltBBox.GetMaxX() > 180. ) ) {
-                    wxPoint2DDouble xlate( 360., 0. );
-                    wxBoundingBox test_box3 = pEBLDraw->GetBBox();
-                    test_box3.Translate( xlate );
-                    if( !BltBBox.IntersectOut( test_box3 ) ) // Boundary is not wholly outside window
-                    {
-                        b_drawn = true;
-                        pEBLDraw->Draw( dc, *m_vp );
-                    }
-                }
-            }
-            if(pEBLDraw == m_pSelectedEBL && m_bODPointEditing) {
-                double brg, dist;
-                wxPoint destPoint;
-                ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
-                ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
-                DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
-                GetCanvasPixLL( m_vp, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
-                wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
-                if(info.length() > 0)
-                    RenderExtraPathLegInfo( dc, destPoint, info );
-            }
-        }
-        
-        pEBLNode = pEBLNode->GetNext();
-    }
-    
 }
 
 void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
@@ -3026,7 +2979,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_BOUNDARY:
                 // Boundary
                 m_pCurrentCursor = ocpncc1->pCursorPencil;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 1;
                 nPoint_State = 0;
@@ -3038,7 +2991,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_POINT:
                 // Point
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_gray, _img_ocpn_draw_point);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_grey, _img_ocpn_draw_point);
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 0;
                 nPoint_State = 1;
@@ -3062,7 +3015,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_EBL:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_gray);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_grey);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3075,7 +3028,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_DR:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr, _img_ocpn_draw_dr_gray);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr, _img_ocpn_draw_dr_grey);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3089,7 +3042,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 // Boundary
                 m_Mode = ID_MODE_BOUNDARY;
                 m_pCurrentCursor = ocpncc1->pCursorPencil;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_gray, _img_ocpn_draw_boundary);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
                 g_pODToolbar->SetToolbarTool( ID_BOUNDARY );
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 1;

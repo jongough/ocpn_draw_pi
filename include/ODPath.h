@@ -141,6 +141,7 @@ public:
     wxPoint     *m_bpts;
     int         m_iBlink;
     bool        m_bDrawArrow;
+    bool        m_bSaveUpdates;
     
 protected:    
     bool m_bNeedsUpdateBBox;
@@ -154,6 +155,7 @@ protected:
     double      m_ArrivalRadius;
     bool        m_bcrosses_idl;
     wxColour    m_col;
+    
     
 private:
 

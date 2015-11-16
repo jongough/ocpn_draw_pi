@@ -256,6 +256,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sDREndIconName = m_bcomboBoxDREndIconName->GetValue();
     g_sDRStartIconName = m_bcomboBoxDRStartIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
+    g_colourInActiveDRLineColour = m_colourPickerInActiveDRLineColour->GetColour();
     g_DRLineWidth = m_choiceDRLineWidth->GetSelection() + 1;
     g_DRLineStyle = ::StyleValues[ m_choiceDRLineStyle->GetSelection()];
     g_bDRShowArrow = m_checkBoxDRShowArrow->GetValue();

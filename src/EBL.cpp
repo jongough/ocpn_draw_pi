@@ -88,6 +88,7 @@ EBL::EBL() : ODPath()
     m_bVRM = g_bEBLVRM;
     m_bCentreOnBoat = true;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
+    m_bSaveUpdates = false;
     SetPersistence( g_EBLPersistenceType );
     SetActiveColours();
 }
@@ -151,7 +152,6 @@ void EBL::MoveEndPoint( double inc_lat, double inc_lon )
     }
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
         g_pEBLPropDialog->UpdateProperties();
-    
 }
 
 void EBL::SetPersistence( int PersistenceType )
@@ -181,6 +181,7 @@ void EBL::CentreOnBoat( void )
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
         g_pEBLPropDialog->UpdateProperties();
 
+    m_bSaveUpdates = false;
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     return;
@@ -197,6 +198,7 @@ void EBL::CentreOnLatLon( double lat, double lon )
         pStartPoint->ReLoadIcon();
     }
     m_bCentreOnBoat = false;
+    m_bSaveUpdates = true;
     
     UpdateEBL();
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())

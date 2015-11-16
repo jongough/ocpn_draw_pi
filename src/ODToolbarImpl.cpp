@@ -41,11 +41,11 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent )
 {
-    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_BOUNDARY, wxS("Boundary"), *_img_ocpn_draw_boundary_gray, wxNullBitmap, wxS("Create Boundary"), wxEmptyString );
-    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_ODPOINT, wxS("Boundary Point"), *_img_ocpn_draw_point_gray, wxNullBitmap, wxS("Create Boundary Point"), wxEmptyString );
+    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_BOUNDARY, wxS("Boundary"), *_img_ocpn_draw_boundary_grey, wxNullBitmap, wxS("Create Boundary"), wxEmptyString );
+    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_ODPOINT, wxS("Boundary Point"), *_img_ocpn_draw_point_grey, wxNullBitmap, wxS("Create Boundary Point"), wxEmptyString );
     m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_TEXTPOINT, wxS("Text Point"), *_img_ocpn_draw_textpoint_gray, wxNullBitmap, wxS("Create Text Point"), wxEmptyString );
-    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_EBL, wxS("Electronic Bearing Line"), *_img_ocpn_draw_ebl_gray, wxNullBitmap, wxS("Create EBL"), wxEmptyString );
-    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_DR, wxS("Dead Reckoning"), *_img_ocpn_draw_dr_gray, wxNullBitmap, wxS("Create DR"), wxEmptyString );
+    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_EBL, wxS("Electronic Bearing Line"), *_img_ocpn_draw_ebl_grey, wxNullBitmap, wxS("Create EBL"), wxEmptyString );
+    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_DR, wxS("Dead Reckoning"), *_img_ocpn_draw_dr_grey, wxNullBitmap, wxS("Create DR"), wxEmptyString );
     m_toolBarODToolbar->SetInitialSize();
     m_toolbarSize = m_toolBarODToolbar->GetSize();
 	m_toolBarODToolbar->Realize();
