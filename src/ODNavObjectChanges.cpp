@@ -51,7 +51,9 @@ extern int              g_iTextPosition;
 extern wxColour         g_colourDefaultTextColour;
 extern wxColour         g_colourDefaultTextBackgroundColour;
 extern int              g_iTextBackgroundTransparency;
-extern wxFont          g_DisplayTextFont;
+extern wxFont           g_DisplayTextFont;
+extern int              g_iInclusionBoundaryPointSize;
+extern unsigned int     g_uiBoundaryPointFillTransparency;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -387,7 +389,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     child.append_attribute("style") = pPath->m_style;
     if(pBoundary) {
         child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
-        child.append_attribute("inclusion_boundary_size") =pBoundary->m_iInclusionBoundarySize;
+        child.append_attribute("inclusion_boundary_size") = pBoundary->m_iInclusionBoundarySize;
     }
     if(pBoundary) {
         child = node.append_child("opencpn:boundary_type");
@@ -729,6 +731,10 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
     bool    l_bFill = false;
+    bool    l_bExclusionBoundaryPoint;
+    bool    l_bInclusionBoundaryPoint;
+    int     l_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
+    unsigned int l_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
     double  l_natural_scale = 0.0;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
@@ -872,8 +878,28 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             long v = 0;
             if( s.ToLong( &v ) )
                 l_bFill = ( v != 0 );
+        } else if ( !strcmp( pcn, "opencpn:boundary_point_type" ) ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            if( s == "Exclusion" ) {
+                l_bExclusionBoundaryPoint = true;
+                l_bInclusionBoundaryPoint = false;
+            } else if( s == "Inclusion" ) {
+                l_bExclusionBoundaryPoint = false;
+                l_bInclusionBoundaryPoint = true;
+            } else if( s == "None" ) {
+                l_bExclusionBoundaryPoint = false;
+                l_bInclusionBoundaryPoint = false;
+            } else l_bExclusionBoundaryPoint = false;
+        } else if ( !strcmp( pcn, "opencpn:boundary_point_style" ) ) {
+            for ( pugi::xml_attribute attr = child.first_attribute(); attr; attr = attr.next_attribute() ) {
+                if ( wxString::FromUTF8(attr.name()) == _T("fill_transparency") )
+                    l_uiBoundaryPointFillTransparency = attr.as_uint();
+                else if ( wxString::FromUTF8(attr.name()) == _T("inclusion_fill_size") )
+                    l_iInclusionBoundaryPointSize = attr.as_int();
+                
+            }
         }else if ( !strcmp( pcn, "opencpn:natural_scale" ) ){
-            wxString::FromUTF8(child.first_child().value()).ToDouble( &l_natural_scale );
+        wxString::FromUTF8(child.first_child().value()).ToDouble( &l_natural_scale );
         }
     }   // for
 
@@ -914,8 +940,13 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
             pTP->m_natural_scale = l_natural_scale;
-        } else if ( TypeString == "Boundary Point" )
+        } else if ( TypeString == "Boundary Point" ) {
             pBP -> m_bFill = l_bFill;
+            pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
+            pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
+            pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
+            pBP -> m_uiBoundaryPointFillTransparency = l_uiBoundaryPointFillTransparency;
+        }
         
         pOP->SetMarkDescription( DescString );
         pOP->m_sTypeString = TypeString;

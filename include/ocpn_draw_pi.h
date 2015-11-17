@@ -168,6 +168,15 @@ enum {
     ID_BOUNDARY_TYPE_LAST
 };
 
+// Boundary Point types
+enum {
+    ID_BOUNDARY_POINT_EXCLUSION = 0,
+    ID_BOUNDARY_POINT_INCLUSION,
+    ID_BOUNDARY_POINT_NONE,
+    
+    ID_BOUNDARY_POINT_TYPE_LAST
+};
+
 //#define PI 3.14159265
 
 class Boundary;

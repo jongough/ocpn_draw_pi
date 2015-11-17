@@ -25,10 +25,11 @@
 #include <wx/icon.h>
 #include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
+#include <wx/radiobox.h>
+#include <wx/slider.h>
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
 #include <wx/panel.h>
-#include <wx/slider.h>
 #include <wx/button.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
@@ -49,6 +50,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxPanel* m_panelBasicProperties;
 		wxBoxSizer* m_SizerBasicProperties;
 		wxStaticText* m_staticText2;
+		wxBoxSizer* m_bSizerOuterProperties;
 		wxStaticText* m_staticTextName;
 		wxTextCtrl* m_textName;
 		wxBoxSizer* m_SizerNameIcon;
@@ -64,8 +66,14 @@ class ODPointPropertiesDialog : public wxDialog
 		wxTextCtrl* m_textLongitude;
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textArrivalRadius;
+		wxBoxSizer* m_bSizerRangeRingsControl;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
-		wxCheckBox* m_checkBoxFill;
+		wxRadioBox* m_radioBoxBoundaryPointType;
+		wxBoxSizer* m_bSizerFill;
+		wxStaticText* m_staticTextFillDensity;
+		wxSlider* m_sliderBoundaryPointFillTransparency;
+		wxStaticText* m_staticTextBoundaryPointInclusionSize;
+		wxSlider* m_sliderBoundaryPointInclusionSize;
 		wxBoxSizer* m_SizerODPointRangeRingsSelect;
 		wxStaticText* m_staticTextPointRangeRings;
 		wxChoice* m_choicePointRangeRingsNumber;

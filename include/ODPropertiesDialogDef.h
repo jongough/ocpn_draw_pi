@@ -29,9 +29,9 @@
 #include <wx/textctrl.h>
 #include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
+#include <wx/radiobox.h>
 #include <wx/clrpicker.h>
 #include <wx/button.h>
-#include <wx/radiobox.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
@@ -83,7 +83,13 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticBitmap* m_bitmapPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
-		wxCheckBox* m_checkBoxFill;
+		wxRadioBox* m_radioBoxBoundaryPointType;
+		wxFlexGridSizer* m_fgSizerBoundaryPointFillDensity;
+		wxStaticText* m_staticTextBoundaryPointFillDensity;
+		wxSlider* m_sliderBoundaryPointFillTransparency;
+		wxFlexGridSizer* m_fgSizerBoundaryPointSize;
+		wxStaticText* m_staticTextBoundaryPointSize;
+		wxSlider* m_sliderInclusionBoundaryPointSize;
 		wxStaticText* m_staticTextRangeRingNumber;
 		wxChoice* m_choiceODPointRangeRingNumber;
 		wxStaticText* m_staticTextRangeRingSteps;

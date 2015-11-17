@@ -139,10 +139,14 @@ wxColour    g_colourActiveBoundaryFillColour;
 wxColour    g_colourInActiveBoundaryFillColour;
 bool        g_bExclusionBoundary;
 bool        g_bInclusionBoundary;
+bool        g_bExclusionBoundaryPoint;
+bool        g_bInclusionBoundaryPoint;
 unsigned int g_uiFillTransparency;
+unsigned int g_uiBoundaryPointFillTransparency;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
 int         g_iInclusionBoundarySize;
+int         g_iInclusionBoundaryPointSize;
 wxString    g_sEBLEndIconName;
 wxString    g_sEBLStartIconName;
 wxColour    g_colourEBLLineColour;
@@ -885,6 +889,9 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ODPointRangeRingsStep" ), g_fODPointRangeRingsStep );
         pConf->Write( wxS( "ODPointRangeRingsStepUnits" ), g_iODPointRangeRingsStepUnits );
         pConf->Write( wxS( "ODPointRangeRingsColour" ), g_colourODPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        long l_longBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
+        pConf->Write( wxS( "DefaultBoundaryPointFillTransparency" ), l_longBoundaryPointFillTransparency );
+        pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
@@ -1008,6 +1015,30 @@ void ocpn_draw_pi::LoadConfig()
         g_colourODPointRangeRingsColour = wxColour( *wxRED );
         pConf->Read( wxS( "ODPointRangeRingsColour" ), &l_wxsODPointRangeRingsColour, wxS( "RED" ) );
         g_colourODPointRangeRingsColour.Set( l_wxsODPointRangeRingsColour );
+        long l_longBoundaryPointFillTransparency;
+        pConf->Read( wxS( "DefaultBoundaryPointFillTransparency" ), &l_longBoundaryPointFillTransparency, 175 );
+        g_uiBoundaryPointFillTransparency = l_longBoundaryPointFillTransparency;
+        pConf->Read( wxS( "DefaultInclusionBoundaryPointSize" ), &g_iInclusionBoundaryPointSize, 15 );
+        int l_BoundaryPointType;
+        pConf->Read( wxS( "DefaultBoundaryPointType" ), &l_BoundaryPointType, ID_BOUNDARY_POINT_EXCLUSION );
+        switch (l_BoundaryPointType) {
+            case ID_BOUNDARY_POINT_EXCLUSION:
+                g_bExclusionBoundaryPoint = true;
+                g_bInclusionBoundaryPoint = false;
+                break;
+            case ID_BOUNDARY_POINT_INCLUSION:
+                g_bExclusionBoundaryPoint = false;
+                g_bInclusionBoundaryPoint = true;
+                break;
+            case ID_BOUNDARY_POINT_NONE:
+                g_bExclusionBoundaryPoint = false;
+                g_bInclusionBoundaryPoint = false;
+                break;
+            default:
+                g_bExclusionBoundaryPoint = true;
+                g_bInclusionBoundaryPoint = false;
+                break;
+        }
         pConf->Read( wxS( "ShowMag" ), &g_bShowMag, 0 );
         g_UserVar = 0.0;
         wxString umv;
