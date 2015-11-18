@@ -142,8 +142,44 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, _("Show Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizerRingsShow->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkBoxFill = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, _("Fill Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	fgSizerRingsShow->Add( m_checkBoxFill, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	wxString m_radioBoxBoundaryPointTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
+	int m_radioBoxBoundaryPointTypeNChoices = sizeof( m_radioBoxBoundaryPointTypeChoices ) / sizeof( wxString );
+	m_radioBoxBoundaryPointType = new wxRadioBox( m_panelBoundaryPoint, wxID_ANY, _("Boundary Point Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryPointTypeNChoices, m_radioBoxBoundaryPointTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxBoundaryPointType->SetSelection( 0 );
+	fgSizerRingsShow->Add( m_radioBoxBoundaryPointType, 0, wxALL, 5 );
+	
+	m_fgSizerBoundaryPointFillDensity = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerBoundaryPointFillDensity->AddGrowableCol( 1 );
+	m_fgSizerBoundaryPointFillDensity->SetFlexibleDirection( wxBOTH );
+	m_fgSizerBoundaryPointFillDensity->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextBoundaryPointFillDensity = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBoundaryPointFillDensity->Wrap( -1 );
+	m_fgSizerBoundaryPointFillDensity->Add( m_staticTextBoundaryPointFillDensity, 0, wxALL, 5 );
+	
+	m_sliderBoundaryPointFillTransparency = new wxSlider( m_panelBoundaryPoint, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	m_fgSizerBoundaryPointFillDensity->Add( m_sliderBoundaryPointFillTransparency, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	fgSizerRingsShow->Add( m_fgSizerBoundaryPointFillDensity, 1, wxEXPAND, 5 );
+	
+	m_fgSizerBoundaryPointSize = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerBoundaryPointSize->AddGrowableCol( 1 );
+	m_fgSizerBoundaryPointSize->SetFlexibleDirection( wxBOTH );
+	m_fgSizerBoundaryPointSize->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextBoundaryPointSize = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Boundary Point Inclusion\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBoundaryPointSize->Wrap( -1 );
+	m_fgSizerBoundaryPointSize->Add( m_staticTextBoundaryPointSize, 0, wxALL, 5 );
+	
+	m_sliderInclusionBoundaryPointSize = new wxSlider( m_panelBoundaryPoint, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	m_fgSizerBoundaryPointSize->Add( m_sliderInclusionBoundaryPointSize, 1, wxALL|wxEXPAND, 5 );
+	
+	
+	fgSizerRingsShow->Add( m_fgSizerBoundaryPointSize, 1, wxEXPAND, 5 );
+	
+	
+	fgSizerRingsShow->Add( 0, 0, 1, wxEXPAND, 5 );
 	
 	
 	bSizerOCPNPoint->Add( fgSizerRingsShow, 0, wxEXPAND, 5 );

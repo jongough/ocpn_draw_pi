@@ -264,7 +264,30 @@ void ODPointPropertiesImpl::SaveChanges()
                 m_pTextPoint->m_DisplayTextFont = twxfdData.m_chosenFont;
             }
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
-            m_pBoundaryPoint->m_bFill = m_checkBoxFill->GetValue();
+            m_pBoundaryPoint->m_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
+            m_pBoundaryPoint->m_iInclusionBoundaryPointSize = m_sliderBoundaryPointInclusionSize->GetValue();
+            int l_BoundaryPointType;
+            l_BoundaryPointType = m_radioBoxBoundaryPointType->GetSelection();
+            switch (l_BoundaryPointType) {
+                case ID_BOUNDARY_POINT_EXCLUSION:
+                    m_pBoundaryPoint->m_bExclusionBoundaryPoint = true;
+                    m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
+                    break;
+                case ID_BOUNDARY_POINT_INCLUSION:
+                    m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
+                    m_pBoundaryPoint->m_bInclusionBoundaryPoint = true;
+                    break;
+                case ID_BOUNDARY_POINT_NONE:
+                    m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
+                    m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
+                    break;
+                default:
+                    m_pBoundaryPoint->m_bExclusionBoundaryPoint = true;
+                    m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
+                    break;
+            }
+            
+            
         }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
@@ -357,6 +380,30 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
 bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 {
     if( m_pODPoint ) {
+        if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            m_radioBoxBoundaryPointType->Enable( false );
+            m_radioBoxBoundaryPointType->Hide();
+            m_staticTextBoundaryPointInclusionSize->Hide();
+            m_sliderBoundaryPointInclusionSize->Enable( false );
+            m_sliderBoundaryPointInclusionSize->Hide();
+            m_staticTextFillDensity->Hide();
+            m_sliderBoundaryPointFillTransparency->Enable( false );
+            m_sliderBoundaryPointFillTransparency->Hide();
+            m_bSizerOuterProperties->Hide( m_bSizerFill );
+        } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
+            m_radioBoxBoundaryPointType->Enable( true );
+            m_radioBoxBoundaryPointType->Show();
+            m_staticTextBoundaryPointInclusionSize->Show();
+            m_sliderBoundaryPointInclusionSize->Enable( true );
+            m_sliderBoundaryPointInclusionSize->Show();
+            m_staticTextFillDensity->Show();
+            m_sliderBoundaryPointFillTransparency->Enable( true );
+            m_sliderBoundaryPointFillTransparency->Show();
+            m_bSizerOuterProperties->Show( m_bSizerFill );
+        }
+        this->GetSizer()->Fit( this );
+        this->Layout();
+        
         m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
         m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
         m_lat_save = m_pODPoint->m_lat;
@@ -411,11 +458,14 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
-            m_checkBoxFill->Enable( false );
             m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
-            m_checkBoxFill->Enable( true );
-            m_checkBoxFill->SetValue( m_pBoundaryPoint->m_bFill );
+            if( m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
+            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_INCLUSION );
+            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_NONE );
+            else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
+            m_sliderBoundaryPointInclusionSize->SetValue( m_pBoundaryPoint->m_iInclusionBoundaryPointSize );
+            m_sliderBoundaryPointFillTransparency->SetValue( m_pBoundaryPoint->m_uiBoundaryPointFillTransparency );
         }
         
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );

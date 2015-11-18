@@ -92,6 +92,8 @@ public:
      void DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxCoord rr );
      void DrawCircle(wxCoord x, wxCoord y, wxCoord radius);
      void DrawCircle(const wxPoint &pt, wxCoord radius) { DrawCircle(pt.x, pt.y, radius); }
+     void DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius );
+     //void DrawDisk( wxPoint &pt, wxCoord innerRadius, wxCoord outerRadius );
      void StrokeCircle(wxCoord x, wxCoord y, wxCoord radius);
 
      void DrawEllipse(wxCoord x, wxCoord y, wxCoord width, wxCoord height);

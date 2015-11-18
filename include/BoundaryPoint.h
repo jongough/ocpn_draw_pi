@@ -35,8 +35,10 @@ public:
     void Draw(ODDC& dc, wxPoint* rpn);
     void DrawGL(PlugIn_ViewPort& pivp);
     
-    bool    m_bKeepOut;
-    bool    m_bFill;
+    int             m_iInclusionBoundaryPointSize;
+    bool            m_bExclusionBoundaryPoint;
+    bool            m_bInclusionBoundaryPoint;
+    unsigned int    m_uiBoundaryPointFillTransparency;
 };
 
 #endif // BOUNDARYPOINT_H

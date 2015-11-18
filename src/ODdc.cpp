@@ -722,6 +722,54 @@ void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
     DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
 }
 
+void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius )
+{
+    if( dc ) {
+        wxGraphicsContext *wxGC = NULL;
+        wxMemoryDC *pmdc = wxDynamicCast(GetDC(), wxMemoryDC);
+        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        else {
+            wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
+            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+        }
+        wxGC->SetPen(dc->GetPen());
+        wxGC->SetBrush(dc->GetBrush());
+        wxGraphicsPath p = wxGC->CreatePath();
+        p.AddCircle( x, y, innerRadius );
+        p.AddCircle( x, y, outerRadius );
+        wxGC->FillPath(p);
+    
+    }
+    #ifdef ocpnUSE_GL
+    else {
+        //      Enable anti-aliased lines, at best quality
+        
+        //float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
+        float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((innerRadius * 2) * (innerRadius * 2)) * 2) ), 1) *M_PI);
+        int nInnerSteps = (2 * M_PI) / innerSteps;
+        float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((outerRadius * 2) * (outerRadius * 2)) * 2) ), 1) *M_PI);
+        int nOuterSteps = (2 * M_PI) / outerSteps;
+        wxPoint *disk = new wxPoint[ (int) innerSteps +(int) outerSteps + 2 ];
+        float a = 0.;
+        for( int i = 0; i < (int) innerSteps; i++ ) {
+            disk[i].x = x + innerRadius * sinf( a );
+            disk[i].y = y + innerRadius * cosf( a );
+            a += 2 * M_PI /innerSteps;
+        }
+        //a = 0;
+        for( int i = 0; i < (int) outerSteps; i++) {
+            disk[i + (int) innerSteps].x = x + outerRadius * sinf( a );
+            disk[i + (int) innerSteps].y = y + outerRadius * cosf( a );
+            a -= 2 * M_PI / outerSteps;
+        }
+        int npoints[2];
+        npoints[0] = (int) innerSteps;
+        npoints[1] = (int) outerSteps;
+        DrawPolygonsTessellated( 2, npoints, disk, 0, 0 );
+    }
+    #endif    
+}
+
 void ODDC::StrokeCircle( wxCoord x, wxCoord y, wxCoord radius )
 {
 #if wxUSE_GRAPHICS_CONTEXT

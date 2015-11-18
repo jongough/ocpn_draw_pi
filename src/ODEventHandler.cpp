@@ -657,15 +657,15 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             sType.append(m_pFoundODPoint->m_sTypeString);
             MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_MOVE, sType );
 
-            if( m_pSelectedPath->m_sTypeString != wxT("DR") ) {
-                if( m_pSelectedPath && m_pSelectedPath->GetnPoints() > 2 )
+            if( m_pSelectedPath ) {
+                if( m_pSelectedPath->m_sTypeString != wxT("DR") ) {
+                if( m_pSelectedPath->GetnPoints() > 2 )
                     MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
                 
-                if( m_pSelectedPath )
                     MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
-                else
-                    MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
-            }
+                }
+            } else 
+                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
         }
         //      Set this menu as the "focused context menu"
         menuFocus = menuODPoint;
