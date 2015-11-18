@@ -1199,23 +1199,26 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 l_sMsg = root[wxT("Msg")].AsString();
                 
                 if(l_sType == wxS("Request")) {
-                    if(l_sMsg == wxT("FindPointInAnyBoundary")) {
-                        wxString l_sGUID = GetBoundaryWithPointInBoundary( l_dLat, l_dLon );
+                    wxString l_sGUID = GetBoundaryWithPointInBoundary( l_dLat, l_dLon );
+                    if(l_sGUID.length() > 0)
+                        jMsg[wxS("Found")] = true;
+                    else {
+                        l_sGUID = g_pBoundaryMan->FindPointInBoundaryPoint( l_dLat, l_dLon );
                         if(l_sGUID.length() > 0)
                             jMsg[wxS("Found")] = true;
                         else 
                             jMsg[wxS("Found")] = false;
-                        jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                        jMsg[wxT("Msg")] = root[wxT("Msg")];
-                        jMsg[wxT("Type")] = wxT("Response");
-                        jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                        jMsg[wxS("GUID")] = l_sGUID;
-                        jMsg[wxS("lat")] = l_dLat;
-                        jMsg[wxS("lon")] = l_dLon;
-                        writer.Write( jMsg, MsgString );
-                        SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
-                        return;
                     }
+                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                    jMsg[wxT("Msg")] = root[wxT("Msg")];
+                    jMsg[wxT("Type")] = wxT("Response");
+                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                    jMsg[wxS("GUID")] = l_sGUID;
+                    jMsg[wxS("lat")] = l_dLat;
+                    jMsg[wxS("lon")] = l_dLon;
+                    writer.Write( jMsg, MsgString );
+                    SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
+                    return;
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInBoundary")) {
@@ -1243,13 +1246,15 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 l_sMsg = root[wxT("Msg")].AsString();
                 
                 if(l_sType == wxS("Request")) {
-                    Boundary *l_boundary;
+                    Boundary *l_boundary = NULL;
+                    BoundaryPoint *l_boundarypoint = NULL;
                     if(l_sMsg == wxS("FindPointInBoundary")) {
                         l_dLat = root[wxS("lat")].AsDouble();
                         l_dLon = root[wxS("lon")].AsDouble();
                         
                         l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( root[wxS("GUID")].AsString() );
-                        if(!l_boundary) {
+                        if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
+                        if(!l_boundary && !l_boundarypoint) {
                             wxString l_msg;
                             l_msg.append( wxS("Boundary, with GUID: ") );
                             l_msg.append(root[wxS("GUID")].AsString());
@@ -1267,8 +1272,9 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                             SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                             return;
                         }
-                        
-                        bool l_bFound = FindPointInBoundary( l_boundary, l_dLat, l_dLon );
+                        bool l_bFound;
+                        if(l_boundary) l_bFound = FindPointInBoundary( l_boundary, l_dLat, l_dLon );
+                        else if(l_boundarypoint) l_bFound = (BoundaryPoint *)g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
                         jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                         jMsg[wxT("Msg")] = root[wxT("Msg")];
                         jMsg[wxT("Type")] = wxT("Response");
@@ -1277,14 +1283,28 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         jMsg[wxS("lat")] = l_dLat;
                         jMsg[wxS("lon")] = l_dLon;
                         jMsg[wxS("GUID")] = root[wxS("GUID")];
-                        if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
-                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
-                        else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
-                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
-                        else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
-                            jMsg[wxS("BoundaryType")] = wxT("Neither");
-                        else
-                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
+                        if(l_boundary) {
+                            jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
+                            if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                                jMsg[wxS("BoundaryType")] = wxT("Exclusion");
+                            else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
+                                jMsg[wxS("BoundaryType")] = wxT("Inclusion");
+                            else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                                jMsg[wxS("BoundaryType")] = wxT("Neither");
+                            else
+                                jMsg[wxS("BoundaryType")] = wxT("Unknown");
+                        }
+                        else {
+                            jMsg[wxS("BoundaryObjectType")] = wxT("Boundary Point");
+                            if( l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
+                                jMsg[wxS("BoundaryType")] = wxT("Exclusion");
+                            else if( !l_boundarypoint->m_bExclusionBoundaryPoint && l_boundarypoint->m_bInclusionBoundaryPoint)
+                                jMsg[wxS("BoundaryType")] = wxT("Inclusion");
+                            else if( !l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
+                                jMsg[wxS("BoundaryType")] = wxT("Neither");
+                            else
+                                jMsg[wxS("BoundaryType")] = wxT("Unknown");
+                        }
                         writer.Write( jMsg, MsgString );
                         SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                         return;

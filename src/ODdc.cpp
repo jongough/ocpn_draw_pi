@@ -732,8 +732,8 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
             if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
         }
-        wxGC->SetPen(m_pen);
-        wxGC->SetBrush(m_brush);
+        wxGC->SetPen(dc->GetPen());
+        wxGC->SetBrush(dc->GetBrush());
         wxGraphicsPath p = wxGC->CreatePath();
         p.AddCircle( x, y, innerRadius );
         p.AddCircle( x, y, outerRadius );

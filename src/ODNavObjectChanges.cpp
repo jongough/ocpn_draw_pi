@@ -189,11 +189,14 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     }
     
     if(pp->m_sTypeString == wxT("Boundary Point")) {
-        child = node.append_child("opencpn:fill");
-        if(bp->m_bFill)
-            child.append_child(pugi::node_pcdata).set_value( "1" );
-        else
-            child.append_child(pugi::node_pcdata).set_value( "0" );
+        child = node.append_child("opencpn:boundary_type");
+        if( bp->m_bExclusionBoundaryPoint && !bp->m_bInclusionBoundaryPoint )
+            child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
+        else if( !bp->m_bExclusionBoundaryPoint && bp->m_bInclusionBoundaryPoint )
+            child.append_child(pugi::node_pcdata).set_value( "Inclusion" );
+        else if( !bp->m_bExclusionBoundaryPoint && !bp->m_bInclusionBoundaryPoint )
+            child.append_child(pugi::node_pcdata).set_value( "None" );
+        else child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
     }
     
     // Hyperlinks
@@ -878,7 +881,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             long v = 0;
             if( s.ToLong( &v ) )
                 l_bFill = ( v != 0 );
-        } else if ( !strcmp( pcn, "opencpn:boundary_point_type" ) ) {
+        } else if ( !strcmp( pcn, "opencpn:boundary_type" ) ) {
             wxString s = wxString::FromUTF8( child.first_child().value() );
             if( s == "Exclusion" ) {
                 l_bExclusionBoundaryPoint = true;
@@ -941,7 +944,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
             pTP->m_natural_scale = l_natural_scale;
         } else if ( TypeString == "Boundary Point" ) {
-            pBP -> m_bFill = l_bFill;
             pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
             pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
             pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
