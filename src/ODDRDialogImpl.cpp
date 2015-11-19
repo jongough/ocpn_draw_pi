@@ -81,7 +81,7 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     else
         s.Printf( _T("%.3f"), g_pfFix.Cog );
     m_textCtrlCOG->SetValue( s );
-    RequestRefresh( this );
+    this->Layout();
 }
 
 void ODDRDialogImpl::UpdateDialog()
