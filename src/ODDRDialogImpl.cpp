@@ -61,10 +61,10 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     wxString s;
     s.Printf( _T("%.3f"), g_dDRLength );
     m_textCtrlLength->SetValue( s );
-    s.Printf( _T("%.3f"), g_dDRPointInterval );
     if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
     else s.Printf( _T("Course over Ground %s"), _T("(T)") );
     m_staticTextCOG->SetLabel( s );
+    s.Printf( _T("%.3f"), g_dDRPointInterval );
     m_textCtrlDRPointInterval->SetValue( s );
     m_radioBoxLengthType->SetSelection( g_iDRLengthType );
     m_radioBoxIntervalType->SetSelection( g_iDRIntervalType );
