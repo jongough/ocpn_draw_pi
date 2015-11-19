@@ -30,7 +30,7 @@ ODDRDialogDef::ODDRDialogDef( wxWindow* parent, wxWindowID id, const wxString& t
 	m_textCtrlSOG = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer6->Add( m_textCtrlSOG, 0, wxALL, 5 );
 	
-	m_staticTextCOG = new wxStaticText( this, wxID_ANY, _("Course over Ground (M)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextCOG = new wxStaticText( this, wxID_ANY, _("Course over Ground"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextCOG->Wrap( -1 );
 	fgSizer6->Add( m_staticTextCOG, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	

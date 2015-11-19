@@ -1273,8 +1273,8 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                             return;
                         }
                         bool l_bFound;
-                        if(l_boundary) l_bFound = FindPointInBoundary( l_boundary, l_dLat, l_dLon );
-                        else if(l_boundarypoint) l_bFound = (BoundaryPoint *)g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
+                        if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
+                        else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
                         jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                         jMsg[wxT("Msg")] = root[wxT("Msg")];
                         jMsg[wxT("Type")] = wxT("Response");
@@ -2673,6 +2673,7 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
         g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
     
+    g_pODDRDialog->UpdateDialog();
     DimeWindow( g_pODDRDialog );
     g_pODDRDialog->Show();
     

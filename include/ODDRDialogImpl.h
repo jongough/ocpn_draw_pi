@@ -44,10 +44,13 @@ class ODDRDialogImpl : public ODDRDialogDef
 		// Handlers for MyDialogDR events.
 		void OnOK( wxCommandEvent& event );
 		void OnCancel( wxCommandEvent& event );
+        
 	public:
 		/** Constructor */
 		ODDRDialogImpl( wxWindow* parent );
-	//// end generated class members
+        //// end generated class members
+        
+        void UpdateDialog();
 	
 };
 
