@@ -54,6 +54,8 @@ extern int              g_iTextBackgroundTransparency;
 extern wxFont           g_DisplayTextFont;
 extern int              g_iInclusionBoundaryPointSize;
 extern unsigned int     g_uiBoundaryPointFillTransparency;
+extern bool             g_bExclusionBoundaryPoint;
+extern bool             g_bInclusionBoundaryPoint;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -734,8 +736,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
     bool    l_bFill = false;
-    bool    l_bExclusionBoundaryPoint;
-    bool    l_bInclusionBoundaryPoint;
+    bool    l_bExclusionBoundaryPoint = g_bExclusionBoundaryPoint;
+    bool    l_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     int     l_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
     unsigned int l_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
     double  l_natural_scale = 0.0;
