@@ -86,6 +86,7 @@ class DR : public ODPath
         int         m_iIntervalType;
         int         m_iDistanceUnits;
         int         m_iTimeUnits;
+        double      m_dMagCOG;
         
     protected:
         

@@ -75,6 +75,8 @@ extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
+extern bool         g_bShowMag;
+extern double       g_dVar;
 
 DR::DR() : ODPath()
 {
@@ -85,6 +87,7 @@ DR::DR() : ODPath()
     m_style = g_DRLineStyle;
     m_bDrawArrow = g_bDRShowArrow;
     SetPersistence( g_DRPersistenceType );
+    m_dMagCOG = g_dVar;
     SetActiveColours();
 }
 

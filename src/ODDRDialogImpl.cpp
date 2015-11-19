@@ -36,6 +36,8 @@
 #include "ODSelect.h"
 
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
+extern bool     g_bShowMag;
+extern double   g_dVar;
 extern double   g_dDRSOG;
 extern int      g_iDRCOG;
 extern double   g_dDRLength;
@@ -60,12 +62,34 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     s.Printf( _T("%.3f"), g_dDRLength );
     m_textCtrlLength->SetValue( s );
     s.Printf( _T("%.3f"), g_dDRPointInterval );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
+    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    m_staticTextCOG->SetLabel( s );
     m_textCtrlDRPointInterval->SetValue( s );
     m_radioBoxLengthType->SetSelection( g_iDRLengthType );
     m_radioBoxIntervalType->SetSelection( g_iDRIntervalType );
     m_radioBoxDistanceUnits->SetSelection( g_iDRDistanceUnits );
     m_radioBoxTimeUnits->SetSelection( g_iDRTimeUnits );
     
+    if(g_pfFix.Sog != g_pfFix.Sog )
+        s.Printf( _T("%.3f"), g_dDRSOG );
+    else
+        s.Printf( _T("%.3f"), g_pfFix.Sog );
+    m_textCtrlSOG->SetValue( s );
+    if(g_pfFix.Cog != g_pfFix.Cog )
+        s.Printf( _T("%i"), g_iDRCOG );
+    else
+        s.Printf( _T("%.3f"), g_pfFix.Cog );
+    m_textCtrlCOG->SetValue( s );
+    RequestRefresh( this );
+}
+
+void ODDRDialogImpl::UpdateDialog()
+{
+    wxString s;
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
+    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    m_staticTextCOG->SetLabel( s );
     if(g_pfFix.Sog != g_pfFix.Sog )
         s.Printf( _T("%.3f"), g_dDRSOG );
     else
@@ -92,7 +116,8 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     l_pDR->AddPoint( beginPoint, false );
 
     m_textCtrlSOG->GetValue().ToDouble( &l_pDR->m_dSoG );
-    l_pDR->m_iCoG = wxAtoi( m_textCtrlCOG->GetValue() );
+    l_pDR->m_iCoG = g_ocpn_draw_pi->GetTrueOrMag( wxAtoi( m_textCtrlCOG->GetValue() ) );
+    l_pDR->m_dMagCOG = g_dVar;
     m_textCtrlLength->GetValue().ToDouble( &l_pDR->m_dDRPathLength );
     m_textCtrlDRPointInterval->GetValue().ToDouble( &l_pDR->m_dDRPointInterval );
     
@@ -153,6 +178,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     double l_dStartLon = g_pfFix.Lon;
     double l_dEndLat;
     double l_dEndLon;
+
     PositionBearingDistanceMercator_Plugin( l_dStartLat, l_dStartLon, l_pDR->m_iCoG, l_pDR->m_dTotalLengthNM, &l_dEndLat, &l_dEndLon );
     
     int l_iNumWaypoints = floor( l_pDR->m_dTotalLengthNM / l_pDR->m_dDRPointIntervalNM );
