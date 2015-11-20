@@ -43,7 +43,7 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon )
 {
     wxPathListNode *boundary_node = g_pPathList->GetFirst();
     Boundary *pboundary = NULL;
-    bool bInPoly;
+    bool bInPoly = false;
     ODPoint *pop;
     int k = 0;
     wxString l_GUID = wxEmptyString;
@@ -156,7 +156,7 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
 
 wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon )
 {
-    bool bInPoly;
+    bool bInPoly = false;
     ODPoint *pop;
     int k = 0;
     wxString l_GUID = wxEmptyString;
