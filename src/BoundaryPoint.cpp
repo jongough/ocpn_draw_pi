@@ -89,7 +89,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
     int pix_radius = (int) lpp * m_iODPointRangeRingsNumber;
     
     // fill boundary with hatching
-    if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 0 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
+    if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 10 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxColour tCol;
         tCol.Set(m_wxcODPointRangeRingsColour.Red(), m_wxcODPointRangeRingsColour.Green(), m_wxcODPointRangeRingsColour.Blue(), m_uiBoundaryPointFillTransparency);
         if(m_bExclusionBoundaryPoint && !m_bInclusionBoundaryPoint) {
@@ -104,21 +104,6 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxHATCHSTYLE_CROSSDIAG ) );
             dc.DrawDisk( r.x, r.y, pix_radius, pix_radius + m_iInclusionBoundaryPointSize );
             dc.SetPen( savePen );
-/*            
-            wxGraphicsContext *wxGC = NULL;
-            wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
-            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
-            else {
-                wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
-                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
-            }
-            wxGC->SetPen(*wxTRANSPARENT_PEN);
-            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxHATCHSTYLE_CROSSDIAG ) );
-            wxGraphicsPath p = wxGC->CreatePath();
-            p.AddCircle( r.x, r.y, pix_radius );
-            p.AddCircle( r.x, r.y, pix_radius + m_iInclusionBoundaryPointSize );
-            wxGC->FillPath(p);
-*/            
         }
     }
     
@@ -174,7 +159,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     glPolygonStipple( slope_cross_hatch );
     glBegin(GL_POLYGON_STIPPLE);
     // fill boundary with hatching
-    if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 0 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
+    if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 10 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPen savePen = dc.GetPen();
         dc.SetPen(*wxTRANSPARENT_PEN);
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsColour, wxHATCHSTYLE_CROSSDIAG ) );
