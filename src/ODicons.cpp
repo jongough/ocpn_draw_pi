@@ -51,9 +51,9 @@ void initialize_images(void)
     fn.AppendDir(wxT("data"));
     wxLogMessage( _("ocpn_draw_pi data location: %s"), fn.GetFullPath());
 
-    fn.SetFullName(wxT("OCPNDrawManager.png"));
+    fn.SetFullName(wxT("ODManager.png"));
     _img_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-    fn.SetFullName(wxT("OCPNDrawManagerGrey.png"));
+    fn.SetFullName(wxT("ODManagerGrey.png"));
     _img_ocpn_draw_grey_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("boundary.png"));
