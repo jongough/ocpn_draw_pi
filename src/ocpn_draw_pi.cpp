@@ -1272,7 +1272,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                             SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                             return;
                         }
-                        bool l_bFound;
+                        bool l_bFound = false;
                         if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
                         else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
                         jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");

@@ -118,8 +118,8 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
     bool bInPoly = false;
     bool bBoundaryFound = false;
     int i;
-    float *polyX;
-    float *polyY;
+    float *polyX = NULL;
+    float *polyY = NULL;
     Boundary *pboundary = NULL;
     
     wxBoundaryListNode *pboundary_node = g_pBoundaryList->GetFirst();
@@ -148,8 +148,8 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
         bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
     } 
     
-    delete [] polyX;
-    delete [] polyY;
+    if(polyX) delete [] polyX;
+    if(polyY) delete [] polyY;
     
     return bInPoly;
 }

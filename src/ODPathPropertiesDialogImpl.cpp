@@ -390,8 +390,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     //  Iterate on Path Points
     wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
     
-    double slat = g_pfFix.Lat;
-    double slon = g_pfFix.Lon;
     double brgFromBoat = 0.;
     double distanceFromBoat = 0.;
     

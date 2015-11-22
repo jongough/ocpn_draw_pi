@@ -735,7 +735,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     wxColour    l_colourTextColour = g_colourDefaultTextColour;
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
-    bool    l_bFill = false;
     bool    l_bExclusionBoundaryPoint = g_bExclusionBoundaryPoint;
     bool    l_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     int     l_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
@@ -878,11 +877,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                 else if ( wxString::FromUTF8(attr.name()) == _T("colour") )
                     l_wxcODPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
             }
-        } else if ( !strcmp( pcn, "opencpn:fill" ) ) {
-            wxString s = wxString::FromUTF8( child.first_child().value() );
-            long v = 0;
-            if( s.ToLong( &v ) )
-                l_bFill = ( v != 0 );
         } else if ( !strcmp( pcn, "opencpn:boundary_type" ) ) {
             wxString s = wxString::FromUTF8( child.first_child().value() );
             if( s == "Exclusion" ) {

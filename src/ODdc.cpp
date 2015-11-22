@@ -746,9 +746,7 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
         
         //float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
         float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((innerRadius * 2) * (innerRadius * 2)) * 2) ), 1) *M_PI);
-        int nInnerSteps = (2 * M_PI) / innerSteps;
         float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((outerRadius * 2) * (outerRadius * 2)) * 2) ), 1) *M_PI);
-        int nOuterSteps = (2 * M_PI) / outerSteps;
         wxPoint *disk = new wxPoint[ (int) innerSteps +(int) outerSteps + 2 ];
         float a = 0.;
         for( int i = 0; i < (int) innerSteps; i++ ) {

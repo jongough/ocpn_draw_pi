@@ -85,7 +85,6 @@ bool EBLProp::SaveChanges( void )
 {
     wxColour l_EBLOrigColour = m_pEBL->GetCurrentColour();
     ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEndPoint = m_pEBL->m_pODPointList->GetLast()->GetData();
 
     bool ret = ODPathPropertiesDialogImpl::SaveChanges();
 
