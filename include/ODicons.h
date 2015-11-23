@@ -42,7 +42,7 @@ extern wxBitmap *_img_ocpn_draw_boundary_grey;
 extern wxBitmap *_img_ocpn_draw_point;
 extern wxBitmap *_img_ocpn_draw_point_grey;
 extern wxBitmap *_img_ocpn_draw_textpoint;
-extern wxBitmap *_img_ocpn_draw_textpoint_gray;
+extern wxBitmap *_img_ocpn_draw_textpoint_grey;
 extern wxBitmap *_img_ocpn_draw_ebl;
 extern wxBitmap *_img_ocpn_draw_ebl_grey;
 extern wxBitmap *_img_ocpn_draw_dr;
