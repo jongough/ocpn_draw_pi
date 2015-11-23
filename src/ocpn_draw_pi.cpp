@@ -264,7 +264,7 @@ wxBitmap *_img_ocpn_draw_boundary_grey;
 wxBitmap *_img_ocpn_draw_point;
 wxBitmap *_img_ocpn_draw_point_grey;
 wxBitmap *_img_ocpn_draw_textpoint;
-wxBitmap *_img_ocpn_draw_textpoint_gray;
+wxBitmap *_img_ocpn_draw_textpoint_grey;
 wxBitmap *_img_ocpn_draw_ebl;
 wxBitmap *_img_ocpn_draw_ebl_grey;
 wxBitmap *_img_ocpn_draw_dr;
@@ -402,12 +402,17 @@ int ocpn_draw_pi::Init(void)
             
         case ID_MODE_TEXT_POINT:
             // Text Point
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint, _img_ocpn_draw_textpoint_gray);
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint_grey, _img_ocpn_draw_textpoint);
             break;
             
         case ID_MODE_EBL:
             // EBL
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_grey);
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl_grey, _img_ocpn_draw_ebl);
+            break;
+            
+        case ID_MODE_DR:
+            // EBL
+            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr_grey, _img_ocpn_draw_dr);
             break;
             
         default:
@@ -1355,7 +1360,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
                     m_Mode = ID_MODE_BOUNDARY;
-                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_grey);
+                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
                     m_iCallerId = m_draw_button_id;
                     m_pCurrentCursor = ocpncc1->pCursorPencil;
                     bret = TRUE;
@@ -3055,7 +3060,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_TEXT_POINT:
                 // Text Point
                 m_pCurrentCursor = m_pTextCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint, _img_ocpn_draw_textpoint_gray);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint_grey, _img_ocpn_draw_textpoint);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3067,7 +3072,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_EBL:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl, _img_ocpn_draw_ebl_grey);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl_grey, _img_ocpn_draw_ebl);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3080,7 +3085,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_DR:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr, _img_ocpn_draw_dr_grey);
+                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr_grey, _img_ocpn_draw_dr);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
