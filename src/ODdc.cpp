@@ -924,7 +924,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
 
         gluTessNormal( tobj, 0, 0, 1);
-		gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
+        gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
 
@@ -981,7 +981,7 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
         gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
         
         gluTessNormal( tobj, 0, 0, 1);
-        gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO);
+        gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
         
