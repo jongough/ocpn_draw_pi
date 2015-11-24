@@ -692,7 +692,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             nConfig_State = 1;
             //SetToolbarItemState( m_config_button_id, true );
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
             
             DimeWindow( g_pPathManagerDialog );
             g_pPathManagerDialog->UpdatePathListCtrl();
