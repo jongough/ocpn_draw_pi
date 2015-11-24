@@ -106,8 +106,7 @@ extern int          g_iDRIntervalType;
 extern int          g_iDRDistanceUnits;
 extern int          g_iDRTimeUnits;
 extern int          g_iDRPersistenceType;
-extern wxString     g_sDREndIconName;
-extern wxString     g_sDRStartIconName;
+extern wxString     g_sDRPointIconName;
 extern wxColour     g_colourDRLineColour;
 extern int          g_DRPersistenceType;
 extern bool         g_bDRShowArrow;
@@ -153,14 +152,9 @@ void ODPropertiesDialogImpl::OnEBLStartIconComboboxSelected( wxCommandEvent& eve
     m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
 }
 
-void ODPropertiesDialogImpl::OnDREndIconComboboxSelected( wxCommandEvent& event )
+void ODPropertiesDialogImpl::OnDRPointIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapDREndBitmap->SetBitmap( m_bcomboBoxDREndIconName->GetItemBitmap( m_bcomboBoxDREndIconName->GetSelection() ) );
-}
-
-void ODPropertiesDialogImpl::OnDRStartIconComboboxSelected( wxCommandEvent& event )
-{
-    m_bitmapDRStartBitmap->SetBitmap( m_bcomboBoxDRStartIconName->GetItemBitmap( m_bcomboBoxDRStartIconName->GetSelection() ) );
+    m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
@@ -282,8 +276,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
     g_sEBLStartIconName = g_sEBLEndIconName;
     
-    g_sDREndIconName = m_bcomboBoxDREndIconName->GetValue();
-    g_sDRStartIconName = m_bcomboBoxDRStartIconName->GetValue();
+    g_sDRPointIconName = m_bcomboBoxDRPointIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
     g_colourInActiveDRLineColour = m_colourPickerInActiveDRLineColour->GetColour();
     g_DRLineWidth = m_choiceDRLineWidth->GetSelection() + 1;
@@ -368,8 +361,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_bcomboBoxODPointIconName->Clear();
         m_bcomboBoxEBLEndIconName->Clear();
         m_bcomboBoxEBLStartIconName->Clear();
-        m_bcomboBoxDREndIconName->Clear();
-        m_bcomboBoxDRStartIconName->Clear();
+        m_bcomboBoxDRPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
         if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
         
@@ -382,8 +374,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
                 m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
                 m_bcomboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
                 m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
-                m_bcomboBoxDRStartIconName->Append( *ps, icons->GetBitmap( i ) );
-                m_bcomboBoxDREndIconName->Append( *ps, icons->GetBitmap( i ) );
+                m_bcomboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
@@ -475,7 +466,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 
         iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sDREndIconName ) {
+            if( *g_pODPointMan->GetIconDescription( i ) == g_sDRPointIconName ) {
                 iconToSelect = i;
                 break;
             }
@@ -483,29 +474,12 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxDREndIconName->Append( g_sDREndIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxDREndIconName->GetCount() - 1;
+            m_bcomboBoxDRPointIconName->Append( g_sDRPointIconName, icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxDRPointIconName->GetCount() - 1;
         } 
         
-        m_bcomboBoxDREndIconName->SetSelection( iconToSelect );
-        m_bitmapDREndBitmap->SetBitmap( m_bcomboBoxDREndIconName->GetItemBitmap( m_bcomboBoxDREndIconName->GetSelection() ) );
-        
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sDRStartIconName ) {
-                iconToSelect = i;
-                break;
-            }
-        }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxDRStartIconName->Append( g_sDRStartIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxDRStartIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxDRStartIconName->SetSelection( iconToSelect );
-        m_bitmapDRStartBitmap->SetBitmap( m_bcomboBoxDRStartIconName->GetItemBitmap( m_bcomboBoxDRStartIconName->GetSelection() ) );
+        m_bcomboBoxDRPointIconName->SetSelection( iconToSelect );
+        m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
         
         icons = NULL;
 

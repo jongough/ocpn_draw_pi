@@ -543,37 +543,18 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerEBLEndPointIcon1->SetFlexibleDirection( wxBOTH );
 	fgSizerEBLEndPointIcon1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextDRStartPointIcon = new wxStaticText( m_panelDR, wxID_ANY, _("Start Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextDRStartPointIcon->Wrap( -1 );
-	fgSizerEBLEndPointIcon1->Add( m_staticTextDRStartPointIcon, 0, wxALL, 5 );
+	m_staticTextDRPointIcon = new wxStaticText( m_panelDR, wxID_ANY, _("DR Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRPointIcon->Wrap( -1 );
+	fgSizerEBLEndPointIcon1->Add( m_staticTextDRPointIcon, 0, wxALL, 5 );
 	
-	m_bitmapDRStartBitmap = new wxStaticBitmap( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerEBLEndPointIcon1->Add( m_bitmapDRStartBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	m_bitmapDRPointBitmap = new wxStaticBitmap( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerEBLEndPointIcon1->Add( m_bitmapDRPointBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
-	m_bcomboBoxDRStartIconName = new wxBitmapComboBox( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	fgSizerEBLEndPointIcon1->Add( m_bcomboBoxDRStartIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
+	m_bcomboBoxDRPointIconName = new wxBitmapComboBox( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerEBLEndPointIcon1->Add( m_bcomboBoxDRPointIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	fgSizerDRSettings->Add( fgSizerEBLEndPointIcon1, 1, wxEXPAND, 5 );
-	
-	wxFlexGridSizer* fgSizerEBLStartPointIcon1;
-	fgSizerEBLStartPointIcon1 = new wxFlexGridSizer( 0, 3, 0, 0 );
-	fgSizerEBLStartPointIcon1->AddGrowableCol( 1 );
-	fgSizerEBLStartPointIcon1->SetFlexibleDirection( wxBOTH );
-	fgSizerEBLStartPointIcon1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
-	
-	m_staticTextDREndPointIcon = new wxStaticText( m_panelDR, wxID_ANY, _("End Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextDREndPointIcon->Wrap( -1 );
-	fgSizerEBLStartPointIcon1->Add( m_staticTextDREndPointIcon, 0, wxALL, 5 );
-	
-	m_bitmapDREndBitmap = new wxStaticBitmap( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerEBLStartPointIcon1->Add( m_bitmapDREndBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
-	
-	m_bcomboBoxDREndIconName = new wxBitmapComboBox( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	fgSizerEBLStartPointIcon1->Add( m_bcomboBoxDREndIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
-	
-	
-	fgSizerDRSettings->Add( fgSizerEBLStartPointIcon1, 1, wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizerDRDefaultSizes;
 	fgSizerDRDefaultSizes = new wxFlexGridSizer( 0, 4, 0, 0 );
@@ -799,8 +780,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_bcomboBoxEBLStartIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLStartIconComboboxSelected ), NULL, this );
 	m_bcomboBoxEBLEndIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
-	m_bcomboBoxDRStartIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRStartIconComboboxSelected ), NULL, this );
-	m_bcomboBoxDREndIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDREndIconComboboxSelected ), NULL, this );
+	m_bcomboBoxDRPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRPointIconComboboxSelected ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
@@ -813,8 +793,7 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_bcomboBoxEBLStartIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLStartIconComboboxSelected ), NULL, this );
 	m_bcomboBoxEBLEndIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
-	m_bcomboBoxDRStartIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRStartIconComboboxSelected ), NULL, this );
-	m_bcomboBoxDREndIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDREndIconComboboxSelected ), NULL, this );
+	m_bcomboBoxDRPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRPointIconComboboxSelected ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );

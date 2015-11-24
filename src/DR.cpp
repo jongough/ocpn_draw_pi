@@ -60,8 +60,7 @@ WX_DEFINE_LIST ( DRList );
 
 extern wxColour    g_colourDRLineColour;
 extern wxColour    g_colourInActiveDRLineColour;
-extern wxString    g_sDREndIconName;
-extern wxString    g_sDRStartIconName;
+extern wxString    g_sDRPointIconName;
 extern int         g_DRPersistenceType;
 extern bool        g_bDRShowArrow;
 extern int         g_DRLineWidth; 
@@ -72,7 +71,6 @@ extern DRList       *g_pDRList;
 extern ODSelect     *g_pODSelect;
 extern PathMan      *g_pPathMan;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
 extern bool         g_bShowMag;
@@ -99,7 +97,7 @@ DR::~DR()
 ODPoint *DR::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
     ODPoint *newpoint = ODPath::InsertPointBefore( pOP, lat, lon );
-    newpoint->m_IconName = g_sODPointIconName;
+    newpoint->m_IconName = g_sDRPointIconName;
     newpoint->m_sTypeString = wxT("DR Point");
     newpoint->m_MarkName = wxT("");
     FinalizeForRendering();
@@ -109,7 +107,7 @@ ODPoint *DR::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRena
 ODPoint *DR::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
     ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon );
-    newpoint->m_IconName = g_sODPointIconName;
+    newpoint->m_IconName = g_sDRPointIconName;
     newpoint->m_sTypeString = wxT("DR Point");
     newpoint->m_MarkName = wxT("");
     ReloadPathPointIcons();

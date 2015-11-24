@@ -156,8 +156,7 @@ bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
-wxString    g_sDREndIconName;
-wxString    g_sDRStartIconName;
+wxString    g_sDRPointIconName;
 wxColour    g_colourDRLineColour;
 wxColour    g_colourInActiveDRLineColour;
 int         g_DRPersistenceType;
@@ -871,8 +870,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
-        pConf->Write( wxS( "DefaultDRStartIcon" ), g_sDRStartIconName );
-        pConf->Write( wxS( "DefaultDREndIcon" ), g_sDREndIconName );
+        pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
         pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
         pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
@@ -991,8 +989,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
-        pConf->Read( wxS( "DefaultDREndIcon" ), &g_sDREndIconName, wxS("Circle") );
-        pConf->Read( wxS( "DefaultDRStartIcon" ), &g_sDRStartIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultDRPointIcon" ), &g_sDRPointIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultDRLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultDRLineWidth" ), &g_DRLineWidth, 2  );
@@ -2641,7 +2638,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL = new EBL();
     g_pEBLList->Append( m_pMouseEBL );
     g_pPathList->Append( m_pMouseEBL );
-    m_pMouseEBL->m_PathNameString << g_pEBLList->GetCount();
+    m_pMouseEBL->m_PathNameString << _("EBL") << _T(" ") << g_pEBLList->GetCount();
     m_dStartLat = g_pfFix.Lat;
     m_dStartLon = g_pfFix.Lon;
 
