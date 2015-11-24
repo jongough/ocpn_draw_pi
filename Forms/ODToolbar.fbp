@@ -45,7 +45,7 @@
             <property name="name">ODToolbarDialog</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
-            <property name="style">wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP</property>
+            <property name="style">wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER</property>
             <property name="subclass"></property>
             <property name="title">Draw Toolbar</property>
             <property name="tooltip"></property>
