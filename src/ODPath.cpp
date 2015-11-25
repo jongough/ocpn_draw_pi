@@ -221,7 +221,7 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     wxPoint ppt1, ppt2;
     m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
     int j = 0;
-    
+
     if ( m_bVisible )
         DrawPointWhich( dc, 1, &ppt1 );
 
@@ -237,10 +237,7 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     while( node ) {
 
         ODPoint *pOp2 = node->GetData();
-        if ( !m_bVisible && pOp2->m_bKeepXPath )
-            pOp2->Draw( dc );
-        else if (m_bVisible)
-            pOp2->Draw( dc, &ppt2 );
+        GetCanvasPixLL( &VP, &ppt2,  pOp2->m_lat, pOp2->m_lon);
         m_bpts[ j++ ] = ( ppt2 );
 
         if ( m_bVisible )
@@ -290,16 +287,22 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
                     RenderSegment( dc, ppt1.x + adder, ppt1.y, ppt2.x, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth );
                 }
         }
-
+        
         ppt1 = ppt2;
         pOp1 = pOp2;
 
         node = node->GetNext();
     }
-
+    
+    for(wxODPointListNode *node  = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        wxPoint r;
+        GetCanvasPixLL( &VP, &r, pOp->m_lat, pOp->m_lon );
+        if ( m_bVisible || pOp->m_bKeepXPath )
+            pOp->Draw( dc, &r );
+    }        
+    
 }
-
-extern ChartCanvas *ocpncc1; /* hopefully can eventually remove? */
 
 void ODPath::DrawGL( PlugIn_ViewPort &piVP )
 {

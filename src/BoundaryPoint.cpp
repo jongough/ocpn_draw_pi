@@ -67,8 +67,6 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
 
 void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
 {
-    ODPoint::Draw( dc, rpn );
-    
     wxPoint r;
     GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);
     
@@ -106,14 +104,13 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
             dc.SetPen( savePen );
         }
     }
-    
+
+    ODPoint::Draw( dc, rpn );
 }
 
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 {
 #ifdef ocpnUSE_GL
-    ODPoint::DrawGL( pivp );
-    
     ODDC dc;
     
     wxPoint r;
@@ -187,5 +184,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     glDisable( GL_BLEND );
     glDisable( GL_TEXTURE_2D );
     glDeleteTextures(1, &textureID);
+    
+    ODPoint::DrawGL( pivp );
 #endif
 }
