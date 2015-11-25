@@ -51,6 +51,8 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_staticTextFillTransparency->Enable( true );
     m_sliderFillTransparency->Show();
     m_sliderFillTransparency->Enable( true );
+    m_staticTextIncluseionBoundarySize->Show();
+    m_staticTextIncluseionBoundarySize->Enable( true );
     m_sliderInclusionBoundarySize->Show();
     m_sliderInclusionBoundarySize->Enable( true );
     

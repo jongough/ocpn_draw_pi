@@ -48,7 +48,7 @@ extern int      g_iDRDistanceUnits;
 extern int      g_iDRTimeUnits;
 extern int      g_iDRPersistenceType;
 
-extern wxString        g_sODPointIconName;
+extern wxString        g_sDRPointIconName;
 
 extern ODPlugIn_Position_Fix_Ex g_pfFix;
 extern DRList                   *g_pDRList;
@@ -107,11 +107,12 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     DR *l_pDR = new(DR);
     g_pDRList->Append( l_pDR );
     g_pPathList->Append( l_pDR );
-    l_pDR->m_PathNameString << g_pDRList->GetCount();
+    l_pDR->m_PathNameString << _("DR") << _T(" ") << g_pDRList->GetCount();
     
     ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, wxEmptyString, wxS("Start"), wxT("") );
     beginPoint->SetNameShown( false );
     beginPoint->SetTypeString( wxT("DR Point"));
+    beginPoint->m_IconName = g_sDRPointIconName;
     beginPoint->m_bIsolatedMark = false;
     l_pDR->AddPoint( beginPoint, false );
 
@@ -188,7 +189,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     for( int i = 0; i < l_iNumWaypoints; i++ ) {
         double l_dLat, l_dLon;
         PositionBearingDistanceMercator_Plugin( l_dStartLat, l_dStartLon, l_pDR->m_iCoG, l_cumLength, &l_dLat, &l_dLon );
-        ODPoint *l_NewPoint = new ODPoint( l_dLat, l_dLon, g_sODPointIconName, wxT(""), wxT("") );
+        ODPoint *l_NewPoint = new ODPoint( l_dLat, l_dLon, g_sDRPointIconName, wxT(""), wxT("") );
         l_NewPoint->SetNameShown( false );
         l_NewPoint->SetTypeString( wxS("DR Point") );
         l_NewPoint->m_bIsolatedMark = FALSE;
@@ -201,7 +202,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     }
     
     if( l_dEndLat != l_dSaveLat || l_dEndLon != l_dSaveLon ) {
-        ODPoint *l_NewPoint = new ODPoint( l_dEndLat, l_dEndLon, g_sODPointIconName, wxT(""), wxT("") );
+        ODPoint *l_NewPoint = new ODPoint( l_dEndLat, l_dEndLon, g_sDRPointIconName, wxT(""), wxT("") );
         l_NewPoint->SetNameShown( false );
         l_NewPoint->SetTypeString( wxS("DR Point") );
         l_NewPoint->m_bIsolatedMark = FALSE;

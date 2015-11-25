@@ -44,10 +44,10 @@ class ODPropertiesDialogImpl : public ODPropertiesDialogDef
 protected:
     // Handlers for ODPropertiesForm events.
     void OnODPointComboboxSelected( wxCommandEvent& event );
+    void OnTextPointIconComboboxSelected( wxCommandEvent& event );
     void OnEBLEndIconComboboxSelected( wxCommandEvent& event );
     void OnEBLStartIconComboboxSelected( wxCommandEvent& event );
-    void OnDREndIconComboboxSelected( wxCommandEvent& event );
-    void OnDRStartIconComboboxSelected( wxCommandEvent& event );
+    void OnDRPointIconComboboxSelected( wxCommandEvent& event );
     void OnButtonClickFonts( wxCommandEvent& event );
     void OnDrawPropertiesOKClick( wxCommandEvent& event );
     void OnDrawPropertiesCancelClick( wxCommandEvent& event );

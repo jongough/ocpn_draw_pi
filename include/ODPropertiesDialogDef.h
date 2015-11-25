@@ -99,6 +99,10 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextRangeRingColours;
 		wxColourPickerCtrl* m_colourPickerODPointRangeRingColours;
 		wxPanel* m_panelTextPoint;
+		wxBoxSizer* m_SizerTextPointIconName;
+		wxStaticText* m_staticTextTextPointIconName;
+		wxStaticBitmap* m_bitmapTextPointBitmap;
+		wxBitmapComboBox* m_bcomboBoxTextPointIconName;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choiceTextPosition;
 		wxStaticText* m_staticTextColour;
@@ -157,12 +161,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxCheckBox* m_checkBoxShowVRM;
 		wxPanel* m_panelDR;
-		wxStaticText* m_staticTextDRStartPointIcon;
-		wxStaticBitmap* m_bitmapDRStartBitmap;
-		wxBitmapComboBox* m_bcomboBoxDRStartIconName;
-		wxStaticText* m_staticTextDREndPointIcon;
-		wxStaticBitmap* m_bitmapDREndBitmap;
-		wxBitmapComboBox* m_bcomboBoxDREndIconName;
+		wxStaticText* m_staticTextDRPointIcon;
+		wxStaticBitmap* m_bitmapDRPointBitmap;
+		wxBitmapComboBox* m_bcomboBoxDRPointIconName;
 		wxStaticText* m_staticTextActiveDRLineColour;
 		wxColourPickerCtrl* m_colourPickerDRLineColour;
 		wxStaticText* m_staticTextInactiveDRLineColour;
@@ -205,11 +206,11 @@ class ODPropertiesDialogDef : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTextPointIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDRStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDREndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnDRPointIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }
