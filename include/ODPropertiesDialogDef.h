@@ -99,6 +99,10 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextRangeRingColours;
 		wxColourPickerCtrl* m_colourPickerODPointRangeRingColours;
 		wxPanel* m_panelTextPoint;
+		wxBoxSizer* m_SizerTextPointIconName;
+		wxStaticText* m_staticTextTextPointIconName;
+		wxStaticBitmap* m_bitmapTextPointBitmap;
+		wxBitmapComboBox* m_bcomboBoxTextPointIconName;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choiceTextPosition;
 		wxStaticText* m_staticTextColour;
@@ -202,6 +206,7 @@ class ODPropertiesDialogDef : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnTextPointIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }

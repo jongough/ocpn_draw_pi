@@ -72,6 +72,7 @@ extern wxString     g_sODPointIconName;
 
 extern double       g_n_arrival_circle_radius;
 
+extern wxString     g_sTextPointIconName;
 extern wxColour     g_colourDefaultTextColour;
 extern wxColour     g_colourDefaultTextBackgroundColour;
 extern int          g_iTextBackgroundTransparency;
@@ -140,6 +141,11 @@ ODPropertiesDialogDef( parent )
 void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )
 {
     m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+}
+
+void ODPropertiesDialogImpl::OnTextPointIconComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapTextPointBitmap->SetBitmap( m_bcomboBoxTextPointIconName->GetItemBitmap( m_bcomboBoxTextPointIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnEBLEndIconComboboxSelected( wxCommandEvent& event )
@@ -359,6 +365,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
 
         m_bcomboBoxODPointIconName->Clear();
+        m_bcomboBoxTextPointIconName->Clear();
         m_bcomboBoxEBLEndIconName->Clear();
         m_bcomboBoxEBLStartIconName->Clear();
         m_bcomboBoxDRPointIconName->Clear();
@@ -372,13 +379,14 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
                 m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
+                m_bcomboBoxTextPointIconName->Append( *ps, icons->GetBitmap( i ) );
                 m_bcomboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
                 m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
                 m_bcomboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
-        // find the correct item in the combo box
+        // find the correct item in the ODPoint Icon combo box
         int iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
             if( *g_pODPointMan->GetIconDescription( i ) == g_sODPointIconName ) {
@@ -396,6 +404,25 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
         m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
         
+        // find the correct item in the Text Point Icon combo box
+        iconToSelect = -1;
+        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+            if( *g_pODPointMan->GetIconDescription( i ) == g_sTextPointIconName ) {
+                iconToSelect = i;
+                break;
+            }
+        }
+        //  not found, so add  it to the list, with a generic bitmap and using the name as description
+        // n.b.  This should never happen...
+        if( -1 == iconToSelect){    
+            m_bcomboBoxTextPointIconName->Append( g_sTextPointIconName, icons->GetBitmap( 0 ) );
+            iconToSelect = m_bcomboBoxTextPointIconName->GetCount() - 1;
+        } 
+        
+        m_bcomboBoxTextPointIconName->SetSelection( iconToSelect );
+        m_bitmapTextPointBitmap->SetBitmap( m_bcomboBoxTextPointIconName->GetItemBitmap( m_bcomboBoxTextPointIconName->GetSelection() ) );
+        
+        // find the correct item in the EBL End Point Icon combo box
         iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
             if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLEndIconName ) {
@@ -413,6 +440,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
         m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
         
+        // find the correct item in the EBL Start Point Icon combo box
         iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
             if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLStartIconName ) {
@@ -430,40 +458,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_bcomboBoxEBLStartIconName->SetSelection( iconToSelect );
         m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
         
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLEndIconName ) {
-                iconToSelect = i;
-                break;
-            }
-        }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxEBLEndIconName->Append( g_sEBLEndIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxEBLEndIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
-        m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
-        
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLStartIconName ) {
-                iconToSelect = i;
-                break;
-            }
-        }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxEBLStartIconName->Append( g_sEBLStartIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxEBLStartIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxEBLStartIconName->SetSelection( iconToSelect );
-        m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
-
+        // find the correct item in the DR Point Icon combo box
         iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
             if( *g_pODPointMan->GetIconDescription( i ) == g_sDRPointIconName ) {

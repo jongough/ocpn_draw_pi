@@ -182,6 +182,7 @@ float           g_fODPointRangeRingsStep;
 int             g_iODPointRangeRingsStepUnits;
 wxColour        g_colourODPointRangeRingsColour;
 wxString        g_sODPointIconName;
+wxString        g_sTextPointIconName;
 wxColour        g_colourDefaultTextColour;
 wxFont          g_DisplayTextFont;
 int             g_DisplayTextFontPointSize;
@@ -905,6 +906,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
         pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
         pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
+        pConf->Write( wxS( "DefaultTextPointIcon" ), g_sTextPointIconName );
         pConf->Write( wxS( "DefaultTextColour" ), g_colourDefaultTextColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultTextBackgroundColour" ), g_colourDefaultTextBackgroundColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
@@ -1057,6 +1059,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "ToolBarPosX" ), &g_iToolbarPosX, 0);
         pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
         pConf->Read( wxS( "DisplayToolbar" ), &g_iDisplayToolbar, 1 );
+
+        pConf->Read( wxS( "DefaultTextPointIcon" ), &g_sTextPointIconName, wxS("Circle") );
         wxString  l_wxsDefautlTextColour;
         g_colourDefaultTextColour = wxColour( *wxBLACK );
         pConf->Read( wxS( "DefaultTextColour" ), &l_wxsDefautlTextColour, wxS( "BLACK" ) );
@@ -2456,7 +2460,7 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     }
     
     if( NULL == pMousePoint ) {                 // need a new point
-        pMousePoint = new TextPoint( rlat, rlon, g_sODPointIconName, wxS(""), wxT("") );
+        pMousePoint = new TextPoint( rlat, rlon, g_sTextPointIconName, wxS(""), wxT("") );
         pMousePoint->SetNameShown( false );
         pMousePoint->m_bIsolatedMark = TRUE;
         
