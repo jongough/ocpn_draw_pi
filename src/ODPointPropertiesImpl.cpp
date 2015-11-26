@@ -91,8 +91,8 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    this->Layout();
     this->GetSizer()->Fit(this);
+    this->Layout();
 }
 
 void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
@@ -398,8 +398,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Show();
             m_bSizerOuterProperties->Show( m_bSizerFill );
         }
-        this->GetSizer()->Fit( this );
-        this->Layout();
         
         m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
         m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
@@ -531,8 +529,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_checkBoxChangeAllPointIcons->Disable();
         }
         m_checkBoxChangeAllPointIcons->SetValue( false );
-        this->Layout();
-        this->GetSizer()->Fit(this);
         
         icons = NULL;
         
@@ -562,7 +558,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         //this->GetSizer()->Fit(this);
     }
-
+    this->GetSizer()->Fit( this );
+    this->Layout();
+    
     return true;
 }
 

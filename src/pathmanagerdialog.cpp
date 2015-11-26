@@ -37,6 +37,7 @@
 #include <wx/progdlg.h>
 #include <wx/clipbrd.h>
 #include <wx/defs.h>
+#include <wx/window.h>
 
 #include <iostream>
 
@@ -791,6 +792,9 @@ void PathManagerDialog::UpdatePathListCtrl()
 #endif WIN32        
     }
     
+    this->GetSizer()->Fit( this );
+    this->Layout();
+    
 }
 
 void PathManagerDialog::UpdatePathButtons()
@@ -1307,6 +1311,8 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
         m_pODPointListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
 #endif WIN32        
     }
+    this->GetSizer()->Fit( this );
+    this->Layout();
     
 }
 

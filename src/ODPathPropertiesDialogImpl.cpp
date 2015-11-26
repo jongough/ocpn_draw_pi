@@ -468,6 +468,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
 #endif WIN32        
     }
     
+    this->GetSizer()->Fit( this );
+    this->Layout();
+    
     ::wxEndBusyCursor();
     
     return true;
