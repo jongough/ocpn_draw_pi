@@ -59,12 +59,6 @@ std::cout << x << std::endl; } while (0)
 #ifndef _OCPNDRAWPI_H_
 #define _OCPNDRAWPI_H_
 
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
-
-#include "wx/wxprec.h"
-
 #include "ocpn_plugin.h"
 #include "undo.h"
 #include "ODPoint.h"

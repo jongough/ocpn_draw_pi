@@ -23,14 +23,15 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "wx/wxprec.h"
+
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
  
-#include "wx/wxprec.h"
- 
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
+#include "FontMgr.h"
 
 /*!
  * Helper stuff for calculating Path
@@ -249,3 +250,4 @@ double getLMT( double ut, double lon )
     else
         return ( t + 24. );
 }
+

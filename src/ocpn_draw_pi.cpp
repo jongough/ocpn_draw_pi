@@ -27,11 +27,11 @@
  */
 //#define _2_9_x_ // uncomment this to compile for 2.9.x
 
+#include "wx/wxprec.h"
+
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
-
-#include "wx/wxprec.h"
 
 #include "ocpn_draw_pi.h"
 #include "Boundary.h"
@@ -944,17 +944,17 @@ void ocpn_draw_pi::LoadConfig()
         wxString  l_wxsColour;
         pConf->Read( wxS( "DefaultActivePathLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActivePathLineColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActivePathLineColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActivePathLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActivePathLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultActiveBoundaryLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActiveBoundaryLineColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveBoundaryLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultActiveBoundaryFillColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActiveBoundaryFillColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveBoundaryFillColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         int l_BoundaryType;
         pConf->Read( wxS( "DefaultBoundaryType" ), &l_BoundaryType, ID_BOUNDARY_EXCLUSION );
         switch (l_BoundaryType) {

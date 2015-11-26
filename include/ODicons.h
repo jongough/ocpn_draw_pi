@@ -26,10 +26,10 @@
 #ifndef ODICONS_H
 #define ODICONS_H 1
 
-#include <wx/wxprec.h>
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
+//#include <wx/wxprec.h>
+//#ifndef WX_PRECOMP
+//#include <wx/wx.h>
+//#endif
 
 extern void initialize_images(void);
 

@@ -33,6 +33,10 @@
 
 #include "wx/wxprec.h"
 
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
 #include "ODToolbarImpl.h"
 #include "ODicons.h"
 #include "ocpn_draw_pi.h"
