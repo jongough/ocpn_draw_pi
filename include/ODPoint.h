@@ -136,7 +136,9 @@ public:
 
       wxSize            m_NameExtents;
 
-      int               m_iBlink;
+      bool              m_bPointPropertiesBlink;
+      bool              m_bPathManagerBlink;
+      
       bool              m_bDynamicName;
       bool              m_bShowName;
       wxRect            CurrentRect_in_DC;

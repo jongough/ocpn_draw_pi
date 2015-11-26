@@ -139,7 +139,10 @@ public:
     bool        m_bTemporary;
     int         m_hiliteWidth;
     wxPoint     *m_bpts;
-    int         m_iBlink;
+    
+    bool        m_bPathManagerBlink;
+    bool        m_bPathPropertiesBlink;
+    
     bool        m_bDrawArrow;
     bool        m_bSaveUpdates;
     

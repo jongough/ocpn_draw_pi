@@ -72,7 +72,8 @@ ODPath::ODPath( void )
     m_path_length = 0.0;
     m_bVisible = true;
     m_bListed = true;
-    m_iBlink = 0;
+    m_bPathManagerBlink = false;
+    m_bPathPropertiesBlink = false;
     m_bDeleteOnArrival = false;
     m_width = STYLE_UNDEFINED;
     m_style = STYLE_UNDEFINED;
@@ -221,7 +222,7 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     wxPoint ppt1, ppt2;
     m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
     int j = 0;
-    
+
     if ( m_bVisible )
         DrawPointWhich( dc, 1, &ppt1 );
 
@@ -237,10 +238,7 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     while( node ) {
 
         ODPoint *pOp2 = node->GetData();
-        if ( !m_bVisible && pOp2->m_bKeepXPath )
-            pOp2->Draw( dc );
-        else if (m_bVisible)
-            pOp2->Draw( dc, &ppt2 );
+        GetCanvasPixLL( &VP, &ppt2,  pOp2->m_lat, pOp2->m_lon);
         m_bpts[ j++ ] = ( ppt2 );
 
         if ( m_bVisible )
@@ -290,16 +288,22 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
                     RenderSegment( dc, ppt1.x + adder, ppt1.y, ppt2.x, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth );
                 }
         }
-
+        
         ppt1 = ppt2;
         pOp1 = pOp2;
 
         node = node->GetNext();
     }
-
+    
+    for(wxODPointListNode *node  = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        wxPoint r;
+        GetCanvasPixLL( &VP, &r, pOp->m_lat, pOp->m_lon );
+        if ( m_bVisible || pOp->m_bKeepXPath )
+            pOp->Draw( dc, &r );
+    }        
+    
 }
-
-extern ChartCanvas *ocpncc1; /* hopefully can eventually remove? */
 
 void ODPath::DrawGL( PlugIn_ViewPort &piVP )
 {
@@ -741,11 +745,14 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
         while( node ) {
 
             ODPoint *pOp2 = node->GetData();
-            int blink_save = pOp2->m_iBlink;
-            pOp2->m_iBlink = false;
+            bool pathpropblinksave = pOp2->m_bPathManagerBlink;
+            bool pointpropblinksave = pOp2->m_bPointPropertiesBlink;
+            pOp2->m_bPathManagerBlink = false;
+            pOp2->m_bPointPropertiesBlink = false;
             ODDC odc_boundary( dc_boundary );
             pOp2->Draw( odc_boundary, NULL );
-            pOp2->m_iBlink = blink_save;
+            pOp2->m_bPathManagerBlink = pathpropblinksave;
+            pOp2->m_bPointPropertiesBlink = pointpropblinksave;
 
             wxRect r =  pOp2->CurrentRect_in_DC ;
             r.Inflate(m_hiliteWidth, m_hiliteWidth);        // allow for large hilite circles at segment ends
@@ -1019,13 +1026,13 @@ void ODPath::SetActiveColours( void )
     wxString colour;
     
     if( m_bVisible && m_bPathIsActive ) {
-        if(m_iBlink && (g_ocpn_draw_pi->nBlinkerTick & 1))
+        if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
             m_col= m_wxcInActiveLineColour;
         else
             m_col = m_wxcActiveLineColour;
     }
     else {
-        if(m_iBlink && (g_ocpn_draw_pi->nBlinkerTick & 1))
+        if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
             m_col= m_wxcActiveLineColour;
         else
             m_col = m_wxcInActiveLineColour;

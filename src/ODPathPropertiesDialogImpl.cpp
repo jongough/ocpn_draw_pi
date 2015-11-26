@@ -110,7 +110,7 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
         ODPath *pPath = node->GetData();
         
         if( pPath == m_pPath ) {
-            m_pPath->m_iBlink--;
+            m_pPath->m_bPathPropertiesBlink = false;
             SaveChanges();              // write changes to globals and update config
             m_pPath->ClearHighlights();
             break;
@@ -142,7 +142,7 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
         ODPath *pPath = node->GetData();
         
         if( pPath == m_pPath ) {
-            m_pPath->m_iBlink--;
+            m_pPath->m_bPathPropertiesBlink = false;
             m_pPath->ClearHighlights();
             break;
         }
@@ -208,16 +208,13 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points 
         m_tz_selection = 1;
         
         if( m_pPath ) {
-            m_pPath->m_iBlink--;
-            if(m_pPath->m_iBlink < 0 ) 
-                m_pPath->m_iBlink = 0;
+            m_pPath->m_bPathPropertiesBlink = false;
         }
         m_pPath = pP;
         if(m_pPath->m_sTypeString == wxT("Boundary")) m_pBoundary = (Boundary *)pP;
         if(m_pPath->m_sTypeString == wxT("EBL")) m_pEBL = (EBL *)pP;
         if(m_pPath->m_sTypeString == wxT("DR")) m_pDR = (DR *)pP;
-        m_pPath->m_iBlink++;
-        if(m_pPath->m_iBlink > 2) m_pPath->m_iBlink = 2;
+        m_pPath->m_bPathPropertiesBlink = true;
         
         m_textCtrlName->SetValue( m_pPath->m_PathNameString );
         

@@ -158,7 +158,6 @@ wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon )
 {
     bool bInPoly = false;
     ODPoint *pop;
-    int k = 0;
     wxString l_GUID = wxEmptyString;
     
     wxODPointListNode *ODpoint_node = g_pODPointMan->GetODPointList()->GetFirst();

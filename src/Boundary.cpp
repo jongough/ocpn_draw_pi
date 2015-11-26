@@ -87,12 +87,19 @@ Boundary::~Boundary()
     //dtor
 }
 
-void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
+void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
-    ODPath::Draw( dc, VP );
-    
-    if ( m_bVisible ) {
-        if(m_pODPointList->GetCount() < 3 ) return; // Nothing to fill at this point
+    //ODPath::Draw( dc, piVP );
+    if ( m_bVisible && m_pODPointList->GetCount() > 2) {
+        int l_iBoundaryPointCount = 0;
+        m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+        wxPoint r;
+        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+            ODPoint *pOp = node->GetData();
+            GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
+            m_bpts[ l_iBoundaryPointCount++ ] = r;
+        }
+        
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
             wxGraphicsContext *wxGC = NULL;
@@ -171,12 +178,12 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         }
     }
 
+    ODPath::Draw( dc, piVP );
 }
 
 void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
-    //Path::DrawGL( piVP );
     if ( !m_bVisible ) return;
     
     ODDC dc;
