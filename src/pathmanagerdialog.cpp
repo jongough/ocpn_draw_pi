@@ -1173,7 +1173,7 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
     ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
-    path->m_iBlink++;
+    path->m_bPathManagerBlink = true;
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
 
@@ -1189,8 +1189,7 @@ void PathManagerDialog::OnPathDeSelected( wxListEvent &event )
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
     ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( clicked_index ) )->GetData();
-    path->m_iBlink--;
-    if( path->m_iBlink < 0 ) path->m_iBlink = 0;
+    path->m_bPathManagerBlink = false;
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
     
@@ -1339,15 +1338,14 @@ void PathManagerDialog::OnODPointDefaultAction( wxListEvent &event )
 void PathManagerDialog::OnODPointSelected( wxListEvent &event )
 {
     ODPoint *point = (ODPoint *)m_pODPointListCtrl->GetItemData( event.m_itemIndex );
-    point->m_iBlink++;
+    point->m_bPathManagerBlink = true;
     UpdateODPointButtons();
 }
 
 void PathManagerDialog::OnODPointDeSelected( wxListEvent &event )
 {
     ODPoint *point = (ODPoint *)m_pODPointListCtrl->GetItemData( event.m_itemIndex );
-    point->m_iBlink--;
-    if( point->m_iBlink < 0 ) point->m_iBlink = 0;
+    point->m_bPathManagerBlink = false;
 
     if( ocpncc1 )
         RequestRefresh( GetOCPNCanvasWindow() );

@@ -89,8 +89,8 @@ Boundary::~Boundary()
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
-    if ( m_bVisible ) {
-        if(m_pODPointList->GetCount() < 3 ) return; // Nothing to fill at this point
+    //ODPath::Draw( dc, piVP );
+    if ( m_bVisible && m_pODPointList->GetCount() > 2) {
         int l_iBoundaryPointCount = 0;
         m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
         wxPoint r;
@@ -184,7 +184,6 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
-    //Path::DrawGL( piVP );
     if ( !m_bVisible ) return;
     
     ODDC dc;

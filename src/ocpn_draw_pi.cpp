@@ -1532,7 +1532,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pSelectedPath->m_bIsBeingEdited = FALSE;
             if( m_pFoundODPoint ) {
                 //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
-                //m_pFoundODPoint->m_iBlink--;
                 m_pFoundODPoint->m_bIsBeingEdited = false;
             }
             g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );

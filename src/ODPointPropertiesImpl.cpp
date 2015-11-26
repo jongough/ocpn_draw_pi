@@ -179,9 +179,8 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
-        m_pODPoint->m_iBlink--;
+        m_pODPoint->m_bPointPropertiesBlink = false;
         m_pODPoint->m_bPtIsSelected = false;
-        if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
     }
@@ -214,9 +213,8 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
 {
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
-        m_pODPoint->m_iBlink--;
+        m_pODPoint->m_bPointPropertiesBlink = false;
         m_pODPoint->m_bPtIsSelected = false;
-        if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
         m_pODPoint->SetVisible( m_bIsVisible_save );
         m_pODPoint->SetNameShown( m_bShowName_save );
         m_pODPoint->SetPosition( m_lat_save, m_lon_save );
@@ -352,8 +350,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_bPtIsSelected = FALSE;
-        m_pODPoint->m_iBlink--;
-        if( m_pODPoint->m_iBlink < 0 ) m_pODPoint->m_iBlink = 0;
+        m_pODPoint->m_bPointPropertiesBlink = false;
     }
     if(pOP->m_sTypeString == wxT("Text Point")) {
         m_pTextPoint = (TextPoint *)pOP;
@@ -367,7 +364,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = TRUE;
-        m_pODPoint->m_iBlink++;
+        m_pODPoint->m_bPointPropertiesBlink = true;
         m_lat_save = m_pODPoint->m_lat;
         m_lon_save = m_pODPoint->m_lon;
         m_IconName_save = m_pODPoint->GetIconName();
