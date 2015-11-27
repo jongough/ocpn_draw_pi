@@ -187,13 +187,13 @@ void MenuPrepend( wxMenu *menu, int id, wxString label)
 {
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-    wxFont *qFont = OCPNGetFont( _("Menu"), 0 );
-//    wxFont *qFont = GetOCPNScaledFont_PlugIn(_("Menu"));
+//    wxFont *qFont = OCPNGetFont( _("Menu"), 0 );
+    wxFont *qFont = OCPNGetScaledFont_PlugIn(_("Menu"));
     item->SetFont(*qFont);
 #endif
 #ifdef __WXQT__
-//    wxFont sFont = GetOCPNGUIScaledFont_PlugIn(_T("Menu"));
-//    item->SetFont(sFont);
+    wxFont sFont = GetOCPNGUIScaledFont_PlugIn(_T("Menu"));
+    item->SetFont(sFont);
 #endif
     
     menu->Prepend(item);
@@ -203,13 +203,13 @@ void MenuAppend( wxMenu *menu, int id, wxString label)
 {
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
-    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
-//    wxFont *qFont = GetOCPNScaledFont_PlugIn(_("Menu"));
+//    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
+    wxFont *qFont = OCPNGetScaledFont_PlugIn(_("Menu"));
     item->SetFont(*qFont);
 #endif
 #ifdef __WXQT__
-//    wxFont sFont = GetOCPNGUIScaledFont_PlugIn(_T("Menu"));
-//    item->SetFont(sFont);
+    wxFont sFont = GetOCPNGUIScaledFont_PlugIn(_T("Menu"));
+    item->SetFont(sFont);
 #endif
     menu->Append(item);
 }
