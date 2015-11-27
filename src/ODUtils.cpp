@@ -188,7 +188,7 @@ void MenuPrepend( wxMenu *menu, int id, wxString label)
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
 //    wxFont *qFont = OCPNGetFont( _("Menu"), 0 );
-    wxFont *qFont = OCPNGetScaledFont_PlugIn(_("Menu"));
+    wxFont *qFont = OCPNGetScaledFont_PlugIn(_T("Menu"), 0);
     item->SetFont(*qFont);
 #endif
 #ifdef __WXQT__
@@ -204,7 +204,7 @@ void MenuAppend( wxMenu *menu, int id, wxString label)
     wxMenuItem *item = new wxMenuItem(menu, id, label);
 #ifdef __WXMSW__
 //    wxFont *qFont = OCPNGetFont(wxS("Menu"), 0);
-    wxFont *qFont = OCPNGetScaledFont_PlugIn(_("Menu"));
+    wxFont *qFont = OCPNGetScaledFont_PlugIn(_T("Menu"), 0);
     item->SetFont(*qFont);
 #endif
 #ifdef __WXQT__
