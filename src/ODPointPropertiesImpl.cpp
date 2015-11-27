@@ -472,7 +472,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 }
             }
             for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
-                if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
+                if( m_pBoundaryPoint->m_iRangeRingStyle == ::StyleValues[i] )
                     m_choiceRangeRingLineStyle->SetSelection( i );
             }
         }

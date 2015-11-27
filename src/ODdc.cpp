@@ -764,6 +764,7 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
         npoints[0] = (int) innerSteps;
         npoints[1] = (int) outerSteps;
         DrawPolygonsTessellated( 2, npoints, disk, 0, 0 );
+        wxDELETE( disk );
     }
     #endif    
 }
