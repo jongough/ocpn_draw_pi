@@ -54,6 +54,8 @@ extern ODConfig             *g_pODConfig;
 extern PathManagerDialog    *g_pPathManagerDialog;
 extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern int                  g_iTextPosition;
+extern int                  g_iBoundaryPointRangeRingLineWidth;
+extern int                  g_iBoundaryPointRangeRingLineStyle;
 
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
@@ -264,6 +266,8 @@ void ODPointPropertiesImpl::SaveChanges()
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
             m_pBoundaryPoint->m_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
             m_pBoundaryPoint->m_iInclusionBoundaryPointSize = m_sliderBoundaryPointInclusionSize->GetValue();
+            m_pBoundaryPoint->m_iRangeRingStyle = ::StyleValues[m_choiceRangeRingLineStyle->GetSelection()];
+            m_pBoundaryPoint->m_iRangeRingWidth = ::WidthValues[m_choiceRangeRingLineWidth->GetSelection()];
             int l_BoundaryPointType;
             l_BoundaryPointType = m_radioBoxBoundaryPointType->GetSelection();
             switch (l_BoundaryPointType) {
@@ -461,6 +465,16 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
             m_sliderBoundaryPointInclusionSize->SetValue( m_pBoundaryPoint->m_iInclusionBoundaryPointSize );
             m_sliderBoundaryPointFillTransparency->SetValue( m_pBoundaryPoint->m_uiBoundaryPointFillTransparency );
+            for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+                if( m_pBoundaryPoint->m_iRangeRingWidth == ::WidthValues[i] ) {
+                    m_choiceRangeRingLineWidth->SetSelection( i );
+                    break;
+                }
+            }
+            for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
+                if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
+                    m_choiceRangeRingLineStyle->SetSelection( i );
+            }
         }
         
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );

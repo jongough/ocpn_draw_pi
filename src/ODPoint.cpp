@@ -106,6 +106,10 @@ ODPoint::ODPoint()
     m_LayerID = 0;
     
     m_ODPointArrivalRadius = g_n_arrival_circle_radius;
+    
+    m_iRangeRingStyle = wxSOLID;
+    m_iRangeRingWidth = 2;
+    
 }
 
 // Copy Constructor
@@ -153,6 +157,9 @@ ODPoint::ODPoint( ODPoint* orig )
     m_ManagerNode = NULL;
     
     m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
+    
+    m_iRangeRingStyle = wxSOLID;
+    m_iRangeRingWidth = 2;
     
 }
 
@@ -231,6 +238,8 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_fODPointRangeRingsStep = g_fODPointRangeRingsStep;
     m_iODPointRangeRingsStepUnits = g_iODPointRangeRingsStepUnits;
     m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
+    m_iRangeRingStyle = wxSOLID;
+    m_iRangeRingWidth = 2;
     
 }
 
@@ -424,7 +433,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
                            pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
 
-        wxPen ppPen1( m_wxcODPointRangeRingsColour, 2 );
+        wxPen ppPen1( m_wxcODPointRangeRingsColour, m_iRangeRingWidth, m_iRangeRingStyle );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
@@ -673,7 +682,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
         
-        wxPen ppPen1( m_wxcODPointRangeRingsColour, 2 );
+        wxPen ppPen1( m_wxcODPointRangeRingsColour, m_iRangeRingWidth, m_iRangeRingStyle );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
@@ -759,7 +768,7 @@ float ODPoint::GetODPointRangeRingsStep() {
         return m_fODPointRangeRingsStep; 
 }
 
-int   ODPoint::GetODPointRangeRingsStepUnits() { 
+int ODPoint::GetODPointRangeRingsStepUnits() { 
     if ( m_iODPointRangeRingsStepUnits == -1 )
         return g_iODPointRangeRingsStepUnits;
     else

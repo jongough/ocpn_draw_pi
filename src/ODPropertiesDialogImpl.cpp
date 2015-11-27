@@ -66,7 +66,8 @@ extern int          g_iInclusionBoundarySize;
 
 extern unsigned int g_uiBoundaryPointFillTransparency;
 extern int          g_iInclusionBoundaryPointSize;
-
+extern int         g_iBoundaryPointRangeRingLineWidth;
+extern int         g_iBoundaryPointRangeRingLineStyle;
 
 extern bool         g_bODPointShowName;
 extern bool         g_bODPointShowRangeRings;
@@ -223,10 +224,12 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourInActiveBoundaryLineColour = m_colourPickerInActiveBoundaryLineColour->GetColour();
     g_colourInActiveBoundaryFillColour = m_colourPickerInActiveBoundaryFillColour->GetColour();
 
-    g_BoundaryLineWidth = m_choiceBoundaryLineWidth->GetSelection() + 1;
-    g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection()];
+    g_BoundaryLineWidth = ::WidthValues[ m_choiceBoundaryLineWidth->GetSelection() ];
+    g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection() ];
     g_uiFillTransparency = m_sliderFillTransparency->GetValue();
     g_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
+    g_iBoundaryPointRangeRingLineWidth = ::WidthValues[ m_choiceRangeRingWidth->GetSelection() ];
+    g_iBoundaryPointRangeRingLineStyle = ::StyleValues[ m_choiceRangeRingStyle->GetSelection() ];
     g_iInclusionBoundarySize = m_sliderInclusionBoundarySize->GetValue();
     g_iInclusionBoundaryPointSize = m_sliderInclusionBoundaryPointSize->GetValue();
     
@@ -275,12 +278,12 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourActivePathLineColour = m_colourPickerActivePathLineColour->GetColour();
     g_colourInActivePathLineColour = m_colourPickerInActivePathLineColour->GetColour();
 
-    g_PathLineWidth = m_choicePathLineWidth->GetSelection() + 1;
+    g_PathLineWidth = ::WidthValues[ m_choicePathLineWidth->GetSelection() ];
     g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
     
     g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
-    g_EBLLineWidth = m_choiceEBLLineWidth->GetSelection() + 1;
-    g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection()];
+    g_EBLLineWidth = ::WidthValues[ m_choiceEBLLineWidth->GetSelection() ];
+    g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
     g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
@@ -291,7 +294,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sDRPointIconName = m_bcomboBoxDRPointIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
     g_colourInActiveDRLineColour = m_colourPickerInActiveDRLineColour->GetColour();
-    g_DRLineWidth = m_choiceDRLineWidth->GetSelection() + 1;
+    g_DRLineWidth = ::WidthValues[ m_choiceDRLineWidth->GetSelection() ];
     g_DRLineStyle = ::StyleValues[ m_choiceDRLineStyle->GetSelection()];
     g_bDRShowArrow = m_checkBoxDRShowArrow->GetValue();
     m_textCtrlSOG->GetValue().ToDouble( &g_dDRSOG );
@@ -364,7 +367,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         
         m_sliderBoundaryPointFillTransparency->SetValue( g_uiBoundaryPointFillTransparency );
         m_sliderInclusionBoundaryPointSize->SetValue( g_iInclusionBoundaryPointSize );
-
+        
         if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
         else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_INCLUSION );
         else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_NONE );
@@ -494,16 +497,28 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         
         for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
             if( g_BoundaryLineStyle == ::StyleValues[i] )
-                m_choiceBoundaryLineStyle->Select( i );
+                m_choiceBoundaryLineStyle->SetSelection( i );
             if( g_PathLineStyle == ::StyleValues[i] )
-                m_choicePathLineStyle->Select( i );
+                m_choicePathLineStyle->SetSelection( i );
             if( g_EBLLineStyle == ::StyleValues[i] )
-                m_choiceEBLLineStyle->Select( i );
+                m_choiceEBLLineStyle->SetSelection( i );
             if( g_DRLineStyle == ::StyleValues[i] )
-                m_choiceDRLineStyle->Select( i );
+                m_choiceDRLineStyle->SetSelection( i );
+            if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
+                m_choiceRangeRingStyle->SetSelection( i );
         }
-        m_choiceBoundaryLineWidth->SetSelection( g_BoundaryLineWidth - 1 );
-        m_choicePathLineWidth->SetSelection( g_PathLineWidth - 1 );
+        for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+            if( g_BoundaryLineWidth == ::WidthValues[i] )
+                m_choiceBoundaryLineWidth->SetSelection( i );
+            if( g_PathLineWidth == ::WidthValues[i] )
+                m_choicePathLineWidth->SetSelection( i );
+            if( g_EBLLineWidth == ::WidthValues[i] )
+                m_choiceEBLLineWidth->SetSelection( i );
+            if( g_iBoundaryPointRangeRingLineWidth == ::WidthValues[i] )
+                m_choiceRangeRingWidth->SetSelection( i );
+            if( g_DRLineWidth == ::WidthValues[i] )
+                m_choiceDRLineWidth->SetSelection( i );
+        }
         m_sliderFillTransparency->SetValue( g_uiFillTransparency );
         m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
         if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
@@ -514,7 +529,6 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
         m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
         m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
-        m_choiceEBLLineWidth->SetSelection( g_EBLLineWidth - 1 );
         m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
         m_checkBoxShowVRM->SetValue( g_bEBLVRM );
         

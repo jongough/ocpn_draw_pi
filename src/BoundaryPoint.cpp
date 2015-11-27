@@ -42,6 +42,9 @@ extern bool         g_bExclusionBoundaryPoint;
 extern bool         g_bInclusionBoundaryPoint;
 extern int          g_iInclusionBoundaryPointSize;
 extern unsigned int g_uiBoundaryPointFillTransparency;
+extern int         g_iBoundaryPointRangeRingLineWidth;
+extern int         g_iBoundaryPointRangeRingLineStyle;
+
 
 BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID, bool bAddToList)
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
@@ -51,6 +54,8 @@ BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident,
     m_bExclusionBoundaryPoint = g_bExclusionBoundaryPoint;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     m_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
+    m_iRangeRingWidth = g_iBoundaryPointRangeRingLineWidth;
+    m_iRangeRingStyle = g_iBoundaryPointRangeRingLineStyle;
 }
 
 BoundaryPoint::BoundaryPoint(BoundaryPoint* orig) : ODPoint( orig )
@@ -63,6 +68,8 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
     m_sTypeString = wxT("Boundary Point");
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     m_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
+    m_iRangeRingWidth = g_iBoundaryPointRangeRingLineWidth;
+    m_iRangeRingStyle = g_iBoundaryPointRangeRingLineStyle;
 }
 
 void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
