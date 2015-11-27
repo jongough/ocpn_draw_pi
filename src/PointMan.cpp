@@ -21,6 +21,12 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#include "wx/wxprec.h"
+
+#ifndef WX_PRECOMP
+#include "wx/wx.h"
+#endif
+
 #include "PointMan.h"
 
 #include "ocpn_draw_pi.h"
@@ -32,6 +38,8 @@
 #include "ODUtils.h"
 #include "cutil.h"
 #include "TextPoint.h"
+#include <stddef.h>                     // for NULL
+#include <wx/chartype.h>                // for _T, wxT, wxS
 
 #include <wx/dir.h>
 #include <wx/filename.h>

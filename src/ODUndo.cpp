@@ -39,7 +39,6 @@
 //#include "navutil.h"
 //#include "styles.h"
 #include "PathMan.h"
-#include "PathProp.h"
 #include "pathmanagerdialog.h"
 #include "tinyxml.h"
 #include "ODundo.h"

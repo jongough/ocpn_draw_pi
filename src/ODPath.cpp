@@ -25,6 +25,10 @@
 
 #include "wx/wxprec.h"
 
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
 #include "ODPath.h"
 #include "georef.h"
 #include "ODdc.h"

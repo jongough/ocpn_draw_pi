@@ -27,11 +27,11 @@
  */
 //#define _2_9_x_ // uncomment this to compile for 2.9.x
 
+#include "wx/wxprec.h"
+
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
-
-#include "wx/wxprec.h"
 
 #include "ocpn_draw_pi.h"
 #include "Boundary.h"
@@ -143,6 +143,8 @@ bool        g_bExclusionBoundaryPoint;
 bool        g_bInclusionBoundaryPoint;
 unsigned int g_uiFillTransparency;
 unsigned int g_uiBoundaryPointFillTransparency;
+int         g_iBoundaryPointRangeRingLineWidth;
+int         g_iBoundaryPointRangeRingLineStyle;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
 int         g_iInclusionBoundarySize;
@@ -895,6 +897,8 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "ODPointRangeRingsColour" ), g_colourODPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         long l_longBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryPointFillTransparency" ), l_longBoundaryPointFillTransparency );
+        pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), g_iBoundaryPointRangeRingLineWidth );
+        pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
         pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
@@ -944,17 +948,17 @@ void ocpn_draw_pi::LoadConfig()
         wxString  l_wxsColour;
         pConf->Read( wxS( "DefaultActivePathLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActivePathLineColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActivePathLineColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActivePathLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActivePathLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultActiveBoundaryLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActiveBoundaryLineColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActiveBoundaryLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveBoundaryLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultActiveBoundaryFillColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActiveBoundaryFillColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveBoundaryFillColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT_GREY" ) );
+        pConf->Read( wxS( "DefaultInActiveBoundaryFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         int l_BoundaryType;
         pConf->Read( wxS( "DefaultBoundaryType" ), &l_BoundaryType, ID_BOUNDARY_EXCLUSION );
         switch (l_BoundaryType) {
@@ -980,6 +984,8 @@ void ocpn_draw_pi::LoadConfig()
         long l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryFillTransparency" ), &l_longFillTransparency, 175 );
         g_uiFillTransparency = l_longFillTransparency;
+        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), &g_iBoundaryPointRangeRingLineWidth, 2 );
+        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &g_iBoundaryPointRangeRingLineStyle, wxSOLID );
         pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
         pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxSOLID );

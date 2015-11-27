@@ -22,10 +22,11 @@
  ***************************************************************************
  */
 
+#include <wx/wxprec.h>
+
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
-#include <wx/wxprec.h>
 
 #include "ODicons.h"
 #include "ocpn_plugin.h"

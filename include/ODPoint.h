@@ -98,6 +98,8 @@ public:
       void  SetODPointRangeRingsStep(float f_ODPointRangeRingsStep) { m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; };
       void  SetODPointRangeRingsStepUnits(int i_ODPointRangeRingsStepUnits) { m_iODPointRangeRingsStepUnits = i_ODPointRangeRingsStepUnits; };
       void  SetODPointRangeRingsColour( wxColour wxc_ODPointRangeRingsColour ) { m_wxcODPointRangeRingsColour = wxc_ODPointRangeRingsColour; };
+      void  SetODPointRangeRingWidth( int i_ODPointRangeRingWidth ) { m_iRangeRingWidth = i_ODPointRangeRingWidth; };
+      void  SetODPointRangeRingStyle( int i_ODPointRangeRingStyle ) { m_iRangeRingStyle = i_ODPointRangeRingStyle; };
       void  SetTypeString( wxString sTypeString ) { m_sTypeString = sTypeString; }
       void  SetMarkDescription( wxString sMarkDescription );
 
@@ -172,6 +174,8 @@ public:
       int               m_iODPointRangeRingsNumber;
       float             m_fODPointRangeRingsStep;
       int               m_iODPointRangeRingsStepUnits;
+      int               m_iRangeRingWidth;
+      int               m_iRangeRingStyle;
       wxColour          m_wxcODPointRangeRingsColour;
       wxString          m_sTypeString;
       wxString          m_IconName;

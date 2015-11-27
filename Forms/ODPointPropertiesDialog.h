@@ -84,6 +84,10 @@ class ODPointPropertiesDialog : public wxDialog
 		wxChoice* m_choiceDistanceUnitsString;
 		wxStaticText* m_staticTextRangeRingColours;
 		wxColourPickerCtrl* m_colourPickerRangeRingsColour;
+		wxStaticText* m_staticTextRangeRingWidth;
+		wxChoice* m_choiceRangeRingLineWidth;
+		wxStaticText* m_staticTextRangeRingStyle;
+		wxChoice* m_choiceRangeRingLineStyle;
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textDescription;
 		wxPanel* m_panelDisplayText;

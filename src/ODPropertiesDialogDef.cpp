@@ -225,6 +225,26 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_colourPickerODPointRangeRingColours = new wxColourPickerCtrl( m_panelBoundaryPoint, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	fgSizerRingsDetail->Add( m_colourPickerODPointRangeRingColours, 0, wxALL|wxALIGN_RIGHT, 5 );
 	
+	m_staticTextRangeRingWidth = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Range Ring Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextRangeRingWidth->Wrap( -1 );
+	fgSizerRingsDetail->Add( m_staticTextRangeRingWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceRangeRingWidthChoices[] = { _("1 pixel"), _("2 pixels"), _("3 pixels"), _("4 pixels"), _("5 pixels"), _("6 pixels"), _("7 pixels"), _("8 pixels"), _("9 pixels"), _("10 pixels") };
+	int m_choiceRangeRingWidthNChoices = sizeof( m_choiceRangeRingWidthChoices ) / sizeof( wxString );
+	m_choiceRangeRingWidth = new wxChoice( m_panelBoundaryPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceRangeRingWidthNChoices, m_choiceRangeRingWidthChoices, 0 );
+	m_choiceRangeRingWidth->SetSelection( 1 );
+	fgSizerRingsDetail->Add( m_choiceRangeRingWidth, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_staticTextRangeRingStyle = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Range Ring Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextRangeRingStyle->Wrap( -1 );
+	fgSizerRingsDetail->Add( m_staticTextRangeRingStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceRangeRingStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
+	int m_choiceRangeRingStyleNChoices = sizeof( m_choiceRangeRingStyleChoices ) / sizeof( wxString );
+	m_choiceRangeRingStyle = new wxChoice( m_panelBoundaryPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceRangeRingStyleNChoices, m_choiceRangeRingStyleChoices, 0 );
+	m_choiceRangeRingStyle->SetSelection( 0 );
+	fgSizerRingsDetail->Add( m_choiceRangeRingStyle, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
 	
 	bSizerOCPNPoint->Add( fgSizerRingsDetail, 0, wxEXPAND, 5 );
 	

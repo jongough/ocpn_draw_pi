@@ -184,6 +184,26 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_colourPickerRangeRingsColour = new wxColourPickerCtrl( m_panelBasicProperties, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, 0 );
 	m_SizerPointRangeGrid->Add( m_colourPickerRangeRingsColour, 0, wxALIGN_RIGHT|wxALL, 0 );
 	
+	m_staticTextRangeRingWidth = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Range Ring Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextRangeRingWidth->Wrap( -1 );
+	m_SizerPointRangeGrid->Add( m_staticTextRangeRingWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	
+	wxString m_choiceRangeRingLineWidthChoices[] = { _("1 pixel"), _("2 pixels"), _("3 pixels"), _("4 pixels"), _("5 pixels"), _("6 pixels"), _("7 pixels"), _("8 pixels"), _("9 pixels"), _("10 pixels") };
+	int m_choiceRangeRingLineWidthNChoices = sizeof( m_choiceRangeRingLineWidthChoices ) / sizeof( wxString );
+	m_choiceRangeRingLineWidth = new wxChoice( m_panelBasicProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceRangeRingLineWidthNChoices, m_choiceRangeRingLineWidthChoices, 0 );
+	m_choiceRangeRingLineWidth->SetSelection( 1 );
+	m_SizerPointRangeGrid->Add( m_choiceRangeRingLineWidth, 0, wxALIGN_RIGHT|wxALL, 2 );
+	
+	m_staticTextRangeRingStyle = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Range Ring Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextRangeRingStyle->Wrap( -1 );
+	m_SizerPointRangeGrid->Add( m_staticTextRangeRingStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	
+	wxString m_choiceRangeRingLineStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
+	int m_choiceRangeRingLineStyleNChoices = sizeof( m_choiceRangeRingLineStyleChoices ) / sizeof( wxString );
+	m_choiceRangeRingLineStyle = new wxChoice( m_panelBasicProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceRangeRingLineStyleNChoices, m_choiceRangeRingLineStyleChoices, 0 );
+	m_choiceRangeRingLineStyle->SetSelection( 0 );
+	m_SizerPointRangeGrid->Add( m_choiceRangeRingLineStyle, 0, wxALIGN_RIGHT|wxALL, 2 );
+	
 	
 	m_SizerODPointRangeRingsSelect->Add( m_SizerPointRangeGrid, 0, wxEXPAND, 2 );
 	

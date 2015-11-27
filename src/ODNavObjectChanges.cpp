@@ -292,6 +292,10 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             units.set_value( pp->m_iODPointRangeRingsStepUnits );
             pugi::xml_attribute colour = child.append_attribute( "colour" );
             colour.set_value( pp->m_wxcODPointRangeRingsColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() ) ;
+            pugi::xml_attribute width = child.append_attribute( "width" );
+            width.set_value( pp->m_iRangeRingWidth );
+            pugi::xml_attribute style = child.append_attribute( "line_style" );
+            style.set_value( pp->m_iRangeRingStyle );
         }
     }
     
@@ -732,6 +736,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     bool    l_bODPointRangeRingsVisible = false;
     int     l_iTextPosition = g_iTextPosition;
     wxColour    l_wxcODPointRangeRingsColour;
+    int     l_iODPointRangeRingWidth;
+    int     l_iODPointRangeRingStyle;
     wxColour    l_colourTextColour = g_colourDefaultTextColour;
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
@@ -876,6 +882,10 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                     l_bODPointRangeRingsVisible =  attr.as_bool();
                 else if ( wxString::FromUTF8(attr.name()) == _T("colour") )
                     l_wxcODPointRangeRingsColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                else if ( wxString::FromUTF8(attr.name()) == _T("width") )
+                    l_iODPointRangeRingWidth = attr.as_int();
+                else if ( wxString::FromUTF8(attr.name()) == _T("line_style") )
+                    l_iODPointRangeRingStyle = attr.as_int();
             }
         } else if ( !strcmp( pcn, "opencpn:boundary_type" ) ) {
             wxString s = wxString::FromUTF8( child.first_child().value() );
@@ -954,6 +964,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
         pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
         pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
+        pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
+        pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
     }
 
     if( b_propvizname )
