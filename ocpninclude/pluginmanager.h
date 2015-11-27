@@ -39,9 +39,12 @@
 #include "chart1.h"                 // for MyFrame
 #include "chcanv.h"                 // for ViewPort
 #include "OCPN_Sound.h"
+#include "chartimg.h"
+
+#ifdef USE_S57
 #include "s52s57.h"
 #include "s57chart.h"               // for Object list
-#include "chartimg.h"
+#endif
 
 //For widgets...
 #include "wx/hyperlink.h"
@@ -276,6 +279,8 @@ public:
       void NotifyAuiPlugIns(void);
       bool CallLateInit(void);
       
+      bool IsPlugInAvailable(wxString commonName);
+      
       void SendVectorChartObjectInfo(const wxString &chart, const wxString &feature, const wxString &objname, double &lat, double &lon, double &scale, int &nativescale);
 
       bool SendMouseEventToPlugins( wxMouseEvent &event);
@@ -397,6 +402,8 @@ private:
 //  API 1.11 adds access to S52 Presentation library
 //  These are some wrapper conversion utilities
 
+#ifdef USE_S57
+
 class S52PLIB_Context
 {
 public:
@@ -432,6 +439,7 @@ public:
 
 void CreateCompatibleS57Object( PI_S57Obj *pObj, S57Obj *cobj, chart_context *pctx );
 void UpdatePIObjectPlibContext( PI_S57Obj *pObj, S57Obj *cobj );
+#endif
 
 #endif            // _PLUGINMGR_H_
 

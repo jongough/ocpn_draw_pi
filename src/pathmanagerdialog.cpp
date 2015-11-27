@@ -405,9 +405,9 @@ PathManagerDialog::PathManagerDialog( wxWindow *parent )
     wxDialog::Create( parent, -1, wxString( _("Path & Point Manager") ), wxDefaultPosition, wxDefaultSize,
             style );
     
-    wxFont *qFont = OCPNGetFont(wxS("Dialog"), 0);
+    wxFont *qFont = OCPNGetScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *qFont );
-
+    
     m_lastODPointItem = -1;
     m_lastPathItem = -1;
 

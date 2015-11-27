@@ -1091,7 +1091,7 @@ void ocpn_draw_pi::LoadConfig()
         int l_fontInfo;
         bool l_bfontInfo;
         wxString l_wxsfontInfo;
-        wxFont *l_pDisplayTextFont = OCPNGetFont( wxS("Marks"), 0 );
+        wxFont *l_pDisplayTextFont = OCPNGetScaledFont_PlugIn( wxS("Marks"), 0 );
         pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, (int)l_pDisplayTextFont->GetPointSize() );
         g_DisplayTextFont.SetPointSize( l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, (int)l_pDisplayTextFont->GetFamily() );
@@ -2139,7 +2139,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
     
     wxFont *dFont;
-    dFont = OCPNGetFont( wxS("RouteLegInfoRollover"), 0 );
+    dFont = OCPNGetScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;
@@ -2180,7 +2180,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
 
 void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
 {
-    wxFont *dFont = OCPNGetFont( wxS("RouteLegInfoRollover"), 0 );
+    wxFont *dFont = OCPNGetScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;

@@ -354,7 +354,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
-            m_pMarkFont = OCPNGetFont( wxS("Marks"), 0 );
+            m_pMarkFont = OCPNGetScaledFont_PlugIn( wxS("Marks"), 0 );
             m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
             CalculateNameExtents();
         }

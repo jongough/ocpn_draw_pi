@@ -176,8 +176,10 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             dc.GetDC()->DrawPolyPolygon( 2, l_iPolygonPointCount, l_AllPoints, 0, 0, wxODDEVEN_RULE );
             ExpandedBoundaries.clear();
         }
+        wxDELETEA( m_bpts );
     }
 
+    
     ODPath::Draw( dc, piVP );
 }
 
@@ -299,6 +301,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         } 
         
     }
+    wxDELETEA( m_bpts );
     
     ODPath::DrawGL( piVP );
     

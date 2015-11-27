@@ -306,7 +306,7 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         if ( m_bVisible || pOp->m_bKeepXPath )
             pOp->Draw( dc, &r );
     }        
-    
+    wxDELETEA( m_bpts );
 }
 
 void ODPath::DrawGL( PlugIn_ViewPort &piVP )
@@ -359,6 +359,7 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
             pOp->DrawGL( piVP );
     }        
     
+    wxDELETEA( m_bpts );
 #endif
 }
 
