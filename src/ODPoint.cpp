@@ -354,8 +354,9 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
-            m_pMarkFont = OCPNGetScaledFont_PlugIn( wxS("Marks"), 0 );
+            m_pMarkFont = OCPNGetScaledFont_PlugIn( wxS("Marks") );
             m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
+            //m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
             CalculateNameExtents();
         }
 
@@ -516,8 +517,9 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     wxRect r3 = r1;
     if( m_bShowName ) {
         if( !m_pMarkFont ) {
-            m_pMarkFont = FontMgr::Get().GetFont( wxT( "Marks" ) );
+            m_pMarkFont = OCPNGetScaledFont_PlugIn( wxT( "Marks" ) );
             m_FontColor = FontMgr::Get().GetFontColor( wxT( "Marks" ) );
+//            m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
             CalculateNameExtents();
         }
 
