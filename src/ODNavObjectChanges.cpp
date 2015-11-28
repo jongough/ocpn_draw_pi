@@ -1168,6 +1168,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
         pTentPath->m_PathNameString = PathName;
         pTentPath->m_PathDescription = DescString;
 
+        pTentPath->m_wxcActiveLineColour.Set( pTentPath->m_wxcActiveLineColour.Red(), pTentPath->m_wxcActiveLineColour.Green(), pTentPath->m_wxcActiveLineColour.Blue() );
+        pTentPath->m_wxcInActiveLineColour.Set( pTentPath->m_wxcInActiveLineColour.Red(), pTentPath->m_wxcInActiveLineColour.Green(), pTentPath->m_wxcInActiveLineColour.Blue() );
+        
         if( b_propviz )
                 pTentPath->SetVisible( b_viz );
         else {
