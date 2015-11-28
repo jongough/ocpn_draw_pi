@@ -107,6 +107,7 @@ void ODRolloverWin::SetBitmap( int rollover )
             GetGlobalColor( wxT("YELO1"), &wxCol );
             g_ocpn_draw_pi->AlphaBlending( dc, 0, 0, m_size.x, m_size.y, 6.0, wxCol, 172 );
             mdc.SetTextForeground( FontMgr::Get().GetFontColor( wxT("PathLegInfoRollover") ) );
+//            mdc.SetTextForeground( GetFontColour_PlugIn( wxT("PathLegInfoRollover") ) );
             break;
             
     }
@@ -150,7 +151,7 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
 
     default:
     case PATH_ROLLOVER:
-        dFont = FontMgr::Get().GetFont( wxT("PathLegInfoRollover") );
+        dFont = OCPNGetScaledFont_PlugIn( wxT("PathLegInfoRollover") );
         break;
 
     }

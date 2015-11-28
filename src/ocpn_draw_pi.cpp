@@ -462,6 +462,10 @@ int ocpn_draw_pi::Init(void)
     m_rollover_popup_timer_msec = 20;
     m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
+    // Get item into font list in options/user interface
+    wxFont *l_pfont = OCPNGetScaledFont_PlugIn( wxS("PathLegInfoRollover") );
+    //wxColour l_fontcolout = GetFontColour_PlugIn( wxS("PathLegInfoRollover") );
+    
     //    m_pCurrentCursor = ocpncc1->pCursorArrow;
     m_pCurrentCursor = NULL;
     
@@ -846,7 +850,7 @@ void ocpn_draw_pi::SaveConfig()
     
     if(pConf)
     {
-        pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
         pConf->Write( wxS( "DefaultActivePathLineColour" ), g_colourActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_colourInActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
@@ -875,6 +879,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
         pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultInActiveDRLineColour" ), g_colourInActiveDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
         pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
         pConf->Write( wxS( "DefaultDRSOG" ), g_dDRSOG );
@@ -944,7 +949,7 @@ void ocpn_draw_pi::LoadConfig()
     if(pConf)
     {
         wxString val;
-        pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
         wxString  l_wxsColour;
         pConf->Read( wxS( "DefaultActivePathLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActivePathLineColour.Set( l_wxsColour );
@@ -1000,6 +1005,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultDRPointIcon" ), &g_sDRPointIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultDRLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourDRLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultInActiveDRLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourInActiveDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultDRLineWidth" ), &g_DRLineWidth, 2  );
         pConf->Read( wxS( "DefaultDRLineStyle" ), &g_DRLineStyle, wxSOLID );
         pConf->Read( wxS( "DefaultDRSOG" ), &val, wxS("5.0") );

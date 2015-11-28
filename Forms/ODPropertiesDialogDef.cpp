@@ -185,7 +185,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	bSizerOCPNPoint->Add( fgSizerRingsShow, 0, wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizerRingsDetail;
-	fgSizerRingsDetail = new wxFlexGridSizer( 5, 2, 0, 0 );
+	fgSizerRingsDetail = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizerRingsDetail->AddGrowableCol( 0 );
 	fgSizerRingsDetail->SetFlexibleDirection( wxBOTH );
 	fgSizerRingsDetail->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
