@@ -850,7 +850,7 @@ void ocpn_draw_pi::SaveConfig()
     
     if(pConf)
     {
-        pConf->SetPath( wxS( "/PlugIns/libocpn_draw_pi.so" ) );
+        pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
         pConf->Write( wxS( "DefaultActivePathLineColour" ), g_colourActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_colourInActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
