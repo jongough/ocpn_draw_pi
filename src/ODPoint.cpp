@@ -49,6 +49,7 @@ extern bool         g_btouch;
 extern bool         g_bresponsive;
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern double       g_n_arrival_circle_radius;
+extern bool         g_bODPointShowRangeRings;
 extern int          g_iODPointRangeRingsNumber;
 extern float        g_fODPointRangeRingsStep;
 extern int          g_iODPointRangeRingsStepUnits;
@@ -107,6 +108,7 @@ ODPoint::ODPoint()
     
     m_ODPointArrivalRadius = g_n_arrival_circle_radius;
     
+    m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iRangeRingStyle = wxSOLID;
     m_iRangeRingWidth = 2;
     
@@ -158,6 +160,7 @@ ODPoint::ODPoint( ODPoint* orig )
     
     m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
     
+    m_bShowODPointRangeRings = orig->m_bShowODPointRangeRings;
     m_iRangeRingStyle = wxSOLID;
     m_iRangeRingWidth = 2;
     
@@ -233,7 +236,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     
     SetODPointArrivalRadius( g_n_arrival_circle_radius );
 
-    m_bShowODPointRangeRings = false;
+    m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
     m_fODPointRangeRingsStep = g_fODPointRangeRingsStep;
     m_iODPointRangeRingsStepUnits = g_iODPointRangeRingsStepUnits;
@@ -554,8 +557,13 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxpoint.y = r.y + hilitebox.y;
         GetCanvasLLPix( &pivp, wxpoint, &lat2, &lon2 );
 
-        m_wpBBox.SetMin(lon1, lat1);
-        m_wpBBox.SetMax(lon2, lat2);
+        if(lon1 > lon2) {
+            m_wpBBox.SetMin(lon1, lat1);
+            m_wpBBox.SetMax(lon2+360, lat2);
+        } else {
+            m_wpBBox.SetMin(lon1, lat1);
+            m_wpBBox.SetMax(lon2, lat2);
+        }
         m_wpBBox_chart_scale = pivp.chart_scale;
         m_wpBBox_rotation = pivp.rotation;
     }
@@ -689,9 +697,13 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
         dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxTRANSPARENT ) );
+        dc.SetGLStipple();
         
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( r.x, r.y, i * pix_radius );
+        
+        glDisable( GL_LINE_STIPPLE );
+        
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }

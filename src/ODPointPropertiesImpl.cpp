@@ -75,6 +75,7 @@ ODPointPropertiesDialog( parent )
 
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
+    m_pDisplayText = m_notebookProperties->GetPage( 2 );
 
 }
 
@@ -382,6 +383,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 {
     if( m_pODPoint ) {
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            m_panelDisplayText->Enable( true );
+            m_panelDisplayText->Show();
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -392,6 +395,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Hide();
             m_bSizerOuterProperties->Hide( m_bSizerFill );
         } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
+            //m_panelDisplayText->Enable( false );
+            //m_panelDisplayText->Hide();
+            m_notebookProperties->RemovePage( 1 );
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
             m_staticTextBoundaryPointInclusionSize->Show();
@@ -558,14 +564,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
         }
         SetTitle( caption );
-        if( m_pODPoint->m_sTypeString == wxT("Text Point") ) {
-            m_panelDisplayText->Show( true );
-            m_panelDisplayText->Enable();
-        }
-        else {
-            m_panelDisplayText->Show( false );
-            m_panelDisplayText->Disable();
-        }
         
         m_notebookProperties->SetSelection(1);
         m_notebookProperties->SetSelection(0);

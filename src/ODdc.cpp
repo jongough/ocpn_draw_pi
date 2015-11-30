@@ -812,9 +812,11 @@ void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
         }
 
         if( ConfigurePen() ) {
-            glBegin( GL_LINE_LOOP );
-            for( float a = 0; a < 2 * M_PI - M_PI/steps; a += 2 * M_PI / steps )
+            glBegin( GL_LINE_STRIP );
+            float a;
+            for( a = 0; a < 2 * M_PI - M_PI/steps; a += 2 * M_PI / steps )
                 glVertex2f( cx + r1 * sinf( a ), cy + r2 * cosf( a ) );
+            glVertex2f( cx + r1 * sinf( a ), cy + r2 * cosf( a ) ); // added to ensure line is closed and no holes are shown when not using solid line
             glEnd();
         }
 

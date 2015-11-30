@@ -91,6 +91,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textDescription;
 		wxPanel* m_panelDisplayText;
+		wxBoxSizer* m_bSizerDisplayText;
 		wxStaticText* m_staticTextDisplayText;
 		wxTextCtrl* m_textDisplayText;
 		wxStaticText* m_staticTextPosition;
