@@ -40,7 +40,7 @@
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "ODPositionParser.h"
-#include "FontMgr.h"
+//#include "FontMgr.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/window.h>
@@ -75,7 +75,6 @@ ODPointPropertiesDialog( parent )
 
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
-    m_pDisplayText = m_notebookProperties->GetPage( 2 );
 
 }
 

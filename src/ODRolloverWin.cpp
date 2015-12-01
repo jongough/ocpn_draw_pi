@@ -39,7 +39,7 @@
 #include "timers.h"
 #include "chart1.h"
 //#include "navutil.h"
-#include "FontMgr.h"
+//#include "FontMgr.h"
 
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
@@ -106,8 +106,8 @@ void ODRolloverWin::SetBitmap( int rollover )
             wxColour wxCol;
             GetGlobalColor( wxT("YELO1"), &wxCol );
             g_ocpn_draw_pi->AlphaBlending( dc, 0, 0, m_size.x, m_size.y, 6.0, wxCol, 172 );
-            mdc.SetTextForeground( FontMgr::Get().GetFontColor( wxT("PathLegInfoRollover") ) );
-//            mdc.SetTextForeground( GetFontColour_PlugIn( wxT("PathLegInfoRollover") ) );
+            //mdc.SetTextForeground( FontMgr::Get().GetFontColor( wxT("PathLegInfoRollover") ) );
+            mdc.SetTextForeground( GetFontColour_PlugIn( wxT("PathLegInfoRollover") ) );
             break;
             
     }
@@ -151,7 +151,7 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
 
     default:
     case PATH_ROLLOVER:
-        dFont = OCPNGetScaledFont_PlugIn( wxT("PathLegInfoRollover") );
+        dFont = GetOCPNScaledFont_PlugIn( wxT("PathLegInfoRollover") );
         break;
 
     }

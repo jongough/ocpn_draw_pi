@@ -113,7 +113,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
+            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             wxGraphicsPath path = wxGC->CreatePath();
             path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
             for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
@@ -172,7 +172,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             dc.SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxCROSSDIAG_HATCH ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             dc.GetDC()->DrawPolyPolygon( 2, l_iPolygonPointCount, l_AllPoints, 0, 0, wxODDEVEN_RULE );
             ExpandedBoundaries.clear();
         }
@@ -286,7 +286,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxSOLID ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxPENSTYLE_SOLID ) );
 
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);

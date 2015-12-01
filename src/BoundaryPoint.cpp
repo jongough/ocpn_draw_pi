@@ -100,13 +100,13 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
         if(m_bExclusionBoundaryPoint && !m_bInclusionBoundaryPoint) {
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxHATCHSTYLE_CROSSDIAG ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             dc.DrawCircle( r, pix_radius );
             dc.SetPen( savePen );
         } else if(!m_bExclusionBoundaryPoint && m_bInclusionBoundaryPoint){
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxHATCHSTYLE_CROSSDIAG ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             dc.DrawDisk( r.x, r.y, pix_radius, pix_radius + m_iInclusionBoundaryPointSize );
             dc.SetPen( savePen );
         }
@@ -178,7 +178,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 10 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPen savePen = dc.GetPen();
         dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsColour, wxSOLID ) );
+        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsColour, wxPENSTYLE_SOLID ) );
         if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
             dc.DrawDisk( r.x, r.y , 0, pix_radius);
         }

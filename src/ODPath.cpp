@@ -210,7 +210,7 @@ void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
 void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
     wxString colour;
-    int style = wxSOLID;
+    int style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
 
     if( m_nPoints == 0 || !m_bVisible ) return;
@@ -317,7 +317,7 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     ODDC dc;
     
     /* determine color and width */
-    int style = wxSOLID;
+    int style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
     
     if( m_style != STYLE_UNDEFINED ) style = m_style;
@@ -397,7 +397,7 @@ void ODPath::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_Vie
             GetGlobalColor( wxS( "YELO1" ), &y );
             wxColour hilt( y.Red(), y.Green(), y.Blue(), 128 );
 
-            wxPen HiPen( hilt, hilite_width, wxSOLID );
+            wxPen HiPen( hilt, hilite_width, wxPENSTYLE_SOLID );
 
             dc.SetPen( HiPen );
             dc.StrokeLine( x0, y0, x1, y1 );

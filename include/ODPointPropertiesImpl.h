@@ -123,7 +123,6 @@ protected:
     
     wxObject*               m_contextObject;
     wxSize                  m_defaultClientSize;
-    wxWindow                *m_pDisplayText;
 
 
 public:

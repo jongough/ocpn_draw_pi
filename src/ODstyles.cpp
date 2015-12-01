@@ -249,8 +249,8 @@ wxBitmap Style::GetToolIcon(const wxString & toolname, int iconType, bool rollov
                 wxMemoryDC mdc( bg );
                 wxColour pColour;
                 GetGlobalColor( wxT("GREY2"), &pColour);
-                mdc.SetBackground( wxBrush ( pColour, wxSOLID) );
-//                mdc.SetBackground( wxBrush( GetGlobalColor( _T("GREY2") ), wxSOLID ) );
+                mdc.SetBackground( wxBrush ( pColour, wxPENSTYLE_SOLID) );
+//                mdc.SetBackground( wxBrush( GetGlobalColor( _T("GREY2") ), wxPENSTYLE_SOLID ) );
                 mdc.Clear();
                 mdc.SelectObject( wxNullBitmap );
                 bm = MergeBitmaps( bg, bm, wxSize( 0, 0 ) );
@@ -350,8 +350,8 @@ wxBitmap Style::BuildPluginIcon( const wxBitmap* bm, int iconType )
                 offset /= 2;
                 wxColour pColour;
                 GetGlobalColor( wxT("GREY2"), &pColour);
-                mdc.SetBackground( wxBrush ( pColour, wxSOLID) );
-//                mdc.SetBackground( wxBrush( GetGlobalColor( _T("GREY2") ), wxSOLID ) );
+                mdc.SetBackground( wxBrush ( pColour, wxPENSTYLE_SOLID) );
+//                mdc.SetBackground( wxBrush( GetGlobalColor( _T("GREY2") ), wxPENSTYLE_SOLID ) );
                 mdc.Clear();
                 mdc.SelectObject( wxNullBitmap );
                 iconbm = MergeBitmaps( bg, *bm, offset );

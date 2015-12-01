@@ -30,7 +30,7 @@
 #include "ODPoint.h"
 #include "PointMan.h"
 #include "PathMan.h"
-#include "FontMgr.h"
+//#include "FontMgr.h"
 #include "cutil.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
@@ -54,6 +54,8 @@ extern int          g_iODPointRangeRingsNumber;
 extern float        g_fODPointRangeRingsStep;
 extern int          g_iODPointRangeRingsStepUnits;
 extern wxColour     g_colourODPointRangeRingsColour;
+extern bool         g_bBoundaryPointShowName;
+
 extern PlugIn_ViewPort  *g_pivp;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
@@ -109,7 +111,7 @@ ODPoint::ODPoint()
     m_ODPointArrivalRadius = g_n_arrival_circle_radius;
     
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
-    m_iRangeRingStyle = wxSOLID;
+    m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     
 }
@@ -161,7 +163,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
     
     m_bShowODPointRangeRings = orig->m_bShowODPointRangeRings;
-    m_iRangeRingStyle = wxSOLID;
+    m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     
 }
@@ -195,7 +197,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
     m_bIsolatedMark = false;
-    m_bShowName = true;
+    m_bShowName = g_bBoundaryPointShowName;
     m_bKeepXPath = false;
     m_bIsVisible = true;
     m_bIsListed = true;
@@ -241,7 +243,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_fODPointRangeRingsStep = g_fODPointRangeRingsStep;
     m_iODPointRangeRingsStepUnits = g_iODPointRangeRingsStepUnits;
     m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
-    m_iRangeRingStyle = wxSOLID;
+    m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     
 }
@@ -357,9 +359,9 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
-            m_pMarkFont = OCPNGetScaledFont_PlugIn( wxS("Marks") );
-            m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
-            //m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
+            m_pMarkFont = GetOCPNScaledFont_PlugIn( wxS("Marks") );
+            //m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
+            m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
             CalculateNameExtents();
         }
 
@@ -441,7 +443,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
-        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxTRANSPARENT ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxPENSTYLE_TRANSPARENT ) );
 
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( r.x, r.y, i * pix_radius );
@@ -520,9 +522,9 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     wxRect r3 = r1;
     if( m_bShowName ) {
         if( !m_pMarkFont ) {
-            m_pMarkFont = OCPNGetScaledFont_PlugIn( wxT( "Marks" ) );
-            m_FontColor = FontMgr::Get().GetFontColor( wxT( "Marks" ) );
-//            m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
+            m_pMarkFont = GetOCPNScaledFont_PlugIn( wxT( "Marks" ) );
+            //m_FontColor = FontMgr::Get().GetFontColor( wxT( "Marks" ) );
+            m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
             CalculateNameExtents();
         }
 
@@ -696,7 +698,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
-        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxTRANSPARENT ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxBRUSHSTYLE_TRANSPARENT ) );
         dc.SetGLStipple();
         
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
