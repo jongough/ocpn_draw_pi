@@ -66,7 +66,6 @@
 #include "OCPNPlatform.h"
 #include "pluginmanager.h"
 #include "geodesic.h"
-#include "FontMgr.h"
 #include "IDX_entry.h"
 #include "wx/stdpaths.h"
 #include <wx/timer.h>
@@ -147,6 +146,7 @@ int         g_iBoundaryPointRangeRingLineWidth;
 int         g_iBoundaryPointRangeRingLineStyle;
 int         g_BoundaryLineWidth; 
 int         g_BoundaryLineStyle;
+bool        g_bBoundaryPointShowName;
 int         g_iInclusionBoundarySize;
 int         g_iInclusionBoundaryPointSize;
 wxString    g_sEBLEndIconName;
@@ -463,8 +463,8 @@ int ocpn_draw_pi::Init(void)
     m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
     // Get item into font list in options/user interface
-    wxFont *l_pfont = OCPNGetScaledFont_PlugIn( wxS("PathLegInfoRollover") );
-    //wxColour l_fontcolout = GetFontColour_PlugIn( wxS("PathLegInfoRollover") );
+    wxFont *l_pfont = GetOCPNScaledFont_PlugIn( wxS("PathLegInfoRollover") );
+    wxColour l_fontcolout = GetFontColour_PlugIn( wxS("PathLegInfoRollover") );
     
     //    m_pCurrentCursor = ocpncc1->pCursorArrow;
     m_pCurrentCursor = NULL;
@@ -990,14 +990,14 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultBoundaryFillTransparency" ), &l_longFillTransparency, 175 );
         g_uiFillTransparency = l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), &g_iBoundaryPointRangeRingLineWidth, 2 );
-        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &g_iBoundaryPointRangeRingLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &g_iBoundaryPointRangeRingLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
-        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLStartIcon" ), &g_sEBLStartIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
-        pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
@@ -1008,7 +1008,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultInActiveDRLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultDRLineWidth" ), &g_DRLineWidth, 2  );
-        pConf->Read( wxS( "DefaultDRLineStyle" ), &g_DRLineStyle, wxSOLID );
+        pConf->Read( wxS( "DefaultDRLineStyle" ), &g_DRLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultDRSOG" ), &val, wxS("5.0") );
         g_dDRSOG = atof( val.mb_str() );
         pConf->Read( wxS( "DefaultDRCOG" ), &g_iDRCOG, 0 );
@@ -1098,7 +1098,7 @@ void ocpn_draw_pi::LoadConfig()
         int l_fontInfo;
         bool l_bfontInfo;
         wxString l_wxsfontInfo;
-        wxFont *l_pDisplayTextFont = OCPNGetScaledFont_PlugIn( wxS("Marks"), 0 );
+        wxFont *l_pDisplayTextFont = GetOCPNScaledFont_PlugIn( wxS("Marks"), 0 );
         pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, (int)l_pDisplayTextFont->GetPointSize() );
         g_DisplayTextFont.SetPointSize( l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, (int)l_pDisplayTextFont->GetFamily() );
@@ -2146,7 +2146,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
     
     wxFont *dFont;
-    dFont = OCPNGetScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
+    dFont = GetOCPNScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;
@@ -2187,7 +2187,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
 
 void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
 {
-    wxFont *dFont = OCPNGetScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
+    wxFont *dFont = GetOCPNScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;

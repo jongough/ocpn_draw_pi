@@ -218,6 +218,7 @@ void ODPropertiesDialogImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
 
 void ODPropertiesDialogImpl::SaveChanges()
 {
+    g_bODPointShowName =m_checkBoxShowName->GetValue();
     //g_colourActiveBoundaryLineColour = PickerODPointRangeRingColours->GetColour();
     g_colourActiveBoundaryLineColour = m_colourPickerActiveBoundaryLineColour->GetColour();
     g_colourActiveBoundaryFillColour = m_colourPickerActiveBoundaryFillColour->GetColour();

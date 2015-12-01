@@ -31,7 +31,7 @@
 
 #include "TextPoint.h"
 #include "ocpn_draw_pi.h"
-#include "FontMgr.h"
+//#include "FontMgr.h"
 #include "ODdc.h"
 #include "PointMan.h"
 #include "cutil.h"

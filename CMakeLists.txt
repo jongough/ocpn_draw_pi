@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "573")
-SET(VERSION_DATE "28/11/2015")
+SET(VERSION_PATCH "575")
+SET(VERSION_DATE "01/12/2015")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -119,8 +119,6 @@ SET(HDRS
 SET(OCPNSRC 
         ocpnsrc/bbox.cpp
         ocpnsrc/cutil.cpp
-        ocpnsrc/FontDesc.cpp
-        ocpnsrc/FontMgr.cpp
         ocpnsrc/geodesic.cpp
         ocpnsrc/georef.cpp
         ocpnsrc/Hyperlink.cpp
@@ -149,8 +147,6 @@ SET(OCPNHDRS
         ocpninclude/dsPortType.h
         ocpninclude/dychart.h
         ocpninclude/emboss_data.h
-        ocpninclude/FontDesc.h
-        ocpninclude/FontMgr.h
         ocpninclude/geodesic.h
         ocpninclude/georef.h
         ocpninclude/gga.hpp

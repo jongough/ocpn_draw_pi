@@ -85,7 +85,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
     m_bStartNow = false;
     m_pPath = NULL;
     
-    wxFont *qFont = OCPNGetScaledFont_PlugIn(wxT("Dialog"), 0);
+    wxFont *qFont = GetOCPNScaledFont_PlugIn(wxT("Dialog"), 0);
     SetFont( *qFont );
     
     SetPointsListHeadings();

@@ -329,30 +329,30 @@ void PathMan::SetColorScheme( PI_ColorScheme cs )
 {
     // Re-Create the pens and colors
 
-    m_pActiveODPointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_path_line_width, wxSOLID );
-    m_pODPointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_path_line_width, wxSOLID );
+    m_pActiveODPointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_path_line_width, wxPENSTYLE_SOLID );
+    m_pODPointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_path_line_width, wxPENSTYLE_SOLID );
 
 //    Or in something like S-52 compliance
     wxColour tColour;
     GetGlobalColor( wxS("UINFB"), &tColour );
-    m_pPathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
-    m_pPathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID );
+    m_pPathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxPENSTYLE_SOLID );
+    m_pPathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxPENSTYLE_SOLID );
 
     GetGlobalColor( wxS("UINFO"), &tColour );
-    m_pSelectedPathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
-    m_pSelectedPathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID );
+    m_pSelectedPathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxPENSTYLE_SOLID );
+    m_pSelectedPathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxPENSTYLE_SOLID );
 
     GetGlobalColor( wxS("UARTE"), &tColour );
-    m_pActivePathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+    m_pActivePathPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxPENSTYLE_SOLID );
 
     GetGlobalColor( wxS("PLRTE"), &tColour );
-    m_pActivePathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID );
-    m_pActiveODPointBrush =  wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID);
+    m_pActivePathBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxPENSTYLE_SOLID );
+    m_pActiveODPointBrush =  wxTheBrushList->FindOrCreateBrush( tColour, wxPENSTYLE_SOLID);
 
-    m_pActiveODPointPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
+    m_pActiveODPointPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxPENSTYLE_SOLID );
     GetGlobalColor( wxS("CHBLK"), &tColour );
-    m_pODPointPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxSOLID );
-    m_pODPointBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxSOLID);
+    m_pODPointPen = wxThePenList->FindOrCreatePen( tColour, g_path_line_width, wxPENSTYLE_SOLID );
+    m_pODPointBrush = wxTheBrushList->FindOrCreateBrush( tColour, wxPENSTYLE_SOLID);
 
 }
 

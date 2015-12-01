@@ -238,17 +238,16 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), true );
+	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), false );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizer5;
-	bSizer5 = new wxBoxSizer( wxVERTICAL );
+	m_bSizerDisplayText = new wxBoxSizer( wxVERTICAL );
 	
 	m_staticTextDisplayText = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Text to Display with Point"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDisplayText->Wrap( -1 );
-	bSizer5->Add( m_staticTextDisplayText, 0, wxALL, 5 );
+	m_bSizerDisplayText->Add( m_staticTextDisplayText, 0, wxALL, 5 );
 	
 	m_textDisplayText = new wxTextCtrl( m_panelDisplayText, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP );
-	bSizer5->Add( m_textDisplayText, 1, wxALL|wxEXPAND, 5 );
+	m_bSizerDisplayText->Add( m_textDisplayText, 1, wxALL|wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizerTextProperties;
 	fgSizerTextProperties = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -306,13 +305,13 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	fgSizerTextProperties->Add( m_buttonTextFont, 0, wxALL, 5 );
 	
 	
-	bSizer5->Add( fgSizerTextProperties, 1, wxEXPAND, 5 );
+	m_bSizerDisplayText->Add( fgSizerTextProperties, 1, wxEXPAND, 5 );
 	
 	
-	m_panelDisplayText->SetSizer( bSizer5 );
+	m_panelDisplayText->SetSizer( m_bSizerDisplayText );
 	m_panelDisplayText->Layout();
-	bSizer5->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
+	m_bSizerDisplayText->Fit( m_panelDisplayText );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
