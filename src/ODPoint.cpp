@@ -30,7 +30,6 @@
 #include "ODPoint.h"
 #include "PointMan.h"
 #include "PathMan.h"
-//#include "FontMgr.h"
 #include "cutil.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
@@ -360,7 +359,6 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
             m_pMarkFont = GetOCPNScaledFont_PlugIn( wxS("Marks") );
-            //m_FontColor = FontMgr::Get().GetFontColor( wxS( "Marks" ) );
             m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
             CalculateNameExtents();
         }
@@ -523,7 +521,6 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( m_bShowName ) {
         if( !m_pMarkFont ) {
             m_pMarkFont = GetOCPNScaledFont_PlugIn( wxT( "Marks" ) );
-            //m_FontColor = FontMgr::Get().GetFontColor( wxT( "Marks" ) );
             m_FontColor = GetFontColour_PlugIn( wxS( "Marks" ) );
             CalculateNameExtents();
         }
