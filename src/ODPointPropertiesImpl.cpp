@@ -40,7 +40,6 @@
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "ODPositionParser.h"
-//#include "FontMgr.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/window.h>

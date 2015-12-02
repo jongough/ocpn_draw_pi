@@ -31,7 +31,6 @@
  
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
-//#include "FontMgr.h"
 
 /*!
  * Helper stuff for calculating Path
