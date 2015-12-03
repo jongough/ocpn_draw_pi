@@ -156,6 +156,7 @@ extern double       g_dLat, g_dLon;
 extern double       gCog, gSog;
 extern bool         g_bShowLayers;
 extern wxString     g_sODPointIconName;
+extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 //extern AIS_Decoder      *g_pAIS;
 extern PlugIn_ViewPort  *g_pivp;
@@ -1262,7 +1263,7 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
             m_pODPointListCtrl->SetItem( idx, colOCPNPOINTNAME, name );
 
             double dst;
-            DistanceBearingMercator_Plugin( op->m_lat, op->m_lon, g_dLat, g_dLon, NULL, &dst );
+            DistanceBearingMercator_Plugin( op->m_lat, op->m_lon, g_pfFix.Lat, g_pfFix.Lon, NULL, &dst );
             wxString dist;
             dist.Printf( _T("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( dst ) );
             m_pODPointListCtrl->SetItem( idx, colOCPNPOINTDIST, dist );
