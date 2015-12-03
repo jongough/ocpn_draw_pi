@@ -143,7 +143,6 @@ class PathManagerDialog : public wxDialog {
             wxButton *btnODPointProperties;
             wxButton *btnODPointZoomto;
             wxButton *btnODPointDelete;
-            wxButton *btnODPointGoTo;
             wxButton *btnODPointExport;
             wxButton *btnODPointSendToGPS;
             wxButton *btnODPointDeleteAll;
