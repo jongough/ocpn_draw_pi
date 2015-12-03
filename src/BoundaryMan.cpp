@@ -96,20 +96,21 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
     
     wxODPointListNode *OCPNpoint_node = ( pBoundary->m_pODPointList )->GetFirst();
     wxODPointListNode *OCPNpoint_last_node = ( pBoundary->m_pODPointList )->GetLast();
-    i = 0;
-    while( OCPNpoint_node ) {
-        ODPoint *pop = OCPNpoint_node->GetData();
-        polyX[i] = (float)pop->m_lon;
-        polyY[i] = (float)pop->m_lat;
-        i++;
-        OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-        if(OCPNpoint_node == OCPNpoint_last_node) break;
-    }
-    bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
+    if(pBoundary->m_pODPointList->GetCount() > 3) {
+        i = 0;
+        while( OCPNpoint_node ) {
+            ODPoint *pop = OCPNpoint_node->GetData();
+            polyX[i] = (float)pop->m_lon;
+            polyY[i] = (float)pop->m_lat;
+            i++;
+            OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
+            if(OCPNpoint_node == OCPNpoint_last_node) break;
+        }
+        bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
 
-    delete [] polyX;
-    delete [] polyY;
-    
+        delete [] polyX;
+        delete [] polyY;
+    }
     return bInPoly;
 }
 

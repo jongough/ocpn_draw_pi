@@ -393,9 +393,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Hide();
             m_bSizerOuterProperties->Hide( m_bSizerFill );
         } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
-            //m_panelDisplayText->Enable( false );
-            //m_panelDisplayText->Hide();
-            m_notebookProperties->RemovePage( 1 );
+            m_panelDisplayText->Enable( false );
+            m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
             m_staticTextBoundaryPointInclusionSize->Show();

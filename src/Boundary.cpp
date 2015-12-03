@@ -298,10 +298,12 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glDisable( GL_BLEND );
             glDisable( GL_TEXTURE_2D );
             glDeleteTextures(1, &textureID);
+
+            wxDELETEA( m_bpts );
+            
         } 
         
     }
-    wxDELETEA( m_bpts );
     
     ODPath::DrawGL( piVP );
     
