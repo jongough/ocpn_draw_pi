@@ -1046,7 +1046,7 @@ void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
     item = m_pPathListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    // optionally make this route exclusively visible
+    // optionally make this path exclusively visible
     if( m_bCtrlDown ) MakeAllPathsInvisible();
 
     ODPath *path = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
@@ -1492,12 +1492,8 @@ void PathManagerDialog::OnODPointZoomtoClick( wxCommandEvent &event )
 
     if( !wp ) return;
 
-//      ocpncc1->ClearbFollow();
-//      ocpncc1->SetViewPoint(wp->m_lat, wp->m_lon, ocpncc1->GetVPScale(), 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
-//      ocpncc1->Refresh();
-//      RequestRefresh( GetOCPNCanvasWindow() );    
-    JumpToPosition( wp->m_lat, wp->m_lon, g_pivp->view_scale_ppm );
-
+    JumpToPosition( wp->m_lat, wp->m_lon, g_ocpn_draw_pi->m_view_scale );
+    
 }
 
 void PathManagerDialog::OnODPointDeleteClick( wxCommandEvent &event )
