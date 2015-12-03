@@ -548,11 +548,6 @@ void PathManagerDialog::Create()
     btnODPointDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnODPointDeleteClick), NULL, this );
 
-    btnODPointGoTo = new wxButton( m_pPanelODPoint, -1, _("&Go To") );
-    bsODPointButtons->Add( btnODPointGoTo, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
-//    btnODPointGoTo->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
-//            wxCommandEventHandler(PathManagerDialog::OnODPointGoToClick), NULL, this );
-
     btnODPointExport = new wxButton( m_pPanelODPoint, -1, _("&Export selected...") );
     bsODPointButtons->Add( btnODPointExport, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
     btnODPointExport->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
@@ -698,7 +693,6 @@ PathManagerDialog::~PathManagerDialog()
     delete btnODPointProperties;
     delete btnODPointZoomto;
     delete btnODPointDelete;
-    delete btnODPointGoTo;
     delete btnODPointExport;
     delete btnODPointDeleteAll;
     delete btnImport;
@@ -1408,7 +1402,6 @@ void PathManagerDialog::UpdateODPointButtons()
     btnODPointZoomto->Enable( enable1 );
     btnODPointDeleteAll->Enable( TRUE );
     btnODPointDelete->Enable( b_delete_enable && enablemultiple );
-    btnODPointGoTo->Enable( enable1 );
     btnODPointExport->Enable( enablemultiple );
     //btnODPointSendToGPS->Enable( enable1 );
 }
@@ -1559,44 +1552,7 @@ void PathManagerDialog::OnODPointDeleteClick( wxCommandEvent &event )
     }
 
 }
-/*
-void PathManagerDialog::OnODPointGoToClick( wxCommandEvent &event )
-{
-    long item = -1;
-    item = m_pODPointListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-    if( item == -1 ) return;
 
-    ODPoint *wp = (ODPoint *) m_pODPointListCtrl->GetItemData( item );
-
-    if( !wp ) return;
-
-    ODPoint *pWP_src = new ODPoint( g_dLat, g_dLon, g_default_ODPoint_icon, wxEmptyString,
-            GPX_EMPTY_STRING );
-    g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pWP_src );
-
-    ODPath *temp_path = new ODPath();
-    g_pPathList->Append( temp_path );
-
-    temp_path->AddPoint( pWP_src );
-    temp_path->AddPoint( wp );
-
-    g_pODSelect->AddSelectablePathSegment( g_dLat, g_dLon, wp->m_lat, wp->m_lon, pWP_src, wp, temp_path );
-
-    wxString name = wp->GetName();
-    if( name.IsEmpty() ) name = _("(Unnamed OCPN Point)");
-    wxString pathName = _("Go to ");
-    pathName.Append( name );
-    temp_path->m_PathNameString = pathName;
-    
-    temp_path->m_bDeleteOnArrival = true;
-
-    if( g_pPathMan->GetpActivePath() ) g_pPathMan->DeactivatePath();
-
-    g_pPathMan->ActivatePath( temp_path );
-
-    UpdatePathListCtrl();
-}
-*/
 void PathManagerDialog::OnODPointExportClick( wxCommandEvent &event )
 {
     ODPointList list;
