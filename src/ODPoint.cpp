@@ -430,18 +430,16 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-        //cc1->GetCanvasPointPix( tlat, tlon, &r1 );
         GetCanvasPixLL( g_pivp, &r1,  tlat, tlon);
 
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
                            pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
 
-        wxPen ppPen1( m_wxcODPointRangeRingsColour, m_iRangeRingWidth, m_iRangeRingStyle );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
-        dc.SetPen( ppPen1 );
-        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxPENSTYLE_TRANSPARENT ) );
+        dc.SetPen( wxPen( m_wxcODPointRangeRingsColour, m_iRangeRingWidth, m_iRangeRingStyle ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxBRUSHSTYLE_TRANSPARENT ) );
 
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( r.x, r.y, i * pix_radius );
