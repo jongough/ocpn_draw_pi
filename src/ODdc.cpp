@@ -234,22 +234,22 @@ void ODDC::SetGLStipple() const
 #ifdef ocpnUSE_GL
     
     switch( m_pen.GetStyle() ) {
-        case wxDOT: {
+        case wxPENSTYLE_DOT: {
             glLineStipple( 1, 0xF8F8 );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
-        case wxLONG_DASH: {
+        case wxPENSTYLE_LONG_DASH: {
             glLineStipple( 2, 0x3FFF );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
-        case wxSHORT_DASH: {
+        case wxPENSTYLE_SHORT_DASH: {
             glLineStipple( 1, 0x0FFF );
             glEnable( GL_LINE_STIPPLE );
             break;
         }
-        case wxDOT_DASH: {
+        case wxPENSTYLE_DOT_DASH: {
             glLineStipple( 2, 0xDEDE );
             glEnable( GL_LINE_STIPPLE );
             break;
@@ -374,9 +374,11 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
         if( b_hiqual ) {
             SetGLStipple();
 
+#ifndef __WXQT__
             glEnable( GL_BLEND );
             glEnable( GL_LINE_SMOOTH );
-
+#endif            
+            
             if( pen_width > 1.0 ) {
                 GLint parms[2];
                 glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
@@ -561,7 +563,6 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
     else if( ConfigurePen() ) {
 
         SetGLAttrs( b_hiqual );
-
         bool b_draw_thick = false;
 
         glDisable( GL_LINE_STIPPLE );
@@ -569,6 +570,7 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
 
         //      Enable anti-aliased lines, at best quality
         if( b_hiqual ) {
+            glEnable( GL_BLEND );
             if( m_pen.GetWidth() > 1 ) {
                 GLint parms[2];
                 glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
@@ -591,6 +593,9 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
         if( b_draw_thick) {
             DrawGLThickLines( n, points, xoffset, yoffset, m_pen, b_hiqual );
         } else {
+            if( b_hiqual ) {
+                glEnable( GL_LINE_SMOOTH );
+            }
             glBegin( GL_LINE_STRIP );
             for( int i = 0; i < n; i++ )
                 glVertex2i( points[i].x + xoffset, points[i].y + yoffset );

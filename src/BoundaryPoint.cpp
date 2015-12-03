@@ -101,7 +101,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
-            dc.DrawCircle( r, pix_radius );
+            dc.DrawDisk( r.x, r.y, 0, pix_radius );
             dc.SetPen( savePen );
         } else if(!m_bExclusionBoundaryPoint && m_bInclusionBoundaryPoint){
             wxPen savePen = dc.GetPen();
