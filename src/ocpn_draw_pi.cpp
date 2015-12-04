@@ -1218,15 +1218,15 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 l_sMsg = root[wxT("Msg")].AsString();
                 
                 if(l_sType == wxS("Request")) {
+                    bool    l_bFoundBoundary = false;
+                    bool    l_bFoundBoundaryPoint = false;
                     wxString l_sGUID = GetBoundaryWithPointInBoundary( l_dLat, l_dLon );
-                    if(l_sGUID.length() > 0)
-                        jMsg[wxS("Found")] = true;
+                    if(l_sGUID.length() > 0) 
+                        l_bFoundBoundary = true;
                     else {
                         l_sGUID = g_pBoundaryMan->FindPointInBoundaryPoint( l_dLat, l_dLon );
                         if(l_sGUID.length() > 0)
-                            jMsg[wxS("Found")] = true;
-                        else 
-                            jMsg[wxS("Found")] = false;
+                            l_bFoundBoundaryPoint = true;
                     }
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                     jMsg[wxT("Msg")] = root[wxT("Msg")];
@@ -1235,6 +1235,31 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     jMsg[wxS("GUID")] = l_sGUID;
                     jMsg[wxS("lat")] = l_dLat;
                     jMsg[wxS("lon")] = l_dLon;
+                    if(l_bFoundBoundary ) {
+                        jMsg[wxS("Found")] = true;
+                        Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
+                        jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
+                        if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
+                        else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
+                        else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Neither");
+                        else
+                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
+                    }
+                    else if(l_bFoundBoundaryPoint ) {
+                        jMsg[wxS("Found")] = true;
+                        BoundaryPoint *l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
+                        if( l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
+                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
+                        else if( !l_boundarypoint->m_bExclusionBoundaryPoint && l_boundarypoint->m_bInclusionBoundaryPoint)
+                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
+                        else if( !l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
+                            jMsg[wxS("BoundaryType")] = wxT("Neither");
+                        else
+                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
+                    }
                     writer.Write( jMsg, MsgString );
                     SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
                     return;
@@ -1271,12 +1296,12 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         l_dLat = root[wxS("lat")].AsDouble();
                         l_dLon = root[wxS("lon")].AsDouble();
                         
-                        l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( root[wxS("GUID")].AsString() );
+                        l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
                         if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
                         if(!l_boundary && !l_boundarypoint) {
                             wxString l_msg;
                             l_msg.append( wxS("Boundary, with GUID: ") );
-                            l_msg.append(root[wxS("GUID")].AsString());
+                            l_msg.append( l_sGUID );
                             l_msg.append( wxS(", not found") );
                             wxLogMessage( l_msg );
                             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
