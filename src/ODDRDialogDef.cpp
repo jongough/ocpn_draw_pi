@@ -71,7 +71,7 @@ ODDRDialogDef::ODDRDialogDef( wxWindow* parent, wxWindowID id, const wxString& t
 	fgSizerIntervalType->SetFlexibleDirection( wxBOTH );
 	fgSizerIntervalType->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	wxString m_radioBoxDistanceUnitsChoices[] = { _("Kilometers"), _("Nautical Miles") };
+	wxString m_radioBoxDistanceUnitsChoices[] = { _("Kilometres"), _("Nautical Miles") };
 	int m_radioBoxDistanceUnitsNChoices = sizeof( m_radioBoxDistanceUnitsChoices ) / sizeof( wxString );
 	m_radioBoxDistanceUnits = new wxRadioBox( this, wxID_ANY, _("Distance Units"), wxDefaultPosition, wxDefaultSize, m_radioBoxDistanceUnitsNChoices, m_radioBoxDistanceUnitsChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxDistanceUnits->SetSelection( 1 );

@@ -143,7 +143,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
             break;
         }
         case ID_LT_DISTANCE: {
-            if( m_radioBoxDistanceUnits->GetSelection() == ID_DU_KILOMETERS )
+            if( m_radioBoxDistanceUnits->GetSelection() == ID_DU_KILOMETRES )
                 l_pDR->m_dTotalLengthNM = l_pDR->m_dDRPathLength / 1.852;
             else
                 l_pDR->m_dTotalLengthNM = l_pDR->m_dDRPathLength;
@@ -167,7 +167,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
             break;
         }
         case ID_IT_DISTANCE: {
-            if( m_radioBoxDistanceUnits->GetSelection() == ID_DU_KILOMETERS )
+            if( m_radioBoxDistanceUnits->GetSelection() == ID_DU_KILOMETRES )
                 l_pDR->m_dDRPointIntervalNM = l_pDR->m_dDRPointInterval / 1.852;
             else
                 l_pDR->m_dDRPointIntervalNM = l_pDR->m_dDRPointInterval;

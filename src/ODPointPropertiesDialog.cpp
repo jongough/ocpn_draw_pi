@@ -171,7 +171,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_staticTextDistanceUnit->Wrap( -1 );
 	m_SizerPointRangeGrid->Add( m_staticTextDistanceUnit, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 	
-	wxString m_choiceDistanceUnitsStringChoices[] = { _("Nautical Miles"), _("Kilometers") };
+	wxString m_choiceDistanceUnitsStringChoices[] = { _("Nautical Miles"), _("Kilometres") };
 	int m_choiceDistanceUnitsStringNChoices = sizeof( m_choiceDistanceUnitsStringChoices ) / sizeof( wxString );
 	m_choiceDistanceUnitsString = new wxChoice( m_panelBasicProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceDistanceUnitsStringNChoices, m_choiceDistanceUnitsStringChoices, 0 );
 	m_choiceDistanceUnitsString->SetSelection( 0 );
@@ -238,7 +238,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), false );
+	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), true );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_bSizerDisplayText = new wxBoxSizer( wxVERTICAL );
 	
@@ -311,7 +311,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDisplayText->SetSizer( m_bSizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_bSizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
