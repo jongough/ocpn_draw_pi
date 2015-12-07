@@ -124,7 +124,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->StrokePath(path);
             wxGC->FillPath( path );
             delete wxGC;
-        } else if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
+        } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
             // surround boundary with hatching if there is more than 10 pixels different between points
             int l_imaxpointdiffX = 0;
             int l_imaxpointdiffY = 0;

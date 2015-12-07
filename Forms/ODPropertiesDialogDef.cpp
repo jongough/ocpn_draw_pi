@@ -212,7 +212,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextDistanceUnit->Wrap( -1 );
 	fgSizerRingsDetail->Add( m_staticTextDistanceUnit, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceODPointDistanceUnitChoices[] = { _("Nautical Miles"), _("Kilometers") };
+	wxString m_choiceODPointDistanceUnitChoices[] = { _("Nautical Miles"), _("Kilometres") };
 	int m_choiceODPointDistanceUnitNChoices = sizeof( m_choiceODPointDistanceUnitChoices ) / sizeof( wxString );
 	m_choiceODPointDistanceUnit = new wxChoice( m_panelBoundaryPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceODPointDistanceUnitNChoices, m_choiceODPointDistanceUnitChoices, 0 );
 	m_choiceODPointDistanceUnit->SetSelection( 0 );
@@ -283,7 +283,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextPosition->Wrap( -1 );
 	fgSizer21->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choiceTextPositionChoices[] = { _("Top"), _("Bottom"), _("Right"), _("Left") };
+	wxString m_choiceTextPositionChoices[] = { _("Top"), _("Top Centre"), _("Bottom"), _("Bottom Centre"), _("Centre"), _("Right"), _("Left") };
 	int m_choiceTextPositionNChoices = sizeof( m_choiceTextPositionChoices ) / sizeof( wxString );
 	m_choiceTextPosition = new wxChoice( m_panelTextPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceTextPositionNChoices, m_choiceTextPositionChoices, 0 );
 	m_choiceTextPosition->SetSelection( 1 );
@@ -686,10 +686,10 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_radioBoxDRIntervalType->SetSelection( 1 );
 	fgSizer16->Add( m_radioBoxDRIntervalType, 0, wxALL, 5 );
 	
-	wxString m_radioBoxDRDistanceUnitsChoices[] = { _("Kilometers"), _("Nautical Miles") };
+	wxString m_radioBoxDRDistanceUnitsChoices[] = { _("Kilometres"), _("Nautical Miles") };
 	int m_radioBoxDRDistanceUnitsNChoices = sizeof( m_radioBoxDRDistanceUnitsChoices ) / sizeof( wxString );
 	m_radioBoxDRDistanceUnits = new wxRadioBox( m_panelDR, wxID_ANY, _("Distance Units"), wxDefaultPosition, wxDefaultSize, m_radioBoxDRDistanceUnitsNChoices, m_radioBoxDRDistanceUnitsChoices, 1, wxRA_SPECIFY_ROWS );
-	m_radioBoxDRDistanceUnits->SetSelection( 1 );
+	m_radioBoxDRDistanceUnits->SetSelection( 0 );
 	fgSizer16->Add( m_radioBoxDRDistanceUnits, 0, wxALL, 5 );
 	
 	wxString m_radioBoxDRTimeUnitsChoices[] = { _("Minutes"), _("Hours"), _("Days") };

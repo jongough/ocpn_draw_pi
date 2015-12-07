@@ -44,7 +44,7 @@ enum {
 };
 
 enum {
-    ID_DU_KILOMETERS = 0,
+    ID_DU_KILOMETRES = 0,
     ID_DU_NAUTICAL_MILES,
     
     ID_DU_LAST
