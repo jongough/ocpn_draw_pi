@@ -38,6 +38,8 @@
 #include "DR.h"
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
+#include "ODEventHandler.h"
+#include "chcanv.h"
 
 enum {
     ID_FROM_POINT = 0,
@@ -64,6 +66,7 @@ extern wxColour             g_colourInActivePathLineColour;
 extern bool                 g_bExclusionBoundary;
 extern bool                 g_bInclusionBoundary;
 extern int                  g_iInclusionBoundarySize;
+extern ODEventHandler       *g_ODEventHandler;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
@@ -161,6 +164,7 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
 {
 // TODO: Implement OnRightClick
     wxMenu menu;
+    if( m_listCtrlODPoints->GetSelectedItemCount() == 0 ) return;
     
     if( ! m_pPath->m_bIsInLayer ) {
         wxString sPropertiesType( wxS("") );
@@ -171,14 +175,16 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
             sPropertiesType.append( _(" Point") );
         }
         sPropertiesType.append( _(" &Properties...") );
-        wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_WP, sPropertiesType );
+        wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
         
-        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, _("&Remove Selected") );
-        delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 && m_listCtrlODPoints->GetItemCount() > 2 );
+        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
+        delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
     }
-    
-    PopupMenu( &menu );
+    ChartCanvas *l_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
+    l_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    l_parentcanvas->PopupMenu( &menu );
+    l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
 
 void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
@@ -585,3 +591,45 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     
     return;
 }
+
+void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
+{
+    switch( event.GetId() ) {
+        case ID_PATHPROP_MENU_DELETE: {
+            //OnRoutepropCopyTxtClick( event );
+            break;
+        }
+        case ID_PATHPROP_MENU_REMOVE: {
+            int dlg_return = OCPNMessageBox( this, _("Are you sure you want to remove this point?"),
+                                             _("OD Remove ODPoint"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            
+            if( dlg_return == wxID_YES ) {
+                long item = -1;
+                item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+                
+                if( item == -1 ) break;
+                
+                ODPoint *odp;
+                odp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+                
+                m_pPath->RemovePointFromPath( odp, m_pPath );
+            }
+            break;
+        }
+        case ID_PATHPROP_MENU_EDIT_PROPERTIES: {
+            long item = -1;
+            
+            item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            
+            if( item == -1 ) break;
+            
+            ODPoint *odp;
+            odp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+            if( !odp ) break;
+            
+            g_pPathManagerDialog->ODPointShowPropertiesDialog( odp, GetParent() );
+            break;
+        }
+    }
+}
+

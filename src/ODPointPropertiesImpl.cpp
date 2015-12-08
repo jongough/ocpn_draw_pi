@@ -404,6 +404,16 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Enable( true );
             m_sliderBoundaryPointFillTransparency->Show();
             m_bSizerOuterProperties->Show( m_bSizerFill );
+        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point")) {
+            m_radioBoxBoundaryPointType->Enable( false );
+            m_radioBoxBoundaryPointType->Hide();
+            m_staticTextBoundaryPointInclusionSize->Hide();
+            m_sliderBoundaryPointInclusionSize->Enable( false );
+            m_sliderBoundaryPointInclusionSize->Hide();
+            m_staticTextFillDensity->Hide();
+            m_sliderBoundaryPointFillTransparency->Enable( false );
+            m_sliderBoundaryPointFillTransparency->Hide();
+            m_bSizerOuterProperties->Hide( m_bSizerFill );
         }
         
         m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
