@@ -878,7 +878,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
 {
     PathList list;
 
-    int answer = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
+    int answer = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete the selected object(s)"), _("OpenCPN Alert"), wxYES_NO );
     if ( answer != wxID_YES )
         return;
 
@@ -926,8 +926,7 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
 
 void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
 {
-    int dialog_ret = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete <ALL> paths?"),
-            wxString( _("OpenCPN Alert") ), wxYES_NO );
+    int dialog_ret = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete <ALL> paths?"), _("OpenCPN Alert"), wxYES_NO );
 
     if( dialog_ret == wxID_YES ) {
 
@@ -1615,7 +1614,7 @@ void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
         buttons = wxYES_NO | wxCANCEL;
         type = 2;
     }
-    int answer = OCPNMessageBox_PlugIn( this, prompt, wxString( _("OpenCPN Alert") ), buttons );
+    int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), buttons );
     if ( answer == wxID_YES )
         g_pODPointMan->DeleteAllODPoints( true );
     if ( answer == wxID_NO && type == 2 )
@@ -1744,7 +1743,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     if( !layer ) return;
 
     wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
-    int answer = OCPNMessageBox_PlugIn( this, prompt, wxString( _("OpenCPN Alert") ), wxYES_NO );
+    int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), wxYES_NO );
     if ( answer == wxID_NO )
         return;
     

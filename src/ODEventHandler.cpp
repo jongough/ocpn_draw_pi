@@ -60,8 +60,9 @@ extern ODPath             *g_PathToEdit;
 extern PointMan         *g_pODPointMan;
 extern bool             g_bShowMag;
 extern bool             g_bConfirmObjectDelete;
-extern ODRolloverWin    *g_pPathRolloverWin;
+extern ODRolloverWin    *g_pODRolloverWin;
 extern SelectItem       *g_pRolloverPathSeg;
+extern SelectItem       *g_pRolloverPoint;
 extern int              g_cursor_x;
 extern int              g_cursor_y;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
@@ -193,11 +194,10 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     
     bool showRollover = false;
     
-    if( NULL == g_pRolloverPathSeg ) {
+    if( !g_pRolloverPathSeg && !g_pRolloverPoint ) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon,
-                                                                     SELTYPE_PATHSEGMENT );
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT );
         
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
@@ -209,12 +209,12 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                 g_pRolloverPathSeg = pFindSel;
                 showRollover = true;
                 
-                if( NULL == g_pPathRolloverWin ) {
-                    g_pPathRolloverWin = new ODRolloverWin( g_ocpn_draw_pi->m_parent_window );
-                    g_pPathRolloverWin->IsActive( false );
+                if( NULL == g_pODRolloverWin ) {
+                    g_pODRolloverWin = new ODRolloverWin( g_ocpn_draw_pi->m_parent_window );
+                    g_pODRolloverWin->IsActive( false );
                 }
                 
-                if( !g_pPathRolloverWin->IsActive() ) {
+                if( !g_pODRolloverWin->IsActive() ) {
                     wxString s;
                     ODPoint *segShow_point_a = (ODPoint *) g_pRolloverPathSeg->m_pData1;
                     ODPoint *segShow_point_b = (ODPoint *) g_pRolloverPathSeg->m_pData2;
@@ -287,16 +287,16 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
                     }
                     
-                    g_pPathRolloverWin->SetString( s );
+                    g_pODRolloverWin->SetString( s );
                     
                     wxSize win_size = ocpncc1->GetSize();
                     //if( console && console->IsShown() ) win_size.x -= console->().x;
                     wxPoint point;
                     GetCanvasPixLL( g_pivp, &point, g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon );
                     PlugInNormalizeViewport( g_pivp );
-                    g_pPathRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, PATH_ROLLOVER, win_size );
-                    g_pPathRolloverWin->SetBitmap( PATH_ROLLOVER );
-                    g_pPathRolloverWin->IsActive( true );
+                    g_pODRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, PATH_ROLLOVER, win_size );
+                    g_pODRolloverWin->SetBitmap( PATH_ROLLOVER );
+                    g_pODRolloverWin->IsActive( true );
                     b_need_refresh = true;
                     showRollover = true;
                     break;
@@ -304,27 +304,91 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             } else
                 node = node->GetNext();
         }
+        
+        if( !showRollover && !g_pRolloverPathSeg) {
+            SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_ODPOINT );
+            node = SelList.GetFirst();
+            while( node ) {
+                SelectItem *pFindSel = node->GetData();
+                
+                ODPoint *pp = (ODPoint *) pFindSel->m_pData1;        //candidate
+                if( pp && pp->IsVisible() ) {
+                    showRollover = true;
+                    
+                    if( NULL == g_pODRolloverWin ) {
+                        g_pODRolloverWin = new ODRolloverWin( g_ocpn_draw_pi->m_parent_window );
+                        g_pODRolloverWin->IsActive( false );
+                    }
+                    
+                    if( !g_pODRolloverWin->IsActive() ) {
+                        wxString s;
+                        if( !pp->m_bIsInLayer ) {
+                            wxString wxsText;
+                            wxsText.append( pp->m_sTypeString );
+                            wxsText.append( wxT(": ") );
+                            s.append( wxsText );
+                        }
+                        else {
+                            wxString wxsText;
+                            wxsText.append( _("Layer") );
+                            wxsText.append( wxT(" ") );
+                            wxsText.append( pp->m_sTypeString );
+                            wxsText.append( wxT(": ") );
+                            s.Append( wxsText );
+                        }
+                        if( pp->m_MarkName.length() > 0 ) {
+                            wxString wxsText;
+                            wxsText.append( _("Name") );
+                            wxsText.append( wxT(" : ") );
+                            wxsText.append( pp->m_MarkName );
+                            s.Append( wxsText );
+                        }
+                        g_pODRolloverWin->SetString( s );
+                        
+                        wxSize win_size = ocpncc1->GetSize();
+                        //if( console && console->IsShown() ) win_size.x -= console->().x;
+                        wxPoint point;
+                        GetCanvasPixLL( g_pivp, &point, g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon );
+                        PlugInNormalizeViewport( g_pivp );
+                        g_pODRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, POINT_ROLLOVER, win_size );
+                        g_pODRolloverWin->SetBitmap( POINT_ROLLOVER );
+                        g_pODRolloverWin->IsActive( true );
+                        b_need_refresh = true;
+                        showRollover = true;
+                        break;
+                    }
+                }
+                node = node->GetNext();
+            }
+        }
     } else {
         //    Is the cursor still in select radius?
-        if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
-            showRollover = false;
-        else
-            showRollover = true;
+        if(g_pRolloverPathSeg) {
+            if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPathSeg ) ) 
+                showRollover = false;
+            else
+                showRollover = true;
+        } else if(g_pRolloverPoint) {
+            if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPoint ) ) 
+                showRollover = false;
+            else
+                showRollover = true;
+        }
     }
     
     //    If currently creating a Path, do not show this rollover window
     if( g_ocpn_draw_pi->nPath_State )
         showRollover = false;
     
-    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() && !showRollover ) {
-        g_pPathRolloverWin->IsActive( false );
+    if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
+        g_pODRolloverWin->IsActive( false );
         g_pRolloverPathSeg = NULL;
-        g_pPathRolloverWin->Destroy();
-        g_pPathRolloverWin = NULL;
+        g_pODRolloverWin->Destroy();
+        g_pODRolloverWin = NULL;
         b_need_refresh = true;
-    } else if( g_pPathRolloverWin && showRollover ) {
-        g_pPathRolloverWin->IsActive( true );
-        g_pPathRolloverWin->Show();
+    } else if( g_pODRolloverWin && showRollover ) {
+        g_pODRolloverWin->IsActive( true );
+        g_pODRolloverWin->Show();
         b_need_refresh = true;
     }
     
@@ -498,7 +562,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sCaption( _("OCPN Draw Delete ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( wxS("OCPN Point") );
+                    sType.append( _("OCPN Point") );
                 else
                     sType.append( m_pFoundODPoint->GetTypeString() );
                 sMessage.append( sType );
@@ -529,7 +593,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sCaption( _("OCPN Draw Delete ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( wxS("OCPN Point") );
+                    sType.append( _("OCPN Point") );
                 else
                     sType.append( m_pFoundODPoint->GetTypeString() );
                 sMessage.append( sType );
@@ -548,7 +612,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 }
                 else {
                     g_pODConfig->DeleteODPoint( m_pFoundODPoint );
-                    g_pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_OCPNPOINT );
+                    g_pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_ODPOINT );
                     if( NULL != g_pODPointMan )
                         g_pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }
@@ -632,7 +696,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         menuFocus = menuPath;
     }
     
-    if( seltype & SELTYPE_OCPNPOINT ) {
+    if( seltype & SELTYPE_ODPOINT ) {
         bool blay = false;
         if( m_pFoundODPoint && m_pFoundODPoint->m_bIsInLayer )
             blay = true;

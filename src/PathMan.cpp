@@ -171,7 +171,7 @@ bool PathMan::DeletePath( ODPath *pPath )
 //    This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
 //                              g_pODConfig->DeleteWayPoint(prp);
 
-                    g_pODSelect->DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
+                    g_pODSelect->DeleteSelectablePoint( prp, SELTYPE_ODPOINT );
 
                     // Remove all instances of this point from the list.
                     wxODPointListNode *pdnode = pnode;
