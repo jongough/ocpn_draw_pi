@@ -726,6 +726,22 @@ void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
 {
     DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
 }
+void ODDC::DrawTorusSector( wxCoord x, wxCoord y, wxDouble r, wxDouble s, wxDouble e )
+{
+    wxGraphicsContext *wxGC = NULL;
+    wxMemoryDC *pmdc = wxDynamicCast(GetDC(), wxMemoryDC);
+    if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+    else {
+        wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
+        if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+    }
+    wxGC->SetPen(dc->GetPen());
+    wxGC->SetBrush(dc->GetBrush());
+    wxGraphicsPath p = wxGC->CreatePath();
+    p.AddArc( (wxDouble)x, (wxDouble)y,(wxDouble)r, (wxDouble)s * (2*PI/360.0), (wxDouble)e * (2*PI/360.0), true);
+    wxGC->DrawPath(p);
+    
+}
 
 void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius )
 {

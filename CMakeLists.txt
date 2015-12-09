@@ -50,6 +50,7 @@ SET(SRCS
         src/DRProp.cpp
         src/EBL.cpp
         src/EBLProp.cpp
+        src/GuardZone.cpp
         src/PointMan.cpp
         src/ODSelect.cpp
         src/PathMan.cpp
@@ -87,6 +88,7 @@ SET(HDRS
         include/DRProp.h
         include/EBL.h
         include/EBLProp.h
+        include/GuardZone.h
         include/PointMan.h
         include/ODSelect.h
         include/PathMan.h

@@ -42,6 +42,7 @@
 #include "DRProp.h"
 #include "EBL.h"
 #include "EBLProp.h"
+#include "GuardZone.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
@@ -126,6 +127,7 @@ PlugInManager           *g_OD_pi_manager;
 BoundaryList            *g_pBoundaryList;
 EBLList                 *g_pEBLList;
 DRList                  *g_pDRList;
+GZList                  *g_pGZList;
 ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
@@ -169,6 +171,14 @@ wxColour    g_colourActivePathLineColour;
 wxColour    g_colourInActivePathLineColour;
 int         g_PathLineWidth; 
 int         g_PathLineStyle;
+
+GuardZone   *g_pGuardZone;
+wxColour    g_colourGZLineColour;
+wxString    g_sGZIconName;
+int         g_GZPersistenceType;
+int         g_GZLineWidth; 
+int         g_GZLineStyle;
+ODPathPropertiesDialogImpl      *g_pGZPropDialog;
 
 wxString    *g_PrivateDataDir;
 
@@ -485,6 +495,9 @@ int ocpn_draw_pi::Init(void)
     g_pDRPropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
+    
+    g_pGuardZone = new GuardZone();
+    g_pPathList->Append(g_pGuardZone);
     
     
     return (
@@ -1123,6 +1136,7 @@ void ocpn_draw_pi::LoadConfig()
     g_pEBLList = new EBLList;
     g_pDRList = new DRList;
     g_pPathList = new PathList;
+    g_pGZList = new GZList;
     //    Layers
     pLayerList = new LayerList;
     
@@ -2304,6 +2318,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
         Boundary *pBoundaryDraw = NULL;
         EBL *pEBLDraw = NULL;
         DR *pDRDraw = NULL;
+        GuardZone *pGZDraw = NULL;
         
         if(pPath->m_sTypeString == wxT("Boundary")){
             pBoundaryDraw = (Boundary *) pPath;
@@ -2314,6 +2329,9 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
         } else if(pPath->m_sTypeString == wxT("DR")) {
             pDRDraw = (DR *) pPath;
             pPathDraw = pDRDraw;
+        } else if(pPath->m_sTypeString == wxT("GZ")) {
+            pGZDraw = (GuardZone *) pPath;
+            pPathDraw = pGZDraw;
         }
 
         if( pPathDraw ) {
