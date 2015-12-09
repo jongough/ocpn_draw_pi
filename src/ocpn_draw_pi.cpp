@@ -129,8 +129,9 @@ DRList                  *g_pDRList;
 ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
-ODRolloverWin           *g_pPathRolloverWin;
+ODRolloverWin           *g_pODRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
+SelectItem              *g_pRolloverPoint;
 
 wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
@@ -455,17 +456,21 @@ int ocpn_draw_pi::Init(void)
     // Create an OCPN Draw event handler
     g_ODEventHandler = new ODEventHandler( g_ocpn_draw_pi );
     
-    g_pPathRolloverWin = new ODRolloverWin( m_parent_window );
+    g_pODRolloverWin = new ODRolloverWin( m_parent_window );
     g_pRolloverPathSeg = NULL;
+    g_pRolloverPoint = NULL;
     
     m_RolloverPopupTimer.SetOwner( ocpncc1, ODROPOPUP_TIMER );
     m_rollover_popup_timer_msec = 20;
     m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
     // Get item into font list in options/user interface
-    AddPersistentFontKey( wxT("PathLegInfoRollover") );
-    wxFont *l_pfont = GetOCPNScaledFont_PlugIn( wxS("PathLegInfoRollover") );
-    wxColour l_fontcolout = GetFontColour_PlugIn( wxS("PathLegInfoRollover") );
+    AddPersistentFontKey( wxT("OD_PathLegInfoRollover") );
+    AddPersistentFontKey( wxT("OD_PointInfoRollover") );
+    wxFont *l_pfont = GetOCPNScaledFont_PlugIn( wxS("OD_PathLegInfoRollover") );
+    wxColour l_fontcolout = GetFontColour_PlugIn( wxS("OD_PathLegInfoRollover") );
+    l_pfont = GetOCPNScaledFont_PlugIn( wxS("OD_PointInfoRollover") );
+    l_fontcolout = GetFontColour_PlugIn( wxS("OD_PointInfoRollover") );
     
     //    m_pCurrentCursor = ocpncc1->pCursorArrow;
     m_pCurrentCursor = NULL;
@@ -522,8 +527,8 @@ bool ocpn_draw_pi::DeInit(void)
     ocpncc1->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     if( g_ODEventHandler ) delete g_ODEventHandler;
     g_ODEventHandler = NULL;
-    if( g_pPathRolloverWin ) delete g_pPathRolloverWin;
-    g_pPathRolloverWin = NULL;
+    if( g_pODRolloverWin ) delete g_pODRolloverWin;
+    g_pODRolloverWin = NULL;
     
     if( m_config_button_id ) RemovePlugInTool(m_config_button_id);
     m_config_button_id = 0;
@@ -1469,7 +1474,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     m_cursorPoint.x = g_cursor_x;
     m_cursorPoint.y = g_cursor_y;
     
-    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() )
+    if( g_pODRolloverWin && g_pODRolloverWin->IsActive() )
         m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
     else
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
@@ -1849,7 +1854,7 @@ void ocpn_draw_pi::FindSelectedObject()
     
     SelectItem *pFindPP;
     SelectItem *pFindPathSeg;
-    pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_OCPNPOINT );
+    pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_ODPOINT );
     pFindPathSeg = g_pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
     // start           
     m_pFoundODPoint = NULL;
@@ -1862,7 +1867,7 @@ void ocpn_draw_pi::FindSelectedObject()
         ODPath *pSelectedVizPath = NULL;
         
         //There is at least one OCPNpoint, so get the whole list
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_OCPNPOINT );
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_ODPOINT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
@@ -1933,8 +1938,8 @@ void ocpn_draw_pi::FindSelectedObject()
         
         if ( m_pSelectedPath ) {
             if ( m_pSelectedPath->IsVisible() )
-                m_seltype |= SELTYPE_OCPNPOINT;
-        } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_OCPNPOINT;
+                m_seltype |= SELTYPE_ODPOINT;
+        } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_ODPOINT;
         
         if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = true;
     }
@@ -1965,7 +1970,7 @@ void ocpn_draw_pi::FindSelectedObject()
                 (ODPoint *) pFindPathSeg->m_pData1;
             m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
             
-            m_pSelectedPath->m_bPathIsSelected = !(m_seltype & SELTYPE_OCPNPOINT);
+            m_pSelectedPath->m_bPathIsSelected = !(m_seltype & SELTYPE_ODPOINT);
             //                    if( m_pSelectedPath->m_bPathIsSelected ) {
             //                        m_pSelectedPath->m_iBlink++;
             //m_pSelectedPath->Draw( *g_pDC, *g_pivp );
@@ -2070,10 +2075,10 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     
     DrawAllPathsAndODPoints( *pivp );
 
-    if( g_pPathRolloverWin && g_pPathRolloverWin->IsActive() && g_pPathRolloverWin->GetBitmap() != NULL ) {
-        g_pDC->DrawBitmap( *(g_pPathRolloverWin->GetBitmap()),
-                       g_pPathRolloverWin->GetPosition().x,
-                       g_pPathRolloverWin->GetPosition().y, false );
+    if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && g_pODRolloverWin->GetBitmap() != NULL ) {
+        g_pDC->DrawBitmap( *(g_pODRolloverWin->GetBitmap()),
+                       g_pODRolloverWin->GetPosition().x,
+                       g_pODRolloverWin->GetPosition().y, false );
     }
     
     return TRUE;

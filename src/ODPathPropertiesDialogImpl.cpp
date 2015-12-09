@@ -600,7 +600,7 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
             break;
         }
         case ID_PATHPROP_MENU_REMOVE: {
-            int dlg_return = OCPNMessageBox( this, _("Are you sure you want to remove this point?"),
+            int dlg_return = OCPNMessageBox_PlugIn( this, _("Are you sure you want to remove this point?"),
                                              _("OD Remove ODPoint"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             
             if( dlg_return == wxID_YES ) {
