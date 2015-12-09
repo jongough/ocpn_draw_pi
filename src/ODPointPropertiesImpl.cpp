@@ -116,7 +116,7 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 
     if( !m_pODPoint->m_bIsInLayer ) {
         m_pODPoint->SetPosition( lat, lon );
-        g_pODSelect->ModifySelectablePoint( lat, lon, (void *) m_pODPoint, SELTYPE_OCPNPOINT );
+        g_pODSelect->ModifySelectablePoint( lat, lon, (void *) m_pODPoint, SELTYPE_ODPOINT );
     }
 
     // Update the mark position dynamically

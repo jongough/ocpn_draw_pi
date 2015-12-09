@@ -137,7 +137,7 @@ void doRedoDeleteODPoint( UndoAction* action )
 {
     ODPoint* point = (ODPoint*) action->before[0];
     g_pODConfig->DeleteODPoint( point );
-    g_pODSelect->DeleteSelectablePoint( point, SELTYPE_OCPNPOINT );
+    g_pODSelect->DeleteSelectablePoint( point, SELTYPE_ODPOINT );
     if( NULL != g_pODPointMan ) g_pODPointMan->RemoveODPoint( point );
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
 }

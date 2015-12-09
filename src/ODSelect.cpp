@@ -58,7 +58,7 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
     SelectItem *pSelItem = new SelectItem;
     pSelItem->m_slat = slat;
     pSelItem->m_slon = slon;
-    pSelItem->m_seltype = SELTYPE_OCPNPOINT;
+    pSelItem->m_seltype = SELTYPE_ODPOINT;
     pSelItem->m_bIsSelected = false;
     pSelItem->m_pData1 = pODPointAdd;
 
@@ -135,7 +135,7 @@ bool ODSelect::DeleteAllSelectableODPoints( ODPath *pr )
 
     while( node ) {
         pFindSel = node->GetData();
-        if( pFindSel->m_seltype == SELTYPE_OCPNPOINT ) {
+        if( pFindSel->m_seltype == SELTYPE_ODPOINT ) {
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
             //    inner loop iterates on the path's point list
@@ -280,7 +280,7 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                     delete pFindSel;
                     delete node;
                     
-                    if( SELTYPE_OCPNPOINT == SeltypeToDelete ){
+                    if( SELTYPE_ODPOINT == SeltypeToDelete ){
                         ODPoint *prp = (ODPoint *)pdata;
                         prp->SetSelectNode( NULL );
                     }
@@ -306,7 +306,7 @@ bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
         if( pFindSel->m_seltype == SeltypeToDelete ) {
             delete node;
             
-            if( SELTYPE_OCPNPOINT == SeltypeToDelete ){
+            if( SELTYPE_ODPOINT == SeltypeToDelete ){
                 ODPoint *prp = (ODPoint *)pFindSel->m_pData1;
                 prp->SetSelectNode( NULL );
             }
@@ -337,7 +337,7 @@ bool ODSelect::DeleteSelectableODPoint( ODPoint *prp )
             }
         }
         else
-            return DeleteSelectablePoint( prp, SELTYPE_OCPNPOINT );
+            return DeleteSelectablePoint( prp, SELTYPE_ODPOINT );
         
     }
     return false;
@@ -435,7 +435,7 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
         pFindSel = node->GetData();
         if( pFindSel->m_seltype == fseltype ) {
             switch( fseltype ){
-                case SELTYPE_OCPNPOINT:
+                case SELTYPE_ODPOINT:
                     if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
                             && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) return pFindSel;
                     break;
@@ -488,7 +488,7 @@ SelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fsel
             pFindSel = node->GetData();
             if( pFindSel->m_seltype == fseltype ) {
                 switch( fseltype ){
-                    case SELTYPE_OCPNPOINT:
+                    case SELTYPE_ODPOINT:
                         if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
                                 && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) {
                             ret_list.Append( pFindSel );

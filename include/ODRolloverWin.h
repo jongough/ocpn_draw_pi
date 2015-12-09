@@ -32,7 +32,8 @@
 //constants for rollovers fonts
 enum
 {
-    PATH_ROLLOVER = 1
+    PATH_ROLLOVER = 1,
+    POINT_ROLLOVER
 };
 
 class ODRolloverWin: public wxWindow
