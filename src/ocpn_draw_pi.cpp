@@ -463,6 +463,7 @@ int ocpn_draw_pi::Init(void)
     m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
     // Get item into font list in options/user interface
+    AddPersistentFontKey( wxT("PathLegInfoRollover") );
     wxFont *l_pfont = GetOCPNScaledFont_PlugIn( wxS("PathLegInfoRollover") );
     wxColour l_fontcolout = GetFontColour_PlugIn( wxS("PathLegInfoRollover") );
     
