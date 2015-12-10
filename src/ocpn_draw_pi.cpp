@@ -2177,7 +2177,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
     
     wxFont *dFont;
-    dFont = GetOCPNScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
+    dFont = GetOCPNScaledFont_PlugIn( wxS("OD_PathLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;
@@ -2205,10 +2205,12 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     wxString s0;
     if(path->m_sTypeString == wxT("Boundary")) {
         if ( nBoundary_State >= 2 ) {
-            if( !path->m_bIsInLayer )
-                s0.Append( _("Boundary: ") );
+            if( !path->m_bIsInLayer ) {
+                s0.Append( _("Boundary") );
+            }
             else
-                s0.Append( _("Layer Boundary: ") );
+                s0.Append( _("Layer Boundary") );
+            s0.Append( _T(": ") );
         }
         s0 += FormatDistanceAdaptive( path->m_path_length + dist );
     } 
@@ -2218,7 +2220,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
 
 void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
 {
-    wxFont *dFont = GetOCPNScaledFont_PlugIn( wxS("RouteLegInfoRollover"), 0 );
+    wxFont *dFont = GetOCPNScaledFont_PlugIn( wxS("OD_PathLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
     
     int w, h;

@@ -196,18 +196,15 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     
     if( !g_pRolloverPathSeg && !g_pRolloverPoint ) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
-        
         SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT );
         
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
             SelectItem *pFindSel = node->GetData();
-            
             ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
             
             if( pp && pp->IsVisible() ) {
                 g_pRolloverPathSeg = pFindSel;
-                showRollover = true;
                 
                 if( NULL == g_pODRolloverWin ) {
                     g_pODRolloverWin = new ODRolloverWin( g_ocpn_draw_pi->m_parent_window );
@@ -310,9 +307,9 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             node = SelList.GetFirst();
             while( node ) {
                 SelectItem *pFindSel = node->GetData();
-                
                 ODPoint *pp = (ODPoint *) pFindSel->m_pData1;        //candidate
                 if( pp && pp->IsVisible() ) {
+                    g_pRolloverPoint = pFindSel;
                     showRollover = true;
                     
                     if( NULL == g_pODRolloverWin ) {
@@ -377,12 +374,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     }
     
     //    If currently creating a Path, do not show this rollover window
-    if( g_ocpn_draw_pi->nPath_State )
+    if( g_ocpn_draw_pi->nPath_State || g_ocpn_draw_pi->nPoint_State )
         showRollover = false;
     
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
         g_pODRolloverWin->IsActive( false );
         g_pRolloverPathSeg = NULL;
+        g_pRolloverPoint = NULL;
         g_pODRolloverWin->Destroy();
         g_pODRolloverWin = NULL;
         b_need_refresh = true;

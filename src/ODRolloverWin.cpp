@@ -154,7 +154,10 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
     case PATH_ROLLOVER:
         dFont = GetOCPNScaledFont_PlugIn( wxT("OD_PathLegInfoRollover") );
         break;
-
+    case POINT_ROLLOVER:
+        dFont = GetOCPNScaledFont_PlugIn( wxT("OD_PointInfoRollover") );
+        break;
+        
     }
 
     int font_size = wxMax(8, dFont->GetPointSize());
