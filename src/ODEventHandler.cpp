@@ -383,6 +383,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
         g_pODRolloverWin->IsActive( false );
         g_pRolloverPathSeg = NULL;
+        g_pRolloverPoint = NULL;
         g_pODRolloverWin->Destroy();
         g_pODRolloverWin = NULL;
         b_need_refresh = true;
