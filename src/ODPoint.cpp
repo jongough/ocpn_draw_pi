@@ -393,7 +393,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     
         
     //  Highlite any selected point
-    if( m_bPtIsSelected || m_bIsBeingEdited) {
+    if( m_bPtIsSelected || m_bIsBeingEdited ) {
         g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                 hi_colour, transparency );
     }
@@ -568,7 +568,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     ODDC dc;
 
     //  Highlite any selected point
-    if( m_bPtIsSelected ) {
+    if( m_bPtIsSelected || m_bIsBeingEdited ) {
         wxColour hi_colour;
         if( m_bPointPropertiesBlink || m_bPathManagerBlink ){
             wxPen *pen = g_pPathMan->GetActiveODPointPen();
