@@ -65,6 +65,9 @@ public:
     void SetDialogSize( void );
     wxFontDialog  *m_pfdDialog;
     
+private:
+    double        m_dValidator;
+    
 };
 
 #endif // __ODPropertiesDialogImpl__
