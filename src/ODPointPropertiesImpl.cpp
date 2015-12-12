@@ -44,6 +44,7 @@
 #include <wx/menu.h>
 #include <wx/window.h>
 #include <wx/fontdlg.h>
+#include <wx/valnum.h>
 
 extern ODSelect             *g_pODSelect;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
@@ -74,6 +75,10 @@ ODPointPropertiesDialog( parent )
 
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
+    wxFloatingPointValidator<double> dVal(3, &m_dValidator, wxNUM_VAL_DEFAULT);
+    dVal.SetMin(0);
+    m_textCtrlPointRangeRingsSteps->SetValidator( dVal );
+    m_textArrivalRadius->SetValidator( dVal );
 
 }
 
@@ -244,6 +249,7 @@ void ODPointPropertiesImpl::SaveChanges()
         // Get User input Text Fields
         m_pODPoint->m_iODPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
         m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlPointRangeRingsSteps->GetValue().mb_str() );
+//        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
         m_pODPoint->SetName( m_textName->GetValue() );
@@ -499,6 +505,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         wxString buf;
         buf.Printf( _T("%.3f" ), m_pODPoint->GetODPointRangeRingsStep() );
         m_textCtrlPointRangeRingsSteps->SetValue( buf );
+//        m_RangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
         wxCommandEvent eDummy;

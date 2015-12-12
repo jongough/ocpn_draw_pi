@@ -95,7 +95,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	m_textArrivalRadius = new wxTextCtrl( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_textArrivalRadius->SetMaxLength( 0 ); 
-	bSizerArrivalRadius->Add( m_textArrivalRadius, 1, wxALL, 2 );
+	bSizerArrivalRadius->Add( m_textArrivalRadius, 0, wxALL, 2 );
 	
 	
 	m_bSizerOuterProperties->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );

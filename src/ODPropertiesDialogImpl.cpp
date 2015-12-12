@@ -34,6 +34,7 @@
 #include "PointMan.h"
 #include "version.h"
 #include <wx/fontdlg.h>
+#include <wx/valnum.h>
 
 extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
@@ -142,7 +143,14 @@ ODPropertiesDialogDef( parent )
     m_staticTextDateVal->SetLabel(PLUGIN_VERSION_DATE);
     
     m_pfdDialog = NULL;
-
+    wxFloatingPointValidator<double> dVal(3, &m_dValidator, wxNUM_VAL_DEFAULT);
+    dVal.SetMin(0);
+    m_textCtrlODPointRangeRingSteps->SetValidator( dVal );
+    m_textCtrlODPointArrivalRadius->SetValidator( dVal );
+    m_textCtrlSOG->SetValidator( dVal );
+    m_textCtrlCOG->SetValidator( dVal );
+    m_textCtrlDRPathLength->SetValidator( dVal );
+    m_textCtrlDRPointInterval->SetValidator( dVal );
 }
 
 void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )

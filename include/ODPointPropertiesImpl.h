@@ -145,6 +145,7 @@ private:
       bool          m_bIsVisible_save;
       int           m_iFontNamePosition;
       wxFontDialog  *m_pfdDialog;
+      double        m_dValidator;
 };
 
 #endif // __ODPointPropertiesImpl__
