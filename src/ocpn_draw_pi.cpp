@@ -1266,6 +1266,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         else
                             jMsg[wxS("BoundaryType")] = wxT("Unknown");
                     }
+                    else jMsg[wxS("Found")] = false;
                     writer.Write( jMsg, MsgString );
                     SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
                     return;
