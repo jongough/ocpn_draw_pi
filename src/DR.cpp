@@ -65,6 +65,13 @@ extern int         g_DRPersistenceType;
 extern bool        g_bDRShowArrow;
 extern int         g_DRLineWidth; 
 extern int         g_DRLineStyle;
+extern bool        g_bDRPointShowRangeRings;
+extern int         g_iDRPointRangeRingsNumber;
+extern float       g_fDRPointRangeRingsStep;
+extern int         g_iDRPointRangeRingsStepUnits;
+extern wxColour    g_colourDRPointRangeRingsColour;
+extern int         g_iDRPointRangeRingLineWidth;
+extern int         g_iDRPointRangeRingLineStyle;
 
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern DRList       *g_pDRList;
@@ -100,6 +107,13 @@ ODPoint *DR::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRena
     newpoint->m_IconName = g_sDRPointIconName;
     newpoint->m_sTypeString = wxT("DR Point");
     newpoint->m_MarkName = wxT("");
+    newpoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
+    newpoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
+    newpoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;
+    newpoint->m_iODPointRangeRingsStepUnits = g_iDRPointRangeRingsStepUnits;
+    newpoint->m_wxcODPointRangeRingsColour = g_colourDRPointRangeRingsColour;
+    newpoint->m_iRangeRingStyle = g_iDRPointRangeRingLineStyle;
+    newpoint->m_iRangeRingWidth = g_iDRPointRangeRingLineWidth;
     FinalizeForRendering();
     return newpoint;
 }
@@ -110,6 +124,13 @@ ODPoint *DR::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenam
     newpoint->m_IconName = g_sDRPointIconName;
     newpoint->m_sTypeString = wxT("DR Point");
     newpoint->m_MarkName = wxT("");
+    newpoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
+    newpoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
+    newpoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;
+    newpoint->m_iODPointRangeRingsStepUnits = g_iDRPointRangeRingsStepUnits;
+    newpoint->m_wxcODPointRangeRingsColour = g_colourDRPointRangeRingsColour;
+    newpoint->m_iRangeRingStyle = g_iDRPointRangeRingLineStyle;
+    newpoint->m_iRangeRingWidth = g_iDRPointRangeRingLineWidth;
     ReloadPathPointIcons();
     FinalizeForRendering();
     return newpoint;

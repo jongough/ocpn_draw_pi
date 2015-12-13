@@ -66,7 +66,14 @@ public:
     wxFontDialog  *m_pfdDialog;
     
 private:
-    double        m_dValidator;
+    double      m_dValidator;
+    double      m_dODPointRangRingStepValidator;
+    double      m_dSOGValidator;
+    double      m_dODPointArrivalRadiusValidator;
+    double      m_dDRPathLengthValidator;
+    double      m_dODPointIntervalValidator;
+    double      m_dDRPointRangRingStepValidator;
+    int         m_iCOGValidator;
     
 };
 

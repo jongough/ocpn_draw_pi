@@ -17,20 +17,20 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/string.h>
-#include <wx/sizer.h>
 #include <wx/checkbox.h>
 #include <wx/stattext.h>
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
+#include <wx/sizer.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
+#include <wx/clrpicker.h>
+#include <wx/radiobox.h>
 #include <wx/textctrl.h>
 #include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
-#include <wx/radiobox.h>
-#include <wx/clrpicker.h>
 #include <wx/button.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
@@ -74,6 +74,24 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextInitialEdgePan;
 		wxSlider* m_sliderInitialEdgePan;
 		wxStaticText* m_staticTextToolbar;
+		wxPanel* m_panelBoundary;
+		wxStaticText* m_staticTextActiveBoundayLineColour;
+		wxColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
+		wxStaticText* m_staticTextActiveBoundaryFillColour;
+		wxColourPickerCtrl* m_colourPickerActiveBoundaryFillColour;
+		wxStaticText* m_staticTextInactiveBoundaryLineColour;
+		wxColourPickerCtrl* m_colourPickerInActiveBoundaryLineColour;
+		wxStaticText* m_staticTextInactiveBoundaryFillColour;
+		wxColourPickerCtrl* m_colourPickerInActiveBoundaryFillColour;
+		wxStaticText* m_staticTextBoundaryLineWidth;
+		wxChoice* m_choiceBoundaryLineWidth;
+		wxStaticText* m_staticTextBoundaryLineStyle;
+		wxChoice* m_choiceBoundaryLineStyle;
+		wxStaticText* m_staticTextFillTransparency;
+		wxSlider* m_sliderFillTransparency;
+		wxStaticText* m_staticTextInclusionBoundarySize;
+		wxSlider* m_sliderInclusionBoundarySize;
+		wxRadioBox* m_radioBoxBoundaryType;
 		wxPanel* m_panelBoundaryPoint;
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
@@ -127,24 +145,6 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choicePathLineWidth;
 		wxStaticText* m_staticTextPathLineStyle;
 		wxChoice* m_choicePathLineStyle;
-		wxPanel* m_panelBoundary;
-		wxStaticText* m_staticTextActiveBoundayLineColour;
-		wxColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
-		wxStaticText* m_staticTextActiveBoundaryFillColour;
-		wxColourPickerCtrl* m_colourPickerActiveBoundaryFillColour;
-		wxStaticText* m_staticTextInactiveBoundaryLineColour;
-		wxColourPickerCtrl* m_colourPickerInActiveBoundaryLineColour;
-		wxStaticText* m_staticTextInactiveBoundaryFillColour;
-		wxColourPickerCtrl* m_colourPickerInActiveBoundaryFillColour;
-		wxStaticText* m_staticTextBoundaryLineWidth;
-		wxChoice* m_choiceBoundaryLineWidth;
-		wxStaticText* m_staticTextBoundaryLineStyle;
-		wxChoice* m_choiceBoundaryLineStyle;
-		wxStaticText* m_staticTextFillTransparency;
-		wxSlider* m_sliderFillTransparency;
-		wxStaticText* m_staticTextInclusionBoundarySize;
-		wxSlider* m_sliderInclusionBoundarySize;
-		wxRadioBox* m_radioBoxBoundaryType;
 		wxPanel* m_panelEBL;
 		wxStaticText* m_staticTextStartPointIcon;
 		wxStaticBitmap* m_bitmapEBLStartBitmap;
@@ -190,6 +190,20 @@ class ODPropertiesDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxDRTimeUnits;
 		wxCheckBox* m_checkBoxDRShowArrow;
 		wxRadioBox* m_radioBoxDRPersistence;
+		wxPanel* m_panelDRPoint;
+		wxCheckBox* m_checkBoxShowDRPointRangeRings;
+		wxStaticText* m_staticTextDRPointRangeRingNumber;
+		wxChoice* m_choiceDRPointRangeRingNumber;
+		wxStaticText* m_staticTextDRPointRangeRingSteps;
+		wxTextCtrl* m_textCtrlDRPointRangeRingSteps;
+		wxStaticText* m_staticTextDRPointDistanceUnit;
+		wxChoice* m_choiceDRPointDistanceUnit;
+		wxStaticText* m_staticTextDRPointRangeRingColours;
+		wxColourPickerCtrl* m_colourPickerDRPointRangeRingColours;
+		wxStaticText* m_staticTextDRPointRangeRingWidth;
+		wxChoice* m_choiceDRPointRangeRingWidth;
+		wxStaticText* m_staticTextDRPointRangeRingStyle;
+		wxChoice* m_choiceDRPointRangeRingStyle;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;
@@ -223,7 +237,7 @@ class ODPropertiesDialogDef : public wxDialog
 	public:
 		wxChoice* m_choiceToolbar;
 		
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 530,567 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,554 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
 		~ODPropertiesDialogDef();
 	
 };

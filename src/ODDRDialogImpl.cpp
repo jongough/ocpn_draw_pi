@@ -34,19 +34,27 @@
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 #include "ODSelect.h"
+#include <wx/valnum.h>
 
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern bool     g_bShowMag;
-extern double   g_dVar;
-extern double   g_dDRSOG;
-extern int      g_iDRCOG;
-extern double   g_dDRLength;
-extern double   g_dDRPointInterval;
-extern int      g_iDRLengthType;
-extern int      g_iDRIntervalType;
-extern int      g_iDRDistanceUnits;
-extern int      g_iDRTimeUnits;
-extern int      g_iDRPersistenceType;
+extern ocpn_draw_pi *g_ocpn_draw_pi;
+extern bool         g_bShowMag;
+extern double       g_dVar;
+extern double       g_dDRSOG;
+extern int          g_iDRCOG;
+extern double       g_dDRLength;
+extern double       g_dDRPointInterval;
+extern int          g_iDRLengthType;
+extern int          g_iDRIntervalType;
+extern int          g_iDRDistanceUnits;
+extern int          g_iDRTimeUnits;
+extern int          g_iDRPersistenceType;
+extern bool         g_bDRPointShowRangeRings;
+extern int          g_iDRPointRangeRingsNumber;
+extern float        g_fDRPointRangeRingsStep;
+extern int          g_iDRPointRangeRingsStepUnits;
+extern wxColour     g_colourDRPointRangeRingsColour;
+extern int          g_iDRPointRangeRingLineWidth;
+extern int          g_iDRPointRangeRingLineStyle;
 
 extern wxString        g_sDRPointIconName;
 
@@ -58,30 +66,22 @@ extern ODConfig                 *g_pODConfig;
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
-    wxString s;
-    s.Printf( _T("%.3f"), g_dDRLength );
-    m_textCtrlLength->SetValue( s );
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
-    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
-    m_staticTextCOG->SetLabel( s );
-    s.Printf( _T("%.3f"), g_dDRPointInterval );
-    m_textCtrlDRPointInterval->SetValue( s );
-    m_radioBoxLengthType->SetSelection( g_iDRLengthType );
-    m_radioBoxIntervalType->SetSelection( g_iDRIntervalType );
-    m_radioBoxDistanceUnits->SetSelection( g_iDRDistanceUnits );
-    m_radioBoxTimeUnits->SetSelection( g_iDRTimeUnits );
-    
-    if(g_pfFix.Sog != g_pfFix.Sog )
-        s.Printf( _T("%.3f"), g_dDRSOG );
-    else
-        s.Printf( _T("%.3f"), g_pfFix.Sog );
-    m_textCtrlSOG->SetValue( s );
-    if(g_pfFix.Cog != g_pfFix.Cog )
-        s.Printf( _T("%i"), g_iDRCOG );
-    else
-        s.Printf( _T("%.3f"), g_pfFix.Cog );
-    m_textCtrlCOG->SetValue( s );
-    this->Layout();
+    wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dIntervalVal(3, &m_dIntervalValidator, wxNUM_VAL_DEFAULT);
+    wxIntegerValidator<int> iCOGVal(&m_iCOGValidator, wxNUM_VAL_DEFAULT);
+    dSOGVal.SetMin(0);
+    dLengthVal.SetMin(0);
+    dIntervalVal.SetMin(0);
+    iCOGVal.SetRange(0, 360);
+    m_textCtrlSOG->SetValidator( dSOGVal );
+    m_textCtrlCOG->SetValidator( iCOGVal );
+    m_textCtrlLength->SetValidator( dLengthVal );
+    m_textCtrlDRPointInterval->SetValidator( dIntervalVal );
+    m_dSOGValidator = g_dDRSOG;
+    m_iCOGValidator = g_iDRCOG;
+    m_dLengthValidator = g_dDRLength;
+    m_dIntervalValidator = g_dDRPointInterval;
 }
 
 void ODDRDialogImpl::UpdateDialog()
@@ -90,16 +90,12 @@ void ODDRDialogImpl::UpdateDialog()
     if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
     else s.Printf( _T("Course over Ground %s"), _T("(T)") );
     m_staticTextCOG->SetLabel( s );
-    if(g_pfFix.Sog != g_pfFix.Sog )
-        s.Printf( _T("%.3f"), g_dDRSOG );
-    else
-        s.Printf( _T("%.3f"), g_pfFix.Sog );
-    m_textCtrlSOG->SetValue( s );
-    if(g_pfFix.Cog != g_pfFix.Cog )
-        s.Printf( _T("%i"), g_iDRCOG );
-    else
-        s.Printf( _T("%.3f"), g_pfFix.Cog );
-    m_textCtrlCOG->SetValue( s );
+    m_dSOGValidator = g_dDRSOG;
+    m_iCOGValidator = g_iDRCOG;
+    m_dLengthValidator = g_dDRLength;
+    m_dIntervalValidator = g_dDRPointInterval;
+    
+    this->Layout();
 }
 
 void ODDRDialogImpl::OnOK( wxCommandEvent& event )
@@ -114,6 +110,13 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     beginPoint->SetTypeString( wxT("DR Point"));
     beginPoint->m_IconName = g_sDRPointIconName;
     beginPoint->m_bIsolatedMark = false;
+    beginPoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
+    beginPoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
+    beginPoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;
+    beginPoint->m_iODPointRangeRingsStepUnits = g_iDRPointRangeRingsStepUnits;
+    beginPoint->m_wxcODPointRangeRingsColour = g_colourDRPointRangeRingsColour;
+    beginPoint->m_iRangeRingStyle = g_iDRPointRangeRingLineStyle;
+    beginPoint->m_iRangeRingWidth = g_iDRPointRangeRingLineWidth;
     l_pDR->AddPoint( beginPoint, false );
 
     m_textCtrlSOG->GetValue().ToDouble( &l_pDR->m_dSoG );
@@ -193,6 +196,13 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
         l_NewPoint->SetNameShown( false );
         l_NewPoint->SetTypeString( wxS("DR Point") );
         l_NewPoint->m_bIsolatedMark = FALSE;
+        l_NewPoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
+        l_NewPoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
+        l_NewPoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;
+        l_NewPoint->m_iODPointRangeRingsStepUnits = g_iDRPointRangeRingsStepUnits;
+        l_NewPoint->m_wxcODPointRangeRingsColour = g_colourDRPointRangeRingsColour;
+        l_NewPoint->m_iRangeRingStyle = g_iDRPointRangeRingLineStyle;
+        l_NewPoint->m_iRangeRingWidth = g_iDRPointRangeRingLineWidth;
         l_pDR->AddPoint( l_NewPoint );
         g_pODSelect->AddSelectableODPoint( l_dLat, l_dLon, l_NewPoint );
         g_pODSelect->AddSelectablePathSegment( l_dLat, l_dLon, l_dSaveLat, l_dSaveLon, beginPoint, l_NewPoint, l_pDR );
@@ -206,6 +216,13 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
         l_NewPoint->SetNameShown( false );
         l_NewPoint->SetTypeString( wxS("DR Point") );
         l_NewPoint->m_bIsolatedMark = FALSE;
+        l_NewPoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
+        l_NewPoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
+        l_NewPoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;
+        l_NewPoint->m_iODPointRangeRingsStepUnits = g_iDRPointRangeRingsStepUnits;
+        l_NewPoint->m_wxcODPointRangeRingsColour = g_colourDRPointRangeRingsColour;
+        l_NewPoint->m_iRangeRingStyle = g_iDRPointRangeRingLineStyle;
+        l_NewPoint->m_iRangeRingWidth = g_iDRPointRangeRingLineWidth;
         l_pDR->AddPoint( l_NewPoint );
         g_pODSelect->AddSelectableODPoint( l_dEndLat, l_dEndLon, l_NewPoint );
         g_pODSelect->AddSelectablePathSegment( l_dSaveLat, l_dSaveLon, l_dEndLat, l_dEndLon, beginPoint, l_NewPoint, l_pDR );

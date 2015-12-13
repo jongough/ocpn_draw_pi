@@ -27,28 +27,32 @@ ODDRDialogDef::ODDRDialogDef( wxWindow* parent, wxWindowID id, const wxString& t
 	m_staticTextSOG->Wrap( -1 );
 	fgSizer6->Add( m_staticTextSOG, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlSOG = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlSOG = new wxTextCtrl( this, wxID_ANY, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlSOG->SetMaxLength( 0 ); 
 	fgSizer6->Add( m_textCtrlSOG, 0, wxALL, 5 );
 	
 	m_staticTextCOG = new wxStaticText( this, wxID_ANY, _("Course over Ground"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextCOG->Wrap( -1 );
 	fgSizer6->Add( m_staticTextCOG, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlCOG = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlCOG = new wxTextCtrl( this, wxID_ANY, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlCOG->SetMaxLength( 0 ); 
 	fgSizer6->Add( m_textCtrlCOG, 0, wxALL, 5 );
 	
 	m_staticTextLength = new wxStaticText( this, wxID_ANY, _("DR Path Length"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLength->Wrap( -1 );
 	fgSizer6->Add( m_staticTextLength, 0, wxALL, 5 );
 	
-	m_textCtrlLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlLength = new wxTextCtrl( this, wxID_ANY, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlLength->SetMaxLength( 0 ); 
 	fgSizer6->Add( m_textCtrlLength, 0, wxALL, 5 );
 	
 	m_staticTextDRPointInterval = new wxStaticText( this, wxID_ANY, _("DR Point Interval"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDRPointInterval->Wrap( -1 );
 	fgSizer6->Add( m_staticTextDRPointInterval, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlDRPointInterval = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlDRPointInterval = new wxTextCtrl( this, wxID_ANY, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlDRPointInterval->SetMaxLength( 0 ); 
 	fgSizer6->Add( m_textCtrlDRPointInterval, 0, wxALL, 5 );
 	
 	wxString m_radioBoxLengthTypeChoices[] = { _("Time"), _("Distance") };

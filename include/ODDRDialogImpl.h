@@ -51,6 +51,14 @@ class ODDRDialogImpl : public ODDRDialogDef
         //// end generated class members
         
         void UpdateDialog();
+        
+    private:
+        double  m_dValidator;
+        double  m_dSOGValidator;
+        double  m_dLengthValidator;
+        double  m_dIntervalValidator;
+        int     m_iValidator;
+        int     m_iCOGValidator;
 	
 };
 
