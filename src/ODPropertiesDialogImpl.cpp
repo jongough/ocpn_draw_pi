@@ -121,6 +121,13 @@ extern int          g_DRPersistenceType;
 extern bool         g_bDRShowArrow;
 extern int          g_DRLineWidth;
 extern int          g_DRLineStyle;
+extern bool         g_bDRPointShowRangeRings;
+extern int          g_iDRPointRangeRingsNumber;
+extern float        g_fDRPointRangeRingsStep;
+extern int          g_iDRPointRangeRingsStepUnits;
+extern wxColour     g_colourDRPointRangeRingsColour;
+extern int          g_iDRPointRangeRingLineWidth;
+extern int          g_iDRPointRangeRingLineStyle;
 
 extern bool         g_bConfirmObjectDelete;
 extern bool         g_bShowMag;
@@ -143,14 +150,28 @@ ODPropertiesDialogDef( parent )
     m_staticTextDateVal->SetLabel(PLUGIN_VERSION_DATE);
     
     m_pfdDialog = NULL;
-    wxFloatingPointValidator<double> dVal(3, &m_dValidator, wxNUM_VAL_DEFAULT);
-    dVal.SetMin(0);
-    m_textCtrlODPointRangeRingSteps->SetValidator( dVal );
-    m_textCtrlODPointArrivalRadius->SetValidator( dVal );
-    m_textCtrlSOG->SetValidator( dVal );
-    m_textCtrlCOG->SetValidator( dVal );
-    m_textCtrlDRPathLength->SetValidator( dVal );
-    m_textCtrlDRPointInterval->SetValidator( dVal );
+    wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODPointArrivalRadiusVal(3, &m_dODPointArrivalRadiusValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dDRPathLengthVal(3, &m_dDRPathLengthValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dDRPointIntervalVal(3, &m_dODPointIntervalValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dDRPointRangeRingStepVal(3, &m_dDRPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
+    wxIntegerValidator<int> iCOGVal(&m_iCOGValidator, wxNUM_VAL_DEFAULT);
+    dODPointRangeRingStepVal.SetMin(0);
+    dODPointArrivalRadiusVal.SetMin(0);
+    dDRPathLengthVal.SetMin(0);
+    dDRPointIntervalVal.SetMin(0);
+    dDRPointRangeRingStepVal.SetMin(0);
+    dSOGVal.SetMin(0);
+    iCOGVal.SetRange(0, 360);
+
+    m_textCtrlODPointRangeRingSteps->SetValidator( dODPointRangeRingStepVal );
+    m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadiusVal );
+    m_textCtrlSOG->SetValidator( dSOGVal );
+    m_textCtrlCOG->SetValidator( iCOGVal );
+    m_textCtrlDRPathLength->SetValidator( dDRPathLengthVal );
+    m_textCtrlDRPointInterval->SetValidator( dDRPointIntervalVal );
+    m_textCtrlDRPointRangeRingSteps->SetValidator( dDRPointRangeRingStepVal );
 }
 
 void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )
@@ -307,7 +328,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_DRLineStyle = ::StyleValues[ m_choiceDRLineStyle->GetSelection()];
     g_bDRShowArrow = m_checkBoxDRShowArrow->GetValue();
     m_textCtrlSOG->GetValue().ToDouble( &g_dDRSOG );
-    g_iDRCOG = wxAtoi( m_textCtrlCOG->GetValue() );
+    m_textCtrlCOG->GetValue().ToLong( (long*)&g_iDRCOG );
     g_iDRLengthType = m_radioBoxDRLengthType->GetSelection();
     g_iDRIntervalType = m_radioBoxDRIntervalType->GetSelection();
     g_iDRDistanceUnits = m_radioBoxDRDistanceUnits->GetSelection();
@@ -315,6 +336,13 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iDRPersistenceType = m_radioBoxDRPersistence->GetSelection();
     m_textCtrlDRPathLength->GetValue().ToDouble( &g_dDRLength );
     m_textCtrlDRPointInterval->GetValue().ToDouble( &g_dDRPointInterval );
+    g_bDRPointShowRangeRings = m_checkBoxShowDRPointRangeRings->GetValue();
+    g_iDRPointRangeRingsNumber = m_choiceDRPointRangeRingNumber->GetSelection();
+    g_fDRPointRangeRingsStep = atof( m_textCtrlDRPointRangeRingSteps->GetValue().mb_str() );
+    g_iDRPointRangeRingsStepUnits = m_choiceDRPointDistanceUnit->GetSelection();
+    g_colourDRPointRangeRingsColour = m_colourPickerDRPointRangeRingColours->GetColour();
+    g_iDRPointRangeRingLineWidth = ::WidthValues[ m_choiceDRPointRangeRingWidth->GetSelection() ];
+    g_iDRPointRangeRingLineStyle = ::StyleValues[ m_choiceDRPointRangeRingStyle->GetSelection() ];
     
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
     g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
@@ -513,6 +541,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
                 m_choiceEBLLineStyle->SetSelection( i );
             if( g_DRLineStyle == ::StyleValues[i] )
                 m_choiceDRLineStyle->SetSelection( i );
+            if( g_iDRPointRangeRingLineStyle == ::StyleValues[i] )
+                m_choiceDRPointRangeRingStyle->SetSelection( i );
             if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
                 m_choiceRangeRingStyle->SetSelection( i );
         }
@@ -525,6 +555,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
                 m_choiceEBLLineWidth->SetSelection( i );
             if( g_iBoundaryPointRangeRingLineWidth == ::WidthValues[i] )
                 m_choiceRangeRingWidth->SetSelection( i );
+            if( g_iDRPointRangeRingLineWidth == ::WidthValues[i] )
+                m_choiceDRPointRangeRingWidth->SetSelection( i );
             if( g_DRLineWidth == ::WidthValues[i] )
                 m_choiceDRLineWidth->SetSelection( i );
         }
@@ -562,6 +594,15 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_radioBoxDRDistanceUnits->SetSelection( g_iDRDistanceUnits );
         m_radioBoxDRTimeUnits->SetSelection( g_iDRTimeUnits );
         m_radioBoxDRPersistence->SetSelection( g_iDRPersistenceType );
+        m_checkBoxShowDRPointRangeRings->SetValue( g_bDRPointShowRangeRings );
+        m_choiceDRPointRangeRingNumber->SetSelection( g_iDRPointRangeRingsNumber );
+        wxString s_DRRangeRingStep;
+        s_DRRangeRingStep.Printf( wxT("%.3f"), g_fDRPointRangeRingsStep );
+        m_textCtrlDRPointRangeRingSteps->SetValue( s_DRRangeRingStep );
+        m_choiceDRPointDistanceUnit->SetSelection( g_iDRPointRangeRingsStepUnits );
+        m_colourPickerDRPointRangeRingColours->SetColour( g_colourDRPointRangeRingsColour );
+        
+        
 
         s.Printf( _T("%.3f"), g_dDRSOG );
         m_textCtrlSOG->SetValue( s );
