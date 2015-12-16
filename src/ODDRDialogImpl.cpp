@@ -34,7 +34,10 @@
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 #include "ODSelect.h"
+
+#if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
+#endif
 
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern bool         g_bShowMag;
@@ -66,6 +69,7 @@ extern ODConfig                 *g_pODConfig;
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
+#if wxCHECK_VERSION(3,0,0)    
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dIntervalVal(3, &m_dIntervalValidator, wxNUM_VAL_DEFAULT);
@@ -82,10 +86,38 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     m_iCOGValidator = g_iDRCOG;
     m_dLengthValidator = g_dDRLength;
     m_dIntervalValidator = g_dDRPointInterval;
+#else
+    wxString s;
+    s.Printf( _T("%.3f"), g_dDRLength );
+    m_textCtrlLength->SetValue( s );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
+    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    m_staticTextCOG->SetLabel( s );
+    s.Printf( _T("%.3f"), g_dDRPointInterval );
+    m_textCtrlDRPointInterval->SetValue( s );
+    m_radioBoxLengthType->SetSelection( g_iDRLengthType );
+    m_radioBoxIntervalType->SetSelection( g_iDRIntervalType );
+    m_radioBoxDistanceUnits->SetSelection( g_iDRDistanceUnits );
+    m_radioBoxTimeUnits->SetSelection( g_iDRTimeUnits );
+    
+    if(g_pfFix.Sog != g_pfFix.Sog )
+        s.Printf( _T("%.3f"), g_dDRSOG );
+    else
+        s.Printf( _T("%.3f"), g_pfFix.Sog );
+    m_textCtrlSOG->SetValue( s );
+    if(g_pfFix.Cog != g_pfFix.Cog )
+        s.Printf( _T("%i"), g_iDRCOG );
+    else
+        s.Printf( _T("%.3f"), g_pfFix.Cog );
+    m_textCtrlCOG->SetValue( s );
+#endif    
+    
+    this->Layout();
 }
 
 void ODDRDialogImpl::UpdateDialog()
 {
+#if wxCHECK_VERSION(3,0,0) 
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
     else s.Printf( _T("Course over Ground %s"), _T("(T)") );
@@ -94,7 +126,22 @@ void ODDRDialogImpl::UpdateDialog()
     m_iCOGValidator = g_iDRCOG;
     m_dLengthValidator = g_dDRLength;
     m_dIntervalValidator = g_dDRPointInterval;
-    
+#else
+    wxString s;
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
+    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    m_staticTextCOG->SetLabel( s );
+    if(g_pfFix.Sog != g_pfFix.Sog )
+        s.Printf( _T("%.3f"), g_dDRSOG );
+    else
+        s.Printf( _T("%.3f"), g_pfFix.Sog );
+    m_textCtrlSOG->SetValue( s );
+    if(g_pfFix.Cog != g_pfFix.Cog )
+        s.Printf( _T("%i"), g_iDRCOG );
+    else
+        s.Printf( _T("%.3f"), g_pfFix.Cog );
+    m_textCtrlCOG->SetValue( s );
+    #endif
     this->Layout();
 }
 

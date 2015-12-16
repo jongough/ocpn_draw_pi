@@ -68,7 +68,7 @@ std::cout << x << std::endl; } while (0)
 
 #include "georef.h"
 //#include "chartbarwin.h"
-
+#include "wx28compat.h"
 #include <wx/aui/aui.h>
 #include <wx/string.h>
 #include <wx/settings.h>

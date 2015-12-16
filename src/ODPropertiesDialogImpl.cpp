@@ -34,7 +34,10 @@
 #include "PointMan.h"
 #include "version.h"
 #include <wx/fontdlg.h>
+
+#if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
+#endif
 
 extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
@@ -147,9 +150,11 @@ ODPropertiesDialogDef( parent )
     m_staticTextMajorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MAJOR ));
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
-    m_staticTextDateVal->SetLabel(PLUGIN_VERSION_DATE);
+    m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
     
     m_pfdDialog = NULL;
+    
+#if wxCHECK_VERSION(3,0,0) 
     wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadiusVal(3, &m_dODPointArrivalRadiusValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dDRPathLengthVal(3, &m_dDRPathLengthValidator, wxNUM_VAL_DEFAULT);
@@ -172,6 +177,7 @@ ODPropertiesDialogDef( parent )
     m_textCtrlDRPathLength->SetValidator( dDRPathLengthVal );
     m_textCtrlDRPointInterval->SetValidator( dDRPointIntervalVal );
     m_textCtrlDRPointRangeRingSteps->SetValidator( dDRPointRangeRingStepVal );
+#endif
 }
 
 void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )

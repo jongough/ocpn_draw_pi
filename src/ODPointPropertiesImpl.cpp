@@ -44,7 +44,10 @@
 #include <wx/menu.h>
 #include <wx/window.h>
 #include <wx/fontdlg.h>
+
+#if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
+#endif
 
 extern ODSelect             *g_pODSelect;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
@@ -75,11 +78,15 @@ ODPointPropertiesDialog( parent )
 
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
-    wxFloatingPointValidator<double> dVal(3, &m_dValidator, wxNUM_VAL_DEFAULT);
-    dVal.SetMin(0);
-    m_textCtrlPointRangeRingsSteps->SetValidator( dVal );
-    m_textArrivalRadius->SetValidator( dVal );
-
+    
+#if wxCHECK_VERSION(3,0,0) 
+    wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
+    dODPointRangeRingSteps.SetMin(0);
+    dODPointArrivalRadius.SetMin(0);
+    m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingSteps );
+    m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
+#endif
 }
 
 void ODPointPropertiesImpl::SetDialogSize( void )
@@ -248,12 +255,12 @@ void ODPointPropertiesImpl::SaveChanges()
 
         // Get User input Text Fields
         m_pODPoint->m_iODPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
-        m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlPointRangeRingsSteps->GetValue().mb_str() );
+        m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingsSteps->GetValue().mb_str() );
 //        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
         m_pODPoint->SetName( m_textName->GetValue() );
-        m_pODPoint->SetODPointArrivalRadius( m_textArrivalRadius->GetValue() );
+        m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
@@ -440,11 +447,11 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
             m_checkBoxChangeAllPointIcons->Enable( false );
-            m_textArrivalRadius->SetEditable ( false );
+            m_textCtrlODPointArrivalRadius->SetEditable ( false );
             m_checkBoxShowODPointRangeRings->Enable( false );
             m_choiceDistanceUnitsString->Enable( false );
             m_choicePointRangeRingsNumber->Enable( false );
-            m_textCtrlPointRangeRingsSteps->SetEditable( false );
+            m_textCtrlODPointRangeRingsSteps->SetEditable( false );
             m_colourPickerRangeRingsColour->Enable( false );
         } else {
             m_textName->SetEditable( true );
@@ -455,18 +462,18 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bcomboBoxODPointIconName->Enable( true );
             m_checkBoxShowName->Enable( true );
             m_checkBoxVisible->Enable( true );
-            m_textArrivalRadius->SetEditable ( true );
+            m_textCtrlODPointArrivalRadius->SetEditable ( true );
             m_checkBoxShowODPointRangeRings->Enable( true );
             m_choiceDistanceUnitsString->Enable( true );
             m_choicePointRangeRingsNumber->Enable( true );
-            m_textCtrlPointRangeRingsSteps->SetEditable( true );
+            m_textCtrlODPointRangeRingsSteps->SetEditable( true );
             m_colourPickerRangeRingsColour->Enable( true );
         }
         m_textName->SetValue( m_pODPoint->GetName() );
 
         wxString s_ArrivalRadius;
         s_ArrivalRadius.Printf( _T("%.3f"), m_pODPoint->GetODPointArrivalRadius() );
-        m_textArrivalRadius->SetValue( s_ArrivalRadius );        
+        m_textCtrlODPointArrivalRadius->SetValue( s_ArrivalRadius );        
         
         m_textDescription->SetValue( m_pODPoint->m_MarkDescription );
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
@@ -504,7 +511,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_choiceDistanceUnitsString->SetSelection( m_pODPoint->GetODPointRangeRingsStepUnits() );
         wxString buf;
         buf.Printf( _T("%.3f" ), m_pODPoint->GetODPointRangeRingsStep() );
-        m_textCtrlPointRangeRingsSteps->SetValue( buf );
+        m_textCtrlODPointRangeRingsSteps->SetValue( buf );
 //        m_RangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         

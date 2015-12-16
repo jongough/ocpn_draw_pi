@@ -39,7 +39,6 @@
 #include "cutil.h"
 #include "TextPoint.h"
 #include <stddef.h>                     // for NULL
-#include <wx/chartype.h>                // for _T, wxT, wxS
 
 #include <wx/dir.h>
 #include <wx/filename.h>
