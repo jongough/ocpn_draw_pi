@@ -333,11 +333,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                             wxsText.append( wxT(": ") );
                             s.Append( wxsText );
                         }
-                        if( pp->m_MarkName.length() > 0 ) {
+                        if( pp->m_ODPointName.length() > 0 ) {
                             wxString wxsText;
                             wxsText.append( _("Name") );
                             wxsText.append( wxT(" : ") );
-                            wxsText.append( pp->m_MarkName );
+                            wxsText.append( pp->m_ODPointName );
                             s.Append( wxsText );
                         }
                         g_pODRolloverWin->SetString( s );

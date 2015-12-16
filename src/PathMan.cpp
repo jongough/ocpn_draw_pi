@@ -180,7 +180,7 @@ bool PathMan::DeletePath( ODPath *pPath )
                         pdnode = pPath->m_pODPointList->Find( prp );
                     }
 
-                    if(prp->m_MarkName == wxT("Boat") && pPath->m_sTypeString == wxT("EBL") ) g_ocpn_draw_pi->m_pEBLBoatPoint = NULL;
+                    if(prp->m_ODPointName == wxT("Boat") && pPath->m_sTypeString == wxT("EBL") ) g_ocpn_draw_pi->m_pEBLBoatPoint = NULL;
                     pnode = NULL;
                     delete prp;
                 } else {

@@ -1113,11 +1113,6 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextColour" ), &l_wxsDefautlTextColour, wxS( "BLACK" ) );
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextColour );
         wxString  l_wxsDefautlTextBackgroundColour;
-//#if !wxCHECK_VERSION(3,0,0)        
-//        g_colourDefaultTextBackgroundColour = wxColour( "YEL01" );
-//#else        
-//        g_colourDefaultTextBackgroundColour = wxColour( *wxYELLOW );
-//#endif
         pConf->Read( wxS( "DefaultTextBackgroundColour" ), &l_wxsDefautlTextBackgroundColour, wxS( "YELLOW" ) );
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextBackgroundColour );
         pConf->Read( wxS( "DefaultTextBackgroundTransparency" ), &g_iTextBackgroundTransparency, 100 );
@@ -1276,8 +1271,10 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     jMsg[wxS("lat")] = l_dLat;
                     jMsg[wxS("lon")] = l_dLon;
                     if(l_bFoundBoundary ) {
-                        jMsg[wxS("Found")] = true;
                         Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
+                        jMsg[wxS("Name")] = l_boundary->m_PathNameString;
+                        jMsg[wxS("Description")] = l_boundary->m_PathDescription;
+                        jMsg[wxS("Found")] = true;
                         jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
                         if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
                             jMsg[wxS("BoundaryType")] = wxT("Exclusion");
@@ -1291,6 +1288,8 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     else if(l_bFoundBoundaryPoint ) {
                         jMsg[wxS("Found")] = true;
                         BoundaryPoint *l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
+                        jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
+                        jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
                         if( l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
                             jMsg[wxS("BoundaryType")] = wxT("Exclusion");
                         else if( !l_boundarypoint->m_bExclusionBoundaryPoint && l_boundarypoint->m_bInclusionBoundaryPoint)
@@ -1908,7 +1907,7 @@ void ocpn_draw_pi::FindSelectedObject()
             SelectItem *pFindSel = node->GetData();
             
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
-            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_MarkName == _("Boat") ) continue;
+            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) continue;
             
             //    Get an array of all paths using this point
             wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );

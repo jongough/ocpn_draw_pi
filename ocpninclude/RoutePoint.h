@@ -60,8 +60,8 @@ public:
       void SetVisible(bool viz = true){ m_bIsVisible = viz; }
       void SetListed(bool viz = true){ m_bIsListed = viz; }
       void SetNameShown(bool viz = true) { m_bShowName = viz; }
-      wxString GetName(void){ return m_MarkName; }
-      wxString GetDescription(void) { return m_MarkDescription; }
+      wxString GetName(void){ return m_ODPointName; }
+      wxString GetDescription(void) { return m_ODPointDescription; }
       
       wxString GetIconName(void){ return m_IconName; }
       wxBitmap *GetIconBitmap(){ return m_pbmIcon; }
@@ -120,7 +120,7 @@ public:
       bool              m_bIsVisible;           // true if should be drawn, false if invisible
       bool              m_bIsListed;
       bool              m_bIsActive;
-      wxString          m_MarkDescription;
+      wxString          m_ODPointDescription;
       wxString          m_GUID;
 
       wxFont            *m_pMarkFont;
@@ -166,7 +166,7 @@ public:
       double m_WaypointArrivalRadius;
       
 private:
-      wxString          m_MarkName;
+      wxString          m_ODPointName;
       wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
       wxString          m_IconName;

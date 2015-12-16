@@ -294,7 +294,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
         //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
         
-        if(pOp->m_MarkName != _("Boat")) {
+        if(pOp->m_ODPointName != _("Boat")) {
         //  ODPoint Name
             m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, pOp->GetName() );
             wxsLastPoint = pOp->GetName();
@@ -405,7 +405,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
         //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
 
-        if(pOp->m_MarkName != _("Boat")) {
+        if(pOp->m_ODPointName != _("Boat")) {
             //  ODPoint Name
             m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, pOp->GetName() );
             wxsLastPoint = pOp->GetName();

@@ -102,7 +102,7 @@ ODPoint::ODPoint()
     m_IconName = wxEmptyString;
     ReLoadIcon();
 
-    m_MarkName = wxEmptyString;
+    m_ODPointName = wxEmptyString;
 
     m_bIsInLayer = false;
     m_LayerID = 0;
@@ -118,7 +118,7 @@ ODPoint::ODPoint()
 // Copy Constructor
 ODPoint::ODPoint( ODPoint* orig )
 {
-    m_MarkName = orig->GetName();
+    m_ODPointName = orig->GetName();
     m_lat = orig->m_lat;
     m_lon = orig->m_lon;
     m_seg_len = orig->m_seg_len;
@@ -145,7 +145,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_NameLocationOffsetX = orig->m_NameLocationOffsetX;
     m_NameLocationOffsetY = orig->m_NameLocationOffsetY;
     m_pMarkFont = orig->m_pMarkFont;
-    m_MarkDescription = orig->m_MarkDescription;
+    m_ODPointDescription = orig->m_ODPointDescription;
     m_btemp = orig->m_btemp;
     m_sTypeString = orig->m_sTypeString;
 
@@ -276,7 +276,7 @@ void ODPoint::SetCreateTime( wxDateTime dt )
 
 void ODPoint::SetName(const wxString & name)
 {
-    m_MarkName = name;
+    m_ODPointName = name;
     CalculateNameExtents();
 }
 
@@ -286,7 +286,7 @@ void ODPoint::CalculateNameExtents( void )
         wxScreenDC dc;
 
         dc.SetFont( *m_pMarkFont );
-        m_NameExtents = dc.GetTextExtent( m_MarkName );
+        m_NameExtents = dc.GetTextExtent( m_ODPointName );
     } else
         m_NameExtents = wxSize( 0, 0 );
 
@@ -415,7 +415,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
             dc.SetFont( *m_pMarkFont );
             dc.SetTextForeground( m_FontColor );
 
-            dc.DrawText( m_MarkName, r.x + m_NameLocationOffsetX, r.y + m_NameLocationOffsetY );
+            dc.DrawText( m_ODPointName, r.x + m_NameLocationOffsetX, r.y + m_NameLocationOffsetY );
         }
     }
 
@@ -621,7 +621,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
             dc.Clear();
             dc.SetFont( *m_pMarkFont );
             dc.SetTextForeground( *wxWHITE );
-            dc.DrawText( m_MarkName, 0, 0);
+            dc.DrawText( m_ODPointName, 0, 0);
             dc.SelectObject( wxNullBitmap );
             
             /* make alpha texture for text */
@@ -744,7 +744,7 @@ bool ODPoint::IsSame( ODPoint *pOtherRP )
 {
     bool IsSame = false;
 
-    if( this->m_MarkName == pOtherRP->m_MarkName ) {
+    if( this->m_ODPointName == pOtherRP->m_ODPointName ) {
         if( fabs( this->m_lat - pOtherRP->m_lat ) < 1.e-6
                 && fabs( this->m_lon - pOtherRP->m_lon ) < 1.e-6 ) IsSame = true;
     }
@@ -795,5 +795,5 @@ wxColour ODPoint::GetODPointRangeRingsColour(void) {
 
 void ODPoint::SetMarkDescription(wxString sMarkDescription)
 {
-    m_MarkDescription = sMarkDescription;
+    m_ODPointDescription = sMarkDescription;
 }

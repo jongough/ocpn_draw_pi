@@ -542,8 +542,8 @@ public:
 
     wxString          m_GUID;
 
-    wxString          m_MarkName;
-    wxString          m_MarkDescription;
+    wxString          m_ODPointName;
+    wxString          m_ODPointDescription;
     wxDateTime        m_CreateTime;
 	bool			  m_IsVisible;
 

@@ -462,7 +462,7 @@ void TextPoint::SetPointText( wxString sTextPointText )
 void TextPoint::ShowText( void )
 {
     return;
-    if( m_MarkDescription.Len() == 0 )
+    if( m_ODPointDescription.Len() == 0 )
         m_pstText->Show( false );
   //  else
 //        m_pstText->Show( true );
