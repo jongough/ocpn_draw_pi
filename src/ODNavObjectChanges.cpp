@@ -91,8 +91,8 @@ void ODNavObjectChanges::RemoveChangesFile( void )
 {
     if(m_ODchanges_file)
         fclose(m_ODchanges_file);
-    if( ::wxFileExists( m_ODfilename.mb_str() ) )
-        ::wxRemoveFile( m_ODfilename.mb_str() );
+    if( ::wxFileExists( m_ODfilename ) )
+        ::wxRemoveFile( m_ODfilename );
     
     m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
 }
@@ -180,8 +180,10 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             weight.set_value( tp->m_DisplayTextFont.GetWeight() );
             pugi::xml_attribute underline = child.append_attribute( "underline" );
             underline.set_value( tp->m_DisplayTextFont.GetUnderlined() );
+#if wxCHECK_VERSION(3,0,0) 
             pugi::xml_attribute strikethrough = child.append_attribute( "strikethrough" );
             strikethrough.set_value( tp->m_DisplayTextFont.GetStrikethrough() );
+#endif
             pugi::xml_attribute face = child.append_attribute( "face" );
             face.set_value( tp->m_DisplayTextFont.GetFaceName().ToUTF8() );
             pugi::xml_attribute encoding = child.append_attribute( "encoding" );
@@ -727,7 +729,11 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     int     l_iTextPointFontStyle = g_DisplayTextFont.GetStyle();
     int     l_iTextPointFontWeight = g_DisplayTextFont.GetWeight();
     bool    l_bTextPointFontUnderline = g_DisplayTextFont.GetUnderlined();
+#if wxCHECK_VERSION(3,0,0) 
     bool    l_bTextPointFontStrikethrough = g_DisplayTextFont.GetStrikethrough();
+#else
+    bool    l_bTextPointFontStrikethrough = false;
+#endif
     wxString    l_wxsTextPointFontFace = g_DisplayTextFont.GetFaceName();
     int     l_iTextPointFontEncoding = g_DisplayTextFont.GetEncoding();
     int     l_iODPointRangeRingsNumber = -1;
@@ -889,13 +895,13 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             }
         } else if ( !strcmp( pcn, "opencpn:boundary_type" ) ) {
             wxString s = wxString::FromUTF8( child.first_child().value() );
-            if( s == "Exclusion" ) {
+            if( s == _T("Exclusion") ) {
                 l_bExclusionBoundaryPoint = true;
                 l_bInclusionBoundaryPoint = false;
-            } else if( s == "Inclusion" ) {
+            } else if( s == _T("Inclusion") ) {
                 l_bExclusionBoundaryPoint = false;
                 l_bInclusionBoundaryPoint = true;
-            } else if( s == "None" ) {
+            } else if( s == _T("Neither") ) {
                 l_bExclusionBoundaryPoint = false;
                 l_bInclusionBoundaryPoint = false;
             } else l_bExclusionBoundaryPoint = false;
@@ -934,7 +940,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
             
         m_ptODPointList->Append( pOP ); 
-        if( TypeString == "Text Point" ) {
+        if( TypeString == _T("Text Point") ) {
             pTP->SetPointText( TextString );
             pTP->m_iTextPosition = l_iTextPosition;
             pTP->m_colourTextColour = l_colourTextColour;
@@ -943,13 +949,15 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_DisplayTextFont.SetStyle( l_iTextPointFontStyle );
             pTP->m_DisplayTextFont.SetWeight( l_iTextPointFontWeight );
             pTP->m_DisplayTextFont.SetUnderlined( l_bTextPointFontUnderline );
+#if wxCHECK_VERSION(3,0,0) 
             pTP->m_DisplayTextFont.SetStrikethrough( l_bTextPointFontStrikethrough );
+#endif
             pTP->m_DisplayTextFont.SetFaceName( l_wxsTextPointFontFace );
             pTP->m_DisplayTextFont.SetEncoding( (wxFontEncoding)l_iTextPointFontEncoding );
             pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
             pTP->m_natural_scale = l_natural_scale;
-        } else if ( TypeString == "Boundary Point" ) {
+        } else if ( TypeString == _T("Boundary Point") ) {
             pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
             pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
             pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
@@ -1109,13 +1117,13 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
                 }
             } else if( ChildName == _T( "opencpn:boundary_type") ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                if( s == "Exclusion" ) {
+                if( s == _T("Exclusion") ) {
                     pTentBoundary->m_bExclusionBoundary = true;
                     pTentBoundary->m_bInclusionBoundary = false;
-                } else if( s == "Inclusion" ) {
+                } else if( s == _T("Inclusion") ) {
                     pTentBoundary->m_bExclusionBoundary = false;
                     pTentBoundary->m_bInclusionBoundary = true;
-                } else if( s == "None" ) {
+                } else if( s == _T("Neither") ) {
                     pTentBoundary->m_bExclusionBoundary = false;
                     pTentBoundary->m_bInclusionBoundary = false;
                 } else pTentBoundary->m_bExclusionBoundary = false;

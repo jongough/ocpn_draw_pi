@@ -4,8 +4,6 @@
 
 cp ../../clean/src/bbox.cpp ./ocpnsrc/.
 cp ../../clean/src/cutil.cpp ./ocpnsrc/.
-cp ../../clean/src/FontDesc.cpp ./ocpnsrc/.
-cp ../../clean/src/FontMgr.cpp ./ocpnsrc/.
 cp ../../clean/src/geodesic.cpp ./ocpnsrc/.
 cp ../../clean/src/georef.cpp ./ocpnsrc/.
 cp ../../clean/src/Hyperlink.cpp ./ocpnsrc/.
@@ -32,8 +30,6 @@ cp ../../clean/include/datastream.h ./ocpninclude/.
 cp ../../clean/include/dsPortType.h ./ocpninclude/.
 cp ../../clean/include/dychart.h ./ocpninclude/.
 cp ../../clean/include/emboss_data.h ./ocpninclude/.
-cp ../../clean/include/FontDesc.h ./ocpninclude/.
-cp ../../clean/include/FontMgr.h ./ocpninclude/.
 cp ../../clean/include/geodesic.h ./ocpninclude/.
 cp ../../clean/include/georef.h ./ocpninclude/.
 cp ../../clean/src/nmea0183/gga.hpp ./ocpninclude/.

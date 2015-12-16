@@ -65,7 +65,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextLogitude;
 		wxTextCtrl* m_textLongitude;
 		wxStaticText* m_staticTextArrivalRadius;
-		wxTextCtrl* m_textArrivalRadius;
+		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_bSizerRangeRingsControl;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxRadioBox* m_radioBoxBoundaryPointType;
@@ -79,7 +79,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxChoice* m_choicePointRangeRingsNumber;
 		wxFlexGridSizer* m_SizerPointRangeGrid;
 		wxStaticText* m_staticTextPointRangeRingSteps;
-		wxTextCtrl* m_textCtrlPointRangeRingsSteps;
+		wxTextCtrl* m_textCtrlODPointRangeRingsSteps;
 		wxStaticText* m_staticTextDistanceUnit;
 		wxChoice* m_choiceDistanceUnitsString;
 		wxStaticText* m_staticTextRangeRingColours;

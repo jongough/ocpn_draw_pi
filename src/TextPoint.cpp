@@ -449,9 +449,11 @@ void TextPoint::SetPointText( wxString sTextPointText )
 {
     m_TextPointText = ( sTextPointText );
     return;
+#if wxCHECK_VERSION(3,0,0)
     bool bMarkup;
     bMarkup = m_pstText->SetLabelMarkup( sTextPointText );
     if (!bMarkup)
+#endif
         m_pstText->SetLabel( sTextPointText );
     ShowText();
     m_iDisplayTextTexture = 0;

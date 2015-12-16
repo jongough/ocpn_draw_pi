@@ -67,7 +67,7 @@
 #include "pluginmanager.h"
 #include "geodesic.h"
 #include "IDX_entry.h"
-#include "wx/stdpaths.h"
+#include <wx/stdpaths.h>
 #include <wx/timer.h>
 #include <wx/event.h>
 #include <wx/sysopt.h>
@@ -78,7 +78,7 @@
 #include <wx/listbook.h>
 #include <memory>
 
-#include "wx/jsonreader.h"
+#include <wx/jsonreader.h>
 
 using namespace std;
 
@@ -957,7 +957,9 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultTextPointFontStyle" ), (int)g_DisplayTextFont.GetStyle() );
         pConf->Write( wxS( "DefaultTextPointFontWeight" ), (int)g_DisplayTextFont.GetWeight() );
         pConf->Write( wxS( "DefaultTextPointFontUnderline" ), g_DisplayTextFont.GetUnderlined() );
+#if wxCHECK_VERSION(3,0,0)        
         pConf->Write( wxS( "DefaultTextPointFontStrikethrough" ), g_DisplayTextFont.GetStrikethrough() );
+#endif
         pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
         pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
         
@@ -1111,7 +1113,11 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextColour" ), &l_wxsDefautlTextColour, wxS( "BLACK" ) );
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextColour );
         wxString  l_wxsDefautlTextBackgroundColour;
-        g_colourDefaultTextBackgroundColour = wxColour( *wxYELLOW );
+//#if !wxCHECK_VERSION(3,0,0)        
+//        g_colourDefaultTextBackgroundColour = wxColour( "YEL01" );
+//#else        
+//        g_colourDefaultTextBackgroundColour = wxColour( *wxYELLOW );
+//#endif
         pConf->Read( wxS( "DefaultTextBackgroundColour" ), &l_wxsDefautlTextBackgroundColour, wxS( "YELLOW" ) );
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextBackgroundColour );
         pConf->Read( wxS( "DefaultTextBackgroundTransparency" ), &g_iTextBackgroundTransparency, 100 );
@@ -1141,8 +1147,10 @@ void ocpn_draw_pi::LoadConfig()
         g_DisplayTextFont.SetWeight( l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontUnderline" ), &l_bfontInfo, false );
         g_DisplayTextFont.SetUnderlined( l_bfontInfo );
+#if wxCHECK_VERSION(3,0,0)   
         pConf->Read( wxS( "DefaultTextPointFontStrikethrough" ), &l_bfontInfo, false );
         g_DisplayTextFont.SetStrikethrough( l_bfontInfo );
+#endif        
         wxString l_wxsFaceName;
         pConf->Read( wxS( "DefaultTextPointFaceName" ), &l_wxsFaceName, l_pDisplayTextFont->GetFaceName() );
         g_DisplayTextFont.SetFaceName( l_wxsFaceName );
@@ -2411,7 +2419,7 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
     
     while( node ) {
         ODPoint *pOP = node->GetData();
-        if(node->GetData()->m_sTypeString == "Boundary Point")
+        if(node->GetData()->m_sTypeString == _T("Boundary Point"))
             pOP = (BoundaryPoint *)node->GetData();
         if( pOP ) {
             if( pOP->m_bIsInRoute || pOP->m_bIsInPath ) {
@@ -2688,6 +2696,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 // TODO fix up undo
                 //undo->AfterUndoableAction( m_pMouseBoundary );
             }
+            pMousePoint->m_bExclusionBoundaryPoint = m_pMouseBoundary->m_bExclusionBoundary;
+            pMousePoint->m_bInclusionBoundaryPoint = m_pMouseBoundary->m_bInclusionBoundary;
         }
     }
     
