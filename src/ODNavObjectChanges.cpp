@@ -1527,7 +1527,7 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pTentPath )
                 ex_op->m_lat = pop->m_lat;
                 ex_op->m_lon = pop->m_lon;
                 ex_op->SetIconName( pop->GetIconName() );
-                ex_op->m_MarkDescription = pop->m_MarkDescription;
+                ex_op->m_ODPointDescription = pop->m_ODPointDescription;
                 ex_op->SetName( pop->GetName() );
                 save_ex_op = ex_op;
             } else {

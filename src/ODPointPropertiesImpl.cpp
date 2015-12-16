@@ -262,7 +262,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetName( m_textName->GetValue() );
         m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
-        m_pODPoint->m_MarkDescription = m_textDescription->GetValue();
+        m_pODPoint->m_ODPointDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
             m_pTextPoint->m_bTextChanged = true;
@@ -475,7 +475,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         s_ArrivalRadius.Printf( _T("%.3f"), m_pODPoint->GetODPointArrivalRadius() );
         m_textCtrlODPointArrivalRadius->SetValue( s_ArrivalRadius );        
         
-        m_textDescription->SetValue( m_pODPoint->m_MarkDescription );
+        m_textDescription->SetValue( m_pODPoint->m_ODPointDescription );
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_textDisplayText->Clear();
             m_textDisplayText->SetValue( m_pTextPoint->m_TextPointText );

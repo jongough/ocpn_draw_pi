@@ -106,7 +106,7 @@ ODPoint *DR::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRena
     ODPoint *newpoint = ODPath::InsertPointBefore( pOP, lat, lon );
     newpoint->m_IconName = g_sDRPointIconName;
     newpoint->m_sTypeString = wxT("DR Point");
-    newpoint->m_MarkName = wxT("");
+    newpoint->m_ODPointName = wxT("");
     newpoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
     newpoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
     newpoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;
@@ -123,7 +123,7 @@ ODPoint *DR::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenam
     ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon );
     newpoint->m_IconName = g_sDRPointIconName;
     newpoint->m_sTypeString = wxT("DR Point");
-    newpoint->m_MarkName = wxT("");
+    newpoint->m_ODPointName = wxT("");
     newpoint->m_bShowODPointRangeRings = g_bDRPointShowRangeRings;
     newpoint->m_iODPointRangeRingsNumber = g_iDRPointRangeRingsNumber;
     newpoint->m_fODPointRangeRingsStep = g_fDRPointRangeRingsStep;

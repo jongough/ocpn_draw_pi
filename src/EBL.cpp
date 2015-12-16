@@ -101,7 +101,7 @@ EBL::~EBL()
 void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
 {
     ODPath::AddPoint( pNewPoint, b_rename_in_sequence, b_deferBoxCalc, b_isLoading );
-    if(pNewPoint->m_MarkName == _("Start") || pNewPoint->m_MarkName == _("Boat")) {
+    if(pNewPoint->m_ODPointName == _("Start") || pNewPoint->m_ODPointName == _("Boat")) {
         pNewPoint->SetODPointRangeRingsNumber( 1 );
         pNewPoint->SetODPointRangeRingsStep( 0 );
         pNewPoint->SetODPointRangeRingsColour( GetCurrentColour() );
@@ -109,7 +109,7 @@ void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferB
             pNewPoint->m_bShowODPointRangeRings = true;
         else
             pNewPoint->m_bShowODPointRangeRings = false;
-    } else if(pNewPoint->m_MarkName == _("End")) {
+    } else if(pNewPoint->m_ODPointName == _("End")) {
         ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
         pFirstPoint->SetODPointRangeRingsStep( pNewPoint->m_seg_len );
     }
@@ -168,7 +168,7 @@ void EBL::CentreOnBoat( void )
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     pStartPoint->m_lat = g_pfFix.Lat;
     pStartPoint->m_lon = g_pfFix.Lon;
-    pStartPoint->m_MarkName = _("Boat");
+    pStartPoint->m_ODPointName = _("Boat");
     m_bCentreOnBoat = true;
     
     UpdateEBL();
@@ -192,7 +192,7 @@ void EBL::CentreOnLatLon( double lat, double lon )
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     pStartPoint->m_lat = lat;
     pStartPoint->m_lon = lon;
-    pStartPoint->m_MarkName = _("Start");
+    pStartPoint->m_ODPointName = _("Start");
     if(pStartPoint->GetIconName() != wxEmptyString) {
         pStartPoint->SetIconName( g_sEBLStartIconName );
         pStartPoint->ReLoadIcon();
@@ -239,7 +239,7 @@ ODPoint *EBL::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRen
     ODPoint *newpoint = ODPath::InsertPointBefore( pOP, lat, lon );
     newpoint->m_IconName = g_sEBLStartIconName;
     newpoint->m_sTypeString = wxT("EBL Point");
-    newpoint->m_MarkName = wxT("Start");
+    newpoint->m_ODPointName = wxT("Start");
     FinalizeForRendering();
     return newpoint;
 }
@@ -249,7 +249,7 @@ ODPoint *EBL::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRena
     ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon );
     newpoint->m_IconName = g_sEBLStartIconName;
     newpoint->m_sTypeString = wxT("EBL Point");
-    newpoint->m_MarkName = wxT("Start");
+    newpoint->m_ODPointName = wxT("Start");
     ReloadPathPointIcons();
     FinalizeForRendering();
     return newpoint;
