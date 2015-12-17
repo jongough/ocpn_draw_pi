@@ -45,6 +45,7 @@
 #include "DR.h"
 #include "TextPoint.h"
 #include <wx/window.h>
+#include <wx/clipbrd.h>
 
 extern ocpn_draw_pi    *g_ocpn_draw_pi;
 extern PathManagerDialog *g_pPathManagerDialog;
@@ -503,7 +504,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
             break;
         }
-        case ID_OCPNPOINT_MENU_PROPERTIES:
+        case ID_ODPOINT_MENU_PROPERTIES:
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
             
@@ -520,7 +521,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sCaption( _("OCPN Draw Remove ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( _("OCPN Point") );
+                    sType.append( _("OD Point") );
                 else
                     sType.append( m_pFoundODPoint->GetTypeString() );
                 sMessage.append( sType );
@@ -547,11 +548,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         }
-        case ID_OCPNPOINT_MENU_MOVE:
+        case ID_ODPOINT_MENU_MOVE:
             m_pFoundODPoint->m_bIsBeingEdited = TRUE;
             g_ocpn_draw_pi->m_bODPointEditing = TRUE;
             break;
-        case ID_OCPNPOINT_MENU_COPY:
+        case ID_ODPOINT_MENU_COPY:
             break;
         case ID_PATH_MENU_DELPOINT: {
             dlg_return = wxID_YES;
@@ -584,7 +585,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         }
-        case ID_OCPNPOINT_MENU_DELPOINT: {
+        case ID_ODPOINT_MENU_DELPOINT: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
                 wxString sMessage( _("Are you sure you want to delete this ") );
@@ -627,6 +628,20 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pFoundODPoint = NULL;
             break;
         }
+        case ID_PATH_MENU_COPY_GUID: {
+            if(wxTheClipboard->Open()) {
+                wxTheClipboard->SetData( new wxTextDataObject(m_pSelectedPath->m_GUID));
+                wxTheClipboard->Close();
+            }
+            break;
+        }
+        case ID_ODPOINT_MENU_COPY_GUID: {
+            if(wxTheClipboard->Open()) {
+                wxTheClipboard->SetData( new wxTextDataObject(m_pFoundODPoint->m_GUID));
+                wxTheClipboard->Close();
+            }
+            break;
+        }
             
     }
     
@@ -639,6 +654,8 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
     wxMenu* menuPath = NULL;
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
+ 
+    wxString sString;
     
     popx = x;
     popy = y;
@@ -661,7 +678,6 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
         else {
             menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
-            wxString sType;
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                 if(!m_pEBL->m_bCentreOnBoat) {
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, _("Centre on moving boat") );
@@ -673,21 +689,33 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
                     MenuAppend( menuPath, ID_EBL_MENU_VRM_MATCH_EBL_COLOUR, _("Match VRM colour to EBL colour"));
             }
             else if(m_pSelectedPath->m_sTypeString != wxT("DR")) {
-                sType.clear();
-                sType.append( _("Move ") );
-                sType.append( m_pSelectedPath->m_sTypeString );
-                MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sType );
-                sType.clear();
-                sType.append( _("Insert ") );
-                sType.append(m_pSelectedPath->m_sTypeString);
-                sType.append( _(" Point") );
-                MenuAppend( menuPath, ID_PATH_MENU_INSERT, sType );
+                sString.clear();
+                sString.append( _("Move") );
+                sString.append(_T(" "));
+                sString.append( m_pSelectedPath->m_sTypeString );
+                MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
+                sString.clear();
+                sString.append( _("Insert") );
+                sString.append(_T(" "));
+                sString.append(m_pSelectedPath->m_sTypeString);
+                sString.append( _(" Point") );
+                MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
             }
-            MenuAppend( menuPath, ID_PATH_MENU_DELETE, _( "Delete..." ) );
+            sString.clear();
+            sString.append( _("Delete") );
+            sString.append(_T("..."));
+            MenuAppend( menuPath, ID_PATH_MENU_DELETE, sString );
             if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
                 if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
                 else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
             }
+            sString.clear();
+            sString.append(_("Copy"));
+            sString.append(_T(" "));
+            sString.append( m_pSelectedPath->m_sTypeString );
+            sString.append(_T(" "));
+            sString.append(_("GUID"));
+            MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
         }
         
         //      Set this menu as the "focused context menu"
@@ -700,24 +728,24 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
             blay = true;
         
         if( blay ){
-            wxString sType;
-            sType.append( _("Layer ") );
-            sType.append( m_pFoundODPoint->m_sTypeString );
-            menuODPoint = new wxMenu( sType );
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            sString.clear();
+            sString.append( _("Layer ") );
+            sString.append( m_pFoundODPoint->m_sTypeString );
+            menuODPoint = new wxMenu( sString );
+            MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
             //if( m_pSelectedPath && m_pSelectedPath->IsActive() )
             //    MenuAppend( menuODPoint, ID_PATH_MENU_ACTPOINT, _( "Activate" ) );
         }
         else {
-            wxString sType;
-            sType.append( m_pFoundODPoint->m_sTypeString );
-            menuODPoint = new wxMenu( sType );
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_PROPERTIES, _( "Properties..." ) );
-            sType.clear();
-            sType.append( _("Move ") );
-            sType.append(m_pFoundODPoint->m_sTypeString);
-            MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_MOVE, sType );
+            sString.clear();
+            sString.append( m_pFoundODPoint->m_sTypeString );
+            menuODPoint = new wxMenu( sString );
+            MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
+            sString.clear();
+            sString.append( _("Move ") );
+            sString.append(m_pFoundODPoint->m_sTypeString);
+            MenuAppend( menuODPoint, ID_ODPOINT_MENU_MOVE, sString );
 
             if( m_pSelectedPath ) {
                 if( m_pSelectedPath->m_sTypeString != wxT("DR") ) {
@@ -727,7 +755,9 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
                     MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
                 }
             } else 
-                MenuAppend( menuODPoint, ID_OCPNPOINT_MENU_DELPOINT,  _( "Delete" ) );
+                MenuAppend( menuODPoint, ID_ODPOINT_MENU_DELPOINT,  _( "Delete" ) );
+            MenuAppend( menuODPoint, ID_ODPOINT_MENU_COPY_GUID, _("Copy Point GUID") );
+            
         }
         //      Set this menu as the "focused context menu"
         menuFocus = menuODPoint;
