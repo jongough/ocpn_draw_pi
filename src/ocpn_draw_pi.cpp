@@ -1290,6 +1290,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         BoundaryPoint *l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
                         jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
                         jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
+                        jMsg[wxS("BoundaryObjectType")] = wxT("Boundary Point");
                         if( l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
                             jMsg[wxS("BoundaryType")] = wxT("Exclusion");
                         else if( !l_boundarypoint->m_bExclusionBoundaryPoint && l_boundarypoint->m_bInclusionBoundaryPoint)
