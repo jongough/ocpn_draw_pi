@@ -97,6 +97,7 @@ extern int          g_iTextRightOffsetX;
 extern int          g_iTextRightOffsetY;
 extern int          g_iTextLeftOffsetX;
 extern int          g_iTextLeftOffsetY;
+extern int          g_iTextPointDisplayTextWhen;
 
 extern wxString     g_sEBLEndIconName;
 extern wxString     g_sEBLStartIconName;
@@ -367,6 +368,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
     g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
     if(m_pfdDialog) g_DisplayTextFont = m_pfdDialog->GetFontData().GetChosenFont();
+    g_iTextPointDisplayTextWhen  = m_radioBoxShowDisplayText->GetSelection();
     
     g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
     g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
@@ -584,6 +586,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
         m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );
         m_staticTextFontFaceExample->SetFont( g_DisplayTextFont );
+        m_radioBoxShowDisplayText->SetSelection( g_iTextPointDisplayTextWhen );
         
         m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
         m_checkBoxShowMagBearings->SetValue( g_bShowMag );

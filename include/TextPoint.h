@@ -28,6 +28,12 @@
 
 #include "ODPoint.h"
 
+enum {
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS = 0,
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER,
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_NEVER
+};
+
 class ODText;
 
 class TextPoint : public ODPoint
@@ -55,6 +61,8 @@ class TextPoint : public ODPoint
         int             m_DisplayTextFontPointSize;
         bool            m_bTextChanged;
         double          m_natural_scale;
+        bool            m_bShowDisplayTextOnRollover;
+        int             m_iDisplayTextWhen;
         
     protected:
         

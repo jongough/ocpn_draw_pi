@@ -275,6 +275,7 @@ void ODPointPropertiesImpl::SaveChanges()
                 wxFont twxfFont = twxfdData.GetChosenFont();
                 m_pTextPoint->m_DisplayTextFont = twxfdData.m_chosenFont;
             }
+            m_pTextPoint->m_iDisplayTextWhen = m_radioBoxShowDisplayText->GetSelection();
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
             m_pBoundaryPoint->m_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
             m_pBoundaryPoint->m_iInclusionBoundaryPointSize = m_sliderBoundaryPointInclusionSize->GetValue();
@@ -484,6 +485,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
             m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
+            m_radioBoxShowDisplayText->SetSelection( m_pTextPoint->m_iDisplayTextWhen );
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             if( m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
             else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_INCLUSION );

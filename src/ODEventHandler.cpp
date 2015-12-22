@@ -318,7 +318,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         g_pODRolloverWin->IsActive( false );
                     }
                     
-                    if( !g_pODRolloverWin->IsActive() ) {
+                    if( pp->m_sTypeString == wxT("Text Point") ) m_pFoundTextPoint = (TextPoint *) pp;
+                    
+                    if( m_pFoundTextPoint && m_pFoundTextPoint->m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER ) {
+                        m_pFoundTextPoint->m_bShowDisplayTextOnRollover = true;
+                        showRollover = true;
+                        b_need_refresh = true;
+                    } else if( !g_pODRolloverWin->IsActive() ) {
                         wxString s;
                         if( !pp->m_bIsInLayer ) {
                             wxString wxsText;
@@ -367,8 +373,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             else
                 showRollover = true;
         } else if(g_pRolloverPoint) {
-            if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPoint ) ) 
+            if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPoint ) ) {
                 showRollover = false;
+                if( m_pFoundTextPoint ) {
+                    m_pFoundTextPoint->m_bShowDisplayTextOnRollover = false;
+                    m_pFoundTextPoint = NULL;
+                }
+            }
             else
                 showRollover = true;
         }

@@ -168,6 +168,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
             child = node.append_child( "opencpn:natural_scale" );
             s.Printf(_T("%f"), tp->m_natural_scale );
             child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+            child = node.append_child( "opencpn:display_text_when" );
+            s.Printf(_T("%i"), tp->m_iDisplayTextWhen );
+            child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
             
             child = node.append_child("opencpn:font_info");
             pugi::xml_attribute size = child.append_attribute( "size" );
@@ -752,6 +755,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     int     l_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
     unsigned int l_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
     double  l_natural_scale = 0.0;
+    int     l_display_text_when = ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
 
@@ -915,6 +919,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             }
         }else if ( !strcmp( pcn, "opencpn:natural_scale" ) ){
         wxString::FromUTF8(child.first_child().value()).ToDouble( &l_natural_scale );
+        }else if ( !strcmp( pcn, "opencpn:display_text_when" ) ){
+            wxString::FromUTF8(child.first_child().value()).ToLong( (long *) &l_display_text_when );
         }
     }   // for
 
@@ -957,6 +963,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
             pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
             pTP->m_natural_scale = l_natural_scale;
+            pTP->m_iDisplayTextWhen = l_display_text_when;
         } else if ( TypeString == _T("Boundary Point") ) {
             pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
             pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
