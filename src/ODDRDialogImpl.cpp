@@ -34,6 +34,9 @@
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 #include "ODSelect.h"
+#include "ODPathPropertiesDialogImpl.h"
+#include "ODPointPropertiesImpl.h"
+#include "PathMan.h"
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
@@ -66,6 +69,11 @@ extern DRList                   *g_pDRList;
 extern PathList                 *g_pPathList;
 extern ODSelect                 *g_pODSelect;
 extern ODConfig                 *g_pODConfig;
+extern PathMan                  *g_pPathMan;
+extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
+extern PathManagerDialog            *g_pPathManagerDialog;
+extern ODPointPropertiesImpl        *g_pODPointPropDialog;
+
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
@@ -112,10 +120,12 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     m_textCtrlCOG->SetValue( s );
 #endif    
     
+    m_pDR = NULL;
+    
     this->Layout();
 }
 
-void ODDRDialogImpl::UpdateDialog()
+void ODDRDialogImpl::SetupDialog()
 {
 #if wxCHECK_VERSION(3,0,0) 
     wxString s;
@@ -145,8 +155,52 @@ void ODDRDialogImpl::UpdateDialog()
     this->Layout();
 }
 
+void ODDRDialogImpl::UpdateDialog( DR * dr)
+{
+    m_pDR = dr;
+#if wxCHECK_VERSION(3,0,0) 
+    wxString s;
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
+    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    m_staticTextCOG->SetLabel( s );
+    m_dSOGValidator = dr->m_dSoG;
+    m_iCOGValidator = dr->m_iCoG;
+    m_dLengthValidator = dr->m_dDRPathLength;
+    m_dIntervalValidator = dr->m_dDRPointInterval;
+#else
+    wxString s;
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
+    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    m_staticTextCOG->SetLabel( s );
+    s.Printf( _T("%.3f"), dr->m_dSoG );
+    m_textCtrlSOG->SetValue( s );
+    s.Printf( _T("%i"), dr->m_iCoG );
+    m_textCtrlCOG->SetValue( s );
+#endif
+    this->Layout();
+}
+
 void ODDRDialogImpl::OnOK( wxCommandEvent& event )
 {
+    if( m_pDR != NULL ) {
+        if( g_pPathMan->GetpActivePath() == m_pDR ) g_pPathMan->DeactivatePath( m_pDR );
+        
+        if( !g_pPathMan->DeletePath( m_pDR ) )
+            return;
+        if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown()) && (m_pDR == g_pODPathPropDialog->GetPath()) ) {
+            g_pODPathPropDialog->Hide();
+        }
+        
+        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+            g_pPathManagerDialog->UpdatePathListCtrl();
+        
+        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+            g_pODPointPropDialog->ValidateMark();
+            g_pODPointPropDialog->UpdateProperties();
+        }
+        
+    }
+    
     DR *l_pDR = new(DR);
     g_pDRList->Append( l_pDR );
     g_pPathList->Append( l_pDR );

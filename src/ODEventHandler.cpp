@@ -43,30 +43,32 @@
 #include "Boundary.h"
 #include "EBL.h"
 #include "DR.h"
+#include "ODDRDialogImpl.h"
 #include "TextPoint.h"
 #include <wx/window.h>
 #include <wx/clipbrd.h>
 
-extern ocpn_draw_pi    *g_ocpn_draw_pi;
-extern PathManagerDialog *g_pPathManagerDialog;
-extern ODSelect         *g_pODSelect;
-extern ODConfig         *g_pODConfig;
-extern PlugIn_ViewPort *g_pivp;
-extern ChartCanvas     *ocpncc1;
-extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
-extern PathMan          *g_pPathMan;
+extern ocpn_draw_pi                 *g_ocpn_draw_pi;
+extern PathManagerDialog            *g_pPathManagerDialog;
+extern ODSelect                     *g_pODSelect;
+extern ODConfig                     *g_pODConfig;
+extern PlugIn_ViewPort              *g_pivp;
+extern ChartCanvas                  *ocpncc1;
+extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
+extern PathMan                      *g_pPathMan;
 
-extern ODPointPropertiesImpl    *g_pODPointPropDialog;
-extern ODPath             *g_PathToEdit;
-extern PointMan         *g_pODPointMan;
-extern bool             g_bShowMag;
-extern bool             g_bConfirmObjectDelete;
-extern ODRolloverWin    *g_pODRolloverWin;
-extern SelectItem       *g_pRolloverPathSeg;
-extern SelectItem       *g_pRolloverPoint;
-extern int              g_cursor_x;
-extern int              g_cursor_y;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
+extern ODPointPropertiesImpl        *g_pODPointPropDialog;
+extern ODPath                       *g_PathToEdit;
+extern PointMan                     *g_pODPointMan;
+extern bool                         g_bShowMag;
+extern bool                         g_bConfirmObjectDelete;
+extern ODRolloverWin                *g_pODRolloverWin;
+extern SelectItem                   *g_pRolloverPathSeg;
+extern SelectItem                   *g_pRolloverPoint;
+extern int                          g_cursor_x;
+extern int                          g_cursor_y;
+extern ODPlugIn_Position_Fix_Ex     g_pfFix;
+extern ODDRDialogImpl               *g_pODDRDialog;
 
 // Event Handler implementation 
 
@@ -668,6 +670,24 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             break;
         }
+        case ID_DR_MENU_UPDATE_INITIAL_CONDITIONS:
+            if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
+                g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
+            
+            g_pODDRDialog->UpdateDialog( m_pDR );
+            DimeWindow( g_pODDRDialog );
+            g_pODDRDialog->Show();
+            
+            
+            //    Required if RMDialog is not STAY_ON_TOP
+#ifdef __WXOSX__
+            g_pODDRDialog->Centre();
+            g_pODDRDialog->Raise();
+#endif
+            
+            RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+            
+            break;
             
     }
     
@@ -713,6 +733,9 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
                 ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
                 if(m_pEBL->GetCurrentColour() != pFirstPoint->GetODPointRangeRingsColour())
                     MenuAppend( menuPath, ID_EBL_MENU_VRM_MATCH_EBL_COLOUR, _("Match VRM colour to EBL colour"));
+            }
+            else if(m_pSelectedPath->m_sTypeString == wxT("DR")) {
+                MenuAppend( menuPath, ID_DR_MENU_UPDATE_INITIAL_CONDITIONS, _("Update initial conditions") );
             }
             else if(m_pSelectedPath->m_sTypeString != wxT("DR")) {
                 sString.clear();
