@@ -211,6 +211,7 @@ int             g_iTextRightOffsetX;
 int             g_iTextRightOffsetY;
 int             g_iTextLeftOffsetX;
 int             g_iTextLeftOffsetY;
+int             g_iTextPointDisplayTextWhen;
 
 PlugIn_ViewPort *g_pivp;
 ODDC          *g_pDC;
@@ -962,6 +963,7 @@ void ocpn_draw_pi::SaveConfig()
 #endif
         pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
         pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
+        pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
         
     }
 }
@@ -1151,6 +1153,7 @@ void ocpn_draw_pi::LoadConfig()
         g_DisplayTextFont.SetFaceName( l_wxsFaceName );
         pConf->Read( wxS( "DefaultTextPointFontEncoding" ), &l_fontInfo, (int)l_pDisplayTextFont->GetEncoding() );
         g_DisplayTextFont.SetEncoding( (wxFontEncoding)l_fontInfo );
+        pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
     }
     
     g_pODPointList = new ODPointList;

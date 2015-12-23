@@ -73,8 +73,9 @@ class ODEventHandler : public wxEvtHandler
         ocpn_draw_pi    *m_parent;
         ChartCanvas     *m_parentcanvas;
         int             popx, popy;
-        ODPath            *m_pSelectedPath;
-        ODPoint       *m_pFoundODPoint;
+        ODPath          *m_pSelectedPath;
+        ODPoint         *m_pFoundODPoint;
+        TextPoint       *m_pFoundTextPoint;
         double          m_cursor_lat;
         double          m_cursor_lon;
         wxTimer         ODTimer1;

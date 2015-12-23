@@ -136,6 +136,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextTextFont;
 		wxStaticText* m_staticTextFontFaceExample;
 		wxButton* m_buttonTextFont;
+		wxRadioBox* m_radioBoxShowDisplayText;
 		wxPanel* m_panelPath;
 		wxStaticText* m_staticTextActivePathLineColour;
 		wxColourPickerCtrl* m_colourPickerActivePathLineColour;

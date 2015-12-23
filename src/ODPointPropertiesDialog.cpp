@@ -238,7 +238,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), true );
+	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), false );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_bSizerDisplayText = new wxBoxSizer( wxVERTICAL );
 	
@@ -304,6 +304,12 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_buttonTextFont = new wxButton( m_panelDisplayText, wxID_ANY, _("Fonts"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizerTextProperties->Add( m_buttonTextFont, 0, wxALL, 5 );
 	
+	wxString m_radioBoxShowDisplayTextChoices[] = { _("Always"), _("On Rollover Only"), _("Never") };
+	int m_radioBoxShowDisplayTextNChoices = sizeof( m_radioBoxShowDisplayTextChoices ) / sizeof( wxString );
+	m_radioBoxShowDisplayText = new wxRadioBox( m_panelDisplayText, wxID_ANY, _("Show Display Text"), wxDefaultPosition, wxDefaultSize, m_radioBoxShowDisplayTextNChoices, m_radioBoxShowDisplayTextChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxShowDisplayText->SetSelection( 0 );
+	fgSizerTextProperties->Add( m_radioBoxShowDisplayText, 0, wxALL, 5 );
+	
 	
 	m_bSizerDisplayText->Add( fgSizerTextProperties, 1, wxEXPAND, 5 );
 	
@@ -311,7 +317,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDisplayText->SetSizer( m_bSizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_bSizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
