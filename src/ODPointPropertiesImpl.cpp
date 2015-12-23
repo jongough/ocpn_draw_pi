@@ -143,18 +143,6 @@ void ODPointPropertiesImpl::OnArrivalRadiusChange( wxCommandEvent& event )
 void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 {
     // TODO: Implement OnShowRangeRingsSelect
-/*    if( m_checkBoxShowODPointRangeRings->GetValue() == FALSE ) {
-        m_SizerODPointRangeRingsSelect->ShowItems( false );
-        m_SizerPointRangeGrid->ShowItems( false );
-    } else {
-        m_SizerODPointRangeRingsSelect->ShowItems( true );
-        if ( m_choicePointRangeRingsNumber->GetSelection() != 0 ) 
-            m_SizerPointRangeGrid->ShowItems( true );
-    }
-    m_SizerBasicProperties->Layout();
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-    event.Skip();
-*/    
 }
 
 void ODPointPropertiesImpl::OnRangeRingsStepChange( wxCommandEvent& event )
@@ -516,9 +504,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_textCtrlODPointRangeRingsSteps->SetValue( buf );
 //        m_RangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
-        
-        wxCommandEvent eDummy;
-        OnShowRangeRingsSelect( eDummy );
         
 
         m_bcomboBoxODPointIconName->Clear();
