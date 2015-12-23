@@ -2768,7 +2768,7 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
         g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
     
-    g_pODDRDialog->UpdateDialog();
+    g_pODDRDialog->SetupDialog();
     DimeWindow( g_pODDRDialog );
     g_pODDRDialog->Show();
     

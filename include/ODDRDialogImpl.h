@@ -50,7 +50,8 @@ class ODDRDialogImpl : public ODDRDialogDef
 		ODDRDialogImpl( wxWindow* parent );
         //// end generated class members
         
-        void UpdateDialog();
+        void SetupDialog();
+        void UpdateDialog( DR *dr );
         
     private:
         double  m_dValidator;
@@ -59,6 +60,8 @@ class ODDRDialogImpl : public ODDRDialogDef
         double  m_dIntervalValidator;
         int     m_iValidator;
         int     m_iCOGValidator;
+        
+        DR      *m_pDR;
 	
 };
 
