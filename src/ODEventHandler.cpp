@@ -91,6 +91,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     m_pBoundary = NULL;
     m_pEBL = NULL;
     m_pDR = NULL;
+    m_pFoundTextPoint = NULL;
     
     m_parentcanvas = parent;
     if(selectedPath->m_sTypeString == wxT("Boundary")) {
@@ -104,13 +105,21 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
         m_pSelectedPath = m_pDR;
     } else
         m_pSelectedPath = selectedPath;
-    m_pFoundODPoint = selectedODPoint;
+
+    if(selectedODPoint->m_sTypeString == wxT("Text Point")) {
+        m_pFoundTextPoint = (TextPoint *)selectedODPoint;
+        m_pFoundODPoint = m_pFoundTextPoint;
+    } else
+        m_pFoundODPoint = selectedODPoint;
+    
 }
 
 ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPoint *selectedTextPoint)
 {
     m_pBoundary = NULL;
     m_pEBL = NULL;
+    m_pDR = NULL;
+    m_pFoundTextPoint = NULL;
     
     m_parentcanvas = parent;
     if(selectedPath->m_sTypeString == wxT("Boundary")) {
@@ -124,7 +133,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
         m_pSelectedPath = m_pDR;
     } else
         m_pSelectedPath = selectedPath;
-    m_pSelectedPath = selectedPath;
+
     m_pFoundODPoint = selectedTextPoint;
 }
 
@@ -318,13 +327,17 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         g_pODRolloverWin->IsActive( false );
                     }
                     
-                    if( pp->m_sTypeString == wxT("Text Point") ) m_pFoundTextPoint = (TextPoint *) pp;
-                    
-                    if( m_pFoundTextPoint && m_pFoundTextPoint->m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER ) {
-                        m_pFoundTextPoint->m_bShowDisplayTextOnRollover = true;
+                    TextPoint *tp = NULL;
+                    if( pp->m_sTypeString == wxT("Text Point") ) tp = (TextPoint *) pFindSel->m_pData1;
+
+                    if( tp && tp->m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER ) {
+                        tp->m_bShowDisplayTextOnRollover = true;
                         showRollover = true;
                         b_need_refresh = true;
-                    } else if( !g_pODRolloverWin->IsActive() ) {
+                        break;
+                    } else 
+                        
+                        if( !g_pODRolloverWin->IsActive() ) {
                         wxString s;
                         if( !pp->m_bIsInLayer ) {
                             wxString wxsText;
@@ -373,13 +386,8 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             else
                 showRollover = true;
         } else if(g_pRolloverPoint) {
-            if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPoint ) ) {
+            if( !g_pODSelect->IsSelectableSegmentSelected( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, g_pRolloverPoint ) ) 
                 showRollover = false;
-                if( m_pFoundTextPoint ) {
-                    m_pFoundTextPoint->m_bShowDisplayTextOnRollover = false;
-                    m_pFoundTextPoint = NULL;
-                }
-            }
             else
                 showRollover = true;
         }
@@ -392,6 +400,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
         g_pODRolloverWin->IsActive( false );
         g_pRolloverPathSeg = NULL;
+        if(g_pRolloverPoint) {
+            TextPoint *tp = (TextPoint *) g_pRolloverPoint->m_pData1;
+            if( tp && tp->m_sTypeString == wxT("Text Point")) {
+                tp->m_bShowDisplayTextOnRollover = false;
+                tp = NULL;
+            }
+        }
         g_pRolloverPoint = NULL;
         g_pODRolloverWin->Destroy();
         g_pODRolloverWin = NULL;
