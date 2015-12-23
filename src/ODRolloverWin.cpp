@@ -50,7 +50,7 @@ END_EVENT_TABLE()
 
 // Define a constructor
 ODRolloverWin::ODRolloverWin( wxWindow *parent, int timeout ) :
-    wxWindow( parent, wxID_ANY, wxPoint( 0, 0 ), wxDefaultSize, wxNO_BORDER )
+    wxWindow( parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNO_BORDER )
 {
     m_pbm = NULL;
     m_parent = parent;

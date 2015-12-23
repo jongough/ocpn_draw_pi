@@ -390,6 +390,15 @@ int ocpn_draw_pi::Init(void)
     g_pODSelect = new ODSelect();
     
     LoadConfig();
+
+    g_pODPointList = new ODPointList;
+    g_pBoundaryList = new BoundaryList;
+    g_pEBLList = new EBLList;
+    g_pDRList = new DRList;
+    g_pPathList = new PathList;
+    //    Layers
+    pLayerList = new LayerList;
+    
     if(m_bLOGShowIcon) {
         m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_grey_pi, wxITEM_NORMAL,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
@@ -501,7 +510,6 @@ int ocpn_draw_pi::Init(void)
     
     g_pODConfig->LoadNavObjects();
     
-    
     return (
     WANTS_OVERLAY_CALLBACK  |
     WANTS_CURSOR_LATLON       |
@@ -538,7 +546,11 @@ bool ocpn_draw_pi::DeInit(void)
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) delete g_pODRolloverWin;
     g_pODRolloverWin = NULL;
-    
+    if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
+        g_pODPathPropDialog = NULL;
+    if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
+        g_pODPointPropDialog = NULL;
+
     if( m_config_button_id ) RemovePlugInTool(m_config_button_id);
     m_config_button_id = 0;
     
@@ -1156,14 +1168,6 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
     }
     
-    g_pODPointList = new ODPointList;
-    g_pBoundaryList = new BoundaryList;
-    g_pEBLList = new EBLList;
-    g_pDRList = new DRList;
-    g_pPathList = new PathList;
-    //    Layers
-    pLayerList = new LayerList;
-    
 }
 
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
@@ -1537,7 +1541,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         FindSelectedObject();
         if( m_pSelectedPath ) {
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
             
             DimeWindow( g_pPathManagerDialog );
             g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
@@ -1545,7 +1549,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bret = true;
         } else if( m_pFoundODPoint ) {
             if( NULL == g_pODPointPropDialog )
-                g_pODPointPropDialog = new ODPointPropertiesImpl( ocpncc1 );
+                g_pODPointPropDialog = new ODPointPropertiesImpl( m_parent_window );
             
             DimeWindow( g_pODPointPropDialog );
             g_pODPointPropDialog->SetODPoint( m_pFoundODPoint );
