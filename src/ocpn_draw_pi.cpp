@@ -1430,38 +1430,20 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 if(l_sType == wxS("Request")) {
                     Boundary *l_boundary = NULL;
                     BoundaryPoint *l_boundarypoint = NULL;
-                    if(l_sMsg == wxS("FindPointInGuardZone")) {
-                        l_dLat = root[wxS("lat")].AsDouble();
-                        l_dLon = root[wxS("lon")].AsDouble();
-                        
-                        l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
-                        if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
-                        if(!l_boundary && !l_boundarypoint) {
-                            wxString l_msg;
-                            l_msg.append( wxS("Guard Zone, with GUID: ") );
-                            l_msg.append( l_sGUID );
-                            l_msg.append( wxS(", not found") );
-                            wxLogMessage( l_msg );
-                            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                            jMsg[wxT("Msg")] = root[wxT("Msg")];
-                            jMsg[wxT("Type")] = wxT("Response");
-                            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                            jMsg[wxS("Found")] = false;
-                            jMsg[wxS("lat")] = l_dLat;
-                            jMsg[wxS("lon")] = l_dLon;
-                            jMsg[wxS("GUID")] = root[wxS("GUID")];
-                            writer.Write( jMsg, MsgString );
-                            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                            return;
-                        }
-                        bool l_bFound = false;
-                        if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
-                        else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
+
+                    l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
+                    if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
+                    if(!l_boundary && !l_boundarypoint) {
+                        wxString l_msg;
+                        l_msg.append( wxS("Guard Zone, with GUID: ") );
+                        l_msg.append( l_sGUID );
+                        l_msg.append( wxS(", not found") );
+                        wxLogMessage( l_msg );
                         jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                         jMsg[wxT("Msg")] = root[wxT("Msg")];
                         jMsg[wxT("Type")] = wxT("Response");
                         jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                        jMsg[wxS("Found")] = l_bFound;
+                        jMsg[wxS("Found")] = false;
                         jMsg[wxS("lat")] = l_dLat;
                         jMsg[wxS("lon")] = l_dLon;
                         jMsg[wxS("GUID")] = root[wxS("GUID")];
@@ -1469,6 +1451,31 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                         return;
                     }
+                    bool l_bFound = false;
+                    if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
+                    else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
+                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                    jMsg[wxT("Msg")] = root[wxT("Msg")];
+                    jMsg[wxT("Type")] = wxT("Response");
+                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                    jMsg[wxS("Found")] = l_bFound;
+                    jMsg[wxS("lat")] = l_dLat;
+                    jMsg[wxS("lon")] = l_dLon;
+                    if(l_boundary) {
+                        jMsg[wxS("Name")] = l_boundary->m_PathNameString;
+                        jMsg[wxS("Description")] = l_boundary->m_PathDescription;
+                    } else if(l_boundarypoint) {
+                        jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
+                        jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
+                    } else {
+                        jMsg[wxS("Name")] = wxEmptyString;
+                        jMsg[wxS("Description")] = wxEmptyString;
+                    }
+                    
+                    jMsg[wxS("GUID")] = root[wxS("GUID")];
+                    writer.Write( jMsg, MsgString );
+                    SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                    return;
                 }
             }
         }
