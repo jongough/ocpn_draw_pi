@@ -281,7 +281,7 @@ void ODPropertiesDialogImpl::SaveChanges()
             g_bExclusionBoundary = false;
             g_bInclusionBoundary = true;
             break;
-        case ID_BOUNDARY_NONE:
+        case ID_BOUNDARY_NIETHER:
             g_bExclusionBoundary = false;
             g_bInclusionBoundary = false;
             break;
@@ -294,15 +294,15 @@ void ODPropertiesDialogImpl::SaveChanges()
     int l_BoundaryPointType;
     l_BoundaryPointType = m_radioBoxBoundaryPointType->GetSelection();
     switch (l_BoundaryPointType) {
-        case ID_BOUNDARY_POINT_EXCLUSION:
+        case ID_BOUNDARY_EXCLUSION:
             g_bExclusionBoundaryPoint = true;
             g_bInclusionBoundaryPoint = false;
             break;
-        case ID_BOUNDARY_POINT_INCLUSION:
+        case ID_BOUNDARY_INCLUSION:
             g_bExclusionBoundaryPoint = false;
             g_bInclusionBoundaryPoint = true;
             break;
-        case ID_BOUNDARY_POINT_NONE:
+        case ID_BOUNDARY_NIETHER:
             g_bExclusionBoundaryPoint = false;
             g_bInclusionBoundaryPoint = false;
             break;
@@ -413,10 +413,10 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_sliderBoundaryPointFillTransparency->SetValue( g_uiBoundaryPointFillTransparency );
         m_sliderInclusionBoundaryPointSize->SetValue( g_iInclusionBoundaryPointSize );
         
-        if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
-        else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_INCLUSION );
-        else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_NONE );
-        else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
+        if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
+        else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
+        else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+        else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
 
         m_bcomboBoxODPointIconName->Clear();
         m_bcomboBoxTextPointIconName->Clear();
@@ -572,7 +572,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
         if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
         else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-        else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NONE );
+        else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
         else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
         
         m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );

@@ -886,7 +886,7 @@ void ocpn_draw_pi::SaveConfig()
         int l_BoundaryType;
         if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
         else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
-        else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NONE;
+        else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
         else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
         pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
         long l_longFillTransparency = g_uiFillTransparency;
@@ -1012,7 +1012,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bExclusionBoundary = false;
                 g_bInclusionBoundary = true;
                 break;
-            case ID_BOUNDARY_NONE:
+            case ID_BOUNDARY_NIETHER:
                 g_bExclusionBoundary = false;
                 g_bInclusionBoundary = false;
                 break;
@@ -1085,17 +1085,17 @@ void ocpn_draw_pi::LoadConfig()
         g_uiBoundaryPointFillTransparency = l_longBoundaryPointFillTransparency;
         pConf->Read( wxS( "DefaultInclusionBoundaryPointSize" ), &g_iInclusionBoundaryPointSize, 15 );
         int l_BoundaryPointType;
-        pConf->Read( wxS( "DefaultBoundaryPointType" ), &l_BoundaryPointType, ID_BOUNDARY_POINT_EXCLUSION );
+        pConf->Read( wxS( "DefaultBoundaryPointType" ), &l_BoundaryPointType, ID_BOUNDARY_EXCLUSION );
         switch (l_BoundaryPointType) {
-            case ID_BOUNDARY_POINT_EXCLUSION:
+            case ID_BOUNDARY_EXCLUSION:
                 g_bExclusionBoundaryPoint = true;
                 g_bInclusionBoundaryPoint = false;
                 break;
-            case ID_BOUNDARY_POINT_INCLUSION:
+            case ID_BOUNDARY_INCLUSION:
                 g_bExclusionBoundaryPoint = false;
                 g_bInclusionBoundaryPoint = true;
                 break;
-            case ID_BOUNDARY_POINT_NONE:
+            case ID_BOUNDARY_NIETHER:
                 g_bExclusionBoundaryPoint = false;
                 g_bInclusionBoundaryPoint = false;
                 break;
@@ -1184,6 +1184,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
     double      l_dLat;
     double      l_dLon;
     wxString    l_GUID;
+    int         l_BoundaryType;
     bool        bFail = false;
     
     if(message_id == wxS("OCPN_DRAW_PI")) {
@@ -1259,14 +1260,19 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
                 
+                if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+                else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+                else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NIETHER;
+                else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
+                
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;
                     bool    l_bFoundBoundaryPoint = false;
-                    wxString l_sGUID = GetBoundaryWithPointInBoundary( l_dLat, l_dLon );
+                    wxString l_sGUID = g_pBoundaryMan->FindPointInBoundary( l_dLat, l_dLon, l_BoundaryType );
                     if(l_sGUID.length() > 0) 
                         l_bFoundBoundary = true;
                     else {
-                        l_sGUID = g_pBoundaryMan->FindPointInBoundaryPoint( l_dLat, l_dLon );
+                        l_sGUID = g_pBoundaryMan->FindPointInBoundaryPoint( l_dLat, l_dLon, l_BoundaryType );
                         if(l_sGUID.length() > 0)
                             l_bFoundBoundaryPoint = true;
                     }
@@ -3275,22 +3281,5 @@ void ocpn_draw_pi::SetToolbarTool( void )
         }
     }
     
-}
-
-wxString GetBoundaryWithPointInBoundary( double lat, double lon )
-{
-    return g_pBoundaryMan->FindPointInBoundary( lat, lon );
-}
-
-
-bool FindPointInBoundary( double lat, double lon )
-{
-    if(g_pBoundaryMan->FindPointInBoundary( lat, lon ).length() > 0 ) return true;
-    else return false;
-}
-
-bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon )
-{
-    return g_pBoundaryMan->FindPointInBoundary( pBoundary, lat, lon );
 }
 

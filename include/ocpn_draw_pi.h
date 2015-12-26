@@ -160,19 +160,12 @@ enum {
 enum {
     ID_BOUNDARY_EXCLUSION = 0,
     ID_BOUNDARY_INCLUSION,
-    ID_BOUNDARY_NONE,
+    ID_BOUNDARY_NIETHER,
+    ID_BOUNDARY_ANY,
     
     ID_BOUNDARY_TYPE_LAST
 };
 
-// Boundary Point types
-enum {
-    ID_BOUNDARY_POINT_EXCLUSION = 0,
-    ID_BOUNDARY_POINT_INCLUSION,
-    ID_BOUNDARY_POINT_NONE,
-    
-    ID_BOUNDARY_POINT_TYPE_LAST
-};
 
 //#define PI 3.14159265
 
@@ -184,10 +177,6 @@ class SelectItem;
 
 const int StyleValues[] = { wxPENSTYLE_SOLID, wxPENSTYLE_DOT, wxPENSTYLE_LONG_DASH, wxPENSTYLE_SHORT_DASH, wxPENSTYLE_DOT_DASH };
 const int WidthValues[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-
-extern DECL_EXP bool FindPointInBoundary( double lat, double lon );
-extern DECL_EXP bool FindPointInBoundary( Boundary *pBoundary, double lat, double lon);
-extern DECL_EXP wxString GetBoundaryWithPointInBoundary( double lat, double lon );
 
 class  ODPlugIn_Position_Fix_Ex : public PlugIn_Position_Fix_Ex
 {

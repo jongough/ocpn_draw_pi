@@ -35,15 +35,15 @@ class BoundaryPoint;
 class BoundaryMan : public PathMan
 {
     public:
-        wxString    FindPointInBoundary( double lat, double lon );
+        wxString    FindPointInBoundary( double lat, double lon, int type );
         bool        FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
         bool        FindPointInBoundary( wxString l_GUID, double lat, double lon );
-        wxString    FindPointInBoundaryPoint( double lat, double lon );
+        wxString    FindPointInBoundaryPoint( double lat, double lon, int type );
         bool        FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, double lat, double lon );
         bool        FindPointInBoundaryPoint( wxString l_GUID, double lat, double lon );
         
     private:
-        bool    pointInPolygon(int polyCorners, float *polyX, float *polyY, float x, float y);
+        bool    pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y);
 };
 
 #endif // BOUNDARYMAN_H
