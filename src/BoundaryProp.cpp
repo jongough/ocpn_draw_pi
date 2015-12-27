@@ -77,7 +77,7 @@ bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
     m_sliderInclusionBoundarySize->SetValue( m_pBoundary->m_iInclusionBoundarySize );
     if(m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NONE );
+    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     
     ODPathPropertiesDialogImpl::UpdateProperties( pBoundary );
@@ -100,7 +100,7 @@ bool BoundaryProp::SaveChanges( void )
                 m_pBoundary->m_bExclusionBoundary = false;
                 m_pBoundary->m_bInclusionBoundary = true;
                 break;
-            case ID_BOUNDARY_NONE:
+            case ID_BOUNDARY_NIETHER:
                 m_pBoundary->m_bExclusionBoundary = false;
                 m_pBoundary->m_bInclusionBoundary = false;
                 break;

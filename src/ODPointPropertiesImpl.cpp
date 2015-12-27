@@ -272,15 +272,15 @@ void ODPointPropertiesImpl::SaveChanges()
             int l_BoundaryPointType;
             l_BoundaryPointType = m_radioBoxBoundaryPointType->GetSelection();
             switch (l_BoundaryPointType) {
-                case ID_BOUNDARY_POINT_EXCLUSION:
+                case ID_BOUNDARY_EXCLUSION:
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = true;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
                     break;
-                case ID_BOUNDARY_POINT_INCLUSION:
+                case ID_BOUNDARY_INCLUSION:
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = true;
                     break;
-                case ID_BOUNDARY_POINT_NONE:
+                case ID_BOUNDARY_NIETHER:
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
                     break;
@@ -475,10 +475,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
             m_radioBoxShowDisplayText->SetSelection( m_pTextPoint->m_iDisplayTextWhen );
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
-            if( m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
-            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_INCLUSION );
-            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_NONE );
-            else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_POINT_EXCLUSION );
+            if( m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
+            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
+            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+            else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
             m_sliderBoundaryPointInclusionSize->SetValue( m_pBoundaryPoint->m_iInclusionBoundaryPointSize );
             m_sliderBoundaryPointFillTransparency->SetValue( m_pBoundaryPoint->m_uiBoundaryPointFillTransparency );
             for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
