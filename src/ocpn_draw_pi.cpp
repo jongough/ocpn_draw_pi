@@ -1253,6 +1253,11 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 bFail = true;
             }
             
+            if(!root.HasMember( wxS("BoundaryType"))) {
+                wxLogMessage( wxS("No Boundary Type found in message") );
+                bFail = true;
+            }
+            
             if(!bFail) {
                 l_dLat = root[wxS("lat")].AsDouble();
                 l_dLon = root[wxS("lon")].AsDouble();
@@ -1264,6 +1269,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NIETHER;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
+                else l_BoundaryType = ID_BOUNDARY_ANY;
                 
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;

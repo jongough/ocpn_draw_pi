@@ -41,7 +41,7 @@ extern PointMan         *g_pODPointMan;
 
 wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type )
 {
-    wxPathListNode *boundary_node = g_pPathList->GetFirst();
+    wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
     Boundary *pboundary = NULL;
     bool bInPoly = false;
     ODPoint *pop;
@@ -50,7 +50,7 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type )
     
     while( boundary_node ) {
         bool    l_bNext = false;
-        pboundary = (Boundary *)boundary_node->GetData();
+        pboundary = boundary_node->GetData();
         switch (type) {
             case ID_BOUNDARY_ANY:
                 l_bNext = false;
@@ -62,7 +62,7 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type )
                 if(!pboundary->m_bInclusionBoundary) l_bNext = true;
                 break;
             case ID_BOUNDARY_NIETHER:
-                if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = false;
+                if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = true;
                 break;
         }
         

@@ -638,8 +638,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     g_pODPointMan->DestroyODPoint( m_pFoundODPoint );
                 }
                 else {
-                    g_pODConfig->DeleteODPoint( m_pFoundODPoint );
                     g_pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_ODPOINT );
+                    g_pODConfig->DeleteODPoint( m_pFoundODPoint );
                     if( NULL != g_pODPointMan )
                         g_pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }
