@@ -1242,6 +1242,51 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
             jMsg[wxS("Date")] = PLUGIN_VERSION_DATE;
             writer.Write( jMsg, MsgString );
             SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
+            
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPathByGUID")) {
+            if(!root.HasMember( wxS("GUID"))) {
+                wxLogMessage( wxS("No GUID found in message") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                wxString l_sGUID = root[wxS("GUID")].AsString();
+                l_sType = root[wxS("Type")].AsString();
+                l_sMsg = root[wxT("Msg")].AsString();
+                
+                if(l_sType == wxS("Request")) {
+                    ODPath *l_path = NULL;
+                        l_path = g_pPathMan->FindPathByGUID( l_sGUID );
+                        if(!l_path) {
+                            wxString l_msg;
+                            l_msg.append( wxS("Path, with GUID: ") );
+                            l_msg.append( l_sGUID );
+                            l_msg.append( wxS(", not found") );
+                            wxLogMessage( l_msg );
+                            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                            jMsg[wxT("Msg")] = root[wxT("Msg")];
+                            jMsg[wxT("Type")] = wxT("Response");
+                            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                            jMsg[wxS("Found")] = false;
+                            jMsg[wxS("GUID")] = root[wxS("GUID")];
+                            writer.Write( jMsg, MsgString );
+                            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                            return;
+                        }
+                        jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                        jMsg[wxT("Msg")] = root[wxT("Msg")];
+                        jMsg[wxT("Type")] = wxT("Response");
+                        jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                        jMsg[wxT("Found")] = true;
+                        jMsg[wxT("GUID")] = root[wxS("GUID")];
+                        jMsg[wxT("Name")] = l_path->m_PathNameString;
+                        jMsg[wxT("Description")] = l_path->m_PathDescription;
+                        writer.Write( jMsg, MsgString );
+                        SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                        return;
+                }
+            }
+                    
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
             if(!root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
@@ -1325,6 +1370,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     return;
                 }
             }
+            
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInBoundary")) {
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
@@ -1415,6 +1461,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     }
                 }
             }
+            
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInGuardZone")) {
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
