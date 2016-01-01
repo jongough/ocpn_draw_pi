@@ -94,6 +94,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     m_pEBL = NULL;
     m_pDR = NULL;
     m_pFoundTextPoint = NULL;
+    g_pRolloverPoint = NULL;
     
     m_parentcanvas = parent;
     if(selectedPath->m_sTypeString == wxT("Boundary")) {
@@ -122,6 +123,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     m_pEBL = NULL;
     m_pDR = NULL;
     m_pFoundTextPoint = NULL;
+    g_pRolloverPoint = NULL;
     
     m_parentcanvas = parent;
     if(selectedPath->m_sTypeString == wxT("Boundary")) {

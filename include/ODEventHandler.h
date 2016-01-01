@@ -83,8 +83,6 @@ class ODEventHandler : public wxEvtHandler
         EBL             *m_pEBL;
         DR              *m_pDR;
         
-        
-        
         DECLARE_EVENT_TABLE();
 };
 
