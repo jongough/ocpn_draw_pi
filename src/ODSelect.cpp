@@ -30,9 +30,10 @@
 #include "chcanv.h"
 #include "ODPath.h"
 
-extern ChartCanvas *ocpncc1;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
+extern ChartCanvas                  *ocpncc1;
+extern ocpn_draw_pi                 *g_ocpn_draw_pi;
+extern ODPlugIn_Position_Fix_Ex     g_pfFix;
+extern SelectItem                   *g_pRolloverPoint;
 
 ODSelect::ODSelect()
 {
@@ -279,6 +280,7 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                 if( pdata == pFindSel->m_pData1 ) {
                     delete pFindSel;
                     delete node;
+                    g_pRolloverPoint = NULL;
                     
                     if( SELTYPE_ODPOINT == SeltypeToDelete ){
                         ODPoint *prp = (ODPoint *)pdata;
