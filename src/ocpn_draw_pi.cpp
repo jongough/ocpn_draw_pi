@@ -1200,7 +1200,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     sLogMessage.Append(wxT("ocpn_draw_pi: Error parsing JSON message - "));
                     sLogMessage.Append( message_id );
                 }
-                else sLogMessage.Append(wxT("\n"));
+                else sLogMessage.Append(wxT(" "));
                 sLogMessage.append( errors.Item( i ) );
                 wxLogMessage( sLogMessage );
             }

@@ -946,42 +946,52 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pOP = new ODPoint( rlat, rlon, SymString, NameString, GuidString, false ); // do not add to global WP list yet...
             
         m_ptODPointList->Append( pOP ); 
-        if( TypeString == _T("Text Point") ) {
-            pTP->SetPointText( TextString );
-            pTP->m_iTextPosition = l_iTextPosition;
-            pTP->m_colourTextColour = l_colourTextColour;
-            pTP->m_DisplayTextFont.SetPointSize( l_iTextPointFontSize );
-            pTP->m_DisplayTextFont.SetFamily( l_iTextPointFontFamily );
-            pTP->m_DisplayTextFont.SetStyle( l_iTextPointFontStyle );
-            pTP->m_DisplayTextFont.SetWeight( l_iTextPointFontWeight );
-            pTP->m_DisplayTextFont.SetUnderlined( l_bTextPointFontUnderline );
-#if wxCHECK_VERSION(3,0,0) 
-            pTP->m_DisplayTextFont.SetStrikethrough( l_bTextPointFontStrikethrough );
-#endif
-            pTP->m_DisplayTextFont.SetFaceName( l_wxsTextPointFontFace );
-            pTP->m_DisplayTextFont.SetEncoding( (wxFontEncoding)l_iTextPointFontEncoding );
-            pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
-            pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
-            pTP->m_natural_scale = l_natural_scale;
-            pTP->m_iDisplayTextWhen = l_display_text_when;
-        } else if ( TypeString == _T("Boundary Point") ) {
-            pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
-            pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
-            pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
-            pBP -> m_uiBoundaryPointFillTransparency = l_uiBoundaryPointFillTransparency;
-        }
+    } else {
+        if(pOP->m_sTypeString == wxT("Text Point")) 
+            pTP = (TextPoint *)pOP;
+        else if(pOP->m_sTypeString == wxT("Boundary Point"))
+            pBP = (BoundaryPoint *)pOP;
         
-        pOP->SetMarkDescription( DescString );
-        pOP->m_sTypeString = TypeString;
-        pOP->SetODPointArrivalRadius( ArrivalRadius );
-        pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
-        pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
-        pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
-        pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
-        pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
-        pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
-        pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
+        pOP->m_lat = rlat;
+        pOP->m_lon = rlon;
+        pOP->m_IconName = SymString;
+        pOP->SetName( NameString );
     }
+    if( TypeString == _T("Text Point") ) {
+        pTP->SetPointText( TextString );
+        pTP->m_iTextPosition = l_iTextPosition;
+        pTP->m_colourTextColour = l_colourTextColour;
+        pTP->m_DisplayTextFont.SetPointSize( l_iTextPointFontSize );
+        pTP->m_DisplayTextFont.SetFamily( l_iTextPointFontFamily );
+        pTP->m_DisplayTextFont.SetStyle( l_iTextPointFontStyle );
+        pTP->m_DisplayTextFont.SetWeight( l_iTextPointFontWeight );
+        pTP->m_DisplayTextFont.SetUnderlined( l_bTextPointFontUnderline );
+#if wxCHECK_VERSION(3,0,0) 
+        pTP->m_DisplayTextFont.SetStrikethrough( l_bTextPointFontStrikethrough );
+#endif
+        pTP->m_DisplayTextFont.SetFaceName( l_wxsTextPointFontFace );
+        pTP->m_DisplayTextFont.SetEncoding( (wxFontEncoding)l_iTextPointFontEncoding );
+        pTP->m_colourTextBackgroundColour = l_colourBackgroundColour;
+        pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
+        pTP->m_natural_scale = l_natural_scale;
+        pTP->m_iDisplayTextWhen = l_display_text_when;
+    } else if ( TypeString == _T("Boundary Point") ) {
+        pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
+        pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
+        pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
+        pBP -> m_uiBoundaryPointFillTransparency = l_uiBoundaryPointFillTransparency;
+    }
+    
+    pOP->SetMarkDescription( DescString );
+    pOP->m_sTypeString = TypeString;
+    pOP->SetODPointArrivalRadius( ArrivalRadius );
+    pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
+    pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
+    pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
+    pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
+    pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
+    pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
+    pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
 
     if( b_propvizname )
         pOP->m_bShowName = bviz_name;
@@ -1509,46 +1519,46 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
     return n_obj;
 }
 
-void ODNavObjectChanges::UpdatePathA( ODPath *pTentPath )
+void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
 {
-    ODPath * path = PathExists( pTentPath->m_GUID );
+    ODPath * pExistingPath = PathExists( pPathUpdate->m_GUID );
 
-    if( path ) {
-        if ( pTentPath->GetnPoints() < path->GetnPoints() ) {
-            wxODPointListNode *node = path->m_pODPointList->GetFirst();
-            while( node ) {
-                ODPoint *pFP = node->GetData();
-                ODPoint *pOP = pTentPath->GetPoint( pFP->m_GUID );
+    if( pExistingPath ) {
+        if ( pPathUpdate->GetnPoints() < pExistingPath->GetnPoints() ) {
+            wxODPointListNode *enode = pExistingPath->m_pODPointList->GetFirst();
+            while( enode ) {
+                ODPoint *pFP = enode->GetData();
+                ODPoint *pOP = pPathUpdate->GetPoint( pFP->m_GUID );
                 if (!pOP ) {
-                    path->RemovePoint( pFP );
-                    node = path->m_pODPointList->GetFirst(); // start at begining of list again
-                } else node = node->GetNext();
+                    pExistingPath->RemovePoint( pFP );
+                    enode = pExistingPath->m_pODPointList->GetFirst(); // start at begining of list again
+                } else enode = enode->GetNext();
             }
         }
-        wxODPointListNode *node = pTentPath->m_pODPointList->GetFirst();
+        wxODPointListNode *unode = pPathUpdate->m_pODPointList->GetFirst();
         ODPoint *save_ex_op = NULL;
-        while( node ) {
-            ODPoint *pop = node->GetData();
-            ODPoint *ex_op = path->GetPoint( pop->m_GUID );
+        while( unode ) {
+            ODPoint *up_op = unode->GetData();
+            ODPoint *ex_op = pExistingPath->GetPoint( up_op->m_GUID );
             if( ex_op ) {
-                ex_op->m_lat = pop->m_lat;
-                ex_op->m_lon = pop->m_lon;
-                ex_op->SetIconName( pop->GetIconName() );
-                ex_op->m_ODPointDescription = pop->m_ODPointDescription;
-                ex_op->SetName( pop->GetName() );
+                ex_op->m_lat = up_op->m_lat;
+                ex_op->m_lon = up_op->m_lon;
+                ex_op->SetIconName( up_op->GetIconName() );
+                ex_op->m_ODPointDescription = up_op->m_ODPointDescription;
+                ex_op->SetName( up_op->GetName() );
                 save_ex_op = ex_op;
             } else {
-                path->InsertPointAfter( save_ex_op, pop );
-                save_ex_op = pop;
+                pExistingPath->InsertPointAfter( save_ex_op, up_op );
+                save_ex_op = up_op;
             }
-            node = node->GetNext();
+            unode = unode->GetNext();
         }
-        g_pODSelect->DeleteAllSelectableODPoints( path );
-        g_pODSelect->DeleteAllSelectablePathSegments( path );
-        g_pODSelect->AddAllSelectablePathSegments( path );
-        g_pODSelect->AddAllSelectableODPoints( path );
+        g_pODSelect->DeleteAllSelectableODPoints( pExistingPath );
+        g_pODSelect->DeleteAllSelectablePathSegments( pExistingPath );
+        g_pODSelect->AddAllSelectablePathSegments( pExistingPath );
+        g_pODSelect->AddAllSelectableODPoints( pExistingPath );
     } else {
-        InsertPathA( pTentPath );
+        InsertPathA( pPathUpdate );
     }
 }
                     
