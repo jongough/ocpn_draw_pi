@@ -431,11 +431,6 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     
     wxPoint r;
     
-    //ocpncc1->GetCanvasPixPoint( popx, popy, zlat, zlon );
-    wxPoint wxp;
-    wxp.x = popx;
-    wxp.y = popy;
-    
     switch( event.GetId() )
     {            
         case ID_PATH_MENU_PROPERTIES:
@@ -695,7 +690,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     
 } 
 
-void ODEventHandler::PopupMenu( int x, int y, int seltype )
+void ODEventHandler::PopupMenu( int seltype )
 {
     wxMenu* contextMenu = new wxMenu;
     wxMenu* menuODPoint = NULL;
@@ -704,9 +699,6 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
  
     wxString sString;
-    
-    popx = x;
-    popy = y;
     
     //  This is the default context menu
     menuFocus = contextMenu;
@@ -824,7 +816,7 @@ void ODEventHandler::PopupMenu( int x, int y, int seltype )
     
     //        Invoke the correct focused drop-down menu
     m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
-    m_parentcanvas->PopupMenu( menuFocus, x, y );
+    m_parentcanvas->PopupMenu( menuFocus );
     m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
     
     // Cleanup

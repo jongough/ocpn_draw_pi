@@ -1827,7 +1827,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bret = TRUE;
         } else if( m_pFoundODPoint ) {
             m_pFoundODPoint->m_bPtIsSelected = false;
-            bret = TRUE;
+            bret = false;
         } else if ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             // This is to handle the double click to bring up the dialog box so that the screen does not jump on the extra clicks.
             bret = TRUE;
@@ -1982,11 +1982,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
-                g_ODEventHandler->PopupMenu( g_cursor_x, g_cursor_y, m_seltype );
+                g_ODEventHandler->PopupMenu( m_seltype );
                 
                 //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
-                bret = TRUE;
+                bret = true;
             } else bret = FALSE;
             
             //end           
