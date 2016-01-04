@@ -60,7 +60,7 @@ class ODEventHandler : public wxEvtHandler
         void OnODTimer1(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
-        void PopupMenu( int x, int y, int seltype );
+        void PopupMenu( int seltype );
         void SetPath( ODPath *path );
         void SetPoint ( ODPoint *point );
         void SetPoint ( TextPoint *point );
@@ -72,7 +72,6 @@ class ODEventHandler : public wxEvtHandler
     private:
         ocpn_draw_pi    *m_parent;
         ChartCanvas     *m_parentcanvas;
-        int             popx, popy;
         ODPath          *m_pSelectedPath;
         ODPoint         *m_pFoundODPoint;
         TextPoint       *m_pFoundTextPoint;
