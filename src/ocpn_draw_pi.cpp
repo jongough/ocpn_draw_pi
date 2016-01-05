@@ -1833,6 +1833,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bret = TRUE;
         }
         
+        FindSelectedObject();
+        if(m_pSelectedPath || m_pFoundODPoint) {
+            m_pSelectedPath = NULL;
+            m_pFoundODPoint = NULL;
+            bret = true;
+        }
         
     }
         
