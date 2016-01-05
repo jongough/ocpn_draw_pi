@@ -542,8 +542,8 @@ public:
 
     wxString          m_GUID;
 
-    wxString          m_ODPointName;
-    wxString          m_ODPointDescription;
+    wxString          m_MarkName;
+    wxString          m_MarkDescription;
     wxDateTime        m_CreateTime;
 	bool			  m_IsVisible;
 
@@ -832,9 +832,9 @@ public:
     float               lat_min;
     float               lon_max;
     float               lon_min;
-    void                *private0;
     int                 type;
-    
+    void                *private0;
+   
     PI_line_segment_element *next;
 };
 
