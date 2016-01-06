@@ -1729,6 +1729,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if( event.LeftUp() ) {
         if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0 || nEBL_State > 0 || nDR_State > 0 ) ) {
             bret = true;
+        } else {
+            FindSelectedObject();
+            if(m_pSelectedPath || m_pFoundODPoint) {
+                m_pSelectedPath = NULL;
+                m_pFoundODPoint = NULL;
+                bret = true;
+            }
         }
         if (m_bEBLMoveOrigin) {
             m_bEBLMoveOrigin = false;
@@ -1832,14 +1839,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             // This is to handle the double click to bring up the dialog box so that the screen does not jump on the extra clicks.
             bret = TRUE;
         }
-        
-        FindSelectedObject();
-        if(m_pSelectedPath || m_pFoundODPoint) {
-            m_pSelectedPath = NULL;
-            m_pFoundODPoint = NULL;
-            bret = true;
-        }
-        
     }
         
     if( event.Dragging() ) {
