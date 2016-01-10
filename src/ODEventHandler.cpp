@@ -398,7 +398,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     }
     
     //    If currently creating a Path, do not show this rollover window
-    if( g_ocpn_draw_pi->nPath_State || g_ocpn_draw_pi->nPoint_State )
+    if( g_ocpn_draw_pi->nBoundary_State || g_ocpn_draw_pi->nEBL_State || g_ocpn_draw_pi->nDR_State || g_ocpn_draw_pi->nPoint_State )
         showRollover = false;
     
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
