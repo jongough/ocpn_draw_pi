@@ -924,7 +924,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         }
     }   // for
 
-    // Create waypoint
+    // Create ODPoint
 
     if( b_layer ) {
         if( GuidString.IsEmpty() )
@@ -1031,7 +1031,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     return ( pOP );
 }
 
-ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
+ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b_fullviz,
                     bool b_layer,
                     bool b_layerviz,
                     int layer_id, wxString *pPathType )
@@ -1048,7 +1048,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
     HyperlinkList *linklist = NULL;
     
     //m_ptODPointList->clear();
-    wxString Name = wxString::FromUTF8( wpt_node.name() );
+    wxString Name = wxString::FromUTF8( odpoint_node.name() );
     if( Name == _T ( "opencpn:path" ) ) {
         if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
             pTentBoundary = new Boundary();
@@ -1062,7 +1062,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullv
         } else 
             pTentPath = new ODPath();
         
-        for( pugi::xml_node tschild = wpt_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
+        for( pugi::xml_node tschild = odpoint_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
             wxString ChildName = wxString::FromUTF8( tschild.name() );
 
             if( ChildName == _T ( "opencpn:ODPoint" ) ) {

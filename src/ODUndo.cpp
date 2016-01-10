@@ -294,7 +294,7 @@ bool Undo::RedoNextAction()
             break;
 
         case Undo_MoveWaypoint:
-            doUndoMoveWaypoint( action ); // For Wpt move, redo is same as undo (swap lat/long);
+            doUndoMoveWaypoint( action ); // For point move, redo is same as undo (swap lat/long);
             stackpointer--;
             break;
 

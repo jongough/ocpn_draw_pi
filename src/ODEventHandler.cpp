@@ -454,7 +454,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
             break;
         case ID_PATH_MENU_INSERT:
-            // Insert new OCPN Point
+            // Insert new OD Point
             m_pSelectedPath->InsertPointAfter( m_pFoundODPoint, m_cursor_lat, m_cursor_lon );
             
             g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
@@ -475,10 +475,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
                 wxString sTypeLong = _("Are you sure you want to delete this ");
-                sTypeLong.append( m_pSelectedPath->m_sTypeString );
+                sTypeLong.append( _(m_pSelectedPath->m_sTypeString) );
                 sTypeLong.append( wxT("?") );
                 wxString sTypeShort = wxT("OpenCPN ");
-                sTypeShort.append( m_pSelectedPath->m_sTypeString );
+                sTypeShort.append( _(m_pSelectedPath->m_sTypeString) );
                 sTypeShort.append( _(" Delete") );
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
@@ -491,9 +491,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_DEACTIVATE: {
             wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
             wxString msg;
-            msg.append( wxS("Name: ") );
+            msg.append( _("Name: ") );
             msg.append( m_pSelectedPath->m_PathNameString.c_str() );
-            msg.append( wxS(", GUID: ") );
+            msg.append( wxT(", ") );
+            msg.append( _("GUID") );
+            msg.append( wxT(": ") );
             msg.append( m_pSelectedPath->m_GUID );
             SendPluginMessage( msg_id, msg );
             
@@ -504,9 +506,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_ACTIVATE: {
             wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
             wxString msg;
-            msg.append( wxS("Name: ") );
+            msg.append( _("Name: ") );
             msg.append( m_pSelectedPath->m_PathNameString.c_str() );
-            msg.append( wxS(", GUID: ") );
+            msg.append( wxT(", ") );
+            msg.append( _("GUID") );
+            msg.append( wxT(": ") );
             msg.append( m_pSelectedPath->m_GUID );
             SendPluginMessage( msg_id, msg );
             
@@ -548,7 +552,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( _("OD Point") );
                 else
-                    sType.append( m_pFoundODPoint->GetTypeString() );
+                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
                 sMessage.append( sType );
                 sMessage.append( wxS("?") );
                 sCaption.append( sType );
@@ -558,7 +562,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->RemovePointFromPath( m_pFoundODPoint, m_pSelectedPath );
-                m_pFoundODPoint->SetTypeString( wxT("OCPN Point") );
+                m_pFoundODPoint->SetTypeString( _("OD Point") );
             }
             
             g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
@@ -586,9 +590,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sCaption( _("OCPN Draw Delete ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( _("OCPN Point") );
+                    sType.append( _("OD Point") );
                 else
-                    sType.append( m_pFoundODPoint->GetTypeString() );
+                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
                 sMessage.append( sType );
                 sMessage.append( wxS("?") );
                 sCaption.append( sType );
@@ -617,9 +621,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sCaption( _("OCPN Draw Delete ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( _("OCPN Point") );
+                    sType.append( _("OD Point") );
                 else
-                    sType.append( m_pFoundODPoint->GetTypeString() );
+                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
                 sMessage.append( sType );
                 sMessage.append( wxS("?") );
                 sCaption.append( sType );
@@ -711,12 +715,12 @@ void ODEventHandler::PopupMenu( int seltype )
         if( blay ) {
             wxString  tName;
             tName.Append( _("Layer ") );
-            tName.Append( m_pSelectedPath->m_sTypeString );
+            tName.Append( _(m_pSelectedPath->m_sTypeString) );
             menuPath = new wxMenu( tName );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
         }
         else {
-            menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
+            menuPath = new wxMenu( _(m_pSelectedPath->m_sTypeString) );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                 if(!m_pEBL->m_bCentreOnBoat) {
@@ -735,12 +739,12 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.clear();
                 sString.append( _("Move") );
                 sString.append(_T(" "));
-                sString.append( m_pSelectedPath->m_sTypeString );
+                sString.append( _(m_pSelectedPath->m_sTypeString) );
                 MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
                 sString.clear();
                 sString.append( _("Insert") );
                 sString.append(_T(" "));
-                sString.append(m_pSelectedPath->m_sTypeString);
+                sString.append( _(m_pSelectedPath->m_sTypeString) );
                 sString.append( _(" Point") );
                 MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
             }
@@ -755,7 +759,7 @@ void ODEventHandler::PopupMenu( int seltype )
             sString.clear();
             sString.append(_("Copy"));
             sString.append(_T(" "));
-            sString.append( m_pSelectedPath->m_sTypeString );
+            sString.append( _(m_pSelectedPath->m_sTypeString) );
             sString.append(_T(" "));
             sString.append(_("GUID"));
             MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
@@ -773,7 +777,7 @@ void ODEventHandler::PopupMenu( int seltype )
         if( blay ){
             sString.clear();
             sString.append( _("Layer ") );
-            sString.append( m_pFoundODPoint->m_sTypeString );
+            sString.append( _(m_pFoundODPoint->m_sTypeString) );
             menuODPoint = new wxMenu( sString );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
@@ -782,12 +786,12 @@ void ODEventHandler::PopupMenu( int seltype )
         }
         else {
             sString.clear();
-            sString.append( m_pFoundODPoint->m_sTypeString );
+            sString.append( _(m_pFoundODPoint->m_sTypeString) );
             menuODPoint = new wxMenu( sString );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             sString.clear();
             sString.append( _("Move ") );
-            sString.append(m_pFoundODPoint->m_sTypeString);
+            sString.append( _(m_pFoundODPoint->m_sTypeString) );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_MOVE, sString );
 
             if( m_pSelectedPath ) {

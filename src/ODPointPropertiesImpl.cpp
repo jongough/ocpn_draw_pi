@@ -640,7 +640,7 @@ void ODPointPropertiesImpl::OnCopyPasteLatLon( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::ValidateMark( void )
 {
-    //    Look in the master list of Waypoints to see if the currently selected waypoint is still valid
+    //    Look in the master list of ODPoints to see if the currently selected ODPpoint is still valid
     //    It may have been deleted as part of a route
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     

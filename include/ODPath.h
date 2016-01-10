@@ -89,7 +89,7 @@ public:
     virtual wxColour GetCurrentColour( void );
 
     bool CrossesIDL(){ return m_bcrosses_idl; }
-    void SetVisible(bool visible = true, bool includeWpts = true);
+    void SetVisible(bool visible = true, bool includeODPoints = true);
     void SetListed(bool visible = true);
     bool IsVisible() { return m_bVisible; }
     bool IsListed() { return m_bListed; }

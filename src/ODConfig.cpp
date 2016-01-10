@@ -312,7 +312,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
             pprog->Centre();
         }
 
-        //WPTs
+        //Points
         int ic = 0;
 
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();

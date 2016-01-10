@@ -677,7 +677,7 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
         ODPoint *prp = node->GetData();
-        // if argument is false, then only delete non-route waypoints
+        // if argument is false, then only delete non-path ODPoints
         if( !prp->m_bIsInLayer && ( prp->GetIconName() != _T("mob") )
             && ( ( b_delete_used && prp->m_bKeepXPath )
                         || ( ( !prp->m_bIsInPath ) && !( prp == pAnchorWatchPoint1 ) && !( prp == pAnchorWatchPoint2 ) ) ) ) {

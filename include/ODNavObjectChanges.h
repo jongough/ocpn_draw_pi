@@ -113,7 +113,7 @@ class ODNavObjectChanges : public pugi::xml_document
                                bool b_layerviz,
                                int layer_id
                              );
-        ODPath *GPXLoadPath1( pugi::xml_node &wpt_node, bool b_fullviz,
+        ODPath *GPXLoadPath1( pugi::xml_node &odpoint_node, bool b_fullviz,
                       bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );
         ODPoint *ODPointExists( const wxString& guid );
         ODPoint *ODPointExists( const wxString& name, double lat, double lon );

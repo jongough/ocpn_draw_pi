@@ -784,11 +784,11 @@ void ODPath::RebuildGUIDList( void )
         node = node->GetNext();
     }
 }
-void ODPath::SetVisible( bool visible, bool includeWpts )
+void ODPath::SetVisible( bool visible, bool includeODPoints )
 {
     m_bVisible = visible;
 
-    if ( !includeWpts )
+    if ( !includeODPoints )
         return;
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
@@ -798,7 +798,6 @@ void ODPath::SetVisible( bool visible, bool includeWpts )
         if ( rp->m_bKeepXPath )
         {
             rp->SetVisible( visible );
-            //g_pODConfig->UpdateWayPoint( rp );
         }
         node = node->GetNext();
     }
