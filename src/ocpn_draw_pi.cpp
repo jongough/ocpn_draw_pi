@@ -397,15 +397,9 @@ int ocpn_draw_pi::Init(void)
     pLayerList = new LayerList;
     
     if(m_bLOGShowIcon) {
-//#if OD_USE_SVG
-//        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi_svg, _img_ocpn_draw_grey_pi_svg, wxITEM_NORMAL,
-//                                               _("OCPN Draw Manager"), wxS(""), NULL,
-//                                               OCPN_DRAW_POSITION, 0, this);
-//#else
-        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_grey_pi, wxITEM_NORMAL,
+        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_grey_pi, wxITEM_CHECK,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
-//#endif
         m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_grey, wxITEM_CHECK,
                                              _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);
@@ -2745,7 +2739,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
         #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby waypoint?"),
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby OD Point?"),
                                             _("OpenCPN Boundary Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else

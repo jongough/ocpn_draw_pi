@@ -171,8 +171,8 @@ bool PathMan::DeletePath( ODPath *pPath )
             if( pcontainer_path == NULL && prp->m_bIsInPath ) {
                 prp->m_bIsInPath = false;          // Take this point out of this (and only) path
                 if( !prp->m_bKeepXPath ) {
-//    This does not need to be done with navobj.xml storage, since the waypoints are stored with the route
-//                              g_pODConfig->DeleteWayPoint(prp);
+//    This does not need to be done with navobj.xml storage, since the ODPoints are stored with the route
+//                              g_pODConfig->DeleteODPoint(prp);
 
                     g_pODSelect->DeleteSelectablePoint( prp, SELTYPE_ODPOINT );
 
@@ -231,7 +231,7 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
             if( pnode ) pnode = pnode->GetNext();
         }
         
-        //      Now walk the path again, looking for isolated type shared waypoints
+        //      Now walk the path again, looking for isolated type shared ODPoints
         pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
@@ -259,7 +259,7 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
             if( prp == pWP )                // success
             pArray->Add( (void *) ppath );
 
-            OCPNpoint_node = OCPNpoint_node->GetNext();           // next waypoint
+            OCPNpoint_node = OCPNpoint_node->GetNext();           // next ODPoint
         }
 
         path_node = path_node->GetNext();                         // next route

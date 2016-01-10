@@ -220,7 +220,7 @@ int wxCALLBACK SortPathOnTo(long item1, long item2, long list)
 
 int sort_ODPoint_key;
 
-// sort callback. Sort by wpt name.
+// sort callback. Sort by point name.
 int sort_ODPoint_name_dir;
 #if wxCHECK_VERSION(2, 9, 0)
 int wxCALLBACK SortODPointsOnName(long item1, long item2, wxIntPtr list)
@@ -243,7 +243,7 @@ int wxCALLBACK SortODPointsOnName(long item1, long item2, long list)
     
 }
 
-// sort callback. Sort by wpt distance.
+// sort callback. Sort by point distance.
 int sort_ODPoint_len_dir;
 #if wxCHECK_VERSION(2, 9, 0)
 int wxCALLBACK SortODPointsOnDistance(long item1, long item2, wxIntPtr list)
@@ -501,12 +501,12 @@ void PathManagerDialog::Create()
     btnPathDeleteAll->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnPathDeleteAllClick), NULL, this );
 
-    //  Create "OCPN points" panel
+    //  Create "OD points" panel
     m_pPanelODPoint = new wxPanel( m_pNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
             wxNO_BORDER | wxTAB_TRAVERSAL );
     wxBoxSizer* itemBoxSizer4 = new wxBoxSizer( wxHORIZONTAL );
     m_pPanelODPoint->SetSizer( itemBoxSizer4 );
-    m_pNotebook->AddPage( m_pPanelODPoint, _("OCPN Points") );
+    m_pNotebook->AddPage( m_pPanelODPoint, _("OD Points") );
 
     m_pODPointListCtrl = new wxListCtrl( m_pPanelODPoint, -1, wxDefaultPosition, wxSize( 400, -1 ),
             wxLC_REPORT | wxLC_SORT_ASCENDING | wxLC_HRULES | wxBORDER_SUNKEN/*|wxLC_VRULES*/);
@@ -523,7 +523,7 @@ void PathManagerDialog::Create()
     itemBoxSizer4->Add( m_pODPointListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
 
     m_pODPointListCtrl->InsertColumn( colOCPNPOINTICON, _("Icon"), wxLIST_FORMAT_LEFT, 44 );
-    m_pODPointListCtrl->InsertColumn( colOCPNPOINTNAME, _("OCPN Point Name"), wxLIST_FORMAT_LEFT, 180 );
+    m_pODPointListCtrl->InsertColumn( colOCPNPOINTNAME, _("OD Point Name"), wxLIST_FORMAT_LEFT, 180 );
     m_pODPointListCtrl->InsertColumn( colOCPNPOINTDIST, _("Distance from Ownship"), wxLIST_FORMAT_LEFT, 180 );
 
     wxBoxSizer *bsODPointButtons = new wxBoxSizer( wxVERTICAL );
@@ -636,7 +636,7 @@ void PathManagerDialog::Create()
     btnLayToggleChart->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnLayToggleChartClick), NULL, this );
 
-    btnLayToggleNames = new wxButton( m_pPanelLay, -1, _("Show WPT names") );
+    btnLayToggleNames = new wxButton( m_pPanelLay, -1, _("Show Point names") );
     bsLayButtons->Add( btnLayToggleNames, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
     btnLayToggleNames->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnLayToggleNamesClick), NULL, this );
@@ -1137,7 +1137,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
         bool has_shared_ODPoints = g_pPathMan->DoesPathContainSharedPoints( path );
         
         if( has_shared_ODPoints && path->IsVisible() ) {
-            ODPoints_set_viz = OCPNMessageBox_PlugIn(  this, _("Do you also want to make the shared OCPN Points being part of this boundary invisible?"), _("Question"), wxYES_NO );
+            ODPoints_set_viz = OCPNMessageBox_PlugIn(  this, _("Do you also want to make the shared OD Points being part of this boundary invisible?"), _("Question"), wxYES_NO );
             togglesharedODPoints = (ODPoints_set_viz == wxID_YES);
         }
         path->SetVisible( !path->IsVisible(), togglesharedODPoints );
@@ -1148,7 +1148,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
         g_pODConfig->UpdatePath( path );
         RequestRefresh( GetOCPNCanvasWindow() );
 
-        //   We need to update the waypoint list control only if the visibility of shared waypoints might have changed.
+        //   We need to update the ODPoint list control only if the visibility of shared ODPoints might have changed.
         if( has_shared_ODPoints )
             UpdateODPointsListCtrlViz();
 
@@ -1267,7 +1267,7 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
             dist.Printf( _T("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( dst ) );
             m_pODPointListCtrl->SetItem( idx, colOCPNPOINTDIST, dist );
 
-            if( op == op_select ) selected_id = (long) op_select; //index; //m_pWptListCtrl->GetItemData(item);
+            if( op == op_select ) selected_id = (long) op_select; //index; 
 
             index++;
         }
@@ -1526,7 +1526,7 @@ void PathManagerDialog::OnODPointDeleteClick( wxCommandEvent &event )
 
                 if ( wp->m_bIsInPath )
                 {
-                    if ( wxYES == OCPNMessageBox_PlugIn(this,  _( "The OCPN Point you want to delete is used in a path, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
+                    if ( wxYES == OCPNMessageBox_PlugIn(this,  _( "The OD Point you want to delete is used in a path, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
                             g_pODPointMan->DestroyODPoint( wp );
                 }
                 else
@@ -1557,7 +1557,7 @@ void PathManagerDialog::OnODPointExportClick( wxCommandEvent &event )
 {
     ODPointList list;
 
-    wxString suggested_name = _T("OCPN Points");
+    wxString suggested_name = _T("OD Points");
 
     long item = -1;
     for ( ;; )
@@ -1604,13 +1604,13 @@ void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
     int buttons, type;
     if ( !g_pODPointMan->SharedODPointsExist() )
     {
-        prompt = _("Are you sure you want to delete <ALL> OCPN points?");
+        prompt = _("Are you sure you want to delete <ALL> OD points?");
         buttons = wxYES_NO;
         type = 1;
     }
     else
     {
-        prompt = _("There are some OCPN points used in paths or anchor alarms.\n Do you want to delete them as well?\n This will change the paths and disable the anchor alarms.\n Answering No keeps the OCPN points used in paths or alarms.");
+        prompt = _("There are some OD points used in paths or anchor alarms.\n Do you want to delete them as well?\n This will change the paths and disable the anchor alarms.\n Answering No keeps the OD points used in paths or alarms.");
         buttons = wxYES_NO | wxCANCEL;
         type = 2;
     }
@@ -1618,7 +1618,7 @@ void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
     if ( answer == wxID_YES )
         g_pODPointMan->DeleteAllODPoints( true );
     if ( answer == wxID_NO && type == 2 )
-        g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OCPN points
+        g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OD points
 
     m_lastODPointItem = -1;
     UpdatePathListCtrl();
@@ -1666,7 +1666,7 @@ void PathManagerDialog::UpdateLayButtons()
         if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->HasVisibleNames() ) btnLayToggleNames->SetLabel(
                 _("Hide WPT names") );
         else
-            btnLayToggleNames->SetLabel( _("Show WPT names") );
+            btnLayToggleNames->SetLabel( _("Show Point names") );
 
         if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnListing() ) btnLayToggleListing->SetLabel(
                 _("Unlist contents") );
@@ -1674,7 +1674,7 @@ void PathManagerDialog::UpdateLayButtons()
             btnLayToggleListing->SetLabel( _("List contents") );
     } else {
         btnLayToggleChart->SetLabel( _("Show on chart") );
-        btnLayToggleNames->SetLabel( _("Show WPT names") );
+        btnLayToggleNames->SetLabel( _("Show Point names") );
         btnLayToggleListing->SetLabel( _("List contents") );
     }
 }
@@ -1762,7 +1762,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
         node2 = NULL;
     }
 
-    // Process waypoints in this layer
+    // Process ODPoints in this layer
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     wxODPointListNode *node3;
 
@@ -1820,7 +1820,7 @@ void PathManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
         node1 = node1->GetNext();
     }
 
-    // Process OCPN points in this layer
+    // Process OD points in this layer
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
@@ -1842,7 +1842,7 @@ void PathManagerDialog::ToggleLayerContentsOnChart( Layer *layer )
 
 void PathManagerDialog::OnLayToggleNamesClick( wxCommandEvent &event )
 {
-    // Toggle WPT names visibility on chart for selected layer
+    // Toggle Point names visibility on chart for selected layer
     long item = -1;
     item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
@@ -1873,7 +1873,7 @@ void PathManagerDialog::ToggleLayerContentsNames( Layer *layer )
         node1 = node1->GetNext();
     }
 
-    // Process OCPN points in this layer
+    // Process OD points in this layer
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
@@ -1921,8 +1921,8 @@ void PathManagerDialog::ToggleLayerContentsOnListing( Layer *layer )
         node1 = node1->GetNext();
     }
 
-    // Process OCPN points in this layer
-    //  n.b.  If the OCPN point belongs to a track, and is not shared, then do not list it.
+    // Process OD points in this layer
+    //  n.b.  If the OD point belongs to a track, and is not shared, then do not list it.
     //  This is a performance optimization, allowing large track support.
 
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();

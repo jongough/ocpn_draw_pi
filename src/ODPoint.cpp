@@ -249,7 +249,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
 
 ODPoint::~ODPoint( void )
 {
-//  Remove this point from the global waypoint list
+//  Remove this point from the global ODPoint list
     if( NULL != g_pODPointMan )
         g_pODPointMan->RemoveODPoint( this );
 
@@ -297,7 +297,7 @@ void ODPoint::ReLoadIcon( void )
     bool icon_exists = g_pODPointMan->DoesIconExist(m_IconName);
     if( !icon_exists ){
         
-        //  Try all lower case as a favor in the case where imported waypoints use mixed case names
+        //  Try all lower case as a favor in the case where imported ODPoints use mixed case names
         wxString tentative_icon = m_IconName.Lower();
         if(g_pODPointMan->DoesIconExist(tentative_icon)){
             // if found, convert point's icon name permanently.
@@ -472,7 +472,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         pivp.rotation == m_wpBBox_rotation) {
 //       vp.chart_scale == m_wpBBox_chart_scale &&
 //       vp.rotation == m_wpBBox_rotation) {
-        /* see if this waypoint can intersect with bounding box */
+        /* see if this ODPoint can intersect with bounding box */
 //        LLBBox vpBBox = vp.GetBBox();
 //        pivp.
 /*        if( vpBBox.IntersectOut( m_wpBBox ) ) {

@@ -55,7 +55,7 @@ class ODConfig
         void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
 
         bool ExportGPXPaths(wxWindow* parent, PathList *pPathss, const wxString suggestedName = _T("paths"));
-        bool ExportGPXODPoints(wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName = _T("OCPN points"));
+        bool ExportGPXODPoints(wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName = _T("OD Points"));
         
         void CreateRotatingNavObjBackup();
         bool ODPointIsInPathList( ODPoint *pr );

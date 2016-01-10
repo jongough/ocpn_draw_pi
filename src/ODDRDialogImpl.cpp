@@ -286,11 +286,11 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
 
     PositionBearingDistanceMercator_Plugin( l_dStartLat, l_dStartLon, l_pDR->m_iCoG, l_pDR->m_dTotalLengthNM, &l_dEndLat, &l_dEndLon );
     
-    int l_iNumWaypoints = floor( l_pDR->m_dTotalLengthNM / l_pDR->m_dDRPointIntervalNM );
+    int l_iNumODPoints = floor( l_pDR->m_dTotalLengthNM / l_pDR->m_dDRPointIntervalNM );
     double l_cumLength = l_pDR->m_dDRPointIntervalNM;
     double l_dSaveLat = l_dStartLat;
     double l_dSaveLon = l_dStartLon;
-    for( int i = 0; i < l_iNumWaypoints; i++ ) {
+    for( int i = 0; i < l_iNumODPoints; i++ ) {
         double l_dLat, l_dLon;
         PositionBearingDistanceMercator_Plugin( l_dStartLat, l_dStartLon, l_pDR->m_iCoG, l_cumLength, &l_dLat, &l_dLon );
         ODPoint *l_NewPoint = new ODPoint( l_dLat, l_dLon, g_sDRPointIconName, wxT(""), wxT("") );
