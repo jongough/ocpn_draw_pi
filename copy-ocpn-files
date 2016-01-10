@@ -93,3 +93,6 @@ cp ../../clean/src/nmea0183/xte.hpp ./ocpninclude/.
 cp -R ../../clean/src/wxcurl/include ./ocpninclude/wxcurl/.
 cp -R ../../clean/src/wxcurl/wx ./ocpninclude/wxcurl/.
 
+cp ../../clean/src/wxsvg/include/wxSVG/* ./ocpninclude/wxsvg/.
+
+cp ../../clean/src/wxsvg/include/wxSVGXML/svgxml.h ./ocpninclude/wxSVGXML/.
