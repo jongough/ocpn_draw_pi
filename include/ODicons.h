@@ -26,12 +26,13 @@
 #ifndef ODICONS_H
 #define ODICONS_H 1
 
-//#include <wx/wxprec.h>
-//#ifndef WX_PRECOMP
-//#include <wx/wx.h>
-//#endif
+#include <wx/wxprec.h>
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
 
 extern void initialize_images(void);
+wxBitmap *LoadSVG( const wxString filename, unsigned int width, unsigned int height );
 
 extern void *g_ppimgr;
 extern wxBitmap *_img_ocpn_draw_pi;
@@ -47,7 +48,5 @@ extern wxBitmap *_img_ocpn_draw_ebl;
 extern wxBitmap *_img_ocpn_draw_ebl_grey;
 extern wxBitmap *_img_ocpn_draw_dr;
 extern wxBitmap *_img_ocpn_draw_dr_grey;
-extern const wxBitmap *_img_Bullet_green;
-extern const wxBitmap *_img_Bullet_red;
-extern const wxBitmap *_img_Bullet_yellow;
+
 #endif /* ODICONS_H */

@@ -281,9 +281,6 @@ wxBitmap *_img_ocpn_draw_ebl;
 wxBitmap *_img_ocpn_draw_ebl_grey;
 wxBitmap *_img_ocpn_draw_dr;
 wxBitmap *_img_ocpn_draw_dr_grey;
-const wxBitmap *_img_Bullet_green;
-const wxBitmap *_img_Bullet_red;
-const wxBitmap *_img_Bullet_yellow;
 
 // Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 float g_GLMinSymbolLineWidth;
@@ -400,9 +397,15 @@ int ocpn_draw_pi::Init(void)
     pLayerList = new LayerList;
     
     if(m_bLOGShowIcon) {
+//#if OD_USE_SVG
+//        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi_svg, _img_ocpn_draw_grey_pi_svg, wxITEM_NORMAL,
+//                                               _("OCPN Draw Manager"), wxS(""), NULL,
+//                                               OCPN_DRAW_POSITION, 0, this);
+//#else
         m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_grey_pi, wxITEM_NORMAL,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
+//#endif
         m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_grey, wxITEM_CHECK,
                                              _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);

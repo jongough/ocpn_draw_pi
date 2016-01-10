@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "600")
-SET(VERSION_DATE "08/01/2016")
+SET(VERSION_PATCH "602")
+SET(VERSION_DATE "10/01/2016")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -39,6 +39,7 @@ SET(CMAKE_VERBOSE_MAKEFILE ON)
 INCLUDE("cmake/PluginConfigure.cmake")
 
 ADD_DEFINITIONS(-DUSE_S57)
+
 
 SET(SRCS
         src/ocpn_draw_pi.cpp
@@ -221,9 +222,114 @@ SET(EXTINCLUDE
     extinclude/clipper.hpp
 )
 
-#INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal ${CMAKE_SOURCE_DIR}/../../include ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src )
+OPTION(OD_USE_SVG "Use SVG graphics" ON)
+
+IF(OD_USE_SVG)
+  MESSAGE(STATUS "SVG support enabled...")
+  IF(NOT QT_ANDROID)
+
+    IF(NOT WIN32)
+      #Find Cairo
+      IF( CAIRO_INCLUDE_DIR )
+        # Already in cache, be silent
+        SET( CAIRO_FIND_QUIETLY TRUE )
+      ENDIF( CAIRO_INCLUDE_DIR )
+
+      FIND_PATH( CAIRO_INCLUDE_DIR cairo.h
+              PATHS /usr/local/include /usr/include
+              PATH_SUFFIXES cairo/ libcairo/ cairo/libcairo/ )
+
+      SET( CAIRO_NAMES libcairo cairo )
+      FIND_LIBRARY( CAIRO_LIBRARY
+              NAMES ${CAIRO_NAMES}
+              PATHS /usr/lib /usr/local/lib /usr/lib/i386-linux-gnu)
+
+      GET_FILENAME_COMPONENT( CAIRO_LIBRARY_DIR ${CAIRO_LIBRARY} PATH )
+
+      # handle the QUIETLY and REQUIRED arguments and set CAIRO_FOUND to TRUE if
+      # all listed variables are TRUE
+      INCLUDE( "FindPackageHandleStandardArgs" )
+      FIND_PACKAGE_HANDLE_STANDARD_ARGS( "CAIRO" DEFAULT_MSG CAIRO_INCLUDE_DIR CAIRO_LIBRARY )
+
+      MARK_AS_ADVANCED( CAIRO_INCLUDE_DIR CAIRO_LIBRARY )
+      if ( NOT CAIRO_FOUND )
+        message(FATAL_ERROR "Cairo component required, but not found!")
+      endif()
+
+      IF(NOT WIN32 AND NOT APPLE)
+        OPTION(OCPN_FORCE_GTK3 "Force the build to use GTK3" OFF)
+
+        IF(NOT OCPN_FORCE_GTK3)
+          FIND_PACKAGE(GTK2)
+        ENDIF(NOT OCPN_FORCE_GTK3)
+
+        IF(GTK2_FOUND)
+          INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
+          SET(GTK_LIBRARIES ${GTK2_LIBRARIES})
+          MESSAGE(STATUS "Building against GTK2...")
+        ELSE(GTK2_FOUND)
+          FIND_PACKAGE(GTK3)
+          INCLUDE_DIRECTORIES(${GTK3_INCLUDE_DIRS})
+          SET(GTK_LIBRARIES ${GTK3_LIBRARIES})
+          MESSAGE(STATUS "Building against GTK3...")
+        ENDIF(GTK2_FOUND)
+      ENDIF(NOT WIN32 AND NOT APPLE)
+
+      # Find FFMPEG - we have it disabled in our wxSVG
+      #set(FFmpeg_FIND_COMPONENTS AVCODEC AVFORMAT AVUTIL SWSCALE SWRESAMPLE AVRESAMPLE)
+      #unset(FFMPEG_LIBRARIES CACHE)
+      #find_package(FFmpeg)
+      #if ( NOT AVCODEC_FOUND OR NOT AVFORMAT_FOUND OR NOT AVUTIL_FOUND OR NOT SWSCALE_FOUND )
+      #  message(FATAL_ERROR "FFmpeg component required, but not found!")
+      #endif()
+      #set(VIDEO_FFMPEG_LIBRARIES ${FFMPEG_LIBRARIES} ${SWSCALE_LIBRARIES})
+
+       FIND_PACKAGE(EXPAT REQUIRED)
+    ELSE(NOT WIN32)
+      #On Windows, we have our own expat
+      SET(EXPAT_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/buildwin/expat-2.1.0/include)
+      INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR})
+      #And cairo
+      SET(CAIRO_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/buildwin/gtk/include)
+    ENDIF(NOT WIN32)
+
+    INCLUDE_DIRECTORIES(${CAIRO_INCLUDE_DIR})
+    IF(APPLE)
+      INCLUDE_DIRECTORIES(${CAIRO_INCLUDE_DIR}/..)
+    ENDIF(APPLE)
+    #INCLUDE_DIRECTORIES(${FFMPEG_INCLUDE_DIRS})
+
+    ADD_DEFINITIONS(-DUSE_RENDER_CAIRO)
+
+    ADD_DEFINITIONS(-DODUSE_SVG)
+    IF(WIN32)
+      SET(SVG_LIBS
+        ${CMAKE_SOURCE_DIR}/buildwin/gtk/cairo.lib
+    ${CMAKE_SOURCE_DIR}/buildwin/expat-2.1.0/expat.lib
+      )
+      FILE(GLOB gtkdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/gtk/*.dll")
+      INSTALL(FILES ${gtkdll_files} DESTINATION ".")
+      FILE(GLOB expatdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/expat-2.1.0/*.dll")
+      INSTALL(FILES ${expatdll_files} DESTINATION ".")
+      MESSAGE(STATUS "GTK and Expat DLLs bundled into the installer package...")
+    ELSE(WIN32)
+      SET(SVG_LIBS
+        ${CAIRO_LIBRARY}
+    #${FFMPEG_LIBRARIES}
+    ${EXPAT_LIBRARIES}
+        ${GTK_LIBRARIES}
+      )
+    ENDIF(WIN32)
+
+    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxsvg)
+    INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxSVGXML)
+    IF(WIN32)
+        SET(EXTRA_LIBS ${EXTRA_LIBS} WXSVG expat cairo)
+    ENDIF(WIN32)
+  ENDIF(NOT QT_ANDROID)
+ENDIF(OD_USE_SVG)
+
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src/mygdal  )
-#INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/../../include)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/extinclude)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxcurl)
