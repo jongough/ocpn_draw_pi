@@ -1727,7 +1727,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0 || nEBL_State > 0 || nDR_State > 0 ) ) {
             bret = true;
         } else {
-            if(!m_bPathEditing && !m_bODPointEditing) {
+            if(!m_bPathEditing && !m_bEBLMoveOrigin && !m_bODPointEditing) { // Handle left up moving origin when doing double left click on OD object
                 FindSelectedObject();
                 if(m_pSelectedPath || m_pFoundODPoint) {
                     m_pSelectedPath = NULL;
@@ -1736,108 +1736,108 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     bret = true;
                 }
             }
-        }
-        if (m_bEBLMoveOrigin) {
-            m_bEBLMoveOrigin = false;
-            m_pSelectedEBL = (EBL *)m_pSelectedPath;
-            m_pSelectedEBL->CentreOnLatLon( m_cursor_lat, m_cursor_lon );
-            m_bPathEditing = FALSE;
-            m_bODPointEditing = FALSE;
-            m_pCurrentCursor = NULL;
-            m_pSelectedPath->m_bIsBeingEdited = FALSE;
-            
-            // TODO reimplement undo
-            //undo->AfterUndoableAction( m_pRoutePointEditTarget );
-            m_pSelectedPath = NULL;
-            m_pFoundODPoint = NULL;
-            bRefresh = TRUE;
-            bret = TRUE;
-        } else if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
-            m_bPathEditing = FALSE;
-            m_bODPointEditing = FALSE;
-            m_pCurrentCursor = NULL;
-            m_pSelectedPath->m_bIsBeingEdited = FALSE;
-            if( m_pFoundODPoint ) {
-                //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
-                m_pFoundODPoint->m_bIsBeingEdited = false;
-            }
-            g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
-            g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-            g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
-            
-            m_pSelectedPath->FinalizeForRendering();
-            m_pSelectedPath->UpdateSegmentDistances();
-            bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
-            g_pODConfig->m_bSkipChangeSetUpdate = false;
-            if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
-                // Save changes done by user
-                bool l_bSaveUpdatesState = m_pSelectedPath->m_bSaveUpdates;
-                m_pSelectedPath->m_bSaveUpdates = true;
-                g_pODConfig->UpdatePath( m_pSelectedPath );
-                m_pSelectedPath->m_bSaveUpdates = l_bSaveUpdatesState;
-            } else
-                g_pODConfig->UpdatePath( m_pSelectedPath );
-            g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
-            
-            if( m_pSelectedPath->m_pODPointList ) {
-                for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
-                    ODPath *pp = (ODPath *) m_pSelectedPath->m_pODPointList->Item( ip );
-                    if( g_pPathMan->IsPathValid(pp) ) {
-                        pp->FinalizeForRendering();
-                        pp->UpdateSegmentDistances();
-                        pp->m_bIsBeingEdited = false;
-                        
-                        g_pODConfig->UpdatePath( pp );
-                        
-                        pp->SetHiLite( 0 );
-                    }
-                }
+            if (m_bEBLMoveOrigin) {
+                m_bEBLMoveOrigin = false;
+                m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                m_pSelectedEBL->CentreOnLatLon( m_cursor_lat, m_cursor_lon );
+                m_bPathEditing = FALSE;
+                m_bODPointEditing = FALSE;
+                m_pCurrentCursor = NULL;
+                m_pSelectedPath->m_bIsBeingEdited = FALSE;
+                
+                // TODO reimplement undo
+                //undo->AfterUndoableAction( m_pRoutePointEditTarget );
+                m_pSelectedPath = NULL;
+                m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
-            }
-            
-            //    Update the PathProperties Dialog, if currently shown
-            if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) {
+                bret = TRUE;
+            } else if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
+                m_bPathEditing = FALSE;
+                m_bODPointEditing = FALSE;
+                m_pCurrentCursor = NULL;
+                m_pSelectedPath->m_bIsBeingEdited = FALSE;
+                if( m_pFoundODPoint ) {
+                    //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
+                    m_pFoundODPoint->m_bIsBeingEdited = false;
+                }
+                g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+                g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
+                
+                m_pSelectedPath->FinalizeForRendering();
+                m_pSelectedPath->UpdateSegmentDistances();
+                bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
+                g_pODConfig->m_bSkipChangeSetUpdate = false;
+                if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                    // Save changes done by user
+                    bool l_bSaveUpdatesState = m_pSelectedPath->m_bSaveUpdates;
+                    m_pSelectedPath->m_bSaveUpdates = true;
+                    g_pODConfig->UpdatePath( m_pSelectedPath );
+                    m_pSelectedPath->m_bSaveUpdates = l_bSaveUpdatesState;
+                } else
+                    g_pODConfig->UpdatePath( m_pSelectedPath );
+                g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
+                
                 if( m_pSelectedPath->m_pODPointList ) {
                     for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
                         ODPath *pp = (ODPath *) m_pSelectedPath->m_pODPointList->Item( ip );
                         if( g_pPathMan->IsPathValid(pp) ) {
-                            g_pODPathPropDialog->SetPathAndUpdate( pp, true );
+                            pp->FinalizeForRendering();
+                            pp->UpdateSegmentDistances();
+                            pp->m_bIsBeingEdited = false;
+                            
+                            g_pODConfig->UpdatePath( pp );
+                            
+                            pp->SetHiLite( 0 );
+                        }
+                    }
+                    bRefresh = TRUE;
+                }
+                
+                //    Update the PathProperties Dialog, if currently shown
+                if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) {
+                    if( m_pSelectedPath->m_pODPointList ) {
+                        for( unsigned int ip = 0; ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++ ) {
+                            ODPath *pp = (ODPath *) m_pSelectedPath->m_pODPointList->Item( ip );
+                            if( g_pPathMan->IsPathValid(pp) ) {
+                                g_pODPathPropDialog->SetPathAndUpdate( pp, true );
+                            }
                         }
                     }
                 }
+                
+                //m_pSelectedPath->m_bPtIsSelected = false;
+                
+                // TODO reimplement undo
+                //undo->AfterUndoableAction( m_pRoutePointEditTarget );
+                m_pSelectedPath = NULL;
+                m_pFoundODPoint = NULL;
+                bRefresh = TRUE;
+                bret = TRUE;
+            } else if( m_pFoundODPoint && m_bODPointEditing ) {
+                m_bODPointEditing = FALSE;
+                m_pFoundODPoint->m_bIsBeingEdited = FALSE;
+                m_pFoundODPoint->m_bPtIsSelected = false;
+                m_pCurrentCursor = NULL;
+                g_pODSelect->DeleteSelectableODPoint( m_pFoundODPoint );
+                g_pODSelect->AddSelectableODPoint( m_cursor_lat, m_cursor_lon, m_pFoundODPoint );
+                bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
+                g_pODConfig->m_bSkipChangeSetUpdate = false;
+                g_pODConfig->UpdateODPoint( m_pFoundODPoint );
+                g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
+                
+                m_pSelectedPath = NULL;
+                m_pFoundODPoint = NULL;
+                
+                bret = TRUE;
+            } else if( m_pFoundODPoint ) {
+                m_pFoundODPoint->m_bPtIsSelected = false;
+                bret = false;
+            } else if ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+                // This is to handle the double click to bring up the dialog box so that the screen does not jump on the extra clicks.
+                bret = TRUE;
             }
-            
-            //m_pSelectedPath->m_bPtIsSelected = false;
-            
-            // TODO reimplement undo
-            //undo->AfterUndoableAction( m_pRoutePointEditTarget );
-            m_pSelectedPath = NULL;
-            m_pFoundODPoint = NULL;
-            bRefresh = TRUE;
-            bret = TRUE;
-        } else if( m_pFoundODPoint && m_bODPointEditing ) {
-            m_bODPointEditing = FALSE;
-            m_pFoundODPoint->m_bIsBeingEdited = FALSE;
-            m_pFoundODPoint->m_bPtIsSelected = false;
-            m_pCurrentCursor = NULL;
-            g_pODSelect->DeleteSelectableODPoint( m_pFoundODPoint );
-            g_pODSelect->AddSelectableODPoint( m_cursor_lat, m_cursor_lon, m_pFoundODPoint );
-            bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
-            g_pODConfig->m_bSkipChangeSetUpdate = false;
-            g_pODConfig->UpdateODPoint( m_pFoundODPoint );
-            g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
-            
-            m_pSelectedPath = NULL;
-            m_pFoundODPoint = NULL;
-            
-            bret = TRUE;
-        } else if( m_pFoundODPoint ) {
-            m_pFoundODPoint->m_bPtIsSelected = false;
-            bret = false;
-        } else if ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
-            // This is to handle the double click to bring up the dialog box so that the screen does not jump on the extra clicks.
-            bret = TRUE;
         }
     }
         

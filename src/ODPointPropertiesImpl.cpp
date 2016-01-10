@@ -199,7 +199,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
     
-    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
 }
@@ -231,7 +231,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
 
-    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     event.Skip();
 }
