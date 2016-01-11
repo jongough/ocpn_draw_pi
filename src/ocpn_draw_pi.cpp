@@ -328,7 +328,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
     
-    initialize_images();
+    m_pODicons = new ODicons();
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
@@ -397,10 +397,10 @@ int ocpn_draw_pi::Init(void)
     pLayerList = new LayerList;
     
     if(m_bLOGShowIcon) {
-        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), _img_ocpn_draw_pi, _img_ocpn_draw_grey_pi, wxITEM_CHECK,
+        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), m_pODicons->m_p_bm_ocpn_draw_pi, m_pODicons->m_p_bm_ocpn_draw_grey_pi, wxITEM_NORMAL,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
-        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), _img_ocpn_draw_boundary, _img_ocpn_draw_boundary_grey, wxITEM_CHECK,
+        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), m_pODicons->m_p_bm_ocpn_draw_boundary, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, wxITEM_CHECK,
                                              _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);
     }
@@ -410,33 +410,33 @@ int ocpn_draw_pi::Init(void)
     {
         case ID_MODE_BOUNDARY:
             // Boundary
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
             break;
             
         case ID_MODE_POINT:
             // Point
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_grey, _img_ocpn_draw_point);
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_point_grey, m_pODicons->m_p_bm_ocpn_draw_point);
             break;
             
         case ID_MODE_TEXT_POINT:
             // Text Point
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint_grey, _img_ocpn_draw_textpoint);
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, m_pODicons->m_p_bm_ocpn_draw_textpoint);
             break;
             
         case ID_MODE_EBL:
             // EBL
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl_grey, _img_ocpn_draw_ebl);
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_ebl_grey, m_pODicons->m_p_bm_ocpn_draw_ebl);
             break;
             
         case ID_MODE_DR:
             // EBL
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr_grey, _img_ocpn_draw_dr);
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_dr_grey, m_pODicons->m_p_bm_ocpn_draw_dr);
             break;
             
         default:
             // Boundary
             m_Mode = ID_MODE_BOUNDARY;
-            SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
             break;
     }
     
@@ -744,6 +744,8 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
         }
     }
     else if ( id == m_draw_button_id ) {
+        if(m_pODicons->ScaleIcons()) g_pODToolbar->UpdateIcons();
+        
         switch (m_Mode)
         {
             case ID_MODE_BOUNDARY:
@@ -3265,7 +3267,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_BOUNDARY:
                 // Boundary
                 m_pCurrentCursor = ocpncc1->pCursorPencil;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
+                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary);
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 1;
                 nPoint_State = 0;
@@ -3277,7 +3279,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_POINT:
                 // Point
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_point_grey, _img_ocpn_draw_point);
+                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point);
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 0;
                 nPoint_State = 1;
@@ -3289,7 +3291,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_TEXT_POINT:
                 // Text Point
                 m_pCurrentCursor = m_pTextCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_textpoint_grey, _img_ocpn_draw_textpoint);
+                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3301,7 +3303,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_EBL:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_ebl_grey, _img_ocpn_draw_ebl);
+                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3314,7 +3316,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_DR:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_dr_grey, _img_ocpn_draw_dr);
+                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr);
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3328,7 +3330,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 // Boundary
                 m_Mode = ID_MODE_BOUNDARY;
                 m_pCurrentCursor = ocpncc1->pCursorPencil;
-                SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
+                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary);
                 g_pODToolbar->SetToolbarTool( ID_BOUNDARY );
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 1;

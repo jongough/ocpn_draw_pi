@@ -20,7 +20,7 @@ ODToolbarDialog::ODToolbarDialog( wxWindow* parent, wxWindowID id, const wxStrin
 	m_toolBarODToolbar = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL|wxNO_BORDER ); 
 	m_toolBarODToolbar->Realize(); 
 	
-	bSizerToolbar->Add( m_toolBarODToolbar, 0, wxEXPAND, 5 );
+	bSizerToolbar->Add( m_toolBarODToolbar, 1, wxEXPAND, 5 );
 	
 	
 	this->SetSizer( bSizerToolbar );

@@ -39,6 +39,7 @@ public:
     void OnClose( wxCloseEvent& event );
     void OnToolButtonClick( wxCommandEvent& event );
     void SetToolbarTool( int iTool );
+    void UpdateIcons(void);
     
     wxToolBarToolBase *m_toolBoundary;
     wxToolBarToolBase *m_toolODPoint;
@@ -47,6 +48,7 @@ public:
     wxToolBarToolBase *m_toolDR;
     
 private:
+    
     wxSize m_toolbarSize;
     
 };
