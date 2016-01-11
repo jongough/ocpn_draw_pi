@@ -160,10 +160,11 @@ bool ODicons::ScaleIcons()
     //if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
     //m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
 
-    m_dScaleFactor = 3.0;
+    m_dScaleFactor = 1.0;
     
-    m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
-    m_p_bm_ocpn_draw_grey_pi = ScaleIcon( m_p_svgd_ocpn_draw_grey_pi, m_p_img_ocpn_draw_grey_pi, m_dScaleFactor );
+    // Dont scale the OD manager as that should be done by the OCPN toolbar
+    //m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
+    //m_p_bm_ocpn_draw_grey_pi = ScaleIcon( m_p_svgd_ocpn_draw_grey_pi, m_p_img_ocpn_draw_grey_pi, m_dScaleFactor );
     
     m_p_bm_ocpn_draw_boundary = ScaleIcon( m_p_svgd_ocpn_draw_boundary, m_p_img_ocpn_draw_boundary, m_dScaleFactor );
     m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_p_svgd_ocpn_draw_boundary_grey, m_p_img_ocpn_draw_boundary_grey, m_dScaleFactor );

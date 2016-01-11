@@ -16,7 +16,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "604")
+SET(VERSION_PATCH "605")
 SET(VERSION_DATE "11/01/2016")
 
 SET(BUNDLE_DATA FALSE)
@@ -62,6 +62,7 @@ SET(SRCS
         src/ODDRDialogDef.cpp
         src/ODDRDialogImpl.cpp
         src/ODEventHandler.cpp
+        src/ODicons.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
         src/ODPropertiesDialogImpl.cpp
@@ -74,7 +75,6 @@ SET(SRCS
         src/ODToolbarDef.cpp
         src/ODToolbarImpl.cpp
         src/ODUtils.cpp
-        src/ODicons.cpp
         src/TextPoint.cpp
      )
 
