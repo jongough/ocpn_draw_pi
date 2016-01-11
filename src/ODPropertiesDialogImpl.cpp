@@ -31,6 +31,7 @@
 
 #include "ODPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
+#include "ODToolbarImpl.h"
 #include "PointMan.h"
 #include "version.h"
 #include <wx/fontdlg.h>
@@ -141,6 +142,8 @@ extern int          g_EdgePanSensitivity;
 extern int          g_InitialEdgePanSensitivity;
 
 extern int          g_iDisplayToolbar;
+extern ODToolbarImpl   *g_pODToolbar;
+
 
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
@@ -374,6 +377,14 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
     
     g_iDisplayToolbar = m_choiceToolbar->GetSelection();
+    switch (g_iDisplayToolbar) {
+        case ID_DISPLAY_NEVER:
+            g_pODToolbar->Hide();
+            break;
+        case ID_DISPLAY_ALWAYS:
+            g_pODToolbar->Show();
+            break;
+    }
 }
 
 void ODPropertiesDialogImpl::SetDialogSize( void )

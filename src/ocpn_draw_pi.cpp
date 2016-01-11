@@ -383,10 +383,10 @@ int ocpn_draw_pi::Init(void)
     pLayerList = new LayerList;
     
     if(m_bLOGShowIcon) {
-        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), m_pODicons->m_p_bm_ocpn_draw_pi, m_pODicons->m_p_bm_ocpn_draw_grey_pi, wxITEM_NORMAL,
+        m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), m_pODicons->m_p_bm_ocpn_draw_grey_pi, m_pODicons->m_p_bm_ocpn_draw_pi, wxITEM_NORMAL,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
-        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), m_pODicons->m_p_bm_ocpn_draw_boundary, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, wxITEM_CHECK,
+        m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary, wxITEM_CHECK,
                                              _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);
     }
@@ -1902,7 +1902,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 ) {
             m_Mode++;
             if(m_Mode >= ID_MODE_BOUNDARY)
-            SetToolbarTool();
+                SetToolbarTool();
             g_pODToolbar->SetToolbarTool( m_Mode );
             bret = TRUE;
         } else if ( nBoundary_State > 1 ) {
