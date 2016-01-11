@@ -58,7 +58,9 @@ public:
     wxBitmap    *m_p_bm_ocpn_draw_dr_grey;
     
 private:
-#ifdef OD_USE_SVG
+    wxBitmap *ScaleIcon( wxBitmap *p_wxBitmap, double sf );
+
+    #ifdef OD_USE_SVG
     wxBitmap *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
     wxBitmap *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
 

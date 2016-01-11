@@ -154,13 +154,20 @@ wxBitmap *ODicons::ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, doubl
     else
         return new wxBitmap(32 * sf, 32 * sf); //scalled default blank bitmap
 }
-
+#endif // OD_USE_SVG
+wxBitmap *ODicons::ScaleIcon( wxBitmap *p_wxBitmap, double sf )
+{
+    wxImage scaled_image = p_wxBitmap->ConvertToImage();
+    return new wxBitmap(scaled_image.Scale(scaled_image.GetWidth() * sf, scaled_image.GetHeight() * sf, wxIMAGE_QUALITY_HIGH));
+}
 bool ODicons::ScaleIcons()
 {
     //if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
     //m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
-
+    
     m_dScaleFactor = 1.0;
+
+    #ifdef OD_USE_SVG
     
     // Dont scale the OD manager as that should be done by the OCPN toolbar
     //m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
@@ -180,7 +187,23 @@ bool ODicons::ScaleIcons()
     
     m_p_bm_ocpn_draw_dr = ScaleIcon( m_p_svgd_ocpn_draw_dr, m_p_img_ocpn_draw_dr, m_dScaleFactor );
     m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_svgd_ocpn_draw_dr_grey, m_p_img_ocpn_draw_dr_grey, m_dScaleFactor );
-
+#else
+    m_p_bm_ocpn_draw_boundary = ScaleIcon( m_p_bm_ocpn_draw_boundary, m_dScaleFactor );
+    m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_p_bm_ocpn_draw_boundary_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_point = ScaleIcon( m_p_bm_ocpn_draw_point, m_dScaleFactor );
+    m_p_bm_ocpn_draw_point_grey = ScaleIcon( m_p_bm_ocpn_draw_point_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_textpoint = ScaleIcon( m_p_bm_ocpn_draw_textpoint, m_dScaleFactor );
+    m_p_bm_ocpn_draw_textpoint_grey = ScaleIcon( m_p_bm_ocpn_draw_textpoint_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_ebl = ScaleIcon( m_p_bm_ocpn_draw_ebl, m_dScaleFactor );
+    m_p_bm_ocpn_draw_ebl_grey = ScaleIcon( m_p_bm_ocpn_draw_ebl_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_dr = ScaleIcon( m_p_bm_ocpn_draw_dr, m_dScaleFactor );
+    m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_bm_ocpn_draw_dr_grey, m_dScaleFactor );
+    
+#endif // OD_USE_SVG
     return true;
 }
-#endif // OD_USE_SVG
+
