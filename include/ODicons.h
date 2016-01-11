@@ -31,22 +31,64 @@
 #include <wx/wx.h>
 #endif
 
-extern void initialize_images(void);
-wxBitmap *LoadSVG( const wxString filename, unsigned int width, unsigned int height );
+//forward declare
+class wxSVGDocument;
 
-extern void *g_ppimgr;
-extern wxBitmap *_img_ocpn_draw_pi;
-extern wxBitmap *_img_ocpn_draw_grey_pi;
-extern wxBitmap *_img_ocpn_draw;
-extern wxBitmap *_img_ocpn_draw_boundary;
-extern wxBitmap *_img_ocpn_draw_boundary_grey;
-extern wxBitmap *_img_ocpn_draw_point;
-extern wxBitmap *_img_ocpn_draw_point_grey;
-extern wxBitmap *_img_ocpn_draw_textpoint;
-extern wxBitmap *_img_ocpn_draw_textpoint_grey;
-extern wxBitmap *_img_ocpn_draw_ebl;
-extern wxBitmap *_img_ocpn_draw_ebl_grey;
-extern wxBitmap *_img_ocpn_draw_dr;
-extern wxBitmap *_img_ocpn_draw_dr_grey;
+class ODicons
+{
+public:
+    ODicons();
+    ~ODicons();
+    
+    void    initialize_images(void);
+    bool    ScaleIcons(void);
+    wxSize  GetIconSize(void);
+    
+    wxBitmap    *m_p_bm_ocpn_draw_pi;
+    wxBitmap    *m_p_bm_ocpn_draw_grey_pi;
+    wxBitmap    *m_p_bm_ocpn_draw_boundary;
+    wxBitmap    *m_p_bm_ocpn_draw_boundary_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_point;
+    wxBitmap    *m_p_bm_ocpn_draw_point_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_textpoint;
+    wxBitmap    *m_p_bm_ocpn_draw_textpoint_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_ebl;
+    wxBitmap    *m_p_bm_ocpn_draw_ebl_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_dr;
+    wxBitmap    *m_p_bm_ocpn_draw_dr_grey;
+    
+private:
+#ifdef OD_USE_SVG
+    wxBitmap *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
+    wxBitmap *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
+#endif OD_USE_SVG
 
+    wxSVGDocument   *m_p_svgd_ocpn_draw_pi;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_grey_pi;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_boundary;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_boundary_grey;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_point;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_point_grey;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_textpoint;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_textpoint_grey;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_ebl;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_ebl_grey;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_dr;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_dr_grey;
+    
+    wxImage         *m_p_img_ocpn_draw_pi;
+    wxImage         *m_p_img_ocpn_draw_grey_pi;
+    wxImage         *m_p_img_ocpn_draw_boundary;
+    wxImage         *m_p_img_ocpn_draw_boundary_grey;
+    wxImage         *m_p_img_ocpn_draw_point;
+    wxImage         *m_p_img_ocpn_draw_point_grey;
+    wxImage         *m_p_img_ocpn_draw_textpoint;
+    wxImage         *m_p_img_ocpn_draw_textpoint_grey;
+    wxImage         *m_p_img_ocpn_draw_ebl;
+    wxImage         *m_p_img_ocpn_draw_ebl_grey;
+    wxImage         *m_p_img_ocpn_draw_dr;
+    wxImage         *m_p_img_ocpn_draw_dr_grey;
+    
+    double          m_dScaleFactor;
+};
 #endif /* ODICONS_H */

@@ -35,7 +35,7 @@
 #include <wx/mstream.h>
 #include <wx/filename.h>
 
-#ifdef ODUSE_SVG
+#ifdef OD_USE_SVG
 #include "svg.h"
 #endif // OD_USE_SVG
 
@@ -43,9 +43,21 @@
 extern wxString g_SData_Locn;
 extern wxString *g_pHome_locn;
 extern wxString *g_pData;
-extern wxString *g_pImage;;
+extern wxString *g_pImage;
 
-void initialize_images(void)
+ODicons::ODicons()
+{
+    //m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    m_dScaleFactor = 1.0;
+    
+    initialize_images();
+}
+
+ODicons::~ODicons()
+{
+    
+}
+void ODicons::initialize_images(void)
 {
     wxFileName fn;
     fn.SetPath(*GetpSharedDataLocation());
@@ -54,77 +66,120 @@ void initialize_images(void)
     fn.AppendDir(wxT("data"));
     wxString s = _("ocpn_draw_pi data location");
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
+    
 
-#if ODUSE_SVG
+#ifdef OD_USE_SVG
     fn.SetFullName(wxT("ODManager.svg"));
-    _img_ocpn_draw_pi = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_pi = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_pi, &m_p_img_ocpn_draw_pi );
     fn.SetFullName(wxT("ODManagergrey.svg"));
-    _img_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_grey_pi, &m_p_img_ocpn_draw_grey_pi );
     
     fn.SetFullName(wxT("boundary.svg"));
-    _img_ocpn_draw_boundary = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_boundary = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_boundary, &m_p_img_ocpn_draw_boundary );
     fn.SetFullName(wxT("boundarygrey.svg"));
-    _img_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_boundary_grey, &m_p_img_ocpn_draw_boundary_grey );
     
     fn.SetFullName(wxT("pointbutton.svg"));
-    _img_ocpn_draw_point = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_point = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_point, &m_p_img_ocpn_draw_point );
     fn.SetFullName(wxT("pointbuttongrey.svg"));
-    _img_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_point_grey, &m_p_img_ocpn_draw_point_grey );
     
     fn.SetFullName(wxT("textpointbutton.svg"));
-    _img_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_textpoint, &m_p_img_ocpn_draw_textpoint );
     fn.SetFullName(wxT("textpointbuttongrey.svg"));
-    _img_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_textpoint_grey, &m_p_img_ocpn_draw_textpoint_grey );
     
     fn.SetFullName(wxT("EBL.svg"));
-    _img_ocpn_draw_ebl = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_ebl = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_ebl, &m_p_img_ocpn_draw_ebl );
     fn.SetFullName(wxT("EBLgrey.svg"));
-    _img_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_ebl_grey, &m_p_img_ocpn_draw_ebl_grey );
     
     fn.SetFullName(wxT("DR.svg"));
-    _img_ocpn_draw_dr = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_dr = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_dr, &m_p_img_ocpn_draw_dr );
     fn.SetFullName(wxT("DRgrey.svg"));
-    _img_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath(), 32, 32 );
+    m_p_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_dr_grey, &m_p_img_ocpn_draw_dr_grey );
 #else
     fn.SetFullName(wxT("ODManager.png"));
-    _img_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("ODManagergrey.png"));
-    _img_ocpn_draw_grey_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_grey_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("boundary.png"));
-    _img_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("boundarygrey.png"));
-    _img_ocpn_draw_boundary_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_boundary_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("pointbutton.png"));
-    _img_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("pointbuttongrey.png"));
-    _img_ocpn_draw_point_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_point_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("textpointbutton.png"));
-    _img_ocpn_draw_textpoint = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_textpoint = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("textpointbuttongrey.png"));
-    _img_ocpn_draw_textpoint_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_textpoint_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("EBL.png"));
-    _img_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("EBLgrey.png"));
-    _img_ocpn_draw_ebl_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_ebl_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     
     fn.SetFullName(wxT("DR.png"));
-    _img_ocpn_draw_dr = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_dr = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("DRgrey.png"));
-    _img_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_p_bm_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
 #endif
 }
 
-#ifdef ODUSE_SVG
-wxBitmap *LoadSVG( const wxString filename, unsigned int width, unsigned int height )
+#ifdef OD_USE_SVG
+wxBitmap *ODicons::LoadSVG( const wxString filename, wxSVGDocument **svgDoc, wxImage **Image, unsigned int width, unsigned int height )
 {
-    wxSVGDocument *svgDoc = new wxSVGDocument;;
-    if( svgDoc->Load(filename) )
-        return new wxBitmap( svgDoc->Render( width, height, NULL, true, true) );
+    wxSVGDocument *newDoc = new wxSVGDocument;
+    *svgDoc = newDoc;
+    if( newDoc->Load(filename) ) {
+        wxImage *newImage = new wxImage(newDoc->Render( width, height, NULL, true, true));
+        *Image = newImage;
+        return new wxBitmap( *newImage );
+    }
     else
         return new wxBitmap(width, height);
+}
+
+wxBitmap *ODicons::ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf )
+{
+    if(p_svgDoc) {
+        wxImage *p_Image = new wxImage(p_svgDoc->Render( p_wxImage->GetWidth() * sf, p_wxImage->GetHeight() * sf, NULL, true, true));
+        return new wxBitmap( *p_Image );
+    }
+    else
+        return new wxBitmap(32 * sf, 32 * sf); //scalled default blank bitmap
+}
+
+bool ODicons::ScaleIcons()
+{
+    //if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
+    //m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+
+    m_dScaleFactor = 3.0;
+    
+    m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
+    m_p_bm_ocpn_draw_grey_pi = ScaleIcon( m_p_svgd_ocpn_draw_grey_pi, m_p_img_ocpn_draw_grey_pi, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_boundary = ScaleIcon( m_p_svgd_ocpn_draw_boundary, m_p_img_ocpn_draw_boundary, m_dScaleFactor );
+    m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_p_svgd_ocpn_draw_boundary_grey, m_p_img_ocpn_draw_boundary_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_point = ScaleIcon( m_p_svgd_ocpn_draw_point, m_p_img_ocpn_draw_point, m_dScaleFactor );
+    m_p_bm_ocpn_draw_point_grey = ScaleIcon( m_p_svgd_ocpn_draw_point_grey, m_p_img_ocpn_draw_point_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_textpoint = ScaleIcon( m_p_svgd_ocpn_draw_textpoint, m_p_img_ocpn_draw_textpoint, m_dScaleFactor );
+    m_p_bm_ocpn_draw_textpoint_grey = ScaleIcon( m_p_svgd_ocpn_draw_textpoint_grey, m_p_img_ocpn_draw_textpoint_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_ebl = ScaleIcon( m_p_svgd_ocpn_draw_ebl, m_p_img_ocpn_draw_ebl, m_dScaleFactor );
+    m_p_bm_ocpn_draw_ebl_grey = ScaleIcon( m_p_svgd_ocpn_draw_ebl_grey, m_p_img_ocpn_draw_ebl_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_dr = ScaleIcon( m_p_svgd_ocpn_draw_dr, m_p_img_ocpn_draw_dr, m_dScaleFactor );
+    m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_svgd_ocpn_draw_dr_grey, m_p_img_ocpn_draw_dr_grey, m_dScaleFactor );
+
+    return true;
 }
 #endif // OD_USE_SVG

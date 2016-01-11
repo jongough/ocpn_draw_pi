@@ -174,6 +174,7 @@ class BoundaryProp;
 class EBL;
 class DR;
 class SelectItem;
+class ODicons;
 
 const int StyleValues[] = { wxPENSTYLE_SOLID, wxPENSTYLE_DOT, wxPENSTYLE_LONG_DASH, wxPENSTYLE_SHORT_DASH, wxPENSTYLE_DOT_DASH };
 const int WidthValues[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -339,6 +340,8 @@ public:
     
     double  m_chart_scale;
     double  m_view_scale;
+    
+    ODicons     *m_pODicons;
     
 
 private:
