@@ -268,20 +268,6 @@ wxImage ICursorDown;
 wxImage ICursorPencil;
 wxImage ICursorCross;
 
-wxBitmap *_img_ocpn_draw_pi;
-wxBitmap *_img_ocpn_draw_grey_pi;
-wxBitmap *_img_ocpn_draw;
-wxBitmap *_img_ocpn_draw_boundary;
-wxBitmap *_img_ocpn_draw_boundary_grey;
-wxBitmap *_img_ocpn_draw_point;
-wxBitmap *_img_ocpn_draw_point_grey;
-wxBitmap *_img_ocpn_draw_textpoint;
-wxBitmap *_img_ocpn_draw_textpoint_grey;
-wxBitmap *_img_ocpn_draw_ebl;
-wxBitmap *_img_ocpn_draw_ebl_grey;
-wxBitmap *_img_ocpn_draw_dr;
-wxBitmap *_img_ocpn_draw_dr_grey;
-
 // Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 float g_GLMinSymbolLineWidth;
 
@@ -617,7 +603,7 @@ int ocpn_draw_pi::GetAPIVersionMinor()
 }
 wxString ocpn_draw_pi::GetCommonName()
 {
-    return wxS("ocpn_draw");
+    return wxS("OCPN Draw");
 }
 wxString ocpn_draw_pi::GetShortDescription()
 {
@@ -648,7 +634,7 @@ void ocpn_draw_pi::SetDefaults(void)
 }
 wxBitmap *ocpn_draw_pi::GetPlugInBitmap()
 {
-    return _img_ocpn_draw_pi;
+    return m_pODicons->m_p_bm_ocpn_draw_pi;
 }
 int ocpn_draw_pi::GetToolbarToolCount(void)
 {
@@ -1580,7 +1566,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
                     m_Mode = ID_MODE_BOUNDARY;
-                    SetToolbarToolBitmaps(m_draw_button_id, _img_ocpn_draw_boundary_grey, _img_ocpn_draw_boundary);
+                    SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
                     m_iCallerId = m_draw_button_id;
                     m_pCurrentCursor = ocpncc1->pCursorPencil;
                     bret = TRUE;
