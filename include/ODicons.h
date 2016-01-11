@@ -61,7 +61,6 @@ private:
 #ifdef OD_USE_SVG
     wxBitmap *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
     wxBitmap *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
-#endif OD_USE_SVG
 
     wxSVGDocument   *m_p_svgd_ocpn_draw_pi;
     wxSVGDocument   *m_p_svgd_ocpn_draw_grey_pi;
@@ -75,6 +74,7 @@ private:
     wxSVGDocument   *m_p_svgd_ocpn_draw_ebl_grey;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr_grey;
+#endif OD_USE_SVG
     
     wxImage         *m_p_img_ocpn_draw_pi;
     wxImage         *m_p_img_ocpn_draw_grey_pi;
