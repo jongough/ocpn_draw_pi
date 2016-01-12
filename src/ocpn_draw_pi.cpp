@@ -383,12 +383,21 @@ int ocpn_draw_pi::Init(void)
     pLayerList = new LayerList;
     
     if(m_bLOGShowIcon) {
+#ifdef ODraw_USE_SVG
+        m_config_button_id  = InsertPlugInToolSVG(_("OCPN Draw Manager"), m_pODicons->m_s_ocpn_draw_grey_pi, m_pODicons->m_s_ocpn_draw_pi, wxITEM_NORMAL,
+                                               _("OCPN Draw Manager"), wxS(""), NULL,
+                                               OCPN_DRAW_POSITION, 0, this);
+        m_draw_button_id  = InsertPlugInToolSVG(_("OCPN Draw Boundary"), m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, wxITEM_CHECK,
+                                             _("OCPN Draw"), wxS(""), NULL,
+                                             OCPN_DRAW_POSITION, 0, this);
+#else
         m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), m_pODicons->m_p_bm_ocpn_draw_grey_pi, m_pODicons->m_p_bm_ocpn_draw_pi, wxITEM_NORMAL,
                                                _("OCPN Draw Manager"), wxS(""), NULL,
                                                OCPN_DRAW_POSITION, 0, this);
         m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary, wxITEM_CHECK,
                                              _("OCPN Draw"), wxS(""), NULL,
                                              OCPN_DRAW_POSITION, 0, this);
+#endif
     }
     
     // Set tool to show in tool bar
@@ -396,33 +405,57 @@ int ocpn_draw_pi::Init(void)
     {
         case ID_MODE_BOUNDARY:
             // Boundary
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
+#else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
+#endif            
             break;
             
         case ID_MODE_POINT:
             // Point
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_point_grey, m_pODicons->m_s_ocpn_draw_point, m_pODicons->m_s_ocpn_draw_point);
+#else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_point_grey, m_pODicons->m_p_bm_ocpn_draw_point);
+#endif            
             break;
             
         case ID_MODE_TEXT_POINT:
             // Text Point
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_textpoint_grey, m_pODicons->m_s_ocpn_draw_textpoint, m_pODicons->m_s_ocpn_draw_textpoint);
+#else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, m_pODicons->m_p_bm_ocpn_draw_textpoint);
+#endif            
             break;
             
         case ID_MODE_EBL:
             // EBL
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_ebl_grey, m_pODicons->m_s_ocpn_draw_ebl, m_pODicons->m_s_ocpn_draw_ebl);
+#else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_ebl_grey, m_pODicons->m_p_bm_ocpn_draw_ebl);
+#endif            
             break;
             
         case ID_MODE_DR:
             // EBL
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_dr_grey, m_pODicons->m_s_ocpn_draw_dr, m_pODicons->m_s_ocpn_draw_dr);
+#else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_dr_grey, m_pODicons->m_p_bm_ocpn_draw_dr);
+#endif            
             break;
             
         default:
             // Boundary
             m_Mode = ID_MODE_BOUNDARY;
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
+#else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
+#endif            
             break;
     }
     
@@ -1566,7 +1599,11 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
                     nBoundary_State = 1;
                     m_Mode = ID_MODE_BOUNDARY;
+#ifdef ODraw_USE_SVG
+                    SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
+#else
                     SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
+#endif
                     m_iCallerId = m_draw_button_id;
                     m_pCurrentCursor = ocpncc1->pCursorPencil;
                     bret = TRUE;
@@ -3253,7 +3290,11 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_BOUNDARY:
                 // Boundary
                 m_pCurrentCursor = ocpncc1->pCursorPencil;
-                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary);
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
+#endif
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 1;
                 nPoint_State = 0;
@@ -3265,7 +3306,11 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_POINT:
                 // Point
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point);
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_point_grey, m_pODicons->m_s_ocpn_draw_point, m_pODicons->m_s_ocpn_draw_point);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_point_grey, m_pODicons->m_p_bm_ocpn_draw_point);
+#endif
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 0;
                 nPoint_State = 1;
@@ -3277,7 +3322,11 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_TEXT_POINT:
                 // Text Point
                 m_pCurrentCursor = m_pTextCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint);
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_textpoint_grey, m_pODicons->m_s_ocpn_draw_textpoint, m_pODicons->m_s_ocpn_draw_textpoint);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, m_pODicons->m_p_bm_ocpn_draw_textpoint);
+#endif
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3289,7 +3338,11 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_EBL:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl);
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_ebl_grey, m_pODicons->m_s_ocpn_draw_ebl, m_pODicons->m_s_ocpn_draw_ebl);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_ebl_grey, m_pODicons->m_p_bm_ocpn_draw_ebl);
+#endif
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3302,7 +3355,11 @@ void ocpn_draw_pi::SetToolbarTool( void )
             case ID_MODE_DR:
                 // EBL
                 m_pCurrentCursor = ocpncc1->pCursorCross;
-                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr);
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_dr_grey, m_pODicons->m_s_ocpn_draw_dr, m_pODicons->m_s_ocpn_draw_dr);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_dr_grey, m_pODicons->m_p_bm_ocpn_draw_dr);
+#endif
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
@@ -3316,7 +3373,11 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 // Boundary
                 m_Mode = ID_MODE_BOUNDARY;
                 m_pCurrentCursor = ocpncc1->pCursorPencil;
-                SetToolbarToolBitmaps(m_draw_button_id, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary);
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
+#endif
                 g_pODToolbar->SetToolbarTool( ID_BOUNDARY );
                 SetToolbarItemState( m_draw_button_id, true );
                 nBoundary_State = 1;

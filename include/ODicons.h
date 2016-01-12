@@ -57,6 +57,19 @@ public:
     wxBitmap    *m_p_bm_ocpn_draw_dr;
     wxBitmap    *m_p_bm_ocpn_draw_dr_grey;
     
+    wxString    m_s_ocpn_draw_pi;
+    wxString    m_s_ocpn_draw_grey_pi;
+    wxString    m_s_ocpn_draw_boundary;
+    wxString    m_s_ocpn_draw_boundary_grey;
+    wxString    m_s_ocpn_draw_point;
+    wxString    m_s_ocpn_draw_point_grey;
+    wxString    m_s_ocpn_draw_textpoint;
+    wxString    m_s_ocpn_draw_textpoint_grey;
+    wxString    m_s_ocpn_draw_ebl;
+    wxString    m_s_ocpn_draw_ebl_grey;
+    wxString    m_s_ocpn_draw_dr;
+    wxString    m_s_ocpn_draw_dr_grey;
+
 private:
     wxBitmap *ScaleIcon( wxBitmap *p_wxBitmap, double sf );
 
@@ -76,7 +89,7 @@ private:
     wxSVGDocument   *m_p_svgd_ocpn_draw_ebl_grey;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr_grey;
-#endif OD_USE_SVG
+#endif ODraw_USE_SVG
     
     wxImage         *m_p_img_ocpn_draw_pi;
     wxImage         *m_p_img_ocpn_draw_grey_pi;

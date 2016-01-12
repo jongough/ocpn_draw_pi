@@ -35,9 +35,9 @@
 #include <wx/mstream.h>
 #include <wx/filename.h>
 
-#ifdef OD_USE_SVG
+#ifdef ODraw_USE_SVG
 #include "svg.h"
-#endif // OD_USE_SVG
+#endif // ODraw_USE_SVG
 
 
 extern wxString g_SData_Locn;
@@ -47,8 +47,7 @@ extern wxString *g_pImage;
 
 ODicons::ODicons()
 {
-    //m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
-    m_dScaleFactor = 1.0;
+    m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
     
     initialize_images();
 }
@@ -68,35 +67,47 @@ void ODicons::initialize_images(void)
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
     
 
-#ifdef OD_USE_SVG
+#ifdef ODraw_USE_SVG
     fn.SetFullName(wxT("ODManager.svg"));
+    m_s_ocpn_draw_pi = fn.GetFullPath();
     m_p_bm_ocpn_draw_pi = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_pi, &m_p_img_ocpn_draw_pi );
     fn.SetFullName(wxT("ODManagergrey.svg"));
+    m_s_ocpn_draw_grey_pi = fn.GetFullPath();
     m_p_bm_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_grey_pi, &m_p_img_ocpn_draw_grey_pi );
     
     fn.SetFullName(wxT("boundary.svg"));
     m_p_bm_ocpn_draw_boundary = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_boundary, &m_p_img_ocpn_draw_boundary );
+    m_s_ocpn_draw_boundary = fn.GetFullPath();
     fn.SetFullName(wxT("boundarygrey.svg"));
+    m_s_ocpn_draw_boundary_grey = fn.GetFullPath();
     m_p_bm_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_boundary_grey, &m_p_img_ocpn_draw_boundary_grey );
     
     fn.SetFullName(wxT("pointbutton.svg"));
+    m_s_ocpn_draw_point = fn.GetFullPath();
     m_p_bm_ocpn_draw_point = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_point, &m_p_img_ocpn_draw_point );
     fn.SetFullName(wxT("pointbuttongrey.svg"));
+    m_s_ocpn_draw_point_grey = fn.GetFullPath();
     m_p_bm_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_point_grey, &m_p_img_ocpn_draw_point_grey );
     
     fn.SetFullName(wxT("textpointbutton.svg"));
+    m_s_ocpn_draw_textpoint = fn.GetFullPath();
     m_p_bm_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_textpoint, &m_p_img_ocpn_draw_textpoint );
     fn.SetFullName(wxT("textpointbuttongrey.svg"));
+    m_s_ocpn_draw_textpoint_grey = fn.GetFullPath();
     m_p_bm_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_textpoint_grey, &m_p_img_ocpn_draw_textpoint_grey );
     
     fn.SetFullName(wxT("EBL.svg"));
+    m_s_ocpn_draw_ebl = fn.GetFullPath();
     m_p_bm_ocpn_draw_ebl = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_ebl, &m_p_img_ocpn_draw_ebl );
     fn.SetFullName(wxT("EBLgrey.svg"));
+    m_s_ocpn_draw_ebl_grey = fn.GetFullPath();
     m_p_bm_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_ebl_grey, &m_p_img_ocpn_draw_ebl_grey );
     
     fn.SetFullName(wxT("DR.svg"));
+    m_s_ocpn_draw_dr = fn.GetFullPath();
     m_p_bm_ocpn_draw_dr = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_dr, &m_p_img_ocpn_draw_dr );
     fn.SetFullName(wxT("DRgrey.svg"));
+    m_s_ocpn_draw_dr_grey = fn.GetFullPath();
     m_p_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_dr_grey, &m_p_img_ocpn_draw_dr_grey );
 #else
     fn.SetFullName(wxT("ODManager.png"));
@@ -131,7 +142,7 @@ void ODicons::initialize_images(void)
 #endif
 }
 
-#ifdef OD_USE_SVG
+#ifdef ODraw_USE_SVG
 wxBitmap *ODicons::LoadSVG( const wxString filename, wxSVGDocument **svgDoc, wxImage **Image, unsigned int width, unsigned int height )
 {
     wxSVGDocument *newDoc = new wxSVGDocument;
@@ -162,12 +173,9 @@ wxBitmap *ODicons::ScaleIcon( wxBitmap *p_wxBitmap, double sf )
 }
 bool ODicons::ScaleIcons()
 {
-    //if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
-    //m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
-    
-    m_dScaleFactor = 1.0;
+    if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
+    m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
 
-    #ifdef OD_USE_SVG
     
     // Dont scale the OD manager as that should be done by the OCPN toolbar
     //m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
