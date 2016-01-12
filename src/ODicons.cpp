@@ -166,6 +166,7 @@ wxBitmap *ODicons::ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, doubl
         return new wxBitmap(32 * sf, 32 * sf); //scalled default blank bitmap
 }
 #endif // OD_USE_SVG
+
 wxBitmap *ODicons::ScaleIcon( wxBitmap *p_wxBitmap, double sf )
 {
     wxImage scaled_image = p_wxBitmap->ConvertToImage();
@@ -173,6 +174,7 @@ wxBitmap *ODicons::ScaleIcon( wxBitmap *p_wxBitmap, double sf )
 }
 bool ODicons::ScaleIcons()
 {
+#ifdef ODraw_USE_SVG
     if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
     m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
 

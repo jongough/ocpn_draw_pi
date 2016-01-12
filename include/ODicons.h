@@ -73,7 +73,7 @@ public:
 private:
     wxBitmap *ScaleIcon( wxBitmap *p_wxBitmap, double sf );
 
-    #ifdef OD_USE_SVG
+#ifdef ODraw_USE_SVG
     wxBitmap *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
     wxBitmap *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
 
