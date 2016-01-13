@@ -535,9 +535,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         }
         case ID_ODPOINT_MENU_PROPERTIES:
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+                g_pPathManagerDialog = new PathManagerDialog( g_ocpn_draw_pi->m_parent_window );
             
-            g_pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, ocpncc1 );
+            g_pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, g_ocpn_draw_pi->m_parent_window );
             m_pFoundODPoint = NULL;
             break;
         case ID_PATH_MENU_ACTPOINT:

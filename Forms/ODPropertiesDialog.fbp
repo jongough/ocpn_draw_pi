@@ -98,7 +98,7 @@
             <property name="name">ODPropertiesDialogDef</property>
             <property name="pos"></property>
             <property name="size">591,554</property>
-            <property name="style">wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP</property>
+            <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass"></property>
             <property name="title">OCPN Draw Properties</property>
             <property name="tooltip"></property>
