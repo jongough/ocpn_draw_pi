@@ -1,7 +1,9 @@
 /***************************************************************************
-*
-* Project:  OpenCPN
-*
+ * 
+ * Project:  OpenCPN
+ * Purpose:  OCPN Draw Point Properties Dialog support
+ * Author:   Jon Gough
+ *
 ***************************************************************************
 *   Copyright (C) 2010 by David S. Register                               *
 *                                                                         *
