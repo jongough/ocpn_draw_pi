@@ -992,7 +992,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pDRPropDialog->UpdateProperties( l_pDR );
     } else {
         if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
-            g_pPathPropDialog = new ODPathPropertiesDialogImpl( GetParent() );
+            g_pPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
         g_pODPathPropDialog = g_pPathPropDialog;
         l_pPath = inpath;
         g_pODPathPropDialog->SetPathAndUpdate( l_pPath );
@@ -1454,7 +1454,7 @@ void PathManagerDialog::OnODPointPropertiesClick( wxCommandEvent &event )
 
     if( !wp ) return;
 
-    ODPointShowPropertiesDialog( wp, GetParent() );
+    ODPointShowPropertiesDialog( wp, g_ocpn_draw_pi->m_parent_window );
 
     UpdateODPointsListCtrl();
     m_bNeedConfigFlush = true;

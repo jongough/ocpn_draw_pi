@@ -238,7 +238,7 @@ class ODPropertiesDialogDef : public wxDialog
 	public:
 		wxChoice* m_choiceToolbar;
 		
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,554 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,554 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~ODPropertiesDialogDef();
 	
 };
