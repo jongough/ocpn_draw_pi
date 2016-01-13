@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "608")
-SET(VERSION_DATE "12/01/2016")
+SET(VERSION_PATCH "610")
+SET(VERSION_DATE "13/01/2016")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -307,18 +307,13 @@ IF(OD_USE_SVG)
         ${CMAKE_SOURCE_DIR}/buildwin/gtk/cairo.lib
     ${CMAKE_SOURCE_DIR}/buildwin/expat-2.1.0/expat.lib
       )
-      FILE(GLOB gtkdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/gtk/*.dll")
-      INSTALL(FILES ${gtkdll_files} DESTINATION ".")
-      FILE(GLOB expatdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/expat-2.1.0/*.dll")
-      INSTALL(FILES ${expatdll_files} DESTINATION ".")
-      MESSAGE(STATUS "GTK and Expat DLLs bundled into the installer package...")
+#      FILE(GLOB gtkdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/gtk/*.dll")
+#      INSTALL(FILES ${gtkdll_files} DESTINATION ".")
+#      FILE(GLOB expatdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/expat-2.1.0/*.dll")
+#      INSTALL(FILES ${expatdll_files} DESTINATION ".")
+#      MESSAGE(STATUS "GTK and Expat DLLs bundled into the installer package...")
     ELSE(WIN32)
-      SET(SVG_LIBS
-        ${CAIRO_LIBRARY}
-    #${FFMPEG_LIBRARIES}
-    ${EXPAT_LIBRARIES}
-        ${GTK_LIBRARIES}
-      )
+      SET(SVG_LIBS ${CAIRO_LIBRARY} ${EXPAT_LIBRARIES} ${GTK_LIBRARIES})
     ENDIF(WIN32)
 
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxsvg)

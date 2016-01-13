@@ -384,19 +384,15 @@ int ocpn_draw_pi::Init(void)
     
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
-        m_config_button_id  = InsertPlugInToolSVG(_("OCPN Draw Manager"), m_pODicons->m_s_ocpn_draw_grey_pi, m_pODicons->m_s_ocpn_draw_pi, wxITEM_NORMAL,
-                                               _("OCPN Draw Manager"), wxS(""), NULL,
-                                               OCPN_DRAW_POSITION, 0, this);
-        m_draw_button_id  = InsertPlugInToolSVG(_("OCPN Draw Boundary"), m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, wxITEM_CHECK,
-                                             _("OCPN Draw"), wxS(""), NULL,
-                                             OCPN_DRAW_POSITION, 0, this);
+        m_config_button_id  = InsertPlugInToolSVG(_("OCPN Draw Manager"), m_pODicons->m_s_ocpn_draw_grey_pi, m_pODicons->m_s_ocpn_draw_pi, wxEmptyString, wxITEM_NORMAL,
+                                               _("OCPN Draw Manager"), wxS(""), NULL, OCPN_DRAW_POSITION, 0, this);
+        m_draw_button_id  = InsertPlugInToolSVG(_("OCPN Draw Boundary"), m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, wxEmptyString, wxITEM_CHECK,
+                                             _("OCPN Draw"), wxS(""), NULL, OCPN_DRAW_POSITION, 0, this);
 #else
         m_config_button_id  = InsertPlugInTool(_("OCPN Draw Manager"), m_pODicons->m_p_bm_ocpn_draw_grey_pi, m_pODicons->m_p_bm_ocpn_draw_pi, wxITEM_NORMAL,
-                                               _("OCPN Draw Manager"), wxS(""), NULL,
-                                               OCPN_DRAW_POSITION, 0, this);
+                                               _("OCPN Draw Manager"), wxS(""), NULL, OCPN_DRAW_POSITION, 0, this);
         m_draw_button_id  = InsertPlugInTool(_("OCPN Draw Boundary"), m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary, wxITEM_CHECK,
-                                             _("OCPN Draw"), wxS(""), NULL,
-                                             OCPN_DRAW_POSITION, 0, this);
+                                             _("OCPN Draw"), wxS(""), NULL, OCPN_DRAW_POSITION, 0, this);
 #endif
     }
     
@@ -763,7 +759,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
         }
     }
     else if ( id == m_draw_button_id ) {
-        if(m_pODicons->ScaleIcons()) g_pODToolbar->UpdateIcons();
+        g_pODToolbar->UpdateIcons();
         
         switch (m_Mode)
         {
@@ -787,6 +783,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+                    DimeWindow(g_pODToolbar);
                 }
                 break;
                 
@@ -887,6 +884,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 }
 void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
 {
+    m_pODicons->SetScaleFactor();
     return;
 }
 void ocpn_draw_pi::SaveConfig()
@@ -3139,7 +3137,7 @@ double ocpn_draw_pi::GetTrueOrMag(double a)
         return a;
 }
 
-void ocpn_draw_pi::DimeControl( wxWindow* ctrl )
+void ocpn_draw_pi::DimeControl1( wxWindow* ctrl )
 {
     #ifdef __WXQT__
     return; // this is seriously broken on wxqt
@@ -3156,10 +3154,10 @@ void ocpn_draw_pi::DimeControl( wxWindow* ctrl )
     GetGlobalColor( wxS("UDKRD"), &udkrd );
     GetGlobalColor( wxS("GREY2"), &gridline );
     
-    DimeControl( ctrl, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
+    DimeControl1( ctrl, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
 }
 
-void ocpn_draw_pi::DimeControl( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
+void ocpn_draw_pi::DimeControl1( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
                                 wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline )
 {
     
@@ -3275,7 +3273,7 @@ void ocpn_draw_pi::DimeControl( wxWindow* ctrl, wxColour col, wxColour window_ba
         if( win->GetChildren().GetCount() > 0 ) {
             depth++;
             wxWindow * w = win;
-            DimeControl( w, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
+            DimeControl1( w, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
             depth--;
         }
     }

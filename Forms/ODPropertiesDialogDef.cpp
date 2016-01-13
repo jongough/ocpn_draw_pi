@@ -215,7 +215,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBoundaryPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 2, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
@@ -223,41 +223,44 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	wxFlexGridSizer* fgSizerRingsShow;
 	fgSizerRingsShow = new wxFlexGridSizer( 5, 2, 0, 0 );
 	fgSizerRingsShow->AddGrowableCol( 0 );
+	fgSizerRingsShow->AddGrowableCol( 1 );
 	fgSizerRingsShow->SetFlexibleDirection( wxBOTH );
 	fgSizerRingsShow->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, _("Show Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	fgSizerRingsShow->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerRingsShow->Add( m_checkBoxShowODPointRangeRings, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_radioBoxBoundaryPointTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
 	int m_radioBoxBoundaryPointTypeNChoices = sizeof( m_radioBoxBoundaryPointTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryPointType = new wxRadioBox( m_panelBoundaryPoint, wxID_ANY, _("Boundary Point Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryPointTypeNChoices, m_radioBoxBoundaryPointTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxBoundaryPointType->SetSelection( 0 );
-	fgSizerRingsShow->Add( m_radioBoxBoundaryPointType, 0, wxALL, 5 );
+	fgSizerRingsShow->Add( m_radioBoxBoundaryPointType, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_fgSizerBoundaryPointFillDensity = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerBoundaryPointFillDensity->AddGrowableCol( 0 );
 	m_fgSizerBoundaryPointFillDensity->AddGrowableCol( 1 );
 	m_fgSizerBoundaryPointFillDensity->SetFlexibleDirection( wxBOTH );
 	m_fgSizerBoundaryPointFillDensity->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_staticTextBoundaryPointFillDensity = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBoundaryPointFillDensity->Wrap( -1 );
-	m_fgSizerBoundaryPointFillDensity->Add( m_staticTextBoundaryPointFillDensity, 0, wxALL, 5 );
+	m_fgSizerBoundaryPointFillDensity->Add( m_staticTextBoundaryPointFillDensity, 0, wxALL|wxEXPAND, 5 );
 	
 	m_sliderBoundaryPointFillTransparency = new wxSlider( m_panelBoundaryPoint, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
-	m_fgSizerBoundaryPointFillDensity->Add( m_sliderBoundaryPointFillTransparency, 0, wxALL|wxEXPAND, 5 );
+	m_fgSizerBoundaryPointFillDensity->Add( m_sliderBoundaryPointFillTransparency, 1, wxEXPAND, 5 );
 	
 	
-	fgSizerRingsShow->Add( m_fgSizerBoundaryPointFillDensity, 1, wxEXPAND, 5 );
+	fgSizerRingsShow->Add( m_fgSizerBoundaryPointFillDensity, 1, wxEXPAND|wxRIGHT, 5 );
 	
 	m_fgSizerBoundaryPointSize = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerBoundaryPointSize->AddGrowableCol( 0 );
 	m_fgSizerBoundaryPointSize->AddGrowableCol( 1 );
 	m_fgSizerBoundaryPointSize->SetFlexibleDirection( wxBOTH );
 	m_fgSizerBoundaryPointSize->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_staticTextBoundaryPointSize = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Boundary Point Inclusion\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBoundaryPointSize->Wrap( -1 );
-	m_fgSizerBoundaryPointSize->Add( m_staticTextBoundaryPointSize, 0, wxALL, 5 );
+	m_fgSizerBoundaryPointSize->Add( m_staticTextBoundaryPointSize, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_sliderInclusionBoundaryPointSize = new wxSlider( m_panelBoundaryPoint, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_fgSizerBoundaryPointSize->Add( m_sliderInclusionBoundaryPointSize, 1, wxALL|wxEXPAND, 5 );
@@ -343,6 +346,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelTextPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerTextPoint;
 	fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
+	fgSizerTextPoint->AddGrowableCol( 0 );
 	fgSizerTextPoint->SetFlexibleDirection( wxBOTH );
 	fgSizerTextPoint->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -356,7 +360,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_SizerTextPointIconName->Add( m_bitmapTextPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxTextPointIconName = new wxBitmapComboBox( m_panelTextPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerTextPointIconName->Add( m_bcomboBoxTextPointIconName, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	m_SizerTextPointIconName->Add( m_bcomboBoxTextPointIconName, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	fgSizerTextPoint->Add( m_SizerTextPointIconName, 1, wxEXPAND, 5 );
@@ -415,7 +419,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	bSizerTextFont->Add( m_buttonTextFont, 0, wxALL, 5 );
 	
 	
-	fgSizerTextPoint->Add( bSizerTextFont, 1, wxEXPAND, 5 );
+	fgSizerTextPoint->Add( bSizerTextFont, 1, 0, 5 );
 	
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
@@ -497,13 +501,13 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerEBLEndPointIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_bitmapEBLStartBitmap = new wxStaticBitmap( m_panelEBL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerEBLEndPointIcon->Add( m_bitmapEBLStartBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	fgSizerEBLEndPointIcon->Add( m_bitmapEBLStartBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_bcomboBoxEBLStartIconName = new wxBitmapComboBox( m_panelEBL, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	fgSizerEBLEndPointIcon->Add( m_bcomboBoxEBLStartIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
-	fgSizerEBLSettings->Add( fgSizerEBLEndPointIcon, 1, 0, 5 );
+	fgSizerEBLSettings->Add( fgSizerEBLEndPointIcon, 1, wxEXPAND, 5 );
 	
 	m_staticTextEndPointIcon = new wxStaticText( m_panelEBL, wxID_ANY, _("End Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextEndPointIcon->Wrap( -1 );
@@ -522,7 +526,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerEBLStartPointIcon->Add( m_bcomboBoxEBLEndIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
-	fgSizerEBLSettings->Add( fgSizerEBLStartPointIcon, 1, 0, 5 );
+	fgSizerEBLSettings->Add( fgSizerEBLStartPointIcon, 1, wxALIGN_RIGHT|wxEXPAND, 5 );
 	
 	m_staticTextActiveEBLLineColour = new wxStaticText( m_panelEBL, wxID_ANY, _("Active EBL Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActiveEBLLineColour->Wrap( -1 );
@@ -583,25 +587,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizerDRSettings->SetFlexibleDirection( wxBOTH );
 	fgSizerDRSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
-	
-	wxFlexGridSizer* fgSizerEBLEndPointIcon1;
-	fgSizerEBLEndPointIcon1 = new wxFlexGridSizer( 0, 3, 0, 0 );
-	fgSizerEBLEndPointIcon1->AddGrowableCol( 1 );
-	fgSizerEBLEndPointIcon1->SetFlexibleDirection( wxBOTH );
-	fgSizerEBLEndPointIcon1->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
-	
-	m_staticTextDRPointIcon = new wxStaticText( m_panelDR, wxID_ANY, _("DR Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextDRPointIcon->Wrap( -1 );
-	fgSizerEBLEndPointIcon1->Add( m_staticTextDRPointIcon, 0, wxALL, 5 );
-	
-	m_bitmapDRPointBitmap = new wxStaticBitmap( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerEBLEndPointIcon1->Add( m_bitmapDRPointBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
-	
-	m_bcomboBoxDRPointIconName = new wxBitmapComboBox( m_panelDR, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	fgSizerEBLEndPointIcon1->Add( m_bcomboBoxDRPointIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
-	
-	
-	fgSizerDRSettings->Add( fgSizerEBLEndPointIcon1, 1, wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizerDRDefaultSizes;
 	fgSizerDRDefaultSizes = new wxFlexGridSizer( 0, 4, 0, 0 );
@@ -721,11 +706,31 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerDRSettings->Fit( m_panelDR );
 	m_notebookProperties->AddPage( m_panelDR, _("DR"), false );
 	m_panelDRPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bSizerDRPoint;
-	bSizerDRPoint = new wxBoxSizer( wxVERTICAL );
+	wxBoxSizer* bSizer12;
+	bSizer12 = new wxBoxSizer( wxVERTICAL );
+	
+	wxFlexGridSizer* fgSizerDREndPointIcon;
+	fgSizerDREndPointIcon = new wxFlexGridSizer( 0, 3, 0, 0 );
+	fgSizerDREndPointIcon->AddGrowableCol( 1 );
+	fgSizerDREndPointIcon->SetFlexibleDirection( wxBOTH );
+	fgSizerDREndPointIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextDRPointIcon = new wxStaticText( m_panelDRPoint, wxID_ANY, _("DR Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDRPointIcon->Wrap( -1 );
+	fgSizerDREndPointIcon->Add( m_staticTextDRPointIcon, 0, wxALL, 5 );
+	
+	m_bitmapDRPointBitmap = new wxStaticBitmap( m_panelDRPoint, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerDREndPointIcon->Add( m_bitmapDRPointBitmap, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_bcomboBoxDRPointIconName = new wxBitmapComboBox( m_panelDRPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerDREndPointIcon->Add( m_bcomboBoxDRPointIconName, 1, wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	bSizer12->Add( fgSizerDREndPointIcon, 0, wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizerDRPointRangeRings;
 	fgSizerDRPointRangeRings = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerDRPointRangeRings->AddGrowableCol( 1 );
 	fgSizerDRPointRangeRings->SetFlexibleDirection( wxBOTH );
 	fgSizerDRPointRangeRings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
@@ -791,12 +796,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerDRPointRangeRings->Add( m_choiceDRPointRangeRingStyle, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
-	bSizerDRPoint->Add( fgSizerDRPointRangeRings, 1, wxEXPAND, 5 );
+	bSizer12->Add( fgSizerDRPointRangeRings, 0, wxEXPAND, 5 );
 	
 	
-	m_panelDRPoint->SetSizer( bSizerDRPoint );
+	m_panelDRPoint->SetSizer( bSizer12 );
 	m_panelDRPoint->Layout();
-	bSizerDRPoint->Fit( m_panelDRPoint );
+	bSizer12->Fit( m_panelDRPoint );
 	m_notebookProperties->AddPage( m_panelDRPoint, _("DR Point"), false );
 	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerAbout;
