@@ -290,23 +290,9 @@ void ODToolbarImpl::UpdateIcons()
     m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, _("Create DR"), wxEmptyString );
     m_toolBarODToolbar->Realize();
     
-/*    
-    m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary );
-    m_toolBarODToolbar->SetToolDisabledBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-    m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point );
-    m_toolBarODToolbar->SetToolDisabledBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-    m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint );
-    m_toolBarODToolbar->SetToolDisabledBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-    m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl );
-    m_toolBarODToolbar->SetToolDisabledBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-    m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr );
-    m_toolBarODToolbar->SetToolDisabledBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-*/    
     m_toolBarODToolbar->SetInitialSize();
-//    m_toolbarSize = m_toolBarODToolbar->GetSize();
     this->Layout();
     this->GetSizer()->Fit(this);
-//    this->Refresh();
     
 }
 
