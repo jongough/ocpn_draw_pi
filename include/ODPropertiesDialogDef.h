@@ -166,9 +166,6 @@ class ODPropertiesDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxCheckBox* m_checkBoxShowVRM;
 		wxPanel* m_panelDR;
-		wxStaticText* m_staticTextDRPointIcon;
-		wxStaticBitmap* m_bitmapDRPointBitmap;
-		wxBitmapComboBox* m_bcomboBoxDRPointIconName;
 		wxStaticText* m_staticTextActiveDRLineColour;
 		wxColourPickerCtrl* m_colourPickerDRLineColour;
 		wxStaticText* m_staticTextInactiveDRLineColour;
@@ -192,6 +189,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxDRShowArrow;
 		wxRadioBox* m_radioBoxDRPersistence;
 		wxPanel* m_panelDRPoint;
+		wxStaticText* m_staticTextDRPointIcon;
+		wxStaticBitmap* m_bitmapDRPointBitmap;
+		wxBitmapComboBox* m_bcomboBoxDRPointIconName;
 		wxCheckBox* m_checkBoxShowDRPointRangeRings;
 		wxStaticText* m_staticTextDRPointRangeRingNumber;
 		wxChoice* m_choiceDRPointRangeRingNumber;
