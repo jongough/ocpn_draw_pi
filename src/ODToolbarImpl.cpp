@@ -134,6 +134,8 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
 
 void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
 {
+    UpdateIcons();
+    
     switch( event.GetId() )
     {
         case ID_BOUNDARY:
@@ -199,6 +201,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
         default:
             break;
     }
+    
 }
 
 void ODToolbarImpl::OnClose( wxCloseEvent& event )
@@ -271,6 +274,23 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
 
 void ODToolbarImpl::UpdateIcons()
 {
+    if(!g_ocpn_draw_pi->m_pODicons->ScaleIcons()) return;
+    m_toolBarODToolbar->DeleteTool( ID_BOUNDARY );
+    m_toolBarODToolbar->DeleteTool( ID_ODPOINT );
+    m_toolBarODToolbar->DeleteTool( ID_TEXTPOINT );
+    m_toolBarODToolbar->DeleteTool( ID_EBL );
+    m_toolBarODToolbar->DeleteTool( ID_DR );
+    
+    this->InvalidateBestSize();
+    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
+    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, _("Create Boundary"), wxEmptyString );
+    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_ODPOINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, _("Create Boundary Point"), wxEmptyString );
+    m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_TEXTPOINT, _("Text Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, _("Create Text Point"), wxEmptyString );
+    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_EBL, _("Electronic Bearing Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, _("Create EBL"), wxEmptyString );
+    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, _("Create DR"), wxEmptyString );
+    m_toolBarODToolbar->Realize();
+    
+/*    
     m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary );
     m_toolBarODToolbar->SetToolDisabledBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
     m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point );
@@ -281,11 +301,12 @@ void ODToolbarImpl::UpdateIcons()
     m_toolBarODToolbar->SetToolDisabledBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
     m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr );
     m_toolBarODToolbar->SetToolDisabledBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
-    this->InvalidateBestSize();
+*/    
     m_toolBarODToolbar->SetInitialSize();
-    m_toolbarSize = m_toolBarODToolbar->GetSize();
-    this->GetSizer()->Fit(this);
+//    m_toolbarSize = m_toolBarODToolbar->GetSize();
     this->Layout();
+    this->GetSizer()->Fit(this);
+//    this->Refresh();
     
 }
+

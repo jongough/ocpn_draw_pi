@@ -47,7 +47,7 @@ extern wxString *g_pImage;
 
 ODicons::ODicons()
 {
-    m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    m_dScaleFactor = 1.0;
     
     initialize_images();
 }
@@ -140,6 +140,8 @@ void ODicons::initialize_images(void)
     fn.SetFullName(wxT("DRgrey.png"));
     m_p_bm_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
 #endif
+    
+    ScaleIcons();
 }
 
 #ifdef ODraw_USE_SVG
@@ -174,10 +176,10 @@ wxBitmap *ODicons::ScaleIcon( wxBitmap *p_wxBitmap, double sf )
 }
 bool ODicons::ScaleIcons()
 {
-#ifdef ODraw_USE_SVG
-    if(m_dScaleFactor == GetOCPNGUIToolScaleFactor_PlugIn()) return false;
-    m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    if(!SetScaleFactor()) return false;
+    
 
+#ifdef ODraw_USE_SVG
     
     // Dont scale the OD manager as that should be done by the OCPN toolbar
     //m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
@@ -215,5 +217,14 @@ bool ODicons::ScaleIcons()
     
 #endif // OD_USE_SVG
     return true;
+}
+
+bool ODicons::SetScaleFactor()
+{
+    if(m_dScaleFactor != GetOCPNGUIToolScaleFactor_PlugIn()) {
+        m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+        return true;
+    }
+    return false;
 }
 

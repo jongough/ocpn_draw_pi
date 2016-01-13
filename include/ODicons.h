@@ -43,6 +43,7 @@ public:
     void    initialize_images(void);
     bool    ScaleIcons(void);
     wxSize  GetIconSize(void);
+    bool    SetScaleFactor(void);
     
     wxBitmap    *m_p_bm_ocpn_draw_pi;
     wxBitmap    *m_p_bm_ocpn_draw_grey_pi;
