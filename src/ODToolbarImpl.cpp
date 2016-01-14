@@ -139,6 +139,10 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
     UpdateIcons();
     
     g_ocpn_draw_pi->m_iCallerId = g_ocpn_draw_pi->m_draw_button_id;
+    if(m_iButtonClicked == ID_BOUNDARY && event.GetId() != ID_BOUNDARY && g_ocpn_draw_pi->nBoundary_State > 1) {
+        m_toolBarODToolbar->ToggleTool(event.GetId(), false);
+        return; // if creating a boundary must finish before clicking another button
+    }
     
     switch( event.GetId() )
     {
