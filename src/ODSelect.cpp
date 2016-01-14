@@ -68,7 +68,7 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
     if( pODPointAdd->m_bIsInLayer )
         node = pSelectList->Append( pSelItem );
     else
-        node = pSelectList->Insert( pSelItem );
+        node = pSelectList->Append( pSelItem );
 
     pODPointAdd->SetSelectNode(node);
     
@@ -91,7 +91,7 @@ bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, 
 
     if( pPath->m_bIsInLayer ) pSelectList->Append( pSelItem );
     else
-        pSelectList->Insert( pSelItem );
+        pSelectList->Append( pSelItem );
 
     return true;
 }
@@ -106,9 +106,6 @@ bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
     while( node ) {
         pFindSel = node->GetData();
         if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT ) {
-
-//                  RoutePoint *ps1 = (RoutePoint *)pFindSel->m_pData1;
-//                  RoutePoint *ps2 = (RoutePoint *)pFindSel->m_pData2;
 
             if( (ODPath *) pFindSel->m_pData3 == pr ) {
                 delete pFindSel;
