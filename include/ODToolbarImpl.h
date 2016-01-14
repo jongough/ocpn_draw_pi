@@ -50,6 +50,7 @@ public:
 private:
     
     wxSize m_toolbarSize;
+    int    m_iButtonClicked;
     
 };
 

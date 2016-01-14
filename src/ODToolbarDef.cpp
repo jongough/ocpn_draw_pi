@@ -30,7 +30,11 @@ ODToolbarDialog::ODToolbarDialog( wxWindow* parent, wxWindowID id, const wxStrin
 	// Connect Events
 	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( ODToolbarDialog::OnActivate ) );
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODToolbarDialog::OnClose ) );
+	this->Connect( wxEVT_KEY_DOWN, wxKeyEventHandler( ODToolbarDialog::OnKeyDown ) );
+	this->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( ODToolbarDialog::OnLeftDown ) );
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( ODToolbarDialog::OnSize ) );
+	m_toolBarODToolbar->Connect( wxEVT_KEY_DOWN, wxKeyEventHandler( ODToolbarDialog::OnKeyDown ), NULL, this );
+	m_toolBarODToolbar->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( ODToolbarDialog::OnLeftDown ), NULL, this );
 }
 
 ODToolbarDialog::~ODToolbarDialog()
@@ -38,6 +42,10 @@ ODToolbarDialog::~ODToolbarDialog()
 	// Disconnect Events
 	this->Disconnect( wxEVT_ACTIVATE, wxActivateEventHandler( ODToolbarDialog::OnActivate ) );
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODToolbarDialog::OnClose ) );
+	this->Disconnect( wxEVT_KEY_DOWN, wxKeyEventHandler( ODToolbarDialog::OnKeyDown ) );
+	this->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( ODToolbarDialog::OnLeftDown ) );
 	this->Disconnect( wxEVT_SIZE, wxSizeEventHandler( ODToolbarDialog::OnSize ) );
+	m_toolBarODToolbar->Disconnect( wxEVT_KEY_DOWN, wxKeyEventHandler( ODToolbarDialog::OnKeyDown ), NULL, this );
+	m_toolBarODToolbar->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( ODToolbarDialog::OnLeftDown ), NULL, this );
 	
 }
