@@ -545,7 +545,22 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         case ID_PATH_MENU_REMPOINT: {
             dlg_return = wxID_YES;
-            if( g_bConfirmObjectDelete ) {
+            if( m_pSelectedPath->m_pODPointList->GetCount() < 4) {
+                wxString sMessage(_("Removing this point will invalidate the "));
+                sMessage.append(m_pSelectedPath->m_sTypeString);
+                sMessage.append(_(", this is not allowed."));
+                wxString sCaption( _("OCPN Draw Remove ") );
+                wxString sType( wxS("") );
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
+                    sType.append( _("OD Point") );
+                else
+                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
+                sCaption.append( sType );
+                
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxOK | wxOK_DEFAULT );
+                break;
+            }
+            if( g_bConfirmObjectDelete && dlg_return == wxID_YES) {
                 wxString sMessage( _("Are you sure you want to remove this ") );
                 wxString sCaption( _("OCPN Draw Remove ") );
                 wxString sType( wxS("") );
@@ -563,13 +578,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->RemovePointFromPath( m_pFoundODPoint, m_pSelectedPath );
                 m_pFoundODPoint->SetTypeString( _("OD Point") );
+                g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+                g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                
+                g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
             }
             
-            g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-            g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
-            
-            g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-            g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
 
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;

@@ -58,6 +58,8 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &po
     this->GetSizer()->Fit(this);
     this->Layout();
     
+    m_iButtonClicked = -1;
+    
     Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
 }
 
@@ -136,6 +138,12 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
 {
     UpdateIcons();
     
+    g_ocpn_draw_pi->m_iCallerId = g_ocpn_draw_pi->m_draw_button_id;
+    if(m_iButtonClicked == ID_BOUNDARY && event.GetId() != ID_BOUNDARY && g_ocpn_draw_pi->nBoundary_State > 1) {
+        m_toolBarODToolbar->ToggleTool(event.GetId(), false);
+        return; // if creating a boundary must finish before clicking another button
+    }
+    
     switch( event.GetId() )
     {
         case ID_BOUNDARY:
@@ -146,8 +154,13 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_BOUNDARY;
-            if( g_ocpn_draw_pi->nBoundary_State == 0) g_ocpn_draw_pi->nBoundary_State = 1;
-            g_ocpn_draw_pi->SetToolbarTool();
+            if(m_iButtonClicked == event.GetId()) {
+                m_iButtonClicked = -1;
+                g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+            } else {
+                m_iButtonClicked = ID_BOUNDARY;
+                if( g_ocpn_draw_pi->nBoundary_State == 0) g_ocpn_draw_pi->nBoundary_State = 1;
+            }
             break;
         }
         case ID_ODPOINT:
@@ -158,8 +171,13 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_POINT;
-            if( g_ocpn_draw_pi->nPoint_State == 0) g_ocpn_draw_pi->nPoint_State = 1;
-            g_ocpn_draw_pi->SetToolbarTool();
+            if(m_iButtonClicked == event.GetId()) {
+                m_iButtonClicked = -1;
+                g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+            } else {
+                m_iButtonClicked = ID_ODPOINT;
+                if( g_ocpn_draw_pi->nPoint_State == 0) g_ocpn_draw_pi->nPoint_State = 1;
+            }
             break;
         }
         case ID_TEXTPOINT:
@@ -170,8 +188,13 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_TEXT_POINT;
-            if( g_ocpn_draw_pi->nTextPoint_State == 0) g_ocpn_draw_pi->nTextPoint_State = 1;
-            g_ocpn_draw_pi->SetToolbarTool();
+            if(m_iButtonClicked == event.GetId()) {
+                m_iButtonClicked = -1;
+                g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+            } else {
+                m_iButtonClicked = ID_TEXTPOINT;
+                if( g_ocpn_draw_pi->nTextPoint_State == 0) g_ocpn_draw_pi->nTextPoint_State = 1;
+            }
             break;
         }
         case ID_EBL:
@@ -182,8 +205,13 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             g_ocpn_draw_pi->m_Mode = ID_MODE_EBL;
-            if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
-            g_ocpn_draw_pi->SetToolbarTool();
+            if(m_iButtonClicked == event.GetId()) {
+                m_iButtonClicked = -1;
+                g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+            } else {
+                m_iButtonClicked = ID_EBL;
+                if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
+            }
             break;
         }
         case ID_DR:
@@ -194,13 +222,19 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), true );
             g_ocpn_draw_pi->m_Mode = ID_MODE_DR;
-            if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
-            g_ocpn_draw_pi->SetToolbarTool();
+            if(m_iButtonClicked == event.GetId()) {
+                m_iButtonClicked = -1;
+                g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+            } else {
+                m_iButtonClicked = ID_DR;
+                if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
+            }
             break;
         }
         default:
             break;
     }
+    g_ocpn_draw_pi->SetToolbarTool();
     
 }
 
