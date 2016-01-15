@@ -483,9 +483,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 sTypeLong.append( wxT("?") );
                 wxString sTypeShort = wxT("OpenCPN ");
 #if wxCHECK_VERSION(3,0,0)
-                sTypeLong.append( _(m_pSelectedPath->m_sTypeString) );
+                sTypeShort.append( _(m_pSelectedPath->m_sTypeString) );
 #else
-                sTypeLong.append( m_pSelectedPath->m_sTypeString );
+                sTypeShort.append( m_pSelectedPath->m_sTypeString );
 #endif
                 sTypeShort.append( _(" Delete") );
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
