@@ -85,7 +85,7 @@ std::cout << x << std::endl; } while (0)
 //----------------------------------------------------------------------------------------------------------
 
 #define OCPN_DRAW_POSITION -1
-
+#define ID_NONE -1
 //    Constants for right click menus
 enum
 {
