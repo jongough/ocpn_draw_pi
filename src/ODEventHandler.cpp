@@ -475,10 +475,18 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
                 wxString sTypeLong = _("Are you sure you want to delete this ");
+#if wxCHECK_VERSION(3,0,0)
                 sTypeLong.append( _(m_pSelectedPath->m_sTypeString) );
+#else
+                sTypeLong.append( m_pSelectedPath->m_sTypeString );
+#endif
                 sTypeLong.append( wxT("?") );
                 wxString sTypeShort = wxT("OpenCPN ");
-                sTypeShort.append( _(m_pSelectedPath->m_sTypeString) );
+#if wxCHECK_VERSION(3,0,0)
+                sTypeLong.append( _(m_pSelectedPath->m_sTypeString) );
+#else
+                sTypeLong.append( m_pSelectedPath->m_sTypeString );
+#endif
                 sTypeShort.append( _(" Delete") );
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
@@ -554,10 +562,14 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( _("OD Point") );
                 else
+#if wxCHECK_VERSION(3,0,0)
                     sType.append( _(m_pFoundODPoint->GetTypeString()) );
+#else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+#endif                
                 sCaption.append( sType );
                 
-                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxOK | wxOK_DEFAULT );
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxOK );
                 break;
             }
             if( g_bConfirmObjectDelete && dlg_return == wxID_YES) {
@@ -567,7 +579,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( _("OD Point") );
                 else
+#if wxCHECK_VERSION(3,0,0)
                     sType.append( _(m_pFoundODPoint->GetTypeString()) );
+#else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+#endif
                 sMessage.append( sType );
                 sMessage.append( wxS("?") );
                 sCaption.append( sType );
@@ -607,7 +623,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( _("OD Point") );
                 else
+#if wxCHECK_VERSION(3,0,0)
                     sType.append( _(m_pFoundODPoint->GetTypeString()) );
+#else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+#endif
                 sMessage.append( sType );
                 sMessage.append( wxS("?") );
                 sCaption.append( sType );
@@ -638,7 +658,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
                     sType.append( _("OD Point") );
                 else
+#if wxCHECK_VERSION(3,0,0)
                     sType.append( _(m_pFoundODPoint->GetTypeString()) );
+#else
+                    sType.append( m_pFoundODPoint->GetTypeString() );
+#endif
                 sMessage.append( sType );
                 sMessage.append( wxS("?") );
                 sCaption.append( sType );
@@ -730,12 +754,20 @@ void ODEventHandler::PopupMenu( int seltype )
         if( blay ) {
             wxString  tName;
             tName.Append( _("Layer ") );
+#if wxCHECK_VERSION(3,0,0)
             tName.Append( _(m_pSelectedPath->m_sTypeString) );
+#else
+            tName.Append( m_pSelectedPath->m_sTypeString );
+#endif
             menuPath = new wxMenu( tName );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
         }
         else {
+#if wxCHECK_VERSION(3,0,0)
             menuPath = new wxMenu( _(m_pSelectedPath->m_sTypeString) );
+#else
+            menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
+#endif
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                 if(!m_pEBL->m_bCentreOnBoat) {
@@ -754,12 +786,20 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.clear();
                 sString.append( _("Move") );
                 sString.append(_T(" "));
+#if wxCHECK_VERSION(3,0,0)
                 sString.append( _(m_pSelectedPath->m_sTypeString) );
+#else
+                sString.append( m_pSelectedPath->m_sTypeString );
+#endif
                 MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
                 sString.clear();
                 sString.append( _("Insert") );
                 sString.append(_T(" "));
+#if wxCHECK_VERSION(3,0,0)
                 sString.append( _(m_pSelectedPath->m_sTypeString) );
+#else
+                sString.append( m_pSelectedPath->m_sTypeString );
+#endif
                 sString.append( _(" Point") );
                 MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
             }
@@ -774,7 +814,11 @@ void ODEventHandler::PopupMenu( int seltype )
             sString.clear();
             sString.append(_("Copy"));
             sString.append(_T(" "));
+#if wxCHECK_VERSION(3,0,0)
             sString.append( _(m_pSelectedPath->m_sTypeString) );
+#else
+            sString.append( m_pSelectedPath->m_sTypeString );
+#endif
             sString.append(_T(" "));
             sString.append(_("GUID"));
             MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
@@ -792,7 +836,11 @@ void ODEventHandler::PopupMenu( int seltype )
         if( blay ){
             sString.clear();
             sString.append( _("Layer ") );
+#if wxCHECK_VERSION(3,0,0)
             sString.append( _(m_pFoundODPoint->m_sTypeString) );
+#else
+            sString.append( m_pFoundODPoint->m_sTypeString );
+#endif
             menuODPoint = new wxMenu( sString );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
@@ -801,12 +849,20 @@ void ODEventHandler::PopupMenu( int seltype )
         }
         else {
             sString.clear();
+#if wxCHECK_VERSION(3,0,0)
             sString.append( _(m_pFoundODPoint->m_sTypeString) );
+#else
+            sString.append( m_pFoundODPoint->m_sTypeString );
+#endif
             menuODPoint = new wxMenu( sString );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             sString.clear();
             sString.append( _("Move ") );
+#if wxCHECK_VERSION(3,0,0)
             sString.append( _(m_pFoundODPoint->m_sTypeString) );
+#else
+            sString.append( m_pFoundODPoint->m_sTypeString );
+#endif
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_MOVE, sString );
 
             if( m_pSelectedPath ) {
