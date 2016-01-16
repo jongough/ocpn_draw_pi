@@ -77,8 +77,6 @@ void ODToolbarImpl::OnActivate( wxActivateEvent& event )
 
 void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
 {
-    UpdateIcons(m_Mode);
-    
     g_ocpn_draw_pi->m_iCallerId = g_ocpn_draw_pi->m_draw_button_id;
     if(m_Mode == ID_MODE_BOUNDARY && event.GetId() != ID_MODE_BOUNDARY && g_ocpn_draw_pi->nBoundary_State > 1) {
         m_toolBarODToolbar->ToggleTool(event.GetId(), false);
@@ -221,6 +219,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
+            m_Mode = ID_NONE;
             break;
         }
         default:
@@ -285,6 +284,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_Mode = ID_NONE;
             break;
         }
         default:
