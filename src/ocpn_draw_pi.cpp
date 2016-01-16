@@ -1952,6 +1952,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FinishBoundary();
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->UpdateIcons( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
