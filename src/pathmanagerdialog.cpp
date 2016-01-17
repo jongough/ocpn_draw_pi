@@ -1664,7 +1664,7 @@ void PathManagerDialog::UpdateLayButtons()
             btnLayToggleChart->SetLabel( _("Show on chart") );
 
         if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->HasVisibleNames() ) btnLayToggleNames->SetLabel(
-                _("Hide WPT names") );
+                _("Hide Point names") );
         else
             btnLayToggleNames->SetLabel( _("Show Point names") );
 
