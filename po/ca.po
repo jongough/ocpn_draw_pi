@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-06 11:26-0500\n"
+"POT-Creation-Date: 2016-01-18 09:56+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -15,510 +15,1156 @@ msgstr ""
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: ca\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
-
-#: src/ODConfig.cpp:146 src/ODConfig.cpp:186 src/ODConfig.cpp:283
-#: src/ODConfig.cpp:308
-msgid "Export GPX file"
-msgstr "Exportar fitxers GPX"
-
-#: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:296
-msgid "Overwrite existing file?"
-msgstr "Sobreescriure el fitxer existent?"
-
-#: src/ODConfig.cpp:380
-msgid "Import GPX file"
-msgstr "Importar fitxers GPX"
-
-#: src/ODEventHandler.cpp:183
-msgid "(unnamed)"
+#
+#, fuzzy
+msgid " &Properties..."
+msgstr "&Propietats..."
+#
+#, fuzzy
+msgid " Delete"
+msgstr "Esborrar"
+#
+#, fuzzy
+msgid " Point"
+msgstr "Punts OCPN"
+#
+#, fuzzy
+msgid " Properties"
+msgstr "Propietats"
+#
+#, fuzzy
+msgid " Properties, Layer:"
+msgstr "Propietats"
+#
+msgid " To: "
 msgstr ""
-
-#: src/ODEventHandler.cpp:187
-msgid "Total Length: "
+#
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
 msgstr ""
-
-#: src/ODEventHandler.cpp:188
-msgid "Leg: from "
-msgstr ""
-
-#: src/ODEventHandler.cpp:189
+#
 msgid " to "
 msgstr ""
-
-#: src/ODEventHandler.cpp:510
-msgid "Layer Path"
-msgstr "Capa de trajecte"
-
-#: src/ODEventHandler.cpp:511 src/ODEventHandler.cpp:514
-#: src/ODEventHandler.cpp:539 src/ODEventHandler.cpp:548
-msgid "Properties..."
-msgstr "Propietats..."
-
-#: src/ODEventHandler.cpp:520
-msgid "Delete..."
-msgstr "Suprimir..."
-
-#: src/ODEventHandler.cpp:521
-msgid "Deactivate"
-msgstr "Desactivar"
-
-#: src/ODEventHandler.cpp:522
-msgid "Activate"
-msgstr "Activa"
-
-#: src/ODEventHandler.cpp:567
-msgid "Remove Point from Path"
-msgstr ""
-
-#: src/ODEventHandler.cpp:570 src/ODEventHandler.cpp:572
-msgid "Delete"
-msgstr "Esborrar"
-
-#: src/ODPoint.cpp:504 src/ODPoint.cpp:505
-msgid "Marks"
-msgstr "Marques"
-
-#: src/ODPointPropertiesImpl.cpp:99
-msgid "Copy"
-msgstr "Copiar"
-
-#: src/ODPointPropertiesImpl.cpp:100
-msgid "Copy lat/long"
-msgstr "Copiar lat/long"
-
-#: src/ODPointPropertiesImpl.cpp:101
-msgid "Paste"
-msgstr "Enganxar"
-
-#: src/ODPointPropertiesImpl.cpp:102
-msgid "Paste lat/long"
-msgstr "Enganxar lat/long"
-
-#: src/ODRolloverWin.cpp:105 src/ODRolloverWin.cpp:148
-msgid "PathLegInfoRollover"
-msgstr ""
-
-#: src/ODUndo.cpp:80
-msgid "Create ODPoint"
-msgstr ""
-
-#: src/ODUndo.cpp:83
-msgid "Delete ODPoint"
-msgstr ""
-
-#: src/ODUndo.cpp:86
-msgid "Move ODPoint"
-msgstr ""
-
-#: src/ODUndo.cpp:89
-msgid "Append ODPoint"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:395
-msgid "Path & Point Manager"
-msgstr "Gestionar camins i punts"
-
-#: src/pathmanagerdialog.cpp:428
-msgid "Paths"
-msgstr "Camins"
-
-#: src/pathmanagerdialog.cpp:449
-msgid "Show"
-msgstr "Mostrar"
-
-#: src/pathmanagerdialog.cpp:450
-msgid "Path Name"
-msgstr "Nom del camí"
-
-#: src/pathmanagerdialog.cpp:451
-msgid "Desc"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:457
-msgid "&Properties..."
-msgstr "&Propietats..."
-
-#: src/pathmanagerdialog.cpp:462 src/pathmanagerdialog.cpp:799
+#
 msgid "&Activate"
 msgstr "&Activa"
-
-#: src/pathmanagerdialog.cpp:469 src/pathmanagerdialog.cpp:531
+#
+msgid "&Apply"
+msgstr ""
+#
+#, fuzzy
+msgid "&Cancel"
+msgstr "Cancel·la"
+#
 msgid "&Center View"
 msgstr "&Centra Vista"
-
-#: src/pathmanagerdialog.cpp:476 src/pathmanagerdialog.cpp:536
-#: src/pathmanagerdialog.cpp:623
-msgid "&Delete"
-msgstr "&Esborra"
-
-#: src/pathmanagerdialog.cpp:481 src/pathmanagerdialog.cpp:546
-msgid "&Export selected..."
-msgstr "&Exporta la Ruta..."
-
-#: src/pathmanagerdialog.cpp:488
-msgid "&Delete All"
-msgstr "&Esborra-ho Tot"
-
-#: src/pathmanagerdialog.cpp:498
-msgid "OCPN Points"
-msgstr "Punts OCPN"
-
-#: src/pathmanagerdialog.cpp:514
-msgid "Icon"
-msgstr "Icona"
-
-#: src/pathmanagerdialog.cpp:515
-msgid "OCPN Point Name"
-msgstr "Nom de punt d'OCPN"
-
-#: src/pathmanagerdialog.cpp:516
-msgid "Distance from Ownship"
-msgstr "Distància a la pròpia nau"
-
-#: src/pathmanagerdialog.cpp:521
-msgid "&New"
-msgstr "&Nou"
-
-#: src/pathmanagerdialog.cpp:526
-msgid "&Properties"
-msgstr "&Propietats"
-
-#: src/pathmanagerdialog.cpp:541
-msgid "&Go To"
-msgstr "&Anar a"
-
-#: src/pathmanagerdialog.cpp:558
-msgid "Delete All"
-msgstr "Esborra-ho Tot"
-
-#: src/pathmanagerdialog.cpp:569
-msgid "I&mport GPX..."
-msgstr "I&mporta GPX..."
-
-#: src/pathmanagerdialog.cpp:579
-msgid "Export All Visible..."
-msgstr "Exportar Tot el Visible..."
-
-#: src/pathmanagerdialog.cpp:589
-msgid "Layers"
-msgstr "Capes"
-
-#: src/pathmanagerdialog.cpp:613
-msgid "Temporary layer"
-msgstr "Capa temporal"
-
-#: src/pathmanagerdialog.cpp:628 src/pathmanagerdialog.cpp:1703
-#: src/pathmanagerdialog.cpp:1715
-msgid "Show on chart"
-msgstr "Mostra a la carta"
-
-#: src/pathmanagerdialog.cpp:633 src/pathmanagerdialog.cpp:1708
-#: src/pathmanagerdialog.cpp:1716
-msgid "Show WPT names"
-msgstr "Mostra noms de WPT"
-
-#: src/pathmanagerdialog.cpp:638 src/pathmanagerdialog.cpp:1713
-#: src/pathmanagerdialog.cpp:1717
-msgid "List contents"
-msgstr "Llista dels continguts"
-
-#: src/pathmanagerdialog.cpp:647
-msgid "&OK"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:755
-msgid "(Unnamed )"
-msgstr "(Sense nom)"
-
-#: src/pathmanagerdialog.cpp:798
+#
 msgid "&Deactivate"
 msgstr "&Desactiva"
-
-#: src/pathmanagerdialog.cpp:864 src/pathmanagerdialog.cpp:1488
-msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Esteu segur de voler esborrar l'objecte(s) seleccionat(s)"
-
-#: src/pathmanagerdialog.cpp:864 src/pathmanagerdialog.cpp:913
-#: src/pathmanagerdialog.cpp:1488 src/pathmanagerdialog.cpp:1521
-#: src/pathmanagerdialog.cpp:1651 src/pathmanagerdialog.cpp:1785
-msgid "OpenCPN Alert"
-msgstr "Alaerta de l'OpenCPN"
-
-#: src/pathmanagerdialog.cpp:912
+#
+msgid "&Delete"
+msgstr "&Esborra"
+#
+msgid "&Delete All"
+msgstr "&Esborra-ho Tot"
+#
+msgid "&Export selected..."
+msgstr "&Exporta la Ruta..."
+#
+msgid "&New"
+msgstr "&Nou"
+#
+msgid "&OK"
+msgstr ""
+#
+msgid "&Properties"
+msgstr "&Propietats"
+#
+msgid "&Properties..."
+msgstr "&Propietats..."
+#
+msgid "&Remove Selected"
+msgstr ""
+#
+msgid "(Unnamed )"
+msgstr "(Sense nom)"
+#
+msgid "(Unnamed Layer)"
+msgstr "(Capa Sense Nom)"
+#
+#, fuzzy
+msgid "(Unnamed) "
+msgstr "(Sense nom)"
+#
+msgid "(unnamed)"
+msgstr ""
+#
+#, fuzzy
+msgid ", Layer: "
+msgstr "Capes"
+#
+msgid ", this is not allowed."
+msgstr ""
+#
+msgid "0"
+msgstr ""
+#
+msgid "0.0"
+msgstr ""
+#
+msgid "0.5"
+msgstr ""
+#
+msgid "1"
+msgstr ""
+#
+#, fuzzy
+msgid "1 Pixel"
+msgstr "1 pixel"
+#
+msgid "1 pixel"
+msgstr "1 pixel"
+#
+msgid "10"
+msgstr ""
+#
+#, fuzzy
+msgid "10 Pixels"
+msgstr "10 pixels"
+#
+msgid "10 pixels"
+msgstr "10 pixels"
+#
+msgid "2"
+msgstr ""
+#
+#, fuzzy
+msgid "2 Pixels"
+msgstr "2 pixels"
+#
+msgid "2 pixels"
+msgstr "2 pixels"
+#
+msgid "3"
+msgstr ""
+#
+#, fuzzy
+msgid "3 Pixels"
+msgstr "3 pixels"
+#
+msgid "3 pixels"
+msgstr "3 pixels"
+#
+msgid "4"
+msgstr ""
+#
+#, fuzzy
+msgid "4 Pixels"
+msgstr "4 pixels"
+#
+msgid "4 pixels"
+msgstr "4 pixels"
+#
+msgid "5"
+msgstr ""
+#
+#, fuzzy
+msgid "5 Pixels"
+msgstr "5 pixels"
+#
+msgid "5 pixels"
+msgstr "5 pixels"
+#
+msgid "6"
+msgstr ""
+#
+#, fuzzy
+msgid "6 Pixels"
+msgstr "6 pixels"
+#
+msgid "6 pixels"
+msgstr "6 pixels"
+#
+msgid "7"
+msgstr ""
+#
+#, fuzzy
+msgid "7 Pixels"
+msgstr "7 pixels"
+#
+msgid "7 pixels"
+msgstr "7 pixels"
+#
+msgid "8"
+msgstr ""
+#
+#, fuzzy
+msgid "8 Pixels"
+msgstr "8 pixels"
+#
+msgid "8 pixels"
+msgstr "8 pixels"
+#
+msgid "9"
+msgstr ""
+#
+#, fuzzy
+msgid "9 Pixels"
+msgstr "9 pixels"
+#
+msgid "9 pixels"
+msgstr "9 pixels"
+#
+msgid "About"
+msgstr ""
+#
+msgid "Activate"
+msgstr "Activa"
+#
+msgid "Active"
+msgstr "Activa"
+#
+#, fuzzy
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr "Color de la línia:"
+#
+#, fuzzy
+msgid "Active EBL Line Colour"
+msgstr "Color de la línia:"
+#
+#, fuzzy
+msgid "Active Fill Colour"
+msgstr "Omplir de color:"
+#
+#, fuzzy
+msgid "Active Line Colour"
+msgstr "Color de la línia:"
+#
+msgid "Always"
+msgstr ""
+#
+msgid "Applying changes from "
+msgstr ""
+#
+#, fuzzy
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
+#
 msgid "Are you sure you want to delete <ALL> paths?"
 msgstr "N'està segur de voler esborrar <ALL>les rutes?"
-
-#: src/pathmanagerdialog.cpp:1128
-msgid "Do you also want to make the shared OCPN Points being part of this boundary invisible?"
-msgstr "També voleu fer els punts comuns de l'OCPN  formant part d'aquesta frontera invisible?"
-
-#: src/pathmanagerdialog.cpp:1128
+#
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Esteu segur de voler esborrar l'objecte(s) seleccionat(s)"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this "
+msgstr "N'està segur de voler esborrar <ALL>les rutes?"
+#
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "N'està segur de voler esborrar aquesta capa i <ALL> el seu contingut?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this "
+msgstr "N'està segur de voler esborrar <ALL>les rutes?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this point?"
+msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
+#
+msgid "Arrival Radius"
+msgstr ""
+#
+msgid "Background Colour"
+msgstr ""
+#
+msgid "Background Density"
+msgstr ""
+#
+msgid "Background Transparency"
+msgstr ""
+#
+msgid "Basic"
+msgstr ""
+#
+msgid "Bearing"
+msgstr "Rumb"
+#
+msgid "Bearing (M)"
+msgstr "Rumb (M)"
+#
+#, fuzzy
+msgid "Bearing From-To"
+msgstr "Rumb"
+#
+#, fuzzy
+msgid "Bearing From-To (M)"
+msgstr "Rumb (M)"
+#
+msgid "Boat"
+msgstr ""
+#
+msgid "Bottom"
+msgstr ""
+#
+msgid "Bottom Centre"
+msgstr ""
+#
+msgid "Boundary"
+msgstr ""
+#
+msgid "Boundary Point"
+msgstr ""
+#
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+#
+msgid "Boundary Point Type"
+msgstr ""
+#
+msgid "Boundary Type"
+msgstr ""
+#
+#, fuzzy
+msgid "Centre"
+msgstr "&Centra Vista"
+#
+msgid "Centre on boat lat lon"
+msgstr ""
+#
+msgid "Centre on moving boat"
+msgstr ""
+#
+msgid "Change all Path Point Icons"
+msgstr ""
+#
+msgid "Confirm"
+msgstr ""
+#
+msgid "Confirm Object Delete"
+msgstr ""
+#
+msgid "Copy"
+msgstr "Copiar"
+#
+msgid "Copy Point GUID"
+msgstr ""
+#
+msgid "Copy lat/long"
+msgstr "Copiar lat/long"
+#
+msgid "Course over Ground"
+msgstr ""
+#
+msgid "Create Boundary"
+msgstr ""
+#
+msgid "Create Boundary Point"
+msgstr ""
+#
+msgid "Create DR"
+msgstr ""
+#
+msgid "Create EBL"
+msgstr ""
+#
+msgid "Create Text Point"
+msgstr ""
+#
+msgid "DR"
+msgstr ""
+#
+#, fuzzy
+msgid "DR Path Length"
+msgstr "Distància Total"
+#
+msgid "DR Persistence"
+msgstr ""
+#
+#, fuzzy
+msgid "DR Point"
+msgstr "Punts OCPN"
+#
+msgid "DR Point Icon"
+msgstr ""
+#
+msgid "DR Point Interval"
+msgstr ""
+#
+msgid "Date:"
+msgstr ""
+#
+msgid "Days"
+msgstr ""
+#
+msgid "Deactivate"
+msgstr "Desactivar"
+#
+msgid "Dead Reckoning"
+msgstr ""
+#
+msgid "Delete"
+msgstr "Esborrar"
+#
+msgid "Delete All"
+msgstr "Esborra-ho Tot"
+#
+msgid "Desc"
+msgstr ""
+#
+msgid "Description"
+msgstr "Descripció"
+#
+msgid "Display Toolbar"
+msgstr ""
+#
+msgid "Display text"
+msgstr ""
+#
+msgid "Distance"
+msgstr "Distància"
+#
+msgid "Distance Between Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Distance From Boat"
+msgstr "Distància a la pròpia nau"
+#
+#, fuzzy
+msgid "Distance Unit"
+msgstr "Distància"
+#
+#, fuzzy
+msgid "Distance Units"
+msgstr "Distància"
+#
+msgid "Distance between Range Rings"
+msgstr ""
+#
+msgid "Distance from Ownship"
+msgstr "Distància a la pròpia nau"
+#
+#, fuzzy
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+"També voleu fer els punts comuns de l'OCPN  formant part d'aquesta frontera "
+"invisible?"
+#
+msgid "Dot"
+msgstr "Punt"
+#
+#, fuzzy
+msgid "Dot Dash"
+msgstr "Guió puntejat"
+#
+msgid "EBL"
+msgstr ""
+#
+msgid "EBL Fixed End Position"
+msgstr ""
+#
+msgid "EBL Persistence"
+msgstr ""
+#
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+#
+msgid "Electronic Bearing Line"
+msgstr ""
+#
+msgid "End"
+msgstr ""
+#
+msgid "End Point Icon"
+msgstr ""
+#
+msgid "Example"
+msgstr ""
+#
+msgid "Exclusion"
+msgstr ""
+#
+msgid "Export All Visible..."
+msgstr "Exportar Tot el Visible..."
+#
+msgid "Export GPX file"
+msgstr "Exportar fitxers GPX"
+#
+msgid "Extended"
+msgstr ""
+#
+#, fuzzy
+msgid "Fill Colour"
+msgstr "Omplir de color:"
+#
+msgid "Fill Density"
+msgstr ""
+#
+msgid "Fonts"
+msgstr ""
+#
+msgid "For this leg the Great Circle boundary is "
+msgstr ""
+#
+msgid "From Point"
+msgstr ""
+#
+msgid "From: "
+msgstr ""
+#
+msgid "GUID"
+msgstr ""
+#
+msgid "General"
+msgstr ""
+#
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+#
+msgid "General drawing for OpenCPN"
+msgstr ""
+#
+#, fuzzy
+msgid "Hide Point names"
+msgstr "Amagar noms de WPT"
+#
+msgid "Hide from chart"
+msgstr "Amagar de la carta"
+#
+#, fuzzy
+msgid "Hours"
+msgstr "Curs"
+#
+msgid "I&mport GPX..."
+msgstr "I&mporta GPX..."
+#
+msgid "Icon"
+msgstr "Icona"
+#
+msgid "Import GPX file"
+msgstr "Importar fitxers GPX"
+#
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+#
+#, fuzzy
+msgid "Inactive EBL Line Colour"
+msgstr "Color de la línia:"
+#
+#, fuzzy
+msgid "Inactive Fill Colour"
+msgstr "Omplir de color:"
+#
+#, fuzzy
+msgid "Inactive Line Colour"
+msgstr "Color de la línia:"
+#
+msgid "Inclusion"
+msgstr ""
+#
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+#
+msgid "Inclusion Boundary Size"
+msgstr ""
+#
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+#
+msgid "Insert"
+msgstr ""
+#
+msgid "Interval Type"
+msgstr ""
+#
+msgid "Kilometres"
+msgstr ""
+#
+msgid "Latitude"
+msgstr "Latitud"
+#
+#, fuzzy
+msgid "Layer"
+msgstr "Capes"
+#
+#, fuzzy
+msgid "Layer "
+msgstr "Capes"
+#
+msgid "Layer Boundary"
+msgstr ""
+#
+#, fuzzy
+msgid "Layer Name"
+msgstr "Capa de trajecte"
+#
+msgid "Layers"
+msgstr "Capes"
+#
+msgid "Left"
+msgstr ""
+#
+msgid "Leg: from "
+msgstr ""
+#
+msgid "Length Type"
+msgstr ""
+#
+#, fuzzy
+msgid "Line Colour"
+msgstr "Color de la línia:"
+#
+#, fuzzy
+msgid "Line Style"
+msgstr "Estil:"
+#
+#, fuzzy
+msgid "Line Width"
+msgstr "Amplada:"
+#
+msgid "List contents"
+msgstr "Llista dels continguts"
+#
+msgid "Loading navobjects from "
+msgstr ""
+#
+#, fuzzy
+msgid "Long Dash"
+msgstr "Guió llarg"
+#
+msgid "Longitude"
+msgstr "Longitud"
+#
+msgid "Major:"
+msgstr ""
+#
+msgid "Match VRM colour to EBL colour"
+msgstr ""
+#
+msgid "Minor:"
+msgstr ""
+#
+msgid "Minutes"
+msgstr ""
+#
+msgid "Move"
+msgstr ""
+#
+msgid "Move "
+msgstr ""
+#
+msgid "Name"
+msgstr "Nom"
+#
+#, fuzzy
+msgid "Name:"
+msgstr "Nom"
+#
+#, fuzzy
+msgid "Name: "
+msgstr "Nom"
+#
+msgid "Nautical Miles"
+msgstr ""
+#
+msgid "Nav Object Backups"
+msgstr ""
+#
+msgid "Neither"
+msgstr ""
+#
+msgid "Never"
+msgstr ""
+#
+#, c-format
+msgid "New layer %d: %s"
+msgstr ""
+#
+msgid "No. of items"
+msgstr ""
+#
+msgid "None"
+msgstr ""
+#
+msgid "Number of Point Range Rings"
+msgstr ""
+#
+msgid "Number of Range Rings"
+msgstr ""
+#
+msgid "OCPN Draw"
+msgstr ""
+#
+msgid "OCPN Draw Boundary"
+msgstr ""
+#
+msgid "OCPN Draw Boundary Create"
+msgstr ""
+#
+msgid "OCPN Draw Delete "
+msgstr ""
+#
+msgid "OCPN Draw Manager"
+msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Point Create"
+msgstr "Nom de punt d'OCPN"
+#
+#, fuzzy
+msgid "OCPN Draw Properties"
+msgstr "Propietats"
+#
+msgid "OCPN Draw Remove "
+msgstr ""
+#
+msgid "OCPN Draw Remove ODPoint"
+msgstr ""
+#
+#, fuzzy
+msgid "OD Point"
+msgstr "Punts OCPN"
+#
+#, fuzzy
+msgid "OD Point Name"
+msgstr "Nom de punt d'OCPN"
+#
+#, fuzzy
+msgid "OD Point Properties"
+msgstr "Propietats"
+#
+#, fuzzy
+msgid "OD Points"
+msgstr "Punts OCPN"
+#
+msgid "On Rollover Only"
+msgstr ""
+#
+msgid "OpenCPN Alert"
+msgstr "Alaerta de l'OpenCPN"
+#
+msgid "Other:"
+msgstr ""
+#
+msgid "Overwrite existing file?"
+msgstr "Sobreescriure el fitxer existent?"
+#
+msgid "Paste"
+msgstr "Enganxar"
+#
+msgid "Paste lat/long"
+msgstr "Enganxar lat/long"
+#
+msgid "Patch:"
+msgstr ""
+#
+#, fuzzy
+msgid "Path"
+msgstr "Camins"
+#
+msgid "Path & Point Manager"
+msgstr "Gestionar camins i punts"
+#
+msgid "Path Name"
+msgstr "Nom del camí"
+#
+msgid "Path Persistence"
+msgstr ""
+#
+#, fuzzy
+msgid "Path Properties"
+msgstr "Propietats"
+#
+msgid "Path Properties, Layer: "
+msgstr ""
+#
+msgid "Paths"
+msgstr "Camins"
+#
+msgid "Persistent"
+msgstr ""
+#
+msgid "Persistent over Crash"
+msgstr ""
+#
+msgid "Pick a new start point"
+msgstr ""
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+#
+msgid "Point Inclusion Size"
+msgstr ""
+#
+msgid "Point Type"
+msgstr ""
+#
+#, fuzzy
+msgid "Points"
+msgstr "Punts OCPN"
+#
+msgid "Properties"
+msgstr "Propietats"
+#
+msgid "Properties..."
+msgstr "Propietats..."
+#
 msgid "Question"
 msgstr "Pregunta"
-
-#: src/pathmanagerdialog.cpp:1247
-msgid "(Unnamed OCPN Point)"
-msgstr "(Punt OCPN sense nom)"
-
-#: src/pathmanagerdialog.cpp:1521
-msgid "The OCPN Point you want to delete is used in a path, do you really want to delete it?"
-msgstr "El punt OCPN que voleu suprimir s'utilitza en una ruta, segur que voleu suprimir-lo?"
-
-#: src/pathmanagerdialog.cpp:1641
-msgid "Are you sure you want to delete <ALL> OCPN points?"
-msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
-
-#: src/pathmanagerdialog.cpp:1647
-msgid "There are some OCPN points used in paths or anchor alarms.\n"
+#
+#, fuzzy
+msgid "Range Ring Colours"
+msgstr "Color de la línia:"
+#
+msgid "Range Ring Line Style"
+msgstr ""
+#
+msgid "Range Ring Line Width"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr ""
+#
+msgid "Removing this point will invalidate the "
+msgstr ""
+#
+msgid "Right"
+msgstr ""
+#
+#, fuzzy
+msgid "Short Dash"
+msgstr "Guió curt"
+#
+msgid "Show"
+msgstr "Mostrar"
+#
+msgid "Show DR Direction Arrow"
+msgstr ""
+#
+msgid "Show Display Text"
+msgstr ""
+#
+msgid "Show EBL Direction Arrow"
+msgstr ""
+#
+msgid "Show Magnetic Bearings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Name"
+msgstr "Mostra noms de WPT"
+#
+msgid "Show Path Direction Arrow"
+msgstr ""
+#
+msgid "Show Point Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Point names"
+msgstr "Mostra noms de WPT"
+#
+msgid "Show Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show VRM"
+msgstr "Mostrar"
+#
+#, fuzzy
+msgid "Show name"
+msgstr "Mostra noms de WPT"
+#
+msgid "Show on chart"
+msgstr "Mostra a la carta"
+#
+msgid "Solid"
+msgstr "Sòlid"
+#
+msgid "Speed over Ground"
+msgstr ""
+#
+msgid "Start"
+msgstr ""
+#
+msgid "Start Point Icon"
+msgstr ""
+#
+msgid "Temporary layer"
+msgstr "Capa temporal"
+#
+#, fuzzy
+msgid "Text Colour"
+msgstr "Color de la línia:"
+#
+msgid "Text Font"
+msgstr ""
+#
+msgid "Text Point"
+msgstr ""
+#
+msgid "Text Point Icon"
+msgstr ""
+#
+msgid "Text position relative to point"
+msgstr ""
+#
+msgid "Text to Display with Point"
+msgstr ""
+#
+#, fuzzy
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"El punt OCPN que voleu suprimir s'utilitza en una ruta, segur que voleu "
+"suprimir-lo?"
+#
+#, fuzzy
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
 " This will change the paths and disable the anchor alarms.\n"
-" Answering No keeps the OCPN points used in paths or alarms."
-msgstr "Hi ha alguns punts OCPN utilitzats en rutes o alarmes d'ancoratge.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"Hi ha alguns punts OCPN utilitzats en rutes o alarmes d'ancoratge.\n"
 " Els voleu suprimir malgrat tot?\n"
 " Això canviarà les rutes i impossibilitarà les alarmes d'ancoratge.\n"
 " Si responeu No, es conservaran els punts OCPN utilitzats en rutes o alarmes."
-
-#: src/pathmanagerdialog.cpp:1701
-msgid "Hide from chart"
-msgstr "Amagar de la carta"
-
-#: src/pathmanagerdialog.cpp:1706
-msgid "Hide WPT names"
-msgstr "Amagar noms de WPT"
-
-#: src/pathmanagerdialog.cpp:1711
-msgid "Unlist contents"
-msgstr "Continguts no llistats"
-
-#: src/pathmanagerdialog.cpp:1784
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr "N'està segur de voler esborrar aquesta capa i <ALL> el seu contingut?"
-
-#: src/pathmanagerdialog.cpp:2041
-msgid "(Unnamed Layer)"
-msgstr "(Capa Sense Nom)"
-
-#: src/PathProp.cpp:204
-msgid "Dialog"
-msgstr "Diàleg"
-
-#: src/PathProp.cpp:278
-msgid "Properties"
-msgstr "Propietats"
-
-#: src/PathProp.cpp:283
-msgid "Name"
-msgstr "Nom"
-
-#: src/PathProp.cpp:296 src/PathProp.cpp:432
-msgid "Description"
-msgstr "Descripció"
-
-#: src/PathProp.cpp:307
-msgid "Total Length"
-msgstr "Distància Total"
-
-#: src/PathProp.cpp:317
-msgid "Active"
-msgstr "Activa"
-
-#: src/PathProp.cpp:326
-msgid "Line Colour:"
-msgstr "Color de la línia:"
-
-#: src/PathProp.cpp:331
-msgid "Default color"
-msgstr "Color per defecte"
-
-#: src/PathProp.cpp:331
-msgid "Black"
-msgstr "Negre"
-
-#: src/PathProp.cpp:331
-msgid "Dark Red"
-msgstr "Vermell fosc"
-
-#: src/PathProp.cpp:331
-msgid "Dark Green"
-msgstr "Verd fosc"
-
-#: src/PathProp.cpp:332
-msgid "Dark Yellow"
-msgstr "Groc fosc"
-
-#: src/PathProp.cpp:332
-msgid "Dark Blue"
-msgstr "Blau fosc"
-
-#: src/PathProp.cpp:332
-msgid "Dark Magenta"
-msgstr "Magenta fosc"
-
-#: src/PathProp.cpp:332
-msgid "Dark Cyan"
-msgstr "Cian fosc"
-
-#: src/PathProp.cpp:333
-msgid "Light Gray"
-msgstr "Gris clar"
-
-#: src/PathProp.cpp:333
-msgid "Dark Gray"
-msgstr "Gris fosc"
-
-#: src/PathProp.cpp:333
-msgid "Red"
-msgstr "Vermell"
-
-#: src/PathProp.cpp:333
-msgid "Green"
-msgstr "Verd"
-
-#: src/PathProp.cpp:333
-msgid "Yellow"
-msgstr "Groc"
-
-#: src/PathProp.cpp:333
-msgid "Blue"
-msgstr "Blau"
-
-#: src/PathProp.cpp:334
-msgid "Magenta"
-msgstr "Magenta"
-
-#: src/PathProp.cpp:334
-msgid "Cyan"
-msgstr "Cian"
-
-#: src/PathProp.cpp:334
-msgid "White"
-msgstr "Blanc"
-
-#: src/PathProp.cpp:341
-msgid "Fill Colour:"
-msgstr "Omplir de color:"
-
-#: src/PathProp.cpp:351
-msgid "Style:"
-msgstr "Estil:"
-
-#: src/PathProp.cpp:356 src/PathProp.cpp:369
-msgid "Default"
-msgstr "Per Defecte"
-
-#: src/PathProp.cpp:356
-msgid "Solid"
-msgstr "Sòlid"
-
-#: src/PathProp.cpp:356
-msgid "Dot"
-msgstr "Punt"
-
-#: src/PathProp.cpp:356
-msgid "Long dash"
-msgstr "Guió llarg"
-
-#: src/PathProp.cpp:357
-msgid "Short dash"
-msgstr "Guió curt"
-
-#: src/PathProp.cpp:357
-msgid "Dot dash"
-msgstr "Guió puntejat"
-
-#: src/PathProp.cpp:364
-msgid "Width:"
-msgstr "Amplada:"
-
-#: src/PathProp.cpp:369
-msgid "1 pixel"
-msgstr "1 pixel"
-
-#: src/PathProp.cpp:369
-msgid "2 pixels"
-msgstr "2 pixels"
-
-#: src/PathProp.cpp:369
-msgid "3 pixels"
-msgstr "3 pixels"
-
-#: src/PathProp.cpp:370
-msgid "4 pixels"
-msgstr "4 pixels"
-
-#: src/PathProp.cpp:370
-msgid "5 pixels"
-msgstr "5 pixels"
-
-#: src/PathProp.cpp:370
-msgid "6 pixels"
-msgstr "6 pixels"
-
-#: src/PathProp.cpp:370
-msgid "7 pixels"
-msgstr "7 pixels"
-
-#: src/PathProp.cpp:370
-msgid "8 pixels"
-msgstr "8 pixels"
-
-#: src/PathProp.cpp:371
-msgid "9 pixels"
-msgstr "9 pixels"
-
-#: src/PathProp.cpp:371
-msgid "10 pixels"
-msgstr "10 pixels"
-
-#: src/PathProp.cpp:381
-msgid "ODPoints"
+#
+msgid "Time"
 msgstr ""
-
-#: src/PathProp.cpp:394
-msgid "Cancel"
-msgstr "Cancel·la"
-
-#: src/PathProp.cpp:398
-msgid "OK"
-msgstr "Ok"
-
-#: src/PathProp.cpp:416
-msgid "Leg"
-msgstr "Tram/etapa"
-
-#: src/PathProp.cpp:417
+#
+msgid "Time Units"
+msgstr ""
+#
 msgid "To Point"
 msgstr ""
-
-#: src/PathProp.cpp:418
-msgid "Distance"
-msgstr "Distància"
-
-#: src/PathProp.cpp:421
-msgid "Bearing (M)"
-msgstr "Rumb (M)"
-
-#: src/PathProp.cpp:423
-msgid "Bearing"
-msgstr "Rumb"
-
-#: src/PathProp.cpp:425
-msgid "Latitude"
-msgstr "Latitud"
-
-#: src/PathProp.cpp:426
-msgid "Longitude"
-msgstr "Longitud"
-
-#: src/PathProp.cpp:427 src/PathProp.cpp:575
-msgid "Next tide event"
-msgstr "Propera marea"
-
-#: src/PathProp.cpp:429
-msgid "Course (M)"
-msgstr "Curs (M)"
-
-#: src/PathProp.cpp:431
-msgid "Course"
-msgstr "Curs"
-
+#
+msgid "Top"
+msgstr ""
+#
+msgid "Top Centre"
+msgstr ""
+#
+msgid "Total Length"
+msgstr "Distància Total"
+#
+msgid "Total Length: "
+msgstr ""
+#
+msgid "Unlist contents"
+msgstr "Continguts no llistats"
+#
+msgid "Update initial conditions"
+msgstr ""
+#
+msgid "Use nearby OD Point?"
+msgstr ""
+#
+msgid "Use nearby Point?"
+msgstr ""
+#
+msgid "Version:"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr ""
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+#
+msgid "ocpn_draw_pi data location"
+msgstr ""
+#
+#
+#
+#
+#~ msgid "&Go To"
+#~ msgstr "&Anar a"
+#
+#
+#
+#
+#~ msgid "(Unnamed OCPN Point)"
+#~ msgstr "(Punt OCPN sense nom)"
+#
+#
+#
+#
+#~ msgid "Black"
+#~ msgstr "Negre"
+#
+#
+#
+#
+#~ msgid "Blue"
+#~ msgstr "Blau"
+#
+#
+#
+#
+#~ msgid "Course (M)"
+#~ msgstr "Curs (M)"
+#
+#
+#
+#
+#~ msgid "Cyan"
+#~ msgstr "Cian"
+#
+#
+#
+#
+#~ msgid "Dark Blue"
+#~ msgstr "Blau fosc"
+#
+#
+#
+#
+#~ msgid "Dark Cyan"
+#~ msgstr "Cian fosc"
+#
+#
+#
+#
+#~ msgid "Dark Gray"
+#~ msgstr "Gris fosc"
+#
+#
+#
+#
+#~ msgid "Dark Green"
+#~ msgstr "Verd fosc"
+#
+#
+#
+#
+#~ msgid "Dark Magenta"
+#~ msgstr "Magenta fosc"
+#
+#
+#
+#
+#~ msgid "Dark Red"
+#~ msgstr "Vermell fosc"
+#
+#
+#
+#
+#~ msgid "Dark Yellow"
+#~ msgstr "Groc fosc"
+#
+#
+#
+#
+#~ msgid "Default"
+#~ msgstr "Per Defecte"
+#
+#
+#
+#
+#~ msgid "Default color"
+#~ msgstr "Color per defecte"
+#
+#
+#
+#
+#~ msgid "Delete..."
+#~ msgstr "Suprimir..."
+#
+#
+#
+#
+#~ msgid "Dialog"
+#~ msgstr "Diàleg"
+#
+#
+#
+#
+#~ msgid "Green"
+#~ msgstr "Verd"
+#
+#
+#
+#
+#~ msgid "Leg"
+#~ msgstr "Tram/etapa"
+#
+#
+#
+#
+#~ msgid "Light Gray"
+#~ msgstr "Gris clar"
+#
+#
+#
+#
+#~ msgid "Magenta"
+#~ msgstr "Magenta"
+#
+#
+#
+#
+#~ msgid "Marks"
+#~ msgstr "Marques"
+#
+#
+#
+#
+#~ msgid "Next tide event"
+#~ msgstr "Propera marea"
+#
+#
+#
+#
+#~ msgid "OK"
+#~ msgstr "Ok"
+#
+#
+#
+#
+#~ msgid "Red"
+#~ msgstr "Vermell"
+#
+#
+#
+#
+#~ msgid "White"
+#~ msgstr "Blanc"
+#
+#
+#
+#
+#~ msgid "Yellow"
+#~ msgstr "Groc"

@@ -758,7 +758,11 @@ void PathManagerDialog::UpdatePathListCtrl()
         wxString name = ( *it )->m_PathNameString;
         if( name.IsEmpty() ) {
             name = _("(Unnamed )");
+#if wxCHECK_VERSION(3,0,0)
+            name.append( _(( *it )->m_sTypeString ) );
+#else
             name.append( ( *it )->m_sTypeString );
+#endif
         }
         m_pPathListCtrl->SetItem( idx, colPATHNAME, name );
         wxString desc = ( *it ) ->m_PathDescription;
@@ -1003,7 +1007,11 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() )
             g_pODPathPropDialog->SetDialogTitle( _("Path Properties") );
         else {
+#if wxCHECK_VERSION(3,0,0)
+            wxString sTitle( _(l_pPath->m_sTypeString) );
+#else
             wxString sTitle( l_pPath->m_sTypeString );
+#endif
             sTitle.append( _(" Properties") );
             g_pODPathPropDialog->SetDialogTitle( sTitle );
         }
@@ -1014,7 +1022,11 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
             caption.append( _("Path Properties, Layer: ") );
         }
         else {
+#if wxCHECK_VERSION(3,0,0)
+            caption.append( _(l_pPath->m_sTypeString) );
+#else
             caption.append( l_pPath->m_sTypeString );
+#endif
             caption.append( _(" Properties, Layer:") );
         }
         caption.append( GetLayerName( l_pPath->m_LayerID ) );
@@ -1257,7 +1269,11 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
             wxString name = op->GetName();
             if( name.IsEmpty() ) {
                 name.append( _("(Unnamed) ") );
+#if wxCHECK_VERSION(3,0,0)
+                name.append( _(op->m_sTypeString) );
+#else
                 name.append( op->m_sTypeString );
+#endif
             }
             m_pODPointListCtrl->SetItem( idx, colOCPNPOINTNAME, name );
 

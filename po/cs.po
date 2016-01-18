@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-06 11:26-0500\n"
+"POT-Creation-Date: 2016-01-18 09:56+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
@@ -15,507 +15,917 @@ msgstr ""
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: cs\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
-
-#: src/ODConfig.cpp:146 src/ODConfig.cpp:186 src/ODConfig.cpp:283
-#: src/ODConfig.cpp:308
-msgid "Export GPX file"
+#
+msgid " &Properties..."
 msgstr ""
-
-#: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:296
-msgid "Overwrite existing file?"
+#
+msgid " Delete"
 msgstr ""
-
-#: src/ODConfig.cpp:380
-msgid "Import GPX file"
+#
+msgid " Point"
 msgstr ""
-
-#: src/ODEventHandler.cpp:183
-msgid "(unnamed)"
+#
+msgid " Properties"
 msgstr ""
-
-#: src/ODEventHandler.cpp:187
-msgid "Total Length: "
+#
+msgid " Properties, Layer:"
 msgstr ""
-
-#: src/ODEventHandler.cpp:188
-msgid "Leg: from "
+#
+msgid " To: "
 msgstr ""
-
-#: src/ODEventHandler.cpp:189
+#
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+#
 msgid " to "
 msgstr ""
-
-#: src/ODEventHandler.cpp:510
-msgid "Layer Path"
-msgstr ""
-
-#: src/ODEventHandler.cpp:511 src/ODEventHandler.cpp:514
-#: src/ODEventHandler.cpp:539 src/ODEventHandler.cpp:548
-msgid "Properties..."
-msgstr ""
-
-#: src/ODEventHandler.cpp:520
-msgid "Delete..."
-msgstr ""
-
-#: src/ODEventHandler.cpp:521
-msgid "Deactivate"
-msgstr ""
-
-#: src/ODEventHandler.cpp:522
-msgid "Activate"
-msgstr ""
-
-#: src/ODEventHandler.cpp:567
-msgid "Remove Point from Path"
-msgstr ""
-
-#: src/ODEventHandler.cpp:570 src/ODEventHandler.cpp:572
-msgid "Delete"
-msgstr ""
-
-#: src/ODPoint.cpp:504 src/ODPoint.cpp:505
-msgid "Marks"
-msgstr ""
-
-#: src/ODPointPropertiesImpl.cpp:99
-msgid "Copy"
-msgstr ""
-
-#: src/ODPointPropertiesImpl.cpp:100
-msgid "Copy lat/long"
-msgstr ""
-
-#: src/ODPointPropertiesImpl.cpp:101
-msgid "Paste"
-msgstr ""
-
-#: src/ODPointPropertiesImpl.cpp:102
-msgid "Paste lat/long"
-msgstr ""
-
-#: src/ODRolloverWin.cpp:105 src/ODRolloverWin.cpp:148
-msgid "PathLegInfoRollover"
-msgstr ""
-
-#: src/ODUndo.cpp:80
-msgid "Create ODPoint"
-msgstr ""
-
-#: src/ODUndo.cpp:83
-msgid "Delete ODPoint"
-msgstr ""
-
-#: src/ODUndo.cpp:86
-msgid "Move ODPoint"
-msgstr ""
-
-#: src/ODUndo.cpp:89
-msgid "Append ODPoint"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:395
-msgid "Path & Point Manager"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:428
-msgid "Paths"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:449
-msgid "Show"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:450
-msgid "Path Name"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:451
-msgid "Desc"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:457
-msgid "&Properties..."
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:462 src/pathmanagerdialog.cpp:799
+#
 msgid "&Activate"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:469 src/pathmanagerdialog.cpp:531
+#
+msgid "&Apply"
+msgstr ""
+#
+msgid "&Cancel"
+msgstr ""
+#
 msgid "&Center View"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:476 src/pathmanagerdialog.cpp:536
-#: src/pathmanagerdialog.cpp:623
-msgid "&Delete"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:481 src/pathmanagerdialog.cpp:546
-msgid "&Export selected..."
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:488
-msgid "&Delete All"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:498
-msgid "OCPN Points"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:514
-msgid "Icon"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:515
-msgid "OCPN Point Name"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:516
-msgid "Distance from Ownship"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:521
-msgid "&New"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:526
-msgid "&Properties"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:541
-msgid "&Go To"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:558
-msgid "Delete All"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:569
-msgid "I&mport GPX..."
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:579
-msgid "Export All Visible..."
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:589
-msgid "Layers"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:613
-msgid "Temporary layer"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:628 src/pathmanagerdialog.cpp:1703
-#: src/pathmanagerdialog.cpp:1715
-msgid "Show on chart"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:633 src/pathmanagerdialog.cpp:1708
-#: src/pathmanagerdialog.cpp:1716
-msgid "Show WPT names"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:638 src/pathmanagerdialog.cpp:1713
-#: src/pathmanagerdialog.cpp:1717
-msgid "List contents"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:647
-msgid "&OK"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:755
-msgid "(Unnamed )"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:798
+#
 msgid "&Deactivate"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:864 src/pathmanagerdialog.cpp:1488
-msgid "Are you sure you want to delete the selected object(s)"
+#
+msgid "&Delete"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:864 src/pathmanagerdialog.cpp:913
-#: src/pathmanagerdialog.cpp:1488 src/pathmanagerdialog.cpp:1521
-#: src/pathmanagerdialog.cpp:1651 src/pathmanagerdialog.cpp:1785
-msgid "OpenCPN Alert"
+#
+msgid "&Delete All"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:912
-msgid "Are you sure you want to delete <ALL> paths?"
+#
+msgid "&Export selected..."
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1128
-msgid "Do you also want to make the shared OCPN Points being part of this boundary invisible?"
+#
+msgid "&New"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1128
-msgid "Question"
+#
+msgid "&OK"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1247
-msgid "(Unnamed OCPN Point)"
+#
+msgid "&Properties"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1521
-msgid "The OCPN Point you want to delete is used in a path, do you really want to delete it?"
+#
+msgid "&Properties..."
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1641
-msgid "Are you sure you want to delete <ALL> OCPN points?"
+#
+msgid "&Remove Selected"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1647
-msgid "There are some OCPN points used in paths or anchor alarms.\n"
-" Do you want to delete them as well?\n"
-" This will change the paths and disable the anchor alarms.\n"
-" Answering No keeps the OCPN points used in paths or alarms."
+#
+msgid "(Unnamed )"
 msgstr ""
-
-#: src/pathmanagerdialog.cpp:1701
-msgid "Hide from chart"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:1706
-msgid "Hide WPT names"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:1711
-msgid "Unlist contents"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:1784
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr ""
-
-#: src/pathmanagerdialog.cpp:2041
+#
 msgid "(Unnamed Layer)"
 msgstr ""
-
-#: src/PathProp.cpp:204
-msgid "Dialog"
+#
+msgid "(Unnamed) "
 msgstr ""
-
-#: src/PathProp.cpp:278
-msgid "Properties"
+#
+msgid "(unnamed)"
 msgstr ""
-
-#: src/PathProp.cpp:283
-msgid "Name"
+#
+msgid ", Layer: "
 msgstr ""
-
-#: src/PathProp.cpp:296 src/PathProp.cpp:432
-msgid "Description"
+#
+msgid ", this is not allowed."
 msgstr ""
-
-#: src/PathProp.cpp:307
-msgid "Total Length"
+#
+msgid "0"
 msgstr ""
-
-#: src/PathProp.cpp:317
-msgid "Active"
+#
+msgid "0.0"
 msgstr ""
-
-#: src/PathProp.cpp:326
-msgid "Line Colour:"
+#
+msgid "0.5"
 msgstr ""
-
-#: src/PathProp.cpp:331
-msgid "Default color"
+#
+msgid "1"
 msgstr ""
-
-#: src/PathProp.cpp:331
-msgid "Black"
+#
+msgid "1 Pixel"
 msgstr ""
-
-#: src/PathProp.cpp:331
-msgid "Dark Red"
-msgstr ""
-
-#: src/PathProp.cpp:331
-msgid "Dark Green"
-msgstr ""
-
-#: src/PathProp.cpp:332
-msgid "Dark Yellow"
-msgstr ""
-
-#: src/PathProp.cpp:332
-msgid "Dark Blue"
-msgstr ""
-
-#: src/PathProp.cpp:332
-msgid "Dark Magenta"
-msgstr ""
-
-#: src/PathProp.cpp:332
-msgid "Dark Cyan"
-msgstr ""
-
-#: src/PathProp.cpp:333
-msgid "Light Gray"
-msgstr ""
-
-#: src/PathProp.cpp:333
-msgid "Dark Gray"
-msgstr ""
-
-#: src/PathProp.cpp:333
-msgid "Red"
-msgstr ""
-
-#: src/PathProp.cpp:333
-msgid "Green"
-msgstr ""
-
-#: src/PathProp.cpp:333
-msgid "Yellow"
-msgstr ""
-
-#: src/PathProp.cpp:333
-msgid "Blue"
-msgstr ""
-
-#: src/PathProp.cpp:334
-msgid "Magenta"
-msgstr ""
-
-#: src/PathProp.cpp:334
-msgid "Cyan"
-msgstr ""
-
-#: src/PathProp.cpp:334
-msgid "White"
-msgstr ""
-
-#: src/PathProp.cpp:341
-msgid "Fill Colour:"
-msgstr ""
-
-#: src/PathProp.cpp:351
-msgid "Style:"
-msgstr ""
-
-#: src/PathProp.cpp:356 src/PathProp.cpp:369
-msgid "Default"
-msgstr ""
-
-#: src/PathProp.cpp:356
-msgid "Solid"
-msgstr ""
-
-#: src/PathProp.cpp:356
-msgid "Dot"
-msgstr ""
-
-#: src/PathProp.cpp:356
-msgid "Long dash"
-msgstr ""
-
-#: src/PathProp.cpp:357
-msgid "Short dash"
-msgstr ""
-
-#: src/PathProp.cpp:357
-msgid "Dot dash"
-msgstr ""
-
-#: src/PathProp.cpp:364
-msgid "Width:"
-msgstr ""
-
-#: src/PathProp.cpp:369
+#
 msgid "1 pixel"
 msgstr ""
-
-#: src/PathProp.cpp:369
-msgid "2 pixels"
+#
+msgid "10"
 msgstr ""
-
-#: src/PathProp.cpp:369
-msgid "3 pixels"
+#
+msgid "10 Pixels"
 msgstr ""
-
-#: src/PathProp.cpp:370
-msgid "4 pixels"
-msgstr ""
-
-#: src/PathProp.cpp:370
-msgid "5 pixels"
-msgstr ""
-
-#: src/PathProp.cpp:370
-msgid "6 pixels"
-msgstr ""
-
-#: src/PathProp.cpp:370
-msgid "7 pixels"
-msgstr ""
-
-#: src/PathProp.cpp:370
-msgid "8 pixels"
-msgstr ""
-
-#: src/PathProp.cpp:371
-msgid "9 pixels"
-msgstr ""
-
-#: src/PathProp.cpp:371
+#
 msgid "10 pixels"
 msgstr ""
-
-#: src/PathProp.cpp:381
-msgid "ODPoints"
+#
+msgid "2"
 msgstr ""
-
-#: src/PathProp.cpp:394
-msgid "Cancel"
+#
+msgid "2 Pixels"
 msgstr ""
-
-#: src/PathProp.cpp:398
-msgid "OK"
+#
+msgid "2 pixels"
 msgstr ""
-
-#: src/PathProp.cpp:416
-msgid "Leg"
+#
+msgid "3"
 msgstr ""
-
-#: src/PathProp.cpp:417
-msgid "To Point"
+#
+msgid "3 Pixels"
 msgstr ""
-
-#: src/PathProp.cpp:418
-msgid "Distance"
+#
+msgid "3 pixels"
 msgstr ""
-
-#: src/PathProp.cpp:421
-msgid "Bearing (M)"
+#
+msgid "4"
 msgstr ""
-
-#: src/PathProp.cpp:423
+#
+msgid "4 Pixels"
+msgstr ""
+#
+msgid "4 pixels"
+msgstr ""
+#
+msgid "5"
+msgstr ""
+#
+msgid "5 Pixels"
+msgstr ""
+#
+msgid "5 pixels"
+msgstr ""
+#
+msgid "6"
+msgstr ""
+#
+msgid "6 Pixels"
+msgstr ""
+#
+msgid "6 pixels"
+msgstr ""
+#
+msgid "7"
+msgstr ""
+#
+msgid "7 Pixels"
+msgstr ""
+#
+msgid "7 pixels"
+msgstr ""
+#
+msgid "8"
+msgstr ""
+#
+msgid "8 Pixels"
+msgstr ""
+#
+msgid "8 pixels"
+msgstr ""
+#
+msgid "9"
+msgstr ""
+#
+msgid "9 Pixels"
+msgstr ""
+#
+msgid "9 pixels"
+msgstr ""
+#
+msgid "About"
+msgstr ""
+#
+msgid "Activate"
+msgstr ""
+#
+msgid "Active"
+msgstr ""
+#
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr ""
+#
+msgid "Active EBL Line Colour"
+msgstr ""
+#
+msgid "Active Fill Colour"
+msgstr ""
+#
+msgid "Active Line Colour"
+msgstr ""
+#
+msgid "Always"
+msgstr ""
+#
+msgid "Applying changes from "
+msgstr ""
+#
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr ""
+#
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr ""
+#
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr ""
+#
+msgid "Are you sure you want to delete this "
+msgstr ""
+#
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr ""
+#
+msgid "Are you sure you want to remove this "
+msgstr ""
+#
+msgid "Are you sure you want to remove this point?"
+msgstr ""
+#
+msgid "Arrival Radius"
+msgstr ""
+#
+msgid "Background Colour"
+msgstr ""
+#
+msgid "Background Density"
+msgstr ""
+#
+msgid "Background Transparency"
+msgstr ""
+#
+msgid "Basic"
+msgstr ""
+#
 msgid "Bearing"
 msgstr ""
-
-#: src/PathProp.cpp:425
+#
+msgid "Bearing (M)"
+msgstr ""
+#
+msgid "Bearing From-To"
+msgstr ""
+#
+msgid "Bearing From-To (M)"
+msgstr ""
+#
+msgid "Boat"
+msgstr ""
+#
+msgid "Bottom"
+msgstr ""
+#
+msgid "Bottom Centre"
+msgstr ""
+#
+msgid "Boundary"
+msgstr ""
+#
+msgid "Boundary Point"
+msgstr ""
+#
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+#
+msgid "Boundary Point Type"
+msgstr ""
+#
+msgid "Boundary Type"
+msgstr ""
+#
+msgid "Centre"
+msgstr ""
+#
+msgid "Centre on boat lat lon"
+msgstr ""
+#
+msgid "Centre on moving boat"
+msgstr ""
+#
+msgid "Change all Path Point Icons"
+msgstr ""
+#
+msgid "Confirm"
+msgstr ""
+#
+msgid "Confirm Object Delete"
+msgstr ""
+#
+msgid "Copy"
+msgstr ""
+#
+msgid "Copy Point GUID"
+msgstr ""
+#
+msgid "Copy lat/long"
+msgstr ""
+#
+msgid "Course over Ground"
+msgstr ""
+#
+msgid "Create Boundary"
+msgstr ""
+#
+msgid "Create Boundary Point"
+msgstr ""
+#
+msgid "Create DR"
+msgstr ""
+#
+msgid "Create EBL"
+msgstr ""
+#
+msgid "Create Text Point"
+msgstr ""
+#
+msgid "DR"
+msgstr ""
+#
+msgid "DR Path Length"
+msgstr ""
+#
+msgid "DR Persistence"
+msgstr ""
+#
+msgid "DR Point"
+msgstr ""
+#
+msgid "DR Point Icon"
+msgstr ""
+#
+msgid "DR Point Interval"
+msgstr ""
+#
+msgid "Date:"
+msgstr ""
+#
+msgid "Days"
+msgstr ""
+#
+msgid "Deactivate"
+msgstr ""
+#
+msgid "Dead Reckoning"
+msgstr ""
+#
+msgid "Delete"
+msgstr ""
+#
+msgid "Delete All"
+msgstr ""
+#
+msgid "Desc"
+msgstr ""
+#
+msgid "Description"
+msgstr ""
+#
+msgid "Display Toolbar"
+msgstr ""
+#
+msgid "Display text"
+msgstr ""
+#
+msgid "Distance"
+msgstr ""
+#
+msgid "Distance Between Range Rings"
+msgstr ""
+#
+msgid "Distance From Boat"
+msgstr ""
+#
+msgid "Distance Unit"
+msgstr ""
+#
+msgid "Distance Units"
+msgstr ""
+#
+msgid "Distance between Range Rings"
+msgstr ""
+#
+msgid "Distance from Ownship"
+msgstr ""
+#
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+#
+msgid "Dot"
+msgstr ""
+#
+msgid "Dot Dash"
+msgstr ""
+#
+msgid "EBL"
+msgstr ""
+#
+msgid "EBL Fixed End Position"
+msgstr ""
+#
+msgid "EBL Persistence"
+msgstr ""
+#
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+#
+msgid "Electronic Bearing Line"
+msgstr ""
+#
+msgid "End"
+msgstr ""
+#
+msgid "End Point Icon"
+msgstr ""
+#
+msgid "Example"
+msgstr ""
+#
+msgid "Exclusion"
+msgstr ""
+#
+msgid "Export All Visible..."
+msgstr ""
+#
+msgid "Export GPX file"
+msgstr ""
+#
+msgid "Extended"
+msgstr ""
+#
+msgid "Fill Colour"
+msgstr ""
+#
+msgid "Fill Density"
+msgstr ""
+#
+msgid "Fonts"
+msgstr ""
+#
+msgid "For this leg the Great Circle boundary is "
+msgstr ""
+#
+msgid "From Point"
+msgstr ""
+#
+msgid "From: "
+msgstr ""
+#
+msgid "GUID"
+msgstr ""
+#
+msgid "General"
+msgstr ""
+#
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+#
+msgid "General drawing for OpenCPN"
+msgstr ""
+#
+msgid "Hide Point names"
+msgstr ""
+#
+msgid "Hide from chart"
+msgstr ""
+#
+msgid "Hours"
+msgstr ""
+#
+msgid "I&mport GPX..."
+msgstr ""
+#
+msgid "Icon"
+msgstr ""
+#
+msgid "Import GPX file"
+msgstr ""
+#
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+#
+msgid "Inactive EBL Line Colour"
+msgstr ""
+#
+msgid "Inactive Fill Colour"
+msgstr ""
+#
+msgid "Inactive Line Colour"
+msgstr ""
+#
+msgid "Inclusion"
+msgstr ""
+#
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+#
+msgid "Inclusion Boundary Size"
+msgstr ""
+#
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+#
+msgid "Insert"
+msgstr ""
+#
+msgid "Interval Type"
+msgstr ""
+#
+msgid "Kilometres"
+msgstr ""
+#
 msgid "Latitude"
 msgstr ""
-
-#: src/PathProp.cpp:426
+#
+msgid "Layer"
+msgstr ""
+#
+msgid "Layer "
+msgstr ""
+#
+msgid "Layer Boundary"
+msgstr ""
+#
+msgid "Layer Name"
+msgstr ""
+#
+msgid "Layers"
+msgstr ""
+#
+msgid "Left"
+msgstr ""
+#
+msgid "Leg: from "
+msgstr ""
+#
+msgid "Length Type"
+msgstr ""
+#
+msgid "Line Colour"
+msgstr ""
+#
+msgid "Line Style"
+msgstr ""
+#
+msgid "Line Width"
+msgstr ""
+#
+msgid "List contents"
+msgstr ""
+#
+msgid "Loading navobjects from "
+msgstr ""
+#
+msgid "Long Dash"
+msgstr ""
+#
 msgid "Longitude"
 msgstr ""
-
-#: src/PathProp.cpp:427 src/PathProp.cpp:575
-msgid "Next tide event"
+#
+msgid "Major:"
 msgstr ""
-
-#: src/PathProp.cpp:429
-msgid "Course (M)"
+#
+msgid "Match VRM colour to EBL colour"
 msgstr ""
-
-#: src/PathProp.cpp:431
-msgid "Course"
+#
+msgid "Minor:"
 msgstr ""
-
+#
+msgid "Minutes"
+msgstr ""
+#
+msgid "Move"
+msgstr ""
+#
+msgid "Move "
+msgstr ""
+#
+msgid "Name"
+msgstr ""
+#
+msgid "Name:"
+msgstr ""
+#
+msgid "Name: "
+msgstr ""
+#
+msgid "Nautical Miles"
+msgstr ""
+#
+msgid "Nav Object Backups"
+msgstr ""
+#
+msgid "Neither"
+msgstr ""
+#
+msgid "Never"
+msgstr ""
+#
+#, c-format
+msgid "New layer %d: %s"
+msgstr ""
+#
+msgid "No. of items"
+msgstr ""
+#
+msgid "None"
+msgstr ""
+#
+msgid "Number of Point Range Rings"
+msgstr ""
+#
+msgid "Number of Range Rings"
+msgstr ""
+#
+msgid "OCPN Draw"
+msgstr ""
+#
+msgid "OCPN Draw Boundary"
+msgstr ""
+#
+msgid "OCPN Draw Boundary Create"
+msgstr ""
+#
+msgid "OCPN Draw Delete "
+msgstr ""
+#
+msgid "OCPN Draw Manager"
+msgstr ""
+#
+msgid "OCPN Draw Point Create"
+msgstr ""
+#
+msgid "OCPN Draw Properties"
+msgstr ""
+#
+msgid "OCPN Draw Remove "
+msgstr ""
+#
+msgid "OCPN Draw Remove ODPoint"
+msgstr ""
+#
+msgid "OD Point"
+msgstr ""
+#
+msgid "OD Point Name"
+msgstr ""
+#
+msgid "OD Point Properties"
+msgstr ""
+#
+msgid "OD Points"
+msgstr ""
+#
+msgid "On Rollover Only"
+msgstr ""
+#
+msgid "OpenCPN Alert"
+msgstr ""
+#
+msgid "Other:"
+msgstr ""
+#
+msgid "Overwrite existing file?"
+msgstr ""
+#
+msgid "Paste"
+msgstr ""
+#
+msgid "Paste lat/long"
+msgstr ""
+#
+msgid "Patch:"
+msgstr ""
+#
+msgid "Path"
+msgstr ""
+#
+msgid "Path & Point Manager"
+msgstr ""
+#
+msgid "Path Name"
+msgstr ""
+#
+msgid "Path Persistence"
+msgstr ""
+#
+msgid "Path Properties"
+msgstr ""
+#
+msgid "Path Properties, Layer: "
+msgstr ""
+#
+msgid "Paths"
+msgstr ""
+#
+msgid "Persistent"
+msgstr ""
+#
+msgid "Persistent over Crash"
+msgstr ""
+#
+msgid "Pick a new start point"
+msgstr ""
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+#
+msgid "Point Inclusion Size"
+msgstr ""
+#
+msgid "Point Type"
+msgstr ""
+#
+msgid "Points"
+msgstr ""
+#
+msgid "Properties"
+msgstr ""
+#
+msgid "Properties..."
+msgstr ""
+#
+msgid "Question"
+msgstr ""
+#
+msgid "Range Ring Colours"
+msgstr ""
+#
+msgid "Range Ring Line Style"
+msgstr ""
+#
+msgid "Range Ring Line Width"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr ""
+#
+msgid "Removing this point will invalidate the "
+msgstr ""
+#
+msgid "Right"
+msgstr ""
+#
+msgid "Short Dash"
+msgstr ""
+#
+msgid "Show"
+msgstr ""
+#
+msgid "Show DR Direction Arrow"
+msgstr ""
+#
+msgid "Show Display Text"
+msgstr ""
+#
+msgid "Show EBL Direction Arrow"
+msgstr ""
+#
+msgid "Show Magnetic Bearings"
+msgstr ""
+#
+msgid "Show Name"
+msgstr ""
+#
+msgid "Show Path Direction Arrow"
+msgstr ""
+#
+msgid "Show Point Range Rings"
+msgstr ""
+#
+msgid "Show Point names"
+msgstr ""
+#
+msgid "Show Range Rings"
+msgstr ""
+#
+msgid "Show VRM"
+msgstr ""
+#
+msgid "Show name"
+msgstr ""
+#
+msgid "Show on chart"
+msgstr ""
+#
+msgid "Solid"
+msgstr ""
+#
+msgid "Speed over Ground"
+msgstr ""
+#
+msgid "Start"
+msgstr ""
+#
+msgid "Start Point Icon"
+msgstr ""
+#
+msgid "Temporary layer"
+msgstr ""
+#
+msgid "Text Colour"
+msgstr ""
+#
+msgid "Text Font"
+msgstr ""
+#
+msgid "Text Point"
+msgstr ""
+#
+msgid "Text Point Icon"
+msgstr ""
+#
+msgid "Text position relative to point"
+msgstr ""
+#
+msgid "Text to Display with Point"
+msgstr ""
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+#
+msgid "Time"
+msgstr ""
+#
+msgid "Time Units"
+msgstr ""
+#
+msgid "To Point"
+msgstr ""
+#
+msgid "Top"
+msgstr ""
+#
+msgid "Top Centre"
+msgstr ""
+#
+msgid "Total Length"
+msgstr ""
+#
+msgid "Total Length: "
+msgstr ""
+#
+msgid "Unlist contents"
+msgstr ""
+#
+msgid "Update initial conditions"
+msgstr ""
+#
+msgid "Use nearby OD Point?"
+msgstr ""
+#
+msgid "Use nearby Point?"
+msgstr ""
+#
+msgid "Version:"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr ""
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+#
+msgid "ocpn_draw_pi data location"
+msgstr ""

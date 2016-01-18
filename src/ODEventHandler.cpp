@@ -238,14 +238,22 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     
                     if( !pp->m_bIsInLayer ) {
                         wxString wxsText;
+#if wxCHECK_VERSION(3,0,0)
+                        wxsText.append( _(pp->m_sTypeString) );
+#else
                         wxsText.append( pp->m_sTypeString );
+#endif
                         wxsText.append( wxT(": ") );
                         s.append( wxsText );
                     }
                     else {
                         wxString wxsText;
                         wxsText.append( _("Layer ") );
+#if wxCHECK_VERSION(3,0,0)
+                        wxsText.append( _(pp->m_sTypeString) );
+#else
                         wxsText.append( pp->m_sTypeString );
+#endif
                         wxsText.append( wxT(": ") );
                         s.Append( wxsText );
                     }
@@ -345,7 +353,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         wxString s;
                         if( !pp->m_bIsInLayer ) {
                             wxString wxsText;
+#if wxCHECK_VERSION(3,0,0)
+                            wxsText.append( _(pp->m_sTypeString) );
+#else
                             wxsText.append( pp->m_sTypeString );
+#endif
                             wxsText.append( wxT(": ") );
                             s.append( wxsText );
                         }
@@ -353,7 +365,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                             wxString wxsText;
                             wxsText.append( _("Layer") );
                             wxsText.append( wxT(" ") );
+#if wxCHECK_VERSION(3,0,0)
+                            wxsText.append( _(pp->m_sTypeString) );
+#else
                             wxsText.append( pp->m_sTypeString );
+#endif
                             wxsText.append( wxT(": ") );
                             s.Append( wxsText );
                         }

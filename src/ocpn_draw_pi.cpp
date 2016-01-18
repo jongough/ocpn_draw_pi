@@ -636,11 +636,11 @@ wxString ocpn_draw_pi::GetCommonName()
 }
 wxString ocpn_draw_pi::GetShortDescription()
 {
-    return wxS("General drawing for OpenCPN");
+    return _("General drawing for OpenCPN");
 }
 wxString ocpn_draw_pi::GetLongDescription()
 {
-    return wxS("General Drawing for OpenCPN\n\nThanks to the community for their helpful suggestions.");
+    return _("General Drawing for OpenCPN\n\nThanks to the community for their helpful suggestions.");
 }
 void ocpn_draw_pi::SendVectorChartObjectInfo(wxString &chart, wxString &feature, wxString &objname, double lat, double lon, double scale, int nativescale) 
 {
@@ -2635,7 +2635,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
         int dlg_return;
         #ifndef __WXOSX__
         dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Point?"),
-                                            _("OpenCPN Point Create"),
+                                            _("OCPN Draw Point Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else
         dlg_return = wxID_YES;
@@ -2695,8 +2695,8 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     {
         int dlg_return;
         #ifndef __WXOSX__
-        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Pointoint?"),
-                                            _("OpenCPN Point Create"),
+        dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Point?"),
+                                            _("OCPN Draw Point Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else
         dlg_return = wxID_YES;
@@ -2770,7 +2770,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         int dlg_return;
         #ifndef __WXOSX__
         dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby OD Point?"),
-                                            _("OpenCPN Boundary Create"),
+                                            _("OCPN Draw Boundary Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
         #else
         dlg_return = wxID_YES;
@@ -2823,7 +2823,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 
                 m_disable_edge_pan = true;  // This helps on OS X if MessageBox does not fully capture mouse
                 
-                int answer = OCPNMessageBox_PlugIn( m_parent_window, msg, _("OpenCPN Boundary Create"), wxYES_NO | wxNO_DEFAULT );
+                int answer = OCPNMessageBox_PlugIn( m_parent_window, msg, _("OCPN Draw Boundary Create"), wxYES_NO | wxNO_DEFAULT );
                 
                 m_disable_edge_pan = false;
                 

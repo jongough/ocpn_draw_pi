@@ -10,6 +10,7 @@
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
+#include <wx/intl.h>
 #include <wx/gdicmn.h>
 #include <wx/toolbar.h>
 #include <wx/font.h>
@@ -42,7 +43,7 @@ class ODToolbarDialog : public wxDialog
 	public:
 		wxToolBar* m_toolBarODToolbar;
 		
-		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER ); 
+		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER ); 
 		~ODToolbarDialog();
 	
 };
