@@ -10,6 +10,7 @@ IF (GETTEXT_XGETTEXT_EXECUTABLE)
   ADD_CUSTOM_COMMAND(
     OUTPUT po/${PACKAGE_NAME}.pot.dummy
     COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE} --force-po -F --package-name=${PACKAGE_NAME} --package-version="${PACKAGE_VERSION}" --output=po/${PACKAGE_NAME}.pot  --keyword=_ --width=80 -D${CMAKE_CURRENT_SOURCE_DIR} ${SRCS} ${HDRS}
+    DEPENDS ${SRCS} ${HDRS}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "${I18N_NAME}-pot-update [${PACKAGE_NAME}]: Generated pot file."
     )

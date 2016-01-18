@@ -562,14 +562,22 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         wxString caption( wxS("") );
         if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
-            caption.append( wxS("OCPN Draw Point") );
+            caption.append( _("OCPN Draw Point") );
         else
-            caption.append( m_pODPoint->GetTypeString() );
+#if wxCHECK_VERSION(3,0,0)
+            caption.append( _(m_pODPoint->GetTypeString()) );
+#else
+        caption.append( m_pODPoint->GetTypeString() );
+#endif
         caption.append( _(" Properties") );
         
         if( m_pODPoint->m_bIsInLayer ) {
             caption.append( _(", Layer: ") );
+#if wxCHECK_VERSION(3,0,0)
+            caption.Append( _(g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID )) );
+#else
             caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
+#endif
         }
         SetTitle( caption );
         

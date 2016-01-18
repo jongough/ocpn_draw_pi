@@ -169,9 +169,13 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
     if( ! m_pPath->m_bIsInLayer ) {
         wxString sPropertiesType( wxS("") );
         if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
-            sPropertiesType.append( wxS("OCPN Draw Point") );
+            sPropertiesType.append( _("OCPN Draw Point") );
         else {
+#if wxCHECK_VERSION(3,0,0)
+            sPropertiesType.append( _(m_pPath->m_sTypeString) );
+#else
             sPropertiesType.append( m_pPath->m_sTypeString );
+#endif
             sPropertiesType.append( _(" Point") );
         }
         sPropertiesType.append( _(" &Properties...") );
@@ -601,7 +605,7 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
         }
         case ID_PATHPROP_MENU_REMOVE: {
             int dlg_return = OCPNMessageBox_PlugIn( this, _("Are you sure you want to remove this point?"),
-                                             _("OD Remove ODPoint"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+                                             _("OCPN Draw Remove ODPoint"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             
             if( dlg_return == wxID_YES ) {
                 long item = -1;

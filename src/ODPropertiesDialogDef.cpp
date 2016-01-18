@@ -85,7 +85,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -436,6 +436,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerTextPoint->Fit( m_panelTextPoint );
 	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelPath->Hide();
+	
 	wxFlexGridSizer* fgSizerPathSettings;
 	fgSizerPathSettings = new wxFlexGridSizer( 6, 4, 0, 0 );
 	fgSizerPathSettings->SetFlexibleDirection( wxBOTH );
@@ -479,7 +481,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelPath->SetSizer( fgSizerPathSettings );
 	m_panelPath->Layout();
 	fgSizerPathSettings->Fit( m_panelPath );
-	m_notebookProperties->AddPage( m_panelPath, _("Path"), false );
+	m_notebookProperties->AddPage( m_panelPath, _("Path"), true );
 	m_panelEBL = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerEBLSettings;
 	fgSizerEBLSettings = new wxFlexGridSizer( 0, 2, 0, 0 );

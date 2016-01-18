@@ -75,7 +75,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_textLatitude->SetMaxLength( 0 ); 
 	bSizerLatLon->Add( m_textLatitude, 1, wxALL, 2 );
 	
-	m_staticTextLogitude = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Logitude"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextLogitude = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Longitude"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLogitude->Wrap( -1 );
 	bSizerLatLon->Add( m_staticTextLogitude, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 	
@@ -238,7 +238,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), false );
+	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), true );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_bSizerDisplayText = new wxBoxSizer( wxVERTICAL );
 	
@@ -317,7 +317,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDisplayText->SetSizer( m_bSizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_bSizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
