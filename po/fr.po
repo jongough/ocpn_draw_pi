@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 09:56+1100\n"
+"POT-Creation-Date: 2016-01-20 15:55+1100\n"
 "PO-Revision-Date: 2016-01-17 16:17-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -435,6 +435,10 @@ msgstr "Point"
 msgid "Dot Dash"
 msgstr "Pointillé"
 #
+#, fuzzy
+msgid "Draw Toolbar"
+msgstr "Afficher la barre d'icônes"
+#
 msgid "EBL"
 msgstr "EBL"
 #
@@ -689,6 +693,10 @@ msgstr "Supprimer OCPN Draw "
 #
 msgid "OCPN Draw Manager"
 msgstr "Gestionnaire de OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "Créer un point OpenCPN"
 #
 #, fuzzy
 msgid "OCPN Draw Point Create"
@@ -974,8 +982,20 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Logitude"
 #~ msgstr "Longitude"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -984,8 +1004,20 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Créer une limite OpenCPN"
+#
+#
+#
+#
+#
+#
 #
 #
 #

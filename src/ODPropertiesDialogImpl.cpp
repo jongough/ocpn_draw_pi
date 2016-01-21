@@ -182,6 +182,9 @@ ODPropertiesDialogDef( parent )
     m_textCtrlDRPointInterval->SetValidator( dDRPointIntervalVal );
     m_textCtrlDRPointRangeRingSteps->SetValidator( dDRPointRangeRingStepVal );
 #endif
+    int l_iPage = m_notebookProperties->FindPage(m_panelPath);
+    m_notebookProperties->DeletePage(l_iPage);
+    SetDialogSize();
 }
 
 void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )
@@ -315,11 +318,11 @@ void ODPropertiesDialogImpl::SaveChanges()
             break;
     }
     
-    g_colourActivePathLineColour = m_colourPickerActivePathLineColour->GetColour();
-    g_colourInActivePathLineColour = m_colourPickerInActivePathLineColour->GetColour();
+//    g_colourActivePathLineColour = m_colourPickerActivePathLineColour->GetColour();
+//    g_colourInActivePathLineColour = m_colourPickerInActivePathLineColour->GetColour();
 
-    g_PathLineWidth = ::WidthValues[ m_choicePathLineWidth->GetSelection() ];
-    g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
+//    g_PathLineWidth = ::WidthValues[ m_choicePathLineWidth->GetSelection() ];
+//    g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
     
     g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
     g_EBLLineWidth = ::WidthValues[ m_choiceEBLLineWidth->GetSelection() ];
@@ -389,6 +392,8 @@ void ODPropertiesDialogImpl::SaveChanges()
 
 void ODPropertiesDialogImpl::SetDialogSize( void )
 {
+    m_notebookProperties->SetSelection(m_notebookProperties->FindPage(m_panelGeneral));
+    
     wxSize sz = m_SizerProperties->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
     wxSize dsize = ::wxGetDisplaySize();
@@ -403,7 +408,9 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
     this->Layout();
+    m_notebookProperties->Layout();
     this->GetSizer()->Fit(this);
+    
 }
 
 void ODPropertiesDialogImpl::UpdateProperties( void )
@@ -548,14 +555,14 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_colourPickerActiveBoundaryFillColour->SetColour( g_colourActiveBoundaryFillColour );
         m_colourPickerInActiveBoundaryFillColour->SetColour( g_colourInActiveBoundaryFillColour );
         
-        m_colourPickerActivePathLineColour->SetColour( g_colourActivePathLineColour );
-        m_colourPickerInActivePathLineColour->SetColour( g_colourInActivePathLineColour );
+//        m_colourPickerActivePathLineColour->SetColour( g_colourActivePathLineColour );
+//        m_colourPickerInActivePathLineColour->SetColour( g_colourInActivePathLineColour );
         
         for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
             if( g_BoundaryLineStyle == ::StyleValues[i] )
                 m_choiceBoundaryLineStyle->SetSelection( i );
-            if( g_PathLineStyle == ::StyleValues[i] )
-                m_choicePathLineStyle->SetSelection( i );
+//            if( g_PathLineStyle == ::StyleValues[i] )
+//                m_choicePathLineStyle->SetSelection( i );
             if( g_EBLLineStyle == ::StyleValues[i] )
                 m_choiceEBLLineStyle->SetSelection( i );
             if( g_DRLineStyle == ::StyleValues[i] )
@@ -568,8 +575,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
             if( g_BoundaryLineWidth == ::WidthValues[i] )
                 m_choiceBoundaryLineWidth->SetSelection( i );
-            if( g_PathLineWidth == ::WidthValues[i] )
-                m_choicePathLineWidth->SetSelection( i );
+//            if( g_PathLineWidth == ::WidthValues[i] )
+//                m_choicePathLineWidth->SetSelection( i );
             if( g_EBLLineWidth == ::WidthValues[i] )
                 m_choiceEBLLineWidth->SetSelection( i );
             if( g_iBoundaryPointRangeRingLineWidth == ::WidthValues[i] )
