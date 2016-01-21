@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 15:55+1100\n"
+"POT-Creation-Date: 2016-01-21 15:41+1100\n"
 "PO-Revision-Date: 2016-01-17 22:01-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Dutch\n"
@@ -18,18 +18,6 @@ msgstr ""
 #
 msgid " &Properties..."
 msgstr " &Eigenschappen ..."
-#
-msgid " Delete"
-msgstr " Verwijderen"
-#
-msgid " Point"
-msgstr " Punt"
-#
-msgid " Properties"
-msgstr " Eigenschappen"
-#
-msgid " Properties, Layer:"
-msgstr "Eigenschappen, kaartlaag:"
 #
 msgid " To: "
 msgstr "Naar: "
@@ -94,12 +82,6 @@ msgstr "(naamloos) "
 #
 msgid "(unnamed)"
 msgstr "(onbenoemd)"
-#
-msgid ", Layer: "
-msgstr ", kaartlaag: "
-#
-msgid ", this is not allowed."
-msgstr ", dit is niet toegestaan."
 #
 msgid "0"
 msgstr "0"
@@ -238,7 +220,32 @@ msgstr "Weet u zeker dat u ALLE lijnen wilt verwijderen?"
 msgid "Are you sure you want to delete the selected object(s)"
 msgstr "Weet u zeker dat u de geselecteerde objecten wilt verwijderen?"
 #
-msgid "Are you sure you want to delete this "
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR?"
+msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this OD Point?"
 msgstr "Weet u zeker dat u dit wilt verwijderen? "
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
@@ -247,6 +254,26 @@ msgstr ""
 #
 msgid "Are you sure you want to remove this "
 msgstr "Weet u zeker dat u dit wilt verwijderen? "
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Weet u zeker dat u dit punt wilt verwijderen?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Weet u zeker dat u dit punt wilt verwijderen?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Weet u zeker dat u dit punt wilt verwijderen?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Weet u zeker dat u dit punt wilt verwijderen?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Text Point?"
+msgstr "Weet u zeker dat u dit punt wilt verwijderen?"
 #
 msgid "Are you sure you want to remove this point?"
 msgstr "Weet u zeker dat u dit punt wilt verwijderen?"
@@ -293,6 +320,10 @@ msgstr "Rechtlijnig gebied"
 msgid "Boundary Point"
 msgstr "Cirkelgebied"
 #
+#, fuzzy
+msgid "Boundary Point &Properties"
+msgstr "Type cirkelgebied"
+#
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
@@ -300,8 +331,24 @@ msgstr ""
 "Breedte grensarcering\n"
 "(voor beperkend gebied)"
 #
+#, fuzzy
+msgid "Boundary Point Properties"
+msgstr "Eigenschappen OD-punt"
+#
+#, fuzzy
+msgid "Boundary Point Properties, Layer: "
+msgstr "Lijneigenschappen, kaartlaag: "
+#
 msgid "Boundary Point Type"
 msgstr "Type cirkelgebied"
+#
+#, fuzzy
+msgid "Boundary Properties"
+msgstr " Eigenschappen"
+#
+#, fuzzy
+msgid "Boundary Properties, Layer: "
+msgstr "Eigenschappen, kaartlaag:"
 #
 msgid "Boundary Type"
 msgstr "Type gebied"
@@ -326,6 +373,18 @@ msgstr "Objectverwijdering bevestigen"
 #
 msgid "Copy"
 msgstr "Kopieëren"
+#
+#, fuzzy
+msgid "Copy Boundary GUID"
+msgstr "GUID van punt kopiëren"
+#
+#, fuzzy
+msgid "Copy DR GUID"
+msgstr "GUID van punt kopiëren"
+#
+#, fuzzy
+msgid "Copy EBL GUID"
+msgstr "GUID van punt kopiëren"
 #
 msgid "Copy Point GUID"
 msgstr "GUID van punt kopiëren"
@@ -363,11 +422,31 @@ msgstr "Vasthouden gegiste track"
 msgid "DR Point"
 msgstr "Gispunt"
 #
+#, fuzzy
+msgid "DR Point &Properties"
+msgstr "Eigenschappen OD-punt"
+#
 msgid "DR Point Icon"
 msgstr "Pictogram gis-punt"
 #
 msgid "DR Point Interval"
 msgstr "Interval gisposities"
+#
+#, fuzzy
+msgid "DR Point Properties"
+msgstr "Eigenschappen OD-punt"
+#
+#, fuzzy
+msgid "DR Point Properties, Layer: "
+msgstr "Lijneigenschappen, kaartlaag: "
+#
+#, fuzzy
+msgid "DR Properties"
+msgstr " Eigenschappen"
+#
+#, fuzzy
+msgid "DR Properties, Layer: "
+msgstr "Eigenschappen, kaartlaag:"
 #
 msgid "Date:"
 msgstr "Datum:"
@@ -386,6 +465,10 @@ msgstr "Verwijderen"
 #
 msgid "Delete All"
 msgstr "Verwijder alles"
+#
+#, fuzzy
+msgid "Delete..."
+msgstr "Verwijderen"
 #
 msgid "Desc"
 msgstr "Beschrijving"
@@ -445,6 +528,30 @@ msgstr "Peilinglijn heeft vaste eindpositie"
 #
 msgid "EBL Persistence"
 msgstr "Vasthouding peilinglijn"
+#
+#, fuzzy
+msgid "EBL Point"
+msgstr " Punt"
+#
+#, fuzzy
+msgid "EBL Point &Properties"
+msgstr "Eigenschappen OD-punt"
+#
+#, fuzzy
+msgid "EBL Point Properties"
+msgstr "Eigenschappen OD-punt"
+#
+#, fuzzy
+msgid "EBL Point Properties, Layer: "
+msgstr "Lijneigenschappen, kaartlaag: "
+#
+#, fuzzy
+msgid "EBL Properties"
+msgstr " Eigenschappen"
+#
+#, fuzzy
+msgid "EBL Properties, Layer: "
+msgstr "Eigenschappen, kaartlaag:"
 #
 msgid ""
 "Edge Panning Sensitivity\n"
@@ -564,8 +671,17 @@ msgstr ""
 "Gevoeligheid randwaarneming (eerste punt)\n"
 "(percentage van schermbreedte; standaard 3)"
 #
-msgid "Insert"
-msgstr "Invoegen"
+#, fuzzy
+msgid "Insert Boundary Point"
+msgstr "Teken cirkelgebied"
+#
+#, fuzzy
+msgid "Insert DR Point"
+msgstr "Gispunt"
+#
+#, fuzzy
+msgid "Insert EBL Point"
+msgstr "Tekstpunt"
 #
 msgid "Interval Type"
 msgstr "Intervaltype"
@@ -585,8 +701,24 @@ msgstr "Kaartlaag "
 msgid "Layer Boundary"
 msgstr "Layer Boundary"
 #
+#, fuzzy
+msgid "Layer Boundary Point"
+msgstr "Teken cirkelgebied"
+#
+#, fuzzy
+msgid "Layer DR Point"
+msgstr "Gispunt"
+#
+#, fuzzy
+msgid "Layer EBL Point"
+msgstr "Layer Boundary"
+#
 msgid "Layer Name"
 msgstr "Kaartlaagnaam"
+#
+#, fuzzy
+msgid "Layer Text Point"
+msgstr "Teken tekstpunt"
 #
 msgid "Layers"
 msgstr "Kaartlagen"
@@ -633,11 +765,33 @@ msgstr "Minor:"
 msgid "Minutes"
 msgstr "minuten"
 #
-msgid "Move"
-msgstr "Verplaatsen"
+#, fuzzy
+msgid "Move Boundary"
+msgstr "Rechtlijnig gebied"
 #
-msgid "Move "
+#, fuzzy
+msgid "Move Boundary Point"
+msgstr "Cirkelgebied"
+#
+#, fuzzy
+msgid "Move DR Point"
+msgstr "Gispunt"
+#
+#, fuzzy
+msgid "Move EBL"
 msgstr "Verplaatsen "
+#
+#, fuzzy
+msgid "Move EBL Point"
+msgstr "Naar punt"
+#
+#, fuzzy
+msgid "Move OD Point"
+msgstr "OD-punt"
+#
+#, fuzzy
+msgid "Move Text Point"
+msgstr "Tekstpunt"
 #
 msgid "Name"
 msgstr "Naam"
@@ -686,11 +840,40 @@ msgstr "OCPN Draw Boundary"
 msgid "OCPN Draw Boundary Create"
 msgstr "OCPN Draw Boundary"
 #
-msgid "OCPN Draw Delete "
+#, fuzzy
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN Draw Boundary"
+#
+#, fuzzy
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN Draw Verwijderen "
+#
+#, fuzzy
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Teken cirkelgebied"
+#
+#, fuzzy
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN Draw Verwijderen "
+#
+#, fuzzy
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN Draw Verwijderen "
+#
+#, fuzzy
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN Draw Weghalen "
+#
+#, fuzzy
+msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Draw Verwijderen "
 #
 msgid "OCPN Draw Manager"
 msgstr "OCPN Draw Manager"
+#
+#, fuzzy
+msgid "OCPN Draw Path &Properties"
+msgstr "Eigenschappen OCPN Draw PlugIn"
 #
 #, fuzzy
 msgid "OCPN Draw Point"
@@ -700,6 +883,10 @@ msgstr "OCPN Draw"
 msgid "OCPN Draw Point Create"
 msgstr "Maak OpenCPN-punt"
 #
+#, fuzzy
+msgid "OCPN Draw Point, Layer: "
+msgstr "Maak OpenCPN-punt"
+#
 msgid "OCPN Draw Properties"
 msgstr "Eigenschappen OCPN Draw PlugIn"
 #
@@ -707,7 +894,27 @@ msgid "OCPN Draw Remove "
 msgstr "OCPN Draw Weghalen "
 #
 #, fuzzy
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN Draw Weghalen "
+#
+#, fuzzy
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN Draw Weghalen "
+#
+#, fuzzy
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN Draw Weghalen "
+#
+#, fuzzy
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN Draw Weghalen "
+#
+#, fuzzy
 msgid "OCPN Draw Remove ODPoint"
+msgstr "OCPN Draw Weghalen "
+#
+#, fuzzy
+msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN Draw Weghalen "
 #
 msgid "OD Point"
@@ -830,7 +1037,8 @@ msgstr "Dikte afstandscirkels"
 msgid "Remove Point from Path"
 msgstr "Verwijder punt van lijn"
 #
-msgid "Removing this point will invalidate the "
+#, fuzzy
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr "Dit put verwijderen leidt tot ongeldigheid van "
 #
 msgid "Right"
@@ -975,9 +1183,31 @@ msgid "ocpn_draw_pi data location"
 msgstr "Gegevensmap opencpn_draw_pi"
 #
 #
+#~ msgid " Delete"
+#~ msgstr " Verwijderen"
+#
+#
+#~ msgid ", Layer: "
+#~ msgstr ", kaartlaag: "
+#
+#
+#~ msgid ", this is not allowed."
+#~ msgstr ", dit is niet toegestaan."
+#
+#
+#~ msgid "Insert"
+#~ msgstr "Invoegen"
+#
+#
+#
 #
 #~ msgid "Logitude"
 #~ msgstr "Lengte"
+#
+#
+#~ msgid "Move"
+#~ msgstr "Verplaatsen"
+#
 #
 #
 #
@@ -986,8 +1216,10 @@ msgstr "Gegevensmap opencpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Maak OpenCPN gebeidsgrens"
+#
 #
 #
 #

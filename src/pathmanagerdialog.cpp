@@ -1006,29 +1006,24 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
     if( !l_pPath->m_bIsInLayer ) {
         if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() )
             g_pODPathPropDialog->SetDialogTitle( _("Path Properties") );
-        else {
-#if wxCHECK_VERSION(3,0,0)
-            wxString sTitle( _(l_pPath->m_sTypeString) );
-#else
-            wxString sTitle( l_pPath->m_sTypeString );
-#endif
-            sTitle.append( _(" Properties") );
-            g_pODPathPropDialog->SetDialogTitle( sTitle );
-        }
+        else if(l_pPath->m_sTypeString == wxT("Boundary")) 
+            g_pODPathPropDialog->SetDialogTitle(_("Boundary Properties"));
+        else if(l_pPath->m_sTypeString == wxT("EBL")) 
+            g_pODPathPropDialog->SetDialogTitle(_("EBL Properties"));
+        else if(l_pPath->m_sTypeString == wxT("DR")) 
+            g_pODPathPropDialog->SetDialogTitle(_("DR Properties"));
     }
     else {
         wxString caption( wxS("") );
-        if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() ) {
+        if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() ) 
             caption.append( _("Path Properties, Layer: ") );
-        }
-        else {
-#if wxCHECK_VERSION(3,0,0)
-            caption.append( _(l_pPath->m_sTypeString) );
-#else
-            caption.append( l_pPath->m_sTypeString );
-#endif
-            caption.append( _(" Properties, Layer:") );
-        }
+        else if(l_pPath->m_sTypeString == wxT("Boundary")) 
+            caption.append(_("Boundary Properties, Layer: "));
+        else if(l_pPath->m_sTypeString == wxT("EBL")) 
+            caption.append(_("EBL Properties, Layer: "));
+        else if(l_pPath->m_sTypeString == wxT("DR")) 
+            caption.append(_("DR Properties, Layer: "));
+        
         caption.append( GetLayerName( l_pPath->m_LayerID ) );
         g_pODPathPropDialog->SetDialogTitle( caption );
         
@@ -1593,27 +1588,7 @@ void PathManagerDialog::OnODPointExportClick( wxCommandEvent &event )
 
     g_pODConfig->ExportGPXODPoints( this, &list, suggested_name );
 }
-/*
-void PathManagerDialog::OnODPointSendToGPSClick( wxCommandEvent &event )
-{
-    long item = -1;
-    item = m_pODPointListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-    if( item == -1 ) return;
 
-    ODPoint *wp = (ODPoint *) m_pODPointListCtrl->GetItemData( item );
-
-    if( !wp ) return;
-
-    SendToGpsDlg *pdlg = new SendToGpsDlg();
-    pdlg->SetODPoint( wp );
-
-    wxString source;
-    pdlg->Create( NULL, -1, _( "Send To GPS..." ), source );
-    pdlg->ShowModal();
-
-    delete pdlg;
-}
-*/
 void PathManagerDialog::OnODPointDeleteAllClick( wxCommandEvent &event )
 {
     wxString prompt;

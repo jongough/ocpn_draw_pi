@@ -490,20 +490,21 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_DELETE: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sTypeLong = _("Are you sure you want to delete this ");
-#if wxCHECK_VERSION(3,0,0)
-                sTypeLong.append( _(m_pSelectedPath->m_sTypeString) );
-#else
-                sTypeLong.append( m_pSelectedPath->m_sTypeString );
-#endif
-                sTypeLong.append( wxT("?") );
-                wxString sTypeShort = wxT("OpenCPN ");
-#if wxCHECK_VERSION(3,0,0)
-                sTypeShort.append( _(m_pSelectedPath->m_sTypeString) );
-#else
-                sTypeShort.append( m_pSelectedPath->m_sTypeString );
-#endif
-                sTypeShort.append( _(" Delete") );
+                wxString sTypeLong;
+                wxString sTypeShort;
+                if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+                    sTypeLong = _("Are you sure you want to delete this Boundary?");
+                    sTypeShort = _("OCPN Draw Boundary Delete");
+                }
+                else if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                    sTypeLong = _("Are you sure you want to delete this EBL?");
+                    sTypeShort = _("OCPN Draw EBL Delete");
+                }
+                else if(m_pSelectedPath->m_sTypeString == wxT("DR")) {
+                    sTypeLong = _("Are you sure you want to delete this DR?");
+                    sTypeShort = _("OCPN Draw DR Delete");
+                }
+
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
             
@@ -569,10 +570,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         case ID_PATH_MENU_REMPOINT: {
             dlg_return = wxID_YES;
-            if( m_pSelectedPath->m_pODPointList->GetCount() < 4) {
-                wxString sMessage(_("Removing this point will invalidate the "));
-                sMessage.append(m_pSelectedPath->m_sTypeString);
-                sMessage.append(_(", this is not allowed."));
+            if( m_pSelectedPath->m_pODPointList->GetCount() < 4 && m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+                wxString sMessage(_("Removing this point will invalidate the Boundary, this is not allowed."));
                 wxString sCaption( _("OCPN Draw Remove ") );
                 wxString sType( wxS("") );
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
@@ -592,24 +591,32 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxString sMessage( _("Are you sure you want to remove this ") );
                 wxString sCaption( _("OCPN Draw Remove ") );
                 wxString sType( wxS("") );
-                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( _("OD Point") );
-                else
-#if wxCHECK_VERSION(3,0,0)
-                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
-#else
-                    sType.append( m_pFoundODPoint->GetTypeString() );
-#endif
-                sMessage.append( sType );
-                sMessage.append( wxS("?") );
-                sCaption.append( sType );
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() ) {
+                    sMessage = _("Are you sure you want to remove this OD Point?");
+                    sCaption = _("OCPN Draw Remove OD Point");
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point")) {
+                    sMessage = _("Are you sure you want to remove this Boundary Point?");
+                    sCaption = _("OCPN Draw Remove Boundary Point");
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
+                    sMessage = _("Are you sure you want to remove this EBL Point?");
+                    sCaption = _("OCPN Draw Remove EBL Point");
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point")) {
+                    sMessage = _("Are you sure you want to remove this DR Point?");
+                    sCaption = _("OCPN Draw Remove DR Point");
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("Text Point")) {
+                    sMessage = _("Are you sure you want to remove this Text Point?");
+                    sCaption = _("OCPN Draw Remove Text Point");
+                } else {
+                    sMessage = _("Are you sure you want to remove this OD Point?");
+                    sCaption = _("OCPN Draw Remove OD Point");
+                }
                 
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
             
             if( dlg_return == wxID_YES ) {
                 m_pSelectedPath->RemovePointFromPath( m_pFoundODPoint, m_pSelectedPath );
-                m_pFoundODPoint->SetTypeString( _("OD Point") );
+                m_pFoundODPoint->SetTypeString( wxT("OD Point") );
                 g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
                 g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
                 
@@ -633,20 +640,21 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_DELPOINT: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sMessage( _("Are you sure you want to delete this ") );
-                wxString sCaption( _("OCPN Draw Delete ") );
-                wxString sType( wxS("") );
-                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( _("OD Point") );
-                else
-#if wxCHECK_VERSION(3,0,0)
-                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
-#else
-                    sType.append( m_pFoundODPoint->GetTypeString() );
-#endif
-                sMessage.append( sType );
-                sMessage.append( wxS("?") );
-                sCaption.append( sType );
+                wxString sMessage;
+                wxString sCaption;
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() ) {
+                    sMessage = _("Are you sure you want to delete this OD Point?");
+                    sCaption = _("OCPN Draw Delete OD Point");
+                } else if(m_pFoundODPoint->m_sTypeString == "Boundary Point") {
+                    sMessage = _("Are you sure you want to delete this Boundary Point?");
+                    sCaption = _("OCPN Draw Delete Boundary Point");
+                } else if(m_pFoundODPoint->m_sTypeString == "DR Point") {
+                    sMessage = _("Are you sure you want to delete this DR Point?");
+                    sCaption = _("OCPN Draw Delete DR Point");
+                } else if(m_pFoundODPoint->m_sTypeString == "EBL Point") {
+                    sMessage = _("Are you sure you want to delete this EBL Point?");
+                    sCaption = _("OCPN Draw Delete EBL Point");
+                }
                 
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
@@ -668,20 +676,21 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_ODPOINT_MENU_DELPOINT: {
             dlg_return = wxID_YES;
             if( g_bConfirmObjectDelete ) {
-                wxString sMessage( _("Are you sure you want to delete this ") );
-                wxString sCaption( _("OCPN Draw Delete ") );
-                wxString sType( wxS("") );
-                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() )
-                    sType.append( _("OD Point") );
-                else
-#if wxCHECK_VERSION(3,0,0)
-                    sType.append( _(m_pFoundODPoint->GetTypeString()) );
-#else
-                    sType.append( m_pFoundODPoint->GetTypeString() );
-#endif
-                sMessage.append( sType );
-                sMessage.append( wxS("?") );
-                sCaption.append( sType );
+                wxString sMessage;
+                wxString sCaption;
+                if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() ) {
+                    sMessage = _("Are you sure you want to delete this OD Point?");
+                    sCaption = _("OCPN Draw Delete OD Point");
+                } else if(m_pFoundODPoint->m_sTypeString == "Boundary Point") {
+                    sMessage = _("Are you sure you want to delete this Boundary Point?");
+                    sCaption = _("OCPN Draw Delete Boundary Point");
+                } else if(m_pFoundODPoint->m_sTypeString == "DR Point") {
+                    sMessage = _("Are you sure you want to delete this DR Point?");
+                    sCaption = _("OCPN Draw Delete DR Point");
+                } else if(m_pFoundODPoint->m_sTypeString == "EBL Point") {
+                    sMessage = _("Are you sure you want to delete this EBL Point?");
+                    sCaption = _("OCPN Draw Delete EBL Point");
+                }
                 
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
             }
@@ -800,43 +809,37 @@ void ODEventHandler::PopupMenu( int seltype )
             }
             else if(m_pSelectedPath->m_sTypeString != wxT("DR")) {
                 sString.clear();
-                sString.append( _("Move") );
-                sString.append(_T(" "));
-#if wxCHECK_VERSION(3,0,0)
-                sString.append( _(m_pSelectedPath->m_sTypeString) );
-#else
-                sString.append( m_pSelectedPath->m_sTypeString );
-#endif
+                if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                    sString.append(_("Move Boundary"));
+                else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+                    sString.append(_("Move EBL"));
+
                 MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
+                
                 sString.clear();
-                sString.append( _("Insert") );
-                sString.append(_T(" "));
-#if wxCHECK_VERSION(3,0,0)
-                sString.append( _(m_pSelectedPath->m_sTypeString) );
-#else
-                sString.append( m_pSelectedPath->m_sTypeString );
-#endif
-                sString.append( _(" Point") );
+                if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                    sString.append(_("Insert Boundary Point"));
+                else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+                    sString.append(_("Insert EBL Point"));
+                else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
+                    sString.append(_("Insert DR Point"));
+
                 MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
             }
             sString.clear();
-            sString.append( _("Delete") );
-            sString.append(_T("..."));
+            sString.append( _("Delete...") );
             MenuAppend( menuPath, ID_PATH_MENU_DELETE, sString );
             if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
                 if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
                 else  MenuAppend( menuPath, ID_PATH_MENU_ACTIVATE, _( "Activate" ) );
             }
             sString.clear();
-            sString.append(_("Copy"));
-            sString.append(_T(" "));
-#if wxCHECK_VERSION(3,0,0)
-            sString.append( _(m_pSelectedPath->m_sTypeString) );
-#else
-            sString.append( m_pSelectedPath->m_sTypeString );
-#endif
-            sString.append(_T(" "));
-            sString.append(_("GUID"));
+            if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                sString.append(_("Copy Boundary GUID"));
+            else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+                sString.append(_("Copy EBL GUID"));
+            else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
+                sString.append(_("Copy DR GUID"));
             MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
         }
         
@@ -851,12 +854,14 @@ void ODEventHandler::PopupMenu( int seltype )
         
         if( blay ){
             sString.clear();
-            sString.append( _("Layer ") );
-#if wxCHECK_VERSION(3,0,0)
-            sString.append( _(m_pFoundODPoint->m_sTypeString) );
-#else
-            sString.append( m_pFoundODPoint->m_sTypeString );
-#endif
+            if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point"))
+                sString.append(_("Layer Boundary Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("Text Point"))
+                sString.append(_("Layer Text Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point"))
+                sString.append(_("Layer EBL Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point"))
+                sString.append(_("Layer DR Point"));
             menuODPoint = new wxMenu( sString );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             
@@ -865,20 +870,30 @@ void ODEventHandler::PopupMenu( int seltype )
         }
         else {
             sString.clear();
-#if wxCHECK_VERSION(3,0,0)
-            sString.append( _(m_pFoundODPoint->m_sTypeString) );
-#else
-            sString.append( m_pFoundODPoint->m_sTypeString );
-#endif
+            if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point"))
+                sString.append(_("Boundary Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("Text Point"))
+                sString.append(_("Text Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point"))
+                sString.append(_("EBL Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point"))
+                sString.append(_("DR Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("OD Point"))
+                sString.append(_("OD Point"));
             menuODPoint = new wxMenu( sString );
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_PROPERTIES, _( "Properties..." ) );
             sString.clear();
-            sString.append( _("Move ") );
-#if wxCHECK_VERSION(3,0,0)
-            sString.append( _(m_pFoundODPoint->m_sTypeString) );
-#else
-            sString.append( m_pFoundODPoint->m_sTypeString );
-#endif
+            if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point"))
+                sString.append(_("Move Boundary Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("Text Point"))
+                sString.append(_("Move Text Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point"))
+                sString.append(_("Move EBL Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point"))
+                sString.append(_("Move DR Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("OD Point"))
+                sString.append(_("Move OD Point"));
+
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_MOVE, sString );
 
             if( m_pSelectedPath ) {

@@ -561,23 +561,29 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         icons = NULL;
         
         wxString caption( wxS("") );
-        if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
-            caption.append( _("OCPN Draw Point") );
-        else
-#if wxCHECK_VERSION(3,0,0)
-            caption.append( _(m_pODPoint->GetTypeString()) );
-#else
-        caption.append( m_pODPoint->GetTypeString() );
-#endif
-        caption.append( _(" Properties") );
-        
-        if( m_pODPoint->m_bIsInLayer ) {
-            caption.append( _(", Layer: ") );
+        if(m_pODPoint->m_bIsInLayer) {
+            if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
+                caption.append( _("OCPN Draw Point, Layer: ") );
+            else if(m_pODPoint->m_sTypeString == wxT("Boundary Point"))
+                caption.append(_("Boundary Point Properties, Layer: "));
+            else if(m_pODPoint->m_sTypeString == wxT("EBL Point"))
+                caption.append(_("EBL Point Properties, Layer: "));
+            else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
+                caption.append(_("DR Point Properties, Layer: "));
 #if wxCHECK_VERSION(3,0,0)
             caption.Append( _(g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID )) );
 #else
             caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
 #endif
+        } else {
+            if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
+                caption.append( _("OCPN Draw Point") );
+            else if(m_pODPoint->m_sTypeString == wxT("Boundary Point"))
+                caption.append(_("Boundary Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("EBL Point"))
+                caption.append(_("EBL Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
+                caption.append(_("DR Point Properties"));
         }
         SetTitle( caption );
         
