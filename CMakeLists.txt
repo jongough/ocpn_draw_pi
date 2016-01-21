@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "619")
-SET(VERSION_DATE "18/01/2016")
+SET(VERSION_PATCH "621")
+SET(VERSION_DATE "21/01/2016")
 
 SET(BUNDLE_DATA FALSE)
 
@@ -304,14 +304,9 @@ IF(OD_USE_SVG)
     ADD_DEFINITIONS(-DODraw_USE_SVG)
     IF(WIN32)
       SET(SVG_LIBS
-        ${CMAKE_SOURCE_DIR}/buildwin/gtk/cairo.lib
-    ${CMAKE_SOURCE_DIR}/buildwin/expat-2.1.0/expat.lib
+            ${CMAKE_BINARY_DIR}/cairo.lib
+            ${CMAKE_BINARY_DIR}/expat.lib
       )
-#      FILE(GLOB gtkdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/gtk/*.dll")
-#      INSTALL(FILES ${gtkdll_files} DESTINATION ".")
-#      FILE(GLOB expatdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/expat-2.1.0/*.dll")
-#      INSTALL(FILES ${expatdll_files} DESTINATION ".")
-#      MESSAGE(STATUS "GTK and Expat DLLs bundled into the installer package...")
     ELSE(WIN32)
       SET(SVG_LIBS ${CAIRO_LIBRARY} ${EXPAT_LIBRARIES} ${GTK_LIBRARIES})
     ENDIF(WIN32)
@@ -319,7 +314,7 @@ IF(OD_USE_SVG)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxsvg)
     INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude/wxSVGXML)
     IF(WIN32)
-        SET(EXTRA_LIBS ${EXTRA_LIBS} WXSVG expat cairo)
+        SET(EXTRA_LIBS ${EXTRA_LIBS} ${SVG_LIBS} wxSVG)
     ENDIF(WIN32)
   ENDIF(NOT QT_ANDROID)
 ENDIF(OD_USE_SVG)

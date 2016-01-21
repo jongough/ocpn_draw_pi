@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 0.4.619\n"
+"Project-Id-Version: ocpn_draw_pi 0.4.621\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 13:11+1100\n"
+"POT-Creation-Date: 2016-01-21 12:04+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgstr ""
 msgid "End"
 msgstr ""
 
-#: src/EBLProp.cpp:58 src/ODPropertiesDialogDef.cpp:572
+#: src/EBLProp.cpp:58 src/ODPropertiesDialogDef.cpp:573
 msgid "EBL Persistence"
 msgstr ""
 
@@ -86,7 +86,7 @@ msgstr ""
 msgid "New layer %d: %s"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:26 src/ODPropertiesDialogDef.cpp:629
+#: src/ODDRDialogDef.cpp:26 src/ODPropertiesDialogDef.cpp:630
 msgid "Speed over Ground"
 msgstr ""
 
@@ -94,7 +94,7 @@ msgstr ""
 msgid "0.0"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:34 src/ODPropertiesDialogDef.cpp:636
+#: src/ODDRDialogDef.cpp:34 src/ODPropertiesDialogDef.cpp:637
 msgid "Course over Ground"
 msgstr ""
 
@@ -102,76 +102,76 @@ msgstr ""
 msgid "0"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:42 src/ODPropertiesDialogDef.cpp:643
+#: src/ODDRDialogDef.cpp:42 src/ODPropertiesDialogDef.cpp:644
 msgid "DR Path Length"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:50 src/ODPropertiesDialogDef.cpp:650
+#: src/ODDRDialogDef.cpp:50 src/ODPropertiesDialogDef.cpp:651
 msgid "DR Point Interval"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
-#: src/ODPropertiesDialogDef.cpp:665 src/ODPropertiesDialogDef.cpp:671
+#: src/ODPropertiesDialogDef.cpp:666 src/ODPropertiesDialogDef.cpp:672
 msgid "Distance"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
-#: src/ODPropertiesDialogDef.cpp:665 src/ODPropertiesDialogDef.cpp:671
+#: src/ODPropertiesDialogDef.cpp:666 src/ODPropertiesDialogDef.cpp:672
 msgid "Time"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:60 src/ODPropertiesDialogDef.cpp:667
+#: src/ODDRDialogDef.cpp:60 src/ODPropertiesDialogDef.cpp:668
 msgid "Length Type"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:66 src/ODPropertiesDialogDef.cpp:673
+#: src/ODDRDialogDef.cpp:66 src/ODPropertiesDialogDef.cpp:674
 msgid "Interval Type"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:174
-#: src/ODPropertiesDialogDef.cpp:302 src/ODPropertiesDialogDef.cpp:677
-#: src/ODPropertiesDialogDef.cpp:764
+#: src/ODPropertiesDialogDef.cpp:302 src/ODPropertiesDialogDef.cpp:678
+#: src/ODPropertiesDialogDef.cpp:765
 msgid "Kilometres"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:174
-#: src/ODPropertiesDialogDef.cpp:302 src/ODPropertiesDialogDef.cpp:677
-#: src/ODPropertiesDialogDef.cpp:764
+#: src/ODPropertiesDialogDef.cpp:302 src/ODPropertiesDialogDef.cpp:678
+#: src/ODPropertiesDialogDef.cpp:765
 msgid "Nautical Miles"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:80 src/ODPropertiesDialogDef.cpp:679
+#: src/ODDRDialogDef.cpp:80 src/ODPropertiesDialogDef.cpp:680
 msgid "Distance Units"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:683
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:684
 msgid "Days"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:683
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:684
 msgid "Hours"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:683
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:684
 msgid "Minutes"
 msgstr ""
 
-#: src/ODDRDialogDef.cpp:86 src/ODPropertiesDialogDef.cpp:685
+#: src/ODDRDialogDef.cpp:86 src/ODPropertiesDialogDef.cpp:686
 msgid "Time Units"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:96 src/ODPathPropertiesDialogDef.cpp:192
-#: src/ODPointPropertiesDialog.cpp:354 src/ODPropertiesDialogDef.cpp:888
+#: src/ODPointPropertiesDialog.cpp:354 src/ODPropertiesDialogDef.cpp:889
 #: src/pathmanagerdialog.cpp:653
 msgid "&OK"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:100 src/ODPathPropertiesDialogDef.cpp:196
-#: src/ODPointPropertiesDialog.cpp:357 src/ODPropertiesDialogDef.cpp:891
+#: src/ODPointPropertiesDialog.cpp:357 src/ODPropertiesDialogDef.cpp:892
 msgid "&Cancel"
 msgstr ""
 
-#: src/ODDRDialogImpl.cpp:207 src/ODPropertiesDialogDef.cpp:706
+#: src/ODDRDialogImpl.cpp:207 src/ODPropertiesDialogDef.cpp:707
 msgid "DR"
 msgstr ""
 
@@ -342,99 +342,99 @@ msgid "Line Colour"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:92 src/ODPropertiesDialogDef.cpp:138
-#: src/ODPropertiesDialogDef.cpp:470 src/ODPropertiesDialogDef.cpp:554
-#: src/ODPropertiesDialogDef.cpp:619
+#: src/ODPropertiesDialogDef.cpp:471 src/ODPropertiesDialogDef.cpp:555
+#: src/ODPropertiesDialogDef.cpp:620
 msgid "Line Style"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:96 src/ODPointPropertiesDialog.cpp:201
 #: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:329
-#: src/ODPropertiesDialogDef.cpp:474 src/ODPropertiesDialogDef.cpp:558
-#: src/ODPropertiesDialogDef.cpp:623 src/ODPropertiesDialogDef.cpp:791
+#: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
+#: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Dot"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:96 src/ODPointPropertiesDialog.cpp:201
 #: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:329
-#: src/ODPropertiesDialogDef.cpp:474 src/ODPropertiesDialogDef.cpp:558
-#: src/ODPropertiesDialogDef.cpp:623 src/ODPropertiesDialogDef.cpp:791
+#: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
+#: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Dot Dash"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:96 src/ODPointPropertiesDialog.cpp:201
 #: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:329
-#: src/ODPropertiesDialogDef.cpp:474 src/ODPropertiesDialogDef.cpp:558
-#: src/ODPropertiesDialogDef.cpp:623 src/ODPropertiesDialogDef.cpp:791
+#: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
+#: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Long Dash"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:96 src/ODPointPropertiesDialog.cpp:201
 #: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:329
-#: src/ODPropertiesDialogDef.cpp:474 src/ODPropertiesDialogDef.cpp:558
-#: src/ODPropertiesDialogDef.cpp:623 src/ODPropertiesDialogDef.cpp:791
+#: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
+#: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Short Dash"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:96 src/ODPointPropertiesDialog.cpp:201
 #: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:329
-#: src/ODPropertiesDialogDef.cpp:474 src/ODPropertiesDialogDef.cpp:558
-#: src/ODPropertiesDialogDef.cpp:623 src/ODPropertiesDialogDef.cpp:791
+#: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
+#: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Solid"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:102 src/ODPropertiesDialogDef.cpp:128
-#: src/ODPropertiesDialogDef.cpp:460 src/ODPropertiesDialogDef.cpp:544
-#: src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:461 src/ODPropertiesDialogDef.cpp:545
+#: src/ODPropertiesDialogDef.cpp:610
 msgid "Line Width"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "1 pixel"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "10 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "2 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "3 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "4 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "5 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "6 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "7 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "8 pixels"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
-#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:781
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "9 pixels"
 msgstr ""
 
@@ -472,11 +472,11 @@ msgstr ""
 msgid "Boundary Type"
 msgstr ""
 
-#: src/ODPathPropertiesDialogDef.cpp:151 src/ODPropertiesDialogDef.cpp:564
+#: src/ODPathPropertiesDialogDef.cpp:151 src/ODPropertiesDialogDef.cpp:565
 msgid "EBL Fixed End Position"
 msgstr ""
 
-#: src/ODPathPropertiesDialogDef.cpp:154 src/ODPropertiesDialogDef.cpp:576
+#: src/ODPathPropertiesDialogDef.cpp:154 src/ODPropertiesDialogDef.cpp:577
 msgid "Show VRM"
 msgstr ""
 
@@ -486,17 +486,17 @@ msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:167 src/ODPointPropertiesDialog.cpp:307
 #: src/ODPropertiesDialogDef.cpp:75 src/ODPropertiesDialogDef.cpp:424
-#: src/ODPropertiesDialogDef.cpp:570 src/ODPropertiesDialogDef.cpp:693
+#: src/ODPropertiesDialogDef.cpp:571 src/ODPropertiesDialogDef.cpp:694
 msgid "Never"
 msgstr ""
 
-#: src/ODPathPropertiesDialogDef.cpp:167 src/ODPropertiesDialogDef.cpp:570
-#: src/ODPropertiesDialogDef.cpp:693
+#: src/ODPathPropertiesDialogDef.cpp:167 src/ODPropertiesDialogDef.cpp:571
+#: src/ODPropertiesDialogDef.cpp:694
 msgid "Persistent"
 msgstr ""
 
-#: src/ODPathPropertiesDialogDef.cpp:167 src/ODPropertiesDialogDef.cpp:570
-#: src/ODPropertiesDialogDef.cpp:693
+#: src/ODPathPropertiesDialogDef.cpp:167 src/ODPropertiesDialogDef.cpp:571
+#: src/ODPropertiesDialogDef.cpp:694
 msgid "Persistent over Crash"
 msgstr ""
 
@@ -602,57 +602,57 @@ msgid "Number of Point Range Rings"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "1"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "10"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "2"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "3"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "4"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "5"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "6"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "7"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "8"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "9"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:148 src/ODPropertiesDialogDef.cpp:284
-#: src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:747
 msgid "None"
 msgstr ""
 
@@ -661,22 +661,22 @@ msgid "Distance between Range Rings"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:170 src/ODPropertiesDialogDef.cpp:298
-#: src/ODPropertiesDialogDef.cpp:760
+#: src/ODPropertiesDialogDef.cpp:761
 msgid "Distance Unit"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:180 src/ODPropertiesDialogDef.cpp:308
-#: src/ODPropertiesDialogDef.cpp:770
+#: src/ODPropertiesDialogDef.cpp:771
 msgid "Range Ring Colours"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:187 src/ODPropertiesDialogDef.cpp:315
-#: src/ODPropertiesDialogDef.cpp:777
+#: src/ODPropertiesDialogDef.cpp:778
 msgid "Range Ring Line Width"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:197 src/ODPropertiesDialogDef.cpp:325
-#: src/ODPropertiesDialogDef.cpp:787
+#: src/ODPropertiesDialogDef.cpp:788
 msgid "Range Ring Line Style"
 msgstr ""
 
@@ -826,7 +826,7 @@ msgstr ""
 msgid "General"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:100 src/ODPropertiesDialogDef.cpp:446
+#: src/ODPropertiesDialogDef.cpp:100 src/ODPropertiesDialogDef.cpp:447
 msgid "Active Line Colour"
 msgstr ""
 
@@ -834,7 +834,7 @@ msgstr ""
 msgid "Active Fill Colour"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:114 src/ODPropertiesDialogDef.cpp:453
+#: src/ODPropertiesDialogDef.cpp:114 src/ODPropertiesDialogDef.cpp:454
 msgid "Inactive Line Colour"
 msgstr ""
 
@@ -842,53 +842,53 @@ msgstr ""
 msgid "Inactive Fill Colour"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "1 Pixel"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "10 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "2 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "3 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "4 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "5 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "6 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "7 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "8 Pixels"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:464
-#: src/ODPropertiesDialogDef.cpp:548 src/ODPropertiesDialogDef.cpp:613
+#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:465
+#: src/ODPropertiesDialogDef.cpp:549 src/ODPropertiesDialogDef.cpp:614
 msgid "9 Pixels"
 msgstr ""
 
@@ -902,7 +902,7 @@ msgid "Boundary"
 msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:195 src/ODPropertiesDialogDef.cpp:294
-#: src/ODPropertiesDialogDef.cpp:756
+#: src/ODPropertiesDialogDef.cpp:757
 msgid "0.5"
 msgstr ""
 
@@ -910,7 +910,7 @@ msgstr ""
 msgid "Show Name"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:227 src/ODPropertiesDialogDef.cpp:736
+#: src/ODPropertiesDialogDef.cpp:227 src/ODPropertiesDialogDef.cpp:737
 msgid "Show Range Rings"
 msgstr ""
 
@@ -924,11 +924,11 @@ msgid ""
 "Size"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:280 src/ODPropertiesDialogDef.cpp:742
+#: src/ODPropertiesDialogDef.cpp:280 src/ODPropertiesDialogDef.cpp:743
 msgid "Number of Range Rings"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:290 src/ODPropertiesDialogDef.cpp:752
+#: src/ODPropertiesDialogDef.cpp:290 src/ODPropertiesDialogDef.cpp:753
 msgid "Distance Between Range Rings"
 msgstr ""
 
@@ -950,91 +950,91 @@ msgstr ""
 msgid "Text Point"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:484
+#: src/ODPropertiesDialogDef.cpp:485
 msgid "Path"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:492
+#: src/ODPropertiesDialogDef.cpp:493
 msgid "Start Point Icon"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:511
+#: src/ODPropertiesDialogDef.cpp:512
 msgid "End Point Icon"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:530
+#: src/ODPropertiesDialogDef.cpp:531
 msgid "Active EBL Line Colour"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:537
+#: src/ODPropertiesDialogDef.cpp:538
 msgid "Inactive EBL Line Colour"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:567
+#: src/ODPropertiesDialogDef.cpp:568
 msgid "Show EBL Direction Arrow"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:583 src/ocpn_draw_pi.cpp:2903
+#: src/ODPropertiesDialogDef.cpp:584 src/ocpn_draw_pi.cpp:2903
 msgid "EBL"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:595
+#: src/ODPropertiesDialogDef.cpp:596
 msgid ""
 "Active DR Line\n"
 "Colour"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:602
+#: src/ODPropertiesDialogDef.cpp:603
 msgid ""
 "Inactive DR Line\n"
 "Colour"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:689
+#: src/ODPropertiesDialogDef.cpp:690
 msgid "Show DR Direction Arrow"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:695
+#: src/ODPropertiesDialogDef.cpp:696
 msgid "DR Persistence"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:718
+#: src/ODPropertiesDialogDef.cpp:719
 msgid "DR Point Icon"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:804
+#: src/ODPropertiesDialogDef.cpp:805
 msgid "DR Point"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:814
+#: src/ODPropertiesDialogDef.cpp:815
 msgid "Name:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:822
+#: src/ODPropertiesDialogDef.cpp:823
 msgid "Version:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:831
+#: src/ODPropertiesDialogDef.cpp:832
 msgid "Major:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:839
+#: src/ODPropertiesDialogDef.cpp:840
 msgid "Minor:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:848
 msgid "Patch:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:858
+#: src/ODPropertiesDialogDef.cpp:859
 msgid "Date:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:866
+#: src/ODPropertiesDialogDef.cpp:867
 msgid "Other:"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:870
+#: src/ODPropertiesDialogDef.cpp:871
 msgid ""
 "Please report problems using FlySpray at:\n"
 "http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n"
@@ -1050,11 +1050,11 @@ msgid ""
 "https://github.com/jongough/ocpn_draw_pi/issues\n"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:881
+#: src/ODPropertiesDialogDef.cpp:882
 msgid "About"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:894
+#: src/ODPropertiesDialogDef.cpp:895
 msgid "&Apply"
 msgstr ""
 

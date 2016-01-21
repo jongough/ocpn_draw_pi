@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 09:56+1100\n"
+"POT-Creation-Date: 2016-01-20 15:55+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -455,6 +455,9 @@ msgstr ""
 msgid "Dot Dash"
 msgstr ""
 #
+msgid "Draw Toolbar"
+msgstr ""
+#
 msgid "EBL"
 msgstr ""
 #
@@ -705,6 +708,10 @@ msgstr ""
 #
 msgid "OCPN Draw Manager"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "OCPN pisteen nimi"
 #
 #, fuzzy
 msgid "OCPN Draw Point Create"
@@ -979,8 +986,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "&Go To"
 #~ msgstr "&Mene tänne"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -989,8 +1008,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Delete..."
 #~ msgstr "Poista..."
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -999,13 +1030,31 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Marks"
 #~ msgstr "Merkit"
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Next tide event"
 #~ msgstr "Seuraava vuorovesi tapahtuma"
+#
+#
+#
+#
+#
+#
 #
 #
 #

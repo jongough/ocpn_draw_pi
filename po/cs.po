@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 09:56+1100\n"
+"POT-Creation-Date: 2016-01-20 15:55+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
@@ -426,6 +426,9 @@ msgstr ""
 msgid "Dot Dash"
 msgstr ""
 #
+msgid "Draw Toolbar"
+msgstr ""
+#
 msgid "EBL"
 msgstr ""
 #
@@ -670,6 +673,9 @@ msgid "OCPN Draw Delete "
 msgstr ""
 #
 msgid "OCPN Draw Manager"
+msgstr ""
+#
+msgid "OCPN Draw Point"
 msgstr ""
 #
 msgid "OCPN Draw Point Create"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 09:56+1100\n"
+"POT-Creation-Date: 2016-01-20 15:55+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
@@ -462,6 +462,9 @@ msgstr "Punkt"
 msgid "Dot Dash"
 msgstr "Punkt strek"
 #
+msgid "Draw Toolbar"
+msgstr ""
+#
 msgid "EBL"
 msgstr ""
 #
@@ -722,6 +725,10 @@ msgstr ""
 #
 msgid "OCPN Draw Manager"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "OCPN punktnavn"
 #
 #, fuzzy
 msgid "OCPN Draw Point Create"
@@ -1006,8 +1013,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "&Go To"
 #~ msgstr "&Gå til"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1016,8 +1035,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Black"
 #~ msgstr "Sort"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1026,8 +1057,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Course (M)"
 #~ msgstr "Kurs (M)"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1036,8 +1079,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Mørk Blå"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1046,8 +1101,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Mørk Grå"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1056,8 +1123,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Mørk Magenta"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1066,8 +1145,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Mørk Gul"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1076,8 +1167,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Default color"
 #~ msgstr "Standard farge"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1086,8 +1189,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dialog"
 #~ msgstr "Dialog"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1096,8 +1211,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Leg"
 #~ msgstr "Legg"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1106,8 +1233,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Magenta"
 #~ msgstr "Magenta"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1116,8 +1255,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Next tide event"
 #~ msgstr "Neste tidevannsforekomst"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1126,13 +1277,31 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Red"
 #~ msgstr "Rød"
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "White"
 #~ msgstr "Hvit"
+#
+#
+#
+#
+#
+#
 #
 #
 #

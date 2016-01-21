@@ -64,6 +64,7 @@ MACRO(GETTEXT_BUILD_MO)
       INSTALL(FILES ${_gmoFile} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/Resources/${_poBasename}.lproj RENAME opencpn-${PACKAGE_NAME}.mo )
     ELSE(APPLE)
       INSTALL(FILES ${_gmoFile} DESTINATION ${PREFIX_DATA}/locale/${_poBasename}/LC_MESSAGES RENAME opencpn-${PACKAGE_NAME}.mo )
+      MESSAGE (STATUS "Install language files to: ${PREFIX_DATA}/locale/${_poBasename}/LC_MESSAGES renamed to: opencpn-${PACKAGE_NAME}.mo")
     ENDIF(APPLE)
 
     SET(_gmoFiles ${_gmoFiles} ${_gmoFile})

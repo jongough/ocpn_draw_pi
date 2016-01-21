@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 09:56+1100\n"
+"POT-Creation-Date: 2016-01-20 15:55+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -465,6 +465,9 @@ msgstr "punktiirjoon"
 msgid "Dot Dash"
 msgstr "punkt-kriips-joon"
 #
+msgid "Draw Toolbar"
+msgstr ""
+#
 msgid "EBL"
 msgstr ""
 #
@@ -725,6 +728,10 @@ msgstr ""
 #
 msgid "OCPN Draw Manager"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "OCPN'i punkti nimi"
 #
 #, fuzzy
 msgid "OCPN Draw Point Create"
@@ -1010,8 +1017,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "&Go To"
 #~ msgstr "&Mine"
+#
+#
+#
 #
 #
 #
@@ -1020,8 +1033,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Black"
 #~ msgstr "must"
+#
+#
+#
 #
 #
 #
@@ -1030,8 +1049,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Course (M)"
 #~ msgstr "Kurss (M)"
+#
+#
+#
 #
 #
 #
@@ -1040,8 +1065,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Dark Blue"
 #~ msgstr "tumesinine"
+#
+#
+#
 #
 #
 #
@@ -1050,8 +1081,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Dark Gray"
 #~ msgstr "tumehall"
+#
+#
+#
 #
 #
 #
@@ -1060,8 +1097,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "tumepurpurviolett"
+#
+#
+#
 #
 #
 #
@@ -1070,8 +1113,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "tumekollane"
+#
+#
+#
 #
 #
 #
@@ -1080,8 +1129,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Default color"
 #~ msgstr "vaikimisi värv"
+#
+#
+#
 #
 #
 #
@@ -1090,8 +1145,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Dialog"
 #~ msgstr "Dialoog"
+#
+#
+#
 #
 #
 #
@@ -1100,8 +1161,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Leg"
 #~ msgstr "Lõik"
+#
+#
+#
 #
 #
 #
@@ -1110,8 +1177,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Magenta"
 #~ msgstr "purpurviolett"
+#
+#
+#
 #
 #
 #
@@ -1120,8 +1193,14 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Next tide event"
 #~ msgstr "Järgmised looded"
+#
+#
+#
 #
 #
 #
@@ -1130,13 +1209,22 @@ msgstr ""
 #
 #
 #
+#
+#
+#
 #~ msgid "Red"
 #~ msgstr "punane"
 #
 #
 #
+#
+#
+#
 #~ msgid "White"
 #~ msgstr "valge"
+#
+#
+#
 #
 #
 #

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-18 09:56+1100\n"
+"POT-Creation-Date: 2016-01-20 15:55+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -464,6 +464,9 @@ msgstr "Punt"
 msgid "Dot Dash"
 msgstr "Guió puntejat"
 #
+msgid "Draw Toolbar"
+msgstr ""
+#
 msgid "EBL"
 msgstr ""
 #
@@ -724,6 +727,10 @@ msgstr ""
 #
 msgid "OCPN Draw Manager"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "Nom de punt d'OCPN"
 #
 #, fuzzy
 msgid "OCPN Draw Point Create"
@@ -1010,8 +1017,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "&Go To"
 #~ msgstr "&Anar a"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1022,8 +1041,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Black"
 #~ msgstr "Negre"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1034,8 +1065,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Course (M)"
 #~ msgstr "Curs (M)"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1046,8 +1089,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Blau fosc"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1058,8 +1113,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Gris fosc"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1070,8 +1137,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Magenta fosc"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1082,8 +1161,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Groc fosc"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1094,8 +1185,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Default color"
 #~ msgstr "Color per defecte"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1106,8 +1209,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Dialog"
 #~ msgstr "Diàleg"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1118,8 +1233,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Leg"
 #~ msgstr "Tram/etapa"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1130,8 +1257,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Magenta"
 #~ msgstr "Magenta"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1142,8 +1281,20 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Next tide event"
 #~ msgstr "Propera marea"
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -1154,14 +1305,32 @@ msgstr ""
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "Red"
 #~ msgstr "Vermell"
 #
 #
 #
 #
+#
+#
+#
+#
+#
+#
 #~ msgid "White"
 #~ msgstr "Blanc"
+#
+#
+#
+#
+#
+#
 #
 #
 #
