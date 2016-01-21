@@ -167,17 +167,16 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
     if( m_listCtrlODPoints->GetSelectedItemCount() == 0 ) return;
     
     if( ! m_pPath->m_bIsInLayer ) {
-        wxString sPropertiesType( wxS("") );
+        wxString sPropertiesType(wxT(""));
         if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
-            sPropertiesType.append( _("OCPN Draw Point") );
-        else {
-#if wxCHECK_VERSION(3,0,0)
-            sPropertiesType.append( _(m_pPath->m_sTypeString) );
-#else
-            sPropertiesType.append( m_pPath->m_sTypeString );
-#endif
-            sPropertiesType.append( _(" Point") );
-        }
+            sPropertiesType.append( _("OCPN Draw Path &Properties") );
+        else if(m_pPath->m_sTypeString == wxT("Boundary")) 
+            sPropertiesType.append(_("Boundary Point &Properties"));
+        else if(m_pPath->m_sTypeString == wxT("EBL")) 
+            sPropertiesType.append(_("EBL Point &Properties"));
+        else if(m_pPath->m_sTypeString == wxT("DR")) 
+            sPropertiesType.append(_("DR Point &Properties"));
+                    
         sPropertiesType.append( _(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
@@ -513,9 +512,9 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
     {
         wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
         wxString msg;
-        msg.append( wxS("Name: ") );
+        msg.append( wxT("Name: ") );
         msg.append( m_pPath->m_PathNameString.c_str() );
-        msg.append( wxS(", GUID: ") );
+        msg.append( wxT(", GUID: ") );
         msg.append( m_pPath->m_GUID );
         SendPluginMessage( msg_id, msg );
         

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 15:55+1100\n"
+"POT-Creation-Date: 2016-01-21 15:41+1100\n"
 "PO-Revision-Date: 2016-01-17 16:17-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -18,18 +18,6 @@ msgstr ""
 #
 msgid " &Properties..."
 msgstr " &Propriétés ..."
-#
-msgid " Delete"
-msgstr " Supprimer"
-#
-msgid " Point"
-msgstr " Point"
-#
-msgid " Properties"
-msgstr " Propriétés"
-#
-msgid " Properties, Layer:"
-msgstr " Couche, Propriétés :"
 #
 msgid " To: "
 msgstr "à :"
@@ -94,12 +82,6 @@ msgstr "(Sans nom) "
 #
 msgid "(unnamed)"
 msgstr "(sans nom)"
-#
-msgid ", Layer: "
-msgstr ", Couche : "
-#
-msgid ", this is not allowed."
-msgstr ", ceci n'est pas permis."
 #
 msgid "0"
 msgstr "0"
@@ -240,7 +222,32 @@ msgstr "Etes vous certain de vouloir détruire <TOUS> les chemins"
 msgid "Are you sure you want to delete the selected object(s)"
 msgstr "Etes vous certain de vouloir supprimer cet ou ces object(s)"
 #
-msgid "Are you sure you want to delete this "
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Voulez vous vraiment supprimer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Voulez vous vraiment supprimer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Voulez vous vraiment supprimer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR?"
+msgstr "Voulez vous vraiment supprimer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Voulez vous vraiment supprimer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Voulez vous vraiment supprimer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to delete this OD Point?"
 msgstr "Voulez vous vraiment supprimer ceci "
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
@@ -249,6 +256,26 @@ msgstr ""
 #
 msgid "Are you sure you want to remove this "
 msgstr "Voulez vous vraiment retirer ceci "
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Voulez vous vraiment retirer ce point ?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Voulez vous vraiment retirer ce point ?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Voulez vous vraiment retirer ce point ?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Voulez vous vraiment retirer ce point ?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Text Point?"
+msgstr "Voulez vous vraiment retirer ce point ?"
 #
 msgid "Are you sure you want to remove this point?"
 msgstr "Voulez vous vraiment retirer ce point ?"
@@ -295,6 +322,10 @@ msgstr "Limite"
 msgid "Boundary Point"
 msgstr "Point limite"
 #
+#, fuzzy
+msgid "Boundary Point &Properties"
+msgstr "Type de point limite"
+#
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
@@ -302,8 +333,24 @@ msgstr ""
 "Zone quadrillée autour d'un point limite\n"
 "Largeur de la zone"
 #
+#, fuzzy
+msgid "Boundary Point Properties"
+msgstr "Propriété d'un point OD"
+#
+#, fuzzy
+msgid "Boundary Point Properties, Layer: "
+msgstr "Couche, propriétés du chemin : "
+#
 msgid "Boundary Point Type"
 msgstr "Type de point limite"
+#
+#, fuzzy
+msgid "Boundary Properties"
+msgstr " Propriétés"
+#
+#, fuzzy
+msgid "Boundary Properties, Layer: "
+msgstr " Couche, Propriétés :"
 #
 msgid "Boundary Type"
 msgstr "Type de limite"
@@ -328,6 +375,18 @@ msgstr "Confirmer la suppression de l'objet"
 #
 msgid "Copy"
 msgstr "Copier"
+#
+#, fuzzy
+msgid "Copy Boundary GUID"
+msgstr "Copier le GUID du point"
+#
+#, fuzzy
+msgid "Copy DR GUID"
+msgstr "Copier le GUID du point"
+#
+#, fuzzy
+msgid "Copy EBL GUID"
+msgstr "Copier le GUID du point"
 #
 msgid "Copy Point GUID"
 msgstr "Copier le GUID du point"
@@ -365,11 +424,31 @@ msgstr "Persistence DR"
 msgid "DR Point"
 msgstr "Point DR"
 #
+#, fuzzy
+msgid "DR Point &Properties"
+msgstr "Propriété d'un point OD"
+#
 msgid "DR Point Icon"
 msgstr "Icône d'un point DR"
 #
 msgid "DR Point Interval"
 msgstr "Intervalle entre deux points du DR"
+#
+#, fuzzy
+msgid "DR Point Properties"
+msgstr "Propriété d'un point OD"
+#
+#, fuzzy
+msgid "DR Point Properties, Layer: "
+msgstr "Couche, propriétés du chemin : "
+#
+#, fuzzy
+msgid "DR Properties"
+msgstr " Propriétés"
+#
+#, fuzzy
+msgid "DR Properties, Layer: "
+msgstr " Couche, Propriétés :"
 #
 msgid "Date:"
 msgstr "Date :"
@@ -388,6 +467,10 @@ msgstr "Supprimer"
 #
 msgid "Delete All"
 msgstr "Supprimer tout"
+#
+#, fuzzy
+msgid "Delete..."
+msgstr "Supprimer"
 #
 msgid "Desc"
 msgstr "Desc"
@@ -447,6 +530,30 @@ msgstr "Position fixe de la fin de la limite"
 #
 msgid "EBL Persistence"
 msgstr "Persistence EBL"
+#
+#, fuzzy
+msgid "EBL Point"
+msgstr " Point"
+#
+#, fuzzy
+msgid "EBL Point &Properties"
+msgstr "Propriété d'un point OD"
+#
+#, fuzzy
+msgid "EBL Point Properties"
+msgstr "Propriété d'un point OD"
+#
+#, fuzzy
+msgid "EBL Point Properties, Layer: "
+msgstr "Couche, propriétés du chemin : "
+#
+#, fuzzy
+msgid "EBL Properties"
+msgstr " Propriétés"
+#
+#, fuzzy
+msgid "EBL Properties, Layer: "
+msgstr " Couche, Propriétés :"
 #
 msgid ""
 "Edge Panning Sensitivity\n"
@@ -566,8 +673,17 @@ msgstr ""
 "Sensibilité initiale du déplacement sur les bords\n"
 "(pourcentage de la largeur de l'écran)"
 #
-msgid "Insert"
-msgstr "Insérer"
+#, fuzzy
+msgid "Insert Boundary Point"
+msgstr "Créer un point limite"
+#
+#, fuzzy
+msgid "Insert DR Point"
+msgstr "Point DR"
+#
+#, fuzzy
+msgid "Insert EBL Point"
+msgstr "Point texte"
 #
 msgid "Interval Type"
 msgstr "Type d'intervalle"
@@ -587,8 +703,24 @@ msgstr "Couche "
 msgid "Layer Boundary"
 msgstr "Couche de limite"
 #
+#, fuzzy
+msgid "Layer Boundary Point"
+msgstr "Créer un point limite"
+#
+#, fuzzy
+msgid "Layer DR Point"
+msgstr "Point DR"
+#
+#, fuzzy
+msgid "Layer EBL Point"
+msgstr "Couche de limite"
+#
 msgid "Layer Name"
 msgstr "Nom de la couche"
+#
+#, fuzzy
+msgid "Layer Text Point"
+msgstr "Créer un point texte"
 #
 msgid "Layers"
 msgstr "Couches"
@@ -635,11 +767,33 @@ msgstr "Mineure :"
 msgid "Minutes"
 msgstr "Minutes"
 #
-msgid "Move"
-msgstr "Déplacer"
+#, fuzzy
+msgid "Move Boundary"
+msgstr "Limite"
 #
-msgid "Move "
+#, fuzzy
+msgid "Move Boundary Point"
+msgstr "Point limite"
+#
+#, fuzzy
+msgid "Move DR Point"
+msgstr "Point DR"
+#
+#, fuzzy
+msgid "Move EBL"
 msgstr "Déplacer "
+#
+#, fuzzy
+msgid "Move EBL Point"
+msgstr "Au point"
+#
+#, fuzzy
+msgid "Move OD Point"
+msgstr "Point OD"
+#
+#, fuzzy
+msgid "Move Text Point"
+msgstr "Point texte"
 #
 msgid "Name"
 msgstr "Nom"
@@ -688,11 +842,40 @@ msgstr "Limite de OCPN Draw"
 msgid "OCPN Draw Boundary Create"
 msgstr "Limite de OCPN Draw"
 #
-msgid "OCPN Draw Delete "
+#, fuzzy
+msgid "OCPN Draw Boundary Delete"
+msgstr "Limite de OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw DR Delete"
+msgstr "Supprimer OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Créer un point limite"
+#
+#, fuzzy
+msgid "OCPN Draw Delete DR Point"
+msgstr "Supprimer OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Delete EBL Point"
+msgstr "Supprimer OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Delete OD Point"
+msgstr "Retirer OCPN draw "
+#
+#, fuzzy
+msgid "OCPN Draw EBL Delete"
 msgstr "Supprimer OCPN Draw "
 #
 msgid "OCPN Draw Manager"
 msgstr "Gestionnaire de OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Path &Properties"
+msgstr "Propriétés du complément OCPN Draw"
 #
 #, fuzzy
 msgid "OCPN Draw Point"
@@ -702,6 +885,10 @@ msgstr "Créer un point OpenCPN"
 msgid "OCPN Draw Point Create"
 msgstr "Créer un point OpenCPN"
 #
+#, fuzzy
+msgid "OCPN Draw Point, Layer: "
+msgstr "Créer un point OpenCPN"
+#
 msgid "OCPN Draw Properties"
 msgstr "Propriétés du complément OCPN Draw"
 #
@@ -709,7 +896,27 @@ msgid "OCPN Draw Remove "
 msgstr "Retirer OCPN draw "
 #
 #, fuzzy
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "Retirer OCPN draw "
+#
+#, fuzzy
+msgid "OCPN Draw Remove DR Point"
+msgstr "Retirer OCPN draw "
+#
+#, fuzzy
+msgid "OCPN Draw Remove EBL Point"
+msgstr "Retirer OCPN draw "
+#
+#, fuzzy
+msgid "OCPN Draw Remove OD Point"
+msgstr "Retirer OCPN draw "
+#
+#, fuzzy
 msgid "OCPN Draw Remove ODPoint"
+msgstr "Retirer OCPN draw "
+#
+#, fuzzy
+msgid "OCPN Draw Remove Text Point"
 msgstr "Retirer OCPN draw "
 #
 msgid "OD Point"
@@ -833,7 +1040,8 @@ msgstr "Epaisseur du trait des cercles concentriques"
 msgid "Remove Point from Path"
 msgstr "Retirer ce point du chemin"
 #
-msgid "Removing this point will invalidate the "
+#, fuzzy
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr "Retirer ce point rendra invalide le "
 #
 msgid "Right"
@@ -981,6 +1189,23 @@ msgid "ocpn_draw_pi data location"
 msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
+#~ msgid " Delete"
+#~ msgstr " Supprimer"
+#
+#
+#~ msgid ", Layer: "
+#~ msgstr ", Couche : "
+#
+#
+#~ msgid ", this is not allowed."
+#~ msgstr ", ceci n'est pas permis."
+#
+#
+#~ msgid "Insert"
+#~ msgstr "Insérer"
+#
+#
+#
 #
 #
 #
@@ -990,6 +1215,11 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #~ msgid "Logitude"
 #~ msgstr "Longitude"
+#
+#
+#~ msgid "Move"
+#~ msgstr "Déplacer"
+#
 #
 #
 #
@@ -1010,8 +1240,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Créer une limite OpenCPN"
+#
 #
 #
 #

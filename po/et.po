@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 15:55+1100\n"
+"POT-Creation-Date: 2016-01-21 15:41+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -19,22 +19,6 @@ msgstr ""
 #, fuzzy
 msgid " &Properties..."
 msgstr "&Omadused..."
-#
-#, fuzzy
-msgid " Delete"
-msgstr "Kustuta"
-#
-#, fuzzy
-msgid " Point"
-msgstr "OCPN'i punktid"
-#
-#, fuzzy
-msgid " Properties"
-msgstr "Omadused"
-#
-#, fuzzy
-msgid " Properties, Layer:"
-msgstr "Omadused"
 #
 msgid " To: "
 msgstr ""
@@ -98,13 +82,6 @@ msgid "(Unnamed) "
 msgstr "(nimetu)"
 #
 msgid "(unnamed)"
-msgstr ""
-#
-#, fuzzy
-msgid ", Layer: "
-msgstr "Kihid"
-#
-msgid ", this is not allowed."
 msgstr ""
 #
 msgid "0"
@@ -260,7 +237,31 @@ msgid "Are you sure you want to delete the selected object(s)"
 msgstr "Kas kindlalt soovid valitud objekti(d) kustutada"
 #
 #, fuzzy
-msgid "Are you sure you want to delete this "
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this OD Point?"
 msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
@@ -270,6 +271,26 @@ msgstr ""
 #, fuzzy
 msgid "Are you sure you want to remove this "
 msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Text Point?"
+msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
 #
 #, fuzzy
 msgid "Are you sure you want to remove this point?"
@@ -319,13 +340,33 @@ msgstr ""
 msgid "Boundary Point"
 msgstr ""
 #
+#, fuzzy
+msgid "Boundary Point &Properties"
+msgstr "Omadused"
+#
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
 msgstr ""
 #
+#, fuzzy
+msgid "Boundary Point Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "Boundary Point Properties, Layer: "
+msgstr "Omadused"
+#
 msgid "Boundary Point Type"
 msgstr ""
+#
+#, fuzzy
+msgid "Boundary Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "Boundary Properties, Layer: "
+msgstr "Omadused"
 #
 msgid "Boundary Type"
 msgstr ""
@@ -351,6 +392,15 @@ msgstr ""
 #
 msgid "Copy"
 msgstr "Kopeeri"
+#
+msgid "Copy Boundary GUID"
+msgstr ""
+#
+msgid "Copy DR GUID"
+msgstr ""
+#
+msgid "Copy EBL GUID"
+msgstr ""
 #
 msgid "Copy Point GUID"
 msgstr ""
@@ -390,11 +440,31 @@ msgstr ""
 msgid "DR Point"
 msgstr "OCPN'i punktid"
 #
+#, fuzzy
+msgid "DR Point &Properties"
+msgstr "Omadused"
+#
 msgid "DR Point Icon"
 msgstr ""
 #
 msgid "DR Point Interval"
 msgstr ""
+#
+#, fuzzy
+msgid "DR Point Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "DR Point Properties, Layer: "
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "DR Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "DR Properties, Layer: "
+msgstr "Omadused"
 #
 msgid "Date:"
 msgstr ""
@@ -413,6 +483,14 @@ msgstr "Kustuta"
 #
 msgid "Delete All"
 msgstr "Kustuta kõik"
+#
+#
+#
+#
+#
+#
+msgid "Delete..."
+msgstr "Kustuta..."
 #
 msgid "Desc"
 msgstr "Kahanev"
@@ -476,6 +554,30 @@ msgstr ""
 #
 msgid "EBL Persistence"
 msgstr ""
+#
+#, fuzzy
+msgid "EBL Point"
+msgstr "OCPN'i punktid"
+#
+#, fuzzy
+msgid "EBL Point &Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "EBL Point Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "EBL Point Properties, Layer: "
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "EBL Properties"
+msgstr "Omadused"
+#
+#, fuzzy
+msgid "EBL Properties, Layer: "
+msgstr "Omadused"
 #
 msgid ""
 "Edge Panning Sensitivity\n"
@@ -593,7 +695,14 @@ msgid ""
 "(percentage screen width) Default 3"
 msgstr ""
 #
-msgid "Insert"
+msgid "Insert Boundary Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Insert DR Point"
+msgstr "OCPN'i punktid"
+#
+msgid "Insert EBL Point"
 msgstr ""
 #
 msgid "Interval Type"
@@ -616,9 +725,22 @@ msgstr "Kihid"
 msgid "Layer Boundary"
 msgstr ""
 #
+msgid "Layer Boundary Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Layer DR Point"
+msgstr "OCPN'i punktid"
+#
+msgid "Layer EBL Point"
+msgstr ""
+#
 #, fuzzy
 msgid "Layer Name"
 msgstr "Kihi tee"
+#
+msgid "Layer Text Point"
+msgstr ""
 #
 msgid "Layers"
 msgstr "Kihid"
@@ -669,10 +791,28 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 #
-msgid "Move"
+msgid "Move Boundary"
 msgstr ""
 #
-msgid "Move "
+msgid "Move Boundary Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Move DR Point"
+msgstr "OCPN'i punktid"
+#
+msgid "Move EBL"
+msgstr ""
+#
+#, fuzzy
+msgid "Move EBL Point"
+msgstr "OCPN'i punktid"
+#
+#, fuzzy
+msgid "Move OD Point"
+msgstr "OCPN'i punktid"
+#
+msgid "Move Text Point"
 msgstr ""
 #
 msgid "Name"
@@ -723,11 +863,40 @@ msgstr ""
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 #
-msgid "OCPN Draw Delete "
-msgstr ""
+#, fuzzy
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN'i punkti nimi"
 #
 msgid "OCPN Draw Manager"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Path &Properties"
+msgstr "Omadused"
 #
 #, fuzzy
 msgid "OCPN Draw Point"
@@ -738,14 +907,38 @@ msgid "OCPN Draw Point Create"
 msgstr "OCPN'i punkti nimi"
 #
 #, fuzzy
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
 msgid "OCPN Draw Properties"
 msgstr "Omadused"
 #
 msgid "OCPN Draw Remove "
 msgstr ""
 #
+#, fuzzy
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN'i punkti nimi"
+#
 msgid "OCPN Draw Remove ODPoint"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Remove Text Point"
+msgstr "OCPN'i punkti nimi"
 #
 #, fuzzy
 msgid "OD Point"
@@ -863,7 +1056,7 @@ msgstr ""
 msgid "Remove Point from Path"
 msgstr ""
 #
-msgid "Removing this point will invalidate the "
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
 #
 msgid "Right"
@@ -1016,6 +1209,12 @@ msgid "ocpn_draw_pi data location"
 msgstr ""
 #
 #
+#, fuzzy
+#~ msgid " Delete"
+#~ msgstr "Kustuta"
+#
+#
+#
 #
 #
 #
@@ -1028,8 +1227,15 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(nimetu OCPN-punkt)"
+#
+#
+#, fuzzy
+#~ msgid ", Layer: "
+#~ msgstr "Kihid"
+#
 #
 #
 #
@@ -1044,8 +1250,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "sinine"
+#
 #
 #
 #
@@ -1060,8 +1268,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Cyan"
 #~ msgstr "erksinine"
+#
 #
 #
 #
@@ -1076,8 +1286,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Cyan"
 #~ msgstr "tume-erksinine"
+#
 #
 #
 #
@@ -1092,8 +1304,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Green"
 #~ msgstr "tumeroheline"
+#
 #
 #
 #
@@ -1108,8 +1322,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Red"
 #~ msgstr "tumepunane"
+#
 #
 #
 #
@@ -1124,8 +1340,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default"
 #~ msgstr "vaikimisi"
+#
 #
 #
 #
@@ -1140,16 +1358,10 @@ msgstr ""
 #
 #
 #
-#~ msgid "Delete..."
-#~ msgstr "Kustuta..."
-#
-#
-#
-#
-#
 #
 #~ msgid "Dialog"
 #~ msgstr "Dialoog"
+#
 #
 #
 #
@@ -1164,8 +1376,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Leg"
 #~ msgstr "Lõik"
+#
 #
 #
 #
@@ -1180,8 +1394,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Magenta"
 #~ msgstr "purpurviolett"
+#
 #
 #
 #
@@ -1196,8 +1412,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Järgmised looded"
+#
 #
 #
 #
@@ -1212,6 +1430,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "punane"
 #
@@ -1220,8 +1439,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "valge"
+#
 #
 #
 #

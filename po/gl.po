@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 15:55+1100\n"
+"POT-Creation-Date: 2016-01-21 15:41+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Galician\n"
@@ -17,18 +17,6 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 #
 msgid " &Properties..."
-msgstr ""
-#
-msgid " Delete"
-msgstr ""
-#
-msgid " Point"
-msgstr ""
-#
-msgid " Properties"
-msgstr ""
-#
-msgid " Properties, Layer:"
 msgstr ""
 #
 msgid " To: "
@@ -91,12 +79,6 @@ msgid "(Unnamed) "
 msgstr ""
 #
 msgid "(unnamed)"
-msgstr ""
-#
-msgid ", Layer: "
-msgstr ""
-#
-msgid ", this is not allowed."
 msgstr ""
 #
 msgid "0"
@@ -236,13 +218,46 @@ msgstr ""
 msgid "Are you sure you want to delete the selected object(s)"
 msgstr ""
 #
-msgid "Are you sure you want to delete this "
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr ""
+#
+msgid "Are you sure you want to delete this Boundary?"
+msgstr ""
+#
+msgid "Are you sure you want to delete this DR Point?"
+msgstr ""
+#
+msgid "Are you sure you want to delete this DR?"
+msgstr ""
+#
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr ""
+#
+msgid "Are you sure you want to delete this EBL?"
+msgstr ""
+#
+msgid "Are you sure you want to delete this OD Point?"
 msgstr ""
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 #
 msgid "Are you sure you want to remove this "
+msgstr ""
+#
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr ""
+#
+msgid "Are you sure you want to remove this DR Point?"
+msgstr ""
+#
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr ""
+#
+msgid "Are you sure you want to remove this OD Point?"
+msgstr ""
+#
+msgid "Are you sure you want to remove this Text Point?"
 msgstr ""
 #
 msgid "Are you sure you want to remove this point?"
@@ -290,12 +305,27 @@ msgstr ""
 msgid "Boundary Point"
 msgstr ""
 #
+msgid "Boundary Point &Properties"
+msgstr ""
+#
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
 msgstr ""
 #
+msgid "Boundary Point Properties"
+msgstr ""
+#
+msgid "Boundary Point Properties, Layer: "
+msgstr ""
+#
 msgid "Boundary Point Type"
+msgstr ""
+#
+msgid "Boundary Properties"
+msgstr ""
+#
+msgid "Boundary Properties, Layer: "
 msgstr ""
 #
 msgid "Boundary Type"
@@ -320,6 +350,15 @@ msgid "Confirm Object Delete"
 msgstr ""
 #
 msgid "Copy"
+msgstr ""
+#
+msgid "Copy Boundary GUID"
+msgstr ""
+#
+msgid "Copy DR GUID"
+msgstr ""
+#
+msgid "Copy EBL GUID"
 msgstr ""
 #
 msgid "Copy Point GUID"
@@ -358,10 +397,25 @@ msgstr ""
 msgid "DR Point"
 msgstr ""
 #
+msgid "DR Point &Properties"
+msgstr ""
+#
 msgid "DR Point Icon"
 msgstr ""
 #
 msgid "DR Point Interval"
+msgstr ""
+#
+msgid "DR Point Properties"
+msgstr ""
+#
+msgid "DR Point Properties, Layer: "
+msgstr ""
+#
+msgid "DR Properties"
+msgstr ""
+#
+msgid "DR Properties, Layer: "
 msgstr ""
 #
 msgid "Date:"
@@ -380,6 +434,9 @@ msgid "Delete"
 msgstr ""
 #
 msgid "Delete All"
+msgstr ""
+#
+msgid "Delete..."
 msgstr ""
 #
 msgid "Desc"
@@ -436,6 +493,24 @@ msgid "EBL Fixed End Position"
 msgstr ""
 #
 msgid "EBL Persistence"
+msgstr ""
+#
+msgid "EBL Point"
+msgstr ""
+#
+msgid "EBL Point &Properties"
+msgstr ""
+#
+msgid "EBL Point Properties"
+msgstr ""
+#
+msgid "EBL Point Properties, Layer: "
+msgstr ""
+#
+msgid "EBL Properties"
+msgstr ""
+#
+msgid "EBL Properties, Layer: "
 msgstr ""
 #
 msgid ""
@@ -548,7 +623,13 @@ msgid ""
 "(percentage screen width) Default 3"
 msgstr ""
 #
-msgid "Insert"
+msgid "Insert Boundary Point"
+msgstr ""
+#
+msgid "Insert DR Point"
+msgstr ""
+#
+msgid "Insert EBL Point"
 msgstr ""
 #
 msgid "Interval Type"
@@ -569,7 +650,19 @@ msgstr ""
 msgid "Layer Boundary"
 msgstr ""
 #
+msgid "Layer Boundary Point"
+msgstr ""
+#
+msgid "Layer DR Point"
+msgstr ""
+#
+msgid "Layer EBL Point"
+msgstr ""
+#
 msgid "Layer Name"
+msgstr ""
+#
+msgid "Layer Text Point"
 msgstr ""
 #
 msgid "Layers"
@@ -617,10 +710,25 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 #
-msgid "Move"
+msgid "Move Boundary"
 msgstr ""
 #
-msgid "Move "
+msgid "Move Boundary Point"
+msgstr ""
+#
+msgid "Move DR Point"
+msgstr ""
+#
+msgid "Move EBL"
+msgstr ""
+#
+msgid "Move EBL Point"
+msgstr ""
+#
+msgid "Move OD Point"
+msgstr ""
+#
+msgid "Move Text Point"
 msgstr ""
 #
 msgid "Name"
@@ -669,10 +777,31 @@ msgstr ""
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 #
-msgid "OCPN Draw Delete "
+msgid "OCPN Draw Boundary Delete"
+msgstr ""
+#
+msgid "OCPN Draw DR Delete"
+msgstr ""
+#
+msgid "OCPN Draw Delete Boundary Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete DR Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete EBL Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete OD Point"
+msgstr ""
+#
+msgid "OCPN Draw EBL Delete"
 msgstr ""
 #
 msgid "OCPN Draw Manager"
+msgstr ""
+#
+msgid "OCPN Draw Path &Properties"
 msgstr ""
 #
 msgid "OCPN Draw Point"
@@ -681,13 +810,31 @@ msgstr ""
 msgid "OCPN Draw Point Create"
 msgstr ""
 #
+msgid "OCPN Draw Point, Layer: "
+msgstr ""
+#
 msgid "OCPN Draw Properties"
 msgstr ""
 #
 msgid "OCPN Draw Remove "
 msgstr ""
 #
+msgid "OCPN Draw Remove Boundary Point"
+msgstr ""
+#
+msgid "OCPN Draw Remove DR Point"
+msgstr ""
+#
+msgid "OCPN Draw Remove EBL Point"
+msgstr ""
+#
+msgid "OCPN Draw Remove OD Point"
+msgstr ""
+#
 msgid "OCPN Draw Remove ODPoint"
+msgstr ""
+#
+msgid "OCPN Draw Remove Text Point"
 msgstr ""
 #
 msgid "OD Point"
@@ -798,7 +945,7 @@ msgstr ""
 msgid "Remove Point from Path"
 msgstr ""
 #
-msgid "Removing this point will invalidate the "
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
 #
 msgid "Right"

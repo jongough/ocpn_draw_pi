@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-20 15:55+1100\n"
+"POT-Creation-Date: 2016-01-21 15:41+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
@@ -19,22 +19,6 @@ msgstr ""
 #, fuzzy
 msgid " &Properties..."
 msgstr "&Egenskaper..."
-#
-#, fuzzy
-msgid " Delete"
-msgstr "Slett"
-#
-#, fuzzy
-msgid " Point"
-msgstr "OCPN punkter"
-#
-#, fuzzy
-msgid " Properties"
-msgstr "Egenskaper"
-#
-#, fuzzy
-msgid " Properties, Layer:"
-msgstr "Egenskaper"
 #
 msgid " To: "
 msgstr ""
@@ -98,13 +82,6 @@ msgid "(Unnamed) "
 msgstr "(Uten navn)"
 #
 msgid "(unnamed)"
-msgstr ""
-#
-#, fuzzy
-msgid ", Layer: "
-msgstr "Lag"
-#
-msgid ", this is not allowed."
 msgstr ""
 #
 msgid "0"
@@ -260,7 +237,31 @@ msgid "Are you sure you want to delete the selected object(s)"
 msgstr "Er du sikker på at du vil slette valgt(e) objekt(er)"
 #
 #, fuzzy
-msgid "Are you sure you want to delete this "
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this DR?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this OD Point?"
 msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
@@ -269,6 +270,26 @@ msgstr "Er du sikker på at du vil slette dette laget og <ALT> innholdet i det?"
 #, fuzzy
 msgid "Are you sure you want to remove this "
 msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
+#
+#, fuzzy
+msgid "Are you sure you want to remove this Text Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
 #
 #, fuzzy
 msgid "Are you sure you want to remove this point?"
@@ -318,13 +339,33 @@ msgstr ""
 msgid "Boundary Point"
 msgstr ""
 #
+#, fuzzy
+msgid "Boundary Point &Properties"
+msgstr "Egenskaper"
+#
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
 msgstr ""
 #
+#, fuzzy
+msgid "Boundary Point Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "Boundary Point Properties, Layer: "
+msgstr "Egenskaper"
+#
 msgid "Boundary Point Type"
 msgstr ""
+#
+#, fuzzy
+msgid "Boundary Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "Boundary Properties, Layer: "
+msgstr "Egenskaper"
 #
 msgid "Boundary Type"
 msgstr ""
@@ -350,6 +391,15 @@ msgstr ""
 #
 msgid "Copy"
 msgstr "Kopier"
+#
+msgid "Copy Boundary GUID"
+msgstr ""
+#
+msgid "Copy DR GUID"
+msgstr ""
+#
+msgid "Copy EBL GUID"
+msgstr ""
 #
 msgid "Copy Point GUID"
 msgstr ""
@@ -389,11 +439,31 @@ msgstr ""
 msgid "DR Point"
 msgstr "OCPN punkter"
 #
+#, fuzzy
+msgid "DR Point &Properties"
+msgstr "Egenskaper"
+#
 msgid "DR Point Icon"
 msgstr ""
 #
 msgid "DR Point Interval"
 msgstr ""
+#
+#, fuzzy
+msgid "DR Point Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "DR Point Properties, Layer: "
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "DR Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "DR Properties, Layer: "
+msgstr "Egenskaper"
 #
 msgid "Date:"
 msgstr ""
@@ -412,6 +482,17 @@ msgstr "Slett"
 #
 msgid "Delete All"
 msgstr "Slett alle"
+#
+#
+#
+#
+#
+#
+#
+#
+#
+msgid "Delete..."
+msgstr "Slett..."
 #
 msgid "Desc"
 msgstr "Synkende"
@@ -473,6 +554,30 @@ msgstr ""
 #
 msgid "EBL Persistence"
 msgstr ""
+#
+#, fuzzy
+msgid "EBL Point"
+msgstr "OCPN punkter"
+#
+#, fuzzy
+msgid "EBL Point &Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "EBL Point Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "EBL Point Properties, Layer: "
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "EBL Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "EBL Properties, Layer: "
+msgstr "Egenskaper"
 #
 msgid ""
 "Edge Panning Sensitivity\n"
@@ -590,7 +695,14 @@ msgid ""
 "(percentage screen width) Default 3"
 msgstr ""
 #
-msgid "Insert"
+msgid "Insert Boundary Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Insert DR Point"
+msgstr "OCPN punkter"
+#
+msgid "Insert EBL Point"
 msgstr ""
 #
 msgid "Interval Type"
@@ -613,9 +725,22 @@ msgstr "Lag"
 msgid "Layer Boundary"
 msgstr ""
 #
+msgid "Layer Boundary Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Layer DR Point"
+msgstr "OCPN punkter"
+#
+msgid "Layer EBL Point"
+msgstr ""
+#
 #, fuzzy
 msgid "Layer Name"
 msgstr "Sti til lag"
+#
+msgid "Layer Text Point"
+msgstr ""
 #
 msgid "Layers"
 msgstr "Lag"
@@ -666,10 +791,28 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 #
-msgid "Move"
+msgid "Move Boundary"
 msgstr ""
 #
-msgid "Move "
+msgid "Move Boundary Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Move DR Point"
+msgstr "OCPN punkter"
+#
+msgid "Move EBL"
+msgstr ""
+#
+#, fuzzy
+msgid "Move EBL Point"
+msgstr "OCPN punkter"
+#
+#, fuzzy
+msgid "Move OD Point"
+msgstr "OCPN punkter"
+#
+msgid "Move Text Point"
 msgstr ""
 #
 msgid "Name"
@@ -720,11 +863,40 @@ msgstr ""
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 #
-msgid "OCPN Draw Delete "
-msgstr ""
+#, fuzzy
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN punktnavn"
 #
 msgid "OCPN Draw Manager"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Path &Properties"
+msgstr "Egenskaper"
 #
 #, fuzzy
 msgid "OCPN Draw Point"
@@ -735,14 +907,38 @@ msgid "OCPN Draw Point Create"
 msgstr "OCPN punktnavn"
 #
 #, fuzzy
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
 msgid "OCPN Draw Properties"
 msgstr "Egenskaper"
 #
 msgid "OCPN Draw Remove "
 msgstr ""
 #
+#, fuzzy
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN punktnavn"
+#
 msgid "OCPN Draw Remove ODPoint"
 msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Remove Text Point"
+msgstr "OCPN punktnavn"
 #
 #, fuzzy
 msgid "OD Point"
@@ -860,7 +1056,7 @@ msgstr ""
 msgid "Remove Point from Path"
 msgstr ""
 #
-msgid "Removing this point will invalidate the "
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
 #
 msgid "Right"
@@ -1012,6 +1208,12 @@ msgid "ocpn_draw_pi data location"
 msgstr ""
 #
 #
+#, fuzzy
+#~ msgid " Delete"
+#~ msgstr "Slett"
+#
+#
+#
 #
 #
 #
@@ -1030,8 +1232,15 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(OCPN punkt uten navn)"
+#
+#
+#, fuzzy
+#~ msgid ", Layer: "
+#~ msgstr "Lag"
+#
 #
 #
 #
@@ -1052,8 +1261,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blå"
+#
 #
 #
 #
@@ -1074,8 +1285,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Cyan"
 #~ msgstr "Cyan"
+#
 #
 #
 #
@@ -1096,8 +1309,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Cyan"
 #~ msgstr "Mørk Cyan"
+#
 #
 #
 #
@@ -1118,8 +1333,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Green"
 #~ msgstr "Mørk Grønn"
+#
 #
 #
 #
@@ -1140,8 +1357,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Red"
 #~ msgstr "Mørk Rød"
+#
 #
 #
 #
@@ -1162,8 +1381,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default"
 #~ msgstr "Standard"
+#
 #
 #
 #
@@ -1184,19 +1405,10 @@ msgstr ""
 #
 #
 #
-#~ msgid "Delete..."
-#~ msgstr "Slett..."
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #~ msgid "Dialog"
 #~ msgstr "Dialog"
+#
 #
 #
 #
@@ -1217,8 +1429,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Leg"
 #~ msgstr "Legg"
+#
 #
 #
 #
@@ -1239,8 +1453,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Magenta"
 #~ msgstr "Magenta"
+#
 #
 #
 #
@@ -1261,8 +1477,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Neste tidevannsforekomst"
+#
 #
 #
 #
@@ -1283,6 +1501,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "Rød"
 #
@@ -1294,8 +1513,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Hvit"
+#
 #
 #
 #
