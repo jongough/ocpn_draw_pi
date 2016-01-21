@@ -297,7 +297,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     
-    g_pData = GetpPrivateApplicationDataLocation();
+    g_pData = new wxString(GetpPrivateApplicationDataLocation()->ToStdString());
     appendOSDirSlash( g_pData );
     g_pData->Append(_T("plugins"));
     appendOSDirSlash( g_pData );
