@@ -505,7 +505,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sTypeShort = _("OCPN Draw DR Delete");
                 }
 
-                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxYES_DEFAULT );
             }
             
             if( dlg_return == wxID_YES ) {
@@ -611,7 +611,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sCaption = _("OCPN Draw Remove OD Point");
                 }
                 
-                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT );
             }
             
             if( dlg_return == wxID_YES ) {
@@ -656,7 +656,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sCaption = _("OCPN Draw Delete EBL Point");
                 }
                 
-                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT );
             }
             
             if( dlg_return == wxID_YES ) {
@@ -692,7 +692,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sCaption = _("OCPN Draw Delete EBL Point");
                 }
                 
-                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT );
             }
             
             if( dlg_return == wxID_YES ) {
@@ -711,13 +711,19 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 
                 if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
                     g_pPathManagerDialog->UpdateODPointsListCtrl();
+                
+                m_pFoundODPoint->m_bPtIsSelected = false;
+
+                if(m_pFoundODPoint->m_sTypeString == wxT("Text Point"))
+                    delete (TextPoint *)m_pFoundODPoint;
+                else
+                    delete m_pFoundODPoint;
+            } else {
+                m_pFoundODPoint->m_bPtIsSelected = false;
             }
+            
             g_ocpn_draw_pi->m_bPathEditing = FALSE;
             g_ocpn_draw_pi->m_bODPointEditing = FALSE;
-            if(m_pFoundODPoint->m_sTypeString == wxT("Text Point"))
-                delete (TextPoint *)m_pFoundODPoint;
-            else
-                delete m_pFoundODPoint;
             m_pFoundODPoint = NULL;
             break;
         }
