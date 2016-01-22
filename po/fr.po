@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:41+1100\n"
+"POT-Creation-Date: 2016-01-21 15:52+1100\n"
 "PO-Revision-Date: 2016-01-17 16:17-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -1189,16 +1189,20 @@ msgid "ocpn_draw_pi data location"
 msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
+#
 #~ msgid " Delete"
 #~ msgstr " Supprimer"
+#
 #
 #
 #~ msgid ", Layer: "
 #~ msgstr ", Couche : "
 #
 #
+#
 #~ msgid ", this is not allowed."
 #~ msgstr ", ceci n'est pas permis."
+#
 #
 #
 #~ msgid "Insert"
@@ -1213,12 +1217,15 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "Logitude"
 #~ msgstr "Longitude"
 #
 #
+#
 #~ msgid "Move"
 #~ msgstr "Déplacer"
+#
 #
 #
 #
@@ -1241,8 +1248,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Créer une limite OpenCPN"
+#
 #
 #
 #

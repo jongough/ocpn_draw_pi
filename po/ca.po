@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:41+1100\n"
+"POT-Creation-Date: 2016-01-21 15:52+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -1212,9 +1212,11 @@ msgid "ocpn_draw_pi data location"
 msgstr ""
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Esborrar"
+#
 #
 #
 #
@@ -1239,13 +1241,16 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(Punt OCPN sense nom)"
+#
 #
 #
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Capes"
+#
 #
 #
 #
@@ -1270,8 +1275,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blau"
+#
 #
 #
 #
@@ -1296,8 +1303,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Cyan"
 #~ msgstr "Cian"
+#
 #
 #
 #
@@ -1322,8 +1331,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Cyan"
 #~ msgstr "Cian fosc"
+#
 #
 #
 #
@@ -1348,8 +1359,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Green"
 #~ msgstr "Verd fosc"
+#
 #
 #
 #
@@ -1374,8 +1387,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Red"
 #~ msgstr "Vermell fosc"
+#
 #
 #
 #
@@ -1400,8 +1415,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default"
 #~ msgstr "Per Defecte"
+#
 #
 #
 #
@@ -1426,8 +1443,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dialog"
 #~ msgstr "Diàleg"
+#
 #
 #
 #
@@ -1452,8 +1471,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Leg"
 #~ msgstr "Tram/etapa"
+#
 #
 #
 #
@@ -1478,8 +1499,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Magenta"
 #~ msgstr "Magenta"
+#
 #
 #
 #
@@ -1504,8 +1527,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Propera marea"
+#
 #
 #
 #
@@ -1530,6 +1555,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "Vermell"
 #
@@ -1543,8 +1569,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Blanc"
+#
 #
 #
 #
