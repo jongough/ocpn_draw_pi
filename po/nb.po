@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:41+1100\n"
+"POT-Creation-Date: 2016-01-21 15:52+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
@@ -1208,9 +1208,11 @@ msgid "ocpn_draw_pi data location"
 msgstr ""
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Slett"
+#
 #
 #
 #
@@ -1233,13 +1235,16 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(OCPN punkt uten navn)"
+#
 #
 #
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Lag"
+#
 #
 #
 #
@@ -1262,8 +1267,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blå"
+#
 #
 #
 #
@@ -1286,8 +1293,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Cyan"
 #~ msgstr "Cyan"
+#
 #
 #
 #
@@ -1310,8 +1319,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Cyan"
 #~ msgstr "Mørk Cyan"
+#
 #
 #
 #
@@ -1334,8 +1345,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Green"
 #~ msgstr "Mørk Grønn"
+#
 #
 #
 #
@@ -1358,8 +1371,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Red"
 #~ msgstr "Mørk Rød"
+#
 #
 #
 #
@@ -1382,8 +1397,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default"
 #~ msgstr "Standard"
+#
 #
 #
 #
@@ -1406,8 +1423,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dialog"
 #~ msgstr "Dialog"
+#
 #
 #
 #
@@ -1430,8 +1449,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Leg"
 #~ msgstr "Legg"
+#
 #
 #
 #
@@ -1454,8 +1475,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Magenta"
 #~ msgstr "Magenta"
+#
 #
 #
 #
@@ -1478,8 +1501,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Neste tidevannsforekomst"
+#
 #
 #
 #
@@ -1502,6 +1527,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "Rød"
 #
@@ -1514,8 +1540,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Hvit"
+#
 #
 #
 #

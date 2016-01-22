@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:41+1100\n"
+"POT-Creation-Date: 2016-01-21 15:52+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -1181,9 +1181,11 @@ msgid "ocpn_draw_pi data location"
 msgstr ""
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Poista"
+#
 #
 #
 #
@@ -1198,9 +1200,11 @@ msgstr ""
 #~ msgstr "&Mene tänne"
 #
 #
+#
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Kerrokset"
+#
 #
 #
 #
@@ -1223,8 +1227,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Leg"
 #~ msgstr "Reittiväli"
+#
 #
 #
 #
@@ -1247,8 +1253,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Seuraava vuorovesi tapahtuma"
+#
 #
 #
 #

@@ -4,13 +4,29 @@
 ## License:     GPLv3+
 ##---------------------------------------------------------------------------
 
+MESSAGE(STATUS "Starting POTFILE generation")
+
+SET(POTFILE ${CMAKE_CURRENT_SOURCE_DIR}/po/POTFILES.in)
+FILE(REMOVE ${POTFILE}.test)
+FOREACH(POTLINE IN ITEMS ${SRCS})
+    FILE(APPEND ${POTFILE}.test "${POTLINE}\n")
+ENDFOREACH(POTLINE)
+FOREACH(POTLINE IN ITEMS ${HDRS})
+    FILE(APPEND ${POTFILE}.test "${POTLINE}\n")
+ENDFOREACH(POTLINE)
+EXECUTE_PROCESS(
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${POTFILE}.test ${POTFILE}
+    OUTPUT_QUIET
+    ERROR_QUIET
+)
+
 FIND_PROGRAM(GETTEXT_XGETTEXT_EXECUTABLE xgettext)
 string(REPLACE "_pi" "" I18N_NAME ${PACKAGE_NAME})
 IF (GETTEXT_XGETTEXT_EXECUTABLE)
   ADD_CUSTOM_COMMAND(
     OUTPUT po/${PACKAGE_NAME}.pot.dummy
-    COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE} --force-po -F --package-name=${PACKAGE_NAME} --package-version="${PACKAGE_VERSION}" --output=po/${PACKAGE_NAME}.pot  --keyword=_ --width=80 -D${CMAKE_CURRENT_SOURCE_DIR} ${SRCS} ${HDRS}
-    DEPENDS ${SRCS} ${HDRS}
+    COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE} --force-po -F --package-name=${PACKAGE_NAME} --package-version="${PACKAGE_VERSION}" --output=po/${PACKAGE_NAME}.pot  --keyword=_ --width=80 --files-from=${CMAKE_CURRENT_SOURCE_DIR}/po/POTFILES.in
+    DEPENDS po/POTFILES.in po/${PACKAGE_NAME}.po
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "${I18N_NAME}-pot-update [${PACKAGE_NAME}]: Generated pot file."
     )
