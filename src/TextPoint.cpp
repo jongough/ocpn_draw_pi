@@ -297,7 +297,8 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( !m_bIsVisible )
         return;
     
-    if( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS || m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER ) {
+    if( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS || 
+        ( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER && m_bShowDisplayTextOnRollover)  ) {
         if( m_TextPointText.Len() > 0 ) {
             CalculateTextExtents();
             int teX, teY;

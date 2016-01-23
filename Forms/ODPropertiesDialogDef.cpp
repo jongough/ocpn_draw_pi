@@ -421,7 +421,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	wxBoxSizer* bSizer11;
 	bSizer11 = new wxBoxSizer( wxVERTICAL );
 	
-	wxString m_radioBoxShowDisplayTextChoices[] = { _("Always"), _("On Rollover Only"), _("Never"), wxEmptyString };
+	wxString m_radioBoxShowDisplayTextChoices[] = { _("Always"), _("On Rollover Only"), _("Never") };
 	int m_radioBoxShowDisplayTextNChoices = sizeof( m_radioBoxShowDisplayTextChoices ) / sizeof( wxString );
 	m_radioBoxShowDisplayText = new wxRadioBox( m_panelTextPoint, wxID_ANY, _("Show Display Text"), wxDefaultPosition, wxDefaultSize, m_radioBoxShowDisplayTextNChoices, m_radioBoxShowDisplayTextChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxShowDisplayText->SetSelection( 0 );
