@@ -140,6 +140,13 @@ IF(WIN32)
     INSTALL(DIRECTORY data DESTINATION "${INSTALL_DIRECTORY}")
     MESSAGE (STATUS "Install Data: ${INSTALL_DIRECTORY}")
   ENDIF(EXISTS ${PROJECT_SOURCE_DIR}/data)
+  
+  #fix for missing dll's 
+  #FILE(GLOB gtkdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/gtk/*.dll")
+  #    INSTALL(FILES ${gtkdll_files} DESTINATION ".")
+  #    FILE(GLOB expatdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/expat-2.1.0/*.dll")
+  #    INSTALL(FILES ${expatdll_files} DESTINATION ".")
+
 ENDIF(WIN32)
 
 IF(UNIX AND NOT APPLE)
