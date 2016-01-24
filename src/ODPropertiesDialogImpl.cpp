@@ -378,6 +378,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
+    g_sTextPointIconName = m_bcomboBoxTextPointIconName->GetValue();
     g_iTextPosition = m_choiceTextPosition->GetSelection();
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
