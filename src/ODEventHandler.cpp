@@ -645,13 +645,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() ) {
                     sMessage = _("Are you sure you want to delete this OD Point?");
                     sCaption = _("OCPN Draw Delete OD Point");
-                } else if(m_pFoundODPoint->m_sTypeString == "Boundary Point") {
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point")) {
                     sMessage = _("Are you sure you want to delete this Boundary Point?");
                     sCaption = _("OCPN Draw Delete Boundary Point");
-                } else if(m_pFoundODPoint->m_sTypeString == "DR Point") {
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point")) {
                     sMessage = _("Are you sure you want to delete this DR Point?");
                     sCaption = _("OCPN Draw Delete DR Point");
-                } else if(m_pFoundODPoint->m_sTypeString == "EBL Point") {
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
                     sMessage = _("Are you sure you want to delete this EBL Point?");
                     sCaption = _("OCPN Draw Delete EBL Point");
                 }
@@ -681,13 +681,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 if (!m_pFoundODPoint || m_pFoundODPoint->GetTypeString().IsNull() || m_pFoundODPoint->GetTypeString().IsEmpty() ) {
                     sMessage = _("Are you sure you want to delete this OD Point?");
                     sCaption = _("OCPN Draw Delete OD Point");
-                } else if(m_pFoundODPoint->m_sTypeString == "Boundary Point") {
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point")) {
                     sMessage = _("Are you sure you want to delete this Boundary Point?");
                     sCaption = _("OCPN Draw Delete Boundary Point");
-                } else if(m_pFoundODPoint->m_sTypeString == "DR Point") {
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point")) {
                     sMessage = _("Are you sure you want to delete this DR Point?");
                     sCaption = _("OCPN Draw Delete DR Point");
-                } else if(m_pFoundODPoint->m_sTypeString == "EBL Point") {
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
                     sMessage = _("Are you sure you want to delete this EBL Point?");
                     sCaption = _("OCPN Draw Delete EBL Point");
                 }
