@@ -803,7 +803,7 @@ void ODEventHandler::PopupMenu( int seltype )
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                 if(!m_pEBL->m_bCentreOnBoat) {
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, _("Centre on moving boat") );
-                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Centre on boat lat lon") );
+                    MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Move start point to boat lat/lon") );
                 } else
                     MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
                 ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();

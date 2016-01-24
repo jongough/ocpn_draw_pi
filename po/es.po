@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-24 19:32+1100\n"
+"POT-Creation-Date: 2016-01-25 09:57+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Spanish\n"
@@ -332,9 +332,6 @@ msgid "Boundary Type"
 msgstr ""
 #
 msgid "Centre"
-msgstr ""
-#
-msgid "Centre on boat lat lon"
 msgstr ""
 #
 msgid "Centre on moving boat"
@@ -735,6 +732,9 @@ msgid "Move OD Point"
 msgstr ""
 #
 msgid "Move Text Point"
+msgstr ""
+#
+msgid "Move start point to boat lat/lon"
 msgstr ""
 #
 msgid "Name"

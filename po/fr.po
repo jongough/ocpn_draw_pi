@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-24 19:32+1100\n"
-"PO-Revision-Date: 2016-01-24 01:47+0100\n"
+"POT-Creation-Date: 2016-01-25 09:57+1100\n"
+"PO-Revision-Date: 2016-01-24 23:07+0100\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -224,7 +224,7 @@ msgstr ""
 "Objet(s) sélectionné(s) : Etes vous certain de vouloir le ou les supprimer ?"
 #
 msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Point limite : Voulez vous vraiment supprimer le supprimer ? "
+msgstr "Borne : Voulez vous vraiment la supprimer ? "
 #
 msgid "Are you sure you want to delete this Boundary?"
 msgstr "Limite : Voulez vous vraiment la supprimer ? "
@@ -252,7 +252,7 @@ msgid "Are you sure you want to remove this "
 msgstr "Voulez vous vraiment retirer ceci "
 #
 msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Point limite : Voulez vous vraiment le retirer ?"
+msgstr "Borne : Voulez vous vraiment la retirer ?"
 #
 msgid "Are you sure you want to remove this DR Point?"
 msgstr "Point estimé : Voulez vous vraiment le retirer ?"
@@ -264,7 +264,7 @@ msgid "Are you sure you want to remove this OD Point?"
 msgstr "Point du traceur : Voulez vous vraiment le retirer ?"
 #
 msgid "Are you sure you want to remove this Text Point?"
-msgstr "Point texte : Voulez vous vraiment le retirer ?"
+msgstr "Pense-bête : Voulez vous vraiment le retirer ?"
 #
 msgid "Are you sure you want to remove this point?"
 msgstr "Voulez vous vraiment retirer ce point ?"
@@ -309,26 +309,26 @@ msgid "Boundary"
 msgstr "Limite"
 #
 msgid "Boundary Point"
-msgstr "Point limite"
+msgstr "Borne"
 #
 msgid "Boundary Point &Properties"
-msgstr "&Propriétés d'un point limite"
+msgstr "&Propriétés d'une borne"
 #
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
 msgstr ""
-"Zone quadrillée autour d'un point limite\n"
+"Zone quadrillée autour d'une borne\n"
 "Largeur de la zone"
 #
 msgid "Boundary Point Properties"
-msgstr "Propriétés d'un point limite"
+msgstr "Propriétés d'une borne"
 #
 msgid "Boundary Point Properties, Layer: "
-msgstr "Couche, propriétés du point limite : "
+msgstr "Couche, propriétés de la borne : "
 #
 msgid "Boundary Point Type"
-msgstr "Type de point limite"
+msgstr "Type de borne"
 #
 msgid "Boundary Properties"
 msgstr " Propriétés de la limite"
@@ -341,9 +341,6 @@ msgstr "Type de limite"
 #
 msgid "Centre"
 msgstr "Centrer"
-#
-msgid "Centre on boat lat lon"
-msgstr "Centrer sur la position du bateau (lat, lon)"
 #
 msgid "Centre on moving boat"
 msgstr "Centrer sur le bateau durant son déplacement"
@@ -361,7 +358,7 @@ msgid "Copy"
 msgstr "Copier"
 #
 msgid "Copy Boundary GUID"
-msgstr "Copier le GUID du point limite"
+msgstr "Copier le GUID de la borne"
 #
 msgid "Copy DR GUID"
 msgstr "Copier le GUID de la ligne EBL"
@@ -378,19 +375,17 @@ msgstr "Copier lat/long"
 msgid "Course over Ground"
 msgstr "Cap fond"
 #
-#, fuzzy
 msgid "Course over Ground (M)"
-msgstr "Cap fond"
+msgstr "Cap fond (M)"
 #
-#, fuzzy
 msgid "Course over Ground (T)"
-msgstr "Cap fond"
+msgstr "Cap fond (T)"
 #
 msgid "Create Boundary"
 msgstr "Créer une limite"
 #
 msgid "Create Boundary Point"
-msgstr "Créer un point limite"
+msgstr "Créer "
 #
 msgid "Create DR"
 msgstr "Créer une route estimée"
@@ -399,7 +394,7 @@ msgid "Create EBL"
 msgstr "Créer une EBL"
 #
 msgid "Create Text Point"
-msgstr "Créer un point texte"
+msgstr "Créer un pense-bête"
 #
 msgid "DR"
 msgstr "Route estimée"
@@ -417,7 +412,7 @@ msgid "DR Point &Properties"
 msgstr "&Propriétés d'un point estimé"
 #
 msgid "DR Point Icon"
-msgstr "Icône d'un point DR"
+msgstr "Icône d'un point estimé"
 #
 msgid "DR Point Interval"
 msgstr "Intervalle entre deux points de la route estimée"
@@ -653,7 +648,7 @@ msgstr ""
 "(pourcentage de la largeur de l'écran)"
 #
 msgid "Insert Boundary Point"
-msgstr "Insérer un point limite"
+msgstr "Insérer une borne"
 #
 msgid "Insert DR Point"
 msgstr "insérer un point estimé"
@@ -680,10 +675,10 @@ msgid "Layer Boundary"
 msgstr "Couche de limite"
 #
 msgid "Layer Boundary Point"
-msgstr "Couche de point limite"
+msgstr "Couche de borne"
 #
 msgid "Layer DR Point"
-msgstr "couche de point estimé"
+msgstr "Couche de point estimé"
 #
 msgid "Layer EBL Point"
 msgstr "Couche de point EBL"
@@ -692,7 +687,7 @@ msgid "Layer Name"
 msgstr "Nom de la couche"
 #
 msgid "Layer Text Point"
-msgstr "Couche de point texte"
+msgstr "Couche de pense-bête"
 #
 msgid "Layers"
 msgstr "Couches"
@@ -743,7 +738,7 @@ msgid "Move Boundary"
 msgstr "Déplacer la limite"
 #
 msgid "Move Boundary Point"
-msgstr "Déplacer le point limite"
+msgstr "Déplacer la borne"
 #
 msgid "Move DR Point"
 msgstr "Déplacer le point estimé"
@@ -758,7 +753,11 @@ msgid "Move OD Point"
 msgstr "Déplacer le point du traceur"
 #
 msgid "Move Text Point"
-msgstr "Déplacer le point texte"
+msgstr "Déplacer le pense-bête"
+#
+#, fuzzy
+msgid "Move start point to boat lat/lon"
+msgstr "Centrer sur la position du bateau (lat, lon)"
 #
 msgid "Name"
 msgstr "Nom"
@@ -813,7 +812,7 @@ msgid "OCPN Draw DR Delete"
 msgstr "Traceur OCPN, supprimer une route estimée"
 #
 msgid "OCPN Draw Delete Boundary Point"
-msgstr "Traceur OCPN, supprimer un point limite"
+msgstr "Traceur OCPN, supprimer une borne"
 #
 msgid "OCPN Draw Delete DR Point"
 msgstr "Traceur OCPN, supprimer une route estimée"
@@ -843,7 +842,7 @@ msgid "OCPN Draw Point, Layer: "
 msgstr "Traceur OCPN, point, couches : "
 #
 msgid "OCPN Draw Properties"
-msgstr "Traceur OCPN : Préférences générale"
+msgstr "Traceur OCPN : Préférences générales"
 #
 msgid "OCPN Draw Remove "
 msgstr "Traceur OCPN, Retirer "
@@ -861,13 +860,13 @@ msgid "OCPN Draw Remove OD Point"
 msgstr "Traceur OCPN, retirer un point"
 #
 msgid "OCPN Draw Remove Text Point"
-msgstr "Traceur OCPN, retirer un point texte"
+msgstr "Traceur OCPN, retirer un pense-bête"
 #
 msgid "OD Point"
 msgstr "Point du traceur"
 #
 msgid "OD Point Name"
-msgstr "Nom du point du traceur"
+msgstr "Nom du point A"
 #
 msgid "OD Point Properties"
 msgstr "Propriétés d'un point du traceur"
@@ -955,7 +954,7 @@ msgstr ""
 "https://github.com/jongough/ocpn_draw_pi/issues\n"
 #
 msgid "Point Inclusion Size"
-msgstr "Taille de la zone ajoutée à ce point"
+msgstr "Taille de la zone environnant ce point"
 #
 msgid "Point Type"
 msgstr "Type de point"
@@ -1054,10 +1053,10 @@ msgid "Text Font"
 msgstr "Police de caractère"
 #
 msgid "Text Point"
-msgstr "Point texte"
+msgstr "Pense-bête"
 #
 msgid "Text Point Icon"
-msgstr "Icône d'un point texte"
+msgstr "Icône d'un pense-bête"
 #
 msgid "Text position relative to point"
 msgstr "Position relative du texte par rapport au point"
@@ -1134,8 +1133,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid " Delete"
 #~ msgstr " Supprimer"
+#
 #
 #
 #
@@ -1146,8 +1147,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid ", this is not allowed."
 #~ msgstr ", ceci n'est pas permis."
+#
 #
 #
 #
@@ -1166,8 +1169,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "Logitude"
 #~ msgstr "Longitude"
+#
 #
 #
 #
@@ -1176,8 +1181,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #~ msgstr "Déplacer"
 #
 #
+#
 #~ msgid "OCPN Draw Remove ODPoint"
 #~ msgstr "Traceur OCPN, retirer un point texte"
+#
 #
 #
 #
@@ -1204,8 +1211,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Créer une limite OpenCPN"
+#
 #
 #
 #

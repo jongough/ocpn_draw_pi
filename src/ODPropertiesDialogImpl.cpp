@@ -341,7 +341,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
-    g_sEBLStartIconName = g_sEBLEndIconName;
+    g_sEBLStartIconName = m_bcomboBoxEBLStartIconName->GetValue();;
     
     g_sDRPointIconName = m_bcomboBoxDRPointIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
@@ -378,6 +378,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
+    g_sTextPointIconName = m_bcomboBoxTextPointIconName->GetValue();
     g_iTextPosition = m_choiceTextPosition->GetSelection();
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();

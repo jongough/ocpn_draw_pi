@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-24 19:32+1100\n"
+"POT-Creation-Date: 2016-01-25 09:57+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -373,9 +373,6 @@ msgstr ""
 #, fuzzy
 msgid "Centre"
 msgstr "&Centra Vista"
-#
-msgid "Centre on boat lat lon"
-msgstr ""
 #
 msgid "Centre on moving boat"
 msgstr ""
@@ -836,6 +833,9 @@ msgstr "Punts OCPN"
 msgid "Move Text Point"
 msgstr ""
 #
+msgid "Move start point to boat lat/lon"
+msgstr ""
+#
 msgid "Name"
 msgstr "Nom"
 #
@@ -1230,9 +1230,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Esborrar"
+#
 #
 #
 #
@@ -1263,8 +1265,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(Punt OCPN sense nom)"
+#
 #
 #
 #
@@ -1273,6 +1277,7 @@ msgstr ""
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Capes"
+#
 #
 #
 #
@@ -1303,8 +1308,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blau"
+#
 #
 #
 #
@@ -1335,8 +1342,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Blau fosc"
+#
 #
 #
 #
@@ -1367,8 +1376,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Gris fosc"
+#
 #
 #
 #
@@ -1399,8 +1410,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Magenta fosc"
+#
 #
 #
 #
@@ -1431,8 +1444,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Groc fosc"
+#
 #
 #
 #
@@ -1463,8 +1478,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "Color per defecte"
+#
 #
 #
 #
@@ -1495,8 +1512,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "Verd"
+#
 #
 #
 #
@@ -1527,8 +1546,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "Gris clar"
+#
 #
 #
 #
@@ -1559,8 +1580,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Marques"
+#
 #
 #
 #
@@ -1591,8 +1614,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "OK"
 #~ msgstr "Ok"
+#
 #
 #
 #
@@ -1623,8 +1648,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Blanc"
+#
 #
 #
 #

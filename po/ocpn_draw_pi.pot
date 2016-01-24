@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 0.4.629\n"
+"Project-Id-Version: ocpn_draw_pi 0.4.630\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-24 19:40+1100\n"
+"POT-Creation-Date: 2016-01-25 09:57+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr ""
 
 #: src/EBL.cpp:104 src/EBL.cpp:171 src/ODPathPropertiesDialogImpl.cpp:293
 #: src/ODPathPropertiesDialogImpl.cpp:300
-#: src/ODPathPropertiesDialogImpl.cpp:411 src/ocpn_draw_pi.cpp:2087
+#: src/ODPathPropertiesDialogImpl.cpp:411 src/ocpn_draw_pi.cpp:2091
 msgid "Boat"
 msgstr ""
 
@@ -56,32 +56,32 @@ msgstr ""
 msgid "EBL Persistence"
 msgstr ""
 
-#: src/ODConfig.cpp:146 src/ODConfig.cpp:186 src/ODConfig.cpp:283
-#: src/ODConfig.cpp:308
+#: src/ODConfig.cpp:146 src/ODConfig.cpp:186 src/ODConfig.cpp:281
+#: src/ODConfig.cpp:306
 msgid "Export GPX file"
 msgstr ""
 
-#: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:296
+#: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:294
 msgid "Confirm"
 msgstr ""
 
-#: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:296
+#: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:294
 msgid "Overwrite existing file?"
 msgstr ""
 
-#: src/ODConfig.cpp:235
+#: src/ODConfig.cpp:233
 msgid "Loading navobjects from "
 msgstr ""
 
-#: src/ODConfig.cpp:267
+#: src/ODConfig.cpp:265
 msgid "Applying changes from "
 msgstr ""
 
-#: src/ODConfig.cpp:380
+#: src/ODConfig.cpp:378
 msgid "Import GPX file"
 msgstr ""
 
-#: src/ODConfig.cpp:428
+#: src/ODConfig.cpp:426
 #, c-format
 msgid "New layer %d: %s"
 msgstr ""
@@ -356,7 +356,7 @@ msgid "Centre on moving boat"
 msgstr ""
 
 #: src/ODEventHandler.cpp:806
-msgid "Centre on boat lat lon"
+msgid "Move start point to boat lat/lon"
 msgstr ""
 
 #: src/ODEventHandler.cpp:808
@@ -1090,7 +1090,7 @@ msgid "Inclusion Boundary Size"
 msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:183 src/ODToolbarImpl.cpp:49
-#: src/ODToolbarImpl.cpp:307 src/ocpn_draw_pi.cpp:2420
+#: src/ODToolbarImpl.cpp:307 src/ocpn_draw_pi.cpp:2424
 msgid "Boundary"
 msgstr ""
 
@@ -1157,7 +1157,7 @@ msgstr ""
 msgid "Show EBL Direction Arrow"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:584 src/ocpn_draw_pi.cpp:2903
+#: src/ODPropertiesDialogDef.cpp:584 src/ocpn_draw_pi.cpp:2907
 msgid "EBL"
 msgstr ""
 
@@ -1278,48 +1278,48 @@ msgstr ""
 msgid "OCPN Draw"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:639
+#: src/ocpn_draw_pi.cpp:638
 msgid "General drawing for OpenCPN"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:643
+#: src/ocpn_draw_pi.cpp:642
 msgid ""
 "General Drawing for OpenCPN\n"
 "\n"
 "Thanks to the community for their helpful suggestions."
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2423
+#: src/ocpn_draw_pi.cpp:2427
 msgid "Layer Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2637 src/ocpn_draw_pi.cpp:2698
+#: src/ocpn_draw_pi.cpp:2641 src/ocpn_draw_pi.cpp:2702
 msgid "Use nearby Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2638 src/ocpn_draw_pi.cpp:2699
+#: src/ocpn_draw_pi.cpp:2642 src/ocpn_draw_pi.cpp:2703
 msgid "OCPN Draw Point Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2772
+#: src/ocpn_draw_pi.cpp:2776
 msgid "Use nearby OD Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2773 src/ocpn_draw_pi.cpp:2826
+#: src/ocpn_draw_pi.cpp:2777 src/ocpn_draw_pi.cpp:2830
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2820
+#: src/ocpn_draw_pi.cpp:2824
 msgid "For this leg the Great Circle boundary is "
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2821
+#: src/ocpn_draw_pi.cpp:2825
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2822
+#: src/ocpn_draw_pi.cpp:2826
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 

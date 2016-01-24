@@ -221,8 +221,6 @@ void ODConfig::UpdateNavObj( void )
 
     delete pNavObjectSet;
 
-    m_pODNavObjectChangesSet->RemoveChangesFile();
-    
     delete m_pODNavObjectChangesSet;
     m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
 
