@@ -122,6 +122,8 @@ class ODNavObjectChanges : public pugi::xml_document
         void UpdatePathA( ODPath *pTentPath );
         ODPath *PathExists( const wxString& guid);
         ODPath *PathExists( ODPath * pTentPath );
+        void CreateRotatingNavObjChangesBackup();
+        
         wxString m_ODfilename;
         ODPointList *m_ptODPointList;
 

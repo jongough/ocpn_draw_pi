@@ -56,6 +56,7 @@ extern int              g_iInclusionBoundaryPointSize;
 extern unsigned int     g_uiBoundaryPointFillTransparency;
 extern bool             g_bExclusionBoundaryPoint;
 extern bool             g_bInclusionBoundaryPoint;
+extern int              g_navobjbackups;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -91,10 +92,63 @@ void ODNavObjectChanges::RemoveChangesFile( void )
 {
     if(m_ODchanges_file)
         fclose(m_ODchanges_file);
-    if( ::wxFileExists( m_ODfilename ) )
-        ::wxRemoveFile( m_ODfilename );
+    
+    CreateRotatingNavObjChangesBackup();
     
     m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
+}
+
+void ODNavObjectChanges::CreateRotatingNavObjChangesBackup()
+{
+    //Rotate navobj backups, but just in case there are some changes in the current version
+    //to prevent the user trying to "fix" the problem by continuously starting the
+    //application to overwrite all of his good backups...
+    if( g_navobjbackups > 0 ) {
+        wxFile f;
+        wxString oldname = m_ODfilename;
+        wxString newname = wxString::Format( _T("%s.1"), m_ODfilename.c_str() );
+        
+        wxFileOffset s_diff = 1;
+        if( wxFileExists( newname ) ) {
+            
+            if( f.Open(oldname) ){
+                s_diff = f.Length();
+                f.Close();
+            }
+            
+            if( f.Open(newname) ){
+                s_diff -= f.Length();
+                f.Close();
+            }
+        }
+        
+        
+        if ( s_diff != 0 )
+        {
+            for( int i = g_navobjbackups - 1; i >= 1; i-- )
+            {
+                oldname = wxString::Format( _T("%s.%d"), m_ODfilename.c_str(), i );
+                newname = wxString::Format( _T("%s.%d"), m_ODfilename.c_str(), i + 1 );
+                if( wxFile::Exists( oldname ) )
+                    wxCopyFile( oldname, newname );
+            }
+            
+            if( wxFile::Exists( m_ODfilename ) )
+            {
+                newname = wxString::Format( _T("%s.1"), m_ODfilename.c_str() );
+                wxCopyFile( m_ODfilename, newname );
+            }
+        }
+    }
+
+    wxRemoveFile( m_ODfilename );
+
+    //try to clean the backups the user doesn't want - breaks if he deleted some by hand as it tries to be effective...
+    for( int i = g_navobjbackups + 1; i <= 99; i++ )
+        if( wxFile::Exists( wxString::Format( _T("%s.%d"), m_ODfilename.c_str(), i ) ) ) 
+            ::wxRemoveFile( wxString::Format( _T("%s.%d"), m_ODfilename.c_str(), i ) );
+        else
+            break;
 }
 
 bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, unsigned int flags )

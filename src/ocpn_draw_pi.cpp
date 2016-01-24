@@ -466,7 +466,6 @@ int ocpn_draw_pi::Init(void)
     //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
     if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
     if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
-    g_pODToolbar->SetToolbarTool( m_Mode );
     
     // TODO fix up undo
     //    undo = new Undo();
@@ -508,7 +507,7 @@ int ocpn_draw_pi::Init(void)
     //build_cursors(); // build cursors to use on chart
     m_pTextCursorCross = new wxCursor( wxCURSOR_CHAR );
     
-    if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
+    g_pODPointMan = new PointMan();
     g_pODPointMan->SetColorScheme( global_color_scheme );
     
     g_pPathMan = new PathMan();
