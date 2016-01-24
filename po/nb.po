@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
+"POT-Creation-Date: 2016-01-24 19:32+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
@@ -408,6 +408,23 @@ msgid "Copy lat/long"
 msgstr "Kopier B.grad/L.grad"
 #
 msgid "Course over Ground"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Course over Ground (M)"
+msgstr "Kurs (M)"
+#
+msgid "Course over Ground (T)"
 msgstr ""
 #
 msgid "Create Boundary"
@@ -933,9 +950,6 @@ msgstr "OCPN punktnavn"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN punktnavn"
 #
-msgid "OCPN Draw Remove ODPoint"
-msgstr ""
-#
 #, fuzzy
 msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN punktnavn"
@@ -1209,9 +1223,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Slett"
+#
+#
 #
 #
 #
@@ -1236,14 +1254,20 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(OCPN punkt uten navn)"
+#
+#
 #
 #
 #
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Lag"
+#
+#
 #
 #
 #
@@ -1268,21 +1292,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Blue"
 #~ msgstr "Blå"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Course (M)"
-#~ msgstr "Kurs (M)"
 #
 #
 #
@@ -1307,8 +1322,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Mørk Blå"
+#
+#
 #
 #
 #
@@ -1333,8 +1352,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Mørk Grå"
+#
+#
 #
 #
 #
@@ -1359,8 +1382,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Mørk Magenta"
+#
+#
 #
 #
 #
@@ -1385,8 +1412,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Mørk Gul"
+#
+#
 #
 #
 #
@@ -1411,8 +1442,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Default color"
 #~ msgstr "Standard farge"
+#
+#
 #
 #
 #
@@ -1437,8 +1472,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Green"
 #~ msgstr "Grønn"
+#
+#
 #
 #
 #
@@ -1463,8 +1502,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Light Gray"
 #~ msgstr "Lys Grå"
+#
+#
 #
 #
 #
@@ -1489,8 +1532,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Marks"
 #~ msgstr "Merker"
+#
+#
 #
 #
 #
@@ -1515,8 +1562,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "OK"
 #~ msgstr "OK"
+#
+#
 #
 #
 #
@@ -1541,8 +1592,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "White"
 #~ msgstr "Hvit"
+#
+#
 #
 #
 #

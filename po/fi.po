@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
+"POT-Creation-Date: 2016-01-24 19:32+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -404,6 +404,23 @@ msgid "Copy lat/long"
 msgstr "Kopioi lat/long"
 #
 msgid "Course over Ground"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Course over Ground (M)"
+msgstr "Kurssi (M)"
+#
+msgid "Course over Ground (T)"
 msgstr ""
 #
 msgid "Create Boundary"
@@ -916,9 +933,6 @@ msgstr "OCPN pisteen nimi"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN pisteen nimi"
 #
-msgid "OCPN Draw Remove ODPoint"
-msgstr ""
-#
 #, fuzzy
 msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN pisteen nimi"
@@ -1182,9 +1196,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Poista"
+#
+#
 #
 #
 #
@@ -1201,22 +1219,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Kerrokset"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Course (M)"
-#~ msgstr "Kurssi (M)"
 #
 #
 #
@@ -1241,6 +1250,8 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Marks"
 #~ msgstr "Merkit"
 #
@@ -1254,8 +1265,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Next tide event"
 #~ msgstr "Seuraava vuorovesi tapahtuma"
+#
+#
 #
 #
 #

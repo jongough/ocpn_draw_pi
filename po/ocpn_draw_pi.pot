@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 0.4.623\n"
+"Project-Id-Version: ocpn_draw_pi 0.4.629\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
+"POT-Creation-Date: 2016-01-24 19:40+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,11 +171,23 @@ msgstr ""
 msgid "&Cancel"
 msgstr ""
 
+#: src/ODDRDialogImpl.cpp:101 src/ODDRDialogImpl.cpp:132
+#: src/ODDRDialogImpl.cpp:141 src/ODDRDialogImpl.cpp:163
+#: src/ODDRDialogImpl.cpp:172
+msgid "Course over Ground (M)"
+msgstr ""
+
+#: src/ODDRDialogImpl.cpp:102 src/ODDRDialogImpl.cpp:133
+#: src/ODDRDialogImpl.cpp:142 src/ODDRDialogImpl.cpp:164
+#: src/ODDRDialogImpl.cpp:173
+msgid "Course over Ground (T)"
+msgstr ""
+
 #: src/ODDRDialogImpl.cpp:207 src/ODPropertiesDialogDef.cpp:707
 msgid "DR"
 msgstr ""
 
-#: src/ODEventHandler.cpp:251 src/ODEventHandler.cpp:781
+#: src/ODEventHandler.cpp:251 src/ODEventHandler.cpp:787
 msgid "Layer "
 msgstr ""
 
@@ -253,7 +265,7 @@ msgstr ""
 msgid "OCPN Draw Remove "
 msgstr ""
 
-#: src/ODEventHandler.cpp:578 src/ODEventHandler.cpp:882
+#: src/ODEventHandler.cpp:578 src/ODEventHandler.cpp:888
 msgid "OD Point"
 msgstr ""
 
@@ -266,6 +278,7 @@ msgid "Are you sure you want to remove this OD Point?"
 msgstr ""
 
 #: src/ODEventHandler.cpp:596 src/ODEventHandler.cpp:611
+#: src/ODPathPropertiesDialogImpl.cpp:607
 msgid "OCPN Draw Remove OD Point"
 msgstr ""
 
@@ -333,138 +346,138 @@ msgstr ""
 msgid "OCPN Draw Delete EBL Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:788 src/ODEventHandler.cpp:796
-#: src/ODEventHandler.cpp:866 src/ODEventHandler.cpp:884
+#: src/ODEventHandler.cpp:794 src/ODEventHandler.cpp:802
+#: src/ODEventHandler.cpp:872 src/ODEventHandler.cpp:890
 msgid "Properties..."
 msgstr ""
 
-#: src/ODEventHandler.cpp:799
+#: src/ODEventHandler.cpp:805
 msgid "Centre on moving boat"
 msgstr ""
 
-#: src/ODEventHandler.cpp:800
+#: src/ODEventHandler.cpp:806
 msgid "Centre on boat lat lon"
 msgstr ""
 
-#: src/ODEventHandler.cpp:802
+#: src/ODEventHandler.cpp:808
 msgid "Pick a new start point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:805
+#: src/ODEventHandler.cpp:811
 msgid "Match VRM colour to EBL colour"
 msgstr ""
 
-#: src/ODEventHandler.cpp:808
+#: src/ODEventHandler.cpp:814
 msgid "Update initial conditions"
 msgstr ""
 
-#: src/ODEventHandler.cpp:813
+#: src/ODEventHandler.cpp:819
 msgid "Move Boundary"
 msgstr ""
 
-#: src/ODEventHandler.cpp:815
+#: src/ODEventHandler.cpp:821
 msgid "Move EBL"
 msgstr ""
 
-#: src/ODEventHandler.cpp:821
+#: src/ODEventHandler.cpp:827
 msgid "Insert Boundary Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:823
+#: src/ODEventHandler.cpp:829
 msgid "Insert EBL Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:825
+#: src/ODEventHandler.cpp:831
 msgid "Insert DR Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:830
+#: src/ODEventHandler.cpp:836
 msgid "Delete..."
 msgstr ""
 
-#: src/ODEventHandler.cpp:833
+#: src/ODEventHandler.cpp:839
 msgid "Deactivate"
 msgstr ""
 
-#: src/ODEventHandler.cpp:834
+#: src/ODEventHandler.cpp:840
 msgid "Activate"
 msgstr ""
 
-#: src/ODEventHandler.cpp:838
+#: src/ODEventHandler.cpp:844
 msgid "Copy Boundary GUID"
 msgstr ""
 
-#: src/ODEventHandler.cpp:840
+#: src/ODEventHandler.cpp:846
 msgid "Copy EBL GUID"
 msgstr ""
 
-#: src/ODEventHandler.cpp:842
+#: src/ODEventHandler.cpp:848
 msgid "Copy DR GUID"
 msgstr ""
 
-#: src/ODEventHandler.cpp:858
+#: src/ODEventHandler.cpp:864
 msgid "Layer Boundary Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:860
+#: src/ODEventHandler.cpp:866
 msgid "Layer Text Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:862
+#: src/ODEventHandler.cpp:868
 msgid "Layer EBL Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:864
+#: src/ODEventHandler.cpp:870
 msgid "Layer DR Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:874 src/ODPropertiesDialogDef.cpp:342
+#: src/ODEventHandler.cpp:880 src/ODPropertiesDialogDef.cpp:342
 #: src/ODToolbarImpl.cpp:50 src/ODToolbarImpl.cpp:308
 msgid "Boundary Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:876 src/ODPropertiesDialogDef.cpp:437
+#: src/ODEventHandler.cpp:882 src/ODPropertiesDialogDef.cpp:437
 #: src/ODToolbarImpl.cpp:51 src/ODToolbarImpl.cpp:309
 msgid "Text Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:878
+#: src/ODEventHandler.cpp:884
 msgid "EBL Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:880 src/ODPropertiesDialogDef.cpp:805
+#: src/ODEventHandler.cpp:886 src/ODPropertiesDialogDef.cpp:805
 msgid "DR Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:887
+#: src/ODEventHandler.cpp:893
 msgid "Move Boundary Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:889
+#: src/ODEventHandler.cpp:895
 msgid "Move Text Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:891
+#: src/ODEventHandler.cpp:897
 msgid "Move EBL Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:893
+#: src/ODEventHandler.cpp:899
 msgid "Move DR Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:895
+#: src/ODEventHandler.cpp:901
 msgid "Move OD Point"
 msgstr ""
 
-#: src/ODEventHandler.cpp:902
+#: src/ODEventHandler.cpp:908
 msgid "Remove Point from Path"
 msgstr ""
 
-#: src/ODEventHandler.cpp:904 src/ODEventHandler.cpp:907
+#: src/ODEventHandler.cpp:910 src/ODEventHandler.cpp:913
 msgid "Delete"
 msgstr ""
 
-#: src/ODEventHandler.cpp:908
+#: src/ODEventHandler.cpp:914
 msgid "Copy Point GUID"
 msgstr ""
 
@@ -714,10 +727,6 @@ msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:606
 msgid "Are you sure you want to remove this point?"
-msgstr ""
-
-#: src/ODPathPropertiesDialogImpl.cpp:607
-msgid "OCPN Draw Remove ODPoint"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:22
@@ -1124,7 +1133,7 @@ msgstr ""
 msgid "Background Density"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:485
+#: src/ODPropertiesDialogDef.cpp:485 src/ODPropertiesDialogImpl.cpp:189
 msgid "Path"
 msgstr ""
 

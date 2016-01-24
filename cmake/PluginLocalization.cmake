@@ -26,7 +26,7 @@ IF (GETTEXT_XGETTEXT_EXECUTABLE)
   ADD_CUSTOM_COMMAND(
     OUTPUT po/${PACKAGE_NAME}.pot.dummy
     COMMAND ${GETTEXT_XGETTEXT_EXECUTABLE} --force-po -F --package-name=${PACKAGE_NAME} --package-version="${PACKAGE_VERSION}" --output=po/${PACKAGE_NAME}.pot  --keyword=_ --width=80 --files-from=${CMAKE_CURRENT_SOURCE_DIR}/po/POTFILES.in
-    DEPENDS po/POTFILES.in po/${PACKAGE_NAME}.po
+    DEPENDS po/POTFILES.in po/${PACKAGE_NAME}.pot
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "${I18N_NAME}-pot-update [${PACKAGE_NAME}]: Generated pot file."
     )
@@ -43,7 +43,7 @@ MACRO(GETTEXT_UPDATE_PO _potFile)
     GET_FILENAME_COMPONENT(_poBasename ${_absFile} NAME_WE)
 
     ADD_CUSTOM_COMMAND(
-      OUTPUT ${_absFile}.dummy
+      OUTPUT ${_absFile}.dummy 
       COMMAND ${GETTEXT_MSGMERGE_EXECUTABLE} --width=80 --strict --quiet --update --backup=none --no-location -s ${_absFile} ${_absPotFile}
       DEPENDS ${_absPotFile} ${_absFile}
       COMMENT "${I18N_NAME}-po-update [${_poBasename}]: Updated po file."

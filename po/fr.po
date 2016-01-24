@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
-"PO-Revision-Date: 2016-01-17 16:17-0500\n"
+"POT-Creation-Date: 2016-01-24 19:32+1100\n"
+"PO-Revision-Date: 2016-01-24 01:47+0100\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 1.8.5\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
@@ -195,17 +195,17 @@ msgid ""
 "Active DR Line\n"
 "Colour"
 msgstr ""
-"Ligne DR active\n"
+"Route estimée active\n"
 "Couleur"
 #
 msgid "Active EBL Line Colour"
 msgstr "Couleur du trait d'une EBL active"
 #
 msgid "Active Fill Colour"
-msgstr "Couleur active de remplissage"
+msgstr "Activité : Couleur de remplissage"
 #
 msgid "Active Line Colour"
-msgstr "Couleur du trait actif"
+msgstr "Activité : Couleur du trait"
 #
 msgid "Always"
 msgstr "Toujours"
@@ -214,68 +214,57 @@ msgid "Applying changes from "
 msgstr "Application des changement depuis "
 #
 msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr "Voulez vous vraiment supprimer <TOUT> les points OD ?"
+msgstr "Points du traceur : Voulez vous vraiment supprimer <TOUT> ?"
 #
 msgid "Are you sure you want to delete <ALL> paths?"
-msgstr "Etes vous certain de vouloir détruire <TOUS> les chemins"
+msgstr "Chemins : Etes vous certain de vouloir détruire <TOUT> ?"
 #
 msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Etes vous certain de vouloir supprimer cet ou ces object(s)"
+msgstr ""
+"Objet(s) sélectionné(s) : Etes vous certain de vouloir le ou les supprimer ?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Point limite : Voulez vous vraiment supprimer le supprimer ? "
 #
-#, fuzzy
 msgid "Are you sure you want to delete this Boundary?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Limite : Voulez vous vraiment la supprimer ? "
 #
-#, fuzzy
 msgid "Are you sure you want to delete this DR Point?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Point estimé : Voulez vous vraiment le supprimer ? "
 #
-#, fuzzy
 msgid "Are you sure you want to delete this DR?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Route estimée : Voulez vous vraiment la supprimer ? "
 #
-#, fuzzy
 msgid "Are you sure you want to delete this EBL Point?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Point EBL : Voulez vous vraiment le supprimer ? "
 #
-#, fuzzy
 msgid "Are you sure you want to delete this EBL?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Ligne EBL : Voulez vous vraiment la supprimer ?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this OD Point?"
-msgstr "Voulez vous vraiment supprimer ceci "
+msgstr "Point du traceur : Voulez vous vraiment le supprimer ? "
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
-"Etes vous certain de vouloir détruire cette couche et <TOUS> ses contenus ?"
+"Couche : Etes vous certain de vouloir la détruire et <TOUT> ses contenus ?"
 #
 msgid "Are you sure you want to remove this "
 msgstr "Voulez vous vraiment retirer ceci "
 #
-#, fuzzy
 msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Voulez vous vraiment retirer ce point ?"
+msgstr "Point limite : Voulez vous vraiment le retirer ?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this DR Point?"
-msgstr "Voulez vous vraiment retirer ce point ?"
+msgstr "Point estimé : Voulez vous vraiment le retirer ?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this EBL Point?"
-msgstr "Voulez vous vraiment retirer ce point ?"
+msgstr "Point EBL : Voulez vous vraiment le retirer ?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this OD Point?"
-msgstr "Voulez vous vraiment retirer ce point ?"
+msgstr "Point du traceur : Voulez vous vraiment le retirer ?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this Text Point?"
-msgstr "Voulez vous vraiment retirer ce point ?"
+msgstr "Point texte : Voulez vous vraiment le retirer ?"
 #
 msgid "Are you sure you want to remove this point?"
 msgstr "Voulez vous vraiment retirer ce point ?"
@@ -322,9 +311,8 @@ msgstr "Limite"
 msgid "Boundary Point"
 msgstr "Point limite"
 #
-#, fuzzy
 msgid "Boundary Point &Properties"
-msgstr "Type de point limite"
+msgstr "&Propriétés d'un point limite"
 #
 msgid ""
 "Boundary Point Inclusion\n"
@@ -333,24 +321,20 @@ msgstr ""
 "Zone quadrillée autour d'un point limite\n"
 "Largeur de la zone"
 #
-#, fuzzy
 msgid "Boundary Point Properties"
-msgstr "Propriété d'un point OD"
+msgstr "Propriétés d'un point limite"
 #
-#, fuzzy
 msgid "Boundary Point Properties, Layer: "
-msgstr "Couche, propriétés du chemin : "
+msgstr "Couche, propriétés du point limite : "
 #
 msgid "Boundary Point Type"
 msgstr "Type de point limite"
 #
-#, fuzzy
 msgid "Boundary Properties"
-msgstr " Propriétés"
+msgstr " Propriétés de la limite"
 #
-#, fuzzy
 msgid "Boundary Properties, Layer: "
-msgstr " Couche, Propriétés :"
+msgstr " Couche, Propriétés de la limite :"
 #
 msgid "Boundary Type"
 msgstr "Type de limite"
@@ -362,7 +346,7 @@ msgid "Centre on boat lat lon"
 msgstr "Centrer sur la position du bateau (lat, lon)"
 #
 msgid "Centre on moving boat"
-msgstr "Centrer durant les déplacement du bateau"
+msgstr "Centrer sur le bateau durant son déplacement"
 #
 msgid "Change all Path Point Icons"
 msgstr "Changer toutes les icônes des points du chemin"
@@ -376,15 +360,12 @@ msgstr "Confirmer la suppression de l'objet"
 msgid "Copy"
 msgstr "Copier"
 #
-#, fuzzy
 msgid "Copy Boundary GUID"
-msgstr "Copier le GUID du point"
+msgstr "Copier le GUID du point limite"
 #
-#, fuzzy
 msgid "Copy DR GUID"
-msgstr "Copier le GUID du point"
+msgstr "Copier le GUID de la ligne EBL"
 #
-#, fuzzy
 msgid "Copy EBL GUID"
 msgstr "Copier le GUID du point"
 #
@@ -395,6 +376,14 @@ msgid "Copy lat/long"
 msgstr "Copier lat/long"
 #
 msgid "Course over Ground"
+msgstr "Cap fond"
+#
+#, fuzzy
+msgid "Course over Ground (M)"
+msgstr "Cap fond"
+#
+#, fuzzy
+msgid "Course over Ground (T)"
 msgstr "Cap fond"
 #
 msgid "Create Boundary"
@@ -413,42 +402,37 @@ msgid "Create Text Point"
 msgstr "Créer un point texte"
 #
 msgid "DR"
-msgstr "DR"
+msgstr "Route estimée"
 #
 msgid "DR Path Length"
-msgstr "Longueur du chemin DR"
+msgstr "Longueur de la route estimée"
 #
 msgid "DR Persistence"
-msgstr "Persistence DR"
+msgstr "Persistance de la route estimée"
 #
 msgid "DR Point"
-msgstr "Point DR"
+msgstr "Point estimé"
 #
-#, fuzzy
 msgid "DR Point &Properties"
-msgstr "Propriété d'un point OD"
+msgstr "&Propriétés d'un point estimé"
 #
 msgid "DR Point Icon"
 msgstr "Icône d'un point DR"
 #
 msgid "DR Point Interval"
-msgstr "Intervalle entre deux points du DR"
+msgstr "Intervalle entre deux points de la route estimée"
 #
-#, fuzzy
 msgid "DR Point Properties"
-msgstr "Propriété d'un point OD"
+msgstr "Propriétés d'un point estimé"
 #
-#, fuzzy
 msgid "DR Point Properties, Layer: "
-msgstr "Couche, propriétés du chemin : "
+msgstr "Couche, propriétés de la route estimée : "
 #
-#, fuzzy
 msgid "DR Properties"
-msgstr " Propriétés"
+msgstr " Propriétés d'une route estimée"
 #
-#, fuzzy
 msgid "DR Properties, Layer: "
-msgstr " Couche, Propriétés :"
+msgstr " Couche, Propriétés de la route estimée :"
 #
 msgid "Date:"
 msgstr "Date :"
@@ -468,9 +452,8 @@ msgstr "Supprimer"
 msgid "Delete All"
 msgstr "Supprimer tout"
 #
-#, fuzzy
 msgid "Delete..."
-msgstr "Supprimer"
+msgstr "Supprimer ..."
 #
 msgid "Desc"
 msgstr "Desc"
@@ -479,7 +462,7 @@ msgid "Description"
 msgstr "Description"
 #
 msgid "Display Toolbar"
-msgstr "Afficher la barre d'icônes"
+msgstr "Afficher la barre d'outils"
 #
 msgid "Display text"
 msgstr "Afficher le texte"
@@ -497,7 +480,7 @@ msgid "Distance Unit"
 msgstr "Unité de distance"
 #
 msgid "Distance Units"
-msgstr "Unité de distances"
+msgstr "Unités de distance"
 #
 msgid "Distance between Range Rings"
 msgstr "Distance entre les cercles concentriques"
@@ -509,8 +492,8 @@ msgid ""
 "Do you also want to make the shared OD Points being part of this boundary "
 "invisible?"
 msgstr ""
-"Voulez vous aussi le faire avec les points OD partagés faisant partie de la "
-"limite invisible ?"
+"Voulez vous aussi le faire avec les points partagés du traceur faisant partie "
+"de la limite invisible ?"
 #
 msgid "Dot"
 msgstr "Point"
@@ -518,48 +501,41 @@ msgstr "Point"
 msgid "Dot Dash"
 msgstr "Pointillé"
 #
-#, fuzzy
 msgid "Draw Toolbar"
-msgstr "Afficher la barre d'icônes"
+msgstr "Les outils"
 #
 msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Fixed End Position"
-msgstr "Position fixe de la fin de la limite"
+msgstr "Position de la fin de la ligne EBL"
 #
 msgid "EBL Persistence"
 msgstr "Persistence EBL"
 #
-#, fuzzy
 msgid "EBL Point"
-msgstr " Point"
+msgstr " Point EBL"
 #
-#, fuzzy
 msgid "EBL Point &Properties"
-msgstr "Propriété d'un point OD"
+msgstr "&Propriétés du point EBL"
 #
-#, fuzzy
 msgid "EBL Point Properties"
-msgstr "Propriété d'un point OD"
+msgstr "Propriétés d'un point EBL"
 #
-#, fuzzy
 msgid "EBL Point Properties, Layer: "
-msgstr "Couche, propriétés du chemin : "
+msgstr "Couche, propriétés du point EBL : "
 #
-#, fuzzy
 msgid "EBL Properties"
-msgstr " Propriétés"
+msgstr " Propriétés de la ligne EBL"
 #
-#, fuzzy
 msgid "EBL Properties, Layer: "
-msgstr " Couche, Propriétés :"
+msgstr " Couche, Propriétés de la ligne EBL :"
 #
 msgid ""
 "Edge Panning Sensitivity\n"
 "(percentage screen width) Default 5"
 msgstr ""
-"Sensibilité du déplacement sur les bords\n"
+"Sensibilité du déplacement de la zone de carte sur les bords\n"
 "(Pourcentage de la largeur de l'écran) Valeur par défaut : 5"
 #
 msgid "Electronic Bearing Line"
@@ -596,7 +572,7 @@ msgid "Fonts"
 msgstr "Polices"
 #
 msgid "For this leg the Great Circle boundary is "
-msgstr "Pour ce segment la limite orthodromique est "
+msgstr "Pour ce segment, la limite orthodromique est "
 #
 msgid "From Point"
 msgstr "Depuis le point"
@@ -615,15 +591,18 @@ msgid ""
 "\n"
 "Thanks to the community for their helpful suggestions."
 msgstr ""
+"Traceur général pour OpenCPN\n"
+"\n"
+"Merci à la communauté pour les suggestions apportées "
 #
 msgid "General drawing for OpenCPN"
-msgstr ""
+msgstr "Traceur général pour OpenCPN"
 #
 msgid "Hide Point names"
 msgstr "Cacher les noms des points"
 #
 msgid "Hide from chart"
-msgstr "Cacher dans la zone de carte"
+msgstr "Cacher sur la carte"
 #
 msgid "Hours"
 msgstr "Heures"
@@ -641,17 +620,17 @@ msgid ""
 "Inactive DR Line\n"
 "Colour"
 msgstr ""
-"Ligne DR inactive\n"
+"Route estimée inactive\n"
 "Couleur"
 #
 msgid "Inactive EBL Line Colour"
-msgstr "Couleur du trait d'une EBL inactive"
+msgstr "Couleur du trait d'une ligne EBL inactive"
 #
 msgid "Inactive Fill Colour"
-msgstr "Couleur inactive de remplissage"
+msgstr "Inactivité : Couleur de remplissage"
 #
 msgid "Inactive Line Colour"
-msgstr "Couleur du trait inactif"
+msgstr "Inactivité : Couleur du trait"
 #
 msgid "Inclusion"
 msgstr "Inclusive"
@@ -664,26 +643,23 @@ msgstr ""
 "Taille"
 #
 msgid "Inclusion Boundary Size"
-msgstr "Largeur du quadrillage"
+msgstr "Taille du quadrillage"
 #
 msgid ""
 "Initial Edge Panning Sensitivity\n"
 "(percentage screen width) Default 3"
 msgstr ""
-"Sensibilité initiale du déplacement sur les bords\n"
+"Sensibilité initiale du déplacement de la zone de carte sur les bords\n"
 "(pourcentage de la largeur de l'écran)"
 #
-#, fuzzy
 msgid "Insert Boundary Point"
-msgstr "Créer un point limite"
+msgstr "Insérer un point limite"
 #
-#, fuzzy
 msgid "Insert DR Point"
-msgstr "Point DR"
+msgstr "insérer un point estimé"
 #
-#, fuzzy
 msgid "Insert EBL Point"
-msgstr "Point texte"
+msgstr "Insérer un point EBL"
 #
 msgid "Interval Type"
 msgstr "Type d'intervalle"
@@ -703,24 +679,20 @@ msgstr "Couche "
 msgid "Layer Boundary"
 msgstr "Couche de limite"
 #
-#, fuzzy
 msgid "Layer Boundary Point"
-msgstr "Créer un point limite"
+msgstr "Couche de point limite"
 #
-#, fuzzy
 msgid "Layer DR Point"
-msgstr "Point DR"
+msgstr "couche de point estimé"
 #
-#, fuzzy
 msgid "Layer EBL Point"
-msgstr "Couche de limite"
+msgstr "Couche de point EBL"
 #
 msgid "Layer Name"
 msgstr "Nom de la couche"
 #
-#, fuzzy
 msgid "Layer Text Point"
-msgstr "Créer un point texte"
+msgstr "Couche de point texte"
 #
 msgid "Layers"
 msgstr "Couches"
@@ -767,33 +739,26 @@ msgstr "Mineure :"
 msgid "Minutes"
 msgstr "Minutes"
 #
-#, fuzzy
 msgid "Move Boundary"
-msgstr "Limite"
+msgstr "Déplacer la limite"
 #
-#, fuzzy
 msgid "Move Boundary Point"
-msgstr "Point limite"
+msgstr "Déplacer le point limite"
 #
-#, fuzzy
 msgid "Move DR Point"
-msgstr "Point DR"
+msgstr "Déplacer le point estimé"
 #
-#, fuzzy
 msgid "Move EBL"
-msgstr "Déplacer "
+msgstr "Déplacer la ligne EBL"
 #
-#, fuzzy
 msgid "Move EBL Point"
-msgstr "Au point"
+msgstr "Déplacer le point EBL"
 #
-#, fuzzy
 msgid "Move OD Point"
-msgstr "Point OD"
+msgstr "Déplacer le point du traceur"
 #
-#, fuzzy
 msgid "Move Text Point"
-msgstr "Point texte"
+msgstr "Déplacer le point texte"
 #
 msgid "Name"
 msgstr "Nom"
@@ -808,7 +773,7 @@ msgid "Nautical Miles"
 msgstr "Milles nautiques"
 #
 msgid "Nav Object Backups"
-msgstr "Montrer les directions magnétiques"
+msgstr "Nombre de fichier(s) de sauvegarde des objets"
 #
 msgid "Neither"
 msgstr "Aucun"
@@ -833,103 +798,82 @@ msgid "Number of Range Rings"
 msgstr "Nombre de cercles concentriques"
 #
 msgid "OCPN Draw"
-msgstr "OCPN Draw"
+msgstr "Traceur OCPN"
 #
 msgid "OCPN Draw Boundary"
-msgstr "Limite de OCPN Draw"
+msgstr "Traceur OCPN, limite"
 #
-#, fuzzy
 msgid "OCPN Draw Boundary Create"
-msgstr "Limite de OCPN Draw"
+msgstr "Traceur OCPN, créer une limite"
 #
-#, fuzzy
 msgid "OCPN Draw Boundary Delete"
-msgstr "Limite de OCPN Draw"
+msgstr "Traceur OCPN, supprimer une limite"
 #
-#, fuzzy
 msgid "OCPN Draw DR Delete"
-msgstr "Supprimer OCPN Draw "
+msgstr "Traceur OCPN, supprimer une route estimée"
 #
-#, fuzzy
 msgid "OCPN Draw Delete Boundary Point"
-msgstr "Créer un point limite"
+msgstr "Traceur OCPN, supprimer un point limite"
 #
-#, fuzzy
 msgid "OCPN Draw Delete DR Point"
-msgstr "Supprimer OCPN Draw "
+msgstr "Traceur OCPN, supprimer une route estimée"
 #
-#, fuzzy
 msgid "OCPN Draw Delete EBL Point"
-msgstr "Supprimer OCPN Draw "
+msgstr "Traceur OCPN, supprimer un point EBL"
 #
-#, fuzzy
 msgid "OCPN Draw Delete OD Point"
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, supprimer un point"
 #
-#, fuzzy
 msgid "OCPN Draw EBL Delete"
-msgstr "Supprimer OCPN Draw "
+msgstr "Traceur OCPN, supprimer une ligne EBL"
 #
 msgid "OCPN Draw Manager"
-msgstr "Gestionnaire de OCPN Draw"
+msgstr "Gestionnaire du traceur OCPN"
 #
-#, fuzzy
 msgid "OCPN Draw Path &Properties"
-msgstr "Propriétés du complément OCPN Draw"
+msgstr "Traceur OCPN, Chemin et &Propriétés"
 #
-#, fuzzy
 msgid "OCPN Draw Point"
-msgstr "Créer un point OpenCPN"
+msgstr "Traceur OCPN, point"
 #
-#, fuzzy
 msgid "OCPN Draw Point Create"
-msgstr "Créer un point OpenCPN"
+msgstr "Traceur OCPN, créer un point"
 #
-#, fuzzy
 msgid "OCPN Draw Point, Layer: "
-msgstr "Créer un point OpenCPN"
+msgstr "Traceur OCPN, point, couches : "
 #
 msgid "OCPN Draw Properties"
-msgstr "Propriétés du complément OCPN Draw"
+msgstr "Traceur OCPN : Préférences générale"
 #
 msgid "OCPN Draw Remove "
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, Retirer "
 #
-#, fuzzy
 msgid "OCPN Draw Remove Boundary Point"
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, retirer un point estimé"
 #
-#, fuzzy
 msgid "OCPN Draw Remove DR Point"
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, retirer un point estimé"
 #
-#, fuzzy
 msgid "OCPN Draw Remove EBL Point"
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, retirer un point du traceur"
 #
-#, fuzzy
 msgid "OCPN Draw Remove OD Point"
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, retirer un point"
 #
-#, fuzzy
-msgid "OCPN Draw Remove ODPoint"
-msgstr "Retirer OCPN draw "
-#
-#, fuzzy
 msgid "OCPN Draw Remove Text Point"
-msgstr "Retirer OCPN draw "
+msgstr "Traceur OCPN, retirer un point texte"
 #
 msgid "OD Point"
-msgstr "Point OD"
+msgstr "Point du traceur"
 #
 msgid "OD Point Name"
-msgstr "Nom du point OD"
+msgstr "Nom du point du traceur"
 #
 msgid "OD Point Properties"
-msgstr "Propriété d'un point OD"
+msgstr "Propriétés d'un point du traceur"
 #
 msgid "OD Points"
-msgstr "Points OD"
+msgstr "Points du traceur"
 #
 msgid "On Rollover Only"
 msgstr "Seulement par rollover"
@@ -956,7 +900,7 @@ msgid "Path"
 msgstr "Chemin"
 #
 msgid "Path & Point Manager"
-msgstr "Gestionnaire de chemins et de points OD"
+msgstr "Gestionnaire de chemins et de points du traceur"
 #
 msgid "Path Name"
 msgstr "Nom du chemin"
@@ -965,7 +909,7 @@ msgid "Path Persistence"
 msgstr "Persistance du chemin"
 #
 msgid "Path Properties"
-msgstr "Propriété du chemin"
+msgstr "Propriétés du chemin"
 #
 msgid "Path Properties, Layer: "
 msgstr "Couche, propriétés du chemin : "
@@ -980,7 +924,7 @@ msgid "Persistent over Crash"
 msgstr "Persistance après un crash"
 #
 msgid "Pick a new start point"
-msgstr "Pick a new start point"
+msgstr "Choisissez un nouveau point de départ"
 #
 msgid ""
 "Please report problems using FlySpray at:\n"
@@ -1005,7 +949,7 @@ msgstr ""
 "sur le forum OpenCPN :\n"
 "http://www.cruisersforum.com/forums/f134\n"
 "\n"
-"or\n"
+"ou\n"
 "\n"
 "Soulever une question dans le GIT :\n"
 "https://github.com/jongough/ocpn_draw_pi/issues\n"
@@ -1040,9 +984,8 @@ msgstr "Epaisseur du trait des cercles concentriques"
 msgid "Remove Point from Path"
 msgstr "Retirer ce point du chemin"
 #
-#, fuzzy
 msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr "Retirer ce point rendra invalide le "
+msgstr "Retirer ce point rendra invalide la limite, ceci n'est pas permis."
 #
 msgid "Right"
 msgstr "Droit"
@@ -1054,7 +997,7 @@ msgid "Show"
 msgstr "Montrer"
 #
 msgid "Show DR Direction Arrow"
-msgstr "Montrer la direction d'une ligne DR"
+msgstr "Montrer la direction d'une route estimée"
 #
 msgid "Show Display Text"
 msgstr "Montrer le texte"
@@ -1117,7 +1060,7 @@ msgid "Text Point Icon"
 msgstr "Icône d'un point texte"
 #
 msgid "Text position relative to point"
-msgstr "Posiotion relative du texte par rapport au point"
+msgstr "Position relative du texte par rapport au point"
 #
 msgid "Text to Display with Point"
 msgstr "Texte à afficher avec un point"
@@ -1126,8 +1069,8 @@ msgid ""
 "The OD Point you want to delete is used in a path, do you really want to "
 "delete it?"
 msgstr ""
-"Le point OD que vous voulez supprimer est utilisé par un chemin, voulez vous "
-"vraiment le supprimer ?"
+"Le point du traceur que vous voulez supprimer est utilisé par un chemin, "
+"voulez vous vraiment le supprimer ?"
 #
 msgid ""
 "There are some OD points used in paths or anchor alarms.\n"
@@ -1135,12 +1078,12 @@ msgid ""
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
 msgstr ""
-"Il y a certains points OD utilisés dans des chemins ou des alarmes de "
+"Il y a certains points du traceur utilisés dans des chemins ou des alarmes de "
 "mouillage.\n"
-"Voulez vous vraiment les supprimer quand même ?\n"
-" Ceci modifiera les chemins et désactivera les alarmes de mouillage.\n"
-"Répondre \"Non\", maintiendra les points OD utilisés dans ces chemins ou ces "
-"alarmes de mouillage."
+"  Voulez vous vraiment les supprimer quand même ?\n"
+"  Ceci modifiera les chemins et désactivera les alarmes de mouillage.\n"
+"Répondre \"Non\", maintiendra les points traceur utilisés dans ces chemins ou "
+"ces alarmes de mouillage."
 #
 msgid "Time"
 msgstr "Temps"
@@ -1167,10 +1110,10 @@ msgid "Unlist contents"
 msgstr "Ne pas lister les contenus"
 #
 msgid "Update initial conditions"
-msgstr "Conditions initiale de mise à jour"
+msgstr "Revenir à la définition initiale"
 #
 msgid "Use nearby OD Point?"
-msgstr "Utiliser le point OD proche ?"
+msgstr "Utiliser le point du traceur, proche ?"
 #
 msgid "Use nearby Point?"
 msgstr "Utilisez le point proche ?"
@@ -1179,7 +1122,7 @@ msgid "Version:"
 msgstr "Version :"
 #
 msgid "Whilst Drawing"
-msgstr "Alors que le dessin"
+msgstr "Si traçage en cours"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
@@ -1190,8 +1133,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid " Delete"
 #~ msgstr " Supprimer"
+#
 #
 #
 #
@@ -1200,8 +1145,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid ", this is not allowed."
 #~ msgstr ", ceci n'est pas permis."
+#
 #
 #
 #
@@ -1218,13 +1165,20 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "Logitude"
 #~ msgstr "Longitude"
 #
 #
 #
+#
 #~ msgid "Move"
 #~ msgstr "Déplacer"
+#
+#
+#~ msgid "OCPN Draw Remove ODPoint"
+#~ msgstr "Traceur OCPN, retirer un point texte"
+#
 #
 #
 #
@@ -1249,8 +1203,10 @@ msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
 #
 #
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Créer une limite OpenCPN"
+#
 #
 #
 #
