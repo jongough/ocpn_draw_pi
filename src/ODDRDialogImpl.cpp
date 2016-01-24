@@ -98,8 +98,8 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     wxString s;
     s.Printf( _T("%.3f"), g_dDRLength );
     m_textCtrlLength->SetValue( s );
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
-    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
+    else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
     s.Printf( _T("%.3f"), g_dDRPointInterval );
     m_textCtrlDRPointInterval->SetValue( s );
@@ -129,8 +129,8 @@ void ODDRDialogImpl::SetupDialog()
 {
 #if wxCHECK_VERSION(3,0,0) 
     wxString s;
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
-    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
+    else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
     m_dSOGValidator = g_dDRSOG;
     m_iCOGValidator = g_iDRCOG;
@@ -138,8 +138,8 @@ void ODDRDialogImpl::SetupDialog()
     m_dIntervalValidator = g_dDRPointInterval;
 #else
     wxString s;
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
-    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
+    else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
     if(g_pfFix.Sog != g_pfFix.Sog )
         s.Printf( _T("%.3f"), g_dDRSOG );
@@ -160,8 +160,8 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     m_pDR = dr;
 #if wxCHECK_VERSION(3,0,0) 
     wxString s;
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
-    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
+    else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
     m_dSOGValidator = dr->m_dSoG;
     m_iCOGValidator = dr->m_iCoG;
@@ -169,8 +169,8 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     m_dIntervalValidator = dr->m_dDRPointInterval;
 #else
     wxString s;
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s.Printf( _T("Course over Ground %s"), _T("(M)") );
-    else s.Printf( _T("Course over Ground %s"), _T("(T)") );
+    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
+    else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
     s.Printf( _T("%.3f"), dr->m_dSoG );
     m_textCtrlSOG->SetValue( s );

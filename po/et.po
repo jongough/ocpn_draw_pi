@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
+"POT-Creation-Date: 2016-01-24 19:32+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -409,6 +409,20 @@ msgid "Copy lat/long"
 msgstr "Kopeeri laius/pikkus"
 #
 msgid "Course over Ground"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Course over Ground (M)"
+msgstr "Kurss (M)"
+#
+msgid "Course over Ground (T)"
 msgstr ""
 #
 msgid "Create Boundary"
@@ -933,9 +947,6 @@ msgstr "OCPN'i punkti nimi"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN'i punkti nimi"
 #
-msgid "OCPN Draw Remove ODPoint"
-msgstr ""
-#
 #, fuzzy
 msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN'i punkti nimi"
@@ -1210,9 +1221,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Kustuta"
+#
+#
 #
 #
 #
@@ -1231,14 +1246,20 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(nimetu OCPN-punkt)"
+#
+#
 #
 #
 #
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Kihid"
+#
+#
 #
 #
 #
@@ -1257,18 +1278,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Blue"
 #~ msgstr "sinine"
 #
 #
-#
-#
-#
-#
-#
-#
-#~ msgid "Course (M)"
-#~ msgstr "Kurss (M)"
 #
 #
 #
@@ -1287,8 +1302,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Blue"
 #~ msgstr "tumesinine"
+#
+#
 #
 #
 #
@@ -1307,8 +1326,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Gray"
 #~ msgstr "tumehall"
+#
+#
 #
 #
 #
@@ -1327,8 +1350,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "tumepurpurviolett"
+#
+#
 #
 #
 #
@@ -1347,8 +1374,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "tumekollane"
+#
+#
 #
 #
 #
@@ -1367,8 +1398,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Default color"
 #~ msgstr "vaikimisi värv"
+#
+#
 #
 #
 #
@@ -1387,8 +1422,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Green"
 #~ msgstr "roheline"
+#
+#
 #
 #
 #
@@ -1407,8 +1446,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Light Gray"
 #~ msgstr "helehall"
+#
+#
 #
 #
 #
@@ -1427,8 +1470,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Marks"
 #~ msgstr "Märgid"
+#
+#
 #
 #
 #
@@ -1447,8 +1494,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "OK"
 #~ msgstr "OK"
+#
+#
 #
 #
 #
@@ -1467,8 +1518,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "White"
 #~ msgstr "valge"
+#
+#
 #
 #
 #

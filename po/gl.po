@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
+"POT-Creation-Date: 2016-01-24 19:32+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Galician\n"
@@ -368,6 +368,12 @@ msgid "Copy lat/long"
 msgstr ""
 #
 msgid "Course over Ground"
+msgstr ""
+#
+msgid "Course over Ground (M)"
+msgstr ""
+#
+msgid "Course over Ground (T)"
 msgstr ""
 #
 msgid "Create Boundary"
@@ -829,9 +835,6 @@ msgid "OCPN Draw Remove EBL Point"
 msgstr ""
 #
 msgid "OCPN Draw Remove OD Point"
-msgstr ""
-#
-msgid "OCPN Draw Remove ODPoint"
 msgstr ""
 #
 msgid "OCPN Draw Remove Text Point"

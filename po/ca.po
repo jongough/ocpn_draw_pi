@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-21 15:52+1100\n"
+"POT-Creation-Date: 2016-01-24 19:32+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -408,6 +408,24 @@ msgid "Copy lat/long"
 msgstr "Copiar lat/long"
 #
 msgid "Course over Ground"
+msgstr ""
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#, fuzzy
+msgid "Course over Ground (M)"
+msgstr "Curs (M)"
+#
+msgid "Course over Ground (T)"
 msgstr ""
 #
 msgid "Create Boundary"
@@ -936,9 +954,6 @@ msgstr "Nom de punt d'OCPN"
 msgid "OCPN Draw Remove OD Point"
 msgstr "Nom de punt d'OCPN"
 #
-msgid "OCPN Draw Remove ODPoint"
-msgstr ""
-#
 #, fuzzy
 msgid "OCPN Draw Remove Text Point"
 msgstr "Nom de punt d'OCPN"
@@ -1213,9 +1228,13 @@ msgstr ""
 #
 #
 #
+#
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Esborrar"
+#
+#
 #
 #
 #
@@ -1242,14 +1261,20 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(Punt OCPN sense nom)"
+#
+#
 #
 #
 #
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Capes"
+#
+#
 #
 #
 #
@@ -1276,22 +1301,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Blue"
 #~ msgstr "Blau"
 #
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Course (M)"
-#~ msgstr "Curs (M)"
 #
 #
 #
@@ -1318,8 +1333,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Blau fosc"
+#
+#
 #
 #
 #
@@ -1346,8 +1365,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Gris fosc"
+#
+#
 #
 #
 #
@@ -1374,8 +1397,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Magenta fosc"
+#
+#
 #
 #
 #
@@ -1402,8 +1429,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Groc fosc"
+#
+#
 #
 #
 #
@@ -1430,8 +1461,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Default color"
 #~ msgstr "Color per defecte"
+#
+#
 #
 #
 #
@@ -1458,8 +1493,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Green"
 #~ msgstr "Verd"
+#
+#
 #
 #
 #
@@ -1486,8 +1525,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Light Gray"
 #~ msgstr "Gris clar"
+#
+#
 #
 #
 #
@@ -1514,8 +1557,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "Marks"
 #~ msgstr "Marques"
+#
+#
 #
 #
 #
@@ -1542,8 +1589,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "OK"
 #~ msgstr "Ok"
+#
+#
 #
 #
 #
@@ -1570,8 +1621,12 @@ msgstr ""
 #
 #
 #
+#
+#
 #~ msgid "White"
 #~ msgstr "Blanc"
+#
+#
 #
 #
 #
