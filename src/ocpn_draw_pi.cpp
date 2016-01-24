@@ -1951,6 +1951,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FinishBoundary();
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->UpdateIcons( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -1961,6 +1962,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             nPoint_State = 0;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -1970,6 +1972,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             nTextPoint_State = 0;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -1980,6 +1983,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_bEBLMoveOrigin = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -1989,6 +1993,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             nDR_State = 0;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2903,7 +2908,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_dStartLat = g_pfFix.Lat;
     m_dStartLon = g_pfFix.Lon;
 
-    ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, wxEmptyString, wxS("Boat"), wxT("") );
+    ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sEBLStartIconName, wxS("Boat"), wxT("") );
     beginPoint->SetNameShown( false );
     beginPoint->SetTypeString( wxT("EBL Point"));
     beginPoint->m_bIsolatedMark = false;
