@@ -181,9 +181,18 @@ ODPropertiesDialogDef( parent )
     m_textCtrlDRPathLength->SetValidator( dDRPathLengthVal );
     m_textCtrlDRPointInterval->SetValidator( dDRPointIntervalVal );
     m_textCtrlDRPointRangeRingSteps->SetValidator( dDRPointRangeRingStepVal );
-#endif
+    
     int l_iPage = m_notebookProperties->FindPage(m_panelPath);
     m_notebookProperties->DeletePage(l_iPage);
+#else
+    for(size_t i = 0; i < m_notebookProperties->GetPageCount(); i++) {
+        if(m_notebookProperties->GetPageText(i) == _("Path")) {
+            m_notebookProperties->DeletePage(i);
+            break;
+        }
+    }
+#endif
+
     SetDialogSize();
 }
 
@@ -392,7 +401,11 @@ void ODPropertiesDialogImpl::SaveChanges()
 
 void ODPropertiesDialogImpl::SetDialogSize( void )
 {
+#if wxCHECK_VERSION(3,0,0) 
     m_notebookProperties->SetSelection(m_notebookProperties->FindPage(m_panelGeneral));
+#else
+    m_notebookProperties->SetSelection(0);
+#endif
     
     wxSize sz = m_SizerProperties->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
