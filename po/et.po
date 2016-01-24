@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-24 19:32+1100\n"
+"POT-Creation-Date: 2016-01-25 09:57+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -374,9 +374,6 @@ msgstr ""
 #, fuzzy
 msgid "Centre"
 msgstr "Keskenda &vaade"
-#
-msgid "Centre on boat lat lon"
-msgstr ""
 #
 msgid "Centre on moving boat"
 msgstr ""
@@ -829,6 +826,9 @@ msgstr "OCPN'i punktid"
 msgid "Move Text Point"
 msgstr ""
 #
+msgid "Move start point to boat lat/lon"
+msgstr ""
+#
 msgid "Name"
 msgstr "Nimi"
 #
@@ -1223,9 +1223,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Kustuta"
+#
 #
 #
 #
@@ -1248,8 +1250,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(nimetu OCPN-punkt)"
+#
 #
 #
 #
@@ -1258,6 +1262,7 @@ msgstr ""
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Kihid"
+#
 #
 #
 #
@@ -1280,8 +1285,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "sinine"
+#
 #
 #
 #
@@ -1304,8 +1311,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "tumesinine"
+#
 #
 #
 #
@@ -1328,8 +1337,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "tumehall"
+#
 #
 #
 #
@@ -1352,8 +1363,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "tumepurpurviolett"
+#
 #
 #
 #
@@ -1376,8 +1389,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "tumekollane"
+#
 #
 #
 #
@@ -1400,8 +1415,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "vaikimisi värv"
+#
 #
 #
 #
@@ -1424,8 +1441,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "roheline"
+#
 #
 #
 #
@@ -1448,8 +1467,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "helehall"
+#
 #
 #
 #
@@ -1472,8 +1493,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Märgid"
+#
 #
 #
 #
@@ -1496,8 +1519,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "OK"
 #~ msgstr "OK"
+#
 #
 #
 #
@@ -1520,8 +1545,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "valge"
+#
 #
 #
 #
