@@ -247,6 +247,7 @@ int             g_iDisplayToolbar;
 
 double          g_dScale;
 int             g_iNSScale;
+float           g_ChartScaleFactorExp;
 
 double          g_dDRSOG;
 int             g_iDRCOG;

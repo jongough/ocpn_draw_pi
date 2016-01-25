@@ -54,6 +54,8 @@ extern float        g_fODPointRangeRingsStep;
 extern int          g_iODPointRangeRingsStepUnits;
 extern wxColour     g_colourODPointRangeRingsColour;
 extern bool         g_bBoundaryPointShowName;
+extern float        g_ChartScaleFactorExp;
+
 
 extern PlugIn_ViewPort  *g_pivp;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
@@ -93,6 +95,7 @@ ODPoint::ODPoint()
     m_btemp = false;
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
+    m_fIconScaleFactor = 1.0;
     m_sTypeString = wxEmptyString;
     
     m_HyperlinkList = new HyperlinkList;
@@ -158,6 +161,7 @@ ODPoint::ODPoint( ODPoint* orig )
     
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
+    m_fIconScaleFactor = 1.0;
     
     m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
     
@@ -209,6 +213,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
 
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
+    m_fIconScaleFactor = 1.0;
     
     m_HyperlinkList = new HyperlinkList;
 
@@ -321,6 +326,8 @@ void ODPoint::ReLoadIcon( void )
 
     m_iTextTexture = 0;
 #endif
+    
+    m_fIconScaleFactor = -1;
 }
 
 void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
@@ -345,11 +352,25 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 
 //    Substitue icon?
     wxBitmap *pbm;
-    if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = g_pODPointMan->GetIconBitmap(
-            _T ( "activepoint" ) );
+    if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = g_pODPointMan->GetIconBitmap( _T ( "activepoint" ) );
     else
         pbm = m_pbmIcon;
-
+    
+    wxBitmap *pbms = NULL;
+    float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
+    if( l_ChartScaleFactorExp > 1.0){
+        if(m_fIconScaleFactor != l_ChartScaleFactorExp){
+            wxImage scaled_image = pbm->ConvertToImage();
+            int new_width = pbm->GetWidth() * l_ChartScaleFactorExp;
+            int new_height = pbm->GetHeight() * l_ChartScaleFactorExp;
+            m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
+            
+            m_fIconScaleFactor = l_ChartScaleFactorExp;
+        }
+        if( m_ScaledBMP.IsOk() )
+            pbm = &m_ScaledBMP;
+    }
+    
     int sx2 = pbm->GetWidth() / 2;
     int sy2 = pbm->GetHeight() / 2;
 
@@ -470,30 +491,6 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if(m_wpBBox.GetValid() &&
         pivp.chart_scale == m_wpBBox_chart_scale &&
         pivp.rotation == m_wpBBox_rotation) {
-//       vp.chart_scale == m_wpBBox_chart_scale &&
-//       vp.rotation == m_wpBBox_rotation) {
-        /* see if this ODPoint can intersect with bounding box */
-//        LLBBox vpBBox = vp.GetBBox();
-//        pivp.
-/*        if( vpBBox.IntersectOut( m_wpBBox ) ) {
-            //try with vp crossing IDL
-            if(vpBBox.GetMinX() < -180 && vpBBox.GetMaxX() > -180) {
-                wxPoint2DDouble xlate( -360., 0. );
-                wxBoundingBox test_box2 = m_wpBBox;
-                test_box2.Translate( xlate );
-                if( vp.GetBBox().IntersectOut( test_box2 ) )
-                    return;
-            } else 
-            if(vpBBox.GetMinX() < 180 && vpBBox.GetMaxX() > 180) {
-                wxPoint2DDouble xlate( 360., 0. );
-                wxBoundingBox test_box2 = m_wpBBox;
-                test_box2.Translate( xlate );
-                if( vp.GetBBox().IntersectOut( test_box2 ) )
-                    return;
-            } else
-                return;
-        }
-*/        
     }
 
     wxPoint r;
@@ -599,8 +596,12 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         
         glColor3f(1, 1, 1);
         
-        int x = r1.x, y = r1.y, w = r1.width, h = r1.height;
-        float u = (float)w/glw, v = (float)h/glh;
+        float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
+        float w = r1.width * l_ChartScaleFactorExp;
+        float h = r1.height * l_ChartScaleFactorExp;
+        float x = r.x - w/2; 
+        float y = r.y - h/2;
+        float u = (float)r1.width/glw, v = (float)r1.height/glh;
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0); glVertex2f(x, y);
         glTexCoord2f(u, 0); glVertex2f(x+w, y);

@@ -193,6 +193,8 @@ private:
       
       void              *m_SelectNode;
       void              *m_ManagerNode;
+      float             m_fIconScaleFactor;
+      wxBitmap          m_ScaledBMP;
       
 };
 
