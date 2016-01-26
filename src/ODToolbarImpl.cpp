@@ -157,8 +157,18 @@ void ODToolbarImpl::OnClose( wxCloseEvent& event )
     g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
 }
 
+void ODToolbarImpl::OnKeyDown(wxKeyEvent& event)
+{
+    if( event.GetKeyCode() == 27 ) { // esc key
+        m_Mode = -1;
+        g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+    }
+    ODToolbarDialog::OnKeyDown(event);
+}
+
 void ODToolbarImpl::SetToolbarTool( int iTool )
 {
+    UpdateIcons();
     SetToolbarToolToggle( iTool );
     SetToolbarToolBitmap( iTool );
 }    
@@ -293,7 +303,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
     m_toolBarODToolbar->Realize();
 }
 
-void ODToolbarImpl::UpdateIcons( int iTool )
+void ODToolbarImpl::UpdateIcons( void )
 {
     if(g_ocpn_draw_pi->m_pODicons->ScaleIcons()) {
         m_toolBarODToolbar->DeleteTool( ID_MODE_BOUNDARY );
@@ -314,6 +324,5 @@ void ODToolbarImpl::UpdateIcons( int iTool )
         this->Layout();
         this->GetSizer()->Fit(this);
     }
-    SetToolbarTool(iTool);
 }
 

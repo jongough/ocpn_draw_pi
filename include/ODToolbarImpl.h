@@ -27,8 +27,9 @@ public:
     void OnActivate( wxActivateEvent& event );
     void OnClose( wxCloseEvent& event );
     void OnToolButtonClick( wxCommandEvent& event );
+    void OnKeyDown( wxKeyEvent& event );
     void SetToolbarTool( int iTool );
-    void UpdateIcons( int iTool );
+    void UpdateIcons( void );
     
     wxToolBarToolBase *m_toolBoundary;
     wxToolBarToolBase *m_toolODPoint;
