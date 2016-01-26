@@ -768,7 +768,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = ocpncc1->pCursorPencil;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->UpdateIcons( m_Mode );
+                    g_pODToolbar->SetToolbarTool( m_Mode );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     m_iCallerId = 0;
@@ -781,7 +781,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->UpdateIcons( ID_NONE );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
@@ -793,7 +793,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->UpdateIcons( m_Mode );
+                    g_pODToolbar->SetToolbarTool( m_Mode );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     m_iCallerId = 0;
@@ -805,7 +805,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->UpdateIcons( ID_NONE );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
@@ -817,7 +817,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = m_pTextCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->UpdateIcons( m_Mode );
+                    g_pODToolbar->SetToolbarTool( m_Mode );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     m_iCallerId = 0;
@@ -829,7 +829,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->UpdateIcons( ID_NONE );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
@@ -841,7 +841,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->UpdateIcons( m_Mode );
+                    g_pODToolbar->SetToolbarTool( m_Mode );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     m_iCallerId = 0;
@@ -853,7 +853,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->UpdateIcons( ID_NONE );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
@@ -865,7 +865,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
-                    g_pODToolbar->UpdateIcons( m_Mode );
+                    g_pODToolbar->SetToolbarTool( m_Mode );
                     if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
                 } else {
                     m_iCallerId = 0;
@@ -877,7 +877,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->UpdateIcons( ID_NONE );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
@@ -1624,30 +1624,35 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
                     nPoint_State = 0;
                     m_pCurrentCursor = NULL;
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nTextPoint_State > 0 ){
                     nTextPoint_State = 0;
                     m_pCurrentCursor = NULL;
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nEBL_State > 0 ){
                     nEBL_State = 0;
                     m_pCurrentCursor = NULL;
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( nDR_State > 0 ){
                     nDR_State = 0;
                     m_pCurrentCursor = NULL;
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
                     RequestRefresh( m_parent_window );
                     bret = TRUE;
                 } else if( m_bODPointEditing ) {
@@ -1953,7 +1958,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
-            g_pODToolbar->UpdateIcons( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;

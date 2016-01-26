@@ -603,9 +603,6 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 } else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point")) {
                     sMessage = _("Are you sure you want to remove this DR Point?");
                     sCaption = _("OCPN Draw Remove DR Point");
-                } else if(m_pFoundODPoint->m_sTypeString == wxT("Text Point")) {
-                    sMessage = _("Are you sure you want to remove this Text Point?");
-                    sCaption = _("OCPN Draw Remove Text Point");
                 } else {
                     sMessage = _("Are you sure you want to remove this OD Point?");
                     sCaption = _("OCPN Draw Remove OD Point");
@@ -684,6 +681,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 } else if(m_pFoundODPoint->m_sTypeString == wxT("Boundary Point")) {
                     sMessage = _("Are you sure you want to delete this Boundary Point?");
                     sCaption = _("OCPN Draw Delete Boundary Point");
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("Text Point")) {
+                    sMessage = _("Are you sure you want to delete this Text Point?");
+                    sCaption = _("OCPN Draw Delete Text Point");
                 } else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point")) {
                     sMessage = _("Are you sure you want to delete this DR Point?");
                     sCaption = _("OCPN Draw Delete DR Point");
