@@ -303,6 +303,16 @@ public:
     
     int         nPath_State;
     int         nBoundary_State;
+    int         nPoint_State;
+    int         nTextPoint_State;
+    int         nEBL_State;
+    int         nDR_State;
+    bool        bKey_Path_Pressed;
+    bool        bKey_Boundary_Pressed;
+    bool        bKey_Point_Pressed;
+    bool        bKey_TextPoint_Pressed;
+    bool        bKey_EBL_Pressed;
+    bool        bKey_DR_Pressed;
     Boundary    *m_pMouseBoundary;
     EBL         *m_pMouseEBL;
     ODPoint     *m_pEBLBoatPoint;
@@ -310,10 +320,6 @@ public:
     ODPoint   *m_pFoundODPoint;
     ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;
-    int         nPoint_State;
-    int         nTextPoint_State;
-    int         nEBL_State;
-    int         nDR_State;
     double      m_dStartLat;
     double      m_dStartLon;
     double      m_cursor_lon, m_cursor_lat;
