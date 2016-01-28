@@ -150,6 +150,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
     }
     g_ocpn_draw_pi->SetToolbarTool();
     SetToolbarTool( m_Mode );
+    GetOCPNCanvasWindow()->SetFocus();
 }
 
 void ODToolbarImpl::OnClose( wxCloseEvent& event )

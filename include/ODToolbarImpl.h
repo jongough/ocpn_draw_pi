@@ -36,13 +36,13 @@ public:
     wxToolBarToolBase *m_toolTextPoint;
     wxToolBarToolBase *m_toolEBL;
     wxToolBarToolBase *m_toolDR;
+    int    m_Mode;
     
 private:
     void SetToolbarToolToggle( int iTool );
     void SetToolbarToolBitmap( int iTool );
     
     wxSize m_toolbarSize;
-    int    m_Mode;
     
 };
 

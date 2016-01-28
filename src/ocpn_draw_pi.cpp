@@ -348,6 +348,12 @@ int ocpn_draw_pi::Init(void)
     nPath_State = 0;
     nEBL_State = 0;
     nDR_State = 0;
+    bKey_Path_Pressed = false;
+    bKey_Boundary_Pressed = false;
+    bKey_Point_Pressed = false;
+    bKey_TextPoint_Pressed = false;
+    bKey_DR_Pressed = false;
+    bKey_EBL_Pressed = false;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
     
@@ -777,6 +783,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    bKey_Boundary_Pressed = false;
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -802,6 +809,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    bKey_Point_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -826,6 +834,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    bKey_TextPoint_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -850,6 +859,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    bKey_EBL_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -874,6 +884,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    bKey_DR_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
@@ -1598,62 +1609,105 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
         if ( event.ControlDown() )
             key_char -= 64;
         
+        if((bKey_Boundary_Pressed || bKey_Point_Pressed || bKey_TextPoint_Pressed || bKey_EBL_Pressed || bKey_DR_Pressed) && key_char != WXK_ESCAPE) return true; 
+        
         switch( key_char ) {
-            case 2:                      // Ctrl B
+            case WXK_CONTROL_B:                      // Ctrl B
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
-                    nBoundary_State = 1;
+                    bKey_Boundary_Pressed = true;
+                    bKey_Point_Pressed = false;
+                    bKey_TextPoint_Pressed = false;
+                    bKey_EBL_Pressed = false;
+                    bKey_DR_Pressed = false;
                     m_Mode = ID_MODE_BOUNDARY;
-#ifdef ODraw_USE_SVG
-                    SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
-#else
-                    SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_boundary_grey, m_pODicons->m_p_bm_ocpn_draw_boundary);
-#endif
-                    m_iCallerId = m_draw_button_id;
-                    m_pCurrentCursor = ocpncc1->pCursorPencil;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                    SetToolbarTool();
                     bret = TRUE;
                 } else bret = FALSE;
-                if(g_iDisplayToolbar == ID_DISPLAY_WHILST_DRAWING ) {
-                    g_pODToolbar->SetPosition( wxPoint(g_iToolbarPosX, g_iToolbarPosY) );
-                    g_pODToolbar->Show();
-                }
+                break;
+            case WXK_CONTROL_P:                      // Ctrl P
+                if ( event.ShiftDown() ) { // Shift-Ctrl-P
+                    bKey_Boundary_Pressed = false;
+                    bKey_Point_Pressed = true;
+                    bKey_TextPoint_Pressed = false;
+                    bKey_EBL_Pressed = false;
+                    bKey_DR_Pressed = false;
+                    m_Mode = ID_MODE_POINT;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                    SetToolbarTool();
+                    bret = TRUE;
+                } else bret = FALSE;
+                break;
+            case WXK_CONTROL_T:                      // Ctrl T
+                if ( event.ShiftDown() ) { // Shift-Ctrl-T
+                    bKey_Boundary_Pressed = false;
+                    bKey_Point_Pressed = false;
+                    bKey_TextPoint_Pressed = true;
+                    bKey_EBL_Pressed = false;
+                    bKey_DR_Pressed = false;
+                    m_Mode = ID_MODE_TEXT_POINT;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                    SetToolbarTool();
+                    bret = TRUE;
+                } else bret = FALSE;
+                break;
+            case WXK_CONTROL_E:                      // Ctrl E
+                if ( event.ShiftDown() ) { // Shift-Ctrl-E
+                    bKey_Boundary_Pressed = false;
+                    bKey_Point_Pressed = false;
+                    bKey_TextPoint_Pressed = false;
+                    bKey_EBL_Pressed = true;
+                    bKey_DR_Pressed = false;
+                    m_Mode = ID_MODE_EBL;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                    SetToolbarTool();
+                    bret = TRUE;
+                } else bret = FALSE;
+                break;
+            case WXK_CONTROL_D:                      // Ctrl D
+                if ( event.ShiftDown() ) { // Shift-Ctrl-D
+                    bKey_Boundary_Pressed = false;
+                    bKey_Point_Pressed = false;
+                    bKey_TextPoint_Pressed = false;
+                    bKey_EBL_Pressed = false;
+                    bKey_DR_Pressed = true;
+                    m_Mode = ID_MODE_DR;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                    SetToolbarTool();
+                    bret = TRUE;
+                } else bret = FALSE;
                 break;
                 
-            case 27: // Generic Break
+            case WXK_ESCAPE: // Generic Break
                 if( nBoundary_State > 0 ){
-                    nBoundary_State = 0;
-                    FinishBoundary();
-                    m_pCurrentCursor = NULL;
-                    SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->SetToolbarTool( ID_NONE );
-                    RequestRefresh( m_parent_window );
+                    m_Mode = ID_MODE_BOUNDARY;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                     bret = TRUE;
                 } else if( nPoint_State > 0 ){
-                    nPoint_State = 0;
-                    m_pCurrentCursor = NULL;
-                    SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->SetToolbarTool( ID_NONE );
-                    RequestRefresh( m_parent_window );
+                    m_Mode = ID_MODE_POINT;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                     bret = TRUE;
                 } else if( nTextPoint_State > 0 ){
-                    nTextPoint_State = 0;
-                    m_pCurrentCursor = NULL;
-                    SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->SetToolbarTool( ID_NONE );
-                    RequestRefresh( m_parent_window );
+                    m_Mode = ID_MODE_TEXT_POINT;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                     bret = TRUE;
                 } else if( nEBL_State > 0 ){
-                    nEBL_State = 0;
-                    m_pCurrentCursor = NULL;
-                    SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->SetToolbarTool( ID_NONE );
-                    RequestRefresh( m_parent_window );
+                    m_Mode = ID_MODE_EBL;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                     bret = TRUE;
                 } else if( nDR_State > 0 ){
-                    nDR_State = 0;
-                    m_pCurrentCursor = NULL;
-                    SetToolbarItemState( m_draw_button_id, false );
-                    g_pODToolbar->SetToolbarTool( ID_NONE );
-                    RequestRefresh( m_parent_window );
+                    m_Mode = ID_MODE_DR;
+                    g_pODToolbar->m_Mode = m_Mode;
+                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                     bret = TRUE;
                 } else if( m_bODPointEditing ) {
                     m_bODPointEditing = false;
@@ -1662,6 +1716,11 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     RequestRefresh( m_parent_window );
                 } else bret = FALSE;
                 m_iCallerId = 0;
+                bKey_Boundary_Pressed = false;
+                bKey_Point_Pressed = false;
+                bKey_TextPoint_Pressed = false;
+                bKey_EBL_Pressed = false;
+                bKey_DR_Pressed = false;
                 g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                 if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 break;
@@ -1955,6 +2014,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_iCallerId = 0;
             nBoundary_State = 0;
             FinishBoundary();
+            bKey_Boundary_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1965,6 +2025,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( nPoint_State > 1) {
             m_iCallerId = 0;
             nPoint_State = 0;
+            bKey_Point_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1975,6 +2036,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( nTextPoint_State > 1) {
             m_iCallerId = 0;
             nTextPoint_State = 0;
+            bKey_TextPoint_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1985,6 +2047,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( nEBL_State > 1 ) {
             m_iCallerId = 0;
             nEBL_State = 0;
+            bKey_EBL_Pressed = false;
             m_bEBLMoveOrigin = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
@@ -1996,6 +2059,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( nDR_State > 1 ) {
             m_iCallerId = 0;
             nDR_State = 0;
+            bKey_DR_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
