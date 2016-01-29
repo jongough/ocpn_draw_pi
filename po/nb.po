@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 09:57+1100\n"
+"POT-Creation-Date: 2016-01-30 08:56+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Norwegian Bokmal\n"
@@ -264,6 +264,10 @@ msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
 msgid "Are you sure you want to delete this OD Point?"
 msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr "Er du sikker på at du vil slette dette laget og <ALT> innholdet i det?"
 #
@@ -285,10 +289,6 @@ msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
 #
 #, fuzzy
 msgid "Are you sure you want to remove this OD Point?"
-msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
-#
-#, fuzzy
-msgid "Are you sure you want to remove this Text Point?"
 msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
 #
 #, fuzzy
@@ -905,6 +905,10 @@ msgid "OCPN Draw Delete OD Point"
 msgstr "OCPN punktnavn"
 #
 #, fuzzy
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN punktnavn"
+#
+#, fuzzy
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN punktnavn"
 #
@@ -948,10 +952,6 @@ msgstr "OCPN punktnavn"
 #
 #, fuzzy
 msgid "OCPN Draw Remove OD Point"
-msgstr "OCPN punktnavn"
-#
-#, fuzzy
-msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN punktnavn"
 #
 #, fuzzy
@@ -1226,9 +1226,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Slett"
+#
 #
 #
 #
@@ -1259,8 +1261,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(OCPN punkt uten navn)"
+#
 #
 #
 #
@@ -1270,6 +1274,12 @@ msgstr ""
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Lag"
+#
+#
+#, fuzzy
+#~ msgid "Are you sure you want to remove this Text Point?"
+#~ msgstr "Er du sikker på at du vil slette <ALLE> OCPN punktene?"
+#
 #
 #
 #
@@ -1300,8 +1310,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blå"
+#
 #
 #
 #
@@ -1332,8 +1344,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Mørk Blå"
+#
 #
 #
 #
@@ -1364,8 +1378,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Mørk Grå"
+#
 #
 #
 #
@@ -1396,8 +1412,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Mørk Magenta"
+#
 #
 #
 #
@@ -1428,8 +1446,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Mørk Gul"
+#
 #
 #
 #
@@ -1460,8 +1480,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "Standard farge"
+#
 #
 #
 #
@@ -1492,8 +1514,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "Grønn"
+#
 #
 #
 #
@@ -1524,8 +1548,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "Lys Grå"
+#
 #
 #
 #
@@ -1556,6 +1582,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Merker"
 #
@@ -1572,8 +1599,15 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Neste tidevannsforekomst"
+#
+#
+#, fuzzy
+#~ msgid "OCPN Draw Remove Text Point"
+#~ msgstr "OCPN punktnavn"
+#
 #
 #
 #
@@ -1604,6 +1638,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "Rød"
 #
@@ -1620,8 +1655,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Hvit"
+#
 #
 #
 #

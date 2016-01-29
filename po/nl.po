@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 09:57+1100\n"
+"POT-Creation-Date: 2016-01-30 08:56+1100\n"
 "PO-Revision-Date: 2016-01-24 14:42+0100\n"
 "Last-Translator: NAV <rider2@kpnmail.nl>\n"
 "Language-Team: Dutch\n"
@@ -243,6 +243,10 @@ msgstr "Weet u zeker dat u deze peilinglijn wilt verwijderen? "
 msgid "Are you sure you want to delete this OD Point?"
 msgstr "Weet u zeker dat u dit OD-punt wilt verwijderen? "
 #
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Weet u zeker dat u dit gegiste punt wilt verwijderen? "
+#
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 "Weet u zeker dat u deze kaartlaag en ALLE inhoud ervan wilt verwijderen?"
@@ -261,9 +265,6 @@ msgstr "Weet u zeker dat u dit peilinglijn-punt wilt weghalen?"
 #
 msgid "Are you sure you want to remove this OD Point?"
 msgstr "Weet u zeker dat u dit OD-punt wilt weghalen?"
-#
-msgid "Are you sure you want to remove this Text Point?"
-msgstr "Weet u zeker dat u dit tekstpunt wilt weghalen?"
 #
 msgid "Are you sure you want to remove this point?"
 msgstr "Weet u zeker dat u dit punt wilt weghalen?"
@@ -824,6 +825,10 @@ msgstr "OCPN Draw Peilinglijn-punt verwijderen "
 msgid "OCPN Draw Delete OD Point"
 msgstr "OCPN Draw OD-punt verwijderen "
 #
+#, fuzzy
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN Draw Gegist Punt verwijderen "
+#
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Draw Peilinglijn verwijderen "
 #
@@ -859,9 +864,6 @@ msgstr "OCPN Draw Peilinglijn-punt weghalen "
 #
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Draw OD-punt weghalen"
-#
-msgid "OCPN Draw Remove Text Point"
-msgstr "OCPN Draw Tekstpunt weghalen "
 #
 msgid "OD Point"
 msgstr "OD-punt"
@@ -1129,32 +1131,50 @@ msgstr "Wilt u voor dit lijndeel ook grootcirkelpunten toevoegen?"
 msgid "ocpn_draw_pi data location"
 msgstr "Gegevensmap opencpn_draw_pi"
 #
+#
 #~ msgid " Delete"
 #~ msgstr " Verwijderen"
+#
 #
 #~ msgid ", Layer: "
 #~ msgstr ", kaartlaag: "
 #
+#
 #~ msgid ", this is not allowed."
 #~ msgstr ", dit is niet toegestaan."
+#
+#
+#~ msgid "Are you sure you want to remove this Text Point?"
+#~ msgstr "Weet u zeker dat u dit tekstpunt wilt weghalen?"
+#
 #
 #~ msgid "Insert"
 #~ msgstr "Invoegen"
 #
+#
 #~ msgid "Logitude"
 #~ msgstr "Lengte"
+#
 #
 #~ msgid "Move"
 #~ msgstr "Verplaatsen"
 #
+#
 #~ msgid "OCPN Draw Remove ODPoint"
 #~ msgstr "OCPN Draw OD-punt weghalen "
+#
+#
+#~ msgid "OCPN Draw Remove Text Point"
+#~ msgstr "OCPN Draw Tekstpunt weghalen "
+#
 #
 #~ msgid "OD Remove ODPoint"
 #~ msgstr "OD Verwijderen OD-punt"
 #
+#
 #~ msgid "OpenCPN Boundary Create"
 #~ msgstr "Maak OpenCPN gebeidsgrens"
+#
 #
 #~ msgid "Use nearby Pointoint?"
 #~ msgstr "Gebruik nabij punt?"

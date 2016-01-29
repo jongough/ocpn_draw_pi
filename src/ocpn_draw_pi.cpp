@@ -1616,115 +1616,127 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
         switch( key_char ) {
             case WXK_CONTROL_B:                      // Ctrl B
                 if ( event.ShiftDown() ) { // Shift-Ctrl-B
-                    bKey_Boundary_Pressed = true;
-                    bKey_Point_Pressed = false;
-                    bKey_TextPoint_Pressed = false;
-                    bKey_EBL_Pressed = false;
-                    bKey_DR_Pressed = false;
-                    m_Mode = ID_MODE_BOUNDARY;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    SetToolbarTool();
+                    if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        bKey_Boundary_Pressed = true;
+                        bKey_Point_Pressed = false;
+                        bKey_TextPoint_Pressed = false;
+                        bKey_EBL_Pressed = false;
+                        bKey_DR_Pressed = false;
+                        m_Mode = ID_MODE_BOUNDARY;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        SetToolbarTool();
+                    }
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
             case WXK_CONTROL_P:                      // Ctrl P
                 if ( event.ShiftDown() ) { // Shift-Ctrl-P
-                    bKey_Boundary_Pressed = false;
-                    bKey_Point_Pressed = true;
-                    bKey_TextPoint_Pressed = false;
-                    bKey_EBL_Pressed = false;
-                    bKey_DR_Pressed = false;
-                    m_Mode = ID_MODE_POINT;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    SetToolbarTool();
+                    if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        bKey_Boundary_Pressed = false;
+                        bKey_Point_Pressed = true;
+                        bKey_TextPoint_Pressed = false;
+                        bKey_EBL_Pressed = false;
+                        bKey_DR_Pressed = false;
+                        m_Mode = ID_MODE_POINT;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        SetToolbarTool();
+                    }
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
             case WXK_CONTROL_T:                      // Ctrl T
                 if ( event.ShiftDown() ) { // Shift-Ctrl-T
-                    bKey_Boundary_Pressed = false;
-                    bKey_Point_Pressed = false;
-                    bKey_TextPoint_Pressed = true;
-                    bKey_EBL_Pressed = false;
-                    bKey_DR_Pressed = false;
-                    m_Mode = ID_MODE_TEXT_POINT;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    SetToolbarTool();
+                    if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        bKey_Boundary_Pressed = false;
+                        bKey_Point_Pressed = false;
+                        bKey_TextPoint_Pressed = true;
+                        bKey_EBL_Pressed = false;
+                        bKey_DR_Pressed = false;
+                        m_Mode = ID_MODE_TEXT_POINT;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        SetToolbarTool();
+                    }
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
             case WXK_CONTROL_E:                      // Ctrl E
                 if ( event.ShiftDown() ) { // Shift-Ctrl-E
-                    bKey_Boundary_Pressed = false;
-                    bKey_Point_Pressed = false;
-                    bKey_TextPoint_Pressed = false;
-                    bKey_EBL_Pressed = true;
-                    bKey_DR_Pressed = false;
-                    m_Mode = ID_MODE_EBL;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    SetToolbarTool();
+                    if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        bKey_Boundary_Pressed = false;
+                        bKey_Point_Pressed = false;
+                        bKey_TextPoint_Pressed = false;
+                        bKey_EBL_Pressed = true;
+                        bKey_DR_Pressed = false;
+                        m_Mode = ID_MODE_EBL;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        SetToolbarTool();
+                    }
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
             case WXK_CONTROL_D:                      // Ctrl D
                 if ( event.ShiftDown() ) { // Shift-Ctrl-D
-                    bKey_Boundary_Pressed = false;
-                    bKey_Point_Pressed = false;
-                    bKey_TextPoint_Pressed = false;
-                    bKey_EBL_Pressed = false;
-                    bKey_DR_Pressed = true;
-                    m_Mode = ID_MODE_DR;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    SetToolbarTool();
+                    if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        bKey_Boundary_Pressed = false;
+                        bKey_Point_Pressed = false;
+                        bKey_TextPoint_Pressed = false;
+                        bKey_EBL_Pressed = false;
+                        bKey_DR_Pressed = true;
+                        m_Mode = ID_MODE_DR;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        SetToolbarTool();
+                    }
                     bret = TRUE;
                 } else bret = FALSE;
                 break;
                 
             case WXK_ESCAPE: // Generic Break
-                if( nBoundary_State > 0 ){
-                    m_Mode = ID_MODE_BOUNDARY;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    bret = TRUE;
-                } else if( nPoint_State > 0 ){
-                    m_Mode = ID_MODE_POINT;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    bret = TRUE;
-                } else if( nTextPoint_State > 0 ){
-                    m_Mode = ID_MODE_TEXT_POINT;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    bret = TRUE;
-                } else if( nEBL_State > 0 ){
-                    m_Mode = ID_MODE_EBL;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    bret = TRUE;
-                } else if( nDR_State > 0 ){
-                    m_Mode = ID_MODE_DR;
-                    g_pODToolbar->m_Mode = m_Mode;
-                    OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
-                    bret = TRUE;
-                } else if( m_bODPointEditing ) {
-                    m_bODPointEditing = false;
-                    m_pCurrentCursor = NULL;
-                    m_pFoundODPoint->m_bIsBeingEdited = false;
-                    RequestRefresh( m_parent_window );
-                } else bret = FALSE;
-                m_iCallerId = 0;
-                bKey_Boundary_Pressed = false;
-                bKey_Point_Pressed = false;
-                bKey_TextPoint_Pressed = false;
-                bKey_EBL_Pressed = false;
-                bKey_DR_Pressed = false;
-                g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
-                if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+                if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        if( nBoundary_State > 0 ){
+                        m_Mode = ID_MODE_BOUNDARY;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        bret = TRUE;
+                    } else if( nPoint_State > 0 ){
+                        m_Mode = ID_MODE_POINT;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        bret = TRUE;
+                    } else if( nTextPoint_State > 0 ){
+                        m_Mode = ID_MODE_TEXT_POINT;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        bret = TRUE;
+                    } else if( nEBL_State > 0 ){
+                        m_Mode = ID_MODE_EBL;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        bret = TRUE;
+                    } else if( nDR_State > 0 ){
+                        m_Mode = ID_MODE_DR;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        bret = TRUE;
+                    } else if( m_bODPointEditing ) {
+                        m_bODPointEditing = false;
+                        m_pCurrentCursor = NULL;
+                        m_pFoundODPoint->m_bIsBeingEdited = false;
+                        RequestRefresh( m_parent_window );
+                    } else bret = FALSE;
+                    m_iCallerId = 0;
+                    bKey_Boundary_Pressed = false;
+                    bKey_Point_Pressed = false;
+                    bKey_TextPoint_Pressed = false;
+                    bKey_EBL_Pressed = false;
+                    bKey_DR_Pressed = false;
+                    g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                    if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+                }
                 break;
         }
     }
