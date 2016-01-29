@@ -278,9 +278,6 @@ public:
     
     void    AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
 
-    void    DimeControl1( wxWindow* ctrl );
-    void    DimeControl1( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
-                  wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline );
     void    SetToolbarTool( void );
 
     wxCursor    *pCursorLeft;

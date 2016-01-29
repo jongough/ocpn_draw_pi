@@ -48,6 +48,7 @@ extern wxString *g_pImage;
 ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
+    m_bUpdateIcons = false;
     
     initialize_images();
 }
@@ -140,7 +141,7 @@ void ODicons::initialize_images(void)
     fn.SetFullName(wxT("DRgrey.png"));
     m_p_bm_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
 #endif
-    
+    CreateSchemeIcons();
     ScaleIcons();
 }
 
@@ -216,6 +217,9 @@ bool ODicons::ScaleIcons()
     m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_bm_ocpn_draw_dr_grey, m_dScaleFactor );
     
 #endif // OD_USE_SVG
+    
+    CreateSchemeIcons();
+    
     return true;
 }
 
@@ -228,3 +232,145 @@ bool ODicons::SetScaleFactor()
     return false;
 }
 
+void ODicons::SetColourScheme( PI_ColorScheme cs )
+{
+    if(m_ColourScheme == cs) m_bUpdateIcons = false;
+    else {
+        m_bUpdateIcons = true;
+        m_ColourScheme = cs;
+        ChangeScheme();
+    }
+}
+
+void ODicons::ChangeScheme(void)
+{
+    switch(m_ColourScheme) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_p_bm_ocpn_draw_grey_pi = m_p_bm_day_ocpn_draw_grey_pi;
+            m_p_bm_ocpn_draw_boundary = m_p_bm_day_ocpn_draw_boundary;
+            m_p_bm_ocpn_draw_boundary_grey = m_p_bm_day_ocpn_draw_boundary_grey;
+            m_p_bm_ocpn_draw_point = m_p_bm_day_ocpn_draw_point;
+            m_p_bm_ocpn_draw_point_grey = m_p_bm_day_ocpn_draw_point_grey;
+            m_p_bm_ocpn_draw_textpoint = m_p_bm_day_ocpn_draw_textpoint;
+            m_p_bm_ocpn_draw_textpoint_grey = m_p_bm_day_ocpn_draw_textpoint_grey;
+            m_p_bm_ocpn_draw_ebl = m_p_bm_day_ocpn_draw_ebl;
+            m_p_bm_ocpn_draw_ebl_grey = m_p_bm_day_ocpn_draw_ebl_grey;
+            m_p_bm_ocpn_draw_dr = m_p_bm_day_ocpn_draw_dr;
+            m_p_bm_ocpn_draw_dr_grey = m_p_bm_day_ocpn_draw_dr_grey;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_p_bm_ocpn_draw_grey_pi = m_p_bm_dusk_ocpn_draw_grey_pi;
+            m_p_bm_ocpn_draw_boundary = m_p_bm_dusk_ocpn_draw_boundary;
+            m_p_bm_ocpn_draw_boundary_grey = m_p_bm_dusk_ocpn_draw_boundary_grey;
+            m_p_bm_ocpn_draw_point = m_p_bm_dusk_ocpn_draw_point;
+            m_p_bm_ocpn_draw_point_grey = m_p_bm_dusk_ocpn_draw_point_grey;
+            m_p_bm_ocpn_draw_textpoint = m_p_bm_dusk_ocpn_draw_textpoint;
+            m_p_bm_ocpn_draw_textpoint_grey = m_p_bm_dusk_ocpn_draw_textpoint_grey;
+            m_p_bm_ocpn_draw_ebl = m_p_bm_dusk_ocpn_draw_ebl;
+            m_p_bm_ocpn_draw_ebl_grey = m_p_bm_dusk_ocpn_draw_ebl_grey;
+            m_p_bm_ocpn_draw_dr = m_p_bm_dusk_ocpn_draw_dr;
+            m_p_bm_ocpn_draw_dr_grey = m_p_bm_dusk_ocpn_draw_dr_grey;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_p_bm_ocpn_draw_grey_pi = m_p_bm_night_ocpn_draw_grey_pi;
+            m_p_bm_ocpn_draw_boundary = m_p_bm_night_ocpn_draw_boundary;
+            m_p_bm_ocpn_draw_boundary_grey = m_p_bm_night_ocpn_draw_boundary_grey;
+            m_p_bm_ocpn_draw_point = m_p_bm_night_ocpn_draw_point;
+            m_p_bm_ocpn_draw_point_grey = m_p_bm_night_ocpn_draw_point_grey;
+            m_p_bm_ocpn_draw_textpoint = m_p_bm_night_ocpn_draw_textpoint;
+            m_p_bm_ocpn_draw_textpoint_grey = m_p_bm_night_ocpn_draw_textpoint_grey;
+            m_p_bm_ocpn_draw_ebl = m_p_bm_night_ocpn_draw_ebl;
+            m_p_bm_ocpn_draw_ebl_grey = m_p_bm_night_ocpn_draw_ebl_grey;
+            m_p_bm_ocpn_draw_dr = m_p_bm_night_ocpn_draw_dr;
+            m_p_bm_ocpn_draw_dr_grey = m_p_bm_night_ocpn_draw_dr_grey;
+            break;
+    }
+}
+
+void ODicons::CreateSchemeIcons()
+{
+    m_p_bm_day_ocpn_draw_grey_pi = m_p_bm_ocpn_draw_grey_pi;
+    m_p_bm_day_ocpn_draw_boundary = m_p_bm_ocpn_draw_boundary;
+    m_p_bm_day_ocpn_draw_boundary_grey = m_p_bm_ocpn_draw_boundary_grey;
+    m_p_bm_day_ocpn_draw_point = m_p_bm_ocpn_draw_point;
+    m_p_bm_day_ocpn_draw_point_grey = m_p_bm_ocpn_draw_point_grey;
+    m_p_bm_day_ocpn_draw_textpoint = m_p_bm_ocpn_draw_textpoint;
+    m_p_bm_day_ocpn_draw_textpoint_grey = m_p_bm_ocpn_draw_textpoint_grey;
+    m_p_bm_day_ocpn_draw_ebl = m_p_bm_ocpn_draw_ebl;
+    m_p_bm_day_ocpn_draw_ebl_grey = m_p_bm_ocpn_draw_ebl_grey;
+    m_p_bm_day_ocpn_draw_dr = m_p_bm_ocpn_draw_dr;
+    m_p_bm_day_ocpn_draw_dr_grey = m_p_bm_ocpn_draw_dr_grey;
+    
+    m_p_bm_dusk_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_grey_pi, 128);
+    m_p_bm_dusk_ocpn_draw_boundary = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary, 128);
+    m_p_bm_dusk_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary_grey, 128);
+    m_p_bm_dusk_ocpn_draw_point = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point, 128);
+    m_p_bm_dusk_ocpn_draw_point_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point_grey, 128);
+    m_p_bm_dusk_ocpn_draw_textpoint = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint, 128);
+    m_p_bm_dusk_ocpn_draw_textpoint_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint_grey, 128);
+    m_p_bm_dusk_ocpn_draw_ebl = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl, 128);
+    m_p_bm_dusk_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl_grey, 128);
+    m_p_bm_dusk_ocpn_draw_dr = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr, 128);
+    m_p_bm_dusk_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr_grey, 128);
+
+    m_p_bm_night_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_grey_pi, 32);
+    m_p_bm_night_ocpn_draw_boundary = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary, 32);
+    m_p_bm_night_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary_grey, 32);
+    m_p_bm_night_ocpn_draw_point = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point, 32);
+    m_p_bm_night_ocpn_draw_point_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point_grey, 32);
+    m_p_bm_night_ocpn_draw_textpoint = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint, 32);
+    m_p_bm_night_ocpn_draw_textpoint_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint_grey, 32);
+    m_p_bm_night_ocpn_draw_ebl = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl, 32);
+    m_p_bm_night_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl_grey, 32);
+    m_p_bm_night_ocpn_draw_dr = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr, 32);
+    m_p_bm_night_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr_grey, 32);
+    
+}
+
+wxBitmap *ODicons::BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio)
+{
+    wxImage img_dup = pbmp_normal->ConvertToImage();
+    
+    if( !img_dup.IsOk() ) return NULL;
+    
+    if(dim_ratio < 200)
+    {
+        //  Create a dimmed version of the image/bitmap
+        int gimg_width = img_dup.GetWidth();
+        int gimg_height = img_dup.GetHeight();
+        
+        double factor = (double)(dim_ratio) / 256.0;
+        
+        for(int iy=0 ; iy < gimg_height ; iy++)
+        {
+            for(int ix=0 ; ix < gimg_width ; ix++)
+            {
+                if(!img_dup.IsTransparent(ix, iy))
+                {
+                    wxImage::RGBValue rgb(img_dup.GetRed(ix, iy), img_dup.GetGreen(ix, iy), img_dup.GetBlue(ix, iy));
+                    wxImage::HSVValue hsv = wxImage::RGBtoHSV(rgb);
+                    hsv.value = hsv.value * factor;
+                    wxImage::RGBValue nrgb = wxImage::HSVtoRGB(hsv);
+                    img_dup.SetRGB(ix, iy, nrgb.red, nrgb.green, nrgb.blue);
+                }
+            }
+        }
+    }
+    
+    //  Make a bitmap
+    wxBitmap *ptoolBarBitmap;
+    
+#ifdef __WXMSW__
+    wxBitmap tbmp(img_dup.GetWidth(),img_dup.GetHeight(),-1);
+    wxMemoryDC dwxdc;
+    dwxdc.SelectObject(tbmp);
+    
+    ptoolBarBitmap = new wxBitmap(img_dup, (wxDC &)dwxdc);
+#else
+    ptoolBarBitmap = new wxBitmap(img_dup);
+#endif
+    
+    // store it
+    return ptoolBarBitmap;
+}

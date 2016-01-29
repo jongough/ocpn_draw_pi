@@ -45,18 +45,7 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent )
 {
-    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
-    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, _("Create Boundary"), wxEmptyString );
-    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, _("Create Boundary Point"), wxEmptyString );
-    m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_TEXT_POINT, _("Text Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, _("Create Text Point"), wxEmptyString );
-    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_MODE_EBL, _("Electronic Bearing Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, _("Create EBL"), wxEmptyString );
-    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_MODE_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, _("Create DR"), wxEmptyString );
-    m_toolBarODToolbar->SetInitialSize();
-    m_toolbarSize = m_toolBarODToolbar->GetSize();
-	m_toolBarODToolbar->Realize();
-    // this is to ensure the toolbar is the correct size to show icons
-    this->GetSizer()->Fit(this);
-    this->Layout();
+    AddTools();
     
     m_Mode = ID_NONE;
     
@@ -66,13 +55,6 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &po
 ODToolbarImpl::~ODToolbarImpl()
 {
     Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
-}
-
-void ODToolbarImpl::OnActivate( wxActivateEvent& event )
-{
-    //if( !event.GetActive() ) return;
-    
-    SetToolbarTool( m_Mode );
 }
 
 void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
@@ -150,7 +132,6 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
     }
     g_ocpn_draw_pi->SetToolbarTool();
     SetToolbarTool( m_Mode );
-    GetOCPNCanvasWindow()->SetFocus();
 }
 
 void ODToolbarImpl::OnClose( wxCloseEvent& event )
@@ -239,8 +220,84 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
     m_toolBarODToolbar->Realize();
 }
 
+void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
+{
+    switch( iTool )
+    {
+        case ID_MODE_BOUNDARY:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), true );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
+            break;
+        }
+        case ID_MODE_POINT:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), true );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
+            break;
+        }
+        case ID_MODE_TEXT_POINT:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), true );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
+            break;
+        }
+        case ID_MODE_EBL:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), true );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
+            break;
+        }
+        case ID_MODE_DR:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), true );
+            break;
+        }
+        case ID_NONE:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
+            m_Mode = ID_NONE;
+            break;
+        }
+        default:
+            break;
+    }
+    m_toolBarODToolbar->Realize();
+}
+
+void ODToolbarImpl::SetToolbarToolEnableAll( void )
+{
+    m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), true );
+    m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), true );
+    m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), true );
+    m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), true );
+    m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), true );
+    m_toolBarODToolbar->Realize();
+}
+
 void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
 {
+    m_Mode = iTool;
     switch( iTool )
     {
         case ID_MODE_BOUNDARY:
@@ -300,13 +357,14 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
         }
         default:
             break;
+        
     }
     m_toolBarODToolbar->Realize();
 }
 
 void ODToolbarImpl::UpdateIcons( void )
 {
-    if(g_ocpn_draw_pi->m_pODicons->ScaleIcons()) {
+    if(g_ocpn_draw_pi->m_pODicons->ScaleIcons() || g_ocpn_draw_pi->m_pODicons->m_bUpdateIcons) {
         m_toolBarODToolbar->DeleteTool( ID_MODE_BOUNDARY );
         m_toolBarODToolbar->DeleteTool( ID_MODE_POINT );
         m_toolBarODToolbar->DeleteTool( ID_MODE_TEXT_POINT );
@@ -314,16 +372,48 @@ void ODToolbarImpl::UpdateIcons( void )
         m_toolBarODToolbar->DeleteTool( ID_MODE_DR );
         
         this->InvalidateBestSize();
-        m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
-        m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, _("Create Boundary"), wxEmptyString );
-        m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, _("Create Boundary Point"), wxEmptyString );
-        m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_TEXT_POINT, _("Text Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, _("Create Text Point"), wxEmptyString );
-        m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_MODE_EBL, _("Electronic Bearing Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, _("Create EBL"), wxEmptyString );
-        m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_MODE_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr, *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, _("Create DR"), wxEmptyString );
-
-        m_toolBarODToolbar->SetInitialSize();
-        this->Layout();
-        this->GetSizer()->Fit(this);
+        AddTools();
     }
+}
+
+void ODToolbarImpl::AddTools(void)
+{
+    Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    
+    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
+    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, wxNullBitmap, _("Create Boundary"), wxEmptyString );
+    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, wxNullBitmap, _("Create Boundary Point"), wxEmptyString );
+    m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_TEXT_POINT, _("Text Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, wxNullBitmap, _("Create Text Point"), wxEmptyString );
+    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_MODE_EBL, _("Electronic Bearing Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, wxNullBitmap, _("Create EBL"), wxEmptyString );
+    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_MODE_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, wxNullBitmap, _("Create DR"), wxEmptyString );
+    
+    m_toolBarODToolbar->Realize();
+    m_toolBarODToolbar->SetInitialSize();
+    this->Layout();
+    this->GetSizer()->Fit(this);
+    //SetToolbarToolToggle(ID_NONE);
+    
+    Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+}
+
+void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
+{
+    if(m_ColourScheme != cs){
+        m_ColourScheme = cs;
+        wxColour col, window_back_color, gridline, uitext, udkrd, ctrl_back_color, text_color;
+        GetGlobalColor( _T("DILG0"), &col );       // Dialog Background white
+        GetGlobalColor( _T("DILG1"), &window_back_color );      // Dialog Background
+        GetGlobalColor( _T("DILG1"), &ctrl_back_color );      // Control Background
+        GetGlobalColor( _T("DILG3"), &text_color );      // Text
+        GetGlobalColor( _T("UITX1"), &uitext );    // Menu Text, derived from UINFF
+        GetGlobalColor( _T("UDKRD"), &udkrd );
+        GetGlobalColor( _T("GREY2"), &gridline );
+        DEBUGSL(printf("DILG1: R: %u, B: %u, G: %u ", window_back_color.Red(), window_back_color.Blue(), window_back_color.Green()));
+//        this->SetBackgroundColour( window_back_color );
+//        this->ClearBackground();
+//        this->m_toolBarODToolbar->SetBackgroundColour( window_back_color );
+//        this->m_toolBarODToolbar->ClearBackground();
+    }
+    
 }
 

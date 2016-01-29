@@ -611,6 +611,9 @@ void ocpn_draw_pi::SetOriginalColors()
 void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
 {
     global_color_scheme = cs;
+    m_pODicons->SetColourScheme( cs );
+    g_pODToolbar->SetColourScheme( cs );
+    g_pODToolbar->UpdateIcons();
 }
 
 void ocpn_draw_pi::UpdateAuiStatus(void)
@@ -765,7 +768,6 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
         }
     }
     else if ( id == m_draw_button_id ) {
-        DimeWindow(g_pODToolbar);
         switch (m_Mode)
         {
             case ID_MODE_BOUNDARY:
@@ -1727,6 +1729,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
         }
     }
     SetCursor_PlugIn( m_pCurrentCursor );
+    if(bret) RequestRefresh(m_parent_window);
     return bret;
 }
 
@@ -1790,14 +1793,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if ( event.LeftDown() ) {
         if( m_iCallerId == m_draw_button_id ) {
             if (nBoundary_State > 0 ) {   
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_BOUNDARY);
                 bret = CreateBoundaryLeftClick( event );
             } else if ( nPoint_State > 0) {
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_POINT);
                 bret = CreatePointLeftClick( event );
             } else if ( nTextPoint_State > 0 ) {
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_TEXT_POINT);
                 bret = CreateTextPointLeftClick( event );
             } else if ( nEBL_State > 0 ) {
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_EBL);
                 bret = CreateEBLLeftClick( event );
             } else if ( nDR_State > 0 ) {
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_DR);
                 bret = CreateDRLeftClick( event );
             }
         } else if( m_bPathEditing ) {
@@ -2018,6 +2026,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
+            g_pODToolbar->SetToolbarToolEnableAll();
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2029,6 +2038,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
+            g_pODToolbar->SetToolbarToolEnableAll();
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2052,6 +2062,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
+            g_pODToolbar->SetToolbarToolEnableAll();
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2063,6 +2074,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
             g_pODToolbar->SetToolbarTool( ID_NONE );
+            g_pODToolbar->SetToolbarToolEnableAll();
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -3215,148 +3227,6 @@ double ocpn_draw_pi::GetTrueOrMag(double a)
     }
     else
         return a;
-}
-
-void ocpn_draw_pi::DimeControl1( wxWindow* ctrl )
-{
-    #ifdef __WXQT__
-    return; // this is seriously broken on wxqt
-    #endif
-    
-    if( NULL == ctrl ) return;
-    
-    wxColour col, window_back_color, gridline, uitext, udkrd, ctrl_back_color, text_color;
-    GetGlobalColor( wxS("DILG0"), &col );
-    GetGlobalColor( wxS("DILG1"), &window_back_color );
-    GetGlobalColor( wxS("DILG1"), &ctrl_back_color );
-    GetGlobalColor( wxS("DILG3"), &text_color );
-    GetGlobalColor( wxS("UITX1"), &uitext );
-    GetGlobalColor( wxS("UDKRD"), &udkrd );
-    GetGlobalColor( wxS("GREY2"), &gridline );
-    
-    DimeControl1( ctrl, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
-}
-
-void ocpn_draw_pi::DimeControl1( wxWindow* ctrl, wxColour col, wxColour window_back_color, wxColour ctrl_back_color,
-                                wxColour text_color, wxColour uitext, wxColour udkrd, wxColour gridline )
-{
-    
-    ColorScheme cs = ocpncc1->GetColorScheme();
-    
-    static int depth = 0; // recursion count
-    if ( depth == 0 ) {   // only for the window root, not for every child
-        
-        // If the color scheme is DAY or RGB, use the default platform native colour for backgrounds
-        if( cs == GLOBAL_COLOR_SCHEME_DAY || cs == GLOBAL_COLOR_SCHEME_RGB ) {
-            #ifdef __WXOSX__
-            window_back_color = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWFRAME);
-            #else
-            window_back_color = wxNullColour;
-            #endif
-            
-            col = wxSystemSettings::GetColour(wxSYS_COLOUR_LISTBOX);
-        }
-        
-        ctrl->SetBackgroundColour( window_back_color );
-    }
-    
-    wxWindowList kids = ctrl->GetChildren();
-    for( unsigned int i = 0; i < kids.GetCount(); i++ ) {
-        wxWindowListNode *node = kids.Item( i );
-        wxWindow *win = node->GetData();
-        
-        if( win->IsKindOf( CLASSINFO(wxListBox) ) )
-            ( (wxListBox*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxListCtrl) ) )
-            ( (wxListCtrl*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxTextCtrl) ) )
-            ( (wxTextCtrl*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxStaticText) ) )
-            ( (wxStaticText*) win )->SetForegroundColour( uitext );
-        
-        #ifndef __WXOSX__
-        // on OS X most controls can't be styled, and trying to do so only creates weird coloured boxes around them
-        
-        else if( win->IsKindOf( CLASSINFO(wxBitmapComboBox) ) )
-            ( (wxBitmapComboBox*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxChoice) ) )
-            ( (wxChoice*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxComboBox) ) )
-            ( (wxComboBox*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxRadioButton) ) )
-            ( (wxRadioButton*) win )->SetBackgroundColour( window_back_color );
-        
-        else if( win->IsKindOf( CLASSINFO(wxScrolledWindow) ) ) {
-            if( cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB )
-                ( (wxScrolledWindow*) win )->SetBackgroundColour( window_back_color );
-        }
-        #endif
-        
-        else if( win->IsKindOf( CLASSINFO(wxGenericDirCtrl) ) )
-            ( (wxGenericDirCtrl*) win )->SetBackgroundColour( window_back_color );
-        
-        else if( win->IsKindOf( CLASSINFO(wxListbook) ) )
-            ( (wxListbook*) win )->SetBackgroundColour( window_back_color );
-        
-        else if( win->IsKindOf( CLASSINFO(wxTreeCtrl) ) )
-            ( (wxTreeCtrl*) win )->SetBackgroundColour( col );
-        
-        else if( win->IsKindOf( CLASSINFO(wxNotebook) ) ) {
-            ( (wxNotebook*) win )->SetBackgroundColour( window_back_color );
-            ( (wxNotebook*) win )->SetForegroundColour( text_color );
-        }
-        
-        else if( win->IsKindOf( CLASSINFO(wxButton) ) ) {
-            ( (wxButton*) win )->SetBackgroundColour( window_back_color );
-        }
-        
-        else if( win->IsKindOf( CLASSINFO(wxToggleButton) ) ) {
-            ( (wxToggleButton*) win )->SetBackgroundColour( window_back_color );
-        }
-        
-        //        else if( win->IsKindOf( CLASSINFO(wxPanel) ) ) {
-        ////                  ((wxPanel*)win)->SetBackgroundColour(col1);
-        //            if( cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB )
-        //                ( (wxPanel*) win )->SetBackgroundColour( ctrl_back_color );
-        //            else
-        //                ( (wxPanel*) win )->SetBackgroundColour( wxNullColour );
-        //        }
-        
-        else if( win->IsKindOf( CLASSINFO(wxHtmlWindow) ) ) {
-            if( cs != GLOBAL_COLOR_SCHEME_DAY && cs != GLOBAL_COLOR_SCHEME_RGB )
-                ( (wxPanel*) win )->SetBackgroundColour( ctrl_back_color );
-            else
-                ( (wxPanel*) win )->SetBackgroundColour( wxNullColour );
-        }
-        
-        else if( win->IsKindOf( CLASSINFO(wxGrid) ) ) {
-            ( (wxGrid*) win )->SetDefaultCellBackgroundColour( window_back_color );
-            ( (wxGrid*) win )->SetDefaultCellTextColour( uitext );
-            ( (wxGrid*) win )->SetLabelBackgroundColour( col );
-            ( (wxGrid*) win )->SetLabelTextColour( uitext );
-            #if !wxCHECK_VERSION(3,0,0)
-            ( (wxGrid*) win )->SetDividerPen( wxPen( col ) );
-            #endif            
-            ( (wxGrid*) win )->SetGridLineColour( gridline );
-        }
-        
-        else {
-            ;
-        }
-        
-        if( win->GetChildren().GetCount() > 0 ) {
-            depth++;
-            wxWindow * w = win;
-            DimeControl1( w, col, window_back_color, ctrl_back_color, text_color, uitext, udkrd, gridline );
-            depth--;
-        }
-    }
 }
 
 void ocpn_draw_pi::SetToolbarTool( void )

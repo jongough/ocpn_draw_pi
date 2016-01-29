@@ -24,12 +24,14 @@ public:
 	/** Constructor */
 	ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &pos, const wxSize &size, long style );
     ~ODToolbarImpl();
-    void OnActivate( wxActivateEvent& event );
     void OnClose( wxCloseEvent& event );
     void OnToolButtonClick( wxCommandEvent& event );
     void OnKeyDown( wxKeyEvent& event );
     void SetToolbarTool( int iTool );
     void UpdateIcons( void );
+    void SetToolbarToolEnableOnly( int iTool );
+    void SetToolbarToolEnableAll( void );
+    void SetColourScheme( PI_ColorScheme cs );
     
     wxToolBarToolBase *m_toolBoundary;
     wxToolBarToolBase *m_toolODPoint;
@@ -39,10 +41,12 @@ public:
     int    m_Mode;
     
 private:
+    void AddTools( void );
     void SetToolbarToolToggle( int iTool );
     void SetToolbarToolBitmap( int iTool );
     
     wxSize m_toolbarSize;
+    PI_ColorScheme m_ColourScheme;
     
 };
 
