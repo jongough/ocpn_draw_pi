@@ -22,8 +22,6 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
 // TODO: Implement OnCancel
 }
 
-
-}
 void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
 {
 // TODO: Implement OnRightClick
