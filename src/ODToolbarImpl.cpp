@@ -408,11 +408,11 @@ void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
         GetGlobalColor( _T("UITX1"), &uitext );    // Menu Text, derived from UINFF
         GetGlobalColor( _T("UDKRD"), &udkrd );
         GetGlobalColor( _T("GREY2"), &gridline );
-        DEBUGSL(printf("DILG1: R: %u, B: %u, G: %u ", window_back_color.Red(), window_back_color.Blue(), window_back_color.Green()));
-//        this->SetBackgroundColour( window_back_color );
-//        this->ClearBackground();
-//        this->m_toolBarODToolbar->SetBackgroundColour( window_back_color );
-//        this->m_toolBarODToolbar->ClearBackground();
+//TODO this does not appear to work correctly
+        this->SetBackgroundColour( window_back_color );
+        this->ClearBackground();
+        this->m_toolBarODToolbar->SetBackgroundColour( window_back_color );
+        this->m_toolBarODToolbar->ClearBackground();
     }
     
 }
