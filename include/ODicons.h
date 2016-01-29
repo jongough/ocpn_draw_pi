@@ -31,6 +31,8 @@
 #include <wx/wx.h>
 #endif
 
+#include "ocpn_plugin.h"
+
 //forward declare
 class wxSVGDocument;
 
@@ -44,6 +46,8 @@ public:
     bool    ScaleIcons(void);
     wxSize  GetIconSize(void);
     bool    SetScaleFactor(void);
+    void    SetColourScheme( PI_ColorScheme cs );
+    void    ChangeScheme(void);
     
     wxBitmap    *m_p_bm_ocpn_draw_pi;
     wxBitmap    *m_p_bm_ocpn_draw_grey_pi;
@@ -70,14 +74,18 @@ public:
     wxString    m_s_ocpn_draw_ebl_grey;
     wxString    m_s_ocpn_draw_dr;
     wxString    m_s_ocpn_draw_dr_grey;
+    
+    bool        m_bUpdateIcons;
 
 private:
     wxBitmap *ScaleIcon( wxBitmap *p_wxBitmap, double sf );
 
 #ifdef ODraw_USE_SVG
-    wxBitmap *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
-    wxBitmap *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
-
+    wxBitmap    *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
+    wxBitmap    *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
+    wxBitmap    *BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio);
+    void        CreateSchemeIcons(void);
+    
     wxSVGDocument   *m_p_svgd_ocpn_draw_pi;
     wxSVGDocument   *m_p_svgd_ocpn_draw_grey_pi;
     wxSVGDocument   *m_p_svgd_ocpn_draw_boundary;
@@ -105,6 +113,46 @@ private:
     wxImage         *m_p_img_ocpn_draw_dr;
     wxImage         *m_p_img_ocpn_draw_dr_grey;
     
+    wxBitmap    *m_p_bm_day_ocpn_draw_pi;
+    wxBitmap    *m_p_bm_day_ocpn_draw_grey_pi;
+    wxBitmap    *m_p_bm_day_ocpn_draw_boundary;
+    wxBitmap    *m_p_bm_day_ocpn_draw_boundary_grey;
+    wxBitmap    *m_p_bm_day_ocpn_draw_point;
+    wxBitmap    *m_p_bm_day_ocpn_draw_point_grey;
+    wxBitmap    *m_p_bm_day_ocpn_draw_textpoint;
+    wxBitmap    *m_p_bm_day_ocpn_draw_textpoint_grey;
+    wxBitmap    *m_p_bm_day_ocpn_draw_ebl;
+    wxBitmap    *m_p_bm_day_ocpn_draw_ebl_grey;
+    wxBitmap    *m_p_bm_day_ocpn_draw_dr;
+    wxBitmap    *m_p_bm_day_ocpn_draw_dr_grey;
+    
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_pi;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_grey_pi;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_boundary;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_boundary_grey;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_point;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_point_grey;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_textpoint;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_textpoint_grey;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_ebl;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_ebl_grey;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_dr;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_dr_grey;
+    
+    wxBitmap    *m_p_bm_night_ocpn_draw_pi;
+    wxBitmap    *m_p_bm_night_ocpn_draw_grey_pi;
+    wxBitmap    *m_p_bm_night_ocpn_draw_boundary;
+    wxBitmap    *m_p_bm_night_ocpn_draw_boundary_grey;
+    wxBitmap    *m_p_bm_night_ocpn_draw_point;
+    wxBitmap    *m_p_bm_night_ocpn_draw_point_grey;
+    wxBitmap    *m_p_bm_night_ocpn_draw_textpoint;
+    wxBitmap    *m_p_bm_night_ocpn_draw_textpoint_grey;
+    wxBitmap    *m_p_bm_night_ocpn_draw_ebl;
+    wxBitmap    *m_p_bm_night_ocpn_draw_ebl_grey;
+    wxBitmap    *m_p_bm_night_ocpn_draw_dr;
+    wxBitmap    *m_p_bm_night_ocpn_draw_dr_grey;
+    
     double          m_dScaleFactor;
+    PI_ColorScheme  m_ColourScheme;
 };
 #endif /* ODICONS_H */
