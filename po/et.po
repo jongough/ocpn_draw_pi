@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 09:57+1100\n"
+"POT-Creation-Date: 2016-01-30 08:56+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -264,6 +264,10 @@ msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
 msgid "Are you sure you want to delete this OD Point?"
 msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+#
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 "Kas oled kindel, et soovid kustutada selle kihi ja <ALL> temas sisalduva?"
@@ -286,10 +290,6 @@ msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
 #
 #, fuzzy
 msgid "Are you sure you want to remove this OD Point?"
-msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
-#
-#, fuzzy
-msgid "Are you sure you want to remove this Text Point?"
 msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
 #
 #, fuzzy
@@ -902,6 +902,10 @@ msgid "OCPN Draw Delete OD Point"
 msgstr "OCPN'i punkti nimi"
 #
 #, fuzzy
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN'i punkti nimi"
+#
+#, fuzzy
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN'i punkti nimi"
 #
@@ -945,10 +949,6 @@ msgstr "OCPN'i punkti nimi"
 #
 #, fuzzy
 msgid "OCPN Draw Remove OD Point"
-msgstr "OCPN'i punkti nimi"
-#
-#, fuzzy
-msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN'i punkti nimi"
 #
 #, fuzzy
@@ -1224,9 +1224,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Kustuta"
+#
 #
 #
 #
@@ -1251,8 +1253,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(nimetu OCPN-punkt)"
+#
 #
 #
 #
@@ -1262,6 +1266,12 @@ msgstr ""
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Kihid"
+#
+#
+#, fuzzy
+#~ msgid "Are you sure you want to remove this Text Point?"
+#~ msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
+#
 #
 #
 #
@@ -1286,8 +1296,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "sinine"
+#
 #
 #
 #
@@ -1312,8 +1324,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "tumesinine"
+#
 #
 #
 #
@@ -1338,8 +1352,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "tumehall"
+#
 #
 #
 #
@@ -1364,8 +1380,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "tumepurpurviolett"
+#
 #
 #
 #
@@ -1390,8 +1408,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "tumekollane"
+#
 #
 #
 #
@@ -1416,8 +1436,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "vaikimisi värv"
+#
 #
 #
 #
@@ -1442,8 +1464,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "roheline"
+#
 #
 #
 #
@@ -1468,8 +1492,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "helehall"
+#
 #
 #
 #
@@ -1494,6 +1520,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Märgid"
 #
@@ -1507,8 +1534,15 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Järgmised looded"
+#
+#
+#, fuzzy
+#~ msgid "OCPN Draw Remove Text Point"
+#~ msgstr "OCPN'i punkti nimi"
+#
 #
 #
 #
@@ -1533,6 +1567,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "punane"
 #
@@ -1546,8 +1581,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "valge"
+#
 #
 #
 #

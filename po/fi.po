@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 09:57+1100\n"
+"POT-Creation-Date: 2016-01-30 08:56+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -260,6 +260,10 @@ msgstr "Oletko varma, että haluat poistaa valitut kohteet"
 msgid "Are you sure you want to delete this OD Point?"
 msgstr "Oletko varma, että haluat poistaa valitut kohteet"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+#
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 #
@@ -281,10 +285,6 @@ msgstr "Oletko varma, että haluat poistaa valitut kohteet"
 #
 #, fuzzy
 msgid "Are you sure you want to remove this OD Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
-#
-#, fuzzy
-msgid "Are you sure you want to remove this Text Point?"
 msgstr "Oletko varma, että haluat poistaa valitut kohteet"
 #
 #, fuzzy
@@ -888,6 +888,10 @@ msgid "OCPN Draw Delete OD Point"
 msgstr "OCPN pisteen nimi"
 #
 #, fuzzy
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN pisteen nimi"
+#
+#, fuzzy
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN pisteen nimi"
 #
@@ -931,10 +935,6 @@ msgstr "OCPN pisteen nimi"
 #
 #, fuzzy
 msgid "OCPN Draw Remove OD Point"
-msgstr "OCPN pisteen nimi"
-#
-#, fuzzy
-msgid "OCPN Draw Remove Text Point"
 msgstr "OCPN pisteen nimi"
 #
 #, fuzzy
@@ -1199,9 +1199,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Poista"
+#
 #
 #
 #
@@ -1224,9 +1226,16 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Kerrokset"
+#
+#
+#, fuzzy
+#~ msgid "Are you sure you want to remove this Text Point?"
+#~ msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+#
 #
 #
 #
@@ -1257,6 +1266,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Merkit"
 #
@@ -1273,8 +1283,15 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Seuraava vuorovesi tapahtuma"
+#
+#
+#, fuzzy
+#~ msgid "OCPN Draw Remove Text Point"
+#~ msgstr "OCPN pisteen nimi"
+#
 #
 #
 #

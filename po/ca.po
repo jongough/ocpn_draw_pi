@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-25 09:57+1100\n"
+"POT-Creation-Date: 2016-01-30 08:56+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -264,6 +264,10 @@ msgstr "N'està segur de voler esborrar <ALL>les rutes?"
 msgid "Are you sure you want to delete this OD Point?"
 msgstr "N'està segur de voler esborrar <ALL>les rutes?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "N'està segur de voler esborrar <ALL>les rutes?"
+#
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr "N'està segur de voler esborrar aquesta capa i <ALL> el seu contingut?"
 #
@@ -285,10 +289,6 @@ msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
 #
 #, fuzzy
 msgid "Are you sure you want to remove this OD Point?"
-msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
-#
-#, fuzzy
-msgid "Are you sure you want to remove this Text Point?"
 msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
 #
 #, fuzzy
@@ -909,6 +909,10 @@ msgid "OCPN Draw Delete OD Point"
 msgstr "Nom de punt d'OCPN"
 #
 #, fuzzy
+msgid "OCPN Draw Delete Text Point"
+msgstr "Nom de punt d'OCPN"
+#
+#, fuzzy
 msgid "OCPN Draw EBL Delete"
 msgstr "Nom de punt d'OCPN"
 #
@@ -952,10 +956,6 @@ msgstr "Nom de punt d'OCPN"
 #
 #, fuzzy
 msgid "OCPN Draw Remove OD Point"
-msgstr "Nom de punt d'OCPN"
-#
-#, fuzzy
-msgid "OCPN Draw Remove Text Point"
 msgstr "Nom de punt d'OCPN"
 #
 #, fuzzy
@@ -1231,9 +1231,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Esborrar"
+#
 #
 #
 #
@@ -1266,8 +1268,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(Punt OCPN sense nom)"
+#
 #
 #
 #
@@ -1277,6 +1281,12 @@ msgstr ""
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Capes"
+#
+#
+#, fuzzy
+#~ msgid "Are you sure you want to remove this Text Point?"
+#~ msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
+#
 #
 #
 #
@@ -1309,8 +1319,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blau"
+#
 #
 #
 #
@@ -1343,8 +1355,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Blau fosc"
+#
 #
 #
 #
@@ -1377,8 +1391,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Gris fosc"
+#
 #
 #
 #
@@ -1411,8 +1427,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Magenta fosc"
+#
 #
 #
 #
@@ -1445,8 +1463,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Groc fosc"
+#
 #
 #
 #
@@ -1479,8 +1499,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "Color per defecte"
+#
 #
 #
 #
@@ -1513,8 +1535,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "Verd"
+#
 #
 #
 #
@@ -1547,8 +1571,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "Gris clar"
+#
 #
 #
 #
@@ -1581,6 +1607,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Marques"
 #
@@ -1598,8 +1625,15 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Next tide event"
 #~ msgstr "Propera marea"
+#
+#
+#, fuzzy
+#~ msgid "OCPN Draw Remove Text Point"
+#~ msgstr "Nom de punt d'OCPN"
+#
 #
 #
 #
@@ -1632,6 +1666,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "Vermell"
 #
@@ -1649,8 +1684,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Blanc"
+#
 #
 #
 #
