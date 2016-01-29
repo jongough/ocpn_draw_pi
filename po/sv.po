@@ -947,7 +947,7 @@ msgstr ""
 "Anmäl ett problem via GIT på: \n"
 "https://github.com/jongough/ocpn_draw_pi/issues \n"
 "\n"
-"OBS att samtliga refererade websidor är på Engelska"
+"OBS att samtliga refererade websidor är på Engelska\n"
 #
 msgid "Point Inclusion Size"
 msgstr "Yttre punktstorlek"
