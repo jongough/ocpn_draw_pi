@@ -330,7 +330,7 @@ public:
     
     Undo        *undo;
     
-    PlugIn_ViewPort *m_vp;
+    PlugIn_ViewPort *m_pVP;
     wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
 //    wxGLCanvas      *m_glcc;

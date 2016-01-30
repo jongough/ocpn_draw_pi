@@ -57,7 +57,7 @@ extern bool         g_bBoundaryPointShowName;
 extern float        g_ChartScaleFactorExp;
 
 
-extern PlugIn_ViewPort  *g_pivp;
+extern PlugIn_ViewPort  *g_pVP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 #include <wx/listimpl.cpp>
@@ -335,7 +335,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     wxPoint r;
     wxRect hilitebox;
 
-    GetCanvasPixLL( g_pivp, &r,  m_lat, m_lon);
+    GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);
 
     //  return the home point in this dc to allow "connect the dots"
     if( NULL != rpn ) *rpn = r;
@@ -358,18 +358,17 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     
     wxBitmap *pbms = NULL;
     float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
-    if( l_ChartScaleFactorExp > 1.0){
-        if(m_fIconScaleFactor != l_ChartScaleFactorExp){
-            wxImage scaled_image = pbm->ConvertToImage();
-            int new_width = pbm->GetWidth() * l_ChartScaleFactorExp;
-            int new_height = pbm->GetHeight() * l_ChartScaleFactorExp;
-            m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
-            
-            m_fIconScaleFactor = l_ChartScaleFactorExp;
+    if(m_fIconScaleFactor != l_ChartScaleFactorExp) {
+        m_fIconScaleFactor = l_ChartScaleFactorExp;
+        if(m_fIconScaleFactor != 0) {
+        wxImage scaled_image = pbm->ConvertToImage();
+        int new_width = pbm->GetWidth() * m_fIconScaleFactor;
+        int new_height = pbm->GetHeight() * m_fIconScaleFactor;
+        m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
         }
-        if( m_ScaledBMP.IsOk() )
-            pbm = &m_ScaledBMP;
     }
+    if( m_fIconScaleFactor != 0 && m_ScaledBMP.IsOk() )
+        pbm = &m_ScaledBMP;
     
     int sx2 = pbm->GetWidth() / 2;
     int sy2 = pbm->GetHeight() / 2;
@@ -385,7 +384,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         }
 
         if( m_pMarkFont ) {
-            wxRect r2( r.x + m_NameLocationOffsetX, r.y + m_NameLocationOffsetY, m_NameExtents.x,
+            wxRect r2( r.x + (m_NameLocationOffsetX * m_fIconScaleFactor), r.y + (m_NameLocationOffsetY * m_fIconScaleFactor), m_NameExtents.x,
                     m_NameExtents.y );
             r1.Union( r2 );
         }
@@ -436,7 +435,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
             dc.SetFont( *m_pMarkFont );
             dc.SetTextForeground( m_FontColor );
 
-            dc.DrawText( m_ODPointName, r.x + m_NameLocationOffsetX, r.y + m_NameLocationOffsetY );
+            dc.DrawText( m_ODPointName, r.x + (m_NameLocationOffsetX * m_fIconScaleFactor), r.y + (m_NameLocationOffsetY * m_fIconScaleFactor) );
         }
     }
 
@@ -451,7 +450,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-        GetCanvasPixLL( g_pivp, &r1,  tlat, tlon);
+        GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
 
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
                            pow( (double) (r.y - r1.y), 2 ) );
@@ -497,7 +496,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     wxRect hilitebox;
     unsigned char transparency = 150;
 
-    GetCanvasPixLL( g_pivp, &r, m_lat, m_lon );
+    GetCanvasPixLL( g_pVP, &r, m_lat, m_lon );
 
 //    Substitue icon?
     wxBitmap *pbm;
@@ -510,8 +509,9 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     int sy2 = pbm->GetHeight() / 2;
 
 //    Calculate the mark drawing extents
-    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
-
+    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );          // the bitmap extents
+    
+    float  l_fIconScaleFactor = GetOCPNChartScaleFactor_Plugin();
     wxRect r3 = r1;
     if( m_bShowName ) {
         if( !m_pMarkFont ) {
@@ -521,7 +521,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         }
 
         if( m_pMarkFont ) {
-            wxRect r2( r.x + m_NameLocationOffsetX, r.y + m_NameLocationOffsetY,
+            wxRect r2( r.x + (m_NameLocationOffsetX * l_fIconScaleFactor), r.y + (m_NameLocationOffsetY * l_fIconScaleFactor),
                        m_NameExtents.x, m_NameExtents.y );
             r3.Union( r2 );
         }
@@ -660,7 +660,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         
             glColor3ub(m_FontColor.Red(), m_FontColor.Green(), m_FontColor.Blue());
             
-            int x = r.x + m_NameLocationOffsetX, y = r.y + m_NameLocationOffsetY;
+            int x = r.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = r.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
             float u = (float)w/m_iTextTextureWidth, v = (float)h/m_iTextTextureHeight;
             glBegin(GL_QUADS);
             glTexCoord2f(0, 0); glVertex2f(x, y);
@@ -684,7 +684,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-        GetCanvasPixLL( g_pivp, &r1,  tlat, tlon);
+        GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
         
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
         pow( (double) (r.y - r1.y), 2 ) );

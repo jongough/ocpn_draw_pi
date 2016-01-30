@@ -52,7 +52,8 @@ extern ocpn_draw_pi                 *g_ocpn_draw_pi;
 extern PathManagerDialog            *g_pPathManagerDialog;
 extern ODSelect                     *g_pODSelect;
 extern ODConfig                     *g_pODConfig;
-extern PlugIn_ViewPort              *g_pivp;
+extern PlugIn_ViewPort              *g_pVP;
+extern PlugIn_ViewPort              g_VP;
 extern ChartCanvas                  *ocpncc1;
 extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 extern PathMan                      *g_pPathMan;
@@ -309,10 +310,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     g_pODRolloverWin->SetString( s );
                     
                     wxSize win_size = ocpncc1->GetSize();
-                    //if( console && console->IsShown() ) win_size.x -= console->().x;
                     wxPoint point;
-                    GetCanvasPixLL( g_pivp, &point, g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon );
-                    PlugInNormalizeViewport( g_pivp );
                     g_pODRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, PATH_ROLLOVER, win_size );
                     g_pODRolloverWin->SetBitmap( PATH_ROLLOVER );
                     g_pODRolloverWin->IsActive( true );
@@ -375,8 +373,6 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         }
                         if( pp->m_ODPointName.length() > 0 ) {
                             wxString wxsText;
-                            wxsText.append( _("Name") );
-                            wxsText.append( wxT(" : ") );
                             wxsText.append( pp->m_ODPointName );
                             s.Append( wxsText );
                         }
@@ -385,9 +381,18 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         wxSize win_size = ocpncc1->GetSize();
                         //if( console && console->IsShown() ) win_size.x -= console->().x;
                         wxPoint point;
-                        GetCanvasPixLL( g_pivp, &point, g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon );
-                        PlugInNormalizeViewport( g_pivp );
-                        g_pODRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, POINT_ROLLOVER, win_size );
+                        GetCanvasPixLL( &g_VP, &point, pp->m_lat, pp->m_lon );
+                        PlugInNormalizeViewport( &g_VP );
+                        int l_OffsetX;
+                        int l_OffsetY;
+                        if(pp->m_bShowName) {
+                            l_OffsetX = 16;
+                            l_OffsetY = 28;
+                        } else {
+                            l_OffsetX = 16;
+                            l_OffsetY = 16;
+                        }
+                        g_pODRolloverWin->SetBestPosition( point.x, point.y, l_OffsetX, l_OffsetY, POINT_ROLLOVER, win_size );
                         g_pODRolloverWin->SetBitmap( POINT_ROLLOVER );
                         g_pODRolloverWin->IsActive( true );
                         b_need_refresh = true;

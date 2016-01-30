@@ -213,7 +213,8 @@ int             g_iTextLeftOffsetX;
 int             g_iTextLeftOffsetY;
 int             g_iTextPointDisplayTextWhen;
 
-PlugIn_ViewPort *g_pivp;
+PlugIn_ViewPort *g_pVP;
+PlugIn_ViewPort g_VP;
 ODDC          *g_pDC;
 bool            g_bShowMag;
 double          g_dVar;
@@ -2281,7 +2282,7 @@ void ocpn_draw_pi::FindSelectedObject()
             m_pSelectedPath->m_bPathIsSelected = !(m_seltype & SELTYPE_ODPOINT);
             //                    if( m_pSelectedPath->m_bPathIsSelected ) {
             //                        m_pSelectedPath->m_iBlink++;
-            //m_pSelectedPath->Draw( *g_pDC, *g_pivp );
+            //m_pSelectedPath->Draw( *g_pDC, *g_pVP );
             //                    }
             m_seltype |= SELTYPE_PATHSEGMENT;
         }
@@ -2333,8 +2334,9 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
 
 bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 {
-    m_vp = pivp;
-    g_pivp = pivp;
+    m_pVP = pivp;
+    g_pVP = pivp;
+    g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
     
@@ -2346,8 +2348,9 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
-    m_vp = pivp;
-    g_pivp = pivp;
+    m_pVP = pivp;
+    g_pVP = pivp;
+    g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
     
@@ -2366,8 +2369,9 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
     m_pcontext = pcontext;
-    m_vp = pivp;
-    g_pivp = pivp;
+    m_pVP = pivp;
+    g_pVP = pivp;
+    g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
     
@@ -2431,21 +2435,21 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
                 double p = (double)i * (1.0/(double)milesDiff);
                 double pLat, pLon;
                 Geodesic::GreatCircleTravel( m_prev_rlon, m_prev_rlat, gcDist*p, brg, &pLon, &pLat, &gcBearing2 );
-                GetCanvasPixLL( m_vp, &destPoint, m_cursor_lat, m_cursor_lon);
+                GetCanvasPixLL( m_pVP, &destPoint, m_cursor_lat, m_cursor_lon);
                 //destPoint = VPoint.GetPixFromLL( pLat, pLon );
-                boundary->DrawSegment( tdc, &lastPoint, &destPoint, *m_vp, false );
+                boundary->DrawSegment( tdc, &lastPoint, &destPoint, *m_pVP, false );
                 wxPoint rpn;
                 boundary->GetPoint( 1 )->Draw( tdc, &rpn );
-                boundary->DrawSegment( tdc, &rpn , &destPoint, *m_vp, false );
+                boundary->DrawSegment( tdc, &rpn , &destPoint, *m_pVP, false );
                 lastPoint = destPoint;
             }
         }
         else {
-            boundary->DrawSegment( tdc, &lastPoint, &r_rband, *m_vp, false );
+            boundary->DrawSegment( tdc, &lastPoint, &r_rband, *m_pVP, false );
             if ( nBoundary_State >= 2) { 
                 wxPoint rpn;
                 boundary->GetPoint( 1 )->Draw( tdc, &rpn );
-                boundary->DrawSegment( tdc, &rpn , &r_rband, *m_vp, false );
+                boundary->DrawSegment( tdc, &rpn , &r_rband, *m_pVP, false );
             }
         }
         
@@ -2457,13 +2461,13 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         wxPoint tpoint;
         if(m_bEBLMoveOrigin) {
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
-            GetCanvasPixLL( g_pivp, &tpoint, tp->m_lat, tp->m_lon );
+            GetCanvasPixLL( g_pVP, &tpoint, tp->m_lat, tp->m_lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
-            ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_vp, false );
+            ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_pVP, false );
         } else {
-            GetCanvasPixLL( g_pivp, &tpoint, g_pfFix.Lat, g_pfFix.Lon );
+            GetCanvasPixLL( g_pVP, &tpoint, g_pfFix.Lat, g_pfFix.Lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
-            ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_vp, false );
+            ebl->DrawSegment( tdc, &tpoint, &m_cursorPoint, *m_pVP, false );
         }
         wxString info = CreateExtraPathLegInfo(tdc, ebl, brg, dist, m_cursorPoint);
         if(info.length() > 0)
@@ -2556,8 +2560,9 @@ void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString
 
 void ocpn_draw_pi::SetCurrentViewPort(PlugIn_ViewPort &vp)
 {
-    m_vp = &vp;
-    g_pivp = &vp;
+    m_pVP = &vp;
+    g_pVP = &vp;
+    g_VP = vp;
 }
 
 void ocpn_draw_pi::FinishBoundary( void )
@@ -2641,7 +2646,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
             if( !BltBBox.IntersectOut( test_box ) ) // Path is not wholly outside window
             {
                 b_drawn = true;
-                pPathDraw->Draw( dc, *m_vp );
+                pPathDraw->Draw( dc, *m_pVP );
             } else if( pPathDraw->CrossesIDL() ) {
                 wxPoint2DDouble xlate( -360., 0. );
                 wxBoundingBox test_box1 = pPathDraw->GetBBox();
@@ -2651,7 +2656,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 if( !BltBBox.IntersectOut( test_box1 ) ) // Boundary is not wholly outside window
                 {
                     b_drawn = true;
-                    pPathDraw->Draw( dc, *m_vp );
+                    pPathDraw->Draw( dc, *m_pVP );
                 }
             }
             
@@ -2664,7 +2669,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                     if( !BltBBox.IntersectOut( test_box2 ) ) // Boundary is not wholly outside window
                     {
                         b_drawn = true;
-                        pPathDraw->Draw( dc, *m_vp );
+                        pPathDraw->Draw( dc, *m_pVP );
                     }
                 } else if( !b_drawn && ( BltBBox.GetMinX() < 180. ) && ( BltBBox.GetMaxX() > 180. ) ) {
                     wxPoint2DDouble xlate( 360., 0. );
@@ -2673,7 +2678,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                     if( !BltBBox.IntersectOut( test_box3 ) ) // Boundary is not wholly outside window
                     {
                         b_drawn = true;
-                        pPathDraw->Draw( dc, *m_vp );
+                        pPathDraw->Draw( dc, *m_pVP );
                     }
                 }
             }
@@ -3115,7 +3120,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
             ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
             DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
-            GetCanvasPixLL( m_vp, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+            GetCanvasPixLL( m_pVP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
             wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
             if(info.length() > 0)
                 RenderExtraPathLegInfo( dc, destPoint, info );
