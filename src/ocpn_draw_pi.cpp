@@ -357,6 +357,8 @@ int ocpn_draw_pi::Init(void)
     bKey_EBL_Pressed = false;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
+    g_btouch = false;
+    //g_btouch = IsTouchInterface_PlugIn();
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -2724,7 +2726,11 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     BoundaryPoint *pMousePoint = NULL;
     
     //    Calculate meaningful SelectRadius
-    int nearby_sel_rad_pix = 8;
+    int nearby_sel_rad_pix;
+    if(g_btouch)
+        nearby_sel_rad_pix = 50;
+    else
+        nearby_sel_rad_pix = 8;
     //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
     
@@ -2786,7 +2792,11 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     TextPoint *pMousePoint = NULL;
     
     //    Calculate meaningful SelectRadius
-    int nearby_sel_rad_pix = 8;
+    int nearby_sel_rad_pix;
+    if(g_btouch)
+        nearby_sel_rad_pix = 50;
+    else
+        nearby_sel_rad_pix = 8;
     //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
     
@@ -2860,7 +2870,11 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     BoundaryPoint *pMousePoint = NULL;
     
     //    Calculate meaningful SelectRadius
-    int nearby_sel_rad_pix = 8;
+    int nearby_sel_rad_pix;
+    if(g_btouch)
+        nearby_sel_rad_pix = 50;
+    else
+        nearby_sel_rad_pix = 8;
     //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
     double nearby_radius_meters = nearby_sel_rad_pix / 1;
     
@@ -3006,13 +3020,13 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_dStartLat = g_pfFix.Lat;
     m_dStartLon = g_pfFix.Lon;
 
-    ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sEBLStartIconName, wxS("Boat"), wxT("") );
+    ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, g_sEBLStartIconName, _("Boat"), wxT("") );
     beginPoint->SetNameShown( false );
     beginPoint->SetTypeString( wxT("EBL Point"));
     beginPoint->m_bIsolatedMark = false;
     m_pMouseEBL->AddPoint( beginPoint, false );
     
-    pMousePoint = new ODPoint( rlat, rlon, g_sEBLEndIconName, wxS("End"), wxT("") );
+    pMousePoint = new ODPoint( rlat, rlon, g_sEBLEndIconName, _("End"), wxT("") );
     
     pMousePoint->SetNameShown( false );
     pMousePoint->SetTypeString( wxS("EBL Point") );

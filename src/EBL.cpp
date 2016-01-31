@@ -239,7 +239,7 @@ ODPoint *EBL::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool bRen
     ODPoint *newpoint = ODPath::InsertPointBefore( pOP, lat, lon );
     newpoint->m_IconName = g_sEBLStartIconName;
     newpoint->m_sTypeString = wxT("EBL Point");
-    newpoint->m_ODPointName = wxT("Start");
+    newpoint->m_ODPointName = _("Start");
     FinalizeForRendering();
     return newpoint;
 }
@@ -249,7 +249,7 @@ ODPoint *EBL::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRena
     ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon );
     newpoint->m_IconName = g_sEBLStartIconName;
     newpoint->m_sTypeString = wxT("EBL Point");
-    newpoint->m_ODPointName = wxT("Start");
+    newpoint->m_ODPointName = _("Start");
     ReloadPathPointIcons();
     FinalizeForRendering();
     return newpoint;
