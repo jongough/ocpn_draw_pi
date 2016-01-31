@@ -38,11 +38,6 @@ extern SelectItem                   *g_pRolloverPoint;
 ODSelect::ODSelect()
 {
     pSelectList = new SelectableItemList;
-    pixelRadius = 8;
-    int w,h;
-    wxDisplaySize( &w, &h );
-    if( h > 800 ) pixelRadius = 10;
-    if( h > 1024 ) pixelRadius = 12;
     
 }
 
@@ -52,6 +47,21 @@ ODSelect::~ODSelect()
     pSelectList->Clear();
     delete pSelectList;
 
+}
+
+int ODSelect::GetSelectPixelRadius( void )
+{
+    int pixelRadius;
+    if(IsTouchInterface_PlugIn())
+        pixelRadius = 50;
+    else {
+        pixelRadius = 8;
+        int w,h;
+        wxDisplaySize( &w, &h );
+        if( h > 800 ) pixelRadius = 10;
+        if( h > 1024 ) pixelRadius = 12;
+    }
+    return pixelRadius;
 }
 
 bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd )
@@ -417,7 +427,7 @@ bool ODSelect::IsSegmentSelected( float a, float b, float c, float d, float slat
 
 void ODSelect::CalcSelectRadius()
 {
-    selectRadius = pixelRadius / ( ocpncc1->GetCanvasTrueScale() * 1852 * 60 );
+    selectRadius = GetSelectPixelRadius() / ( ocpncc1->GetCanvasTrueScale() * 1852 * 60 );
 }
 
 SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )

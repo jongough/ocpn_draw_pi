@@ -221,7 +221,6 @@ double          g_dVar;
 double          g_UserVar;
 double          g_n_arrival_circle_radius;
 wxRect          g_blink_rect;
-bool            g_btouch;
 
 int             g_LayerIdx;
 bool            g_bShowLayers;
@@ -357,8 +356,6 @@ int ocpn_draw_pi::Init(void)
     bKey_EBL_Pressed = false;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
-    g_btouch = false;
-    //g_btouch = IsTouchInterface_PlugIn();
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -2430,7 +2427,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             boundary->m_NextLegGreatCircle = true;
         }
         
-        //        if( !g_btouch) {
+        //        if( !IsTouchInterface_PlugIn) {
         boundary->DrawPointWhich( tdc, boundary->m_lastMousePointIndex, &lastPoint );
         if( boundary->m_NextLegGreatCircle ) {
             for( int i=1; i<=milesDiff; i++ ) {
@@ -2727,7 +2724,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     
     //    Calculate meaningful SelectRadius
     int nearby_sel_rad_pix;
-    if(g_btouch)
+    if(IsTouchInterface_PlugIn())
         nearby_sel_rad_pix = 50;
     else
         nearby_sel_rad_pix = 8;
@@ -2793,7 +2790,7 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     
     //    Calculate meaningful SelectRadius
     int nearby_sel_rad_pix;
-    if(g_btouch)
+    if(IsTouchInterface_PlugIn())
         nearby_sel_rad_pix = 50;
     else
         nearby_sel_rad_pix = 8;
@@ -2871,7 +2868,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     
     //    Calculate meaningful SelectRadius
     int nearby_sel_rad_pix;
-    if(g_btouch)
+    if(IsTouchInterface_PlugIn())
         nearby_sel_rad_pix = 50;
     else
         nearby_sel_rad_pix = 8;

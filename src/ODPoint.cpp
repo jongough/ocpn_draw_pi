@@ -44,7 +44,6 @@ extern ChartCanvas  *ocpncc1;
 extern PathMan      *g_pPathMan;
 extern PathList     *g_pPathList;
 extern wxRect       g_blink_rect;
-extern bool         g_btouch;
 extern bool         g_bresponsive;
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern double       g_n_arrival_circle_radius;
@@ -394,7 +393,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     hilitebox.x -= r.x;
     hilitebox.y -= r.y;
     float radius;
-    if( g_btouch ){
+    if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
         radius = 20.0f;
     }
@@ -531,7 +530,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     hilitebox.x -= r.x;
     hilitebox.y -= r.y;
     float radius;
-    if( g_btouch ){
+    if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
         radius = 20.0f;
     }
