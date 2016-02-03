@@ -104,6 +104,8 @@ extern wxString     g_sEBLEndIconName;
 extern wxString     g_sEBLStartIconName;
 extern wxColour     g_colourEBLLineColour;
 extern wxColour     g_colourInActiveDRLineColour;
+extern bool         g_bEBLRotateWithBoat;
+extern int          g_iEBLMaintainWith;
 extern bool         g_bEBLFixedEndPosition;
 extern int          g_EBLPersistenceType;
 extern bool         g_bEBLShowArrow;
@@ -192,7 +194,6 @@ ODPropertiesDialogDef( parent )
         }
     }
 #endif
-
     SetDialogSize();
 }
 
@@ -336,6 +337,8 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
     g_EBLLineWidth = ::WidthValues[ m_choiceEBLLineWidth->GetSelection() ];
     g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
+    g_bEBLRotateWithBoat = m_checkBoxRotateWithBoat->GetValue();
+    g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
     g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
@@ -608,6 +611,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
         
         m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
+        m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);
+        m_radioBoxMaintainWith->SetSelection( g_iEBLMaintainWith );
         m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
         m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
         m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );

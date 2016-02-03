@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-30 08:56+1100\n"
-"PO-Revision-Date: 2016-01-25 19:58-0500\n"
+"POT-Creation-Date: 2016-01-31 21:01+1100\n"
+"PO-Revision-Date: 2016-01-31 04:59-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -243,9 +243,8 @@ msgstr "Är du säker på att du vill ta bort denna EBL?"
 msgid "Are you sure you want to delete this OD Point?"
 msgstr "Är du säker på att du vill ta bort denna punkt?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this Text Point?"
-msgstr "Är du säker på att du vill ta bort denna punkt?"
+msgstr "Är du säker på att du vill ta bort denna Textpunkt?"
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr "Är du säker du vill ta bort detta lager och <ALLT> innehåll?"
@@ -321,19 +320,19 @@ msgstr ""
 "Storlek"
 #
 msgid "Boundary Point Properties"
-msgstr ""
+msgstr "Egenskaper gränslinjepunkt"
 #
 msgid "Boundary Point Properties, Layer: "
-msgstr ""
+msgstr "Egenskaper Gränslinjepunkt, Lager: "
 #
 msgid "Boundary Point Type"
 msgstr "Typ av gränslinjepunkter"
 #
 msgid "Boundary Properties"
-msgstr ""
+msgstr "Egenskaper för gränslinjen"
 #
 msgid "Boundary Properties, Layer: "
-msgstr ""
+msgstr "Egenskaper för gränslinje, Lager: "
 #
 msgid "Boundary Type"
 msgstr "Gränstyp"
@@ -417,16 +416,16 @@ msgid "DR Point Interval"
 msgstr "DR Punktavstånd"
 #
 msgid "DR Point Properties"
-msgstr ""
+msgstr "Egenskaper DR-punkt"
 #
 msgid "DR Point Properties, Layer: "
-msgstr ""
+msgstr "Egenskaper DR-punkt, Lager: "
 #
 msgid "DR Properties"
-msgstr ""
+msgstr "Egenskaper för DR"
 #
 msgid "DR Properties, Layer: "
-msgstr ""
+msgstr "Egenskaper DR, Lager: "
 #
 msgid "Date:"
 msgstr "Datum:"
@@ -512,24 +511,23 @@ msgid "EBL Point &Properties"
 msgstr "EBL-punkt, egenskaper"
 #
 msgid "EBL Point Properties"
-msgstr ""
+msgstr "Egenskaper EBL-punkt"
 #
 msgid "EBL Point Properties, Layer: "
-msgstr ""
+msgstr "Egenskaper EBL-punkt, Lager: "
 #
 msgid "EBL Properties"
-msgstr ""
+msgstr "Egenskaper för EBL"
 #
 msgid "EBL Properties, Layer: "
-msgstr ""
+msgstr "Egenskaper EBL, Lager: "
 #
 msgid ""
 "Edge Panning Sensitivity\n"
 "(percentage screen width) Default 5"
 msgstr ""
 "Anger hur nära skärmkanten en punkt kan ritas\n"
-"\n"
-"innan panorering. 5 (procent av skärmvidd) är standard"
+"innan panorering. 5 (% av skärmvidd) är standard"
 #
 msgid "Electronic Bearing Line"
 msgstr "Elektronisk Bäring-Linje"
@@ -584,9 +582,12 @@ msgid ""
 "\n"
 "Thanks to the community for their helpful suggestions."
 msgstr ""
+"Ritverktyg för OpenCPN\n"
+"\n"
+"Tack alla som hjälpt till med värdefulla synpunkter."
 #
 msgid "General drawing for OpenCPN"
-msgstr ""
+msgstr "Ritverktyg för OpenCPN"
 #
 msgid "Hide Point names"
 msgstr "Dölj punktens namn"
@@ -750,9 +751,8 @@ msgstr "Flytta OD-punkt"
 msgid "Move Text Point"
 msgstr "Flytta Textpunkt"
 #
-#, fuzzy
 msgid "Move start point to boat lat/lon"
-msgstr "Centrera på båtens position"
+msgstr "Flytta startpunkten till båtens position"
 #
 msgid "Name"
 msgstr "Namn"
@@ -798,7 +798,7 @@ msgid "OCPN Draw Boundary"
 msgstr "OCPN Rita gränser"
 #
 msgid "OCPN Draw Boundary Create"
-msgstr ""
+msgstr "OCPN ritverktyg. Skapa en gränslinje"
 #
 msgid "OCPN Draw Boundary Delete"
 msgstr "Ta bort OD gränser"
@@ -818,9 +818,8 @@ msgstr "Ta bort EBL-punkt"
 msgid "OCPN Draw Delete OD Point"
 msgstr "Ta bort punkt"
 #
-#, fuzzy
 msgid "OCPN Draw Delete Text Point"
-msgstr "Ta bort punkt"
+msgstr "OCPN Ritverktyg; Radera textpunkt"
 #
 msgid "OCPN Draw EBL Delete"
 msgstr "Ta bort OD EBL"
@@ -832,13 +831,13 @@ msgid "OCPN Draw Path &Properties"
 msgstr "OCPN Rita: Linjer & Egenskaper"
 #
 msgid "OCPN Draw Point"
-msgstr ""
+msgstr "OCPN Rita punkt"
 #
 msgid "OCPN Draw Point Create"
-msgstr ""
+msgstr "OCPN ritverktyg. Skapa en punkt"
 #
 msgid "OCPN Draw Point, Layer: "
-msgstr ""
+msgstr "OCPN Rita punk, Lager: "
 #
 msgid "OCPN Draw Properties"
 msgstr "OCPN Ritverktyg. Egenskaper"
@@ -940,14 +939,15 @@ msgstr ""
 "\n"
 "Eller\n"
 "\n"
-"På forumet för OpenCPN: \\ nhttp://www.cruisersforum.com/forums/f134 \n"
+"På forumet för OpenCPN:\n"
+"http://www.cruisersforum.com/forums/f134 \n"
 "\n"
 "Eller\n"
 "\n"
 "Anmäl ett problem via GIT på: \n"
 "https://github.com/jongough/ocpn_draw_pi/issues \n"
 "\n"
-"OBS att samtliga refererade websidor är på Engelska\n"
+"OBS att samtliga refererade websidor är på Engelska"
 #
 msgid "Point Inclusion Size"
 msgstr "Yttre punktstorlek"
@@ -1114,16 +1114,10 @@ msgid "Version:"
 msgstr "Version:"
 #
 msgid "Whilst Drawing"
-msgstr "Vid ritande"
+msgstr "Vid användning"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Vill du använda gränspunkter efter en storcirkel för detta ben?"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi data finns på"
-#
-#~ msgid "Are you sure you want to remove this Text Point?"
-#~ msgstr "Är du säker på att du vill ta bort denna text-punkt?"
-#
-#~ msgid "OCPN Draw Remove Text Point"
-#~ msgstr "Ta bort text-punkt"

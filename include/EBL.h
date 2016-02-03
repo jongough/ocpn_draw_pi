@@ -34,6 +34,11 @@ enum {
     ID_EBL_PERSISTENT_LAST
 };
 
+enum {
+    ID_EBL_MAINTAIN_WITH_HEADING = 0,
+    ID_EBL_MAINTAIN_WITH_COG
+};
+
 class EBL : public ODPath
 {
     public:
@@ -44,20 +49,29 @@ class EBL : public ODPath
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
         void ResizeVRM( double lat, double lon );
         void ResizeVRM( void );
-        void MoveEndPoint( double inc_lat, double inc_lon );
+        void MoveEndPoint( double lat, double lon );
+        void MoveEndPoint( bool bUpdateEBL );
+        void MoveEndPoint( void );
+        void MoveStartPoint( double lat, double lon );
         void AddPoint(ODPoint* pNewPoint, bool b_rename_in_sequence = true, bool b_deferBoxCalc = false, bool b_isLoading = false);
         ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
         ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
         void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
         
         void SetPersistence( int PersistenceType );
-        void CentreOnBoat( void );
+        void CentreOnBoat( bool bMoveEndPoint );
         void CentreOnLatLon( double lat, double lon );
 
         bool        m_bFixedEndPosition;
         int         m_iPersistenceType;
         bool        m_bVRM;
         bool        m_bCentreOnBoat;
+        bool        m_bRotateWithBoat;
+        int         m_iMaintainWith;
+        double      m_dBoatHeading;
+        double      m_dBoatCOG;
+        double      m_dEBLAngle;
+        double      m_dLength;
         
     protected:
         void        UpdateEBL( void );

@@ -39,8 +39,6 @@ public:
     ODSelect();
     ~ODSelect();
 
-    void SetSelectPixelRadius(int radius){ pixelRadius = radius; }
-
     bool AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd );
     bool AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
             ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath );
@@ -68,6 +66,8 @@ public:
 
     bool DeleteSelectableODPoint( ODPoint *prp );
     
+    int GetSelectPixelRadius( void );
+    
     //  Accessors
 
     SelectableItemList *GetSelectList()
@@ -85,7 +85,6 @@ private:
     double vVectorMagnitude( pODVector2D v0 );
 
     SelectableItemList *pSelectList;
-    int pixelRadius;
     float selectRadius;
 };
 

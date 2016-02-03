@@ -76,6 +76,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
 {
     m_pPath = NULL;
+    
     SetPointsListHeadings();    
     SetViewableItems();
 }
@@ -262,9 +263,10 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("DR")) {
         pDR = (DR *)pInPath;
         pPath = pDR;
-    } else
+    } else {
         pPath = pInPath;
-        
+    }
+    
     m_textCtrlName->SetValue( pPath->m_PathNameString );
     m_textCtrlDesctiption->SetValue( pPath->m_PathDescription);
     m_textCtrlGUID->SetValue( pPath->m_GUID );
@@ -291,16 +293,17 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     wxString nullify = _T("----");
     long item_line_index = 0;
     wxString wxsLastPoint = _("Boat");
+    ODPoint * p_last_pOp = NULL;
     while( node ) {
         ODPoint *pOp = node->GetData();
         wxString t;
         //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
         
-        if(pOp->m_ODPointName != _("Boat")) {
+        if(pOp->m_ODPointName != _("Boat") || item_line_index > 0) {
         //  ODPoint Name
             m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, pOp->GetName() );
-            wxsLastPoint = pOp->GetName();
+//            wxsLastPoint = pOp->GetName();
             // Store Description
             m_listCtrlODPoints->SetItem( item_line_index, ID_DESCRIPTION, pOp->GetDescription() );
             
@@ -326,31 +329,42 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
         
         // calculation of bearging from current point to next point.
         double brgFromTo, tmp_leg_dist;
-        wxODPointListNode *next_node = node->GetNext();
-        ODPoint * p_next_pOp = (next_node)? next_node->GetData(): NULL;
-        if ( p_next_pOp ) {
-            DistanceBearingMercator_Plugin( p_next_pOp->m_lat, p_next_pOp->m_lon, pOp->m_lat, pOp->m_lon, &brgFromTo, &tmp_leg_dist );
+        if ( p_last_pOp ) {
+            DistanceBearingMercator_Plugin( pOp->m_lat, pOp->m_lon, p_last_pOp->m_lat, p_last_pOp->m_lon, &brgFromTo, &tmp_leg_dist );
         }else {
             brgFromTo = 0.0;
             tmp_leg_dist = 0.0;
         }
         
-        if (p_next_pOp){
-            if( g_bShowMag )
-                t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
+        if(wxsLastPoint != _("Boat") || item_line_index > 0) {
+            if (p_last_pOp){
+                if( g_bShowMag )
+                    t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
+                else
+                    t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
+                m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, t );
+            }
             else
-                t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
-            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, t );
-        }
-        else
+                m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
+            
+            //  Lat/Lon
+            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
+            
+            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
+        } else {
             m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
+
+            wxString tlat = toSDMM_PlugIn( 1, slat, pOp->m_bIsInTrack );  // low precision for routes
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
+            
+            wxString tlon = toSDMM_PlugIn( 2, slon, pOp->m_bIsInTrack );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
+        }
         
-        //  Lat/Lon
-        wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
-        m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
-        
-        wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
-        m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
+        wxsLastPoint = pOp->GetName();
+        p_last_pOp = pOp;
         
         item_line_index++;
 
@@ -402,22 +416,22 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     wxString nullify = _T("----");
     long item_line_index = 0;
     wxString wxsLastPoint = wxT("Boat");
+    ODPoint *p_last_pOp = NULL;
     while( node ) {
         ODPoint *pOp = node->GetData();
         wxString t;
         //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
 
-        if(pOp->m_ODPointName != _("Boat")) {
+        if(pOp->m_ODPointName != _("Boat") || item_line_index > 0) {
             //  ODPoint Name
             m_listCtrlODPoints->SetItem( item_line_index, ID_TO_POINT, pOp->GetName() );
-            wxsLastPoint = pOp->GetName();
             // Store Description
             m_listCtrlODPoints->SetItem( item_line_index, ID_DESCRIPTION, pOp->GetDescription() );
             
             //  Distance
             //  Note that Distance/Bearing for Leg 000 is as from current position
-            DistanceBearingMercator_Plugin(  g_dLat, g_dLon, pOp->m_lat, pOp->m_lon, &brgFromBoat, &distanceFromBoat );
+            DistanceBearingMercator_Plugin( pOp->m_lat, pOp->m_lon, g_pfFix.Lat, g_pfFix.Lon, &brgFromBoat, &distanceFromBoat );
             
             t.Printf( _T("%6.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( distanceFromBoat ) );
             m_listCtrlODPoints->SetItem( item_line_index, ID_DISTANCE_FROM_BOAT, t );
@@ -437,31 +451,40 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
         
         // calculation of bearging from current point to next point.
         double brgFromTo, tmp_leg_dist;
-        wxODPointListNode *next_node = node->GetNext();
-        ODPoint * _next_pOp = (next_node)? next_node->GetData(): NULL;
-        if (_next_pOp ) {
-            DistanceBearingMercator_Plugin( pOp->m_lat, pOp->m_lon, _next_pOp->m_lat, _next_pOp->m_lon, &brgFromTo, &tmp_leg_dist );
+        if ( p_last_pOp ) {
+            DistanceBearingMercator_Plugin( pOp->m_lat, pOp->m_lon, p_last_pOp->m_lat, p_last_pOp->m_lon, &brgFromTo, &tmp_leg_dist );
         }else {
             brgFromTo = 0.0;
             tmp_leg_dist = 0.0;
         }
         
-        if (_next_pOp){
-            if( g_bShowMag )
-                t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
+        if(wxsLastPoint != _("Boat") || item_line_index > 0) {
+            if (p_last_pOp){
+                if( g_bShowMag )
+                    t.Printf( _T("%03.0f Deg. M"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
+                else
+                    t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
+                m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, t );
+            }
             else
-                t.Printf( _T("%03.0f Deg. T"), g_ocpn_draw_pi->GetTrueOrMag( brgFromTo ) );
-            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, t );
+                m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
+            
+            //  Lat/Lon
+            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
+            
+            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
+        } else {
+            wxString tlat = toSDMM_PlugIn( 1, g_pfFix.Lat, pOp->m_bIsInTrack );  // low precision for routes
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
+            
+            wxString tlon = toSDMM_PlugIn( 2, g_pfFix.Lon, pOp->m_bIsInTrack );
+            m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         }
-        else
-            m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
-        
-        //  Lat/Lon
-        wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
-        m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
-        
-        wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
-        m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
+
+        wxsLastPoint = pOp->GetName();
+        p_last_pOp = pOp;
         
         item_line_index++;
         node = node->GetNext();
@@ -591,7 +614,15 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_checkBoxPathShowArrow->Enable( false );
     m_radioBoxPathPersistence->Hide();
     m_radioBoxPathPersistence->Enable( false );
-    
+    m_checkBoxRotateWithBoat->Hide();
+    m_checkBoxRotateWithBoat->Enable(false);
+    m_radioBoxMaintainWith->Hide();
+    m_radioBoxMaintainWith->Enable(false);
+    m_staticTextEBLAngle->Hide();
+    m_staticTextEBLAngle->Enable(false);
+    m_textCtrlEBLAngle->Hide();
+    m_textCtrlEBLAngle->Enable(false);
+
     return;
 }
 

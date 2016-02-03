@@ -159,7 +159,7 @@ extern wxString     g_sODPointIconName;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 //extern AIS_Decoder      *g_pAIS;
-extern PlugIn_ViewPort  *g_pivp;
+extern PlugIn_ViewPort  *g_pVP;
 
 // sort callback. Sort by route name.
 int sort_path_name_dir;

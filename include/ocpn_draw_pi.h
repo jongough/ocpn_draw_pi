@@ -32,14 +32,16 @@ time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
-std::cout << stime << " : " << x << std::endl; } while (0)
+std::cout << stime << " :: " ; \
+std::cout << x << std::endl; } while (0)
 
 #  define DEBUGST(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
-std::cout << stime << " : " << x; } while (0)
+std::cout << stime << " :: " ; \
+std::cout << x; } while (0)
 
 #  define DEBUGCONT(x) do { \
 std::cout << x ; } while (0)
@@ -211,6 +213,7 @@ public:
     bool            m_bTextPointEditing;
     bool            m_bEBLEditing;
     bool            m_bEBLMoveOrigin;
+
     
 
     //    The required PlugIn Methods
@@ -330,7 +333,7 @@ public:
     
     Undo        *undo;
     
-    PlugIn_ViewPort *m_vp;
+    PlugIn_ViewPort *m_pVP;
     wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
 //    wxGLCanvas      *m_glcc;

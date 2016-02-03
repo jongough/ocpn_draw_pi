@@ -62,6 +62,10 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxBoxSizer* m_bSizerBoundaryType;
 		wxRadioBox* m_radioBoxBoundaryType;
 		wxFlexGridSizer* m_fgSizerEBL;
+		wxCheckBox* m_checkBoxRotateWithBoat;
+		wxRadioBox* m_radioBoxMaintainWith;
+		wxStaticText* m_staticTextEBLAngle;
+		wxTextCtrl* m_textCtrlEBLAngle;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxShowVRM;
 		wxFlexGridSizer* m_fgSizerPath;
@@ -77,6 +81,10 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineWidth( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }

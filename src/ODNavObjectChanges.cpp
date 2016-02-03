@@ -480,6 +480,16 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bVRM == true ? "1" : "0" );
         child = node.append_child("opencpn:fixed_end_position");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bFixedEndPosition == true ? "1" : "0" );
+        child = node.append_child("opencpn:centre_on_boat");
+        child.append_child(pugi::node_pcdata).set_value( pEBL->m_bCentreOnBoat == true ? "1" : "0" );
+        child = node.append_child("opencpn:rotate_with_boat");
+        child.append_child(pugi::node_pcdata).set_value( pEBL->m_bRotateWithBoat == true ? "1" : "0" );
+        child = node.append_child("opencpn:maintain_with");
+        s.Printf(_T("%1i"), pEBL->m_iMaintainWith);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:EBL_angle");
+        s.Printf(_T("%0.2f"), pEBL->m_dEBLAngle);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
     }
     if(pDR) {
         child = node.append_child("opencpn:persistence");
@@ -1222,6 +1232,16 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             } else if( ChildName == _T ( "opencpn:fixed_end_position" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:centre_on_boat" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                pTentEBL->m_bCentreOnBoat = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:rotate_with_boat" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                pTentEBL->m_bRotateWithBoat = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:maintain_with" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentEBL->m_iMaintainWith );
+            } else if( ChildName == _T ( "opencpn:EBL_angle" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dEBLAngle );
             } else if( ChildName == _T ( "opencpn:DRSOG" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dSoG );
             } else if( ChildName == _T ( "opencpn:DRCOG" ) ) {
@@ -1322,8 +1342,8 @@ ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
         ODPoint *pp = node->GetData();
         
         //        if( pr->m_bIsInLayer ) return NULL;
-        
-        if( guid == pp->m_GUID ) {
+        //TODO fix crash when pp->m_GUID is not valid. Why is this so? appears to be when a point is updated twice, but.....
+        if( pp->m_GUID.length() > 0 && guid == pp->m_GUID ) {
             return pp;
         }
         node = node->GetNext();
