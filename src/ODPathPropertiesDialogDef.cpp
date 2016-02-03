@@ -235,6 +235,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRotateWithBoat ), NULL, this );
 	m_textCtrlEBLAngle->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlEBLAngle->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_checkBoxEBLFixedEndPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnFixedEndPosition ), NULL, this );
 	m_listCtrlODPoints->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( ODPathPropertiesDialogDef::OnLeftDoubleClick ), NULL, this );
 	m_listCtrlODPoints->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPathPropertiesDialogDef::OnRightClick ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnOK ), NULL, this );
@@ -251,6 +252,7 @@ ODPathPropertiesDialogDef::~ODPathPropertiesDialogDef()
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRotateWithBoat ), NULL, this );
 	m_textCtrlEBLAngle->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlEBLAngle->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_checkBoxEBLFixedEndPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnFixedEndPosition ), NULL, this );
 	m_listCtrlODPoints->Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( ODPathPropertiesDialogDef::OnLeftDoubleClick ), NULL, this );
 	m_listCtrlODPoints->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPathPropertiesDialogDef::OnRightClick ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnOK ), NULL, this );

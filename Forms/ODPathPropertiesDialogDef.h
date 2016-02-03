@@ -84,6 +84,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }

@@ -100,6 +100,13 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         m_checkBoxRotateWithBoat->Enable(true);
     else
         m_checkBoxRotateWithBoat->Enable(false);
+    if(m_pEBL->m_bFixedEndPosition) {
+        m_radioBoxMaintainWith->Enable(false);
+        m_textCtrlEBLAngle->Enable(false);
+    } else {
+        m_radioBoxMaintainWith->Enable(true);
+        m_textCtrlEBLAngle->Enable(true);
+    }
     
     ODPoint *pFp = pInEBL->m_pODPointList->GetFirst()->GetData();
     ODPoint *pEp = pInEBL->m_pODPointList->GetLast()->GetData();
@@ -200,10 +207,28 @@ void EBLProp::OnRotateWithBoat(wxCommandEvent& event)
 {
     if(m_checkBoxRotateWithBoat->IsChecked()) {
         m_checkBoxEBLFixedEndPosition->Enable(false);
+        m_radioBoxMaintainWith->Enable(true);
+        m_textCtrlEBLAngle->Enable(true);
     } else {
         m_checkBoxEBLFixedEndPosition->Enable(true);
+        if(m_checkBoxEBLFixedEndPosition->IsChecked()) {
+            m_radioBoxMaintainWith->Enable(false);
+            m_textCtrlEBLAngle->Enable(false);
+        }
     }
     ODPathPropertiesDialogDef::OnRotateWithBoat(event);
+}
+
+void EBLProp::OnFixedEndPosition(wxCommandEvent& event)
+{
+    if(m_checkBoxEBLFixedEndPosition->IsChecked()) {
+        m_radioBoxMaintainWith->Enable(false);
+        m_textCtrlEBLAngle->Enable(false);
+    } else {
+        m_radioBoxMaintainWith->Enable(true);
+        m_textCtrlEBLAngle->Enable(true);
+    }
+    ODPathPropertiesDialogDef::OnFixedEndPosition(event);
 }
 
 void EBLProp::OnSetFocus( wxFocusEvent& event )
