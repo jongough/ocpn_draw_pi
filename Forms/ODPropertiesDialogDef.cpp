@@ -562,6 +562,15 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_choiceEBLLineStyle->SetSelection( 0 );
 	fgSizerEBLSettings->Add( m_choiceEBLLineStyle, 0, wxALL, 5 );
 	
+	m_checkBoxRotateWithBoat = new wxCheckBox( m_panelEBL, wxID_ANY, _("Rotate with Boat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizerEBLSettings->Add( m_checkBoxRotateWithBoat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_radioBoxMaintainWithChoices[] = { _("Heading"), _("Course over Ground") };
+	int m_radioBoxMaintainWithNChoices = sizeof( m_radioBoxMaintainWithChoices ) / sizeof( wxString );
+	m_radioBoxMaintainWith = new wxRadioBox( m_panelEBL, wxID_ANY, _("Maintain with"), wxDefaultPosition, wxDefaultSize, m_radioBoxMaintainWithNChoices, m_radioBoxMaintainWithChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxMaintainWith->SetSelection( 0 );
+	fgSizerEBLSettings->Add( m_radioBoxMaintainWith, 0, wxALL, 5 );
+	
 	m_checkBoxEBLFixedEndPosition = new wxCheckBox( m_panelEBL, wxID_ANY, _("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizerEBLSettings->Add( m_checkBoxEBLFixedEndPosition, 0, wxALL, 5 );
 	

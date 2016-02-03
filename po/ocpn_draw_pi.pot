@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 0.4.637\n"
+"Project-Id-Version: ocpn_draw_pi 0.4.638\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-31 11:17+1100\n"
+"POT-Creation-Date: 2016-01-31 21:01+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,8 +39,8 @@ msgstr ""
 
 #: src/EBL.cpp:104 src/EBL.cpp:171 src/ODPathPropertiesDialogImpl.cpp:293
 #: src/ODPathPropertiesDialogImpl.cpp:300
-#: src/ODPathPropertiesDialogImpl.cpp:411 src/ocpn_draw_pi.cpp:2187
-#: src/ocpn_draw_pi.cpp:3023
+#: src/ODPathPropertiesDialogImpl.cpp:411 src/ocpn_draw_pi.cpp:2184
+#: src/ocpn_draw_pi.cpp:3020
 msgid "Boat"
 msgstr ""
 
@@ -48,7 +48,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: src/EBL.cpp:112 src/ocpn_draw_pi.cpp:3029
+#: src/EBL.cpp:112 src/ocpn_draw_pi.cpp:3026
 msgid "End"
 msgstr ""
 
@@ -1089,7 +1089,7 @@ msgid "Inclusion Boundary Size"
 msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:183 src/ODToolbarImpl.cpp:384
-#: src/ocpn_draw_pi.cpp:2523
+#: src/ocpn_draw_pi.cpp:2520
 msgid "Boundary"
 msgstr ""
 
@@ -1156,7 +1156,7 @@ msgstr ""
 msgid "Show EBL Direction Arrow"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:584 src/ocpn_draw_pi.cpp:3019
+#: src/ODPropertiesDialogDef.cpp:584 src/ocpn_draw_pi.cpp:3016
 msgid "EBL"
 msgstr ""
 
@@ -1264,61 +1264,61 @@ msgstr ""
 msgid "ocpn_draw_pi data location"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:397 src/ocpn_draw_pi.cpp:398 src/ocpn_draw_pi.cpp:402
-#: src/ocpn_draw_pi.cpp:403
+#: src/ocpn_draw_pi.cpp:394 src/ocpn_draw_pi.cpp:395 src/ocpn_draw_pi.cpp:399
+#: src/ocpn_draw_pi.cpp:400
 msgid "OCPN Draw Manager"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:399 src/ocpn_draw_pi.cpp:404
+#: src/ocpn_draw_pi.cpp:396 src/ocpn_draw_pi.cpp:401
 msgid "OCPN Draw Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:400 src/ocpn_draw_pi.cpp:405
+#: src/ocpn_draw_pi.cpp:397 src/ocpn_draw_pi.cpp:402
 msgid "OCPN Draw"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:651
+#: src/ocpn_draw_pi.cpp:648
 msgid "General drawing for OpenCPN"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:655
+#: src/ocpn_draw_pi.cpp:652
 msgid ""
 "General Drawing for OpenCPN\n"
 "\n"
 "Thanks to the community for their helpful suggestions."
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2526
+#: src/ocpn_draw_pi.cpp:2523
 msgid "Layer Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2745 src/ocpn_draw_pi.cpp:2810
+#: src/ocpn_draw_pi.cpp:2742 src/ocpn_draw_pi.cpp:2807
 msgid "Use nearby Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2746 src/ocpn_draw_pi.cpp:2811
+#: src/ocpn_draw_pi.cpp:2743 src/ocpn_draw_pi.cpp:2808
 msgid "OCPN Draw Point Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2888
+#: src/ocpn_draw_pi.cpp:2885
 msgid "Use nearby OD Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2889 src/ocpn_draw_pi.cpp:2942
+#: src/ocpn_draw_pi.cpp:2886 src/ocpn_draw_pi.cpp:2939
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2936
+#: src/ocpn_draw_pi.cpp:2933
 msgid "For this leg the Great Circle boundary is "
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2937
+#: src/ocpn_draw_pi.cpp:2934
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:2938
+#: src/ocpn_draw_pi.cpp:2935
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 

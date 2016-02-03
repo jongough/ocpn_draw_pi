@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-30 08:56+1100\n"
-"PO-Revision-Date: 2015-06-06 12:28-0400\n"
+"POT-Creation-Date: 2016-01-31 21:01+1100\n"
+"PO-Revision-Date: 2016-01-31 05:00-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -16,30 +16,30 @@ msgstr ""
 "X-Crowdin-Language: fi\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 #
-#, fuzzy
 msgid " &Properties..."
-msgstr "&Ominaisuudet..."
+msgstr " &Ominaisuudet..."
 #
 msgid " To: "
-msgstr ""
+msgstr " Asti: "
 #
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
 msgstr ""
+" lyhyempi kuin loksodromi.\n"
+"\n"
 #
 msgid " to "
-msgstr ""
+msgstr " kohti "
 #
 msgid "&Activate"
 msgstr "&Aktivoi"
 #
 msgid "&Apply"
-msgstr ""
+msgstr "&Käytä"
 #
-#, fuzzy
 msgid "&Cancel"
-msgstr "Peruuta"
+msgstr "&Peruuta"
 #
 msgid "&Center View"
 msgstr "&Keskitä näkymä"
@@ -60,7 +60,7 @@ msgid "&New"
 msgstr "&Uusi"
 #
 msgid "&OK"
-msgstr ""
+msgstr "&OK"
 #
 msgid "&Properties"
 msgstr "&Ominaisuudet"
@@ -69,242 +69,218 @@ msgid "&Properties..."
 msgstr "&Ominaisuudet..."
 #
 msgid "&Remove Selected"
-msgstr ""
+msgstr "&Poista valitut"
 #
 msgid "(Unnamed )"
 msgstr "(Nimetön)"
 #
 msgid "(Unnamed Layer)"
-msgstr ""
+msgstr "(Nimetön kerros)"
 #
-#, fuzzy
 msgid "(Unnamed) "
-msgstr "(Nimetön)"
+msgstr "(Nimetön) "
 #
 msgid "(unnamed)"
-msgstr ""
+msgstr "(Nimeämätön)"
 #
 msgid "0"
-msgstr ""
+msgstr "0"
 #
 msgid "0.0"
-msgstr ""
+msgstr "0.0"
 #
 msgid "0.5"
-msgstr ""
+msgstr "0.5"
 #
 msgid "1"
-msgstr ""
+msgstr "1"
 #
-#, fuzzy
 msgid "1 Pixel"
-msgstr "10 kuvapistettä"
+msgstr "1 pikseli"
 #
 msgid "1 pixel"
-msgstr ""
+msgstr "1 pikseli"
 #
 msgid "10"
-msgstr ""
+msgstr "10"
 #
-#, fuzzy
 msgid "10 Pixels"
-msgstr "10 kuvapistettä"
+msgstr "10 pikseliä"
 #
 msgid "10 pixels"
 msgstr "10 kuvapistettä"
 #
 msgid "2"
-msgstr ""
+msgstr "2"
 #
-#, fuzzy
 msgid "2 Pixels"
-msgstr "5 kuvapistettä"
+msgstr "2 pikseliä"
 #
 msgid "2 pixels"
-msgstr ""
+msgstr "2 pikseliä"
 #
 msgid "3"
-msgstr ""
+msgstr "3"
 #
-#, fuzzy
 msgid "3 Pixels"
-msgstr "5 kuvapistettä"
+msgstr "3 pikseliä"
 #
 msgid "3 pixels"
-msgstr ""
+msgstr "3 pikseliä"
 #
 msgid "4"
-msgstr ""
+msgstr "4"
 #
-#, fuzzy
 msgid "4 Pixels"
-msgstr "5 kuvapistettä"
+msgstr "4 pikseliä"
 #
 msgid "4 pixels"
-msgstr ""
+msgstr "4 pikseliä"
 #
 msgid "5"
-msgstr ""
+msgstr "5"
 #
-#, fuzzy
 msgid "5 Pixels"
-msgstr "5 kuvapistettä"
+msgstr "5 pikseliä"
 #
 msgid "5 pixels"
 msgstr "5 kuvapistettä"
 #
 msgid "6"
-msgstr ""
+msgstr "6"
 #
-#, fuzzy
 msgid "6 Pixels"
-msgstr "6 kuvapistettä"
+msgstr "6 pikseliä"
 #
 msgid "6 pixels"
 msgstr "6 kuvapistettä"
 #
 msgid "7"
-msgstr ""
+msgstr "7"
 #
-#, fuzzy
 msgid "7 Pixels"
-msgstr "7 kuvapistettä"
+msgstr "7 pikseliä"
 #
 msgid "7 pixels"
 msgstr "7 kuvapistettä"
 #
 msgid "8"
-msgstr ""
+msgstr "8"
 #
-#, fuzzy
 msgid "8 Pixels"
-msgstr "8 kuvapistettä"
+msgstr "8 pikseliä"
 #
 msgid "8 pixels"
 msgstr "8 kuvapistettä"
 #
 msgid "9"
-msgstr ""
+msgstr "9"
 #
-#, fuzzy
 msgid "9 Pixels"
-msgstr "9 kuvapistettä"
+msgstr "9 pikseliä"
 #
 msgid "9 pixels"
 msgstr "9 kuvapistettä"
 #
 msgid "About"
-msgstr ""
+msgstr "Ohjelmatietoja"
 #
 msgid "Activate"
 msgstr "Aktivoi"
 #
 msgid "Active"
-msgstr ""
+msgstr "Aktiivinen"
 #
 msgid ""
 "Active DR Line\n"
 "Colour"
 msgstr ""
+"Aktiivisen DR viivan\n"
+"Väri"
 #
 msgid "Active EBL Line Colour"
-msgstr ""
+msgstr "Aktiivinen EBL rivin väri"
 #
 msgid "Active Fill Colour"
-msgstr ""
+msgstr "Aktiivinen täyttöväri"
 #
 msgid "Active Line Colour"
-msgstr ""
+msgstr "Aktiivisen rivin väri"
 #
 msgid "Always"
-msgstr ""
+msgstr "Aina"
 #
 msgid "Applying changes from "
-msgstr ""
+msgstr "Haetaan muutokset kohdasta "
 #
-#, fuzzy
 msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Oletko varma, että haluat poistaa <ALL> OD pisteet?"
 #
 msgid "Are you sure you want to delete <ALL> paths?"
-msgstr ""
+msgstr "Haluatko varmasti poistaa <ALL> jäljet?"
 #
 msgid "Are you sure you want to delete the selected object(s)"
 msgstr "Oletko varma, että haluat poistaa valitut kohteet"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän rajapisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this Boundary?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän rajan?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this DR Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän DR pisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this DR?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän DR:n?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this EBL Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän EBL pisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this EBL?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän EBL:n?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this OD Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän OD pisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to delete this Text Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän tekstipisteen?"
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr ""
+msgstr "Oletko varma, että haluat poistaa tämä kerroksen ja <ALL> sen sisällön?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this "
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän "
 #
-#, fuzzy
 msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän rajapisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this DR Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän DR pisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this EBL Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän EBL pisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this OD Point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän OD pisteen?"
 #
-#, fuzzy
 msgid "Are you sure you want to remove this point?"
-msgstr "Oletko varma, että haluat poistaa valitut kohteet"
+msgstr "Haluatko varmasti poistaa tämän pisteen?"
 #
 msgid "Arrival Radius"
-msgstr ""
+msgstr "Saapumisympyrän säde"
 #
 msgid "Background Colour"
-msgstr ""
+msgstr "Taustaväri"
 #
 msgid "Background Density"
-msgstr ""
+msgstr "Taustan tiheys"
 #
 msgid "Background Transparency"
-msgstr ""
+msgstr "Taustan läpinäkyvyys"
 #
 msgid "Basic"
-msgstr ""
+msgstr "Perus"
 #
 msgid "Bearing"
 msgstr "Suuntima"
@@ -312,193 +288,162 @@ msgstr "Suuntima"
 msgid "Bearing (M)"
 msgstr "Suuntima(M)"
 #
-#, fuzzy
 msgid "Bearing From-To"
-msgstr "Suuntima"
+msgstr "Välinen suunta"
 #
-#, fuzzy
 msgid "Bearing From-To (M)"
-msgstr "Suuntima(M)"
+msgstr "Välinen suunta (M)"
 #
 msgid "Boat"
-msgstr ""
+msgstr "Vene"
 #
 msgid "Bottom"
-msgstr ""
+msgstr "Alaosa"
 #
 msgid "Bottom Centre"
-msgstr ""
+msgstr "Alaosan keskus"
 #
 msgid "Boundary"
-msgstr ""
+msgstr "Raja"
 #
 msgid "Boundary Point"
-msgstr ""
+msgstr "Raja piste"
 #
-#, fuzzy
 msgid "Boundary Point &Properties"
-msgstr "&Ominaisuudet"
+msgstr "Rajapiste & ominaisuudet"
 #
 msgid ""
 "Boundary Point Inclusion\n"
 "Size"
 msgstr ""
+"Raja pisteen sisällyttäminen\n"
+"Koko"
 #
-#, fuzzy
 msgid "Boundary Point Properties"
-msgstr "&Ominaisuudet"
+msgstr "Rajapisteen ominaisuudet"
 #
-#, fuzzy
 msgid "Boundary Point Properties, Layer: "
-msgstr "&Ominaisuudet"
+msgstr "Raja pisteen ominaisuudet, kerros: "
 #
 msgid "Boundary Point Type"
-msgstr ""
+msgstr "Reunapisteen tyyppi"
 #
-#, fuzzy
 msgid "Boundary Properties"
-msgstr "&Ominaisuudet"
+msgstr "Reunan ominaisuudet"
 #
-#, fuzzy
 msgid "Boundary Properties, Layer: "
-msgstr "&Ominaisuudet"
+msgstr "Reunan ominaisuudet, kerros: "
 #
 msgid "Boundary Type"
-msgstr ""
+msgstr "Reunan tyyppi"
 #
-#, fuzzy
 msgid "Centre"
-msgstr "&Keskitä näkymä"
+msgstr "Keskus"
 #
 msgid "Centre on moving boat"
-msgstr ""
+msgstr "Keskitä liikkuvaan veneeseen"
 #
 msgid "Change all Path Point Icons"
-msgstr ""
+msgstr "Vaihda kaikki polkupiste kuvakkeet"
 #
 msgid "Confirm"
-msgstr ""
+msgstr "Vahvista"
 #
 msgid "Confirm Object Delete"
-msgstr ""
+msgstr "Vahvista kohteen poistaminen"
 #
 msgid "Copy"
 msgstr "Kopioi"
 #
 msgid "Copy Boundary GUID"
-msgstr ""
+msgstr "Kopioi rajan GUID"
 #
 msgid "Copy DR GUID"
-msgstr ""
+msgstr "Kopioi DR GUID"
 #
 msgid "Copy EBL GUID"
-msgstr ""
+msgstr "Kopioi EBL GUID"
 #
 msgid "Copy Point GUID"
-msgstr ""
+msgstr "Kopioi piste GUID:een"
 #
 msgid "Copy lat/long"
 msgstr "Kopioi lat/long"
 #
 msgid "Course over Ground"
-msgstr ""
+msgstr "Suunta pohjan suhteen"
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
 msgid "Course over Ground (M)"
-msgstr "Kurssi (M)"
+msgstr "Kurssi pohjan suhteen (M)"
 #
 msgid "Course over Ground (T)"
-msgstr ""
+msgstr "Kurssi pohjan suhteen (T)"
 #
 msgid "Create Boundary"
-msgstr ""
+msgstr "Luo raja"
 #
 msgid "Create Boundary Point"
-msgstr ""
+msgstr "Luo rajapiste"
 #
 msgid "Create DR"
-msgstr ""
+msgstr "Luo DR"
 #
 msgid "Create EBL"
-msgstr ""
+msgstr "Luo EBL"
 #
 msgid "Create Text Point"
-msgstr ""
+msgstr "Luo tekstipiste"
 #
 msgid "DR"
-msgstr ""
+msgstr "DR"
 #
 msgid "DR Path Length"
-msgstr ""
+msgstr "DR jäljen pituus"
 #
 msgid "DR Persistence"
-msgstr ""
+msgstr "DR pysyvyys"
 #
-#, fuzzy
 msgid "DR Point"
-msgstr "OCPN pisteet"
+msgstr "DR kohta"
 #
-#, fuzzy
 msgid "DR Point &Properties"
-msgstr "&Ominaisuudet"
+msgstr "DR piste & ominaisuudet"
 #
 msgid "DR Point Icon"
-msgstr ""
+msgstr "DR pisteen kuvake"
 #
 msgid "DR Point Interval"
-msgstr ""
+msgstr "DR piste vaihtelu väli"
 #
-#, fuzzy
 msgid "DR Point Properties"
-msgstr "&Ominaisuudet"
+msgstr "DR pisteen ominaisuudet"
 #
-#, fuzzy
 msgid "DR Point Properties, Layer: "
-msgstr "&Ominaisuudet"
+msgstr "DR kohta ominaisuudet, kerros: "
 #
-#, fuzzy
 msgid "DR Properties"
-msgstr "&Ominaisuudet"
+msgstr "DR ominaisuudet"
 #
-#, fuzzy
 msgid "DR Properties, Layer: "
-msgstr "&Ominaisuudet"
+msgstr "DR-ominaisuudet kerros: "
 #
 msgid "Date:"
-msgstr ""
+msgstr "Päivämäärä:"
 #
 msgid "Days"
-msgstr ""
+msgstr "Päivät"
 #
 msgid "Deactivate"
 msgstr "Deaktivoi"
 #
 msgid "Dead Reckoning"
-msgstr ""
+msgstr "Dead Reckoning"
 #
 msgid "Delete"
 msgstr "Poista"
 #
 msgid "Delete All"
 msgstr "Poista kaikki"
-#
-#
-#
-#
-#
-#
-#
-#
 #
 msgid "Delete..."
 msgstr "Poista..."
@@ -507,34 +452,31 @@ msgid "Desc"
 msgstr "Tiedot"
 #
 msgid "Description"
-msgstr ""
+msgstr "Kuvaus"
 #
 msgid "Display Toolbar"
-msgstr ""
+msgstr "Näytön työkalurivi"
 #
 msgid "Display text"
-msgstr ""
+msgstr "Näyttöteksti"
 #
 msgid "Distance"
 msgstr "Etäisyys"
 #
 msgid "Distance Between Range Rings"
-msgstr ""
+msgstr "Etäisyysrenkaiden väli"
 #
-#, fuzzy
 msgid "Distance From Boat"
-msgstr "Etäisyys omasta veneestä"
+msgstr "Etäisyys veneestä"
 #
-#, fuzzy
 msgid "Distance Unit"
-msgstr "Etäisyys"
+msgstr "Etäisyys yksikkö"
 #
-#, fuzzy
 msgid "Distance Units"
-msgstr "Etäisyys"
+msgstr "Välimatkan yksiköt"
 #
 msgid "Distance between Range Rings"
-msgstr ""
+msgstr "Etäisyysrenkaiden väli"
 #
 msgid "Distance from Ownship"
 msgstr "Etäisyys omasta veneestä"
@@ -543,68 +485,66 @@ msgid ""
 "Do you also want to make the shared OD Points being part of this boundary "
 "invisible?"
 msgstr ""
+"Haluatko myös tehdä näkymättömiksi jaetut OD pisteet, jotka ovat tulleet "
+"osaksi tätä rajaa?"
 #
 msgid "Dot"
-msgstr ""
+msgstr "Piste"
 #
 msgid "Dot Dash"
-msgstr ""
+msgstr "Piste viiva"
 #
 msgid "Draw Toolbar"
-msgstr ""
+msgstr "Piirtotyökalurivi"
 #
 msgid "EBL"
-msgstr ""
+msgstr "EBL"
 #
 msgid "EBL Fixed End Position"
-msgstr ""
+msgstr "EBL kiinteä lopetuskohta"
 #
 msgid "EBL Persistence"
-msgstr ""
+msgstr "EBL pysyvyys"
 #
-#, fuzzy
 msgid "EBL Point"
-msgstr "OCPN pisteet"
+msgstr "EBL piste"
 #
-#, fuzzy
 msgid "EBL Point &Properties"
-msgstr "&Ominaisuudet"
+msgstr "EBL piste & ominaisuudet"
 #
-#, fuzzy
 msgid "EBL Point Properties"
-msgstr "&Ominaisuudet"
+msgstr "EBL pisteen ominaisuudet"
 #
-#, fuzzy
 msgid "EBL Point Properties, Layer: "
-msgstr "&Ominaisuudet"
+msgstr "EBL kohta ominaisuudet, kerros: "
 #
-#, fuzzy
 msgid "EBL Properties"
-msgstr "&Ominaisuudet"
+msgstr "EBL ominaisuudet"
 #
-#, fuzzy
 msgid "EBL Properties, Layer: "
-msgstr "&Ominaisuudet"
+msgstr "EBL ominaisuudet, kerros: "
 #
 msgid ""
 "Edge Panning Sensitivity\n"
 "(percentage screen width) Default 5"
 msgstr ""
+"Reunanvieritysherkkyys\n"
+"(prosenttia näytön leveydestä) Vakio 5"
 #
 msgid "Electronic Bearing Line"
-msgstr ""
+msgstr "Elektroninen suuntaviiva"
 #
 msgid "End"
-msgstr ""
+msgstr "Loppu"
 #
 msgid "End Point Icon"
-msgstr ""
+msgstr "Päätepisteen kuvake"
 #
 msgid "Example"
-msgstr ""
+msgstr "Esimerkki"
 #
 msgid "Exclusion"
-msgstr ""
+msgstr "Poisjättäminen"
 #
 msgid "Export All Visible..."
 msgstr "Vienti kaikki näkyvät..."
@@ -613,51 +553,52 @@ msgid "Export GPX file"
 msgstr "Vie GPX-tiedosto"
 #
 msgid "Extended"
-msgstr ""
+msgstr "Laajennettu"
 #
 msgid "Fill Colour"
-msgstr ""
+msgstr "Täyte väri"
 #
 msgid "Fill Density"
-msgstr ""
+msgstr "Täyttö tiheys"
 #
 msgid "Fonts"
-msgstr ""
+msgstr "Kirjasimet"
 #
 msgid "For this leg the Great Circle boundary is "
-msgstr ""
+msgstr "Tälle reittiosuudelle isoympyräraja on "
 #
 msgid "From Point"
-msgstr ""
+msgstr "Pisteestä"
 #
 msgid "From: "
-msgstr ""
+msgstr "Alku: "
 #
 msgid "GUID"
-msgstr ""
+msgstr "GUID"
 #
 msgid "General"
-msgstr ""
+msgstr "Yleistä"
 #
 msgid ""
 "General Drawing for OpenCPN\n"
 "\n"
 "Thanks to the community for their helpful suggestions."
 msgstr ""
+"Yleispiirtäminen OpenCPN:ssä\n"
+"\n"
+"Kiitokset yhteisölle hyödyllisistä ehdotuksista."
 #
 msgid "General drawing for OpenCPN"
-msgstr ""
+msgstr "Yleispiirtäminen OpenCPN:ssä"
 #
-#, fuzzy
 msgid "Hide Point names"
-msgstr "OCPN pisteen nimi"
+msgstr "Piilota pisteiden nimet"
 #
 msgid "Hide from chart"
-msgstr ""
+msgstr "Piilota kartalta"
 #
-#, fuzzy
 msgid "Hours"
-msgstr "Kurssi"
+msgstr "Tunnit"
 #
 msgid "I&mport GPX..."
 msgstr "&Tuo GPX..."
@@ -672,295 +613,272 @@ msgid ""
 "Inactive DR Line\n"
 "Colour"
 msgstr ""
+"Passiivisen DR viivan\n"
+"Väri"
 #
 msgid "Inactive EBL Line Colour"
-msgstr ""
+msgstr "Passiivinen EBL rivin väri"
 #
 msgid "Inactive Fill Colour"
-msgstr ""
+msgstr "Passiivinen täyttöväri"
 #
 msgid "Inactive Line Colour"
-msgstr ""
+msgstr "Passiivisen rivin väri"
 #
 msgid "Inclusion"
-msgstr ""
+msgstr "Mukaan ottaminen"
 #
 msgid ""
 "Inclusion Boundary\n"
 "Size"
 msgstr ""
+"Reuna mukaanluettuna\n"
+"Koko"
 #
 msgid "Inclusion Boundary Size"
-msgstr ""
+msgstr "Reunan koko mukaanluettuna"
 #
 msgid ""
 "Initial Edge Panning Sensitivity\n"
 "(percentage screen width) Default 3"
 msgstr ""
+"Aloitus reunanvieritysherkkyys\n"
+"(prosenttia näytön leveydestä) Vakio 3"
 #
 msgid "Insert Boundary Point"
-msgstr ""
+msgstr "Aseta rajapiste"
 #
-#, fuzzy
 msgid "Insert DR Point"
-msgstr "OCPN pisteet"
+msgstr "Aseta DR piste"
 #
 msgid "Insert EBL Point"
-msgstr ""
+msgstr "Aseta EBL piste"
 #
 msgid "Interval Type"
-msgstr ""
+msgstr "Vaihteluväli tyyppi"
 #
 msgid "Kilometres"
-msgstr ""
+msgstr "Kilometriä"
 #
 msgid "Latitude"
 msgstr "Leveyspiiri"
 #
-#, fuzzy
 msgid "Layer"
-msgstr "Kerrokset"
+msgstr "Kerros"
 #
-#, fuzzy
 msgid "Layer "
-msgstr "Kerrokset"
+msgstr "Kerros "
 #
 msgid "Layer Boundary"
-msgstr ""
+msgstr "Kerroksen raja"
 #
 msgid "Layer Boundary Point"
-msgstr ""
+msgstr "Rajapiste kerros"
 #
-#, fuzzy
 msgid "Layer DR Point"
-msgstr "OCPN pisteet"
+msgstr "DR piste kerros"
 #
 msgid "Layer EBL Point"
-msgstr ""
+msgstr "EBL piste kerros"
 #
-#, fuzzy
 msgid "Layer Name"
-msgstr "Kerros polku"
+msgstr "Kerroksen nimi"
 #
 msgid "Layer Text Point"
-msgstr ""
+msgstr "Tekstipistekerros"
 #
 msgid "Layers"
 msgstr "Kerrokset"
 #
 msgid "Left"
-msgstr ""
+msgstr "Vasen"
 #
 msgid "Leg: from "
-msgstr ""
+msgstr "Reittiväli: alkaen "
 #
 msgid "Length Type"
-msgstr ""
+msgstr "Pituuden tyyppi"
 #
 msgid "Line Colour"
-msgstr ""
+msgstr "Viivan väri"
 #
 msgid "Line Style"
-msgstr ""
+msgstr "Viivatyyli"
 #
 msgid "Line Width"
-msgstr ""
+msgstr "Viivan leveys"
 #
 msgid "List contents"
 msgstr "Luetteloi sisältö"
 #
 msgid "Loading navobjects from "
-msgstr ""
+msgstr "Ladataan väylämerkit osoitteesta "
 #
 msgid "Long Dash"
-msgstr ""
+msgstr "Pitkä katkoviiva"
 #
 msgid "Longitude"
 msgstr "Pituuspiiri"
 #
 msgid "Major:"
-msgstr ""
+msgstr "Pää:"
 #
 msgid "Match VRM colour to EBL colour"
-msgstr ""
+msgstr "Sovita VRM väri EBL väriin"
 #
 msgid "Minor:"
-msgstr ""
+msgstr "Ala:"
 #
 msgid "Minutes"
-msgstr ""
+msgstr "Minuuttia"
 #
 msgid "Move Boundary"
-msgstr ""
+msgstr "Siirrä rajaa"
 #
 msgid "Move Boundary Point"
-msgstr ""
+msgstr "Siirrä rajapistettä"
 #
-#, fuzzy
 msgid "Move DR Point"
-msgstr "OCPN pisteet"
+msgstr "Siirrä DR pistettä"
 #
 msgid "Move EBL"
-msgstr ""
+msgstr "Siirrä EBL"
 #
-#, fuzzy
 msgid "Move EBL Point"
-msgstr "OCPN pisteet"
+msgstr "Siirrä EBL pistettä"
 #
-#, fuzzy
 msgid "Move OD Point"
-msgstr "OCPN pisteet"
+msgstr "Siirrä OD pistettä"
 #
 msgid "Move Text Point"
-msgstr ""
+msgstr "Siirrä tekstipistettä"
 #
 msgid "Move start point to boat lat/lon"
-msgstr ""
+msgstr "Siirrä alkupiste paikkaan veneen lat/lon"
 #
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 #
 msgid "Name:"
-msgstr ""
+msgstr "Nimi:"
 #
 msgid "Name: "
-msgstr ""
+msgstr "Nimi: "
 #
 msgid "Nautical Miles"
-msgstr ""
+msgstr "Meripeninkulmaa"
 #
 msgid "Nav Object Backups"
-msgstr ""
+msgstr "Väylämerkkien varmuuskopiot"
 #
 msgid "Neither"
-msgstr ""
+msgstr "Ei kumpikaan"
 #
 msgid "Never"
-msgstr ""
+msgstr "Ei koskaan"
 #
 #, c-format
 msgid "New layer %d: %s"
-msgstr ""
+msgstr "Uusi kerros %d: %s"
 #
 msgid "No. of items"
-msgstr ""
+msgstr "Yksiköiden luku"
 #
 msgid "None"
-msgstr ""
+msgstr "Ei yhtään"
 #
 msgid "Number of Point Range Rings"
-msgstr ""
+msgstr "Pisteen etäisyysrenkaiden luku"
 #
 msgid "Number of Range Rings"
-msgstr ""
+msgstr "Etäisyysympyröiden luku"
 #
 msgid "OCPN Draw"
-msgstr ""
+msgstr "OCPN piirros"
 #
 msgid "OCPN Draw Boundary"
-msgstr ""
+msgstr "OCPN piirtämä raja"
 #
 msgid "OCPN Draw Boundary Create"
-msgstr ""
+msgstr "OCPN piirto rajan luonti"
 #
-#, fuzzy
 msgid "OCPN Draw Boundary Delete"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto rajan poisto"
 #
-#, fuzzy
 msgid "OCPN Draw DR Delete"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto DR poisto"
 #
-#, fuzzy
 msgid "OCPN Draw Delete Boundary Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa rajapisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Delete DR Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa DR pisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Delete EBL Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa EBL pisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Delete OD Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa OD pisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Delete Text Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN Draw Poista teksti piste"
 #
-#, fuzzy
 msgid "OCPN Draw EBL Delete"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto EBL poisto"
 #
 msgid "OCPN Draw Manager"
-msgstr ""
+msgstr "OCPN piirronhallinta"
 #
-#, fuzzy
 msgid "OCPN Draw Path &Properties"
-msgstr "&Ominaisuudet"
+msgstr "OCPN piirto polku & ominaisuudet"
 #
-#, fuzzy
 msgid "OCPN Draw Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto piste"
 #
-#, fuzzy
 msgid "OCPN Draw Point Create"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto pisteen luonti"
 #
-#, fuzzy
 msgid "OCPN Draw Point, Layer: "
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto piste, kerros: "
 #
-#, fuzzy
 msgid "OCPN Draw Properties"
-msgstr "&Ominaisuudet"
+msgstr "OCPN piirto-ominaisuudet"
 #
 msgid "OCPN Draw Remove "
-msgstr ""
+msgstr "OCPN Draw:n poisto "
 #
-#, fuzzy
 msgid "OCPN Draw Remove Boundary Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa rajapisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Remove DR Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa DR pisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Remove EBL Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa EBL pisteen"
 #
-#, fuzzy
 msgid "OCPN Draw Remove OD Point"
-msgstr "OCPN pisteen nimi"
+msgstr "OCPN piirto poistaa OD pisteen"
 #
-#, fuzzy
 msgid "OD Point"
-msgstr "OCPN pisteet"
+msgstr "OD piste"
 #
-#, fuzzy
 msgid "OD Point Name"
-msgstr "OCPN pisteen nimi"
+msgstr "OD pisteen nimi"
 #
-#, fuzzy
 msgid "OD Point Properties"
-msgstr "&Ominaisuudet"
+msgstr "OD pisteen ominaisuudet"
 #
-#, fuzzy
 msgid "OD Points"
-msgstr "OCPN pisteet"
+msgstr "OD pisteet"
 #
 msgid "On Rollover Only"
-msgstr ""
+msgstr "Vain tietoruudussa"
 #
 msgid "OpenCPN Alert"
-msgstr ""
+msgstr "OpenCPN-hälytys"
 #
 msgid "Other:"
-msgstr ""
+msgstr "Muu:"
 #
 msgid "Overwrite existing file?"
 msgstr "Tiedoston päällekirjoitus?"
@@ -972,11 +890,10 @@ msgid "Paste lat/long"
 msgstr "Liitä lat/long"
 #
 msgid "Patch:"
-msgstr ""
+msgstr "Korjaus:"
 #
-#, fuzzy
 msgid "Path"
-msgstr "Polut"
+msgstr "Polku"
 #
 msgid "Path & Point Manager"
 msgstr "Polku & kohta hallinta"
@@ -985,26 +902,25 @@ msgid "Path Name"
 msgstr "Polun nimi"
 #
 msgid "Path Persistence"
-msgstr ""
+msgstr "Polun pysyvyys"
 #
-#, fuzzy
 msgid "Path Properties"
-msgstr "&Ominaisuudet"
+msgstr "Polun ominaisuudet"
 #
 msgid "Path Properties, Layer: "
-msgstr ""
+msgstr "Polun ominaisuuksien, kerros: "
 #
 msgid "Paths"
 msgstr "Polut"
 #
 msgid "Persistent"
-msgstr ""
+msgstr "Pysyvä"
 #
 msgid "Persistent over Crash"
-msgstr ""
+msgstr "Jatkuu törmäyksen yli"
 #
 msgid "Pick a new start point"
-msgstr ""
+msgstr "Valitse uusi aloituspiste"
 #
 msgid ""
 "Please report problems using FlySpray at:\n"
@@ -1020,127 +936,136 @@ msgid ""
 "Raise an issue in GIT at:\n"
 "https://github.com/jongough/ocpn_draw_pi/issues\n"
 msgstr ""
+"Ilmoitathan ongelmista käyttämällä FlySpray:tä osoittessa:\n"
+"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+" OpenCPN foorumissa:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Mainitse aiheesta GIT:ssä\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
 #
 msgid "Point Inclusion Size"
-msgstr ""
+msgstr "Pisteen sisällyttämis koko"
 #
 msgid "Point Type"
-msgstr ""
+msgstr "Pistetyyppi"
 #
-#, fuzzy
 msgid "Points"
-msgstr "OCPN pisteet"
+msgstr "Pisteet"
 #
 msgid "Properties"
-msgstr ""
+msgstr "Ominaisuudet"
 #
 msgid "Properties..."
 msgstr "Ominaisuudet..."
 #
 msgid "Question"
-msgstr ""
+msgstr "Kysymys"
 #
 msgid "Range Ring Colours"
-msgstr ""
+msgstr "Etäisyysrenkaan värit"
 #
 msgid "Range Ring Line Style"
-msgstr ""
+msgstr "Etäisyysrenkaan tyyli"
 #
 msgid "Range Ring Line Width"
-msgstr ""
+msgstr "Etäisyysrenkaan viivanleveys"
 #
 msgid "Remove Point from Path"
-msgstr ""
+msgstr "Poista piste jäljestä"
 #
 msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr ""
+msgstr "Tämän pisteen poisto mitätöi rajan, tämä ei ole sallittua."
 #
 msgid "Right"
-msgstr ""
+msgstr "Oikea"
 #
 msgid "Short Dash"
-msgstr ""
+msgstr "Lyhyt katkoviiva"
 #
 msgid "Show"
 msgstr "Näytä"
 #
 msgid "Show DR Direction Arrow"
-msgstr ""
+msgstr "Näytä DR suuntanuoli"
 #
 msgid "Show Display Text"
-msgstr ""
+msgstr "Näytä näyttöteksti"
 #
 msgid "Show EBL Direction Arrow"
-msgstr ""
+msgstr "Näytä EBL suuntanuoli"
 #
 msgid "Show Magnetic Bearings"
-msgstr ""
+msgstr "Näytä magneettisuunnat"
 #
-#, fuzzy
 msgid "Show Name"
-msgstr "Näytä WPT nimet"
+msgstr "Näytä nimi"
 #
 msgid "Show Path Direction Arrow"
-msgstr ""
+msgstr "Näytä jäljen suuntanuoli"
 #
 msgid "Show Point Range Rings"
-msgstr ""
+msgstr "Näytä pisteen etäisyysrenkaat"
 #
-#, fuzzy
 msgid "Show Point names"
-msgstr "Näytä WPT nimet"
+msgstr "Näytä pisteiden nimet"
 #
 msgid "Show Range Rings"
-msgstr ""
+msgstr "Näytä etäisyys renkaat"
 #
-#, fuzzy
 msgid "Show VRM"
-msgstr "Näytä"
+msgstr "Näytä VRM"
 #
-#, fuzzy
 msgid "Show name"
-msgstr "Näytä WPT nimet"
+msgstr "Näytä nimi"
 #
 msgid "Show on chart"
 msgstr "Näytä kartalla"
 #
 msgid "Solid"
-msgstr ""
+msgstr "Kiinteä"
 #
 msgid "Speed over Ground"
-msgstr ""
+msgstr "Nopeus pohjan suhteen"
 #
 msgid "Start"
-msgstr ""
+msgstr "Alku"
 #
 msgid "Start Point Icon"
-msgstr ""
+msgstr "Alkupisteen kuvake"
 #
 msgid "Temporary layer"
 msgstr "Väliaikainen kerros"
 #
 msgid "Text Colour"
-msgstr ""
+msgstr "Tekstin väri"
 #
 msgid "Text Font"
-msgstr ""
+msgstr "Tekstin fontti"
 #
 msgid "Text Point"
-msgstr ""
+msgstr "Tekstin kohta"
 #
 msgid "Text Point Icon"
-msgstr ""
+msgstr "Tekstipistekuvake"
 #
 msgid "Text position relative to point"
-msgstr ""
+msgstr "Teksti suhteessa pisteeseen"
 #
 msgid "Text to Display with Point"
-msgstr ""
+msgstr "Pisteen kanssa näytettävä teksti"
 #
 msgid ""
 "The OD Point you want to delete is used in a path, do you really want to "
 "delete it?"
 msgstr ""
+"OD pistettä, jonka haluat poistaa on käytetty polussa, Haluatko varmasti "
+"poistaa sen?"
 #
 msgid ""
 "There are some OD points used in paths or anchor alarms.\n"
@@ -1148,163 +1073,52 @@ msgid ""
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
 msgstr ""
+"Joitakin OD pisteitä on käytetty poluissa tai ankkurihälytyksinä.\n"
+" Haluatko poistaa myös nämä merkinnät? \n"
+" Tämä muuttaa polut ja poista ankkuri hälytykset.\n"
+" Jos vastaat Ei pitää OD pisteet polkujen tai hälytysten käytössä."
 #
 msgid "Time"
-msgstr ""
+msgstr "Aika"
 #
 msgid "Time Units"
-msgstr ""
+msgstr "Ajan yksiköt"
 #
 msgid "To Point"
-msgstr ""
+msgstr "Pisteeseen"
 #
 msgid "Top"
-msgstr ""
+msgstr "Yläosa"
 #
 msgid "Top Centre"
-msgstr ""
+msgstr "Ylhäällä-keskellä"
 #
 msgid "Total Length"
-msgstr ""
+msgstr "Kokonaispituus"
 #
 msgid "Total Length: "
-msgstr ""
+msgstr "Kokonaispituus: "
 #
 msgid "Unlist contents"
-msgstr ""
+msgstr "Poista sisältö luettelosta"
 #
 msgid "Update initial conditions"
-msgstr ""
+msgstr "Päivitä alkuehdot"
 #
 msgid "Use nearby OD Point?"
-msgstr ""
+msgstr "Käytäkö läheistä OD pistettä?"
 #
 msgid "Use nearby Point?"
-msgstr ""
+msgstr "Käytä läheistä pistettä?"
 #
 msgid "Version:"
-msgstr ""
+msgstr "Versio:"
 #
 msgid "Whilst Drawing"
-msgstr ""
+msgstr "Piirron aikana"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
-msgstr ""
+msgstr "Haluatko lisätä Isoympyrä rajojen pisteet tähän osuuteen?"
 #
 msgid "ocpn_draw_pi data location"
-msgstr ""
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid " Delete"
-#~ msgstr "Poista"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "&Go To"
-#~ msgstr "&Mene tänne"
-#
-#
-#
-#
-#
-#
-#
-#, fuzzy
-#~ msgid ", Layer: "
-#~ msgstr "Kerrokset"
-#
-#
-#, fuzzy
-#~ msgid "Are you sure you want to remove this Text Point?"
-#~ msgstr "Oletko varma, että haluat poistaa valitut kohteet"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Leg"
-#~ msgstr "Reittiväli"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Marks"
-#~ msgstr "Merkit"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Next tide event"
-#~ msgstr "Seuraava vuorovesi tapahtuma"
-#
-#
-#, fuzzy
-#~ msgid "OCPN Draw Remove Text Point"
-#~ msgstr "OCPN pisteen nimi"
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "OK"
-#~ msgstr "OK"
+msgstr "ocpn_draw_pi tietojen sijainti"

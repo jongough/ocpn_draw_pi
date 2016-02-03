@@ -159,6 +159,8 @@ bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
+bool        g_bEBLRotateWithBoat;
+int         g_iEBLMaintainWith;
 wxString    g_sDRPointIconName;
 wxColour    g_colourDRLineColour;
 wxColour    g_colourInActiveDRLineColour;
@@ -696,13 +698,13 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
 void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 {
-    double incLat, incLon;
+    bool    l_bBoatChange = false;
     
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
-    incLat = g_pfFix.Lat - pfix.Lat;
-    incLon = g_pfFix.Lon - pfix.Lon;
+    if(g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !isnan(pfix.Cog)) || (g_pfFix.Hdt != pfix.Hdt && !isnan(pfix.Hdt)))
+        l_bBoatChange = true;
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
@@ -718,16 +720,14 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
         return;
     }
     
-    if(incLat || incLon) {
+    if(l_bBoatChange) {
         wxEBLListNode *node = g_pEBLList->GetFirst();
         for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
             EBL *ebl = (EBL *)node->GetData();
             if(ebl->m_bCentreOnBoat)  {
-                if(!ebl->m_bFixedEndPosition)
-                    ebl->MoveEndPoint( incLat, incLon );
                 bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
                 ebl->m_bSaveUpdates = false;
-                ebl->CentreOnBoat();
+                ebl->CentreOnBoat(true);
                 ebl->m_bSaveUpdates = l_bSaveUpdatesState;
             }
             node = node->GetNext();
@@ -939,6 +939,8 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
+        pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
+        pConf->Write( wxS( "DefaultEBLMaintainWith" ), g_iEBLMaintainWith );
         pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
         pConf->Write( wxS( "DefaultShowDRPointRangeRings"), g_bDRPointShowRangeRings );
         pConf->Write( wxS( "DefaultDRPointRangeRingsNumber" ), g_iDRPointRangeRingsNumber );
@@ -1074,6 +1076,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
+        pConf->Read( wxS( "DefaultEBLRotateWithBoat" ), &g_bEBLRotateWithBoat, false );
+        pConf->Read( wxS( "DefaultEBLMaintainWith" ), &g_iEBLMaintainWith, ID_EBL_MAINTAIN_WITH_HEADING );
         pConf->Read( wxS( "DefaultDRPointIcon" ), &g_sDRPointIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultShowDRPointRangeRings"), &g_bDRPointShowRangeRings, false );
         pConf->Read( wxS( "DefaultDRPointRangeRingsNumber" ), &g_iDRPointRangeRingsNumber, 0 );
@@ -1872,6 +1876,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 if( m_pFoundODPoint ) {
                     //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
                     m_pFoundODPoint->m_bIsBeingEdited = false;
+                    if(m_pSelectedEBL)
+                        m_pSelectedEBL->MoveEndPoint();
                 }
                 g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
                 g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
@@ -1976,7 +1982,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 } else if ( m_bODPointEditing ) {
-                    
                     m_pFoundODPoint->m_lat = m_cursor_lat;
                     m_pFoundODPoint->m_lon = m_cursor_lon;
                     if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("EBL")) {
@@ -3030,6 +3035,12 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     pMousePoint->m_bIsolatedMark = FALSE;
     m_pMouseEBL->AddPoint( pMousePoint );
     m_pMouseEBL->m_bCentreOnBoat = true;
+    double l_dAngle;
+    DistanceBearingMercator_Plugin(rlat, rlon, m_dStartLat, m_dStartLon, &l_dAngle, &m_pMouseEBL->m_dLength);
+    if(!isnan(g_pfFix.Hdt))
+        m_pMouseEBL->m_dEBLAngle = l_dAngle - g_pfFix.Hdt;
+    else
+        m_pMouseEBL->m_dEBLAngle = l_dAngle;
 
     if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart

@@ -549,7 +549,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_EBL_MENU_CENTRE_ON_BOAT:
-            m_pEBL->CentreOnBoat();
+            m_pEBL->m_bSaveUpdates = true;
+            m_pEBL->CentreOnBoat(false);
             break;
         case ID_EBL_MENU_CENTRE_ON_BOAT_LATLON:
             m_pEBL->CentreOnLatLon( g_pfFix.Lat, g_pfFix.Lon );
@@ -636,6 +637,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_ODPOINT_MENU_MOVE:
             m_pFoundODPoint->m_bIsBeingEdited = TRUE;
             g_ocpn_draw_pi->m_bODPointEditing = TRUE;
+            if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
+                if(m_pFoundODPoint->m_ODPointName == _("Start"))
+                    g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
+            }
             break;
         case ID_ODPOINT_MENU_COPY:
             break;
