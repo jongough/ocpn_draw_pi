@@ -61,11 +61,11 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_checkBoxRotateWithBoat->Show();
     m_checkBoxRotateWithBoat->Enable(true);
     m_radioBoxMaintainWith->Show();
-    m_radioBoxMaintainWith->Enable(false);
+    m_radioBoxMaintainWith->Enable(true);
     m_staticTextEBLAngle->Show();
     m_staticTextEBLAngle->Enable(true);
     m_textCtrlEBLAngle->Show();
-    m_textCtrlEBLAngle->Enable(false);
+    m_textCtrlEBLAngle->Enable(true);
     
 #if wxCHECK_VERSION(3,0,0) 
     wxFloatingPointValidator<double> dODEBLAngle(2, &m_dODEBLAngleValidator, wxNUM_VAL_DEFAULT);
@@ -119,13 +119,9 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
 #endif
     
     if(pInEBL->m_bRotateWithBoat) {
-        m_radioBoxMaintainWith->Enable(true);
         m_checkBoxEBLFixedEndPosition->Enable(false);
-        m_textCtrlEBLAngle->Enable(true);
     } else {
-        m_radioBoxMaintainWith->Enable(false);
         m_checkBoxEBLFixedEndPosition->Enable(true);
-        m_textCtrlEBLAngle->Enable(false);
     }
     
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
@@ -135,26 +131,13 @@ bool EBLProp::UpdateProperties( void )
 {
     wxString s;
     
-    m_checkBoxRotateWithBoat->SetValue( m_pEBL->m_bRotateWithBoat );
-    if(m_pEBL->m_bCentreOnBoat)
-        m_checkBoxRotateWithBoat->Enable(true);
-    else
-        m_checkBoxRotateWithBoat->Enable(false);
+//    m_checkBoxRotateWithBoat->SetValue( m_pEBL->m_bRotateWithBoat );
+//    if(m_pEBL->m_bCentreOnBoat)
+//        m_checkBoxRotateWithBoat->Enable(true);
+//    else
+//        m_checkBoxRotateWithBoat->Enable(false);
 
     if(!m_bLockEBLAngle){
-#if wxCHECK_VERSION(3,0,0) 
-        if(m_pEBL->m_dEBLAngle > 180)
-            m_dODEBLAngleValidator = m_pEBL->m_dEBLAngle - 360;
-        else
-            m_dODEBLAngleValidator = m_pEBL->m_dEBLAngle;
-#else
-        if(m_pEBL->m_dEBLAngle > 180)
-            s.Printf( _T("%.2f"), m_pEBL->m_dEBLAngle - 360 );
-        else
-            s.Printf( _T("%.2f"), m_pEBL->m_dEBLAngle );
-        
-        m_textCtrlEBLAngle->SetValue(s);
-#endif
         if(m_pEBL->m_dEBLAngle > 180)
             s.Printf( _T("%.2f"), m_pEBL->m_dEBLAngle - 360 );
         else
@@ -163,7 +146,7 @@ bool EBLProp::UpdateProperties( void )
         m_textCtrlEBLAngle->SetValue(s);
     }
     
-    if(m_pEBL->m_bRotateWithBoat) {
+/*    if(m_pEBL->m_bRotateWithBoat) {
         m_radioBoxMaintainWith->Enable(true);
         m_checkBoxEBLFixedEndPosition->Enable(false);
         m_textCtrlEBLAngle->Enable(true);
@@ -173,7 +156,7 @@ bool EBLProp::UpdateProperties( void )
         m_textCtrlEBLAngle->Enable(false);
     }
     RequestRefresh(this);
-    
+*/    
     return ODPathPropertiesDialogImpl::UpdateProperties();
 }
 
@@ -217,15 +200,8 @@ void EBLProp::OnRotateWithBoat(wxCommandEvent& event)
 {
     if(m_checkBoxRotateWithBoat->IsChecked()) {
         m_checkBoxEBLFixedEndPosition->Enable(false);
-        m_pEBL->m_bFixedEndPosition = false;
-        m_radioBoxMaintainWith->Enable(true);
-        m_textCtrlEBLAngle->Enable(true);
     } else {
         m_checkBoxEBLFixedEndPosition->Enable(true);
-        if(m_checkBoxEBLFixedEndPosition->IsChecked())
-            m_pEBL->m_bFixedEndPosition = true;
-        m_radioBoxMaintainWith->Enable(false);
-        m_textCtrlEBLAngle->Enable(false);
     }
     ODPathPropertiesDialogDef::OnRotateWithBoat(event);
 }
