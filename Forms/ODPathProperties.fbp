@@ -914,7 +914,7 @@
                                         <event name="OnEraseBackground"></event>
                                         <event name="OnKeyDown"></event>
                                         <event name="OnKeyUp"></event>
-                                        <event name="OnKillFocus"></event>
+                                        <event name="OnKillFocus">OnKillFocus</event>
                                         <event name="OnLeaveWindow"></event>
                                         <event name="OnLeftDClick"></event>
                                         <event name="OnLeftDown"></event>
@@ -929,7 +929,7 @@
                                         <event name="OnRightDClick"></event>
                                         <event name="OnRightDown"></event>
                                         <event name="OnRightUp"></event>
-                                        <event name="OnSetFocus"></event>
+                                        <event name="OnSetFocus">OnSetFocus</event>
                                         <event name="OnSize"></event>
                                         <event name="OnText"></event>
                                         <event name="OnTextEnter"></event>

@@ -157,8 +157,10 @@ bool EBLProp::UpdateProperties( void )
         m_textCtrlEBLAngle->SetValue(s);
     }
     
-    s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pEBL->m_dLength) );
-    m_textCtrlTotalLength->SetValue(s);
+    if(!m_bLockEBLLength) {
+        s.Printf( _T("%.2f"), toUsrDistance_Plugin(m_pEBL->m_dLength) );
+        m_textCtrlTotalLength->SetValue(s);
+    }
     
     return  true;
 }
@@ -233,7 +235,10 @@ void EBLProp::OnFixedEndPosition(wxCommandEvent& event)
 
 void EBLProp::OnSetFocus( wxFocusEvent& event )
 {
-    m_bLockEBLAngle = true;
+    if(event.GetId() == m_textCtrlTotalLength->GetId())
+        m_bLockEBLLength = true;
+    if(event.GetId() == m_textCtrlEBLAngle->GetId())
+        m_bLockEBLAngle = true;
     ODPathPropertiesDialogDef::OnSetFocus(event);
 }
 
@@ -244,18 +249,21 @@ void EBLProp::OnKillFocus( wxFocusEvent& event )
 
 void EBLProp::OnOK( wxCommandEvent& event )
 {
+    m_bLockEBLLength = false;
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnOK(event);
 }
 
 void EBLProp::OnClose( wxCloseEvent& event )
 {
+    m_bLockEBLLength = false;
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnClose(event);
 }
 
 void EBLProp::OnCancel( wxCommandEvent& event )
 {
+    m_bLockEBLLength = false;
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnCancel(event);
 }

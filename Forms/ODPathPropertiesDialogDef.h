@@ -79,12 +79,12 @@ class ODPathPropertiesDialogDef : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
+		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineWidth( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
-		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
