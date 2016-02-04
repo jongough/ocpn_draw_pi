@@ -61,6 +61,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
         double  m_dODEBLAngleValidator;
         double  m_dODEBLLengthValidator;
         bool    m_bLockEBLAngle;
+        bool    m_bLockEBLLength;
 };
 
 #endif // EBLPROP_H
