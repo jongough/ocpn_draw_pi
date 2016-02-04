@@ -76,6 +76,7 @@ class EBL : public ODPath
         void        UpdateEBL( void );
         
     private:
+        void MaintainWith( void );
         wxColour    m_wxcLineColour;
 };
 
