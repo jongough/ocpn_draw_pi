@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-31 21:01+1100\n"
-"PO-Revision-Date: 2016-01-31 04:59-0500\n"
+"POT-Creation-Date: 2016-02-04 08:11+1100\n"
+"PO-Revision-Date: 2016-02-03 19:52-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -498,6 +498,9 @@ msgstr "Ritverktyg"
 msgid "EBL"
 msgstr "EBL"
 #
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
 msgid "EBL Fixed End Position"
 msgstr "EBL - fast slutposition"
 #
@@ -588,6 +591,9 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "Ritverktyg för OpenCPN"
+#
+msgid "Heading"
+msgstr ""
 #
 msgid "Hide Point names"
 msgstr "Dölj punktens namn"
@@ -717,6 +723,9 @@ msgstr "Långa streck"
 #
 msgid "Longitude"
 msgstr "Longitud"
+#
+msgid "Maintain with"
+msgstr ""
 #
 msgid "Major:"
 msgstr "Huvud:"
@@ -939,15 +948,14 @@ msgstr ""
 "\n"
 "Eller\n"
 "\n"
-"På forumet för OpenCPN:\n"
-"http://www.cruisersforum.com/forums/f134 \n"
+"På forumet för OpenCPN: \\ nhttp://www.cruisersforum.com/forums/f134 \n"
 "\n"
 "Eller\n"
 "\n"
 "Anmäl ett problem via GIT på: \n"
 "https://github.com/jongough/ocpn_draw_pi/issues \n"
 "\n"
-"OBS att samtliga refererade websidor är på Engelska"
+"OBS att samtliga refererade websidor är på Engelska\n"
 #
 msgid "Point Inclusion Size"
 msgstr "Yttre punktstorlek"
@@ -984,6 +992,9 @@ msgstr "Du kan inte ta bort denna punkt eftersom det förstör gränsmarkeringen
 #
 msgid "Right"
 msgstr "Höger"
+#
+msgid "Rotate with Boat"
+msgstr ""
 #
 msgid "Short Dash"
 msgstr "Korta streck"

@@ -47,6 +47,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxActive;
 		wxStaticText* m_staticTextTotalLength;
 		wxTextCtrl* m_textCtrlTotalLength;
+		wxStaticText* m_staticTextDistUntis;
 		wxStaticText* m_staticTextLineColour;
 		wxColourPickerCtrl* m_colourPickerLineColour;
 		wxStaticText* m_staticTextLineStyle;

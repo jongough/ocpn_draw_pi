@@ -268,6 +268,18 @@ void ODPropertiesDialogImpl::OnDrawPropertiesApplyClick( wxCommandEvent& event )
     event.Skip();
 }
 
+void ODPropertiesDialogImpl::OnEBLRotateWithBoat( wxCommandEvent& event )
+{
+    if(m_checkBoxRotateWithBoat->IsChecked())
+        m_checkBoxEBLFixedEndPosition->SetValue(false);
+}
+
+void ODPropertiesDialogImpl::OnEBLFixedEndPosition( wxCommandEvent& event )
+{
+    if(m_checkBoxEBLFixedEndPosition->IsChecked())
+        m_checkBoxRotateWithBoat->SetValue(false);
+}
+
 void ODPropertiesDialogImpl::SaveChanges()
 {
     g_bODPointShowName =m_checkBoxShowName->GetValue();

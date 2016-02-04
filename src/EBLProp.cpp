@@ -69,9 +69,12 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     
 #if wxCHECK_VERSION(3,0,0) 
     wxFloatingPointValidator<double> dODEBLAngle(2, &m_dODEBLAngleValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODEBLLength(2, &m_dODEBLLengthValidator, wxNUM_VAL_DEFAULT);
     dODEBLAngle.SetRange(-180, 180);
+    dODEBLLength.SetMin(0);
     
     m_textCtrlEBLAngle->SetValidator( dODEBLAngle );
+    m_textCtrlTotalLength->SetValidator( dODEBLLength );
 #endif
     
     this->GetSizer()->Fit( this );
@@ -116,6 +119,8 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         m_dODEBLAngleValidator = pInEBL->m_dEBLAngle - 360;
     else
         m_dODEBLAngleValidator = pInEBL->m_dEBLAngle;
+    
+    m_dODEBLLengthValidator = toUsrDistance_Plugin(pInEBL->m_dLength);
 #else
     if(pInEBL->m_dEBLAngle > 180)
         s.Printf( _T("%.2f"), pInEBL->m_dEBLAngle - 360 );
@@ -123,6 +128,9 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         s.Printf( _T("%.2f"), pInEBL->m_dEBLAngle );
     
     m_textCtrlEBLAngle->SetValue(s);
+    
+    s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pEBL->m_dLength) );
+    m_textCtrlTotalLength->SetValue(s);
 #endif
     
     if(pInEBL->m_bRotateWithBoat) {
@@ -138,12 +146,8 @@ bool EBLProp::UpdateProperties( void )
 {
     wxString s;
     
-//    m_checkBoxRotateWithBoat->SetValue( m_pEBL->m_bRotateWithBoat );
-//    if(m_pEBL->m_bCentreOnBoat)
-//        m_checkBoxRotateWithBoat->Enable(true);
-//    else
-//        m_checkBoxRotateWithBoat->Enable(false);
-
+    ODPathPropertiesDialogImpl::UpdateProperties();
+    
     if(!m_bLockEBLAngle){
         if(m_pEBL->m_dEBLAngle > 180)
             s.Printf( _T("%.2f"), m_pEBL->m_dEBLAngle - 360 );
@@ -153,18 +157,10 @@ bool EBLProp::UpdateProperties( void )
         m_textCtrlEBLAngle->SetValue(s);
     }
     
-/*    if(m_pEBL->m_bRotateWithBoat) {
-        m_radioBoxMaintainWith->Enable(true);
-        m_checkBoxEBLFixedEndPosition->Enable(false);
-        m_textCtrlEBLAngle->Enable(true);
-    } else {
-        m_radioBoxMaintainWith->Enable(false);
-        m_checkBoxEBLFixedEndPosition->Enable(true);
-        m_textCtrlEBLAngle->Enable(false);
-    }
-    RequestRefresh(this);
-*/    
-    return ODPathPropertiesDialogImpl::UpdateProperties();
+    s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pEBL->m_dLength) );
+    m_textCtrlTotalLength->SetValue(s);
+    
+    return  true;
 }
 
 bool EBLProp::SaveChanges( void )
@@ -174,6 +170,10 @@ bool EBLProp::SaveChanges( void )
 
     bool ret = ODPathPropertiesDialogImpl::SaveChanges();
 
+    double l_dLength;
+    m_textCtrlTotalLength->GetValue().ToDouble( &l_dLength );
+    m_pEBL->m_dLength = fromUsrDistance_Plugin( l_dLength );
+    
     if(pFirstPoint->GetODPointRangeRingsColour() == l_EBLOrigColour)
         pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
 

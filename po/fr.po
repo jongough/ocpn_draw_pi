@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-31 11:17+1100\n"
+"POT-Creation-Date: 2016-02-04 08:11+1100\n"
 "PO-Revision-Date: 2016-01-30 19:24-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -503,6 +503,9 @@ msgstr "Les outils"
 msgid "EBL"
 msgstr "EBL"
 #
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
 msgid "EBL Fixed End Position"
 msgstr "Ligne EBL : Fixer la fin de la ligne EBL."
 #
@@ -593,6 +596,9 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "Traceur général pour OpenCPN"
+#
+msgid "Heading"
+msgstr ""
 #
 msgid "Hide Point names"
 msgstr "Cacher les noms des points"
@@ -722,6 +728,9 @@ msgstr "Tiret long"
 #
 msgid "Longitude"
 msgstr "Longitude"
+#
+msgid "Maintain with"
+msgstr ""
 #
 msgid "Major:"
 msgstr "Majeure :"
@@ -991,6 +1000,9 @@ msgstr ""
 #
 msgid "Right"
 msgstr "Droit"
+#
+msgid "Rotate with Boat"
+msgstr ""
 #
 msgid "Short Dash"
 msgstr "Tiret court"

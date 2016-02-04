@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-30 08:56+1100\n"
+"POT-Creation-Date: 2016-02-04 08:11+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -567,6 +567,9 @@ msgstr ""
 msgid "EBL"
 msgstr ""
 #
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
 msgid "EBL Fixed End Position"
 msgstr ""
 #
@@ -658,6 +661,9 @@ msgid ""
 msgstr ""
 #
 msgid "General drawing for OpenCPN"
+msgstr ""
+#
+msgid "Heading"
 msgstr ""
 #
 #, fuzzy
@@ -796,6 +802,9 @@ msgstr "Guió llarg"
 #
 msgid "Longitude"
 msgstr "Longitud"
+#
+msgid "Maintain with"
+msgstr ""
 #
 msgid "Major:"
 msgstr ""
@@ -1080,6 +1089,9 @@ msgstr ""
 msgid "Right"
 msgstr ""
 #
+msgid "Rotate with Boat"
+msgstr ""
+#
 #, fuzzy
 msgid "Short Dash"
 msgstr "Guió curt"
@@ -1232,9 +1244,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Esborrar"
+#
 #
 #
 #
@@ -1269,8 +1283,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(Punt OCPN sense nom)"
+#
 #
 #
 #
@@ -1283,9 +1299,11 @@ msgstr ""
 #~ msgstr "Capes"
 #
 #
+#
 #, fuzzy
 #~ msgid "Are you sure you want to remove this Text Point?"
 #~ msgstr "Esteu segur que voleu suprimir <ALL>OCPN punts?"
+#
 #
 #
 #
@@ -1320,8 +1338,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "Blau"
+#
 #
 #
 #
@@ -1356,8 +1376,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "Blau fosc"
+#
 #
 #
 #
@@ -1392,8 +1414,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "Gris fosc"
+#
 #
 #
 #
@@ -1428,8 +1452,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "Magenta fosc"
+#
 #
 #
 #
@@ -1464,8 +1490,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "Groc fosc"
+#
 #
 #
 #
@@ -1500,8 +1528,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "Color per defecte"
+#
 #
 #
 #
@@ -1536,8 +1566,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "Verd"
+#
 #
 #
 #
@@ -1572,8 +1604,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "Gris clar"
+#
 #
 #
 #
@@ -1608,8 +1642,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Marques"
+#
 #
 #
 #
@@ -1630,9 +1666,11 @@ msgstr ""
 #~ msgstr "Propera marea"
 #
 #
+#
 #, fuzzy
 #~ msgid "OCPN Draw Remove Text Point"
 #~ msgstr "Nom de punt d'OCPN"
+#
 #
 #
 #
@@ -1667,6 +1705,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "Vermell"
 #
@@ -1685,8 +1724,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "Blanc"
+#
 #
 #
 #

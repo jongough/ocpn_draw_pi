@@ -49,7 +49,6 @@ class EBL : public ODPath
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
         void ResizeVRM( double lat, double lon );
         void ResizeVRM( void );
-        void MoveEndPoint( double lat, double lon );
         void MoveEndPoint( bool bUpdateEBL );
         void MoveEndPoint( void );
         void MoveStartPoint( double lat, double lon );
