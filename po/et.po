@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-30 08:56+1100\n"
+"POT-Creation-Date: 2016-02-04 08:11+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -560,6 +560,9 @@ msgstr ""
 msgid "EBL"
 msgstr ""
 #
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
 msgid "EBL Fixed End Position"
 msgstr ""
 #
@@ -651,6 +654,9 @@ msgid ""
 msgstr ""
 #
 msgid "General drawing for OpenCPN"
+msgstr ""
+#
+msgid "Heading"
 msgstr ""
 #
 #, fuzzy
@@ -789,6 +795,9 @@ msgstr "pikk joon"
 #
 msgid "Longitude"
 msgstr "pikkus"
+#
+msgid "Maintain with"
+msgstr ""
 #
 msgid "Major:"
 msgstr ""
@@ -1073,6 +1082,9 @@ msgstr ""
 msgid "Right"
 msgstr ""
 #
+msgid "Rotate with Boat"
+msgstr ""
+#
 #, fuzzy
 msgid "Short Dash"
 msgstr "lühike joon"
@@ -1225,9 +1237,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid " Delete"
 #~ msgstr "Kustuta"
+#
 #
 #
 #
@@ -1254,8 +1268,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "(Unnamed OCPN Point)"
 #~ msgstr "(nimetu OCPN-punkt)"
+#
 #
 #
 #
@@ -1268,9 +1284,11 @@ msgstr ""
 #~ msgstr "Kihid"
 #
 #
+#
 #, fuzzy
 #~ msgid "Are you sure you want to remove this Text Point?"
 #~ msgstr "Kas sa oled kindel, et soovid <ALL> OCPN-punktid kustutada?"
+#
 #
 #
 #
@@ -1297,8 +1315,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Blue"
 #~ msgstr "sinine"
+#
 #
 #
 #
@@ -1325,8 +1345,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Blue"
 #~ msgstr "tumesinine"
+#
 #
 #
 #
@@ -1353,8 +1375,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Gray"
 #~ msgstr "tumehall"
+#
 #
 #
 #
@@ -1381,8 +1405,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Magenta"
 #~ msgstr "tumepurpurviolett"
+#
 #
 #
 #
@@ -1409,8 +1435,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Dark Yellow"
 #~ msgstr "tumekollane"
+#
 #
 #
 #
@@ -1437,8 +1465,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Default color"
 #~ msgstr "vaikimisi värv"
+#
 #
 #
 #
@@ -1465,8 +1495,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Green"
 #~ msgstr "roheline"
+#
 #
 #
 #
@@ -1493,8 +1525,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Light Gray"
 #~ msgstr "helehall"
+#
 #
 #
 #
@@ -1521,8 +1555,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Marks"
 #~ msgstr "Märgid"
+#
 #
 #
 #
@@ -1539,9 +1575,11 @@ msgstr ""
 #~ msgstr "Järgmised looded"
 #
 #
+#
 #, fuzzy
 #~ msgid "OCPN Draw Remove Text Point"
 #~ msgstr "OCPN'i punkti nimi"
+#
 #
 #
 #
@@ -1568,6 +1606,7 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "Red"
 #~ msgstr "punane"
 #
@@ -1582,8 +1621,10 @@ msgstr ""
 #
 #
 #
+#
 #~ msgid "White"
 #~ msgstr "valge"
+#
 #
 #
 #

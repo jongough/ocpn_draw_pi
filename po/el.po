@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-30 08:56+1100\n"
+"POT-Creation-Date: 2016-02-04 08:11+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -492,6 +492,9 @@ msgstr ""
 msgid "EBL"
 msgstr ""
 #
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
 msgid "EBL Fixed End Position"
 msgstr ""
 #
@@ -576,6 +579,9 @@ msgid ""
 msgstr ""
 #
 msgid "General drawing for OpenCPN"
+msgstr ""
+#
+msgid "Heading"
 msgstr ""
 #
 msgid "Hide Point names"
@@ -699,6 +705,9 @@ msgid "Long Dash"
 msgstr ""
 #
 msgid "Longitude"
+msgstr ""
+#
+msgid "Maintain with"
 msgstr ""
 #
 msgid "Major:"
@@ -952,6 +961,9 @@ msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
 #
 msgid "Right"
+msgstr ""
+#
+msgid "Rotate with Boat"
 msgstr ""
 #
 msgid "Short Dash"
