@@ -3035,12 +3035,11 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     pMousePoint->m_bIsolatedMark = FALSE;
     m_pMouseEBL->AddPoint( pMousePoint );
     m_pMouseEBL->m_bCentreOnBoat = true;
-    double l_dAngle;
-    DistanceBearingMercator_Plugin(rlat, rlon, m_dStartLat, m_dStartLon, &l_dAngle, &m_pMouseEBL->m_dLength);
-    if(!isnan(g_pfFix.Hdt))
-        m_pMouseEBL->m_dEBLAngle = l_dAngle - g_pfFix.Hdt;
-    else
-        m_pMouseEBL->m_dEBLAngle = l_dAngle;
+    DistanceBearingMercator_Plugin(rlat, rlon, m_dStartLat, m_dStartLon, &m_pMouseEBL->m_dEBLAngle, &m_pMouseEBL->m_dLength);
+//    if(!isnan(g_pfFix.Hdt))
+//        m_pMouseEBL->m_dEBLAngle = l_dAngle - g_pfFix.Hdt;
+//    else
+//        m_pMouseEBL->m_dEBLAngle = l_dAngle;
 
     if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart

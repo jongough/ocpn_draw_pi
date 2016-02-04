@@ -490,6 +490,11 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child = node.append_child("opencpn:EBL_angle");
         s.Printf(_T("%0.2f"), pEBL->m_dEBLAngle);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        if(pEBL->m_dLength > 0.) {
+            child = node.append_child("opencpn:EBL_length");
+            s.Printf(_T("%0.2f"), pEBL->m_dLength);
+            child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        }
     }
     if(pDR) {
         child = node.append_child("opencpn:persistence");
@@ -1242,6 +1247,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentEBL->m_iMaintainWith );
             } else if( ChildName == _T ( "opencpn:EBL_angle" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dEBLAngle );
+            } else if( ChildName == _T ( "opencpn:EBL_length" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dLength );
             } else if( ChildName == _T ( "opencpn:DRSOG" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dSoG );
             } else if( ChildName == _T ( "opencpn:DRCOG" ) ) {

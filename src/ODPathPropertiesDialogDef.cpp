@@ -73,8 +73,9 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_textCtrlTotalLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer3->Add( m_textCtrlTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	
-	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_staticTextDistUntis = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextDistUntis->Wrap( -1 );
+	fgSizer3->Add( m_staticTextDistUntis, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	
 	fgSizer3->Add( 0, 0, 1, wxEXPAND, 5 );

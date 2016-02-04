@@ -231,6 +231,8 @@ class ODPropertiesDialogDef : public wxDialog
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnEBLFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDRPointIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }

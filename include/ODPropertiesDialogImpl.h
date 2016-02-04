@@ -47,6 +47,8 @@ protected:
     void OnTextPointIconComboboxSelected( wxCommandEvent& event );
     void OnEBLEndIconComboboxSelected( wxCommandEvent& event );
     void OnEBLStartIconComboboxSelected( wxCommandEvent& event );
+    void OnEBLRotateWithBoat( wxCommandEvent& event );
+    void OnEBLFixedEndPosition( wxCommandEvent& event );
     void OnDRPointIconComboboxSelected( wxCommandEvent& event );
     void OnButtonClickFonts( wxCommandEvent& event );
     void OnDrawPropertiesOKClick( wxCommandEvent& event );

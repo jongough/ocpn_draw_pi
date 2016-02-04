@@ -279,8 +279,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     double total_length = pPath->m_path_length;
     
     wxString slen;
-    slen.Printf( wxT("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( total_length ) );
+    slen.Printf( wxT("%5.2f "), toUsrDistance_Plugin( total_length ) );
     m_textCtrlTotalLength->SetValue( slen );
+    m_staticTextDistUntis->SetLabel(getUsrDistanceUnit_Plugin());
     
     wxString time_form;
     wxString tide_form;
