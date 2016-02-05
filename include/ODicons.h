@@ -78,13 +78,13 @@ public:
     bool        m_bUpdateIcons;
 
 private:
-    wxBitmap *ScaleIcon( wxBitmap *p_wxBitmap, double sf );
-
+    wxBitmap    *ScaleIcon( wxBitmap *p_wxBitmap, double sf );
+    void        CreateSchemeIcons(void);
+    wxBitmap    *BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio);
+    
 #ifdef ODraw_USE_SVG
     wxBitmap    *LoadSVG( const wxString filename, wxSVGDocument **svgDco, wxImage **Image, unsigned int width = -1, unsigned int height = -1 );
     wxBitmap    *ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf );
-    wxBitmap    *BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio);
-    void        CreateSchemeIcons(void);
     
     wxSVGDocument   *m_p_svgd_ocpn_draw_pi;
     wxSVGDocument   *m_p_svgd_ocpn_draw_grey_pi;
