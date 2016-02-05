@@ -639,6 +639,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_ODPOINT_MENU_MOVE:
             m_pFoundODPoint->m_bIsBeingEdited = TRUE;
             g_ocpn_draw_pi->m_bODPointEditing = TRUE;
+            if(!m_pFoundODPoint->m_bIsInPath) {
+                m_pSelectedPath = NULL;
+                g_ocpn_draw_pi->m_pSelectedPath = NULL;
+            }
             if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
                 if(m_pFoundODPoint->m_ODPointName == _("Start"))
                     g_ocpn_draw_pi->m_bEBLMoveOrigin = true;

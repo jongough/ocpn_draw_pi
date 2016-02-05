@@ -32,8 +32,8 @@ time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
-std::cout << stime << " :: " ; \
-std::cout << x << std::endl; } while (0)
+std::cout << stime << " :: "; \
+std::cout << x << std::endl ;} while (0)
 
 #  define DEBUGST(x) do { \
 time_t now = time(0); \
@@ -47,7 +47,7 @@ std::cout << x; } while (0)
 std::cout << x ; } while (0)
 
 #  define DEBUGEND(x) do { \
-std::cout << x << std::endl; } while (0)
+std::cout << x  << std::endl ; } while (0)
 #else
 #  define DEBUGSL(x) do {} while (0)
 #  define DEBUGST(x) do {} while (0)

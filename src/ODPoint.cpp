@@ -355,7 +355,6 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     else
         pbm = m_pbmIcon;
     
-    wxBitmap *pbms = NULL;
     float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
     if(m_fIconScaleFactor != l_ChartScaleFactorExp) {
         m_fIconScaleFactor = l_ChartScaleFactorExp;
