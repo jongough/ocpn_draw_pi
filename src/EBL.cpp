@@ -434,13 +434,13 @@ void EBL::MaintainWith( void )
     switch(m_iMaintainWith) {
         case ID_EBL_MAINTAIN_WITH_HEADING:
             if(!isnan(g_pfFix.Hdt))
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dBoatHeading - g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Hdt - m_dBoatHeading + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             break;
         case ID_EBL_MAINTAIN_WITH_COG:
             if(!isnan(g_pfFix.Cog))
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dBoatCOG - g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Cog - m_dBoatCOG + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             break;
