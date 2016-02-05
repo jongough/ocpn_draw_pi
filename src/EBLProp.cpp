@@ -111,9 +111,6 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         m_textCtrlEBLAngle->Enable(true);
     }
     
-    ODPoint *pFp = pInEBL->m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEp = pInEBL->m_pODPointList->GetLast()->GetData();
-
 #if wxCHECK_VERSION(3,0,0) 
     if(pInEBL->m_dEBLAngle > 180)
         m_dODEBLAngleValidator = pInEBL->m_dEBLAngle - 360;

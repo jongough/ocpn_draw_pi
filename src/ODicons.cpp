@@ -285,6 +285,8 @@ void ODicons::ChangeScheme(void)
             m_p_bm_ocpn_draw_dr = m_p_bm_night_ocpn_draw_dr;
             m_p_bm_ocpn_draw_dr_grey = m_p_bm_night_ocpn_draw_dr_grey;
             break;
+        default:
+            break;
     }
 }
 

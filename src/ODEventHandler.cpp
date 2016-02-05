@@ -421,6 +421,8 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     //    If currently creating a Path, do not show this rollover window
     if( g_ocpn_draw_pi->nBoundary_State || g_ocpn_draw_pi->nEBL_State || g_ocpn_draw_pi->nDR_State || g_ocpn_draw_pi->nPoint_State )
         showRollover = false;
+    if(g_ocpn_draw_pi->m_bODPointEditing || g_ocpn_draw_pi->m_bPathEditing)
+        showRollover = false;
     
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
         g_pODRolloverWin->IsActive( false );
@@ -637,9 +639,16 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_ODPOINT_MENU_MOVE:
             m_pFoundODPoint->m_bIsBeingEdited = TRUE;
             g_ocpn_draw_pi->m_bODPointEditing = TRUE;
+            if(!m_pFoundODPoint->m_bIsInPath) {
+                m_pSelectedPath = NULL;
+                g_ocpn_draw_pi->m_pSelectedPath = NULL;
+            }
             if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
                 if(m_pFoundODPoint->m_ODPointName == _("Start"))
                     g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
+                else {
+                    m_pEBL->m_bEndPointMoving = true;
+                }
             }
             break;
         case ID_ODPOINT_MENU_COPY:
