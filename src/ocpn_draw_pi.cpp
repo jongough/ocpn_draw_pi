@@ -1894,6 +1894,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedPath->m_bSaveUpdates = true;
                     g_pODConfig->UpdatePath( m_pSelectedPath );
                     m_pSelectedPath->m_bSaveUpdates = l_bSaveUpdatesState;
+                    m_pSelectedEBL->m_bEndPointMoving = false;
                 } else
                     g_pODConfig->UpdatePath( m_pSelectedPath );
                 g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
@@ -3036,7 +3037,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL->AddPoint( pMousePoint );
     m_pMouseEBL->m_bCentreOnBoat = true;
     DistanceBearingMercator_Plugin(rlat, rlon, m_dStartLat, m_dStartLon, &m_pMouseEBL->m_dEBLAngle, &m_pMouseEBL->m_dLength);
-    
+/*    
     if(m_pMouseEBL->m_bRotateWithBoat) {
         switch(m_pMouseEBL->m_iMaintainWith) {
             case ID_EBL_MAINTAIN_WITH_HEADING:
@@ -3049,7 +3050,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
                 break;
         }
     }
-    
+*/    
     if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );

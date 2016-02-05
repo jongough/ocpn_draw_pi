@@ -100,6 +100,7 @@ EBL::EBL() : ODPath()
     m_dBoatCOG = g_pfFix.Cog;
     m_dEBLAngle = 0.;
     m_dLength = 0.;
+    m_bEndPointMoving = false;
 }
 
 EBL::~EBL()
@@ -180,7 +181,10 @@ void EBL::MoveEndPoint( void )
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     double brg;
     double hdg = 0;
-    DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength);
+    DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength);
+    m_dBoatHeading = g_pfFix.Hdt;
+    m_dBoatCOG = g_pfFix.Cog;
+/*    DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength);
     switch(m_iMaintainWith) {
         case ID_EBL_MAINTAIN_WITH_HEADING:
             if(!isnan(g_pfFix.Hdt))
@@ -196,7 +200,7 @@ void EBL::MoveEndPoint( void )
     else if(hdg < brg)
         m_dEBLAngle = brg - hdg;
     else m_dEBLAngle = 0;
-    
+*/    
     if(m_bVRM) {
         ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
         pStartPoint->SetODPointRangeRingsStep( m_dLength / pStartPoint->GetODPointRangeRingsNumber() );
@@ -253,7 +257,7 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
 
     if(m_dLength == 0.) m_dLength = pEndPoint->m_seg_len;
 
-    if(bMoveEndPoint) {
+    if(bMoveEndPoint && !m_bEndPointMoving) {
         if(m_bRotateWithBoat) {
             MaintainWith();
         } else {
@@ -282,7 +286,9 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
         }
     } else {
         DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength);
-        switch(m_iMaintainWith) {
+        m_dBoatHeading = g_pfFix.Hdt;
+        m_dBoatCOG = g_pfFix.Cog;
+/*        switch(m_iMaintainWith) {
             case ID_EBL_MAINTAIN_WITH_HEADING:
                 if(!isnan(g_pfFix.Hdt))
                     m_dEBLAngle -= g_pfFix.Hdt;
@@ -292,6 +298,7 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
                     m_dEBLAngle -= g_pfFix.Cog;
                 break;
         }
+*/        
     }
     pStartPoint->m_ODPointName = _("Boat");
     m_bCentreOnBoat = true;
@@ -457,13 +464,13 @@ void EBL::MaintainWith( void )
     switch(m_iMaintainWith) {
         case ID_EBL_MAINTAIN_WITH_HEADING:
             if(!isnan(g_pfFix.Hdt))
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dBoatHeading - g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             break;
         case ID_EBL_MAINTAIN_WITH_COG:
             if(!isnan(g_pfFix.Cog))
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dBoatCOG - g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             break;

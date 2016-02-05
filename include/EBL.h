@@ -71,6 +71,7 @@ class EBL : public ODPath
         double      m_dBoatCOG;
         double      m_dEBLAngle;
         double      m_dLength;
+        bool        m_bEndPointMoving;
         
     protected:
         void        UpdateEBL( void );
