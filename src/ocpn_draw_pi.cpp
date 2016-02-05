@@ -294,6 +294,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 :opencpn_plugin_113(ppimgr)
 {
+    setlocale(LC_ALL, "");
     // Create the PlugIn icons
     g_ppimgr = ppimgr;
     g_OD_pi_manager = (PlugInManager *) ppimgr;
