@@ -206,7 +206,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     #endif
     
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "");
+#else
+    setlocale(LC_NUMERIC, "");
+#endif
     
     bool b_need_refresh = false;
     
@@ -450,7 +454,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( b_need_refresh )
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
+#if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+#else
+    setlocale(LC_NUMERIC, l_locale->ToAscii());
+#endif
     delete l_locale;
 }
 

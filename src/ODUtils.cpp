@@ -259,7 +259,11 @@ void SetGlobalLocale( void )
 {
     if(g_iLocaleDepth == 0) { 
         g_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#if wxCHECK_VERSION(3,0,0)        
         wxSetlocale(LC_NUMERIC, "");
+#else
+        setlocale(LC_NUMERIC, "");
+#endif
     }
     g_iLocaleDepth++;
 }
@@ -271,7 +275,11 @@ void ResetGlobalLocale( void )
     if(g_iLocaleDepth < 0) 
         g_iLocaleDepth = 0;
     if(g_iLocaleDepth == 0 && g_locale) {
+#if wxCHECK_VERSION(3,0,0)        
         wxSetlocale(LC_NUMERIC, g_locale->ToAscii());
+#else
+        setlocale(LC_NUMERIC, g_locale->ToAscii());
+#endif
         delete g_locale;
         g_locale = NULL;
     } 
