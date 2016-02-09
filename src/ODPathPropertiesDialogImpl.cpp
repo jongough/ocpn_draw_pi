@@ -39,6 +39,7 @@
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 #include "ODEventHandler.h"
+#include "ODUtils.h"
 #include "chcanv.h"
 
 enum {
@@ -67,6 +68,7 @@ extern bool                 g_bExclusionBoundary;
 extern bool                 g_bInclusionBoundary;
 extern int                  g_iInclusionBoundarySize;
 extern ODEventHandler       *g_ODEventHandler;
+
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
@@ -158,6 +160,9 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     
     Hide();
     RequestRefresh( GetOCPNCanvasWindow() );
+    
+    ResetGlobalLocale();
+    
     event.Skip();
 }
 
@@ -221,9 +226,18 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points 
             m_pPath->m_bPathPropertiesBlink = false;
         }
         m_pPath = pP;
-        if(m_pPath->m_sTypeString == wxT("Boundary")) m_pBoundary = (Boundary *)pP;
-        if(m_pPath->m_sTypeString == wxT("EBL")) m_pEBL = (EBL *)pP;
-        if(m_pPath->m_sTypeString == wxT("DR")) m_pDR = (DR *)pP;
+        if(pP->m_sTypeString == wxT("Boundary")) {
+            m_pBoundary = (Boundary *)pP;
+            m_pPath = m_pBoundary;
+        }
+        if(pP->m_sTypeString == wxT("EBL")) {
+            m_pEBL = (EBL *)pP;
+            m_pPath = m_pEBL;
+        }
+        if(pP->m_sTypeString == wxT("DR")) {
+            m_pDR = (DR *)pP;
+            m_pPath = m_pDR;
+        }
         m_pPath->m_bPathPropertiesBlink = true;
         
         m_textCtrlName->SetValue( m_pPath->m_PathNameString );
@@ -235,13 +249,52 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points 
 
     InitializeList();
 
-    UpdateProperties( pP );
+    UpdateProperties( m_pPath );
 
     if( m_pPath )
         m_listCtrlODPoints->Show();
 
     Refresh( false );
 
+}
+
+void ODPathPropertiesDialogImpl::SetPath( ODPath *pP )
+{
+    if( NULL == pP )
+        return;
+    
+    m_tz_selection = 1;
+    
+    if( m_pPath ) {
+        m_pPath->m_bPathPropertiesBlink = false;
+    }
+    m_pPath = pP;
+    if(pP->m_sTypeString == wxT("Boundary")) {
+        m_pBoundary = (Boundary *)pP;
+        m_pPath = m_pBoundary;
+    }
+    if(pP->m_sTypeString == wxT("EBL")) {
+        m_pEBL = (EBL *)pP;
+        m_pPath = m_pEBL;
+    }
+    if(pP->m_sTypeString == wxT("DR")) {
+        m_pDR = (DR *)pP;
+        m_pPath = m_pDR;
+    }
+    m_pPath->m_bPathPropertiesBlink = true;
+    
+    m_textCtrlName->SetValue( m_pPath->m_PathNameString );
+    
+    m_textCtrlName->SetFocus();
+    m_listCtrlODPoints->DeleteAllItems();
+    
+    InitializeList();
+    
+    if( m_pPath )
+        m_listCtrlODPoints->Show();
+    
+    Refresh( false );
+    
 }
 
 bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
@@ -253,6 +306,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     
     if( NULL == pInPath ) return false;
     ::wxBeginBusyCursor();
+   
+    SetGlobalLocale();
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
@@ -406,6 +461,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
 
 bool ODPathPropertiesDialogImpl::UpdateProperties( void )
 {
+    SetGlobalLocale();
+    
     ::wxBeginBusyCursor();
     
     //  Iterate on Path Points
@@ -543,6 +600,8 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         SendPluginMessage( msg_id, msg );
         
     }
+    
+    ResetGlobalLocale();
     
     return true;
 }

@@ -53,7 +53,7 @@ class ODDRDialogImpl : public ODDRDialogDef
         void SetupDialog();
         void UpdateDialog( DR *dr );
         
-    private:
+private:
         double  m_dValidator;
         double  m_dSOGValidator;
         double  m_dLengthValidator;
@@ -62,7 +62,7 @@ class ODDRDialogImpl : public ODDRDialogDef
         int     m_iCOGValidator;
         
         DR      *m_pDR;
-	
+        
 };
 
 #endif // __ODDRDialogImpl__

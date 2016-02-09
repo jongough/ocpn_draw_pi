@@ -205,6 +205,9 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     return;
     #endif
     
+    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "");
+    
     bool b_need_refresh = false;
     
     bool showRollover = false;
@@ -446,6 +449,9 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     
     if( b_need_refresh )
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
 }
 
 void ODEventHandler::PopupMenuHandler(wxCommandEvent& event ) 

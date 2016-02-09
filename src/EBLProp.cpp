@@ -26,14 +26,15 @@
 #include "EBLProp.h"
 #include "EBL.h"
 #include "ocpn_draw_pi.h"
+#include "ODUtils.h"
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
 
-extern EBLList         *g_pEBLList;
-extern ocpn_draw_pi    *g_ocpn_draw_pi;
-extern PlugIn_Position_Fix_Ex g_pfFix;
+extern EBLList                 *g_pEBLList;
+extern ocpn_draw_pi            *g_ocpn_draw_pi;
+extern PlugIn_Position_Fix_Ex   g_pfFix;
 
 EBLProp::EBLProp()
 {
@@ -44,7 +45,6 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
-
     m_fgSizerEBL->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
@@ -62,10 +62,12 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_checkBoxRotateWithBoat->Enable(true);
     m_radioBoxMaintainWith->Show();
     m_radioBoxMaintainWith->Enable(true);
+    m_textCtrlTotalLength->SetEditable(true);
     m_staticTextEBLAngle->Show();
     m_staticTextEBLAngle->Enable(true);
     m_textCtrlEBLAngle->Show();
     m_textCtrlEBLAngle->Enable(true);
+    m_textCtrlEBLAngle->SetEditable(true);
     
 #if wxCHECK_VERSION(3,0,0) 
     wxFloatingPointValidator<double> dODEBLAngle(2, &m_dODEBLAngleValidator, wxNUM_VAL_DEFAULT);
@@ -91,6 +93,8 @@ EBLProp::~EBLProp()
 
 bool EBLProp::UpdateProperties( EBL *pInEBL )
 {
+    SetGlobalLocale();
+    
     wxString s;
 
     m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
@@ -99,11 +103,11 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
     m_checkBoxRotateWithBoat->SetValue( pInEBL->m_bRotateWithBoat );
     m_radioBoxMaintainWith->SetSelection( pInEBL->m_iMaintainWith );
-    if(m_pEBL->m_bCentreOnBoat)
+    if(pInEBL->m_bCentreOnBoat)
         m_checkBoxRotateWithBoat->Enable(true);
     else
         m_checkBoxRotateWithBoat->Enable(false);
-    if(m_pEBL->m_bFixedEndPosition) {
+    if(pInEBL->m_bFixedEndPosition) {
         m_radioBoxMaintainWith->Enable(false);
         m_textCtrlEBLAngle->Enable(false);
     } else {
@@ -167,11 +171,14 @@ bool EBLProp::SaveChanges( void )
     wxColour l_EBLOrigColour = m_pEBL->GetCurrentColour();
     ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
 
-    bool ret = ODPathPropertiesDialogImpl::SaveChanges();
-
+    bool l_bUpdatePath = false;
     double l_dLength;
     m_textCtrlTotalLength->GetValue().ToDouble( &l_dLength );
-    m_pEBL->m_dLength = fromUsrDistance_Plugin( l_dLength );
+    l_dLength = fromUsrDistance_Plugin( l_dLength );
+    if(m_pEBL->m_dLength != l_dLength) {
+        l_bUpdatePath = true;
+        m_pEBL->m_dLength = l_dLength;
+    }
     
     if(pFirstPoint->GetODPointRangeRingsColour() == l_EBLOrigColour)
         pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
@@ -188,8 +195,15 @@ bool EBLProp::SaveChanges( void )
         m_pEBL->m_bFixedEndPosition = false;
     m_pEBL->m_iMaintainWith = m_radioBoxMaintainWith->GetSelection();
     
-    m_textCtrlEBLAngle->GetValue().ToDouble( &m_pEBL->m_dEBLAngle );
-    m_pEBL->MoveEndPoint(true);
+    double l_dEBLAngle;
+    m_textCtrlEBLAngle->GetValue().ToDouble( &l_dEBLAngle );
+    if(l_dEBLAngle != m_pEBL->m_dEBLAngle) {
+        l_bUpdatePath = true;
+        m_pEBL->m_dEBLAngle = l_dEBLAngle;
+    }
+
+    if(l_bUpdatePath)
+        m_pEBL->MoveEndPoint(true);
 
     m_pEBL->m_bDrawArrow = m_checkBoxPathShowArrow->GetValue();
     m_pEBL->m_bVRM = m_checkBoxShowVRM->GetValue();
@@ -198,7 +212,8 @@ bool EBLProp::SaveChanges( void )
     } else
         pFirstPoint->m_bShowODPointRangeRings = false;
     
-    //RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    bool ret = ODPathPropertiesDialogImpl::SaveChanges();
+    
     return ret;
 }
 
@@ -256,6 +271,8 @@ void EBLProp::OnClose( wxCloseEvent& event )
     m_bLockEBLLength = false;
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnClose(event);
+    
+    ResetGlobalLocale();
 }
 
 void EBLProp::OnCancel( wxCommandEvent& event )
@@ -263,4 +280,6 @@ void EBLProp::OnCancel( wxCommandEvent& event )
     m_bLockEBLLength = false;
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnCancel(event);
+
+    ResetGlobalLocale();
 }

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-04 08:11+1100\n"
-"PO-Revision-Date: 2016-01-30 19:26-0500\n"
-"Last-Translator: nohal <pavel@kalian.cz>\n"
+"POT-Creation-Date: 2016-02-09 15:05+1100\n"
+"PO-Revision-Date: 2016-02-05 11:01+0100\n"
+"Last-Translator: NAV <rider2@kpnmail.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
@@ -75,7 +75,7 @@ msgid "(Unnamed )"
 msgstr "(naamloos)"
 #
 msgid "(Unnamed Layer)"
-msgstr "(kaartlaag zonder naam)"
+msgstr "(naamloze kaartlaag)"
 #
 msgid "(Unnamed) "
 msgstr "(naamloos) "
@@ -244,7 +244,7 @@ msgid "Are you sure you want to delete this OD Point?"
 msgstr "Weet u zeker dat u dit OD-punt wilt verwijderen? "
 #
 msgid "Are you sure you want to delete this Text Point?"
-msgstr "Weet u zeker dat u dit tekstpunt wilt verwijderen?"
+msgstr "Weet u zeker dat u dit tekstpunt wilt verwijderen? "
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
@@ -438,7 +438,7 @@ msgid "Deactivate"
 msgstr "Deactiveren"
 #
 msgid "Dead Reckoning"
-msgstr "Instellingen Trackvoorspelling"
+msgstr "Instellingen Trajectvoorspelling"
 #
 msgid "Delete"
 msgstr "Verwijderen"
@@ -502,7 +502,7 @@ msgid "EBL"
 msgstr "Peilinglijn"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "Boordhoek (-L/+R)"
 #
 msgid "EBL Fixed End Position"
 msgstr "Peilinglijn heeft vaste eindpositie"
@@ -595,7 +595,7 @@ msgid "General drawing for OpenCPN"
 msgstr "Teken PlugIn voor OpenCPN"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Voorliggende koers"
 #
 msgid "Hide Point names"
 msgstr "Verbergen puntnamen"
@@ -675,7 +675,7 @@ msgid "Layer"
 msgstr "Kaartlaag"
 #
 msgid "Layer "
-msgstr "Kaartlaag"
+msgstr "Kaartlaag "
 #
 msgid "Layer Boundary"
 msgstr "Kaartlaag Lijn (of rechtlijnig gebied)"
@@ -729,7 +729,7 @@ msgid "Longitude"
 msgstr "Lengte"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Te gebruiken richting"
 #
 msgid "Major:"
 msgstr "Major:"
@@ -805,7 +805,7 @@ msgid "Number of Range Rings"
 msgstr "Aantal afstandscirkels"
 #
 msgid "OCPN Draw"
-msgstr "OCPN Draw: Werkbalk"
+msgstr "OCPN Draw Werkbalk"
 #
 msgid "OCPN Draw Boundary"
 msgstr "OCPN Draw: Lijn of Rechtlijnig gebied"
@@ -832,7 +832,7 @@ msgid "OCPN Draw Delete OD Point"
 msgstr "OCPN Draw: OD-punt verwijderen "
 #
 msgid "OCPN Draw Delete Text Point"
-msgstr "OCPN Draw: Tekstpunt verwijderen"
+msgstr "OCPN Draw: Tekstpunt verwijderen "
 #
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Draw: Peilinglijn verwijderen "
@@ -999,7 +999,7 @@ msgid "Right"
 msgstr "rechts"
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Meedraaien met schip"
 #
 msgid "Short Dash"
 msgstr "korte streep"
@@ -1138,3 +1138,39 @@ msgstr "Wilt u voor dit lijndeel ook grootcirkelpunten toevoegen?"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "Gegevensmap opencpn_draw_pi"
+#
+#~ msgid " Delete"
+#~ msgstr " Verwijderen"
+#
+#~ msgid ", Layer: "
+#~ msgstr ", kaartlaag: "
+#
+#~ msgid ", this is not allowed."
+#~ msgstr ", dit is niet toegestaan."
+#
+#~ msgid "Are you sure you want to remove this Text Point?"
+#~ msgstr "Weet u zeker dat u dit tekstpunt wilt weghalen?"
+#
+#~ msgid "Insert"
+#~ msgstr "Invoegen"
+#
+#~ msgid "Logitude"
+#~ msgstr "Lengte"
+#
+#~ msgid "Move"
+#~ msgstr "Verplaatsen"
+#
+#~ msgid "OCPN Draw Remove ODPoint"
+#~ msgstr "OCPN Draw OD-punt weghalen "
+#
+#~ msgid "OCPN Draw Remove Text Point"
+#~ msgstr "OCPN Draw Tekstpunt weghalen "
+#
+#~ msgid "OD Remove ODPoint"
+#~ msgstr "OD Verwijderen OD-punt"
+#
+#~ msgid "OpenCPN Boundary Create"
+#~ msgstr "Maak OpenCPN gebeidsgrens"
+#
+#~ msgid "Use nearby Pointoint?"
+#~ msgstr "Gebruik nabij punt?"

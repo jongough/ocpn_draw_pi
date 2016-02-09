@@ -36,4 +36,6 @@
  double         FNday( int y, int m, int d, int h );
  double         FNrange( double x );
  double         getLMT( double ut, double lon );
+ void           SetGlobalLocale( void );
+ void           ResetGlobalLocale( void );
 #endif

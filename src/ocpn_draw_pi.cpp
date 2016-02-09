@@ -238,7 +238,9 @@ ODPoint       *pAnchorWatchPoint2;
 
 IDX_entry       *gpIDX;
 
-wxString        g_locale;
+wxString        *g_locale;
+int             g_iLocaleDepth;
+
 int             g_click_stop;
 bool            g_bConfirmObjectDelete;
 
@@ -260,7 +262,6 @@ int             g_iDRIntervalType;
 int             g_iDRDistanceUnits;
 int             g_iDRTimeUnits;
 int             g_iDRPersistenceType;
-
 
 ODPlugIn_Position_Fix_Ex  g_pfFix;
 
@@ -358,12 +359,14 @@ int ocpn_draw_pi::Init(void)
     bKey_EBL_Pressed = false;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
+    g_iLocaleDepth = 0;
+    g_locale = NULL;
     
     // Drawing modes from toolbar
     m_Mode = 0;
     m_numModes = ID_MODE_LAST - 1;
     
-    // Not sure what this is
+    // Adds local language support for the plugin to OCPN
     AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
     
     lastODPointInPath = wxS("-1");
@@ -908,6 +911,9 @@ void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
 }
 void ocpn_draw_pi::SaveConfig()
 {
+    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "C");
+    
     wxFileConfig *pConf = m_pODConfig;
     
     if(pConf)
@@ -1015,9 +1021,16 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
         
     }
+    
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
 }
+
 void ocpn_draw_pi::LoadConfig()
 {
+    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "C");
+    
     wxFileConfig *pConf = (wxFileConfig *)m_pODConfig;
     
     if(pConf)
@@ -1206,7 +1219,9 @@ void ocpn_draw_pi::LoadConfig()
         g_DisplayTextFont.SetEncoding( (wxFontEncoding)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
     }
-    
+
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
 }
 
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
