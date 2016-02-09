@@ -912,7 +912,11 @@ void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
 void ocpn_draw_pi::SaveConfig()
 {
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "C");
+#else
+    setlocale(LC_NUMERIC, "C");
+#endif
     
     wxFileConfig *pConf = m_pODConfig;
     
@@ -1022,14 +1026,22 @@ void ocpn_draw_pi::SaveConfig()
         
     }
     
+#if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+#else
+    setlocale(LC_NUMERIC, l_locale->ToAscii());
+#endif
     delete l_locale;
 }
 
 void ocpn_draw_pi::LoadConfig()
 {
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "C");
+#else
+    setlocale(LC_NUMERIC, "C");
+#endif
     
     wxFileConfig *pConf = (wxFileConfig *)m_pODConfig;
     
@@ -1220,7 +1232,11 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
     }
 
+#if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+#else
+    setlocale(LC_NUMERIC, l_locale->ToAscii());
+#endif
     delete l_locale;
 }
 
