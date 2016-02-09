@@ -262,8 +262,6 @@ void SetGlobalLocale( void )
         wxSetlocale(LC_NUMERIC, "");
     }
     g_iLocaleDepth++;
-    DEBUGST("SetGlobalLocale depth: ");
-    DEBUGEND(g_iLocaleDepth);
 }
 
 void ResetGlobalLocale( void )
@@ -277,6 +275,4 @@ void ResetGlobalLocale( void )
         delete g_locale;
         g_locale = NULL;
     } 
-    DEBUGST("ResetGlobalLocale depth: ");
-    DEBUGEND(g_iLocaleDepth);
 }
