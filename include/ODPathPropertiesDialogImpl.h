@@ -89,14 +89,15 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
         ODPoint     *m_pEnroutePoint;
         bool        m_bStartNow;
         int         m_tz_selection;
-	
+        
 	public:
 		/** Constructor */
         ODPathPropertiesDialogImpl( void );
         ODPathPropertiesDialogImpl( wxWindow* parent );
         ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style );
 	//// end generated class members
-        void SetPathAndUpdate( ODPath *pB, bool only_points = false );
+        void SetPathAndUpdate( ODPath *pP, bool only_points = false );
+        void SetPath( ODPath *pP );
         virtual bool UpdateProperties( ODPath *pPath );
         virtual bool UpdateProperties( void );
         void SetDialogTitle( const wxString &sTitle );
@@ -110,6 +111,7 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
     private:
         void    SetViewableItems();
         void    OnPathPropMenuSelected( wxCommandEvent& event );
+        
 };
 
 #endif // __ODPathPropertiesDialogImpl__

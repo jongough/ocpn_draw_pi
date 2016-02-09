@@ -36,6 +36,7 @@
 #include "ODSelect.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
+#include "ODUtils.h"
 #include "PathMan.h"
 
 #if wxCHECK_VERSION(3,0,0) 
@@ -74,9 +75,10 @@ extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 extern PathManagerDialog            *g_pPathManagerDialog;
 extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 
-
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
+    SetGlobalLocale();
+
 #if wxCHECK_VERSION(3,0,0)    
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
@@ -123,24 +125,30 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     m_pDR = NULL;
     
     this->Layout();
+    
+    ResetGlobalLocale();
 }
 
 void ODDRDialogImpl::SetupDialog()
 {
-#if wxCHECK_VERSION(3,0,0) 
+    SetGlobalLocale();
+    
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
-    m_dSOGValidator = g_dDRSOG;
-    m_iCOGValidator = g_iDRCOG;
+#if wxCHECK_VERSION(3,0,0)   
+    if(g_pfFix.Sog != g_pfFix.Sog )
+        m_dSOGValidator = g_dDRSOG;
+    else
+        m_dSOGValidator = g_pfFix.Sog;
+    if(g_pfFix.Cog != g_pfFix.Cog )
+        m_iCOGValidator = g_iDRCOG;
+    else
+        m_iCOGValidator = g_pfFix.Cog;
     m_dLengthValidator = g_dDRLength;
     m_dIntervalValidator = g_dDRPointInterval;
 #else
-    wxString s;
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
-    else s = _("Course over Ground (T)");
-    m_staticTextCOG->SetLabel( s );
     if(g_pfFix.Sog != g_pfFix.Sog )
         s.Printf( _T("%.3f"), g_dDRSOG );
     else
@@ -151,33 +159,40 @@ void ODDRDialogImpl::SetupDialog()
     else
         s.Printf( _T("%.3f"), g_pfFix.Cog );
     m_textCtrlCOG->SetValue( s );
-    #endif
+    s.Printf( _T("%.3f"), g_dDRLength );
+    m_textCtrlLength->SetValue( s );
+    s.Printf( _T("%.3f"), g_dDRPointInterval );
+    m_textCtrlDRPointInterval->SetValue( s );
+#endif
     this->Layout();
 }
 
 void ODDRDialogImpl::UpdateDialog( DR * dr)
 {
+    SetGlobalLocale();
+    
     m_pDR = dr;
-#if wxCHECK_VERSION(3,0,0) 
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
-    m_staticTextCOG->SetLabel( s );
+#if wxCHECK_VERSION(3,0,0)   
     m_dSOGValidator = dr->m_dSoG;
     m_iCOGValidator = dr->m_iCoG;
     m_dLengthValidator = dr->m_dDRPathLength;
     m_dIntervalValidator = dr->m_dDRPointInterval;
-#else
-    wxString s;
-    if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
-    else s = _("Course over Ground (T)");
+#else    
     m_staticTextCOG->SetLabel( s );
     s.Printf( _T("%.3f"), dr->m_dSoG );
     m_textCtrlSOG->SetValue( s );
     s.Printf( _T("%i"), dr->m_iCoG );
     m_textCtrlCOG->SetValue( s );
+    s.Printf( _T("%.3f"), dr->m_dDRPathLength );
+    m_textCtrlLength->SetValue( s );
+    s.Printf( _T("%.3f"), dr->m_dDRPointInterval );
+    m_textCtrlDRPointInterval->SetValue( s );
 #endif
     this->Layout();
+    
 }
 
 void ODDRDialogImpl::OnOK( wxCommandEvent& event )
@@ -336,14 +351,19 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
 #ifdef __WXOSX__    
     EndModal(wxID_CANCEL);
 #endif
+    
+    ResetGlobalLocale();
+    m_pDR = NULL;
 }
 
 void ODDRDialogImpl::OnCancel( wxCommandEvent& event )
 {
     Show( false );
-    #ifdef __WXOSX__    
+#ifdef __WXOSX__    
     EndModal(wxID_CANCEL);
-    #endif
+#endif
     
+    ResetGlobalLocale();
+    m_pDR = NULL;
     event.Skip();
 }

@@ -160,6 +160,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     BoundaryPoint *bp;
     ODPoint *pp;
     
+    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "C");
+    
     if(pop->m_sTypeString == wxT("Text Point")) 
         tp = (TextPoint *)pop;
     else if(pop->m_sTypeString == wxT("Boundary Point"))
@@ -358,6 +361,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
         }
     }
     
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
+    
     return true;
 }
 
@@ -367,6 +373,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     Boundary * pBoundary = NULL;
     EBL * pEBL = NULL;
     DR  *pDR = NULL;
+    wxString *l_locale;
+    
+    l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "C");
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
@@ -544,6 +554,9 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
             
         node2 = node2->GetNext();
     }
+    
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
     
     return true;
 }
@@ -772,6 +785,9 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                             int layer_id
                             )
 {
+    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "C");
+    
     bool bviz = false;
     bool bviz_name = false;
     bool bauto_name = false;
@@ -1097,6 +1113,9 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pOP->m_HyperlinkList = linklist;
     }
 
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
+    
     return ( pOP );
 }
 
@@ -1105,6 +1124,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     bool b_layerviz,
                     int layer_id, wxString *pPathType )
 {
+    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+    wxSetlocale(LC_NUMERIC, "C");
+    
     wxString PathName;
     wxString DescString;
     bool b_propviz = false;
@@ -1301,6 +1323,10 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
     pTentPath->SetActiveColours();
     pTentPath->UpdateSegmentDistances();
     pTentPath->m_bIsBeingCreated = false;
+    
+    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+    delete l_locale;
+    
     return pTentPath;
 }
 

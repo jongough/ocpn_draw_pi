@@ -976,7 +976,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pODPathPropDialog = g_pBoundaryPropDialog;
         l_pBoundary = (Boundary *) inpath;
         l_pPath = l_pBoundary;
-        g_pBoundaryPropDialog->SetPathAndUpdate( l_pBoundary );
+        g_pBoundaryPropDialog->SetPath( l_pBoundary );
         g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
     } else if(inpath->m_sTypeString == wxT("EBL")) {
         if( NULL == g_pEBLPropDialog )          // There is one global instance of the ELBProp Dialog
@@ -984,7 +984,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pODPathPropDialog = g_pEBLPropDialog;
         l_pEBL = (EBL *) inpath;
         l_pPath = l_pEBL;
-        g_pEBLPropDialog->SetPathAndUpdate( l_pEBL );
+        g_pEBLPropDialog->SetPath( l_pEBL );
         g_pEBLPropDialog->UpdateProperties( l_pEBL );
     } else if(inpath->m_sTypeString == wxT("DR")) {
         if( NULL == g_pDRPropDialog )          // There is one global instance of the DRProp Dialog
@@ -992,14 +992,14 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pODPathPropDialog = g_pDRPropDialog;
         l_pDR = (DR *) inpath;
         l_pPath = l_pDR;
-        g_pDRPropDialog->SetPathAndUpdate( l_pDR );
+        g_pDRPropDialog->SetPath( l_pDR );
         g_pDRPropDialog->UpdateProperties( l_pDR );
     } else {
         if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
             g_pPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
         g_pODPathPropDialog = g_pPathPropDialog;
         l_pPath = inpath;
-        g_pODPathPropDialog->SetPathAndUpdate( l_pPath );
+        g_pODPathPropDialog->SetPath( l_pPath );
         g_pODPathPropDialog->UpdateProperties( l_pPath );
     }
 

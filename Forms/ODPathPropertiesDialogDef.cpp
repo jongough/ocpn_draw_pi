@@ -70,7 +70,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_staticTextTotalLength->Wrap( -1 );
 	fgSizer3->Add( m_staticTextTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlTotalLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlTotalLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
 	fgSizer3->Add( m_textCtrlTotalLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_staticTextDistUntis = new wxStaticText( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
@@ -164,7 +164,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_staticTextEBLAngle->Wrap( -1 );
 	m_fgSizerEBL->Add( m_staticTextEBLAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_textCtrlEBLAngle = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlEBLAngle = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
 	m_fgSizerEBL->Add( m_textCtrlEBLAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, _("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );

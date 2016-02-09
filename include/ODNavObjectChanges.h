@@ -127,7 +127,6 @@ class ODNavObjectChanges : public pugi::xml_document
         wxString m_ODfilename;
         ODPointList *m_ptODPointList;
 
-
 };
 
 #endif // OCPNDRAWNAVOBJECTCHANGES_H

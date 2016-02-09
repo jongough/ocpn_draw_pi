@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-04 08:11+1100\n"
+"POT-Creation-Date: 2016-02-09 15:05+1100\n"
 "PO-Revision-Date: 2015-06-06 12:28-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese, Brazilian\n"
@@ -1152,9 +1152,11 @@ msgstr ""
 #
 #
 #
+#
 #, fuzzy
 #~ msgid ", Layer: "
 #~ msgstr "Caminho da camada"
+#
 #
 #
 #

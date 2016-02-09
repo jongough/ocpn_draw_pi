@@ -31,6 +31,10 @@
  
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
+#include "ocpn_draw_pi.h"
+
+extern int      g_iLocaleDepth;
+extern wxString *g_locale;
 
 /*!
  * Helper stuff for calculating Path
@@ -213,7 +217,7 @@ void MenuAppend( wxMenu *menu, int id, wxString label)
     menu->Append(item);
 }
 
-
+// Helper functions
 double sign( double x )
 {
     if( x < 0. ) return -1.;
@@ -250,3 +254,29 @@ double getLMT( double ut, double lon )
         return ( t + 24. );
 }
 
+// International helper functions
+void SetGlobalLocale( void )
+{
+    if(g_iLocaleDepth == 0) { 
+        g_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+        wxSetlocale(LC_NUMERIC, "");
+    }
+    g_iLocaleDepth++;
+    DEBUGST("SetGlobalLocale depth: ");
+    DEBUGEND(g_iLocaleDepth);
+}
+
+void ResetGlobalLocale( void )
+{
+    
+    g_iLocaleDepth--;
+    if(g_iLocaleDepth < 0) 
+        g_iLocaleDepth = 0;
+    if(g_iLocaleDepth == 0 && g_locale) {
+        wxSetlocale(LC_NUMERIC, g_locale->ToAscii());
+        delete g_locale;
+        g_locale = NULL;
+    } 
+    DEBUGST("ResetGlobalLocale depth: ");
+    DEBUGEND(g_iLocaleDepth);
+}
