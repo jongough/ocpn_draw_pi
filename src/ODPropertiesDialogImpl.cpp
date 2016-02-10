@@ -32,6 +32,7 @@
 #include "ODPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
 #include "ODToolbarImpl.h"
+#include "ODUtils.h"
 #include "PointMan.h"
 #include "version.h"
 #include <wx/fontdlg.h>
@@ -247,6 +248,7 @@ void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 #endif
     SetClientSize(m_defaultClientSize);
 
+    ResetGlobalLocale();
     event.Skip();
 }
 
@@ -258,6 +260,7 @@ void ODPropertiesDialogImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event 
 #endif
     SetClientSize(m_defaultClientSize);
 
+    ResetGlobalLocale();
     event.Skip();
 }
 
@@ -444,235 +447,236 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
 
 void ODPropertiesDialogImpl::UpdateProperties( void )
 {
-        wxString s;
-        s.Printf( _T("%.3f"), g_n_arrival_circle_radius );
-        m_textCtrlODPointArrivalRadius->SetValue( s );
-        
-        m_checkBoxShowName->SetValue( g_bODPointShowName );
-        m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
-        m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
-        wxString s_RangeRingStep;
-        s_RangeRingStep.Printf( wxT("%.3f"), g_fODPointRangeRingsStep );
-        m_textCtrlODPointRangeRingSteps->SetValue( s_RangeRingStep );
-        m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
-        m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
-        
-        m_sliderBoundaryPointFillTransparency->SetValue( g_uiBoundaryPointFillTransparency );
-        m_sliderInclusionBoundaryPointSize->SetValue( g_iInclusionBoundaryPointSize );
-        
-        if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
-        else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
-        else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
-        else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
+    SetGlobalLocale();
+    wxString s;
+    s.Printf( _T("%.3f"), g_n_arrival_circle_radius );
+    m_textCtrlODPointArrivalRadius->SetValue( s );
+    
+    m_checkBoxShowName->SetValue( g_bODPointShowName );
+    m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
+    m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
+    wxString s_RangeRingStep;
+    s_RangeRingStep.Printf( wxT("%.3f"), g_fODPointRangeRingsStep );
+    m_textCtrlODPointRangeRingSteps->SetValue( s_RangeRingStep );
+    m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
+    m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
+    
+    m_sliderBoundaryPointFillTransparency->SetValue( g_uiBoundaryPointFillTransparency );
+    m_sliderInclusionBoundaryPointSize->SetValue( g_iInclusionBoundaryPointSize );
+    
+    if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
+    else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
+    else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+    else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
 
-        m_bcomboBoxODPointIconName->Clear();
-        m_bcomboBoxTextPointIconName->Clear();
-        m_bcomboBoxEBLEndIconName->Clear();
-        m_bcomboBoxEBLStartIconName->Clear();
-        m_bcomboBoxDRPointIconName->Clear();
-        //      Iterate on the Icon Descriptions, filling in the combo control
-        if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
-        
-        bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
-        wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
+    m_bcomboBoxODPointIconName->Clear();
+    m_bcomboBoxTextPointIconName->Clear();
+    m_bcomboBoxEBLEndIconName->Clear();
+    m_bcomboBoxEBLStartIconName->Clear();
+    m_bcomboBoxDRPointIconName->Clear();
+    //      Iterate on the Icon Descriptions, filling in the combo control
+    if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
+    
+    bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
+    wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
-        if( fillCombo  && icons){
-            for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-                wxString *ps = g_pODPointMan->GetIconDescription( i );
-                m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
-                m_bcomboBoxTextPointIconName->Append( *ps, icons->GetBitmap( i ) );
-                m_bcomboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
-                m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
-                m_bcomboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
-            }
-        }
-        
-        // find the correct item in the ODPoint Icon combo box
-        int iconToSelect = -1;
+    if( fillCombo  && icons){
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sODPointIconName ) {
-                iconToSelect = i;
-                break;
-            }
+            wxString *ps = g_pODPointMan->GetIconDescription( i );
+            m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bcomboBoxTextPointIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bcomboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bcomboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
         }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
-        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
-        
-        // find the correct item in the Text Point Icon combo box
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sTextPointIconName ) {
-                iconToSelect = i;
-                break;
-            }
+    }
+    
+    // find the correct item in the ODPoint Icon combo box
+    int iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sODPointIconName ) {
+            iconToSelect = i;
+            break;
         }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxTextPointIconName->Append( g_sTextPointIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxTextPointIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxTextPointIconName->SetSelection( iconToSelect );
-        m_bitmapTextPointBitmap->SetBitmap( m_bcomboBoxTextPointIconName->GetItemBitmap( m_bcomboBoxTextPointIconName->GetSelection() ) );
-        
-        // find the correct item in the EBL End Point Icon combo box
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLEndIconName ) {
-                iconToSelect = i;
-                break;
-            }
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
+    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+    
+    // find the correct item in the Text Point Icon combo box
+    iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sTextPointIconName ) {
+            iconToSelect = i;
+            break;
         }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxEBLEndIconName->Append( g_sEBLEndIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxEBLEndIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
-        m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
-        
-        // find the correct item in the EBL Start Point Icon combo box
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLStartIconName ) {
-                iconToSelect = i;
-                break;
-            }
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxTextPointIconName->Append( g_sTextPointIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxTextPointIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxTextPointIconName->SetSelection( iconToSelect );
+    m_bitmapTextPointBitmap->SetBitmap( m_bcomboBoxTextPointIconName->GetItemBitmap( m_bcomboBoxTextPointIconName->GetSelection() ) );
+    
+    // find the correct item in the EBL End Point Icon combo box
+    iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLEndIconName ) {
+            iconToSelect = i;
+            break;
         }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxEBLStartIconName->Append( g_sEBLStartIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxEBLStartIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxEBLStartIconName->SetSelection( iconToSelect );
-        m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
-        
-        // find the correct item in the DR Point Icon combo box
-        iconToSelect = -1;
-        for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
-            if( *g_pODPointMan->GetIconDescription( i ) == g_sDRPointIconName ) {
-                iconToSelect = i;
-                break;
-            }
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxEBLEndIconName->Append( g_sEBLEndIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxEBLEndIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
+    m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
+    
+    // find the correct item in the EBL Start Point Icon combo box
+    iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sEBLStartIconName ) {
+            iconToSelect = i;
+            break;
         }
-        //  not found, so add  it to the list, with a generic bitmap and using the name as description
-        // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
-            m_bcomboBoxDRPointIconName->Append( g_sDRPointIconName, icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxDRPointIconName->GetCount() - 1;
-        } 
-        
-        m_bcomboBoxDRPointIconName->SetSelection( iconToSelect );
-        m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
-        
-        icons = NULL;
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxEBLStartIconName->Append( g_sEBLStartIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxEBLStartIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxEBLStartIconName->SetSelection( iconToSelect );
+    m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
+    
+    // find the correct item in the DR Point Icon combo box
+    iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sDRPointIconName ) {
+            iconToSelect = i;
+            break;
+        }
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxDRPointIconName->Append( g_sDRPointIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxDRPointIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxDRPointIconName->SetSelection( iconToSelect );
+    m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
+    
+    icons = NULL;
 
-        m_colourPickerActiveBoundaryLineColour->SetColour( g_colourActiveBoundaryLineColour );
-        m_colourPickerInActiveBoundaryLineColour->SetColour( g_colourInActiveBoundaryLineColour );
-        m_colourPickerActiveBoundaryFillColour->SetColour( g_colourActiveBoundaryFillColour );
-        m_colourPickerInActiveBoundaryFillColour->SetColour( g_colourInActiveBoundaryFillColour );
-        
+    m_colourPickerActiveBoundaryLineColour->SetColour( g_colourActiveBoundaryLineColour );
+    m_colourPickerInActiveBoundaryLineColour->SetColour( g_colourInActiveBoundaryLineColour );
+    m_colourPickerActiveBoundaryFillColour->SetColour( g_colourActiveBoundaryFillColour );
+    m_colourPickerInActiveBoundaryFillColour->SetColour( g_colourInActiveBoundaryFillColour );
+    
 //        m_colourPickerActivePathLineColour->SetColour( g_colourActivePathLineColour );
 //        m_colourPickerInActivePathLineColour->SetColour( g_colourInActivePathLineColour );
-        
-        for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
-            if( g_BoundaryLineStyle == ::StyleValues[i] )
-                m_choiceBoundaryLineStyle->SetSelection( i );
+    
+    for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
+        if( g_BoundaryLineStyle == ::StyleValues[i] )
+            m_choiceBoundaryLineStyle->SetSelection( i );
 //            if( g_PathLineStyle == ::StyleValues[i] )
 //                m_choicePathLineStyle->SetSelection( i );
-            if( g_EBLLineStyle == ::StyleValues[i] )
-                m_choiceEBLLineStyle->SetSelection( i );
-            if( g_DRLineStyle == ::StyleValues[i] )
-                m_choiceDRLineStyle->SetSelection( i );
-            if( g_iDRPointRangeRingLineStyle == ::StyleValues[i] )
-                m_choiceDRPointRangeRingStyle->SetSelection( i );
-            if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
-                m_choiceRangeRingStyle->SetSelection( i );
-        }
-        for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
-            if( g_BoundaryLineWidth == ::WidthValues[i] )
-                m_choiceBoundaryLineWidth->SetSelection( i );
+        if( g_EBLLineStyle == ::StyleValues[i] )
+            m_choiceEBLLineStyle->SetSelection( i );
+        if( g_DRLineStyle == ::StyleValues[i] )
+            m_choiceDRLineStyle->SetSelection( i );
+        if( g_iDRPointRangeRingLineStyle == ::StyleValues[i] )
+            m_choiceDRPointRangeRingStyle->SetSelection( i );
+        if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
+            m_choiceRangeRingStyle->SetSelection( i );
+    }
+    for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+        if( g_BoundaryLineWidth == ::WidthValues[i] )
+            m_choiceBoundaryLineWidth->SetSelection( i );
 //            if( g_PathLineWidth == ::WidthValues[i] )
 //                m_choicePathLineWidth->SetSelection( i );
-            if( g_EBLLineWidth == ::WidthValues[i] )
-                m_choiceEBLLineWidth->SetSelection( i );
-            if( g_iBoundaryPointRangeRingLineWidth == ::WidthValues[i] )
-                m_choiceRangeRingWidth->SetSelection( i );
-            if( g_iDRPointRangeRingLineWidth == ::WidthValues[i] )
-                m_choiceDRPointRangeRingWidth->SetSelection( i );
-            if( g_DRLineWidth == ::WidthValues[i] )
-                m_choiceDRLineWidth->SetSelection( i );
-        }
-        m_sliderFillTransparency->SetValue( g_uiFillTransparency );
-        m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
-        if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
-        else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-        else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
-        else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
-        
-        m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
-        m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);
-        m_radioBoxMaintainWith->SetSelection( g_iEBLMaintainWith );
-        m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
-        m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
-        m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
-        m_checkBoxShowVRM->SetValue( g_bEBLVRM );
-        
-        m_choiceTextPosition->SetSelection( g_iTextPosition );
-        m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
-        m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
-        m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );
-        m_staticTextFontFaceExample->SetFont( g_DisplayTextFont );
-        m_radioBoxShowDisplayText->SetSelection( g_iTextPointDisplayTextWhen );
-        
-        m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
-        m_checkBoxShowMagBearings->SetValue( g_bShowMag );
-        m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
-        m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
-        m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
-        m_choiceToolbar->Select( g_iDisplayToolbar );
-        
-        m_colourPickerDRLineColour->SetColour( g_colourDRLineColour );
-        m_colourPickerInActiveDRLineColour->SetColour( g_colourInActiveDRLineColour );
-        m_choiceDRLineWidth->SetSelection( g_DRLineWidth - 1 );
-        m_radioBoxDRLengthType->SetSelection( g_iDRLengthType );
-        m_radioBoxDRIntervalType->SetSelection( g_iDRIntervalType );
-        m_radioBoxDRDistanceUnits->SetSelection( g_iDRDistanceUnits );
-        m_radioBoxDRTimeUnits->SetSelection( g_iDRTimeUnits );
-        m_radioBoxDRPersistence->SetSelection( g_iDRPersistenceType );
-        m_checkBoxShowDRPointRangeRings->SetValue( g_bDRPointShowRangeRings );
-        m_choiceDRPointRangeRingNumber->SetSelection( g_iDRPointRangeRingsNumber );
-        wxString s_DRRangeRingStep;
-        s_DRRangeRingStep.Printf( wxT("%.3f"), g_fDRPointRangeRingsStep );
-        m_textCtrlDRPointRangeRingSteps->SetValue( s_DRRangeRingStep );
-        m_choiceDRPointDistanceUnit->SetSelection( g_iDRPointRangeRingsStepUnits );
-        m_colourPickerDRPointRangeRingColours->SetColour( g_colourDRPointRangeRingsColour );
-        
-        
+        if( g_EBLLineWidth == ::WidthValues[i] )
+            m_choiceEBLLineWidth->SetSelection( i );
+        if( g_iBoundaryPointRangeRingLineWidth == ::WidthValues[i] )
+            m_choiceRangeRingWidth->SetSelection( i );
+        if( g_iDRPointRangeRingLineWidth == ::WidthValues[i] )
+            m_choiceDRPointRangeRingWidth->SetSelection( i );
+        if( g_DRLineWidth == ::WidthValues[i] )
+            m_choiceDRLineWidth->SetSelection( i );
+    }
+    m_sliderFillTransparency->SetValue( g_uiFillTransparency );
+    m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
+    if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
+    else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
+    else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
+    else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
+    
+    m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
+    m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);
+    m_radioBoxMaintainWith->SetSelection( g_iEBLMaintainWith );
+    m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
+    m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
+    m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
+    m_checkBoxShowVRM->SetValue( g_bEBLVRM );
+    
+    m_choiceTextPosition->SetSelection( g_iTextPosition );
+    m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
+    m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
+    m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );
+    m_staticTextFontFaceExample->SetFont( g_DisplayTextFont );
+    m_radioBoxShowDisplayText->SetSelection( g_iTextPointDisplayTextWhen );
+    
+    m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
+    m_checkBoxShowMagBearings->SetValue( g_bShowMag );
+    m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
+    m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
+    m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
+    m_choiceToolbar->Select( g_iDisplayToolbar );
+    
+    m_colourPickerDRLineColour->SetColour( g_colourDRLineColour );
+    m_colourPickerInActiveDRLineColour->SetColour( g_colourInActiveDRLineColour );
+    m_choiceDRLineWidth->SetSelection( g_DRLineWidth - 1 );
+    m_radioBoxDRLengthType->SetSelection( g_iDRLengthType );
+    m_radioBoxDRIntervalType->SetSelection( g_iDRIntervalType );
+    m_radioBoxDRDistanceUnits->SetSelection( g_iDRDistanceUnits );
+    m_radioBoxDRTimeUnits->SetSelection( g_iDRTimeUnits );
+    m_radioBoxDRPersistence->SetSelection( g_iDRPersistenceType );
+    m_checkBoxShowDRPointRangeRings->SetValue( g_bDRPointShowRangeRings );
+    m_choiceDRPointRangeRingNumber->SetSelection( g_iDRPointRangeRingsNumber );
+    wxString s_DRRangeRingStep;
+    s_DRRangeRingStep.Printf( wxT("%.3f"), g_fDRPointRangeRingsStep );
+    m_textCtrlDRPointRangeRingSteps->SetValue( s_DRRangeRingStep );
+    m_choiceDRPointDistanceUnit->SetSelection( g_iDRPointRangeRingsStepUnits );
+    m_colourPickerDRPointRangeRingColours->SetColour( g_colourDRPointRangeRingsColour );
+    
+    
 
-        s.Printf( _T("%.3f"), g_dDRSOG );
-        m_textCtrlSOG->SetValue( s );
-        s.Printf( _T("%i"), g_iDRCOG );
-        m_textCtrlCOG->SetValue( s );
-        s.Printf( _T("%.3f"), g_dDRLength );
-        m_textCtrlDRPathLength->SetValue( s );
-        s.Printf( _T("%.3f"), g_dDRPointInterval );
-        m_textCtrlDRPointInterval->SetValue( s );
-        
+    s.Printf( _T("%.3f"), g_dDRSOG );
+    m_textCtrlSOG->SetValue( s );
+    s.Printf( _T("%i"), g_iDRCOG );
+    m_textCtrlCOG->SetValue( s );
+    s.Printf( _T("%.3f"), g_dDRLength );
+    m_textCtrlDRPathLength->SetValue( s );
+    s.Printf( _T("%.3f"), g_dDRPointInterval );
+    m_textCtrlDRPointInterval->SetValue( s );
+    
 
-        SetDialogSize();
+    SetDialogSize();
 
     return;
 }

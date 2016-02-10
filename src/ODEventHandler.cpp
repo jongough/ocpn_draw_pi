@@ -204,13 +204,15 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     #ifdef __OCPN__ANDROID__
     return;
     #endif
-    
+
+//#ifndef _WXMSW_
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "");
 #else
     setlocale(LC_NUMERIC, "");
 #endif
+//#endif
     
     bool b_need_refresh = false;
     
@@ -453,13 +455,16 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     
     if( b_need_refresh )
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-    
+
+//#ifndef _WXMSW_
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
 #else
     setlocale(LC_NUMERIC, l_locale->ToAscii());
 #endif
     delete l_locale;
+//#endif
+    
 }
 
 void ODEventHandler::PopupMenuHandler(wxCommandEvent& event ) 

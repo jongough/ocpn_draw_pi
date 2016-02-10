@@ -34,8 +34,7 @@ tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
 std::string s1(x); \
-std::string s("") \
-s = stime; \
+std::string s = stime; \
 s += s1; \
 s += "\n"; \
 std::wstring stemp = std::wstring(s.begin(), s.end()); \
