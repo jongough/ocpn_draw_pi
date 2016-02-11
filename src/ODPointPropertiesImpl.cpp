@@ -79,7 +79,7 @@ ODPointPropertiesDialog( parent )
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
     
-#if wxCHECK_VERSION(3,0,0) 
+#if wxCHECK_VERSION(3,0,0)  && not defined(_WXMSW_)
     wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
     dODPointRangeRingSteps.SetMin(0);
