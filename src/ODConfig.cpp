@@ -25,6 +25,7 @@
 
 #include "ODConfig.h"
 #include "ODNavObjectChanges.h"
+#include "EBL.h"
 #include "Layer.h"
 #include "PointMan.h"
 #include "pugixml.hpp"
@@ -43,6 +44,8 @@ extern LayerList        *pLayerList;
 extern PointMan         *g_pODPointMan;  
 extern PathList         *g_pPathList;
 extern int              g_navobjbackups;
+extern EBLList          *g_pEBLList;
+
 
 //ODConfig::ODConfig(const wxString &appName, const wxString &vendorName,
 //                              const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName)
@@ -445,6 +448,19 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
 
                 delete pSet;
             }
+        }
+
+        // make sure any EBL hanging of the boat is repositioned
+        wxEBLListNode *node = g_pEBLList->GetFirst();
+        for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
+            EBL *ebl = (EBL *)node->GetData();
+            if(ebl->m_bCentreOnBoat)  {
+                bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
+                ebl->m_bSaveUpdates = false;
+                ebl->CentreOnBoat(true);
+                ebl->m_bSaveUpdates = l_bSaveUpdatesState;
+            }
+            node = node->GetNext();
         }
     }
 }
