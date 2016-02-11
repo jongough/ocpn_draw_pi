@@ -96,8 +96,14 @@ EBL::EBL() : ODPath()
     SetActiveColours();
     m_bRotateWithBoat = g_bEBLRotateWithBoat;
     m_iMaintainWith = g_iEBLMaintainWith;
-    m_dBoatHeading = g_pfFix.Hdt;
-    m_dBoatCOG = g_pfFix.Cog;
+    if(!isnan(g_pfFix.Hdt))
+        m_dBoatHeading = g_pfFix.Hdt;
+    else
+        m_dBoatHeading = 0.;
+    if(!isnan(g_pfFix.Cog))
+        m_dBoatCOG = g_pfFix.Cog;
+    else
+        m_dBoatCOG = 0.;
     m_dEBLAngle = 0.;
     m_dLength = 0.;
     m_bEndPointMoving = false;
