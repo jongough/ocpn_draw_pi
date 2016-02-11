@@ -569,7 +569,7 @@ bool ocpn_draw_pi::DeInit(void)
     m_parent_window->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     if( g_ODEventHandler ) delete g_ODEventHandler;
     g_ODEventHandler = NULL;
-    if( g_pODRolloverWin ) delete g_pODRolloverWin;
+    if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
     if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
         g_pODPathPropDialog = NULL;
@@ -724,10 +724,10 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
-    if(!g_pfFix.valid) {
-        g_pfFix.valid = true;
-        return;
-    }
+//    if(!g_pfFix.valid) {
+//        g_pfFix.valid = true;
+//        return;
+//    }
     
     if(l_bBoatChange) {
         wxEBLListNode *node = g_pEBLList->GetFirst();
