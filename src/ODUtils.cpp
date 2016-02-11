@@ -257,6 +257,7 @@ double getLMT( double ut, double lon )
 // International helper functions
 void SetGlobalLocale( void )
 {
+#ifndef __WXMSW__
     if(g_iLocaleDepth == 0) { 
         g_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
@@ -266,11 +267,12 @@ void SetGlobalLocale( void )
 #endif
     }
     g_iLocaleDepth++;
+#endif
 }
 
 void ResetGlobalLocale( void )
 {
-    
+#ifndef __WXMSW__
     g_iLocaleDepth--;
     if(g_iLocaleDepth < 0) 
         g_iLocaleDepth = 0;
@@ -283,4 +285,5 @@ void ResetGlobalLocale( void )
         delete g_locale;
         g_locale = NULL;
     } 
+#endif
 }

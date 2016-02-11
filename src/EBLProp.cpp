@@ -69,7 +69,8 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlEBLAngle->Enable(true);
     m_textCtrlEBLAngle->SetEditable(true);
     
-#if wxCHECK_VERSION(3,0,0) 
+
+#if wxCHECK_VERSION(3,0,0)  && not defined(__WXMSW__)
     wxFloatingPointValidator<double> dODEBLAngle(2, &m_dODEBLAngleValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODEBLLength(2, &m_dODEBLLengthValidator, wxNUM_VAL_DEFAULT);
     dODEBLAngle.SetRange(-180, 180);
@@ -115,7 +116,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         m_textCtrlEBLAngle->Enable(true);
     }
     
-#if wxCHECK_VERSION(3,0,0) 
+#if wxCHECK_VERSION(3,0,0)  && not defined(__WXMSW__)
     if(pInEBL->m_dEBLAngle > 180)
         m_dODEBLAngleValidator = pInEBL->m_dEBLAngle - 360;
     else

@@ -532,6 +532,8 @@ int ocpn_draw_pi::Init(void)
     g_pDRPropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
+
+    //SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
     
     return (
     WANTS_OVERLAY_CALLBACK  |
@@ -574,6 +576,10 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
         g_pODPointPropDialog = NULL;
 
+    while(g_iLocaleDepth) {
+        ResetGlobalLocale();
+    }
+    
     if( m_config_button_id ) RemovePlugInTool(m_config_button_id);
     m_config_button_id = 0;
     
@@ -589,7 +595,7 @@ bool ocpn_draw_pi::DeInit(void)
 
 void ocpn_draw_pi::shutdown(bool menu)
 {
-    SendPluginMessage(wxS("OCPNDRAW_READY_FOR_REQUESTS"), wxS("FALSE"));
+    SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("FALSE"));
     
 }
 
@@ -911,11 +917,13 @@ void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
 }
 void ocpn_draw_pi::SaveConfig()
 {
+#ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-#if wxCHECK_VERSION(3,0,0)        
+#if wxCHECK_VERSION(3,0,0)  && not defined(_WXMSW_)       
     wxSetlocale(LC_NUMERIC, "C");
 #else
     setlocale(LC_NUMERIC, "C");
+#endif
 #endif
     
     wxFileConfig *pConf = m_pODConfig;
@@ -1026,21 +1034,25 @@ void ocpn_draw_pi::SaveConfig()
         
     }
     
+#ifndef __WXMSW__
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
 #else
     setlocale(LC_NUMERIC, l_locale->ToAscii());
 #endif
     delete l_locale;
+#endif
 }
 
 void ocpn_draw_pi::LoadConfig()
 {
+#ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "C");
 #else
     setlocale(LC_NUMERIC, "C");
+#endif
 #endif
     
     wxFileConfig *pConf = (wxFileConfig *)m_pODConfig;
@@ -1232,12 +1244,14 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
     }
 
+#ifndef __WXMSW__
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
 #else
     setlocale(LC_NUMERIC, l_locale->ToAscii());
 #endif
     delete l_locale;
+#endif
 }
 
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)

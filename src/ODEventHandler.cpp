@@ -205,14 +205,14 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     return;
     #endif
 
-//#ifndef _WXMSW_
-    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#ifndef __WXMSW__
+    wxString *l_locale = NULL;
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "");
 #else
     setlocale(LC_NUMERIC, "");
 #endif
-//#endif
+#endif
     
     bool b_need_refresh = false;
     
@@ -223,6 +223,17 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT );
         
         wxSelectableItemListNode *node = SelList.GetFirst();
+        if(node) {
+#ifndef __WIN32__
+			l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#if wxCHECK_VERSION(3,0,0)        
+            wxSetlocale(LC_NUMERIC, "");
+#else
+            setlocale(LC_NUMERIC, "");
+#endif
+#endif
+            
+        }
         while( node ) {
             SelectItem *pFindSel = node->GetData();
             ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
@@ -456,14 +467,16 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( b_need_refresh )
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
 
-//#ifndef _WXMSW_
+#ifndef __WXMSW__
+    if(l_locale) {
 #if wxCHECK_VERSION(3,0,0)        
-    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
+        wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
 #else
-    setlocale(LC_NUMERIC, l_locale->ToAscii());
+        setlocale(LC_NUMERIC, l_locale->ToAscii());
 #endif
-    delete l_locale;
-//#endif
+        delete l_locale;
+    }
+#endif
     
 }
 

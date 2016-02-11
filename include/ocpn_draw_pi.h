@@ -25,9 +25,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
  ***************************************************************************
  */
+#ifndef _OCPNDRAWPI_H_
+#define _OCPNDRAWPI_H_
 
-#ifdef DEBUG_BUILD
 #ifdef __WXMSW__
+#ifdef _DEBUG
 #  define DEBUGSL(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
@@ -35,6 +37,7 @@ char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
 std::string s1(x); \
 std::string s = stime; \
+s += " :: "; \
 s += s1; \
 s += "\n"; \
 std::wstring stemp = std::wstring(s.begin(), s.end()); \
@@ -65,9 +68,14 @@ s += "\n" ; \
 std::wstring stemp = std::wstring(s.begin(), s.end()); \
 LPCWSTR sw = stemp.c_str(); \
 OutputDebugString(sw); } while (0) 
-
 #else
-
+#  define DEBUGSL(x) do {} while (0)
+#  define DEBUGST(x) do {} while (0)
+#  define DEBUGCONT(x) do {} while (0)
+#  define DEBUGEND(x) do {} while (0)
+#endif
+#else
+#ifdef DEBUG_BUILD
 #  define DEBUGSL(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
@@ -89,19 +97,16 @@ std::cout << x ; } while (0)
 
 #  define DEBUGEND(x) do { \
 std::cout << x  << std::endl ; } while (0)
-#endif
 #else
 #  define DEBUGSL(x) do {} while (0)
 #  define DEBUGST(x) do {} while (0)
 #  define DEBUGCONT(x) do {} while (0)
 #  define DEBUGEND(x) do {} while (0)
 #endif
+#endif
 
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
-
-#ifndef _OCPNDRAWPI_H_
-#define _OCPNDRAWPI_H_
 
 #include "ocpn_plugin.h"
 #include "undo.h"

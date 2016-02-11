@@ -161,7 +161,7 @@ ODPropertiesDialogDef( parent )
     
     m_pfdDialog = NULL;
     
-#if wxCHECK_VERSION(3,0,0) 
+#if wxCHECK_VERSION(3,0,0)  && not defined(_WXMSW_)
     wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadiusVal(3, &m_dODPointArrivalRadiusValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dDRPathLengthVal(3, &m_dDRPathLengthValidator, wxNUM_VAL_DEFAULT);
