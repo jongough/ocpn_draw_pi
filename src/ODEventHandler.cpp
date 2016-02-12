@@ -207,11 +207,6 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 
 #ifndef __WXMSW__
     wxString *l_locale = NULL;
-#if wxCHECK_VERSION(3,0,0)        
-    wxSetlocale(LC_NUMERIC, "");
-#else
-    setlocale(LC_NUMERIC, "");
-#endif
 #endif
     
     bool b_need_refresh = false;
@@ -224,7 +219,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
         
         wxSelectableItemListNode *node = SelList.GetFirst();
         if(node) {
-#ifndef __WIN32__
+#ifndef __WXMSW__
 			l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
             wxSetlocale(LC_NUMERIC, "");
