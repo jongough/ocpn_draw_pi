@@ -127,6 +127,7 @@ protected:
 public:
     /** Constructor */
     ODPointPropertiesImpl( wxWindow* parent );
+    virtual ~ODPointPropertiesImpl();
     void SetODPoint( ODPoint *pOP );
     ODPoint *GetODPoint( void ) { return (ODPoint *)m_pODPoint; }
     bool UpdateProperties( bool positionOnly = false );

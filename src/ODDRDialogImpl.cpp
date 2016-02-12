@@ -78,7 +78,7 @@ extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
     SetGlobalLocale();
-#if wxCHECK_VERSION(3,0,0)  && not defined(__WXMSW__)   
+#if wxCHECK_VERSION(3,0,0) && not defined(__WXMSW__)   
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dIntervalVal(3, &m_dIntervalValidator, wxNUM_VAL_DEFAULT);

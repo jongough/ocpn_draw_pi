@@ -686,6 +686,99 @@ void PathManagerDialog::Create()
 
 PathManagerDialog::~PathManagerDialog()
 {
+    m_pPathListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED,
+                              wxListEventHandler(PathManagerDialog::OnPathSelected), NULL, this );
+    m_pPathListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED,
+                              wxListEventHandler(PathManagerDialog::OnPathDeSelected), NULL, this );
+    m_pPathListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
+                              wxListEventHandler(PathManagerDialog::OnPathDefaultAction), NULL, this );
+    m_pPathListCtrl->Disconnect( wxEVT_LEFT_DOWN,
+                              wxMouseEventHandler(PathManagerDialog::OnPathToggleVisibility), NULL, this );
+    m_pPathListCtrl->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK,
+                              wxListEventHandler(PathManagerDialog::OnPathColumnClicked), NULL, this );
+    btnPathProperties->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                                wxCommandEventHandler(PathManagerDialog::OnPathPropertiesClick), NULL, this );
+    
+    btnPathActivate->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                              wxCommandEventHandler(PathManagerDialog::OnPathActivateClick), NULL, this );
+    btnPathActivate->Disconnect( wxEVT_LEFT_DOWN,
+                              wxMouseEventHandler(PathManagerDialog::OnPathBtnLeftDown), NULL, this );
+    
+    btnPathZoomto->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                            wxCommandEventHandler(PathManagerDialog::OnPathZoomtoClick), NULL, this );
+    btnPathZoomto->Disconnect( wxEVT_LEFT_DOWN,
+                            wxMouseEventHandler(PathManagerDialog::OnPathBtnLeftDown), NULL, this );
+    
+    btnPathDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                            wxCommandEventHandler(PathManagerDialog::OnPathDeleteClick), NULL, this );
+    
+    btnPathExport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                            wxCommandEventHandler(PathManagerDialog::OnPathExportClick), NULL, this );
+    
+    btnPathDeleteAll->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                               wxCommandEventHandler(PathManagerDialog::OnPathDeleteAllClick), NULL, this );
+    
+    m_pODPointListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED,
+                                 wxListEventHandler(PathManagerDialog::OnODPointSelected), NULL, this );
+    m_pODPointListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED,
+                                 wxListEventHandler(PathManagerDialog::OnODPointDeSelected), NULL, this );
+    m_pODPointListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
+                                 wxListEventHandler(PathManagerDialog::OnODPointDefaultAction), NULL, this );
+    m_pODPointListCtrl->Disconnect( wxEVT_LEFT_DOWN,
+                                 wxMouseEventHandler(PathManagerDialog::OnODPointToggleVisibility), NULL, this );
+    m_pODPointListCtrl->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK,
+                                 wxListEventHandler(PathManagerDialog::OnODPointColumnClicked), NULL, this );
+    btnODPointNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                            wxCommandEventHandler(PathManagerDialog::OnODPointNewClick), NULL, this );
+    
+    btnODPointProperties->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                                   wxCommandEventHandler(PathManagerDialog::OnODPointPropertiesClick), NULL, this );
+    
+    btnODPointZoomto->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                               wxCommandEventHandler(PathManagerDialog::OnODPointZoomtoClick), NULL, this );
+    
+    btnODPointDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                               wxCommandEventHandler(PathManagerDialog::OnODPointDeleteClick), NULL, this );
+    
+    btnODPointExport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                               wxCommandEventHandler(PathManagerDialog::OnODPointExportClick), NULL, this );
+    
+    btnODPointDeleteAll->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                                  wxCommandEventHandler(PathManagerDialog::OnODPointDeleteAllClick), NULL, this );
+    
+    btnImport->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                        wxCommandEventHandler(PathManagerDialog::OnImportClick), NULL, this );
+    btnExportViz->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                           wxCommandEventHandler(PathManagerDialog::OnExportVizClick), NULL, this );
+    
+    m_pLayListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED,
+                             wxListEventHandler(PathManagerDialog::OnLaySelected), NULL, this );
+    m_pLayListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_DESELECTED,
+                             wxListEventHandler(PathManagerDialog::OnLaySelected), NULL, this );
+    m_pLayListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_ACTIVATED,
+                             wxListEventHandler(PathManagerDialog::OnLayDefaultAction), NULL, this );
+    m_pLayListCtrl->Disconnect( wxEVT_LEFT_DOWN,
+                             wxMouseEventHandler(PathManagerDialog::OnLayToggleVisibility), NULL, this );
+    m_pLayListCtrl->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK,
+                             wxListEventHandler(PathManagerDialog::OnLayColumnClicked), NULL, this );
+    btnLayNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                        wxCommandEventHandler(PathManagerDialog::OnLayNewClick), NULL, this );
+    
+    btnLayDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                           wxCommandEventHandler(PathManagerDialog::OnLayDeleteClick), NULL, this );
+    
+    btnLayToggleChart->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                                wxCommandEventHandler(PathManagerDialog::OnLayToggleChartClick), NULL, this );
+    
+    btnLayToggleNames->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                                wxCommandEventHandler(PathManagerDialog::OnLayToggleNamesClick), NULL, this );
+    
+    btnLayToggleListing->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                                  wxCommandEventHandler(PathManagerDialog::OnLayToggleListingClick), NULL, this );
+    
+    btnPathOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
+                        wxCommandEventHandler(PathManagerDialog::OnOK), NULL, this );
+    
     delete m_pPathListCtrl;
     delete m_pODPointListCtrl;
     delete m_pLayListCtrl;

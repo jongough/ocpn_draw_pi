@@ -572,9 +572,11 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
     if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
-        g_pODPathPropDialog = NULL;
+    g_pODPathPropDialog = NULL;
     if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
-        g_pODPointPropDialog = NULL;
+    g_pODPointPropDialog = NULL;
+    if( g_pODToolbar ) g_pODToolbar->Destroy();
+    g_pODToolbar = NULL;
 
     while(g_iLocaleDepth) {
         ResetGlobalLocale();
