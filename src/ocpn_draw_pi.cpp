@@ -724,10 +724,15 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
-//    if(!g_pfFix.valid) {
-//        g_pfFix.valid = true;
-//        return;
-//    }
+    if(!g_pfFix.valid) {
+        g_pfFix.valid = true;
+        g_pfFix.Lat = 360.;
+        g_pfFix.Lon = 360.;
+        g_pfFix.Cog = -999.;
+        g_pfFix.Hdm = -999.;
+        g_pfFix.Hdt = -999.;
+        return;
+    }
     
     if(l_bBoatChange) {
         wxEBLListNode *node = g_pEBLList->GetFirst();
