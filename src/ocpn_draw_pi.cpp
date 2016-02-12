@@ -710,11 +710,14 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 {
     bool    l_bBoatChange = false;
-    
+    DEBUGST("SetPositionFixEX:, SOG: ");
+    DEBUGCONT(pfix.Sog);
+    DEBUGCONT(", COG: ");
+    DEBUGEND(pfix.Cog);
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
-    if(g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !isnan(pfix.Cog)) || (g_pfFix.Hdt != pfix.Hdt && !isnan(pfix.Hdt)))
+    if(g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !isnan(g_pfFix.Cog)) || (g_pfFix.Hdt != pfix.Hdt && !isnan(g_pfFix.Hdt)))
         l_bBoatChange = true;
     
     g_pfFix.Lat = pfix.Lat;
