@@ -64,6 +64,7 @@ ODRolloverWin::ODRolloverWin( wxWindow *parent, int timeout ) :
 
 ODRolloverWin::~ODRolloverWin()
 {
+    m_timer_timeout.Stop();
     delete m_pbm;
 }
 void ODRolloverWin::OnTimer( wxTimerEvent& event )
