@@ -89,6 +89,18 @@ ODPointPropertiesDialog( parent )
 #endif
 }
 
+ODPointPropertiesImpl::~ODPointPropertiesImpl()
+{
+    this->Disconnect( ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
+                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+    this->Disconnect( ID_RCLK_MENU_COPY_LL, wxEVT_COMMAND_MENU_SELECTED,
+                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+    this->Disconnect( ID_RCLK_MENU_PASTE, wxEVT_COMMAND_MENU_SELECTED,
+                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+    this->Disconnect( ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
+                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+}
+
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
     wxSize sz = m_SizerDialogBox->CalcMin();
