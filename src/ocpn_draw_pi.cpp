@@ -710,10 +710,6 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 {
     bool    l_bBoatChange = false;
-    DEBUGST("SetPositionFixEX:, SOG: ");
-    DEBUGCONT(pfix.Sog);
-    DEBUGCONT(", COG: ");
-    DEBUGEND(pfix.Cog);
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
