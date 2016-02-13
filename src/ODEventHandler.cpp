@@ -234,7 +234,8 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
             
             if( pp && pp->IsVisible() ) {
-                g_pRolloverPathSeg = pFindSel;
+                g_pRolloverPathSeg = new SelectItem;
+                *g_pRolloverPathSeg = *pFindSel;
                 
                 if( NULL == g_pODRolloverWin ) {
                     g_pODRolloverWin = new ODRolloverWin( g_ocpn_draw_pi->m_parent_window );
@@ -344,7 +345,9 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                 SelectItem *pFindSel = node->GetData();
                 ODPoint *pp = (ODPoint *) pFindSel->m_pData1;        //candidate
                 if( pp && pp->IsVisible() ) {
-                    g_pRolloverPoint = pFindSel;
+                    //g_pRolloverPoint = pFindSel;
+                    g_pRolloverPoint = new SelectItem();
+                    *g_pRolloverPoint = *pFindSel;
                     showRollover = true;
                     
                     if( NULL == g_pODRolloverWin ) {
@@ -441,15 +444,24 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
         g_pODRolloverWin->IsActive( false );
-        g_pRolloverPathSeg = NULL;
-        if(g_pRolloverPoint) {
-            TextPoint *tp = (TextPoint *) g_pRolloverPoint->m_pData1;
-            if( tp && tp->m_sTypeString == wxT("Text Point")) {
-                tp->m_bShowDisplayTextOnRollover = false;
-                tp = NULL;
-            }
+        if(g_pRolloverPathSeg) {
+            delete g_pRolloverPathSeg;
+            g_pRolloverPathSeg = NULL;
         }
-        g_pRolloverPoint = NULL;
+
+        if(g_pRolloverPoint) {
+            ODPoint *l_ODPoint = (ODPoint *)g_pRolloverPoint->m_pData1;
+            if(l_ODPoint && l_ODPoint->m_GUID != wxEmptyString && l_ODPoint->m_sTypeString == wxT("Text Point")) {
+                TextPoint *tp = (TextPoint *) g_pRolloverPoint->m_pData1;
+                if( tp ) {
+                    tp->m_bShowDisplayTextOnRollover = false;
+                    tp = NULL;
+                }
+            }
+            delete g_pRolloverPoint;
+            g_pRolloverPoint = NULL;
+        }
+        
         g_pODRolloverWin->Destroy();
         g_pODRolloverWin = NULL;
         b_need_refresh = true;
