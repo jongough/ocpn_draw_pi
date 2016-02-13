@@ -110,9 +110,11 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     if(pInEBL->m_bFixedEndPosition) {
         m_radioBoxMaintainWith->Enable(false);
         m_textCtrlEBLAngle->Enable(false);
+        m_textCtrlTotalLength->SetEditable(false);
     } else {
         m_radioBoxMaintainWith->Enable(true);
         m_textCtrlEBLAngle->Enable(true);
+        m_textCtrlTotalLength->SetEditable(true);
     }
     
 #if wxCHECK_VERSION(3,0,0) && not defined(__WXMSW__)
@@ -197,9 +199,20 @@ bool EBLProp::SaveChanges( void )
     
     double l_dEBLAngle;
     m_textCtrlEBLAngle->GetValue().ToDouble( &l_dEBLAngle );
-    if(l_dEBLAngle != m_pEBL->m_dEBLAngle) {
-        l_bUpdatePath = true;
-        m_pEBL->m_dEBLAngle = l_dEBLAngle;
+    if(m_pEBL->m_bRotateWithBoat) {
+        if(l_dEBLAngle != m_pEBL->m_dEBLAngle) {
+            l_bUpdatePath = true;
+            m_pEBL->m_dEBLAngle = l_dEBLAngle;
+        }
+    } else if(!m_pEBL->m_bFixedEndPosition) {
+        switch (m_pEBL->m_iMaintainWith) {
+            case ID_EBL_MAINTAIN_WITH_HEADING:
+                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Hdm;
+                break;
+            case ID_EBL_MAINTAIN_WITH_COG:
+                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Cog;
+                break;
+        }
     }
 
     if(l_bUpdatePath)
@@ -223,11 +236,13 @@ void EBLProp::OnRotateWithBoat(wxCommandEvent& event)
         m_checkBoxEBLFixedEndPosition->Enable(false);
         m_radioBoxMaintainWith->Enable(true);
         m_textCtrlEBLAngle->Enable(true);
+        m_textCtrlTotalLength->SetEditable(true);
     } else {
         m_checkBoxEBLFixedEndPosition->Enable(true);
         if(m_checkBoxEBLFixedEndPosition->IsChecked()) {
             m_radioBoxMaintainWith->Enable(false);
             m_textCtrlEBLAngle->Enable(false);
+            m_textCtrlTotalLength->SetEditable(false);
         }
     }
     ODPathPropertiesDialogDef::OnRotateWithBoat(event);
@@ -238,9 +253,11 @@ void EBLProp::OnFixedEndPosition(wxCommandEvent& event)
     if(m_checkBoxEBLFixedEndPosition->IsChecked()) {
         m_radioBoxMaintainWith->Enable(false);
         m_textCtrlEBLAngle->Enable(false);
+        m_textCtrlTotalLength->SetEditable(false);
     } else {
         m_radioBoxMaintainWith->Enable(true);
         m_textCtrlEBLAngle->Enable(true);
+        m_textCtrlTotalLength->SetEditable(true);
     }
     ODPathPropertiesDialogDef::OnFixedEndPosition(event);
 }
