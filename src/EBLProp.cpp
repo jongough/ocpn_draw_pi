@@ -32,9 +32,9 @@
 #include <wx/valnum.h>
 #endif
 
-extern EBLList                 *g_pEBLList;
-extern ocpn_draw_pi            *g_ocpn_draw_pi;
-extern PlugIn_Position_Fix_Ex   g_pfFix;
+extern EBLList                  *g_pEBLList;
+extern ocpn_draw_pi             *g_ocpn_draw_pi;
+extern ODPlugIn_Position_Fix_Ex g_pfFix;
 
 EBLProp::EBLProp()
 {
