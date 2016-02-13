@@ -713,26 +713,23 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
-    if(g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !isnan(g_pfFix.Cog)) || (g_pfFix.Hdt != pfix.Hdt && !isnan(g_pfFix.Hdt)))
+    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || g_pfFix.Cog != pfix.Cog || g_pfFix.Hdt != pfix.Hdt))
         l_bBoatChange = true;
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
-    g_pfFix.Cog = pfix.Cog;
+    if(isnan(pfix.Cog)) g_pfFix.Cog = 0.;
+    else g_pfFix.Cog = pfix.Cog;
     g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
     g_pfFix.Hdm = pfix.Hdm;
-    g_pfFix.Hdt = pfix.Hdt;
+    if(isnan(pfix.Hdt)) g_pfFix.Hdt = 0.;
+    else g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
     if(!g_pfFix.valid) {
         g_pfFix.valid = true;
-        g_pfFix.Lat = 360.;
-        g_pfFix.Lon = 360.;
-        g_pfFix.Cog = -999.;
-        g_pfFix.Hdm = -999.;
-        g_pfFix.Hdt = -999.;
-        return;
+        l_bBoatChange = true;
     }
     
     if(l_bBoatChange) {
@@ -3088,7 +3085,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL->AddPoint( pMousePoint );
     m_pMouseEBL->m_bCentreOnBoat = true;
     DistanceBearingMercator_Plugin(rlat, rlon, m_dStartLat, m_dStartLon, &m_pMouseEBL->m_dEBLAngle, &m_pMouseEBL->m_dLength);
-/*    
+    
     if(m_pMouseEBL->m_bRotateWithBoat) {
         switch(m_pMouseEBL->m_iMaintainWith) {
             case ID_EBL_MAINTAIN_WITH_HEADING:
@@ -3101,7 +3098,8 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
                 break;
         }
     }
-*/    
+
+    
     if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
