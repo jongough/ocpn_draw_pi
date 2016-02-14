@@ -3,17 +3,17 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-01-30 08:56+1100\n"
-"PO-Revision-Date: 2016-02-07 02:48-0500\n"
+"PO-Revision-Date: 2016-02-07 02:49-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
-"Language-Team: Catalan\n"
-"Language: ca_ES\n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: crowdin.com\n"
 "X-Crowdin-Project: opencpn\n"
-"X-Crowdin-Language: ca\n"
+"X-Crowdin-Language: ja\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 
 #: include/ODDRDialogDef.h:59 src/ODToolbarImpl.cpp:388
@@ -57,7 +57,7 @@ msgstr ""
 #: src/ODConfig.cpp:146 src/ODConfig.cpp:186 src/ODConfig.cpp:281
 #: src/ODConfig.cpp:306
 msgid "Export GPX file"
-msgstr "Exportar fitxers GPX"
+msgstr "GPX ファイルにエクスポートします。"
 
 #: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:294
 msgid "Confirm"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: src/ODConfig.cpp:169 src/ODConfig.cpp:199 src/ODConfig.cpp:294
 msgid "Overwrite existing file?"
-msgstr "Sobreescriure el fitxer existent?"
+msgstr "既存のファイルを上書きしますか？"
 
 #: src/ODConfig.cpp:233
 msgid "Loading navobjects from "
@@ -77,7 +77,7 @@ msgstr ""
 
 #: src/ODConfig.cpp:378
 msgid "Import GPX file"
-msgstr "Importar fitxers GPX"
+msgstr "GPX ファイルからインポート"
 
 #: src/ODConfig.cpp:426
 #, c-format
@@ -111,7 +111,7 @@ msgstr ""
 #: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
 #: src/ODPropertiesDialogDef.cpp:666 src/ODPropertiesDialogDef.cpp:672
 msgid "Distance"
-msgstr "Distància"
+msgstr ""
 
 #: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
 #: src/ODPropertiesDialogDef.cpp:666 src/ODPropertiesDialogDef.cpp:672
@@ -191,19 +191,19 @@ msgstr ""
 
 #: src/ODEventHandler.cpp:261
 msgid "(unnamed)"
-msgstr "(sense nom)"
+msgstr "(名前なし)"
 
 #: src/ODEventHandler.cpp:265
 msgid "Total Length: "
-msgstr "Longitud total: "
+msgstr "全長: "
 
 #: src/ODEventHandler.cpp:266
 msgid "Leg: from "
-msgstr "Tram: des de "
+msgstr "Leg: from "
 
 #: src/ODEventHandler.cpp:267
 msgid " to "
-msgstr " fins "
+msgstr " to "
 
 #: src/ODEventHandler.cpp:271
 msgid "From: "
@@ -220,7 +220,7 @@ msgstr ""
 #: src/ODEventHandler.cpp:378 src/ODPathPropertiesDialogDef.cpp:33
 #: src/ODPointPropertiesDialog.cpp:31
 msgid "Name"
-msgstr "Nom"
+msgstr ""
 
 #: src/ODEventHandler.cpp:496
 msgid "Are you sure you want to delete this Boundary?"
@@ -347,7 +347,7 @@ msgstr ""
 #: src/ODEventHandler.cpp:794 src/ODEventHandler.cpp:802
 #: src/ODEventHandler.cpp:872 src/ODEventHandler.cpp:890
 msgid "Properties..."
-msgstr "Propietats..."
+msgstr "プロパティ..."
 
 #: src/ODEventHandler.cpp:805
 msgid "Centre on moving boat"
@@ -395,11 +395,11 @@ msgstr ""
 
 #: src/ODEventHandler.cpp:839
 msgid "Deactivate"
-msgstr "Desactivar"
+msgstr ""
 
 #: src/ODEventHandler.cpp:840
 msgid "Activate"
-msgstr "Activa"
+msgstr ""
 
 #: src/ODEventHandler.cpp:844
 msgid "Copy Boundary GUID"
@@ -469,11 +469,11 @@ msgstr ""
 
 #: src/ODEventHandler.cpp:908
 msgid "Remove Point from Path"
-msgstr "Treure el punt de la ruta"
+msgstr "パスからポイント削除"
 
 #: src/ODEventHandler.cpp:910 src/ODEventHandler.cpp:913
 msgid "Delete"
-msgstr "Esborrar"
+msgstr "削除"
 
 #: src/ODEventHandler.cpp:914
 msgid "Copy Point GUID"
@@ -482,15 +482,15 @@ msgstr ""
 #: src/ODPathPropertiesDialogDef.cpp:40 src/ODPathPropertiesDialogImpl.cpp:563
 #: src/ODPointPropertiesDialog.cpp:216
 msgid "Description"
-msgstr "Descripció"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:65
 msgid "Active"
-msgstr "Activa"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:69
 msgid "Total Length"
-msgstr "Distància Total"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:85
 msgid "Line Colour"
@@ -507,7 +507,7 @@ msgstr ""
 #: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
 #: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Dot"
-msgstr "Punt"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:96 src/ODPointPropertiesDialog.cpp:201
 #: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:329
@@ -535,7 +535,7 @@ msgstr ""
 #: src/ODPropertiesDialogDef.cpp:475 src/ODPropertiesDialogDef.cpp:559
 #: src/ODPropertiesDialogDef.cpp:624 src/ODPropertiesDialogDef.cpp:792
 msgid "Solid"
-msgstr "Sòlid"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:102 src/ODPropertiesDialogDef.cpp:128
 #: src/ODPropertiesDialogDef.cpp:461 src/ODPropertiesDialogDef.cpp:545
@@ -546,52 +546,52 @@ msgstr ""
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "1 pixel"
-msgstr "1 pixel"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "10 pixels"
-msgstr "10 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "2 pixels"
-msgstr "2 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "3 pixels"
-msgstr "3 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "4 pixels"
-msgstr "4 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "5 pixels"
-msgstr "5 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "6 pixels"
-msgstr "6 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "7 pixels"
-msgstr "7 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "8 pixels"
-msgstr "8 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:106 src/ODPointPropertiesDialog.cpp:191
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:782
 msgid "9 pixels"
-msgstr "9 pixels"
+msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:112
 msgid "Fill Colour"
@@ -692,7 +692,7 @@ msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:549
 msgid "To Point"
-msgstr "Al Punt"
+msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:550
 msgid "Distance From Boat"
@@ -700,19 +700,19 @@ msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:553
 msgid "Bearing (M)"
-msgstr "Rumb (M)"
+msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:555
 msgid "Bearing"
-msgstr "Rumb"
+msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:557 src/ODPointPropertiesDialog.cpp:70
 msgid "Latitude"
-msgstr "Latitud"
+msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:558 src/ODPointPropertiesDialog.cpp:78
 msgid "Longitude"
-msgstr "Longitud"
+msgstr ""
 
 #: src/ODPathPropertiesDialogImpl.cpp:560
 msgid "Bearing From-To (M)"
@@ -728,7 +728,7 @@ msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:22
 msgid "Properties"
-msgstr "Propietats"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:43
 msgid "Show name"
@@ -737,7 +737,7 @@ msgstr ""
 #: src/ODPointPropertiesDialog.cpp:46 src/ODPropertiesDialogDef.cpp:207
 #: src/pathmanagerdialog.cpp:525
 msgid "Icon"
-msgstr "Icona"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:61
 msgid "Change all Path Point Icons"
@@ -926,7 +926,7 @@ msgstr ""
 #: src/ODPointPropertiesDialog.cpp:325 src/pathmanagerdialog.cpp:634
 #: src/pathmanagerdialog.cpp:1655 src/pathmanagerdialog.cpp:1667
 msgid "Show on chart"
-msgstr "Mostra a la carta"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:347
 msgid "Extended"
@@ -934,19 +934,19 @@ msgstr ""
 
 #: src/ODPointPropertiesImpl.cpp:114
 msgid "Copy"
-msgstr "Copiar"
+msgstr "コピー"
 
 #: src/ODPointPropertiesImpl.cpp:115
 msgid "Copy lat/long"
-msgstr "Copiar lat/long"
+msgstr "緯度/経度をコピーします。"
 
 #: src/ODPointPropertiesImpl.cpp:116
 msgid "Paste"
-msgstr "Enganxar"
+msgstr "張付け"
 
 #: src/ODPointPropertiesImpl.cpp:117
 msgid "Paste lat/long"
-msgstr "Enganxar lat/long"
+msgstr "緯度/経度を貼り付ける"
 
 #: src/ODPointPropertiesImpl.cpp:566
 msgid "OCPN Draw Point, Layer: "
@@ -1308,48 +1308,48 @@ msgstr ""
 
 #: src/pathmanagerdialog.cpp:406
 msgid "Path & Point Manager"
-msgstr "Gestionar camins i punts"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:439
 msgid "Paths"
-msgstr "Camins"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:460 src/pathmanagerdialog.cpp:612
 msgid "Show"
-msgstr "Mostrar"
+msgstr "表示"
 
 #: src/pathmanagerdialog.cpp:461
 msgid "Path Name"
-msgstr "Nom del camí"
+msgstr "パス名"
 
 #: src/pathmanagerdialog.cpp:462
 msgid "Desc"
-msgstr "Desc"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:468
 msgid "&Properties..."
-msgstr "&Propietats..."
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:473 src/pathmanagerdialog.cpp:820
 msgid "&Activate"
-msgstr "&Activa"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:480 src/pathmanagerdialog.cpp:542
 msgid "&Center View"
-msgstr "&Centra Vista"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:487 src/pathmanagerdialog.cpp:547
 #: src/pathmanagerdialog.cpp:629
 msgid "&Delete"
-msgstr "&Esborra"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:492 src/pathmanagerdialog.cpp:552
 msgid "&Export selected..."
-msgstr "&Exporta la Ruta..."
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:499
 msgid "&Delete All"
-msgstr "&Esborra-ho Tot"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:509
 msgid "OD Points"
@@ -1361,31 +1361,31 @@ msgstr ""
 
 #: src/pathmanagerdialog.cpp:527
 msgid "Distance from Ownship"
-msgstr "Distància a la pròpia nau"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:532
 msgid "&New"
-msgstr "&Nou"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:537
 msgid "&Properties"
-msgstr "&Propietats"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:564
 msgid "Delete All"
-msgstr "Esborra-ho Tot"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:575
 msgid "I&mport GPX..."
-msgstr "I&mporta GPX..."
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:585
 msgid "Export All Visible..."
-msgstr "Exportar Tot el Visible..."
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:595
 msgid "Layers"
-msgstr "Capes"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:613
 msgid "Layer Name"
@@ -1397,7 +1397,7 @@ msgstr ""
 
 #: src/pathmanagerdialog.cpp:619
 msgid "Temporary layer"
-msgstr "Capa temporal"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:639 src/pathmanagerdialog.cpp:1660
 #: src/pathmanagerdialog.cpp:1668
@@ -1407,29 +1407,29 @@ msgstr ""
 #: src/pathmanagerdialog.cpp:644 src/pathmanagerdialog.cpp:1665
 #: src/pathmanagerdialog.cpp:1669
 msgid "List contents"
-msgstr "Llista dels continguts"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:760
 msgid "(Unnamed )"
-msgstr "(Sense nom)"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:819
 msgid "&Deactivate"
-msgstr "&Desactiva"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:885 src/pathmanagerdialog.cpp:1507
 msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Esteu segur de voler esborrar l'objecte(s) seleccionat(s)"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:885 src/pathmanagerdialog.cpp:933
 #: src/pathmanagerdialog.cpp:1507 src/pathmanagerdialog.cpp:1540
 #: src/pathmanagerdialog.cpp:1608 src/pathmanagerdialog.cpp:1737
 msgid "OpenCPN Alert"
-msgstr "Alaerta de l'OpenCPN"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:933
 msgid "Are you sure you want to delete <ALL> paths?"
-msgstr "N'està segur de voler esborrar <ALL>les rutes?"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:1010
 msgid "Boundary Properties"
@@ -1465,7 +1465,7 @@ msgstr ""
 
 #: src/pathmanagerdialog.cpp:1147
 msgid "Question"
-msgstr "Pregunta"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:1266
 msgid "(Unnamed) "
@@ -1488,7 +1488,7 @@ msgstr ""
 
 #: src/pathmanagerdialog.cpp:1653
 msgid "Hide from chart"
-msgstr "Amagar de la carta"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:1658
 msgid "Hide Point names"
@@ -1496,13 +1496,13 @@ msgstr ""
 
 #: src/pathmanagerdialog.cpp:1663
 msgid "Unlist contents"
-msgstr "Continguts no llistats"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:1736
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr "N'està segur de voler esborrar aquesta capa i <ALL> el seu contingut?"
+msgstr ""
 
 #: src/pathmanagerdialog.cpp:1977
 msgid "(Unnamed Layer)"
-msgstr "(Capa Sense Nom)"
+msgstr ""
 
