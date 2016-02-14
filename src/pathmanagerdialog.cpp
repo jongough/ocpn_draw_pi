@@ -879,9 +879,9 @@ void PathManagerDialog::UpdatePathListCtrl()
     for(int i = 0; i < m_pPathListCtrl->GetColumnCount(); i++) {
 #ifdef WIN32
         m_pPathListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else WIN32        
+#else
         m_pPathListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif WIN32        
+#endif 
     }
     
     this->GetSizer()->Fit( this );
@@ -1405,9 +1405,9 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
     for(int i = 0; i < m_pODPointListCtrl->GetColumnCount(); i++) {
 #ifdef WIN32
         m_pODPointListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else WIN32        
+#else
         m_pODPointListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif WIN32        
+#endif
     }
     this->GetSizer()->Fit( this );
     this->Layout();
@@ -2090,9 +2090,9 @@ void PathManagerDialog::UpdateLayListCtrl()
     for(int i = 0; i < m_pLayListCtrl->GetColumnCount(); i++) {
 #ifdef WIN32
         m_pLayListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else WIN32        
+#else
         m_pLayListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif WIN32        
+#endif
     }
 }
 
