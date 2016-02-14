@@ -98,7 +98,7 @@ private:
     wxSVGDocument   *m_p_svgd_ocpn_draw_ebl_grey;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr_grey;
-#endif ODraw_USE_SVG
+#endif
     
     wxImage         *m_p_img_ocpn_draw_pi;
     wxImage         *m_p_img_ocpn_draw_grey_pi;

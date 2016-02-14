@@ -449,9 +449,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
 #ifdef WIN32
         m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else WIN32        
+#else
         m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif WIN32        
+#endif
     }
     
     ::wxEndBusyCursor();
@@ -553,9 +553,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
 #ifdef WIN32
         m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else WIN32        
+#else
         m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif WIN32        
+#endif
     }
     
     this->GetSizer()->Fit( this );

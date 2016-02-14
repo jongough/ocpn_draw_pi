@@ -602,9 +602,9 @@ bool ODNavObjectChanges::AddPath( ODPath *pb, const char *action )
 #ifdef __WXMSW__
     fclose(m_ODchanges_file);
     m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
-#else __WXMSW__    
+#else
     fflush(m_ODchanges_file);
-#endif __WXMSW__
+#endif
     
     return true;
 }
@@ -625,9 +625,9 @@ bool ODNavObjectChanges::AddODPoint( ODPoint *pOP, const char *action )
 #ifdef __WXMSW__
     fclose(m_ODchanges_file);
     m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
-#else __WXMSW__    
+#else
     fflush(m_ODchanges_file);
-#endif __WXMSW__
+#endif
     
     return true;
 }
