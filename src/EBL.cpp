@@ -292,11 +292,13 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
         pStartPoint->SetODPointRangeRingsStep( m_dLength / pStartPoint->GetODPointRangeRingsNumber() );
     }
     
+    bool l_bRequestRefresh = true;
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
-        g_pEBLPropDialog->UpdateProperties();
-
+        l_bRequestRefresh = g_pEBLPropDialog->UpdateProperties();
+    
     m_bSaveUpdates = false;
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    if(l_bRequestRefresh)
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     
     return;
 }

@@ -142,12 +142,16 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         m_checkBoxEBLFixedEndPosition->Enable(true);
     }
     
+    m_bLockUpdate = false;
+    
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
 }
 
 bool EBLProp::UpdateProperties( void )
 {
     wxString s;
+    
+    if(m_bLockUpdate) return true;
     
     ODPathPropertiesDialogImpl::UpdateProperties();
     
@@ -299,4 +303,41 @@ void EBLProp::OnCancel( wxCommandEvent& event )
     ODPathPropertiesDialogImpl::OnCancel(event);
 
     ResetGlobalLocale();
+}
+
+
+void EBLProp::OnChoiceLineWidth( wxCommandEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnChoiceLineWidth(event);
+}
+
+void EBLProp::OnChoiceLineStyle( wxCommandEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnChoiceLineStyle(event);
+}
+
+void EBLProp::OnKillFocusChoiceLineWidth( wxFocusEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnKillFocusChoiceLineWidth(event);
+}
+
+void EBLProp::OnSetFocusChoiceLineWidth( wxFocusEvent& event )
+{
+    m_bLockUpdate = true;
+    ODPathPropertiesDialogImpl::OnSetFocusChoiceLineWidth(event);
+}
+
+void EBLProp::OnKillFocusChoiceLineStyle( wxFocusEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnKillFocusChoiceLineStyle(event);
+}
+
+void EBLProp::OnSetFocusChoiceLineStyle( wxFocusEvent& event )
+{
+    m_bLockUpdate = true;
+    ODPathPropertiesDialogImpl::OnSetFocusChoiceLineStyle(event);
 }

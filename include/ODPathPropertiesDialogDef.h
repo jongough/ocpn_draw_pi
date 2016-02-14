@@ -83,7 +83,11 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnKillFocusChoiceLineStyle( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnSetFocusChoiceLineStyle( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineWidth( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnKillFocusChoiceLineWidth( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnSetFocusChoiceLineWidth( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }

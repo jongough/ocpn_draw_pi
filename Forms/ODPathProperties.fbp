@@ -1362,7 +1362,7 @@
                                         <event name="OnEraseBackground"></event>
                                         <event name="OnKeyDown"></event>
                                         <event name="OnKeyUp"></event>
-                                        <event name="OnKillFocus"></event>
+                                        <event name="OnKillFocus">OnKillFocusChoiceLineStyle</event>
                                         <event name="OnLeaveWindow"></event>
                                         <event name="OnLeftDClick"></event>
                                         <event name="OnLeftDown"></event>
@@ -1377,7 +1377,7 @@
                                         <event name="OnRightDClick"></event>
                                         <event name="OnRightDown"></event>
                                         <event name="OnRightUp"></event>
-                                        <event name="OnSetFocus"></event>
+                                        <event name="OnSetFocus">OnSetFocusChoiceLineStyle</event>
                                         <event name="OnSize"></event>
                                         <event name="OnUpdateUI"></event>
                                     </object>
@@ -1533,7 +1533,7 @@
                                         <event name="OnEraseBackground"></event>
                                         <event name="OnKeyDown"></event>
                                         <event name="OnKeyUp"></event>
-                                        <event name="OnKillFocus"></event>
+                                        <event name="OnKillFocus">OnKillFocusChoiceLineWidth</event>
                                         <event name="OnLeaveWindow"></event>
                                         <event name="OnLeftDClick"></event>
                                         <event name="OnLeftDown"></event>
@@ -1548,7 +1548,7 @@
                                         <event name="OnRightDClick"></event>
                                         <event name="OnRightDown"></event>
                                         <event name="OnRightUp"></event>
-                                        <event name="OnSetFocus"></event>
+                                        <event name="OnSetFocus">OnSetFocusChoiceLineWidth</event>
                                         <event name="OnSize"></event>
                                         <event name="OnUpdateUI"></event>
                                     </object>
