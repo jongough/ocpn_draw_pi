@@ -54,6 +54,12 @@ class EBLProp : public ODPathPropertiesDialogImpl
         void OnOK( wxCommandEvent& event );
         void OnClose( wxCloseEvent& event );
         void OnCancel( wxCommandEvent& event );
+        void OnChoiceLineWidth( wxCommandEvent& event );
+        void OnChoiceLineStyle( wxCommandEvent& event );
+        void OnSetFocusChoiceLineWidth( wxFocusEvent& event );
+        void OnKillFocusChoiceLineWidth( wxFocusEvent& event );
+        void OnSetFocusChoiceLineStyle( wxFocusEvent& event );
+        void OnKillFocusChoiceLineStyle( wxFocusEvent& event );
         
     protected:
         
@@ -63,6 +69,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
         bool    m_bLockEBLAngle;
         bool    m_bLockEBLLength;
         bool    m_bSetLocale;
+        bool    m_bLockUpdate;
         
 };
 
