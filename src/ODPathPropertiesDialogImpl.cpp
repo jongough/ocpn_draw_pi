@@ -589,7 +589,7 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         //g_ocpn_draw_pi->SaveConfig();
     }
     
-    if( m_pPath->IsActive() )
+    if( m_pPath && m_pPath->IsActive() )
     {
         wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
         wxString msg;

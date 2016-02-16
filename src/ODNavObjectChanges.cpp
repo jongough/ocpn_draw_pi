@@ -1661,7 +1661,7 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
                         break;
                     }
                 }
-                if ( !TypeString.compare( wxS("Boundary") ) ) {
+                if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || !TypeString.compare( wxS("DR") ) ) {
                     ODPath *pPath = GPXLoadPath1( object, true, true, b_layerviz, layer_id, &TypeString );
                     n_obj++;
                     InsertPathA( pPath );
