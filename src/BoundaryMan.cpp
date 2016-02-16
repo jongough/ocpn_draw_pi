@@ -30,7 +30,11 @@
 #include "PointMan.h"
 #include "ocpn_draw_pi.h"
 
+#ifdef __WXOSX__
+#include <math.h>
+#else
 #include "math.h"
+#endif
 
 extern PathList         *g_pPathList;
 extern BoundaryList     *g_pBoundaryList;
@@ -124,10 +128,15 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
             if(OCPNpoint_node == OCPNpoint_last_node) break;
         }
         bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
-
+#ifdef __WXOSX__
+    }
+    delete [] polyX;
+    delete [] polyY;
+#else
         delete [] polyX;
         delete [] polyY;
     }
+#endif
     return bInPoly;
 }
 

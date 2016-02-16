@@ -498,8 +498,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_PATH_MENU_PROPERTIES:
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
-            
+#ifndef __WXOSX__
             DimeWindow( g_pPathManagerDialog );
+#endif
             g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
@@ -550,8 +551,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sTypeLong = _("Are you sure you want to delete this DR?");
                     sTypeShort = _("OCPN Draw DR Delete");
                 }
-
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT| wxICON_QUESTION );
+#else
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
             }
             
             if( dlg_return == wxID_YES ) {
@@ -654,8 +658,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sMessage = _("Are you sure you want to remove this OD Point?");
                     sCaption = _("OCPN Draw Remove OD Point");
                 }
-                
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION);
+#else
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
             }
             
             if( dlg_return == wxID_YES ) {
@@ -710,8 +717,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sMessage = _("Are you sure you want to delete this EBL Point?");
                     sCaption = _("OCPN Draw Delete EBL Point");
                 }
-                
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION);
+#else
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
             }
             
             if( dlg_return == wxID_YES ) {
@@ -749,8 +759,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sMessage = _("Are you sure you want to delete this EBL Point?");
                     sCaption = _("OCPN Draw Delete EBL Point");
                 }
-                
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION);
+#else
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
             }
             
             if( dlg_return == wxID_YES ) {
@@ -804,7 +817,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
             
             g_pODDRDialog->UpdateDialog( m_pDR );
+#ifndef __WXOSX__
             DimeWindow( g_pODDRDialog );
+#endif
             g_pODDRDialog->Show();
             
             

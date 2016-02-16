@@ -33,6 +33,9 @@
 #include <wx/filename.h>
 #include <wx/file.h>
 #include <wx/dir.h>
+#ifdef __WXOSX__
+#include <wx/stdpaths.h>
+#endif
 
 
 extern wxString         *g_pData;
@@ -53,7 +56,13 @@ ODConfig::ODConfig(const wxString &appName, const wxString &vendorName, const wx
 {
     //ODConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
     //g_pODConfig->LoadMyConfig( 0 );
+#ifdef __WXOSX__
+    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+    m_sODNavObjSetFile = std_path.GetUserConfigDir();   // should be ~/Library/Preferences
+    m_sODNavObjSetFile += wxS("/opencpn/plugins/draw_pi/data/");
+#else
     m_sODNavObjSetFile = *g_pData;
+#endif
     m_sODNavObjSetFile += wxS( "ODnavobj.xml" );
     m_sODNavObjSetChangesFile = m_sODNavObjSetFile + _T( ".changes" );
  
@@ -272,11 +281,7 @@ void ODConfig::LoadNavObjects()
             UpdateNavObj();
         }
         
-//        delete m_pODNavObjectChangesSet;
-           
     }
-
-//    m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
 }
 
 void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )

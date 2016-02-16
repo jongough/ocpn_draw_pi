@@ -445,10 +445,6 @@ void EBL::MaintainWith( void )
 {
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    double l_dHdt = g_pfFix.Hdt;
-    double l_dCog = g_pfFix.Cog;
-    if(isnan(l_dHdt)) l_dHdt = 0.;
-    if(isnan(l_dCog)) l_dCog = 0.;
     switch(m_iMaintainWith) {
         case ID_EBL_MAINTAIN_WITH_HEADING:
             if(!isnan(g_pfFix.Hdt))

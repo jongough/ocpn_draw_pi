@@ -767,10 +767,10 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             
             
             //    Required if RMDialog is not STAY_ON_TOP
-            #ifdef __WXOSX__
+#ifdef __WXOSX__
             g_pPathManagerDialog->Centre();
             g_pPathManagerDialog->Raise();
-            #endif
+#endif
             nConfig_State = 0;
             //SetToolbarItemState( m_config_button_id, false );
             
@@ -2792,13 +2792,13 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
         && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
-        #ifndef __WXOSX__
+#ifndef __WXOSX__
         dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Point?"),
                                             _("OCPN Draw Point Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
-        #else
+#else
         dlg_return = wxID_YES;
-        #endif
+#endif
         if( dlg_return == wxID_YES ) {
             pMousePoint = pNearbyPoint;
             
@@ -2857,13 +2857,13 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
         && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
-        #ifndef __WXOSX__
+#ifndef __WXOSX__
         dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby Point?"),
                                             _("OCPN Draw Point Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
-        #else
+#else
         dlg_return = wxID_YES;
-        #endif
+#endif
         if( dlg_return == wxID_YES ) {
             pMousePoint = pNearbyPoint;
             
@@ -2935,13 +2935,13 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
-        #ifndef __WXOSX__
+#ifndef __WXOSX__
         dlg_return = OCPNMessageBox_PlugIn( m_parent_window, _("Use nearby OD Point?"),
                                             _("OCPN Draw Boundary Create"),
                                             (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
-        #else
+#else
         dlg_return = wxID_YES;
-        #endif
+#endif
         if( dlg_return == wxID_YES ) {
             pMousePoint = pNearbyPoint;
             
@@ -3125,10 +3125,10 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     
     
     //    Required if RMDialog is not STAY_ON_TOP
-    #ifdef __WXOSX__
+#ifdef __WXOSX__
     g_pODDRDialog->Centre();
     g_pODDRDialog->Raise();
-    #endif
+#endif
     
     nDR_State++;
     
@@ -3255,8 +3255,12 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
         unsigned char *d = dest_data;
         
         //  Sometimes, on Windows, the destination image is corrupt...
-        if(NULL == box)
+        if(NULL == box) {
+#ifdef __WXOSX__
+            free(d);
+#endif
             return;
+        }
         
         float alpha = 1.0 - (float)transparency / 255.0;
         int sb = size_x * size_y;
