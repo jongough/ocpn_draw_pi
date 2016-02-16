@@ -36,6 +36,10 @@
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
+#ifdef __WXOSX__
+#include "ODConfig.h"
+#include "styles.h"
+#endif
 //#include "navutil.h"
 //#include "styles.h"
 #include "PathMan.h"

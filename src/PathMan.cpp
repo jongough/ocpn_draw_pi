@@ -60,9 +60,11 @@
 #include <wx/apptrait.h>
 
 //    List definitions for Point Manager Icons
+#ifndef __WXOSX__
 WX_DECLARE_LIST(wxBitmap, markicon_bitmap_list_type);
 WX_DECLARE_LIST(wxString, markicon_key_list_type);
 WX_DECLARE_LIST(wxString, markicon_description_list_type);
+#endif
 
 //    List implementation for Point Manager Icons
 #include <wx/listimpl.cpp>

@@ -146,6 +146,17 @@ bool PointMan::RemoveODPoint(ODPoint *prp)
 
 void PointMan::ProcessUserIcons( )
 {
+#ifdef __WXOSX__
+    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+    wxString UserIconPath = std_path.GetUserConfigDir();
+    UserIconPath += wxS("/opencpn/UserIcons");
+    
+    if( wxDir::Exists( UserIconPath ) ) {
+        wxArrayString FileList;
+        
+        wxDir dir( UserIconPath );
+        int n_files = dir.GetAllFiles( UserIconPath, &FileList );
+#else
     wxString *UserIconPath = g_PrivateDataDir;
     wxChar sep = wxFileName::GetPathSeparator();
     if ( UserIconPath->IsNull() ) return;
@@ -158,6 +169,7 @@ void PointMan::ProcessUserIcons( )
         
         wxDir dir( *UserIconPath );
         int n_files = dir.GetAllFiles( *UserIconPath, &FileList );
+#endif
         
         for( int ifile = 0; ifile < n_files; ifile++ ) {
             wxString name = FileList.Item( ifile );

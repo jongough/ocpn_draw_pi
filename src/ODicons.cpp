@@ -60,10 +60,18 @@ ODicons::~ODicons()
 void ODicons::initialize_images(void)
 {
     wxFileName fn;
+#ifdef __WXOSX__
+    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+    fn.SetPath(std_path.GetUserConfigDir());  // should be ~/Library/Preferences
+    fn.AppendDir(_T("opencpn"));
+    fn.AppendDir( wxT("plugins") );
+    fn.AppendDir(wxT("draw_pi"));
+#else
     fn.SetPath(*GetpSharedDataLocation());
     fn.AppendDir( wxT("plugins") );
     fn.AppendDir(wxT("ocpn_draw_pi"));
     fn.AppendDir(wxT("data"));
+#endif
     wxString s = _("ocpn_draw_pi data location");
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
     

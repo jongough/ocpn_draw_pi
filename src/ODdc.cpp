@@ -737,15 +737,20 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
             if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
         }
+#ifdef __WXOSX__
+        if(wxGC) {
+#endif
         wxGC->SetPen(dc->GetPen());
         wxGC->SetBrush(dc->GetBrush());
         wxGraphicsPath p = wxGC->CreatePath();
         p.AddCircle( x, y, innerRadius );
         p.AddCircle( x, y, outerRadius );
         wxGC->FillPath(p);
-    
+#ifdef __WXOSX__
+        }
+#endif
     }
-    #ifdef ocpnUSE_GL
+#ifdef ocpnUSE_GL
     else {
         //      Enable anti-aliased lines, at best quality
         
@@ -769,9 +774,13 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
         npoints[0] = (int) innerSteps;
         npoints[1] = (int) outerSteps;
         DrawPolygonsTessellated( 2, npoints, disk, 0, 0 );
+#ifdef __WXOSX__
+        delete [] disk;
+#else
         wxDELETE( disk );
+#endif
     }
-    #endif    
+#endif    
 }
 
 void ODDC::StrokeCircle( wxCoord x, wxCoord y, wxCoord radius )
