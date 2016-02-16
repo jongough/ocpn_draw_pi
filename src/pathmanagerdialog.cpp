@@ -641,7 +641,7 @@ void PathManagerDialog::Create()
     btnLayToggleNames->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnLayToggleNamesClick), NULL, this );
 
-    btnLayToggleListing = new wxButton( m_pPanelLay, -1, _("List contents") );
+    btnLayToggleListing = new wxButton( m_pPanelLay, -1, _("List contents ") );
     bsLayButtons->Add( btnLayToggleListing, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
     btnLayToggleListing->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnLayToggleListingClick), NULL, this );
@@ -1753,13 +1753,13 @@ void PathManagerDialog::UpdateLayButtons()
             btnLayToggleNames->SetLabel( _("Show Point names") );
 
         if( pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData()->IsVisibleOnListing() ) btnLayToggleListing->SetLabel(
-                _("Unlist contents") );
+                _("Unlist contents ") );
         else
-            btnLayToggleListing->SetLabel( _("List contents") );
+            btnLayToggleListing->SetLabel( _("List contents ") );
     } else {
         btnLayToggleChart->SetLabel( _("Show on chart") );
         btnLayToggleNames->SetLabel( _("Show Point names") );
-        btnLayToggleListing->SetLabel( _("List contents") );
+        btnLayToggleListing->SetLabel( _("List contents ") );
     }
 }
 
