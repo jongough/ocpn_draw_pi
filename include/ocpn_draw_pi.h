@@ -215,6 +215,14 @@ enum {
     ID_BOUNDARY_TYPE_LAST
 };
 
+// Boundary states
+enum {
+    ID_BOUNDARY_STATE_ANY = 0,
+    ID_BOUNDARY_STATE_ACTIVE,
+    ID_BOUNDARY_STATE_INACTIVE,
+    
+    ID_BOUNDARY_STATE_LAST
+};
 
 //#define PI 3.14159265
 
