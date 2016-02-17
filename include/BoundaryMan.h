@@ -28,6 +28,7 @@
 #define BOUNDARYMAN_H
 
 #include "PathMan.h"
+#include "ocpn_draw_pi.h"
 
 class Boundary;
 class BoundaryPoint;
@@ -35,7 +36,7 @@ class BoundaryPoint;
 class BoundaryMan : public PathMan
 {
     public:
-        wxString    FindPointInBoundary( double lat, double lon, int type );
+        wxString    FindPointInBoundary( double lat, double lon, int type, int state = ID_BOUNDARY_ANY );
         bool        FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
         bool        FindPointInBoundary( wxString l_GUID, double lat, double lon );
         wxString    FindPointInBoundaryPoint( double lat, double lon, int type );

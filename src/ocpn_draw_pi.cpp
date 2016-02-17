@@ -1272,6 +1272,7 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
     double      l_dLon;
     wxString    l_GUID;
     int         l_BoundaryType;
+    int         l_BoundaryState;
     bool        bFail = false;
     
     if(message_id == wxS("OCPN_DRAW_PI")) {
@@ -1403,10 +1404,15 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
                 else l_BoundaryType = ID_BOUNDARY_ANY;
                 
+                l_BoundaryState = ID_BOUNDARY_ANY;
+                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_BOUNDARY_STATE_ACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_BOUNDARY_STATE_INACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_BOUNDARY_STATE_ANY;
+                
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;
                     bool    l_bFoundBoundaryPoint = false;
-                    wxString l_sGUID = g_pBoundaryMan->FindPointInBoundary( l_dLat, l_dLon, l_BoundaryType );
+                    wxString l_sGUID = g_pBoundaryMan->FindPointInBoundary( l_dLat, l_dLon, l_BoundaryType, l_BoundaryState );
                     if(l_sGUID.length() > 0) 
                         l_bFoundBoundary = true;
                     else {
