@@ -285,7 +285,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_sliderBackgroundTransparency = new wxSlider( m_panelDisplayText, wxID_ANY, 100, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_sliderBackgroundTransparency->SetMinSize( wxSize( 100,-1 ) );
 	
-	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
 	
 	wxBoxSizer* bSizerFontFace;
 	bSizerFontFace = new wxBoxSizer( wxHORIZONTAL );
