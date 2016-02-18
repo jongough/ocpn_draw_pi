@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-07 02:50-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
@@ -595,6 +595,9 @@ msgstr "Ritverktyg för OpenCPN"
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr "Dölj punktens namn"
 #
@@ -712,7 +715,8 @@ msgstr "Linjestil"
 msgid "Line Width"
 msgstr "Linjebredd"
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Visa innehåll"
 #
 msgid "Loading navobjects from "
@@ -1088,6 +1092,11 @@ msgstr ""
 "Gränslinjerna kommer att ändras och ankarvakten att inaktiveras\n"
 "Klicka på Nej för att behålla punkterna i gränslinjer och larm."
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr "Tid"
 #
@@ -1109,7 +1118,8 @@ msgstr "Total längd"
 msgid "Total Length: "
 msgstr "Total längd: "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "Dölj innehåll"
 #
 msgid "Update initial conditions"

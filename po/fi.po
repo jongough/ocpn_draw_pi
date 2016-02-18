@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -597,6 +597,9 @@ msgstr "Yleispiirtäminen OpenCPN:ssä"
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr "Piilota pisteiden nimet"
 #
@@ -714,7 +717,8 @@ msgstr "Viivatyyli"
 msgid "Line Width"
 msgstr "Viivan leveys"
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Luetteloi sisältö"
 #
 msgid "Loading navobjects from "
@@ -1090,6 +1094,11 @@ msgstr ""
 " Tämä muuttaa polut ja poista ankkuri hälytykset.\n"
 " Jos vastaat Ei pitää OD pisteet polkujen tai hälytysten käytössä."
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr "Aika"
 #
@@ -1111,7 +1120,8 @@ msgstr "Kokonaispituus"
 msgid "Total Length: "
 msgstr "Kokonaispituus: "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "Poista sisältö luettelosta"
 #
 msgid "Update initial conditions"

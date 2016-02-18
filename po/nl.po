@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-12 17:06-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Dutch\n"
@@ -597,6 +597,9 @@ msgstr "Teken PlugIn voor OpenCPN"
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr "Verbergen puntnamen"
 #
@@ -716,7 +719,8 @@ msgstr "Lijnstijl"
 msgid "Line Width"
 msgstr "Lijndikte"
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Toon inhoud"
 #
 msgid "Loading navobjects from "
@@ -1094,6 +1098,11 @@ msgstr ""
 "Dit zal de lijnen veranderen en de ankeralarmen uitschakelen. \n"
 " Het antwoord 'Nee' zorgt ervoor dat deze OD-punten hiervoor behouden blijven."
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr "tijd"
 #
@@ -1115,7 +1124,8 @@ msgstr "Totale lengte"
 msgid "Total Length: "
 msgstr "Totale lengte: "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "Haal inhoud weg"
 #
 msgid "Update initial conditions"

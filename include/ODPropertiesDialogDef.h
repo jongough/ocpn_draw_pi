@@ -11,18 +11,18 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
-#include <wx/panel.h>
+#include <wx/string.h>
+#include <wx/checkbox.h>
 #include <wx/gdicmn.h>
 #include <wx/font.h>
 #include <wx/colour.h>
 #include <wx/settings.h>
-#include <wx/string.h>
-#include <wx/checkbox.h>
 #include <wx/stattext.h>
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
 #include <wx/sizer.h>
+#include <wx/panel.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
@@ -37,22 +37,6 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-
-///////////////////////////////////////////////////////////////////////////////
-/// Class MyPanel1
-///////////////////////////////////////////////////////////////////////////////
-class MyPanel1 : public wxPanel 
-{
-	private:
-	
-	protected:
-	
-	public:
-		
-		MyPanel1( wxWindow* parent, wxWindowID id = wxID_ANY, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 500,300 ), long style = wxTAB_TRAVERSAL ); 
-		~MyPanel1();
-	
-};
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODPropertiesDialogDef
@@ -221,6 +205,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextDateVal;
 		wxStaticText* m_staticTextOther;
 		wxStaticText* m_staticText34;
+		wxPanel* m_panelHelp;
+		wxStaticText* m_staticTextHelp;
+		wxStaticBitmap* m_bitmapOD_WD_Interactions;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonApply;

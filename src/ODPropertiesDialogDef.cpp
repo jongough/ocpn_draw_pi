@@ -9,14 +9,6 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-MyPanel1::MyPanel1( wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style ) : wxPanel( parent, id, pos, size, style )
-{
-}
-
-MyPanel1::~MyPanel1()
-{
-}
-
 ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
@@ -889,6 +881,24 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelAbout->Layout();
 	bSizerAbout->Fit( m_panelAbout );
 	m_notebookProperties->AddPage( m_panelAbout, _("About"), false );
+	m_panelHelp = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizer22;
+	fgSizer22 = new wxFlexGridSizer( 0, 1, 0, 0 );
+	fgSizer22->SetFlexibleDirection( wxBOTH );
+	fgSizer22->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextHelp = new wxStaticText( m_panelHelp, wxID_ANY, _("This chart shows the interactions between Boundaries and WatchDog alam boundaries"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextHelp->Wrap( -1 );
+	fgSizer22->Add( m_staticTextHelp, 0, wxALL, 5 );
+	
+	m_bitmapOD_WD_Interactions = new wxStaticBitmap( m_panelHelp, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer22->Add( m_bitmapOD_WD_Interactions, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	
+	m_panelHelp->SetSizer( fgSizer22 );
+	m_panelHelp->Layout();
+	fgSizer22->Fit( m_panelHelp );
+	m_notebookProperties->AddPage( m_panelHelp, _("Help"), false );
 	
 	m_SizerProperties->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
 	
