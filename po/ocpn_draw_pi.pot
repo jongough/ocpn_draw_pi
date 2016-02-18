@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 0.4.663\n"
+"Project-Id-Version: ocpn_draw_pi 0.4.664\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr ""
 msgid "OD Point Properties"
 msgstr ""
 
-#: include/ODPropertiesDialogDef.h:232
+#: include/ODPropertiesDialogDef.h:233
 msgid "OCPN Draw Properties"
 msgstr ""
 
@@ -165,13 +165,13 @@ msgid "Time Units"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:96 src/ODPathPropertiesDialogDef.cpp:211
-#: src/ODPointPropertiesDialog.cpp:354 src/ODPropertiesDialogDef.cpp:908
+#: src/ODPointPropertiesDialog.cpp:354 src/ODPropertiesDialogDef.cpp:941
 #: src/pathmanagerdialog.cpp:653
 msgid "&OK"
 msgstr ""
 
 #: src/ODDRDialogDef.cpp:100 src/ODPathPropertiesDialogDef.cpp:215
-#: src/ODPointPropertiesDialog.cpp:357 src/ODPropertiesDialogDef.cpp:911
+#: src/ODPointPropertiesDialog.cpp:357 src/ODPropertiesDialogDef.cpp:944
 msgid "&Cancel"
 msgstr ""
 
@@ -613,16 +613,22 @@ msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:108
 #: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:222
+#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:918
+#: src/ODPropertiesDialogImpl.cpp:166 src/ODPropertiesDialogImpl.cpp:169
 msgid "Exclusion"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:108
 #: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:222
+#: src/ODPropertiesDialogDef.cpp:910 src/ODPropertiesDialogDef.cpp:919
+#: src/ODPropertiesDialogImpl.cpp:167 src/ODPropertiesDialogImpl.cpp:170
 msgid "Inclusion"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:108
 #: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:222
+#: src/ODPropertiesDialogDef.cpp:911 src/ODPropertiesDialogDef.cpp:920
+#: src/ODPropertiesDialogImpl.cpp:168 src/ODPropertiesDialogImpl.cpp:171
 msgid "Neither"
 msgstr ""
 
@@ -1150,7 +1156,7 @@ msgstr ""
 msgid "Background Density"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:477 src/ODPropertiesDialogImpl.cpp:195
+#: src/ODPropertiesDialogDef.cpp:477 src/ODPropertiesDialogImpl.cpp:218
 msgid "Path"
 msgstr ""
 
@@ -1256,12 +1262,40 @@ msgid ""
 "boundaries"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:901
+#: src/ODPropertiesDialogDef.cpp:907
+msgid "WD"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:908 src/ODPropertiesDialogImpl.cpp:165
+msgid "All"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:917
+msgid "OD"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:934
 msgid "Help"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:914
+#: src/ODPropertiesDialogDef.cpp:947
 msgid "&Apply"
+msgstr ""
+
+#: src/ODPropertiesDialogImpl.cpp:164
+msgid "OD\\WD"
+msgstr ""
+
+#: src/ODPropertiesDialogImpl.cpp:173 src/ODPropertiesDialogImpl.cpp:174
+#: src/ODPropertiesDialogImpl.cpp:175 src/ODPropertiesDialogImpl.cpp:176
+#: src/ODPropertiesDialogImpl.cpp:180 src/ODPropertiesDialogImpl.cpp:184
+msgid "Ring"
+msgstr ""
+
+#: src/ODPropertiesDialogImpl.cpp:177 src/ODPropertiesDialogImpl.cpp:178
+#: src/ODPropertiesDialogImpl.cpp:179 src/ODPropertiesDialogImpl.cpp:181
+#: src/ODPropertiesDialogImpl.cpp:182 src/ODPropertiesDialogImpl.cpp:183
+msgid "No alarm"
 msgstr ""
 
 #: src/ODToolbarImpl.cpp:384

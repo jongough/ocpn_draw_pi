@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-12 17:06-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -206,6 +206,9 @@ msgstr "Aktiivse täitevärv"
 #
 msgid "Active Line Colour"
 msgstr "Aktiivse joone värv"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "Alati"
@@ -795,6 +798,9 @@ msgstr "Mitte kunagi"
 msgid "New layer %d: %s"
 msgstr "Uus kiht %d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "Üksuste nr"
 #
@@ -873,6 +879,9 @@ msgstr "OCPN Draw EBL-punkti eemaldamine"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Draw OD-punkti eemaldamine"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "OD-punkt"
 #
@@ -884,6 +893,9 @@ msgstr "OD-punkti omadused"
 #
 msgid "OD Points"
 msgstr "OD-punktid"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Ainult üleliikudes"
@@ -998,6 +1010,9 @@ msgstr "Eemaldades selle punkti muutub piir kehtetuks, see pole lubatud."
 #
 msgid "Right"
 msgstr "Paremal"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1136,6 +1151,9 @@ msgstr "Kasuta punkti läheduses?"
 #
 msgid "Version:"
 msgstr "Versioon:"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "Joonistamise ajal"

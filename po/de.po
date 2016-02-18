@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-07 02:49-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
@@ -206,6 +206,9 @@ msgstr "Füllungs-Farbe Inaktiv"
 #
 msgid "Active Line Colour"
 msgstr "Linienfarbe Aktiv"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "Immer"
@@ -794,6 +797,9 @@ msgstr "Nie"
 msgid "New layer %d: %s"
 msgstr "Neue Ebene-%d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "Anz. Elemente"
 #
@@ -872,6 +878,9 @@ msgstr "OCPN Draw EBL Punkt löschen"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Draw OD Punkt löschen"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "OD Punkt"
 #
@@ -883,6 +892,9 @@ msgstr "OD Punkt Eigenschaften"
 #
 msgid "OD Points"
 msgstr "OD Punkte"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Nur bei Maus-über"
@@ -1000,6 +1012,9 @@ msgstr ""
 #
 msgid "Right"
 msgstr "Rechts"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1139,6 +1154,9 @@ msgstr "Nahen Punkt benutzen?"
 #
 msgid "Version:"
 msgstr "Version:"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "Beim Zeichnen"
