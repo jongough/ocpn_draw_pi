@@ -75,6 +75,8 @@ public:
     wxString    m_s_ocpn_draw_dr;
     wxString    m_s_ocpn_draw_dr_grey;
     
+    wxBitmap    *m_p_bm_od_wd_interactions;
+    
     bool        m_bUpdateIcons;
 
 private:

@@ -31,6 +31,7 @@
 
 #include "ODPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
+#include "ODicons.h"
 #include "ODToolbarImpl.h"
 #include "ODUtils.h"
 #include "PointMan.h"
@@ -41,6 +42,7 @@
 #include <wx/valnum.h>
 #endif
 
+extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
 extern wxString     g_OD_default_wp_icon;
@@ -158,6 +160,7 @@ ODPropertiesDialogDef( parent )
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
     m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
+    m_bitmapOD_WD_Interactions->SetBitmap(*g_ocpn_draw_pi->m_pODicons->m_p_bm_od_wd_interactions);
     
     m_pfdDialog = NULL;
     
