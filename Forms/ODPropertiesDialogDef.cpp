@@ -77,7 +77,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -898,7 +898,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelHelp->SetSizer( fgSizer22 );
 	m_panelHelp->Layout();
 	fgSizer22->Fit( m_panelHelp );
-	m_notebookProperties->AddPage( m_panelHelp, _("Help"), true );
+	m_notebookProperties->AddPage( m_panelHelp, _("Help"), false );
 	
 	m_SizerProperties->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
 	
