@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -596,6 +596,9 @@ msgstr "Γενικό σχέδιο για το OpenCPN"
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr "Απόκρυψη ονομάτων σημείων"
 #
@@ -713,7 +716,8 @@ msgstr "Στυλ γραμμής"
 msgid "Line Width"
 msgstr "Πλάτος Γραμμής"
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Περιεχόμενα"
 #
 msgid "Loading navobjects from "
@@ -1091,6 +1095,11 @@ msgstr ""
 " Με ΟΧΙ τα σημεία OD που χρησιμοποιούνται σε μονοπάτια ή συναγερμούς "
 "διατηρούνται."
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr "Χρόνος"
 #
@@ -1112,7 +1121,8 @@ msgstr "Συνολικό μήκος"
 msgid "Total Length: "
 msgstr "Συνολικό μήκος: "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "Αφαίρεση περιεχομένων"
 #
 msgid "Update initial conditions"

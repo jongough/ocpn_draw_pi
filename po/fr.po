@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -600,6 +600,9 @@ msgstr "Traceur général pour OpenCPN"
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr "Cacher les noms des points"
 #
@@ -717,7 +720,8 @@ msgstr "Type du trait"
 msgid "Line Width"
 msgstr "Epaisseur du trait"
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Liste des contenus"
 #
 msgid "Loading navobjects from "
@@ -1099,6 +1103,11 @@ msgstr ""
 "Répondre \"Non\", maintiendra les points traceur utilisés dans ces chemins ou "
 "ces alarmes de mouillage."
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr "Temps"
 #
@@ -1120,7 +1129,8 @@ msgstr "Longueur totale"
 msgid "Total Length: "
 msgstr "Longueur totale : "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "Ne pas lister les contenus"
 #
 msgid "Update initial conditions"

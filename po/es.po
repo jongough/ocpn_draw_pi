@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Spanish\n"
@@ -596,6 +596,9 @@ msgstr "Generador de dibujos para OpenCPN"
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr "Ocultar nombres de puntos"
 #
@@ -713,7 +716,8 @@ msgstr "Estilo de línea"
 msgid "Line Width"
 msgstr "Grosor de la línea"
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Lista contenidos"
 #
 msgid "Loading navobjects from "
@@ -1089,6 +1093,11 @@ msgstr ""
 " Esto va a cambiar las líneas y a desactivar las alarmas de fondeo.\n"
 " Respondiendo No mantiene los puntos OD utilizados en líneas o alarmas."
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr "Hora"
 #
@@ -1110,7 +1119,8 @@ msgstr "Long. Total"
 msgid "Total Length: "
 msgstr "Long. Total: "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "No mostrar contenidos"
 #
 msgid "Update initial conditions"

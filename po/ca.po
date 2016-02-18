@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-14 08:57+1100\n"
+"POT-Creation-Date: 2016-02-18 17:19+1100\n"
 "PO-Revision-Date: 2016-02-07 02:48-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -584,6 +584,9 @@ msgstr ""
 msgid "Heading"
 msgstr ""
 #
+msgid "Help"
+msgstr ""
+#
 msgid "Hide Point names"
 msgstr ""
 #
@@ -695,7 +698,8 @@ msgstr ""
 msgid "Line Width"
 msgstr ""
 #
-msgid "List contents"
+#, fuzzy
+msgid "List contents "
 msgstr "Llista dels continguts"
 #
 msgid "Loading navobjects from "
@@ -1053,6 +1057,11 @@ msgid ""
 " Answering No keeps the OD points used in paths or alarms."
 msgstr ""
 #
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
 msgid "Time"
 msgstr ""
 #
@@ -1074,7 +1083,8 @@ msgstr "Distància Total"
 msgid "Total Length: "
 msgstr "Longitud total: "
 #
-msgid "Unlist contents"
+#, fuzzy
+msgid "Unlist contents "
 msgstr "Continguts no llistats"
 #
 msgid "Update initial conditions"
