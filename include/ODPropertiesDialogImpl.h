@@ -68,6 +68,8 @@ public:
     wxFontDialog  *m_pfdDialog;
     
 private:
+    void        SetCellBackroundColours(void);
+    
     double      m_dValidator;
     double      m_dODPointRangRingStepValidator;
     double      m_dSOGValidator;
@@ -76,6 +78,8 @@ private:
     double      m_dODPointIntervalValidator;
     double      m_dDRPointRangRingStepValidator;
     int         m_iCOGValidator;
+    wxColour    m_cRed;
+    wxColour    m_cGreen;
     
 };
 

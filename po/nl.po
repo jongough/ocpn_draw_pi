@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-12 17:06-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Dutch\n"
@@ -206,6 +206,9 @@ msgstr "Vulkleur actief"
 #
 msgid "Active Line Colour"
 msgstr "Lijnkleur actief"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "altijd"
@@ -796,6 +799,9 @@ msgstr "nooit"
 msgid "New layer %d: %s"
 msgstr "Nieuwe laag %d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "Aantal items"
 #
@@ -874,6 +880,9 @@ msgstr "OCPN Draw: Peilinglijn-punt weghalen "
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Draw: OD-punt weghalen"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "OD-punt"
 #
@@ -885,6 +894,9 @@ msgstr "Eigenschappen OD-punt"
 #
 msgid "OD Points"
 msgstr "Punten en Cirkelgebieden"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "alleen bij aanwijzen"
@@ -1001,6 +1013,9 @@ msgstr ""
 #
 msgid "Right"
 msgstr "rechts"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1139,6 +1154,9 @@ msgstr "Gebruik nabij punt?"
 #
 msgid "Version:"
 msgstr "Versie:"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "tijdens tekenen"

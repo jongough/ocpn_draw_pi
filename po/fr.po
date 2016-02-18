@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -206,6 +206,9 @@ msgstr "Activité : Couleur de remplissage"
 #
 msgid "Active Line Colour"
 msgstr "Activité : Couleur du trait"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "Toujours"
@@ -799,6 +802,9 @@ msgstr "Jamais"
 msgid "New layer %d: %s"
 msgstr "Nouvelle couche %d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "N° des items"
 #
@@ -877,6 +883,9 @@ msgstr "Traceur OCPN, retirer un point EBL"
 msgid "OCPN Draw Remove OD Point"
 msgstr "Traceur OCPN, retirer un point"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "Point du traceur"
 #
@@ -888,6 +897,9 @@ msgstr "Propriétés d'un point du traceur"
 #
 msgid "OD Points"
 msgstr "Points du traceur"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Seulement par rollover"
@@ -1004,6 +1016,9 @@ msgstr ""
 #
 msgid "Right"
 msgstr "Droit"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1144,6 +1159,9 @@ msgstr "Utilisez le point proche ?"
 #
 msgid "Version:"
 msgstr "Version :"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "Si traçage en cours"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-07 02:48-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
@@ -201,6 +201,9 @@ msgid "Active Fill Colour"
 msgstr ""
 #
 msgid "Active Line Colour"
+msgstr ""
+#
+msgid "All"
 msgstr ""
 #
 msgid "Always"
@@ -774,6 +777,9 @@ msgstr ""
 msgid "New layer %d: %s"
 msgstr ""
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr ""
 #
@@ -852,6 +858,9 @@ msgstr ""
 msgid "OCPN Draw Remove OD Point"
 msgstr ""
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr ""
 #
@@ -862,6 +871,9 @@ msgid "OD Point Properties"
 msgstr ""
 #
 msgid "OD Points"
+msgstr ""
+#
+msgid "OD\\WD"
 msgstr ""
 #
 msgid "On Rollover Only"
@@ -964,6 +976,9 @@ msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
 #
 msgid "Right"
+msgstr ""
+#
+msgid "Ring"
 msgstr ""
 #
 msgid "Rotate with Boat"
@@ -1095,6 +1110,9 @@ msgid "Use nearby Point?"
 msgstr ""
 #
 msgid "Version:"
+msgstr ""
+#
+msgid "WD"
 msgstr ""
 #
 msgid "Whilst Drawing"

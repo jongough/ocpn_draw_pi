@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -206,6 +206,9 @@ msgstr "Ενεργό χρώμα εσωτερικού"
 #
 msgid "Active Line Colour"
 msgstr "Ενεργό χρώμα γραμμής"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "Πάντα"
@@ -793,6 +796,9 @@ msgstr "Ποτέ"
 msgid "New layer %d: %s"
 msgstr "Νέα ταξίδι %d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "Αρ. στοιχείων"
 #
@@ -871,6 +877,9 @@ msgstr "Αφαίρεση σημείου OCPN Draw"
 msgid "OCPN Draw Remove OD Point"
 msgstr "Αφαίρεση σημείου OCPN Draw"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "Σημείο OD"
 #
@@ -882,6 +891,9 @@ msgstr "Ιδιότητες σημείου OD"
 #
 msgid "OD Points"
 msgstr "Σημεία OD"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Στο Rollover μόνο"
@@ -996,6 +1008,9 @@ msgstr "Αφαίρεση αυτoύ του σημείου θα ακυρώσει �
 #
 msgid "Right"
 msgstr "Δεξιά"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1136,6 +1151,9 @@ msgstr "Χρήση κοντινού σημείου;"
 #
 msgid "Version:"
 msgstr "Έκδοση:"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "Καθώς σχεδιάζει"

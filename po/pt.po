@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-12 17:06-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese, Brazilian\n"
@@ -206,6 +206,9 @@ msgstr "Cor de preenchimento ativo"
 #
 msgid "Active Line Colour"
 msgstr "Cor da linha ativa"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "Sempre"
@@ -791,6 +794,9 @@ msgstr "Nunca"
 msgid "New layer %d: %s"
 msgstr "Nova camada %d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "N. º de itens"
 #
@@ -869,6 +875,9 @@ msgstr "OCPN Remove Desenho Ponto EBL"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Remover Desnho ponto OD"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "Ponto OD"
 #
@@ -880,6 +889,9 @@ msgstr "Propriedades do ponto OD"
 #
 msgid "OD Points"
 msgstr "Pontos OD"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "No Rollover apenas"
@@ -994,6 +1006,9 @@ msgstr "Remover este ponto invalidará o Limite, isso não é permitido."
 #
 msgid "Right"
 msgstr "Direita"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1132,6 +1147,9 @@ msgstr "Usar ponto próximo?"
 #
 msgid "Version:"
 msgstr "Versão:"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "Enquanto desenho"

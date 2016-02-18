@@ -891,8 +891,41 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextHelp->Wrap( -1 );
 	fgSizer22->Add( m_staticTextHelp, 0, wxALL, 5 );
 	
-	m_bitmapOD_WD_Interactions = new wxStaticBitmap( m_panelHelp, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizer22->Add( m_bitmapOD_WD_Interactions, 0, wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_gridODWDInteractions = new wxGrid( m_panelHelp, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	
+	// Grid
+	m_gridODWDInteractions->CreateGrid( 4, 5 );
+	m_gridODWDInteractions->EnableEditing( false );
+	m_gridODWDInteractions->EnableGridLines( true );
+	m_gridODWDInteractions->EnableDragGridSize( false );
+	m_gridODWDInteractions->SetMargins( 0, 0 );
+	
+	// Columns
+	m_gridODWDInteractions->EnableDragColMove( false );
+	m_gridODWDInteractions->EnableDragColSize( false );
+	m_gridODWDInteractions->SetColLabelSize( 0 );
+	m_gridODWDInteractions->SetColLabelValue( 0, _("WD") );
+	m_gridODWDInteractions->SetColLabelValue( 1, _("All") );
+	m_gridODWDInteractions->SetColLabelValue( 2, _("Exclusion") );
+	m_gridODWDInteractions->SetColLabelValue( 3, _("Inclusion") );
+	m_gridODWDInteractions->SetColLabelValue( 4, _("Neither") );
+	m_gridODWDInteractions->SetColLabelAlignment( wxALIGN_CENTRE, wxALIGN_CENTRE );
+	
+	// Rows
+	m_gridODWDInteractions->EnableDragRowSize( true );
+	m_gridODWDInteractions->SetRowLabelSize( 0 );
+	m_gridODWDInteractions->SetRowLabelValue( 0, _("OD") );
+	m_gridODWDInteractions->SetRowLabelValue( 1, _("Exclusion") );
+	m_gridODWDInteractions->SetRowLabelValue( 2, _("Inclusion") );
+	m_gridODWDInteractions->SetRowLabelValue( 3, _("Neither") );
+	m_gridODWDInteractions->SetRowLabelAlignment( wxALIGN_CENTRE, wxALIGN_CENTRE );
+	
+	// Label Appearance
+	
+	// Cell Defaults
+	m_gridODWDInteractions->SetDefaultCellBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
+	m_gridODWDInteractions->SetDefaultCellAlignment( wxALIGN_CENTRE, wxALIGN_CENTRE );
+	fgSizer22->Add( m_gridODWDInteractions, 0, wxALL, 5 );
 	
 	
 	m_panelHelp->SetSizer( fgSizer22 );

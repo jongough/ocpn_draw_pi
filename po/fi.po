@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-18 17:19+1100\n"
+"POT-Creation-Date: 2016-02-19 08:13+1100\n"
 "PO-Revision-Date: 2016-02-12 17:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -206,6 +206,9 @@ msgstr "Aktiivinen täyttöväri"
 #
 msgid "Active Line Colour"
 msgstr "Aktiivisen rivin väri"
+#
+msgid "All"
+msgstr ""
 #
 msgid "Always"
 msgstr "Aina"
@@ -794,6 +797,9 @@ msgstr "Ei koskaan"
 msgid "New layer %d: %s"
 msgstr "Uusi kerros %d: %s"
 #
+msgid "No alarm"
+msgstr ""
+#
 msgid "No. of items"
 msgstr "Yksiköiden luku"
 #
@@ -872,6 +878,9 @@ msgstr "OCPN piirto poistaa EBL pisteen"
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN piirto poistaa OD pisteen"
 #
+msgid "OD"
+msgstr ""
+#
 msgid "OD Point"
 msgstr "OD piste"
 #
@@ -883,6 +892,9 @@ msgstr "OD pisteen ominaisuudet"
 #
 msgid "OD Points"
 msgstr "OD pisteet"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Vain tietoruudussa"
@@ -997,6 +1009,9 @@ msgstr "Tämän pisteen poisto mitätöi rajan, tämä ei ole sallittua."
 #
 msgid "Right"
 msgstr "Oikea"
+#
+msgid "Ring"
+msgstr ""
 #
 msgid "Rotate with Boat"
 msgstr ""
@@ -1135,6 +1150,9 @@ msgstr "Käytä läheistä pistettä?"
 #
 msgid "Version:"
 msgstr "Versio:"
+#
+msgid "WD"
+msgstr ""
 #
 msgid "Whilst Drawing"
 msgstr "Piirron aikana"
