@@ -160,7 +160,30 @@ ODPropertiesDialogDef( parent )
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
     m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
-    m_bitmapOD_WD_Interactions->SetBitmap(*g_ocpn_draw_pi->m_pODicons->m_p_bm_od_wd_interactions);
+
+    m_gridODWDInteractions->SetCellValue(0, 0, _("OD\\WD"));
+    m_gridODWDInteractions->SetCellValue(0, 1, _("All"));
+    m_gridODWDInteractions->SetCellValue(0, 2, _("Exclusion"));
+    m_gridODWDInteractions->SetCellValue(0, 3, _("Inclusion"));
+    m_gridODWDInteractions->SetCellValue(0, 4, _("Neither"));
+    m_gridODWDInteractions->SetCellValue(1, 0, _("Exclusion"));
+    m_gridODWDInteractions->SetCellValue(2, 0, _("Inclusion"));
+    m_gridODWDInteractions->SetCellValue(3, 0, _("Neither"));
+
+    m_gridODWDInteractions->SetCellValue(1, 1, _("Ring"));
+    m_gridODWDInteractions->SetCellValue(2, 1, _("Ring"));
+    m_gridODWDInteractions->SetCellValue(3, 1, _("Ring"));
+    m_gridODWDInteractions->SetCellValue(1, 2, _("Ring"));
+    m_gridODWDInteractions->SetCellValue(2, 2, _("No alarm"));
+    m_gridODWDInteractions->SetCellValue(3, 2, _("No alarm"));
+    m_gridODWDInteractions->SetCellValue(1, 3, _("No alarm"));
+    m_gridODWDInteractions->SetCellValue(2, 3, _("Ring"));
+    m_gridODWDInteractions->SetCellValue(3, 3, _("No alarm"));
+    m_gridODWDInteractions->SetCellValue(1, 4, _("No alarm"));
+    m_gridODWDInteractions->SetCellValue(2, 4, _("No alarm"));
+    m_gridODWDInteractions->SetCellValue(3, 4, _("Ring"));
+    
+    SetCellBackroundColours();
     
     m_pfdDialog = NULL;
     
@@ -451,6 +474,7 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
 void ODPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
+    SetCellBackroundColours();
     wxString s;
     s.Printf( _T("%.3f"), g_n_arrival_circle_radius );
     m_textCtrlODPointArrivalRadius->SetValue( s );
@@ -684,3 +708,35 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     return;
 }
 
+void ODPropertiesDialogImpl::SetCellBackroundColours()
+{
+    wxColour wxRed;
+    GetGlobalColor( wxS( "URED" ), &wxRed );
+    wxColour wxGreen;
+    GetGlobalColor( wxS( "UGREN" ), &wxGreen );
+    wxColour wxGray;
+    GetGlobalColor( wxS( "GREY1" ), &wxGray );
+    
+    m_gridODWDInteractions->SetCellBackgroundColour(0, 0, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(0, 1, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(0, 2, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(0, 3, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(0, 4, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(1, 0, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(2, 0, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(3, 0, wxGray);
+    m_gridODWDInteractions->SetCellBackgroundColour(1, 1, wxGreen);
+    m_gridODWDInteractions->SetCellBackgroundColour(2, 1, wxGreen);
+    m_gridODWDInteractions->SetCellBackgroundColour(3, 1, wxGreen);
+    m_gridODWDInteractions->SetCellBackgroundColour(1, 2, wxGreen);
+    m_gridODWDInteractions->SetCellBackgroundColour(2, 2, wxRed);
+    m_gridODWDInteractions->SetCellBackgroundColour(3, 2, wxRed);
+    m_gridODWDInteractions->SetCellBackgroundColour(1, 3, wxRed);
+    m_gridODWDInteractions->SetCellBackgroundColour(2, 3, wxGreen);
+    m_gridODWDInteractions->SetCellBackgroundColour(3, 3, wxRed);
+    m_gridODWDInteractions->SetCellBackgroundColour(1, 4, wxRed);
+    m_gridODWDInteractions->SetCellBackgroundColour(2, 4, wxRed);
+    m_gridODWDInteractions->SetCellBackgroundColour(3, 4, wxGreen);
+    
+    return;
+}

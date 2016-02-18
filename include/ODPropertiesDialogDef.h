@@ -32,6 +32,7 @@
 #include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
 #include <wx/button.h>
+#include <wx/grid.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
@@ -207,7 +208,6 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticText34;
 		wxPanel* m_panelHelp;
 		wxStaticText* m_staticTextHelp;
-		wxStaticBitmap* m_bitmapOD_WD_Interactions;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonApply;
@@ -228,6 +228,7 @@ class ODPropertiesDialogDef : public wxDialog
 	
 	public:
 		wxChoice* m_choiceToolbar;
+		wxGrid* m_gridODWDInteractions;
 		
 		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,554 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~ODPropertiesDialogDef();
