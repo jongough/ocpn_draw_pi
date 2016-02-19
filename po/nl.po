@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-02-19 08:13+1100\n"
-"PO-Revision-Date: 2016-02-12 17:06-0500\n"
-"Last-Translator: nohal <pavel@kalian.cz>\n"
+"PO-Revision-Date: 2016-02-19 09:37+0100\n"
+"Last-Translator: NAV <rider2@kpnmail.nl>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: crowdin.com\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: nl\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
@@ -20,7 +20,7 @@ msgid " &Properties..."
 msgstr " &Eigenschappen ..."
 #
 msgid " To: "
-msgstr "Omgekeerd: "
+msgstr " Omgekeerd: "
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -42,7 +42,7 @@ msgid "&Cancel"
 msgstr "&Annuleren"
 #
 msgid "&Center View"
-msgstr "Ge&centreerd beeld"
+msgstr "&Gecentreerd beeld"
 #
 msgid "&Deactivate"
 msgstr "&Deactiveren"
@@ -51,10 +51,10 @@ msgid "&Delete"
 msgstr "&Verwijderen"
 #
 msgid "&Delete All"
-msgstr "Verwij&der alles"
+msgstr "Alles &verwijderen"
 #
 msgid "&Export selected..."
-msgstr "&Exporteer selectie..."
+msgstr "&Exporteer selectie ..."
 #
 msgid "&New"
 msgstr "&Nieuw"
@@ -75,7 +75,7 @@ msgid "(Unnamed )"
 msgstr "(naamloos)"
 #
 msgid "(Unnamed Layer)"
-msgstr "(kaartlaag zonder naam)"
+msgstr "(naamloze kaartlaag)"
 #
 msgid "(Unnamed) "
 msgstr "(naamloos) "
@@ -208,7 +208,7 @@ msgid "Active Line Colour"
 msgstr "Lijnkleur actief"
 #
 msgid "All"
-msgstr ""
+msgstr "Elk"
 #
 msgid "Always"
 msgstr "altijd"
@@ -299,7 +299,7 @@ msgid "Bearing From-To (M)"
 msgstr "Richting van-naar (M)"
 #
 msgid "Boat"
-msgstr "Schip"
+msgstr "Eigen Schip"
 #
 msgid "Bottom"
 msgstr "onder"
@@ -447,7 +447,7 @@ msgid "Delete"
 msgstr "Verwijderen"
 #
 msgid "Delete All"
-msgstr "Verwijder alles"
+msgstr "Alles verwijderen"
 #
 msgid "Delete..."
 msgstr "Verwijderen ..."
@@ -471,7 +471,7 @@ msgid "Distance Between Range Rings"
 msgstr "Interval tussen afstandscirkels"
 #
 msgid "Distance From Boat"
-msgstr "Afstand van schip"
+msgstr "Afstand van eigen schip"
 #
 msgid "Distance Unit"
 msgstr "Eenheid voor afstand"
@@ -505,7 +505,7 @@ msgid "EBL"
 msgstr "Peilinglijn"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "Boordhoek (-L, +R)"
 #
 msgid "EBL Fixed End Position"
 msgstr "Peilinglijn heeft vaste eindpositie"
@@ -554,7 +554,7 @@ msgid "Exclusion"
 msgstr "te ontwijken"
 #
 msgid "Export All Visible..."
-msgstr "Exporteer alles wat zichtbaar is..."
+msgstr "Exporteer wat zichtbaar is ..."
 #
 msgid "Export GPX file"
 msgstr "Exporteer GPX-bestand"
@@ -598,13 +598,13 @@ msgid "General drawing for OpenCPN"
 msgstr "Teken PlugIn voor OpenCPN"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Koers"
 #
 msgid "Help"
-msgstr ""
+msgstr "Help"
 #
 msgid "Hide Point names"
-msgstr "Verbergen puntnamen"
+msgstr "Verberg puntnamen"
 #
 msgid "Hide from chart"
 msgstr "Niet tonen op kaart"
@@ -613,7 +613,7 @@ msgid "Hours"
 msgstr "uren"
 #
 msgid "I&mport GPX..."
-msgstr "I&mporteer GPX-bestand..."
+msgstr "I&mporteer GPX-bestand ..."
 #
 msgid "Icon"
 msgstr "Pictogram"
@@ -684,22 +684,22 @@ msgid "Layer "
 msgstr "Kaartlaag"
 #
 msgid "Layer Boundary"
-msgstr "Kaartlaag Lijn (of rechtlijnig gebied)"
+msgstr "Kaartlaaglijn (of rechtlijnig gebied)"
 #
 msgid "Layer Boundary Point"
-msgstr "Kaartlaag: Punt"
+msgstr "Kaartlaagpunt"
 #
 msgid "Layer DR Point"
 msgstr "Kaartlaag: Gegist punt"
 #
 msgid "Layer EBL Point"
-msgstr "Kaartlaag: Peilinglijn-punt"
+msgstr "Kaartlaagpeilinglijn-punt"
 #
 msgid "Layer Name"
 msgstr "Kaartlaagnaam"
 #
 msgid "Layer Text Point"
-msgstr "Kaartlaag: Tekstpunt"
+msgstr "Kaartlaagtekstpunt"
 #
 msgid "Layers"
 msgstr "Kaartlagen"
@@ -722,9 +722,8 @@ msgstr "Lijnstijl"
 msgid "Line Width"
 msgstr "Lijndikte"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Toon inhoud"
+msgstr "Toon inhoud "
 #
 msgid "Loading navobjects from "
 msgstr "Objecten laden van "
@@ -736,7 +735,7 @@ msgid "Longitude"
 msgstr "Lengte"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Onderhouden met"
 #
 msgid "Major:"
 msgstr "Major:"
@@ -800,7 +799,7 @@ msgid "New layer %d: %s"
 msgstr "Nieuwe laag %d: %s"
 #
 msgid "No alarm"
-msgstr ""
+msgstr "geen alarm"
 #
 msgid "No. of items"
 msgstr "Aantal items"
@@ -848,7 +847,7 @@ msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Draw: Peilinglijn verwijderen "
 #
 msgid "OCPN Draw Manager"
-msgstr "OCPN Draw Manager"
+msgstr "OCPN Draw: Manager"
 #
 msgid "OCPN Draw Path &Properties"
 msgstr "OCPN Draw: Eigenschappen Lijn"
@@ -881,7 +880,7 @@ msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Draw: OD-punt weghalen"
 #
 msgid "OD"
-msgstr ""
+msgstr "OD"
 #
 msgid "OD Point"
 msgstr "OD-punt"
@@ -896,7 +895,7 @@ msgid "OD Points"
 msgstr "Punten en Cirkelgebieden"
 #
 msgid "OD\\WD"
-msgstr ""
+msgstr "OD\\WD"
 #
 msgid "On Rollover Only"
 msgstr "alleen bij aanwijzen"
@@ -1004,7 +1003,7 @@ msgid "Range Ring Line Width"
 msgstr "Dikte afstandscirkels"
 #
 msgid "Remove Point from Path"
-msgstr "Verwijder punt van lijn"
+msgstr "Punt van lijn weghalen"
 #
 msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
@@ -1015,10 +1014,10 @@ msgid "Right"
 msgstr "rechts"
 #
 msgid "Ring"
-msgstr ""
+msgstr "Cirkel"
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Meedraaien met schip"
 #
 msgid "Short Dash"
 msgstr "korte streep"
@@ -1117,6 +1116,8 @@ msgid ""
 "This chart shows the interactions between Boundaries and WatchDog alam "
 "boundaries"
 msgstr ""
+"Deze tabel toont de interactie tussen instellingen van de OCPN Draw en "
+"WatchDog PlugIns"
 #
 msgid "Time"
 msgstr "tijd"
@@ -1139,9 +1140,8 @@ msgstr "Totale lengte"
 msgid "Total Length: "
 msgstr "Totale lengte: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Haal inhoud weg"
+msgstr "Haal inhoud weg "
 #
 msgid "Update initial conditions"
 msgstr "Initiële instellingen aanpassen"
@@ -1156,7 +1156,7 @@ msgid "Version:"
 msgstr "Versie:"
 #
 msgid "WD"
-msgstr ""
+msgstr "WD"
 #
 msgid "Whilst Drawing"
 msgstr "tijdens tekenen"
