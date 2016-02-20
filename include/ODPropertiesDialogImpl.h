@@ -68,7 +68,7 @@ public:
     wxFontDialog  *m_pfdDialog;
     
 private:
-    void        SetCellBackroundColours(void);
+    void        SetTableCellBackgroundColours(void);
     
     double      m_dValidator;
     double      m_dODPointRangRingStepValidator;

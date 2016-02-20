@@ -183,7 +183,7 @@ ODPropertiesDialogDef( parent )
     m_gridODWDInteractions->SetCellValue(2, 4, _("No alarm"));
     m_gridODWDInteractions->SetCellValue(3, 4, _("Ring"));
     
-    SetCellBackroundColours();
+    SetTableCellBackgroundColours();
     
     m_pfdDialog = NULL;
     
@@ -474,7 +474,7 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
 void ODPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
-    SetCellBackroundColours();
+    SetTableCellBackgroundColours();
     wxString s;
     s.Printf( _T("%.3f"), g_n_arrival_circle_radius );
     m_textCtrlODPointArrivalRadius->SetValue( s );
@@ -708,7 +708,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     return;
 }
 
-void ODPropertiesDialogImpl::SetCellBackroundColours()
+void ODPropertiesDialogImpl::SetTableCellBackgroundColours()
 {
     wxColour wxRed;
     GetGlobalColor( wxS( "URED" ), &wxRed );
