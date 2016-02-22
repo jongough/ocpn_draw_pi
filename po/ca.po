@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-19 08:13+1100\n"
+"POT-Creation-Date: 2016-02-22 12:41+1100\n"
 "PO-Revision-Date: 2016-02-07 02:48-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -872,9 +872,6 @@ msgid "OD Point Properties"
 msgstr ""
 #
 msgid "OD Points"
-msgstr ""
-#
-msgid "OD\\WD"
 msgstr ""
 #
 msgid "On Rollover Only"
