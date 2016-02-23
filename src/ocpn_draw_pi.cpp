@@ -367,7 +367,7 @@ int ocpn_draw_pi::Init(void)
     m_numModes = ID_MODE_LAST - 1;
     
     // Adds local language support for the plugin to OCPN
-    AddLocaleCatalog( wxS("opencpn-ocpn_draw_pi") );
+    AddLocaleCatalog( PLUGIN_CATALOG_NAME );
     
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;

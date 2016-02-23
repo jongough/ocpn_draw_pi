@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "666")
-SET(VERSION_DATE "22/02/2016")
+SET(VERSION_PATCH "667")
+SET(VERSION_DATE "24/02/2016")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
@@ -111,6 +111,7 @@ SET(HDRS
         include/ODicons.h
         include/TextPoint.h
         include/version.h
+        include/wxWTranslateCatalog.h
 )
 
 SET(OCPNSRC 

@@ -23,6 +23,8 @@
 #include <wx/button.h>
 #include <wx/dialog.h>
 
+#include "wxWTranslateCatalog.h"
+
 ///////////////////////////////////////////////////////////////////////////
 
 

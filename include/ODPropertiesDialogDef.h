@@ -36,6 +36,8 @@
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
+#include "wxWTranslateCatalog.h"
+
 ///////////////////////////////////////////////////////////////////////////
 
 
