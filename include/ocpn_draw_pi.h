@@ -108,18 +108,17 @@ std::cout << x  << std::endl ; } while (0)
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
-#define OPC wxS("opencpn-ocpn_draw_pi")
-
-#ifndef WXINTL_NO_GETTEXT_MACRO
-#ifdef OPC
-#ifdef _
-#undef _
-#endif // _
-#define _(s) wxGetTranslation((s),OPC)
-#endif // OPC
-#else 
-#define _(s) wxGetTranslation((s))
-#endif // WXINTL_NO_GETTEXT_MACRO
+//#ifndef WXINTL_NO_GETTEXT_MACRO
+//#ifdef OPC
+//#ifdef _
+//#undef _
+//#endif // _
+//#define _(s) wxGetTranslation((s),OPC)
+//#endif // OPC
+//#else 
+//#define _(s) wxGetTranslation((s))
+//#endif // WXINTL_NO_GETTEXT_MACRO
+#include "wxWTranslateCatalog.h"
 
 #include "ocpn_plugin.h"
 #include "undo.h"
