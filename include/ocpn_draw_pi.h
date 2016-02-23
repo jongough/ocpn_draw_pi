@@ -108,16 +108,6 @@ std::cout << x  << std::endl ; } while (0)
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
-//#ifndef WXINTL_NO_GETTEXT_MACRO
-//#ifdef OPC
-//#ifdef _
-//#undef _
-//#endif // _
-//#define _(s) wxGetTranslation((s),OPC)
-//#endif // OPC
-//#else 
-//#define _(s) wxGetTranslation((s))
-//#endif // WXINTL_NO_GETTEXT_MACRO
 #include "wxWTranslateCatalog.h"
 
 #include "ocpn_plugin.h"
