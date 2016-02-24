@@ -29,6 +29,7 @@
 #include "Layer.h"
 #include "PointMan.h"
 #include "pugixml.hpp"
+#include "wxWTranslateCatalog.h"
 #include <wx/progdlg.h>
 #include <wx/filename.h>
 #include <wx/file.h>
