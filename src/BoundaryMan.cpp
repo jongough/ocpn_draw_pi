@@ -69,19 +69,21 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
                 break;
         }
 
-        switch (type) {
-            case ID_BOUNDARY_ANY:
-                l_bNext = false;
-                break;
-            case ID_BOUNDARY_EXCLUSION:
-                if(!pboundary->m_bExclusionBoundary) l_bNext = true;
-                break;
-            case ID_BOUNDARY_INCLUSION:
-                if(!pboundary->m_bInclusionBoundary) l_bNext = true;
-                break;
-            case ID_BOUNDARY_NIETHER:
-                if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = true;
-                break;
+        if(!l_bNext) {
+            switch (type) {
+                case ID_BOUNDARY_ANY:
+                    l_bNext = false;
+                    break;
+                case ID_BOUNDARY_EXCLUSION:
+                    if(!pboundary->m_bExclusionBoundary) l_bNext = true;
+                    break;
+                case ID_BOUNDARY_INCLUSION:
+                    if(!pboundary->m_bInclusionBoundary) l_bNext = true;
+                    break;
+                case ID_BOUNDARY_NIETHER:
+                    if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = true;
+                    break;
+            }
         }
         
         if(!l_bNext) {

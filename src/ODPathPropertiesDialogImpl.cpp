@@ -473,7 +473,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     
     wxString nullify = _T("----");
     long item_line_index = 0;
-    wxString wxsLastPoint = wxT("Boat");
+    wxString wxsLastPoint = _("Boat");
     ODPoint *p_last_pOp = NULL;
     while( node ) {
         ODPoint *pOp = node->GetData();
