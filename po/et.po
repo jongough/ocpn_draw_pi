@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-12 17:06-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-27 08:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -505,7 +505,7 @@ msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "EBL nurk (-P/+T)"
 #
 msgid "EBL Fixed End Position"
 msgstr "EBL fikseeritud lõpp-punkt"
@@ -599,7 +599,7 @@ msgid "General drawing for OpenCPN"
 msgstr "OpenCPN'i üldine joonistamine"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Suund"
 #
 msgid "Help"
 msgstr ""
@@ -721,9 +721,8 @@ msgstr "Joone laad"
 msgid "Line Width"
 msgstr "Joone jämedus"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Loenda sisu"
+msgstr ""
 #
 msgid "Loading navobjects from "
 msgstr "Laen nav.objekte "
@@ -735,7 +734,7 @@ msgid "Longitude"
 msgstr "pikkus"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Säilita koos"
 #
 msgid "Major:"
 msgstr "Peamine:"
@@ -894,6 +893,9 @@ msgstr "OD-punkti omadused"
 msgid "OD Points"
 msgstr "OD-punktid"
 #
+msgid "OD\\WD"
+msgstr ""
+#
 msgid "On Rollover Only"
 msgstr "Ainult üleliikudes"
 #
@@ -1012,7 +1014,7 @@ msgid "Ring"
 msgstr ""
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Pööra koos paadiga"
 #
 msgid "Short Dash"
 msgstr "Lühike kriips"
@@ -1133,9 +1135,8 @@ msgstr "Kogupikkus"
 msgid "Total Length: "
 msgstr "Kogupikkus: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Tühjenda nimekiri"
+msgstr ""
 #
 msgid "Update initial conditions"
 msgstr "Uuenda lähtetingimusi"

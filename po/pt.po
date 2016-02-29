@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-12 17:06-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-27 08:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -503,7 +503,7 @@ msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "Ângulo EBL (-P / + S)"
 #
 msgid "EBL Fixed End Position"
 msgstr "EBL final posição fixada"
@@ -597,7 +597,7 @@ msgid "General drawing for OpenCPN"
 msgstr "Desenho Geral para OpenCPN"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Proa"
 #
 msgid "Help"
 msgstr ""
@@ -717,9 +717,8 @@ msgstr "Estilo da linha"
 msgid "Line Width"
 msgstr "Largura da linha"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Listar conteúdo"
+msgstr ""
 #
 msgid "Loading navobjects from "
 msgstr "Carregar objetos náuticos de "
@@ -731,7 +730,7 @@ msgid "Longitude"
 msgstr "Longitude"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Manter com"
 #
 msgid "Major:"
 msgstr "Maior:"
@@ -890,6 +889,9 @@ msgstr "Propriedades do ponto OD"
 msgid "OD Points"
 msgstr "Pontos OD"
 #
+msgid "OD\\WD"
+msgstr ""
+#
 msgid "On Rollover Only"
 msgstr "No Rollover apenas"
 #
@@ -1008,7 +1010,7 @@ msgid "Ring"
 msgstr ""
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Gire com barco"
 #
 msgid "Short Dash"
 msgstr "Traço curto"
@@ -1129,9 +1131,8 @@ msgstr "Comprimento Total"
 msgid "Total Length: "
 msgstr "Comprimento Total: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Remover da lista de conteúdo"
+msgstr ""
 #
 msgid "Update initial conditions"
 msgstr "Condições iniciais de atualização"

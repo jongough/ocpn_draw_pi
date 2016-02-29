@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-07 02:50-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-28 17:40-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -208,7 +208,7 @@ msgid "Active Line Colour"
 msgstr "Färg på aktiv linje"
 #
 msgid "All"
-msgstr ""
+msgstr "Allt"
 #
 msgid "Always"
 msgstr "Alltid"
@@ -502,7 +502,7 @@ msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "EBL Bäring (-Bb/+Sb)"
 #
 msgid "EBL Fixed End Position"
 msgstr "EBL - fast slutposition"
@@ -596,10 +596,10 @@ msgid "General drawing for OpenCPN"
 msgstr "Ritverktyg för OpenCPN"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Kurs (K/T)"
 #
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 #
 msgid "Hide Point names"
 msgstr "Dölj punktens namn"
@@ -718,9 +718,8 @@ msgstr "Linjestil"
 msgid "Line Width"
 msgstr "Linjebredd"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Visa innehåll"
+msgstr "Visa innehåll "
 #
 msgid "Loading navobjects from "
 msgstr "Laddar navigeringsobjekt från "
@@ -732,7 +731,7 @@ msgid "Longitude"
 msgstr "Longitud"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Låt linjen rotera med båtens:"
 #
 msgid "Major:"
 msgstr "Huvud:"
@@ -796,7 +795,7 @@ msgid "New layer %d: %s"
 msgstr "Nytt lager %d: %s"
 #
 msgid "No alarm"
-msgstr ""
+msgstr "Inga larm"
 #
 msgid "No. of items"
 msgstr "Antal förekomster"
@@ -877,7 +876,7 @@ msgid "OCPN Draw Remove OD Point"
 msgstr "Ta bort OD punkt"
 #
 msgid "OD"
-msgstr ""
+msgstr "OR"
 #
 msgid "OD Point"
 msgstr "OD Punkt"
@@ -890,6 +889,9 @@ msgstr "OR punktegenskaper"
 #
 msgid "OD Points"
 msgstr "OR Punkt"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Bar vid mus-över"
@@ -1007,10 +1009,10 @@ msgid "Right"
 msgstr "Höger"
 #
 msgid "Ring"
-msgstr ""
+msgstr "Ring"
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Rotera med båten"
 #
 msgid "Short Dash"
 msgstr "Korta streck"
@@ -1108,6 +1110,8 @@ msgid ""
 "This chart shows the interactions between Boundaries and WatchDog alam "
 "boundaries"
 msgstr ""
+"Tabellen visar hur olika gränstyper, OR, interagerar med inställningar i  "
+"Vakthunden, WD."
 #
 msgid "Time"
 msgstr "Tid"
@@ -1130,9 +1134,8 @@ msgstr "Total längd"
 msgid "Total Length: "
 msgstr "Total längd: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Dölj innehåll"
+msgstr "Dölj innehåll "
 #
 msgid "Update initial conditions"
 msgstr "Uppdatera ursprungliga inställningar"
@@ -1147,7 +1150,7 @@ msgid "Version:"
 msgstr "Version:"
 #
 msgid "WD"
-msgstr ""
+msgstr "WD"
 #
 msgid "Whilst Drawing"
 msgstr "Vid användning"

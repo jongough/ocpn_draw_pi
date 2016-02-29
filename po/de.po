@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-07 02:49-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-27 13:52-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -720,9 +720,8 @@ msgstr "Linienart"
 msgid "Line Width"
 msgstr "Linienstärke"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Elemente auflisten"
+msgstr ""
 #
 msgid "Loading navobjects from "
 msgstr "Laden von Navobjects von "
@@ -892,6 +891,9 @@ msgstr "OD Punkt Eigenschaften"
 #
 msgid "OD Points"
 msgstr "OD Punkte"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Nur bei Maus-über"
@@ -1136,9 +1138,8 @@ msgstr "Gesamtlänge"
 msgid "Total Length: "
 msgstr "Gesamtlänge: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Elemente nicht aufl"
+msgstr ""
 #
 msgid "Update initial conditions"
 msgstr "Ausgangsbedingungen erneuern"
