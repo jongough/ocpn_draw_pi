@@ -39,6 +39,8 @@
 #include "svg.h"
 #endif // ODraw_USE_SVG
 
+#include <wx/stdpaths.h>
+
 
 extern wxString g_SData_Locn;
 extern wxString *g_pHome_locn;
@@ -60,18 +62,19 @@ ODicons::~ODicons()
 void ODicons::initialize_images(void)
 {
     wxFileName fn;
-#ifdef __WXOSX__
-    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
-    fn.SetPath(std_path.GetUserConfigDir());  // should be ~/Library/Preferences
-    fn.AppendDir(_T("opencpn"));
-    fn.AppendDir( wxT("plugins") );
-    fn.AppendDir(wxT("draw_pi"));
-#else
+//#ifdef __WXOSX__
+// Not in this case - the icons are part of the plugin package, not it's configuration data, so they have nothing to do in the user's preferences directory
+//    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+//    fn.SetPath(std_path.GetUserConfigDir());  // should be ~/Library/Preferences
+//    fn.AppendDir(_T("opencpn"));
+//    fn.AppendDir( wxT("plugins") );
+//    fn.AppendDir(wxT("ocpn_draw_pi"));
+//#else
     fn.SetPath(*GetpSharedDataLocation());
     fn.AppendDir( wxT("plugins") );
     fn.AppendDir(wxT("ocpn_draw_pi"));
     fn.AppendDir(wxT("data"));
-#endif
+//#endif
     wxString s = _("ocpn_draw_pi data location");
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
     
@@ -165,12 +168,13 @@ wxBitmap *ODicons::LoadSVG( const wxString filename, wxSVGDocument **svgDoc, wxI
         return new wxBitmap( *newImage );
     }
     else
+        *Image = new wxImage(width, height);
         return new wxBitmap(width, height);
 }
 
 wxBitmap *ODicons::ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf )
 {
-    if(p_svgDoc) {
+    if( p_svgDoc && p_wxImage ) {
         wxImage *p_Image = new wxImage(p_svgDoc->Render( p_wxImage->GetWidth() * sf, p_wxImage->GetHeight() * sf, NULL, true, true));
         return new wxBitmap( *p_Image );
     }
