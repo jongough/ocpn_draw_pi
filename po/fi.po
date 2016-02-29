@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-12 17:05-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-28 17:40-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -504,7 +504,7 @@ msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "EBL kulma (-P/+S)"
 #
 msgid "EBL Fixed End Position"
 msgstr "EBL kiinteä lopetuskohta"
@@ -598,7 +598,7 @@ msgid "General drawing for OpenCPN"
 msgstr "Yleispiirtäminen OpenCPN:ssä"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Suunta"
 #
 msgid "Help"
 msgstr ""
@@ -720,9 +720,8 @@ msgstr "Viivatyyli"
 msgid "Line Width"
 msgstr "Viivan leveys"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Luetteloi sisältö"
+msgstr ""
 #
 msgid "Loading navobjects from "
 msgstr "Ladataan väylämerkit osoitteesta "
@@ -734,7 +733,7 @@ msgid "Longitude"
 msgstr "Pituuspiiri"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Ylläpidä"
 #
 msgid "Major:"
 msgstr "Pää:"
@@ -893,6 +892,9 @@ msgstr "OD pisteen ominaisuudet"
 msgid "OD Points"
 msgstr "OD pisteet"
 #
+msgid "OD\\WD"
+msgstr ""
+#
 msgid "On Rollover Only"
 msgstr "Vain tietoruudussa"
 #
@@ -1011,7 +1013,7 @@ msgid "Ring"
 msgstr ""
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Käänny veneen mukaan"
 #
 msgid "Short Dash"
 msgstr "Lyhyt katkoviiva"
@@ -1132,9 +1134,8 @@ msgstr "Kokonaispituus"
 msgid "Total Length: "
 msgstr "Kokonaispituus: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Poista sisältö luettelosta"
+msgstr ""
 #
 msgid "Update initial conditions"
 msgstr "Päivitä alkuehdot"

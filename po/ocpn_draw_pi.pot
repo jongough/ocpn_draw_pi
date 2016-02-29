@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 0.4.665\n"
+"Project-Id-Version: ocpn_draw_pi 1.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: include/ODDRDialogDef.h:59 src/ODToolbarImpl.cpp:388
+#: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:388
 msgid "Dead Reckoning"
 msgstr ""
 
-#: include/ODPathPropertiesDialogDef.h:101 src/pathmanagerdialog.cpp:1101
+#: include/ODPathPropertiesDialogDef.h:103 src/pathmanagerdialog.cpp:1101
 msgid "Path Properties"
 msgstr ""
 
-#: include/ODPointPropertiesDialog.h:133
+#: include/ODPointPropertiesDialog.h:135
 msgid "OD Point Properties"
 msgstr ""
 
-#: include/ODPropertiesDialogDef.h:233
+#: include/ODPropertiesDialogDef.h:235
 msgid "OCPN Draw Properties"
 msgstr ""
 
@@ -40,6 +40,7 @@ msgstr ""
 #: src/EBL.cpp:116 src/EBL.cpp:286 src/ODPathPropertiesDialogImpl.cpp:351
 #: src/ODPathPropertiesDialogImpl.cpp:359
 #: src/ODPathPropertiesDialogImpl.cpp:395
+#: src/ODPathPropertiesDialogImpl.cpp:476
 #: src/ODPathPropertiesDialogImpl.cpp:484
 #: src/ODPathPropertiesDialogImpl.cpp:519 src/ocpn_draw_pi.cpp:2244
 #: src/ocpn_draw_pi.cpp:3080
@@ -59,32 +60,32 @@ msgstr ""
 msgid "EBL Persistence"
 msgstr ""
 
-#: src/ODConfig.cpp:158 src/ODConfig.cpp:198 src/ODConfig.cpp:289
-#: src/ODConfig.cpp:314
+#: src/ODConfig.cpp:159 src/ODConfig.cpp:199 src/ODConfig.cpp:290
+#: src/ODConfig.cpp:315
 msgid "Export GPX file"
 msgstr ""
 
-#: src/ODConfig.cpp:181 src/ODConfig.cpp:211 src/ODConfig.cpp:302
+#: src/ODConfig.cpp:182 src/ODConfig.cpp:212 src/ODConfig.cpp:303
 msgid "Confirm"
 msgstr ""
 
-#: src/ODConfig.cpp:181 src/ODConfig.cpp:211 src/ODConfig.cpp:302
+#: src/ODConfig.cpp:182 src/ODConfig.cpp:212 src/ODConfig.cpp:303
 msgid "Overwrite existing file?"
 msgstr ""
 
-#: src/ODConfig.cpp:245
+#: src/ODConfig.cpp:246
 msgid "Loading navobjects from "
 msgstr ""
 
-#: src/ODConfig.cpp:277
+#: src/ODConfig.cpp:278
 msgid "Applying changes from "
 msgstr ""
 
-#: src/ODConfig.cpp:386
+#: src/ODConfig.cpp:387
 msgid "Import GPX file"
 msgstr ""
 
-#: src/ODConfig.cpp:434
+#: src/ODConfig.cpp:435
 #, c-format
 msgid "New layer %d: %s"
 msgstr ""
@@ -614,18 +615,21 @@ msgstr ""
 #: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:108
 #: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:222
 #: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:918
+#: src/ODPropertiesDialogImpl.cpp:166 src/ODPropertiesDialogImpl.cpp:169
 msgid "Exclusion"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:108
 #: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:222
 #: src/ODPropertiesDialogDef.cpp:910 src/ODPropertiesDialogDef.cpp:919
+#: src/ODPropertiesDialogImpl.cpp:167 src/ODPropertiesDialogImpl.cpp:170
 msgid "Inclusion"
 msgstr ""
 
 #: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:108
 #: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:222
 #: src/ODPropertiesDialogDef.cpp:911 src/ODPropertiesDialogDef.cpp:920
+#: src/ODPropertiesDialogImpl.cpp:168 src/ODPropertiesDialogImpl.cpp:171
 msgid "Neither"
 msgstr ""
 
@@ -1153,7 +1157,7 @@ msgstr ""
 msgid "Background Density"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:477 src/ODPropertiesDialogImpl.cpp:219
+#: src/ODPropertiesDialogDef.cpp:477 src/ODPropertiesDialogImpl.cpp:218
 msgid "Path"
 msgstr ""
 
@@ -1263,7 +1267,7 @@ msgstr ""
 msgid "WD"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:908
+#: src/ODPropertiesDialogDef.cpp:908 src/ODPropertiesDialogImpl.cpp:165
 msgid "All"
 msgstr ""
 
@@ -1279,15 +1283,19 @@ msgstr ""
 msgid "&Apply"
 msgstr ""
 
-#: src/ODPropertiesDialogImpl.cpp:174 src/ODPropertiesDialogImpl.cpp:175
-#: src/ODPropertiesDialogImpl.cpp:176 src/ODPropertiesDialogImpl.cpp:177
-#: src/ODPropertiesDialogImpl.cpp:181 src/ODPropertiesDialogImpl.cpp:185
+#: src/ODPropertiesDialogImpl.cpp:164
+msgid "OD\\WD"
+msgstr ""
+
+#: src/ODPropertiesDialogImpl.cpp:173 src/ODPropertiesDialogImpl.cpp:174
+#: src/ODPropertiesDialogImpl.cpp:175 src/ODPropertiesDialogImpl.cpp:176
+#: src/ODPropertiesDialogImpl.cpp:180 src/ODPropertiesDialogImpl.cpp:184
 msgid "Ring"
 msgstr ""
 
-#: src/ODPropertiesDialogImpl.cpp:178 src/ODPropertiesDialogImpl.cpp:179
-#: src/ODPropertiesDialogImpl.cpp:180 src/ODPropertiesDialogImpl.cpp:182
-#: src/ODPropertiesDialogImpl.cpp:183 src/ODPropertiesDialogImpl.cpp:184
+#: src/ODPropertiesDialogImpl.cpp:177 src/ODPropertiesDialogImpl.cpp:178
+#: src/ODPropertiesDialogImpl.cpp:179 src/ODPropertiesDialogImpl.cpp:181
+#: src/ODPropertiesDialogImpl.cpp:182 src/ODPropertiesDialogImpl.cpp:183
 msgid "No alarm"
 msgstr ""
 
@@ -1319,15 +1327,16 @@ msgstr ""
 msgid "ocpn_draw_pi data location"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:400 src/ocpn_draw_pi.cpp:404 src/ocpn_draw_pi.cpp:405
+#: src/ocpn_draw_pi.cpp:399 src/ocpn_draw_pi.cpp:400 src/ocpn_draw_pi.cpp:404
+#: src/ocpn_draw_pi.cpp:405
 msgid "OCPN Draw Manager"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:406
+#: src/ocpn_draw_pi.cpp:401 src/ocpn_draw_pi.cpp:406
 msgid "OCPN Draw Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:407
+#: src/ocpn_draw_pi.cpp:402 src/ocpn_draw_pi.cpp:407
 msgid "OCPN Draw"
 msgstr ""
 

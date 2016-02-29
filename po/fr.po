@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-12 17:05-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-27 12:12-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -208,7 +208,7 @@ msgid "Active Line Colour"
 msgstr "Activité : Couleur du trait"
 #
 msgid "All"
-msgstr ""
+msgstr "Tout"
 #
 msgid "Always"
 msgstr "Toujours"
@@ -322,7 +322,7 @@ msgid ""
 "Size"
 msgstr ""
 "Zone quadrillée autour d'une borne\n"
-"Largeur de la zone"
+"Largeur du quadrillage"
 #
 msgid "Boundary Point Properties"
 msgstr "Propriétés d'une borne"
@@ -507,7 +507,7 @@ msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "Angle EBL (-B/+T)"
 #
 msgid "EBL Fixed End Position"
 msgstr "Ligne EBL : Fixer la fin de la ligne EBL."
@@ -553,7 +553,7 @@ msgid "Example"
 msgstr "Exemple"
 #
 msgid "Exclusion"
-msgstr "Exclusive"
+msgstr "Intérieur"
 #
 msgid "Export All Visible..."
 msgstr "Exporter tout ce qui est visible ..."
@@ -601,10 +601,10 @@ msgid "General drawing for OpenCPN"
 msgstr "Traceur général pour OpenCPN"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Cap"
 #
 msgid "Help"
-msgstr ""
+msgstr "Aide"
 #
 msgid "Hide Point names"
 msgstr "Cacher les noms des points"
@@ -641,17 +641,17 @@ msgid "Inactive Line Colour"
 msgstr "Inactivité : Couleur du trait"
 #
 msgid "Inclusion"
-msgstr "Inclusive"
+msgstr "Extérieur"
 #
 msgid ""
 "Inclusion Boundary\n"
 "Size"
 msgstr ""
-"Barrière/Zone inclusive\n"
+"Extérieur de la barrière/Zone\n"
 "Taille"
 #
 msgid "Inclusion Boundary Size"
-msgstr "Taille du quadrillage"
+msgstr "Largeur du quadrillage extérieur"
 #
 msgid ""
 "Initial Edge Panning Sensitivity\n"
@@ -723,9 +723,8 @@ msgstr "Type du trait"
 msgid "Line Width"
 msgstr "Epaisseur du trait"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Liste des contenus"
+msgstr "Lister les contenus "
 #
 msgid "Loading navobjects from "
 msgstr "Chargement des fichiers navobjects depuis "
@@ -737,7 +736,7 @@ msgid "Longitude"
 msgstr "Longitude"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Dirigé par"
 #
 msgid "Major:"
 msgstr "Majeure :"
@@ -803,7 +802,7 @@ msgid "New layer %d: %s"
 msgstr "Nouvelle couche %d: %s"
 #
 msgid "No alarm"
-msgstr ""
+msgstr "Pas d'alarme"
 #
 msgid "No. of items"
 msgstr "N° des items"
@@ -890,13 +889,16 @@ msgid "OD Point"
 msgstr "Point du traceur"
 #
 msgid "OD Point Name"
-msgstr "Nom du point A"
+msgstr "Nom du point"
 #
 msgid "OD Point Properties"
 msgstr "Propriétés d'un point du traceur"
 #
 msgid "OD Points"
 msgstr "Points du traceur"
+#
+msgid "OD\\WD"
+msgstr ""
 #
 msgid "On Rollover Only"
 msgstr "Seulement par rollover"
@@ -978,7 +980,7 @@ msgstr ""
 "https://github.com/jongough/ocpn_draw_pi/issues\n"
 #
 msgid "Point Inclusion Size"
-msgstr "Taille de la zone environnant ce point"
+msgstr "Largeur de la zone environnant le point"
 #
 msgid "Point Type"
 msgstr "Type de point"
@@ -1015,10 +1017,10 @@ msgid "Right"
 msgstr "Droit"
 #
 msgid "Ring"
-msgstr ""
+msgstr "Cercle"
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Tourner avec le bateau"
 #
 msgid "Short Dash"
 msgstr "Tiret court"
@@ -1119,6 +1121,8 @@ msgid ""
 "This chart shows the interactions between Boundaries and WatchDog alam "
 "boundaries"
 msgstr ""
+"Ce tableau montre les interaction entre les \"Limites/Zones\" et les alarmes "
+"du Chien de garde"
 #
 msgid "Time"
 msgstr "Temps"
@@ -1141,9 +1145,8 @@ msgstr "Longueur totale"
 msgid "Total Length: "
 msgstr "Longueur totale : "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Ne pas lister les contenus"
+msgstr "Ne pas lister les contenus "
 #
 msgid "Update initial conditions"
 msgstr "Revenir à la définition initiale"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-22 12:41+1100\n"
-"PO-Revision-Date: 2016-02-12 17:05-0500\n"
+"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"PO-Revision-Date: 2016-02-27 08:04-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -503,7 +503,7 @@ msgid "EBL"
 msgstr "EBL"
 #
 msgid "EBL Angle (-P/+S)"
-msgstr ""
+msgstr "Γωνία EBL (-Αρ/+Δξ)"
 #
 msgid "EBL Fixed End Position"
 msgstr "Εκτ. πορεία με σταθερό τελικό σημείο"
@@ -597,7 +597,7 @@ msgid "General drawing for OpenCPN"
 msgstr "Γενικό σχέδιο για το OpenCPN"
 #
 msgid "Heading"
-msgstr ""
+msgstr "Πορεία"
 #
 msgid "Help"
 msgstr ""
@@ -719,9 +719,8 @@ msgstr "Στυλ γραμμής"
 msgid "Line Width"
 msgstr "Πλάτος Γραμμής"
 #
-#, fuzzy
 msgid "List contents "
-msgstr "Περιεχόμενα"
+msgstr ""
 #
 msgid "Loading navobjects from "
 msgstr "Φόρτωση navobjects από "
@@ -733,7 +732,7 @@ msgid "Longitude"
 msgstr "Γεωγραφικό μήκος"
 #
 msgid "Maintain with"
-msgstr ""
+msgstr "Διατήρηση με"
 #
 msgid "Major:"
 msgstr "Κύριο:"
@@ -892,6 +891,9 @@ msgstr "Ιδιότητες σημείου OD"
 msgid "OD Points"
 msgstr "Σημεία OD"
 #
+msgid "OD\\WD"
+msgstr ""
+#
 msgid "On Rollover Only"
 msgstr "Στο Rollover μόνο"
 #
@@ -1010,7 +1012,7 @@ msgid "Ring"
 msgstr ""
 #
 msgid "Rotate with Boat"
-msgstr ""
+msgstr "Περιστροφή με το πλοίο"
 #
 msgid "Short Dash"
 msgstr "Με κοντές παύλες"
@@ -1133,9 +1135,8 @@ msgstr "Συνολικό μήκος"
 msgid "Total Length: "
 msgstr "Συνολικό μήκος: "
 #
-#, fuzzy
 msgid "Unlist contents "
-msgstr "Αφαίρεση περιεχομένων"
+msgstr ""
 #
 msgid "Update initial conditions"
 msgstr "Ανανέωσε τις αρχικές συνθήκες"
