@@ -22,7 +22,7 @@ class ODToolbarImpl : public ODToolbarDialog
 {
 public:
 	/** Constructor */
-	ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxPoint &pos, const wxSize &size, long style );
+    ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style );
     ~ODToolbarImpl();
     void OnClose( wxCloseEvent& event );
     void OnToolButtonClick( wxCommandEvent& event );
