@@ -39,6 +39,8 @@
 #include "svg.h"
 #endif // ODraw_USE_SVG
 
+#include <wx/stdpaths.h>
+
 
 extern wxString g_SData_Locn;
 extern wxString *g_pHome_locn;
