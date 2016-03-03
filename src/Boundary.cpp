@@ -136,14 +136,17 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             }
             if(l_imaxpointdiffX < 10 && l_imaxpointdiffY < 10 ) return;
 
-            // Use ClipperLib to manage Pollygon 
-            Path poly;
+            // Use ClipperLib to manage Polygon 
+            // If needed simplify polygons to make shading stay outside
+            Paths poly(1);
             for( size_t i = 0; i < m_pODPointList->GetCount(); i++ ) {
-                poly << IntPoint( m_bpts[i].x, m_bpts[i].y );
+                poly[0] << IntPoint( m_bpts[i].x, m_bpts[i].y );
             }
+            Paths polys;
+            SimplifyPolygons( poly, polys );
             ClipperOffset co;
             Paths ExpandedBoundaries;
-            co.AddPath( poly, jtSquare, etClosedPolygon );
+            co.AddPaths( polys, jtSquare, etClosedPolygon );
             co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
             
             wxPoint *l_InclusionBoundary = new wxPoint[ ExpandedBoundaries[0].size() + 1 ];
@@ -216,14 +219,17 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 }
 
                 if(l_imaxpointdiffX < 10 && l_imaxpointdiffY < 10 ) return;
-                // Use ClipperLib to manage Pollygon 
-                Path poly;
+                // Use ClipperLib to manage Polygon 
+                // If needed simplify polygons to make shading stay outside
+                Paths poly(1);
                 for( int i = 0; i < l_iBoundaryPointCount; i++ ) {
-                    poly << IntPoint( m_bpts[i].x, m_bpts[i].y );
+                    poly[0] << IntPoint( m_bpts[i].x, m_bpts[i].y );
                 }
+                Paths simplePolys;
+                SimplifyPolygons( poly, simplePolys );
                 ClipperOffset co;
                 Paths ExpandedBoundaries;
-                co.AddPath( poly, jtSquare, etClosedPolygon );
+                co.AddPaths( simplePolys, jtSquare, etClosedPolygon );
                 co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
                 
                 int l_iInclusionBoundarySize = ExpandedBoundaries[0].size();
