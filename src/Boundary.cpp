@@ -163,21 +163,35 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             l_iPolygonPointCount[0] = m_pODPointList->GetCount();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
             
-            // Create one array containing the original polygon and the expanded polygon to allow filling
-            wxPoint *l_AllPoints = new wxPoint[ l_iPolygonPointCount[0] + l_iPolygonPointCount[1] ];
-            for( int i = 0; i < l_iPolygonPointCount[0]; i++ ) {
-                l_AllPoints[i] = m_bpts[i];
-            }
-            for( int i = 0; i < l_iPolygonPointCount[1]; i++ ) {
-                l_AllPoints[ i + l_iPolygonPointCount[0] ] += l_InclusionBoundary[i];
+            wxGraphicsContext *wxGC = NULL;
+            wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
+            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+            else {
+                wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
+                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
             }
             
-            dc.SetPen(*wxTRANSPARENT_PEN);
+            wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
-            dc.GetDC()->DrawPolyPolygon( 2, l_iPolygonPointCount, l_AllPoints, 0, 0, wxODDEVEN_RULE );
+            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
+            wxGraphicsPath path = wxGC->CreatePath();
+            path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
+            for( int i = 0; i < l_iPolygonPointCount[0]; i++ ) {
+                path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
+            }
+            path.MoveToPoint(l_InclusionBoundary[0].x, l_InclusionBoundary[0].y);
+            for( int i = 1; i < l_iPolygonPointCount[1]; i++ ) {
+                path.AddLineToPoint(l_InclusionBoundary[i].x, l_InclusionBoundary[i].y);
+            }
+            path.CloseSubpath();
+            wxGC->StrokePath(path);
+            wxGC->FillPath( path );
+            delete wxGC;
             ExpandedBoundaries.clear();
+            polys.clear();
+            poly.clear();
+            co.Clear();
         }
         wxDELETEA( m_bpts );
     }
