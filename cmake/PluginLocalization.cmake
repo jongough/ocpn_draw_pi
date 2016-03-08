@@ -14,6 +14,8 @@ ENDFOREACH(POTLINE)
 FOREACH(POTLINE IN ITEMS ${HDRS})
     FILE(APPEND ${POTFILE}.test "${POTLINE}\n")
 ENDFOREACH(POTLINE)
+# convert crlf to lf for consistency and make copy_if_different work correctly
+configure_file(${POTFILE}.test ${POTFILE}.test NEWLINE_STYLE UNIX)
 EXECUTE_PROCESS(
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${POTFILE}.test ${POTFILE}
     OUTPUT_QUIET
