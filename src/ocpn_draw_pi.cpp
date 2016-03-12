@@ -238,7 +238,7 @@ ODPoint       *pAnchorWatchPoint2;
 
 IDX_entry       *gpIDX;
 
-wxString        *g_locale;
+wxString        *g_ODlocale;
 int             g_iLocaleDepth;
 
 int             g_click_stop;
@@ -360,7 +360,7 @@ int ocpn_draw_pi::Init(void)
     m_chart_scale = 0.;
     g_pfFix.valid = false;
     g_iLocaleDepth = 0;
-    g_locale = NULL;
+    g_ODlocale = NULL;
     
     // Drawing modes from toolbar
     m_Mode = 0;

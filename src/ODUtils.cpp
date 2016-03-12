@@ -34,7 +34,7 @@
 #include "ocpn_draw_pi.h"
 
 extern int      g_iLocaleDepth;
-extern wxString *g_locale;
+extern wxString *g_ODlocale;
 
 /*!
  * Helper stuff for calculating Path
@@ -259,7 +259,7 @@ void SetGlobalLocale( void )
 {
 #ifndef __WXMSW__
     if(g_iLocaleDepth == 0) { 
-        g_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+        g_ODlocale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
         wxSetlocale(LC_NUMERIC, "");
 #else
@@ -276,14 +276,14 @@ void ResetGlobalLocale( void )
     g_iLocaleDepth--;
     if(g_iLocaleDepth < 0) 
         g_iLocaleDepth = 0;
-    if(g_iLocaleDepth == 0 && g_locale) {
+    if(g_iLocaleDepth == 0 && g_ODlocale) {
 #if wxCHECK_VERSION(3,0,0)        
-        wxSetlocale(LC_NUMERIC, g_locale->ToAscii());
+        wxSetlocale(LC_NUMERIC, g_ODlocale->ToAscii());
 #else
-        setlocale(LC_NUMERIC, g_locale->ToAscii());
+        setlocale(LC_NUMERIC, g_ODlocale->ToAscii());
 #endif
-        delete g_locale;
-        g_locale = NULL;
+        delete g_ODlocale;
+        g_ODlocale = NULL;
     } 
 #endif
 }
