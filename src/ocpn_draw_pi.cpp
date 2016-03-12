@@ -575,10 +575,10 @@ bool ocpn_draw_pi::DeInit(void)
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
-    if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
-    g_pODPathPropDialog = NULL;
     if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
     g_pODPointPropDialog = NULL;
+    if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
+    g_pODPathPropDialog = NULL;
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     g_pODToolbar = NULL;
 
