@@ -79,14 +79,19 @@ ODPointPropertiesDialog( parent )
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
     
-#if wxCHECK_VERSION(3,0,0)  && not defined(_WXMSW_)
+#if wxCHECK_VERSION(3,0,0)
+    SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+#if not defined(_WXMSW_)
     wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
     dODPointRangeRingSteps.SetMin(0);
     dODPointArrivalRadius.SetMin(0);
     m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingSteps );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
-#endif
+#endif // not defined(_WXMSW_)
+#endif // wxCHECK_VERSION(3,0,0)
+    SetDialogSize();
+    
 }
 
 ODPointPropertiesImpl::~ODPointPropertiesImpl()
@@ -107,7 +112,6 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     sz.IncBy( 20 );   // Account for some decorations?
     wxSize dsize = ::wxGetDisplaySize();
     sz.y = wxMin(sz.y, dsize.y-80);
-//    sz = wxSize(600, 400);
     SetClientSize(sz);
     m_defaultClientSize = sz;
     //m_panelBasicProperties->SetScrollRate(5, 5);
@@ -116,7 +120,6 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    this->GetSizer()->Fit(this);
     this->Layout();
 }
 
@@ -184,7 +187,7 @@ void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
     int iRet = m_pfdDialog->ShowModal();
     if(iRet == wxID_OK) {
         m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
-        this->GetSizer()->Fit(this);
+        SetDialogSize();
     }
 }
 
@@ -601,11 +604,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_notebookProperties->SetSelection(1);
         m_notebookProperties->SetSelection(0);
-        
-        //this->GetSizer()->Fit(this);
     }
-    this->GetSizer()->Fit( this );
-    this->Layout();
+    SetDialogSize();
     
     return true;
 }

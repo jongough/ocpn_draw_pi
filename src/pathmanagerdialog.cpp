@@ -1571,9 +1571,8 @@ void PathManagerDialog::ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* pare
 
     DimeWindow( g_pODPointPropDialog );
     g_pODPointPropDialog->SetODPoint( wp );
-    g_pODPointPropDialog->SetDialogSize();
     g_pODPointPropDialog->UpdateProperties();
-
+    
     if( !g_pODPointPropDialog->IsShown() )
         g_pODPointPropDialog->Show();
 
