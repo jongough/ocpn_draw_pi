@@ -926,7 +926,7 @@ void ocpn_draw_pi::SaveConfig()
 {
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-#if wxCHECK_VERSION(3,0,0)  && not defined(_WXMSW_)       
+#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)       
     wxSetlocale(LC_NUMERIC, "C");
 #else
     setlocale(LC_NUMERIC, "C");
