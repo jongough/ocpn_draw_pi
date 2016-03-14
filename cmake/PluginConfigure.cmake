@@ -15,8 +15,15 @@ ENDIF (COMMAND cmake_policy)
 
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 
-configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/include/version.h)
-configure_file(cmake/wxWTranslateCatalog.h.in ${PROJECT_SOURCE_DIR}/include/wxWTranslateCatalog.h)
+#configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/src/version.h)
+#  Do the version.h configuration into the build output directory,
+#  thereby allowing building from a read-only source tree.
+IF(NOT SKIP_VERSION_CONFIG)
+    SET(BUILD_INCLUDE_PATH ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY})
+    configure_file(cmake/version.h.in ${BUILD_INCLUDE_PATH}/include/version.h)
+    configure_file(cmake/wxWTranslateCatalog.h.in ${BUILD_INCLUDE_PATH}/include/wxWTranslateCatalog.h)
+    INCLUDE_DIRECTORIES(${BUILD_INCLUDE_PATH}/include)
+ENDIF(NOT SKIP_VERSION_CONFIG)
 
 SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
 
