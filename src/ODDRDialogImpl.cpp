@@ -78,7 +78,7 @@ extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
     SetGlobalLocale();
-#if wxCHECK_VERSION(3,0,0) && not defined(__WXMSW__)   
+#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dIntervalVal(3, &m_dIntervalValidator, wxNUM_VAL_DEFAULT);
@@ -135,7 +135,7 @@ void ODDRDialogImpl::SetupDialog()
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
-#if wxCHECK_VERSION(3,0,0) && not defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
     if(g_pfFix.Sog != g_pfFix.Sog )
         m_dSOGValidator = g_dDRSOG;
     else
@@ -173,7 +173,7 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
-#if wxCHECK_VERSION(3,0,0)  && not defined(_WXMSW_)
+#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)
     m_dSOGValidator = dr->m_dSoG;
     m_iCOGValidator = dr->m_iCoG;
     m_dLengthValidator = dr->m_dDRPathLength;
