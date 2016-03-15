@@ -15,9 +15,11 @@ ENDIF (COMMAND cmake_policy)
 
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 
-#configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/src/version.h)
-#  Do the version.h configuration into the build output directory,
+#  Do the version.h & wxWTranslateCatalog configuration into the build output directory,
 #  thereby allowing building from a read-only source tree.
+# The removes are to get rid of old copies - this can be removed at next release version, i.e. > 1.1.0
+FILE(REMOVE ${PROJECT_SOURCE_DIR}/include/version.h)
+FILE(REMOVE ${PROJECT_SOURCE_DIR}/include/wxWTranslateCatalog.h)
 IF(NOT SKIP_VERSION_CONFIG)
     SET(BUILD_INCLUDE_PATH ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY})
     configure_file(cmake/version.h.in ${BUILD_INCLUDE_PATH}/include/version.h)
