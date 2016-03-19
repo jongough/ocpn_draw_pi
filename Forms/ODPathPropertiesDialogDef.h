@@ -90,6 +90,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnChoiceLineWidth( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnKillFocusChoiceLineWidth( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnSetFocusChoiceLineWidth( wxFocusEvent& event ) { event.Skip(); }
+		virtual void OnRadioBoxBoundaryType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }

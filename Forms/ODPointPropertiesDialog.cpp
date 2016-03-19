@@ -375,6 +375,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_textLongitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
 	m_textCtrlODPointArrivalRadius->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnArrivalRadiusChange ), NULL, this );
 	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
+	m_radioBoxBoundaryPointType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
 	m_textCtrlODPointRangeRingsSteps->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );
@@ -393,6 +394,7 @@ ODPointPropertiesDialog::~ODPointPropertiesDialog()
 	m_textLongitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
 	m_textCtrlODPointArrivalRadius->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnArrivalRadiusChange ), NULL, this );
 	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
+	m_radioBoxBoundaryPointType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
 	m_textCtrlODPointRangeRingsSteps->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );

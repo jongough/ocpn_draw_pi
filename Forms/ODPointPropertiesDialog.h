@@ -123,6 +123,7 @@ class ODPointPropertiesDialog : public wxDialog
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnArrivalRadiusChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowRangeRingsSelect( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioBoxPointType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRangeRingsStepChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDescChangedBasic( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
@@ -132,7 +133,7 @@ class ODPointPropertiesDialog : public wxDialog
 	
 	public:
 		
-		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxALWAYS_SHOW_SB|wxVSCROLL ); 
+		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~ODPointPropertiesDialog();
 	
 };

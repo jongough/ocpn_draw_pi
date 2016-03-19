@@ -117,7 +117,7 @@ protected:
     void OnComboboxSelected( wxCommandEvent& event );
     void OnCopyPasteLatLon( wxCommandEvent& event );
     void OnButtonClickFonts( wxCommandEvent& event );
-    
+    void OnRadioBoxPointType( wxCommandEvent& event );
     void SaveChanges();
     
     wxObject*               m_contextObject;

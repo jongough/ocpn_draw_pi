@@ -252,6 +252,22 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     event.Skip();
 }
 
+void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
+{
+    switch (m_radioBoxBoundaryPointType->GetSelection()) {
+        case ID_BOUNDARY_EXCLUSION:
+        case ID_BOUNDARY_NIETHER:
+            m_sliderBoundaryPointInclusionSize->Disable();
+            break;
+        case ID_BOUNDARY_INCLUSION:
+            m_sliderBoundaryPointInclusionSize->Enable();
+            break;
+    }
+    
+    ODPointPropertiesDialog::OnRadioBoxPointType(event);
+}
+
+
 void ODPointPropertiesImpl::SaveChanges()
 {
     if( m_pODPoint ) {
@@ -507,6 +523,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 if( m_pBoundaryPoint->m_iRangeRingStyle == ::StyleValues[i] )
                     m_choiceRangeRingLineStyle->SetSelection( i );
             }
+            if(!m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint)
+                m_sliderBoundaryPointInclusionSize->Enable();
+            else
+                m_sliderBoundaryPointInclusionSize->Disable();
         }
         
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );

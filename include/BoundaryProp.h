@@ -48,6 +48,7 @@ class BoundaryProp : public ODPathPropertiesDialogImpl
         
     protected:
         bool SaveChanges( void );
+        void OnRadioBoxBoundaryType( wxCommandEvent& event );
         
         unsigned int    m_uiFillTransparency;
         

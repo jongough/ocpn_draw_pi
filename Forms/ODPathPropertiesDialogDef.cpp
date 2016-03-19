@@ -140,7 +140,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryType = new wxRadioBox( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxBoundaryType->SetSelection( 0 );
-	m_bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL, 5 );
+	m_bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL|wxEXPAND, 5 );
 	
 	
 	fgSizer1->Add( m_bSizerBoundaryType, 1, wxEXPAND, 5 );
@@ -239,6 +239,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_choiceLineWidth->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnChoiceLineWidth ), NULL, this );
 	m_choiceLineWidth->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocusChoiceLineWidth ), NULL, this );
 	m_choiceLineWidth->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocusChoiceLineWidth ), NULL, this );
+	m_radioBoxBoundaryType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRadioBoxBoundaryType ), NULL, this );
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRotateWithBoat ), NULL, this );
 	m_textCtrlEBLAngle->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlEBLAngle->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
@@ -262,6 +263,7 @@ ODPathPropertiesDialogDef::~ODPathPropertiesDialogDef()
 	m_choiceLineWidth->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnChoiceLineWidth ), NULL, this );
 	m_choiceLineWidth->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocusChoiceLineWidth ), NULL, this );
 	m_choiceLineWidth->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocusChoiceLineWidth ), NULL, this );
+	m_radioBoxBoundaryType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRadioBoxBoundaryType ), NULL, this );
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRotateWithBoat ), NULL, this );
 	m_textCtrlEBLAngle->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlEBLAngle->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
