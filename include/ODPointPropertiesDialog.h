@@ -123,6 +123,7 @@ class ODPointPropertiesDialog : public wxDialog
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnArrivalRadiusChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowRangeRingsSelect( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRadioBoxPointType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRangeRingsStepChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDescChangedBasic( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }

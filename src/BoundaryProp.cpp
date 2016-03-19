@@ -80,6 +80,11 @@ bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
     else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     
+    if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary)
+        m_sliderInclusionBoundarySize->Enable();
+    else
+        m_sliderInclusionBoundarySize->Disable();
+    
     ODPathPropertiesDialogImpl::UpdateProperties( pBoundary );
     
     return true;
@@ -115,3 +120,16 @@ bool BoundaryProp::SaveChanges( void )
     return true;
 }
 
+void BoundaryProp::OnRadioBoxBoundaryType(wxCommandEvent& event)
+{
+    switch (m_radioBoxBoundaryType->GetSelection()) {
+        case ID_BOUNDARY_EXCLUSION:
+        case ID_BOUNDARY_NIETHER:
+            m_sliderInclusionBoundarySize->Disable();
+            break;
+        case ID_BOUNDARY_INCLUSION:
+            m_sliderInclusionBoundarySize->Enable();
+            break;
+    }
+    ODPathPropertiesDialogImpl::OnRadioBoxBoundaryType(event);
+}

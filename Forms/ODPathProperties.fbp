@@ -2118,7 +2118,7 @@
                                 <property name="permission">protected</property>
                                 <object class="sizeritem" expanded="0">
                                     <property name="border">5</property>
-                                    <property name="flag">wxALL</property>
+                                    <property name="flag">wxALL|wxEXPAND</property>
                                     <property name="proportion">0</property>
                                     <object class="wxRadioBox" expanded="0">
                                         <property name="BottomDockable">1</property>
@@ -2197,7 +2197,7 @@
                                         <event name="OnMouseEvents"></event>
                                         <event name="OnMouseWheel"></event>
                                         <event name="OnPaint"></event>
-                                        <event name="OnRadioBox"></event>
+                                        <event name="OnRadioBox">OnRadioBoxBoundaryType</event>
                                         <event name="OnRightDClick"></event>
                                         <event name="OnRightDown"></event>
                                         <event name="OnRightUp"></event>
