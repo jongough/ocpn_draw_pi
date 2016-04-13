@@ -726,7 +726,8 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     else g_pfFix.Cog = pfix.Cog;
     g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
-    g_pfFix.Hdm = pfix.Hdm;
+    if(isnan(pfix.Hdm)) g_pfFix.Hdm = 0.;
+    else g_pfFix.Hdm = pfix.Hdm;
     if(isnan(pfix.Hdt)) g_pfFix.Hdt = 0.;
     else g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
@@ -2743,6 +2744,17 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                         pPathDraw->Draw( dc, *m_pVP );
                     }
                 }
+            }
+            if(pPathDraw == m_pSelectedEBL && m_bODPointEditing) {
+                double brg, dist;
+                wxPoint destPoint;
+                ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
+                ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+                DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
+                GetCanvasPixLL( m_pVP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+                wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
+                if(info.length() > 0)
+                    RenderExtraPathLegInfo( dc, destPoint, info );
             }
         }
         pnode = pnode->GetNext();
