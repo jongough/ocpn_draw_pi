@@ -287,3 +287,61 @@ void ResetGlobalLocale( void )
     } 
 #endif
 }
+
+// Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 
+// intersect the intersection point may be stored in the floats i_x and i_y.
+bool GetLineIntersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double* i_x, double* i_y)
+{
+    float s1_x, s1_y, s2_x, s2_y;
+    s1_x = p1_x - p0_x;     s1_y = p1_y - p0_y;
+    s2_x = p3_x - p2_x;     s2_y = p3_y - p2_y;
+    
+    float s, t;
+    s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
+    t = ( s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
+    
+    if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
+    {
+        // Collision detected
+        if (i_x != NULL)
+            *i_x = p0_x + (t * s1_x);
+        if (i_y != NULL)
+            *i_y = p0_y + (t * s1_y);
+        return true;
+    }
+    
+    return false; // No collision
+}
+
+//  Parameters for this function:
+//
+//  int    polyCorners  =  how many corners the polygon has
+//  double  polyX[]      =  horizontal coordinates of corners
+//  double  polyY[]      =  vertical coordinates of corners
+//  double  x, y         =  point to be tested
+//
+//  The function will return YES if the point x,y is inside the polygon, or
+//  NO if it is not.  If the point is exactly on the edge of the polygon,
+//  then the function may return YES or NO.
+//
+//  Note that division by zero is avoided because the division is protected
+//  by the "if" clause which surrounds it.
+
+bool pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y) 
+{
+    
+    int   i, j=polyCorners-1 ;
+    bool  oddNodes=false      ;
+    
+    for (i=0; i<polyCorners; i++) {
+        if (((polyY[i]< y && polyY[j]>=y)
+            ||   (polyY[j]< y && polyY[i]>=y))
+            &&  (polyX[i]<=x || polyX[j]<=x)) {
+            oddNodes^=(polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x); }
+            j=i; 
+        
+    }
+    
+    return oddNodes; 
+    
+}

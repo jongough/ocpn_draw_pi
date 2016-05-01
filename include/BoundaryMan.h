@@ -42,9 +42,16 @@ class BoundaryMan : public PathMan
         wxString    FindPointInBoundaryPoint( double lat, double lon, int type );
         bool        FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, double lat, double lon );
         bool        FindPointInBoundaryPoint( wxString l_GUID, double lat, double lon );
-        
+        wxString    FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, double *CrossingLat, double *CrossingLon, double *Crossingdist, int type, int state );
     private:
-        bool    pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y);
+        struct BOUNDARYCROSSING {
+            wxString    GUID;
+            double      Len;
+            double      Lon;
+            double      Lat;
+        };
+        
+        std::list<BOUNDARYCROSSING> BoundaryCrossingList;
 };
 
 #endif // BOUNDARYMAN_H

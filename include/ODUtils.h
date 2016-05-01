@@ -38,4 +38,6 @@
  double         getLMT( double ut, double lon );
  void           SetGlobalLocale( void );
  void           ResetGlobalLocale( void );
+ bool           pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y);
+ bool           GetLineIntersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double *i_x, double *i_y);
 #endif

@@ -1275,6 +1275,13 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
     wxString    l_sMsg;
     double      l_dLat;
     double      l_dLon;
+    double      l_dStartLat;
+    double      l_dStartLon;
+    double      l_dEndLat;
+    double      l_dEndLon;
+    double      l_dCrossingLat;
+    double      l_dCrossingLon;
+    double      l_dCrossingDist;
     wxString    l_GUID;
     int         l_BoundaryType;
     int         l_BoundaryState;
@@ -1468,7 +1475,84 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     return;
                 }
             }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindClosestBoundaryLineCrossing")) {
+            if(!root.HasMember( wxS("StartLat"))) {
+                wxLogMessage( wxS("No Start Latitude found in message") );
+                bFail = true;
+            }
             
+            if(!root.HasMember( wxS("StartLon"))) {
+                wxLogMessage( wxS("No Start Longitude found in message") );
+                bFail = true;
+            }
+            
+            if(!root.HasMember( wxS("EndLat"))) {
+                wxLogMessage( wxS("No End Latitude found in message") );
+                bFail = true;
+            }
+            
+            if(!root.HasMember( wxS("EndLon"))) {
+                wxLogMessage( wxS("No End Longitude found in message") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                root[wxS("StartLat")].AsString().ToDouble( & l_dStartLat );
+                root[wxS("StartLon")].AsString().ToDouble( & l_dStartLon );
+                root[wxS("EndLat")].AsString().ToDouble( & l_dEndLat );
+                root[wxS("EndLon")].AsString().ToDouble( & l_dEndLon );
+                
+                l_sType = root[wxS("Type")].AsString();
+                l_sMsg = root[wxT("Msg")].AsString();
+                
+                if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+                else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+                else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NIETHER;
+                else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
+                else l_BoundaryType = ID_BOUNDARY_ANY;
+                
+                l_BoundaryState = ID_BOUNDARY_ANY;
+                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_BOUNDARY_STATE_ACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_BOUNDARY_STATE_INACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_BOUNDARY_STATE_ANY;
+                
+                
+                if(l_sType == wxS("Request")) {
+                    bool    l_bFoundBoundary = false;
+                    bool    l_bFoundBoundaryPoint = false;
+                    wxString l_sGUID = g_pBoundaryMan->FindLineCrossingBoundary( l_dStartLon, l_dStartLat, l_dEndLon, l_dEndLat, &l_dCrossingLon, &l_dCrossingLat, &l_dCrossingDist, l_BoundaryType, l_BoundaryState );
+                    if(l_sGUID.length() > 0) 
+                        l_bFoundBoundary = true;
+
+                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                    jMsg[wxT("Msg")] = root[wxT("Msg")];
+                    jMsg[wxT("Type")] = wxT("Response");
+                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                    jMsg[wxS("GUID")] = l_sGUID;
+                    jMsg[wxS("CrossingLat")] = l_dCrossingLat;
+                    jMsg[wxS("CrossingLon")] = l_dCrossingLon;
+                    jMsg[wxS("CrossingDist")] = l_dCrossingDist;
+                    if(l_bFoundBoundary ) {
+                        Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
+                        jMsg[wxS("Name")] = l_boundary->m_PathNameString;
+                        jMsg[wxS("Description")] = l_boundary->m_PathDescription;
+                        jMsg[wxS("Found")] = true;
+                        jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
+                        if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
+                        else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
+                        else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
+                            jMsg[wxS("BoundaryType")] = wxT("Neither");
+                        else
+                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
+                    }
+                    else jMsg[wxS("Found")] = false;
+                    writer.Write( jMsg, MsgString );
+                    SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
+                    return;
+                }
+            }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInBoundary")) {
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
