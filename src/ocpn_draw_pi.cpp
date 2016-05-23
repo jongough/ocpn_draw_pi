@@ -362,6 +362,9 @@ int ocpn_draw_pi::Init(void)
     g_iLocaleDepth = 0;
     g_ODlocale = NULL;
     
+    // Ensure scrollbars are on dialogs when using small displays
+    wxDialog::EnableLayoutAdaptation( true );
+    
     // Drawing modes from toolbar
     m_Mode = 0;
     m_numModes = ID_MODE_LAST - 1;
