@@ -154,6 +154,7 @@ ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
 ODPropertiesDialogDef( parent )
 {
+    wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
     
     m_staticTextNameVal->SetLabel( wxT("OpenCPN Draw Plugin") );
     m_staticTextMajorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MAJOR ));

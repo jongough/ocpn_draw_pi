@@ -65,6 +65,8 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :
 ODPointPropertiesDialog( parent )
 {
+    wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+
     this->Connect( ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
             wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
     this->Connect( ID_RCLK_MENU_COPY_LL, wxEVT_COMMAND_MENU_SELECTED,
