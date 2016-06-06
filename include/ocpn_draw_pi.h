@@ -191,6 +191,7 @@ enum
     ID_MODE_TEXT_POINT,
     ID_MODE_EBL,
     ID_MODE_DR,
+    ID_MODE_GZ,
     
     ID_MODE_LAST
 };
@@ -232,6 +233,7 @@ class Boundary;
 class BoundaryProp;
 class EBL;
 class DR;
+class GZ;
 class SelectItem;
 class ODicons;
 
@@ -270,6 +272,7 @@ public:
     bool            m_bTextPointEditing;
     bool            m_bEBLEditing;
     bool            m_bEBLMoveOrigin;
+    bool            m_bGZEditing;
 
     
 
@@ -364,14 +367,17 @@ public:
     int         nTextPoint_State;
     int         nEBL_State;
     int         nDR_State;
+    int         nGZ_State;
     bool        bKey_Path_Pressed;
     bool        bKey_Boundary_Pressed;
     bool        bKey_Point_Pressed;
     bool        bKey_TextPoint_Pressed;
     bool        bKey_EBL_Pressed;
     bool        bKey_DR_Pressed;
+    bool        bKey_GZ_Pressed;
     Boundary    *m_pMouseBoundary;
     EBL         *m_pMouseEBL;
+    GZ          *m_pMouseGZ;
     ODPoint     *m_pEBLBoatPoint;
     ODPath        *m_pSelectedPath;
     ODPoint   *m_pFoundODPoint;
@@ -425,6 +431,7 @@ private:
     bool    CreateTextPointLeftClick( wxMouseEvent &event );
     bool    CreateEBLLeftClick( wxMouseEvent &event );
     bool    CreateDRLeftClick( wxMouseEvent &event );
+    bool    CreateGZLeftClick( wxMouseEvent &event );
     
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
@@ -444,8 +451,10 @@ private:
     Boundary    *m_pSelectedBoundary;
     EBL         *m_pSelectedEBL;
     DR          *m_pSelectedDR;
+    GZ          *m_pSelectedGZ;
     
     bool        m_bDrawingBoundary;
+    bool        m_bDrawingGZ;
     
     int         popx, popy;
     wxString m_sNavObjSetChangesFile;

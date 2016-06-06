@@ -36,6 +36,7 @@
 #include "BoundaryPoint.h"
 #include "EBL.h"
 #include "DR.h"
+#include "GZ.h"
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 #include "ODEventHandler.h"
@@ -244,6 +245,10 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points 
             m_pDR = (DR *)pP;
             m_pPath = m_pDR;
         }
+        if(pP->m_sTypeString == wxT("GuardZone")) {
+            m_pGZ = (GZ *)pP;
+            m_pPath = m_pGZ;
+        }
         m_pPath->m_bPathPropertiesBlink = true;
         
         m_textCtrlName->SetValue( m_pPath->m_PathNameString );
@@ -287,6 +292,10 @@ void ODPathPropertiesDialogImpl::SetPath( ODPath *pP )
         m_pDR = (DR *)pP;
         m_pPath = m_pDR;
     }
+    if(pP->m_sTypeString == wxT("GuardZone")) {
+        m_pGZ = (GZ *)pP;
+        m_pPath = m_pGZ;
+    }
     m_pPath->m_bPathPropertiesBlink = true;
     
     m_textCtrlName->SetValue( m_pPath->m_PathNameString );
@@ -309,6 +318,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
     DR *pDR = NULL;
+    GZ *pGZ = NULL;
     
     if( NULL == pInPath ) return false;
     ::wxBeginBusyCursor();
@@ -324,6 +334,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("DR")) {
         pDR = (DR *)pInPath;
         pPath = pDR;
+    } else if(pInPath->m_sTypeString == wxT("GuardZone")) {
+        pGZ = (GZ *)pInPath;
+        pPath = pGZ;
     } else {
         pPath = pInPath;
     }
@@ -688,6 +701,29 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_staticTextEBLAngle->Enable(false);
     m_textCtrlEBLAngle->Hide();
     m_textCtrlEBLAngle->Enable(false);
+    m_fgSizerGZ->ShowItems( false );
+    m_checkBoxRotateGZWithBoat->Hide();
+    m_checkBoxRotateGZWithBoat->Enable( false );
+    m_radioBoxMaintainGZWith->Hide();
+    m_radioBoxMaintainGZWith->Enable( false );
+    m_staticTextGZFirstAngle->Hide();
+    m_staticTextGZFirstAngle->Enable( false );
+    m_textCtrlGZFirstAngle->Hide();
+    m_textCtrlGZFirstAngle->Enable( false );
+    m_staticTextGZFirstLength->Hide();
+    m_staticTextGZFirstLength->Enable( false );
+    m_textCtrlGZFirstLength->Hide();
+    m_textCtrlGZFirstLength->Enable( false );
+    m_staticTextGZSecondAngle->Hide();
+    m_staticTextGZSecondAngle->Enable( false );
+    m_textCtrlGZSecondAngle->Hide();
+    m_textCtrlGZSecondAngle->Enable( false );
+    m_staticTextGZSecondLength->Hide();
+    m_staticTextGZSecondLength->Enable( false );
+    m_textCtrlGZSecondLength->Hide();
+    m_textCtrlGZSecondLength->Enable( false );
+    
+    
 
     return;
 }

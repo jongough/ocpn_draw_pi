@@ -44,7 +44,14 @@ GZProp::GZProp()
 GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
-    //ctor
+    m_staticTextFillColour->Show();
+    m_staticTextFillColour->Enable( true );
+    m_colourPickerFillColour->Show();
+    m_colourPickerFillColour->Enable( true );
+    m_staticTextFillTransparency->Show();
+    m_staticTextFillTransparency->Enable( true );
+    m_sliderFillTransparency->Show();
+    m_sliderFillTransparency->Enable( true );
     m_fgSizerGZ->ShowItems( true );
     m_staticTextGZFirstAngle->Show();
     m_staticTextGZFirstAngle->Enable( true );
@@ -97,49 +104,58 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
     
     wxString s;
 
-    m_checkBoxRotateGZWithBoat->SetValue( pInGZ->m_bRotateWithBoat );
-    m_radioBoxMaintainGZWith->SetSelection( pInGZ->m_iMaintainWith );
-    if(pInGZ->m_bCentreOnBoat)
-        m_checkBoxRotateGZWithBoat->Enable(true);
-    else
-        m_checkBoxRotateGZWithBoat->Enable(false);
+    m_colourPickerFillColour->SetColour( m_pGZ->m_wxcActiveFillColour );
+    m_sliderFillTransparency->SetValue( m_pGZ->m_uiFillTransparency );
+
+    m_checkBoxRotateGZWithBoat->SetValue( m_pGZ->m_bRotateWithBoat );
+    m_radioBoxMaintainGZWith->SetSelection( m_pGZ->m_iMaintainWith );
+    m_checkBoxRotateGZWithBoat->Enable(true);
 
     m_radioBoxMaintainGZWith->Enable(true);
-    m_textCtrlGZFirstAngle->Enable(true);
-    m_textCtrlGZSecondAngle->Enable(true);
+    m_textCtrlGZFirstAngle->SetEditable(true);
+    m_textCtrlGZSecondAngle->SetEditable(true);
     m_textCtrlGZFirstLength->SetEditable(true);
     m_textCtrlGZSecondLength->SetEditable(true);
     
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    if(pInGZ->m_dFirstLineDirection > 180)
-        m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection - 360;
-    else
-        m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection;
-    if(pInGZ->m_dSecondLineDirection > 180)
-        m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection - 360;
-    else
-        m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection;
-    
-    m_dODGZFirstLengthValidator = pInGZ->m_dFirstDistance;
-    m_dODGZSecondLengthValidator = pInGZ->m_dSecondDistance;
+    if(!m_bLockGZAngle) {
+        if(pInGZ->m_dFirstLineDirection > 180)
+            m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection - 360;
+        else
+            m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection;
+        if(pInGZ->m_dSecondLineDirection > 180)
+            m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection - 360;
+        else
+            m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection;
+    }
+        
+    if(!m_bLockGZLength) {
+        m_dODGZFirstLengthValidator = pInGZ->m_dFirstDistance;
+        m_dODGZSecondLengthValidator = pInGZ->m_dSecondDistance;
+    }
 #else
-    if(pInGZ->m_dFirstLineDirection > 180)
-        s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection - 360 );
-    else
-        s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
-    
-    m_textCtrlGZFirstLAngle->SetValue(s);
-    
-    if(pInGZ->m_dSecondLineDirection > 180)
-        s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection - 360 );
-    else
-        s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
-    m_textCtrlGZSecondAngle->SetValue(s);
-    
-    s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dLength) );
+    if(!m_bLockGZAngle) {
+        if(pInGZ->m_dFirstLineDirection > 180)
+            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection - 360 );
+        else
+            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
+        
+        m_textCtrlGZFirstLAngle->SetValue(s);
+        
+        if(pInGZ->m_dSecondLineDirection > 180)
+            s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection - 360 );
+        else
+            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
+        m_textCtrlGZSecondAngle->SetValue(s);
+    }
+
+    if(!m_bLockGZLength) {
+        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+    }
 #endif
-    
-    m_bLockUpdate = false;
+    m_bLockGZAngle = false;
+    m_bLockGZLength = false;
     
     return ODPathPropertiesDialogImpl::UpdateProperties( pInGZ );
 }
@@ -180,6 +196,9 @@ bool GZProp::UpdateProperties( void )
 
 bool GZProp::SaveChanges( void )
 {
+    m_pGZ->m_wxcActiveFillColour = m_colourPickerFillColour->GetColour();    
+    m_pGZ->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
+    
     wxColour l_GZOrigColour = m_pGZ->GetCurrentColour();
     ODPoint *pFirstPoint = m_pGZ->m_pODPointList->GetFirst()->GetData();
 
@@ -204,17 +223,36 @@ bool GZProp::SaveChanges( void )
     
     double l_dGZAngle;
     m_textCtrlGZFirstAngle->GetValue().ToDouble( &l_dGZAngle );
-    if(m_pGZ->m_bRotateWithBoat) {
-        if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {
+/*    if(!m_pGZ->m_bRotateWithBoat) {
+*/        if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {
             m_pGZ->m_dFirstLineDirection = l_dGZAngle;
+/*        }
+    } else {
+        switch (m_pGZ->m_iMaintainWith) {
+            case ID_MAINTAIN_WITH_HEADING:
+                m_pGZ->m_dFirstLineDirection = l_dGZAngle + g_pfFix.Hdm;
+                break;
+            case ID_MAINTAIN_WITH_COG:
+                m_pGZ->m_dFirstLineDirection = l_dGZAngle + g_pfFix.Cog;
+                break;
         }
-    }
+*/    }
+    
     m_textCtrlGZSecondAngle->GetValue().ToDouble( &l_dGZAngle );
-    if(m_pGZ->m_bRotateWithBoat) {
-        if(l_dGZAngle != m_pGZ->m_dSecondLineDirection) {
+/*    if(!m_pGZ->m_bRotateWithBoat) {
+*/        if(l_dGZAngle != m_pGZ->m_dSecondLineDirection) {
             m_pGZ->m_dSecondLineDirection = l_dGZAngle;
+/*        }
+    } else {
+/*        switch (m_pGZ->m_iMaintainWith) {
+            case ID_MAINTAIN_WITH_HEADING:
+                m_pGZ->m_dSecondLineDirection = l_dGZAngle + g_pfFix.Hdm;
+                break;
+            case ID_MAINTAIN_WITH_COG:
+                m_pGZ->m_dSecondLineDirection = l_dGZAngle + g_pfFix.Cog;
+                break;
         }
-    }
+*/    }
     
     bool ret = ODPathPropertiesDialogImpl::SaveChanges();
     

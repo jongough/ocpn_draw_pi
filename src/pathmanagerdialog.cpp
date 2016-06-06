@@ -56,6 +56,8 @@
 #include "EBLProp.h"
 #include "DR.h"
 #include "DRProp.h"
+#include "GZ.h"
+#include "GZProp.h"
 #include "PathMan.h"
 #include "PointMan.h"
 #include "ODPoint.h"
@@ -144,6 +146,7 @@ extern ODPathPropertiesDialogImpl     *g_pPathPropDialog;
 extern BoundaryProp *g_pBoundaryPropDialog;
 extern EBLProp      *g_pEBLPropDialog;
 extern DRProp       *g_pDRPropDialog;
+extern GZProp       *g_pGZPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
@@ -1063,6 +1066,8 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
     Boundary *l_pBoundary = NULL;
     EBL *l_pEBL = NULL;
     DR  *l_pDR = NULL;
+    GZ  *l_pGZ = NULL;
+    
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
         if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
             g_pBoundaryPropDialog = new BoundaryProp( g_ocpn_draw_pi->m_parent_window );
@@ -1087,6 +1092,14 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         l_pPath = l_pDR;
         g_pDRPropDialog->SetPath( l_pDR );
         g_pDRPropDialog->UpdateProperties( l_pDR );
+    } else if(inpath->m_sTypeString == wxT("GuardZone")) {
+        if( NULL == g_pGZPropDialog )          // There is one global instance of the DRProp Dialog
+            g_pGZPropDialog = new GZProp( GetParent() );
+        g_pODPathPropDialog = g_pGZPropDialog;
+        l_pGZ = (GZ *) inpath;
+        l_pPath = l_pGZ;
+        g_pGZPropDialog->SetPath( l_pGZ );
+        g_pGZPropDialog->UpdateProperties( l_pGZ );
     } else {
         if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
             g_pPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
@@ -1105,6 +1118,8 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
             g_pODPathPropDialog->SetDialogTitle(_("EBL Properties"));
         else if(l_pPath->m_sTypeString == wxT("DR")) 
             g_pODPathPropDialog->SetDialogTitle(_("DR Properties"));
+        else if(l_pPath->m_sTypeString == wxT("GuardZone")) 
+            g_pODPathPropDialog->SetDialogTitle(_("Guard Zone Properties"));
     }
     else {
         wxString caption( wxS("") );

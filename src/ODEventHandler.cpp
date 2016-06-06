@@ -43,6 +43,7 @@
 #include "Boundary.h"
 #include "EBL.h"
 #include "DR.h"
+#include "GZ.h"
 #include "ODDRDialogImpl.h"
 #include "TextPoint.h"
 #include <wx/window.h>
@@ -94,6 +95,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     m_pBoundary = NULL;
     m_pEBL = NULL;
     m_pDR = NULL;
+    m_pGZ = NULL;
     m_pFoundTextPoint = NULL;
     g_pRolloverPoint = NULL;
     
@@ -107,6 +109,9 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     } else if(selectedPath->m_sTypeString == wxT("DR")) {
         m_pDR = (DR *)selectedPath;
         m_pSelectedPath = m_pDR;
+    } else if(selectedPath->m_sTypeString == wxT("GuardZone")) {
+        m_pGZ = (GZ *)selectedPath;
+        m_pSelectedPath = m_pGZ;
     } else
         m_pSelectedPath = selectedPath;
 
@@ -123,6 +128,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     m_pBoundary = NULL;
     m_pEBL = NULL;
     m_pDR = NULL;
+    m_pGZ = NULL;
     m_pFoundTextPoint = NULL;
     g_pRolloverPoint = NULL;
     
@@ -136,6 +142,9 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     } else if(selectedPath->m_sTypeString == wxT("DR")) {
         m_pDR = (DR *)selectedPath;
         m_pSelectedPath = m_pDR;
+    } else if(selectedPath->m_sTypeString == wxT("GuardZone")) {
+        m_pGZ = (GZ *)selectedPath;
+        m_pSelectedPath = m_pGZ;
     } else
         m_pSelectedPath = selectedPath;
 
@@ -146,6 +155,8 @@ void ODEventHandler::SetPath( ODPath *path )
 {
     m_pBoundary = NULL;
     m_pEBL = NULL;
+    m_pDR = NULL;
+    m_pGZ = NULL;
     m_pSelectedPath = NULL;
     if(path) {
         if(path->m_sTypeString == wxT("Boundary")) {
@@ -157,6 +168,9 @@ void ODEventHandler::SetPath( ODPath *path )
         } else if(path->m_sTypeString == wxT("DR")) {
             m_pDR = (DR *)path;
             m_pSelectedPath = m_pDR;
+        } else if(path->m_sTypeString == wxT("GuardZone")) {
+            m_pGZ = (GZ *)path;
+            m_pSelectedPath = m_pGZ;
         } else
             m_pSelectedPath = path;
     }
@@ -248,10 +262,12 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     ODPoint *segShow_point_b = (ODPoint *) g_pRolloverPathSeg->m_pData2;
                     
                     double brgFrom, brgTo, dist;
-                    DistanceBearingMercator_Plugin( segShow_point_b->m_lat, segShow_point_b->m_lon,
-                                             segShow_point_a->m_lat, segShow_point_a->m_lon, &brgFrom, &dist );
-                    DistanceBearingMercator_Plugin( segShow_point_a->m_lat, segShow_point_a->m_lon,
-                                             segShow_point_b->m_lat, segShow_point_b->m_lon, &brgTo, &dist );
+                    if(segShow_point_a && segShow_point_b) {
+                        DistanceBearingMercator_Plugin( segShow_point_b->m_lat, segShow_point_b->m_lon,
+                                                segShow_point_a->m_lat, segShow_point_a->m_lon, &brgFrom, &dist );
+                        DistanceBearingMercator_Plugin( segShow_point_a->m_lat, segShow_point_a->m_lon,
+                                                segShow_point_b->m_lat, segShow_point_b->m_lon, &brgTo, &dist );
+                    }
                     
                     if( !pp->m_bIsInLayer ) {
                         wxString wxsText;
@@ -279,50 +295,51 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     else
                         s.Append( pp->m_PathNameString );
                     
-                    s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
-                    << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
-                    << _(" to ") << segShow_point_b->GetName()
-                    << _T("\n");
+                    if(pp->m_sTypeString != wxT("GuardZone")) {
+                        s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
+                        << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
+                        << _(" to ") << segShow_point_b->GetName()
+                        << _T("\n");
                     
-                    if(pp->m_sTypeString == wxT("EBL")) {
-                        s << _("From: ");
-                        if( g_bShowMag )
-                            s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
-                        else
-                            s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
-                        s << _(" To: ");
-                        if( g_bShowMag )
-                            s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgTo ) );
-                        else
-                            s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgTo ) );
-                        s << _T("\n");
-                    } else {
-                        if( g_bShowMag )
-                            s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
-                        else
-                            s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
-                    }
-                    
-                    s << g_ocpn_draw_pi->FormatDistanceAdaptive( dist );
-                    
-                    // Compute and display cumulative distance from route start point to current
-                    // leg end point.
-                    
-                    if( segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
-                        wxODPointListNode *node = (pp->m_pODPointList)->GetFirst()->GetNext();
-                        ODPoint *pop;
-                        float dist_to_endleg = 0;
-                        wxString t;
-                        
-                        while( node ) {
-                            pop = node->GetData();
-                            dist_to_endleg += pop->m_seg_len;
-                            if( pop->IsSame( segShow_point_a ) ) break;
-                            node = node->GetNext();
+                        if(pp->m_sTypeString == wxT("EBL")) {
+                            s << _("From: ");
+                            if( g_bShowMag )
+                                s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
+                            else
+                                s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
+                            s << _(" To: ");
+                            if( g_bShowMag )
+                                s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgTo ) );
+                            else
+                                s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgTo ) );
+                            s << _T("\n");
+                        } else {
+                            if( g_bShowMag )
+                                s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
+                            else
+                                s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
                         }
-                        s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
+                        
+                        s << g_ocpn_draw_pi->FormatDistanceAdaptive( dist );
+                        
+                        // Compute and display cumulative distance from route start point to current
+                        // leg end point.
+                        
+                        if( segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
+                            wxODPointListNode *node = (pp->m_pODPointList)->GetFirst()->GetNext();
+                            ODPoint *pop;
+                            float dist_to_endleg = 0;
+                            wxString t;
+                            
+                            while( node ) {
+                                pop = node->GetData();
+                                dist_to_endleg += pop->m_seg_len;
+                                if( pop->IsSame( segShow_point_a ) ) break;
+                                node = node->GetNext();
+                            }
+                            s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
+                        }
                     }
-                    
                     g_pODRolloverWin->SetString( s );
                     
                     wxSize win_size = ocpncc1->GetSize();
@@ -886,13 +903,13 @@ void ODEventHandler::PopupMenu( int seltype )
             else if(m_pSelectedPath->m_sTypeString == wxT("DR")) {
                 MenuAppend( menuPath, ID_DR_MENU_UPDATE_INITIAL_CONDITIONS, _("Update initial conditions") );
             }
-            else if(m_pSelectedPath->m_sTypeString != wxT("DR")) {
+            else if(m_pSelectedPath->m_sTypeString != wxT("DR") && m_pSelectedPath->m_sTypeString != wxT("GuardZone")) {
                 sString.clear();
                 if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
                     sString.append(_("Move Boundary"));
                 else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                     sString.append(_("Move EBL"));
-
+                
                 MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
                 
                 sString.clear();
@@ -900,10 +917,9 @@ void ODEventHandler::PopupMenu( int seltype )
                     sString.append(_("Insert Boundary Point"));
                 else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                     sString.append(_("Insert EBL Point"));
-                else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
-                    sString.append(_("Insert DR Point"));
 
-                MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
+                if(sString.Len() > 0)
+                    MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
             }
             sString.clear();
             sString.append( _("Delete...") );
@@ -919,6 +935,8 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("Copy EBL GUID"));
             else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
                 sString.append(_("Copy DR GUID"));
+            else if(m_pSelectedPath->m_sTypeString == wxT("GuardZone"))
+                sString.append(_("Copy Guard Zone GUID"));
             MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
         }
         
@@ -972,7 +990,10 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("Move DR Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("OD Point"))
                 sString.append(_("Move OD Point"));
-
+            else if(m_pFoundODPoint->m_sTypeString == wxT("Guard Zone Point"))
+                sString.append(_("Move Guard Zone Point"));
+            else sString.append(_("Move OD Point"));
+            
             MenuAppend( menuODPoint, ID_ODPOINT_MENU_MOVE, sString );
 
             if( m_pSelectedPath ) {

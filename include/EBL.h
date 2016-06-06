@@ -34,11 +34,6 @@ enum {
     ID_EBL_PERSISTENT_LAST
 };
 
-enum {
-    ID_EBL_MAINTAIN_WITH_HEADING = 0,
-    ID_EBL_MAINTAIN_WITH_COG
-};
-
 class EBL : public ODPath
 {
     public:

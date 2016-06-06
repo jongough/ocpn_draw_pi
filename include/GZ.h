@@ -26,6 +26,10 @@
 
 #include "ODPath.h"
 
+//forward definitions
+class ODPoint;
+class ODDC;
+
 class GZ : public ODPath
 {
     public:
@@ -36,12 +40,14 @@ class GZ : public ODPath
         void SetActiveColours( void );
         void MoveAllPoints( double inc_lat, double inc_lon );
         void CentreOnBoat( void );
-        void UpdateGZ( void );
+        void UpdateGZSelectablePath( void );
         void MaintainWith( void );
+        void UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath = true );
+        void GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_l1p1, wxPoint *l_l1p2, wxPoint *l_l2p1, wxPoint *l_l2p2 );
         
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;
-        unsigned int    m_uiGZFillTransparency;
+        unsigned int    m_uiFillTransparency;
         double          m_dCentreLat;
         double          m_dCentreLon;
         double          m_dFirstLineDirection;

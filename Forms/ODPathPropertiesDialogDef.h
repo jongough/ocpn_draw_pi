@@ -74,6 +74,17 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerPath;
 		wxCheckBox* m_checkBoxPathShowArrow;
 		wxRadioBox* m_radioBoxPathPersistence;
+		wxFlexGridSizer* m_fgSizerGZ;
+		wxCheckBox* m_checkBoxRotateGZWithBoat;
+		wxRadioBox* m_radioBoxMaintainGZWith;
+		wxStaticText* m_staticTextGZFirstAngle;
+		wxTextCtrl* m_textCtrlGZFirstAngle;
+		wxStaticText* m_staticTextGZFirstLength;
+		wxTextCtrl* m_textCtrlGZFirstLength;
+		wxStaticText* m_staticTextGZSecondAngle;
+		wxTextCtrl* m_textCtrlGZSecondAngle;
+		wxStaticText* m_staticTextGZSecondLength;
+		wxTextCtrl* m_textCtrlGZSecondLength;
 		wxStaticText* m_staticTextODPoints;
 		wxListCtrl* m_listCtrlODPoints;
 		wxButton* m_buttonOK;

@@ -50,6 +50,8 @@ protected:
     void OnEBLRotateWithBoat( wxCommandEvent& event );
     void OnEBLFixedEndPosition( wxCommandEvent& event );
     void OnDRPointIconComboboxSelected( wxCommandEvent& event );
+    void OnGZFirstIconComboboxSelected( wxCommandEvent& event );
+    void OnGZSecondIconComboboxSelected( wxCommandEvent& event );
     void OnButtonClickFonts( wxCommandEvent& event );
     void OnDrawPropertiesOKClick( wxCommandEvent& event );
     void OnDrawPropertiesCancelClick( wxCommandEvent& event );

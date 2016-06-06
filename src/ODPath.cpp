@@ -199,12 +199,26 @@ void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
         else
             dc.SetPen( *g_pPathMan->GetPathPen() );
     
-    wxColour col;
-    wxString colour;
-
-//    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width, m_style ) );
-
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
+}
+
+void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
+{
+    if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
+    else
+        if( m_bPathIsActive ) dc.SetPen( *g_pPathMan->GetActivePathPen() );
+        else
+            dc.SetPen( *g_pPathMan->GetPathPen() );
+    
+    wxPoint *points;
+    int numpoints = ArcSectorPoints( *&points, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, true);
+    dc.DrawLines( numpoints, points );
+    #ifdef __WXOSX__
+    delete [] points;
+    #else
+    wxDELETE( points );
+    #endif
+    //RenderArcSegment( dc, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, VP, bdraw_arrow );
 }
 
 void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
@@ -445,6 +459,98 @@ void ODPath::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_Vie
             double px = ( pxa * sin( theta ) ) + ( pya * cos( theta ) );
             double py = ( pya * sin( theta ) ) - ( pxa * cos( theta ) );
 
+            icon[i].x = (int) ( px ) + xc;
+            icon[i].y = (int) ( py ) + yc;
+        }
+        wxPen savePen = dc.GetPen();
+        dc.SetPen( *wxTRANSPARENT_PEN );
+        dc.StrokePolygon( 6, &icon[0], 0, 0 );
+        dc.SetPen( savePen );
+    }
+}
+
+void ODPath::RenderArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow ) 
+{
+    RenderArcSegment( dc, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, VP, bdraw_arrow );
+}
+
+void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP,
+                            bool bdraw_arrow, int hilite_width )
+{
+    //    Get the dc boundary
+    int sx, sy;
+    sx = VP.pix_width;
+    sy = VP.pix_height;
+    
+    //    Try to exit early if the segment is nowhere near the screen
+    wxRect r( 0, 0, sx, sy );
+    wxRect w( centre_x, centre_y, 1, 1 );
+    // These may causes the circular objects not to display early enough
+    wxRect s( xa, ya, 1, 1 );
+    wxRect t( xb, yb, 1, 1 );
+    wxRect u( xc, yc, 1, 1 );
+    wxRect v( xd, yd, 1, 1 );
+    w.Union( t );
+    w.Union( u );
+    w.Union( v );
+    if( !r.Intersects( w ) ) return;
+    
+    //    If hilite is desired, use a Native Graphics context to render alpha colours
+    //    That is, if wxGraphicsContext is available.....
+    
+    if( hilite_width ) {
+        wxPen psave = dc.GetPen();
+        
+        wxColour y;
+        GetGlobalColor( wxS( "YELO1" ), &y );
+        wxColour hilt( y.Red(), y.Green(), y.Blue(), 128 );
+        
+        wxPen HiPen( hilt, hilite_width, wxPENSTYLE_SOLID );
+        
+        dc.SetPen( HiPen );
+        dc.StrokeSector( centre_x, centre_y, xa, ya, xb, yb, xc, yc, xd, yd );
+        
+        dc.SetPen( psave );
+        dc.StrokeSector( centre_x, centre_y, xa, ya, xb, yb, xc, yc, xd, yd );
+    } else {
+        dc.StrokeSector( centre_x, centre_y, xa, ya, xb, yb, xc, yc, xd, yd );
+    }
+    
+    if( bdraw_arrow ) {
+        //    Draw a direction arrow
+        
+        double theta = atan2( (double) ( yb - ya ), (double) ( xb - xa ) );
+        theta -= PI / 2.;
+        
+        wxPoint icon[10];
+        double icon_scale_factor = 100 * VP.view_scale_ppm;
+        icon_scale_factor = fmin ( icon_scale_factor, 1.5 );              // Sets the max size
+        icon_scale_factor = fmax ( icon_scale_factor, .10 );
+        
+        //    Get the absolute line length
+        //    and constrain the arrow to be no more than xx% of the line length
+        double nom_arrow_size = 20.;
+        double max_arrow_to_leg = .20;
+        double lpp = sqrt( pow( (double) ( xa - xb ), 2 ) + pow( (double) ( ya - yb ), 2 ) );
+        
+        double icon_size = icon_scale_factor * nom_arrow_size;
+        if( icon_size > ( lpp * max_arrow_to_leg ) ) icon_scale_factor = ( lpp * max_arrow_to_leg )
+            / nom_arrow_size;
+        
+        int xc, yc; // move the pointer back from the icon
+        xc = xb - ( ( xb - xa ) / 20 );
+        yc = yb - ( ( yb - ya ) / 20 );
+        for( int i = 0; i < 7; i++ ) {
+            int j = i * 2;
+            double pxa = (double) ( s_arrow_icon[j] );
+            double pya = (double) ( s_arrow_icon[j + 1] );
+            
+            pya *= icon_scale_factor;
+            pxa *= icon_scale_factor;
+            
+            double px = ( pxa * sin( theta ) ) + ( pya * cos( theta ) );
+            double py = ( pya * sin( theta ) ) - ( pxa * cos( theta ) );
+            
             icon[i].x = (int) ( px ) + xc;
             icon[i].y = (int) ( py ) + yc;
         }
