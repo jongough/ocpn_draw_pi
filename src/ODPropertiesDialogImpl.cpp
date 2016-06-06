@@ -47,14 +47,6 @@ extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
 extern wxString     g_OD_default_wp_icon;
 
-extern wxString     g_ActiveBoundaryLineColour;
-extern wxString     g_InActiveBoundaryLineColour;
-extern wxString     g_ActiveBoundaryFillColour;
-extern wxString     g_InActiveBoundaryFillColour;
-extern wxColour     g_colourActiveBoundaryLineColour;
-extern wxColour     g_colourInActiveBoundaryLineColour;
-extern wxColour     g_colourActiveBoundaryFillColour;
-extern wxColour     g_colourInActiveBoundaryFillColour;
 extern int          g_BoundaryLineWidth; 
 extern int          g_BoundaryLineStyle;
 extern wxColour     g_colourActivePathLineColour;
@@ -110,7 +102,7 @@ extern wxColour     g_colourInActiveDRLineColour;
 extern bool         g_bEBLRotateWithBoat;
 extern int          g_iEBLMaintainWith;
 extern bool         g_bEBLFixedEndPosition;
-extern int          g_EBLPersistenceType;
+extern int          g_iEBLPersistenceType;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
 extern int          g_EBLLineWidth;
@@ -138,6 +130,19 @@ extern int          g_iDRPointRangeRingsStepUnits;
 extern wxColour     g_colourDRPointRangeRingsColour;
 extern int          g_iDRPointRangeRingLineWidth;
 extern int          g_iDRPointRangeRingLineStyle;
+
+extern wxString     g_sGZFirstIconName;
+extern wxString     g_sGZSecondIconName;
+extern wxColour     g_colourActiveGZLineColour;
+extern wxColour     g_colourInActiveGZLineColour;
+extern wxColour     g_colourActiveGZFillColour;
+extern wxColour     g_colourInActiveGZFillColour;
+extern int          g_GZLineWidth; 
+extern int          g_GZLineStyle;
+extern unsigned int g_uiGZFillTransparency;
+extern bool         g_bGZRotateWithBoat;
+extern int          g_iGZMaintainWith;
+extern int          g_iGZPersistenceType;
 
 extern bool         g_bConfirmObjectDelete;
 extern bool         g_bShowMag;
@@ -248,6 +253,16 @@ void ODPropertiesDialogImpl::OnEBLStartIconComboboxSelected( wxCommandEvent& eve
 void ODPropertiesDialogImpl::OnDRPointIconComboboxSelected( wxCommandEvent& event )
 {
     m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
+}
+
+void ODPropertiesDialogImpl::OnGZFirstIconComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapGZFirstBitmap->SetBitmap( m_bcomboBoxGZSecondIconName->GetItemBitmap( m_bcomboBoxGZFirstIconName->GetSelection() ) );
+}
+
+void ODPropertiesDialogImpl::OnGZSecondIconComboboxSelected( wxCommandEvent& event )
+{
+    m_bitmapGZSecondBitmap->SetBitmap( m_bcomboBoxGZSecondIconName->GetItemBitmap( m_bcomboBoxGZSecondIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
@@ -383,7 +398,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
-    g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
+    g_iEBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
     g_sEBLStartIconName = m_bcomboBoxEBLStartIconName->GetValue();;
@@ -410,6 +425,20 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourDRPointRangeRingsColour = m_colourPickerDRPointRangeRingColours->GetColour();
     g_iDRPointRangeRingLineWidth = ::WidthValues[ m_choiceDRPointRangeRingWidth->GetSelection() ];
     g_iDRPointRangeRingLineStyle = ::StyleValues[ m_choiceDRPointRangeRingStyle->GetSelection() ];
+    
+    g_colourActiveGZLineColour = m_colourPickerActiveGZLineColour->GetColour();
+    g_colourActiveGZFillColour = m_colourPickerActiveGZFillColour->GetColour();
+    g_colourInActiveGZLineColour = m_colourPickerInActiveGZLineColour->GetColour();
+    g_colourInActiveGZFillColour = m_colourPickerInActiveGZFillColour->GetColour();
+    g_GZLineWidth = ::WidthValues[ m_choiceGZLineWidth->GetSelection() ];
+    g_GZLineStyle = ::StyleValues[ m_choiceGZLineStyle->GetSelection() ];
+    g_uiGZFillTransparency = m_sliderGZFillTransparency->GetValue();
+    g_sGZFirstIconName = m_bcomboBoxGZFirstIconName->GetValue();
+    g_sGZSecondIconName = m_bcomboBoxGZSecondIconName->GetValue();;
+    g_bGZRotateWithBoat = m_checkBoxGZRotateWithBoat->GetValue();
+    g_iGZMaintainWith = m_radioBoxGZMaintainWith->GetSelection();
+    g_iGZPersistenceType = m_radioBoxGZPersistence->GetSelection();
+    
     
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
     g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
@@ -516,6 +545,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             m_bcomboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
             m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
             m_bcomboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bcomboBoxGZFirstIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bcomboBoxGZSecondIconName->Append( *ps, icons->GetBitmap( i ) );
         }
     }
     
@@ -609,6 +640,42 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_bcomboBoxDRPointIconName->SetSelection( iconToSelect );
     m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
     
+    // find the correct item in the First GZ Point Icon combo box
+    iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sGZFirstIconName ) {
+            iconToSelect = i;
+            break;
+        }
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxGZFirstIconName->Append( g_sGZFirstIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxGZFirstIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxGZFirstIconName->SetSelection( iconToSelect );
+    m_bitmapGZFirstBitmap->SetBitmap( m_bcomboBoxGZFirstIconName->GetItemBitmap( m_bcomboBoxGZFirstIconName->GetSelection() ) );
+    
+    // find the correct item in the Second GZ Point Icon combo box
+    iconToSelect = -1;
+    for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
+        if( *g_pODPointMan->GetIconDescription( i ) == g_sGZSecondIconName ) {
+            iconToSelect = i;
+            break;
+        }
+    }
+    //  not found, so add  it to the list, with a generic bitmap and using the name as description
+    // n.b.  This should never happen...
+    if( -1 == iconToSelect){    
+        m_bcomboBoxGZSecondIconName->Append( g_sGZSecondIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bcomboBoxGZSecondIconName->GetCount() - 1;
+    } 
+    
+    m_bcomboBoxGZSecondIconName->SetSelection( iconToSelect );
+    m_bitmapGZSecondBitmap->SetBitmap( m_bcomboBoxGZSecondIconName->GetItemBitmap( m_bcomboBoxGZSecondIconName->GetSelection() ) );
+    
     icons = NULL;
 
     m_colourPickerActiveBoundaryLineColour->SetColour( g_colourActiveBoundaryLineColour );
@@ -628,6 +695,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             m_choiceEBLLineStyle->SetSelection( i );
         if( g_DRLineStyle == ::StyleValues[i] )
             m_choiceDRLineStyle->SetSelection( i );
+        if( g_GZLineStyle == ::StyleValues[i] )
+            m_choiceGZLineStyle->SetSelection( i );
         if( g_iDRPointRangeRingLineStyle == ::StyleValues[i] )
             m_choiceDRPointRangeRingStyle->SetSelection( i );
         if( g_iBoundaryPointRangeRingLineStyle == ::StyleValues[i] )
@@ -646,6 +715,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             m_choiceDRPointRangeRingWidth->SetSelection( i );
         if( g_DRLineWidth == ::WidthValues[i] )
             m_choiceDRLineWidth->SetSelection( i );
+        if( g_GZLineWidth == ::WidthValues[i] )
+            m_choiceGZLineWidth->SetSelection( i );
     }
     m_sliderFillTransparency->SetValue( g_uiFillTransparency );
     m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
@@ -658,7 +729,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);
     m_radioBoxMaintainWith->SetSelection( g_iEBLMaintainWith );
     m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
-    m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
+    m_radioBoxEBLPersistence->SetSelection( g_iEBLPersistenceType );
     m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
     m_checkBoxShowVRM->SetValue( g_bEBLVRM );
     
@@ -692,7 +763,14 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_choiceDRPointDistanceUnit->SetSelection( g_iDRPointRangeRingsStepUnits );
     m_colourPickerDRPointRangeRingColours->SetColour( g_colourDRPointRangeRingsColour );
     
-    
+    m_colourPickerActiveGZLineColour->SetColour( g_colourActiveGZLineColour );
+    m_colourPickerInActiveGZLineColour->SetColour( g_colourInActiveGZLineColour );
+    m_colourPickerActiveGZFillColour->SetColour( g_colourActiveGZFillColour );
+    m_colourPickerInActiveGZFillColour->SetColour( g_colourInActiveGZFillColour );
+    m_checkBoxGZRotateWithBoat->SetValue( g_bGZRotateWithBoat);
+    m_radioBoxGZMaintainWith->SetSelection( g_iGZMaintainWith );
+    m_sliderGZFillTransparency->SetValue( g_uiGZFillTransparency );
+    m_radioBoxGZPersistence->SetSelection( g_iGZPersistenceType );
 
     s.Printf( _T("%.3f"), g_dDRSOG );
     m_textCtrlSOG->SetValue( s );

@@ -1,8 +1,5 @@
 /***************************************************************************
- * Project:  OpenCPN
- * Purpose:  DR
- * Author:   Jon Gough
- *
+ * 
  * Project:  OpenCPN
  *
  ***************************************************************************
@@ -24,68 +21,56 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef DR_H
-#define DR_H
+#ifndef GZ_H
+#define GZ_H
 
 #include "ODPath.h"
 
-enum {
-    ID_IT_TIME = 0,
-    ID_IT_DISTANCE,
-    
-    ID_IT_LAST
-};
+//forward definitions
+class ODPoint;
+class ODDC;
 
-enum {
-    ID_LT_TIME = 0,
-    ID_LT_DISTANCE,
-    
-    ID_LT_LAST
-};
-
-enum {
-    ID_DU_KILOMETRES = 0,
-    ID_DU_NAUTICAL_MILES,
-    
-    ID_DU_LAST
-};
-
-enum {
-    ID_TU_MINUTES = 0,
-    ID_TU_HOURS,
-    ID_TU_DAYS,
-    
-    ID_TU_LAST
-};
-
-class DR : public ODPath
+class GZ : public ODPath
 {
     public:
-        DR();
-        virtual ~DR();
-        ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
-        ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
+        GZ();
+        virtual ~GZ();
+        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
+        void DrawGL( PlugIn_ViewPort &piVP );
+        void SetActiveColours( void );
+        void MoveAllPoints( double inc_lat, double inc_lon );
+        void CentreOnBoat( void );
+        void UpdateGZSelectablePath( void );
+        void MaintainWith( void );
+        void UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath = true );
+        void GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_l1p1, wxPoint *l_l1p2, wxPoint *l_l2p1, wxPoint *l_l2p2 );
         void SetPersistence( int PersistenceType );
         
-        int         m_iPersistenceType;
-        double      m_dSoG;
-        int         m_iCoG;
-        double      m_dDRPathLength;
-        double      m_dTotalLengthNM;
-        double      m_dDRPointInterval;
-        double      m_dDRPointIntervalNM;
-        int         m_iLengthType;
-        int         m_iIntervalType;
-        int         m_iDistanceUnits;
-        int         m_iTimeUnits;
-        double      m_dMagCOG;
+        wxColour        m_wxcActiveFillColour;
+        wxColour        m_wxcInActiveFillColour;
+        int             m_iPersistenceType;
+        unsigned int    m_uiFillTransparency;
+        double          m_dCentreLat;
+        double          m_dCentreLon;
+        double          m_dFirstLineDirection;
+        double          m_dSecondLineDirection;
+        double          m_dFirstDistance;
+        double          m_dSecondDistance;
+        bool            m_bRotateWithBoat;
+        int             m_iMaintainWith;
+        bool            m_bCentreOnBoat;
+        double          m_dBoatHeading;
+        double          m_dBoatCOG;
         
     protected:
+        wxColour    m_fillcol;
+        
         
     private:
-        wxColour    m_wxcLineColour;
+        bool        m_bSetTransparent;
+        
 };
 
-WX_DECLARE_LIST(DR, DRList); // establish class DR list member
+WX_DECLARE_LIST(GZ, GZList); // establish class GZ as list member
 
-#endif // DR_H
+#endif // GZ_H

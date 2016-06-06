@@ -509,7 +509,8 @@ SelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fsel
                         c = pFindSel->m_slon;
                         d = pFindSel->m_slon2;
 
-                        if( IsSegmentSelected( a, b, c, d, slat, slon ) ) ret_list.Append( pFindSel );
+                        if( IsSegmentSelected( a, b, c, d, slat, slon ) ) 
+                            ret_list.Append( pFindSel );
 
                         break;
                     default:

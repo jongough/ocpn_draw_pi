@@ -1,0 +1,345 @@
+/***************************************************************************
+ *
+ * Project:  OpenCPN
+ * Purpose:  GZ Properties
+ * Author:   Jon Gough
+ *
+ ***************************************************************************
+ *   Copyright (C) 2010 by David S. Register                               *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
+ **************************************************************************/
+
+#include "GZProp.h"
+#include "GZ.h"
+#include "ocpn_draw_pi.h"
+#include "ODConfig.h"
+#include "ODUtils.h"
+
+#if wxCHECK_VERSION(3,0,0) 
+#include <wx/valnum.h>
+#endif
+
+extern GZList                  *g_pGZList;
+extern ocpn_draw_pi             *g_ocpn_draw_pi;
+extern ODPlugIn_Position_Fix_Ex g_pfFix;
+extern ODConfig                 *g_pODConfig;
+
+GZProp::GZProp()
+{
+    //ctor
+}
+
+GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
+: ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
+{
+    m_staticTextFillColour->Show();
+    m_staticTextFillColour->Enable( true );
+    m_colourPickerFillColour->Show();
+    m_colourPickerFillColour->Enable( true );
+    m_staticTextFillTransparency->Show();
+    m_staticTextFillTransparency->Enable( true );
+    m_sliderFillTransparency->Show();
+    m_sliderFillTransparency->Enable( true );
+    m_fgSizerGZ->ShowItems( true );
+    m_staticTextGZFirstAngle->Show();
+    m_staticTextGZFirstAngle->Enable( true );
+    m_textCtrlGZFirstAngle->Show();
+    m_textCtrlGZFirstAngle->Enable( true );
+    m_staticTextGZFirstLength->Show();
+    m_staticTextGZFirstLength->Enable( true );
+    m_textCtrlGZFirstLength->Show();
+    m_textCtrlGZFirstLength->Enable( true );
+    m_staticTextGZSecondAngle->Show();
+    m_staticTextGZSecondAngle->Enable( true );
+    m_textCtrlGZSecondAngle->Show();
+    m_textCtrlGZSecondAngle->Enable( true );
+    m_staticTextGZSecondLength->Show();
+    m_staticTextGZSecondLength->Enable( true );
+    m_textCtrlGZSecondLength->Show();
+    m_textCtrlGZSecondLength->Enable( true );
+    m_fgSizerPath->ShowItems( true );
+    m_checkBoxPathShowArrow->Hide();
+    m_radioBoxPathPersistence->Show();
+    m_radioBoxPathPersistence->Enable( true );
+    m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
+    
+
+#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+    wxFloatingPointValidator<double> dODGZFirstAngle(2, &m_dODGZFirstAngleValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODGZSecondAngle(2, &m_dODGZSecondAngleValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODGZFirstLength(2, &m_dODGZFirstLengthValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODGZSecondLength(2, &m_dODGZSecondLengthValidator, wxNUM_VAL_DEFAULT);
+    dODGZFirstAngle.SetRange(-180, 180);
+    dODGZSecondAngle.SetRange(-180, 180);
+    dODGZFirstLength.SetMin(0);
+    dODGZSecondLength.SetMin(0);
+    
+    m_textCtrlGZFirstAngle->SetValidator( dODGZFirstAngle );
+    m_textCtrlGZSecondAngle->SetValidator( dODGZSecondAngle );
+    m_textCtrlGZFirstLength->SetValidator( dODGZFirstLength );
+    m_textCtrlGZSecondLength->SetValidator( dODGZSecondLength );
+    #endif
+    
+    this->GetSizer()->Fit( this );
+    this->Layout();
+    
+}
+
+
+GZProp::~GZProp()
+{
+    //dtor
+}
+
+bool GZProp::UpdateProperties( GZ *pInGZ )
+{
+    SetGlobalLocale();
+    
+    wxString s;
+
+    m_colourPickerFillColour->SetColour( m_pGZ->m_wxcActiveFillColour );
+    m_sliderFillTransparency->SetValue( m_pGZ->m_uiFillTransparency );
+
+    m_checkBoxRotateGZWithBoat->SetValue( m_pGZ->m_bRotateWithBoat );
+    m_radioBoxMaintainGZWith->SetSelection( m_pGZ->m_iMaintainWith );
+    m_checkBoxRotateGZWithBoat->Enable(true);
+
+    m_radioBoxMaintainGZWith->Enable(true);
+    m_textCtrlGZFirstAngle->SetEditable(true);
+    m_textCtrlGZSecondAngle->SetEditable(true);
+    m_textCtrlGZFirstLength->SetEditable(true);
+    m_textCtrlGZSecondLength->SetEditable(true);
+    
+#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+    if(!m_bLockGZAngle) {
+        if(pInGZ->m_dFirstLineDirection > 180)
+            m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection - 360;
+        else
+            m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection;
+        if(pInGZ->m_dSecondLineDirection > 180)
+            m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection - 360;
+        else
+            m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection;
+    }
+        
+    if(!m_bLockGZLength) {
+        m_dODGZFirstLengthValidator = pInGZ->m_dFirstDistance;
+        m_dODGZSecondLengthValidator = pInGZ->m_dSecondDistance;
+    }
+#else
+    if(!m_bLockGZAngle) {
+        if(pInGZ->m_dFirstLineDirection > 180)
+            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection - 360 );
+        else
+            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
+        
+        m_textCtrlGZFirstLAngle->SetValue(s);
+        
+        if(pInGZ->m_dSecondLineDirection > 180)
+            s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection - 360 );
+        else
+            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
+        m_textCtrlGZSecondAngle->SetValue(s);
+    }
+
+    if(!m_bLockGZLength) {
+        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+    }
+#endif
+    m_bLockGZAngle = false;
+    m_bLockGZLength = false;
+    
+    m_radioBoxPathPersistence->SetSelection( pInGZ->m_iPersistenceType );
+
+    return ODPathPropertiesDialogImpl::UpdateProperties( pInGZ );
+}
+
+bool GZProp::UpdateProperties( void )
+{
+    wxString s;
+    
+    if(m_bLockUpdate) return true;
+    
+    ODPathPropertiesDialogImpl::UpdateProperties();
+    
+    if(!m_bLockGZAngle){
+        if(m_pGZ->m_dFirstLineDirection > 180)
+            s.Printf( _T("%.2f"), m_pGZ->m_dFirstLineDirection - 360 );
+        else
+            s.Printf( _T("%.2f"), m_pGZ->m_dFirstLineDirection );
+        
+        m_textCtrlGZFirstAngle->SetValue(s);
+
+        if(m_pGZ->m_dSecondLineDirection > 180)
+            s.Printf( _T("%.2f"), m_pGZ->m_dSecondLineDirection - 360 );
+        else
+            s.Printf( _T("%.2f"), m_pGZ->m_dSecondLineDirection );
+        
+        m_textCtrlGZSecondAngle->SetValue(s);
+    }
+    
+    if(!m_bLockGZLength) {
+        s.Printf( _T("%.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+        m_textCtrlGZFirstLength->SetValue(s);
+        s.Printf( _T("%.2f"), toUsrDistance_Plugin(m_pGZ->m_dSecondDistance) );
+        m_textCtrlGZSecondLength->SetValue(s);
+    }
+    
+    return  true;
+}
+
+bool GZProp::SaveChanges( void )
+{
+    m_pGZ->m_wxcActiveFillColour = m_colourPickerFillColour->GetColour();    
+    m_pGZ->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
+    
+    wxColour l_GZOrigColour = m_pGZ->GetCurrentColour();
+    ODPoint *pFirstPoint = m_pGZ->m_pODPointList->GetFirst()->GetData();
+
+    bool l_bUpdatePath = false;
+    double l_dLength;
+    m_textCtrlGZFirstLength->GetValue().ToDouble( &l_dLength );
+    l_dLength = fromUsrDistance_Plugin( l_dLength );
+    if(m_pGZ->m_dFirstDistance != l_dLength) {
+        l_bUpdatePath = true;
+        m_pGZ->m_dFirstDistance = l_dLength;
+    }
+    
+    m_textCtrlGZSecondLength->GetValue().ToDouble( &l_dLength );
+    l_dLength = fromUsrDistance_Plugin( l_dLength );
+    if(m_pGZ->m_dSecondDistance != l_dLength) {
+        l_bUpdatePath = true;
+        m_pGZ->m_dSecondDistance = l_dLength;
+    }
+    
+    m_pGZ->m_bRotateWithBoat = m_checkBoxRotateGZWithBoat->GetValue();
+    m_pGZ->m_iMaintainWith = m_radioBoxMaintainGZWith->GetSelection();
+    
+    double l_dGZAngle;
+    m_textCtrlGZFirstAngle->GetValue().ToDouble( &l_dGZAngle );
+        if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {
+            m_pGZ->m_dFirstLineDirection = l_dGZAngle;
+    }
+    
+    m_textCtrlGZSecondAngle->GetValue().ToDouble( &l_dGZAngle );
+        if(l_dGZAngle != m_pGZ->m_dSecondLineDirection) {
+            m_pGZ->m_dSecondLineDirection = l_dGZAngle;
+    }
+    
+    m_pGZ->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
+    if(m_pGZ->m_iPersistenceType == ID_NOT_PERSISTENT || m_pGZ->m_iPersistenceType == ID_PERSISTENT_CRASH)
+        m_pGZ->m_bTemporary = true;
+    else
+        m_pGZ->m_bTemporary = false;
+    bool ret;
+    if(m_pGZ->m_iPersistenceType == ID_NOT_PERSISTENT)
+        ret = g_pODConfig->DeleteConfigPath( m_pGZ );
+    else
+        ret = ODPathPropertiesDialogImpl::SaveChanges();
+    
+    return ret;
+}
+
+void GZProp::OnRotateWithBoat(wxCommandEvent& event)
+{
+    if(m_checkBoxRotateWithBoat->IsChecked()) {
+        m_radioBoxMaintainWith->Enable(true);
+        m_textCtrlGZFirstAngle->SetEditable(true);
+        m_textCtrlGZSecondAngle->SetEditable(true);
+        m_textCtrlGZFirstLength->SetEditable(true);
+        m_textCtrlGZSecondLength->SetEditable(true);
+    }
+    
+    ODPathPropertiesDialogDef::OnRotateWithBoat(event);
+}
+
+void GZProp::OnSetFocus( wxFocusEvent& event )
+{
+    if(event.GetId() == m_textCtrlGZFirstLength->GetId() || event.GetId() == m_textCtrlGZSecondLength->GetId())
+        m_bLockGZLength = true;
+    if(event.GetId() == m_textCtrlGZFirstAngle->GetId() || event.GetId() == m_textCtrlGZSecondAngle->GetId())
+        m_bLockGZAngle = true;
+    ODPathPropertiesDialogDef::OnSetFocus(event);
+}
+
+void GZProp::OnKillFocus( wxFocusEvent& event )
+{
+    ODPathPropertiesDialogDef::OnKillFocus(event);
+}
+
+void GZProp::OnOK( wxCommandEvent& event )
+{
+    m_bLockGZLength = false;
+    m_bLockGZAngle = false;
+    ODPathPropertiesDialogImpl::OnOK(event);
+}
+
+void GZProp::OnClose( wxCloseEvent& event )
+{
+    m_bLockGZLength = false;
+    m_bLockGZAngle = false;
+    ODPathPropertiesDialogImpl::OnClose(event);
+    
+    ResetGlobalLocale();
+}
+
+void GZProp::OnCancel( wxCommandEvent& event )
+{
+    m_bLockGZLength = false;
+    m_bLockGZAngle = false;
+    ODPathPropertiesDialogImpl::OnCancel(event);
+
+    ResetGlobalLocale();
+}
+
+
+void GZProp::OnChoiceLineWidth( wxCommandEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnChoiceLineWidth(event);
+}
+
+void GZProp::OnChoiceLineStyle( wxCommandEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnChoiceLineStyle(event);
+}
+
+void GZProp::OnKillFocusChoiceLineWidth( wxFocusEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnKillFocusChoiceLineWidth(event);
+}
+
+void GZProp::OnSetFocusChoiceLineWidth( wxFocusEvent& event )
+{
+    m_bLockUpdate = true;
+    ODPathPropertiesDialogImpl::OnSetFocusChoiceLineWidth(event);
+}
+
+void GZProp::OnKillFocusChoiceLineStyle( wxFocusEvent& event )
+{
+    m_bLockUpdate = false;
+    ODPathPropertiesDialogImpl::OnKillFocusChoiceLineStyle(event);
+}
+
+void GZProp::OnSetFocusChoiceLineStyle( wxFocusEvent& event )
+{
+    m_bLockUpdate = true;
+    ODPathPropertiesDialogImpl::OnSetFocusChoiceLineStyle(event);
+}

@@ -62,6 +62,7 @@
 
 #include "ocpn_draw_pi.h"
 #include "ODdc.h"
+#include "ODUtils.h"
 #include "wx28compat.h"
 
 #ifdef __WXMSW__
@@ -567,7 +568,7 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
 
         glDisable( GL_LINE_STIPPLE );
         SetGLStipple();
-
+        
         //      Enable anti-aliased lines, at best quality
         if( b_hiqual ) {
             glEnable( GL_BLEND );
@@ -597,8 +598,9 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
                 glEnable( GL_LINE_SMOOTH );
             }
             glBegin( GL_LINE_STRIP );
-            for( int i = 0; i < n; i++ )
+            for( int i = 0; i < n; i++ ) {
                 glVertex2i( points[i].x + xoffset, points[i].y + yoffset );
+            }
             glEnd();
         }
 
@@ -606,6 +608,195 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
         SetGLAttrs( false );
     }
 #endif    
+}
+
+void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
+{
+    if( dc )
+        dc->DrawArc( x1, y1, x2, y2, xc, yc );
+    #ifdef ocpnUSE_GL
+    else if( ConfigurePen() ) {
+        bool b_draw_thick = false;
+        
+        float pen_width = wxMax(g_GLMinSymbolLineWidth, m_pen.GetWidth());
+        
+        //      Enable anti-aliased lines, at best quality
+        if( b_hiqual ) {
+            SetGLStipple();
+            
+            #ifndef __WXQT__
+            glEnable( GL_BLEND );
+            glEnable( GL_LINE_SMOOTH );
+            #endif            
+            
+            if( pen_width > 1.0 ) {
+                GLint parms[2];
+                glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
+                if( pen_width > parms[1] ) b_draw_thick = true;
+                else
+                    glLineWidth( pen_width );
+            } else
+                glLineWidth( pen_width );
+        } else {            
+            if( pen_width > 1 ) {
+                GLint parms[2];
+                glGetIntegerv( GL_ALIASED_LINE_WIDTH_RANGE, &parms[0] );
+                if( pen_width > parms[1] ) b_draw_thick = true;
+                else
+                    glLineWidth( pen_width );
+            } else
+                glLineWidth( pen_width );
+        }
+        
+        if( b_draw_thick ) DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        else {
+            wxDash *dashes;
+            int n_dashes = m_pen.GetDashes( &dashes );
+            if( n_dashes ) {
+                float angle = atan2f( (float) ( y2 - y1 ), (float) ( x2 - x1 ) );
+                float cosa = cosf( angle );
+                float sina = sinf( angle );
+                float t1 = m_pen.GetWidth();
+                
+                float lpix = sqrtf( powf(x1 - x2, 2) + powf(y1 - y2, 2) );
+                float lrun = 0.;
+                float xa = x1;
+                float ya = y1;
+                float ldraw = t1 * dashes[0];
+                float lspace = t1 * dashes[1];
+                
+                glBegin( GL_LINES );
+                while( lrun < lpix ) {
+                    //    Dash
+                    float xb = xa + ldraw * cosa;
+                    float yb = ya + ldraw * sina;
+                    
+                    if( ( lrun + ldraw ) >= lpix )         // last segment is partial draw
+                    {
+                        xb = x2;
+                        yb = y2;
+                    }
+                    
+                    glVertex2f( xa, ya );
+                    glVertex2f( xb, yb );
+                    
+                    xa = xa + ( lspace + ldraw ) * cosa;
+                    ya = ya + ( lspace + ldraw ) * sina;
+                    lrun += lspace + ldraw;
+                    
+                }
+                glEnd();
+            } else                    // not dashed
+            {
+                glBegin( GL_LINES );
+                glVertex2i( x1, y1 );
+                glVertex2i( x2, y2 );
+                glEnd();
+            }
+        }
+        
+        glDisable( GL_LINE_STIPPLE );
+        
+        if( b_hiqual ) {
+            glDisable( GL_LINE_SMOOTH );
+            glDisable( GL_BLEND );
+        }
+    }
+    #endif    
+}
+void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4 )
+{
+    double y1yc, x1xc, y4yc, x4xc;
+    y1yc = y1-yc;
+    x1xc = x1-xc;
+    y4yc = y4-yc;
+    x4xc = x4-xc;
+    wxDouble  l_dFirstAngle;
+    l_dFirstAngle = atan2(y1yc, x1xc);
+    
+    wxDouble  l_dSecondAngle;
+    l_dSecondAngle = atan2(y4yc, x4xc);
+    
+    wxDouble  l_OuterRadius = sqrt(pow((y2-yc), 2.0) + pow((x2-xc), 2.0));
+    wxDouble l_InnerRadius = sqrt(pow((y1-yc), 2.0) + pow((x1-xc), 2.0));
+    
+    if( dc ) {
+        wxGraphicsContext *wxGC = NULL;
+        wxMemoryDC *pmdc = wxDynamicCast(GetDC(), wxMemoryDC);
+        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        else {
+            wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
+            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+        }
+        #ifdef __WXOSX__
+        if(wxGC) {
+            #endif
+            wxGC->SetPen(dc->GetPen());
+            wxGC->SetBrush(dc->GetBrush());
+            wxGraphicsPath gpath = wxGC->CreatePath();
+            
+            gpath.MoveToPoint( x1, y1 );
+            gpath.AddLineToPoint( x2, y2 );
+            gpath.AddArc( xc, yc, l_OuterRadius, l_dFirstAngle, l_dSecondAngle, true );
+            gpath.MoveToPoint( x3, y3 );
+            gpath.AddLineToPoint( x4, y4 );
+            gpath.AddArc( xc, yc, l_InnerRadius, l_dSecondAngle, l_dFirstAngle, false);
+
+            wxGC->FillPath(gpath);
+            #ifdef __WXOSX__
+        }
+        #endif
+    }
+#ifdef ocpnUSE_GL
+    else {
+        //      Enable anti-aliased lines, at best quality
+        float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_InnerRadius * 2) * (l_InnerRadius * 2)) * 2) ), 1) * M_PI );
+        float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_OuterRadius * 2) * (l_OuterRadius * 2)) * 2) ), 1) * M_PI );
+        
+        wxPoint *sector = new wxPoint[ (int) innerSteps +(int) outerSteps + 5 ];
+        double dxc1 = xc-x1;
+        double dxc4 = xc-x4;
+        double dyc1 = yc-y1;
+        double dyc4 = yc-y4;
+        double angle = atan2(dxc1*dyc4-dyc1*dxc4, dxc1*dxc4+dyc1*dyc4);
+        if(angle < 0) angle += (2*PI);
+        int numpoints_outer = ceil(abs(outerSteps * (angle / (2*PI))));
+        int numpoints_inner = ceil(abs(innerSteps * (angle / (2*PI))));
+        //if(numpoints_outer == 0) return;
+        sector[0].x = x1;
+        sector[0].y = y1;
+        int tx, ty;
+        float a = l_dFirstAngle;
+        for( int i = 0; i < (int) numpoints_outer; i++ ) {
+            sector[i + 1].x = xc + l_OuterRadius * cosf( a );
+            sector[i + 1].y = yc + l_OuterRadius * sinf( a );
+            tx = sector[i + 1].x;
+            ty = sector[i + 1].y;
+            a += 2 * M_PI /outerSteps;
+        }
+        a = l_dSecondAngle;
+        sector[ (int) numpoints_outer + 1].x = x3;
+        sector[ (int) numpoints_outer + 1].y = y3;
+        sector[ (int) numpoints_outer + 2].x = x4;
+        sector[ (int) numpoints_outer + 2].y = y4;
+        for( int i = 0; i < (int) numpoints_inner; i++) {
+            sector[i + (int) numpoints_outer + 3].x = xc + l_InnerRadius * cosf( a );
+            sector[i + (int) numpoints_outer + 3].y = yc + l_InnerRadius * sinf( a );
+            a -= 2 * M_PI / innerSteps;
+        }
+        int npoints;
+        npoints = numpoints_inner + numpoints_outer + 4;
+        sector[ npoints -1 ].x = x1;
+        sector[ npoints -1 ].y = y1;
+        DrawPolygonTessellated( npoints, sector, 0, 0 );
+//        StrokeLines( npoints, sector );
+#ifdef __WXOSX__
+        delete [] sector;
+#else
+        wxDELETE( sector );
+#endif
+    }
+    #endif    
 }
 
 void ODDC::StrokeLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2 )
@@ -639,6 +830,65 @@ void ODDC::StrokeLines( int n, wxPoint *points) {
     } else
 #endif
         DrawLines( n, points, 0, 0, true );
+}
+
+void ODDC::StrokeArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2 )
+{
+    #if wxUSE_GRAPHICS_CONTEXT
+    if( pgc ) {
+        pgc->SetPen( dc->GetPen() );
+        pgc->SetBrush(dc->GetBrush());
+        
+        wxGraphicsPath gpath = pgc->CreatePath();
+        wxDouble  l_dFirstAngle = atan2((y1 - yc), (x1 -xc));
+        wxDouble  l_dSecondAngle = atan2((y2-yc), (x2-xc));
+        wxDouble  l_radius = sqrt(pow((y2-yc), 2.0) + pow((x2-xc), 2.0));
+        gpath.MoveToPoint( x1, y1 );
+        gpath.AddArc( xc, yc, l_radius, l_dFirstAngle, l_dSecondAngle, true);
+        pgc->DrawPath( gpath );
+
+        dc->CalcBoundingBox( x1, y1 );
+        dc->CalcBoundingBox( x2, y2 );
+    } else
+        #endif
+        DrawArc( xc, yc, x1, y1, x2, y2, true );
+}
+
+void ODDC::StrokeSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4  )
+{
+#if wxUSE_GRAPHICS_CONTEXT
+    if( pgc ) {
+        pgc->SetPen( dc->GetPen() );
+        pgc->SetBrush(dc->GetBrush());
+        
+        double y1yc, x1xc, y3yc, x3xc;
+        y1yc = y1-yc;
+        x1xc = x1-xc;
+        y3yc = y3-yc;
+        x3xc = x3-xc;
+        wxGraphicsPath gpath = pgc->CreatePath();
+        wxDouble  l_dFirstAngle;
+        l_dFirstAngle = atan2(y1yc, x1xc);
+        
+        wxDouble  l_dSecondAngle;
+        l_dSecondAngle = atan2(y3yc, x3xc);
+        
+        wxDouble  l_radius = sqrt(pow((y2-yc), 2.0) + pow((x2-xc), 2.0));
+        gpath.MoveToPoint( x1, y1 );
+        gpath.AddLineToPoint( x2, y2 );
+        gpath.AddArc( xc, yc, l_radius, l_dFirstAngle, l_dSecondAngle, true );
+        gpath.MoveToPoint( x3, y3 );
+        gpath.AddLineToPoint( x4, y4 );
+        l_radius = sqrt(pow((y1-yc), 2.0) + pow((x1-xc), 2.0));
+        gpath.AddArc( xc, yc, l_radius, l_dSecondAngle, l_dFirstAngle, false);
+        pgc->StrokePath( gpath );
+        pgc->FillPath( gpath );
+        
+        dc->CalcBoundingBox( x1, y1 );
+        dc->CalcBoundingBox( x3, y3 );
+    } else
+#endif
+        DrawSector( xc, yc, x1, y1, x2, y2, x3, y3, x4, y4 );
 }
 
 void ODDC::DrawRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h )

@@ -60,7 +60,7 @@ extern wxColour     g_colourActiveBoundaryLineColour;
 extern wxColour     g_colourInActiveBoundaryLineColour;
 extern wxColour     g_colourActiveBoundaryFillColour;
 extern wxColour     g_colourInActiveBoundaryFillColour;
-extern bool         g_bExclusionBoundary;
+extern bool          g_bExclusionBoundary;
 extern bool         g_bInclusionBoundary;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern unsigned int g_uiFillTransparency;
@@ -368,6 +368,7 @@ void Boundary::MoveAllPoints( double inc_lat, double inc_lon )
         i++;
     }
 }
+
 ODPoint *Boundary::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
     ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon, bRenamePoints );

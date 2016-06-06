@@ -804,6 +804,160 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelDRPoint->Layout();
 	bSizer12->Fit( m_panelDRPoint );
 	m_notebookProperties->AddPage( m_panelDRPoint, _("DR Point"), false );
+	m_panelGZ = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizerGZSettings;
+	fgSizerGZSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
+	fgSizerGZSettings->AddGrowableCol( 0 );
+	fgSizerGZSettings->SetFlexibleDirection( wxBOTH );
+	fgSizerGZSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxFlexGridSizer* fgSizer24;
+	fgSizer24 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer24->AddGrowableCol( 0 );
+	fgSizer24->AddGrowableCol( 1 );
+	fgSizer24->SetFlexibleDirection( wxBOTH );
+	fgSizer24->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextGZFirstIcon = new wxStaticText( m_panelGZ, wxID_ANY, _("First Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZFirstIcon->Wrap( -1 );
+	fgSizer24->Add( m_staticTextGZFirstIcon, 1, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerGZFirstPointIcon;
+	fgSizerGZFirstPointIcon = new wxFlexGridSizer( 0, 3, 0, 0 );
+	fgSizerGZFirstPointIcon->AddGrowableCol( 1 );
+	fgSizerGZFirstPointIcon->SetFlexibleDirection( wxBOTH );
+	fgSizerGZFirstPointIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_bitmapGZFirstBitmap = new wxStaticBitmap( m_panelGZ, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerGZFirstPointIcon->Add( m_bitmapGZFirstBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	
+	m_bcomboBoxGZFirstIconName = new wxBitmapComboBox( m_panelGZ, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerGZFirstPointIcon->Add( m_bcomboBoxGZFirstIconName, 1, wxALIGN_LEFT|wxALL|wxEXPAND, 5 );
+	
+	
+	fgSizer24->Add( fgSizerGZFirstPointIcon, 1, wxEXPAND, 5 );
+	
+	m_staticTextGZSecondPointIcon = new wxStaticText( m_panelGZ, wxID_ANY, _("Second Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZSecondPointIcon->Wrap( -1 );
+	fgSizer24->Add( m_staticTextGZSecondPointIcon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxFlexGridSizer* fgSizerGZSecondPointIcon;
+	fgSizerGZSecondPointIcon = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerGZSecondPointIcon->AddGrowableCol( 1 );
+	fgSizerGZSecondPointIcon->SetFlexibleDirection( wxBOTH );
+	fgSizerGZSecondPointIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_bitmapGZSecondBitmap = new wxStaticBitmap( m_panelGZ, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerGZSecondPointIcon->Add( m_bitmapGZSecondBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_bcomboBoxGZSecondIconName = new wxBitmapComboBox( m_panelGZ, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	fgSizerGZSecondPointIcon->Add( m_bcomboBoxGZSecondIconName, 1, wxALIGN_LEFT|wxALL|wxEXPAND, 5 );
+	
+	
+	fgSizer24->Add( fgSizerGZSecondPointIcon, 1, wxEXPAND, 5 );
+	
+	
+	fgSizerGZSettings->Add( fgSizer24, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerGZSettingsColours;
+	fgSizerGZSettingsColours = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizerGZSettingsColours->SetFlexibleDirection( wxBOTH );
+	fgSizerGZSettingsColours->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextActiveGZLineColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Active Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextActiveGZLineColour->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextActiveGZLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerActiveGZLineColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerGZSettingsColours->Add( m_colourPickerActiveGZLineColour, 0, wxALL, 5 );
+	
+	m_staticTextActiveGZFillColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextActiveGZFillColour->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextActiveGZFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerActiveGZFillColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerGZSettingsColours->Add( m_colourPickerActiveGZFillColour, 0, wxALL, 5 );
+	
+	m_staticTextInactiveGZLineColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInactiveGZLineColour->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextInactiveGZLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerInActiveGZLineColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerGZSettingsColours->Add( m_colourPickerInActiveGZLineColour, 0, wxALL, 5 );
+	
+	m_staticTextInactiveGZFillColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInactiveGZFillColour->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextInactiveGZFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerInActiveGZFillColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizerGZSettingsColours->Add( m_colourPickerInActiveGZFillColour, 0, wxALL, 5 );
+	
+	m_staticTextGZLineWidth = new wxStaticText( m_panelGZ, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZLineWidth->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextGZLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceGZLineWidthChoices[] = { _("1 Pixel"), _("2 Pixels"), _("3 Pixels"), _("4 Pixels"), _("5 Pixels"), _("6 Pixels"), _("7 Pixels"), _("8 Pixels"), _("9 Pixels"), _("10 Pixels") };
+	int m_choiceGZLineWidthNChoices = sizeof( m_choiceGZLineWidthChoices ) / sizeof( wxString );
+	m_choiceGZLineWidth = new wxChoice( m_panelGZ, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceGZLineWidthNChoices, m_choiceGZLineWidthChoices, 0 );
+	m_choiceGZLineWidth->SetSelection( 0 );
+	fgSizerGZSettingsColours->Add( m_choiceGZLineWidth, 0, wxALL, 5 );
+	
+	m_staticTextGZLineStyle = new wxStaticText( m_panelGZ, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZLineStyle->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextGZLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choiceGZLineStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
+	int m_choiceGZLineStyleNChoices = sizeof( m_choiceGZLineStyleChoices ) / sizeof( wxString );
+	m_choiceGZLineStyle = new wxChoice( m_panelGZ, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceGZLineStyleNChoices, m_choiceGZLineStyleChoices, 0 );
+	m_choiceGZLineStyle->SetSelection( 0 );
+	fgSizerGZSettingsColours->Add( m_choiceGZLineStyle, 0, wxALL, 5 );
+	
+	m_staticTextGZFillTransparency = new wxStaticText( m_panelGZ, wxID_ANY, _("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZFillTransparency->Wrap( -1 );
+	fgSizerGZSettingsColours->Add( m_staticTextGZFillTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_sliderGZFillTransparency = new wxSlider( m_panelGZ, wxID_ANY, 175, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizerGZSettingsColours->Add( m_sliderGZFillTransparency, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	fgSizerGZSettings->Add( fgSizerGZSettingsColours, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerGZRotate;
+	fgSizerGZRotate = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerGZRotate->SetFlexibleDirection( wxBOTH );
+	fgSizerGZRotate->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_checkBoxGZRotateWithBoat = new wxCheckBox( m_panelGZ, wxID_ANY, _("Rotate with Boat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizerGZRotate->Add( m_checkBoxGZRotateWithBoat, 0, wxALL, 5 );
+	
+	wxString m_radioBoxGZMaintainWithChoices[] = { _("Heading"), _("Course over Ground") };
+	int m_radioBoxGZMaintainWithNChoices = sizeof( m_radioBoxGZMaintainWithChoices ) / sizeof( wxString );
+	m_radioBoxGZMaintainWith = new wxRadioBox( m_panelGZ, wxID_ANY, _("Maintain with"), wxDefaultPosition, wxDefaultSize, m_radioBoxGZMaintainWithNChoices, m_radioBoxGZMaintainWithChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxGZMaintainWith->SetSelection( 1 );
+	fgSizerGZRotate->Add( m_radioBoxGZMaintainWith, 0, wxALL, 5 );
+	
+	
+	fgSizerGZSettings->Add( fgSizerGZRotate, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerGZPersistence;
+	fgSizerGZPersistence = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerGZPersistence->SetFlexibleDirection( wxBOTH );
+	fgSizerGZPersistence->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxString m_radioBoxGZPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
+	int m_radioBoxGZPersistenceNChoices = sizeof( m_radioBoxGZPersistenceChoices ) / sizeof( wxString );
+	m_radioBoxGZPersistence = new wxRadioBox( m_panelGZ, wxID_ANY, _("Guard Zone Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxGZPersistenceNChoices, m_radioBoxGZPersistenceChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxGZPersistence->SetSelection( 0 );
+	fgSizerGZPersistence->Add( m_radioBoxGZPersistence, 1, wxALL, 5 );
+	
+	
+	fgSizerGZSettings->Add( fgSizerGZPersistence, 1, wxEXPAND, 5 );
+	
+	
+	m_panelGZ->SetSizer( fgSizerGZSettings );
+	m_panelGZ->Layout();
+	fgSizerGZSettings->Fit( m_panelGZ );
+	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), false );
 	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerAbout;
 	bSizerAbout = new wxBoxSizer( wxVERTICAL );
@@ -963,6 +1117,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
 	m_bcomboBoxDRPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRPointIconComboboxSelected ), NULL, this );
+	m_bcomboBoxGZFirstIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLStartIconComboboxSelected ), NULL, this );
+	m_bcomboBoxGZSecondIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
+	m_checkBoxGZRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
@@ -979,6 +1136,9 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
 	m_bcomboBoxDRPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnDRPointIconComboboxSelected ), NULL, this );
+	m_bcomboBoxGZFirstIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLStartIconComboboxSelected ), NULL, this );
+	m_bcomboBoxGZSecondIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLEndIconComboboxSelected ), NULL, this );
+	m_checkBoxGZRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );

@@ -35,11 +35,13 @@
 #include "Boundary.h"
 #include "EBL.h"
 #include "DR.h"
+#include "GZ.h"
 #include "ODUtils.h"
 
 extern PathList         *g_pPathList;
 extern BoundaryList     *g_pBoundaryList;
 extern EBLList          *g_pEBLList;
+extern GZList           *g_pGZList;
 extern ODPointList      *g_pODPointList;
 extern ODSelect         *g_pODSelect;
 pugi::xml_node          gpx_path_child;
@@ -385,6 +387,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     Boundary * pBoundary = NULL;
     EBL * pEBL = NULL;
     DR  *pDR = NULL;
+    GZ  *pGZ = NULL;
     wxString *l_locale;
     
 #ifndef __WXMSW__
@@ -405,6 +408,9 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("DR")) {
         pDR = (DR *)pInPath;
         pPath = pDR;
+    } else if(pInPath->m_sTypeString == wxT("GuardZone")) {
+        pGZ = (GZ *)pInPath;
+        pPath = pGZ;
     } else
         pPath = pInPath;
     
@@ -475,17 +481,28 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
         activefillcolour.set_value( pBoundary->m_wxcActiveFillColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     }
+    if(pGZ) {
+        pugi::xml_attribute activefillcolour = child.append_attribute("active_fillcolour");
+        activefillcolour.set_value( pGZ->m_wxcActiveFillColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
+    }
     pugi::xml_attribute inactivecolour = child.append_attribute("inactive_colour");
     inactivecolour.set_value( pPath->m_wxcInActiveLineColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     if(pBoundary) {
         pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
         inactivefillcolour.set_value( pBoundary->m_wxcInActiveFillColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
     }
+    if(pGZ) {
+        pugi::xml_attribute inactivefillcolour = child.append_attribute("inactive_fillcolour");
+        inactivefillcolour.set_value( pGZ->m_wxcInActiveFillColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str() );
+    }
     child.append_attribute("width") = pPath->m_width;
     child.append_attribute("style") = pPath->m_style;
     if(pBoundary) {
         child.append_attribute("fill_transparency") = pBoundary->m_uiFillTransparency;
         child.append_attribute("inclusion_boundary_size") = pBoundary->m_iInclusionBoundarySize;
+    }
+    if(pGZ) {
+        child.append_attribute("fill_transparency") = pGZ->m_uiFillTransparency;
     }
     if(pBoundary) {
         child = node.append_child("opencpn:boundary_type");
@@ -558,6 +575,37 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:DRTimeUnits");
         s.Printf(_T("%i"), pDR->m_iTimeUnits);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+    }
+    if(pGZ) {
+        child = node.append_child("opencpn:persistence");
+        wxString s;
+        s.Printf(_T("%1i"), pGZ->m_iPersistenceType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:centre_on_boat");
+        child.append_child(pugi::node_pcdata).set_value( pGZ->m_bCentreOnBoat == true ? "1" : "0" );
+        child = node.append_child("opencpn:rotate_with_boat");
+        child.append_child(pugi::node_pcdata).set_value( pGZ->m_bRotateWithBoat == true ? "1" : "0" );
+        child = node.append_child("opencpn:maintain_with");
+        s.Printf(_T("%1i"), pGZ->m_iMaintainWith);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:GZ_CentreLat");
+        s.Printf(_T("%0.2f"), pGZ->m_dCentreLat);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:GZ_CentreLon");
+        s.Printf(_T("%0.2f"), pGZ->m_dCentreLon);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:GZ_FirstLineDirection");
+        s.Printf(_T("%0.2f"), pGZ->m_dFirstLineDirection);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:GZ_SecondLineDirection");
+        s.Printf(_T("%0.2f"), pGZ->m_dSecondLineDirection);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:GZ_FirstDistance");
+        s.Printf(_T("%0.2f"), pGZ->m_dFirstDistance);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:GZ_SecondDistance");
+        s.Printf(_T("%0.2f"), pGZ->m_dSecondDistance);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
     }
     
@@ -714,18 +762,34 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     ODPath *pPath = NULL;
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
+    DR *pDR = NULL;
+    GZ *pGZ = NULL;
     while( node1 ) {
         pPath = (ODPath *)node1->GetData();
         pBoundary = NULL;
         pEBL = NULL;
+        pDR = NULL;
+        pGZ = NULL;
         if(pPath->m_sTypeString == wxT("Boundary")) {
             pBoundary = (Boundary *)node1->GetData();
             pPath = pBoundary;
         } else if(pPath->m_sTypeString == wxT("EBL")) {
             pEBL = (EBL *)node1->GetData();
             pPath = pEBL;
+        } else if(pPath->m_sTypeString == wxT("DR")) {
+            pDR = (DR *)node1->GetData();
+            pPath = pDR;
+        } else if(pPath->m_sTypeString == wxT("GuardZone")) {
+            pGZ = (GZ *)node1->GetData();
+            pPath = pGZ;
         }
-        if(!pEBL || pEBL->m_iPersistenceType != ID_EBL_NOT_PERSISTENT) {
+        if(!pEBL || pEBL->m_iPersistenceType != ID_NOT_PERSISTENT) {
+            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+        } else if(!pDR || pDR->m_iPersistenceType != ID_NOT_PERSISTENT) {
+            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+        } else if(!pGZ || pGZ->m_iPersistenceType != ID_NOT_PERSISTENT) {
             if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
                 GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         }
@@ -788,7 +852,8 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                                 break;
                         }
                     }
-                    if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || !TypeString.compare( wxS("DR") ) ) {
+                    if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || 
+                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("GuardZone") ) ) {
                         ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
@@ -1176,6 +1241,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
     Boundary    *pTentBoundary = NULL;
     EBL         *pTentEBL = NULL;
     DR          *pTentDR = NULL;
+    GZ          *pTentGZ = NULL;
     ODPath        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
     
@@ -1191,6 +1257,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
         } else if (!strcmp(pPathType->mb_str(), "DR" ) ) {
             pTentDR = new DR();
             pTentPath = pTentDR;
+        } else if (!strcmp(pPathType->mb_str(), "GuardZone" ) ) {
+            pTentGZ = new GZ();
+            pTentPath = pTentGZ;
         } else 
             pTentPath = new ODPath();
         
@@ -1250,17 +1319,26 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
                         pTentPath->m_wxcActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) )
-                        pTentBoundary->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
+                        if(pTentPath->m_sTypeString == wxT("Boundary"))
+                            pTentBoundary->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                        else
+                            pTentGZ->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                        if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
                         pTentPath->m_wxcInActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) )
-                        pTentBoundary->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                        if(pTentPath->m_sTypeString == wxT("Boundary"))
+                            pTentBoundary->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                        else
+                            pTentGZ->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
                     else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
                         pTentPath->m_style = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
                         pTentPath->m_width = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
-                        pTentBoundary->m_uiFillTransparency = attr.as_uint();
+                        if(pTentPath->m_sTypeString == wxT("Boundary"))
+                            pTentBoundary->m_uiFillTransparency = attr.as_uint();
+                        else
+                            pTentGZ->m_uiFillTransparency = attr.as_uint();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("inclusion_boundary_size") )
                         pTentBoundary->m_iInclusionBoundarySize = attr.as_uint();
                 }
@@ -1290,6 +1368,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                         pTentEBL->SetPersistence( v );
                     else if (!strcmp(pPathType->mb_str(), "DR" ) )
                         pTentDR->SetPersistence( v );
+                    else if (!strcmp(pPathType->mb_str(), "GuardZone" ) )
+                        pTentGZ->SetPersistence( v );
                 }
             } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
@@ -1302,12 +1382,21 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
             } else if( ChildName == _T ( "opencpn:centre_on_boat" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bCentreOnBoat = ( s == wxT("1") );
+                if(pTentPath->m_sTypeString == wxT("EBL"))
+                    pTentEBL->m_bCentreOnBoat = ( s == wxT("1") );
+                else
+                    pTentGZ->m_bCentreOnBoat = ( s == wxT("1") );
             } else if( ChildName == _T ( "opencpn:rotate_with_boat" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bRotateWithBoat = ( s == wxT("1") );
+                if(pTentPath->m_sTypeString == wxT("EBL"))
+                    pTentEBL->m_bRotateWithBoat = ( s == wxT("1") );
+                else
+                    pTentGZ->m_bRotateWithBoat = ( s == wxT("1") );
             } else if( ChildName == _T ( "opencpn:maintain_with" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentEBL->m_iMaintainWith );
+                if(pTentPath->m_sTypeString == wxT("EBL"))
+                    wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentEBL->m_iMaintainWith );
+                else
+                    wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentGZ->m_iMaintainWith );
             } else if( ChildName == _T ( "opencpn:EBL_angle" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dEBLAngle );
             } else if( ChildName == _T ( "opencpn:EBL_length" ) ) {
@@ -1332,6 +1421,14 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iDistanceUnits );
             } else if( ChildName == _T ( "opencpn:DRTimeUnits" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iTimeUnits );
+            } else if( ChildName == _T ( "opencpn:GZ_FirstLineDirection" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstLineDirection );
+            } else if( ChildName == _T ( "opencpn:GZ_FirstDistance" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstDistance );
+            } else if( ChildName == _T ( "opencpn:GZ_SecondLineDirection" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondLineDirection );
+            } else if( ChildName == _T ( "opencpn:GZ_SecondDistance" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondDistance );
             }
         }   
         pTentPath->m_PathNameString = PathName;
@@ -1459,6 +1556,7 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
         g_pPathList->Append( pTentPath );
         if(pTentPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->Append( (Boundary *)pTentPath );
         if(pTentPath->m_sTypeString == wxT("EBL")) g_pEBLList->Append( (EBL *)pTentPath );
+        if(pTentPath->m_sTypeString == wxT("GuardZone")) g_pGZList->Append( (GZ *)pTentPath );
         
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
         
@@ -1489,6 +1587,10 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
             
             node = node->GetNext();
         }
+         if(pTentPath->m_sTypeString == wxT("GuardZone")) {
+             GZ * pGZ = (GZ *)pTentPath;
+             pGZ->UpdateGZSelectablePath();
+         }
     }
     else {
         
@@ -1678,6 +1780,18 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
     ODPath * pExistingPath = PathExists( pPathUpdate->m_GUID );
 
     if( pExistingPath ) {
+        if(pPathUpdate->m_bTemporary) {
+            if(pPathUpdate->m_sTypeString == wxT("EBL")) {
+                EBL *pEBL = (EBL *)pPathUpdate;
+                pEBL->m_iPersistenceType = ID_PERSISTENT_CRASH;
+            } else if(pPathUpdate->m_sTypeString == wxT("DR")) {
+                DR *pDR = (DR *)pPathUpdate;
+                pDR->m_iPersistenceType = ID_PERSISTENT_CRASH;
+            } else if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
+                GZ *pGZ = (GZ *)pPathUpdate;
+                pGZ->m_iPersistenceType = ID_PERSISTENT_CRASH;
+            }
+        }
         if ( pPathUpdate->GetnPoints() < pExistingPath->GetnPoints() ) {
             wxODPointListNode *enode = pExistingPath->m_pODPointList->GetFirst();
             while( enode ) {

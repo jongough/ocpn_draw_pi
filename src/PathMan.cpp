@@ -49,6 +49,7 @@
 #include "Boundary.h"
 #include "EBL.h"
 #include "DR.h"
+#include "GZ.h"
 
 #include "georef.h"
 #include "pluginmanager.h"
@@ -75,7 +76,8 @@ extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
 extern EBLList      *g_pEBLList;
 extern DRList       *g_pDRList;
-extern ODConfig  *g_pODConfig;
+extern GZList       *g_pGZList;
+extern ODConfig     *g_pODConfig;
 extern ODSelect      *g_pODSelect;
 extern PlugInManager  *g_OD_pi_manager;
 extern int             g_path_line_width;
@@ -159,6 +161,7 @@ bool PathMan::DeletePath( ODPath *pPath )
         if(pPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->DeleteObject( (Boundary *)pPath );
         if(pPath->m_sTypeString == wxT("EBL")) g_pEBLList->DeleteObject( (EBL *)pPath );
         if(pPath->m_sTypeString == wxT("DR")) g_pDRList->DeleteObject( (DR *)pPath );
+        if(pPath->m_sTypeString == wxT("GuardZone")) g_pGZList->DeleteObject( (GZ *)pPath );
         
         // walk the path, tentatively deleting/marking points used only by this route
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();

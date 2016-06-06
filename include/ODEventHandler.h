@@ -37,6 +37,7 @@ class Boundary;
 class TextPoint;
 class EBL;
 class DR;
+class GZ;
 
 #define TIMER_OD_1 999
 
@@ -81,6 +82,7 @@ class ODEventHandler : public wxEvtHandler
         Boundary        *m_pBoundary;
         EBL             *m_pEBL;
         DR              *m_pDR;
+        GZ              *m_pGZ;
         
         DECLARE_EVENT_TABLE();
 };

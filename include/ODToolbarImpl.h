@@ -38,6 +38,7 @@ public:
     wxToolBarToolBase *m_toolTextPoint;
     wxToolBarToolBase *m_toolEBL;
     wxToolBarToolBase *m_toolDR;
+    wxToolBarToolBase *m_toolGZ;
     int    m_Mode;
     
 private:

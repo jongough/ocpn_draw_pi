@@ -41,6 +41,12 @@
 #define RTE_TIME_DISP_LOCAL _T("LOCAL")
 #define RTE_UNDEF_DEPARTURE wxInvalidDateTime
 
+enum {
+    ID_MAINTAIN_WITH_HEADING = 0,
+    ID_MAINTAIN_WITH_COG
+};
+
+
 class ODDC;
 
 class ODPath : public wxObject
@@ -59,6 +65,8 @@ public:
     virtual void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
     void DrawPointWhich(ODDC& dc, int iPoint, wxPoint *rpn);
     void DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
+    void DrawArcSegment(ODDC& dc, wxPoint *rc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow);
+    void RenderArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow );
     virtual void Draw(ODDC& dc, PlugIn_ViewPort &pVP);
     virtual void DrawGL( PlugIn_ViewPort &piVP );
     ODPoint *GetLastPoint();
@@ -85,6 +93,7 @@ public:
     void ClearHighlights(void);
     void RenderSegment(ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
+    void RenderArcSegment(ODDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     virtual void SetActiveColours( void );
     virtual wxColour GetCurrentColour( void );
 

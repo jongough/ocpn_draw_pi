@@ -63,7 +63,7 @@ extern wxColour    g_colourEBLLineColour;
 extern wxString    g_sEBLEndIconName;
 extern wxString    g_sEBLStartIconName;
 extern bool        g_bEBLFixedEndPosition;
-extern int         g_EBLPersistenceType;
+extern int         g_iEBLPersistenceType;
 extern int         g_EBLLineWidth; 
 extern int         g_EBLLineStyle;
 
@@ -92,7 +92,7 @@ EBL::EBL() : ODPath()
     m_bCentreOnBoat = true;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
     m_bSaveUpdates = false;
-    SetPersistence( g_EBLPersistenceType );
+    SetPersistence( g_iEBLPersistenceType );
     SetActiveColours();
     m_bRotateWithBoat = g_bEBLRotateWithBoat;
     m_iMaintainWith = g_iEBLMaintainWith;
@@ -184,10 +184,10 @@ void EBL::MoveEndPoint( void )
     DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength);
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
-            case ID_EBL_MAINTAIN_WITH_HEADING:
+            case ID_MAINTAIN_WITH_HEADING:
                 m_dEBLAngle -= g_pfFix.Hdt;
                 break;
-            case ID_EBL_MAINTAIN_WITH_COG:
+            case ID_MAINTAIN_WITH_COG:
                 m_dEBLAngle -= g_pfFix.Cog;
                 break;
         }
@@ -236,7 +236,7 @@ void EBL::MoveEndPoint( bool bUpdateEBL )
 void EBL::SetPersistence( int PersistenceType )
 {
     m_iPersistenceType = PersistenceType;
-    if(PersistenceType == ID_EBL_NOT_PERSISTENT || PersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(PersistenceType == ID_NOT_PERSISTENT || PersistenceType == ID_PERSISTENT_CRASH)
         m_bTemporary = true;
     else
         m_bTemporary = false;
@@ -262,11 +262,11 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
                 double hdg = 0.;
                 DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength);
                 switch(m_iMaintainWith) {
-                    case ID_EBL_MAINTAIN_WITH_HEADING:
+                    case ID_MAINTAIN_WITH_HEADING:
                         if(!isnan(g_pfFix.Hdt))
                             hdg = g_pfFix.Hdt;
                         break;
-                    case ID_EBL_MAINTAIN_WITH_COG:
+                    case ID_MAINTAIN_WITH_COG:
                         if(!isnan(g_pfFix.Cog))
                             hdg = g_pfFix.Cog;
                         break;
@@ -391,7 +391,7 @@ void EBL::UpdateEBL( void )
     UpdateSegmentDistances();
     bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
     g_pODConfig->m_bSkipChangeSetUpdate = false;
-    if(m_iPersistenceType == ID_EBL_PERSISTENT || m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(m_iPersistenceType == ID_PERSISTENT || m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->UpdatePath( this ); 
     g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
     
@@ -446,13 +446,13 @@ void EBL::MaintainWith( void )
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
     switch(m_iMaintainWith) {
-        case ID_EBL_MAINTAIN_WITH_HEADING:
+        case ID_MAINTAIN_WITH_HEADING:
             if(!isnan(g_pfFix.Hdt))
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             break;
-        case ID_EBL_MAINTAIN_WITH_COG:
+        case ID_MAINTAIN_WITH_COG:
             if(!isnan(g_pfFix.Cog))
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
