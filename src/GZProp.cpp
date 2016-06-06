@@ -26,6 +26,7 @@
 #include "GZProp.h"
 #include "GZ.h"
 #include "ocpn_draw_pi.h"
+#include "ODConfig.h"
 #include "ODUtils.h"
 
 #if wxCHECK_VERSION(3,0,0) 
@@ -35,6 +36,7 @@
 extern GZList                  *g_pGZList;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex g_pfFix;
+extern ODConfig                 *g_pODConfig;
 
 GZProp::GZProp()
 {
@@ -69,6 +71,11 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_staticTextGZSecondLength->Enable( true );
     m_textCtrlGZSecondLength->Show();
     m_textCtrlGZSecondLength->Enable( true );
+    m_fgSizerPath->ShowItems( true );
+    m_checkBoxPathShowArrow->Hide();
+    m_radioBoxPathPersistence->Show();
+    m_radioBoxPathPersistence->Enable( true );
+    m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
     
 
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
@@ -157,6 +164,8 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
     m_bLockGZAngle = false;
     m_bLockGZLength = false;
     
+    m_radioBoxPathPersistence->SetSelection( pInGZ->m_iPersistenceType );
+
     return ODPathPropertiesDialogImpl::UpdateProperties( pInGZ );
 }
 
@@ -223,38 +232,25 @@ bool GZProp::SaveChanges( void )
     
     double l_dGZAngle;
     m_textCtrlGZFirstAngle->GetValue().ToDouble( &l_dGZAngle );
-/*    if(!m_pGZ->m_bRotateWithBoat) {
-*/        if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {
+        if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {
             m_pGZ->m_dFirstLineDirection = l_dGZAngle;
-/*        }
-    } else {
-        switch (m_pGZ->m_iMaintainWith) {
-            case ID_MAINTAIN_WITH_HEADING:
-                m_pGZ->m_dFirstLineDirection = l_dGZAngle + g_pfFix.Hdm;
-                break;
-            case ID_MAINTAIN_WITH_COG:
-                m_pGZ->m_dFirstLineDirection = l_dGZAngle + g_pfFix.Cog;
-                break;
-        }
-*/    }
+    }
     
     m_textCtrlGZSecondAngle->GetValue().ToDouble( &l_dGZAngle );
-/*    if(!m_pGZ->m_bRotateWithBoat) {
-*/        if(l_dGZAngle != m_pGZ->m_dSecondLineDirection) {
+        if(l_dGZAngle != m_pGZ->m_dSecondLineDirection) {
             m_pGZ->m_dSecondLineDirection = l_dGZAngle;
-/*        }
-    } else {
-/*        switch (m_pGZ->m_iMaintainWith) {
-            case ID_MAINTAIN_WITH_HEADING:
-                m_pGZ->m_dSecondLineDirection = l_dGZAngle + g_pfFix.Hdm;
-                break;
-            case ID_MAINTAIN_WITH_COG:
-                m_pGZ->m_dSecondLineDirection = l_dGZAngle + g_pfFix.Cog;
-                break;
-        }
-*/    }
+    }
     
-    bool ret = ODPathPropertiesDialogImpl::SaveChanges();
+    m_pGZ->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
+    if(m_pGZ->m_iPersistenceType == ID_NOT_PERSISTENT || m_pGZ->m_iPersistenceType == ID_PERSISTENT_CRASH)
+        m_pGZ->m_bTemporary = true;
+    else
+        m_pGZ->m_bTemporary = false;
+    bool ret;
+    if(m_pGZ->m_iPersistenceType == ID_NOT_PERSISTENT)
+        ret = g_pODConfig->DeleteConfigPath( m_pGZ );
+    else
+        ret = ODPathPropertiesDialogImpl::SaveChanges();
     
     return ret;
 }

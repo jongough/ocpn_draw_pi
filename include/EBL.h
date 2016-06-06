@@ -26,14 +26,6 @@
 
 #include "ODPath.h"
 
-enum {
-    ID_EBL_PERSISTENT = 0,
-    ID_EBL_PERSISTENT_CRASH,
-    ID_EBL_NOT_PERSISTENT,
-    
-    ID_EBL_PERSISTENT_LAST
-};
-
 class EBL : public ODPath
 {
     public:

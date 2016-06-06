@@ -227,6 +227,15 @@ enum {
     ID_BOUNDARY_STATE_LAST
 };
 
+enum {
+    ID_PERSISTENT = 0,
+    ID_PERSISTENT_CRASH,
+    ID_NOT_PERSISTENT,
+    
+    ID_PERSISTENT_LAST
+};
+
+
 //#define PI 3.14159265
 
 class Boundary;

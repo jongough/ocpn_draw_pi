@@ -191,7 +191,7 @@ bool EBLProp::SaveChanges( void )
 
     m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     m_pEBL->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
-    if(m_pEBL->m_iPersistenceType == ID_EBL_NOT_PERSISTENT || m_pEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(m_pEBL->m_iPersistenceType == ID_NOT_PERSISTENT || m_pEBL->m_iPersistenceType == ID_PERSISTENT_CRASH)
         m_pEBL->m_bTemporary = true;
     else
         m_pEBL->m_bTemporary = false;

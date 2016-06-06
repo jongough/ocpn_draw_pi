@@ -82,6 +82,7 @@ extern ODSelect     *g_pODSelect;
 extern PathMan      *g_pPathMan;
 extern ODConfig     *g_pODConfig;
 extern GZProp       *g_pGZPropDialog;
+extern int          g_iGZPersistenceType;
 
 extern int g_path_line_width;
 
@@ -101,6 +102,7 @@ GZ::GZ() : ODPath()
     m_bRotateWithBoat = g_bGZRotateWithBoat;
     m_iMaintainWith = g_iGZMaintainWith;
     m_bSetTransparent = false;
+    m_iPersistenceType = g_iGZPersistenceType;
     SetActiveColours();
     
 }
@@ -475,3 +477,13 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
     
     GetCanvasPixLL( &piVP, *&l_pCentre, m_dCentreLat, m_dCentreLon );
 }
+
+void GZ::SetPersistence( int PersistenceType )
+{
+    m_iPersistenceType = PersistenceType;
+    if(PersistenceType == ID_NOT_PERSISTENT || PersistenceType == ID_PERSISTENT_CRASH)
+        m_bTemporary = true;
+    else
+        m_bTemporary = false;
+}
+

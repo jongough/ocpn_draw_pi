@@ -578,7 +578,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
     }
     if(pGZ) {
+        child = node.append_child("opencpn:persistence");
         wxString s;
+        s.Printf(_T("%1i"), pGZ->m_iPersistenceType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:centre_on_boat");
         child.append_child(pugi::node_pcdata).set_value( pGZ->m_bCentreOnBoat == true ? "1" : "0" );
         child = node.append_child("opencpn:rotate_with_boat");
@@ -759,18 +762,34 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     ODPath *pPath = NULL;
     Boundary *pBoundary = NULL;
     EBL *pEBL = NULL;
+    DR *pDR = NULL;
+    GZ *pGZ = NULL;
     while( node1 ) {
         pPath = (ODPath *)node1->GetData();
         pBoundary = NULL;
         pEBL = NULL;
+        pDR = NULL;
+        pGZ = NULL;
         if(pPath->m_sTypeString == wxT("Boundary")) {
             pBoundary = (Boundary *)node1->GetData();
             pPath = pBoundary;
         } else if(pPath->m_sTypeString == wxT("EBL")) {
             pEBL = (EBL *)node1->GetData();
             pPath = pEBL;
+        } else if(pPath->m_sTypeString == wxT("DR")) {
+            pDR = (DR *)node1->GetData();
+            pPath = pDR;
+        } else if(pPath->m_sTypeString == wxT("GuardZone")) {
+            pGZ = (GZ *)node1->GetData();
+            pPath = pGZ;
         }
-        if(!pEBL || pEBL->m_iPersistenceType != ID_EBL_NOT_PERSISTENT) {
+        if(!pEBL || pEBL->m_iPersistenceType != ID_NOT_PERSISTENT) {
+            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+        } else if(!pDR || pDR->m_iPersistenceType != ID_NOT_PERSISTENT) {
+            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+        } else if(!pGZ || pGZ->m_iPersistenceType != ID_NOT_PERSISTENT) {
             if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
                 GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         }
@@ -1349,6 +1368,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                         pTentEBL->SetPersistence( v );
                     else if (!strcmp(pPathType->mb_str(), "DR" ) )
                         pTentDR->SetPersistence( v );
+                    else if (!strcmp(pPathType->mb_str(), "GuardZone" ) )
+                        pTentGZ->SetPersistence( v );
                 }
             } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
@@ -1759,6 +1780,18 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
     ODPath * pExistingPath = PathExists( pPathUpdate->m_GUID );
 
     if( pExistingPath ) {
+        if(pPathUpdate->m_bTemporary) {
+            if(pPathUpdate->m_sTypeString == wxT("EBL")) {
+                EBL *pEBL = (EBL *)pPathUpdate;
+                pEBL->m_iPersistenceType = ID_PERSISTENT_CRASH;
+            } else if(pPathUpdate->m_sTypeString == wxT("DR")) {
+                DR *pDR = (DR *)pPathUpdate;
+                pDR->m_iPersistenceType = ID_PERSISTENT_CRASH;
+            } else if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
+                GZ *pGZ = (GZ *)pPathUpdate;
+                pGZ->m_iPersistenceType = ID_PERSISTENT_CRASH;
+            }
+        }
         if ( pPathUpdate->GetnPoints() < pExistingPath->GetnPoints() ) {
             wxODPointListNode *enode = pExistingPath->m_pODPointList->GetFirst();
             while( enode ) {

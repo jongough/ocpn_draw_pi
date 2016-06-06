@@ -158,7 +158,7 @@ wxString    g_sEBLEndIconName;
 wxString    g_sEBLStartIconName;
 wxColour    g_colourEBLLineColour;
 bool        g_bEBLFixedEndPosition;
-int         g_EBLPersistenceType;
+int         g_iEBLPersistenceType;
 bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
 int         g_EBLLineWidth; 
@@ -191,6 +191,7 @@ bool         g_bGZRotateWithBoat;
 int          g_iGZMaintainWith;
 wxString    g_sGZFirstIconName;
 wxString    g_sGZSecondIconName;
+int         g_iGZPersistenceType;
 
 wxColour    g_colourActivePathLineColour;
 wxColour    g_colourInActivePathLineColour;
@@ -1039,6 +1040,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
         pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
         pConf->Write( wxS( "DefaultGZMaintainWith" ), g_iGZMaintainWith );
+        pConf->Write( wxS( "DefaultGZPersistenceType" ), g_iGZPersistenceType );
         pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
         pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
         pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
@@ -1048,7 +1050,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
         pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
-        pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
+        pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
         pConf->Write( wxS( "DefaultEBLMaintainWith" ), g_iEBLMaintainWith );
@@ -1216,6 +1218,7 @@ void ocpn_draw_pi::LoadConfig()
         g_uiGZFillTransparency = l_longGZFillTransparency;
         pConf->Read( wxS( "DefaultGZRotateWithBoat" ), &g_bGZRotateWithBoat, false );
         pConf->Read( wxS( "DefaultGZMaintainWith" ), &g_iGZMaintainWith, ID_MAINTAIN_WITH_HEADING );
+        pConf->Read( wxS( "DefaultGZPersistenceType" ),  &g_iGZPersistenceType, 0 );
         
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLStartIcon" ), &g_sEBLStartIconName, wxS("Circle") );
@@ -1223,7 +1226,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
-        pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
+        pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_iEBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaultEBLRotateWithBoat" ), &g_bEBLRotateWithBoat, false );
         pConf->Read( wxS( "DefaultEBLMaintainWith" ), &g_iEBLMaintainWith, ID_MAINTAIN_WITH_HEADING );
@@ -3423,7 +3426,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     }
 
     
-    if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(m_pMouseEBL->m_iPersistenceType == ID_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMouseEBL );
@@ -3497,7 +3500,6 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
                     break;
             }
         }
-        
     }
     
     ODPoint *pMousePoint = NULL;
@@ -3534,6 +3536,13 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
             }
             // TODO fix up undo
             //undo->AfterUndoableAction( m_pMouseGZ );
+            
+            if(m_pMouseGZ->m_iPersistenceType == ID_PERSISTENT || m_pMouseGZ->m_iPersistenceType == ID_PERSISTENT_CRASH) {
+                if(m_pMouseGZ->m_iPersistenceType == ID_PERSISTENT_CRASH)
+                    m_pMouseGZ->m_bTemporary = true;
+                else m_pMouseGZ->m_bTemporary = false;
+                g_pODConfig->AddNewPath( m_pMouseGZ, -1 );    // don't save over restart
+            }
         } else {
             pMousePoint->SetName(_("First"));
             pMousePoint->SetIconName( g_sGZFirstIconName );

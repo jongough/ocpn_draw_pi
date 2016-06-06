@@ -928,7 +928,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerGZRotate->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_checkBoxGZRotateWithBoat = new wxCheckBox( m_panelGZ, wxID_ANY, _("Rotate with Boat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	fgSizerGZRotate->Add( m_checkBoxGZRotateWithBoat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizerGZRotate->Add( m_checkBoxGZRotateWithBoat, 0, wxALL, 5 );
 	
 	wxString m_radioBoxGZMaintainWithChoices[] = { _("Heading"), _("Course over Ground") };
 	int m_radioBoxGZMaintainWithNChoices = sizeof( m_radioBoxGZMaintainWithChoices ) / sizeof( wxString );
@@ -938,6 +938,20 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	
 	fgSizerGZSettings->Add( fgSizerGZRotate, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizerGZPersistence;
+	fgSizerGZPersistence = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerGZPersistence->SetFlexibleDirection( wxBOTH );
+	fgSizerGZPersistence->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	wxString m_radioBoxGZPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
+	int m_radioBoxGZPersistenceNChoices = sizeof( m_radioBoxGZPersistenceChoices ) / sizeof( wxString );
+	m_radioBoxGZPersistence = new wxRadioBox( m_panelGZ, wxID_ANY, _("Guard Zone Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxGZPersistenceNChoices, m_radioBoxGZPersistenceChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxGZPersistence->SetSelection( 0 );
+	fgSizerGZPersistence->Add( m_radioBoxGZPersistence, 1, wxALL, 5 );
+	
+	
+	fgSizerGZSettings->Add( fgSizerGZPersistence, 1, wxEXPAND, 5 );
 	
 	
 	m_panelGZ->SetSizer( fgSizerGZSettings );

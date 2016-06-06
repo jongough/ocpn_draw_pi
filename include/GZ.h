@@ -44,9 +44,11 @@ class GZ : public ODPath
         void MaintainWith( void );
         void UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath = true );
         void GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_l1p1, wxPoint *l_l1p2, wxPoint *l_l2p1, wxPoint *l_l2p2 );
+        void SetPersistence( int PersistenceType );
         
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;
+        int             m_iPersistenceType;
         unsigned int    m_uiFillTransparency;
         double          m_dCentreLat;
         double          m_dCentreLon;

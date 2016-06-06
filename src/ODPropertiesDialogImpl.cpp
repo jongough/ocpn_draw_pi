@@ -102,7 +102,7 @@ extern wxColour     g_colourInActiveDRLineColour;
 extern bool         g_bEBLRotateWithBoat;
 extern int          g_iEBLMaintainWith;
 extern bool         g_bEBLFixedEndPosition;
-extern int          g_EBLPersistenceType;
+extern int          g_iEBLPersistenceType;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
 extern int          g_EBLLineWidth;
@@ -142,6 +142,7 @@ extern int          g_GZLineStyle;
 extern unsigned int g_uiGZFillTransparency;
 extern bool         g_bGZRotateWithBoat;
 extern int          g_iGZMaintainWith;
+extern int          g_iGZPersistenceType;
 
 extern bool         g_bConfirmObjectDelete;
 extern bool         g_bShowMag;
@@ -397,7 +398,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
-    g_EBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
+    g_iEBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
     g_sEBLStartIconName = m_bcomboBoxEBLStartIconName->GetValue();;
@@ -436,6 +437,8 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sGZSecondIconName = m_bcomboBoxGZSecondIconName->GetValue();;
     g_bGZRotateWithBoat = m_checkBoxGZRotateWithBoat->GetValue();
     g_iGZMaintainWith = m_radioBoxGZMaintainWith->GetSelection();
+    g_iGZPersistenceType = m_radioBoxGZPersistence->GetSelection();
+    
     
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
     g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
@@ -726,7 +729,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);
     m_radioBoxMaintainWith->SetSelection( g_iEBLMaintainWith );
     m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );
-    m_radioBoxEBLPersistence->SetSelection( g_EBLPersistenceType );
+    m_radioBoxEBLPersistence->SetSelection( g_iEBLPersistenceType );
     m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
     m_checkBoxShowVRM->SetValue( g_bEBLVRM );
     
@@ -767,8 +770,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_checkBoxGZRotateWithBoat->SetValue( g_bGZRotateWithBoat);
     m_radioBoxGZMaintainWith->SetSelection( g_iGZMaintainWith );
     m_sliderGZFillTransparency->SetValue( g_uiGZFillTransparency );
-    
-    
+    m_radioBoxGZPersistence->SetSelection( g_iGZPersistenceType );
 
     s.Printf( _T("%.3f"), g_dDRSOG );
     m_textCtrlSOG->SetValue( s );

@@ -58,14 +58,6 @@ enum {
     ID_TU_LAST
 };
 
-enum {
-    ID_DR_PERSISTENT = 0,
-    ID_DR_PERSISTENT_CRASH,
-    ID_DR_NOT_PERSISTENT,
-    
-    ID_DR_PERSISTENT_LAST
-};
-
 class DR : public ODPath
 {
     public:
