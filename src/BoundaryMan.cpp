@@ -288,7 +288,6 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
     Boundary *pboundary = NULL;
     ODPoint *popFirst;
     ODPoint *popSecond;
-    int k = 0;
     wxString l_GUID = wxEmptyString;
     bool l_bCrosses;
     
@@ -329,13 +328,10 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
         }
         
         if(!l_bNext) {
-            k++;
-            int i, j;
-            
             wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
             wxODPointListNode *OCPNpoint_last_node = ( pboundary->m_pODPointList )->GetLast();
             wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
-            i = 0;
+
             popFirst = OCPNpoint_node->GetData();
             while( OCPNpoint_next_node ) {
                 double l_dCrossingLon;

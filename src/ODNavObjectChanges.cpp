@@ -388,9 +388,9 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     EBL * pEBL = NULL;
     DR  *pDR = NULL;
     GZ  *pGZ = NULL;
-    wxString *l_locale;
     
 #ifndef __WXMSW__
+    wxString *l_locale;
     l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
     wxSetlocale(LC_NUMERIC, "C");
@@ -1318,27 +1318,30 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 {
                     if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
                         pTentPath->m_wxcActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) )
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) ) {
                         if(pTentPath->m_sTypeString == wxT("Boundary"))
                             pTentBoundary->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
                         else
                             pTentGZ->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                        if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
+                    }
+                    if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
                         pTentPath->m_wxcInActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) )
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) ) {
                         if(pTentPath->m_sTypeString == wxT("Boundary"))
                             pTentBoundary->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
                         else
                             pTentGZ->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                    }
                     else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
                         pTentPath->m_style = attr.as_int();
                     else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
                         pTentPath->m_width = attr.as_int();
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") )
+                    else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") ) {
                         if(pTentPath->m_sTypeString == wxT("Boundary"))
                             pTentBoundary->m_uiFillTransparency = attr.as_uint();
                         else
                             pTentGZ->m_uiFillTransparency = attr.as_uint();
+                    }
                     else if ( wxString::FromUTF8( attr.name() ) == _T("inclusion_boundary_size") )
                         pTentBoundary->m_iInclusionBoundarySize = attr.as_uint();
                 }
@@ -1782,13 +1785,13 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
     if( pExistingPath ) {
         if(pPathUpdate->m_bTemporary) {
             if(pPathUpdate->m_sTypeString == wxT("EBL")) {
-                EBL *pEBL = (EBL *)pPathUpdate;
+                EBL *pEBL = (EBL *)pExistingPath;
                 pEBL->m_iPersistenceType = ID_PERSISTENT_CRASH;
             } else if(pPathUpdate->m_sTypeString == wxT("DR")) {
-                DR *pDR = (DR *)pPathUpdate;
+                DR *pDR = (DR *)pExistingPath;
                 pDR->m_iPersistenceType = ID_PERSISTENT_CRASH;
             } else if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
-                GZ *pGZ = (GZ *)pPathUpdate;
+                GZ *pGZ = (GZ *)pExistingPath;
                 pGZ->m_iPersistenceType = ID_PERSISTENT_CRASH;
             }
         }
