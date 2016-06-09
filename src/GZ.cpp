@@ -269,6 +269,8 @@ void GZ::CentreOnBoat( void )
     } 
     
     UpdateGZSelectablePath();
+    FinalizeForRendering();
+
     bool l_bRequestRefresh = true;
 
     if(g_pGZPropDialog && g_pGZPropDialog->IsShown())
@@ -485,5 +487,110 @@ void GZ::SetPersistence( int PersistenceType )
         m_bTemporary = true;
     else
         m_bTemporary = false;
+}
+
+wxBoundingBox GZ::GetBBox( void )
+{
+    if(!m_bNeedsUpdateBBox)
+        return RBBox;
+    
+    double bbox_xmin = 180.;                        // set defaults
+    double bbox_ymin = 90.;
+    double bbox_xmax = -180;
+    double bbox_ymax = -90.;
+    
+    RBBox.Reset();
+    m_bcrosses_idl = CalculateCrossesIDL();
+    
+    double l_dLat;
+    double l_dLon;
+    double firstDirection;
+    double secondDirection;
+    if(m_bRotateWithBoat) {
+        switch(m_iMaintainWith) {
+            case ID_MAINTAIN_WITH_HEADING:
+                if(!isnan(g_pfFix.Hdt)) {
+                    firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
+                    secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
+                } else {
+                    firstDirection = m_dFirstLineDirection;
+                    secondDirection = m_dSecondLineDirection;
+                }
+                break;
+            case ID_MAINTAIN_WITH_COG:
+                if(!isnan(g_pfFix.Cog)) {
+                    firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
+                    secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
+                } else {
+                    firstDirection = m_dFirstLineDirection;
+                    secondDirection = m_dSecondLineDirection;
+                }
+                break;
+        }
+    } else {
+        firstDirection = m_dFirstLineDirection;
+        secondDirection = m_dSecondLineDirection;
+    }
+    
+    PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+    PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+    PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+    PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+    
+    if( !m_bcrosses_idl ) {
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+    } else {
+        //    For GZeds that cross the IDL, we compute and store
+        //    the bbox as positive definite
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+        if( l_dLon < 0. ) l_dLon += 360.0;
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+        if( l_dLon < 0. ) l_dLon += 360.0;
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+        if( l_dLon < 0. ) l_dLon += 360.0;
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+        if( l_dLon < 0. ) l_dLon += 360.0;
+        if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;
+        if( l_dLon < bbox_xmin ) bbox_xmin = l_dLon;
+        if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
+        if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
+    }
+    
+    RBBox.Expand( bbox_xmin, bbox_ymin );
+    RBBox.Expand( bbox_xmax, bbox_ymax );
+    
+    m_bNeedsUpdateBBox = false;
+    return RBBox;
 }
 

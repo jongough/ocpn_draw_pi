@@ -490,10 +490,13 @@ void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int
     wxRect t( xb, yb, 1, 1 );
     wxRect u( xc, yc, 1, 1 );
     wxRect v( xd, yd, 1, 1 );
+    w.Union( s );
     w.Union( t );
     w.Union( u );
     w.Union( v );
-    if( !r.Intersects( w ) ) return;
+    if( !r.Intersects( w ) ) {
+        return;
+    }
     
     //    If hilite is desired, use a Native Graphics context to render alpha colours
     //    That is, if wxGraphicsContext is available.....

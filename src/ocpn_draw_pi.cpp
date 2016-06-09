@@ -747,7 +747,7 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
-    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || g_pfFix.Cog != pfix.Cog || g_pfFix.Hdt != pfix.Hdt))
+    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !isnan(pfix.Cog))  || (g_pfFix.Hdt != pfix.Hdt && !isnan(pfix.Hdt))))
         l_bBoatChange = true;
     
     g_pfFix.Lat = pfix.Lat;
@@ -3586,9 +3586,28 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 {
     for(wxPathListNode *node = g_pPathList->GetFirst(); node; node = node->GetNext() ) {
-        ODPath *pPathDraw = node->GetData();
-        if( !pPathDraw )
+        ODPath *pTempPath = node->GetData();
+        if( !pTempPath )
             continue;
+
+        ODPath *pPathDraw;
+        Boundary *pBoundaryDraw = NULL;
+        EBL *pEBLDraw = NULL;
+        DR *pDRDraw = NULL;
+        GZ *pGZDraw = NULL;
+        if(pTempPath->m_sTypeString == wxT("Boundary")) {
+            pBoundaryDraw = (Boundary *)pTempPath;
+            pPathDraw = pBoundaryDraw;
+        } else if(pTempPath->m_sTypeString == wxT("EBL")) {
+            pEBLDraw = (EBL *)pTempPath;
+            pPathDraw = pEBLDraw;
+        } else if(pTempPath->m_sTypeString == wxT("DR")) {
+            pDRDraw = (DR *)pTempPath;
+            pPathDraw = pDRDraw;
+        } else if(pTempPath->m_sTypeString == wxT("GuardZone")) {
+            pGZDraw = (GZ *)pTempPath;
+            pPathDraw = pGZDraw;
+        }
         
         /* defer rendering active routes until later */ 
         //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )

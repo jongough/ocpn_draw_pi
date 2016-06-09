@@ -77,7 +77,7 @@ public:
     void UpdateSegmentDistances();
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
-    wxBoundingBox GetBBox();
+    virtual wxBoundingBox GetBBox();
     void SetnPoints(void){ m_nPoints = m_pODPointList->GetCount(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);

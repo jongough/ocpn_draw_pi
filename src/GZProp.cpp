@@ -158,7 +158,9 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
 
     if(!m_bLockGZLength) {
         s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
-        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+        m_textCtrlGZFirstLength->SetValue(s);
+        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dSecondDistance) );
+        m_textCtrlGZSecondLength->SetValue(s);
     }
 #endif
     m_bLockGZAngle = false;
