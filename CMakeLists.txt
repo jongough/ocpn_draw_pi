@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "1")
-SET(VERSION_PATCH "6")
-SET(VERSION_DATE "09/05/2016")
+SET(VERSION_PATCH "7")
+SET(VERSION_DATE "12/06/2016")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
@@ -48,6 +48,7 @@ SET(SRCS
         src/EBL.cpp
         src/EBLProp.cpp
         src/GZ.cpp
+        src/GZMan.cpp
         src/GZProp.cpp
         src/PointMan.cpp
         src/ODSelect.cpp
@@ -87,6 +88,7 @@ SET(HDRS
         include/EBL.h
         include/EBLProp.h
         include/GZ.h
+        include/GZMan.h
         include/GZProp.h
         include/PointMan.h
         include/ODSelect.h

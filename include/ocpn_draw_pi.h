@@ -218,13 +218,13 @@ enum {
     ID_BOUNDARY_TYPE_LAST
 };
 
-// Boundary states
+// Path states
 enum {
-    ID_BOUNDARY_STATE_ANY = 0,
-    ID_BOUNDARY_STATE_ACTIVE,
-    ID_BOUNDARY_STATE_INACTIVE,
+    ID_PATH_STATE_ANY = 0,
+    ID_PATH_STATE_ACTIVE,
+    ID_PATH_STATE_INACTIVE,
     
-    ID_BOUNDARY_STATE_LAST
+    ID_PATH_STATE_LAST
 };
 
 enum {

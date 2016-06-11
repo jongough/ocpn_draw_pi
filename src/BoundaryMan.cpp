@@ -57,14 +57,14 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
         bool    l_bNext = false;
         pboundary = boundary_node->GetData();
         switch (state) {
-            case ID_BOUNDARY_STATE_ANY:
+            case ID_PATH_STATE_ANY:
                 l_bNext = false;
                 break;
-            case ID_BOUNDARY_STATE_ACTIVE:
+            case ID_PATH_STATE_ACTIVE:
                 if(pboundary->IsActive()) l_bNext = false;
                 else l_bNext = true;
                 break;
-            case ID_BOUNDARY_STATE_INACTIVE:
+            case ID_PATH_STATE_INACTIVE:
                 if(!pboundary->IsActive()) l_bNext = false;
                 else l_bNext = true;
                 break;
@@ -297,14 +297,14 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
         bool    l_bNext = false;
         pboundary = boundary_node->GetData();
         switch (state) {
-            case ID_BOUNDARY_STATE_ANY:
+            case ID_PATH_STATE_ANY:
                 l_bNext = false;
                 break;
-            case ID_BOUNDARY_STATE_ACTIVE:
+            case ID_PATH_STATE_ACTIVE:
                 if(pboundary->IsActive()) l_bNext = false;
                 else l_bNext = true;
                 break;
-            case ID_BOUNDARY_STATE_INACTIVE:
+            case ID_PATH_STATE_INACTIVE:
                 if(!pboundary->IsActive()) l_bNext = false;
                 else l_bNext = true;
                 break;

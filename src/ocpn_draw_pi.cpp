@@ -43,6 +43,7 @@
 #include "EBL.h"
 #include "EBLProp.h"
 #include "GZ.h"
+#include "GZMan.h"
 #include "GZprop.h"
 #include "ODPath.h"
 #include "PathMan.h"
@@ -114,6 +115,7 @@ wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
+GZMan                   *g_pGZMan;
 wxString                g_default_ODPoint_icon;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 ODPathPropertiesDialogImpl   *g_pPathPropDialog;
@@ -559,6 +561,7 @@ int ocpn_draw_pi::Init(void)
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
     g_pBoundaryMan = new BoundaryMan();
+    g_pGZMan = new GZMan();
     
     g_pODPathPropDialog = NULL;
     g_pBoundaryPropDialog = NULL;
@@ -1524,9 +1527,9 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 else l_BoundaryType = ID_BOUNDARY_ANY;
                 
                 l_BoundaryState = ID_BOUNDARY_ANY;
-                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_BOUNDARY_STATE_ACTIVE;
-                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_BOUNDARY_STATE_INACTIVE;
-                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_BOUNDARY_STATE_ANY;
+                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
                 
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;
@@ -1619,9 +1622,9 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 else l_BoundaryType = ID_BOUNDARY_ANY;
                 
                 l_BoundaryState = ID_BOUNDARY_ANY;
-                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_BOUNDARY_STATE_ACTIVE;
-                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_BOUNDARY_STATE_INACTIVE;
-                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_BOUNDARY_STATE_ANY;
+                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
+                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
                 
                 
                 if(l_sType == wxS("Request")) {
@@ -1776,12 +1779,14 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                 l_sMsg = root[wxT("Msg")].AsString();
                 
                 if(l_sType == wxS("Request")) {
+                    ODPath *l_path = NULL;
                     Boundary *l_boundary = NULL;
                     BoundaryPoint *l_boundarypoint = NULL;
-
-                    l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
-                    if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
-                    if(!l_boundary && !l_boundarypoint) {
+                    GZ *l_GZ = NULL;
+// TODO need to change check to look for path then determine its type.
+                    l_path = g_pPathMan->FindPathByGUID( l_sGUID );
+                    if(!l_path) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
+                    if(!l_path && !l_boundarypoint) {
                         wxString l_msg;
                         l_msg.append( wxS("Guard Zone, with GUID: ") );
                         l_msg.append( l_sGUID );
@@ -1800,8 +1805,13 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                         return;
                     }
                     bool l_bFound = false;
-                    if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
-                    else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
+                    if(l_path) {
+                        if(l_path->m_sTypeString == wxT("GuardZone"))
+                            l_bFound = g_pGZMan->FindPointInGZ( (GZ *)l_path, l_dLat, l_dLon  );
+                        else
+                            l_bFound = g_pBoundaryMan->FindPointInBoundary( (Boundary*)l_path, l_dLat, l_dLon );
+                    } else if(l_boundarypoint) 
+                        l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                     jMsg[wxT("Msg")] = root[wxT("Msg")];
                     jMsg[wxT("Type")] = wxT("Response");
@@ -1809,9 +1819,9 @@ void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body
                     jMsg[wxS("Found")] = l_bFound;
                     jMsg[wxS("lat")] = l_dLat;
                     jMsg[wxS("lon")] = l_dLon;
-                    if(l_boundary) {
-                        jMsg[wxS("Name")] = l_boundary->m_PathNameString;
-                        jMsg[wxS("Description")] = l_boundary->m_PathDescription;
+                    if(l_path) {
+                        jMsg[wxS("Name")] = l_path->m_PathNameString;
+                        jMsg[wxS("Description")] = l_path->m_PathDescription;
                     } else if(l_boundarypoint) {
                         jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
                         jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;

@@ -36,7 +36,7 @@ class BoundaryPoint;
 class BoundaryMan : public PathMan
 {
     public:
-        wxString    FindPointInBoundary( double lat, double lon, int type, int state = ID_BOUNDARY_ANY );
+        wxString    FindPointInBoundary( double lat, double lon, int type, int state = ID_PATH_STATE_ANY );
         bool        FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
         bool        FindPointInBoundary( wxString l_GUID, double lat, double lon );
         wxString    FindPointInBoundaryPoint( double lat, double lon, int type );

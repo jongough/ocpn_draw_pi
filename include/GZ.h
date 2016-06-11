@@ -62,6 +62,8 @@ class GZ : public ODPath
         bool            m_bCentreOnBoat;
         double          m_dBoatHeading;
         double          m_dBoatCOG;
+        bool            m_bExclusionGZ;
+        bool            m_bInclusionGZ;
         
     protected:
         wxColour    m_fillcol;

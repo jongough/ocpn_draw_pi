@@ -8,6 +8,7 @@ src/DRProp.cpp
 src/EBL.cpp
 src/EBLProp.cpp
 src/GZ.cpp
+src/GZMan.cpp
 src/GZProp.cpp
 src/PointMan.cpp
 src/ODSelect.cpp
@@ -44,6 +45,7 @@ include/DRProp.h
 include/EBL.h
 include/EBLProp.h
 include/GZ.h
+include/GZMan.h
 include/GZProp.h
 include/PointMan.h
 include/ODSelect.h
