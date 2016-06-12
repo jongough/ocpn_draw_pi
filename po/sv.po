@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"POT-Creation-Date: 2016-06-12 08:41+1000\n"
 "PO-Revision-Date: 2016-02-28 17:40-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
@@ -367,6 +367,10 @@ msgstr "Kopiera DR-GUID"
 msgid "Copy EBL GUID"
 msgstr "Kopiera EBL-GUID"
 #
+#, fuzzy
+msgid "Copy Guard Zone GUID"
+msgstr "Kopiera punktens GUID"
+#
 msgid "Copy Point GUID"
 msgstr "Kopiera punktens GUID"
 #
@@ -393,6 +397,10 @@ msgstr "Skapa DR"
 #
 msgid "Create EBL"
 msgstr "Skapa EBL"
+#
+#, fuzzy
+msgid "Create GZ"
+msgstr "Skapa DR"
 #
 msgid "Create Text Point"
 msgstr "Skapa Textpunkt"
@@ -565,6 +573,21 @@ msgstr "Färg på raster"
 msgid "Fill Density"
 msgstr "Rastertäthet"
 #
+msgid "First"
+msgstr ""
+#
+#, fuzzy
+msgid "First Angle (-P/+S)"
+msgstr "EBL Bäring (-Bb/+Sb)"
+#
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Ikon för startpunkt"
+#
+#, fuzzy
+msgid "First distance"
+msgstr "Distans"
+#
 msgid "Fonts"
 msgstr "Typsnitt"
 #
@@ -580,6 +603,9 @@ msgstr "Från: "
 msgid "GUID"
 msgstr "GUID"
 #
+msgid "GZ"
+msgstr ""
+#
 msgid "General"
 msgstr "Generellt"
 #
@@ -594,6 +620,17 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "Ritverktyg för OpenCPN"
+#
+msgid "Guard Zone"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Persistence"
+msgstr "Hur sparas linjen"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Egenskaper gränslinjepunkt"
 #
 msgid "Heading"
 msgstr "Kurs (K/T)"
@@ -657,9 +694,6 @@ msgstr ""
 #
 msgid "Insert Boundary Point"
 msgstr "Infoga gränspunkt"
-#
-msgid "Insert DR Point"
-msgstr "Infoga DR-punkt"
 #
 msgid "Insert EBL Point"
 msgstr "Infoga EBL-punkt"
@@ -759,6 +793,10 @@ msgstr "Flytta EBL"
 #
 msgid "Move EBL Point"
 msgstr "Flytta EBL-punkt"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Flytta gränspunkt"
 #
 msgid "Move OD Point"
 msgstr "Flytta OD-punkt"
@@ -1014,6 +1052,21 @@ msgstr "Ring"
 msgid "Rotate with Boat"
 msgstr "Rotera med båten"
 #
+msgid "Second"
+msgstr ""
+#
+#, fuzzy
+msgid "Second Angle (-P/+S)"
+msgstr "EBL Bäring (-Bb/+Sb)"
+#
+#, fuzzy
+msgid "Second Point Icon"
+msgstr "Ikon för ändpunkt"
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Distans"
+#
 msgid "Short Dash"
 msgstr "Korta streck"
 #
@@ -1160,3 +1213,7 @@ msgstr "Vill du använda gränspunkter efter en storcirkel för detta ben?"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi data finns på"
+#
+#
+#~ msgid "Insert DR Point"
+#~ msgstr "Infoga DR-punkt"

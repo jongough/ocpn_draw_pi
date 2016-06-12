@@ -58,6 +58,8 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     
     m_radioBoxBoundaryType->Show();
     m_radioBoxBoundaryType->Enable( true );
+    m_checkBoxShowBoundaryPoints->Show();
+    m_checkBoxShowBoundaryPoints->Enable( true );
     
     this->GetSizer()->Fit( this );
     this->Layout();
@@ -85,6 +87,7 @@ bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
     else
         m_sliderInclusionBoundarySize->Disable();
     
+    m_checkBoxShowBoundaryPoints->SetValue( m_pBoundary->m_bODPointsVisible);
     ODPathPropertiesDialogImpl::UpdateProperties( pBoundary );
     
     return true;
@@ -115,6 +118,8 @@ bool BoundaryProp::SaveChanges( void )
                 break;
         }
     }
+    m_pBoundary->m_bODPointsVisible = m_checkBoxShowBoundaryPoints->GetValue();
+    
     ODPathPropertiesDialogImpl::SaveChanges();
 
     return true;

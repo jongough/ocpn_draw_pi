@@ -77,7 +77,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -165,6 +165,10 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_radioBoxBoundaryType->SetSelection( 0 );
 	fgSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL, 5 );
 	
+	m_checkBoxBoundaryODPointsVisible = new wxCheckBox( m_panelBoundary, wxID_ANY, _("Show Boundary Point Icons"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxBoundaryODPointsVisible->SetValue(true); 
+	fgSizerBoundaryType->Add( m_checkBoxBoundaryODPointsVisible, 0, wxALL, 5 );
+	
 	
 	fgSizerBoundarySettings->Add( fgSizerBoundaryType, 1, wxEXPAND, 5 );
 	
@@ -172,7 +176,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelBoundary->SetSizer( fgSizerBoundarySettings );
 	m_panelBoundary->Layout();
 	fgSizerBoundarySettings->Fit( m_panelBoundary );
-	m_notebookProperties->AddPage( m_panelBoundary, _("Boundary"), false );
+	m_notebookProperties->AddPage( m_panelBoundary, _("Boundary"), true );
 	m_panelBoundaryPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerOCPNPoint;
 	bSizerOCPNPoint = new wxBoxSizer( wxVERTICAL );

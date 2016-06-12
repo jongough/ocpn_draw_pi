@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"POT-Creation-Date: 2016-06-12 08:41+1000\n"
 "PO-Revision-Date: 2016-02-27 08:04-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Spanish\n"
@@ -367,6 +367,10 @@ msgstr "Copiar DR GUID"
 msgid "Copy EBL GUID"
 msgstr "Copiar EBL GUID"
 #
+#, fuzzy
+msgid "Copy Guard Zone GUID"
+msgstr "Copiar GUID del punto"
+#
 msgid "Copy Point GUID"
 msgstr "Copiar GUID del punto"
 #
@@ -393,6 +397,10 @@ msgstr "Crear DR"
 #
 msgid "Create EBL"
 msgstr "Crear EBL"
+#
+#, fuzzy
+msgid "Create GZ"
+msgstr "Crear DR"
 #
 msgid "Create Text Point"
 msgstr "Crear punto de texto"
@@ -566,6 +574,21 @@ msgstr "Rellenar de color"
 msgid "Fill Density"
 msgstr "Densidad del relleno"
 #
+msgid "First"
+msgstr ""
+#
+#, fuzzy
+msgid "First Angle (-P/+S)"
+msgstr "Ángulo EBL (-P / + S)"
+#
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Icono de punto de inicio"
+#
+#, fuzzy
+msgid "First distance"
+msgstr "Distancia"
+#
 msgid "Fonts"
 msgstr "Fuentes"
 #
@@ -581,6 +604,9 @@ msgstr "Desde: "
 msgid "GUID"
 msgstr "GUID"
 #
+msgid "GZ"
+msgstr ""
+#
 msgid "General"
 msgstr "General"
 #
@@ -595,6 +621,17 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "Generador de dibujos para OpenCPN"
+#
+msgid "Guard Zone"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Persistence"
+msgstr "Persistencia de línea"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Propiedades punto límite"
 #
 msgid "Heading"
 msgstr "Rumbo"
@@ -658,9 +695,6 @@ msgstr ""
 #
 msgid "Insert Boundary Point"
 msgstr "Insertsr punto límite"
-#
-msgid "Insert DR Point"
-msgstr "Insertar punto DR"
 #
 msgid "Insert EBL Point"
 msgstr "Insertar punto EBL"
@@ -760,6 +794,10 @@ msgstr "Mover EBL"
 #
 msgid "Move EBL Point"
 msgstr "Mover punto EBL"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Mover punto límite"
 #
 msgid "Move OD Point"
 msgstr "Mover punto OD"
@@ -1014,6 +1052,21 @@ msgstr ""
 msgid "Rotate with Boat"
 msgstr "Rotar con barco"
 #
+msgid "Second"
+msgstr ""
+#
+#, fuzzy
+msgid "Second Angle (-P/+S)"
+msgstr "Ángulo EBL (-P / + S)"
+#
+#, fuzzy
+msgid "Second Point Icon"
+msgstr "Icono de punto final"
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Distancia"
+#
 msgid "Short Dash"
 msgstr "Trazos cortos"
 #
@@ -1159,3 +1212,7 @@ msgstr "¿Quiere incluir los puntos del límite de la ortodrómica en esta etapa
 #
 msgid "ocpn_draw_pi data location"
 msgstr "Ubicación de los datos ocpn_draw_pi"
+#
+#
+#~ msgid "Insert DR Point"
+#~ msgstr "Insertar punto DR"

@@ -79,6 +79,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextInclusionBoundarySize;
 		wxSlider* m_sliderInclusionBoundarySize;
 		wxRadioBox* m_radioBoxBoundaryType;
+		wxCheckBox* m_checkBoxBoundaryODPointsVisible;
 		wxPanel* m_panelBoundaryPoint;
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;

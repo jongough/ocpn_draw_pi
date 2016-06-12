@@ -514,6 +514,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
             child.append_child(pugi::node_pcdata).set_value( "None" );
         else child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
     }
+    if(pBoundary) {
+        child = node.append_child("opencpn:boundary_show_point_icons");
+        child.append_child(pugi::node_pcdata).set_value( pBoundary->m_bODPointsVisible == true ? "1" : "0" );
+    }
     if(pEBL) {
         child = node.append_child("opencpn:persistence");
         wxString s;
@@ -1357,6 +1361,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     pTentBoundary->m_bExclusionBoundary = false;
                     pTentBoundary->m_bInclusionBoundary = false;
                 } else pTentBoundary->m_bExclusionBoundary = false;
+            } else if( ChildName == _T( "opencpn:boundary_show_point_icons") ) {
+                wxString active = wxString::FromUTF8(tschild.first_child().value());
+                pTentBoundary->m_bODPointsVisible = ( active == _T("1") );
             } else if( ChildName == _T ( "opencpn:guid" ) ) {
                 //if ( !g_bODIsNewLayer ) ) 
                 pTentPath->m_GUID.clear();

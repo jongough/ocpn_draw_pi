@@ -686,6 +686,8 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_fgSizerPath->ShowItems( false );
     m_radioBoxPathPersistence->Hide();
     m_radioBoxPathPersistence->Enable( false );
+    m_checkBoxShowBoundaryPoints->Hide();
+    m_checkBoxShowBoundaryPoints->Enable( false );
     m_fgSizerEBL->ShowItems( false );
     m_checkBoxEBLFixedEndPosition->Hide();
     m_checkBoxEBLFixedEndPosition->Enable( false );

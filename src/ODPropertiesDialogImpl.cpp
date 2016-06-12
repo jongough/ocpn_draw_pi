@@ -57,6 +57,7 @@ extern wxColour     g_colourActiveBoundaryFillColour;
 extern wxColour     g_colourInActiveBoundaryFillColour;
 extern bool         g_bExclusionBoundary;
 extern bool         g_bInclusionBoundary;
+extern bool         g_bBoundaryODPointsVisible;
 extern bool         g_bExclusionBoundaryPoint;
 extern bool         g_bInclusionBoundaryPoint;
 extern int          g_PathLineWidth; 
@@ -342,6 +343,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iBoundaryPointRangeRingLineStyle = ::StyleValues[ m_choiceRangeRingStyle->GetSelection() ];
     g_iInclusionBoundarySize = m_sliderInclusionBoundarySize->GetValue();
     g_iInclusionBoundaryPointSize = m_sliderInclusionBoundaryPointSize->GetValue();
+    g_bBoundaryODPointsVisible = m_checkBoxBoundaryODPointsVisible->GetValue();
     
     int l_BoundaryType;
     l_BoundaryType = m_radioBoxBoundaryType->GetSelection();
@@ -724,6 +726,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
     else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
+    m_checkBoxBoundaryODPointsVisible->SetValue( g_bBoundaryODPointsVisible );
     
     m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
     m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);

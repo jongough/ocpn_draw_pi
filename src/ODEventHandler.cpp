@@ -610,6 +610,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath = NULL;
             break;
         }
+        case ID_PATH_MENU_SHOW_ICONS: {
+            if(m_pSelectedPath->m_bODPointsVisible)
+                m_pSelectedPath->m_bODPointsVisible = false;
+            else
+                m_pSelectedPath->m_bODPointsVisible = true;
+            break;
+        }
         case ID_EBL_MENU_CENTRE_ON_BOAT:
             m_pEBL->m_bSaveUpdates = true;
             m_pEBL->CentreOnBoat(false);
@@ -920,6 +927,12 @@ void ODEventHandler::PopupMenu( int seltype )
 
                 if(sString.Len() > 0)
                     MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
+            }
+            if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+                if(m_pSelectedPath->m_bODPointsVisible)
+                    MenuAppend( menuPath, ID_PATH_MENU_SHOW_ICONS, _("Hide Boundary Point Icons"));
+                else
+                    MenuAppend( menuPath, ID_PATH_MENU_SHOW_ICONS, _("Show Boundary Point Icons"));
             }
             sString.clear();
             sString.append( _("Delete...") );

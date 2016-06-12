@@ -155,6 +155,8 @@ public:
     bool        m_bDrawArrow;
     bool        m_bSaveUpdates;
     
+    bool        m_bODPointsVisible; // should the ODPoints on a path be drawn 
+    
 protected:    
     bool m_bNeedsUpdateBBox;
     wxBoundingBox     RBBox;

@@ -147,6 +147,7 @@ bool        g_bExclusionBoundary;
 bool        g_bInclusionBoundary;
 bool        g_bExclusionBoundaryPoint;
 bool        g_bInclusionBoundaryPoint;
+bool        g_bBoundaryODPointsVisible;
 unsigned int g_uiFillTransparency;
 unsigned int g_uiBoundaryPointFillTransparency;
 int         g_iBoundaryPointRangeRingLineWidth;
@@ -1026,6 +1027,7 @@ void ocpn_draw_pi::SaveConfig()
         else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
         else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
         else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+        pConf->Write( wxS( "DefaultBoundaryODPointsVisible"), g_bBoundaryODPointsVisible );
         pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
         long l_longFillTransparency = g_uiFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
@@ -1193,6 +1195,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bInclusionBoundary = false;
                 break;
         }
+        pConf->Read( wxS( "DefaultBoundaryODPointsVisible"), &g_bBoundaryODPointsVisible, 1 );
         pConf->Read( wxS( "DefaultEBLLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourEBLLineColour.Set( l_wxsColour );
         long l_longFillTransparency;

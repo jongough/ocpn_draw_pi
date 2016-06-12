@@ -134,13 +134,16 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
 	
-	m_bSizerBoundaryType = new wxBoxSizer( wxVERTICAL );
+	m_bSizerBoundaryType = new wxBoxSizer( wxHORIZONTAL );
 	
 	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
 	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryType = new wxRadioBox( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxBoundaryType->SetSelection( 0 );
 	m_bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL|wxEXPAND, 5 );
+	
+	m_checkBoxShowBoundaryPoints = new wxCheckBox( this, wxID_ANY, _("Show Boundary Point Icons"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_bSizerBoundaryType->Add( m_checkBoxShowBoundaryPoints, 0, wxALL, 5 );
 	
 	
 	fgSizer1->Add( m_bSizerBoundaryType, 1, wxEXPAND, 5 );

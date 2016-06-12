@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"POT-Creation-Date: 2016-06-12 08:41+1000\n"
 "PO-Revision-Date: 2016-02-27 08:04-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -368,6 +368,10 @@ msgstr "Αντιγραφή GUID DR"
 msgid "Copy EBL GUID"
 msgstr "Αντιγραφή GUID EBL"
 #
+#, fuzzy
+msgid "Copy Guard Zone GUID"
+msgstr "Αντιγραφή GUID σημείου"
+#
 msgid "Copy Point GUID"
 msgstr "Αντιγραφή GUID σημείου"
 #
@@ -394,6 +398,10 @@ msgstr "Δημιουργία DR"
 #
 msgid "Create EBL"
 msgstr "Δημιουργία EBL"
+#
+#, fuzzy
+msgid "Create GZ"
+msgstr "Δημιουργία DR"
 #
 msgid "Create Text Point"
 msgstr "Δημιουργία σημείου κειμένου"
@@ -566,6 +574,21 @@ msgstr "Εσωτερικό χρώμα"
 msgid "Fill Density"
 msgstr "Εσωτερική πυκνότητα"
 #
+msgid "First"
+msgstr ""
+#
+#, fuzzy
+msgid "First Angle (-P/+S)"
+msgstr "Γωνία EBL (-Αρ/+Δξ)"
+#
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Εικονίδιο σημείου εκκίνησης"
+#
+#, fuzzy
+msgid "First distance"
+msgstr "Απόσταση"
+#
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
 #
@@ -581,6 +604,9 @@ msgstr "Από: "
 msgid "GUID"
 msgstr "GUID"
 #
+msgid "GZ"
+msgstr ""
+#
 msgid "General"
 msgstr "Γενικά"
 #
@@ -595,6 +621,17 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "Γενικό σχέδιο για το OpenCPN"
+#
+msgid "Guard Zone"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Persistence"
+msgstr "Παραμένουσα διαδρομή"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Ιδιότητες σημείου ορίου"
 #
 msgid "Heading"
 msgstr "Πορεία"
@@ -658,9 +695,6 @@ msgstr ""
 #
 msgid "Insert Boundary Point"
 msgstr "Εισαγωγή σημείου ορίου"
-#
-msgid "Insert DR Point"
-msgstr "Εισαγωγή σημείου DR"
 #
 msgid "Insert EBL Point"
 msgstr "Εισαγωγή σημείου EBL"
@@ -760,6 +794,10 @@ msgstr "Μετακίνησε την EBL"
 #
 msgid "Move EBL Point"
 msgstr "Μετακίνησε το σημείο EBL"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Μετακίνησε το σημείο ορίου"
 #
 msgid "Move OD Point"
 msgstr "Μετακίνησε το σημείο OD"
@@ -1014,6 +1052,21 @@ msgstr ""
 msgid "Rotate with Boat"
 msgstr "Περιστροφή με το πλοίο"
 #
+msgid "Second"
+msgstr ""
+#
+#, fuzzy
+msgid "Second Angle (-P/+S)"
+msgstr "Γωνία EBL (-Αρ/+Δξ)"
+#
+#, fuzzy
+msgid "Second Point Icon"
+msgstr "Εικονίδιο σημείου τερματισμού"
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Απόσταση"
+#
 msgid "Short Dash"
 msgstr "Με κοντές παύλες"
 #
@@ -1162,3 +1215,7 @@ msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "τοποθεσία δεδομένων ocpn_draw_pi"
+#
+#
+#~ msgid "Insert DR Point"
+#~ msgstr "Εισαγωγή σημείου DR"

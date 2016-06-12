@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"POT-Creation-Date: 2016-06-12 08:41+1000\n"
 "PO-Revision-Date: 2016-02-27 08:04-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Czech\n"
@@ -361,6 +361,9 @@ msgstr ""
 msgid "Copy EBL GUID"
 msgstr ""
 #
+msgid "Copy Guard Zone GUID"
+msgstr ""
+#
 msgid "Copy Point GUID"
 msgstr ""
 #
@@ -386,6 +389,9 @@ msgid "Create DR"
 msgstr ""
 #
 msgid "Create EBL"
+msgstr ""
+#
+msgid "Create GZ"
 msgstr ""
 #
 msgid "Create Text Point"
@@ -557,6 +563,18 @@ msgstr ""
 msgid "Fill Density"
 msgstr ""
 #
+msgid "First"
+msgstr ""
+#
+msgid "First Angle (-P/+S)"
+msgstr ""
+#
+msgid "First Point Icon"
+msgstr ""
+#
+msgid "First distance"
+msgstr ""
+#
 msgid "Fonts"
 msgstr ""
 #
@@ -572,6 +590,9 @@ msgstr ""
 msgid "GUID"
 msgstr ""
 #
+msgid "GZ"
+msgstr ""
+#
 msgid "General"
 msgstr ""
 #
@@ -582,6 +603,15 @@ msgid ""
 msgstr ""
 #
 msgid "General drawing for OpenCPN"
+msgstr ""
+#
+msgid "Guard Zone"
+msgstr ""
+#
+msgid "Guard Zone Persistence"
+msgstr ""
+#
+msgid "Guard Zone Properties"
 msgstr ""
 #
 msgid "Heading"
@@ -639,9 +669,6 @@ msgid ""
 msgstr ""
 #
 msgid "Insert Boundary Point"
-msgstr ""
-#
-msgid "Insert DR Point"
 msgstr ""
 #
 msgid "Insert EBL Point"
@@ -741,6 +768,9 @@ msgid "Move EBL"
 msgstr ""
 #
 msgid "Move EBL Point"
+msgstr ""
+#
+msgid "Move Guard Zone Point"
 msgstr ""
 #
 msgid "Move OD Point"
@@ -982,6 +1012,18 @@ msgid "Ring"
 msgstr ""
 #
 msgid "Rotate with Boat"
+msgstr ""
+#
+msgid "Second"
+msgstr ""
+#
+msgid "Second Angle (-P/+S)"
+msgstr ""
+#
+msgid "Second Point Icon"
+msgstr ""
+#
+msgid "Second distance"
 msgstr ""
 #
 msgid "Short Dash"

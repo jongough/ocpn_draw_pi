@@ -64,6 +64,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxSlider* m_sliderInclusionBoundarySize;
 		wxBoxSizer* m_bSizerBoundaryType;
 		wxRadioBox* m_radioBoxBoundaryType;
+		wxCheckBox* m_checkBoxShowBoundaryPoints;
 		wxFlexGridSizer* m_fgSizerEBL;
 		wxCheckBox* m_checkBoxRotateWithBoat;
 		wxRadioBox* m_radioBoxMaintainWith;

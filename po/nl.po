@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"POT-Creation-Date: 2016-06-12 08:41+1000\n"
 "PO-Revision-Date: 2016-02-28 17:40-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Dutch\n"
@@ -368,6 +368,10 @@ msgstr "GUID van gegist traject kopiëren"
 msgid "Copy EBL GUID"
 msgstr "GUID van peilinglijn kopiëren"
 #
+#, fuzzy
+msgid "Copy Guard Zone GUID"
+msgstr "GUID van punt (of cirkelgebied) kopiëren"
+#
 msgid "Copy Point GUID"
 msgstr "GUID van punt (of cirkelgebied) kopiëren"
 #
@@ -394,6 +398,10 @@ msgstr "Teken gegist traject"
 #
 msgid "Create EBL"
 msgstr "Teken peilinglijn"
+#
+#, fuzzy
+msgid "Create GZ"
+msgstr "Teken gegist traject"
 #
 msgid "Create Text Point"
 msgstr "Teken tekstpunt"
@@ -568,6 +576,21 @@ msgstr "Vulkleur"
 msgid "Fill Density"
 msgstr "Vuldichtheid"
 #
+msgid "First"
+msgstr ""
+#
+#, fuzzy
+msgid "First Angle (-P/+S)"
+msgstr "Boordhoek (-L, +R)"
+#
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Pictogram startpunt peilinglijn"
+#
+#, fuzzy
+msgid "First distance"
+msgstr "afstand"
+#
 msgid "Fonts"
 msgstr "Lettertypes"
 #
@@ -583,6 +606,9 @@ msgstr "Richting: "
 msgid "GUID"
 msgstr "GUID"
 #
+msgid "GZ"
+msgstr ""
+#
 msgid "General"
 msgstr "Algemeen"
 #
@@ -596,6 +622,17 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "Teken PlugIn voor OpenCPN"
+#
+msgid "Guard Zone"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Persistence"
+msgstr "Vasthouden lijn"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Eigenschappen Punt (of cirkelgebied)"
 #
 msgid "Heading"
 msgstr "Voorliggende koers"
@@ -661,9 +698,6 @@ msgstr ""
 #
 msgid "Insert Boundary Point"
 msgstr "Punt toevoegen"
-#
-msgid "Insert DR Point"
-msgstr "Gegist punt toevoegen"
 #
 msgid "Insert EBL Point"
 msgstr "Peilinglijn-punt toevoegen"
@@ -763,6 +797,10 @@ msgstr "Peilinglijn verplaatsen "
 #
 msgid "Move EBL Point"
 msgstr "Peilinglijn-punt verplaatsen"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Punt verplaatsen"
 #
 msgid "Move OD Point"
 msgstr "OD-punt verplaatsen"
@@ -1021,6 +1059,21 @@ msgstr "alarm"
 msgid "Rotate with Boat"
 msgstr "Meedraaien met schip"
 #
+msgid "Second"
+msgstr ""
+#
+#, fuzzy
+msgid "Second Angle (-P/+S)"
+msgstr "Boordhoek (-L, +R)"
+#
+#, fuzzy
+msgid "Second Point Icon"
+msgstr "Pictogram eindpunt peilinglijn"
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "afstand"
+#
 msgid "Short Dash"
 msgstr "korte streep"
 #
@@ -1168,3 +1221,7 @@ msgstr "Wilt u voor dit lijndeel ook grootcirkelpunten toevoegen?"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "Gegevensmap opencpn_draw_pi"
+#
+#
+#~ msgid "Insert DR Point"
+#~ msgstr "Gegist punt toevoegen"

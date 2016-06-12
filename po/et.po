@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-29 15:03+1100\n"
+"POT-Creation-Date: 2016-06-12 08:41+1000\n"
 "PO-Revision-Date: 2016-02-27 08:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -368,6 +368,10 @@ msgstr "Kopeeri DR GUID"
 msgid "Copy EBL GUID"
 msgstr "Kopeeri EBL GUID"
 #
+#, fuzzy
+msgid "Copy Guard Zone GUID"
+msgstr "Kopeeri punkti GUID"
+#
 msgid "Copy Point GUID"
 msgstr "Kopeeri punkti GUID"
 #
@@ -394,6 +398,10 @@ msgstr "Loo DR"
 #
 msgid "Create EBL"
 msgstr "Loo EBL"
+#
+#, fuzzy
+msgid "Create GZ"
+msgstr "Loo DR"
 #
 msgid "Create Text Point"
 msgstr "Loo teksti punkt"
@@ -568,6 +576,21 @@ msgstr "Täite värv"
 msgid "Fill Density"
 msgstr "Täite tihedus"
 #
+msgid "First"
+msgstr ""
+#
+#, fuzzy
+msgid "First Angle (-P/+S)"
+msgstr "EBL nurk (-P/+T)"
+#
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Alguspunkti ikoon"
+#
+#, fuzzy
+msgid "First distance"
+msgstr "Vahemaa"
+#
 msgid "Fonts"
 msgstr "Kirjamärgid"
 #
@@ -583,6 +606,9 @@ msgstr "Alates: "
 msgid "GUID"
 msgstr "GUID"
 #
+msgid "GZ"
+msgstr ""
+#
 msgid "General"
 msgstr "Üldine"
 #
@@ -597,6 +623,17 @@ msgstr ""
 #
 msgid "General drawing for OpenCPN"
 msgstr "OpenCPN'i üldine joonistamine"
+#
+msgid "Guard Zone"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Persistence"
+msgstr "Tee püsivus"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Piiripunkti omadused"
 #
 msgid "Heading"
 msgstr "Suund"
@@ -660,9 +697,6 @@ msgstr ""
 #
 msgid "Insert Boundary Point"
 msgstr "Sisesta piiripunkt"
-#
-msgid "Insert DR Point"
-msgstr "Sisesta DR-punkt"
 #
 msgid "Insert EBL Point"
 msgstr "Sisesta EBL-punkt"
@@ -762,6 +796,10 @@ msgstr "Liiguta EBL"
 #
 msgid "Move EBL Point"
 msgstr "Liiguta EBL-punkti"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Liiguta piiripunkti"
 #
 msgid "Move OD Point"
 msgstr "Liiguta OD-punkti"
@@ -1016,6 +1054,21 @@ msgstr ""
 msgid "Rotate with Boat"
 msgstr "Pööra koos paadiga"
 #
+msgid "Second"
+msgstr ""
+#
+#, fuzzy
+msgid "Second Angle (-P/+S)"
+msgstr "EBL nurk (-P/+T)"
+#
+#, fuzzy
+msgid "Second Point Icon"
+msgstr "Lõpp-punkti ikoon"
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Vahemaa"
+#
 msgid "Short Dash"
 msgstr "Lühike kriips"
 #
@@ -1161,3 +1214,7 @@ msgstr "Kas sa sooviksid lisada selle lõigu jaoks suure ringi piiripunktid?"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi andmete asukoht"
+#
+#
+#~ msgid "Insert DR Point"
+#~ msgstr "Sisesta DR-punkt"

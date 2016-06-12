@@ -65,6 +65,7 @@ extern bool         g_bInclusionBoundary;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern unsigned int g_uiFillTransparency;
 extern int          g_iInclusionBoundarySize;
+extern bool         g_bBoundaryODPointsVisible;
 
 Boundary::Boundary() : ODPath()
 {
@@ -78,6 +79,7 @@ Boundary::Boundary() : ODPath()
     m_bExclusionBoundary = g_bExclusionBoundary;
     m_bInclusionBoundary = g_bInclusionBoundary;
     m_iInclusionBoundarySize = g_iInclusionBoundarySize;
+    m_bODPointsVisible = g_bBoundaryODPointsVisible;
     SetActiveColours();
     
 }

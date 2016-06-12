@@ -45,7 +45,7 @@ public:
       ODPoint( ODPoint* orig );
       ODPoint();
       virtual ~ODPoint(void);
-      virtual void Draw(ODDC& dc, wxPoint *rpn = NULL);
+      virtual void Draw(ODDC& dc, wxPoint *rpn = NULL, bool bDrawIcon = TRUE );
       void ReLoadIcon(void);
 
       wxDateTime GetCreateTime(void);
