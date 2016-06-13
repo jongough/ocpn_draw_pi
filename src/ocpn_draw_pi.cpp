@@ -44,7 +44,7 @@
 #include "EBLProp.h"
 #include "GZ.h"
 #include "GZMan.h"
-#include "GZprop.h"
+#include "GZProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
