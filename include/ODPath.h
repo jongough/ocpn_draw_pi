@@ -112,6 +112,7 @@ public:
     
     void RemovePointFromPath( ODPoint* point, ODPath* path );
     virtual void MoveAllPoints( double inc_lat, double inc_lon );
+    virtual void SetPointVisibility( void );
 
     int         m_ConfigPathNum;
     bool        m_bPathIsSelected;

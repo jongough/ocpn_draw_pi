@@ -189,7 +189,7 @@ ODPoint *ODPath::GetPoint( const wxString &guid )
 void ODPath::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *rpn )
 {
     if( iPoint <= GetnPoints() )
-        GetPoint( iPoint )->Draw( dc, rpn, m_bODPointsVisible );
+        GetPoint( iPoint )->Draw( dc, rpn );
 }
 
 void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
@@ -314,15 +314,13 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         node = node->GetNext();
     }
     
-    if(m_bODPointsVisible) {
-        for(wxODPointListNode *node  = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-            ODPoint *pOp = node->GetData();
-            wxPoint r;
-            GetCanvasPixLL( &VP, &r, pOp->m_lat, pOp->m_lon );
-            if ( m_bVisible || pOp->m_bKeepXPath )
-                pOp->Draw( dc, &r );
-        }        
-    }
+    for(wxODPointListNode *node  = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        wxPoint r;
+        GetCanvasPixLL( &VP, &r, pOp->m_lat, pOp->m_lon );
+        if ( m_bVisible || pOp->m_bKeepXPath )
+            pOp->Draw( dc, &r );
+    }        
     wxDELETEA( m_bpts );
 }
 
@@ -370,13 +368,11 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     }
     
     /*  ODPoints  */
-    if(m_bODPointsVisible) {
-        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-        ODPoint *pOp = node->GetData();
-        if ( m_bVisible || pOp->m_bKeepXPath )
-            pOp->DrawGL( piVP );
-        }   
-    }
+    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+    ODPoint *pOp = node->GetData();
+    if ( m_bVisible || pOp->m_bKeepXPath )
+        pOp->DrawGL( piVP );
+    }   
     
     wxDELETEA( m_bpts );
 #endif
@@ -1172,4 +1168,13 @@ void ODPath::MoveAllPoints( double inc_lat, double inc_lon )
         op->m_lon -= inc_lon;
         node = node->GetNext();
     }
+}
+
+void ODPath::SetPointVisibility()
+{
+    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+        ODPoint *pOp = node->GetData();
+        pOp->SetVisible( m_bODPointsVisible );
+    }   
+    
 }

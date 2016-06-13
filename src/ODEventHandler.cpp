@@ -615,6 +615,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 m_pSelectedPath->m_bODPointsVisible = false;
             else
                 m_pSelectedPath->m_bODPointsVisible = true;
+            m_pSelectedPath->SetPointVisibility();
             break;
         }
         case ID_EBL_MENU_CENTRE_ON_BOAT:
@@ -988,6 +989,8 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("EBL Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point"))
                 sString.append(_("DR Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("Guard Zone Point"))
+                sString.append(_("Guard Zone Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("OD Point"))
                 sString.append(_("OD Point"));
             menuODPoint = new wxMenu( sString );
