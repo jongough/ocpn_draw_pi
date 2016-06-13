@@ -195,6 +195,7 @@ int          g_iGZMaintainWith;
 wxString    g_sGZFirstIconName;
 wxString    g_sGZSecondIconName;
 int         g_iGZPersistenceType;
+int         g_iGZMaxNum;
 
 wxColour    g_colourActivePathLineColour;
 wxColour    g_colourInActivePathLineColour;
@@ -380,6 +381,7 @@ int ocpn_draw_pi::Init(void)
     bKey_EBL_Pressed = false;
     bKey_DR_Pressed = false;
     bKey_GZ_Pressed = false;
+    g_iGZMaxNum = 0;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
     g_iLocaleDepth = 0;
@@ -3490,7 +3492,7 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
         m_pMouseGZ = new GZ();
         g_pGZList->Append( m_pMouseGZ );
         g_pPathList->Append( m_pMouseGZ);
-        m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << g_pGZList->GetCount();
+        m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << g_iGZMaxNum++;
         m_pMouseGZ->m_width = g_GZLineWidth;
         m_pMouseGZ->m_style = g_GZLineStyle;
         m_pMouseGZ->m_dCentreLat = g_pfFix.Lat;

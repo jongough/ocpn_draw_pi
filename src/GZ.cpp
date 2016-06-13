@@ -83,6 +83,7 @@ extern PathMan      *g_pPathMan;
 extern ODConfig     *g_pODConfig;
 extern GZProp       *g_pGZPropDialog;
 extern int          g_iGZPersistenceType;
+extern int          g_iGZMaxNum;
 
 extern int g_path_line_width;
 

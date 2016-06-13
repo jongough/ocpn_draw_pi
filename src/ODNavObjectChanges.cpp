@@ -59,6 +59,7 @@ extern unsigned int     g_uiBoundaryPointFillTransparency;
 extern bool             g_bExclusionBoundaryPoint;
 extern bool             g_bInclusionBoundaryPoint;
 extern int              g_navobjbackups;
+extern int              g_iGZMaxNum;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -1277,6 +1278,13 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
             }
             else if( ChildName == _T ( "name" ) ) {
+                wxString l_name = wxString::FromUTF8( tschild.first_child().value() );
+                if(l_name.StartsWith(wxT("GZ ")) && pTentGZ) {
+                    long i;
+                    l_name.Mid(3).ToLong(&i);
+                    if(g_iGZMaxNum <= i)
+                        g_iGZMaxNum = i++;
+                }
                 PathName.append( wxString::FromUTF8( tschild.first_child().value() ) );
             }
             else if( ChildName == _T ( "desc" ) ) {
