@@ -467,14 +467,14 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
         secondDirection = m_dSecondLineDirection;
     }
     // get x, y of first point on first line
-    PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
-    GetCanvasPixLL( &piVP, *&l_l1p1, l_dLat, l_dLon );
+    ODPoint *l_point = m_pODPointList->GetFirst()->GetData();
+    GetCanvasPixLL( &piVP, *&l_l1p1, l_point->m_lat, l_point->m_lon );
     // get x, y of second point on first line
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     GetCanvasPixLL( &piVP, *&l_l1p2, l_dLat, l_dLon );
     // get x, y of second point on second line
-    PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
-    GetCanvasPixLL( &piVP, *&l_l2p2, l_dLat, l_dLon );
+    l_point = m_pODPointList->GetLast()->GetData();
+    GetCanvasPixLL( &piVP, *&l_l2p2, l_point->m_lat, l_point->m_lon );
     // get x, y of first point on second line
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
     GetCanvasPixLL( &piVP, *&l_l2p1, l_dLat, l_dLon);
