@@ -111,14 +111,6 @@ bool PathMan::IsPathValid( ODPath *pPath )
 
 bool PathMan::ActivatePath(ODPath *pPathToActivate )
 {
-    wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
-    wxString msg;
-    msg.append( wxS("Name: ") );
-    msg.append( pPathToActivate->m_PathNameString.c_str() );
-    msg.append( wxS(", GUID: ") );
-    msg.append( pPathToActivate->m_GUID );
-    SendPluginMessage( msg_id, msg );
-
     pPathToActivate->m_bPathIsActive = true;
     pPathToActivate->SetActiveColours();
 
@@ -127,19 +119,8 @@ bool PathMan::ActivatePath(ODPath *pPathToActivate )
 
 bool PathMan::DeactivatePath( ODPath *pPathToDeactivate )
 {
-    wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
-    wxString msg;
-    msg.append( wxS("Name: ") );
-    msg.append( pPathToDeactivate->m_PathNameString.c_str() );
-    msg.append( wxS(", GUID: ") );
-    msg.append( pPathToDeactivate->m_GUID );
-    SendPluginMessage( msg_id, msg );
-
     pPathToDeactivate->m_bPathIsActive = false;
     pPathToDeactivate->SetActiveColours();
-//    console->pCDI->ClearBackground();
-
-//    m_bDataValid = false;
 
     return true;
 }

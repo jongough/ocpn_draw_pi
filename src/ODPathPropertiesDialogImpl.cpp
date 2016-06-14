@@ -608,18 +608,6 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         //g_ocpn_draw_pi->SaveConfig();
     }
     
-    if( m_pPath && m_pPath->IsActive() )
-    {
-        wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
-        wxString msg;
-        msg.append( wxT("Name: ") );
-        msg.append( m_pPath->m_PathNameString.c_str() );
-        msg.append( wxT(", GUID: ") );
-        msg.append( m_pPath->m_GUID );
-        SendPluginMessage( msg_id, msg );
-        
-    }
-    
     ResetGlobalLocale();
     
     return true;

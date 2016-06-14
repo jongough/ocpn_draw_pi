@@ -22,6 +22,7 @@ src/ODDRDialogDef.cpp
 src/ODDRDialogImpl.cpp
 src/ODEventHandler.cpp
 src/ODicons.cpp
+src/ODJSON.cpp
 src/ODNavObjectChanges.cpp
 src/ODPropertiesDialogDef.cpp
 src/ODPropertiesDialogImpl.cpp

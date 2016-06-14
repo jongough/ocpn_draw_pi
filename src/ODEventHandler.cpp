@@ -581,31 +581,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_PATH_MENU_DEACTIVATE: {
-            wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
-            wxString msg;
-            msg.append( _("Name: ") );
-            msg.append( m_pSelectedPath->m_PathNameString.c_str() );
-            msg.append( wxT(", ") );
-            msg.append( _("GUID") );
-            msg.append( wxT(": ") );
-            msg.append( m_pSelectedPath->m_GUID );
-            SendPluginMessage( msg_id, msg );
-            
             g_pPathMan->DeactivatePath( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
         }
         case ID_PATH_MENU_ACTIVATE: {
-            wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
-            wxString msg;
-            msg.append( _("Name: ") );
-            msg.append( m_pSelectedPath->m_PathNameString.c_str() );
-            msg.append( wxT(", ") );
-            msg.append( _("GUID") );
-            msg.append( wxT(": ") );
-            msg.append( m_pSelectedPath->m_GUID );
-            SendPluginMessage( msg_id, msg );
-            
             g_pPathMan->ActivatePath( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
