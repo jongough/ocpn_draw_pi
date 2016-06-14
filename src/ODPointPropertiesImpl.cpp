@@ -39,6 +39,7 @@
 #include "PathMan.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
+#include "GZ.h"
 #include "ODPositionParser.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
@@ -359,6 +360,10 @@ void ODPointPropertiesImpl::SaveChanges()
             if( pEditPathArray ) {
                 for( unsigned int ip = 0; ip < pEditPathArray->GetCount(); ip++ ) {
                     ODPath *pp = (ODPath *) pEditPathArray->Item( ip );
+                    if(pp->m_sTypeString == wxT("GuardZone")) {
+                        GZ * l_GZ = (GZ *)pp;
+                        l_GZ->UpdateGZ( m_pODPoint, true );
+                    }
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
