@@ -706,21 +706,21 @@ void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, 
 }
 void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4 )
 {
-    double y1yc, x1xc, y4yc, x4xc;
-    y1yc = y1-yc;
-    x1xc = x1-xc;
-    y4yc = y4-yc;
-    x4xc = x4-xc;
-    wxDouble  l_dFirstAngle;
-    l_dFirstAngle = atan2(y1yc, x1xc);
-    
-    wxDouble  l_dSecondAngle;
-    l_dSecondAngle = atan2(y4yc, x4xc);
-    
-    wxDouble  l_OuterRadius = sqrt(pow((y2-yc), 2.0) + pow((x2-xc), 2.0));
-    wxDouble l_InnerRadius = sqrt(pow((y1-yc), 2.0) + pow((x1-xc), 2.0));
-    
     if( dc ) {
+        double y1yc, x1xc, y4yc, x4xc;
+        y1yc = y1-yc;
+        x1xc = x1-xc;
+        y4yc = y4-yc;
+        x4xc = x4-xc;
+        wxDouble  l_dFirstAngle;
+        l_dFirstAngle = atan2(y1yc, x1xc);
+        
+        wxDouble  l_dSecondAngle;
+        l_dSecondAngle = atan2(y4yc, x4xc);
+        
+        wxDouble  l_OuterRadius = sqrt(pow((y2-yc), 2.0) + pow((x2-xc), 2.0));
+        wxDouble l_InnerRadius = sqrt(pow((y1-yc), 2.0) + pow((x1-xc), 2.0));
+        
         wxGraphicsContext *wxGC = NULL;
         wxMemoryDC *pmdc = wxDynamicCast(GetDC(), wxMemoryDC);
         if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -749,54 +749,17 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
     }
 #ifdef ocpnUSE_GL
     else {
-        //      Enable anti-aliased lines, at best quality
-        float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_InnerRadius * 2) * (l_InnerRadius * 2)) * 2) ), 1) * M_PI );
-        float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_OuterRadius * 2) * (l_OuterRadius * 2)) * 2) ), 1) * M_PI );
+        wxPoint *points;
+        int numpoints = ArcSectorPoints( *&points, xc, yc, x1, y1, x2, y2, x3, y3, x4, y4, true);
         
-        wxPoint *sector = new wxPoint[ (int) innerSteps +(int) outerSteps + 5 ];
-        double dxc1 = xc-x1;
-        double dxc4 = xc-x4;
-        double dyc1 = yc-y1;
-        double dyc4 = yc-y4;
-        double angle = atan2(dxc1*dyc4-dyc1*dxc4, dxc1*dxc4+dyc1*dyc4);
-        if(angle < 0) angle += (2*PI);
-        int numpoints_outer = ceil(abs(outerSteps * (angle / (2*PI))));
-        int numpoints_inner = ceil(abs(innerSteps * (angle / (2*PI))));
-        //if(numpoints_outer == 0) return;
-        sector[0].x = x1;
-        sector[0].y = y1;
-        int tx, ty;
-        float a = l_dFirstAngle;
-        for( int i = 0; i < (int) numpoints_outer; i++ ) {
-            sector[i + 1].x = xc + l_OuterRadius * cosf( a );
-            sector[i + 1].y = yc + l_OuterRadius * sinf( a );
-            tx = sector[i + 1].x;
-            ty = sector[i + 1].y;
-            a += 2 * M_PI /outerSteps;
-        }
-        a = l_dSecondAngle;
-        sector[ (int) numpoints_outer + 1].x = x3;
-        sector[ (int) numpoints_outer + 1].y = y3;
-        sector[ (int) numpoints_outer + 2].x = x4;
-        sector[ (int) numpoints_outer + 2].y = y4;
-        for( int i = 0; i < (int) numpoints_inner; i++) {
-            sector[i + (int) numpoints_outer + 3].x = xc + l_InnerRadius * cosf( a );
-            sector[i + (int) numpoints_outer + 3].y = yc + l_InnerRadius * sinf( a );
-            a -= 2 * M_PI / innerSteps;
-        }
-        int npoints;
-        npoints = numpoints_inner + numpoints_outer + 4;
-        sector[ npoints -1 ].x = x1;
-        sector[ npoints -1 ].y = y1;
-        DrawPolygonTessellated( npoints, sector, 0, 0 );
-//        StrokeLines( npoints, sector );
+        DrawPolygonTessellated( numpoints, points, 0, 0 );
 #ifdef __WXOSX__
-        delete [] sector;
+        delete [] points;
 #else
-        wxDELETE( sector );
+        wxDELETE( points );
 #endif
     }
-    #endif    
+#endif    
 }
 
 void ODDC::StrokeLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2 )

@@ -339,8 +339,8 @@ void GZ::UpdateGZSelectablePath( void )
         l_dStepSize = fabs(m_dFirstLineDirection-m_dSecondLineDirection) / l_iSteps;
     }
     else {
-        l_iSteps = 24 - ceil(24 * (fabs(m_dFirstLineDirection-m_dSecondLineDirection))/360) - 1;
-        l_dStepSize = 360.0 - fabs(m_dFirstLineDirection-m_dSecondLineDirection) / l_iSteps;
+        l_iSteps = 24 - ceil(24 * (fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection))/360) - 1;
+        l_dStepSize = fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection) / l_iSteps;
     }
     double firstDirection;
     double secondDirection;
@@ -369,6 +369,7 @@ void GZ::UpdateGZSelectablePath( void )
         firstDirection = m_dFirstLineDirection;
         secondDirection = m_dSecondLineDirection;
     }
+    
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dPrevLat, &l_dPrevLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_pODPointList->GetFirst()->GetData(), NULL, this );
@@ -400,7 +401,7 @@ void GZ::UpdateGZSelectablePath( void )
     }
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_pODPointList->GetFirst()->GetData(), this );
-    
+
     g_pODSelect->AddAllSelectableODPoints( this );
     
 }

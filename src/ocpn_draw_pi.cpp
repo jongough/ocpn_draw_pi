@@ -2418,6 +2418,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bret = TRUE;
         } else if ( nGZ_State > 1 ) {
             m_iCallerId = 0;
+            if(!(nGZ_State & 1) && m_pMouseGZ) {
+                g_pGZMan->DeletePath(m_pMouseGZ);
+                m_pMouseGZ = NULL;
+            }
             nGZ_State = 0;
             bKey_GZ_Pressed = false;
             m_pCurrentCursor = NULL;
@@ -3492,7 +3496,7 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
         m_pMouseGZ = new GZ();
         g_pGZList->Append( m_pMouseGZ );
         g_pPathList->Append( m_pMouseGZ);
-        m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << g_iGZMaxNum++;
+        m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << ++g_iGZMaxNum;
         m_pMouseGZ->m_width = g_GZLineWidth;
         m_pMouseGZ->m_style = g_GZLineStyle;
         m_pMouseGZ->m_dCentreLat = g_pfFix.Lat;
