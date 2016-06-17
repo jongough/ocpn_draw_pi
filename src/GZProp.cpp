@@ -235,11 +235,13 @@ bool GZProp::SaveChanges( void )
     double l_dGZAngle;
     m_textCtrlGZFirstAngle->GetValue().ToDouble( &l_dGZAngle );
         if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {
+            l_bUpdatePath = true;
             m_pGZ->m_dFirstLineDirection = l_dGZAngle;
     }
     
     m_textCtrlGZSecondAngle->GetValue().ToDouble( &l_dGZAngle );
         if(l_dGZAngle != m_pGZ->m_dSecondLineDirection) {
+            l_bUpdatePath = true;
             m_pGZ->m_dSecondLineDirection = l_dGZAngle;
     }
     
@@ -253,7 +255,11 @@ bool GZProp::SaveChanges( void )
         ret = g_pODConfig->DeleteConfigPath( m_pGZ );
     else
         ret = ODPathPropertiesDialogImpl::SaveChanges();
-    
+
+        if(l_bUpdatePath) {
+            m_pGZ->UpdateGZ();
+        }
+        
     return ret;
 }
 

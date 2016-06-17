@@ -129,7 +129,7 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
     wxPoint l_pCentre;
     
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
-
+    
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width, m_style ) );
@@ -152,6 +152,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     wxPoint l_pCentre;
     
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
+
     ODDC dc;
     
     m_bSetTransparent = true;
@@ -252,7 +253,7 @@ void GZ::MoveAllPoints( double inc_lat, double inc_lon )
     }
 }
 
-void GZ::CentreOnBoat( void )
+void GZ::UpdateGZ( bool bUpdateSelectablePath )
 {
     if(m_pODPointList->size() < 2) return;
     ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
@@ -269,7 +270,7 @@ void GZ::CentreOnBoat( void )
         PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, m_dSecondLineDirection, m_dSecondDistance, &pLastPoint->m_lat, &pLastPoint->m_lon);
     } 
     
-    UpdateGZSelectablePath();
+    if(bUpdateSelectablePath) UpdateGZSelectablePath();
     FinalizeForRendering();
 
     bool l_bRequestRefresh = true;
@@ -291,9 +292,8 @@ void GZ::UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath )
     } else {
         DistanceBearingMercator_Plugin( pGZPoint->m_lat, pGZPoint->m_lon, g_pfFix.Lat, g_pfFix.Lon, &m_dSecondLineDirection, &m_dSecondDistance );
     }
-    if(bUpdateSelectablePath) UpdateGZSelectablePath();
-
-    FinalizeForRendering();
+    
+    UpdateGZ( bUpdateSelectablePath );
     
     bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
     g_pODConfig->m_bSkipChangeSetUpdate = false;

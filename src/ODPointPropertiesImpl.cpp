@@ -362,7 +362,7 @@ void ODPointPropertiesImpl::SaveChanges()
                     ODPath *pp = (ODPath *) pEditPathArray->Item( ip );
                     if(pp->m_sTypeString == wxT("GuardZone")) {
                         GZ * l_GZ = (GZ *)pp;
-                        l_GZ->UpdateGZ( m_pODPoint, true );
+                        l_GZ->UpdateGZ( m_pODPoint );
                     }
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();

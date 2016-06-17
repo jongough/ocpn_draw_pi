@@ -39,7 +39,7 @@ class GZ : public ODPath
         void DrawGL( PlugIn_ViewPort &piVP );
         void SetActiveColours( void );
         void MoveAllPoints( double inc_lat, double inc_lon );
-        void CentreOnBoat( void );
+        void UpdateGZ( bool bUpdateSelectablePath = true );
         void UpdateGZSelectablePath( void );
         void MaintainWith( void );
         void UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath = true );

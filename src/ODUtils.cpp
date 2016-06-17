@@ -364,8 +364,8 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
     float innerSteps;
     float outerSteps;
     if(bHighQuality) {
-        innerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_InnerRadius * 2) * (l_InnerRadius * 2)) * 2) ), 1) * M_PI );
-        outerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_OuterRadius * 2) * (l_OuterRadius * 2)) * 2) ), 1) * M_PI );
+        innerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_InnerRadius * 2.) * (l_InnerRadius * 2.)) * 2.) ), 1) * M_PI );
+        outerSteps = floorf(wxMax(sqrtf(sqrtf( ((l_OuterRadius * 2.) * (l_OuterRadius * 2.)) * 2.) ), 1) * M_PI );
     } else {
         innerSteps = 24;
         outerSteps = 24;
@@ -378,8 +378,8 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
     double dyc4 = yc-y4;
     double angle = atan2(dxc1*dyc4-dyc1*dxc4, dxc1*dxc4+dyc1*dyc4);
     if(angle < 0) angle += (2*PI);
-    int numpoints_outer = ceil(abs(outerSteps * (angle / (2*PI))));
-    int numpoints_inner = ceil(abs(innerSteps * (angle / (2*PI))));
+    int numpoints_outer = ceil(abs(outerSteps * (angle / (2.*M_PI))));
+    int numpoints_inner = ceil(abs(innerSteps * (angle / (2.*M_PI))));
     //if(numpoints_outer == 0) return;
     points[0].x = x1;
     points[0].y = y1;

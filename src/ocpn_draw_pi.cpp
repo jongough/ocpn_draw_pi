@@ -795,7 +795,7 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
             GZ *gz = (GZ *)GZnode->GetData();
             bool l_bSaveUpdatesState = gz->m_bSaveUpdates;
             gz->m_bSaveUpdates = false;
-            gz->CentreOnBoat();
+            gz->UpdateGZ();
             gz->m_bSaveUpdates = l_bSaveUpdatesState;
 
             GZnode = GZnode->GetNext();
