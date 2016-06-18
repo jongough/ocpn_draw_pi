@@ -14,6 +14,7 @@ src/PointMan.cpp
 src/ODSelect.cpp
 src/PathMan.cpp
 src/pathmanagerdialog.cpp
+src/ODAPI.cpp
 src/ODPath.cpp
 src/ODPoint.cpp
 src/ODConfig.cpp
@@ -52,6 +53,7 @@ include/PointMan.h
 include/ODSelect.h
 include/PathMan.h
 include/pathmanagerdialog.h
+include/ODAPI.h
 include/ODPath.h
 include/ODPoint.h
 include/ODConfig.h

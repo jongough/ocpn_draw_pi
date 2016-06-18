@@ -42,18 +42,22 @@
 #include "BoundaryPoint.h"
 #include "GZ.h"
 #include "GZMan.h"
+#include "ODAPI.h"
 #include "PointMan.h"
 #include "version.h"
 
 #include <wx/jsonreader.h>
 #include "wx/jsonwriter.h"
 
-extern PathMan                 *g_pPathMan;
-extern BoundaryMan             *g_pBoundaryMan;
-extern GZMan                   *g_pGZMan;
-extern PointMan                *g_pODPointMan;
+#include <stdio.h>
 
-extern double          g_dVar;
+extern PathMan              *g_pPathMan;
+extern BoundaryMan          *g_pBoundaryMan;
+extern GZMan                *g_pGZMan;
+extern PointMan             *g_pODPointMan;
+
+extern double               g_dVar;
+extern ODAPI                *g_pODAPI;
 
 ODJSON::ODJSON()
 {
@@ -146,6 +150,22 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             writer.Write( jMsg, MsgString );
             SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
             
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("GetAPIAddresses")) {
+            if(root[wxS("Type")].AsString() == wxS("Request")) {
+                jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                jMsg[wxT("Msg")] = root[wxT("Msg")];
+                jMsg[wxT("Type")] = wxT("Response");
+                jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                jMsg[wxT("Found")] = true;
+                char ptr[64];
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindPathByGUID );
+                jMsg[wxT("OD_FindPathByGUID")] = wxString::From8BitData(ptr);
+                writer.Write( jMsg, MsgString );
+                
+                SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                return;
+            }
+            
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPathByGUID")) {
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
@@ -189,7 +209,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         return;
                 }
             }
-                    
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
             if(!root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );

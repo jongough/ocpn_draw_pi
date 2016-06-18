@@ -49,6 +49,7 @@
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
 #include "PointMan.h"
+#include "ODAPI.h"
 #include "ODConfig.h"
 #include "ODdc.h"
 #include "ODDRDialogImpl.h"
@@ -288,6 +289,7 @@ int             g_iDRPersistenceType;
 ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 ODJSON          *g_pODJSON;
+ODAPI           *g_pODAPI;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -415,6 +417,7 @@ int ocpn_draw_pi::Init(void)
     LoadConfig();
 
     g_pODJSON = new ODJSON;
+    g_pODAPI = new ODAPI;
     g_pODPointList = new ODPointList;
     g_pBoundaryList = new BoundaryList;
     g_pEBLList = new EBLList;
@@ -621,7 +624,9 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
     g_pODJSON = NULL;
-
+    if( g_pODAPI ) delete g_pODAPI;
+    g_pODAPI = NULL;
+    
     while(g_iLocaleDepth) {
         ResetGlobalLocale();
     }
