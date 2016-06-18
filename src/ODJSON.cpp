@@ -160,6 +160,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 char ptr[64];
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindPathByGUID );
                 jMsg[wxT("OD_FindPathByGUID")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindPointInAnyBoundary );
+                jMsg[wxT("OD_FindPointInAnyBoundary")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindClosestBoundaryLineCrossing );
+                jMsg[wxT("OD_FindClosestBoundaryLineCrossing")] = wxString::From8BitData(ptr);
                 writer.Write( jMsg, MsgString );
                 
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
