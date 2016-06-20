@@ -152,7 +152,7 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
         if(pInGZ->m_dSecondLineDirection > 180)
             s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
+            s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection );
         m_textCtrlGZSecondAngle->SetValue(s);
     }
 
