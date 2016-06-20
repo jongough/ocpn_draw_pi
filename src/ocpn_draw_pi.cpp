@@ -767,13 +767,30 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
-    if(isnan(pfix.Cog)) g_pfFix.Cog = 0.;
+    if(isnan(pfix.Cog)) {
+        if(g_pfFix.Cog != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Cog = 0.;
+    }
     else g_pfFix.Cog = pfix.Cog;
+    if(isnan(pfix.Sog)) {
+        if(g_pfFix.Sog != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Sog = 0.;
+    }
     g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
-    if(isnan(pfix.Hdm)) g_pfFix.Hdm = 0.;
+    if(isnan(pfix.Hdm)) {
+        if(g_pfFix.Hdm != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Hdm = 0.;
+    }
     else g_pfFix.Hdm = pfix.Hdm;
-    if(isnan(pfix.Hdt)) g_pfFix.Hdt = 0.;
+    if(isnan(pfix.Hdt)) {
+        if(g_pfFix.Hdt != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Hdt = 0.;
+    }
     else g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
