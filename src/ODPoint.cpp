@@ -329,7 +329,7 @@ void ODPoint::ReLoadIcon( void )
     m_fIconScaleFactor = -1;
 }
 
-void ODPoint::Draw( ODDC& dc, wxPoint *rpn, bool bDrawIcon )
+void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 {
     wxPoint r;
     wxRect hilitebox;
@@ -420,7 +420,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn, bool bDrawIcon )
 
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
-    if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) && bDrawIcon ) {
+    if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
         dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
         // on MSW, the dc Bounding box is not updated on DrawBitmap() method.
         // Do it explicitely here for all platforms.
