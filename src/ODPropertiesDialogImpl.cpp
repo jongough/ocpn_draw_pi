@@ -32,6 +32,7 @@
 #include "ODPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
 #include "ODicons.h"
+#include "ODIconCombo.h"
 #include "ODToolbarImpl.h"
 #include "ODUtils.h"
 #include "PointMan.h"
@@ -228,42 +229,109 @@ ODPropertiesDialogDef( parent )
         }
     }
 #endif
+
+    // Boundary point Icon
+    m_bODIComboBoxODPointIconName = new ODIconCombo( m_panelBoundaryPoint, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxODPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+
+    //  Accomodate scaling of icon
+    int min_size = GetCharHeight() * 2;
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxODPointIconName->SetMinSize( wxSize(-1, min_size) );
+    //m_SizerNameIcon->Add(m_bODIComboBoxODPointIconName, 1, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
+    m_fgSizerODPointIcon->Replace(m_bcomboBoxODPointIconName, m_bODIComboBoxODPointIconName);
+    
+    // Textpoint Icon
+    m_bODIComboBoxTextPointIconName = new ODIconCombo( m_panelTextPoint, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxTextPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxTextPointIconName->SetMinSize( wxSize(-1, min_size) );
+    m_SizerTextPointIconName->Replace(m_bcomboBoxTextPointIconName, m_bODIComboBoxTextPointIconName);
+
+    // EBL Start point Icon
+    m_bODIComboBoxEBLStartIconName = new ODIconCombo( m_panelEBL, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxEBLStartIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxEBLStartIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerEBLStartIconName->Replace(m_bcomboBoxEBLStartIconName, m_bODIComboBoxEBLStartIconName);
+    
+    // EBL End point Icon
+    m_bODIComboBoxEBLEndIconName = new ODIconCombo( m_panelEBL, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxEBLEndIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxEBLEndIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerEBLEndPointIcon->Replace(m_bcomboBoxEBLEndIconName, m_bODIComboBoxEBLEndIconName);
+    
+    // DR point Icon
+    m_bODIComboBoxDRPointIconName = new ODIconCombo( m_panelDRPoint, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxDRPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxDRPointIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerDREndPointIcon->Replace(m_bcomboBoxDRPointIconName, m_bODIComboBoxDRPointIconName);
+    
+    // GZ First point Icon
+    m_bODIComboBoxGZFirstIconName = new ODIconCombo( m_panelGZ, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxGZFirstIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxGZFirstIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerGZFASIcon->Replace(m_bcomboBoxGZFirstIconName, m_bODIComboBoxGZFirstIconName);
+    
+    // GZ End point Icon
+    m_bODIComboBoxGZSecondIconName = new ODIconCombo( m_panelGZ, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxGZSecondIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
+    m_bODIComboBoxGZSecondIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerGZFASIcon->Replace(m_bcomboBoxGZSecondIconName, m_bODIComboBoxGZSecondIconName);
+    
+    delete m_bcomboBoxODPointIconName;    
+    delete m_bcomboBoxTextPointIconName;    
+    delete m_bcomboBoxEBLStartIconName;    
+    delete m_bcomboBoxEBLEndIconName;    
+    delete m_bcomboBoxDRPointIconName;    
+    delete m_bcomboBoxGZFirstIconName;    
+    delete m_bcomboBoxGZSecondIconName;    
+    
     SetDialogSize();
 }
 
 void ODPropertiesDialogImpl::OnODPointComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnTextPointIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapTextPointBitmap->SetBitmap( m_bcomboBoxTextPointIconName->GetItemBitmap( m_bcomboBoxTextPointIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnEBLEndIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnEBLStartIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnDRPointIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnGZFirstIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapGZFirstBitmap->SetBitmap( m_bcomboBoxGZSecondIconName->GetItemBitmap( m_bcomboBoxGZFirstIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnGZSecondIconComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapGZSecondBitmap->SetBitmap( m_bcomboBoxGZSecondIconName->GetItemBitmap( m_bcomboBoxGZSecondIconName->GetSelection() ) );
 }
 
 void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
@@ -402,10 +470,10 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
     g_iEBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
-    g_sEBLEndIconName = m_bcomboBoxEBLEndIconName->GetValue();
-    g_sEBLStartIconName = m_bcomboBoxEBLStartIconName->GetValue();;
+    g_sEBLEndIconName = m_bODIComboBoxEBLEndIconName->GetValue();
+    g_sEBLStartIconName = m_bODIComboBoxEBLStartIconName->GetValue();;
     
-    g_sDRPointIconName = m_bcomboBoxDRPointIconName->GetValue();
+    g_sDRPointIconName = m_bODIComboBoxDRPointIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
     g_colourInActiveDRLineColour = m_colourPickerInActiveDRLineColour->GetColour();
     g_DRLineWidth = ::WidthValues[ m_choiceDRLineWidth->GetSelection() ];
@@ -435,8 +503,8 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_GZLineWidth = ::WidthValues[ m_choiceGZLineWidth->GetSelection() ];
     g_GZLineStyle = ::StyleValues[ m_choiceGZLineStyle->GetSelection() ];
     g_uiGZFillTransparency = m_sliderGZFillTransparency->GetValue();
-    g_sGZFirstIconName = m_bcomboBoxGZFirstIconName->GetValue();
-    g_sGZSecondIconName = m_bcomboBoxGZSecondIconName->GetValue();;
+    g_sGZFirstIconName = m_bODIComboBoxGZFirstIconName->GetValue();
+    g_sGZSecondIconName = m_bODIComboBoxGZSecondIconName->GetValue();;
     g_bGZRotateWithBoat = m_checkBoxGZRotateWithBoat->GetValue();
     g_iGZMaintainWith = m_radioBoxGZMaintainWith->GetSelection();
     g_iGZPersistenceType = m_radioBoxGZPersistence->GetSelection();
@@ -448,13 +516,13 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
     m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
     g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
-    g_sODPointIconName = m_bcomboBoxODPointIconName->GetValue();
+    g_sODPointIconName = m_bODIComboBoxODPointIconName->GetValue();
     
     g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
-    g_sTextPointIconName = m_bcomboBoxTextPointIconName->GetValue();
+    g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();
     g_iTextPosition = m_choiceTextPosition->GetSelection();
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
@@ -528,27 +596,27 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
     else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
 
-    m_bcomboBoxODPointIconName->Clear();
-    m_bcomboBoxTextPointIconName->Clear();
-    m_bcomboBoxEBLEndIconName->Clear();
-    m_bcomboBoxEBLStartIconName->Clear();
-    m_bcomboBoxDRPointIconName->Clear();
+    m_bODIComboBoxODPointIconName->Clear();
+    m_bODIComboBoxTextPointIconName->Clear();
+    m_bODIComboBoxEBLEndIconName->Clear();
+    m_bODIComboBoxEBLStartIconName->Clear();
+    m_bODIComboBoxDRPointIconName->Clear();
     //      Iterate on the Icon Descriptions, filling in the combo control
     if( g_pODPointMan == NULL ) g_pODPointMan = new PointMan();
     
-    bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
+    bool fillCombo = m_bODIComboBoxODPointIconName->GetCount() == 0;
     wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
     if( fillCombo  && icons){
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
             wxString *ps = g_pODPointMan->GetIconDescription( i );
-            m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
-            m_bcomboBoxTextPointIconName->Append( *ps, icons->GetBitmap( i ) );
-            m_bcomboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
-            m_bcomboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
-            m_bcomboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
-            m_bcomboBoxGZFirstIconName->Append( *ps, icons->GetBitmap( i ) );
-            m_bcomboBoxGZSecondIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxTextPointIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxEBLStartIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxEBLEndIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxDRPointIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxGZFirstIconName->Append( *ps, icons->GetBitmap( i ) );
+            m_bODIComboBoxGZSecondIconName->Append( *ps, icons->GetBitmap( i ) );
         }
     }
     
@@ -563,12 +631,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
+        m_bODIComboBoxODPointIconName->Append( g_sODPointIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxODPointIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
-    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
+    m_bODIComboBoxODPointIconName->SetSelection( iconToSelect );
     
     // find the correct item in the Text Point Icon combo box
     iconToSelect = -1;
@@ -581,12 +648,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxTextPointIconName->Append( g_sTextPointIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxTextPointIconName->GetCount() - 1;
+        m_bODIComboBoxTextPointIconName->Append( g_sTextPointIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxTextPointIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxTextPointIconName->SetSelection( iconToSelect );
-    m_bitmapTextPointBitmap->SetBitmap( m_bcomboBoxTextPointIconName->GetItemBitmap( m_bcomboBoxTextPointIconName->GetSelection() ) );
+    m_bODIComboBoxTextPointIconName->SetSelection( iconToSelect );
     
     // find the correct item in the EBL End Point Icon combo box
     iconToSelect = -1;
@@ -599,12 +665,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxEBLEndIconName->Append( g_sEBLEndIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxEBLEndIconName->GetCount() - 1;
+        m_bODIComboBoxEBLEndIconName->Append( g_sEBLEndIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxEBLEndIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxEBLEndIconName->SetSelection( iconToSelect );
-    m_bitmapEBLEndBitmap->SetBitmap( m_bcomboBoxEBLEndIconName->GetItemBitmap( m_bcomboBoxEBLEndIconName->GetSelection() ) );
+    m_bODIComboBoxEBLEndIconName->SetSelection( iconToSelect );
     
     // find the correct item in the EBL Start Point Icon combo box
     iconToSelect = -1;
@@ -617,12 +682,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxEBLStartIconName->Append( g_sEBLStartIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxEBLStartIconName->GetCount() - 1;
+        m_bODIComboBoxEBLStartIconName->Append( g_sEBLStartIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxEBLStartIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxEBLStartIconName->SetSelection( iconToSelect );
-    m_bitmapEBLStartBitmap->SetBitmap( m_bcomboBoxEBLStartIconName->GetItemBitmap( m_bcomboBoxEBLStartIconName->GetSelection() ) );
+    m_bODIComboBoxEBLStartIconName->SetSelection( iconToSelect );
     
     // find the correct item in the DR Point Icon combo box
     iconToSelect = -1;
@@ -635,12 +699,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxDRPointIconName->Append( g_sDRPointIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxDRPointIconName->GetCount() - 1;
+        m_bODIComboBoxDRPointIconName->Append( g_sDRPointIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxDRPointIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxDRPointIconName->SetSelection( iconToSelect );
-    m_bitmapDRPointBitmap->SetBitmap( m_bcomboBoxDRPointIconName->GetItemBitmap( m_bcomboBoxDRPointIconName->GetSelection() ) );
+    m_bODIComboBoxDRPointIconName->SetSelection( iconToSelect );
     
     // find the correct item in the First GZ Point Icon combo box
     iconToSelect = -1;
@@ -653,12 +716,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxGZFirstIconName->Append( g_sGZFirstIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxGZFirstIconName->GetCount() - 1;
+        m_bODIComboBoxGZFirstIconName->Append( g_sGZFirstIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxGZFirstIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxGZFirstIconName->SetSelection( iconToSelect );
-    m_bitmapGZFirstBitmap->SetBitmap( m_bcomboBoxGZFirstIconName->GetItemBitmap( m_bcomboBoxGZFirstIconName->GetSelection() ) );
+    m_bODIComboBoxGZFirstIconName->SetSelection( iconToSelect );
     
     // find the correct item in the Second GZ Point Icon combo box
     iconToSelect = -1;
@@ -671,12 +733,11 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     //  not found, so add  it to the list, with a generic bitmap and using the name as description
     // n.b.  This should never happen...
     if( -1 == iconToSelect){    
-        m_bcomboBoxGZSecondIconName->Append( g_sGZSecondIconName, icons->GetBitmap( 0 ) );
-        iconToSelect = m_bcomboBoxGZSecondIconName->GetCount() - 1;
+        m_bODIComboBoxGZSecondIconName->Append( g_sGZSecondIconName, icons->GetBitmap( 0 ) );
+        iconToSelect = m_bODIComboBoxGZSecondIconName->GetCount() - 1;
     } 
     
-    m_bcomboBoxGZSecondIconName->SetSelection( iconToSelect );
-    m_bitmapGZSecondBitmap->SetBitmap( m_bcomboBoxGZSecondIconName->GetItemBitmap( m_bcomboBoxGZSecondIconName->GetSelection() ) );
+    m_bODIComboBoxGZSecondIconName->SetSelection( iconToSelect );
     
     icons = NULL;
 

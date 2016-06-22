@@ -34,6 +34,7 @@
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODConfig.h"
+#include "ODIconCombo.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "PathMan.h"
@@ -93,6 +94,19 @@ ODPointPropertiesDialog( parent )
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
 #endif // not defined _WXMSW_ 
 #endif // wxCHECK_VERSION(3,0,0)
+    
+    // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
+    m_bODIComboBoxODPointIconName = new ODIconCombo( m_panelBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxODPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    int min_size = GetCharHeight() * 2;
+    min_size = wxMax( min_size, (32 * GetOCPNChartScaleFactor_Plugin()) + 4 );
+    m_bODIComboBoxODPointIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerNameIcon->Replace(m_bcomboBoxODPointIconName, m_bODIComboBoxODPointIconName );
+    
+    delete m_bcomboBoxODPointIconName;
+    
     SetDialogSize();
     
 }
@@ -176,7 +190,6 @@ void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
 }
 
 void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
@@ -330,7 +343,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
-        m_pODPoint->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
+        m_pODPoint->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
         m_pODPoint->ReLoadIcon();
 
         // Here is some logic....
@@ -371,7 +384,7 @@ void ODPointPropertiesImpl::SaveChanges()
                         wxODPointListNode *pnode = ( pp->m_pODPointList )->GetFirst();
                         while( pnode ) {
                             ODPoint *pop = pnode->GetData();
-                            pop->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
+                            pop->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
                             pop->ReLoadIcon();
                             pnode = pnode->GetNext();
                         }
@@ -471,7 +484,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textDisplayText->SetEditable( false );
             m_textLatitude->SetEditable( false );
             m_textLongitude->SetEditable( false );
-            m_bcomboBoxODPointIconName->Enable( false );
+            m_bODIComboBoxODPointIconName->Enable( false );
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
             m_checkBoxChangeAllPointIcons->Enable( false );
@@ -487,7 +500,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textDisplayText->SetEditable( true );
             m_textLatitude->SetEditable( true );
             m_textLongitude->SetEditable( true );
-            m_bcomboBoxODPointIconName->Enable( true );
+            m_bODIComboBoxODPointIconName->Enable( true );
             m_checkBoxShowName->Enable( true );
             m_checkBoxVisible->Enable( true );
             m_textCtrlODPointArrivalRadius->SetEditable ( true );
@@ -549,15 +562,15 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
 
-        m_bcomboBoxODPointIconName->Clear();
+        m_bODIComboBoxODPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
-        bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
+        bool fillCombo = m_bODIComboBoxODPointIconName->GetCount() == 0;
         wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
-                m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
+                m_bODIComboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
@@ -581,12 +594,11 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxODPointIconName->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
+            m_bODIComboBoxODPointIconName->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
+            iconToSelect = m_bODIComboBoxODPointIconName->GetCount() - 1;
         }
         
-        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
-        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( iconToSelect ) );
+        m_bODIComboBoxODPointIconName->SetSelection( iconToSelect );
         
         //    Get an array of all paths using this point
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );

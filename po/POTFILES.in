@@ -23,6 +23,7 @@ src/ODDRDialogDef.cpp
 src/ODDRDialogImpl.cpp
 src/ODEventHandler.cpp
 src/ODicons.cpp
+src/ODIconCombo.cpp
 src/ODJSON.cpp
 src/ODNavObjectChanges.cpp
 src/ODPropertiesDialogDef.cpp
@@ -54,6 +55,9 @@ include/ODSelect.h
 include/PathMan.h
 include/pathmanagerdialog.h
 include/ODAPI.h
+include/ODicons.h
+include/ODIconCombo.h
+include/ODJSON.h
 include/ODPath.h
 include/ODPoint.h
 include/ODConfig.h
@@ -74,5 +78,4 @@ include/ODToolbarDef.h
 include/ODToolbarImpl.h
 include/ODUtils.h
 include/ODvector2D.h
-include/ODicons.h
 include/TextPoint.h

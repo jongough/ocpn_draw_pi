@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "1")
-SET(VERSION_PATCH "20")
-SET(VERSION_DATE "21/06/2016")
+SET(VERSION_PATCH "21")
+SET(VERSION_DATE "22/06/2016")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
@@ -63,6 +63,7 @@ SET(SRCS
         src/ODDRDialogImpl.cpp
         src/ODEventHandler.cpp
         src/ODicons.cpp
+        src/ODIconCombo.cpp
         src/ODJSON.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
@@ -97,6 +98,9 @@ SET(HDRS
         include/PathMan.h
         include/pathmanagerdialog.h
         include/ODAPI.h
+        include/ODicons.h
+        include/ODIconCombo.h
+        include/ODJSON.h
         include/ODPath.h
         include/ODPoint.h
         include/ODConfig.h
@@ -117,7 +121,6 @@ SET(HDRS
         include/ODToolbarImpl.h
         include/ODUtils.h
         include/ODvector2D.h
-        include/ODicons.h
         include/TextPoint.h
 )
 

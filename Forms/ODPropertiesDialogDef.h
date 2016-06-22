@@ -29,7 +29,6 @@
 #include <wx/clrpicker.h>
 #include <wx/radiobox.h>
 #include <wx/textctrl.h>
-#include <wx/statbmp.h>
 #include <wx/bmpcbox.h>
 #include <wx/button.h>
 #include <wx/grid.h>
@@ -84,9 +83,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_SizerNameIcon;
+		wxFlexGridSizer* m_fgSizerODPointIcon;
 		wxCheckBox* m_checkBoxShowName;
-		wxStaticText* m_staticTextIcon;
-		wxStaticBitmap* m_bitmapPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxRadioBox* m_radioBoxBoundaryPointType;
@@ -111,7 +109,6 @@ class ODPropertiesDialogDef : public wxDialog
 		wxPanel* m_panelTextPoint;
 		wxBoxSizer* m_SizerTextPointIconName;
 		wxStaticText* m_staticTextTextPointIconName;
-		wxStaticBitmap* m_bitmapTextPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxTextPointIconName;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choiceTextPosition;
@@ -135,11 +132,12 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextPathLineStyle;
 		wxChoice* m_choicePathLineStyle;
 		wxPanel* m_panelEBL;
+		wxFlexGridSizer* m_fgSizerEBLSettings;
 		wxStaticText* m_staticTextStartPointIcon;
-		wxStaticBitmap* m_bitmapEBLStartBitmap;
+		wxFlexGridSizer* m_fgSizerEBLStartIconName;
 		wxBitmapComboBox* m_bcomboBoxEBLStartIconName;
 		wxStaticText* m_staticTextEndPointIcon;
-		wxStaticBitmap* m_bitmapEBLEndBitmap;
+		wxFlexGridSizer* m_fgSizerEBLEndPointIcon;
 		wxBitmapComboBox* m_bcomboBoxEBLEndIconName;
 		wxStaticText* m_staticTextActiveEBLLineColour;
 		wxColourPickerCtrl* m_colourPickerEBLLineColour;
@@ -179,8 +177,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxDRShowArrow;
 		wxRadioBox* m_radioBoxDRPersistence;
 		wxPanel* m_panelDRPoint;
+		wxFlexGridSizer* m_fgSizerDREndPointIcon;
 		wxStaticText* m_staticTextDRPointIcon;
-		wxStaticBitmap* m_bitmapDRPointBitmap;
 		wxBitmapComboBox* m_bcomboBoxDRPointIconName;
 		wxCheckBox* m_checkBoxShowDRPointRangeRings;
 		wxStaticText* m_staticTextDRPointRangeRingNumber;
@@ -196,11 +194,11 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextDRPointRangeRingStyle;
 		wxChoice* m_choiceDRPointRangeRingStyle;
 		wxPanel* m_panelGZ;
+		wxFlexGridSizer* m_fgSizerGZIcons;
+		wxFlexGridSizer* m_fgSizerGZFASIcon;
 		wxStaticText* m_staticTextGZFirstIcon;
-		wxStaticBitmap* m_bitmapGZFirstBitmap;
 		wxBitmapComboBox* m_bcomboBoxGZFirstIconName;
 		wxStaticText* m_staticTextGZSecondPointIcon;
-		wxStaticBitmap* m_bitmapGZSecondBitmap;
 		wxBitmapComboBox* m_bcomboBoxGZSecondIconName;
 		wxStaticText* m_staticTextActiveGZLineColour;
 		wxColourPickerCtrl* m_colourPickerActiveGZLineColour;
@@ -240,14 +238,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonApply;
 		
 		// Virtual event handlers, overide them in your derived class
-		virtual void OnODPointComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnTextPointIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEBLStartIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnEBLEndIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnDRPointIconComboboxSelected( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }
