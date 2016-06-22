@@ -2625,7 +2625,10 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
                 ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
                 DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
-                GetCanvasPixLL( m_pVP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+                if(m_pFoundODPoint == pEndPoint)
+                    GetCanvasPixLL( m_pVP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+                else
+                    GetCanvasPixLL( m_pVP, &destPoint, pStartPoint->m_lat, pStartPoint->m_lon);
                 wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
                 if(info.length() > 0)
                     RenderExtraPathLegInfo( dc, destPoint, info );

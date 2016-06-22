@@ -1433,13 +1433,13 @@ void ODDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoor
     if(w) *w = 100;
     if(h) *h = 100;
     
-    if( dc ) dc->GetTextExtent( string, w, h, descent, externalLeading, font );
+    if( dc ) dc->GetMultiLineTextExtent( string, w, h, descent, font );
     else {
         wxFont f = m_font;
         if( font ) f = *font;
 
         wxMemoryDC temp_dc;
-        temp_dc.GetTextExtent( string, w, h, descent, externalLeading, &f );
+        temp_dc.GetMultiLineTextExtent( string, w, h, descent, &f );
         
      }
      
