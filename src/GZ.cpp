@@ -289,8 +289,28 @@ void GZ::UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath )
 {
     if(pGZPoint == m_pODPointList->GetFirst()->GetData()) {
         DistanceBearingMercator_Plugin( pGZPoint->m_lat, pGZPoint->m_lon, g_pfFix.Lat, g_pfFix.Lon, &m_dFirstLineDirection, &m_dFirstDistance );
+        if(m_bRotateWithBoat) {
+            switch(m_iMaintainWith) {
+                case ID_MAINTAIN_WITH_HEADING:
+                    m_dFirstLineDirection -= g_pfFix.Hdt;
+                    break;
+                case ID_MAINTAIN_WITH_COG:
+                    m_dFirstLineDirection -= g_pfFix.Cog;
+                    break;
+            }
+        }
     } else {
         DistanceBearingMercator_Plugin( pGZPoint->m_lat, pGZPoint->m_lon, g_pfFix.Lat, g_pfFix.Lon, &m_dSecondLineDirection, &m_dSecondDistance );
+        if(m_bRotateWithBoat) {
+            switch(m_iMaintainWith) {
+                case ID_MAINTAIN_WITH_HEADING:
+                    m_dSecondLineDirection -= g_pfFix.Hdt;
+                    break;
+                case ID_MAINTAIN_WITH_COG:
+                    m_dSecondLineDirection -= g_pfFix.Cog;
+                    break;
+            }
+        }
     }
     
     UpdateGZ( bUpdateSelectablePath );

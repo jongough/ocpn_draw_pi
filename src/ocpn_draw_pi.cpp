@@ -1820,8 +1820,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if( event.LeftIsDown() ) {
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
             else if( m_pFoundODPoint ) {
-                if( m_bPathEditing )
-                {
+                if( m_bPathEditing ) {
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     m_pFoundODPoint->m_lat = m_cursor_lat;
                     m_pFoundODPoint->m_lon = m_cursor_lon;
