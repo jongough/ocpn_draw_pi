@@ -2405,10 +2405,20 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
 wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point)
 {
     wxString pathInfo;
-    if( g_bShowMag )
-        pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
-    else
-        pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+    if(path->m_sTypeString == wxT("EBL")) {
+        int EBLbrgFrom = (int)GetTrueOrMag( brg );
+        int EBLbrgTo = EBLbrgFrom - 180;
+        if(EBLbrgTo < 0) EBLbrgTo += 360;
+        if( g_bShowMag )
+            pathInfo << wxString::Format( wxString("From: %03d°(M), To: %03d°(M)\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo  );
+        else
+            pathInfo << wxString::Format( wxString("From: %03d°, To: %03d°\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
+    } else {
+        if( g_bShowMag )
+            pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+        else
+            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+    }
     
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
     
