@@ -48,7 +48,7 @@ class ODConfig
         virtual bool UpdateODPoint(ODPoint *pWP);
         virtual bool DeleteODPoint(ODPoint *pWP);
 
-        virtual void UpdateNavObj();
+        virtual void UpdateNavObj(void);
         virtual void LoadNavObjects();
 
         void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);

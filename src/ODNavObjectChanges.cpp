@@ -788,16 +788,26 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
             pGZ = (GZ *)node1->GetData();
             pPath = pGZ;
         }
-        if(!pEBL || pEBL->m_iPersistenceType != ID_NOT_PERSISTENT) {
-            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
-                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
-        } else if(!pDR || pDR->m_iPersistenceType != ID_NOT_PERSISTENT) {
-            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
-                GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
-        } else if(!pGZ || pGZ->m_iPersistenceType != ID_NOT_PERSISTENT) {
-            if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+        if(pEBL) {
+            if(pEBL->m_iPersistenceType != ID_NOT_PERSISTENT) {
+                if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                    GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+            }
+        } else if(pDR) {
+            if(pDR->m_iPersistenceType != ID_NOT_PERSISTENT) {
+                if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                    GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+            }
+        } else if(pGZ) {
+            if(pGZ->m_iPersistenceType != ID_NOT_PERSISTENT) {
+                if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                    GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+            }
+        } else {
+            if( !pPath->m_bIsInLayer)
                 GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         }
+        
         node1 = node1->GetNext();
     }
     
@@ -1722,10 +1732,12 @@ bool ODNavObjectChanges::ApplyChanges(void)
 
                     if(!strcmp(child.first_child().value(), "add") ){
                         InsertPathA( pPath );
+                        g_pODConfig->AddNewPath( pPath );
                     }                    
                 
                     else if(!strcmp(child.first_child().value(), "update") ){
                         UpdatePathA( pPath );
+                        g_pODConfig->UpdatePath( pPath );
                     }
                 
                     else if(!strcmp(child.first_child().value(), "delete") ){
@@ -1798,18 +1810,24 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
     ODPath * pExistingPath = PathExists( pPathUpdate->m_GUID );
 
     if( pExistingPath ) {
-        if(pPathUpdate->m_bTemporary) {
-            if(pPathUpdate->m_sTypeString == wxT("EBL")) {
-                EBL *pEBL = (EBL *)pExistingPath;
-                pEBL->m_iPersistenceType = ID_PERSISTENT_CRASH;
-            } else if(pPathUpdate->m_sTypeString == wxT("DR")) {
-                DR *pDR = (DR *)pExistingPath;
-                pDR->m_iPersistenceType = ID_PERSISTENT_CRASH;
-            } else if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
-                GZ *pGZ = (GZ *)pExistingPath;
-                pGZ->m_iPersistenceType = ID_PERSISTENT_CRASH;
-            }
+        EBL *pEBL = NULL;
+        DR *pDR = NULL;
+        GZ *pGZ = NULL;
+        
+        if(pPathUpdate->m_sTypeString == wxT("EBL")) {
+            pEBL = (EBL *)pExistingPath;
+            EBL *puEBL = (EBL *)pPathUpdate;
+            pEBL->SetPersistence(puEBL->m_iPersistenceType);
+        } else if(pPathUpdate->m_sTypeString == wxT("DR")) {
+            pDR = (DR *)pExistingPath;
+            DR *puDR = (DR *)pPathUpdate;
+            pDR->SetPersistence(puDR->m_iPersistenceType);
+        } else if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
+            pGZ = (GZ *)pExistingPath;
+            GZ *puGZ = (GZ *)pPathUpdate;
+            pGZ->SetPersistence(puGZ->m_iPersistenceType);
         }
+        
         if ( pPathUpdate->GetnPoints() < pExistingPath->GetnPoints() ) {
             wxODPointListNode *enode = pExistingPath->m_pODPointList->GetFirst();
             while( enode ) {
@@ -1839,10 +1857,15 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
             }
             unode = unode->GetNext();
         }
-        g_pODSelect->DeleteAllSelectableODPoints( pExistingPath );
-        g_pODSelect->DeleteAllSelectablePathSegments( pExistingPath );
-        g_pODSelect->AddAllSelectablePathSegments( pExistingPath );
-        g_pODSelect->AddAllSelectableODPoints( pExistingPath );
+        if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
+            GZ * pGZ = (GZ *)pPathUpdate;
+            pGZ->UpdateGZSelectablePath();
+        } else {
+            g_pODSelect->DeleteAllSelectableODPoints( pExistingPath );
+            g_pODSelect->DeleteAllSelectablePathSegments( pExistingPath );
+            g_pODSelect->AddAllSelectablePathSegments( pExistingPath );
+            g_pODSelect->AddAllSelectableODPoints( pExistingPath );
+        }
     } else {
         InsertPathA( pPathUpdate );
     }

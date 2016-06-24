@@ -227,12 +227,13 @@ void ODConfig::UpdateNavObj( void )
 
     pNavObjectSet->CreateAllGPXObjects();
     pNavObjectSet->SaveFile( m_sODNavObjSetFile );
-
+    
     delete pNavObjectSet;
 
-    delete m_pODNavObjectChangesSet;
-    m_pODNavObjectChangesSet = new ODNavObjectChanges(m_sODNavObjSetChangesFile);
-
+    if( ::wxFileExists( m_sODNavObjSetChangesFile ) ){
+        wxLogNull logNo;                
+        wxRemoveFile( m_sODNavObjSetChangesFile );
+    }
 }
 
 void ODConfig::LoadNavObjects()
@@ -275,7 +276,7 @@ void ODConfig::LoadNavObjects()
             sLogMessage.append( m_sODNavObjSetChangesFile );
             wxLogMessage( sLogMessage );
             m_pODNavObjectChangesSet->ApplyChanges();
-            UpdateNavObj();
+            //UpdateNavObj();
         }
         
     }
