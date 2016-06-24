@@ -141,6 +141,8 @@ private:
       ODPoint       *m_pODPoint;
       TextPoint     *m_pTextPoint;
       BoundaryPoint *m_pBoundaryPoint;
+      wxString      m_text_lat;
+      wxString      m_text_lon;
       double        m_lat_save;
       double        m_lon_save;
       wxString      m_IconName_save;

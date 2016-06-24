@@ -41,6 +41,7 @@
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "GZ.h"
+#include "GZMan.h"
 #include "ODPositionParser.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
@@ -55,6 +56,7 @@ extern ODSelect             *g_pODSelect;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern PointMan             *g_pODPointMan;
 extern PathMan              *g_pPathMan;
+extern GZMan                *g_pGZMan;
 extern ODConfig             *g_pODConfig;
 extern PathManagerDialog    *g_pPathManagerDialog;
 extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
@@ -342,7 +344,15 @@ void ODPointPropertiesImpl::SaveChanges()
         }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
-        m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
+        if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
+            if(m_text_lat != m_textLatitude->GetValue() || m_text_lon != m_textLongitude->GetValue()) {
+                m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
+                wxArrayPtrVoid *l_array = g_pPathMan->GetPathArrayContaining(m_pODPoint);
+                GZ *l_gz = (GZ *)l_array->Item(0);
+                l_gz->UpdateGZ(m_pODPoint);
+            }
+        } else
+            m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
         m_pODPoint->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
         m_pODPoint->ReLoadIcon();
 
@@ -458,7 +468,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Enable( true );
             m_sliderBoundaryPointFillTransparency->Show();
             m_bSizerOuterProperties->Show( m_bSizerFill );
-        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point")) {
+        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
+            m_panelDisplayText->Enable( false );
+            m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -470,6 +482,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bSizerOuterProperties->Hide( m_bSizerFill );
         }
         
+        m_text_lat = toSDMM_PlugIn( 1, m_pODPoint->m_lat );
+        m_text_lon = toSDMM_PlugIn( 2, m_pODPoint->m_lon );
         m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
         m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
         m_lat_save = m_pODPoint->m_lat;
