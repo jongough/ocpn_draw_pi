@@ -276,7 +276,6 @@ void ODConfig::LoadNavObjects()
             sLogMessage.append( m_sODNavObjSetChangesFile );
             wxLogMessage( sLogMessage );
             m_pODNavObjectChangesSet->ApplyChanges();
-            //UpdateNavObj();
         }
         
     }
