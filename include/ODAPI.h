@@ -69,7 +69,7 @@ class ODAPI
 public:
     ODAPI();
     ~ODAPI();
-    static bool OD_FindPathByGUID( wxString sGUID, wxString sName, wxString sDescription );
+    static bool OD_FindPathByGUID( wxString sGUID, wxString *sName, wxString *sDescription );
     static bool OD_FindPointInAnyBoundary( FindPointInAnyBoundary_t *pFPIAB );
     static bool OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     

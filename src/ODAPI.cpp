@@ -56,13 +56,13 @@ ODAPI::~ODAPI()
     // dtor
 }
 
-bool ODAPI::OD_FindPathByGUID( wxString sGUID, wxString sName, wxString sDescription )
+bool ODAPI::OD_FindPathByGUID( wxString sGUID, wxString *sName, wxString *sDescription )
 {
     ODPath *l_path;
     l_path = g_pPathMan->FindPathByGUID( sGUID );
     if(l_path) {
-        sDescription.append(l_path->m_PathDescription);
-        sName.assign(l_path->m_PathNameString);
+        sDescription->append(l_path->m_PathDescription);
+        sName->append(l_path->m_PathNameString);
         return true;
     } else
         return false;
