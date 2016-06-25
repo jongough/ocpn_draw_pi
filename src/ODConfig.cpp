@@ -231,8 +231,8 @@ void ODConfig::UpdateNavObj( void )
     delete pNavObjectSet;
 
     if( ::wxFileExists( m_sODNavObjSetChangesFile ) ){
-        wxLogNull logNo;                
-        wxRemoveFile( m_sODNavObjSetChangesFile );
+        wxLogNull logNo;        
+        delete m_pODNavObjectChangesSet;
     }
 }
 

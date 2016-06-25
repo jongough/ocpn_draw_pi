@@ -595,10 +595,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         s.Printf(_T("%1i"), pGZ->m_iMaintainWith);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_CentreLat");
-        s.Printf(_T("%0.2f"), pGZ->m_dCentreLat);
+        s.Printf(_T("%0.9f"), pGZ->m_dCentreLat);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_CentreLon");
-        s.Printf(_T("%0.2f"), pGZ->m_dCentreLon);
+        s.Printf(_T("%0.9f"), pGZ->m_dCentreLon);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_FirstLineDirection");
         s.Printf(_T("%0.2f"), pGZ->m_dFirstLineDirection);
@@ -1449,6 +1449,10 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iDistanceUnits );
             } else if( ChildName == _T ( "opencpn:DRTimeUnits" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iTimeUnits );
+            } else if( ChildName == _T ( "opencpn:GZ_CentreLat" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLat );
+            } else if( ChildName == _T ( "opencpn:GZ_CentreLon" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLon );
             } else if( ChildName == _T ( "opencpn:GZ_FirstLineDirection" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstLineDirection );
             } else if( ChildName == _T ( "opencpn:GZ_FirstDistance" ) ) {

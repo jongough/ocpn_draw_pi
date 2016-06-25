@@ -96,7 +96,9 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     
     this->GetSizer()->Fit( this );
     this->Layout();
-    
+ 
+    m_bLockGZAngle = false;
+    m_bLockGZLength = false;
 }
 
 
