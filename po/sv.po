@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-02-28 17:40-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
@@ -349,6 +349,9 @@ msgstr "Centrera på båten"
 msgid "Change all Path Point Icons"
 msgstr "Ändra alla punkter i linjen"
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr "Bekräfta"
 #
@@ -629,6 +632,10 @@ msgid "Guard Zone Persistence"
 msgstr "Hur sparas linjen"
 #
 #, fuzzy
+msgid "Guard Zone Point"
+msgstr "Flytta gränspunkt"
+#
+#, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Egenskaper gränslinjepunkt"
 #
@@ -637,6 +644,10 @@ msgstr "Kurs (K/T)"
 #
 msgid "Help"
 msgstr "Hjälp"
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Flytta gränspunkt"
 #
 msgid "Hide Point names"
 msgstr "Dölj punktens namn"
@@ -812,9 +823,6 @@ msgstr "Namn"
 #
 msgid "Name:"
 msgstr "Namn:"
-#
-msgid "Name: "
-msgstr "Namn: "
 #
 msgid "Nautical Miles"
 msgstr "Nautisk Mil"
@@ -1073,6 +1081,10 @@ msgstr "Korta streck"
 msgid "Show"
 msgstr "Visa"
 #
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Flytta gränspunkt"
+#
 msgid "Show DR Direction Arrow"
 msgstr "Vis riktningspilar på DR-linjen"
 #
@@ -1215,5 +1227,10 @@ msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi data finns på"
 #
 #
+#
 #~ msgid "Insert DR Point"
 #~ msgstr "Infoga DR-punkt"
+#
+#
+#~ msgid "Name: "
+#~ msgstr "Namn: "

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-02-27 08:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -350,6 +350,9 @@ msgstr "Keskenda liikuvale paadile"
 msgid "Change all Path Point Icons"
 msgstr "Muuda kõik teepunktide ikoonid"
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr "Kinnita"
 #
@@ -632,6 +635,10 @@ msgid "Guard Zone Persistence"
 msgstr "Tee püsivus"
 #
 #, fuzzy
+msgid "Guard Zone Point"
+msgstr "Liiguta piiripunkti"
+#
+#, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Piiripunkti omadused"
 #
@@ -640,6 +647,10 @@ msgstr "Suund"
 #
 msgid "Help"
 msgstr ""
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Liiguta piiripunkti"
 #
 msgid "Hide Point names"
 msgstr "Peida punktinimed"
@@ -815,9 +826,6 @@ msgstr "Nimi"
 #
 msgid "Name:"
 msgstr "Nimi:"
-#
-msgid "Name: "
-msgstr "Nimi: "
 #
 msgid "Nautical Miles"
 msgstr "meremiilid"
@@ -1075,6 +1083,10 @@ msgstr "Lühike kriips"
 msgid "Show"
 msgstr "Näita"
 #
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Liiguta piiripunkti"
+#
 msgid "Show DR Direction Arrow"
 msgstr "Näita DR'i suunanoolt"
 #
@@ -1216,5 +1228,10 @@ msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi andmete asukoht"
 #
 #
+#
 #~ msgid "Insert DR Point"
 #~ msgstr "Sisesta DR-punkt"
+#
+#
+#~ msgid "Name: "
+#~ msgstr "Nimi: "

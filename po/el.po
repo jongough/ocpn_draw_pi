@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-02-27 08:04-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -350,6 +350,9 @@ msgstr "Κεντράρισε στο κινούμενο πλοίο"
 msgid "Change all Path Point Icons"
 msgstr "Αλλαγή όλων των εικονιδίων των σημείων διαδρομής"
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr "Επιβεβαίωση"
 #
@@ -630,6 +633,10 @@ msgid "Guard Zone Persistence"
 msgstr "Παραμένουσα διαδρομή"
 #
 #, fuzzy
+msgid "Guard Zone Point"
+msgstr "Μετακίνησε το σημείο ορίου"
+#
+#, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Ιδιότητες σημείου ορίου"
 #
@@ -638,6 +645,10 @@ msgstr "Πορεία"
 #
 msgid "Help"
 msgstr ""
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Μετακίνησε το σημείο ορίου"
 #
 msgid "Hide Point names"
 msgstr "Απόκρυψη ονομάτων σημείων"
@@ -813,9 +824,6 @@ msgstr "Όνομα"
 #
 msgid "Name:"
 msgstr "Όνομα:"
-#
-msgid "Name: "
-msgstr "Όνομα: "
 #
 msgid "Nautical Miles"
 msgstr "Ναυτικά μίλια"
@@ -1073,6 +1081,10 @@ msgstr "Με κοντές παύλες"
 msgid "Show"
 msgstr "Εμφάνιση"
 #
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Μετακίνησε το σημείο ορίου"
+#
 msgid "Show DR Direction Arrow"
 msgstr "Εμφάνιση βέλος κατεύθυνσης DR"
 #
@@ -1217,5 +1229,10 @@ msgid "ocpn_draw_pi data location"
 msgstr "τοποθεσία δεδομένων ocpn_draw_pi"
 #
 #
+#
 #~ msgid "Insert DR Point"
 #~ msgstr "Εισαγωγή σημείου DR"
+#
+#
+#~ msgid "Name: "
+#~ msgstr "Όνομα: "

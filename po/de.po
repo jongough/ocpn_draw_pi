@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-02-27 13:52-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
@@ -349,6 +349,9 @@ msgstr "Auf fahrendem Boot fixieren"
 msgid "Change all Path Point Icons"
 msgstr "Ändere alle Symbole des Pfades"
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr "Bestätige"
 #
@@ -630,6 +633,10 @@ msgid "Guard Zone Persistence"
 msgstr "Pfad Dauerhaftigkeit"
 #
 #, fuzzy
+msgid "Guard Zone Point"
+msgstr "Begrenzungspunkt verschieben"
+#
+#, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Begrenzungspunkt Eigenschaften"
 #
@@ -638,6 +645,10 @@ msgstr ""
 #
 msgid "Help"
 msgstr ""
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Begrenzungspunkt verschieben"
 #
 msgid "Hide Point names"
 msgstr "Punkt Namen ausblenden"
@@ -813,9 +824,6 @@ msgstr "Name"
 #
 msgid "Name:"
 msgstr "Name:"
-#
-msgid "Name: "
-msgstr "Name: "
 #
 msgid "Nautical Miles"
 msgstr "Seemeilen"
@@ -1075,6 +1083,10 @@ msgstr "Kurzer Strich"
 msgid "Show"
 msgstr "Anzeigen"
 #
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Begrenzungspunkt verschieben"
+#
 msgid "Show DR Direction Arrow"
 msgstr "DR Richtungspfeil anzeigen"
 #
@@ -1217,5 +1229,10 @@ msgid "ocpn_draw_pi data location"
 msgstr "Speicherort der Ocpn_draw_pi-Daten"
 #
 #
+#
 #~ msgid "Insert DR Point"
 #~ msgstr "DR Punkt einfügen"
+#
+#
+#~ msgid "Name: "
+#~ msgstr "Name: "

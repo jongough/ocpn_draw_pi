@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-03-19 13:03+0100\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: French\n"
@@ -408,6 +408,9 @@ msgstr "Fixer le début de la ligne EBL au bateau"
 msgid "Change all Path Point Icons"
 msgstr "Changer toutes les icônes des points du chemin"
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr "Confirmer"
 #
@@ -703,6 +706,10 @@ msgid "Guard Zone Persistence"
 msgstr "Permanence du chemin"
 #
 #, fuzzy
+msgid "Guard Zone Point"
+msgstr "Déplacer la borne"
+#
+#, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Propriétés d'une borne"
 #
@@ -711,6 +718,10 @@ msgstr "Cap M"
 #
 msgid "Help"
 msgstr "Aide"
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Déplacer la borne"
 #
 msgid "Hide Point names"
 msgstr "Cacher les noms des points"
@@ -898,9 +909,6 @@ msgid "Name"
 msgstr "Nom"
 #
 msgid "Name:"
-msgstr "Nom :"
-#
-msgid "Name: "
 msgstr "Nom :"
 #
 msgid "Nautical Miles"
@@ -1201,6 +1209,10 @@ msgstr "Tiret court"
 msgid "Show"
 msgstr "Montrer"
 #
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Déplacer la borne"
+#
 # MODIFIE
 # Gilletarom : Le verbe "Montrer" a disparu ?
 msgid "Show DR Direction Arrow"
@@ -1361,5 +1373,10 @@ msgstr ""
 msgid "ocpn_draw_pi data location"
 msgstr "dossier de stockage des données de ocpn_draw_pi"
 #
+#
 #~ msgid "Insert DR Point"
 #~ msgstr "Insérer un point estimé"
+#
+#
+#~ msgid "Name: "
+#~ msgstr "Nom :"

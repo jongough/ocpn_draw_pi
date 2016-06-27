@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-02-27 08:04-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Turkish\n"
@@ -344,6 +344,9 @@ msgstr ""
 msgid "Change all Path Point Icons"
 msgstr ""
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr ""
 #
@@ -612,6 +615,9 @@ msgstr ""
 msgid "Guard Zone Persistence"
 msgstr ""
 #
+msgid "Guard Zone Point"
+msgstr ""
+#
 msgid "Guard Zone Properties"
 msgstr ""
 #
@@ -619,6 +625,9 @@ msgid "Heading"
 msgstr ""
 #
 msgid "Help"
+msgstr ""
+#
+msgid "Hide Boundary Point Icons"
 msgstr ""
 #
 msgid "Hide Point names"
@@ -787,9 +796,6 @@ msgid "Name"
 msgstr ""
 #
 msgid "Name:"
-msgstr ""
-#
-msgid "Name: "
 msgstr ""
 #
 msgid "Nautical Miles"
@@ -1031,6 +1037,9 @@ msgid "Short Dash"
 msgstr ""
 #
 msgid "Show"
+msgstr ""
+#
+msgid "Show Boundary Point Icons"
 msgstr ""
 #
 msgid "Show DR Direction Arrow"

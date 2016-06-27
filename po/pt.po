@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-12 08:41+1000\n"
+"POT-Creation-Date: 2016-06-27 16:42+1000\n"
 "PO-Revision-Date: 2016-02-27 08:05-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese, Brazilian\n"
@@ -349,6 +349,9 @@ msgstr "Centrar no barco em movimento"
 msgid "Change all Path Point Icons"
 msgstr "Modificar todos os ícones de pontos do caminho"
 #
+msgid "Combo!"
+msgstr ""
+#
 msgid "Confirm"
 msgstr "Confirmar"
 #
@@ -630,6 +633,10 @@ msgid "Guard Zone Persistence"
 msgstr "Persistência do caminho"
 #
 #, fuzzy
+msgid "Guard Zone Point"
+msgstr "Mover Ponto Limite"
+#
+#, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Propriedades Ponto Limite"
 #
@@ -638,6 +645,10 @@ msgstr "Proa"
 #
 msgid "Help"
 msgstr ""
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Mover Ponto Limite"
 #
 msgid "Hide Point names"
 msgstr "Ocultar Nomes dos pontos"
@@ -811,9 +822,6 @@ msgstr "Nome"
 #
 msgid "Name:"
 msgstr "Nome:"
-#
-msgid "Name: "
-msgstr "Nome: "
 #
 msgid "Nautical Miles"
 msgstr "Milhas náuticas"
@@ -1071,6 +1079,10 @@ msgstr "Traço curto"
 msgid "Show"
 msgstr "Mostrar"
 #
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Mover Ponto Limite"
+#
 msgid "Show DR Direction Arrow"
 msgstr "Mostrar a seta de direção DR"
 #
@@ -1213,5 +1225,10 @@ msgid "ocpn_draw_pi data location"
 msgstr "localização dos dados do ocpn_draw_pi"
 #
 #
+#
 #~ msgid "Insert DR Point"
 #~ msgstr "Inserir Ponto DR"
+#
+#
+#~ msgid "Name: "
+#~ msgstr "Nome: "
