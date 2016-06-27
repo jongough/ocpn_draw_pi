@@ -109,7 +109,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     } else if(selectedPath->m_sTypeString == wxT("DR")) {
         m_pDR = (DR *)selectedPath;
         m_pSelectedPath = m_pDR;
-    } else if(selectedPath->m_sTypeString == wxT("GuardZone")) {
+    } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
         m_pGZ = (GZ *)selectedPath;
         m_pSelectedPath = m_pGZ;
     } else
@@ -142,7 +142,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     } else if(selectedPath->m_sTypeString == wxT("DR")) {
         m_pDR = (DR *)selectedPath;
         m_pSelectedPath = m_pDR;
-    } else if(selectedPath->m_sTypeString == wxT("GuardZone")) {
+    } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
         m_pGZ = (GZ *)selectedPath;
         m_pSelectedPath = m_pGZ;
     } else
@@ -168,7 +168,7 @@ void ODEventHandler::SetPath( ODPath *path )
         } else if(path->m_sTypeString == wxT("DR")) {
             m_pDR = (DR *)path;
             m_pSelectedPath = m_pDR;
-        } else if(path->m_sTypeString == wxT("GuardZone")) {
+        } else if(path->m_sTypeString == wxT("Guard Zone")) {
             m_pGZ = (GZ *)path;
             m_pSelectedPath = m_pGZ;
         } else
@@ -295,7 +295,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     else
                         s.Append( pp->m_PathNameString );
                     
-                    if(pp->m_sTypeString != wxT("GuardZone")) {
+                    if(pp->m_sTypeString != wxT("Guard Zone")) {
                         s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
                         << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
                         << _(" to ") << segShow_point_b->GetName()
@@ -891,7 +891,7 @@ void ODEventHandler::PopupMenu( int seltype )
             else if(m_pSelectedPath->m_sTypeString == wxT("DR")) {
                 MenuAppend( menuPath, ID_DR_MENU_UPDATE_INITIAL_CONDITIONS, _("Update initial conditions") );
             }
-            else if(m_pSelectedPath->m_sTypeString != wxT("DR") && m_pSelectedPath->m_sTypeString != wxT("GuardZone")) {
+            else if(m_pSelectedPath->m_sTypeString != wxT("DR") && m_pSelectedPath->m_sTypeString != wxT("Guard Zone")) {
                 sString.clear();
                 if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
                     sString.append(_("Move Boundary"));
@@ -929,7 +929,7 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("Copy EBL GUID"));
             else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
                 sString.append(_("Copy DR GUID"));
-            else if(m_pSelectedPath->m_sTypeString == wxT("GuardZone"))
+            else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
                 sString.append(_("Copy Guard Zone GUID"));
             MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
         }

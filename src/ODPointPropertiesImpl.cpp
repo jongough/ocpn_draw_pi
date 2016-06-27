@@ -383,7 +383,7 @@ void ODPointPropertiesImpl::SaveChanges()
             if( pEditPathArray ) {
                 for( unsigned int ip = 0; ip < pEditPathArray->GetCount(); ip++ ) {
                     ODPath *pp = (ODPath *) pEditPathArray->Item( ip );
-                    if(pp->m_sTypeString == wxT("GuardZone")) {
+                    if(pp->m_sTypeString == wxT("Guard Zone")) {
                         GZ * l_GZ = (GZ *)pp;
                         l_GZ->UpdateGZ( m_pODPoint );
                     }

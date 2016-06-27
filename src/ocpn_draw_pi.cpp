@@ -1722,7 +1722,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     if(m_pSelectedEBL)
                         m_pSelectedEBL->MoveEndPoint();
                 }
-                if(m_pSelectedPath->m_sTypeString == wxT("GuardZone")) {
+                if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                     m_pSelectedGZ->UpdateGZSelectablePath();
                 } else {
                     g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
@@ -1843,7 +1843,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
                         m_pSelectedEBL->ResizeVRM( );
                     }
-                    if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("GuardZone")) {
+                    if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                         m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
                     }
                     
@@ -1991,7 +1991,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
                         m_pSelectedDR = (DR *)m_pSelectedPath;
-                    else if(m_pSelectedPath->m_sTypeString == wxT("GuardZone"))
+                    else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
                         m_pSelectedGZ = (GZ *)m_pSelectedPath;
                 }
                 g_ODEventHandler->SetCanvas( ocpncc1 );
@@ -2134,7 +2134,7 @@ void ocpn_draw_pi::FindSelectedObject()
             if( m_pSelectedPath->m_sTypeString == wxT("Boundary") ) m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
             else if( m_pSelectedPath->m_sTypeString == wxT("EBL") ) m_pSelectedEBL = (EBL *)m_pSelectedPath;
             else if( m_pSelectedPath->m_sTypeString == wxT("DR") ) m_pSelectedDR = (DR *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("GuardZone") ) m_pSelectedGZ = (GZ *)m_pSelectedPath;
+            else if( m_pSelectedPath->m_sTypeString == wxT("Guard Zone") ) m_pSelectedGZ = (GZ *)m_pSelectedPath;
         } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_ODPOINT;
         
         
@@ -2568,7 +2568,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
         } else if(pPath->m_sTypeString == wxT("DR")) {
             pDRDraw = (DR *) pPath;
             pPathDraw = pDRDraw;
-        } else if(pPath->m_sTypeString == wxT("GuardZone")) {
+        } else if(pPath->m_sTypeString == wxT("Guard Zone")) {
             pGZDraw = (GZ *) pPath;
             pPathDraw = pGZDraw;
         }
@@ -3175,7 +3175,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         } else if(pTempPath->m_sTypeString == wxT("DR")) {
             pDRDraw = (DR *)pTempPath;
             pPathDraw = pDRDraw;
-        } else if(pTempPath->m_sTypeString == wxT("GuardZone")) {
+        } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
             pGZDraw = (GZ *)pTempPath;
             pPathDraw = pGZDraw;
         }

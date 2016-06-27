@@ -142,7 +142,7 @@ bool PathMan::DeletePath( ODPath *pPath )
         if(pPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->DeleteObject( (Boundary *)pPath );
         if(pPath->m_sTypeString == wxT("EBL")) g_pEBLList->DeleteObject( (EBL *)pPath );
         if(pPath->m_sTypeString == wxT("DR")) g_pDRList->DeleteObject( (DR *)pPath );
-        if(pPath->m_sTypeString == wxT("GuardZone")) g_pGZList->DeleteObject( (GZ *)pPath );
+        if(pPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->DeleteObject( (GZ *)pPath );
         
         // walk the path, tentatively deleting/marking points used only by this route
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();

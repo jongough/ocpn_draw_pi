@@ -89,7 +89,7 @@ extern int g_path_line_width;
 
 GZ::GZ() : ODPath()
 {
-    m_sTypeString = _T("GuardZone");
+    m_sTypeString = _T("Guard Zone");
 
     m_wxcActiveLineColour = g_colourActiveGZLineColour;
     m_wxcActiveFillColour = g_colourActiveGZFillColour;

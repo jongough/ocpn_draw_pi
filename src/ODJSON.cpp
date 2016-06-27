@@ -519,7 +519,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     }
                     bool l_bFound = false;
                     if(l_path) {
-                        if(l_path->m_sTypeString == wxT("GuardZone"))
+                        if(l_path->m_sTypeString == wxT("Guard Zone"))
                             l_bFound = g_pGZMan->FindPointInGZ( (GZ *)l_path, l_dLat, l_dLon  );
                         else
                             l_bFound = g_pBoundaryMan->FindPointInBoundary( (Boundary*)l_path, l_dLat, l_dLon );

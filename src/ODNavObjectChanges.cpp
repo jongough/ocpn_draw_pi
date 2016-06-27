@@ -409,7 +409,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("DR")) {
         pDR = (DR *)pInPath;
         pPath = pDR;
-    } else if(pInPath->m_sTypeString == wxT("GuardZone")) {
+    } else if(pInPath->m_sTypeString == wxT("Guard Zone")) {
         pGZ = (GZ *)pInPath;
         pPath = pGZ;
     } else
@@ -784,7 +784,7 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
         } else if(pPath->m_sTypeString == wxT("DR")) {
             pDR = (DR *)node1->GetData();
             pPath = pDR;
-        } else if(pPath->m_sTypeString == wxT("GuardZone")) {
+        } else if(pPath->m_sTypeString == wxT("Guard Zone")) {
             pGZ = (GZ *)node1->GetData();
             pPath = pGZ;
         }
@@ -868,7 +868,7 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                         }
                     }
                     if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || 
-                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("GuardZone") ) ) {
+                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("Guard Zone") ) ) {
                         ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
@@ -1272,7 +1272,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
         } else if (!strcmp(pPathType->mb_str(), "DR" ) ) {
             pTentDR = new DR();
             pTentPath = pTentDR;
-        } else if (!strcmp(pPathType->mb_str(), "GuardZone" ) ) {
+        } else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) ) {
             pTentGZ = new GZ();
             pTentPath = pTentGZ;
         } else 
@@ -1396,7 +1396,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                         pTentEBL->SetPersistence( v );
                     else if (!strcmp(pPathType->mb_str(), "DR" ) )
                         pTentDR->SetPersistence( v );
-                    else if (!strcmp(pPathType->mb_str(), "GuardZone" ) )
+                    else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) )
                         pTentGZ->SetPersistence( v );
                 }
             } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
@@ -1588,7 +1588,7 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
         g_pPathList->Append( pTentPath );
         if(pTentPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->Append( (Boundary *)pTentPath );
         if(pTentPath->m_sTypeString == wxT("EBL")) g_pEBLList->Append( (EBL *)pTentPath );
-        if(pTentPath->m_sTypeString == wxT("GuardZone")) g_pGZList->Append( (GZ *)pTentPath );
+        if(pTentPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->Append( (GZ *)pTentPath );
         
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
         
@@ -1619,7 +1619,7 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
             
             node = node->GetNext();
         }
-         if(pTentPath->m_sTypeString == wxT("GuardZone")) {
+         if(pTentPath->m_sTypeString == wxT("Guard Zone")) {
              GZ * pGZ = (GZ *)pTentPath;
              pGZ->UpdateGZSelectablePath();
          }
@@ -1826,7 +1826,7 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
             pDR = (DR *)pExistingPath;
             DR *puDR = (DR *)pPathUpdate;
             pDR->SetPersistence(puDR->m_iPersistenceType);
-        } else if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
+        } else if(pPathUpdate->m_sTypeString == wxT("Guard Zone")) {
             pGZ = (GZ *)pExistingPath;
             GZ *puGZ = (GZ *)pPathUpdate;
             pGZ->SetPersistence(puGZ->m_iPersistenceType);
@@ -1861,7 +1861,7 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
             }
             unode = unode->GetNext();
         }
-        if(pPathUpdate->m_sTypeString == wxT("GuardZone")) {
+        if(pPathUpdate->m_sTypeString == wxT("Guard Zone")) {
             GZ * pGZ = (GZ *)pPathUpdate;
             pGZ->UpdateGZSelectablePath();
         } else {

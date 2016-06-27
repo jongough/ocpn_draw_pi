@@ -1092,7 +1092,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         l_pPath = l_pDR;
         g_pDRPropDialog->SetPath( l_pDR );
         g_pDRPropDialog->UpdateProperties( l_pDR );
-    } else if(inpath->m_sTypeString == wxT("GuardZone")) {
+    } else if(inpath->m_sTypeString == wxT("Guard Zone")) {
         if( NULL == g_pGZPropDialog )          // There is one global instance of the DRProp Dialog
             g_pGZPropDialog = new GZProp( GetParent() );
         g_pODPathPropDialog = g_pGZPropDialog;
@@ -1118,7 +1118,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
             g_pODPathPropDialog->SetDialogTitle(_("EBL Properties"));
         else if(l_pPath->m_sTypeString == wxT("DR")) 
             g_pODPathPropDialog->SetDialogTitle(_("DR Properties"));
-        else if(l_pPath->m_sTypeString == wxT("GuardZone")) 
+        else if(l_pPath->m_sTypeString == wxT("Guard Zone")) 
             g_pODPathPropDialog->SetDialogTitle(_("Guard Zone Properties"));
     }
     else {

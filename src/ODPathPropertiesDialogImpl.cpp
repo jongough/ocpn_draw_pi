@@ -245,7 +245,7 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points 
             m_pDR = (DR *)pP;
             m_pPath = m_pDR;
         }
-        if(pP->m_sTypeString == wxT("GuardZone")) {
+        if(pP->m_sTypeString == wxT("Guard Zone")) {
             m_pGZ = (GZ *)pP;
             m_pPath = m_pGZ;
         }
@@ -292,7 +292,7 @@ void ODPathPropertiesDialogImpl::SetPath( ODPath *pP )
         m_pDR = (DR *)pP;
         m_pPath = m_pDR;
     }
-    if(pP->m_sTypeString == wxT("GuardZone")) {
+    if(pP->m_sTypeString == wxT("Guard Zone")) {
         m_pGZ = (GZ *)pP;
         m_pPath = m_pGZ;
     }
@@ -334,7 +334,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("DR")) {
         pDR = (DR *)pInPath;
         pPath = pDR;
-    } else if(pInPath->m_sTypeString == wxT("GuardZone")) {
+    } else if(pInPath->m_sTypeString == wxT("Guard Zone")) {
         pGZ = (GZ *)pInPath;
         pPath = pGZ;
     } else {
