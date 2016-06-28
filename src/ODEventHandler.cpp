@@ -994,8 +994,8 @@ void ODEventHandler::PopupMenu( int seltype )
 
             if( m_pSelectedPath ) {
                 if( m_pSelectedPath->m_sTypeString != wxT("DR") ) {
-                if( m_pSelectedPath->GetnPoints() > 2 )
-                    MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
+                    if( m_pSelectedPath->GetnPoints() > 2 )
+                        MenuAppend( menuODPoint, ID_PATH_MENU_REMPOINT, _( "Remove Point from Path" ) );
                 
                     MenuAppend( menuODPoint, ID_PATH_MENU_DELPOINT,  _( "Delete" ) );
                 }

@@ -258,9 +258,9 @@ bool GZProp::SaveChanges( void )
     else
         ret = ODPathPropertiesDialogImpl::SaveChanges();
 
-        if(l_bUpdatePath) {
-            m_pGZ->UpdateGZ();
-        }
+    if(l_bUpdatePath) {
+        m_pGZ->UpdateGZ();
+    }
         
     return ret;
 }

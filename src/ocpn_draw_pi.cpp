@@ -2086,35 +2086,35 @@ void ocpn_draw_pi::FindSelectedObject()
             } else
                 bop_viz = pop->IsVisible();               // isolated point
                 
-                if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
+            if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
+            
+            // Use path array to choose the appropriate path
+            // Give preference to any active path, otherwise select the first visible path in the array for this point
+            if( ppath_array ) {
+                for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                    ODPath *pp = (ODPath *) ppath_array->Item( ip );
+                    if( pp->m_bPathIsActive ) {
+                        pSelectedActivePath = pp;
+                        pFoundActiveODPoint = pop;
+                        break;
+                    }
+                }
                 
-                // Use path array to choose the appropriate path
-                // Give preference to any active path, otherwise select the first visible path in the array for this point
-                if( ppath_array ) {
+                if( NULL == pSelectedVizPath ) {
                     for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                         ODPath *pp = (ODPath *) ppath_array->Item( ip );
-                        if( pp->m_bPathIsActive ) {
-                            pSelectedActivePath = pp;
-                            pFoundActiveODPoint = pop;
+                        if( pp->IsVisible() ) {
+                            pSelectedVizPath = pp;
+                            pFoundVizODPoint = pop;
                             break;
                         }
                     }
-                    
-                    if( NULL == pSelectedVizPath ) {
-                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                            ODPath *pp = (ODPath *) ppath_array->Item( ip );
-                            if( pp->IsVisible() ) {
-                                pSelectedVizPath = pp;
-                                pFoundVizODPoint = pop;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    delete ppath_array;
                 }
                 
-                node = node->GetNext();
+                delete ppath_array;
+            }
+            
+            node = node->GetNext();
         }
         
         //      Now choose the "best" selections

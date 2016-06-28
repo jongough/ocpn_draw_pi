@@ -181,7 +181,7 @@ wxBitmap *ODicons::LoadSVG( const wxString filename, wxSVGDocument **svgDoc, wxI
     }
     else
         *Image = new wxImage(width, height);
-        return new wxBitmap(width, height);
+    return new wxBitmap(width, height);
 }
 
 wxBitmap *ODicons::ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf )
