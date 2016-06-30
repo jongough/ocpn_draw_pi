@@ -111,7 +111,8 @@ class ODNavObjectChanges : public pugi::xml_document
                                bool b_fullviz,
                                bool b_layer,
                                bool b_layerviz,
-                               int layer_id
+                               int layer_id,
+                               bool b_InPath = false
                              );
         ODPath *GPXLoadPath1( pugi::xml_node &odpoint_node, bool b_fullviz,
                       bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );

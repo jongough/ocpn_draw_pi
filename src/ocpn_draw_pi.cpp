@@ -208,6 +208,7 @@ wxString    *g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
+wxString    *g_pLayerDir;
 
 ODEventHandler   *g_ODEventHandler;
 
@@ -327,22 +328,27 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     
-    g_pData = new wxString(*GetpPrivateApplicationDataLocation());
-    appendOSDirSlash( g_pData );
-    g_pData->Append(_T("plugins"));
-    appendOSDirSlash( g_pData );
-    if ( !wxDir::Exists(*g_pData))
-        wxMkdir( *g_pData );
-    g_pData->Append(_T("ocpn_draw_pi"));
-    appendOSDirSlash( g_pData );
-    if ( !wxDir::Exists(*g_pData))
-        wxMkdir( *g_pData );
+    wxString *l_pDir = new wxString(*GetpPrivateApplicationDataLocation());
+    appendOSDirSlash( l_pDir );
+    l_pDir->Append(_T("plugins"));
+    appendOSDirSlash( l_pDir );
+    if ( !wxDir::Exists(*l_pDir))
+        wxMkdir( *l_pDir );
+    l_pDir->Append(_T("ocpn_draw_pi"));
+    appendOSDirSlash( l_pDir );
+    if ( !wxDir::Exists(*l_pDir))
+        wxMkdir( *l_pDir );
     g_PrivateDataDir = new wxString;
-    g_PrivateDataDir->Append(*g_pData);
+    g_PrivateDataDir->Append(*l_pDir);
+    g_pData = new wxString(*l_pDir);
     g_pData->append( wxS("data") );
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
+    g_pLayerDir = new wxString;
+    g_pLayerDir->Append(*l_pDir);
+    g_pLayerDir->Append( wxT("Layers") );
+    appendOSDirSlash( g_pLayerDir );
     
     m_pODicons = new ODicons();
 }
@@ -579,7 +585,16 @@ int ocpn_draw_pi::Init(void)
     g_pDRPropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
-
+    
+    // Import Layer-wise any .gpx files from /Layers directory
+    if( wxDir::Exists( *g_pLayerDir ) ) {
+        wxString laymsg;
+        laymsg.Printf( wxT("Getting .gpx layer files from: %s"), g_pLayerDir->c_str() );
+        wxLogMessage( laymsg );
+        
+        g_pODConfig->LoadLayers(*g_pLayerDir);
+    }
+    
     return (
     WANTS_OVERLAY_CALLBACK  |
     WANTS_CURSOR_LATLON       |

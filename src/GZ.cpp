@@ -116,6 +116,7 @@ GZ::~GZ()
 void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
     if(m_dSecondDistance == 0) return;
+    if(!m_bVisible) return;
     
     m_bSetTransparent = true;
     ODPath::Draw( dc, piVP );

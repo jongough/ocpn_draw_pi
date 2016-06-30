@@ -281,6 +281,96 @@ void ODConfig::LoadNavObjects()
     }
 }
 
+bool ODConfig::LoadLayers(wxString &path)
+{
+    wxArrayString file_array;
+    wxDir dir;
+    Layer *l;
+    dir.Open( path );
+    if( dir.IsOpened() ) {
+        wxString filename;
+        bool cont = dir.GetFirst( &filename );
+        while( cont ) {
+            file_array.Clear();
+            filename.Prepend( wxFileName::GetPathSeparator() );
+            filename.Prepend( path );
+            wxFileName f( filename );
+            size_t nfiles = 0;
+            if( f.GetExt().IsSameAs( wxT("gpx") ) )
+                file_array.Add( filename); // single-gpx-file layer
+                else{
+                    if(wxDir::Exists( filename ) ){
+                        wxDir dir( filename );
+                        if( dir.IsOpened() ){
+                            nfiles = dir.GetAllFiles( filename, &file_array, wxT("*.gpx") );      // layers subdirectory set
+                        }
+                    }
+                }
+                
+                if( file_array.GetCount() ){
+                    l = new Layer();
+                    l->m_LayerID = ++g_LayerIdx;
+                    l->m_LayerFileName = file_array[0];
+                    if( file_array.GetCount() <= 1 )
+                        wxFileName::SplitPath( file_array[0], NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+                    else
+                        wxFileName::SplitPath( filename, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+                    
+                    bool bLayerViz = g_bShowLayers;
+                    
+                    if( g_VisibleLayers.Contains( l->m_LayerName ) )
+                        bLayerViz = true;
+                    if( g_InvisibleLayers.Contains( l->m_LayerName ) )
+                        bLayerViz = false;
+                    
+                    l->m_bIsVisibleOnChart = bLayerViz;
+                    
+                    wxString laymsg;
+                    laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
+                    wxLogMessage( laymsg );
+                    
+                    pLayerList->Insert( l );
+                    
+                    //  Load the entire file array as a single layer
+                    
+                    for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
+                        wxString file_path = file_array[i];
+                        
+                        if( ::wxFileExists( file_path ) ) {
+                            ODNavObjectChanges *pSet = new ODNavObjectChanges;
+                            pSet->load_file(file_path.fn_str());
+                            long nItems = pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, bLayerViz);
+                            l->m_NoOfItems += nItems;
+                            
+                            wxString objmsg;
+                            objmsg.Printf( wxT("Loaded GPX file %s with %ld items."), file_path.c_str(), nItems );
+                            wxLogMessage( objmsg );
+                            
+                            delete pSet;
+                        }
+                    }
+                }
+                
+                cont = dir.GetNext( &filename );
+        }
+    }
+    
+    // make sure any EBL hanging of the boat is repositioned
+    wxEBLListNode *node = g_pEBLList->GetFirst();
+    for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
+        EBL *ebl = (EBL *)node->GetData();
+        if(ebl->m_bCentreOnBoat)  {
+            bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
+            ebl->m_bSaveUpdates = false;
+            ebl->CentreOnBoat(true);
+            ebl->m_bSaveUpdates = l_bSaveUpdatesState;
+        }
+        node = node->GetNext();
+    }
+    
+    return true;
+}
+
 void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 {
     wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, wxT ( "" ),

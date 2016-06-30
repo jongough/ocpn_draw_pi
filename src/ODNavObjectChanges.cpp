@@ -886,7 +886,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                             bool b_fullviz,
                             bool b_layer,
                             bool b_layerviz,
-                            int layer_id
+                            int layer_id,
+                            bool b_InPath
                             )
 {
 #ifndef __WXMSW__
@@ -1205,7 +1206,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     if(b_layer) {
         pOP->m_bIsInLayer = true;
         pOP->m_LayerID = layer_id;
-        pOP->m_bIsVisible = b_layerviz;
+        if(!b_InPath)
+            pOP->m_bIsVisible = b_layerviz;
         pOP->SetListed( false );
     }
 
@@ -1282,10 +1284,11 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             wxString ChildName = wxString::FromUTF8( tschild.name() );
 
             if( ChildName == _T ( "opencpn:ODPoint" ) ) {
-                ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id);
+                ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id, true );
                 
                 pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
                 if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
+                if(pTentPath) tpOp->m_bIsInPath = true;
             }
             else if( ChildName == _T ( "name" ) ) {
                 wxString l_name = wxString::FromUTF8( tschild.first_child().value() );
@@ -1797,7 +1800,7 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
                         break;
                     }
                 }
-                if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || !TypeString.compare( wxS("DR") ) ) {
+                if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("Guard Zone") ) ) {
                     ODPath *pPath = GPXLoadPath1( object, true, true, b_layerviz, layer_id, &TypeString );
                     n_obj++;
                     InsertPathA( pPath );

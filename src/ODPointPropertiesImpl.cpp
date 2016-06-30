@@ -127,6 +127,8 @@ ODPointPropertiesImpl::~ODPointPropertiesImpl()
 
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
+    //m_bSizerFill->RecalcSizes();
+/*    
     wxSize sz = m_SizerDialogBox->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
     wxSize dsize = ::wxGetDisplaySize();
@@ -139,7 +141,13 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    
+*/    
+
+    m_SizerBasicProperties->Layout();
+    m_bSizerOuterProperties->Layout();
+    m_SizerODPointRangeRingsSelect->Layout();
+    m_SizerDialogBox->Layout();
+    this->GetSizer()->Fit( this );
     this->Layout();
 }
 
@@ -461,13 +469,13 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
+            m_bSizerOuterProperties->Show( m_bSizerFill );
             m_staticTextBoundaryPointInclusionSize->Show();
             m_sliderBoundaryPointInclusionSize->Enable( true );
             m_sliderBoundaryPointInclusionSize->Show();
             m_staticTextFillDensity->Show();
             m_sliderBoundaryPointFillTransparency->Enable( true );
             m_sliderBoundaryPointFillTransparency->Show();
-            m_bSizerOuterProperties->Show( m_bSizerFill );
         } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
@@ -653,6 +661,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 caption.append(_("EBL Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
                 caption.append(_("DR Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point"))
+                caption.append(_("Guard Zone Point Properties"));
         }
         SetTitle( caption );
         

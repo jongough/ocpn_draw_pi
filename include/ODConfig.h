@@ -50,6 +50,7 @@ class ODConfig
 
         virtual void UpdateNavObj(void);
         virtual void LoadNavObjects();
+        virtual bool LoadLayers(wxString &path);
 
         void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);
         void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
