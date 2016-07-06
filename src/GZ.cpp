@@ -368,7 +368,7 @@ void GZ::UpdateGZSelectablePath( void )
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
-                if(!isnan(g_pfFix.Hdt)) {
+                if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
                 } else {
@@ -377,7 +377,7 @@ void GZ::UpdateGZSelectablePath( void )
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
-                if(!isnan(g_pfFix.Cog)) {
+                if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
                 } else {
@@ -436,7 +436,7 @@ void GZ::MaintainWith( void )
     
     switch(m_iMaintainWith) {
         case ID_MAINTAIN_WITH_HEADING:
-            if(!isnan(g_pfFix.Hdt)) {
+            if(!wxIsNaN(g_pfFix.Hdt)) {
                 PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, g_pfFix.Hdt + m_dFirstLineDirection, m_dFirstDistance, &pStartPoint->m_lat, &pStartPoint->m_lon);
                 PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, g_pfFix.Hdt + m_dSecondLineDirection, m_dSecondDistance, &pEndPoint->m_lat, &pEndPoint->m_lon);
             } else {
@@ -445,7 +445,7 @@ void GZ::MaintainWith( void )
             }
             break;
         case ID_MAINTAIN_WITH_COG:
-            if(!isnan(g_pfFix.Cog)) {
+            if(!wxIsNaN(g_pfFix.Cog)) {
                 PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, g_pfFix.Cog + m_dFirstLineDirection, m_dFirstDistance, &pStartPoint->m_lat, &pStartPoint->m_lon);
                 PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, g_pfFix.Cog + m_dSecondLineDirection, m_dSecondDistance, &pEndPoint->m_lat, &pEndPoint->m_lon);
             } else {
@@ -465,7 +465,7 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
-                if(!isnan(g_pfFix.Hdt)) {
+                if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
                 } else {
@@ -474,7 +474,7 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
-                if(!isnan(g_pfFix.Cog)) {
+                if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
                 } else {
@@ -532,7 +532,7 @@ wxBoundingBox GZ::GetBBox( void )
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
-                if(!isnan(g_pfFix.Hdt)) {
+                if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
                 } else {
@@ -541,7 +541,7 @@ wxBoundingBox GZ::GetBBox( void )
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
-                if(!isnan(g_pfFix.Cog)) {
+                if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
                 } else {

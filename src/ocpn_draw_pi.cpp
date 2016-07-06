@@ -777,31 +777,31 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
-    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !isnan(pfix.Cog))  || (g_pfFix.Hdt != pfix.Hdt && !isnan(pfix.Hdt))))
+    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !wxIsNaN(pfix.Cog))  || (g_pfFix.Hdt != pfix.Hdt && !wxIsNaN(pfix.Hdt))))
         l_bBoatChange = true;
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
-    if(isnan(pfix.Cog)) {
+    if(wxIsNaN(pfix.Cog)) {
         if(g_pfFix.Cog != 0.)
             l_bBoatChange = true;
         g_pfFix.Cog = 0.;
     }
     else g_pfFix.Cog = pfix.Cog;
-    if(isnan(pfix.Sog)) {
+    if(wxIsNaN(pfix.Sog)) {
         if(g_pfFix.Sog != 0.)
             l_bBoatChange = true;
         g_pfFix.Sog = 0.;
     }
     g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
-    if(isnan(pfix.Hdm)) {
+    if(wxIsNaN(pfix.Hdm)) {
         if(g_pfFix.Hdm != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdm = 0.;
     }
     else g_pfFix.Hdm = pfix.Hdm;
-    if(isnan(pfix.Hdt)) {
+    if(wxIsNaN(pfix.Hdt)) {
         if(g_pfFix.Hdt != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdt = 0.;
@@ -3001,11 +3001,11 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     if(m_pMouseEBL->m_bRotateWithBoat) {
         switch(m_pMouseEBL->m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
-                if(!isnan(g_pfFix.Hdt))
+                if(!wxIsNaN(g_pfFix.Hdt))
                     m_pMouseEBL->m_dEBLAngle -= g_pfFix.Hdt;
                 break;
             case ID_MAINTAIN_WITH_COG:
-                if(!isnan(g_pfFix.Cog))
+                if(!wxIsNaN(g_pfFix.Cog))
                     m_pMouseEBL->m_dEBLAngle -= g_pfFix.Cog;
                 break;
         }
@@ -3077,11 +3077,11 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
         if(m_pMouseGZ->m_bRotateWithBoat) {
             switch(m_pMouseGZ->m_iMaintainWith) {
                 case ID_MAINTAIN_WITH_HEADING:
-                    if(!isnan(g_pfFix.Hdt))
+                    if(!wxIsNaN(g_pfFix.Hdt))
                         m_pMouseGZ->m_dFirstLineDirection -= g_pfFix.Hdt;
                     break;
                 case ID_MAINTAIN_WITH_COG:
-                    if(!isnan(g_pfFix.Cog))
+                    if(!wxIsNaN(g_pfFix.Cog))
                         m_pMouseGZ->m_dFirstLineDirection -= g_pfFix.Cog;
                     break;
             }
@@ -3111,11 +3111,11 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
             if(m_pMouseGZ->m_bRotateWithBoat) {
                 switch(m_pMouseGZ->m_iMaintainWith) {
                     case ID_MAINTAIN_WITH_HEADING:
-                        if(!isnan(g_pfFix.Hdt))
+                        if(!wxIsNaN(g_pfFix.Hdt))
                             m_pMouseGZ->m_dSecondLineDirection -= g_pfFix.Hdt;
                         break;
                     case ID_MAINTAIN_WITH_COG:
-                        if(!isnan(g_pfFix.Cog))
+                        if(!wxIsNaN(g_pfFix.Cog))
                             m_pMouseGZ->m_dSecondLineDirection -= g_pfFix.Cog;
                         break;
                 }

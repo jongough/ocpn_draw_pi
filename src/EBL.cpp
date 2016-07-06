@@ -96,9 +96,9 @@ EBL::EBL() : ODPath()
     SetActiveColours();
     m_bRotateWithBoat = g_bEBLRotateWithBoat;
     m_iMaintainWith = g_iEBLMaintainWith;
-    if(isnan(g_pfFix.Hdt)) m_dBoatHeading = 0.;
+    if(wxIsNaN(g_pfFix.Hdt)) m_dBoatHeading = 0.;
     else m_dBoatHeading = g_pfFix.Hdt;
-    if(isnan(g_pfFix.Cog)) m_dBoatCOG = 0.;
+    if(wxIsNaN(g_pfFix.Cog)) m_dBoatCOG = 0.;
     else m_dBoatCOG = g_pfFix.Cog;
     m_dEBLAngle = 0.;
     m_dLength = 0.;
@@ -263,11 +263,11 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
                 DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength);
                 switch(m_iMaintainWith) {
                     case ID_MAINTAIN_WITH_HEADING:
-                        if(!isnan(g_pfFix.Hdt))
+                        if(!wxIsNaN(g_pfFix.Hdt))
                             hdg = g_pfFix.Hdt;
                         break;
                     case ID_MAINTAIN_WITH_COG:
-                        if(!isnan(g_pfFix.Cog))
+                        if(!wxIsNaN(g_pfFix.Cog))
                             hdg = g_pfFix.Cog;
                         break;
                 }
@@ -447,13 +447,13 @@ void EBL::MaintainWith( void )
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
     switch(m_iMaintainWith) {
         case ID_MAINTAIN_WITH_HEADING:
-            if(!isnan(g_pfFix.Hdt))
+            if(!wxIsNaN(g_pfFix.Hdt))
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             break;
         case ID_MAINTAIN_WITH_COG:
-            if(!isnan(g_pfFix.Cog))
+            if(!wxIsNaN(g_pfFix.Cog))
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
             else
                 PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
