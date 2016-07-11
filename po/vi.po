@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-06-27 16:42+1000\n"
-"PO-Revision-Date: 2016-02-28 17:41-0500\n"
+"PO-Revision-Date: 2016-07-10 15:32-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -15,1162 +15,1652 @@ msgstr ""
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: vi\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
-#
-msgid " &Properties..."
-msgstr ""
-#
-msgid " To: "
-msgstr ""
-#
-msgid ""
-" shorter than rhumbline.\n"
-"\n"
-msgstr ""
-#
-msgid " to "
-msgstr ""
-#
-msgid "&Activate"
-msgstr ""
-#
-msgid "&Apply"
-msgstr ""
-#
-msgid "&Cancel"
-msgstr ""
-#
-msgid "&Center View"
-msgstr ""
-#
-msgid "&Deactivate"
-msgstr ""
-#
-msgid "&Delete"
-msgstr ""
-#
-msgid "&Delete All"
-msgstr ""
-#
-msgid "&Export selected..."
-msgstr ""
-#
-msgid "&New"
-msgstr ""
-#
-msgid "&OK"
-msgstr ""
-#
-msgid "&Properties"
-msgstr ""
-#
-msgid "&Properties..."
-msgstr ""
-#
-msgid "&Remove Selected"
-msgstr ""
-#
-msgid "(Unnamed )"
-msgstr ""
-#
-msgid "(Unnamed Layer)"
-msgstr ""
-#
-msgid "(Unnamed) "
-msgstr ""
-#
-msgid "(unnamed)"
-msgstr ""
-#
-msgid "0"
-msgstr ""
-#
-msgid "0.0"
-msgstr ""
-#
-msgid "0.5"
-msgstr ""
-#
-msgid "1"
-msgstr ""
-#
-msgid "1 Pixel"
-msgstr ""
-#
-msgid "1 pixel"
-msgstr ""
-#
-msgid "10"
-msgstr ""
-#
-msgid "10 Pixels"
-msgstr ""
-#
-msgid "10 pixels"
-msgstr ""
-#
-msgid "2"
-msgstr ""
-#
-msgid "2 Pixels"
-msgstr ""
-#
-msgid "2 pixels"
-msgstr ""
-#
-msgid "3"
-msgstr ""
-#
-msgid "3 Pixels"
-msgstr ""
-#
-msgid "3 pixels"
-msgstr ""
-#
-msgid "4"
-msgstr ""
-#
-msgid "4 Pixels"
-msgstr ""
-#
-msgid "4 pixels"
-msgstr ""
-#
-msgid "5"
-msgstr ""
-#
-msgid "5 Pixels"
-msgstr ""
-#
-msgid "5 pixels"
-msgstr ""
-#
-msgid "6"
-msgstr ""
-#
-msgid "6 Pixels"
-msgstr ""
-#
-msgid "6 pixels"
-msgstr ""
-#
-msgid "7"
-msgstr ""
-#
-msgid "7 Pixels"
-msgstr ""
-#
-msgid "7 pixels"
-msgstr ""
-#
-msgid "8"
-msgstr ""
-#
-msgid "8 Pixels"
-msgstr ""
-#
-msgid "8 pixels"
-msgstr ""
-#
-msgid "9"
-msgstr ""
-#
-msgid "9 Pixels"
-msgstr ""
-#
-msgid "9 pixels"
-msgstr ""
-#
-msgid "About"
-msgstr ""
-#
-msgid "Activate"
-msgstr ""
-#
-msgid "Active"
-msgstr ""
-#
-msgid ""
-"Active DR Line\n"
-"Colour"
-msgstr ""
-#
-msgid "Active EBL Line Colour"
-msgstr ""
-#
-msgid "Active Fill Colour"
-msgstr ""
-#
-msgid "Active Line Colour"
-msgstr ""
-#
-msgid "All"
-msgstr ""
-#
-msgid "Always"
-msgstr ""
-#
-msgid "Applying changes from "
-msgstr ""
-#
-msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr ""
-#
-msgid "Are you sure you want to delete <ALL> paths?"
-msgstr ""
-#
-msgid "Are you sure you want to delete the selected object(s)"
-msgstr ""
-#
-msgid "Are you sure you want to delete this Boundary Point?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this Boundary?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this DR Point?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this DR?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this EBL Point?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this EBL?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this OD Point?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this Text Point?"
-msgstr ""
-#
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr ""
-#
-msgid "Are you sure you want to remove this "
-msgstr ""
-#
-msgid "Are you sure you want to remove this Boundary Point?"
-msgstr ""
-#
-msgid "Are you sure you want to remove this DR Point?"
-msgstr ""
-#
-msgid "Are you sure you want to remove this EBL Point?"
-msgstr ""
-#
-msgid "Are you sure you want to remove this OD Point?"
-msgstr ""
-#
-msgid "Are you sure you want to remove this point?"
-msgstr ""
-#
-msgid "Arrival Radius"
-msgstr ""
-#
-msgid "Background Colour"
-msgstr ""
-#
-msgid "Background Density"
-msgstr ""
-#
-msgid "Background Transparency"
-msgstr ""
-#
-msgid "Basic"
-msgstr ""
-#
-msgid "Bearing"
-msgstr ""
-#
-msgid "Bearing (M)"
-msgstr ""
-#
-msgid "Bearing From-To"
-msgstr ""
-#
-msgid "Bearing From-To (M)"
-msgstr ""
-#
-msgid "Boat"
-msgstr ""
-#
-msgid "Bottom"
-msgstr ""
-#
-msgid "Bottom Centre"
-msgstr ""
-#
-msgid "Boundary"
-msgstr ""
-#
-msgid "Boundary Point"
-msgstr ""
-#
-msgid "Boundary Point &Properties"
-msgstr ""
-#
-msgid ""
-"Boundary Point Inclusion\n"
-"Size"
-msgstr ""
-#
-msgid "Boundary Point Properties"
-msgstr ""
-#
-msgid "Boundary Point Properties, Layer: "
-msgstr ""
-#
-msgid "Boundary Point Type"
-msgstr ""
-#
-msgid "Boundary Properties"
-msgstr ""
-#
-msgid "Boundary Properties, Layer: "
-msgstr ""
-#
-msgid "Boundary Type"
-msgstr ""
-#
-msgid "Centre"
-msgstr ""
-#
-msgid "Centre on moving boat"
-msgstr ""
-#
-msgid "Change all Path Point Icons"
-msgstr ""
-#
-msgid "Combo!"
-msgstr ""
-#
-msgid "Confirm"
-msgstr ""
-#
-msgid "Confirm Object Delete"
-msgstr ""
-#
-msgid "Copy"
-msgstr ""
-#
-msgid "Copy Boundary GUID"
-msgstr ""
-#
-msgid "Copy DR GUID"
-msgstr ""
-#
-msgid "Copy EBL GUID"
-msgstr ""
-#
-msgid "Copy Guard Zone GUID"
-msgstr ""
-#
-msgid "Copy Point GUID"
-msgstr ""
-#
-msgid "Copy lat/long"
-msgstr ""
-#
-msgid "Course over Ground"
-msgstr ""
-#
-msgid "Course over Ground (M)"
-msgstr ""
-#
-msgid "Course over Ground (T)"
-msgstr ""
-#
-msgid "Create Boundary"
-msgstr ""
-#
-msgid "Create Boundary Point"
-msgstr ""
-#
-msgid "Create DR"
-msgstr ""
-#
-msgid "Create EBL"
-msgstr ""
-#
-msgid "Create GZ"
-msgstr ""
-#
-msgid "Create Text Point"
-msgstr ""
-#
-msgid "DR"
-msgstr ""
-#
-msgid "DR Path Length"
-msgstr ""
-#
-msgid "DR Persistence"
-msgstr ""
-#
-msgid "DR Point"
-msgstr ""
-#
-msgid "DR Point &Properties"
-msgstr ""
-#
-msgid "DR Point Icon"
-msgstr ""
-#
-msgid "DR Point Interval"
-msgstr ""
-#
-msgid "DR Point Properties"
-msgstr ""
-#
-msgid "DR Point Properties, Layer: "
-msgstr ""
-#
-msgid "DR Properties"
-msgstr ""
-#
-msgid "DR Properties, Layer: "
-msgstr ""
-#
-msgid "Date:"
-msgstr ""
-#
-msgid "Days"
-msgstr ""
-#
-msgid "Deactivate"
-msgstr ""
-#
+
+#: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:450
 msgid "Dead Reckoning"
 msgstr ""
-#
-msgid "Delete"
+
+#: include/ODPathPropertiesDialogDef.h:116 src/pathmanagerdialog.cpp:1114
+msgid "Path Properties"
 msgstr ""
-#
-msgid "Delete All"
+
+#: include/ODPointPropertiesDialog.h:133
+msgid "OD Point Properties"
 msgstr ""
-#
-msgid "Delete..."
+
+#: include/ODPropertiesDialogDef.h:253
+msgid "OCPN Draw Properties"
 msgstr ""
-#
-msgid "Desc"
-msgstr ""
-#
-msgid "Description"
-msgstr ""
-#
-msgid "Display Toolbar"
-msgstr ""
-#
-msgid "Display text"
-msgstr ""
-#
-msgid "Distance"
-msgstr ""
-#
-msgid "Distance Between Range Rings"
-msgstr ""
-#
-msgid "Distance From Boat"
-msgstr ""
-#
-msgid "Distance Unit"
-msgstr ""
-#
-msgid "Distance Units"
-msgstr ""
-#
-msgid "Distance between Range Rings"
-msgstr ""
-#
-msgid "Distance from Ownship"
-msgstr ""
-#
-msgid ""
-"Do you also want to make the shared OD Points being part of this boundary "
-"invisible?"
-msgstr ""
-#
-msgid "Dot"
-msgstr ""
-#
-msgid "Dot Dash"
-msgstr ""
-#
+
+#: include/ODToolbarDef.h:46 src/ocpn_draw_pi.cpp:514 src/ocpn_draw_pi.cpp:516
 msgid "Draw Toolbar"
 msgstr ""
-#
-msgid "EBL"
+
+#: src/EBL.cpp:116 src/EBL.cpp:286 src/ODPathPropertiesDialogImpl.cpp:370
+#: src/ODPathPropertiesDialogImpl.cpp:378
+#: src/ODPathPropertiesDialogImpl.cpp:414
+#: src/ODPathPropertiesDialogImpl.cpp:495
+#: src/ODPathPropertiesDialogImpl.cpp:503
+#: src/ODPathPropertiesDialogImpl.cpp:538 src/ocpn_draw_pi.cpp:2068
+#: src/ocpn_draw_pi.cpp:2971
+msgid "Boat"
 msgstr ""
-#
-msgid "EBL Angle (-P/+S)"
+
+#: src/EBL.cpp:116 src/EBL.cpp:315 src/EBL.cpp:362 src/EBL.cpp:372
+#: src/ODEventHandler.cpp:698
+msgid "Start"
 msgstr ""
-#
-msgid "EBL Fixed End Position"
-msgstr ""
-#
-msgid "EBL Persistence"
-msgstr ""
-#
-msgid "EBL Point"
-msgstr ""
-#
-msgid "EBL Point &Properties"
-msgstr ""
-#
-msgid "EBL Point Properties"
-msgstr ""
-#
-msgid "EBL Point Properties, Layer: "
-msgstr ""
-#
-msgid "EBL Properties"
-msgstr ""
-#
-msgid "EBL Properties, Layer: "
-msgstr ""
-#
-msgid ""
-"Edge Panning Sensitivity\n"
-"(percentage screen width) Default 5"
-msgstr ""
-#
-msgid "Electronic Bearing Line"
-msgstr ""
-#
+
+#: src/EBL.cpp:124 src/ocpn_draw_pi.cpp:2977
 msgid "End"
 msgstr ""
-#
-msgid "End Point Icon"
+
+#: src/EBLProp.cpp:57 src/ODPropertiesDialogDef.cpp:568
+msgid "EBL Persistence"
 msgstr ""
-#
-msgid "Example"
-msgstr ""
-#
-msgid "Exclusion"
-msgstr ""
-#
-msgid "Export All Visible..."
-msgstr ""
-#
-msgid "Export GPX file"
-msgstr ""
-#
-msgid "Extended"
-msgstr ""
-#
-msgid "Fill Colour"
-msgstr ""
-#
-msgid "Fill Density"
-msgstr ""
-#
-msgid "First"
-msgstr ""
-#
-msgid "First Angle (-P/+S)"
-msgstr ""
-#
-msgid "First Point Icon"
-msgstr ""
-#
-msgid "First distance"
-msgstr ""
-#
-msgid "Fonts"
-msgstr ""
-#
-msgid "For this leg the Great Circle boundary is "
-msgstr ""
-#
-msgid "From Point"
-msgstr ""
-#
-msgid "From: "
-msgstr ""
-#
-msgid "GUID"
-msgstr ""
-#
-msgid "GZ"
-msgstr ""
-#
-msgid "General"
-msgstr ""
-#
-msgid ""
-"General Drawing for OpenCPN\n"
-"\n"
-"Thanks to the community for their helpful suggestions."
-msgstr ""
-#
-msgid "General drawing for OpenCPN"
-msgstr ""
-#
-msgid "Guard Zone"
-msgstr ""
-#
+
+#: src/GZProp.cpp:78 src/ODPropertiesDialogDef.cpp:922
 msgid "Guard Zone Persistence"
 msgstr ""
-#
-msgid "Guard Zone Point"
+
+#: src/ODConfig.cpp:155 src/ODConfig.cpp:195 src/ODConfig.cpp:286
+#: src/ODConfig.cpp:311
+msgid "Export GPX file"
 msgstr ""
-#
-msgid "Guard Zone Properties"
+
+#: src/ODConfig.cpp:178 src/ODConfig.cpp:208 src/ODConfig.cpp:299
+msgid "Confirm"
 msgstr ""
-#
-msgid "Heading"
+
+#: src/ODConfig.cpp:178 src/ODConfig.cpp:208 src/ODConfig.cpp:299
+msgid "Overwrite existing file?"
 msgstr ""
-#
-msgid "Help"
-msgstr ""
-#
-msgid "Hide Boundary Point Icons"
-msgstr ""
-#
-msgid "Hide Point names"
-msgstr ""
-#
-msgid "Hide from chart"
-msgstr ""
-#
-msgid "Hours"
-msgstr ""
-#
-msgid "I&mport GPX..."
-msgstr ""
-#
-msgid "Icon"
-msgstr ""
-#
-msgid "Import GPX file"
-msgstr ""
-#
-msgid ""
-"Inactive DR Line\n"
-"Colour"
-msgstr ""
-#
-msgid "Inactive EBL Line Colour"
-msgstr ""
-#
-msgid "Inactive Fill Colour"
-msgstr ""
-#
-msgid "Inactive Line Colour"
-msgstr ""
-#
-msgid "Inclusion"
-msgstr ""
-#
-msgid ""
-"Inclusion Boundary\n"
-"Size"
-msgstr ""
-#
-msgid "Inclusion Boundary Size"
-msgstr ""
-#
-msgid ""
-"Initial Edge Panning Sensitivity\n"
-"(percentage screen width) Default 3"
-msgstr ""
-#
-msgid "Insert Boundary Point"
-msgstr ""
-#
-msgid "Insert EBL Point"
-msgstr ""
-#
-msgid "Interval Type"
-msgstr ""
-#
-msgid "Kilometres"
-msgstr ""
-#
-msgid "Latitude"
-msgstr ""
-#
-msgid "Layer"
-msgstr ""
-#
-msgid "Layer "
-msgstr ""
-#
-msgid "Layer Boundary"
-msgstr ""
-#
-msgid "Layer Boundary Point"
-msgstr ""
-#
-msgid "Layer DR Point"
-msgstr ""
-#
-msgid "Layer EBL Point"
-msgstr ""
-#
-msgid "Layer Name"
-msgstr ""
-#
-msgid "Layer Text Point"
-msgstr ""
-#
-msgid "Layers"
-msgstr ""
-#
-msgid "Left"
-msgstr ""
-#
-msgid "Leg: from "
-msgstr ""
-#
-msgid "Length Type"
-msgstr ""
-#
-msgid "Line Colour"
-msgstr ""
-#
-msgid "Line Style"
-msgstr ""
-#
-msgid "Line Width"
-msgstr ""
-#
-msgid "List contents "
-msgstr ""
-#
+
+#: src/ODConfig.cpp:243
 msgid "Loading navobjects from "
 msgstr ""
-#
-msgid "Long Dash"
+
+#: src/ODConfig.cpp:275
+msgid "Applying changes from "
 msgstr ""
-#
-msgid "Longitude"
+
+#: src/ODConfig.cpp:383
+msgid "Import GPX file"
 msgstr ""
-#
-msgid "Maintain with"
-msgstr ""
-#
-msgid "Major:"
-msgstr ""
-#
-msgid "Match VRM colour to EBL colour"
-msgstr ""
-#
-msgid "Minor:"
-msgstr ""
-#
-msgid "Minutes"
-msgstr ""
-#
-msgid "Move Boundary"
-msgstr ""
-#
-msgid "Move Boundary Point"
-msgstr ""
-#
-msgid "Move DR Point"
-msgstr ""
-#
-msgid "Move EBL"
-msgstr ""
-#
-msgid "Move EBL Point"
-msgstr ""
-#
-msgid "Move Guard Zone Point"
-msgstr ""
-#
-msgid "Move OD Point"
-msgstr ""
-#
-msgid "Move Text Point"
-msgstr ""
-#
-msgid "Move start point to boat lat/lon"
-msgstr ""
-#
-msgid "Name"
-msgstr ""
-#
-msgid "Name:"
-msgstr ""
-#
-msgid "Nautical Miles"
-msgstr ""
-#
-msgid "Nav Object Backups"
-msgstr ""
-#
-msgid "Neither"
-msgstr ""
-#
-msgid "Never"
-msgstr ""
-#
+
+#: src/ODConfig.cpp:431
 #, c-format
 msgid "New layer %d: %s"
 msgstr ""
-#
-msgid "No alarm"
+
+#: src/ODDRDialogDef.cpp:26 src/ODPropertiesDialogDef.cpp:625
+msgid "Speed over Ground"
 msgstr ""
-#
-msgid "No. of items"
+
+#: src/ODDRDialogDef.cpp:30 src/ODDRDialogDef.cpp:46 src/ODDRDialogDef.cpp:54
+msgid "0.0"
 msgstr ""
-#
-msgid "None"
+
+#: src/ODDRDialogDef.cpp:34 src/ODPathPropertiesDialogDef.cpp:158
+#: src/ODPathPropertiesDialogDef.cpp:189 src/ODPropertiesDialogDef.cpp:554
+#: src/ODPropertiesDialogDef.cpp:632 src/ODPropertiesDialogDef.cpp:906
+msgid "Course over Ground"
 msgstr ""
-#
-msgid "Number of Point Range Rings"
+
+#: src/ODDRDialogDef.cpp:38
+msgid "0"
 msgstr ""
-#
-msgid "Number of Range Rings"
+
+#: src/ODDRDialogDef.cpp:42 src/ODPropertiesDialogDef.cpp:639
+msgid "DR Path Length"
 msgstr ""
-#
-msgid "OCPN Draw"
+
+#: src/ODDRDialogDef.cpp:50 src/ODPropertiesDialogDef.cpp:646
+msgid "DR Point Interval"
 msgstr ""
-#
-msgid "OCPN Draw Boundary"
+
+#: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
+#: src/ODPropertiesDialogDef.cpp:661 src/ODPropertiesDialogDef.cpp:667
+msgid "Distance"
 msgstr ""
-#
-msgid "OCPN Draw Boundary Create"
+
+#: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
+#: src/ODPropertiesDialogDef.cpp:661 src/ODPropertiesDialogDef.cpp:667
+msgid "Time"
 msgstr ""
-#
+
+#: src/ODDRDialogDef.cpp:60 src/ODPropertiesDialogDef.cpp:663
+msgid "Length Type"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:66 src/ODPropertiesDialogDef.cpp:669
+msgid "Interval Type"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:176
+#: src/ODPropertiesDialogDef.cpp:300 src/ODPropertiesDialogDef.cpp:673
+#: src/ODPropertiesDialogDef.cpp:756
+msgid "Kilometres"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:176
+#: src/ODPropertiesDialogDef.cpp:300 src/ODPropertiesDialogDef.cpp:673
+#: src/ODPropertiesDialogDef.cpp:756
+msgid "Nautical Miles"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:80 src/ODPropertiesDialogDef.cpp:675
+msgid "Distance Units"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:679
+msgid "Days"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:679
+msgid "Hours"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:679
+msgid "Minutes"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:86 src/ODPropertiesDialogDef.cpp:681
+msgid "Time Units"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:96 src/ODPathPropertiesDialogDef.cpp:266
+#: src/ODPointPropertiesDialog.cpp:356 src/ODPropertiesDialogDef.cpp:1068
+#: src/pathmanagerdialog.cpp:656
+msgid "&OK"
+msgstr ""
+
+#: src/ODDRDialogDef.cpp:100 src/ODPathPropertiesDialogDef.cpp:270
+#: src/ODPointPropertiesDialog.cpp:359 src/ODPropertiesDialogDef.cpp:1071
+msgid "&Cancel"
+msgstr ""
+
+#: src/ODDRDialogImpl.cpp:102 src/ODDRDialogImpl.cpp:135
+#: src/ODDRDialogImpl.cpp:174
+msgid "Course over Ground (M)"
+msgstr ""
+
+#: src/ODDRDialogImpl.cpp:103 src/ODDRDialogImpl.cpp:136
+#: src/ODDRDialogImpl.cpp:175
+msgid "Course over Ground (T)"
+msgstr ""
+
+#: src/ODDRDialogImpl.cpp:220 src/ODPropertiesDialogDef.cpp:702
+msgid "DR"
+msgstr ""
+
+#: src/ODEventHandler.cpp:284 src/ODEventHandler.cpp:865
+msgid "Layer "
+msgstr ""
+
+#: src/ODEventHandler.cpp:294
+msgid "(unnamed)"
+msgstr ""
+
+#: src/ODEventHandler.cpp:299
+msgid "Total Length: "
+msgstr ""
+
+#: src/ODEventHandler.cpp:300
+msgid "Leg: from "
+msgstr ""
+
+#: src/ODEventHandler.cpp:301
+msgid " to "
+msgstr ""
+
+#: src/ODEventHandler.cpp:305
+msgid "From: "
+msgstr ""
+
+#: src/ODEventHandler.cpp:310
+msgid " To: "
+msgstr ""
+
+#: src/ODEventHandler.cpp:399
+msgid "Layer"
+msgstr ""
+
+#: src/ODEventHandler.cpp:560
+msgid "Are you sure you want to delete this Boundary?"
+msgstr ""
+
+#: src/ODEventHandler.cpp:561
 msgid "OCPN Draw Boundary Delete"
 msgstr ""
-#
-msgid "OCPN Draw DR Delete"
+
+#: src/ODEventHandler.cpp:564
+msgid "Are you sure you want to delete this EBL?"
 msgstr ""
-#
-msgid "OCPN Draw Delete Boundary Point"
-msgstr ""
-#
-msgid "OCPN Draw Delete DR Point"
-msgstr ""
-#
-msgid "OCPN Draw Delete EBL Point"
-msgstr ""
-#
-msgid "OCPN Draw Delete OD Point"
-msgstr ""
-#
-msgid "OCPN Draw Delete Text Point"
-msgstr ""
-#
+
+#: src/ODEventHandler.cpp:565
 msgid "OCPN Draw EBL Delete"
 msgstr ""
-#
-msgid "OCPN Draw Manager"
+
+#: src/ODEventHandler.cpp:568
+msgid "Are you sure you want to delete this DR?"
 msgstr ""
-#
-msgid "OCPN Draw Path &Properties"
+
+#: src/ODEventHandler.cpp:569
+msgid "OCPN Draw DR Delete"
 msgstr ""
-#
-msgid "OCPN Draw Point"
+
+#: src/ODEventHandler.cpp:630
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
 msgstr ""
-#
-msgid "OCPN Draw Point Create"
-msgstr ""
-#
-msgid "OCPN Draw Point, Layer: "
-msgstr ""
-#
-msgid "OCPN Draw Properties"
-msgstr ""
-#
+
+#: src/ODEventHandler.cpp:631 src/ODEventHandler.cpp:648
 msgid "OCPN Draw Remove "
 msgstr ""
-#
-msgid "OCPN Draw Remove Boundary Point"
-msgstr ""
-#
-msgid "OCPN Draw Remove DR Point"
-msgstr ""
-#
-msgid "OCPN Draw Remove EBL Point"
-msgstr ""
-#
-msgid "OCPN Draw Remove OD Point"
-msgstr ""
-#
-msgid "OD"
-msgstr ""
-#
+
+#: src/ODEventHandler.cpp:634 src/ODEventHandler.cpp:975
 msgid "OD Point"
 msgstr ""
-#
-msgid "OD Point Name"
+
+#: src/ODEventHandler.cpp:647
+msgid "Are you sure you want to remove this "
 msgstr ""
-#
-msgid "OD Point Properties"
+
+#: src/ODEventHandler.cpp:651 src/ODEventHandler.cpp:663
+msgid "Are you sure you want to remove this OD Point?"
 msgstr ""
-#
-msgid "OD Points"
+
+#: src/ODEventHandler.cpp:652 src/ODEventHandler.cpp:664
+#: src/ODPathPropertiesDialogImpl.cpp:730
+msgid "OCPN Draw Remove OD Point"
 msgstr ""
-#
-msgid "OD\\WD"
+
+#: src/ODEventHandler.cpp:654
+msgid "Are you sure you want to remove this Boundary Point?"
 msgstr ""
-#
-msgid "On Rollover Only"
+
+#: src/ODEventHandler.cpp:655
+msgid "OCPN Draw Remove Boundary Point"
 msgstr ""
-#
-msgid "OpenCPN Alert"
+
+#: src/ODEventHandler.cpp:657
+msgid "Are you sure you want to remove this EBL Point?"
 msgstr ""
-#
-msgid "Other:"
+
+#: src/ODEventHandler.cpp:658
+msgid "OCPN Draw Remove EBL Point"
 msgstr ""
-#
-msgid "Overwrite existing file?"
+
+#: src/ODEventHandler.cpp:660
+msgid "Are you sure you want to remove this DR Point?"
 msgstr ""
-#
-msgid "Paste"
+
+#: src/ODEventHandler.cpp:661
+msgid "OCPN Draw Remove DR Point"
 msgstr ""
-#
-msgid "Paste lat/long"
+
+#: src/ODEventHandler.cpp:713 src/ODEventHandler.cpp:752
+msgid "Are you sure you want to delete this OD Point?"
 msgstr ""
-#
-msgid "Patch:"
+
+#: src/ODEventHandler.cpp:714 src/ODEventHandler.cpp:753
+msgid "OCPN Draw Delete OD Point"
 msgstr ""
-#
-msgid "Path"
+
+#: src/ODEventHandler.cpp:716 src/ODEventHandler.cpp:755
+msgid "Are you sure you want to delete this Boundary Point?"
 msgstr ""
-#
-msgid "Path & Point Manager"
+
+#: src/ODEventHandler.cpp:717 src/ODEventHandler.cpp:756
+msgid "OCPN Draw Delete Boundary Point"
 msgstr ""
-#
-msgid "Path Name"
+
+#: src/ODEventHandler.cpp:719 src/ODEventHandler.cpp:761
+msgid "Are you sure you want to delete this DR Point?"
 msgstr ""
-#
-msgid "Path Persistence"
+
+#: src/ODEventHandler.cpp:720 src/ODEventHandler.cpp:762
+msgid "OCPN Draw Delete DR Point"
 msgstr ""
-#
-msgid "Path Properties"
+
+#: src/ODEventHandler.cpp:722 src/ODEventHandler.cpp:764
+msgid "Are you sure you want to delete this EBL Point?"
 msgstr ""
-#
-msgid "Path Properties, Layer: "
+
+#: src/ODEventHandler.cpp:723 src/ODEventHandler.cpp:765
+msgid "OCPN Draw Delete EBL Point"
 msgstr ""
-#
-msgid "Paths"
+
+#: src/ODEventHandler.cpp:758
+msgid "Are you sure you want to delete this Text Point?"
 msgstr ""
-#
-msgid "Persistent"
+
+#: src/ODEventHandler.cpp:759
+msgid "OCPN Draw Delete Text Point"
 msgstr ""
-#
-msgid "Persistent over Crash"
+
+#: src/ODEventHandler.cpp:872 src/ODEventHandler.cpp:880
+#: src/ODEventHandler.cpp:957 src/ODEventHandler.cpp:977
+msgid "Properties..."
 msgstr ""
-#
+
+#: src/ODEventHandler.cpp:883
+msgid "Centre on moving boat"
+msgstr ""
+
+#: src/ODEventHandler.cpp:884
+msgid "Move start point to boat lat/lon"
+msgstr ""
+
+#: src/ODEventHandler.cpp:886
 msgid "Pick a new start point"
 msgstr ""
-#
-msgid ""
-"Please report problems using FlySpray at:\n"
-"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n"
-"\n"
-"or\n"
-"\n"
+
+#: src/ODEventHandler.cpp:889
+msgid "Match VRM colour to EBL colour"
+msgstr ""
+
+#: src/ODEventHandler.cpp:892
+msgid "Update initial conditions"
+msgstr ""
+
+#: src/ODEventHandler.cpp:897
+msgid "Move Boundary"
+msgstr ""
+
+#: src/ODEventHandler.cpp:899
+msgid "Move EBL"
+msgstr ""
+
+#: src/ODEventHandler.cpp:905
+msgid "Insert Boundary Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:907
+msgid "Insert EBL Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:914
+msgid "Hide Boundary Point Icons"
+msgstr ""
+
+#: src/ODEventHandler.cpp:916 src/ODPathPropertiesDialogDef.cpp:145
+#: src/ODPropertiesDialogDef.cpp:168
+msgid "Show Boundary Point Icons"
+msgstr ""
+
+#: src/ODEventHandler.cpp:919
+msgid "Delete..."
+msgstr ""
+
+#: src/ODEventHandler.cpp:922
+msgid "Deactivate"
+msgstr ""
+
+#: src/ODEventHandler.cpp:923
+msgid "Activate"
+msgstr ""
+
+#: src/ODEventHandler.cpp:927
+msgid "Copy Boundary GUID"
+msgstr ""
+
+#: src/ODEventHandler.cpp:929
+msgid "Copy EBL GUID"
+msgstr ""
+
+#: src/ODEventHandler.cpp:931
+msgid "Copy DR GUID"
+msgstr ""
+
+#: src/ODEventHandler.cpp:933
+msgid "Copy Guard Zone GUID"
+msgstr ""
+
+#: src/ODEventHandler.cpp:949
+msgid "Layer Boundary Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:951
+msgid "Layer Text Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:953
+msgid "Layer EBL Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:955
+msgid "Layer DR Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:965 src/ODPropertiesDialogDef.cpp:340
+#: src/ODToolbarImpl.cpp:447
+msgid "Boundary Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:967 src/ODPropertiesDialogDef.cpp:432
+#: src/ODToolbarImpl.cpp:448
+msgid "Text Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:969
+msgid "EBL Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:971 src/ODPropertiesDialogDef.cpp:796
+msgid "DR Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:973
+msgid "Guard Zone Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:980
+msgid "Move Boundary Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:982
+msgid "Move Text Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:984
+msgid "Move EBL Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:986
+msgid "Move DR Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:988 src/ODEventHandler.cpp:991
+msgid "Move OD Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:990
+msgid "Move Guard Zone Point"
+msgstr ""
+
+#: src/ODEventHandler.cpp:998
+msgid "Remove Point from Path"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1000 src/ODEventHandler.cpp:1003
+msgid "Delete"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1004
+msgid "Copy Point GUID"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:33 src/ODPointPropertiesDialog.cpp:31
+msgid "Name"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:40 src/ODPathPropertiesDialogImpl.cpp:653
+#: src/ODPointPropertiesDialog.cpp:218
+msgid "Description"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:47 src/ODPointPropertiesDialog.cpp:334
+msgid "GUID"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:65
+msgid "Active"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:69
+msgid "Total Length"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:86
+msgid "Line Colour"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:93 src/ODPropertiesDialogDef.cpp:130
+#: src/ODPropertiesDialogDef.cpp:466 src/ODPropertiesDialogDef.cpp:541
+#: src/ODPropertiesDialogDef.cpp:615 src/ODPropertiesDialogDef.cpp:878
+msgid "Line Style"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:203
+#: src/ODPropertiesDialogDef.cpp:134 src/ODPropertiesDialogDef.cpp:327
+#: src/ODPropertiesDialogDef.cpp:470 src/ODPropertiesDialogDef.cpp:545
+#: src/ODPropertiesDialogDef.cpp:619 src/ODPropertiesDialogDef.cpp:783
+#: src/ODPropertiesDialogDef.cpp:882
+msgid "Dot"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:203
+#: src/ODPropertiesDialogDef.cpp:134 src/ODPropertiesDialogDef.cpp:327
+#: src/ODPropertiesDialogDef.cpp:470 src/ODPropertiesDialogDef.cpp:545
+#: src/ODPropertiesDialogDef.cpp:619 src/ODPropertiesDialogDef.cpp:783
+#: src/ODPropertiesDialogDef.cpp:882
+msgid "Dot Dash"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:203
+#: src/ODPropertiesDialogDef.cpp:134 src/ODPropertiesDialogDef.cpp:327
+#: src/ODPropertiesDialogDef.cpp:470 src/ODPropertiesDialogDef.cpp:545
+#: src/ODPropertiesDialogDef.cpp:619 src/ODPropertiesDialogDef.cpp:783
+#: src/ODPropertiesDialogDef.cpp:882
+msgid "Long Dash"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:203
+#: src/ODPropertiesDialogDef.cpp:134 src/ODPropertiesDialogDef.cpp:327
+#: src/ODPropertiesDialogDef.cpp:470 src/ODPropertiesDialogDef.cpp:545
+#: src/ODPropertiesDialogDef.cpp:619 src/ODPropertiesDialogDef.cpp:783
+#: src/ODPropertiesDialogDef.cpp:882
+msgid "Short Dash"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:203
+#: src/ODPropertiesDialogDef.cpp:134 src/ODPropertiesDialogDef.cpp:327
+#: src/ODPropertiesDialogDef.cpp:470 src/ODPropertiesDialogDef.cpp:545
+#: src/ODPropertiesDialogDef.cpp:619 src/ODPropertiesDialogDef.cpp:783
+#: src/ODPropertiesDialogDef.cpp:882
+msgid "Solid"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:103 src/ODPropertiesDialogDef.cpp:120
+#: src/ODPropertiesDialogDef.cpp:456 src/ODPropertiesDialogDef.cpp:531
+#: src/ODPropertiesDialogDef.cpp:605 src/ODPropertiesDialogDef.cpp:868
+msgid "Line Width"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "1 pixel"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "10 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "2 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "3 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "4 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "5 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "6 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "7 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "8 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:193
+#: src/ODPropertiesDialogDef.cpp:317 src/ODPropertiesDialogDef.cpp:773
+msgid "9 pixels"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:113
+msgid "Fill Colour"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:120 src/ODPointPropertiesDialog.cpp:121
+#: src/ODPropertiesDialogDef.cpp:140 src/ODPropertiesDialogDef.cpp:240
+#: src/ODPropertiesDialogDef.cpp:888
+msgid "Fill Density"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:127
+msgid "Inclusion Boundary\n"
+"Size"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:110
+#: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:228
+#: src/ODPropertiesDialogDef.cpp:1036 src/ODPropertiesDialogDef.cpp:1045
+#: src/ODPropertiesDialogImpl.cpp:174 src/ODPropertiesDialogImpl.cpp:177
+msgid "Exclusion"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:110
+#: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:228
+#: src/ODPropertiesDialogDef.cpp:1037 src/ODPropertiesDialogDef.cpp:1046
+#: src/ODPropertiesDialogImpl.cpp:175 src/ODPropertiesDialogImpl.cpp:178
+msgid "Inclusion"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:139 src/ODPointPropertiesDialog.cpp:110
+#: src/ODPropertiesDialogDef.cpp:162 src/ODPropertiesDialogDef.cpp:228
+#: src/ODPropertiesDialogDef.cpp:1038 src/ODPropertiesDialogDef.cpp:1047
+#: src/ODPropertiesDialogImpl.cpp:176 src/ODPropertiesDialogImpl.cpp:179
+msgid "Neither"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:141 src/ODPropertiesDialogDef.cpp:164
+msgid "Boundary Type"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:155 src/ODPathPropertiesDialogDef.cpp:186
+#: src/ODPropertiesDialogDef.cpp:551 src/ODPropertiesDialogDef.cpp:903
+msgid "Rotate with Boat"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:158 src/ODPathPropertiesDialogDef.cpp:189
+#: src/ODPropertiesDialogDef.cpp:554 src/ODPropertiesDialogDef.cpp:906
+msgid "Heading"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:160 src/ODPathPropertiesDialogDef.cpp:191
+#: src/ODPropertiesDialogDef.cpp:556 src/ODPropertiesDialogDef.cpp:908
+msgid "Maintain with"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:166
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:560
+msgid "EBL Fixed End Position"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:176 src/ODPropertiesDialogDef.cpp:572
+msgid "Show VRM"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:203
+msgid "First Angle (-P/+S)"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:210
+msgid "First distance"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:217
+msgid "Second Angle (-P/+S)"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:224
+msgid "Second distance"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:238
+msgid "Show Path Direction Arrow"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:241 src/ODPointPropertiesDialog.cpp:309
+#: src/ODPropertiesDialogDef.cpp:67 src/ODPropertiesDialogDef.cpp:419
+#: src/ODPropertiesDialogDef.cpp:566 src/ODPropertiesDialogDef.cpp:689
+#: src/ODPropertiesDialogDef.cpp:920
+msgid "Never"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:241 src/ODPropertiesDialogDef.cpp:566
+#: src/ODPropertiesDialogDef.cpp:689 src/ODPropertiesDialogDef.cpp:920
+msgid "Persistent"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:241 src/ODPropertiesDialogDef.cpp:566
+#: src/ODPropertiesDialogDef.cpp:689 src/ODPropertiesDialogDef.cpp:920
+msgid "Persistent over Crash"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:243
+msgid "Path Persistence"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:253
+msgid "Points"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:185
+msgid "OCPN Draw Path &Properties"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:187
+msgid "Boundary Point &Properties"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:189
+msgid "EBL Point &Properties"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:191
+msgid "DR Point &Properties"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:193
+msgid " &Properties..."
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:197
+msgid "&Remove Selected"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:638
+msgid "From Point"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:639
+msgid "To Point"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:640
+msgid "Distance From Boat"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:643
+msgid "Bearing (M)"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:645
+msgid "Bearing"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:647 src/ODPointPropertiesDialog.cpp:72
+msgid "Latitude"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:648 src/ODPointPropertiesDialog.cpp:80
+msgid "Longitude"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:650
+msgid "Bearing From-To (M)"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:652
+msgid "Bearing From-To"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:729
+msgid "Are you sure you want to remove this point?"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:22
+msgid "Properties"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:49
+msgid "Show name"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:52 src/ODPointPropertiesImpl.cpp:101
+#: src/ODPropertiesDialogDef.cpp:209 src/ODPropertiesDialogDef.cpp:354
+#: src/ODPropertiesDialogDef.cpp:496 src/ODPropertiesDialogDef.cpp:511
+#: src/ODPropertiesDialogDef.cpp:717 src/ODPropertiesDialogDef.cpp:819
+#: src/ODPropertiesDialogDef.cpp:826 src/ODPropertiesDialogImpl.cpp:234
+#: src/ODPropertiesDialogImpl.cpp:245 src/ODPropertiesDialogImpl.cpp:254
+#: src/ODPropertiesDialogImpl.cpp:263 src/ODPropertiesDialogImpl.cpp:272
+#: src/ODPropertiesDialogImpl.cpp:281 src/ODPropertiesDialogImpl.cpp:290
+msgid "Combo!"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:63
+msgid "Change all Path Point Icons"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:94 src/ODPropertiesDialogDef.cpp:187
+msgid "Arrival Radius"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:107
+msgid "Show Point Range Rings"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:112
+msgid "Point Type"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:128
+msgid "Point Inclusion Size"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:146
+msgid "Number of Point Range Rings"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "1"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "10"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "2"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "3"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "4"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "5"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "6"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "7"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "8"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "9"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:150 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:738
+msgid "None"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:164
+msgid "Distance between Range Rings"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:172 src/ODPropertiesDialogDef.cpp:296
+#: src/ODPropertiesDialogDef.cpp:752
+msgid "Distance Unit"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:182 src/ODPropertiesDialogDef.cpp:306
+#: src/ODPropertiesDialogDef.cpp:762
+msgid "Range Ring Colours"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:189 src/ODPropertiesDialogDef.cpp:313
+#: src/ODPropertiesDialogDef.cpp:769
+msgid "Range Ring Line Width"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:199 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:779
+msgid "Range Ring Line Style"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:243
+msgid "Basic"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:247
+msgid "Text to Display with Point"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:365
+msgid "Text position relative to point"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Bottom"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Bottom Centre"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Centre"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Left"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Right"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Top"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:263 src/ODPropertiesDialogDef.cpp:369
+msgid "Top Centre"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:269 src/ODPropertiesDialogDef.cpp:375
+msgid "Text Colour"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:276 src/ODPropertiesDialogDef.cpp:382
+msgid "Background Colour"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:283
+msgid "Background Transparency"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:295 src/ODPropertiesDialogDef.cpp:402
+msgid "Text Font"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:299 src/ODPropertiesDialogDef.cpp:406
+msgid "Example"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:306 src/ODPropertiesDialogDef.cpp:410
+msgid "Fonts"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:309 src/ODPropertiesDialogDef.cpp:67
+#: src/ODPropertiesDialogDef.cpp:419
+msgid "Always"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:309 src/ODPropertiesDialogDef.cpp:419
+msgid "On Rollover Only"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:311 src/ODPropertiesDialogDef.cpp:421
+msgid "Show Display Text"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:322
+msgid "Display text"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:327 src/pathmanagerdialog.cpp:637
+#: src/pathmanagerdialog.cpp:1762 src/pathmanagerdialog.cpp:1774
+msgid "Show on chart"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:349
+msgid "Extended"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:149
+msgid "Copy"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:150
+msgid "Copy lat/long"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:151
+msgid "Paste"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:152
+msgid "Paste lat/long"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:635
+msgid "OCPN Draw Point, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:637
+msgid "Boundary Point Properties, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:639
+msgid "EBL Point Properties, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:641
+msgid "DR Point Properties, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:649
+msgid "OCPN Draw Point"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:651
+msgid "Boundary Point Properties"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:653
+msgid "EBL Point Properties"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:655
+msgid "DR Point Properties"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:29
+msgid "Confirm Object Delete"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:36
+msgid "Show Magnetic Bearings"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:42
+msgid "Nav Object Backups"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:49
+msgid "Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:56
+msgid "Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:63
+msgid "Display Toolbar"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:67
+msgid "Whilst Drawing"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:80
+msgid "General"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:92 src/ODPropertiesDialogDef.cpp:442
+#: src/ODPropertiesDialogDef.cpp:840
+msgid "Active Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:99 src/ODPropertiesDialogDef.cpp:847
+msgid "Active Fill Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:106 src/ODPropertiesDialogDef.cpp:449
+#: src/ODPropertiesDialogDef.cpp:854
+msgid "Inactive Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:113 src/ODPropertiesDialogDef.cpp:861
+msgid "Inactive Fill Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "1 Pixel"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "10 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "2 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "3 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "4 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "5 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "6 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "7 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "8 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:124 src/ODPropertiesDialogDef.cpp:460
+#: src/ODPropertiesDialogDef.cpp:535 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:872
+msgid "9 Pixels"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:147
+msgid "Inclusion Boundary Size"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:179 src/ODToolbarImpl.cpp:446
+#: src/ocpn_draw_pi.cpp:2454
+msgid "Boundary"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:191 src/ODPropertiesDialogDef.cpp:292
+#: src/ODPropertiesDialogDef.cpp:748
+msgid "0.5"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:206
+msgid "Show Name"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:225 src/ODPropertiesDialogDef.cpp:728
+msgid "Show Range Rings"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:230
+msgid "Boundary Point Type"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:256
+msgid "Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:278 src/ODPropertiesDialogDef.cpp:734
+msgid "Number of Range Rings"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:288 src/ODPropertiesDialogDef.cpp:744
+msgid "Distance Between Range Rings"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:350
+msgid "Text Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:389
+msgid "Background Density"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:480 src/ODPropertiesDialogImpl.cpp:226
+msgid "Path"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:487
+msgid "Start Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:502
+msgid "End Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:517
+msgid "Active EBL Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:524
+msgid "Inactive EBL Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:563
+msgid "Show EBL Direction Arrow"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:579 src/ocpn_draw_pi.cpp:2967
+msgid "EBL"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:591
+msgid "Active DR Line\n"
+"Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:598
+msgid "Inactive DR Line\n"
+"Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:685
+msgid "Show DR Direction Arrow"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:691
+msgid "DR Persistence"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:713
+msgid "DR Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:815
+msgid "First Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:822
+msgid "Second Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:933 src/ODToolbarImpl.cpp:451
+msgid "Guard Zone"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:943
+msgid "Name:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:951
+msgid "Version:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:960
+msgid "Major:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:968
+msgid "Minor:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:976
+msgid "Patch:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:987
+msgid "Date:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:995
+msgid "Other:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:999
+msgid "Please report problems using FlySpray at:\n"
+"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n\n"
+"or\n\n"
 "at the OpenCPN forum:\n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"or\n"
-"\n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"or\n\n"
 "Raise an issue in GIT at:\n"
 "https://github.com/jongough/ocpn_draw_pi/issues\n"
 msgstr ""
-#
-msgid "Point Inclusion Size"
+
+#: src/ODPropertiesDialogDef.cpp:1010
+msgid "About"
 msgstr ""
-#
-msgid "Point Type"
+
+#: src/ODPropertiesDialogDef.cpp:1017
+msgid "This chart shows the interactions between Boundaries and WatchDog alam boundaries"
 msgstr ""
-#
-msgid "Points"
+
+#: src/ODPropertiesDialogDef.cpp:1034
+msgid "WD"
 msgstr ""
-#
-msgid "Properties"
+
+#: src/ODPropertiesDialogDef.cpp:1035 src/ODPropertiesDialogImpl.cpp:173
+msgid "All"
 msgstr ""
-#
-msgid "Properties..."
+
+#: src/ODPropertiesDialogDef.cpp:1044
+msgid "OD"
 msgstr ""
-#
-msgid "Question"
+
+#: src/ODPropertiesDialogDef.cpp:1061
+msgid "Help"
 msgstr ""
-#
-msgid "Range Ring Colours"
+
+#: src/ODPropertiesDialogDef.cpp:1074
+msgid "&Apply"
 msgstr ""
-#
-msgid "Range Ring Line Style"
+
+#: src/ODPropertiesDialogImpl.cpp:172
+msgid "OD\\WD"
 msgstr ""
-#
-msgid "Range Ring Line Width"
-msgstr ""
-#
-msgid "Remove Point from Path"
-msgstr ""
-#
-msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr ""
-#
-msgid "Right"
-msgstr ""
-#
+
+#: src/ODPropertiesDialogImpl.cpp:181 src/ODPropertiesDialogImpl.cpp:182
+#: src/ODPropertiesDialogImpl.cpp:183 src/ODPropertiesDialogImpl.cpp:184
+#: src/ODPropertiesDialogImpl.cpp:188 src/ODPropertiesDialogImpl.cpp:192
 msgid "Ring"
 msgstr ""
-#
-msgid "Rotate with Boat"
+
+#: src/ODPropertiesDialogImpl.cpp:185 src/ODPropertiesDialogImpl.cpp:186
+#: src/ODPropertiesDialogImpl.cpp:187 src/ODPropertiesDialogImpl.cpp:189
+#: src/ODPropertiesDialogImpl.cpp:190 src/ODPropertiesDialogImpl.cpp:191
+msgid "No alarm"
 msgstr ""
-#
+
+#: src/ODToolbarImpl.cpp:446
+msgid "Create Boundary"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:447
+msgid "Create Boundary Point"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:448
+msgid "Create Text Point"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:449
+msgid "Create EBL"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:449
+msgid "Electronic Bearing Line"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:450
+msgid "Create DR"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:451
+msgid "Create GZ"
+msgstr ""
+
+#: src/ODicons.cpp:78
+msgid "ocpn_draw_pi data location"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:432 src/ocpn_draw_pi.cpp:433 src/ocpn_draw_pi.cpp:437
+#: src/ocpn_draw_pi.cpp:438
+msgid "OCPN Draw Manager"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:434 src/ocpn_draw_pi.cpp:439
+msgid "OCPN Draw Boundary"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:435 src/ocpn_draw_pi.cpp:440
+msgid "OCPN Draw"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:710
+msgid "General drawing for OpenCPN"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:714
+msgid "General Drawing for OpenCPN\n\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2457
+msgid "Layer Boundary"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2693 src/ocpn_draw_pi.cpp:2758
+msgid "Use nearby Point?"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2694 src/ocpn_draw_pi.cpp:2759
+msgid "OCPN Draw Point Create"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2836
+msgid "Use nearby OD Point?"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2837 src/ocpn_draw_pi.cpp:2890
+msgid "OCPN Draw Boundary Create"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2884
+msgid "For this leg the Great Circle boundary is "
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2885
+msgid " shorter than rhumbline.\n\n"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:2886
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:3051
+msgid "GZ"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:3092
 msgid "Second"
 msgstr ""
-#
-msgid "Second Angle (-P/+S)"
+
+#: src/ocpn_draw_pi.cpp:3118
+msgid "First"
 msgstr ""
-#
-msgid "Second Point Icon"
+
+#: src/pathmanagerdialog.cpp:409
+msgid "Path & Point Manager"
 msgstr ""
-#
-msgid "Second distance"
+
+#: src/pathmanagerdialog.cpp:442
+msgid "Paths"
 msgstr ""
-#
-msgid "Short Dash"
-msgstr ""
-#
+
+#: src/pathmanagerdialog.cpp:463 src/pathmanagerdialog.cpp:615
 msgid "Show"
 msgstr ""
-#
-msgid "Show Boundary Point Icons"
+
+#: src/pathmanagerdialog.cpp:464
+msgid "Path Name"
 msgstr ""
-#
-msgid "Show DR Direction Arrow"
+
+#: src/pathmanagerdialog.cpp:465
+msgid "Desc"
 msgstr ""
-#
-msgid "Show Display Text"
+
+#: src/pathmanagerdialog.cpp:471
+msgid "&Properties..."
 msgstr ""
-#
-msgid "Show EBL Direction Arrow"
+
+#: src/pathmanagerdialog.cpp:476 src/pathmanagerdialog.cpp:916
+msgid "&Activate"
 msgstr ""
-#
-msgid "Show Magnetic Bearings"
+
+#: src/pathmanagerdialog.cpp:483 src/pathmanagerdialog.cpp:545
+msgid "&Center View"
 msgstr ""
-#
-msgid "Show Name"
+
+#: src/pathmanagerdialog.cpp:490 src/pathmanagerdialog.cpp:550
+#: src/pathmanagerdialog.cpp:632
+msgid "&Delete"
 msgstr ""
-#
-msgid "Show Path Direction Arrow"
+
+#: src/pathmanagerdialog.cpp:495 src/pathmanagerdialog.cpp:555
+msgid "&Export selected..."
 msgstr ""
-#
-msgid "Show Point Range Rings"
+
+#: src/pathmanagerdialog.cpp:502
+msgid "&Delete All"
 msgstr ""
-#
-msgid "Show Point names"
+
+#: src/pathmanagerdialog.cpp:512
+msgid "OD Points"
 msgstr ""
-#
-msgid "Show Range Rings"
+
+#: src/pathmanagerdialog.cpp:528
+msgid "Icon"
 msgstr ""
-#
-msgid "Show VRM"
+
+#: src/pathmanagerdialog.cpp:529
+msgid "OD Point Name"
 msgstr ""
-#
-msgid "Show name"
+
+#: src/pathmanagerdialog.cpp:530
+msgid "Distance from Ownship"
 msgstr ""
-#
-msgid "Show on chart"
+
+#: src/pathmanagerdialog.cpp:535
+msgid "&New"
 msgstr ""
-#
-msgid "Solid"
+
+#: src/pathmanagerdialog.cpp:540
+msgid "&Properties"
 msgstr ""
-#
-msgid "Speed over Ground"
+
+#: src/pathmanagerdialog.cpp:567
+msgid "Delete All"
 msgstr ""
-#
-msgid "Start"
+
+#: src/pathmanagerdialog.cpp:578
+msgid "I&mport GPX..."
 msgstr ""
-#
-msgid "Start Point Icon"
+
+#: src/pathmanagerdialog.cpp:588
+msgid "Export All Visible..."
 msgstr ""
-#
+
+#: src/pathmanagerdialog.cpp:598
+msgid "Layers"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:616
+msgid "Layer Name"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:617
+msgid "No. of items"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:622
 msgid "Temporary layer"
 msgstr ""
-#
-msgid "Text Colour"
+
+#: src/pathmanagerdialog.cpp:642 src/pathmanagerdialog.cpp:1767
+#: src/pathmanagerdialog.cpp:1775
+msgid "Show Point names"
 msgstr ""
-#
-msgid "Text Font"
+
+#: src/pathmanagerdialog.cpp:647 src/pathmanagerdialog.cpp:1772
+#: src/pathmanagerdialog.cpp:1776
+msgid "List contents "
 msgstr ""
-#
-msgid "Text Point"
+
+#: src/pathmanagerdialog.cpp:856
+msgid "(Unnamed )"
 msgstr ""
-#
-msgid "Text Point Icon"
+
+#: src/pathmanagerdialog.cpp:915
+msgid "&Deactivate"
 msgstr ""
-#
-msgid "Text position relative to point"
+
+#: src/pathmanagerdialog.cpp:981 src/pathmanagerdialog.cpp:1614
+msgid "Are you sure you want to delete the selected object(s)"
 msgstr ""
-#
-msgid "Text to Display with Point"
+
+#: src/pathmanagerdialog.cpp:981 src/pathmanagerdialog.cpp:1029
+#: src/pathmanagerdialog.cpp:1614 src/pathmanagerdialog.cpp:1647
+#: src/pathmanagerdialog.cpp:1715 src/pathmanagerdialog.cpp:1844
+msgid "OpenCPN Alert"
 msgstr ""
-#
-msgid ""
-"The OD Point you want to delete is used in a path, do you really want to "
-"delete it?"
+
+#: src/pathmanagerdialog.cpp:1029
+msgid "Are you sure you want to delete <ALL> paths?"
 msgstr ""
-#
-msgid ""
-"There are some OD points used in paths or anchor alarms.\n"
+
+#: src/pathmanagerdialog.cpp:1116
+msgid "Boundary Properties"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1118
+msgid "EBL Properties"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1120
+msgid "DR Properties"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1122
+msgid "Guard Zone Properties"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1127
+msgid "Path Properties, Layer: "
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1129
+msgid "Boundary Properties, Layer: "
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1131
+msgid "EBL Properties, Layer: "
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1133
+msgid "DR Properties, Layer: "
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1255
+msgid "Do you also want to make the shared OD Points being part of this boundary invisible?"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1255
+msgid "Question"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1374
+msgid "(Unnamed) "
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1647
+msgid "The OD Point you want to delete is used in a path, do you really want to delete it?"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1705
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr ""
+
+#: src/pathmanagerdialog.cpp:1711
+msgid "There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
 msgstr ""
-#
-msgid ""
-"This chart shows the interactions between Boundaries and WatchDog alam "
-"boundaries"
+
+#: src/pathmanagerdialog.cpp:1760
+msgid "Hide from chart"
 msgstr ""
-#
-msgid "Time"
+
+#: src/pathmanagerdialog.cpp:1765
+msgid "Hide Point names"
 msgstr ""
-#
-msgid "Time Units"
-msgstr ""
-#
-msgid "To Point"
-msgstr ""
-#
-msgid "Top"
-msgstr ""
-#
-msgid "Top Centre"
-msgstr ""
-#
-msgid "Total Length"
-msgstr ""
-#
-msgid "Total Length: "
-msgstr ""
-#
+
+#: src/pathmanagerdialog.cpp:1770
 msgid "Unlist contents "
 msgstr ""
-#
-msgid "Update initial conditions"
+
+#: src/pathmanagerdialog.cpp:1843
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
-#
-msgid "Use nearby OD Point?"
+
+#: src/pathmanagerdialog.cpp:2084
+msgid "(Unnamed Layer)"
 msgstr ""
-#
-msgid "Use nearby Point?"
-msgstr ""
-#
-msgid "Version:"
-msgstr ""
-#
-msgid "WD"
-msgstr ""
-#
-msgid "Whilst Drawing"
-msgstr ""
-#
-msgid "Would you like include the Great Circle boundary points for this leg?"
-msgstr ""
-#
-msgid "ocpn_draw_pi data location"
-msgstr ""
+
