@@ -73,14 +73,18 @@ extern ODEventHandler       *g_ODEventHandler;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
+#if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+#endif // wxCHECK_VERSION(3,0,0)
 
     SetViewableItems();
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
 {
+#if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+#endif // wxCHECK_VERSION(3,0,0)
 
     m_pPath = NULL;
     
@@ -91,7 +95,9 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODP
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
                     const wxSize& size, long style ) : ODPathPropertiesDialogDef( parent )
 {
+#if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+#endif // wxCHECK_VERSION(3,0,0)
 
     m_nSelected = 0;
     m_pEnroutePoint = NULL;

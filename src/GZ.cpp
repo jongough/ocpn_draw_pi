@@ -233,7 +233,11 @@ void GZ::SetActiveColours( void )
     ODPath::SetActiveColours();
     
     if(m_bSetTransparent) 
+#if wxCHECK_VERSION(3,0,0)
         m_col = wxTransparentColour;
+#else // wxCHECK_VERSION(3,0,0)
+        m_col.Set(m_col.Red(), m_col.Green(), m_col.Blue(), wxALPHA_TRANSPARENT);
+#endif // wxCHECK_VERSION(3,0,0)
     
     if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
     else m_fillcol = m_wxcInActiveFillColour;
