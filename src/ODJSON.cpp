@@ -32,9 +32,11 @@
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
+#include <wx/jsonreader.h>
+#include "wx/jsonwriter.h"
 
-#include "ODJSON.h"
 #include "ocpn_draw_pi.h"
+#include "ODJSON.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "Boundary.h"
@@ -45,9 +47,6 @@
 #include "ODAPI.h"
 #include "PointMan.h"
 #include "version.h"
-
-#include <wx/jsonreader.h>
-#include "wx/jsonwriter.h"
 
 #include <stdio.h>
 
