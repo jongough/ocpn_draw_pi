@@ -34,11 +34,14 @@
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODConfig.h"
+#include "ODIconCombo.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
+#include "GZ.h"
+#include "GZMan.h"
 #include "ODPositionParser.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
@@ -53,6 +56,7 @@ extern ODSelect             *g_pODSelect;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern PointMan             *g_pODPointMan;
 extern PathMan              *g_pPathMan;
+extern GZMan                *g_pGZMan;
 extern ODConfig             *g_pODConfig;
 extern PathManagerDialog    *g_pPathManagerDialog;
 extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
@@ -65,7 +69,9 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :
 ODPointPropertiesDialog( parent )
 {
+#if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+#endif // wxCHECK_VERSION(3,0,0)
 
     this->Connect( ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
             wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
@@ -92,6 +98,19 @@ ODPointPropertiesDialog( parent )
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
 #endif // not defined _WXMSW_ 
 #endif // wxCHECK_VERSION(3,0,0)
+    
+    // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
+    m_bODIComboBoxODPointIconName = new ODIconCombo( m_panelBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxODPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
+    
+    //  Accomodate scaling of icon
+    int min_size = GetCharHeight() * 2;
+    min_size = wxMax( min_size, (32 * GetOCPNChartScaleFactor_Plugin()) + 4 );
+    m_bODIComboBoxODPointIconName->SetMinSize( wxSize(-1, min_size) );
+    m_fgSizerNameIcon->Replace(m_bcomboBoxODPointIconName, m_bODIComboBoxODPointIconName );
+    
+    delete m_bcomboBoxODPointIconName;
+    
     SetDialogSize();
     
 }
@@ -110,6 +129,8 @@ ODPointPropertiesImpl::~ODPointPropertiesImpl()
 
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
+    //m_bSizerFill->RecalcSizes();
+/*    
     wxSize sz = m_SizerDialogBox->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
     wxSize dsize = ::wxGetDisplaySize();
@@ -122,7 +143,13 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    
+*/    
+
+    m_SizerBasicProperties->Layout();
+    m_bSizerOuterProperties->Layout();
+    m_SizerODPointRangeRingsSelect->Layout();
+    m_SizerDialogBox->Layout();
+    this->GetSizer()->Fit( this );
     this->Layout();
 }
 
@@ -175,7 +202,6 @@ void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
 {
-    m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( m_bcomboBoxODPointIconName->GetSelection() ) );
 }
 
 void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
@@ -328,8 +354,16 @@ void ODPointPropertiesImpl::SaveChanges()
         }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
-        m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
-        m_pODPoint->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
+        if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
+            if(m_text_lat != m_textLatitude->GetValue() || m_text_lon != m_textLongitude->GetValue()) {
+                m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
+                wxArrayPtrVoid *l_array = g_pPathMan->GetPathArrayContaining(m_pODPoint);
+                GZ *l_gz = (GZ *)l_array->Item(0);
+                l_gz->UpdateGZ(m_pODPoint);
+            }
+        } else
+            m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
+        m_pODPoint->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
         m_pODPoint->ReLoadIcon();
 
         // Here is some logic....
@@ -359,6 +393,10 @@ void ODPointPropertiesImpl::SaveChanges()
             if( pEditPathArray ) {
                 for( unsigned int ip = 0; ip < pEditPathArray->GetCount(); ip++ ) {
                     ODPath *pp = (ODPath *) pEditPathArray->Item( ip );
+                    if(pp->m_sTypeString == wxT("Guard Zone")) {
+                        GZ * l_GZ = (GZ *)pp;
+                        l_GZ->UpdateGZ( m_pODPoint );
+                    }
                     pp->FinalizeForRendering();
                     pp->UpdateSegmentDistances();
 
@@ -366,7 +404,7 @@ void ODPointPropertiesImpl::SaveChanges()
                         wxODPointListNode *pnode = ( pp->m_pODPointList )->GetFirst();
                         while( pnode ) {
                             ODPoint *pop = pnode->GetData();
-                            pop->SetIconName( m_bcomboBoxODPointIconName->GetValue() );
+                            pop->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
                             pop->ReLoadIcon();
                             pnode = pnode->GetNext();
                         }
@@ -433,14 +471,16 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
+            m_bSizerOuterProperties->Show( m_bSizerFill );
             m_staticTextBoundaryPointInclusionSize->Show();
             m_sliderBoundaryPointInclusionSize->Enable( true );
             m_sliderBoundaryPointInclusionSize->Show();
             m_staticTextFillDensity->Show();
             m_sliderBoundaryPointFillTransparency->Enable( true );
             m_sliderBoundaryPointFillTransparency->Show();
-            m_bSizerOuterProperties->Show( m_bSizerFill );
-        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point")) {
+        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
+            m_panelDisplayText->Enable( false );
+            m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -452,6 +492,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bSizerOuterProperties->Hide( m_bSizerFill );
         }
         
+        m_text_lat = toSDMM_PlugIn( 1, m_pODPoint->m_lat );
+        m_text_lon = toSDMM_PlugIn( 2, m_pODPoint->m_lon );
         m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
         m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
         m_lat_save = m_pODPoint->m_lat;
@@ -466,7 +508,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textDisplayText->SetEditable( false );
             m_textLatitude->SetEditable( false );
             m_textLongitude->SetEditable( false );
-            m_bcomboBoxODPointIconName->Enable( false );
+            m_bODIComboBoxODPointIconName->Enable( false );
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
             m_checkBoxChangeAllPointIcons->Enable( false );
@@ -482,7 +524,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textDisplayText->SetEditable( true );
             m_textLatitude->SetEditable( true );
             m_textLongitude->SetEditable( true );
-            m_bcomboBoxODPointIconName->Enable( true );
+            m_bODIComboBoxODPointIconName->Enable( true );
             m_checkBoxShowName->Enable( true );
             m_checkBoxVisible->Enable( true );
             m_textCtrlODPointArrivalRadius->SetEditable ( true );
@@ -544,15 +586,15 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
 
-        m_bcomboBoxODPointIconName->Clear();
+        m_bODIComboBoxODPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
-        bool fillCombo = m_bcomboBoxODPointIconName->GetCount() == 0;
+        bool fillCombo = m_bODIComboBoxODPointIconName->GetCount() == 0;
         wxImageList *icons = g_pODPointMan->Getpmarkicon_image_list();
 
         if( fillCombo  && icons){
             for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
                 wxString *ps = g_pODPointMan->GetIconDescription( i );
-                m_bcomboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
+                m_bODIComboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
         
@@ -576,12 +618,11 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
         if( -1 == iconToSelect){    
-            m_bcomboBoxODPointIconName->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
-            iconToSelect = m_bcomboBoxODPointIconName->GetCount() - 1;
+            m_bODIComboBoxODPointIconName->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
+            iconToSelect = m_bODIComboBoxODPointIconName->GetCount() - 1;
         }
         
-        m_bcomboBoxODPointIconName->SetSelection( iconToSelect );
-        m_bitmapPointBitmap->SetBitmap( m_bcomboBoxODPointIconName->GetItemBitmap( iconToSelect ) );
+        m_bODIComboBoxODPointIconName->SetSelection( iconToSelect );
         
         //    Get an array of all paths using this point
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
@@ -622,6 +663,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 caption.append(_("EBL Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
                 caption.append(_("DR Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point"))
+                caption.append(_("Guard Zone Point Properties"));
         }
         SetTitle( caption );
         

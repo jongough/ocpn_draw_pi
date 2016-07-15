@@ -68,6 +68,7 @@ class   ODPath;
 class   Boundary;
 class   EBL;
 class   DR;
+class   GZ;
 class   ODPoint;
 
 /** Implementing ODPathPropertiesDialogDef */
@@ -107,6 +108,7 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
         Boundary    *m_pBoundary;
         EBL         *m_pEBL;
         DR          *m_pDR;
+        GZ          *m_pGZ;
         
     private:
         void    SetViewableItems();

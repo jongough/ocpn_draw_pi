@@ -134,13 +134,16 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	fgSizer1->Add( fgSizer3, 1, wxEXPAND, 5 );
 	
-	m_bSizerBoundaryType = new wxBoxSizer( wxVERTICAL );
+	m_bSizerBoundaryType = new wxBoxSizer( wxHORIZONTAL );
 	
 	wxString m_radioBoxBoundaryTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
 	int m_radioBoxBoundaryTypeNChoices = sizeof( m_radioBoxBoundaryTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryType = new wxRadioBox( this, wxID_ANY, _("Boundary Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryTypeNChoices, m_radioBoxBoundaryTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxBoundaryType->SetSelection( 0 );
 	m_bSizerBoundaryType->Add( m_radioBoxBoundaryType, 0, wxALL|wxEXPAND, 5 );
+	
+	m_checkBoxShowBoundaryPoints = new wxCheckBox( this, wxID_ANY, _("Show Boundary Point Icons"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_bSizerBoundaryType->Add( m_checkBoxShowBoundaryPoints, 0, wxALL, 5 );
 	
 	
 	fgSizer1->Add( m_bSizerBoundaryType, 1, wxEXPAND, 5 );
@@ -175,6 +178,58 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	
 	
 	fgSizer1->Add( m_fgSizerEBL, 0, wxEXPAND, 5 );
+	
+	m_fgSizerGZ = new wxFlexGridSizer( 0, 4, 0, 0 );
+	m_fgSizerGZ->SetFlexibleDirection( wxBOTH );
+	m_fgSizerGZ->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_checkBoxRotateGZWithBoat = new wxCheckBox( this, wxID_ANY, _("Rotate with Boat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerGZ->Add( m_checkBoxRotateGZWithBoat, 0, wxALL, 5 );
+	
+	wxString m_radioBoxMaintainGZWithChoices[] = { _("Heading"), _("Course over Ground") };
+	int m_radioBoxMaintainGZWithNChoices = sizeof( m_radioBoxMaintainGZWithChoices ) / sizeof( wxString );
+	m_radioBoxMaintainGZWith = new wxRadioBox( this, wxID_ANY, _("Maintain with"), wxDefaultPosition, wxDefaultSize, m_radioBoxMaintainGZWithNChoices, m_radioBoxMaintainGZWithChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxMaintainGZWith->SetSelection( 0 );
+	m_radioBoxMaintainGZWith->Enable( false );
+	
+	m_fgSizerGZ->Add( m_radioBoxMaintainGZWith, 0, wxALL, 5 );
+	
+	
+	m_fgSizerGZ->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	
+	m_fgSizerGZ->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_staticTextGZFirstAngle = new wxStaticText( this, wxID_ANY, _("First Angle (-P/+S)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZFirstAngle->Wrap( -1 );
+	m_fgSizerGZ->Add( m_staticTextGZFirstAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlGZFirstAngle = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	m_fgSizerGZ->Add( m_textCtrlGZFirstAngle, 0, wxALL, 5 );
+	
+	m_staticTextGZFirstLength = new wxStaticText( this, wxID_ANY, _("First distance"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZFirstLength->Wrap( -1 );
+	m_fgSizerGZ->Add( m_staticTextGZFirstLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlGZFirstLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	m_fgSizerGZ->Add( m_textCtrlGZFirstLength, 0, wxALL, 5 );
+	
+	m_staticTextGZSecondAngle = new wxStaticText( this, wxID_ANY, _("Second Angle (-P/+S)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZSecondAngle->Wrap( -1 );
+	m_fgSizerGZ->Add( m_staticTextGZSecondAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlGZSecondAngle = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	m_fgSizerGZ->Add( m_textCtrlGZSecondAngle, 0, wxALL, 5 );
+	
+	m_staticTextGZSecondLength = new wxStaticText( this, wxID_ANY, _("Second distance"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextGZSecondLength->Wrap( -1 );
+	m_fgSizerGZ->Add( m_staticTextGZSecondLength, 0, wxALL, 5 );
+	
+	m_textCtrlGZSecondLength = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	m_fgSizerGZ->Add( m_textCtrlGZSecondLength, 0, wxALL, 5 );
+	
+	
+	fgSizer1->Add( m_fgSizerGZ, 1, wxEXPAND, 5 );
 	
 	m_fgSizerPath = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerPath->SetFlexibleDirection( wxBOTH );
@@ -244,6 +299,15 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_textCtrlEBLAngle->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlEBLAngle->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnFixedEndPosition ), NULL, this );
+	m_checkBoxRotateGZWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRotateWithBoat ), NULL, this );
+	m_textCtrlGZFirstAngle->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZFirstAngle->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_textCtrlGZFirstLength->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZFirstLength->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_textCtrlGZSecondAngle->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZSecondAngle->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_textCtrlGZSecondLength->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZSecondLength->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
 	m_listCtrlODPoints->Connect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( ODPathPropertiesDialogDef::OnLeftDoubleClick ), NULL, this );
 	m_listCtrlODPoints->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPathPropertiesDialogDef::OnRightClick ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnOK ), NULL, this );
@@ -268,6 +332,15 @@ ODPathPropertiesDialogDef::~ODPathPropertiesDialogDef()
 	m_textCtrlEBLAngle->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlEBLAngle->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnFixedEndPosition ), NULL, this );
+	m_checkBoxRotateGZWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnRotateWithBoat ), NULL, this );
+	m_textCtrlGZFirstAngle->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZFirstAngle->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_textCtrlGZFirstLength->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZFirstLength->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_textCtrlGZSecondAngle->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZSecondAngle->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
+	m_textCtrlGZSecondLength->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
+	m_textCtrlGZSecondLength->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
 	m_listCtrlODPoints->Disconnect( wxEVT_LEFT_DCLICK, wxMouseEventHandler( ODPathPropertiesDialogDef::OnLeftDoubleClick ), NULL, this );
 	m_listCtrlODPoints->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPathPropertiesDialogDef::OnRightClick ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnOK ), NULL, this );

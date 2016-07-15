@@ -139,7 +139,7 @@ ODPoint *DR::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenam
 void DR::SetPersistence( int PersistenceType )
 {
     m_iPersistenceType = PersistenceType;
-    if(PersistenceType == ID_DR_NOT_PERSISTENT || PersistenceType == ID_DR_PERSISTENT_CRASH)
+    if(PersistenceType == ID_NOT_PERSISTENT || PersistenceType == ID_PERSISTENT_CRASH)
         m_bTemporary = true;
     else
         m_bTemporary = false;

@@ -29,6 +29,7 @@
 #include "BoundaryPoint.h"
 #include "PointMan.h"
 #include "ocpn_draw_pi.h"
+#include "ODUtils.h"
 
 #ifdef __WXOSX__
 #include <math.h>
@@ -56,14 +57,14 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
         bool    l_bNext = false;
         pboundary = boundary_node->GetData();
         switch (state) {
-            case ID_BOUNDARY_STATE_ANY:
+            case ID_PATH_STATE_ANY:
                 l_bNext = false;
                 break;
-            case ID_BOUNDARY_STATE_ACTIVE:
+            case ID_PATH_STATE_ACTIVE:
                 if(pboundary->IsActive()) l_bNext = false;
                 else l_bNext = true;
                 break;
-            case ID_BOUNDARY_STATE_INACTIVE:
+            case ID_PATH_STATE_INACTIVE:
                 if(!pboundary->IsActive()) l_bNext = false;
                 else l_bNext = true;
                 break;
@@ -281,35 +282,98 @@ bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double 
     return bInPoly;
 }
 
-//  Parameters for this function:
-//
-//  int    polyCorners  =  how many corners the polygon has
-//  double  polyX[]      =  horizontal coordinates of corners
-//  double  polyY[]      =  vertical coordinates of corners
-//  double  x, y         =  point to be tested
-//
-//  The function will return YES if the point x,y is inside the polygon, or
-//  NO if it is not.  If the point is exactly on the edge of the polygon,
-//  then the function may return YES or NO.
-//
-//  Note that division by zero is avoided because the division is protected
-//  by the "if" clause which surrounds it.
-
-bool BoundaryMan::pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y) 
+wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
 {
+    wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
+    Boundary *pboundary = NULL;
+    ODPoint *popFirst;
+    ODPoint *popSecond;
+    wxString l_GUID = wxEmptyString;
+    bool l_bCrosses;
     
-    int   i, j=polyCorners-1 ;
-    bool  oddNodes=false      ;
+    BoundaryCrossingList.clear();
     
-    for (i=0; i<polyCorners; i++) {
-        if (((polyY[i]< y && polyY[j]>=y)
-            ||   (polyY[j]< y && polyY[i]>=y))
-            &&  (polyX[i]<=x || polyX[j]<=x)) {
-            oddNodes^=(polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x); }
-            j=i; 
+    while( boundary_node ) {
+        bool    l_bNext = false;
+        pboundary = boundary_node->GetData();
+        switch (state) {
+            case ID_PATH_STATE_ANY:
+                l_bNext = false;
+                break;
+            case ID_PATH_STATE_ACTIVE:
+                if(pboundary->IsActive()) l_bNext = false;
+                else l_bNext = true;
+                break;
+            case ID_PATH_STATE_INACTIVE:
+                if(!pboundary->IsActive()) l_bNext = false;
+                else l_bNext = true;
+                break;
+        }
         
+        if(!l_bNext) {
+            switch (type) {
+                case ID_BOUNDARY_ANY:
+                    l_bNext = false;
+                    break;
+                case ID_BOUNDARY_EXCLUSION:
+                    if(!pboundary->m_bExclusionBoundary) l_bNext = true;
+                    break;
+                case ID_BOUNDARY_INCLUSION:
+                    if(!pboundary->m_bInclusionBoundary) l_bNext = true;
+                    break;
+                case ID_BOUNDARY_NIETHER:
+                    if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = true;
+                    break;
+            }
+        }
+        
+        if(!l_bNext) {
+            wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
+            wxODPointListNode *OCPNpoint_last_node = ( pboundary->m_pODPointList )->GetLast();
+            wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
+
+            popFirst = OCPNpoint_node->GetData();
+            while( OCPNpoint_next_node ) {
+                double l_dCrossingLon;
+                double l_dCrossingLat;
+                popSecond = OCPNpoint_next_node->GetData();
+                l_bCrosses = GetLineIntersection(StartLon, StartLat, EndLon, EndLat, popFirst->m_lon, popFirst->m_lat, popSecond->m_lon, popSecond->m_lat, &l_dCrossingLon, &l_dCrossingLat);
+                if(l_bCrosses) {
+                    double brg;
+                    double len;
+                    BOUNDARYCROSSING l_BoundaryCrossing;
+                    l_BoundaryCrossing.GUID = pboundary->m_GUID;
+                    l_BoundaryCrossing.Lon = l_dCrossingLon;
+                    l_BoundaryCrossing.Lat = l_dCrossingLat;
+                    DistanceBearingMercator_Plugin( StartLat, StartLon, l_dCrossingLat, l_dCrossingLon, &brg, &len );
+                    l_BoundaryCrossing.Len = len;
+                    BoundaryCrossingList.push_back(l_BoundaryCrossing);
+                }
+                popFirst = popSecond;
+                OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
+            }
+        }
+        boundary_node = boundary_node->GetNext();                         // next boundary
     }
-            
-    return oddNodes; 
-        
+    // if list of crossings <> 0 then find one closest to start point
+    if(!BoundaryCrossingList.empty()) {
+        std::list<BOUNDARYCROSSING>::iterator it = BoundaryCrossingList.begin();
+        wxString l_sGUID = it->GUID;
+        *CrossingDist = it->Len;
+        *CrossingLon = it->Lon;
+        *CrossingLat = it->Lat;
+        it++;
+        while( it != BoundaryCrossingList.end() ) {
+            if( *CrossingDist > it->Len ) {
+                *CrossingDist = it->Len;
+                *CrossingLon = it->Lon;
+                *CrossingLat = it->Lat;
+                l_sGUID = it->GUID;
+            }
+            it++;
+        }
+        return l_sGUID;
+    }
+    return _T("");
 }
+

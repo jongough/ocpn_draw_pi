@@ -341,7 +341,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
         g_pODSelect->AddSelectableODPoint( l_dEndLat, l_dEndLon, l_NewPoint );
         g_pODSelect->AddSelectablePathSegment( l_dSaveLat, l_dSaveLon, l_dEndLat, l_dEndLon, beginPoint, l_NewPoint, l_pDR );
     }
-    if(l_pDR->m_iPersistenceType == ID_DR_PERSISTENT || l_pDR->m_iPersistenceType == ID_DR_PERSISTENT_CRASH)
+    if(l_pDR->m_iPersistenceType == ID_PERSISTENT || l_pDR->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( l_pDR, -1 );    // don't save over restart
 
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );

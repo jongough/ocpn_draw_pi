@@ -44,7 +44,7 @@ class TextPoint : public ODPoint
         TextPoint(const TextPoint& other);
         ~TextPoint();
         
-        void Draw(ODDC& dc, wxPoint *rpn = NULL);
+        void Draw(ODDC& dc, wxPoint *rpn = NULL );
         void DrawGL( PlugIn_ViewPort &pivp );
         void SetPointText( wxString sTextPointText );
         wxString GetPointText( void ) { return m_TextPointText; }

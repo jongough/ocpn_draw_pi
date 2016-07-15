@@ -49,6 +49,7 @@
 #include "Boundary.h"
 #include "EBL.h"
 #include "DR.h"
+#include "GZ.h"
 
 #include "georef.h"
 #include "pluginmanager.h"
@@ -75,7 +76,8 @@ extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
 extern EBLList      *g_pEBLList;
 extern DRList       *g_pDRList;
-extern ODConfig  *g_pODConfig;
+extern GZList       *g_pGZList;
+extern ODConfig     *g_pODConfig;
 extern ODSelect      *g_pODSelect;
 extern PlugInManager  *g_OD_pi_manager;
 extern int             g_path_line_width;
@@ -109,14 +111,6 @@ bool PathMan::IsPathValid( ODPath *pPath )
 
 bool PathMan::ActivatePath(ODPath *pPathToActivate )
 {
-    wxString msg_id( wxS("OCPN_PATH_ACTIVATED") );
-    wxString msg;
-    msg.append( wxS("Name: ") );
-    msg.append( pPathToActivate->m_PathNameString.c_str() );
-    msg.append( wxS(", GUID: ") );
-    msg.append( pPathToActivate->m_GUID );
-    SendPluginMessage( msg_id, msg );
-
     pPathToActivate->m_bPathIsActive = true;
     pPathToActivate->SetActiveColours();
 
@@ -125,19 +119,8 @@ bool PathMan::ActivatePath(ODPath *pPathToActivate )
 
 bool PathMan::DeactivatePath( ODPath *pPathToDeactivate )
 {
-    wxString msg_id( _T("OCPN_PATH_DEACTIVATED") );
-    wxString msg;
-    msg.append( wxS("Name: ") );
-    msg.append( pPathToDeactivate->m_PathNameString.c_str() );
-    msg.append( wxS(", GUID: ") );
-    msg.append( pPathToDeactivate->m_GUID );
-    SendPluginMessage( msg_id, msg );
-
     pPathToDeactivate->m_bPathIsActive = false;
     pPathToDeactivate->SetActiveColours();
-//    console->pCDI->ClearBackground();
-
-//    m_bDataValid = false;
 
     return true;
 }
@@ -159,6 +142,7 @@ bool PathMan::DeletePath( ODPath *pPath )
         if(pPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->DeleteObject( (Boundary *)pPath );
         if(pPath->m_sTypeString == wxT("EBL")) g_pEBLList->DeleteObject( (EBL *)pPath );
         if(pPath->m_sTypeString == wxT("DR")) g_pDRList->DeleteObject( (DR *)pPath );
+        if(pPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->DeleteObject( (GZ *)pPath );
         
         // walk the path, tentatively deleting/marking points used only by this route
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();

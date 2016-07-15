@@ -121,6 +121,13 @@ void ODicons::initialize_images(void)
     fn.SetFullName(wxT("DRgrey.svg"));
     m_s_ocpn_draw_dr_grey = fn.GetFullPath();
     m_p_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_dr_grey, &m_p_img_ocpn_draw_dr_grey );
+
+    fn.SetFullName(wxT("GZ.svg"));
+    m_s_ocpn_draw_gz = fn.GetFullPath();
+    m_p_bm_ocpn_draw_gz = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_gz, &m_p_img_ocpn_draw_gz );
+    fn.SetFullName(wxT("GZgrey.svg"));
+    m_s_ocpn_draw_gz_grey = fn.GetFullPath();
+    m_p_bm_ocpn_draw_gz_grey = LoadSVG( fn.GetFullPath(), &m_p_svgd_ocpn_draw_gz_grey, &m_p_img_ocpn_draw_gz_grey );
 #else
     fn.SetFullName(wxT("ODManager.png"));
     m_p_bm_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
@@ -151,6 +158,11 @@ void ODicons::initialize_images(void)
     m_p_bm_ocpn_draw_dr = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
     fn.SetFullName(wxT("DRgrey.png"));
     m_p_bm_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    
+    fn.SetFullName(wxT("GZ.png"));
+    m_p_bm_ocpn_draw_gz = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    fn.SetFullName(wxT("GZgrey.png"));
+    m_p_bm_ocpn_draw_gz_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
 #endif
     
     CreateSchemeIcons();
@@ -169,7 +181,7 @@ wxBitmap *ODicons::LoadSVG( const wxString filename, wxSVGDocument **svgDoc, wxI
     }
     else
         *Image = new wxImage(width, height);
-        return new wxBitmap(width, height);
+    return new wxBitmap(width, height);
 }
 
 wxBitmap *ODicons::ScaleIcon( wxSVGDocument *p_svgDoc, wxImage *p_wxImage, double sf )
@@ -213,6 +225,9 @@ bool ODicons::ScaleIcons()
     
     m_p_bm_ocpn_draw_dr = ScaleIcon( m_p_svgd_ocpn_draw_dr, m_p_img_ocpn_draw_dr, m_dScaleFactor );
     m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_svgd_ocpn_draw_dr_grey, m_p_img_ocpn_draw_dr_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_gz = ScaleIcon( m_p_svgd_ocpn_draw_gz, m_p_img_ocpn_draw_gz, m_dScaleFactor );
+    m_p_bm_ocpn_draw_gz_grey = ScaleIcon( m_p_svgd_ocpn_draw_gz_grey, m_p_img_ocpn_draw_gz_grey, m_dScaleFactor );
 #else
     m_p_bm_ocpn_draw_boundary = ScaleIcon( m_p_bm_ocpn_draw_boundary, m_dScaleFactor );
     m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_p_bm_ocpn_draw_boundary_grey, m_dScaleFactor );
@@ -228,6 +243,9 @@ bool ODicons::ScaleIcons()
     
     m_p_bm_ocpn_draw_dr = ScaleIcon( m_p_bm_ocpn_draw_dr, m_dScaleFactor );
     m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_bm_ocpn_draw_dr_grey, m_dScaleFactor );
+    
+    m_p_bm_ocpn_draw_gz = ScaleIcon( m_p_bm_ocpn_draw_gz, m_dScaleFactor );
+    m_p_bm_ocpn_draw_gz_grey = ScaleIcon( m_p_bm_ocpn_draw_gz_grey, m_dScaleFactor );
     
 #endif // OD_USE_SVG
     
@@ -271,6 +289,8 @@ void ODicons::ChangeScheme(void)
             m_p_bm_ocpn_draw_ebl_grey = m_p_bm_day_ocpn_draw_ebl_grey;
             m_p_bm_ocpn_draw_dr = m_p_bm_day_ocpn_draw_dr;
             m_p_bm_ocpn_draw_dr_grey = m_p_bm_day_ocpn_draw_dr_grey;
+            m_p_bm_ocpn_draw_gz = m_p_bm_day_ocpn_draw_gz;
+            m_p_bm_ocpn_draw_gz_grey = m_p_bm_day_ocpn_draw_gz_grey;
             break;
         case PI_GLOBAL_COLOR_SCHEME_DUSK:
             m_p_bm_ocpn_draw_grey_pi = m_p_bm_dusk_ocpn_draw_grey_pi;
@@ -284,6 +304,8 @@ void ODicons::ChangeScheme(void)
             m_p_bm_ocpn_draw_ebl_grey = m_p_bm_dusk_ocpn_draw_ebl_grey;
             m_p_bm_ocpn_draw_dr = m_p_bm_dusk_ocpn_draw_dr;
             m_p_bm_ocpn_draw_dr_grey = m_p_bm_dusk_ocpn_draw_dr_grey;
+            m_p_bm_ocpn_draw_gz = m_p_bm_dusk_ocpn_draw_gz;
+            m_p_bm_ocpn_draw_gz_grey = m_p_bm_dusk_ocpn_draw_gz_grey;
             break;
         case PI_GLOBAL_COLOR_SCHEME_NIGHT:
             m_p_bm_ocpn_draw_grey_pi = m_p_bm_night_ocpn_draw_grey_pi;
@@ -297,6 +319,8 @@ void ODicons::ChangeScheme(void)
             m_p_bm_ocpn_draw_ebl_grey = m_p_bm_night_ocpn_draw_ebl_grey;
             m_p_bm_ocpn_draw_dr = m_p_bm_night_ocpn_draw_dr;
             m_p_bm_ocpn_draw_dr_grey = m_p_bm_night_ocpn_draw_dr_grey;
+            m_p_bm_ocpn_draw_gz = m_p_bm_night_ocpn_draw_gz;
+            m_p_bm_ocpn_draw_gz_grey = m_p_bm_night_ocpn_draw_gz_grey;
             break;
         default:
             break;
@@ -316,6 +340,8 @@ void ODicons::CreateSchemeIcons()
     m_p_bm_day_ocpn_draw_ebl_grey = m_p_bm_ocpn_draw_ebl_grey;
     m_p_bm_day_ocpn_draw_dr = m_p_bm_ocpn_draw_dr;
     m_p_bm_day_ocpn_draw_dr_grey = m_p_bm_ocpn_draw_dr_grey;
+    m_p_bm_day_ocpn_draw_gz = m_p_bm_ocpn_draw_gz;
+    m_p_bm_day_ocpn_draw_gz_grey = m_p_bm_ocpn_draw_gz_grey;
     
     m_p_bm_dusk_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_grey_pi, 128);
     m_p_bm_dusk_ocpn_draw_boundary = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary, 128);
@@ -328,7 +354,9 @@ void ODicons::CreateSchemeIcons()
     m_p_bm_dusk_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl_grey, 128);
     m_p_bm_dusk_ocpn_draw_dr = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr, 128);
     m_p_bm_dusk_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr_grey, 128);
-
+    m_p_bm_dusk_ocpn_draw_gz = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz, 128);
+    m_p_bm_dusk_ocpn_draw_gz_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz_grey, 128);
+    
     m_p_bm_night_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_grey_pi, 32);
     m_p_bm_night_ocpn_draw_boundary = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary, 32);
     m_p_bm_night_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary_grey, 32);
@@ -340,6 +368,8 @@ void ODicons::CreateSchemeIcons()
     m_p_bm_night_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl_grey, 32);
     m_p_bm_night_ocpn_draw_dr = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr, 32);
     m_p_bm_night_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr_grey, 32);
+    m_p_bm_night_ocpn_draw_gz = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz, 32);
+    m_p_bm_night_ocpn_draw_gz_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz_grey, 32);
     
 }
 

@@ -72,7 +72,7 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
     m_iRangeRingStyle = g_iBoundaryPointRangeRingLineStyle;
 }
 
-void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn)
+void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
 {
     wxPoint r;
     GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);

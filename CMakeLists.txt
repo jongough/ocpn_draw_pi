@@ -15,9 +15,9 @@ SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
-SET(VERSION_MINOR "0")
-SET(VERSION_PATCH "17")
-SET(VERSION_DATE "25/05/2016")
+SET(VERSION_MINOR "2")
+SET(VERSION_PATCH "0")
+SET(VERSION_DATE "15/07/2016")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
@@ -47,10 +47,14 @@ SET(SRCS
         src/DRProp.cpp
         src/EBL.cpp
         src/EBLProp.cpp
+        src/GZ.cpp
+        src/GZMan.cpp
+        src/GZProp.cpp
         src/PointMan.cpp
         src/ODSelect.cpp
         src/PathMan.cpp
         src/pathmanagerdialog.cpp
+        src/ODAPI.cpp
         src/ODPath.cpp
         src/ODPoint.cpp
         src/ODConfig.cpp
@@ -59,6 +63,8 @@ SET(SRCS
         src/ODDRDialogImpl.cpp
         src/ODEventHandler.cpp
         src/ODicons.cpp
+        src/ODIconCombo.cpp
+        src/ODJSON.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
         src/ODPropertiesDialogImpl.cpp
@@ -84,10 +90,17 @@ SET(HDRS
         include/DRProp.h
         include/EBL.h
         include/EBLProp.h
+        include/GZ.h
+        include/GZMan.h
+        include/GZProp.h
         include/PointMan.h
         include/ODSelect.h
         include/PathMan.h
         include/pathmanagerdialog.h
+        include/ODAPI.h
+        include/ODicons.h
+        include/ODIconCombo.h
+        include/ODJSON.h
         include/ODPath.h
         include/ODPoint.h
         include/ODConfig.h
@@ -108,7 +121,6 @@ SET(HDRS
         include/ODToolbarImpl.h
         include/ODUtils.h
         include/ODvector2D.h
-        include/ODicons.h
         include/TextPoint.h
 )
 

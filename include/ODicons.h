@@ -61,6 +61,8 @@ public:
     wxBitmap    *m_p_bm_ocpn_draw_ebl_grey;
     wxBitmap    *m_p_bm_ocpn_draw_dr;
     wxBitmap    *m_p_bm_ocpn_draw_dr_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_gz;
+    wxBitmap    *m_p_bm_ocpn_draw_gz_grey;
     
     wxString    m_s_ocpn_draw_pi;
     wxString    m_s_ocpn_draw_grey_pi;
@@ -74,6 +76,8 @@ public:
     wxString    m_s_ocpn_draw_ebl_grey;
     wxString    m_s_ocpn_draw_dr;
     wxString    m_s_ocpn_draw_dr_grey;
+    wxString    m_s_ocpn_draw_gz;
+    wxString    m_s_ocpn_draw_gz_grey;
     
     bool        m_bUpdateIcons;
 
@@ -98,7 +102,9 @@ private:
     wxSVGDocument   *m_p_svgd_ocpn_draw_ebl_grey;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr;
     wxSVGDocument   *m_p_svgd_ocpn_draw_dr_grey;
-#endif
+    wxSVGDocument   *m_p_svgd_ocpn_draw_gz;
+    wxSVGDocument   *m_p_svgd_ocpn_draw_gz_grey;
+    #endif
     
     wxImage         *m_p_img_ocpn_draw_pi;
     wxImage         *m_p_img_ocpn_draw_grey_pi;
@@ -112,6 +118,8 @@ private:
     wxImage         *m_p_img_ocpn_draw_ebl_grey;
     wxImage         *m_p_img_ocpn_draw_dr;
     wxImage         *m_p_img_ocpn_draw_dr_grey;
+    wxImage         *m_p_img_ocpn_draw_gz;
+    wxImage         *m_p_img_ocpn_draw_gz_grey;
     
     wxBitmap    *m_p_bm_day_ocpn_draw_pi;
     wxBitmap    *m_p_bm_day_ocpn_draw_grey_pi;
@@ -125,6 +133,8 @@ private:
     wxBitmap    *m_p_bm_day_ocpn_draw_ebl_grey;
     wxBitmap    *m_p_bm_day_ocpn_draw_dr;
     wxBitmap    *m_p_bm_day_ocpn_draw_dr_grey;
+    wxBitmap    *m_p_bm_day_ocpn_draw_gz;
+    wxBitmap    *m_p_bm_day_ocpn_draw_gz_grey;
     
     wxBitmap    *m_p_bm_dusk_ocpn_draw_pi;
     wxBitmap    *m_p_bm_dusk_ocpn_draw_grey_pi;
@@ -138,6 +148,8 @@ private:
     wxBitmap    *m_p_bm_dusk_ocpn_draw_ebl_grey;
     wxBitmap    *m_p_bm_dusk_ocpn_draw_dr;
     wxBitmap    *m_p_bm_dusk_ocpn_draw_dr_grey;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_gz;
+    wxBitmap    *m_p_bm_dusk_ocpn_draw_gz_grey;
     
     wxBitmap    *m_p_bm_night_ocpn_draw_pi;
     wxBitmap    *m_p_bm_night_ocpn_draw_grey_pi;
@@ -151,6 +163,8 @@ private:
     wxBitmap    *m_p_bm_night_ocpn_draw_ebl_grey;
     wxBitmap    *m_p_bm_night_ocpn_draw_dr;
     wxBitmap    *m_p_bm_night_ocpn_draw_dr_grey;
+    wxBitmap    *m_p_bm_night_ocpn_draw_gz;
+    wxBitmap    *m_p_bm_night_ocpn_draw_gz_grey;
     
     double          m_dScaleFactor;
     PI_ColorScheme  m_ColourScheme;

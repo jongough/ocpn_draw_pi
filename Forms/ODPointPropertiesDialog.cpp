@@ -40,18 +40,20 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 	
+	m_fgSizerNameIcon = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerNameIcon->AddGrowableCol( 0 );
+	m_fgSizerNameIcon->AddGrowableCol( 1 );
+	m_fgSizerNameIcon->SetFlexibleDirection( wxBOTH );
+	m_fgSizerNameIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
 	m_checkBoxShowName = new wxCheckBox( m_panelBasicProperties, wxID_ANY, _("Show name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_SizerNameIcon->Add( m_checkBoxShowName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_fgSizerNameIcon->Add( m_checkBoxShowName, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_LEFT|wxALL, 2 );
 	
-	m_staticTextIcon = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Icon"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextIcon->Wrap( -1 );
-	m_SizerNameIcon->Add( m_staticTextIcon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
+	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
+	m_fgSizerNameIcon->Add( m_bcomboBoxODPointIconName, 0, wxALL|wxEXPAND, 5 );
 	
-	m_bitmapPointBitmap = new wxStaticBitmap( m_panelBasicProperties, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, 0 );
-	m_SizerNameIcon->Add( m_bitmapPointBitmap, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, NULL, 0|wxVSCROLL ); 
-	m_SizerNameIcon->Add( m_bcomboBoxODPointIconName, 2, wxALL|wxEXPAND, 5 );
+	m_SizerNameIcon->Add( m_fgSizerNameIcon, 1, wxEXPAND, 5 );
 	
 	
 	m_bSizerOuterProperties->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
@@ -368,7 +370,6 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialog::OnPointPropertiesClose ) );
-	m_bcomboBoxODPointIconName->Connect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnComboboxSelected ), NULL, this );
 	m_textLatitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::onRightClick ), NULL, this );
 	m_textLatitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
 	m_textLongitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
@@ -387,7 +388,6 @@ ODPointPropertiesDialog::~ODPointPropertiesDialog()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialog::OnPointPropertiesClose ) );
-	m_bcomboBoxODPointIconName->Disconnect( wxEVT_COMMAND_COMBOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnComboboxSelected ), NULL, this );
 	m_textLatitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::onRightClick ), NULL, this );
 	m_textLatitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
 	m_textLongitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );

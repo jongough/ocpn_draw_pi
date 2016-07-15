@@ -86,14 +86,18 @@ public:
      void StrokeLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2);
      void StrokeLine( wxPoint a, wxPoint b) { StrokeLine(a.x, a.y, b.x, b.y); }
      void StrokeLines( int n, wxPoint *points);
-
+     
+     void DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual = true);
+     void StrokeArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2);
+     void StrokeSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4 );
+     
      void Clear();
      void DrawRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h );
      void DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxCoord rr );
      void DrawCircle(wxCoord x, wxCoord y, wxCoord radius);
      void DrawCircle(const wxPoint &pt, wxCoord radius) { DrawCircle(pt.x, pt.y, radius); }
      void DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius );
-     //void DrawDisk( wxPoint &pt, wxCoord innerRadius, wxCoord outerRadius );
+     void DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4  );
      void StrokeCircle(wxCoord x, wxCoord y, wxCoord radius);
 
      void DrawEllipse(wxCoord x, wxCoord y, wxCoord width, wxCoord height);

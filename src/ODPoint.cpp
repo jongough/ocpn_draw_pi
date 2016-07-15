@@ -359,10 +359,10 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     if(m_fIconScaleFactor != l_ChartScaleFactorExp) {
         m_fIconScaleFactor = l_ChartScaleFactorExp;
         if(m_fIconScaleFactor != 0) {
-        wxImage scaled_image = pbm->ConvertToImage();
-        int new_width = pbm->GetWidth() * m_fIconScaleFactor;
-        int new_height = pbm->GetHeight() * m_fIconScaleFactor;
-        m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
+            wxImage scaled_image = pbm->ConvertToImage();
+            int new_width = pbm->GetWidth() * m_fIconScaleFactor;
+            int new_height = pbm->GetHeight() * m_fIconScaleFactor;
+            m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
         }
     }
     if( m_fIconScaleFactor != 0 && m_ScaledBMP.IsOk() )

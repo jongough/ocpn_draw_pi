@@ -42,16 +42,21 @@
 #include "DRProp.h"
 #include "EBL.h"
 #include "EBLProp.h"
+#include "GZ.h"
+#include "GZMan.h"
+#include "GZProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
 #include "PointMan.h"
+#include "ODAPI.h"
 #include "ODConfig.h"
 #include "ODdc.h"
 #include "ODDRDialogImpl.h"
 #include "ODEventHandler.h"
 #include "ODPropertiesDialogImpl.h"
 #include "ODicons.h"
+#include "ODJSON.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "ODPointPropertiesImpl.h"
@@ -112,12 +117,14 @@ wxString                *g_SData_Locn;
 void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
+GZMan                   *g_pGZMan;
 wxString                g_default_ODPoint_icon;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 ODPathPropertiesDialogImpl   *g_pPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
 DRProp                  *g_pDRPropDialog;
+GZProp                  *g_pGZPropDialog;
 PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
@@ -126,6 +133,7 @@ PlugInManager           *g_OD_pi_manager;
 BoundaryList            *g_pBoundaryList;
 EBLList                 *g_pEBLList;
 DRList                  *g_pDRList;
+GZList                  *g_pGZList;
 ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
@@ -141,6 +149,7 @@ bool        g_bExclusionBoundary;
 bool        g_bInclusionBoundary;
 bool        g_bExclusionBoundaryPoint;
 bool        g_bInclusionBoundaryPoint;
+bool        g_bBoundaryODPointsVisible;
 unsigned int g_uiFillTransparency;
 unsigned int g_uiBoundaryPointFillTransparency;
 int         g_iBoundaryPointRangeRingLineWidth;
@@ -154,7 +163,7 @@ wxString    g_sEBLEndIconName;
 wxString    g_sEBLStartIconName;
 wxColour    g_colourEBLLineColour;
 bool        g_bEBLFixedEndPosition;
-int         g_EBLPersistenceType;
+int         g_iEBLPersistenceType;
 bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
 int         g_EBLLineWidth; 
@@ -176,6 +185,20 @@ wxColour    g_colourDRPointRangeRingsColour;
 int         g_iDRPointRangeRingLineWidth;
 int         g_iDRPointRangeRingLineStyle;
 
+wxColour     g_colourActiveGZLineColour;
+wxColour     g_colourInActiveGZLineColour;
+wxColour     g_colourActiveGZFillColour;
+wxColour     g_colourInActiveGZFillColour;
+int          g_GZLineWidth; 
+int          g_GZLineStyle;
+unsigned int g_uiGZFillTransparency;
+bool         g_bGZRotateWithBoat;
+int          g_iGZMaintainWith;
+wxString    g_sGZFirstIconName;
+wxString    g_sGZSecondIconName;
+int         g_iGZPersistenceType;
+int         g_iGZMaxNum;
+
 wxColour    g_colourActivePathLineColour;
 wxColour    g_colourInActivePathLineColour;
 int         g_PathLineWidth; 
@@ -185,6 +208,7 @@ wxString    *g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
+wxString    *g_pLayerDir;
 
 ODEventHandler   *g_ODEventHandler;
 
@@ -265,6 +289,9 @@ int             g_iDRPersistenceType;
 
 ODPlugIn_Position_Fix_Ex  g_pfFix;
 
+ODJSON          *g_pODJSON;
+ODAPI           *g_pODAPI;
+
 wxImage ICursorLeft;
 wxImage ICursorRight;
 wxImage ICursorUp;
@@ -301,22 +328,27 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     
-    g_pData = new wxString(*GetpPrivateApplicationDataLocation());
-    appendOSDirSlash( g_pData );
-    g_pData->Append(_T("plugins"));
-    appendOSDirSlash( g_pData );
-    if ( !wxDir::Exists(*g_pData))
-        wxMkdir( *g_pData );
-    g_pData->Append(_T("ocpn_draw_pi"));
-    appendOSDirSlash( g_pData );
-    if ( !wxDir::Exists(*g_pData))
-        wxMkdir( *g_pData );
+    wxString *l_pDir = new wxString(*GetpPrivateApplicationDataLocation());
+    appendOSDirSlash( l_pDir );
+    l_pDir->Append(_T("plugins"));
+    appendOSDirSlash( l_pDir );
+    if ( !wxDir::Exists(*l_pDir))
+        wxMkdir( *l_pDir );
+    l_pDir->Append(_T("ocpn_draw_pi"));
+    appendOSDirSlash( l_pDir );
+    if ( !wxDir::Exists(*l_pDir))
+        wxMkdir( *l_pDir );
     g_PrivateDataDir = new wxString;
-    g_PrivateDataDir->Append(*g_pData);
+    g_PrivateDataDir->Append(*l_pDir);
+    g_pData = new wxString(*l_pDir);
     g_pData->append( wxS("data") );
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
+    g_pLayerDir = new wxString;
+    g_pLayerDir->Append(*l_pDir);
+    g_pLayerDir->Append( wxT("Layers") );
+    appendOSDirSlash( g_pLayerDir );
     
     m_pODicons = new ODicons();
 }
@@ -343,6 +375,7 @@ int ocpn_draw_pi::Init(void)
     m_pSelectedBoundary = NULL;
     m_pMouseBoundary = NULL;
     m_pSelectedEBL = NULL;
+    m_pSelectedGZ = NULL;
     m_pMouseEBL = NULL;
     g_dVar = NAN;
     nBoundary_State = 0;
@@ -351,12 +384,15 @@ int ocpn_draw_pi::Init(void)
     nPath_State = 0;
     nEBL_State = 0;
     nDR_State = 0;
+    nGZ_State = 0;
     bKey_Path_Pressed = false;
     bKey_Boundary_Pressed = false;
     bKey_Point_Pressed = false;
     bKey_TextPoint_Pressed = false;
-    bKey_DR_Pressed = false;
     bKey_EBL_Pressed = false;
+    bKey_DR_Pressed = false;
+    bKey_GZ_Pressed = false;
+    g_iGZMaxNum = 0;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
     g_iLocaleDepth = 0;
@@ -386,10 +422,13 @@ int ocpn_draw_pi::Init(void)
     
     LoadConfig();
 
+    g_pODJSON = new ODJSON;
+    g_pODAPI = new ODAPI;
     g_pODPointList = new ODPointList;
     g_pBoundaryList = new BoundaryList;
     g_pEBLList = new EBLList;
     g_pDRList = new DRList;
+    g_pGZList = new GZList;
     g_pPathList = new PathList;
     //    Layers
     pLayerList = new LayerList;
@@ -448,11 +487,20 @@ int ocpn_draw_pi::Init(void)
             break;
             
         case ID_MODE_DR:
-            // EBL
+            // DR
 #ifdef ODraw_USE_SVG
             SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_dr_grey, m_pODicons->m_s_ocpn_draw_dr, m_pODicons->m_s_ocpn_draw_dr);
 #else            
             SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_dr_grey, m_pODicons->m_p_bm_ocpn_draw_dr);
+#endif            
+            break;
+            
+        case ID_MODE_GZ:
+            // GZ
+#ifdef ODraw_USE_SVG
+            SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_gz_grey, m_pODicons->m_s_ocpn_draw_gz, m_pODicons->m_s_ocpn_draw_gz);
+#else            
+            SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_gz_grey, m_pODicons->m_p_bm_ocpn_draw_gz);
 #endif            
             break;
             
@@ -529,6 +577,7 @@ int ocpn_draw_pi::Init(void)
     g_pPathMan = new PathMan();
     g_pPathMan->SetColorScheme( global_color_scheme );
     g_pBoundaryMan = new BoundaryMan();
+    g_pGZMan = new GZMan();
     
     g_pODPathPropDialog = NULL;
     g_pBoundaryPropDialog = NULL;
@@ -536,8 +585,15 @@ int ocpn_draw_pi::Init(void)
     g_pDRPropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
-
-    //SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
+    
+    // Import Layer-wise any .gpx files from /Layers directory
+    if( wxDir::Exists( *g_pLayerDir ) ) {
+        wxString laymsg;
+        laymsg.Printf( wxT("Getting .gpx layer files from: %s"), g_pLayerDir->c_str() );
+        wxLogMessage( laymsg );
+        
+        g_pODConfig->LoadLayers(*g_pLayerDir);
+    }
     
     return (
     WANTS_OVERLAY_CALLBACK  |
@@ -581,7 +637,11 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODPathPropDialog = NULL;
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     g_pODToolbar = NULL;
-
+    if( g_pODJSON ) delete g_pODJSON;
+    g_pODJSON = NULL;
+    if( g_pODAPI ) delete g_pODAPI;
+    g_pODAPI = NULL;
+    
     while(g_iLocaleDepth) {
         ResetGlobalLocale();
     }
@@ -717,18 +777,35 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
 
-    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || g_pfFix.Cog != pfix.Cog || g_pfFix.Hdt != pfix.Hdt))
+    if(g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon || (g_pfFix.Cog != pfix.Cog && !wxIsNaN(pfix.Cog))  || (g_pfFix.Hdt != pfix.Hdt && !wxIsNaN(pfix.Hdt))))
         l_bBoatChange = true;
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
-    if(isnan(pfix.Cog)) g_pfFix.Cog = 0.;
+    if(wxIsNaN(pfix.Cog)) {
+        if(g_pfFix.Cog != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Cog = 0.;
+    }
     else g_pfFix.Cog = pfix.Cog;
+    if(wxIsNaN(pfix.Sog)) {
+        if(g_pfFix.Sog != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Sog = 0.;
+    }
     g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
-    if(isnan(pfix.Hdm)) g_pfFix.Hdm = 0.;
+    if(wxIsNaN(pfix.Hdm)) {
+        if(g_pfFix.Hdm != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Hdm = 0.;
+    }
     else g_pfFix.Hdm = pfix.Hdm;
-    if(isnan(pfix.Hdt)) g_pfFix.Hdt = 0.;
+    if(wxIsNaN(pfix.Hdt)) {
+        if(g_pfFix.Hdt != 0.)
+            l_bBoatChange = true;
+        g_pfFix.Hdt = 0.;
+    }
     else g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
@@ -738,17 +815,29 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     }
     
     if(l_bBoatChange) {
-        wxEBLListNode *node = g_pEBLList->GetFirst();
+        wxEBLListNode *EBLnode = g_pEBLList->GetFirst();
         for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
-            EBL *ebl = (EBL *)node->GetData();
+            EBL *ebl = (EBL *)EBLnode->GetData();
             if(ebl->m_bCentreOnBoat)  {
                 bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
                 ebl->m_bSaveUpdates = false;
                 ebl->CentreOnBoat(true);
                 ebl->m_bSaveUpdates = l_bSaveUpdatesState;
             }
-            node = node->GetNext();
+            EBLnode = EBLnode->GetNext();
         }
+
+        wxGZListNode *GZnode = g_pGZList->GetFirst();
+        for(size_t i = 0; i < g_pGZList->GetCount(); i++) {
+            GZ *gz = (GZ *)GZnode->GetData();
+            bool l_bSaveUpdatesState = gz->m_bSaveUpdates;
+            gz->m_bSaveUpdates = false;
+            gz->UpdateGZ();
+            gz->m_bSaveUpdates = l_bSaveUpdatesState;
+
+            GZnode = GZnode->GetNext();
+        }
+        
     }
 }
 
@@ -802,6 +891,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    nGZ_State = 0;
                     bKey_Boundary_Pressed = false;
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
@@ -828,6 +918,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    nGZ_State = 0;
                     bKey_Point_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -853,6 +944,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    nGZ_State = 0;
                     bKey_TextPoint_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -878,6 +970,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    nGZ_State = 0;
                     bKey_EBL_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -903,6 +996,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nTextPoint_State = 0;
                     nEBL_State = 0;
                     nDR_State = 0;
+                    nGZ_State = 0;
                     bKey_DR_Pressed = false;
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
@@ -912,6 +1006,33 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
                 break;
+                
+            case ID_MODE_GZ:
+                if( 0 == nGZ_State ){
+                    nGZ_State = 1;
+                    m_pCurrentCursor = ocpncc1->pCursorPencil;
+                    SetCursor_PlugIn( m_pCurrentCursor );
+                    SetToolbarItemState( m_draw_button_id, true );
+                    g_pODToolbar->SetToolbarTool( m_Mode );
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
+                } else {
+                    m_iCallerId = 0;
+                    nBoundary_State = 0;
+                    nPoint_State = 0;
+                    nTextPoint_State = 0;
+                    nEBL_State = 0;
+                    nDR_State = 0;
+                    nGZ_State = 0;
+                    bKey_GZ_Pressed = false;
+                    m_pCurrentCursor = NULL;
+                    SetCursor_PlugIn( m_pCurrentCursor );
+                    SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarTool( ID_NONE );
+                    g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+                    if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+                }
+                break;
+
             default:
                 m_Mode = ID_MODE_BOUNDARY;
                 break;
@@ -949,11 +1070,25 @@ void ocpn_draw_pi::SaveConfig()
         else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
         else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
         else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+        pConf->Write( wxS( "DefaultBoundaryODPointsVisible"), g_bBoundaryODPointsVisible );
         pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
         long l_longFillTransparency = g_uiFillTransparency;
         pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
         pConf->Write( wxS( "DefaultInclusionBoundarySize" ), g_iInclusionBoundarySize );
         pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultGZFirstIcon" ), g_sGZFirstIconName );
+        pConf->Write( wxS( "DefaultGZSecondIcon" ), g_sGZSecondIconName );
+        pConf->Write( wxS( "DefaultActiveGZLineColour" ), g_colourActiveGZLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultInActiveGZLineColour" ), g_colourInActiveGZLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultActiveGZFillColour" ), g_colourActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultInActiveGZFillColour" ), g_colourInActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultGZLineWidth" ), g_GZLineWidth );
+        pConf->Write( wxS( "DefaultGZLineStyle" ), g_GZLineStyle );
+        long l_longGZFillTransparency = g_uiGZFillTransparency;
+        pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
+        pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
+        pConf->Write( wxS( "DefaultGZMaintainWith" ), g_iGZMaintainWith );
+        pConf->Write( wxS( "DefaultGZPersistenceType" ), g_iGZPersistenceType );
         pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
         pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
         pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
@@ -963,7 +1098,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
         pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
-        pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_EBLPersistenceType );
+        pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
         pConf->Write( wxS( "DefaultEBLMaintainWith" ), g_iEBLMaintainWith );
@@ -1103,6 +1238,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bInclusionBoundary = false;
                 break;
         }
+        pConf->Read( wxS( "DefaultBoundaryODPointsVisible"), &g_bBoundaryODPointsVisible, 1 );
         pConf->Read( wxS( "DefaultEBLLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourEBLLineColour.Set( l_wxsColour );
         long l_longFillTransparency;
@@ -1113,16 +1249,36 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
         pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxPENSTYLE_SOLID );
+        
+        pConf->Read( wxS( "DefaultGZFirstIcon" ), &g_sGZFirstIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultGZSecondIcon" ), &g_sGZSecondIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultActiveGZLineColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourActiveGZLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultInActiveGZLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourInActiveGZLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultActiveGZFillColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourActiveGZFillColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultInActiveGZFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourInActiveGZFillColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultGZLineWidth" ), &g_GZLineWidth, 2  );
+        pConf->Read( wxS( "DefaultGZLineStyle" ), &g_GZLineStyle, wxPENSTYLE_SOLID );
+        long l_longGZFillTransparency;
+        pConf->Read( wxS( "DefaultGZFillTransparency" ), &l_longGZFillTransparency, 175 );
+        g_uiGZFillTransparency = l_longGZFillTransparency;
+        pConf->Read( wxS( "DefaultGZRotateWithBoat" ), &g_bGZRotateWithBoat, false );
+        pConf->Read( wxS( "DefaultGZMaintainWith" ), &g_iGZMaintainWith, ID_MAINTAIN_WITH_HEADING );
+        pConf->Read( wxS( "DefaultGZPersistenceType" ),  &g_iGZPersistenceType, 0 );
+        
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLStartIcon" ), &g_sEBLStartIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
-        pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_EBLPersistenceType, 0 );
+        pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_iEBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaultEBLRotateWithBoat" ), &g_bEBLRotateWithBoat, false );
-        pConf->Read( wxS( "DefaultEBLMaintainWith" ), &g_iEBLMaintainWith, ID_EBL_MAINTAIN_WITH_HEADING );
+        pConf->Read( wxS( "DefaultEBLMaintainWith" ), &g_iEBLMaintainWith, ID_MAINTAIN_WITH_HEADING );
         pConf->Read( wxS( "DefaultDRPointIcon" ), &g_sDRPointIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultShowDRPointRangeRings"), &g_bDRPointShowRangeRings, false );
         pConf->Read( wxS( "DefaultDRPointRangeRingsNumber" ), &g_iDRPointRangeRingsNumber, 0 );
@@ -1264,402 +1420,7 @@ void ocpn_draw_pi::LoadConfig()
 
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
-    wxJSONValue     root;
-    wxJSONReader    reader;
-    wxJSONValue     jMsg;
-    wxJSONWriter    writer;
-    wxString        MsgString;
-    
-    wxString    sLogMessage;
-    wxString    l_sType;
-    wxString    l_sMsg;
-    double      l_dLat;
-    double      l_dLon;
-    wxString    l_GUID;
-    int         l_BoundaryType;
-    int         l_BoundaryState;
-    bool        bFail = false;
-    
-    if(message_id == wxS("OCPN_DRAW_PI")) {
-        // now read the JSON text and store it in the 'root' structure
-        // check for errors before retreiving values...
-        int numErrors = reader.Parse( message_body, &root );
-        if ( numErrors > 0 )  {
-            const wxArrayString& errors = reader.GetErrors();
-            for(size_t i = 0; i < errors.GetCount(); i++)
-            {
-                if(i == 0) {
-                    sLogMessage.clear();
-                    sLogMessage.Append(wxT("ocpn_draw_pi: Error parsing JSON message - "));
-                    sLogMessage.Append( message_id );
-                }
-                else sLogMessage.Append(wxT(" "));
-                sLogMessage.append( errors.Item( i ) );
-                wxLogMessage( sLogMessage );
-            }
-            return;
-        }
-        
-        if(!root.HasMember( wxS("Source"))) {
-            // Originator
-            wxLogMessage( wxS("No Source found in message") );
-            bFail = true;
-        }
-        
-        if(!root.HasMember( wxS("Msg"))) {
-            // Message identifier
-            wxLogMessage( wxS("No Msg found in message") );
-            bFail = true;
-        }
-        
-        if(!root.HasMember( wxS("Type"))) {
-            // Message type, orig or resp
-            wxLogMessage( wxS("No Type found in message") );
-            bFail = true;
-        }
-        
-        if(!root.HasMember( wxS("MsgId"))) {
-            // Unique (?) Msg number
-            wxLogMessage( wxS("No MsgId found in message") );
-            bFail = true;
-        }
-
-        if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
-            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-            jMsg[wxT("Msg")] = root[wxT("Msg")];
-            jMsg[wxT("Type")] = wxT("Response");
-            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-            jMsg[wxS("Major")] = PLUGIN_VERSION_MAJOR;
-            jMsg[wxS("Minor")] = PLUGIN_VERSION_MINOR;
-            jMsg[wxS("Patch")] = PLUGIN_VERSION_PATCH;
-            jMsg[wxS("Date")] = PLUGIN_VERSION_DATE;
-            writer.Write( jMsg, MsgString );
-            SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
-            
-        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPathByGUID")) {
-            if(!root.HasMember( wxS("GUID"))) {
-                wxLogMessage( wxS("No GUID found in message") );
-                bFail = true;
-            }
-            
-            if(!bFail) {
-                wxString l_sGUID = root[wxS("GUID")].AsString();
-                l_sType = root[wxS("Type")].AsString();
-                l_sMsg = root[wxT("Msg")].AsString();
-                
-                if(l_sType == wxS("Request")) {
-                    ODPath *l_path = NULL;
-                        l_path = g_pPathMan->FindPathByGUID( l_sGUID );
-                        if(!l_path) {
-                            wxString l_msg;
-                            l_msg.append( wxS("Path, with GUID: ") );
-                            l_msg.append( l_sGUID );
-                            l_msg.append( wxS(", not found") );
-                            wxLogMessage( l_msg );
-                            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                            jMsg[wxT("Msg")] = root[wxT("Msg")];
-                            jMsg[wxT("Type")] = wxT("Response");
-                            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                            jMsg[wxS("Found")] = false;
-                            jMsg[wxS("GUID")] = root[wxS("GUID")];
-                            writer.Write( jMsg, MsgString );
-                            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                            return;
-                        }
-                        jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                        jMsg[wxT("Msg")] = root[wxT("Msg")];
-                        jMsg[wxT("Type")] = wxT("Response");
-                        jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                        jMsg[wxT("Found")] = true;
-                        jMsg[wxT("GUID")] = root[wxS("GUID")];
-                        jMsg[wxT("Name")] = l_path->m_PathNameString;
-                        jMsg[wxT("Description")] = l_path->m_PathDescription;
-                        writer.Write( jMsg, MsgString );
-                        SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                        return;
-                }
-            }
-                    
-        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
-            if(!root.HasMember( wxS("lat"))) {
-                wxLogMessage( wxS("No Latitude found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("lon"))) {
-                wxLogMessage( wxS("No Longitude found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("BoundaryType"))) {
-                wxLogMessage( wxS("No Boundary Type found in message") );
-                bFail = true;
-            }
-            
-            if(!bFail) {
-                l_dLat = root[wxS("lat")].AsDouble();
-                l_dLon = root[wxS("lon")].AsDouble();
-                
-                l_sType = root[wxS("Type")].AsString();
-                l_sMsg = root[wxT("Msg")].AsString();
-                
-                if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
-                else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
-                else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NIETHER;
-                else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
-                else l_BoundaryType = ID_BOUNDARY_ANY;
-                
-                l_BoundaryState = ID_BOUNDARY_ANY;
-                if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_BOUNDARY_STATE_ACTIVE;
-                else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_BOUNDARY_STATE_INACTIVE;
-                else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_BOUNDARY_STATE_ANY;
-                
-                if(l_sType == wxS("Request")) {
-                    bool    l_bFoundBoundary = false;
-                    bool    l_bFoundBoundaryPoint = false;
-                    wxString l_sGUID = g_pBoundaryMan->FindPointInBoundary( l_dLat, l_dLon, l_BoundaryType, l_BoundaryState );
-                    if(l_sGUID.length() > 0) 
-                        l_bFoundBoundary = true;
-                    else {
-                        l_sGUID = g_pBoundaryMan->FindPointInBoundaryPoint( l_dLat, l_dLon, l_BoundaryType );
-                        if(l_sGUID.length() > 0)
-                            l_bFoundBoundaryPoint = true;
-                    }
-                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                    jMsg[wxT("Msg")] = root[wxT("Msg")];
-                    jMsg[wxT("Type")] = wxT("Response");
-                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                    jMsg[wxS("GUID")] = l_sGUID;
-                    jMsg[wxS("lat")] = l_dLat;
-                    jMsg[wxS("lon")] = l_dLon;
-                    if(l_bFoundBoundary ) {
-                        Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
-                        jMsg[wxS("Name")] = l_boundary->m_PathNameString;
-                        jMsg[wxS("Description")] = l_boundary->m_PathDescription;
-                        jMsg[wxS("Found")] = true;
-                        jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
-                        if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
-                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
-                        else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
-                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
-                        else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
-                            jMsg[wxS("BoundaryType")] = wxT("Neither");
-                        else
-                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
-                    }
-                    else if(l_bFoundBoundaryPoint ) {
-                        jMsg[wxS("Found")] = true;
-                        BoundaryPoint *l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
-                        jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
-                        jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
-                        jMsg[wxS("BoundaryObjectType")] = wxT("Boundary Point");
-                        if( l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
-                            jMsg[wxS("BoundaryType")] = wxT("Exclusion");
-                        else if( !l_boundarypoint->m_bExclusionBoundaryPoint && l_boundarypoint->m_bInclusionBoundaryPoint)
-                            jMsg[wxS("BoundaryType")] = wxT("Inclusion");
-                        else if( !l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
-                            jMsg[wxS("BoundaryType")] = wxT("Neither");
-                        else
-                            jMsg[wxS("BoundaryType")] = wxT("Unknown");
-                    }
-                    else jMsg[wxS("Found")] = false;
-                    writer.Write( jMsg, MsgString );
-                    SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
-                    return;
-                }
-            }
-            
-        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInBoundary")) {
-            if(!root.HasMember( wxS("GUID"))) {
-                wxLogMessage( wxS("No GUID found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("lat"))) {
-                wxLogMessage( wxS("No Latitude found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("lon"))) {
-                wxLogMessage( wxS("No Longitude found in message") );
-                bFail = true;
-            }
-            
-            if(!bFail) {
-                wxString l_sGUID = root[wxS("GUID")].AsString();
-                l_dLat = root[wxS("lat")].AsDouble();
-                l_dLon = root[wxS("lon")].AsDouble();
-                
-                l_sType = root[wxS("Type")].AsString();
-                l_sMsg = root[wxT("Msg")].AsString();
-                
-                if(l_sType == wxS("Request")) {
-                    Boundary *l_boundary = NULL;
-                    BoundaryPoint *l_boundarypoint = NULL;
-                    if(l_sMsg == wxS("FindPointInBoundary")) {
-                        l_dLat = root[wxS("lat")].AsDouble();
-                        l_dLon = root[wxS("lon")].AsDouble();
-                        
-                        l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
-                        if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
-                        if(!l_boundary && !l_boundarypoint) {
-                            wxString l_msg;
-                            l_msg.append( wxS("Boundary, with GUID: ") );
-                            l_msg.append( l_sGUID );
-                            l_msg.append( wxS(", not found") );
-                            wxLogMessage( l_msg );
-                            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                            jMsg[wxT("Msg")] = root[wxT("Msg")];
-                            jMsg[wxT("Type")] = wxT("Response");
-                            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                            jMsg[wxS("Found")] = false;
-                            jMsg[wxS("lat")] = l_dLat;
-                            jMsg[wxS("lon")] = l_dLon;
-                            jMsg[wxS("GUID")] = root[wxS("GUID")];
-                            writer.Write( jMsg, MsgString );
-                            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                            return;
-                        }
-                        bool l_bFound = false;
-                        if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
-                        else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
-                        jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                        jMsg[wxT("Msg")] = root[wxT("Msg")];
-                        jMsg[wxT("Type")] = wxT("Response");
-                        jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                        jMsg[wxS("Found")] = l_bFound;
-                        jMsg[wxS("lat")] = l_dLat;
-                        jMsg[wxS("lon")] = l_dLon;
-                        jMsg[wxS("GUID")] = root[wxS("GUID")];
-                        if(l_boundary) {
-                            jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
-                            if( l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
-                                jMsg[wxS("BoundaryType")] = wxT("Exclusion");
-                            else if( !l_boundary->m_bExclusionBoundary && l_boundary->m_bInclusionBoundary)
-                                jMsg[wxS("BoundaryType")] = wxT("Inclusion");
-                            else if( !l_boundary->m_bExclusionBoundary && !l_boundary->m_bInclusionBoundary)
-                                jMsg[wxS("BoundaryType")] = wxT("Neither");
-                            else
-                                jMsg[wxS("BoundaryType")] = wxT("Unknown");
-                        }
-                        else {
-                            jMsg[wxS("BoundaryObjectType")] = wxT("Boundary Point");
-                            if( l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
-                                jMsg[wxS("BoundaryType")] = wxT("Exclusion");
-                            else if( !l_boundarypoint->m_bExclusionBoundaryPoint && l_boundarypoint->m_bInclusionBoundaryPoint)
-                                jMsg[wxS("BoundaryType")] = wxT("Inclusion");
-                            else if( !l_boundarypoint->m_bExclusionBoundaryPoint && !l_boundarypoint->m_bInclusionBoundaryPoint)
-                                jMsg[wxS("BoundaryType")] = wxT("Neither");
-                            else
-                                jMsg[wxS("BoundaryType")] = wxT("Unknown");
-                        }
-                        writer.Write( jMsg, MsgString );
-                        SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                        return;
-                    }
-                }
-            }
-            
-        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInGuardZone")) {
-            if(!root.HasMember( wxS("GUID"))) {
-                wxLogMessage( wxS("No GUID found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("lat"))) {
-                wxLogMessage( wxS("No Latitude found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("lon"))) {
-                wxLogMessage( wxS("No Longitude found in message") );
-                bFail = true;
-            }
-            
-            if(!bFail) {
-                wxString l_sGUID = root[wxS("GUID")].AsString();
-                root[wxS("lat")].AsString().ToDouble( & l_dLat );
-                root[wxS("lon")].AsString().ToDouble( & l_dLon );
-                
-                l_sType = root[wxS("Type")].AsString();
-                l_sMsg = root[wxT("Msg")].AsString();
-                
-                if(l_sType == wxS("Request")) {
-                    Boundary *l_boundary = NULL;
-                    BoundaryPoint *l_boundarypoint = NULL;
-
-                    l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
-                    if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
-                    if(!l_boundary && !l_boundarypoint) {
-                        wxString l_msg;
-                        l_msg.append( wxS("Guard Zone, with GUID: ") );
-                        l_msg.append( l_sGUID );
-                        l_msg.append( wxS(", not found") );
-                        wxLogMessage( l_msg );
-                        jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                        jMsg[wxT("Msg")] = root[wxT("Msg")];
-                        jMsg[wxT("Type")] = wxT("Response");
-                        jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                        jMsg[wxS("Found")] = false;
-                        jMsg[wxS("lat")] = l_dLat;
-                        jMsg[wxS("lon")] = l_dLon;
-                        jMsg[wxS("GUID")] = root[wxS("GUID")];
-                        writer.Write( jMsg, MsgString );
-                        SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                        return;
-                    }
-                    bool l_bFound = false;
-                    if(l_boundary) l_bFound = g_pBoundaryMan->FindPointInBoundary( l_boundary, l_dLat, l_dLon );
-                    else if(l_boundarypoint) l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
-                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                    jMsg[wxT("Msg")] = root[wxT("Msg")];
-                    jMsg[wxT("Type")] = wxT("Response");
-                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                    jMsg[wxS("Found")] = l_bFound;
-                    jMsg[wxS("lat")] = l_dLat;
-                    jMsg[wxS("lon")] = l_dLon;
-                    if(l_boundary) {
-                        jMsg[wxS("Name")] = l_boundary->m_PathNameString;
-                        jMsg[wxS("Description")] = l_boundary->m_PathDescription;
-                    } else if(l_boundarypoint) {
-                        jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
-                        jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
-                    } else {
-                        jMsg[wxS("Name")] = wxEmptyString;
-                        jMsg[wxS("Description")] = wxEmptyString;
-                    }
-                    
-                    jMsg[wxS("GUID")] = root[wxS("GUID")];
-                    writer.Write( jMsg, MsgString );
-                    SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                    return;
-                }
-            }
-        }
-        
-    } else if(message_id == _T("WMM_VARIATION_BOAT")) {
-
-    // construct the JSON root object
-        wxJSONValue  root;
-    // construct a JSON parser
-        wxJSONReader reader;
-
-    // now read the JSON text and store it in the 'root' structure
-    // check for errors before retreiving values...
-        int numErrors = reader.Parse( message_body, &root );
-        if ( numErrors > 0 )  {
-//              const wxArrayString& errors = reader.GetErrors();
-            return;
-        }
-
-        // get the DECL value from the JSON message
-        wxString decl = root[_T("Decl")].AsString();
-        double decl_val;
-        decl.ToDouble(&decl_val);
-
-        g_dVar = decl_val;
-    }
-    
+    g_pODJSON->ProcessMessage(message_id, message_body);
     return;
 }
 
@@ -1674,7 +1435,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
         if ( event.ControlDown() )
             key_char -= 64;
         
-        if((bKey_Boundary_Pressed || bKey_Point_Pressed || bKey_TextPoint_Pressed || bKey_EBL_Pressed || bKey_DR_Pressed) && key_char != WXK_ESCAPE) return true; 
+        if((bKey_Boundary_Pressed || bKey_Point_Pressed || bKey_TextPoint_Pressed || bKey_EBL_Pressed || bKey_DR_Pressed || bKey_GZ_Pressed) && key_char != WXK_ESCAPE) return true; 
         
         switch( key_char ) {
             case WXK_CONTROL_B:                      // Ctrl B
@@ -1685,6 +1446,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         bKey_TextPoint_Pressed = false;
                         bKey_EBL_Pressed = false;
                         bKey_DR_Pressed = false;
+                        bKey_GZ_Pressed = false;
                         m_Mode = ID_MODE_BOUNDARY;
                         g_pODToolbar->m_Mode = m_Mode;
                         OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
@@ -1701,6 +1463,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         bKey_TextPoint_Pressed = false;
                         bKey_EBL_Pressed = false;
                         bKey_DR_Pressed = false;
+                        bKey_GZ_Pressed = false;
                         m_Mode = ID_MODE_POINT;
                         g_pODToolbar->m_Mode = m_Mode;
                         OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
@@ -1717,6 +1480,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         bKey_TextPoint_Pressed = true;
                         bKey_EBL_Pressed = false;
                         bKey_DR_Pressed = false;
+                        bKey_GZ_Pressed = false;
                         m_Mode = ID_MODE_TEXT_POINT;
                         g_pODToolbar->m_Mode = m_Mode;
                         OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
@@ -1733,6 +1497,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         bKey_TextPoint_Pressed = false;
                         bKey_EBL_Pressed = true;
                         bKey_DR_Pressed = false;
+                        bKey_GZ_Pressed = false;
                         m_Mode = ID_MODE_EBL;
                         g_pODToolbar->m_Mode = m_Mode;
                         OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
@@ -1749,7 +1514,25 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         bKey_TextPoint_Pressed = false;
                         bKey_EBL_Pressed = false;
                         bKey_DR_Pressed = true;
+                        bKey_GZ_Pressed = false;
                         m_Mode = ID_MODE_DR;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        SetToolbarTool();
+                    }
+                    bret = TRUE;
+                } else bret = FALSE;
+                break;
+            case WXK_CONTROL_G:                      // Ctrl G
+                if ( event.ShiftDown() ) { // Shift-Ctrl-Z
+                    if(event.GetEventType() == wxEVT_KEY_DOWN) {
+                        bKey_Boundary_Pressed = false;
+                        bKey_Point_Pressed = false;
+                        bKey_TextPoint_Pressed = false;
+                        bKey_EBL_Pressed = false;
+                        bKey_DR_Pressed = false;
+                        bKey_GZ_Pressed = true;
+                        m_Mode = ID_MODE_GZ;
                         g_pODToolbar->m_Mode = m_Mode;
                         OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                         SetToolbarTool();
@@ -1785,6 +1568,11 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         g_pODToolbar->m_Mode = m_Mode;
                         OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
                         bret = TRUE;
+                    } else if( nGZ_State > 0 ){
+                        m_Mode = ID_MODE_GZ;
+                        g_pODToolbar->m_Mode = m_Mode;
+                        OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+                        bret = TRUE;
                     } else if( m_bODPointEditing ) {
                         m_bODPointEditing = false;
                         m_pCurrentCursor = NULL;
@@ -1797,6 +1585,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     bKey_TextPoint_Pressed = false;
                     bKey_EBL_Pressed = false;
                     bKey_DR_Pressed = false;
+                    bKey_GZ_Pressed = false;
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
                 }
@@ -1824,8 +1613,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
         
         
-    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 
-        || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || nEBL_State > 0 || m_bEBLMoveOrigin ) {
+    if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 || nEBL_State > 0 || nGZ_State > 0
+        || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || m_bEBLMoveOrigin) {
         CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2 );
         bRefresh = TRUE;
     }
@@ -1881,6 +1670,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             } else if ( nDR_State > 0 ) {
                 g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_DR);
                 bret = CreateDRLeftClick( event );
+            } else if ( nGZ_State > 0 ) {
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_GZ);
+                bret = CreateGZLeftClick( event );
             }
         } else if( m_bPathEditing ) {
             m_pCurrentCursor = ocpncc1->pCursorCross;
@@ -1899,13 +1691,17 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
     
     if( event.LeftUp() ) {
-        if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0 || nEBL_State > 0 || nDR_State > 0 ) ) {
+        if (m_iCallerId == m_draw_button_id && (nBoundary_State > 0 || nPoint_State > 0 || nTextPoint_State > 0 || nEBL_State > 0 || nDR_State > 0 || nGZ_State > 0) ) {
             bret = true;
         } else {
             if(!m_bPathEditing && !m_bEBLMoveOrigin && !m_bODPointEditing) { // Handle left up moving origin when doing double left click on OD object
                 FindSelectedObject();
                 if(m_pSelectedPath || m_pFoundODPoint) {
                     m_pSelectedPath = NULL;
+                    m_pSelectedBoundary = NULL;
+                    m_pSelectedEBL = NULL;
+                    m_pSelectedDR = NULL;
+                    m_pSelectedGZ = NULL;
                     m_pFoundODPoint = NULL;
                     m_bPathEditing = false;
                     bret = true;
@@ -1923,6 +1719,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 // TODO reimplement undo
                 //undo->AfterUndoableAction( m_pRoutePointEditTarget );
                 m_pSelectedPath = NULL;
+                m_pSelectedBoundary = NULL;
+                m_pSelectedEBL = NULL;
+                m_pSelectedDR = NULL;
+                m_pSelectedGZ = NULL;
                 m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
                 bret = TRUE;
@@ -1937,10 +1737,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     if(m_pSelectedEBL)
                         m_pSelectedEBL->MoveEndPoint();
                 }
-                g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
-                g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
-                g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
-                g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
+                if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                    m_pSelectedGZ->UpdateGZSelectablePath();
+                } else {
+                    g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
+                    g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
+                    g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
+                    g_pODSelect->AddAllSelectableODPoints( m_pSelectedPath );
+                }
                 
                 m_pSelectedPath->FinalizeForRendering();
                 m_pSelectedPath->UpdateSegmentDistances();
@@ -1990,6 +1794,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 // TODO reimplement undo
                 //undo->AfterUndoableAction( m_pRoutePointEditTarget );
                 m_pSelectedPath = NULL;
+                m_pSelectedBoundary = NULL;
+                m_pSelectedEBL = NULL;
+                m_pSelectedDR = NULL;
+                m_pSelectedGZ = NULL;
                 m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
                 bret = TRUE;
@@ -2006,6 +1814,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
                 
                 m_pSelectedPath = NULL;
+                m_pSelectedBoundary = NULL;
+                m_pSelectedEBL = NULL;
+                m_pSelectedDR = NULL;
+                m_pSelectedGZ = NULL;
                 m_pFoundODPoint = NULL;
                 
                 bret = TRUE;
@@ -2023,8 +1835,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if( event.LeftIsDown() ) {
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
             else if( m_pFoundODPoint ) {
-                if( m_bPathEditing )
-                {
+                if( m_bPathEditing ) {
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     m_pFoundODPoint->m_lat = m_cursor_lat;
                     m_pFoundODPoint->m_lon = m_cursor_lon;
@@ -2044,8 +1855,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pFoundODPoint->m_lat = m_cursor_lat;
                     m_pFoundODPoint->m_lon = m_cursor_lon;
                     if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("EBL")) {
-                        EBL *m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
                         m_pSelectedEBL->ResizeVRM( );
+                    }
+                    if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                        m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
                     }
                     
                     if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
@@ -2088,7 +1902,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             RequestRefresh( m_parent_window );
             bret = TRUE;
         }
-        if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 ) {
+        if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 || nGZ_State == 1) {
             m_Mode++;
             if(m_Mode >= ID_MODE_BOUNDARY)
                 SetToolbarTool();
@@ -2101,8 +1915,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bKey_Boundary_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
-            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->SetToolbarToolEnableAll();
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2113,8 +1927,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bKey_Point_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
-            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->SetToolbarToolEnableAll();
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2125,6 +1939,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bKey_TextPoint_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarToolEnableAll();
             g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -2137,8 +1952,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_bEBLMoveOrigin = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
-            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->SetToolbarToolEnableAll();
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2149,8 +1964,24 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bKey_DR_Pressed = false;
             m_pCurrentCursor = NULL;
             SetToolbarItemState( m_draw_button_id, false );
-            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->SetToolbarToolEnableAll();
+            g_pODToolbar->SetToolbarTool( ID_NONE );
+            g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
+            if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+            bRefresh = TRUE;
+            bret = TRUE;
+        } else if ( nGZ_State > 1 ) {
+            m_iCallerId = 0;
+            if(!(nGZ_State & 1) && m_pMouseGZ) {
+                g_pGZMan->DeletePath(m_pMouseGZ);
+                m_pMouseGZ = NULL;
+            }
+            nGZ_State = 0;
+            bKey_GZ_Pressed = false;
+            m_pCurrentCursor = NULL;
+            SetToolbarItemState( m_draw_button_id, false );
+            g_pODToolbar->SetToolbarToolEnableAll();
+            g_pODToolbar->SetToolbarTool( ID_NONE );
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
@@ -2160,19 +1991,23 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             bRefresh = TRUE;
             bret = TRUE;
-        } else if ( nBoundary_State == 0 && nPoint_State == 0 && nTextPoint_State == 0 && nEBL_State == 0 && nDR_State == 0 ) {
+        } else if ( nBoundary_State == 0 && nPoint_State == 0 && nTextPoint_State == 0 && nEBL_State == 0 && nDR_State == 0 && nGZ_State == 0) {
             FindSelectedObject();
             
             if( 0 != m_seltype ) {
                 if(m_pSelectedPath) {
                     m_pSelectedBoundary = NULL;
                     m_pSelectedEBL = NULL;
+                    m_pSelectedDR = NULL;
+                    m_pSelectedGZ = NULL;
                     if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
                         m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
                         m_pSelectedDR = (DR *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
+                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
                 }
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
@@ -2266,35 +2101,35 @@ void ocpn_draw_pi::FindSelectedObject()
             } else
                 bop_viz = pop->IsVisible();               // isolated point
                 
-                if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
+            if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
+            
+            // Use path array to choose the appropriate path
+            // Give preference to any active path, otherwise select the first visible path in the array for this point
+            if( ppath_array ) {
+                for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                    ODPath *pp = (ODPath *) ppath_array->Item( ip );
+                    if( pp->m_bPathIsActive ) {
+                        pSelectedActivePath = pp;
+                        pFoundActiveODPoint = pop;
+                        break;
+                    }
+                }
                 
-                // Use path array to choose the appropriate path
-                // Give preference to any active path, otherwise select the first visible path in the array for this point
-                if( ppath_array ) {
+                if( NULL == pSelectedVizPath ) {
                     for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                         ODPath *pp = (ODPath *) ppath_array->Item( ip );
-                        if( pp->m_bPathIsActive ) {
-                            pSelectedActivePath = pp;
-                            pFoundActiveODPoint = pop;
+                        if( pp->IsVisible() ) {
+                            pSelectedVizPath = pp;
+                            pFoundVizODPoint = pop;
                             break;
                         }
                     }
-                    
-                    if( NULL == pSelectedVizPath ) {
-                        for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
-                            ODPath *pp = (ODPath *) ppath_array->Item( ip );
-                            if( pp->IsVisible() ) {
-                                pSelectedVizPath = pp;
-                                pFoundVizODPoint = pop;
-                                break;
-                            }
-                        }
-                    }
-                    
-                    delete ppath_array;
                 }
                 
-                node = node->GetNext();
+                delete ppath_array;
+            }
+            
+            node = node->GetNext();
         }
         
         //      Now choose the "best" selections
@@ -2311,7 +2146,12 @@ void ocpn_draw_pi::FindSelectedObject()
         if ( m_pSelectedPath ) {
             if ( m_pSelectedPath->IsVisible() )
                 m_seltype |= SELTYPE_ODPOINT;
+            if( m_pSelectedPath->m_sTypeString == wxT("Boundary") ) m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
+            else if( m_pSelectedPath->m_sTypeString == wxT("EBL") ) m_pSelectedEBL = (EBL *)m_pSelectedPath;
+            else if( m_pSelectedPath->m_sTypeString == wxT("DR") ) m_pSelectedDR = (DR *)m_pSelectedPath;
+            else if( m_pSelectedPath->m_sTypeString == wxT("Guard Zone") ) m_pSelectedGZ = (GZ *)m_pSelectedPath;
         } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_ODPOINT;
+        
         
         if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = true;
     }
@@ -2518,21 +2358,59 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
     } else if( nEBL_State > 0 || m_bEBLMoveOrigin ) {
         EBL *ebl = new EBL();
         double brg, dist;
-        wxPoint tpoint;
+        wxPoint boatpoint;
         if(m_bEBLMoveOrigin) {
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
-            GetCanvasPixLL( g_pVP, &tpoint, tp->m_lat, tp->m_lon );
+            GetCanvasPixLL( g_pVP, &boatpoint, tp->m_lat, tp->m_lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
-            ebl->DrawSegment( dc, &tpoint, &m_cursorPoint, *m_pVP, false );
+            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
         } else {
-            GetCanvasPixLL( g_pVP, &tpoint, g_pfFix.Lat, g_pfFix.Lon );
+            GetCanvasPixLL( g_pVP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
-            ebl->DrawSegment( dc, &tpoint, &m_cursorPoint, *m_pVP, false );
+            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
         }
         wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
         if(info.length() > 0)
             RenderExtraPathLegInfo( dc, m_cursorPoint, info );
         delete ebl;
+    } else if( nGZ_State > 0 ) {
+        // draw line from boat to cursor
+        EBL *ebl = new EBL();
+        double brg, dist;
+        wxPoint boatpoint;
+        GetCanvasPixLL( g_pVP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
+        DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
+        ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
+        wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
+        if(info.length() > 0)
+            RenderExtraPathLegInfo( dc, m_cursorPoint, info );
+        delete ebl;
+        
+        // rubber band guard zone
+        if( !(nGZ_State & 1) ) {
+            // TODO need code here to render GZ as it is drawn
+            double l_dLat;
+            double l_dLon;
+            wxPoint l_l1p1;
+            wxPoint l_l1p2;
+            wxPoint l_l2p1;
+            wxPoint l_l2p2;
+            GZ *gz = new GZ();
+            // get x, y of first point on first line
+            GetCanvasPixLL( g_pVP, &l_l1p1, m_pMouseGZ->m_pODPointList->GetFirst()->GetData()->m_lat, m_pMouseGZ->m_pODPointList->GetFirst()->GetData()->m_lon );
+            // get x, y of second point on first line
+            PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, m_pMouseGZ->m_dFirstLineDirection, dist, &l_dLat, &l_dLon);
+            GetCanvasPixLL( g_pVP, &l_l1p2, l_dLat, l_dLon );
+            // get x, y of second point on second line
+            l_l2p2 = m_cursorPoint;
+            // get x, y of first point on second line
+            PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, brg, m_pMouseGZ->m_dFirstDistance, &l_dLat, &l_dLon);
+            GetCanvasPixLL( g_pVP, &l_l2p1, l_dLat, l_dLon);
+            
+            gz->DrawArcSegment( dc, &boatpoint, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, *m_pVP, false );
+            
+            delete gz;
+        }
     }
         
         
@@ -2541,10 +2419,20 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
 wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point)
 {
     wxString pathInfo;
-    if( g_bShowMag )
-        pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
-    else
-        pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+    if(path->m_sTypeString == wxT("EBL")) {
+        int EBLbrgFrom = (int)GetTrueOrMag( brg );
+        int EBLbrgTo = EBLbrgFrom - 180;
+        if(EBLbrgTo < 0) EBLbrgTo += 360;
+        if( g_bShowMag )
+            pathInfo << wxString::Format( wxString("From: %03d°(M), To: %03d°(M)\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo  );
+        else
+            pathInfo << wxString::Format( wxString("From: %03d°, To: %03d°\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
+    } else {
+        if( g_bShowMag )
+            pathInfo << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+        else
+            pathInfo << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+    }
     
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );
     
@@ -2666,7 +2554,6 @@ void ocpn_draw_pi::FinishBoundary( void )
     
     m_pSelectedPath = NULL;
     m_pSelectedBoundary = NULL;
-    m_pSelectedEBL = NULL;
     m_pFoundODPointSecond = NULL;
     
     // TODO fix up undo
@@ -2685,6 +2572,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
         Boundary *pBoundaryDraw = NULL;
         EBL *pEBLDraw = NULL;
         DR *pDRDraw = NULL;
+        GZ *pGZDraw = NULL;
         
         if(pPath->m_sTypeString == wxT("Boundary")){
             pBoundaryDraw = (Boundary *) pPath;
@@ -2695,6 +2583,9 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
         } else if(pPath->m_sTypeString == wxT("DR")) {
             pDRDraw = (DR *) pPath;
             pPathDraw = pDRDraw;
+        } else if(pPath->m_sTypeString == wxT("Guard Zone")) {
+            pGZDraw = (GZ *) pPath;
+            pPathDraw = pGZDraw;
         }
 
         if( pPathDraw ) {
@@ -2748,7 +2639,10 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
                 ODPoint *pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
                 DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &dist );
-                GetCanvasPixLL( m_pVP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+                if(m_pFoundODPoint == pEndPoint)
+                    GetCanvasPixLL( m_pVP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+                else
+                    GetCanvasPixLL( m_pVP, &destPoint, pStartPoint->m_lat, pStartPoint->m_lon);
                 wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
                 if(info.length() > 0)
                     RenderExtraPathLegInfo( dc, destPoint, info );
@@ -3106,19 +3000,19 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     
     if(m_pMouseEBL->m_bRotateWithBoat) {
         switch(m_pMouseEBL->m_iMaintainWith) {
-            case ID_EBL_MAINTAIN_WITH_HEADING:
-                if(!isnan(g_pfFix.Hdt))
+            case ID_MAINTAIN_WITH_HEADING:
+                if(!wxIsNaN(g_pfFix.Hdt))
                     m_pMouseEBL->m_dEBLAngle -= g_pfFix.Hdt;
                 break;
-            case ID_EBL_MAINTAIN_WITH_COG:
-                if(!isnan(g_pfFix.Cog))
+            case ID_MAINTAIN_WITH_COG:
+                if(!wxIsNaN(g_pfFix.Cog))
                     m_pMouseEBL->m_dEBLAngle -= g_pfFix.Cog;
                 break;
         }
     }
 
     
-    if(m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_EBL_PERSISTENT_CRASH)
+    if(m_pMouseEBL->m_iPersistenceType == ID_PERSISTENT || m_pMouseEBL->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMouseEBL, -1 );    // don't save over restart
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMouseEBL );
@@ -3155,6 +3049,107 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     return true;
 }
 
+bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
+{
+    //Process GZ creation
+    double rlat, rlon;
+    
+    rlat = m_cursor_lat;
+    rlon = m_cursor_lon;
+    
+    m_bGZEditing = true;
+    
+    if( nGZ_State & 1 ) {
+        m_pMouseGZ = new GZ();
+        g_pGZList->Append( m_pMouseGZ );
+        g_pPathList->Append( m_pMouseGZ);
+        m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << ++g_iGZMaxNum;
+        m_pMouseGZ->m_width = g_GZLineWidth;
+        m_pMouseGZ->m_style = g_GZLineStyle;
+        m_pMouseGZ->m_dCentreLat = g_pfFix.Lat;
+        m_pMouseGZ->m_dCentreLon = g_pfFix.Lon;
+        
+        DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &m_pMouseGZ->m_dFirstLineDirection, &m_pMouseGZ->m_dFirstDistance );
+        r_rband.x = g_cursor_x;
+        r_rband.y = g_cursor_y;
+        m_dStartLat = rlat;
+        m_dStartLon = rlon;
+        if(m_pMouseGZ->m_bRotateWithBoat) {
+            switch(m_pMouseGZ->m_iMaintainWith) {
+                case ID_MAINTAIN_WITH_HEADING:
+                    if(!wxIsNaN(g_pfFix.Hdt))
+                        m_pMouseGZ->m_dFirstLineDirection -= g_pfFix.Hdt;
+                    break;
+                case ID_MAINTAIN_WITH_COG:
+                    if(!wxIsNaN(g_pfFix.Cog))
+                        m_pMouseGZ->m_dFirstLineDirection -= g_pfFix.Cog;
+                    break;
+            }
+        }
+    }
+    
+    ODPoint *pMousePoint = NULL;
+    
+    pMousePoint = new ODPoint( rlat, rlon, wxT(""), wxT(""), wxT("") );
+    pMousePoint->SetNameShown( false );
+    pMousePoint->SetTypeString( wxS("Guard Zone Point") );
+    
+    g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
+    g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
+    
+    //if( nGZ_State > 1 )
+    // TODO fix up undo
+    //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_IsOrphanded, NULL );
+    
+    if(m_pMouseGZ){
+        m_pMouseGZ->AddPoint( pMousePoint );
+        if( !(nGZ_State & 1) ) {
+            pMousePoint->SetName(_("Second"));
+            pMousePoint->SetIconName( g_sGZSecondIconName );
+            DistanceBearingMercator_Plugin( rlat, rlon, g_pfFix.Lat, g_pfFix.Lon, &m_pMouseGZ->m_dSecondLineDirection, &m_pMouseGZ->m_dSecondDistance);
+            m_pMouseGZ->UpdateGZSelectablePath();
+            if(m_pMouseGZ->m_bRotateWithBoat) {
+                switch(m_pMouseGZ->m_iMaintainWith) {
+                    case ID_MAINTAIN_WITH_HEADING:
+                        if(!wxIsNaN(g_pfFix.Hdt))
+                            m_pMouseGZ->m_dSecondLineDirection -= g_pfFix.Hdt;
+                        break;
+                    case ID_MAINTAIN_WITH_COG:
+                        if(!wxIsNaN(g_pfFix.Cog))
+                            m_pMouseGZ->m_dSecondLineDirection -= g_pfFix.Cog;
+                        break;
+                }
+            }
+            // TODO fix up undo
+            //undo->AfterUndoableAction( m_pMouseGZ );
+            
+            if(m_pMouseGZ->m_iPersistenceType == ID_PERSISTENT || m_pMouseGZ->m_iPersistenceType == ID_PERSISTENT_CRASH) {
+                if(m_pMouseGZ->m_iPersistenceType == ID_PERSISTENT_CRASH)
+                    m_pMouseGZ->m_bTemporary = true;
+                else m_pMouseGZ->m_bTemporary = false;
+                g_pODConfig->AddNewPath( m_pMouseGZ, -1 );    // don't save over restart
+            }
+        } else {
+            pMousePoint->SetName(_("First"));
+            pMousePoint->SetIconName( g_sGZFirstIconName );
+        }
+    }
+    
+    m_prev_rlat = rlat;
+    m_prev_rlon = rlon;
+    m_prev_pMousePoint = pMousePoint;
+    if(m_pMouseGZ)
+        m_pMouseGZ->m_lastMousePointIndex = m_pMouseGZ->GetnPoints();
+    
+    m_pMouseGZ->RebuildGUIDList();
+    
+    nGZ_State++;
+
+    RequestRefresh( m_parent_window );
+    
+    return TRUE;
+} 
+
 void ocpn_draw_pi::OnTimer(wxTimerEvent& ev)
 {
     ProcessTimerEvent( ev );
@@ -3177,9 +3172,28 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString)
 void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 {
     for(wxPathListNode *node = g_pPathList->GetFirst(); node; node = node->GetNext() ) {
-        ODPath *pPathDraw = node->GetData();
-        if( !pPathDraw )
+        ODPath *pTempPath = node->GetData();
+        if( !pTempPath )
             continue;
+
+        ODPath *pPathDraw;
+        Boundary *pBoundaryDraw = NULL;
+        EBL *pEBLDraw = NULL;
+        DR *pDRDraw = NULL;
+        GZ *pGZDraw = NULL;
+        if(pTempPath->m_sTypeString == wxT("Boundary")) {
+            pBoundaryDraw = (Boundary *)pTempPath;
+            pPathDraw = pBoundaryDraw;
+        } else if(pTempPath->m_sTypeString == wxT("EBL")) {
+            pEBLDraw = (EBL *)pTempPath;
+            pPathDraw = pEBLDraw;
+        } else if(pTempPath->m_sTypeString == wxT("DR")) {
+            pDRDraw = (DR *)pTempPath;
+            pPathDraw = pDRDraw;
+        } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
+            pGZDraw = (GZ *)pTempPath;
+            pPathDraw = pGZDraw;
+        }
         
         /* defer rendering active routes until later */ 
         //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
@@ -3350,7 +3364,7 @@ double ocpn_draw_pi::GetTrueOrMag(double a)
 
 void ocpn_draw_pi::SetToolbarTool( void )
 {
-    if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 ) {
+    if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 || nGZ_State == 1) {
         if (m_Mode > m_numModes ) m_Mode = 0;
         switch (m_Mode)
         {
@@ -3368,6 +3382,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nTextPoint_State = 0;
                 nEBL_State = 0;
                 nDR_State = 0;
+                nGZ_State = 0;
                 break;
                 
             case ID_MODE_POINT:
@@ -3384,6 +3399,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nTextPoint_State = 0;
                 nEBL_State = 0;
                 nDR_State = 0;
+                nGZ_State = 0;
                 break;
                 
             case ID_MODE_TEXT_POINT:
@@ -3400,6 +3416,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nTextPoint_State = 1;
                 nEBL_State = 0;
                 nDR_State = 0;
+                nGZ_State = 0;
                 break;
                 
             case ID_MODE_EBL:
@@ -3416,6 +3433,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nTextPoint_State = 0;
                 nEBL_State = 1;
                 nDR_State = 0;
+                nGZ_State = 0;
                 RequestRefresh( m_parent_window );
                 break;
                 
@@ -3433,6 +3451,25 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nTextPoint_State = 0;
                 nEBL_State = 0;
                 nDR_State = 1;
+                nGZ_State = 0;
+                RequestRefresh( m_parent_window );
+                break;
+                
+            case ID_MODE_GZ:
+                // Guard Zone
+                m_pCurrentCursor = ocpncc1->pCursorPencil;
+#ifdef ODraw_USE_SVG
+                SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_gz_grey, m_pODicons->m_s_ocpn_draw_gz, m_pODicons->m_s_ocpn_draw_gz);
+#else
+                SetToolbarToolBitmaps(m_draw_button_id, m_pODicons->m_p_bm_ocpn_draw_gz_grey, m_pODicons->m_p_bm_ocpn_draw_gz);
+#endif
+                SetToolbarItemState( m_draw_button_id, true );
+                nPoint_State = 0;
+                nBoundary_State = 0;
+                nTextPoint_State = 0;
+                nEBL_State = 0;
+                nDR_State = 0;
+                nGZ_State = 1;
                 RequestRefresh( m_parent_window );
                 break;
                 
@@ -3451,6 +3488,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nPoint_State = 0;
                 nTextPoint_State = 0;
                 nEBL_State = 0;
+                nGZ_State = 0;
                 break;
         }
     }
