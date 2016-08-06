@@ -865,10 +865,12 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             g_pPathManagerDialog->Centre();
             g_pPathManagerDialog->Raise();
 #endif
-            nConfig_State = 0;
             //SetToolbarItemState( m_config_button_id, false );
             
         } else {
+            if( NULL != g_pPathManagerDialog )
+	        g_pPathManagerDialog->Hide();
+
             nConfig_State = 0;
             //SetToolbarItemState( m_config_button_id, false );
         }
