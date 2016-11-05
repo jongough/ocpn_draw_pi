@@ -964,10 +964,6 @@ void PathManagerDialog::ZoomtoPath( ODPath *path )
 
     ppm = wxMin(ppm, 1.0);
 
-//      ocpncc1->ClearbFollow();
-//      ocpncc1->SetViewPoint(clat, clon, ppm, 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
-//        RequestRefresh( GetOCPNCanvasWindow() );
-
     JumpToPosition( clat, clon, ppm );
 
     m_bNeedConfigFlush = true;
@@ -1147,9 +1143,6 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
 
 void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
 {
-//      if (ocpncc1->m_bFollow)
-//            return;
-
     // Zoom into the bounding box of the selected route
     long item = -1;
     item = m_pPathListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );

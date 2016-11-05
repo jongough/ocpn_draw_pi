@@ -40,7 +40,6 @@
 extern PointMan     *g_pODPointMan;
 extern bool         g_bODIsNewLayer;
 extern int          g_ODLayerIdx;
-extern ChartCanvas  *ocpncc1;
 extern PathMan      *g_pPathMan;
 extern PathList     *g_pPathList;
 extern wxRect       g_blink_rect;

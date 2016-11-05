@@ -565,11 +565,31 @@ int ocpn_draw_pi::Init(void)
     l_pfont = GetOCPNScaledFont_PlugIn( wxS("OD_PointInfoRollover") );
     l_fontcolout = GetFontColour_PlugIn( wxS("OD_PointInfoRollover") );
     
-    //    m_pCurrentCursor = ocpncc1->pCursorArrow;
     m_pCurrentCursor = NULL;
     
     //build_cursors(); // build cursors to use on chart
     m_pTextCursorCross = new wxCursor( wxCURSOR_CHAR );
+
+    wxImage ICursorPencil = GetIcon_PlugIn(_T("pencil")).ConvertToImage();
+    if ( ICursorPencil.Ok() )
+    {
+        ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
+        ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 16);
+        m_pCursorPencil = new wxCursor ( ICursorPencil );
+    }
+    else
+        m_pCursorPencil = new wxCursor ( wxCURSOR_ARROW );
+
+    wxImage ICursorCross = GetIcon_PlugIn(_T("cross")).ConvertToImage();
+    if ( ICursorCross.Ok() )
+    {
+        ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 13 );
+        ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 12);
+        m_pCursorCross = new wxCursor ( ICursorCross );
+    }
+    else
+        m_pCursorCross = new wxCursor ( wxCURSOR_ARROW );
+
     
     g_pODPointMan = new PointMan();
     g_pODPointMan->SetColorScheme( global_color_scheme );
@@ -881,7 +901,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             case ID_MODE_BOUNDARY:
                 if( 0 == nBoundary_State ){
                     nBoundary_State = 1;
-                    m_pCurrentCursor = ocpncc1->pCursorPencil;
+                    m_pCurrentCursor = m_pCursorPencil;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
@@ -908,7 +928,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             case ID_MODE_POINT:
                 if( 0 == nPoint_State ){
                     nPoint_State = 1;
-                    m_pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pCurrentCursor = m_pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
@@ -960,7 +980,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             case ID_MODE_EBL:
                 if( 0 == nEBL_State ){
                     nEBL_State = 1;
-                    m_pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pCurrentCursor = m_pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
@@ -986,7 +1006,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             case ID_MODE_DR:
                 if( 0 == nDR_State ){
                     nDR_State = 1;
-                    m_pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pCurrentCursor = m_pCursorCross;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
@@ -1012,7 +1032,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             case ID_MODE_GZ:
                 if( 0 == nGZ_State ){
                     nGZ_State = 1;
-                    m_pCurrentCursor = ocpncc1->pCursorPencil;
+                    m_pCurrentCursor = m_pCursorPencil;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
@@ -1677,12 +1697,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = CreateGZLeftClick( event );
             }
         } else if( m_bPathEditing && ( m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT || m_iEditMode == ID_ODPOINT_MENU_MOVE )) {
-            m_pCurrentCursor = ocpncc1->pCursorCross;
+            m_pCurrentCursor = m_pCursorCross;
             m_PathMove_cursor_start_lat = m_cursor_lat;
             m_PathMove_cursor_start_lon = m_cursor_lon;
             bRefresh = TRUE;
         } else if ( m_bODPointEditing ) {
-            m_pCurrentCursor = ocpncc1->pCursorCross;
+            m_pCurrentCursor = m_pCursorCross;
             bret = TRUE;
         } else if ( m_bTextPointEditing ) {
             m_pCurrentCursor = m_pTextCursorCross;
@@ -1837,7 +1857,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
             else if( m_pFoundODPoint && ( m_iEditMode == ID_PATH_MENU_MOVE_POINT || m_iEditMode == ID_ODPOINT_MENU_MOVE ) ) {
                 if( m_bPathEditing ) {
-                    m_pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pCurrentCursor = m_pCursorCross;
                     if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
                     else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
                     else {
@@ -1873,7 +1893,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     
                     if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
-                    m_pCurrentCursor = ocpncc1->pCursorCross;
+                    m_pCurrentCursor = m_pCursorCross;
                     bRefresh = TRUE;
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
@@ -1907,7 +1927,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 
                 if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                 
-                m_pCurrentCursor = ocpncc1->pCursorCross;
+                m_pCurrentCursor = m_pCursorCross;
                 bRefresh = TRUE;
                 bret = FALSE;
                 event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
@@ -3359,7 +3379,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
         {
             case ID_MODE_BOUNDARY:
                 // Boundary
-                m_pCurrentCursor = ocpncc1->pCursorPencil;
+                m_pCurrentCursor = m_pCursorPencil;
 #ifdef ODraw_USE_SVG
                 SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
 #else
@@ -3376,7 +3396,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 
             case ID_MODE_POINT:
                 // Point
-                m_pCurrentCursor = ocpncc1->pCursorCross;
+                m_pCurrentCursor = m_pCursorCross;
 #ifdef ODraw_USE_SVG
                 SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_point_grey, m_pODicons->m_s_ocpn_draw_point, m_pODicons->m_s_ocpn_draw_point);
 #else
@@ -3410,7 +3430,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 
             case ID_MODE_EBL:
                 // EBL
-                m_pCurrentCursor = ocpncc1->pCursorCross;
+                m_pCurrentCursor = m_pCursorCross;
 #ifdef ODraw_USE_SVG
                 SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_ebl_grey, m_pODicons->m_s_ocpn_draw_ebl, m_pODicons->m_s_ocpn_draw_ebl);
 #else
@@ -3428,7 +3448,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 
             case ID_MODE_DR:
                 // EBL
-                m_pCurrentCursor = ocpncc1->pCursorCross;
+                m_pCurrentCursor = m_pCursorCross;
 #ifdef ODraw_USE_SVG
                 SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_dr_grey, m_pODicons->m_s_ocpn_draw_dr, m_pODicons->m_s_ocpn_draw_dr);
 #else
@@ -3446,7 +3466,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 
             case ID_MODE_GZ:
                 // Guard Zone
-                m_pCurrentCursor = ocpncc1->pCursorPencil;
+                m_pCurrentCursor = m_pCursorPencil;
 #ifdef ODraw_USE_SVG
                 SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_gz_grey, m_pODicons->m_s_ocpn_draw_gz, m_pODicons->m_s_ocpn_draw_gz);
 #else
@@ -3465,7 +3485,7 @@ void ocpn_draw_pi::SetToolbarTool( void )
             default:
                 // Boundary
                 m_Mode = ID_MODE_BOUNDARY;
-                m_pCurrentCursor = ocpncc1->pCursorPencil;
+                m_pCurrentCursor = m_pCursorPencil;
 #ifdef ODraw_USE_SVG
                 SetToolbarToolBitmapsSVG(m_draw_button_id, m_pODicons->m_s_ocpn_draw_boundary_grey, m_pODicons->m_s_ocpn_draw_boundary, m_pODicons->m_s_ocpn_draw_boundary);
 #else

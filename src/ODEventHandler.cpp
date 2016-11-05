@@ -612,7 +612,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         case ID_EBL_MENU_PICK_NEW_START:
             g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
-            g_ocpn_draw_pi->m_pCurrentCursor = ocpncc1->pCursorCross;
+            g_ocpn_draw_pi->m_pCurrentCursor = g_ocpn_draw_pi->m_pCursorCross;
             break;
         case ID_EBL_MENU_VRM_MATCH_EBL_COLOUR: {
             ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();

@@ -365,9 +365,9 @@ public:
     wxCursor    *pCursorUpRight;
     wxCursor    *pCursorDownLeft;
     wxCursor    *pCursorDownRight;
-    wxCursor    *pCursorPencil;
     wxCursor    *pCursorArrow;
-    wxCursor    *pCursorCross;
+    wxCursor    *m_pCursorCross;
+    wxCursor    *m_pCursorPencil;
     wxCursor    *m_pTextCursorCross;
     
     wxCursor    *m_pCurrentCursor;
