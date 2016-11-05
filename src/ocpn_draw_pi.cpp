@@ -1676,12 +1676,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_GZ);
                 bret = CreateGZLeftClick( event );
             }
-        } else if( m_bPathEditing ) {
+        } else if( m_bPathEditing && ( m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT || m_iEditMode == ID_ODPOINT_MENU_MOVE )) {
             m_pCurrentCursor = ocpncc1->pCursorCross;
-            if( !m_pFoundODPoint ) {
             m_PathMove_cursor_start_lat = m_cursor_lat;
             m_PathMove_cursor_start_lon = m_cursor_lon;
-            } 
             bRefresh = TRUE;
         } else if ( m_bODPointEditing ) {
             m_pCurrentCursor = ocpncc1->pCursorCross;
@@ -1830,13 +1828,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 // This is to handle the double click to bring up the dialog box so that the screen does not jump on the extra clicks.
                 bret = TRUE;
             }
+            m_iEditMode = ID_MENU_NOITEM;
         }
     }
         
     if( event.Dragging() ) {
         if( event.LeftIsDown() ) {
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
-            else if( m_pFoundODPoint ) {
+            else if( m_pFoundODPoint && ( m_iEditMode == ID_PATH_MENU_MOVE_POINT || m_iEditMode == ID_ODPOINT_MENU_MOVE ) ) {
                 if( m_bPathEditing ) {
                     m_pCurrentCursor = ocpncc1->pCursorCross;
                     if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
@@ -1879,19 +1878,32 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 }
-            } else if(m_bPathEditing) {
+            } else if(m_bPathEditing && (m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT)) {
                 // Do move of whole path
-                double l_move_lat = m_PathMove_cursor_start_lat - m_cursor_lat;
-                double l_move_lon = m_PathMove_cursor_start_lon - m_cursor_lon;
-                m_pSelectedPath->MoveAllPoints( l_move_lat, l_move_lon );
+                double l_move_lat;
+                double l_move_lon;
+                if( event.ControlDown()) l_move_lat = m_PathMove_cursor_start_lat - m_cursor_lat;
+                else if( event.ShiftDown()) l_move_lon = m_PathMove_cursor_start_lon - m_cursor_lon;
+                else {
+                    l_move_lat = m_PathMove_cursor_start_lat - m_cursor_lat;
+                    l_move_lon = m_PathMove_cursor_start_lon - m_cursor_lon;
+                }
+                if(m_iEditMode == ID_PATH_MENU_MOVE_PATH)
+                    m_pSelectedPath->MoveAllPoints( l_move_lat, l_move_lon );
+                else if(m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT)
+                    m_pSelectedPath->MoveSegment( l_move_lat, l_move_lon, m_pFoundODPoint, m_pFoundODPointSecond );
                 m_PathMove_cursor_start_lat = m_cursor_lat;
                 m_PathMove_cursor_start_lon = m_cursor_lon;
                 bRefresh = TRUE;
                 bret = FALSE;
                 event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
             } else if(m_bEBLEditing) {
-                m_pFoundODPoint->m_lat = m_cursor_lat;
-                m_pFoundODPoint->m_lon = m_cursor_lon;
+                if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                else {
+                    m_pFoundODPoint->m_lat = m_cursor_lat;
+                    m_pFoundODPoint->m_lon = m_cursor_lon;
+                }
                 
                 if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                 

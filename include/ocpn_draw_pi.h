@@ -140,7 +140,8 @@ std::cout << x  << std::endl ; } while (0)
 //    Constants for right click menus
 enum
 {
-    ID_ODPOINT_MENU_GOTO = 1,
+    ID_MENU_NOITEM = 0,
+    ID_ODPOINT_MENU_GOTO,
     ID_ODPOINT_MENU_MOVE,
     ID_ODPOINT_MENU_DELPOINT,
     ID_ODPOINT_MENU_PROPERTIES,
@@ -151,6 +152,7 @@ enum
     ID_PATH_MENU_DEACTIVATE,
     ID_PATH_MENU_MOVE_POINT,
     ID_PATH_MENU_MOVE_PATH,
+    ID_PATH_MENU_MOVE_PATH_SEGMENT,
     ID_PATH_MENU_INSERT,
     ID_PATH_MENU_APPEND,
     ID_PATH_MENU_COPY,
@@ -283,6 +285,7 @@ public:
     bool            m_bEBLEditing;
     bool            m_bEBLMoveOrigin;
     bool            m_bGZEditing;
+    int             m_iEditMode;
 
     
 

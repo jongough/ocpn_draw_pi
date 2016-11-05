@@ -1167,6 +1167,14 @@ void ODPath::MoveAllPoints( double inc_lat, double inc_lon )
     }
 }
 
+void ODPath::MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, ODPoint* secondPoint )
+{
+    firstPoint->m_lat -= inc_lat;
+    firstPoint->m_lon -= inc_lon;
+    secondPoint->m_lat -= inc_lat;
+    secondPoint->m_lon -= inc_lon;
+}
+
 void ODPath::SetPointVisibility()
 {
     for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {

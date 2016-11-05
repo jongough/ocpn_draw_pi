@@ -510,6 +510,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     
     wxPoint r;
     
+    g_ocpn_draw_pi->m_iEditMode = event.GetId();
+
     switch( event.GetId() )
     {            
         case ID_PATH_MENU_PROPERTIES:
@@ -527,8 +529,11 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
             break;
         case ID_PATH_MENU_MOVE_PATH:
-            g_ocpn_draw_pi->m_pFoundODPoint = NULL; // Make sure we dont process a single point
-            m_pFoundODPoint = NULL;
+            m_pSelectedPath->m_bIsBeingEdited = TRUE;
+            g_PathToEdit = m_pSelectedPath;
+            g_ocpn_draw_pi->m_bPathEditing = TRUE;
+            break;
+        case ID_PATH_MENU_MOVE_PATH_SEGMENT: // Need to make sure we have both points of segment
             m_pSelectedPath->m_bIsBeingEdited = TRUE;
             g_PathToEdit = m_pSelectedPath;
             g_ocpn_draw_pi->m_bPathEditing = TRUE;
@@ -817,7 +822,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             break;
         }
-        case ID_DR_MENU_UPDATE_INITIAL_CONDITIONS:
+        case ID_DR_MENU_UPDATE_INITIAL_CONDITIONS: {
             if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
                 g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
             
@@ -837,7 +842,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             RequestRefresh( g_ocpn_draw_pi->m_parent_window );
             
             break;
-            
+        }
     }
     
 } 
@@ -901,6 +906,12 @@ void ODEventHandler::PopupMenu( int seltype )
                 MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
                 
                 sString.clear();
+                if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+                    sString.append( _("Move Boundary Segment") );
+                    MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH_SEGMENT, sString );
+                }
+
+                sString.clear();
                 if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
                     sString.append(_("Insert Boundary Point"));
                 else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
@@ -908,6 +919,10 @@ void ODEventHandler::PopupMenu( int seltype )
 
                 if(sString.Len() > 0)
                     MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
+            }
+            if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+                sString.append( _("Move Boundary Segment") );
+                MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH_SEGMENT, sString );
             }
             if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                 if(m_pSelectedPath->m_bODPointsVisible)
