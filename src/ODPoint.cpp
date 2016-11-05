@@ -549,13 +549,10 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxpoint.y = r.y + hilitebox.y;
         GetCanvasLLPix( &pivp, wxpoint, &lat2, &lon2 );
 
-        if(lon1 > lon2) {
-            m_wpBBox.SetMin(lon1, lat1);
-            m_wpBBox.SetMax(lon2+360, lat2);
-        } else {
-            m_wpBBox.SetMin(lon1, lat1);
-            m_wpBBox.SetMax(lon2, lat2);
-        }
+        if(lon1 > lon2)
+            m_wpBBox.Set(lat1, lon1, lat2, lon2+360);
+        else
+            m_wpBBox.Set(lat1, lon1, lat2, lon2);
         m_wpBBox_chart_scale = pivp.chart_scale;
         m_wpBBox_rotation = pivp.rotation;
     }

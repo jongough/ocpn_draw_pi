@@ -43,7 +43,7 @@
 #include "chartdbs.h"
 
 #ifdef USE_S57
-#include "cpl_error.h"
+#include "mygdal/cpl_error.h"
 
 //    Global Static error reporting function
 extern "C" void MyCPLErrorHandler( CPLErr eErrClass, int nError,
@@ -416,7 +416,6 @@ class MyFrame: public wxFrame
     void ToggleToolbar( bool b_smooth = false );
     void RaiseToolbarRecoveryWindow();
     bool IsToolbarShown();
-    void ShowChartBarIfEnabled(void);
     void SetToolbarScale(void);
     void SetGPSCompassScale(void);
     

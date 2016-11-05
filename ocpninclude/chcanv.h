@@ -1,3 +1,4 @@
+
 /***************************************************************************
  *
  * Project:  OpenCPN
@@ -119,29 +120,6 @@ typedef enum ownship_state_t
 enum {
       ID_S57QUERYTREECTRL =            10000,
       ID_AISDIALOGOK
-};
-
-const wxEventType wxEVT_OCPN_COMPRESSPROGRESS = wxNewEventType();
-
-//----------------------------------------------------------------------------
-// OCPN_CompressProgressEvent
-//----------------------------------------------------------------------------
-class OCPN_CompressProgressEvent: public wxEvent
-{
-public:
-    OCPN_CompressProgressEvent( wxEventType commandType = wxEVT_NULL, int id = 0 );
-    ~OCPN_CompressProgressEvent( );
-    
-    // accessors
-    void SetString(std::string string) { m_string = string; }
-    std::string GetString() { return m_string; }
-    
-    // required for sending with wxPostEvent()
-    wxEvent *Clone() const;
-    int count;
-    int thread;
-    
-    std::string m_string;
 };
 
 //----------------------------------------------------------------------------
@@ -301,7 +279,7 @@ public:
       void ShowObjectQueryWindow( int x, int y, float zlat, float zlon);
       void ShowMarkPropertiesDialog( RoutePoint* markPoint );
       void ShowRoutePropertiesDialog(wxString title, Route* selected);
-      void ShowTrackPropertiesDialog( Route* selected );
+      void ShowTrackPropertiesDialog( Track* selected );
       void DrawTCWindow(int x, int y, void *pIDX);
       
       
@@ -331,8 +309,6 @@ public:
       RoutePoint  *m_prev_pMousePoint;
       Quilt       *m_pQuilt;
       
-      bool PurgeGLCanvasChartCache(ChartBase *pc, bool b_purge_full = false);
-
       void RemovePointFromRoute( RoutePoint* point, Route* route );
 
       void DrawBlinkObjects( void );
@@ -346,7 +322,6 @@ public:
       glChartCanvas *GetglCanvas(){ return m_glcc; }
 #endif      
 
-      void OnEvtCompressProgress( OCPN_CompressProgressEvent & event );
       void JaggyCircle(ocpnDC &dc, wxPen pen, int x, int y, int radius);
       
       bool CheckEdgePan( int x, int y, bool bdragging, int margin, int delta );
@@ -407,7 +382,7 @@ private:
       SelectItem  *m_pFoundPoint;
       bool        m_bChartDragging;
       Route       *m_pSelectedRoute;
-      Route       *m_pSelectedTrack;
+      Track       *m_pSelectedTrack;
       wxArrayPtrVoid *m_pEditRouteArray;
       RoutePoint  *m_pFoundRoutePoint;
 
@@ -464,8 +439,9 @@ private:
       void MovementStopTimerEvent( wxTimerEvent& );
       void OnCursorTrackTimerEvent(wxTimerEvent& event);
 
-      void DrawAllRoutesInBBox(ocpnDC& dc, LLBBox& BltBBox, const wxRegion& clipregion);
-      void DrawAllWaypointsInBBox(ocpnDC& dc, LLBBox& BltBBox, const wxRegion& clipregion, bool bDrawMarksOnly);
+      void DrawAllTracksInBBox( ocpnDC& dc, LLBBox& BltBBox );
+      void DrawAllRoutesInBBox(ocpnDC& dc, LLBBox& BltBBox );
+      void DrawAllWaypointsInBBox(ocpnDC& dc, LLBBox& BltBBox );
       void DrawAnchorWatchPoints( ocpnDC& dc );
       double GetAnchorWatchRadiusPixels(RoutePoint *pAnchorWatchPoint);
 

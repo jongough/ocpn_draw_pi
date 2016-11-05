@@ -516,7 +516,7 @@ void GZ::SetPersistence( int PersistenceType )
         m_bTemporary = false;
 }
 
-wxBoundingBox GZ::GetBBox( void )
+LLBBox GZ::GetBBox( void )
 {
     if(!m_bNeedsUpdateBBox)
         return RBBox;
@@ -526,7 +526,6 @@ wxBoundingBox GZ::GetBBox( void )
     double bbox_xmax = -180;
     double bbox_ymax = -90.;
     
-    RBBox.Reset();
     m_bcrosses_idl = CalculateCrossesIDL();
     
     double l_dLat;
@@ -613,10 +612,9 @@ wxBoundingBox GZ::GetBBox( void )
         if( l_dLat > bbox_ymax ) bbox_ymax = l_dLat;
         if( l_dLat < bbox_ymin ) bbox_ymin = l_dLat;
     }
-    
-    RBBox.Expand( bbox_xmin, bbox_ymin );
-    RBBox.Expand( bbox_xmax, bbox_ymax );
-    
+
+    RBBox.Set(bbox_ymin, bbox_xmin, bbox_ymax, bbox_xmax);
+
     m_bNeedsUpdateBBox = false;
     return RBBox;
 }

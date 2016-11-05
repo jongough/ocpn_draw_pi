@@ -940,9 +940,9 @@ void PathManagerDialog::ZoomtoPath( ODPath *path )
 {
 
     // Calculate bbox center
-    wxBoundingBox RBBox = path->GetBBox();
-    double clat = RBBox.GetMinY() + ( RBBox.GetHeight() / 2 );
-    double clon = RBBox.GetMinX() + ( RBBox.GetWidth() / 2 );
+    LLBBox RBBox = path->GetBBox();
+    double clat = RBBox.GetMinLat() + ( ( RBBox.GetMaxLat() - RBBox.GetMinLat() ) / 2 );
+    double clon = RBBox.GetMinLon() + ( ( RBBox.GetMaxLon() - RBBox.GetMinLon() ) / 2 );
 
     if( clon > 180. ) clon -= 360.;
     else
@@ -952,11 +952,11 @@ void PathManagerDialog::ZoomtoPath( ODPath *path )
     double rw, rh, ppm; // route width, height, final ppm scale to use
     int ww, wh; // chart window width, height
     // route bbox width in nm
-    DistanceBearingMercator_Plugin( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMinY(),
-            RBBox.GetMaxX(), NULL, &rw );
+    DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMinLat(),
+            RBBox.GetMaxLon(), NULL, &rw );
     // route bbox height in nm
-    DistanceBearingMercator_Plugin( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMaxY(),
-            RBBox.GetMinX(), NULL, &rh );
+    DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMaxLat(),
+            RBBox.GetMinLon(), NULL, &rh );
 
     ocpncc1->GetSize( &ww, &wh );
 

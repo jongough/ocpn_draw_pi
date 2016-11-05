@@ -1839,8 +1839,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             else if( m_pFoundODPoint ) {
                 if( m_bPathEditing ) {
                     m_pCurrentCursor = ocpncc1->pCursorCross;
-                    m_pFoundODPoint->m_lat = m_cursor_lat;
-                    m_pFoundODPoint->m_lon = m_cursor_lon;
+                    if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                    else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                    else {
+                        m_pFoundODPoint->m_lat = m_cursor_lat;
+                        m_pFoundODPoint->m_lon = m_cursor_lon;
+                    }
                     g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
                     m_pSelectedPath->FinalizeForRendering();
                     m_pSelectedPath->UpdateSegmentDistances();
@@ -1854,8 +1858,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 } else if ( m_bODPointEditing ) {
-                    m_pFoundODPoint->m_lat = m_cursor_lat;
-                    m_pFoundODPoint->m_lon = m_cursor_lon;
+                    if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                    else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                    else {
+                        m_pFoundODPoint->m_lat = m_cursor_lat;
+                        m_pFoundODPoint->m_lon = m_cursor_lon;
+                    }
                     if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
                         m_pSelectedEBL->ResizeVRM( );
@@ -2258,8 +2266,7 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     
     g_pDC = new ODDC( dc );
     LLBBox llbb;
-    llbb.SetMin( pivp->lon_min, pivp->lat_min );
-    llbb.SetMax( pivp->lon_max, pivp->lat_max );
+    llbb.Set( pivp->lat_min, pivp->lon_min, pivp->lat_max, pivp->lon_max );
     
     DrawAllPathsInBBox( *g_pDC, llbb );
     DrawAllODPointsInBBox( *g_pDC, llbb );
@@ -2280,9 +2287,8 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     
     g_pDC = new ODDC();
     LLBBox llbb;
-    llbb.SetMin( pivp->lon_min, pivp->lat_min );
-    llbb.SetMax( pivp->lon_max, pivp->lat_max );
-    
+    llbb.Set( pivp->lat_min, pivp->lon_min, pivp->lat_max, pivp->lon_max );
+
     //    DrawAllODPointsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
@@ -2592,49 +2598,18 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
 
         if( pPathDraw ) {
             
-            wxBoundingBox test_box = pPathDraw->GetBBox();
-            
-            if( b_run ) test_box.Expand( m_lon, m_lat );
+            LLBBox test_box = pPathDraw->GetBBox();
+            LLBBox tb;
+            tb.Set(m_lat, m_lon, m_lat, m_lon);
+
+            if( b_run ) test_box.Expand( tb );
             
             if( !BltBBox.IntersectOut( test_box ) ) // Path is not wholly outside window
             {
                 b_drawn = true;
                 pPathDraw->Draw( dc, *m_pVP );
-            } else if( pPathDraw->CrossesIDL() ) {
-                wxPoint2DDouble xlate( -360., 0. );
-                wxBoundingBox test_box1 = pPathDraw->GetBBox();
-                test_box1.Translate( xlate );
-                if( b_run ) test_box1.Expand( m_lon, m_lat );
-                
-                if( !BltBBox.IntersectOut( test_box1 ) ) // Boundary is not wholly outside window
-                {
-                    b_drawn = true;
-                    pPathDraw->Draw( dc, *m_pVP );
-                }
             }
-            
-            //      Need to quick check for the case where VP crosses IDL
-            if( !b_drawn ) {
-                if( ( BltBBox.GetMinX() < -180. ) && ( BltBBox.GetMaxX() > -180. ) ) {
-                    wxPoint2DDouble xlate( -360., 0. );
-                    wxBoundingBox test_box2 = pPathDraw->GetBBox();
-                    test_box2.Translate( xlate );
-                    if( !BltBBox.IntersectOut( test_box2 ) ) // Boundary is not wholly outside window
-                    {
-                        b_drawn = true;
-                        pPathDraw->Draw( dc, *m_pVP );
-                    }
-                } else if( !b_drawn && ( BltBBox.GetMinX() < 180. ) && ( BltBBox.GetMaxX() > 180. ) ) {
-                    wxPoint2DDouble xlate( 360., 0. );
-                    wxBoundingBox test_box3 = pPathDraw->GetBBox();
-                    test_box3.Translate( xlate );
-                    if( !BltBBox.IntersectOut( test_box3 ) ) // Boundary is not wholly outside window
-                    {
-                        b_drawn = true;
-                        pPathDraw->Draw( dc, *m_pVP );
-                    }
-                }
-            }
+
             if(pPathDraw == m_pSelectedEBL && m_bODPointEditing) {
                 double brg, dist;
                 wxPoint destPoint;
@@ -2671,7 +2646,7 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
                 node = node->GetNext();
                 continue;
             } else {
-                if( BltBBox.PointInBox( pOP->m_lon, pOP->m_lat, 0 ) ) pOP->Draw( dc, NULL );
+                if( BltBBox.Contains( pOP->m_lat, pOP->m_lon ) ) pOP->Draw( dc, NULL );
             }
         }
         
@@ -3206,8 +3181,8 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         *       to reduce the number of floating point comparisons */
         
         //        const wxBoundingBox &vp_box = vp.GetBBox(), &test_box = pPathDraw->GetBBox();
-        const wxBoundingBox &test_box = pPathDraw->GetBBox();
-        double test_miny = test_box.GetMinY(), test_maxy = test_box.GetMaxY();
+        const LLBBox &test_box = pPathDraw->GetBBox();
+        double test_miny = test_box.GetMinLat(), test_maxy = test_box.GetMaxLat();
         
         if(test_maxy < pivp.lat_min)
             continue;
@@ -3215,7 +3190,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         if(test_miny > pivp.lat_max)
             continue;
         
-        double test_minx = test_box.GetMinX(), test_maxx = test_box.GetMaxX();
+        double test_minx = test_box.GetMinLon(), test_maxx = test_box.GetMaxLon();
         
         // is not wholly outside viewport
         if(test_maxx >= pivp.lon_min && test_minx <= pivp.lon_max) {

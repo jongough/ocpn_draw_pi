@@ -77,7 +77,7 @@ public:
     void UpdateSegmentDistances();
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
-    virtual wxBoundingBox GetBBox();
+    virtual LLBBox GetBBox();
     void SetnPoints(void){ m_nPoints = m_pODPointList->GetCount(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);
@@ -160,7 +160,7 @@ public:
     
 protected:    
     bool m_bNeedsUpdateBBox;
-    wxBoundingBox     RBBox;
+    LLBBox     RBBox;
 
     bool        CalculateCrossesIDL();
     int         m_nPoints;
