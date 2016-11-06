@@ -810,6 +810,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     
     m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
     m_checkBoxShowMagBearings->SetValue( g_bShowMag );
+    m_checkBoxAllowLeftClickAndDrag->SetValue( g_bAllowLeftClickAndDrag );
     m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
     m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
     m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
