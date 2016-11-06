@@ -981,7 +981,6 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
     bool busy = false;
     if( m_pPathListCtrl->GetSelectedItemCount() ) {
         ::wxBeginBusyCursor();
-//        ocpncc1->CancelMousePath();
         m_bNeedConfigFlush = true;
         busy = true;
     }
@@ -1025,8 +1024,6 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
     int dialog_ret = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete <ALL> paths?"), _("OpenCPN Alert"), wxYES_NO );
 
     if( dialog_ret == wxID_YES ) {
-
-//        ocpncc1->CancelMousePath();
 
         g_pPathMan->DeleteAllPaths();
 
@@ -1283,8 +1280,7 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
 
-    if( ocpncc1 )
-        RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetOCPNCanvasWindow() );
 
     UpdatePathButtons();
 
@@ -1299,8 +1295,7 @@ void PathManagerDialog::OnPathDeSelected( wxListEvent &event )
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
     
-    if( ocpncc1 )
-        RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetOCPNCanvasWindow() );
     
     UpdatePathButtons();
     
@@ -1459,8 +1454,7 @@ void PathManagerDialog::OnODPointDeSelected( wxListEvent &event )
     ODPoint *point = (ODPoint *)m_pODPointListCtrl->GetItemData( event.m_itemIndex );
     point->m_bPathManagerBlink = false;
 
-    if( ocpncc1 )
-        RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetOCPNCanvasWindow() );
 
     UpdateODPointButtons();
 }

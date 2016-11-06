@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun 17 2015)
+// C++ code generated with wxFormBuilder (version Feb 16 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -53,6 +53,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxPanel* m_panelGeneral;
 		wxCheckBox* m_checkBoxConfirmObjectDelete;
 		wxCheckBox* m_checkBoxShowMagBearings;
+		wxCheckBox* m_checkBoxAllowLeftClickAndDrag;
 		wxStaticText* m_staticTextNavObjBackups;
 		wxSpinCtrl* m_spinCtrlNavObjBackups;
 		wxStaticText* m_staticTextEdgePan;

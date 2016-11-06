@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun 17 2015)
+// C++ code generated with wxFormBuilder (version Feb 16 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -35,6 +35,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_checkBoxShowMagBearings = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Show Magnetic Bearings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizer4->Add( m_checkBoxShowMagBearings, 0, wxALL, 5 );
+	
+	
+	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
+	
+	m_checkBoxAllowLeftClickAndDrag = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Allow Left Click and Drag"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_checkBoxAllowLeftClickAndDrag, 0, wxALL, 5 );
 	
 	
 	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
@@ -77,7 +83,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -189,7 +195,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	bSizerArrivalRadius->Add( m_staticTextArrivalRadius, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlODPointArrivalRadius = new wxTextCtrl( m_panelBoundaryPoint, wxID_ANY, _("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_textCtrlODPointArrivalRadius->SetMaxLength( 0 ); 
 	bSizerArrivalRadius->Add( m_textCtrlODPointArrivalRadius, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
@@ -290,7 +295,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerRingsDetail->Add( m_staticTextRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlODPointRangeRingSteps = new wxTextCtrl( m_panelBoundaryPoint, wxID_ANY, _("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_textCtrlODPointRangeRingSteps->SetMaxLength( 0 ); 
 	fgSizerRingsDetail->Add( m_textCtrlODPointRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextDistanceUnit = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Distance Unit"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -337,7 +341,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelBoundaryPoint->SetSizer( bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
-	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), true );
+	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
 	m_panelTextPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerTextPoint;
 	fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -746,7 +750,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerDRPointRangeRings->Add( m_staticTextDRPointRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlDRPointRangeRingSteps = new wxTextCtrl( m_panelDRPoint, wxID_ANY, _("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_textCtrlDRPointRangeRingSteps->SetMaxLength( 0 ); 
 	fgSizerDRPointRangeRings->Add( m_textCtrlDRPointRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_staticTextDRPointDistanceUnit = new wxStaticText( m_panelDRPoint, wxID_ANY, _("Distance Unit"), wxDefaultPosition, wxDefaultSize, 0 );

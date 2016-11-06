@@ -148,6 +148,7 @@ extern int          g_iGZPersistenceType;
 
 extern bool         g_bConfirmObjectDelete;
 extern bool         g_bShowMag;
+extern bool         g_bAllowLeftClickAndDrag;
 extern int          g_navobjbackups;
 
 extern int          g_EdgePanSensitivity;
@@ -522,6 +523,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
+    g_bAllowLeftClickAndDrag = m_checkBoxAllowLeftClickAndDrag->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
     g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();

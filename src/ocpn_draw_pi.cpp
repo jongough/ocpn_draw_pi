@@ -243,6 +243,7 @@ PlugIn_ViewPort *g_pVP;
 PlugIn_ViewPort g_VP;
 ODDC            *g_pDC;
 bool            g_bShowMag;
+bool            g_bAllowLeftClickAndDrag;
 double          g_dVar;
 double          g_UserVar;
 double          g_n_arrival_circle_radius;
@@ -1160,6 +1161,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
         pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
+        pConf->Write( wxS( "AllowLeftClickAndDrag" ), g_bAllowLeftClickAndDrag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
         pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
@@ -1367,6 +1369,7 @@ void ocpn_draw_pi::LoadConfig()
                 break;
         }
         pConf->Read( wxS( "ShowMag" ), &g_bShowMag, 0 );
+        pConf->Read( wxS( "AllowLeftClickAndDrag" ), &g_bAllowLeftClickAndDrag,0 );
         g_UserVar = 0.0;
         wxString umv;
         pConf->Read( wxS( "UserMagVariation" ), &umv );
@@ -1707,7 +1710,43 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( m_bTextPointEditing ) {
             m_pCurrentCursor = m_pTextCursorCross;
             bret = TRUE;
-        } 
+        } else if( g_bAllowLeftClickAndDrag ) {
+            FindSelectedObject();
+
+            if( 0 != m_seltype ) {
+                if(m_pSelectedPath) {
+                    m_pSelectedBoundary = NULL;
+                    m_pSelectedEBL = NULL;
+                    m_pSelectedDR = NULL;
+                    m_pSelectedGZ = NULL;
+                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                        m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
+                        m_pSelectedDR = (DR *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
+                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                    m_bPathEditing = true;
+                    if(m_seltype & SELTYPE_ODPOINT) {
+                        m_iEditMode = ID_PATH_MENU_MOVE_POINT;
+                        m_pCurrentCursor = m_pCursorCross;
+                    }
+                    else {
+                        m_iEditMode = ID_PATH_MENU_MOVE_PATH;
+                        m_pCurrentCursor = m_pCursorCross;
+                        m_PathMove_cursor_start_lat = m_cursor_lat;
+                        m_PathMove_cursor_start_lon = m_cursor_lon;
+                    }
+                } else if(m_pFoundODPoint) {
+                    m_iEditMode = ID_ODPOINT_MENU_MOVE;
+                    m_pCurrentCursor = m_pCursorCross;
+                    m_bODPointEditing = true;
+                }
+                bRefresh = TRUE;
+                bret = FALSE;
+            }
+        }
     }
     
     if( event.LeftUp() ) {
@@ -1754,6 +1793,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 if( m_pFoundODPoint ) {
                     //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
                     m_pFoundODPoint->m_bIsBeingEdited = false;
+                    m_pFoundODPoint->m_bPtIsSelected = false;
                     if(m_pSelectedEBL)
                         m_pSelectedEBL->MoveEndPoint();
                 }
