@@ -160,8 +160,8 @@ public:
     bool        m_bODPointsVisible; // should the ODPoints on a path be drawn 
     
 protected:    
-    bool m_bNeedsUpdateBBox;
-    LLBBox     RBBox;
+    bool        m_bNeedsUpdateBBox;
+    LLBBox      RBBox;
 
     bool        CalculateCrossesIDL();
     int         m_nPoints;

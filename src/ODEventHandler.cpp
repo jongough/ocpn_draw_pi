@@ -72,6 +72,13 @@ extern int                          g_cursor_y;
 extern ODPlugIn_Position_Fix_Ex     g_pfFix;
 extern ODDRDialogImpl               *g_pODDRDialog;
 
+extern BoundaryList                 *g_pBoundaryList;
+extern PathList                     *g_pPathList;
+extern int                          g_BoundaryLineWidth;
+extern int                          g_BoundaryLineStyle;
+extern wxString                     g_sODPointIconName;
+
+
 // Event Handler implementation 
 
 BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler ) 
@@ -174,6 +181,11 @@ void ODEventHandler::SetPath( ODPath *path )
         } else
             m_pSelectedPath = path;
     }
+}
+
+void ODEventHandler::SetBoundaryList(std::__cxx11::list< Boundary* > pBoundaryList)
+{
+    m_pBoundaryList = pBoundaryList;
 }
 
 void ODEventHandler::SetPoint( ODPoint* point )
@@ -603,6 +615,77 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             m_pSelectedPath->SetPointVisibility();
             break;
         }
+        case ID_BOUNDARY_LIST_KEEP_MENU:
+        case ID_BOUNDARY_LIST_DELETE_MENU: {
+            Boundary *l_pBoundary = new Boundary();
+            g_pBoundaryList->Append( l_pBoundary );
+            g_pPathList->Append( l_pBoundary);
+            l_pBoundary->m_width = g_BoundaryLineWidth;
+            l_pBoundary->m_style = g_BoundaryLineStyle;
+
+            std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
+            LLBBox l_LLBBox = (*it)->GetBBox();
+            it++;
+            while( it != m_pBoundaryList.end() ) {
+                l_LLBBox.Expand((*it)->GetBBox());
+                it++;
+            }
+
+            BoundaryPoint *l_BP1 = new BoundaryPoint(l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), g_sODPointIconName, wxS(""), wxT(""));
+            l_BP1->SetNameShown( false );
+            l_BP1->SetTypeString( wxS("Boundary Point") );
+            g_pODConfig->AddNewODPoint( l_BP1, -1 );
+            g_pODSelect->AddSelectableODPoint( l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_BP1 );
+            l_pBoundary->AddPoint( l_BP1 );
+
+            BoundaryPoint *l_BP2 = new BoundaryPoint(l_LLBBox.GetMaxLat(), l_LLBBox.GetMinLon(), g_sODPointIconName, wxS(""), wxT(""));
+            l_BP2->SetNameShown( false );
+            l_BP2->SetTypeString( wxS("Boundary Point") );
+            g_pODConfig->AddNewODPoint( l_BP2, -1 );
+            g_pODSelect->AddSelectableODPoint( l_LLBBox.GetMaxLat(), l_LLBBox.GetMinLon(), l_BP2 );
+            g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_LLBBox.GetMaxLat(), l_LLBBox.GetMinLon(), l_BP1, l_BP2, l_pBoundary );
+            l_pBoundary->AddPoint( l_BP2 );
+
+            BoundaryPoint *l_BP3 = new BoundaryPoint(l_LLBBox.GetMinLat(), l_LLBBox.GetMinLon(), g_sODPointIconName, wxS(""), wxT(""));
+            l_BP3->SetNameShown( false );
+            l_BP3->SetTypeString( wxS("Boundary Point") );
+            g_pODConfig->AddNewODPoint( l_BP3, -1 );
+            g_pODSelect->AddSelectableODPoint( l_LLBBox.GetMinLat(), l_LLBBox.GetMinLon(), l_BP3 );
+            g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMaxLat(), l_LLBBox.GetMinLon(), l_LLBBox.GetMinLat(), l_LLBBox.GetMinLon(), l_BP2, l_BP3, l_pBoundary );
+            l_pBoundary->AddPoint( l_BP3 );
+
+            BoundaryPoint *l_BP4 = new BoundaryPoint(l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), g_sODPointIconName, wxS(""), wxT(""));
+            l_BP4->SetNameShown( false );
+            l_BP4->SetTypeString( wxS("Boundary Point") );
+            g_pODConfig->AddNewODPoint( l_BP4, -1 );
+            g_pODSelect->AddSelectableODPoint( l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), l_BP4 );
+            g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMinLat(), l_LLBBox.GetMinLon(), l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), l_BP3, l_BP4, l_pBoundary );
+            l_pBoundary->AddPoint( l_BP4 );
+
+            BoundaryPoint *l_BP5 = new BoundaryPoint(l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), g_sODPointIconName, wxS(""), wxT(""));
+            l_BP5->SetNameShown( false );
+            l_BP5->SetTypeString( wxS("Boundary Point") );
+            g_pODConfig->AddNewODPoint( l_BP5, -1 );
+            g_pODSelect->AddSelectableODPoint( l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_BP5 );
+            g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_BP4, l_BP5, l_pBoundary );
+            l_pBoundary->AddPoint( l_BP5 );
+
+            l_pBoundary->RebuildGUIDList(); // ensure the GUID list is intact and good
+            l_pBoundary->SetHiLite(0);
+            l_pBoundary->m_bIsBeingCreated = false;
+
+            if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown() ) ) {
+                g_pODPathPropDialog->SetPathAndUpdate( l_pBoundary, true );
+            }
+
+            if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+                g_pPathManagerDialog->UpdatePathListCtrl();
+
+            if( event.GetId() == ID_BOUNDARY_LIST_DELETE_MENU) DeletePaths();
+
+            m_pBoundaryList.clear();
+            break;
+        }
         case ID_EBL_MENU_CENTRE_ON_BOAT:
             m_pEBL->m_bSaveUpdates = true;
             m_pEBL->CentreOnBoat(false);
@@ -852,6 +935,7 @@ void ODEventHandler::PopupMenu( int seltype )
     wxMenu* contextMenu = new wxMenu;
     wxMenu* menuODPoint = NULL;
     wxMenu* menuPath = NULL;
+    wxMenu* menuBoundaryList = NULL;
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
  
@@ -1023,6 +1107,13 @@ void ODEventHandler::PopupMenu( int seltype )
         menuFocus = menuODPoint;
     }
     
+    if( seltype & SELTYPE_BOUNDARYLIST ) {
+        menuBoundaryList = new wxMenu( _("Multiple Boundaries") );
+        MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_KEEP_MENU, _( "Merge and Keep Boundaries" ) );
+        MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_DELETE_MENU, _( "Merge and Delete Boundaries" ) );
+        menuFocus = menuBoundaryList;
+    }
+
     if( ( m_pSelectedPath ) ) {
         m_pSelectedPath->m_bPathIsSelected = true;
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
@@ -1074,4 +1165,31 @@ void ODEventHandler::DeletePath( void )
     RequestRefresh( m_parentcanvas );
     m_pSelectedPath = NULL;
     
+}
+
+void ODEventHandler::DeletePaths( void )
+{
+    std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
+    while( it != m_pBoundaryList.end() ) {
+        if( !g_pPathMan->DeletePath( (*it) ) )
+            return;
+        if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown()) && ((*it) == g_pODPathPropDialog->GetPath()) ) {
+            g_pODPathPropDialog->Hide();
+        }
+
+        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+            g_pPathManagerDialog->UpdatePathListCtrl();
+
+        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+            g_pODPointPropDialog->ValidateMark();
+            g_pODPointPropDialog->UpdateProperties();
+        }
+        it++;
+    }
+
+    // TODO implement UNDO
+    //m_parent->undo->InvalidateUndo();
+    RequestRefresh( m_parentcanvas );
+    m_pBoundaryList.empty();
+
 }

@@ -39,8 +39,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_checkBoxAllowLeftClickAndDrag = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Allow Left Click and Drag"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	fgSizer4->Add( m_checkBoxAllowLeftClickAndDrag, 0, wxALL, 5 );
+	m_checkBoxAllowLeftDrag = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Allow Left Mouse Button Drag"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_checkBoxAllowLeftDrag, 0, wxALL, 5 );
 	
 	
 	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );

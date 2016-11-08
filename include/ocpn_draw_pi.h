@@ -174,6 +174,8 @@ enum
     ID_EBL_MENU_PICK_NEW_START,
     ID_EBL_MENU_VRM_MATCH_EBL_COLOUR,
     ID_DR_MENU_UPDATE_INITIAL_CONDITIONS,
+    ID_BOUNDARY_LIST_KEEP_MENU,
+    ID_BOUNDARY_LIST_DELETE_MENU,
 
     ID_UNDO,
     ID_REDO,
@@ -243,6 +245,7 @@ enum {
 
 class Boundary;
 class BoundaryProp;
+class Boundarylist;
 class EBL;
 class DR;
 class GZ;
@@ -372,8 +375,6 @@ public:
     
     wxCursor    *m_pCurrentCursor;
     
-    int         nConfig_State;
-    
     int         nPath_State;
     int         nBoundary_State;
     int         nPoint_State;
@@ -424,7 +425,7 @@ public:
     double  m_view_scale;
     
     ODicons     *m_pODicons;
-    
+
 
 private:
     void    OnTimer(wxTimerEvent& ev);
@@ -465,7 +466,7 @@ private:
     EBL         *m_pSelectedEBL;
     DR          *m_pSelectedDR;
     GZ          *m_pSelectedGZ;
-    
+
     bool        m_bDrawingBoundary;
     bool        m_bDrawingGZ;
     
@@ -484,6 +485,8 @@ private:
     double      m_PathMove_cursor_start_lon;
     
     wxDateTime  m_LastFixTime;
+
+    std::list<Boundary*> m_pBoundaryList;
     
 };
 

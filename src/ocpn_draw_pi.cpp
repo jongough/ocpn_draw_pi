@@ -243,7 +243,7 @@ PlugIn_ViewPort *g_pVP;
 PlugIn_ViewPort g_VP;
 ODDC            *g_pDC;
 bool            g_bShowMag;
-bool            g_bAllowLeftClickAndDrag;
+bool            g_bAllowLeftDrag;
 double          g_dVar;
 double          g_UserVar;
 double          g_n_arrival_circle_radius;
@@ -367,7 +367,6 @@ int ocpn_draw_pi::Init(void)
     m_bTextPointEditing = false;
     m_bEBLEditing = false;
     m_bEBLMoveOrigin = false;
-    nConfig_State = 0;
     m_pMouseBoundary = NULL;
     m_pEBLBoatPoint = NULL;
     m_bDrawingBoundary = NULL;
@@ -866,14 +865,12 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
     m_iCallerId = id;
     if( m_Mode == ID_NONE ) m_Mode = 0;
-    
+
+    if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
+        g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
+
     if ( id == m_config_button_id ) {
-        if( 0 == nConfig_State ){
-            // show the Draw dialog
-            nConfig_State = 1;
-            //SetToolbarItemState( m_config_button_id, true );
-            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
+        if( !g_pPathManagerDialog->IsShown() ){
             
             DimeWindow( g_pPathManagerDialog );
             g_pPathManagerDialog->UpdatePathListCtrl();
@@ -886,14 +883,10 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
             g_pPathManagerDialog->Centre();
             g_pPathManagerDialog->Raise();
 #endif
-            //SetToolbarItemState( m_config_button_id, false );
             
         } else {
             if( NULL != g_pPathManagerDialog )
 	        g_pPathManagerDialog->Hide();
-
-            nConfig_State = 0;
-            //SetToolbarItemState( m_config_button_id, false );
         }
     }
     else if ( id == m_draw_button_id ) {
@@ -1161,7 +1154,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
         pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
         pConf->Write( wxS( "ShowMag" ), g_bShowMag );
-        pConf->Write( wxS( "AllowLeftClickAndDrag" ), g_bAllowLeftClickAndDrag );
+        pConf->Write( wxS( "AllowLeftDrag" ), g_bAllowLeftDrag );
         pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
         pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
         pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
@@ -1369,7 +1362,7 @@ void ocpn_draw_pi::LoadConfig()
                 break;
         }
         pConf->Read( wxS( "ShowMag" ), &g_bShowMag, 0 );
-        pConf->Read( wxS( "AllowLeftClickAndDrag" ), &g_bAllowLeftClickAndDrag,0 );
+        pConf->Read( wxS( "AllowLeftDrag" ), &g_bAllowLeftDrag,0 );
         g_UserVar = 0.0;
         wxString umv;
         pConf->Read( wxS( "UserMagVariation" ), &umv );
@@ -1459,7 +1452,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
         
         if ( event.ControlDown() )
             key_char -= 64;
-        
+
         if((bKey_Boundary_Pressed || bKey_Point_Pressed || bKey_TextPoint_Pressed || bKey_EBL_Pressed || bKey_DR_Pressed || bKey_GZ_Pressed) && key_char != WXK_ESCAPE) return true; 
         
         switch( key_char ) {
@@ -1710,7 +1703,30 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( m_bTextPointEditing ) {
             m_pCurrentCursor = m_pTextCursorCross;
             bret = TRUE;
-        } else if( g_bAllowLeftClickAndDrag ) {
+        } else if( event.ControlDown() ) {
+            FindSelectedObject();
+
+            if ( 0 != m_seltype ) {
+                if(m_pSelectedPath) {
+                    m_pSelectedBoundary = NULL;
+                    m_pSelectedEBL = NULL;
+                    m_pSelectedDR = NULL;
+                    m_pSelectedGZ = NULL;
+                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                        m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
+                        m_pSelectedDR = (DR *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
+                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                }
+                if(m_pSelectedBoundary)
+                    m_pBoundaryList.push_back( m_pSelectedBoundary );
+                bRefresh = FALSE;
+                bret = FALSE;
+            }
+        } else if( g_bAllowLeftDrag ) {
             FindSelectedObject();
 
             if( 0 != m_seltype ) {
@@ -1746,7 +1762,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bRefresh = TRUE;
                 bret = FALSE;
             }
-        }
+        } else if( !m_pBoundaryList.empty() )
+            m_pBoundaryList.clear();
     }
     
     if( event.LeftUp() ) {
@@ -2073,6 +2090,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pCurrentCursor = NULL;
             bRefresh = TRUE;
             bret = TRUE;
+        } else if( m_pBoundaryList.size() > 0 ) {
+            g_ODEventHandler->SetCanvas( ocpncc1 );
+            g_ODEventHandler->SetBoundaryList( m_pBoundaryList );
+            g_ODEventHandler->PopupMenu( SELTYPE_BOUNDARYLIST );
+            m_pBoundaryList.clear();
+            bRefresh = TRUE;
+            bret = true;
         } else if ( nBoundary_State == 0 && nPoint_State == 0 && nTextPoint_State == 0 && nEBL_State == 0 && nDR_State == 0 && nGZ_State == 0) {
             FindSelectedObject();
             
@@ -2103,7 +2127,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             } else bret = FALSE;
             
             //end           
-        } 
+        }
     }
     
     //      Check to see if there is a path under the cursor

@@ -63,11 +63,13 @@ class ODEventHandler : public wxEvtHandler
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
         void PopupMenu( int seltype );
         void SetPath( ODPath *path );
+        void SetBoundaryList( std::list<Boundary*> pBoundaryList );
         void SetPoint ( ODPoint *point );
         void SetPoint ( TextPoint *point );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
         void DeletePath( void );
+        void DeletePaths( void );
         
     protected:
     private:
@@ -83,7 +85,8 @@ class ODEventHandler : public wxEvtHandler
         EBL             *m_pEBL;
         DR              *m_pDR;
         GZ              *m_pGZ;
-        
+        std::list<Boundary*> m_pBoundaryList;
+
         DECLARE_EVENT_TABLE();
 };
 
