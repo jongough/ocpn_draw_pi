@@ -681,6 +681,12 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
                 g_pPathManagerDialog->UpdatePathListCtrl();
 
+            it = m_pBoundaryList.begin();
+            while( it != m_pBoundaryList.end() ) {
+                (*it)->m_bPathPropertiesBlink = false;
+                it++;
+            }
+
             if( event.GetId() == ID_BOUNDARY_LIST_DELETE_MENU) DeletePaths();
 
             m_pBoundaryList.clear();
@@ -1133,6 +1139,15 @@ void ODEventHandler::PopupMenu( int seltype )
     
     if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = false;
     m_pFoundODPoint = NULL;
+
+    if(!m_pBoundaryList.empty()) {
+        std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
+        while( it != m_pBoundaryList.end() ) {
+            (*it)->m_bPathPropertiesBlink = false;
+            it++;
+        }
+    }
+
     
     //m_pFoundODPointSecond = NULL;
     menuFocus = NULL;

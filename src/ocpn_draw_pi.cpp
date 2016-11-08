@@ -1721,8 +1721,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
                         m_pSelectedGZ = (GZ *)m_pSelectedPath;
                 }
-                if(m_pSelectedBoundary)
+                if(m_pSelectedBoundary) {
                     m_pBoundaryList.push_back( m_pSelectedBoundary );
+                    m_pSelectedBoundary->m_bPathPropertiesBlink = true;
+                }
                 bRefresh = FALSE;
                 bret = FALSE;
             }
@@ -1762,8 +1764,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bRefresh = TRUE;
                 bret = FALSE;
             }
-        } else if( !m_pBoundaryList.empty() )
+        } else if( !m_pBoundaryList.empty() ) {
+            std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
+            while( it != m_pBoundaryList.end() ) {
+                (*it)->m_bPathPropertiesBlink = false;
+                it++;
+            }
+
             m_pBoundaryList.clear();
+        }
     }
     
     if( event.LeftUp() ) {
