@@ -1606,6 +1606,16 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     bKey_GZ_Pressed = false;
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
+
+                    if( !m_pBoundaryList.empty() ) {
+                        std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
+                        while( it != m_pBoundaryList.end() ) {
+                            (*it)->m_bPathPropertiesBlink = false;
+                            it++;
+                        }
+
+                        m_pBoundaryList.clear();
+                    }
                 }
                 break;
         }
