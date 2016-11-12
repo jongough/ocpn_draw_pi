@@ -45,6 +45,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
 
         void OnRotateWithBoat( wxCommandEvent& event );
         void OnFixedEndPosition( wxCommandEvent& event );
+        void OnPILCheckbox( wxCommandEvent& event );
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
         bool UpdateProperties( EBL *pInEBL );

@@ -567,14 +567,17 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxEBLShowArrow = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show EBL Direction Arrow"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBLSettings->Add( m_checkBoxEBLShowArrow, 0, wxALL, 5 );
 	
+	m_checkBoxShowVRM = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerEBLSettings->Add( m_checkBoxShowVRM, 0, wxALL, 5 );
+	
+	m_checkBoxShowPIL = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show Perpendicular Index Line"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerEBLSettings->Add( m_checkBoxShowPIL, 0, wxALL, 5 );
+	
 	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
 	m_radioBoxEBLPersistence = new wxRadioBox( m_panelEBL, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 2, wxRA_SPECIFY_ROWS );
 	m_radioBoxEBLPersistence->SetSelection( 0 );
 	m_fgSizerEBLSettings->Add( m_radioBoxEBLPersistence, 0, wxALL, 5 );
-	
-	m_checkBoxShowVRM = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_fgSizerEBLSettings->Add( m_checkBoxShowVRM, 0, wxALL, 5 );
 	
 	
 	m_panelEBL->SetSizer( m_fgSizerEBLSettings );

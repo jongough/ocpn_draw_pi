@@ -107,6 +107,7 @@ extern bool         g_bEBLFixedEndPosition;
 extern int          g_iEBLPersistenceType;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
+extern bool         g_bEBLPIL;
 extern int          g_EBLLineWidth;
 extern int          g_EBLLineStyle;
 
@@ -471,6 +472,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
+    g_bEBLPIL = m_checkBoxShowPIL->GetValue();
     g_iEBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sEBLEndIconName = m_bODIComboBoxEBLEndIconName->GetValue();
@@ -800,7 +802,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxEBLPersistence->SetSelection( g_iEBLPersistenceType );
     m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
     m_checkBoxShowVRM->SetValue( g_bEBLVRM );
-    
+    m_checkBoxShowPIL->SetValue( g_bEBLPIL );
+
     m_choiceTextPosition->SetSelection( g_iTextPosition );
     m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
     m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );

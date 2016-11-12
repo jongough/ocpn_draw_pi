@@ -166,6 +166,7 @@ bool        g_bEBLFixedEndPosition;
 int         g_iEBLPersistenceType;
 bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
+bool        g_bEBLPIL;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
 bool        g_bEBLRotateWithBoat;
@@ -1114,6 +1115,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
         pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
+        pConf->Write( wxS( "DefaultEBLPIL" ), g_bEBLPIL );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
@@ -1292,6 +1294,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
+        pConf->Read( wxS( "DefaultEBLPIL" ), &g_bEBLPIL, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_iEBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaultEBLRotateWithBoat" ), &g_bEBLRotateWithBoat, false );

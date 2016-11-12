@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun 17 2015)
+// C++ code generated with wxFormBuilder (version Feb 16 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -72,6 +72,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlEBLAngle;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxShowVRM;
+		wxCheckBox* m_checkBoxShowPIL;
 		wxFlexGridSizer* m_fgSizerGZ;
 		wxCheckBox* m_checkBoxRotateGZWithBoat;
 		wxRadioBox* m_radioBoxMaintainGZWith;
@@ -105,6 +106,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnRadioBoxBoundaryType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPILCheckbox( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
