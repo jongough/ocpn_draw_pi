@@ -570,8 +570,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxShowVRM = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBLSettings->Add( m_checkBoxShowVRM, 0, wxALL, 5 );
 	
-	m_checkBoxShowPIL = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show Perpendicular Index Line"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_fgSizerEBLSettings->Add( m_checkBoxShowPIL, 0, wxALL, 5 );
+	m_checkBoxShowPerpLine = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show Perpendicular Index Line"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerEBLSettings->Add( m_checkBoxShowPerpLine, 0, wxALL, 5 );
 	
 	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
@@ -953,7 +953,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_fgSizerPILStartIconName->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_bcomboBoxPILStartIconName = new wxBitmapComboBox( m_panelPIL, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_fgSizerPILStartIconName->Add( m_bcomboBoxPILStartIconName, 0, wxALIGN_RIGHT|wxALL, 5 );
+	m_fgSizerPILStartIconName->Add( m_bcomboBoxPILStartIconName, 0, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( m_fgSizerPILStartIconName, 1, wxEXPAND, 5 );
@@ -968,7 +968,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_fgSizerPILEndPointIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
 	m_bcomboBoxPILEndIconName = new wxBitmapComboBox( m_panelPIL, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_fgSizerPILEndPointIcon->Add( m_bcomboBoxPILEndIconName, 0, wxALIGN_RIGHT|wxALL, 5 );
+	m_fgSizerPILEndPointIcon->Add( m_bcomboBoxPILEndIconName, 0, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( m_fgSizerPILEndPointIcon, 1, wxEXPAND, 5 );
@@ -1006,8 +1006,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextInactiveCentreLineColour->Wrap( -1 );
 	fgSizer35->Add( m_staticTextInactiveCentreLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerPILInactiveCentreLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer35->Add( m_colourPickerPILInactiveCentreLineColour, 0, wxALL, 5 );
+	m_colourPickerPILInActiveCentreLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer35->Add( m_colourPickerPILInActiveCentreLineColour, 0, wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer35, 1, wxEXPAND, 5 );
@@ -1038,8 +1038,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextPILInactiveOffsetLineColour->Wrap( -1 );
 	fgSizer36->Add( m_staticTextPILInactiveOffsetLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerPILInactiveOffsetLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer36->Add( m_colourPickerPILInactiveOffsetLineColour, 0, wxALL, 5 );
+	m_colourPickerPILInActiveOffsetLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer36->Add( m_colourPickerPILInActiveOffsetLineColour, 0, wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer36, 1, wxEXPAND, 5 );

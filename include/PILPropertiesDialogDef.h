@@ -24,7 +24,7 @@
 #include <wx/button.h>
 #include <wx/dialog.h>
 
-#include "wxTranslateCatalog.h"
+#include "wxWTranslateCatalog.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -37,13 +37,17 @@ class PILPropertiesDialogDef : public wxDialog
 	private:
 	
 	protected:
+		wxStaticText* m_staticTexrID;
+		wxTextCtrl* m_textCtrlIDNum;
 		wxStaticText* m_staticTextName;
 		wxTextCtrl* m_textCtrlName;
 		wxStaticText* m_staticTextDesctiption;
 		wxTextCtrl* m_textCtrlDesctription;
+		wxStaticText* m_staticTextOffset;
+		wxTextCtrl* m_textCtrlOffset;
 		wxCheckBox* m_checkBoxActive;
 		wxStaticText* m_staticTextLineColour;
-		wxColourPickerCtrl* m_colourPickerActiveLineColour;
+		wxColourPickerCtrl* m_colourPickerLineColour;
 		wxStaticText* m_staticTextLineStyle;
 		wxChoice* m_choiceLineStyle;
 		wxStaticText* m_staticTextLineWidth;
@@ -52,6 +56,7 @@ class PILPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonCancel;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineWidth( wxCommandEvent& event ) { event.Skip(); }
@@ -61,7 +66,7 @@ class PILPropertiesDialogDef : public wxDialog
 	
 	public:
 		
-		PILPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Index Line Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,232 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		PILPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Index Line Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,260 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~PILPropertiesDialogDef();
 	
 };

@@ -61,7 +61,7 @@ WX_DEFINE_LIST ( DRList );
 extern wxColour    g_colourDRLineColour;
 extern wxColour    g_colourInActiveDRLineColour;
 extern wxString    g_sDRPointIconName;
-extern int         g_DRPersistenceType;
+extern int         g_iDRPersistenceType;
 extern bool        g_bDRShowArrow;
 extern int         g_DRLineWidth; 
 extern int         g_DRLineStyle;
@@ -91,7 +91,7 @@ DR::DR() : ODPath()
     m_width = g_DRLineWidth;
     m_style = g_DRLineStyle;
     m_bDrawArrow = g_bDRShowArrow;
-    SetPersistence( g_DRPersistenceType );
+    SetPersistence( g_iDRPersistenceType );
     m_dMagCOG = g_dVar;
     SetActiveColours();
 }

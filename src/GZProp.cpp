@@ -72,10 +72,11 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_textCtrlGZSecondLength->Show();
     m_textCtrlGZSecondLength->Enable( true );
     m_fgSizerPath->ShowItems( true );
-    m_checkBoxPathShowArrow->Hide();
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
+    m_bSizerPathPoints->ShowItems( true );
+    m_listCtrlODPoints->Show();
     
 
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)

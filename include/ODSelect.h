@@ -33,6 +33,7 @@
 #define SELTYPE_PATHSEGMENT         0x0004
 #define SELTYPE_PATHCREATE          0x0008
 #define SELTYPE_BOUNDARYLIST        0x0010
+#define SELTYPE_PIL                 0x0020
 
 class ODSelect
 {
@@ -42,12 +43,13 @@ public:
 
     bool AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd );
     bool AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
-            ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath );
+            ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath, int UserData = 0 );
 
     SelectItem *FindSelection( float slat, float slon, int fseltype );
     SelectableItemList FindSelectionList( float slat, float slon, int fseltype );
 
     bool DeleteAllSelectablePathSegments( ODPath * );
+    bool DeleteSelectablePathSegment( ODPath *pr, int iUserData );
     bool DeleteAllSelectableODPoints( ODPath * );
     bool AddAllSelectablePathSegments( ODPath *pr );
     bool AddAllSelectableODPoints( ODPath *pr );

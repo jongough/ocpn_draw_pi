@@ -42,6 +42,10 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PILList );
 
+extern int          g_path_line_width;
+
+extern PlugIn_ViewPort g_VP;
+
 extern wxString    g_sPILEndIconName;
 extern wxString    g_sPILStartIconName;
 extern wxColour    g_colourPILActiveCentreLineColour;
@@ -86,7 +90,11 @@ PIL::PIL() : EBL()
     else m_dBoatCOG = g_pfFix.Cog;
     m_dEBLAngle = 0.;
     m_dLength = 0.;
-    m_bEndPointMoving = true;
+    m_bEndPointMoving = false;
+    m_width = g_PILCentreLineWidth;
+    m_style = g_PILCentreLineStyle;
+    m_iWidthOffsetLine = g_PILOffsetLineWidth;
+    m_iStyleOffsetLine = g_PILOffsetLineStyle;
 
     PilLineList.clear();
 }
@@ -103,8 +111,40 @@ int PIL::AddLine(wxString sName, wxString sDescription, double dOffset)
     plNewLine.sName = sName;
     plNewLine.sDescription = sDescription;
     plNewLine.dOffset = dOffset;
+    plNewLine.wxcActiveColour = g_colourPILActiveOffsetLineColour;
+    plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLineColour;
+    plNewLine.dStyle = g_PILOffsetLineStyle;
+    plNewLine.dWidth = g_PILOffsetLineWidth;
     PilLineList.push_back(plNewLine);
+
+    wxODPointListNode *node = m_pODPointList->GetFirst();
+    ODPoint *l_pCentre = node->GetData();
+    wxPoint l_Centreppt;
+    wxPoint l_dPoint1, l_dPoint2;
+    double l_dLat, l_dLon;
+
+    GetCanvasPixLL( &g_VP, &l_Centreppt,  l_pCentre->m_lat, l_pCentre->m_lon);
+    double l_dAngle;
+    double l_dLat1, l_dLon1, l_dLat2, l_dLon2;
+    l_dAngle = m_dEBLAngle + 90.;
+    if(l_dAngle > 360.) l_dAngle -= 360.;
+    if(l_dAngle < 0) l_dAngle += 360.;
+
+    PositionBearingDistanceMercator_Plugin(l_pCentre->m_lat, l_pCentre->m_lon, l_dAngle, dOffset, &l_dLat, &l_dLon);
+    GetCanvasPixLL( &g_VP, &l_Centreppt,  l_dLat, l_dLon );
+    CalcOffsetPoints( l_Centreppt, &l_dPoint1, &l_dPoint2);
+    GetCanvasLLPix( &g_VP, l_dPoint1, &l_dLat1, &l_dLon1 );
+    GetCanvasLLPix( &g_VP, l_dPoint2, &l_dLat2, &l_dLon2 );
+    g_pODSelect->AddSelectablePathSegment( l_dLat1, l_dLon1, l_dLat2, l_dLon2, NULL, NULL, this, plNewLine.iID );
+
     return plNewLine.iID;
+}
+
+void PIL::AddLine(PILLINE PilLine)
+{
+    PilLineList.push_back(PilLine);
+
+    return;
 }
 
 void PIL::DelLine(int iID)
@@ -131,8 +171,24 @@ void PIL::ChangeOffset(int iID, double dOffset)
 
 void PIL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
+    RenderPIL( dc, VP );
     ODPath::Draw( dc, VP );
+}
 
+void PIL::DrawGL( PlugIn_ViewPort &piVP )
+{
+    ODDC dc;
+    RenderPIL( dc, piVP );
+    ODPath::DrawGL( piVP );
+}
+
+void PIL::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
+{
+    ODPath::DrawSegment( dc, rp1, rp2, VP, bdraw_arrow );
+}
+
+void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
+{
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
     wxPoint l_Centreppt;
@@ -142,39 +198,140 @@ void PIL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     std::list<PILLINE>::iterator it = PilLineList.begin();
     while(it != PilLineList.end()) {
         double l_dAngle;
-        if(it->dOffset >= 0) l_dAngle = m_dEBLAngle + 90.;
-        else l_dAngle = m_dEBLAngle - 90.;
+        l_dAngle = m_dEBLAngle + 90.;
         if(l_dAngle > 360.) l_dAngle -= 360.;
         if(l_dAngle < 0) l_dAngle += 360.;
+
         double l_dLat, l_dLon;
+        wxPoint l_Centreppt;
         PositionBearingDistanceMercator_Plugin(l_pCentre->m_lat, l_pCentre->m_lon, l_dAngle, it->dOffset, &l_dLat, &l_dLon);
-        GetCanvasPixLL( &VP, &l_Centreppt,  l_dLat, l_dLon);
+        GetCanvasPixLL( &VP, &l_Centreppt,  l_dLat, l_dLon );
+
         wxPoint l_dPoint1, l_dPoint2;
-        double l_len, l_len1, l_len2;
-        l_len1 = (VP.pix_width - l_Centreppt.x)/sin(l_dAngle);
-        l_len2 = (VP.pix_height - l_Centreppt.y)/cos(l_dAngle);
-        if(l_len1 < l_len2) l_len = l_len1;
-        else l_len = l_len2;
-        l_dPoint1.x = l_Centreppt.x + (l_len * sin(l_dAngle));
-        l_dPoint1.y = l_Centreppt.y + (l_len * cos(l_dAngle));
-        l_dPoint2.x = l_Centreppt.x - (l_len * sin(l_dAngle));
-        l_dPoint2.y = l_Centreppt.y - (l_len * cos(l_dAngle));
+        CalcOffsetPoints( l_Centreppt, &l_dPoint1, &l_dPoint2);
+
+        wxColour l_colour;
+
+        if( m_bVisible && m_bPathIsActive ) {
+            if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
+                l_colour = it->wxcInActiveColour;
+            else
+                l_colour = it->wxcActiveColour;
+        }
+        else {
+            if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
+                l_colour= it->wxcActiveColour;
+            else
+                l_colour = it->wxcInActiveColour;
+        }
+
+        dc.SetPen( *wxThePenList->FindOrCreatePen( l_colour, it->dWidth, it->dStyle ) );
+        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( l_colour, wxBRUSHSTYLE_SOLID ) );
 
         RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, VP, m_bDrawArrow, m_hiliteWidth );
 
         it++;
     }
-    if(PilLineList.size() > 0)
-        PilLineList.erase(it);
+}
+
+void PIL::RedrawPIL( void )
+{
+    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    //double brg;
+    //    DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength );
+    DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength );
+    pEndPoint->m_seg_len = m_dLength;
+
+//    if(g_pPILLPropDialog && g_pPILPropDialog->IsShown())
+//       g_pPILPropDialog->UpdateProperties();
+}
+
+void PIL::CentreOnBoat( bool bMoveEndPoint )
+{
+    EBL::CentreOnBoat( bMoveEndPoint );
+
+    wxODPointListNode *node = m_pODPointList->GetFirst();
+    ODPoint *l_pCentre = node->GetData();
+    wxPoint l_Centreppt;
+    wxPoint l_dPoint1, l_dPoint2;
+    double l_dLat, l_dLon;
+
+    GetCanvasPixLL( &g_VP, &l_Centreppt,  l_pCentre->m_lat, l_pCentre->m_lon);
+    std::list<PILLINE>::iterator it = PilLineList.begin();
+    while(it != PilLineList.end()) {
+        double l_dAngle;
+        double l_dLat1, l_dLon1, l_dLat2, l_dLon2;
+        l_dAngle = m_dEBLAngle + 90.;
+        if(l_dAngle > 360.) l_dAngle -= 360.;
+        if(l_dAngle < 0) l_dAngle += 360.;
+
+        PositionBearingDistanceMercator_Plugin(l_pCentre->m_lat, l_pCentre->m_lon, l_dAngle, it->dOffset, &l_dLat, &l_dLon);
+        GetCanvasPixLL( &g_VP, &l_Centreppt,  l_dLat, l_dLon );
+        CalcOffsetPoints( l_Centreppt, &l_dPoint1, &l_dPoint2);
+        GetCanvasLLPix( &g_VP, l_dPoint1, &l_dLat1, &l_dLon1 );
+        GetCanvasLLPix( &g_VP, l_dPoint2, &l_dLat2, &l_dLon2 );
+        g_pODSelect->DeleteSelectablePathSegment(this, it->iID);
+        g_pODSelect->AddSelectablePathSegment( l_dLat1, l_dLon1, l_dLat2, l_dLon2, NULL, NULL, this, it->iID );
+
+        it++;
+    }
+}
+
+void PIL::CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint )
+{
+    wxPoint l_dPoint1, l_dPoint2;
+    double l_len1[4];
+    double l_result = -1;
+    double l_dSinAngle, l_dCosAngle;
+    l_dSinAngle = sin(m_dEBLAngle * PI / 180);
+    l_dCosAngle = cos(m_dEBLAngle * PI / 180);
+
+    l_len1[0] = (g_VP.pix_width - Centreppt.x)/l_dSinAngle;
+    l_len1[1] = (-g_VP.pix_height + Centreppt.y)/l_dCosAngle;
+    l_len1[2] = (-Centreppt.x)/l_dSinAngle;
+    l_len1[3] = (Centreppt.y)/l_dCosAngle;
+    for (int i = 0; i <= 3; i++) {
+        if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
+            l_result = l_len1[i];
+    }
+
+    FirstPoint->x = Centreppt.x + (l_result * l_dSinAngle);
+    FirstPoint->y = Centreppt.y - (l_result * l_dCosAngle);
+
+    // get the other half of the line
+    l_dSinAngle *= -1;
+    l_dCosAngle *= -1;
+    l_result = -1;
+    l_len1[0] = (g_VP.pix_width - Centreppt.x)/l_dSinAngle;
+    l_len1[1] = (-g_VP.pix_height + Centreppt.y)/l_dCosAngle;
+    l_len1[2] = (-Centreppt.x)/l_dSinAngle;
+    l_len1[3] = (Centreppt.y)/l_dCosAngle;
+    for (int i = 0; i <= 3; i++) {
+        if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
+            l_result = l_len1[i];
+    }
+
+    SecondPoint->x = Centreppt.x + (l_result * l_dSinAngle);
+    SecondPoint->y = Centreppt.y - (l_result * l_dCosAngle);
 
 }
 
-void PIL::DrawGL( PlugIn_ViewPort &piVP )
+void PIL::MovePILLine(double dLat, double dLon, int iPILId)
 {
-    ODPath::DrawGL( piVP );
-}
+    double brg, dist;
+    wxODPointListNode *node = m_pODPointList->GetFirst();
+    ODPoint *l_pCentre = node->GetData();
 
-void PIL::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
-{
-    ODPath::DrawSegment( dc, rp1, rp2, VP, bdraw_arrow );
+    DistanceBearingMercator_Plugin(l_pCentre->GetLatitude(), l_pCentre->GetLongitude(), dLat, dLon, &brg, &dist);
+    dist = -dist * sin((brg - m_dEBLAngle) * PI / 180);
+
+    std::list<PILLINE>::iterator it = PilLineList.begin();
+    while(it != PilLineList.end()) {
+        if(it->iID == iPILId) {
+            it->dOffset = dist;
+            return;
+        }
+        it++;
+    }
 }

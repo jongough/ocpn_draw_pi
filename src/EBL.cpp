@@ -79,7 +79,7 @@ extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
-extern bool         g_bEBLPIL;
+extern bool         g_bEBLPerpLine;
 extern bool         g_bEBLRotateWithBoat;
 extern int          g_iEBLMaintainWith;
 
@@ -91,7 +91,7 @@ EBL::EBL() : ODPath()
     m_style = g_EBLLineStyle;
     m_bDrawArrow = g_bEBLShowArrow;
     m_bVRM = g_bEBLVRM;
-    m_bPIL = g_bEBLPIL;
+    m_bPerpLine = g_bEBLPerpLine;
     m_bCentreOnBoat = true;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
     m_bSaveUpdates = false;
@@ -427,7 +427,6 @@ void EBL::UpdateEBL( void )
 
 void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
-    SetActiveColours();
     if(m_bVRM) {
         ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
@@ -436,7 +435,56 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
 
-    if(m_bPIL) {
+    RenderPIL( dc, VP );
+    ODPath::Draw( dc, VP );
+
+}
+    
+void EBL::DrawGL( PlugIn_ViewPort &piVP )
+{
+    ODDC dc;
+    RenderPIL( dc, piVP );
+
+    ODPath::DrawGL( piVP );
+}
+
+void EBL::MaintainWith( void )
+{
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    switch(m_iMaintainWith) {
+        case ID_MAINTAIN_WITH_HEADING:
+            if(!wxIsNaN(g_pfFix.Hdt))
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+            else
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+            break;
+        case ID_MAINTAIN_WITH_COG:
+            if(!wxIsNaN(g_pfFix.Cog))
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+            else
+                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
+            break;
+    }
+}
+
+void EBL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
+{
+    wxString colour;
+    int style = wxPENSTYLE_SOLID;
+    int width = g_path_line_width;
+
+    if( m_nPoints == 0 || !m_bVisible ) return;
+
+    if( m_style != STYLE_UNDEFINED ) style = m_style;
+    if( m_width != STYLE_UNDEFINED ) width = m_width;
+
+    SetActiveColours();
+
+    dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
+
+    if(m_bPerpLine) {
         double l_dAngle = m_dEBLAngle + 90.;
         if(l_dAngle > 360.) l_dAngle -= 360.;
         l_dAngle = l_dAngle * PI / 180;
@@ -479,116 +527,8 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         l_dPoint2.x = l_Centreppt.x + (l_result * l_dSinAngle);
         l_dPoint2.y = l_Centreppt.y - (l_result * l_dCosAngle);
 
-        wxString colour;
-        int style = wxPENSTYLE_SOLID;
-        int width = g_path_line_width;
-
-        if( m_nPoints == 0 || !m_bVisible ) return;
-
-        if( m_style != STYLE_UNDEFINED ) style = m_style;
-        if( m_width != STYLE_UNDEFINED ) width = m_width;
-
-        SetActiveColours();
-
-        dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
-
         RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, VP, m_bDrawArrow, m_hiliteWidth );
 
     }
 
-    ODPath::Draw( dc, VP );
-
-}
-    
-void EBL::DrawGL( PlugIn_ViewPort &piVP )
-{
-    if(m_bVRM) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-        pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
-    }
-
-    if(m_bPIL) {
-        double l_dAngle = m_dEBLAngle + 90.;
-        if(l_dAngle > 360.) l_dAngle -= 360.;
-        l_dAngle = l_dAngle * PI / 180;
-        ODPoint *l_pEndPoint = m_pODPointList->GetLast()->GetData();
-        wxPoint l_Centreppt;
-        GetCanvasPixLL( &piVP, &l_Centreppt,  l_pEndPoint->m_lat, l_pEndPoint->m_lon );
-
-        wxPoint l_dPoint1, l_dPoint2;
-        double l_len1[4];
-        double l_result = -1;
-        double l_dSinAngle, l_dCosAngle;
-        l_dSinAngle = sin(l_dAngle);
-        l_dCosAngle = cos(l_dAngle);
-
-        l_len1[0] = (piVP.pix_width - l_Centreppt.x)/l_dSinAngle;
-        l_len1[1] = (-piVP.pix_height + l_Centreppt.y)/l_dCosAngle;
-        l_len1[2] = (-l_Centreppt.x)/l_dSinAngle;
-        l_len1[3] = (l_Centreppt.y)/l_dCosAngle;
-        for (int i = 0; i <= 3; i++) {
-            if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
-                l_result = l_len1[i];
-        }
-
-        l_dPoint1.x = l_Centreppt.x + (l_result * l_dSinAngle);
-        l_dPoint1.y = l_Centreppt.y - (l_result * l_dCosAngle);
-
-        // get the other half of the line
-        l_dSinAngle *= -1;
-        l_dCosAngle *= -1;
-        l_result = -1;
-        l_len1[0] = (piVP.pix_width - l_Centreppt.x)/l_dSinAngle;
-        l_len1[1] = (-piVP.pix_height + l_Centreppt.y)/l_dCosAngle;
-        l_len1[2] = (-l_Centreppt.x)/l_dSinAngle;
-        l_len1[3] = (l_Centreppt.y)/l_dCosAngle;
-        for (int i = 0; i <= 3; i++) {
-            if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
-                l_result = l_len1[i];
-        }
-
-        l_dPoint2.x = l_Centreppt.x + (l_result * l_dSinAngle);
-        l_dPoint2.y = l_Centreppt.y - (l_result * l_dCosAngle);
-
-        ODDC dc;
-        wxString colour;
-        int style = wxPENSTYLE_SOLID;
-        int width = g_path_line_width;
-
-        if( m_nPoints == 0 || !m_bVisible ) return;
-
-        if( m_style != STYLE_UNDEFINED ) style = m_style;
-        if( m_width != STYLE_UNDEFINED ) width = m_width;
-
-        SetActiveColours();
-
-        dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
-
-        RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, piVP, m_bDrawArrow, m_hiliteWidth );
-
-    }
-    ODPath::DrawGL( piVP );
-}
-
-void EBL::MaintainWith( void )
-{
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    switch(m_iMaintainWith) {
-        case ID_MAINTAIN_WITH_HEADING:
-            if(!wxIsNaN(g_pfFix.Hdt))
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Hdt + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
-            else
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
-            break;
-        case ID_MAINTAIN_WITH_COG:
-            if(!wxIsNaN(g_pfFix.Cog))
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, g_pfFix.Cog + m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
-            else
-                PositionBearingDistanceMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon);
-            break;
-    }
 }

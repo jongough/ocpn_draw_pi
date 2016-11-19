@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  EBL Properties
+ * Purpose:  PIL Properties
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -23,8 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#include "EBLProp.h"
-#include "EBL.h"
+#include "PILProp.h"
+#include "PIL.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 
@@ -32,53 +32,53 @@
 #include <wx/valnum.h>
 #endif
 
-extern EBLList                  *g_pEBLList;
+enum {
+    ID_INDEX_ID = 0,
+    ID_INDEX_NAME,
+    ID_INDEX_OFFSET,
+    ID_INDEX_DESCRIPTION,
+
+    ID_POINTS_LIST_LAST
+};
+
+
+extern PILList                  *g_pPILList;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex g_pfFix;
 
-EBLProp::EBLProp()
+PILProp::PILProp()
 {
     //ctor
 }
 
-EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
+PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
-    m_fgSizerEBL->ShowItems( true );
-    m_checkBoxEBLFixedEndPosition->Show();
-    m_checkBoxEBLFixedEndPosition->Enable( true );
+    m_fgSizerPIL->ShowItems( true );
+
     
-    m_fgSizerPath->ShowItems( true );
-    m_checkBoxPathShowArrow->Show();
-    m_checkBoxPathShowArrow->Enable( true );
+    //m_fgSizerPath->ShowItems( true );
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
-    m_radioBoxPathPersistence->SetLabel( _("EBL Persistence") );
-    m_checkBoxRotateWithBoat->Enable(true);
-    m_radioBoxMaintainWith->Enable(false);
-    m_checkBoxEBLFixedEndPosition->Enable(true);
-    m_checkBoxRotateWithBoat->Show();
-    m_checkBoxRotateWithBoat->Enable(true);
-    m_radioBoxMaintainWith->Show();
-    m_radioBoxMaintainWith->Enable(true);
-    m_textCtrlTotalLength->SetEditable(true);
-    m_staticTextEBLAngle->Show();
-    m_staticTextEBLAngle->Enable(true);
-    m_textCtrlEBLAngle->Show();
-    m_textCtrlEBLAngle->Enable(true);
-    m_textCtrlEBLAngle->SetEditable(true);
+    m_radioBoxPathPersistence->SetLabel( _("PIL Persistence") );
+    m_staticTextPILAngle->Show();
+    m_staticTextPILAngle->Enable(true);
+    m_textCtrlPILAngle->Show();
+    m_textCtrlPILAngle->Enable(true);
+    m_textCtrlPILAngle->SetEditable(true);
+    m_bSizerPathPoints->ShowItems( false );
+    m_bSizerPILLines->ShowItems( true );
     
 
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    wxFloatingPointValidator<double> dODEBLAngle(2, &m_dODEBLAngleValidator, wxNUM_VAL_DEFAULT);
-    wxFloatingPointValidator<double> dODEBLLength(2, &m_dODEBLLengthValidator, wxNUM_VAL_DEFAULT);
-    dODEBLAngle.SetRange(-180, 180);
-    dODEBLLength.SetMin(0);
+    wxFloatingPointValidator<double> dODPILAngle(2, &m_dODPILAngleValidator, wxNUM_VAL_DEFAULT);
+    dODPILAngle.SetRange(-180, 180);
     
-    m_textCtrlEBLAngle->SetValidator( dODEBLAngle );
-    m_textCtrlTotalLength->SetValidator( dODEBLLength );
+    m_textCtrlPILAngle->SetValidator( dODPILAngle );
 #endif
+
+    SetPointsListHeadings();
     
     this->GetSizer()->Fit( this );
     this->Layout();
@@ -86,271 +86,277 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 }
 
 
-EBLProp::~EBLProp()
+PILProp::~PILProp()
 {
     //dtor
 }
 
-bool EBLProp::UpdateProperties( EBL *pInEBL )
+bool PILProp::UpdateProperties( PIL *pInPIL )
 {
+    if( NULL == pInPIL ) return false;
+
+    ::wxBeginBusyCursor();
+
     SetGlobalLocale();
-    
+
     wxString s;
 
-    m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
-    m_radioBoxPathPersistence->SetSelection( pInEBL->m_iPersistenceType );
-    m_checkBoxPathShowArrow->SetValue( pInEBL->m_bDrawArrow );
-    m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
-    m_checkBoxShowPIL->SetValue( pInEBL->m_bPIL );
-    m_checkBoxRotateWithBoat->SetValue( pInEBL->m_bRotateWithBoat );
-    m_radioBoxMaintainWith->SetSelection( pInEBL->m_iMaintainWith );
-    if(pInEBL->m_bCentreOnBoat)
-        m_checkBoxRotateWithBoat->Enable(true);
-    else
-        m_checkBoxRotateWithBoat->Enable(false);
-    if(pInEBL->m_bFixedEndPosition) {
-        m_radioBoxMaintainWith->Enable(false);
-        m_textCtrlEBLAngle->Enable(false);
-        m_textCtrlTotalLength->SetEditable(false);
-    } else {
-        m_radioBoxMaintainWith->Enable(true);
-        m_textCtrlEBLAngle->Enable(true);
-        m_textCtrlTotalLength->SetEditable(true);
-    }
+    m_textCtrlName->SetValue( pInPIL->m_PathNameString );
+    m_textCtrlDesctiption->SetValue( pInPIL->m_PathDescription);
+    m_textCtrlGUID->SetValue( pInPIL->m_GUID );
+    m_checkBoxActive->SetValue( pInPIL->IsActive() );
+
+    m_radioBoxPathPersistence->SetSelection( pInPIL->m_iPersistenceType );
     
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    if(pInEBL->m_dEBLAngle > 180)
-        m_dODEBLAngleValidator = pInEBL->m_dEBLAngle - 360;
+    if(pInPIL->m_dEBLAngle > 180)
+        m_dODPILAngleValidator = pInPIL->m_dEBLAngle - 360;
     else
-        m_dODEBLAngleValidator = pInEBL->m_dEBLAngle;
+        m_dODPILAngleValidator = pInPIL->m_dEBLAngle;
     
-    m_dODEBLLengthValidator = toUsrDistance_Plugin(pInEBL->m_dLength);
+    m_dODPILLengthValidator = toUsrDistance_Plugin(pInPIL->m_dLength);
 #else
-    if(pInEBL->m_dEBLAngle > 180)
-        s.Printf( _T("%.2f"), pInEBL->m_dEBLAngle - 360 );
+    if(pInPIL->m_dEBLAngle > 180)
+        s.Printf( _T("%.2f"), pInPIL->m_dEBLAngle - 360 );
     else
-        s.Printf( _T("%.2f"), pInEBL->m_dEBLAngle );
+        s.Printf( _T("%.2f"), pInPIL->m_dEBLAngle );
     
-    m_textCtrlEBLAngle->SetValue(s);
+    m_textCtrlPILAngle->SetValue(s);
     
-    s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pEBL->m_dLength) );
+    s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pPIL->m_dLength) );
     m_textCtrlTotalLength->SetValue(s);
 #endif
     
-    if(pInEBL->m_bRotateWithBoat) {
-        m_checkBoxEBLFixedEndPosition->Enable(false);
-    } else {
-        m_checkBoxEBLFixedEndPosition->Enable(true);
+    long item_line_index = 0;
+    std::list<PILLINE>::iterator it = pInPIL->PilLineList.begin();
+    while(it != pInPIL->PilLineList.end()) {
+        m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_ID, wxString::Format("%i", it->iID) );
+        m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_NAME, it->sName );
+        m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_OFFSET, wxString::Format("%.3f", it->dOffset) );
+        if(it->sDescription.Len() > 0)
+            m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_DESCRIPTION, it->sDescription );
+        else
+            m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_DESCRIPTION, _T(" ") );
+        it++;
+        item_line_index++;
     }
-    
+
     m_bLockUpdate = false;
     
-    return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
+    for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
+        if( pInPIL->m_style == ::StyleValues[i] ) {
+            m_choiceLineStyle->Select( i );
+            break;
+        }
+    }
+
+    for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+        if( pInPIL->m_width == ::WidthValues[i] ) {
+            m_choiceLineWidth->Select( i );
+            break;
+        }
+    }
+
+    // Set column width correctly for data
+    for(int i = 0; i < m_listCtrlPILList->GetColumnCount(); i++) {
+#ifdef WIN32
+        m_listCtrlPILList->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+#else
+        m_listCtrlPILList->SetColumnWidth( i, wxLIST_AUTOSIZE );
+#endif
+    }
+
+    ::wxEndBusyCursor();
+
+    return true;
+
 }
 
-bool EBLProp::UpdateProperties( void )
+bool PILProp::UpdateProperties( void )
 {
     wxString s;
     
     if(m_bLockUpdate) return true;
     
-    ODPathPropertiesDialogImpl::UpdateProperties();
-    
-    if(!m_bLockEBLAngle){
-        if(m_pEBL->m_dEBLAngle > 180)
-            s.Printf( _T("%.2f"), m_pEBL->m_dEBLAngle - 360 );
+    if(!m_bLockPILAngle){
+        if(m_pPIL->m_dEBLAngle > 180)
+            s.Printf( _T("%.2f"), m_pPIL->m_dEBLAngle - 360 );
         else
-            s.Printf( _T("%.2f"), m_pEBL->m_dEBLAngle );
+            s.Printf( _T("%.2f"), m_pPIL->m_dEBLAngle );
         
-        m_textCtrlEBLAngle->SetValue(s);
-    }
-    
-    if(!m_bLockEBLLength) {
-        s.Printf( _T("%.2f"), toUsrDistance_Plugin(m_pEBL->m_dLength) );
-        m_textCtrlTotalLength->SetValue(s);
+        m_textCtrlPILAngle->SetValue(s);
     }
     
     return  true;
 }
 
-bool EBLProp::SaveChanges( void )
+bool PILProp::SaveChanges( void )
 {
-    wxColour l_EBLOrigColour = m_pEBL->GetCurrentColour();
-    ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+    wxColour l_PILOrigColour = m_pPIL->GetCurrentColour();
+    ODPoint *pFirstPoint = m_pPIL->m_pODPointList->GetFirst()->GetData();
 
     bool l_bUpdatePath = false;
     double l_dLength;
     m_textCtrlTotalLength->GetValue().ToDouble( &l_dLength );
     l_dLength = fromUsrDistance_Plugin( l_dLength );
-    if(m_pEBL->m_dLength != l_dLength) {
+    if(m_pPIL->m_dLength != l_dLength) {
         l_bUpdatePath = true;
-        m_pEBL->m_dLength = l_dLength;
+        m_pPIL->m_dLength = l_dLength;
     }
     
-    if(pFirstPoint->GetODPointRangeRingsColour() == l_EBLOrigColour)
-        pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
+    if(pFirstPoint->GetODPointRangeRingsColour() == l_PILOrigColour)
+        pFirstPoint->SetODPointRangeRingsColour( m_pPIL->GetCurrentColour() );
 
-    m_pEBL->m_bFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
-    m_pEBL->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
-    if(m_pEBL->m_iPersistenceType == ID_NOT_PERSISTENT || m_pEBL->m_iPersistenceType == ID_PERSISTENT_CRASH)
-        m_pEBL->m_bTemporary = true;
+    m_pPIL->m_iPersistenceType = m_radioBoxPathPersistence->GetSelection();
+    if(m_pPIL->m_iPersistenceType == ID_NOT_PERSISTENT || m_pPIL->m_iPersistenceType == ID_PERSISTENT_CRASH)
+        m_pPIL->m_bTemporary = true;
     else
-        m_pEBL->m_bTemporary = false;
+        m_pPIL->m_bTemporary = false;
 
-    m_pEBL->m_bRotateWithBoat = m_checkBoxRotateWithBoat->GetValue();
-    if(m_pEBL->m_bRotateWithBoat)
-        m_pEBL->m_bFixedEndPosition = false;
-    m_pEBL->m_iMaintainWith = m_radioBoxMaintainWith->GetSelection();
-    
-    double l_dEBLAngle;
-    m_textCtrlEBLAngle->GetValue().ToDouble( &l_dEBLAngle );
-    if(m_pEBL->m_bRotateWithBoat) {
-        if(l_dEBLAngle != m_pEBL->m_dEBLAngle) {
-            l_bUpdatePath = true;
-            m_pEBL->m_dEBLAngle = l_dEBLAngle;
-        }
-    } else if(!m_pEBL->m_bFixedEndPosition) {
-        switch (m_pEBL->m_iMaintainWith) {
-            case ID_MAINTAIN_WITH_HEADING:
-                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Hdm;
-                break;
-            case ID_MAINTAIN_WITH_COG:
-                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Cog;
-                break;
-        }
+    double l_dAngle;
+    m_textCtrlPILAngle->GetValue().ToDouble( &l_dAngle );
+    if(l_dAngle != m_pPIL->m_dEBLAngle) {
+        m_pPIL->m_dEBLAngle = l_dAngle;
+        l_bUpdatePath = true;
     }
 
     if(l_bUpdatePath)
-        m_pEBL->MoveEndPoint(true);
-
-    m_pEBL->m_bDrawArrow = m_checkBoxPathShowArrow->GetValue();
-    m_pEBL->m_bVRM = m_checkBoxShowVRM->GetValue();
-    if(m_pEBL->m_bVRM) {
-        pFirstPoint->m_bShowODPointRangeRings = true;
-    } else
-        pFirstPoint->m_bShowODPointRangeRings = false;
-    m_pEBL->m_bPIL = m_checkBoxShowPIL->GetValue();
+        m_pPIL->MoveEndPoint(true);
 
     bool ret = ODPathPropertiesDialogImpl::SaveChanges();
     
     return ret;
 }
 
-void EBLProp::OnRotateWithBoat(wxCommandEvent& event)
-{
-    if(m_checkBoxRotateWithBoat->IsChecked()) {
-        m_checkBoxEBLFixedEndPosition->Enable(false);
-        m_radioBoxMaintainWith->Enable(true);
-        m_textCtrlEBLAngle->Enable(true);
-        m_textCtrlTotalLength->SetEditable(true);
-    } else {
-        m_checkBoxEBLFixedEndPosition->Enable(true);
-        if(m_checkBoxEBLFixedEndPosition->IsChecked()) {
-            m_radioBoxMaintainWith->Enable(false);
-            m_textCtrlEBLAngle->Enable(false);
-            m_textCtrlTotalLength->SetEditable(false);
-        }
-    }
-    ODPathPropertiesDialogDef::OnRotateWithBoat(event);
-}
-
-void EBLProp::OnFixedEndPosition(wxCommandEvent& event)
-{
-    if(m_checkBoxEBLFixedEndPosition->IsChecked()) {
-        m_radioBoxMaintainWith->Enable(false);
-        m_textCtrlEBLAngle->Enable(false);
-        m_textCtrlTotalLength->SetEditable(false);
-        m_checkBoxShowPIL->SetValue(false);
-    } else {
-        m_radioBoxMaintainWith->Enable(true);
-        m_textCtrlEBLAngle->Enable(true);
-        m_textCtrlTotalLength->SetEditable(true);
-    }
-    ODPathPropertiesDialogDef::OnFixedEndPosition(event);
-}
-
-void EBLProp::OnPILCheckbox(wxCommandEvent& event)
-{
-    if(m_checkBoxShowPIL->IsChecked()) {
-        m_checkBoxEBLFixedEndPosition->SetValue(false);
-        m_radioBoxMaintainWith->Enable(true);
-        m_textCtrlEBLAngle->Enable(true);
-        m_textCtrlTotalLength->SetEditable(true);
-    }
-}
-
-void EBLProp::OnSetFocus( wxFocusEvent& event )
+void PILProp::OnSetFocus( wxFocusEvent& event )
 {
     if(event.GetId() == m_textCtrlTotalLength->GetId())
-        m_bLockEBLLength = true;
-    if(event.GetId() == m_textCtrlEBLAngle->GetId())
-        m_bLockEBLAngle = true;
+        m_bLockPILLength = true;
+    if(event.GetId() == m_textCtrlPILAngle->GetId())
+        m_bLockPILAngle = true;
     ODPathPropertiesDialogDef::OnSetFocus(event);
 }
 
-void EBLProp::OnKillFocus( wxFocusEvent& event )
+void PILProp::OnKillFocus( wxFocusEvent& event )
 {
     ODPathPropertiesDialogDef::OnKillFocus(event);
 }
 
-void EBLProp::OnOK( wxCommandEvent& event )
+void PILProp::OnOK( wxCommandEvent& event )
 {
-    m_bLockEBLLength = false;
-    m_bLockEBLAngle = false;
+    m_bLockPILLength = false;
+    m_bLockPILAngle = false;
     ODPathPropertiesDialogImpl::OnOK(event);
 }
 
-void EBLProp::OnClose( wxCloseEvent& event )
+void PILProp::OnClose( wxCloseEvent& event )
 {
-    m_bLockEBLLength = false;
-    m_bLockEBLAngle = false;
+    m_bLockPILLength = false;
+    m_bLockPILAngle = false;
     ODPathPropertiesDialogImpl::OnClose(event);
     
     ResetGlobalLocale();
 }
 
-void EBLProp::OnCancel( wxCommandEvent& event )
+void PILProp::OnCancel( wxCommandEvent& event )
 {
-    m_bLockEBLLength = false;
-    m_bLockEBLAngle = false;
+    m_bLockPILLength = false;
+    m_bLockPILAngle = false;
     ODPathPropertiesDialogImpl::OnCancel(event);
 
     ResetGlobalLocale();
 }
 
 
-void EBLProp::OnChoiceLineWidth( wxCommandEvent& event )
+void PILProp::OnChoiceLineWidth( wxCommandEvent& event )
 {
     m_bLockUpdate = false;
     ODPathPropertiesDialogImpl::OnChoiceLineWidth(event);
 }
 
-void EBLProp::OnChoiceLineStyle( wxCommandEvent& event )
+void PILProp::OnChoiceLineStyle( wxCommandEvent& event )
 {
     m_bLockUpdate = false;
     ODPathPropertiesDialogImpl::OnChoiceLineStyle(event);
 }
 
-void EBLProp::OnKillFocusChoiceLineWidth( wxFocusEvent& event )
+void PILProp::OnKillFocusChoiceLineWidth( wxFocusEvent& event )
 {
     m_bLockUpdate = false;
     ODPathPropertiesDialogImpl::OnKillFocusChoiceLineWidth(event);
 }
 
-void EBLProp::OnSetFocusChoiceLineWidth( wxFocusEvent& event )
+void PILProp::OnSetFocusChoiceLineWidth( wxFocusEvent& event )
 {
     m_bLockUpdate = true;
     ODPathPropertiesDialogImpl::OnSetFocusChoiceLineWidth(event);
 }
 
-void EBLProp::OnKillFocusChoiceLineStyle( wxFocusEvent& event )
+void PILProp::OnKillFocusChoiceLineStyle( wxFocusEvent& event )
 {
     m_bLockUpdate = false;
     ODPathPropertiesDialogImpl::OnKillFocusChoiceLineStyle(event);
 }
 
-void EBLProp::OnSetFocusChoiceLineStyle( wxFocusEvent& event )
+void PILProp::OnSetFocusChoiceLineStyle( wxFocusEvent& event )
 {
     m_bLockUpdate = true;
     ODPathPropertiesDialogImpl::OnSetFocusChoiceLineStyle(event);
 }
+
+void PILProp::SetPointsListHeadings()
+{
+    m_listCtrlPILList->DeleteAllColumns();
+    m_listCtrlPILList->InsertColumn( ID_INDEX_ID, _("ID"), wxLIST_FORMAT_LEFT );
+    m_listCtrlPILList->InsertColumn( ID_INDEX_NAME, _("Name"), wxLIST_FORMAT_LEFT );
+    m_listCtrlPILList->InsertColumn( ID_INDEX_OFFSET, _("Offset"), wxLIST_FORMAT_RIGHT );
+    m_listCtrlPILList->InsertColumn( ID_INDEX_DESCRIPTION, _("Description"), wxLIST_FORMAT_LEFT );
+}
+
+void PILProp::InitializeList( void )
+{
+    if( NULL == m_pPath ) return;
+
+    //  Iterate on Offset lines, inserting blank fields starting with index 0
+    std::list<PILLINE>::iterator it = m_pPIL->PilLineList.begin();
+    int in = 0;
+    while(it != m_pPIL->PilLineList.end()) {
+        m_listCtrlPILList->InsertItem( in, _T(""), 0);
+        in++;
+        it++;
+    }
+}
+
+void PILProp::SetPath( ODPath *pP )
+{
+    if( NULL == pP )
+        return;
+
+    m_tz_selection = 1;
+
+    if( m_pPath ) {
+        m_pPath->m_bPathPropertiesBlink = false;
+    }
+    if(pP->m_sTypeString == wxT("PIL")) {
+        m_pPIL = (PIL *)pP;
+        m_pPath = m_pPIL;
+    } else return;
+
+    m_pPath->m_bPathPropertiesBlink = true;
+
+    m_textCtrlName->SetValue( m_pPath->m_PathNameString );
+
+    m_textCtrlName->SetFocus();
+    m_listCtrlPILList->DeleteAllItems();
+
+    InitializeList();
+
+    if( m_pPath )
+        m_listCtrlPILList->Show();
+
+    Refresh( false );
+
+}
+
+
+

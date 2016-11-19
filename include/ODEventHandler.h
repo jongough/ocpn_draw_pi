@@ -67,10 +67,12 @@ class ODEventHandler : public wxEvtHandler
         void SetBoundaryList( std::list<Boundary*> pBoundaryList );
         void SetPoint ( ODPoint *point );
         void SetPoint ( TextPoint *point );
+        void SetPIL( int iPIL );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
         void DeletePath( void );
         void DeletePaths( void );
+        void DeletePIL( void );
         
     protected:
     private:
@@ -88,6 +90,7 @@ class ODEventHandler : public wxEvtHandler
         GZ              *m_pGZ;
         PIL             *m_pPIL;
         std::list<Boundary*> m_pBoundaryList;
+        int             m_iFoundPIL;
 
         DECLARE_EVENT_TABLE();
 };

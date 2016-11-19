@@ -23,8 +23,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef EBLPROP_H
-#define EBLPROP_H
+#ifndef PILPROP_H
+#define PILPROP_H
 
 #ifndef  WX_PRECOMP
   #include "wx/wx.h"
@@ -33,24 +33,25 @@
 //#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
-class EBL;
+class PIL;
+class ODPath;
 
-class EBLProp : public ODPathPropertiesDialogImpl
+class PILProp : public ODPathPropertiesDialogImpl
 {
     public:
-        EBLProp();
-        EBLProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
+        PILProp();
+        PILProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
                         const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
-        virtual ~EBLProp();
+        virtual ~PILProp();
 
-        void OnRotateWithBoat( wxCommandEvent& event );
-        void OnFixedEndPosition( wxCommandEvent& event );
-        void OnPILCheckbox( wxCommandEvent& event );
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
-        bool UpdateProperties( EBL *pInEBL );
+        bool UpdateProperties( PIL *pInPIL );
         bool UpdateProperties( void );
+        void SetPath( ODPath *pP );
+        void InitializeList( void );
         bool SaveChanges( void );
+        void SetPointsListHeadings( void );
         
         void OnOK( wxCommandEvent& event );
         void OnClose( wxCloseEvent& event );
@@ -65,13 +66,13 @@ class EBLProp : public ODPathPropertiesDialogImpl
     protected:
         
     private:
-        double  m_dODEBLAngleValidator;
-        double  m_dODEBLLengthValidator;
-        bool    m_bLockEBLAngle;
-        bool    m_bLockEBLLength;
+        double  m_dODPILAngleValidator;
+        double  m_dODPILLengthValidator;
+        bool    m_bLockPILAngle;
+        bool    m_bLockPILLength;
         bool    m_bSetLocale;
         bool    m_bLockUpdate;
         
 };
 
-#endif // EBLPROP_H
+#endif // PILPROP_H

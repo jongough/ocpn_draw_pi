@@ -38,6 +38,9 @@ src/ODToolbarDef.cpp
 src/ODToolbarImpl.cpp
 src/ODUtils.cpp
 src/PIL.cpp
+src/PILProp.cpp
+src/PILPropertiesDialogDef.cpp
+src/PILPropertiesDialogImpl.cpp
 src/TextPoint.cpp
 include/ocpn_draw_pi.h
 include/Boundary.h
@@ -80,4 +83,7 @@ include/ODToolbarImpl.h
 include/ODUtils.h
 include/ODvector2D.h
 include/PIL.h
+include/PILPropertiesDialogDef.h
+include/PILPropertiesDialogImpl.h
+include/PILProp.h
 include/TextPoint.h

@@ -176,6 +176,9 @@ enum
     ID_DR_MENU_UPDATE_INITIAL_CONDITIONS,
     ID_BOUNDARY_LIST_KEEP_MENU,
     ID_BOUNDARY_LIST_DELETE_MENU,
+    ID_PIL_MENU_ADD_INDEX_LINE,
+    ID_PIL_MENU_MOVE_INDEX_LINE,
+    ID_PIL_MENU_DELETE_INDEX_LINE,
 
     ID_UNDO,
     ID_REDO,
@@ -399,6 +402,7 @@ public:
     PIL         *m_pMousePIL;
     ODPoint     *m_pEBLBoatPoint;
     ODPath        *m_pSelectedPath;
+    int         m_iPILId;
     ODPoint   *m_pFoundODPoint;
     ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;

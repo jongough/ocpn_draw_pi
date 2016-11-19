@@ -25,19 +25,18 @@ PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id,
 	fgSizerDescription->SetFlexibleDirection( wxBOTH );
 	fgSizerDescription->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
+	m_staticTexrID = new wxStaticText( this, wxID_ANY, wxT("ID Num"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTexrID->Wrap( -1 );
+	fgSizerDescription->Add( m_staticTexrID, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlIDNum = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
+	fgSizerDescription->Add( m_textCtrlIDNum, 0, wxALL, 5 );
+	
 	m_staticTextName = new wxStaticText( this, wxID_ANY, wxT("Name"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextName->Wrap( -1 );
 	fgSizerDescription->Add( m_staticTextName, 0, wxALL, 5 );
 	
 	m_textCtrlName = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	#ifdef __WXGTK__
-	if ( !m_textCtrlName->HasFlag( wxTE_MULTILINE ) )
-	{
-	m_textCtrlName->SetMaxLength(  );
-	}
-	#else
-	m_textCtrlName->SetMaxLength(  );
-	#endif
 	fgSizerDescription->Add( m_textCtrlName, 0, wxALL|wxEXPAND, 5 );
 	
 	m_staticTextDesctiption = new wxStaticText( this, wxID_ANY, wxT("Description"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -45,15 +44,14 @@ PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id,
 	fgSizerDescription->Add( m_staticTextDesctiption, 0, wxALL, 5 );
 	
 	m_textCtrlDesctription = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	#ifdef __WXGTK__
-	if ( !m_textCtrlDesctription->HasFlag( wxTE_MULTILINE ) )
-	{
-	m_textCtrlDesctription->SetMaxLength(  );
-	}
-	#else
-	m_textCtrlDesctription->SetMaxLength(  );
-	#endif
 	fgSizerDescription->Add( m_textCtrlDesctription, 0, wxALL|wxEXPAND, 5 );
+	
+	m_staticTextOffset = new wxStaticText( this, wxID_ANY, wxT("Offset (+ Stbd/- Port)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOffset->Wrap( -1 );
+	fgSizerDescription->Add( m_staticTextOffset, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_textCtrlOffset = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerDescription->Add( m_textCtrlOffset, 0, wxALL, 5 );
 	
 	m_checkBoxActive = new wxCheckBox( this, wxID_ANY, wxT("Active"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_checkBoxActive->SetValue(true); 
@@ -74,8 +72,8 @@ PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id,
 	m_staticTextLineColour->Wrap( -1 );
 	fgSizer3->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerActiveLineColour = new wxColourPickerCtrl( this, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer3->Add( m_colourPickerActiveLineColour, 0, wxALL, 5 );
+	m_colourPickerLineColour = new wxColourPickerCtrl( this, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer3->Add( m_colourPickerLineColour, 0, wxALL, 5 );
 	
 	m_staticTextLineStyle = new wxStaticText( this, wxID_ANY, wxT("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineStyle->Wrap( -1 );
@@ -119,7 +117,8 @@ PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id,
 	this->Centre( wxBOTH );
 	
 	// Connect Events
-	m_colourPickerActiveLineColour->Connect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PILPropertiesDialogDef::OnColourChangedLineColour ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( PILPropertiesDialogDef::OnClose ) );
+	m_colourPickerLineColour->Connect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PILPropertiesDialogDef::OnColourChangedLineColour ), NULL, this );
 	m_choiceLineStyle->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PILPropertiesDialogDef::OnChoiceLineStyle ), NULL, this );
 	m_choiceLineWidth->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PILPropertiesDialogDef::OnChoiceLineWidth ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PILPropertiesDialogDef::OnOK ), NULL, this );
@@ -129,7 +128,8 @@ PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id,
 PILPropertiesDialogDef::~PILPropertiesDialogDef()
 {
 	// Disconnect Events
-	m_colourPickerActiveLineColour->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PILPropertiesDialogDef::OnColourChangedLineColour ), NULL, this );
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( PILPropertiesDialogDef::OnClose ) );
+	m_colourPickerLineColour->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( PILPropertiesDialogDef::OnColourChangedLineColour ), NULL, this );
 	m_choiceLineStyle->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PILPropertiesDialogDef::OnChoiceLineStyle ), NULL, this );
 	m_choiceLineWidth->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PILPropertiesDialogDef::OnChoiceLineWidth ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PILPropertiesDialogDef::OnOK ), NULL, this );

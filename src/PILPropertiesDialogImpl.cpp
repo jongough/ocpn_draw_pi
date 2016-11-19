@@ -30,9 +30,12 @@
 #endif //precompiled headers
 
 
-#include "PILPropertiesImpl.h"
+#include "PILPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
+#include "PIL.h"
+#include "PILProp.h"
+#include "ODSelect.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/window.h>
@@ -44,21 +47,25 @@
 
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern ODConfig             *g_pODConfig;
+extern PILProp              *g_pPILPropDialog;
+extern ODSelect             *g_pODSelect;
 
 
-PILPropertiesImpl::PILPropertiesImpl( wxWindow* parent )
+
+PILPropertiesDialogImpl::PILPropertiesDialogImpl( wxWindow* parent )
 :
-PILPropertiesDialog( parent )
+PILPropertiesDialogDef( parent )
 {
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
+
+    wxFloatingPointValidator<double> dPILOffset(3, &m_dPILOffsetValidator, wxNUM_VAL_DEFAULT);
+
+    m_textCtrlOffset->SetValidator( dPILOffset );
 #endif // wxCHECK_VERSION(3,0,0)
 
     DimeWindow( this );
 
-#if wxCHECK_VERSION(3,0,0)
-    SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
-#endif // wxCHECK_VERSION(3,0,0)
 
     this->GetSizer()->Fit( this );
     this->Layout();
@@ -66,7 +73,80 @@ PILPropertiesDialog( parent )
 
 }
 
-ODPointPropertiesImpl::~ODPointPropertiesImpl()
+PILPropertiesDialogImpl::~PILPropertiesDialogImpl()
 {
+}
+
+void PILPropertiesDialogImpl::SaveChanges()
+{
+    std::list<PILLINE>::iterator it = m_pPIL->PilLineList.begin();
+    while(it != m_pPIL->PilLineList.end()) {
+        if(it->iID == m_iID) break;
+        it++;
+    }
+    it->sName = m_textCtrlName->GetValue();
+    it->sDescription = m_textCtrlDesctription->GetValue();
+    it->dOffset = wxAtof(m_textCtrlOffset->GetValue());
+    it->wxcActiveColour = m_colourPickerLineColour->GetColour();
+    it->dStyle = ::StyleValues[m_choiceLineStyle->GetSelection()];
+    it->dWidth = ::WidthValues[m_choiceLineWidth->GetSelection()];
+
+    if(g_pPILPropDialog)
+        g_pPILPropDialog->UpdateProperties(m_pPIL);
+
+    m_pPIL->CentreOnBoat(true);;
+
+    g_pODConfig->UpdatePath(m_pPIL);
+}
+
+void PILPropertiesDialogImpl:: UpdateProperties( PIL *pPIL, int iID )
+{
+    m_pPIL = pPIL;
+    m_iID = iID;
+    std::list<PILLINE>::iterator it = pPIL->PilLineList.begin();
+    while(it != pPIL->PilLineList.end()) {
+        if(it->iID == iID) break;
+        it++;
+    }
+    m_textCtrlIDNum->SetValue(wxString::Format("%i", iID));
+    m_textCtrlName->Clear();
+    m_textCtrlName->AppendText(it->sName);
+    m_textCtrlDesctription->Clear();
+    m_textCtrlDesctription->AppendText(it->sDescription);
+    m_textCtrlOffset->Clear();
+    m_dPILOffsetValidator = it->dOffset;
+    m_colourPickerLineColour->SetColour(it->wxcActiveColour);
+    for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
+        if( it->dStyle == ::StyleValues[i] ) {
+            m_choiceLineStyle->Select( i );
+            break;
+        }
+    }
+    for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
+        if( it->dWidth == ::WidthValues[i] ) {
+            m_choiceLineWidth->Select( i );
+            break;
+        }
+    }
+
+}
+
+void PILPropertiesDialogImpl::OnOK( wxCommandEvent& event )
+{
+    SaveChanges();
+    Hide();
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PILPropertiesDialogImpl::OnClose( wxCloseEvent& event )
+{
+    wxCommandEvent nullEvent;
+    OnCancel( nullEvent );
+}
+
+void PILPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
+{
+    Hide();
+    RequestRefresh( GetOCPNCanvasWindow() );
 }
 

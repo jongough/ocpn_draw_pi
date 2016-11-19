@@ -51,7 +51,7 @@ class EBL : public ODPath
         bool        m_bFixedEndPosition;
         int         m_iPersistenceType;
         bool        m_bVRM;
-        bool        m_bPIL;
+        bool        m_bPerpLine;
         bool        m_bCentreOnBoat;
         bool        m_bRotateWithBoat;
         int         m_iMaintainWith;
@@ -67,6 +67,7 @@ class EBL : public ODPath
     private:
         void MaintainWith( void );
         wxColour    m_wxcLineColour;
+        void        RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
 };
 
 WX_DECLARE_LIST(EBL, EBLList); // establish class EBL list member

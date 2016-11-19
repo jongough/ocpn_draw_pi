@@ -31,6 +31,10 @@ struct PILLINE {
     wxString    sName;
     wxString    sDescription;
     double      dOffset;
+    wxColour    wxcActiveColour;
+    wxColour    wxcInActiveColour;
+    double      dStyle;
+    double      dWidth;
 };
 
 
@@ -39,16 +43,25 @@ class PIL :  public EBL
     public:
         PIL();
         virtual ~PIL();
-        int    AddLine(wxString sName, wxString sDescription, double dOffset);
+        int     AddLine(wxString sName, wxString sDescription, double dOffset);
+        void    AddLine(PILLINE PilLine);
         void    DelLine(int iID);
         void    ChangeOffset(int iID, double dOffset);
         void    Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void    DrawGL( PlugIn_ViewPort &piVP );
         void    DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
-        
-    protected:
+        void    RedrawPIL(void);
+        void    CentreOnBoat( bool bMoveEndPoint );
         std::list<PILLINE> PilLineList;
-    
+        void    MovePILLine(double dLat, double dLon, int iPILId);
+
+    protected:
+
+    private:
+        void    RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
+        void    CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint );
+        int     m_iStyleOffsetLine;
+        int     m_iWidthOffsetLine;
 };
 
 WX_DECLARE_LIST(PIL, PILList); // establish class PIL list member

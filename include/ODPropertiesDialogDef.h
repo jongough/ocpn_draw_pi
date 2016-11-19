@@ -153,7 +153,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxEBLShowArrow;
 		wxCheckBox* m_checkBoxShowVRM;
-		wxCheckBox* m_checkBoxShowPIL;
+		wxCheckBox* m_checkBoxShowPerpLine;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxPanel* m_panelDR;
 		wxStaticText* m_staticTextActiveDRLineColour;
@@ -232,11 +232,11 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextPILActiveCentreLineColour;
 		wxColourPickerCtrl* m_colourPickerPILActiveCentreLineColour;
 		wxStaticText* m_staticTextInactiveCentreLineColour;
-		wxColourPickerCtrl* m_colourPickerPILInactiveCentreLineColour;
+		wxColourPickerCtrl* m_colourPickerPILInActiveCentreLineColour;
 		wxStaticText* m_staticTextPILActiveOffsetLineColour;
 		wxColourPickerCtrl* m_colourPickerPILActiveOffsetLineColour;
 		wxStaticText* m_staticTextPILInactiveOffsetLineColour;
-		wxColourPickerCtrl* m_colourPickerPILInactiveOffsetLineColour;
+		wxColourPickerCtrl* m_colourPickerPILInActiveOffsetLineColour;
 		wxStaticText* m_staticTextPILCentreLineWidth;
 		wxChoice* m_choicePILCentreLineWidth;
 		wxStaticText* m_staticTextPILCentreLineStyle;

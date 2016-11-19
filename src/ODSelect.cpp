@@ -86,18 +86,22 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
 }
 
 bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
-        ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath )
+        ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath, int iUserData )
 {
     SelectItem *pSelItem = new SelectItem;
     pSelItem->m_slat = slat1;
     pSelItem->m_slon = slon1;
     pSelItem->m_slat2 = slat2;
     pSelItem->m_slon2 = slon2;
-    pSelItem->m_seltype = SELTYPE_PATHSEGMENT;
+    if(iUserData)
+        pSelItem->m_seltype = SELTYPE_PIL;
+    else
+        pSelItem->m_seltype = SELTYPE_PATHSEGMENT;
     pSelItem->m_bIsSelected = false;
     pSelItem->m_pData1 = pODPointAdd1;
     pSelItem->m_pData2 = pODPointAdd2;
     pSelItem->m_pData3 = pPath;
+    pSelItem->SetUserData(iUserData);
 
     if( pPath->m_bIsInLayer ) pSelectList->Append( pSelItem );
     else
@@ -115,7 +119,7 @@ bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
 
     while( node ) {
         pFindSel = node->GetData();
-        if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT ) {
+        if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT || pFindSel->m_seltype == SELTYPE_PIL ) {
 
             if( (ODPath *) pFindSel->m_pData3 == pr ) {
                 delete pFindSel;
@@ -133,6 +137,35 @@ bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
 
     return true;
 }
+
+bool ODSelect::DeleteSelectablePathSegment( ODPath *pr, int iUserData )
+{
+    SelectItem *pFindSel;
+
+    //    Iterate on the select list
+    wxSelectableItemListNode *node = pSelectList->GetFirst();
+
+    while( node ) {
+        pFindSel = node->GetData();
+        if( pFindSel->m_seltype == SELTYPE_PIL ) {
+
+            if( (ODPath *) pFindSel->m_pData3 == pr && pFindSel->GetUserData() == iUserData) {
+                delete pFindSel;
+                pSelectList->DeleteNode( node );   //delete node;
+
+                node = pSelectList->GetFirst();     // reset the top node
+
+                goto got_next_outer_node;
+            }
+        }
+
+        node = node->GetNext();
+        got_next_outer_node: continue;
+    }
+
+    return true;
+}
+
 
 bool ODSelect::DeleteAllSelectableODPoints( ODPath *pr )
 {
@@ -456,6 +489,13 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
 
                     if( IsSegmentSelected( a, b, c, d, slat, slon ) ) return pFindSel;
                     break;
+                case SELTYPE_PIL:
+                    a = pFindSel->m_slat;
+                    b = pFindSel->m_slat2;
+                    c = pFindSel->m_slon;
+                    d = pFindSel->m_slon2;
+
+                    if( IsSegmentSelected( a, b, c, d, slat, slon) ) return pFindSel;
                 default:
                     break;
             }
@@ -495,26 +535,22 @@ SelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fsel
 
         while( node ) {
             pFindSel = node->GetData();
-            if( pFindSel->m_seltype == fseltype ) {
-                switch( fseltype ){
-                    case SELTYPE_ODPOINT:
-                        if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
-                                && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) {
-                            ret_list.Append( pFindSel );
-                        }
-                        break;
-                    case SELTYPE_PATHSEGMENT:
-                        a = pFindSel->m_slat;
-                        b = pFindSel->m_slat2;
-                        c = pFindSel->m_slon;
-                        d = pFindSel->m_slon2;
+            if( pFindSel->m_seltype & fseltype ) {
+                if(fseltype & SELTYPE_ODPOINT) {
+                    if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
+                        && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) {
+                        ret_list.Append( pFindSel );
+                    }
+                } else if(fseltype & SELTYPE_PATHSEGMENT) {
+                    a = pFindSel->m_slat;
+                    b = pFindSel->m_slat2;
+                    c = pFindSel->m_slon;
+                    d = pFindSel->m_slon2;
 
-                        if( IsSegmentSelected( a, b, c, d, slat, slon ) ) 
-                            ret_list.Append( pFindSel );
-
-                        break;
-                    default:
-                        break;
+                    if( IsSegmentSelected( a, b, c, d, slat, slon ) )
+                        ret_list.Append( pFindSel );
+                } else if(fseltype & SELTYPE_PIL) {
+                    ret_list.Append( pFindSel );
                 }
             }
 

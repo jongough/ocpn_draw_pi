@@ -46,6 +46,7 @@
 #include "PIL.h"
 #include "GZMan.h"
 #include "GZProp.h"
+#include "PILProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
 #include "pathmanagerdialog.h"
@@ -66,6 +67,7 @@
 #include "version.h"
 #include "SelectItem.h"
 #include "TextPoint.h"
+#include "PILPropertiesDialogImpl.h"
 
 #include "chcanv.h"
 #include "Layer.h"
@@ -126,9 +128,11 @@ BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
 DRProp                  *g_pDRPropDialog;
 GZProp                  *g_pGZPropDialog;
+PILProp                 *g_pPILPropDialog;
 PathManagerDialog       *g_pPathManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
+PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 ODDRDialogImpl          *g_pODDRDialog;
 PlugInManager           *g_OD_pi_manager;
 BoundaryList            *g_pBoundaryList;
@@ -139,6 +143,7 @@ PILList                 *g_pPILList;
 ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
+int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
 SelectItem              *g_pRolloverPoint;
@@ -168,7 +173,7 @@ bool        g_bEBLFixedEndPosition;
 int         g_iEBLPersistenceType;
 bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
-bool        g_bEBLPIL;
+bool        g_bEBLPerpLine;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
 bool        g_bEBLRotateWithBoat;
@@ -190,7 +195,6 @@ int         g_iPILPersistenceType;
 wxString    g_sDRPointIconName;
 wxColour    g_colourDRLineColour;
 wxColour    g_colourInActiveDRLineColour;
-int         g_DRPersistenceType;
 bool        g_bDRShowArrow;
 int         g_DRLineWidth;
 int         g_DRLineStyle;
@@ -634,6 +638,8 @@ int ocpn_draw_pi::Init(void)
     g_pBoundaryPropDialog = NULL;
     g_pEBLPropDialog = NULL;
     g_pDRPropDialog = NULL;
+    g_pPILPropDialog = NULL;
+    g_PILIndexLinePropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
     
@@ -889,6 +895,18 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
             GZnode = GZnode->GetNext();
         }
         
+        wxPILListNode *PILnode = g_pPILList->GetFirst();
+        for(size_t i = 0; i < g_pPILList->GetCount(); i++) {
+            PIL *pil = (PIL *)PILnode->GetData();
+            if(pil->m_bCentreOnBoat)  {
+                bool l_bSaveUpdatesState = pil->m_bSaveUpdates;
+                pil->m_bSaveUpdates = false;
+                pil->CentreOnBoat(true);
+                pil->m_bSaveUpdates = l_bSaveUpdatesState;
+            }
+            PILnode = PILnode->GetNext();
+        }
+
     }
 }
 
@@ -1178,11 +1196,23 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
         pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
-        pConf->Write( wxS( "DefaultEBLPIL" ), g_bEBLPIL );
+        pConf->Write( wxS( "DefaultEBLPerpLine" ), g_bEBLPerpLine );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
         pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
         pConf->Write( wxS( "DefaultEBLMaintainWith" ), g_iEBLMaintainWith );
+        pConf->Write( wxS( "DefaultPILStartIcon" ), g_sPILStartIconName );
+        pConf->Write( wxS( "DefaultPILEndIcon" ), g_sPILEndIconName );
+        pConf->Write( wxS( "DefaultPILActiveCentreLineColour" ), g_colourPILActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILInActiveCentreLineColour" ), g_colourPILInActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILActiveOffsetLineColour" ), g_colourPILActiveOffsetLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILInActiveOffsetLineColour" ), g_colourPILInActiveOffsetLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILCentreLineWidth" ), g_PILCentreLineWidth );
+        pConf->Write( wxS( "DefaultPILCentreLineStyle" ), g_PILCentreLineStyle );
+        pConf->Write( wxS( "DefaultPILOffsetLineWidth" ), g_PILOffsetLineWidth );
+        pConf->Write( wxS( "DefaultPILOffsetLineStyle" ), g_PILOffsetLineStyle );
+        pConf->Write( wxS( "DefaultPILPersistenceType" ), g_iPILPersistenceType );
+        pConf->Write( wxS( "DefaultPILOffset"), g_dPILOffset );
         pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
         pConf->Write( wxS( "DefaultShowDRPointRangeRings"), g_bDRPointShowRangeRings );
         pConf->Write( wxS( "DefaultDRPointRangeRingsNumber" ), g_iDRPointRangeRingsNumber );
@@ -1357,11 +1387,28 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
-        pConf->Read( wxS( "DefaultEBLPIL" ), &g_bEBLPIL, false );
+        pConf->Read( wxS( "DefaultEBLPerpLine" ), &g_bEBLPerpLine, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_iEBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
         pConf->Read( wxS( "DefaultEBLRotateWithBoat" ), &g_bEBLRotateWithBoat, false );
         pConf->Read( wxS( "DefaultEBLMaintainWith" ), &g_iEBLMaintainWith, ID_MAINTAIN_WITH_HEADING );
+
+        pConf->Read( wxS( "DefaultPILEndIcon" ), &g_sPILEndIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultPILStartIcon" ), &g_sPILStartIconName, wxS("Circle") );
+        pConf->Read( wxS( "DefaultPILActiveCentreLineColour" ), &l_wxsColour, wxS( "RED" ) );
+        g_colourPILActiveCentreLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILInActiveCentreLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourPILInActiveCentreLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILActiveOffsetLineColour" ), &l_wxsColour, wxS( "Red" ) );
+        g_colourPILActiveOffsetLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILInActiveOffsetLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourPILInActiveOffsetLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILCentreLineWidth" ), &g_PILCentreLineWidth, 2 );
+        pConf->Read( wxS( "DefaultPILCentreLineStyle" ), &g_PILCentreLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLineWidth" ), &g_PILOffsetLineWidth, 2 );
+        pConf->Read( wxS( "DefaultPILOffsetLineStyle" ), &g_PILOffsetLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILPersistenceType" ), &g_iPILPersistenceType, 0 );
+        pConf->Read( wxS( "DefaultPILOffset"), &g_dPILOffset, 0.5 );
         pConf->Read( wxS( "DefaultDRPointIcon" ), &g_sDRPointIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultShowDRPointRangeRings"), &g_bDRPointShowRangeRings, false );
         pConf->Read( wxS( "DefaultDRPointRangeRingsNumber" ), &g_iDRPointRangeRingsNumber, 0 );
@@ -1753,13 +1800,20 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     if ( event.LeftDClick() ) {
         FindSelectedObject();
-        if( m_pSelectedPath ) {
+        if( m_pSelectedPath && m_seltype == SELTYPE_PATHSEGMENT) {
             if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
                 g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
             
             DimeWindow( g_pPathManagerDialog );
             g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
+            bret = true;
+        } else if(m_pSelectedPath && m_seltype == SELTYPE_PIL) {
+            if( NULL == g_PILIndexLinePropDialog)
+                g_PILIndexLinePropDialog = new PILPropertiesDialogImpl( m_parent_window );
+            DimeWindow( g_PILIndexLinePropDialog );
+            g_PILIndexLinePropDialog->UpdateProperties( (PIL *)m_pSelectedPath, m_iPILId );
+            g_PILIndexLinePropDialog->Show();
             bret = true;
         } else if( m_pFoundODPoint ) {
             if( NULL == g_pODPointPropDialog )
@@ -1845,6 +1899,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedEBL = NULL;
                     m_pSelectedDR = NULL;
                     m_pSelectedGZ = NULL;
+                    m_pSelectedPIL = NULL;
                     if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
                         m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
@@ -1853,12 +1908,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pSelectedDR = (DR *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
                         m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                    else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
+                        m_pSelectedPIL = (PIL *)m_pSelectedPath;
                     m_bPathEditing = true;
                     if(m_seltype & SELTYPE_ODPOINT) {
                         m_iEditMode = ID_PATH_MENU_MOVE_POINT;
                         m_pCurrentCursor = m_pCursorCross;
                     }
-                    else {
+                    else if(m_seltype & SELTYPE_PIL) {
+                        m_iEditMode = ID_PIL_MENU_MOVE_INDEX_LINE;
+                        m_pCurrentCursor = m_pCursorCross;
+                        m_PathMove_cursor_start_lat = m_cursor_lat;
+                        m_PathMove_cursor_start_lon = m_cursor_lon;
+                    } else {
                         m_iEditMode = ID_PATH_MENU_MOVE_PATH;
                         m_pCurrentCursor = m_pCursorCross;
                         m_PathMove_cursor_start_lat = m_cursor_lat;
@@ -2057,14 +2119,19 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pFoundODPoint->m_lat = m_cursor_lat;
                         m_pFoundODPoint->m_lon = m_cursor_lon;
                     }
-                    if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("EBL")) {
-                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                        m_pSelectedEBL->ResizeVRM( );
+                    if(m_pSelectedPath) {
+                        if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                            m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                            m_pSelectedEBL->ResizeVRM( );
+                        } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                            m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                            m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
+                        } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                            m_pSelectedPIL = (PIL *)m_pSelectedPath;
+                            m_pSelectedPIL->RedrawPIL( );
+                        }
                     }
-                    if(m_pSelectedPath && m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
-                        m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
-                    }
-                    
+
                     if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
                     m_pCurrentCursor = m_pCursorCross;
@@ -2091,6 +2158,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bRefresh = TRUE;
                 bret = FALSE;
                 event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+            } else if(m_bPathEditing && m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE) {
+                m_pSelectedPIL->MovePILLine(m_cursor_lat, m_cursor_lon, m_iPILId);
+                event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                bret = FALSE;
             } else if(m_bEBLEditing) {
                 if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
                 else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
@@ -2250,6 +2321,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
+                g_ODEventHandler->SetPIL( m_iPILId );
                 g_ODEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
                 g_ODEventHandler->PopupMenu( m_seltype );
                 
@@ -2296,11 +2368,14 @@ void ocpn_draw_pi::FindSelectedObject()
     slat = m_cursor_lat;
     slon = m_cursor_lon;
     m_seltype = 0;
+    m_iPILId = 0;
     
     SelectItem *pFindPP;
     SelectItem *pFindPathSeg;
+    SelectItem *pFindPILIndex;
     pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_ODPOINT );
     pFindPathSeg = g_pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
+    pFindPILIndex = g_pODSelect->FindSelection( slat, slon, SELTYPE_PIL );
     // start           
     m_pFoundODPoint = NULL;
     m_pSelectedPath = NULL;
@@ -2395,8 +2470,7 @@ void ocpn_draw_pi::FindSelectedObject()
         if( m_pFoundODPoint ) m_pFoundODPoint->m_bPtIsSelected = true;
     }
     
-    if( pFindPathSeg )                  // there is at least one select item
-    {
+    if( pFindPathSeg ) {                 // there is at least one select item
         SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
                                                                      SELTYPE_PATHSEGMENT );
         
@@ -2425,6 +2499,12 @@ void ocpn_draw_pi::FindSelectedObject()
             m_seltype |= SELTYPE_PATHSEGMENT;
         }
         
+    }
+
+    if(pFindPILIndex) {
+        m_seltype |= SELTYPE_PIL;
+        m_pSelectedPath = (PIL *)pFindPILIndex->m_pData3;
+        m_iPILId = pFindPILIndex->GetUserData();  //get Id of particular PIL being selected
     }
     
 }
@@ -3415,14 +3495,13 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
         }
     }
 
+    m_pMousePIL->RebuildGUIDList();
+    m_pMousePIL->AddLine( _T("Initial"), _T(""), g_dPILOffset);
 
     if(m_pMousePIL->m_iPersistenceType == ID_PERSISTENT || m_pMousePIL->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMousePIL, -1 );    // don't save over restart
-        g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
+    g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMousePIL );
-
-    m_pMousePIL->RebuildGUIDList();
-    m_pMousePIL->AddLine( _T("Initial"), _T(""), g_dPILOffset);
 
     nPIL_State++;
 
@@ -3462,6 +3541,8 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         EBL *pEBLDraw = NULL;
         DR *pDRDraw = NULL;
         GZ *pGZDraw = NULL;
+        PIL *pPILDraw = NULL;
+        
         if(pTempPath->m_sTypeString == wxT("Boundary")) {
             pBoundaryDraw = (Boundary *)pTempPath;
             pPathDraw = pBoundaryDraw;
@@ -3474,6 +3555,9 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
             pGZDraw = (GZ *)pTempPath;
             pPathDraw = pGZDraw;
+        } else if(pTempPath->m_sTypeString == wxT("PIL")) {
+            pPILDraw = (PIL *)pTempPath;
+            pPathDraw = pPILDraw;
         }
         
         /* defer rendering active routes until later */ 

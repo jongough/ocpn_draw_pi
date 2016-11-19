@@ -62,6 +62,7 @@ extern PathMan                      *g_pPathMan;
 
 extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 extern ODPath                       *g_PathToEdit;
+extern int                          g_PILToEdit;
 extern PointMan                     *g_pODPointMan;
 extern bool                         g_bShowMag;
 extern bool                         g_bConfirmObjectDelete;
@@ -78,6 +79,7 @@ extern PathList                     *g_pPathList;
 extern int                          g_BoundaryLineWidth;
 extern int                          g_BoundaryLineStyle;
 extern wxString                     g_sODPointIconName;
+extern double                       g_dPILOffset;
 
 
 // Event Handler implementation 
@@ -104,6 +106,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     m_pEBL = NULL;
     m_pDR = NULL;
     m_pGZ = NULL;
+    m_pPIL = NULL;
     m_pFoundTextPoint = NULL;
     g_pRolloverPoint = NULL;
     
@@ -140,6 +143,7 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     m_pEBL = NULL;
     m_pDR = NULL;
     m_pGZ = NULL;
+    m_pPIL = NULL;
     m_pFoundTextPoint = NULL;
     g_pRolloverPoint = NULL;
     
@@ -171,6 +175,7 @@ void ODEventHandler::SetPath( ODPath *path )
     m_pEBL = NULL;
     m_pDR = NULL;
     m_pGZ = NULL;
+    m_pPIL = NULL;
     m_pSelectedPath = NULL;
     if(path) {
         if(path->m_sTypeString == wxT("Boundary")) {
@@ -206,6 +211,11 @@ void ODEventHandler::SetPoint( ODPoint* point )
 void ODEventHandler::SetPoint( TextPoint* point )
 {
     m_pFoundODPoint = point;
+}
+
+void ODEventHandler::SetPIL( int iPILL )
+{
+    m_iFoundPIL = iPILL;
 }
 
 void ODEventHandler::SetCanvas( ChartCanvas* canvas )
@@ -251,7 +261,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     
     if( !g_pRolloverPathSeg && !g_pRolloverPoint ) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT );
+        SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
         
         wxSelectableItemListNode *node = SelList.GetFirst();
         if(node) {
@@ -316,15 +326,30 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     if( pp->m_PathNameString.IsEmpty() ) s.Append( _("(unnamed)") );
                     else
                         s.Append( pp->m_PathNameString );
+                    s << _T("\n");
                     
                     if(pp->m_sTypeString != wxT("Guard Zone")) {
-                        if(pp->m_sTypeString == _T("PIL")) {
-                            s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
+                        if(pp->m_sTypeString != _T("PIL")) {
+                            s << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
                             << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
                             << _(" to ") << segShow_point_b->GetName()
                             << _T("\n");
+                        } else {
+                            PIL *l_pPIL = (PIL *)pp;
+                            std::list<PILLINE>::iterator it = l_pPIL->PilLineList.begin();
+                            while(it != l_pPIL->PilLineList.end()) {
+                                if(it->iID == pFindSel->GetUserData()) break;
+                                it++;
+                            }
+                            if(it != l_pPIL->PilLineList.end()) {
+                                s << _("Name: ") << it->sName << _T("\n");
+                                s << _("ID: ") << it->iID << _T("\n");
+                                s << _("Offset: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( it->dOffset ) << _T("\n");
+                                brgFrom = l_pPIL->m_dEBLAngle;
+                            }
+                            s << _("Bearing: ");
                         }
-                        if(pp->m_sTypeString == wxT("EBL") || pp->m_sTypeString == wxT("PIL")) {
+                        if(pp->m_sTypeString == wxT("EBL")) {
                             s << _("From: ");
                             if( g_bShowMag )
                                 s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
@@ -343,24 +368,26 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                                 s << wxString::Format( wxString("%03d°  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );
                         }
                         
-                        s << g_ocpn_draw_pi->FormatDistanceAdaptive( dist );
-                        
-                        // Compute and display cumulative distance from route start point to current
-                        // leg end point.
-                        
-                        if( segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
-                            wxODPointListNode *node = (pp->m_pODPointList)->GetFirst()->GetNext();
-                            ODPoint *pop;
-                            float dist_to_endleg = 0;
-                            wxString t;
-                            
-                            while( node ) {
-                                pop = node->GetData();
-                                dist_to_endleg += pop->m_seg_len;
-                                if( pop->IsSame( segShow_point_a ) ) break;
-                                node = node->GetNext();
+                        if(pp->m_sTypeString != _T("PIL")) {
+                            s << g_ocpn_draw_pi->FormatDistanceAdaptive( dist );
+
+                            // Compute and display cumulative distance from route start point to current
+                            // leg end point.
+
+                            if( segShow_point_a && segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
+                                wxODPointListNode *node = (pp->m_pODPointList)->GetFirst()->GetNext();
+                                ODPoint *pop;
+                                float dist_to_endleg = 0;
+                                wxString t;
+
+                                while( node ) {
+                                    pop = node->GetData();
+                                    dist_to_endleg += pop->m_seg_len;
+                                    if( pop->IsSame( segShow_point_a ) ) break;
+                                    node = node->GetNext();
+                                }
+                                s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
                             }
-                            s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
                         }
                     }
                     g_pODRolloverWin->SetString( s );
@@ -596,6 +623,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sTypeLong = _("Are you sure you want to delete this DR?");
                     sTypeShort = _("OCPN Draw DR Delete");
                 }
+                else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                    sTypeLong = _("Are you sure you want to delete this Parallel Index Line Group?");
+                    sTypeShort = _("OCPN Draw PIL Delete");
+                }
 #ifdef __WXOSX__
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT| wxICON_QUESTION );
 #else
@@ -606,6 +637,36 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             if( dlg_return == wxID_YES ) {
                 DeletePath();
             }
+            break;
+        }
+        case ID_PIL_MENU_DELETE_INDEX_LINE: {
+            dlg_return = wxID_YES;
+            if( g_bConfirmObjectDelete ) {
+                wxString sTypeLong;
+                wxString sTypeShort;
+                sTypeLong = _("Are you sure you want to delete this Parallel Index Line?");
+                sTypeShort = _("OCPN Draw Parallel Index Line Delete");
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT| wxICON_QUESTION );
+#else
+                dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas,  sTypeLong, sTypeShort, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
+            }
+
+            if( dlg_return == wxID_YES ) {
+                DeletePIL();
+
+            }
+            break;
+        }
+        case ID_PIL_MENU_ADD_INDEX_LINE: {
+            m_pPIL->AddLine( _T(""), _T(""), g_dPILOffset );
+            break;
+        }
+        case ID_PIL_MENU_MOVE_INDEX_LINE: {
+            g_PathToEdit = m_pSelectedPath;
+            g_PILToEdit = m_iFoundPIL;
+            g_ocpn_draw_pi->m_bPathEditing = TRUE;
             break;
         }
         case ID_PATH_MENU_DEACTIVATE: {
@@ -953,6 +1014,7 @@ void ODEventHandler::PopupMenu( int seltype )
     wxMenu* menuODPoint = NULL;
     wxMenu* menuPath = NULL;
     wxMenu* menuBoundaryList = NULL;
+    wxMenu* menuPILList = NULL;
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
  
@@ -1003,8 +1065,8 @@ void ODEventHandler::PopupMenu( int seltype )
                     sString.append(_("Move Boundary"));
                 else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                     sString.append(_("Move EBL"));
-                
-                MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
+
+                if(!sString.IsEmpty()) MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH, sString );
                 
                 sString.clear();
                 if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
@@ -1021,9 +1083,10 @@ void ODEventHandler::PopupMenu( int seltype )
                 if(sString.Len() > 0)
                     MenuAppend( menuPath, ID_PATH_MENU_INSERT, sString );
             }
-            if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
-                sString.append( _("Move Boundary Segment") );
-                MenuAppend( menuPath, ID_PATH_MENU_MOVE_PATH_SEGMENT, sString );
+            if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                sString.clear();
+                sString.append( _("Add Index Line"));
+                MenuAppend( menuPath, ID_PIL_MENU_ADD_INDEX_LINE, sString );
             }
             if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                 if(m_pSelectedPath->m_bODPointsVisible)
@@ -1047,7 +1110,8 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("Copy DR GUID"));
             else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
                 sString.append(_("Copy Guard Zone GUID"));
-            MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
+            if(sString.Len() > 0)
+                MenuAppend( menuPath, ID_PATH_MENU_COPY_GUID, sString );
         }
         
         //      Set this menu as the "focused context menu"
@@ -1125,10 +1189,18 @@ void ODEventHandler::PopupMenu( int seltype )
     }
     
     if( seltype & SELTYPE_BOUNDARYLIST ) {
-        menuBoundaryList = new wxMenu( _("Multiple Boundaries") );
+        menuPILList = new wxMenu( _("Multiple Boundaries") );
+        MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
         MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_KEEP_MENU, _( "Merge and Keep Boundaries" ) );
         MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_DELETE_MENU, _( "Merge and Delete Boundaries" ) );
         menuFocus = menuBoundaryList;
+    }
+
+    if( seltype & SELTYPE_PIL ) {
+        menuPILList = new wxMenu( _("Parallel Index Line") );
+        MenuAppend( menuPILList, ID_PIL_MENU_MOVE_INDEX_LINE, _( "Move Line" ) );
+        MenuAppend( menuPILList, ID_PIL_MENU_DELETE_INDEX_LINE, _( "Delete Line" ) );
+        menuFocus = menuPILList;
     }
 
     if( ( m_pSelectedPath ) ) {
@@ -1217,5 +1289,37 @@ void ODEventHandler::DeletePaths( void )
     //m_parent->undo->InvalidateUndo();
     RequestRefresh( m_parentcanvas );
     m_pBoundaryList.empty();
+
+}
+
+void ODEventHandler::DeletePIL( void )
+{
+    PIL *l_pPIL = (PIL *)m_pSelectedPath;
+
+    g_pODSelect->DeleteSelectablePathSegment(l_pPIL, m_iFoundPIL);
+    std::list<PILLINE>::iterator it = l_pPIL->PilLineList.begin();
+    while(it != l_pPIL->PilLineList.end()) {
+        if(it->iID == m_iFoundPIL) break;
+        it++;
+    }
+
+    l_pPIL->PilLineList.erase(it);
+
+    if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown()) && (m_pSelectedPath == g_pODPathPropDialog->GetPath()) ) {
+        g_pODPathPropDialog->Hide();
+    }
+
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdatePathListCtrl();
+
+    if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+        g_pODPointPropDialog->ValidateMark();
+        g_pODPointPropDialog->UpdateProperties();
+    }
+
+    // TODO implement UNDO
+    //m_parent->undo->InvalidateUndo();
+    RequestRefresh( m_parentcanvas );
+    m_pSelectedPath = NULL;
 
 }

@@ -16,8 +16,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "3")
-SET(VERSION_PATCH "4")
-SET(VERSION_DATE "09/11/2016")
+SET(VERSION_PATCH "5")
+SET(VERSION_DATE "19/11/2016")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
@@ -78,6 +78,9 @@ SET(SRCS
         src/ODToolbarImpl.cpp
         src/ODUtils.cpp
         src/PIL.cpp
+        src/PILProp.cpp
+        src/PILPropertiesDialogDef.cpp
+        src/PILPropertiesDialogImpl.cpp
         src/TextPoint.cpp
      )
 
@@ -123,6 +126,9 @@ SET(HDRS
         include/ODUtils.h
         include/ODvector2D.h
         include/PIL.h
+        include/PILPropertiesDialogDef.h
+        include/PILPropertiesDialogImpl.h
+        include/PILProp.h
         include/TextPoint.h
 )
 
