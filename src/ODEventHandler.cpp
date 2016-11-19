@@ -1161,6 +1161,8 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("DR Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("Guard Zone Point"))
                 sString.append(_("Guard Zone Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("PIL Point"))
+                sString.append(_("PIL Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("OD Point"))
                 sString.append(_("OD Point"));
             menuODPoint = new wxMenu( sString );
@@ -1174,6 +1176,8 @@ void ODEventHandler::PopupMenu( int seltype )
                 sString.append(_("Move EBL Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("DR Point"))
                 sString.append(_("Move DR Point"));
+            else if(m_pFoundODPoint->m_sTypeString == wxT("PIL Point"))
+                sString.append(_("Move PIL Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("OD Point"))
                 sString.append(_("Move OD Point"));
             else if(m_pFoundODPoint->m_sTypeString == wxT("Guard Zone Point"))

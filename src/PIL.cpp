@@ -287,13 +287,27 @@ void PIL::CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *Sec
     l_dSinAngle = sin(m_dEBLAngle * PI / 180);
     l_dCosAngle = cos(m_dEBLAngle * PI / 180);
 
-    l_len1[0] = (g_VP.pix_width - Centreppt.x)/l_dSinAngle;
-    l_len1[1] = (-g_VP.pix_height + Centreppt.y)/l_dCosAngle;
-    l_len1[2] = (-Centreppt.x)/l_dSinAngle;
-    l_len1[3] = (Centreppt.y)/l_dCosAngle;
-    for (int i = 0; i <= 3; i++) {
-        if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
-            l_result = l_len1[i];
+    if(Centreppt.x > g_VP.pix_width)
+        l_len1[0] = -1;
+    else
+        l_len1[0] = (g_VP.pix_width - Centreppt.x) / l_dSinAngle;
+    l_len1[1] = -Centreppt.x / l_dSinAngle;
+    l_len1[2] = Centreppt.y / l_dCosAngle;
+    if(Centreppt.y > g_VP.pix_height)
+        l_len1[3] = -1;
+    else
+        l_len1[3] = (-g_VP.pix_height + Centreppt.y) / l_dCosAngle;
+
+    if(Centreppt.x >= 0 && Centreppt.y >= 0) {
+        for (int i = 0; i <= 3; i++) {
+            if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
+                l_result = l_len1[i];
+        }
+    } else {
+        for (int i = 0; i <= 3; i++) {
+            if(l_len1[i] >= 0 && l_len1[i] > l_result)
+                l_result = l_len1[i];
+        }
     }
 
     FirstPoint->x = Centreppt.x + (l_result * l_dSinAngle);
@@ -303,13 +317,27 @@ void PIL::CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *Sec
     l_dSinAngle *= -1;
     l_dCosAngle *= -1;
     l_result = -1;
-    l_len1[0] = (g_VP.pix_width - Centreppt.x)/l_dSinAngle;
-    l_len1[1] = (-g_VP.pix_height + Centreppt.y)/l_dCosAngle;
-    l_len1[2] = (-Centreppt.x)/l_dSinAngle;
-    l_len1[3] = (Centreppt.y)/l_dCosAngle;
-    for (int i = 0; i <= 3; i++) {
-        if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
-            l_result = l_len1[i];
+    if(Centreppt.x > g_VP.pix_width)
+        l_len1[0] = -1;
+    else
+        l_len1[0] = (g_VP.pix_width - Centreppt.x) / l_dSinAngle;
+    l_len1[1] = -Centreppt.x / l_dSinAngle;
+    l_len1[2] = Centreppt.y / l_dCosAngle;
+    if(Centreppt.y > g_VP.pix_height)
+        l_len1[3] = -1;
+    else
+        l_len1[3] = (-g_VP.pix_height + Centreppt.y) / l_dCosAngle;
+
+    if(Centreppt.x >= 0 && Centreppt.y >= 0) {
+        for (int i = 0; i <= 3; i++) {
+            if(l_len1[i] >= 0 && (l_result == -1 || l_len1[i] < l_result))
+                l_result = l_len1[i];
+        }
+    } else {
+        for (int i = 0; i <= 3; i++) {
+            if(l_len1[i] >= 0 && l_len1[i] > l_result)
+                l_result = l_len1[i];
+        }
     }
 
     SecondPoint->x = Centreppt.x + (l_result * l_dSinAngle);
