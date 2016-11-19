@@ -197,6 +197,7 @@ enum
     ID_MODE_EBL,
     ID_MODE_DR,
     ID_MODE_GZ,
+    ID_MODE_PIL,
     
     ID_MODE_LAST
 };
@@ -249,6 +250,7 @@ class Boundarylist;
 class EBL;
 class DR;
 class GZ;
+class PIL;
 class SelectItem;
 class ODicons;
 
@@ -382,6 +384,7 @@ public:
     int         nEBL_State;
     int         nDR_State;
     int         nGZ_State;
+    int         nPIL_State;
     bool        bKey_Path_Pressed;
     bool        bKey_Boundary_Pressed;
     bool        bKey_Point_Pressed;
@@ -389,9 +392,11 @@ public:
     bool        bKey_EBL_Pressed;
     bool        bKey_DR_Pressed;
     bool        bKey_GZ_Pressed;
+    bool        bKey_PIL_Pressed;
     Boundary    *m_pMouseBoundary;
     EBL         *m_pMouseEBL;
     GZ          *m_pMouseGZ;
+    PIL         *m_pMousePIL;
     ODPoint     *m_pEBLBoatPoint;
     ODPath        *m_pSelectedPath;
     ODPoint   *m_pFoundODPoint;
@@ -446,7 +451,8 @@ private:
     bool    CreateEBLLeftClick( wxMouseEvent &event );
     bool    CreateDRLeftClick( wxMouseEvent &event );
     bool    CreateGZLeftClick( wxMouseEvent &event );
-    
+    bool    CreatePILLeftClick( wxMouseEvent &event );
+
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     void    FindSelectedObject( void )    ;
@@ -466,6 +472,7 @@ private:
     EBL         *m_pSelectedEBL;
     DR          *m_pSelectedDR;
     GZ          *m_pSelectedGZ;
+    PIL         *m_pSelectedPIL;
 
     bool        m_bDrawingBoundary;
     bool        m_bDrawingGZ;

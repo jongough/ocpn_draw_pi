@@ -38,6 +38,7 @@ class TextPoint;
 class EBL;
 class DR;
 class GZ;
+class PIL;
 
 #define TIMER_OD_1 999
 
@@ -85,6 +86,7 @@ class ODEventHandler : public wxEvtHandler
         EBL             *m_pEBL;
         DR              *m_pDR;
         GZ              *m_pGZ;
+        PIL             *m_pPIL;
         std::list<Boundary*> m_pBoundaryList;
 
         DECLARE_EVENT_TABLE();

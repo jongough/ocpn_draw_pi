@@ -36,6 +36,7 @@
 #include "EBL.h"
 #include "DR.h"
 #include "GZ.h"
+#include "PIL.h"
 #include "ODUtils.h"
 
 extern PathList         *g_pPathList;
@@ -386,9 +387,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
 {
     ODPath *pPath;
     Boundary * pBoundary = NULL;
-    EBL * pEBL = NULL;
+    EBL *pEBL = NULL;
     DR  *pDR = NULL;
     GZ  *pGZ = NULL;
+    PIL *pPIL = NULL;
     
 #ifndef __WXMSW__
     wxString *l_locale;
@@ -412,6 +414,9 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("Guard Zone")) {
         pGZ = (GZ *)pInPath;
         pPath = pGZ;
+    } else if(pInPath->m_sTypeString == wxT("PIL")) {
+        pPIL = (PIL *)pInPath;
+        pPath = pPIL;
     } else
         pPath = pInPath;
     

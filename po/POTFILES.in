@@ -37,6 +37,7 @@ src/ODRolloverWin.cpp
 src/ODToolbarDef.cpp
 src/ODToolbarImpl.cpp
 src/ODUtils.cpp
+src/PIL.cpp
 src/TextPoint.cpp
 include/ocpn_draw_pi.h
 include/Boundary.h
@@ -78,4 +79,5 @@ include/ODToolbarDef.h
 include/ODToolbarImpl.h
 include/ODUtils.h
 include/ODvector2D.h
+include/PIL.h
 include/TextPoint.h

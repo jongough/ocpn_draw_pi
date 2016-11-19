@@ -123,7 +123,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
                 g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
             } else {
                 m_Mode = ID_MODE_DR;
-                if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nEBL_State = 1;
+                if( g_ocpn_draw_pi->nDR_State == 0) g_ocpn_draw_pi->nDR_State = 1;
             }
             break;
         }
@@ -136,6 +136,18 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
             } else {
                 m_Mode = ID_MODE_GZ;
                 if( g_ocpn_draw_pi->nGZ_State == 0) g_ocpn_draw_pi->nGZ_State = 1;
+            }
+            break;
+        }
+        case ID_MODE_PIL:
+        {
+            g_ocpn_draw_pi->m_Mode = ID_MODE_PIL;
+            if(m_Mode == event.GetId()) {
+                m_Mode = -1;
+                g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+            } else {
+                m_Mode = ID_MODE_PIL;
+                if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nPIL_State = 1;
             }
             break;
         }
@@ -179,6 +191,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_POINT:
@@ -189,6 +202,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_TEXT_POINT:
@@ -199,6 +213,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_EBL:
@@ -209,6 +224,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_DR:
@@ -219,6 +235,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), true );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_GZ:
@@ -229,6 +246,18 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), true );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
+            break;
+        }
+        case ID_MODE_PIL:
+        {
+            m_toolBarODToolbar->ToggleTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), true );
             break;
         }
         case ID_NONE:
@@ -239,6 +268,7 @@ void ODToolbarImpl::SetToolbarToolToggle( int iTool )
             m_toolBarODToolbar->ToggleTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->ToggleTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->ToggleTool( m_toolPIL->GetId(), false );
             m_Mode = ID_NONE;
             break;
         }
@@ -260,6 +290,7 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_POINT:
@@ -270,6 +301,7 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_TEXT_POINT:
@@ -280,6 +312,7 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_EBL:
@@ -290,6 +323,7 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), true );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_DR:
@@ -300,6 +334,7 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), true );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
             break;
         }
         case ID_MODE_GZ:
@@ -310,6 +345,18 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), true );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
+            break;
+        }
+        case ID_MODE_PIL:
+        {
+            m_toolBarODToolbar->EnableTool( m_toolBoundary->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolODPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolTextPoint->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), true );
             break;
         }
         case ID_NONE:
@@ -320,6 +367,7 @@ void ODToolbarImpl::SetToolbarToolEnableOnly( int iTool )
             m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), false );
             m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), false );
+            m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), false );
             m_Mode = ID_NONE;
             break;
         }
@@ -337,6 +385,7 @@ void ODToolbarImpl::SetToolbarToolEnableAll( void )
     m_toolBarODToolbar->EnableTool( m_toolEBL->GetId(), true );
     m_toolBarODToolbar->EnableTool( m_toolDR->GetId(), true );
     m_toolBarODToolbar->EnableTool( m_toolGZ->GetId(), true );
+    m_toolBarODToolbar->EnableTool( m_toolPIL->GetId(), true );
     m_toolBarODToolbar->Realize();
 }
 
@@ -353,6 +402,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_POINT:
@@ -363,6 +413,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_TEXT_POINT:
@@ -373,6 +424,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_EBL:
@@ -383,6 +435,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_DR:
@@ -393,6 +446,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_GZ:
@@ -403,6 +457,18 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            break;
+        }
+        case ID_MODE_PIL:
+        {
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil );
             break;
         }
         case ID_NONE:
@@ -413,6 +479,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         default:
@@ -432,7 +499,8 @@ void ODToolbarImpl::UpdateIcons( void )
         m_toolBarODToolbar->DeleteTool( ID_MODE_EBL );
         m_toolBarODToolbar->DeleteTool( ID_MODE_DR );
         m_toolBarODToolbar->DeleteTool( ID_MODE_GZ );
-        
+        m_toolBarODToolbar->DeleteTool( ID_MODE_PIL );
+
         this->InvalidateBestSize();
         AddTools();
     }
@@ -449,7 +517,8 @@ void ODToolbarImpl::AddTools(void)
     m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_MODE_EBL, _("Electronic Bearing Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, wxNullBitmap, _("Create EBL"), wxEmptyString );
     m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_MODE_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, wxNullBitmap, _("Create DR"), wxEmptyString );
     m_toolGZ = m_toolBarODToolbar->AddCheckTool( ID_MODE_GZ, _("Guard Zone"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey, wxNullBitmap, _("Create GZ"), wxEmptyString );
-    
+    m_toolPIL = m_toolBarODToolbar->AddCheckTool( ID_MODE_PIL, _("Parallel Index Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey, wxNullBitmap, _("Create PIL"), wxEmptyString );
+
     m_toolBarODToolbar->Realize();
     m_toolBarODToolbar->SetInitialSize();
     this->Layout();

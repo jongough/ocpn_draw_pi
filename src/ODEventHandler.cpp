@@ -44,6 +44,7 @@
 #include "EBL.h"
 #include "DR.h"
 #include "GZ.h"
+#include "PIL.h"
 #include "ODDRDialogImpl.h"
 #include "TextPoint.h"
 #include <wx/window.h>
@@ -119,6 +120,9 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoin
     } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
         m_pGZ = (GZ *)selectedPath;
         m_pSelectedPath = m_pGZ;
+    } else if(selectedPath->m_sTypeString == wxT("PIL")) {
+        m_pPIL = (PIL *)selectedPath;
+        m_pSelectedPath = m_pPIL;
     } else
         m_pSelectedPath = selectedPath;
 
@@ -152,6 +156,9 @@ ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPo
     } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
         m_pGZ = (GZ *)selectedPath;
         m_pSelectedPath = m_pGZ;
+    } else if(selectedPath->m_sTypeString == wxT("PIL")) {
+        m_pPIL = (PIL *)selectedPath;
+        m_pSelectedPath = m_pPIL;
     } else
         m_pSelectedPath = selectedPath;
 
@@ -178,6 +185,9 @@ void ODEventHandler::SetPath( ODPath *path )
         } else if(path->m_sTypeString == wxT("Guard Zone")) {
             m_pGZ = (GZ *)path;
             m_pSelectedPath = m_pGZ;
+        } else if(path->m_sTypeString == wxT("PIL")) {
+            m_pPIL = (PIL *)path;
+            m_pSelectedPath = m_pPIL;
         } else
             m_pSelectedPath = path;
     }
@@ -308,12 +318,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         s.Append( pp->m_PathNameString );
                     
                     if(pp->m_sTypeString != wxT("Guard Zone")) {
-                        s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
-                        << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
-                        << _(" to ") << segShow_point_b->GetName()
-                        << _T("\n");
-                    
-                        if(pp->m_sTypeString == wxT("EBL")) {
+                        if(pp->m_sTypeString == _T("PIL")) {
+                            s << _T("\n") << _("Total Length: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( pp->m_path_length)
+                            << _T("\n") << _("Leg: from ") << segShow_point_a->GetName()
+                            << _(" to ") << segShow_point_b->GetName()
+                            << _T("\n");
+                        }
+                        if(pp->m_sTypeString == wxT("EBL") || pp->m_sTypeString == wxT("PIL")) {
                             s << _("From: ");
                             if( g_bShowMag )
                                 s << wxString::Format( wxString("%03d°(M)  ", wxConvUTF8 ), (int)g_ocpn_draw_pi->GetTrueOrMag( brgFrom ) );

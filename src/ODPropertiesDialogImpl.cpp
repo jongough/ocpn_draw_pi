@@ -111,6 +111,19 @@ extern bool         g_bEBLPIL;
 extern int          g_EBLLineWidth;
 extern int          g_EBLLineStyle;
 
+extern wxString    g_sPILEndIconName;
+extern wxString    g_sPILStartIconName;
+extern wxColour    g_colourPILActiveCentreLineColour;
+extern wxColour    g_colourPILInActiveCentreLineColour;
+extern wxColour    g_colourPILActiveOffsetLineColour;
+extern wxColour    g_colourPILInActiveOffsetLineColour;
+extern int         g_PILCentreLineWidth;
+extern int         g_PILCentreLineStyle;
+extern int         g_PILOffsetLineWidth;
+extern int         g_PILOffsetLineStyle;
+extern double      g_dPILOffset;
+
+
 extern double       g_dDRSOG;
 extern int          g_iDRCOG;
 extern double       g_dDRLength;
