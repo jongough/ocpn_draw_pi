@@ -38,6 +38,7 @@
 #include "ODPointPropertiesImpl.h"
 #include "ODRolloverWin.h"
 #include "ODUtils.h"
+#include "PILPropertiesDialogImpl.h"
 #include "chcanv.h"
 #include "PointMan.h"
 #include "Boundary.h"
@@ -80,6 +81,7 @@ extern int                          g_BoundaryLineWidth;
 extern int                          g_BoundaryLineStyle;
 extern wxString                     g_sODPointIconName;
 extern double                       g_dPILOffset;
+extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;
 
 
 // Event Handler implementation 
@@ -659,6 +661,14 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             }
             break;
         }
+        case ID_PIL_MENU_INDEX_LINE_PROPERTIES: {
+            if( NULL == g_PILIndexLinePropDialog)
+                g_PILIndexLinePropDialog = new PILPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
+            DimeWindow( g_PILIndexLinePropDialog );
+            g_PILIndexLinePropDialog->UpdateProperties( (PIL *)m_pSelectedPath, m_iFoundPIL );
+            g_PILIndexLinePropDialog->Show();
+            break;
+        }
         case ID_PIL_MENU_ADD_INDEX_LINE: {
             m_pPIL->AddLine( _T(""), _T(""), g_dPILOffset );
             break;
@@ -1198,6 +1208,7 @@ void ODEventHandler::PopupMenu( int seltype )
 
     if( seltype & SELTYPE_PIL ) {
         menuPILList = new wxMenu( _("Parallel Index Line") );
+        MenuAppend( menuPILList, ID_PIL_MENU_INDEX_LINE_PROPERTIES, _("Properties..."));
         MenuAppend( menuPILList, ID_PIL_MENU_MOVE_INDEX_LINE, _( "Move Line" ) );
         MenuAppend( menuPILList, ID_PIL_MENU_DELETE_INDEX_LINE, _( "Delete Line" ) );
         menuFocus = menuPILList;
