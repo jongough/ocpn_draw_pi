@@ -200,7 +200,7 @@ void ODEventHandler::SetPath( ODPath *path )
     }
 }
 
-void ODEventHandler::SetBoundaryList(std::__cxx11::list< Boundary* > pBoundaryList)
+void ODEventHandler::SetBoundaryList(std::list< Boundary* > pBoundaryList)
 {
     m_pBoundaryList = pBoundaryList;
 }
@@ -1203,11 +1203,12 @@ void ODEventHandler::PopupMenu( int seltype )
     }
     
     if( seltype & SELTYPE_BOUNDARYLIST ) {
-        menuPILList = new wxMenu( _("Multiple Boundaries") );
-        MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
+        menuBoundaryList = new wxMenu( _("Multiple Boundaries") );
         MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_KEEP_MENU, _( "Merge and Keep Boundaries" ) );
         MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_DELETE_MENU, _( "Merge and Delete Boundaries" ) );
         menuFocus = menuBoundaryList;
+        m_pSelectedPath = NULL;
+        m_pFoundODPoint = NULL;
     }
 
     if( seltype & SELTYPE_PIL ) {
@@ -1218,13 +1219,15 @@ void ODEventHandler::PopupMenu( int seltype )
         menuFocus = menuPILList;
     }
 
-    if( ( m_pSelectedPath ) ) {
-        m_pSelectedPath->m_bPathIsSelected = true;
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-    } else if( m_pFoundODPoint ) {
-        m_pFoundODPoint->m_bPtIsSelected = true;
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-    }
+    //if( !(seltype & SELTYPE_BOUNDARYLIST) ) {
+        if( ( m_pSelectedPath ) ) {
+            m_pSelectedPath->m_bPathIsSelected = true;
+            RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        } else if( m_pFoundODPoint ) {
+            m_pFoundODPoint->m_bPtIsSelected = true;
+            RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        }
+    //}
     
     //        Invoke the correct focused drop-down menu
     m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
