@@ -1859,6 +1859,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_PathMove_cursor_start_lat = m_cursor_lat;
             m_PathMove_cursor_start_lon = m_cursor_lon;
             bRefresh = TRUE;
+        } else if( m_bPathEditing && m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE) {
+            m_pCurrentCursor = m_pCursorCross;
+            bRefresh = TRUE;
         } else if ( m_bODPointEditing ) {
             m_pCurrentCursor = m_pCursorCross;
             bret = TRUE;
@@ -2054,6 +2057,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedEBL = NULL;
                 m_pSelectedDR = NULL;
                 m_pSelectedGZ = NULL;
+                m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
                 bret = TRUE;
@@ -2186,10 +2190,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_bODPointEditing = false;
             m_pCurrentCursor = NULL;
             m_pFoundODPoint->m_bIsBeingEdited = false;
-            RequestRefresh( m_parent_window );
+            bRefresh = TRUE;
             bret = TRUE;
-        }
-        if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 || nGZ_State == 1 || nPIL_State == 1 ) {
+        } else if(m_bPathEditing) {
+            m_bPathEditing = false;
+            m_pCurrentCursor = NULL;
+            bRefresh = TRUE;
+            bret = TRUE;
+        } else if ( nBoundary_State == 1 || nPoint_State == 1 || nTextPoint_State == 1 || nEBL_State == 1 || nDR_State == 1 || nGZ_State == 1 || nPIL_State == 1 ) {
             m_Mode++;
             if(m_Mode >= ID_MODE_BOUNDARY)
                 SetToolbarTool();
@@ -3601,6 +3609,17 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
             if(info.length() > 0)
                 RenderExtraPathLegInfo( dc, destPoint, info );
+        } else if(pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
+            ODDC dc;
+            std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
+            while(it != m_pSelectedPIL->PilLineList.end()) {
+                if(it->iID == m_iPILId) break;
+                it++;
+            }
+
+            wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
+            if(info.length() > 0)
+                RenderExtraPathLegInfo(dc, m_cursorPoint, info);
         }
         
     }
