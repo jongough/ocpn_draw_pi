@@ -2956,6 +2956,16 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
                 if(info.length() > 0)
                     RenderExtraPathLegInfo( dc, destPoint, info );
+            } else if(pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
+                std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
+                while(it != m_pSelectedPIL->PilLineList.end()) {
+                    if(it->iID == m_iPILId) break;
+                    it++;
+                }
+
+                wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
+                if(info.length() > 0)
+                    RenderExtraPathLegInfo(dc, m_cursorPoint, info);
             }
         }
         pnode = pnode->GetNext();
