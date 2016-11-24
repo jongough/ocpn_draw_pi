@@ -44,6 +44,9 @@ public:
       ~RoutePoint(void);
       void Draw(ocpnDC& dc, wxPoint *rpn = NULL);
       void ReLoadIcon(void);
+
+      wxDateTime GetCreateTime(void);
+      void SetCreateTime( wxDateTime dt );
       
       void SetPosition(double lat, double lon);
       double GetLatitude()  { return m_lat; };
@@ -59,10 +62,7 @@ public:
       void SetNameShown(bool viz = true) { m_bShowName = viz; }
       wxString GetName(void){ return m_MarkName; }
       wxString GetDescription(void) { return m_MarkDescription; }
-
-      wxDateTime GetCreateTime(void);
-      void SetCreateTime( wxDateTime dt );
-
+      
       wxString GetIconName(void){ return m_IconName; }
       wxBitmap *GetIconBitmap(){ return m_pbmIcon; }
       void SetIconName( wxString name ){ m_IconName = name; }
@@ -98,7 +98,8 @@ public:
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
 
 
-      double            m_lat, m_lon;
+      double             m_lat;
+      double             m_lon;
       double             m_seg_len;              // length in NMI to this point
                                                 // undefined for starting point
       double            m_seg_vmg;
@@ -108,6 +109,8 @@ public:
       bool              m_bIsBeingEdited;
 
       bool              m_bIsInRoute;
+      bool              m_bIsInTrack;
+
       bool              m_bIsolatedMark;        // This is an isolated mark
 
       bool              m_bKeepXRoute;          // This is a mark which is part of a route/track
@@ -131,12 +134,15 @@ public:
       wxRect            CurrentRect_in_DC;
       int               m_NameLocationOffsetX;
       int               m_NameLocationOffsetY;
+      wxString          m_timestring;
+      int               m_GPXTrkSegNo;
       bool              m_bIsInLayer;
       int               m_LayerID;
 
       double            m_routeprop_course;         // course from this waypoint to the next waypoint if in a route.
       double            m_routeprop_distance;       // distance from this waypoint to the next waypoint if in a route.
 
+      HyperlinkList     *m_HyperlinkList;
       bool              m_btemp;
       
       bool              m_bShowWaypointRangeRings;
@@ -158,14 +164,10 @@ public:
 #endif
 
       double m_WaypointArrivalRadius;
-      HyperlinkList     *m_HyperlinkList;
-
-      wxString          m_timestring;
-
+      
 private:
-      wxDateTime        m_CreateTimeX;
-
       wxString          m_MarkName;
+      wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
       wxString          m_IconName;
       

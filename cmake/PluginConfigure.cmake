@@ -44,6 +44,8 @@ IF(NOT MSVC)
   ADD_DEFINITIONS( "-Wall -fexceptions" )
 #  ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
  ENDIF(PROFILING)
+ # add to use older, pre gcc 5 versions of std::list
+ ADD_DEFINITIONS( "-D_GLIBCXX_USE_CXX11_ABI=0" )
 
  IF(NOT APPLE)
   SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")

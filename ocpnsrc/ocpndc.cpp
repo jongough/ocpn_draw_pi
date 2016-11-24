@@ -585,7 +585,6 @@ void ocpnDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
         if( b_hiqual ) {
             glDisable( GL_LINE_STIPPLE );
             glDisable( GL_POLYGON_SMOOTH );
-            glDisable( GL_BLEND );
         }
     }
 #endif    

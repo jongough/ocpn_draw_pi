@@ -44,8 +44,8 @@ class ocpnDC;
 class Route : public wxObject
 {
 public:
-      Route();
-      ~Route();
+      Route(void);
+      ~Route(void);
 
       void AddPoint(RoutePoint *pNewPoint,
                     bool b_rename_in_sequence = true,
@@ -59,9 +59,9 @@ public:
       RoutePoint *InsertPointAfter(RoutePoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
       void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
       void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, ViewPort &vp, bool bdraw_arrow);
-      void Draw(ocpnDC& dc, ViewPort &pvp, const LLBBox &box);
+      virtual void Draw(ocpnDC& dc, ViewPort &pvp);
       void DrawGLLines( ViewPort &vp, ocpnDC *dc );
-      void DrawGL( ViewPort &vp );
+      virtual void DrawGL( ViewPort &vp );
       void DrawGLRouteLines( ViewPort &vp );
       RoutePoint *GetLastPoint();
       void DeletePoint(RoutePoint *rp, bool bRenamePoints = false);
@@ -71,8 +71,9 @@ public:
       void UpdateSegmentDistance( RoutePoint *prp0, RoutePoint *prp, double planspeed = -1.0 );
       void UpdateSegmentDistances(double planspeed = -1.0);
       void CalculateDCRect(wxDC& dc_route, wxRect *prect);
-      int GetnPoints(void){ return pRoutePointList->GetCount(); }
+      int GetnPoints(void){ return m_nPoints; }
       LLBBox &GetBBox();
+      void SetnPoints(void){ m_nPoints = pRoutePointList->GetCount(); }
       void SetHiLite( int width ) {m_hiliteWidth = width; }
       void Reverse(bool bRenamePoints = false);
       void RebuildGUIDList(void);
@@ -83,6 +84,8 @@ public:
       bool IsEqualTo(Route *ptargetroute);
       void CloneRoute(Route *psourceroute, int start_nPoint, int end_nPoint, const wxString & suffix);
       void CloneTrack(Route *psourceroute, int start_nPoint, int end_nPoint, const wxString & suffix);
+      void CloneAddedTrackPoint(RoutePoint *ptargetpoint, RoutePoint *psourcepoint);
+      void CloneAddedRoutePoint(RoutePoint *ptargetpoint, RoutePoint *psourcepoint);
       void ClearHighlights(void);
       void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort &vp, bool bdraw_arrow, int hilite_width = 0);
       void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, ViewPort &vp);
@@ -93,6 +96,7 @@ public:
       bool IsListed() { return m_bListed; }
       bool IsActive() { return m_bRtIsActive; }
       bool IsSelected() { return m_bRtIsSelected; }
+      bool IsTrack(){ return m_bIsTrack; }
 
       int SendToGPS(const wxString & com_name, bool bsend_waypoints, wxGauge *pProgress);
 
@@ -111,6 +115,8 @@ public:
       wxString    m_RouteStartString;
       wxString    m_RouteEndString;
       wxString    m_RouteDescription;
+      bool        m_bIsTrack;             //TODO should use class type instead
+      RoutePoint  *m_pLastAddedPoint;
       bool        m_bDeleteOnArrival;
       wxString    m_GUID;
       bool        m_bIsInLayer;
@@ -122,9 +128,10 @@ public:
       double      m_PlannedSpeed;
       wxDateTime  m_PlannedDeparture;
       wxString    m_TimeDisplayFormat;
+      HyperlinkList     *m_HyperlinkList;
 
-      RoutePointList     *pRoutePointList;
       wxArrayString      RoutePointGUIDList;
+      RoutePointList     *pRoutePointList;
 
       wxRect      active_pt_rect;
       wxString    m_Colour;
@@ -132,8 +139,10 @@ public:
       int         m_hiliteWidth;
 
 private:
+      bool m_bNeedsUpdateBBox;
       LLBBox     RBBox;
 
+      int         m_nPoints;
       int         m_nm_sequence;
       bool        m_bVisible; // should this route be drawn?
       bool        m_bListed;

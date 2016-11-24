@@ -141,8 +141,6 @@ class  ChartBaseBSB     :public ChartBase
 
       ChartBaseBSB();
       virtual ~ChartBaseBSB();
-      void FreeLineCacheRows(int start=0, int end=-1);
-      bool HaveLineCacheRow(int row);
 
       //    Accessors
       virtual ThumbData *GetThumbData(int tnx, int tny, float lat, float lon);
@@ -221,7 +219,7 @@ protected:
 
 
       virtual int BSBScanScanline(wxInputStream *pinStream);
-      virtual int ReadBSBHdrLine( wxInputStream*, char *, int );
+      virtual int ReadBSBHdrLine( wxFFileInputStream*, char *, int );
       virtual int AnalyzeRefpoints(bool b_testSolution = true);
       virtual bool AnalyzeSkew(void);
       
@@ -274,8 +272,8 @@ protected:
 
       CachedLine  *pLineCache;
 
-      wxInputStream    *ifs_hdr;
-      wxInputStream    *ifss_bitmap;
+      wxFFileInputStream    *ifs_hdr;
+      wxFFileInputStream    *ifss_bitmap;
       wxBufferedInputStream *ifs_bitmap;
 
       wxString          *pBitmapFilePath;
