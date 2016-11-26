@@ -138,7 +138,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_fgSizerPIL->SetFlexibleDirection( wxBOTH );
 	m_fgSizerPIL->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPILAngle = new wxStaticText( this, wxID_ANY, _("Parallel Index Line Angle (-P/+S)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILAngle = new wxStaticText( this, wxID_ANY, _("Parallel Index Line Angle (+Stbd/-Port)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILAngle->Wrap( -1 );
 	m_fgSizerPIL->Add( m_staticTextPILAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	

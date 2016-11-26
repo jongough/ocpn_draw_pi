@@ -478,7 +478,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_staticTextFillDensity->Show();
             m_sliderBoundaryPointFillTransparency->Enable( true );
             m_sliderBoundaryPointFillTransparency->Show();
-        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
+        } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point") || m_pODPoint->m_sTypeString == wxT("PIL Point")) {
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( false );

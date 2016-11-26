@@ -973,7 +973,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_fgSizerPILSettings->Add( m_fgSizerPILEndPointIcon, 1, wxEXPAND, 5 );
 	
-	m_staticTextPILDefaultOffset = new wxStaticText( m_panelPIL, wxID_ANY, _("Default Offset"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILDefaultOffset = new wxStaticText( m_panelPIL, wxID_ANY, _("Default Offset (+Stbd/-Port)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILDefaultOffset->Wrap( -1 );
 	m_fgSizerPILSettings->Add( m_staticTextPILDefaultOffset, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
