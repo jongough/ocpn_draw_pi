@@ -44,23 +44,13 @@ IF(NOT MSVC)
   ADD_DEFINITIONS( "-Wall -fexceptions" )
 #  ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
  ENDIF(PROFILING)
- # add to use older, pre gcc 5 versions of std::list
-# ADD_DEFINITIONS( "-D_GLIBCXX_USE_CXX11_ABI=0" )
-# ADD_DEFINITIONS( "-Wabi-tag" )
-#  ADD_DEFINITIONS( "-fabi-version=2" )
-#  SET( CMAKE_EXE_LINKER_FLAGS '-Wl,-rpath,$ORIGIN')
-#  SET( CMAKE_SHARED_LINKER_FLAGS '-Wl,-rpath,$ORIGIN' )
-#  SET( CMAKE_MODULE_LINKER_FLAGS '-Wl,-rpath,$ORIGIN' )
-#  TARGET_LINK_LIBRARIES(${PACKAGE_NAME} SHARED '-Wl,-rpath,$ORIGIN')
 
  IF(NOT APPLE)
-  SET(CMAKE_SHARED_LINKER_FLAGS '-Wl,-Bsymbolic,-rpath,$ORIGIN -static-libstdc++')
+  SET( CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
  ELSE(NOT APPLE)
-  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
+  SET( CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
  ENDIF(NOT APPLE)
 
- SET( CMAKE_SHARED_LINKER_FLAGS '-Wl,-Bsymbolic,-rpath,$ORIGIN -static-libstdc++' )
-  #SET ( CMAKE_SHARED_LINKER_FLAGS "-static-libstdc++")
 
 ENDIF(NOT MSVC)
 
@@ -76,8 +66,8 @@ SET(BUILD_SHARED_LIBS TRUE)
 FIND_PACKAGE(wxWidgets REQUIRED)
 
 IF(MSYS)
-# this is just a hack. I think the bug is in FindwxWidgets.cmake
-STRING( REGEX REPLACE "/usr/local" "\\\\;C:/MinGW/msys/1.0/usr/local" wxWidgets_INCLUDE_DIRS ${wxWidgets_INCLUDE_DIRS} )
+  # this is just a hack. I think the bug is in FindwxWidgets.cmake
+  STRING( REGEX REPLACE "/usr/local" "\\\\;C:/MinGW/msys/1.0/usr/local" wxWidgets_INCLUDE_DIRS ${wxWidgets_INCLUDE_DIRS} )
 ENDIF(MSYS)
 
 INCLUDE(${wxWidgets_USE_FILE})

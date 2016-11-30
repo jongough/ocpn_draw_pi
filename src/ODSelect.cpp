@@ -34,6 +34,8 @@ extern ChartCanvas                  *ocpncc1;
 extern ocpn_draw_pi                 *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex     g_pfFix;
 extern SelectItem                   *g_pRolloverPoint;
+extern PlugIn_ViewPort              g_VP;
+
 
 ODSelect::ODSelect()
 {
@@ -460,7 +462,10 @@ bool ODSelect::IsSegmentSelected( float a, float b, float c, float d, float slat
 
 void ODSelect::CalcSelectRadius()
 {
-    selectRadius = GetSelectPixelRadius() / ( ocpncc1->GetCanvasTrueScale() * 1852 * 60 );
+    if( !g_VP.bValid )
+        selectRadius = 0;
+    else
+        selectRadius = GetSelectPixelRadius() / ( g_VP.view_scale_ppm * 1852 * 60 );
 }
 
 SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
