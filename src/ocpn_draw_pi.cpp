@@ -963,6 +963,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -990,6 +991,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -1017,6 +1019,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -1044,6 +1047,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -1071,6 +1075,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -1098,6 +1103,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
@@ -1125,6 +1131,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     m_pCurrentCursor = NULL;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
+                    g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
