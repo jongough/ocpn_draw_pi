@@ -44,6 +44,7 @@ class BoundaryProp : public ODPathPropertiesDialogImpl
                         const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
         virtual ~BoundaryProp();
         
+        using ODPathPropertiesDialogImpl::UpdateProperties;
         bool UpdateProperties( Boundary *pInBoundary );
         
     protected:

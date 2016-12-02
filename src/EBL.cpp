@@ -130,7 +130,7 @@ void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferB
     }
 }
 
-void EBL::ResizeVRM( double lat, double lon )
+void EBL::Resize( double lat, double lon )
 {
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
     pEndPoint->m_lat = lat;
@@ -144,12 +144,11 @@ void EBL::ResizeVRM( double lat, double lon )
         g_pEBLPropDialog->UpdateProperties();
 }
 
-void EBL::ResizeVRM( void )
+void EBL::Resize( void )
 {
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    //double brg;
-//    DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength );
+
     DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength );
     pEndPoint->m_seg_len = m_dLength;
 
@@ -435,7 +434,7 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
     }
 
-    RenderPIL( dc, VP );
+    RenderPerpLine( dc, VP );
     ODPath::Draw( dc, VP );
 
 }
@@ -443,7 +442,7 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 void EBL::DrawGL( PlugIn_ViewPort &piVP )
 {
     ODDC dc;
-    RenderPIL( dc, piVP );
+    RenderPerpLine( dc, piVP );
 
     ODPath::DrawGL( piVP );
 }
@@ -468,7 +467,7 @@ void EBL::MaintainWith( void )
     }
 }
 
-void EBL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
+void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
 {
     wxString colour;
     int style = wxPENSTYLE_SOLID;

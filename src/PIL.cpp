@@ -234,25 +234,13 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
     }
 }
 
-void PIL::RedrawPIL( void )
-{
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    //double brg;
-    //    DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength );
-    DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength );
-    pEndPoint->m_seg_len = m_dLength;
-
-//    if(g_pPILLPropDialog && g_pPILPropDialog->IsShown())
-//       g_pPILPropDialog->UpdateProperties();
-}
-
 void PIL::CentreOnBoat( bool bMoveEndPoint )
 {
     EBL::CentreOnBoat( bMoveEndPoint );
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
+
     wxPoint l_Centreppt;
     wxPoint l_dPoint1, l_dPoint2;
     double l_dLat, l_dLon;
@@ -363,3 +351,4 @@ void PIL::MovePILLine(double dLat, double dLon, int iPILId)
         it++;
     }
 }
+

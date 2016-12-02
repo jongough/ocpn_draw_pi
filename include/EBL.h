@@ -34,8 +34,8 @@ class EBL : public ODPath
         void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
-        void ResizeVRM( double lat, double lon );
-        void ResizeVRM( void );
+        void Resize( double lat, double lon );
+        void Resize( void );
         void MoveEndPoint( bool bUpdateEBL );
         void MoveEndPoint( void );
         void MoveStartPoint( double lat, double lon );
@@ -67,7 +67,7 @@ class EBL : public ODPath
     private:
         void MaintainWith( void );
         wxColour    m_wxcLineColour;
-        void        RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
+        void        RenderPerpLine( ODDC &dc, PlugIn_ViewPort &piVP );
 };
 
 WX_DECLARE_LIST(EBL, EBLList); // establish class EBL list member

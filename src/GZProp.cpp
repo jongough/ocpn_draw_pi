@@ -214,7 +214,6 @@ bool GZProp::SaveChanges( void )
     m_pGZ->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
     
     wxColour l_GZOrigColour = m_pGZ->GetCurrentColour();
-    ODPoint *pFirstPoint = m_pGZ->m_pODPointList->GetFirst()->GetData();
 
     bool l_bUpdatePath = false;
     double l_dLength;

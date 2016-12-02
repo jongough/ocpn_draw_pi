@@ -50,11 +50,11 @@ class PIL :  public EBL
         void    Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void    DrawGL( PlugIn_ViewPort &piVP );
         void    DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
-        void    RedrawPIL(void);
         void    CentreOnBoat( bool bMoveEndPoint );
-        std::list<PILLINE> PilLineList;
         void    MovePILLine(double dLat, double dLon, int iPILId);
 
+        std::list<PILLINE> PilLineList;
+        
     protected:
 
     private:

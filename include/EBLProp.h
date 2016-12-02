@@ -48,6 +48,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
         void OnPILCheckbox( wxCommandEvent& event );
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
+        using ODPathPropertiesDialogImpl::UpdateProperties;
         bool UpdateProperties( EBL *pInEBL );
         bool UpdateProperties( void );
         bool SaveChanges( void );
@@ -69,7 +70,6 @@ class EBLProp : public ODPathPropertiesDialogImpl
         double  m_dODEBLLengthValidator;
         bool    m_bLockEBLAngle;
         bool    m_bLockEBLLength;
-        bool    m_bSetLocale;
         bool    m_bLockUpdate;
         
 };

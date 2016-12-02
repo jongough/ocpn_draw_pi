@@ -25,7 +25,7 @@
  **************************************************************************/
 
 #ifndef ODJSON_H
-#define ODJSCON_H
+#define ODJSON_H
 
 
 class ODJSON

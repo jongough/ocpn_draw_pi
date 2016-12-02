@@ -43,6 +43,7 @@ class DRProp : public ODPathPropertiesDialogImpl
                         const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
         virtual ~DRProp();
         
+        using ODPathPropertiesDialogImpl::UpdateProperties;
         bool UpdateProperties( DR *pInDR );
         
     protected:

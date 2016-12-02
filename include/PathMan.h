@@ -87,7 +87,7 @@ class PathMan
         MyApp       *m_pparent_app;
         ODPath      *pActivePath;
         ODPoint     *pActivePoint;
-        double      PathBrgToActivePoint;        //TODO all these need to be doubles
+        double      PathBrgToActivePoint;        
         double      CurrentSegmentBeginLat;
         double      CurrentSegmentBeginLon;
         double      CurrentRngToActivePoint;

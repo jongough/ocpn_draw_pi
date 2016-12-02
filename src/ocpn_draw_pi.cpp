@@ -390,7 +390,7 @@ int ocpn_draw_pi::Init(void)
     m_bEBLMoveOrigin = false;
     m_pMouseBoundary = NULL;
     m_pEBLBoatPoint = NULL;
-    m_bDrawingBoundary = NULL;
+    m_bDrawingBoundary = false;
     m_pFoundODPoint = NULL;
     m_pSelectedPath = NULL;
     m_pSelectedBoundary = NULL;
@@ -1922,8 +1922,18 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                     m_bPathEditing = true;
                     if(m_seltype & SELTYPE_ODPOINT) {
-                        m_iEditMode = ID_PATH_MENU_MOVE_POINT;
-                        m_pCurrentCursor = m_pCursorCross;
+                        if(m_pSelectedBoundary || m_pSelectedDR || m_pSelectedGZ) {
+                            m_iEditMode = ID_PATH_MENU_MOVE_POINT;
+                            m_pCurrentCursor = m_pCursorCross;
+                        } else if(m_pSelectedEBL || m_pSelectedPIL) {
+                            m_iEditMode = ID_ODPOINT_MENU_MOVE;
+                            m_bODPointEditing = true;
+                            m_pFoundODPoint->m_bIsBeingEdited = TRUE;
+                            if(m_pSelectedEBL)
+                                m_pSelectedEBL->m_bEndPointMoving = true;
+                            else if(m_pSelectedPIL)
+                                m_pSelectedPIL->m_bEndPointMoving = true;
+                        }
                     }
                     else if(m_seltype & SELTYPE_PIL) {
                         m_iEditMode = ID_PIL_MENU_MOVE_INDEX_LINE;
@@ -1967,6 +1977,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedEBL = NULL;
                     m_pSelectedDR = NULL;
                     m_pSelectedGZ = NULL;
+                    m_pSelectedPIL = NULL;
                     m_pFoundODPoint = NULL;
                     m_bPathEditing = false;
                     bret = true;
@@ -1988,6 +1999,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedEBL = NULL;
                 m_pSelectedDR = NULL;
                 m_pSelectedGZ = NULL;
+                m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
                 bret = TRUE;
@@ -2002,6 +2014,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pFoundODPoint->m_bPtIsSelected = false;
                     if(m_pSelectedEBL)
                         m_pSelectedEBL->MoveEndPoint();
+                    if(m_pSelectedPIL)
+                        m_pSelectedPIL->MoveEndPoint();
                 }
                 if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                     m_pSelectedGZ->UpdateGZSelectablePath();
@@ -2085,6 +2099,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedEBL = NULL;
                 m_pSelectedDR = NULL;
                 m_pSelectedGZ = NULL;
+                m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
                 
                 bret = TRUE;
@@ -2111,6 +2126,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pFoundODPoint->m_lat = m_cursor_lat;
                         m_pFoundODPoint->m_lon = m_cursor_lon;
                     }
+                    if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                        m_pSelectedEBL->Resize();
+                    } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                        m_pSelectedPIL = (PIL *)m_pSelectedPath;
+                        m_pSelectedPIL->Resize();
+                    }
                     g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
                     m_pSelectedPath->FinalizeForRendering();
                     m_pSelectedPath->UpdateSegmentDistances();
@@ -2133,13 +2155,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     if(m_pSelectedPath) {
                         if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                             m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                            m_pSelectedEBL->ResizeVRM( );
+                            m_pSelectedEBL->Resize( );
                         } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                             m_pSelectedGZ = (GZ *)m_pSelectedPath;
                             m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
                         } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
                             m_pSelectedPIL = (PIL *)m_pSelectedPath;
-                            m_pSelectedPIL->RedrawPIL( );
+                            m_pSelectedPIL->Resize();
                         }
                     }
 
@@ -3628,13 +3650,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
                 RenderExtraPathLegInfo( dc, destPoint, info );
         } else if(pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
             ODDC dc;
-            std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
-            while(it != m_pSelectedPIL->PilLineList.end()) {
-                if(it->iID == m_iPILId) break;
-                it++;
-            }
-
-            wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
+            wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, m_pSelectedPIL->m_dLength, m_cursorPoint);
             if(info.length() > 0)
                 RenderExtraPathLegInfo(dc, m_cursorPoint, info);
         }
@@ -3642,7 +3658,6 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
     }
         
     /* ODPoints not drawn as part of routes */
-    ViewPort vp = (ViewPort &)pivp;
     if( pivp.bValid && g_pODPointList ) {
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();

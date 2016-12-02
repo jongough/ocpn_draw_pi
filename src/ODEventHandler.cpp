@@ -1046,15 +1046,26 @@ void ODEventHandler::PopupMenu( int seltype )
 #else
             tName.Append( m_pSelectedPath->m_sTypeString );
 #endif
+            if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                tName.Append( _T(" ") );
+                tName.Append( _("Control Line") );
+            }
             menuPath = new wxMenu( tName );
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
         }
         else {
+            wxString tName;
 #if wxCHECK_VERSION(3,0,0)
-            menuPath = new wxMenu( _(m_pSelectedPath->m_sTypeString) );
+            tName.Append( _(m_pSelectedPath->m_sTypeString) );
 #else
-            menuPath = new wxMenu( m_pSelectedPath->m_sTypeString );
+            tName.Append( m_pSelectedPath->m_sTypeString );
 #endif
+            if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                tName.Append( _T(" ") );
+                tName.Append( _("Control Line") );
+            }
+            menuPath = new wxMenu( tName );
+
             MenuAppend( menuPath, ID_PATH_MENU_PROPERTIES, _( "Properties..." ) );
             if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                 if(!m_pEBL->m_bCentreOnBoat) {

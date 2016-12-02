@@ -81,7 +81,6 @@ public:
 private:
     void        SetTableCellBackgroundColours(void);
     
-    double      m_dValidator;
     double      m_dODPointRangRingStepValidator;
     double      m_dSOGValidator;
     double      m_dODPointArrivalRadiusValidator;

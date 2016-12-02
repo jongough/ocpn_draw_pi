@@ -46,6 +46,7 @@ class PILProp : public ODPathPropertiesDialogImpl
 
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
+        using ODPathPropertiesDialogImpl::UpdateProperties;
         bool UpdateProperties( PIL *pInPIL );
         bool UpdateProperties( void );
         void SetPath( ODPath *pP );
@@ -70,7 +71,6 @@ class PILProp : public ODPathPropertiesDialogImpl
         double  m_dODPILLengthValidator;
         bool    m_bLockPILAngle;
         bool    m_bLockPILLength;
-        bool    m_bSetLocale;
         bool    m_bLockUpdate;
         
 };
