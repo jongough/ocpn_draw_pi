@@ -122,7 +122,7 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
     else return wxT("");
 }
 
-bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double lon )
+bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
     int i, j;
@@ -157,7 +157,7 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
     return bInPoly;
 }
 
-bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
+bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
     bool bBoundaryFound = false;
@@ -198,7 +198,7 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon )
     return bInPoly;
 }
 
-wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type )
+wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
     ODPoint *pop;
@@ -245,9 +245,46 @@ wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type
     else return wxT("");
 }
 
-bool BoundaryMan::FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, double lat, double lon )
+bool BoundaryMan::FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
+    bool l_bOK = false;
+    
+    switch (state) {
+        case ID_POINT_STATE_ANY:
+            l_bOK = true;
+            break;
+        case ID_POINT_STATE_ACTIVE:
+            if(pBoundaryPoint->IsActive()) l_bOK = true;
+            else l_bOK = false;
+            break;
+        case ID_POINT_STATE_INACTIVE:
+            if(!pBoundaryPoint->IsActive()) l_bOK = true;
+            else l_bOK = false;
+            break;
+    }
+    
+    if(l_bOK) {
+        switch (type) {
+            case ID_BOUNDARY_ANY:
+                l_bOK = true;
+                break;
+            case ID_BOUNDARY_EXCLUSION:
+                if(!pBoundaryPoint->m_bExclusionBoundaryPoint) l_bOK = true;
+                else l_bOK = false;
+                break;
+            case ID_BOUNDARY_INCLUSION:
+                if(pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = true;
+                else l_bOK = false;
+                break;
+            case ID_BOUNDARY_NIETHER:
+                if(pBoundaryPoint->m_bExclusionBoundaryPoint || pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = false;
+                else l_bOK = true;
+                break;
+        }
+    }
+    
+    if(!l_bOK) return false;
     
     if(pBoundaryPoint->m_iODPointRangeRingsNumber > 0) {
         double l_dRangeRingSize = pBoundaryPoint->m_iODPointRangeRingsNumber * pBoundaryPoint->m_fODPointRangeRingsStep;
@@ -262,13 +299,50 @@ bool BoundaryMan::FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, doubl
     return bInPoly;
 }
 
-bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double lon )
+bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
     
     ODPoint *pPoint = g_pODPointMan->FindODPointByGUID( l_GUID );
     if(pPoint->m_sTypeString == wxT("Boundary Point")) {
         BoundaryPoint *pBoundaryPoint = (BoundaryPoint *) pPoint;
+        bool l_bOK = false;
+        
+        switch (state) {
+            case ID_POINT_STATE_ANY:
+                l_bOK = true;
+                break;
+            case ID_POINT_STATE_ACTIVE:
+                if(pBoundaryPoint->IsActive()) l_bOK = true;
+                else l_bOK = false;
+                break;
+            case ID_POINT_STATE_INACTIVE:
+                if(!pBoundaryPoint->IsActive()) l_bOK = true;
+                else l_bOK = false;
+                break;
+        }
+        
+        if(l_bOK) {
+            switch (type) {
+                case ID_BOUNDARY_ANY:
+                    l_bOK = true;
+                    break;
+                case ID_BOUNDARY_EXCLUSION:
+                    if(!pBoundaryPoint->m_bExclusionBoundaryPoint) l_bOK = true;
+                    else l_bOK = false;
+                    break;
+                case ID_BOUNDARY_INCLUSION:
+                    if(pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = true;
+                    else l_bOK = false;
+                    break;
+                case ID_BOUNDARY_NIETHER:
+                    if(pBoundaryPoint->m_bExclusionBoundaryPoint || pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = false;
+                    else l_bOK = true;
+                    break;
+            }
+        }
+        if(!l_bOK) return false;
+        
         if(pBoundaryPoint->m_iODPointRangeRingsNumber > 0) {
             double l_dRangeRingSize = pBoundaryPoint->m_iODPointRangeRingsNumber * pBoundaryPoint->m_fODPointRangeRingsStep;
             double brg;

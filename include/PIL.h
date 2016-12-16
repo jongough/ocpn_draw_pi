@@ -1,11 +1,9 @@
 /***************************************************************************
- *
+ * 
  * Project:  OpenCPN
- * Purpose:  Boundary Properties
- * Author:   Jon Gough
  *
  ***************************************************************************
- *   Copyright (C) 2010 by David S. Register                               *
+ *   Copyright (C) 2013 by David S. Register                               *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,37 +21,49 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef BOUNDARYPROP_H
-#define BOUNDARYPROP_H
+#ifndef PIL_H
+#define PIL_H
 
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
+#include "EBL.h"
 
-//#include "PathProp.h"
-#include "ODPathPropertiesDialogImpl.h"
-
-class Boundary;
-
-//class BoundaryProp : public PathProp
-class BoundaryProp : public ODPathPropertiesDialogImpl
-{
-    public:
-        BoundaryProp();
-        BoundaryProp( wxWindow* parent, wxWindowID id = SYMBOL_PATHPROP_IDNAME, const wxString& caption = SYMBOL_PATHPROP_TITLE, const wxPoint& pos = SYMBOL_PATHPROP_POSITION,
-                        const wxSize& size = SYMBOL_PATHPROP_SIZE, long style = SYMBOL_PATHPROP_STYLE );
-        virtual ~BoundaryProp();
-        
-        using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( Boundary *pInBoundary );
-        
-    protected:
-        bool SaveChanges( void );
-        void OnRadioBoxBoundaryType( wxCommandEvent& event );
-        
-        unsigned int    m_uiFillTransparency;
-        
-    private:
+struct PILLINE {
+    int         iID;
+    wxString    sName;
+    wxString    sDescription;
+    double      dOffset;
+    wxColour    wxcActiveColour;
+    wxColour    wxcInActiveColour;
+    double      dStyle;
+    double      dWidth;
 };
 
-#endif // BOUNDARYPROP_H
+
+class PIL :  public EBL
+{
+    public:
+        PIL();
+        virtual ~PIL();
+        int     AddLine(wxString sName, wxString sDescription, double dOffset);
+        void    AddLine(PILLINE PilLine);
+        void    DelLine(int iID);
+        void    ChangeOffset(int iID, double dOffset);
+        void    Draw( ODDC& dc, PlugIn_ViewPort &VP );
+        void    DrawGL( PlugIn_ViewPort &piVP );
+        void    DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
+        void    CentreOnBoat( bool bMoveEndPoint );
+        void    MovePILLine(double dLat, double dLon, int iPILId);
+
+        std::list<PILLINE> PilLineList;
+        
+    protected:
+
+    private:
+        void    RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
+        void    CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint );
+        int     m_iStyleOffsetLine;
+        int     m_iWidthOffsetLine;
+};
+
+WX_DECLARE_LIST(PIL, PILList); // establish class PIL list member
+
+#endif // PIL_H

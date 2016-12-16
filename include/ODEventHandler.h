@@ -38,6 +38,7 @@ class TextPoint;
 class EBL;
 class DR;
 class GZ;
+class PIL;
 
 #define TIMER_OD_1 999
 
@@ -63,11 +64,15 @@ class ODEventHandler : public wxEvtHandler
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
         void PopupMenu( int seltype );
         void SetPath( ODPath *path );
+        void SetBoundaryList( std::list<Boundary*> pBoundaryList );
         void SetPoint ( ODPoint *point );
         void SetPoint ( TextPoint *point );
+        void SetPIL( int iPIL );
         void SetCanvas( ChartCanvas *canvas );
         void SetLatLon( double lat, double lon );
         void DeletePath( void );
+        void DeletePaths( void );
+        void DeletePIL( void );
         
     protected:
     private:
@@ -83,7 +88,10 @@ class ODEventHandler : public wxEvtHandler
         EBL             *m_pEBL;
         DR              *m_pDR;
         GZ              *m_pGZ;
-        
+        PIL             *m_pPIL;
+        std::list<Boundary*> m_pBoundaryList;
+        int             m_iFoundPIL;
+
         DECLARE_EVENT_TABLE();
 };
 

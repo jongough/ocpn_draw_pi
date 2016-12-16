@@ -30,6 +30,7 @@
 #endif
 
 #include "ODPathPropertiesDialogImpl.h"
+#include "PILPropertiesDialogImpl.h"
 #include "pathmanagerdialog.h"
 #include "ODPath.h"
 #include "Boundary.h"
@@ -37,6 +38,7 @@
 #include "EBL.h"
 #include "DR.h"
 #include "GZ.h"
+#include "PIL.h"
 #include "ocpn_draw_pi.h"
 #include "ODConfig.h"
 #include "ODEventHandler.h"
@@ -69,6 +71,7 @@ extern bool                 g_bExclusionBoundary;
 extern bool                 g_bInclusionBoundary;
 extern int                  g_iInclusionBoundarySize;
 extern ODEventHandler       *g_ODEventHandler;
+extern PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
@@ -195,7 +198,9 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
             sPropertiesType.append(_("EBL Point &Properties"));
         else if(m_pPath->m_sTypeString == wxT("DR")) 
             sPropertiesType.append(_("DR Point &Properties"));
-                    
+        else if(m_pPath->m_sTypeString == wxT("PIL"))
+            sPropertiesType.append(_("PIL Point &Properties"));
+
         sPropertiesType.append( _(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
@@ -209,6 +214,23 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
     l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
 
+void ODPathPropertiesDialogImpl::OnRightClickPIL( wxMouseEvent& event )
+{
+    wxMenu menu;
+    if( m_listCtrlPILList->GetSelectedItemCount() == 0 ) return;
+    wxString sPropertiesType(wxT(""));
+    sPropertiesType.append( _(" &Properties...") );
+    wxMenuItem* editItem = menu.Append( ID_PILPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
+    editItem->Enable( m_listCtrlPILList->GetSelectedItemCount() == 1 );
+
+    wxMenuItem* delItem = menu.Append( ID_PILPROP_MENU_REMOVE, _("&Remove Selected") );
+    delItem->Enable( m_listCtrlPILList->GetSelectedItemCount() > 0 );
+
+    ChartCanvas *l_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
+    l_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    l_parentcanvas->PopupMenu( &menu );
+    l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+}
 void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
 {
 // TODO: Implement OnPathPropertiesDoubleClick
@@ -222,6 +244,27 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     if( !op ) return;
     
     PathManagerDialog::ODPointShowPropertiesDialog( op, this );
+}
+
+void ODPathPropertiesDialogImpl::OnLeftDoubleClickPIL( wxMouseEvent& event )
+{
+    // TODO: Implement OnPathPropertiesDoubleClick
+    long item = -1;
+
+    item = m_listCtrlPILList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+
+    if( item == -1 ) return;
+
+    if( NULL == g_PILIndexLinePropDialog )
+        g_PILIndexLinePropDialog = new PILPropertiesDialogImpl( this );
+
+    DimeWindow( g_PILIndexLinePropDialog );
+    g_PILIndexLinePropDialog->UpdateProperties( m_pPIL, wxAtoi(m_listCtrlPILList->GetItemText(item, 0)) );
+
+    if( !g_PILIndexLinePropDialog->IsShown() )
+        g_PILIndexLinePropDialog->Show();
+
+
 }
 
 void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points )
@@ -254,6 +297,10 @@ void ODPathPropertiesDialogImpl::SetPathAndUpdate( ODPath *pP, bool only_points 
         if(pP->m_sTypeString == wxT("Guard Zone")) {
             m_pGZ = (GZ *)pP;
             m_pPath = m_pGZ;
+        }
+        if(pP->m_sTypeString == wxT("PIL")) {
+            m_pPIL = (PIL *)pP;
+            m_pPath = m_pPIL;
         }
         m_pPath->m_bPathPropertiesBlink = true;
         
@@ -302,6 +349,10 @@ void ODPathPropertiesDialogImpl::SetPath( ODPath *pP )
         m_pGZ = (GZ *)pP;
         m_pPath = m_pGZ;
     }
+    if(pP->m_sTypeString == wxT("PIL")) {
+        m_pPIL = (PIL *)pP;
+        m_pPath = m_pPIL;
+    }
     m_pPath->m_bPathPropertiesBlink = true;
     
     m_textCtrlName->SetValue( m_pPath->m_PathNameString );
@@ -325,6 +376,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     EBL *pEBL = NULL;
     DR *pDR = NULL;
     GZ *pGZ = NULL;
+    PIL *pPIL = NULL;
     
     if( NULL == pInPath ) return false;
     ::wxBeginBusyCursor();
@@ -343,6 +395,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("Guard Zone")) {
         pGZ = (GZ *)pInPath;
         pPath = pGZ;
+    }else if(pInPath->m_sTypeString == wxT("PIL")) {
+        pPIL = (PIL *)pInPath;
+        pPath = pPIL;
     } else {
         pPath = pInPath;
     }
@@ -663,6 +718,8 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
 {
     m_pPath = NULL;
     SetPointsListHeadings();
+    m_staticTextTotalLength->Hide();
+    m_textCtrlTotalLength->Hide();
     m_staticTextFillColour->Hide();
     m_staticTextFillColour->Enable( false );
     m_colourPickerFillColour->Hide();
@@ -678,6 +735,8 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_radioBoxBoundaryType->Hide();
     m_radioBoxBoundaryType->Enable( false );
     m_fgSizerPath->ShowItems( false );
+    m_checkBoxPathShowArrow->Hide();
+    m_checkBoxPathShowArrow->Enable( false );
     m_radioBoxPathPersistence->Hide();
     m_radioBoxPathPersistence->Enable( false );
     m_checkBoxShowBoundaryPoints->Hide();
@@ -685,8 +744,6 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_fgSizerEBL->ShowItems( false );
     m_checkBoxEBLFixedEndPosition->Hide();
     m_checkBoxEBLFixedEndPosition->Enable( false );
-    m_checkBoxPathShowArrow->Hide();
-    m_checkBoxPathShowArrow->Enable( false );
     m_radioBoxPathPersistence->Hide();
     m_radioBoxPathPersistence->Enable( false );
     m_checkBoxRotateWithBoat->Hide();
@@ -697,6 +754,7 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_staticTextEBLAngle->Enable(false);
     m_textCtrlEBLAngle->Hide();
     m_textCtrlEBLAngle->Enable(false);
+    m_fgSizerPIL->ShowItems(false);
     m_fgSizerGZ->ShowItems( false );
     m_checkBoxRotateGZWithBoat->Hide();
     m_checkBoxRotateGZWithBoat->Enable( false );
@@ -718,8 +776,10 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_staticTextGZSecondLength->Enable( false );
     m_textCtrlGZSecondLength->Hide();
     m_textCtrlGZSecondLength->Enable( false );
-    
-    
+    m_bSizerPathPoints->ShowItems( true );
+    m_listCtrlODPoints->Hide();
+    m_bSizerPILLines->ShowItems( false );
+    m_listCtrlPILList->Hide();
 
     return;
 }
@@ -760,6 +820,23 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
             if( !odp ) break;
             
             g_pPathManagerDialog->ODPointShowPropertiesDialog( odp, GetParent() );
+            break;
+        }
+        case ID_PILPROP_MENU_EDIT_PROPERTIES: {
+            long item = -1;
+
+            item = m_listCtrlPILList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+
+            if( item == -1 ) break;
+
+            if( NULL == g_PILIndexLinePropDialog )
+                g_PILIndexLinePropDialog = new PILPropertiesDialogImpl( this );
+
+            DimeWindow( g_PILIndexLinePropDialog );
+            g_PILIndexLinePropDialog->UpdateProperties( m_pPIL, wxAtoi(m_listCtrlPILList->GetItemText(item, 0)) );
+
+            if( !g_PILIndexLinePropDialog->IsShown() )
+                g_PILIndexLinePropDialog->Show();
             break;
         }
     }

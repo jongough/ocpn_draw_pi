@@ -86,7 +86,6 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
     double tlat, tlon;
     wxPoint r1;
     ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-    //cc1->GetCanvasPointPix( tlat, tlon, &r1 );
     GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
     
     double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
@@ -132,7 +131,6 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     double tlat, tlon;
     wxPoint r1;
     ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-    //cc1->GetCanvasPointPix( tlat, tlon, &r1 );
     GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
     
     double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +

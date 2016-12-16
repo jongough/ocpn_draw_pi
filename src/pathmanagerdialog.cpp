@@ -58,6 +58,8 @@
 #include "DRProp.h"
 #include "GZ.h"
 #include "GZProp.h"
+#include "PIL.h"
+#include "PILProp.h"
 #include "PathMan.h"
 #include "PointMan.h"
 #include "ODPoint.h"
@@ -147,6 +149,7 @@ extern BoundaryProp *g_pBoundaryPropDialog;
 extern EBLProp      *g_pEBLPropDialog;
 extern DRProp       *g_pDRPropDialog;
 extern GZProp       *g_pGZPropDialog;
+extern PILProp      *g_pPILPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
@@ -940,9 +943,9 @@ void PathManagerDialog::ZoomtoPath( ODPath *path )
 {
 
     // Calculate bbox center
-    wxBoundingBox RBBox = path->GetBBox();
-    double clat = RBBox.GetMinY() + ( RBBox.GetHeight() / 2 );
-    double clon = RBBox.GetMinX() + ( RBBox.GetWidth() / 2 );
+    LLBBox RBBox = path->GetBBox();
+    double clat = RBBox.GetMinLat() + ( ( RBBox.GetMaxLat() - RBBox.GetMinLat() ) / 2 );
+    double clon = RBBox.GetMinLon() + ( ( RBBox.GetMaxLon() - RBBox.GetMinLon() ) / 2 );
 
     if( clon > 180. ) clon -= 360.;
     else
@@ -952,21 +955,17 @@ void PathManagerDialog::ZoomtoPath( ODPath *path )
     double rw, rh, ppm; // route width, height, final ppm scale to use
     int ww, wh; // chart window width, height
     // route bbox width in nm
-    DistanceBearingMercator_Plugin( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMinY(),
-            RBBox.GetMaxX(), NULL, &rw );
+    DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMinLat(),
+            RBBox.GetMaxLon(), NULL, &rw );
     // route bbox height in nm
-    DistanceBearingMercator_Plugin( RBBox.GetMinY(), RBBox.GetMinX(), RBBox.GetMaxY(),
-            RBBox.GetMinX(), NULL, &rh );
+    DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMaxLat(),
+            RBBox.GetMinLon(), NULL, &rh );
 
     ocpncc1->GetSize( &ww, &wh );
 
     ppm = wxMin(ww/(rw*1852), wh/(rh*1852)) * ( 100 - fabs( clat ) ) / 90;
 
     ppm = wxMin(ppm, 1.0);
-
-//      ocpncc1->ClearbFollow();
-//      ocpncc1->SetViewPoint(clat, clon, ppm, 0, ocpncc1->GetVPRotation(), CURRENT_RENDER);
-//        RequestRefresh( GetOCPNCanvasWindow() );
 
     JumpToPosition( clat, clon, ppm );
 
@@ -985,7 +984,6 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
     bool busy = false;
     if( m_pPathListCtrl->GetSelectedItemCount() ) {
         ::wxBeginBusyCursor();
-//        ocpncc1->CancelMousePath();
         m_bNeedConfigFlush = true;
         busy = true;
     }
@@ -1030,8 +1028,6 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
 
     if( dialog_ret == wxID_YES ) {
 
-//        ocpncc1->CancelMousePath();
-
         g_pPathMan->DeleteAllPaths();
 
         m_lastPathItem = -1;
@@ -1067,6 +1063,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
     EBL *l_pEBL = NULL;
     DR  *l_pDR = NULL;
     GZ  *l_pGZ = NULL;
+    PIL *l_pPIL = NULL;
     
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
         if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
@@ -1100,6 +1097,14 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         l_pPath = l_pGZ;
         g_pGZPropDialog->SetPath( l_pGZ );
         g_pGZPropDialog->UpdateProperties( l_pGZ );
+    } else if(inpath->m_sTypeString == wxT("PIL")) {
+        if( NULL == g_pPILPropDialog )          // There is one global instance of the ELBProp Dialog
+            g_pPILPropDialog = new PILProp( GetParent() );
+        g_pODPathPropDialog = g_pPILPropDialog;
+        l_pPIL = (PIL *) inpath;
+        l_pPath = l_pPIL;
+        g_pPILPropDialog->SetPath( l_pPIL );
+        g_pPILPropDialog->UpdateProperties( l_pPIL );
     } else {
         if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
             g_pPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
@@ -1120,6 +1125,8 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
             g_pODPathPropDialog->SetDialogTitle(_("DR Properties"));
         else if(l_pPath->m_sTypeString == wxT("Guard Zone")) 
             g_pODPathPropDialog->SetDialogTitle(_("Guard Zone Properties"));
+        else if(l_pPath->m_sTypeString == wxT("PIL"))
+            g_pODPathPropDialog->SetDialogTitle(_("Parallel Index Line Properties"));
     }
     else {
         wxString caption( wxS("") );
@@ -1147,9 +1154,6 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
 
 void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
 {
-//      if (ocpncc1->m_bFollow)
-//            return;
-
     // Zoom into the bounding box of the selected route
     long item = -1;
     item = m_pPathListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -1290,8 +1294,7 @@ void PathManagerDialog::OnPathSelected( wxListEvent &event )
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
 
-    if( ocpncc1 )
-        RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetOCPNCanvasWindow() );
 
     UpdatePathButtons();
 
@@ -1306,8 +1309,7 @@ void PathManagerDialog::OnPathDeSelected( wxListEvent &event )
     
     m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
     
-    if( ocpncc1 )
-        RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetOCPNCanvasWindow() );
     
     UpdatePathButtons();
     
@@ -1466,8 +1468,7 @@ void PathManagerDialog::OnODPointDeSelected( wxListEvent &event )
     ODPoint *point = (ODPoint *)m_pODPointListCtrl->GetItemData( event.m_itemIndex );
     point->m_bPathManagerBlink = false;
 
-    if( ocpncc1 )
-        RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetOCPNCanvasWindow() );
 
     UpdateODPointButtons();
 }

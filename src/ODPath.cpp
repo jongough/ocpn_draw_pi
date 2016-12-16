@@ -92,7 +92,7 @@ ODPath::ODPath( void )
     m_bTemporary = false;
     
     m_bNeedsUpdateBBox = true;
-    RBBox.Reset();
+    RBBox.Set(0.0, 0.0, 0.0, 0.0);
     m_bcrosses_idl = false;
 
     m_LayerID = 0;
@@ -264,10 +264,9 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         {
             //    Handle offscreen points
             LLBBox llbb;
-            llbb.SetMin(VP.lon_min, VP.lat_min);
-            llbb.SetMax(VP.lon_max, VP.lat_max);
-            bool b_2_on = llbb.PointInBox( pOp2->m_lon, pOp2->m_lat, 0 );
-            bool b_1_on = llbb.PointInBox( pOp1->m_lon, pOp1->m_lat, 0 );
+            llbb.Set(VP.lat_min, VP.lon_min, VP.lat_max, VP.lon_max);
+            bool b_2_on = llbb.Contains( pOp2->m_lat, pOp2->m_lon );
+            bool b_1_on = llbb.Contains( pOp1->m_lat, pOp1->m_lon );
 
             //Simple case
             if( b_1_on && b_2_on ) RenderSegment( dc, ppt1.x, ppt1.y, ppt2.x, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth ); // with no arrows
@@ -762,7 +761,7 @@ void ODPath::FinalizeForRendering()
     m_bNeedsUpdateBBox = true;
 }
 
-wxBoundingBox ODPath::GetBBox( void )
+LLBBox ODPath::GetBBox( void )
 {
     if(!m_bNeedsUpdateBBox)
         return RBBox;
@@ -772,7 +771,6 @@ wxBoundingBox ODPath::GetBBox( void )
     double bbox_xmax = -180;
     double bbox_ymax = -90.;
 
-    RBBox.Reset();
     m_bcrosses_idl = CalculateCrossesIDL();
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
@@ -806,8 +804,7 @@ wxBoundingBox ODPath::GetBBox( void )
         }
     }
 
-    RBBox.Expand( bbox_xmin, bbox_ymin );
-    RBBox.Expand( bbox_xmax, bbox_ymax );
+    RBBox.Set(bbox_ymin, bbox_xmin, bbox_ymax, bbox_xmax);
 
     m_bNeedsUpdateBBox = false;
     return RBBox;
@@ -1168,6 +1165,14 @@ void ODPath::MoveAllPoints( double inc_lat, double inc_lon )
         op->m_lon -= inc_lon;
         node = node->GetNext();
     }
+}
+
+void ODPath::MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, ODPoint* secondPoint )
+{
+    firstPoint->m_lat -= inc_lat;
+    firstPoint->m_lon -= inc_lon;
+    secondPoint->m_lat -= inc_lat;
+    secondPoint->m_lon -= inc_lon;
 }
 
 void ODPath::SetPointVisibility()

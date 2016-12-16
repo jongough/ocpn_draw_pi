@@ -77,7 +77,7 @@ public:
     void UpdateSegmentDistances();
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
-    virtual wxBoundingBox GetBBox();
+    virtual LLBBox GetBBox();
     void SetnPoints(void){ m_nPoints = m_pODPointList->GetCount(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);
@@ -112,6 +112,7 @@ public:
     
     void RemovePointFromPath( ODPoint* point, ODPath* path );
     virtual void MoveAllPoints( double inc_lat, double inc_lon );
+    virtual void MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, ODPoint* secondPoint );
     virtual void SetPointVisibility( void );
 
     int         m_ConfigPathNum;
@@ -159,8 +160,8 @@ public:
     bool        m_bODPointsVisible; // should the ODPoints on a path be drawn 
     
 protected:    
-    bool m_bNeedsUpdateBBox;
-    wxBoundingBox     RBBox;
+    bool        m_bNeedsUpdateBBox;
+    LLBBox      RBBox;
 
     bool        CalculateCrossesIDL();
     int         m_nPoints;

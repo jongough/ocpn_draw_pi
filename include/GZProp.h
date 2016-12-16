@@ -46,6 +46,7 @@ class GZProp : public ODPathPropertiesDialogImpl
         void OnRotateWithBoat( wxCommandEvent& event );
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
+        using ODPathPropertiesDialogImpl::UpdateProperties;
         bool UpdateProperties( GZ *pInGZ );
         bool UpdateProperties( void );
         bool SaveChanges( void );

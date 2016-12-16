@@ -72,10 +72,11 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_textCtrlGZSecondLength->Show();
     m_textCtrlGZSecondLength->Enable( true );
     m_fgSizerPath->ShowItems( true );
-    m_checkBoxPathShowArrow->Hide();
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
+    m_bSizerPathPoints->ShowItems( true );
+    m_listCtrlODPoints->Show();
     
 
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
@@ -213,7 +214,6 @@ bool GZProp::SaveChanges( void )
     m_pGZ->m_uiFillTransparency = m_sliderFillTransparency->GetValue();
     
     wxColour l_GZOrigColour = m_pGZ->GetCurrentColour();
-    ODPoint *pFirstPoint = m_pGZ->m_pODPointList->GetFirst()->GetData();
 
     bool l_bUpdatePath = false;
     double l_dLength;

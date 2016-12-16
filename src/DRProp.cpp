@@ -39,10 +39,14 @@ DRProp::DRProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     
     m_fgSizerPath->ShowItems( true );
     
+    m_staticTextTotalLength->Show();
+    m_textCtrlTotalLength->Show();
     m_checkBoxPathShowArrow->Show();
     m_checkBoxPathShowArrow->Enable( true );
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
+    m_bSizerPathPoints->ShowItems( true );
+    m_listCtrlODPoints->Show();
     
     this->GetSizer()->Fit( this );
     this->Layout();

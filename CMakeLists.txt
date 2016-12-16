@@ -15,9 +15,9 @@ SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
-SET(VERSION_MINOR "2")
-SET(VERSION_PATCH "2")
-SET(VERSION_DATE "06/08/2016")
+SET(VERSION_MINOR "3")
+SET(VERSION_PATCH "15")
+SET(VERSION_DATE "16/12/2016")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
@@ -77,6 +77,10 @@ SET(SRCS
         src/ODToolbarDef.cpp
         src/ODToolbarImpl.cpp
         src/ODUtils.cpp
+        src/PIL.cpp
+        src/PILProp.cpp
+        src/PILPropertiesDialogDef.cpp
+        src/PILPropertiesDialogImpl.cpp
         src/TextPoint.cpp
      )
 
@@ -121,6 +125,10 @@ SET(HDRS
         include/ODToolbarImpl.h
         include/ODUtils.h
         include/ODvector2D.h
+        include/PIL.h
+        include/PILPropertiesDialogDef.h
+        include/PILPropertiesDialogImpl.h
+        include/PILProp.h
         include/TextPoint.h
 )
 
@@ -310,9 +318,13 @@ IF(OD_USE_SVG)
 
     ADD_DEFINITIONS(-DODraw_USE_SVG)
     IF(WIN32)
+#      SET(SVG_LIBS
+#            ${CMAKE_BINARY_DIR}/cairo.lib
+#            ${CMAKE_BINARY_DIR}/expat.lib
+#      )
       SET(SVG_LIBS
-            ${CMAKE_BINARY_DIR}/cairo.lib
-            ${CMAKE_BINARY_DIR}/expat.lib
+        ${CMAKE_SOURCE_DIR}/buildwin/gtk/cairo.lib
+        ${CMAKE_SOURCE_DIR}/buildwin/expat-2.1.0/expat.lib
       )
     ELSE(WIN32)
       SET(SVG_LIBS ${CAIRO_LIBRARY} ${EXPAT_LIBRARIES} ${GTK_LIBRARIES})
@@ -321,7 +333,7 @@ IF(OD_USE_SVG)
     INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude/wxsvg)
     INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude/wxSVGXML)
     IF(WIN32)
-        SET(EXTRA_LIBS ${EXTRA_LIBS} ${SVG_LIBS} wxSVG)
+        SET(EXTRA_LIBS ${EXTRA_LIBS} ${SVG_LIBS} ${CMAKE_BINARY_DIR}/wxSVG.lib)
     ENDIF(WIN32)
   ENDIF(NOT QT_ANDROID)
 ENDIF(OD_USE_SVG)

@@ -50,6 +50,7 @@
 #include "EBL.h"
 #include "DR.h"
 #include "GZ.h"
+#include "PIL.h"
 
 #include "georef.h"
 #include "pluginmanager.h"
@@ -77,6 +78,7 @@ extern BoundaryList *g_pBoundaryList;
 extern EBLList      *g_pEBLList;
 extern DRList       *g_pDRList;
 extern GZList       *g_pGZList;
+extern PILList      *g_pPILList;
 extern ODConfig     *g_pODConfig;
 extern ODSelect      *g_pODSelect;
 extern PlugInManager  *g_OD_pi_manager;
@@ -143,7 +145,8 @@ bool PathMan::DeletePath( ODPath *pPath )
         if(pPath->m_sTypeString == wxT("EBL")) g_pEBLList->DeleteObject( (EBL *)pPath );
         if(pPath->m_sTypeString == wxT("DR")) g_pDRList->DeleteObject( (DR *)pPath );
         if(pPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->DeleteObject( (GZ *)pPath );
-        
+        if(pPath->m_sTypeString == wxT("PIL")) g_pPILList->DeleteObject( (PIL *)pPath );
+
         // walk the path, tentatively deleting/marking points used only by this route
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {

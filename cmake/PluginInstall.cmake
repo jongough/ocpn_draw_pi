@@ -152,8 +152,8 @@ IF(WIN32)
     INSTALL(DIRECTORY UserIcons DESTINATION "${INSTALL_DIRECTORY}")
     MESSAGE (STATUS "Install Data: C:/ProgramData/plugins/${PACKAGE_NAME}")
   ENDIF(EXISTS ${PROJECT_SOURCE_DIR}/UserIcons)
-  
-  #fix for missing dll's 
+
+  #fix for missing dll's
   #FILE(GLOB gtkdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/gtk/*.dll")
   #    INSTALL(FILES ${gtkdll_files} DESTINATION ".")
   #    FILE(GLOB expatdll_files "${CMAKE_CURRENT_SOURCE_DIR}/buildwin/expat-2.1.0/*.dll")

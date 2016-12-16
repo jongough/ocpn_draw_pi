@@ -140,7 +140,8 @@ std::cout << x  << std::endl ; } while (0)
 //    Constants for right click menus
 enum
 {
-    ID_ODPOINT_MENU_GOTO = 1,
+    ID_MENU_NOITEM = 0,
+    ID_ODPOINT_MENU_GOTO,
     ID_ODPOINT_MENU_MOVE,
     ID_ODPOINT_MENU_DELPOINT,
     ID_ODPOINT_MENU_PROPERTIES,
@@ -151,6 +152,7 @@ enum
     ID_PATH_MENU_DEACTIVATE,
     ID_PATH_MENU_MOVE_POINT,
     ID_PATH_MENU_MOVE_PATH,
+    ID_PATH_MENU_MOVE_PATH_SEGMENT,
     ID_PATH_MENU_INSERT,
     ID_PATH_MENU_APPEND,
     ID_PATH_MENU_COPY,
@@ -172,6 +174,12 @@ enum
     ID_EBL_MENU_PICK_NEW_START,
     ID_EBL_MENU_VRM_MATCH_EBL_COLOUR,
     ID_DR_MENU_UPDATE_INITIAL_CONDITIONS,
+    ID_BOUNDARY_LIST_KEEP_MENU,
+    ID_BOUNDARY_LIST_DELETE_MENU,
+    ID_PIL_MENU_INDEX_LINE_PROPERTIES,
+    ID_PIL_MENU_ADD_INDEX_LINE,
+    ID_PIL_MENU_MOVE_INDEX_LINE,
+    ID_PIL_MENU_DELETE_INDEX_LINE,
 
     ID_UNDO,
     ID_REDO,
@@ -193,6 +201,7 @@ enum
     ID_MODE_EBL,
     ID_MODE_DR,
     ID_MODE_GZ,
+    ID_MODE_PIL,
     
     ID_MODE_LAST
 };
@@ -228,6 +237,15 @@ enum {
     ID_PATH_STATE_LAST
 };
 
+// Point states
+enum {
+    ID_POINT_STATE_ANY = 0,
+    ID_POINT_STATE_ACTIVE,
+    ID_POINT_STATE_INACTIVE,
+    
+    ID_POINT_STATE_LAST
+};
+
 enum {
     ID_PERSISTENT = 0,
     ID_PERSISTENT_CRASH,
@@ -241,9 +259,11 @@ enum {
 
 class Boundary;
 class BoundaryProp;
+class Boundarylist;
 class EBL;
 class DR;
 class GZ;
+class PIL;
 class SelectItem;
 class ODicons;
 
@@ -283,6 +303,7 @@ public:
     bool            m_bEBLEditing;
     bool            m_bEBLMoveOrigin;
     bool            m_bGZEditing;
+    int             m_iEditMode;
 
     
 
@@ -362,14 +383,12 @@ public:
     wxCursor    *pCursorUpRight;
     wxCursor    *pCursorDownLeft;
     wxCursor    *pCursorDownRight;
-    wxCursor    *pCursorPencil;
     wxCursor    *pCursorArrow;
-    wxCursor    *pCursorCross;
+    wxCursor    *m_pCursorCross;
+    wxCursor    *m_pCursorPencil;
     wxCursor    *m_pTextCursorCross;
     
     wxCursor    *m_pCurrentCursor;
-    
-    int         nConfig_State;
     
     int         nPath_State;
     int         nBoundary_State;
@@ -378,6 +397,7 @@ public:
     int         nEBL_State;
     int         nDR_State;
     int         nGZ_State;
+    int         nPIL_State;
     bool        bKey_Path_Pressed;
     bool        bKey_Boundary_Pressed;
     bool        bKey_Point_Pressed;
@@ -385,11 +405,14 @@ public:
     bool        bKey_EBL_Pressed;
     bool        bKey_DR_Pressed;
     bool        bKey_GZ_Pressed;
+    bool        bKey_PIL_Pressed;
     Boundary    *m_pMouseBoundary;
     EBL         *m_pMouseEBL;
     GZ          *m_pMouseGZ;
+    PIL         *m_pMousePIL;
     ODPoint     *m_pEBLBoatPoint;
     ODPath        *m_pSelectedPath;
+    int         m_iPILId;
     ODPoint   *m_pFoundODPoint;
     ODPoint   *m_pFoundODPointSecond;
     wxPoint     r_rband;
@@ -421,7 +444,7 @@ public:
     double  m_view_scale;
     
     ODicons     *m_pODicons;
-    
+
 
 private:
     void    OnTimer(wxTimerEvent& ev);
@@ -442,7 +465,8 @@ private:
     bool    CreateEBLLeftClick( wxMouseEvent &event );
     bool    CreateDRLeftClick( wxMouseEvent &event );
     bool    CreateGZLeftClick( wxMouseEvent &event );
-    
+    bool    CreatePILLeftClick( wxMouseEvent &event );
+
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     void    FindSelectedObject( void )    ;
@@ -462,7 +486,8 @@ private:
     EBL         *m_pSelectedEBL;
     DR          *m_pSelectedDR;
     GZ          *m_pSelectedGZ;
-    
+    PIL         *m_pSelectedPIL;
+
     bool        m_bDrawingBoundary;
     bool        m_bDrawingGZ;
     
@@ -481,6 +506,8 @@ private:
     double      m_PathMove_cursor_start_lon;
     
     wxDateTime  m_LastFixTime;
+
+    std::list<Boundary*> m_pBoundaryList;
     
 };
 

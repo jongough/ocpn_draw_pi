@@ -43,6 +43,8 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_staticTextTotalLength->Show();
+    m_textCtrlTotalLength->Show();
     m_staticTextFillColour->Show();
     m_staticTextFillColour->Enable( true );
     m_colourPickerFillColour->Show();
@@ -60,6 +62,8 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_radioBoxBoundaryType->Enable( true );
     m_checkBoxShowBoundaryPoints->Show();
     m_checkBoxShowBoundaryPoints->Enable( true );
+    m_bSizerPathPoints->ShowItems( true );
+    m_listCtrlODPoints->Show();
     
     this->GetSizer()->Fit( this );
     this->Layout();

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun 17 2015)
+// C++ code generated with wxFormBuilder (version Feb 16 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -53,6 +53,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxPanel* m_panelGeneral;
 		wxCheckBox* m_checkBoxConfirmObjectDelete;
 		wxCheckBox* m_checkBoxShowMagBearings;
+		wxCheckBox* m_checkBoxAllowLeftDrag;
 		wxStaticText* m_staticTextNavObjBackups;
 		wxSpinCtrl* m_spinCtrlNavObjBackups;
 		wxStaticText* m_staticTextEdgePan;
@@ -151,8 +152,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxMaintainWith;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxEBLShowArrow;
-		wxRadioBox* m_radioBoxEBLPersistence;
 		wxCheckBox* m_checkBoxShowVRM;
+		wxCheckBox* m_checkBoxShowPerpLine;
+		wxRadioBox* m_radioBoxEBLPersistence;
 		wxPanel* m_panelDR;
 		wxStaticText* m_staticTextActiveDRLineColour;
 		wxColourPickerCtrl* m_colourPickerDRLineColour;
@@ -217,6 +219,33 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxGZRotateWithBoat;
 		wxRadioBox* m_radioBoxGZMaintainWith;
 		wxRadioBox* m_radioBoxGZPersistence;
+		wxPanel* m_panelPIL;
+		wxFlexGridSizer* m_fgSizerPILSettings;
+		wxStaticText* m_staticTextPILStartPointIcon;
+		wxFlexGridSizer* m_fgSizerPILStartIconName;
+		wxBitmapComboBox* m_bcomboBoxPILStartIconName;
+		wxStaticText* m_staticTextPILEndPointIcon;
+		wxFlexGridSizer* m_fgSizerPILEndPointIcon;
+		wxBitmapComboBox* m_bcomboBoxPILEndIconName;
+		wxStaticText* m_staticTextPILDefaultOffset;
+		wxTextCtrl* m_textCtrlPILDefaultOffset;
+		wxStaticText* m_staticTextPILActiveCentreLineColour;
+		wxColourPickerCtrl* m_colourPickerPILActiveCentreLineColour;
+		wxStaticText* m_staticTextInactiveCentreLineColour;
+		wxColourPickerCtrl* m_colourPickerPILInActiveCentreLineColour;
+		wxStaticText* m_staticTextPILActiveOffsetLineColour;
+		wxColourPickerCtrl* m_colourPickerPILActiveOffsetLineColour;
+		wxStaticText* m_staticTextPILInactiveOffsetLineColour;
+		wxColourPickerCtrl* m_colourPickerPILInActiveOffsetLineColour;
+		wxStaticText* m_staticTextPILCentreLineWidth;
+		wxChoice* m_choicePILCentreLineWidth;
+		wxStaticText* m_staticTextPILCentreLineStyle;
+		wxChoice* m_choicePILCentreLineStyle;
+		wxStaticText* m_staticTextPILOffsetLineWidth;
+		wxChoice* m_choicePILOffsetLineWidth;
+		wxStaticText* m_staticTextPILOffsetLineStyle;
+		wxChoice* m_choicePILOffsetLineStyle;
+		wxRadioBox* m_radioBoxPILPersistence;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;

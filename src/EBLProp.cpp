@@ -45,6 +45,8 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_staticTextTotalLength->Show();
+    m_textCtrlTotalLength->Show();
     m_fgSizerEBL->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
@@ -68,6 +70,8 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlEBLAngle->Show();
     m_textCtrlEBLAngle->Enable(true);
     m_textCtrlEBLAngle->SetEditable(true);
+    m_bSizerPathPoints->ShowItems( true );
+    m_listCtrlODPoints->Show();
     
 
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
@@ -101,6 +105,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     m_radioBoxPathPersistence->SetSelection( pInEBL->m_iPersistenceType );
     m_checkBoxPathShowArrow->SetValue( pInEBL->m_bDrawArrow );
     m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
+    m_checkBoxShowPerpLine->SetValue( pInEBL->m_bPerpLine );
     m_checkBoxRotateWithBoat->SetValue( pInEBL->m_bRotateWithBoat );
     m_radioBoxMaintainWith->SetSelection( pInEBL->m_iMaintainWith );
     if(pInEBL->m_bCentreOnBoat)
@@ -228,7 +233,8 @@ bool EBLProp::SaveChanges( void )
         pFirstPoint->m_bShowODPointRangeRings = true;
     } else
         pFirstPoint->m_bShowODPointRangeRings = false;
-    
+    m_pEBL->m_bPerpLine = m_checkBoxShowPerpLine->GetValue();
+
     bool ret = ODPathPropertiesDialogImpl::SaveChanges();
     
     return ret;
@@ -258,12 +264,23 @@ void EBLProp::OnFixedEndPosition(wxCommandEvent& event)
         m_radioBoxMaintainWith->Enable(false);
         m_textCtrlEBLAngle->Enable(false);
         m_textCtrlTotalLength->SetEditable(false);
+        m_checkBoxShowPerpLine->SetValue(false);
     } else {
         m_radioBoxMaintainWith->Enable(true);
         m_textCtrlEBLAngle->Enable(true);
         m_textCtrlTotalLength->SetEditable(true);
     }
     ODPathPropertiesDialogDef::OnFixedEndPosition(event);
+}
+
+void EBLProp::OnPILCheckbox(wxCommandEvent& event)
+{
+    if(m_checkBoxShowPerpLine->IsChecked()) {
+        m_checkBoxEBLFixedEndPosition->SetValue(false);
+        m_radioBoxMaintainWith->Enable(true);
+        m_textCtrlEBLAngle->Enable(true);
+        m_textCtrlTotalLength->SetEditable(true);
+    }
 }
 
 void EBLProp::OnSetFocus( wxFocusEvent& event )

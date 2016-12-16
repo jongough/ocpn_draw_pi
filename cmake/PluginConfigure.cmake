@@ -46,10 +46,11 @@ IF(NOT MSVC)
  ENDIF(PROFILING)
 
  IF(NOT APPLE)
-  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
+  SET( CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
  ELSE(NOT APPLE)
-  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
+  SET( CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
  ENDIF(NOT APPLE)
+
 
 ENDIF(NOT MSVC)
 
@@ -65,8 +66,8 @@ SET(BUILD_SHARED_LIBS TRUE)
 FIND_PACKAGE(wxWidgets REQUIRED)
 
 IF(MSYS)
-# this is just a hack. I think the bug is in FindwxWidgets.cmake
-STRING( REGEX REPLACE "/usr/local" "\\\\;C:/MinGW/msys/1.0/usr/local" wxWidgets_INCLUDE_DIRS ${wxWidgets_INCLUDE_DIRS} )
+  # this is just a hack. I think the bug is in FindwxWidgets.cmake
+  STRING( REGEX REPLACE "/usr/local" "\\\\;C:/MinGW/msys/1.0/usr/local" wxWidgets_INCLUDE_DIRS ${wxWidgets_INCLUDE_DIRS} )
 ENDIF(MSYS)
 
 INCLUDE(${wxWidgets_USE_FILE})

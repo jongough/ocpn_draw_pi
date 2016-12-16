@@ -68,7 +68,8 @@ protected:
     ODIconCombo         *m_bODIComboBoxDRPointIconName;
     ODIconCombo         *m_bODIComboBoxGZFirstIconName;
     ODIconCombo         *m_bODIComboBoxGZSecondIconName;
-    
+    ODIconCombo         *m_bODIComboBoxPILStartIconName;
+    ODIconCombo         *m_bODIComboBoxPILEndIconName;
     
 public:
     /** Constructor */
@@ -80,13 +81,13 @@ public:
 private:
     void        SetTableCellBackgroundColours(void);
     
-    double      m_dValidator;
     double      m_dODPointRangRingStepValidator;
     double      m_dSOGValidator;
     double      m_dODPointArrivalRadiusValidator;
     double      m_dDRPathLengthValidator;
     double      m_dODPointIntervalValidator;
     double      m_dDRPointRangRingStepValidator;
+    double      m_dPILOffsetValidator;
     int         m_iCOGValidator;
     wxColour    m_cRed;
     wxColour    m_cGreen;

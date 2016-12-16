@@ -36,12 +36,14 @@
 #include "EBL.h"
 #include "DR.h"
 #include "GZ.h"
+#include "PIL.h"
 #include "ODUtils.h"
 
 extern PathList         *g_pPathList;
 extern BoundaryList     *g_pBoundaryList;
 extern EBLList          *g_pEBLList;
 extern GZList           *g_pGZList;
+extern PILList          *g_pPILList;
 extern ODPointList      *g_pODPointList;
 extern ODSelect         *g_pODSelect;
 pugi::xml_node          gpx_path_child;
@@ -386,9 +388,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
 {
     ODPath *pPath;
     Boundary * pBoundary = NULL;
-    EBL * pEBL = NULL;
+    EBL *pEBL = NULL;
     DR  *pDR = NULL;
     GZ  *pGZ = NULL;
+    PIL *pPIL = NULL;
     
 #ifndef __WXMSW__
     wxString *l_locale;
@@ -412,6 +415,9 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
     } else if(pInPath->m_sTypeString == wxT("Guard Zone")) {
         pGZ = (GZ *)pInPath;
         pPath = pGZ;
+    } else if(pInPath->m_sTypeString == wxT("PIL")) {
+        pPIL = (PIL *)pInPath;
+        pPath = pPIL;
     } else
         pPath = pInPath;
     
@@ -528,6 +534,8 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bDrawArrow == true ? "1" : "0" );
         child = node.append_child("opencpn:VRM");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bVRM == true ? "1" : "0" );
+        child = node.append_child("opencpn:PerpLine");
+        child.append_child(pugi::node_pcdata).set_value( pEBL->m_bPerpLine == true ? "1" : "0" );
         child = node.append_child("opencpn:fixed_end_position");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bFixedEndPosition == true ? "1" : "0" );
         child = node.append_child("opencpn:centre_on_boat");
@@ -613,7 +621,37 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         s.Printf(_T("%0.2f"), pGZ->m_dSecondDistance);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
     }
-    
+    if(pPIL) {
+        child = node.append_child("opencpn:persistence");
+        wxString s;
+        s.Printf(_T("%1i"), pPIL->m_iPersistenceType);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        child = node.append_child("opencpn:PIL_angle");
+        s.Printf(_T("%0.2f"), pPIL->m_dEBLAngle);
+        child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        if(pPIL->m_dLength > 0.) {
+            child = node.append_child("opencpn:PIL_length");
+            s.Printf(_T("%0.2f"), pPIL->m_dLength);
+            child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+        }
+        std::list<PILLINE>::iterator it = pPIL->PilLineList.begin();
+        pugi::xml_node PILchild;
+        PILchild = node.append_child("opencpn:PILList");
+        while(it != pPIL->PilLineList.end()) {
+            child = PILchild.append_child("opencpn:PILITEM");
+            child.append_attribute("ID") = it->iID;
+            child.append_attribute("Offset") = it->dOffset;
+            child.append_attribute("Style") = it->dStyle;
+            child.append_attribute("Width") = it->dWidth;
+            child.append_attribute("Description") = it->sDescription.mbc_str();
+            child.append_attribute("Name") = it->sName.mbc_str();
+            child.append_attribute("ActiveColour") = it->wxcActiveColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str();
+            child.append_attribute("InActiveColour") = it->wxcInActiveColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str();
+            it++;
+        }
+
+    }
+
     ODPointList *pODPointList = pPath->m_pODPointList;
     wxODPointListNode *node2 = pODPointList->GetFirst();
     ODPoint *pop;
@@ -769,12 +807,14 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     EBL *pEBL = NULL;
     DR *pDR = NULL;
     GZ *pGZ = NULL;
+    PIL *pPIL = NULL;
     while( node1 ) {
         pPath = (ODPath *)node1->GetData();
         pBoundary = NULL;
         pEBL = NULL;
         pDR = NULL;
         pGZ = NULL;
+        pPIL = NULL;
         if(pPath->m_sTypeString == wxT("Boundary")) {
             pBoundary = (Boundary *)node1->GetData();
             pPath = pBoundary;
@@ -787,6 +827,9 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
         } else if(pPath->m_sTypeString == wxT("Guard Zone")) {
             pGZ = (GZ *)node1->GetData();
             pPath = pGZ;
+        } else if(pPath->m_sTypeString == wxT("PIL")) {
+            pPIL = (PIL *)node1->GetData();
+            pPath = pPIL;
         }
         if(pEBL) {
             if(pEBL->m_iPersistenceType != ID_NOT_PERSISTENT) {
@@ -800,6 +843,11 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
             }
         } else if(pGZ) {
             if(pGZ->m_iPersistenceType != ID_NOT_PERSISTENT) {
+                if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
+                    GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
+            }
+        } else if(pPIL) {
+            if(pPIL->m_iPersistenceType != ID_NOT_PERSISTENT) {
                 if( !pPath->m_bIsInLayer && !pPath->m_bTemporary )
                     GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
             }
@@ -868,7 +916,7 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                         }
                     }
                     if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) || 
-                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("Guard Zone") ) ) {
+                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("Guard Zone") ) || !TypeString.compare( wxS("PIL") ) ) {
                         ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
                         InsertPathA( pPath );
                     }
@@ -1259,6 +1307,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
     EBL         *pTentEBL = NULL;
     DR          *pTentDR = NULL;
     GZ          *pTentGZ = NULL;
+    PIL         *pTentPIL = NULL;
     ODPath        *pTentPath = NULL;
     HyperlinkList *linklist = NULL;
     
@@ -1277,7 +1326,10 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
         } else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) ) {
             pTentGZ = new GZ();
             pTentPath = pTentGZ;
-        } else 
+        } else if (!strcmp(pPathType->mb_str(), "PIL" ) ) {
+            pTentPIL = new PIL();
+            pTentPath = pTentPIL;
+        } else
             pTentPath = new ODPath();
         
         for( pugi::xml_node tschild = odpoint_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
@@ -1401,6 +1453,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                         pTentDR->SetPersistence( v );
                     else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) )
                         pTentGZ->SetPersistence( v );
+                    else if (!strcmp(pPathType->mb_str(), "PIL" ) )
+                        pTentPIL->SetPersistence( v );
                 }
             } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
@@ -1408,6 +1462,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             } else if( ChildName == _T ( "opencpn:VRM" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bVRM = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:PerpLine" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                pTentEBL->m_bPerpLine = ( s == wxT("1") );
             } else if( ChildName == _T ( "opencpn:fixed_end_position" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
@@ -1430,8 +1487,12 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentGZ->m_iMaintainWith );
             } else if( ChildName == _T ( "opencpn:EBL_angle" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dEBLAngle );
+            } else if( ChildName == _T ( "opencpn:PIL_angle" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentPIL->m_dEBLAngle );
             } else if( ChildName == _T ( "opencpn:EBL_length" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dLength );
+            } else if( ChildName == _T ( "opencpn:PIL_length" ) ) {
+                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentPIL->m_dLength );
             } else if( ChildName == _T ( "opencpn:DRSOG" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dSoG );
             } else if( ChildName == _T ( "opencpn:DRCOG" ) ) {
@@ -1464,6 +1525,30 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondLineDirection );
             } else if( ChildName == _T ( "opencpn:GZ_SecondDistance" ) ) {
                 wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondDistance );
+            } else if( ChildName == _T( "opencpn:PILList" ) ) {
+                pugi::xml_node pilitem = tschild.child("opencpn:PILITEM");
+                for( pugi::xml_node pilchild = tschild.child("opencpn:PILITEM"); pilchild; pilchild = pilchild.next_sibling() ) {
+                    PILLINE plNewLine;
+                    for (pugi::xml_attribute attr = pilchild.first_attribute(); attr; attr = attr.next_attribute()) {
+                        if ( wxString::FromUTF8( attr.name() ) == _T("ActiveColour" ) )
+                            plNewLine.wxcActiveColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                        if ( wxString::FromUTF8( attr.name() ) == _T("InActiveColour" ) )
+                            plNewLine.wxcInActiveColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                        if ( wxString::FromUTF8( attr.name() ) == _T("ID" ) )
+                            plNewLine.iID = attr.as_int();
+                        if ( wxString::FromUTF8( attr.name() ) == _T("Name" ) )
+                            plNewLine.sName = attr.as_string();
+                        if ( wxString::FromUTF8( attr.name() ) == _T("Description" ) )
+                            plNewLine.sDescription = attr.as_string();
+                        if ( wxString::FromUTF8( attr.name() ) == _T("Offset" ) )
+                            plNewLine.dOffset = attr.as_double();
+                        if ( wxString::FromUTF8( attr.name() ) == _T("Style" ) )
+                            plNewLine.dStyle = attr.as_double();
+                        if ( wxString::FromUTF8( attr.name() ) == _T("Width" ) )
+                            plNewLine.dWidth = attr.as_double();
+                    }
+                    pTentPIL->AddLine(plNewLine);
+                }
             }
         }   
         pTentPath->m_PathNameString = PathName;
@@ -1592,7 +1677,8 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
         if(pTentPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->Append( (Boundary *)pTentPath );
         if(pTentPath->m_sTypeString == wxT("EBL")) g_pEBLList->Append( (EBL *)pTentPath );
         if(pTentPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->Append( (GZ *)pTentPath );
-        
+        if(pTentPath->m_sTypeString == wxT("PIL")) g_pPILList->Append( (PIL *)pTentPath );
+
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
         
                 
@@ -1820,6 +1906,7 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
         EBL *pEBL = NULL;
         DR *pDR = NULL;
         GZ *pGZ = NULL;
+        PIL *pPIL = NULL;
         
         if(pPathUpdate->m_sTypeString == wxT("EBL")) {
             pEBL = (EBL *)pExistingPath;
@@ -1833,6 +1920,10 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
             pGZ = (GZ *)pExistingPath;
             GZ *puGZ = (GZ *)pPathUpdate;
             pGZ->SetPersistence(puGZ->m_iPersistenceType);
+        } else if(pPathUpdate->m_sTypeString == wxT("PIL")) {
+            pPIL = (PIL *)pExistingPath;
+            PIL *puPIL = (PIL *)pPathUpdate;
+            pPIL->SetPersistence(puPIL->m_iPersistenceType);
         }
         
         if ( pPathUpdate->GetnPoints() < pExistingPath->GetnPoints() ) {

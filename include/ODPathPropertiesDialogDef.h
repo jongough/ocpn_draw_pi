@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun 17 2015)
+// C++ code generated with wxFormBuilder (version Feb 16 2016)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -62,6 +62,9 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxSlider* m_sliderFillTransparency;
 		wxStaticText* m_staticTextIncluseionBoundarySize;
 		wxSlider* m_sliderInclusionBoundarySize;
+		wxFlexGridSizer* m_fgSizerPIL;
+		wxStaticText* m_staticTextPILAngle;
+		wxTextCtrl* m_textCtrlPILAngle;
 		wxBoxSizer* m_bSizerBoundaryType;
 		wxRadioBox* m_radioBoxBoundaryType;
 		wxCheckBox* m_checkBoxShowBoundaryPoints;
@@ -72,6 +75,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlEBLAngle;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxShowVRM;
+		wxCheckBox* m_checkBoxShowPerpLine;
 		wxFlexGridSizer* m_fgSizerGZ;
 		wxCheckBox* m_checkBoxRotateGZWithBoat;
 		wxRadioBox* m_radioBoxMaintainGZWith;
@@ -86,8 +90,12 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerPath;
 		wxCheckBox* m_checkBoxPathShowArrow;
 		wxRadioBox* m_radioBoxPathPersistence;
+		wxBoxSizer* m_bSizerPathPoints;
 		wxStaticText* m_staticTextODPoints;
 		wxListCtrl* m_listCtrlODPoints;
+		wxBoxSizer* m_bSizerPILLines;
+		wxStaticText* m_staticTextPILLines;
+		wxListCtrl* m_listCtrlPILList;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		
@@ -105,8 +113,11 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnRadioBoxBoundaryType( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPILCheckbox( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLeftDoubleClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnLeftDoubleClickPIL( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnRightClickPIL( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
 		
