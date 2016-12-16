@@ -36,10 +36,10 @@ class ODPoint;
 class GZMan : public PathMan
 {
     public:
-        wxString    FindPointInGZ( double lat, double lon, int type, int state = ID_PATH_STATE_ANY );
-        bool        FindPointInGZ( GZ *pGZ, double lat, double lon );
-        bool        FindPointInGZ( wxString l_GUID, double lat, double lon );
-        wxString    FindLineCrossingGZ( double StartLat, double StartLon, double EndLat, double EndLon, double *CrossingLat, double *CrossingLon, double *Crossingdist, int type, int state );
+        wxString    FindPointInGZ( double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        bool        FindPointInGZ( GZ *pGZ, double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        bool        FindPointInGZ( wxString l_GUID, double lat, double lon, int type = ID_BOUNDARY_ANY , int state = ID_PATH_STATE_ANY );
+        wxString    FindLineCrossingGZ( double StartLat, double StartLon, double Endat, double EndLon, double *CrossingLat, double *CrossingLon, double *Crossingdist, int type, int state );
     private:
         struct GZCROSSING {
             wxString    GUID;

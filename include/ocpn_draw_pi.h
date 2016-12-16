@@ -237,6 +237,15 @@ enum {
     ID_PATH_STATE_LAST
 };
 
+// Point states
+enum {
+    ID_POINT_STATE_ANY = 0,
+    ID_POINT_STATE_ACTIVE,
+    ID_POINT_STATE_INACTIVE,
+    
+    ID_POINT_STATE_LAST
+};
+
 enum {
     ID_PERSISTENT = 0,
     ID_PERSISTENT_CRASH,

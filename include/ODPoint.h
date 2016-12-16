@@ -57,6 +57,7 @@ public:
       void CalculateDCRect(wxDC& dc, wxRect *prect);
 
       bool IsSame(ODPoint *pOtherRP);        // toh, 2009.02.11
+      bool IsActive() { return m_bIsActive; }
       bool IsVisible() { return m_bIsVisible; }
       bool IsListed() { return m_bIsListed; }
       bool IsNameShown() { return m_bShowName; }

@@ -517,11 +517,22 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         return;
                     }
                     bool l_bFound = false;
+                    if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+                    else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+                    else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NIETHER;
+                    else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
+                    else l_BoundaryType = ID_BOUNDARY_ANY;
+                    
+                    l_BoundaryState = ID_BOUNDARY_ANY;
+                    if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
+                    else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
+                    else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
+                    
                     if(l_path) {
                         if(l_path->m_sTypeString == wxT("Guard Zone"))
-                            l_bFound = g_pGZMan->FindPointInGZ( (GZ *)l_path, l_dLat, l_dLon  );
+                            l_bFound = g_pGZMan->FindPointInGZ( (GZ *)l_path, l_dLat, l_dLon, l_BoundaryType, l_BoundaryState  );
                         else
-                            l_bFound = g_pBoundaryMan->FindPointInBoundary( (Boundary*)l_path, l_dLat, l_dLon );
+                            l_bFound = g_pBoundaryMan->FindPointInBoundary( (Boundary*)l_path, l_dLat, l_dLon, l_BoundaryType, l_BoundaryState );
                     } else if(l_boundarypoint) 
                         l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");

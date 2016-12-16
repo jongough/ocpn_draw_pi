@@ -54,10 +54,43 @@ wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
     wxString l_GUID = wxEmptyString;
     
     while( GZ_node ) {
-        bool    l_bNext = false;
         pGZ = GZ_node->GetData();
+
+        bool l_bOK = false;
+        switch (state) {
+            case ID_PATH_STATE_ANY:
+                l_bOK = true;
+                break;
+            case ID_PATH_STATE_ACTIVE:
+                if(pGZ->IsActive()) l_bOK = true;
+                else l_bOK = false;
+                break;
+            case ID_PATH_STATE_INACTIVE:
+                if(!pGZ->IsActive()) l_bOK = true;
+                else l_bOK = false;
+                break;
+        }
         
-        if(!l_bNext) {
+        if(l_bOK) {
+            switch (type) {
+                case ID_BOUNDARY_ANY:
+                    l_bOK = true;
+                    break;
+                case ID_BOUNDARY_EXCLUSION:
+                    if(pGZ->m_bExclusionGZ) l_bOK = true;
+                    else l_bOK = false;
+                    break;
+                case ID_BOUNDARY_INCLUSION:
+                    if(pGZ->m_bInclusionGZ) l_bOK = true;
+                    else l_bOK = false;
+                    break;
+                case ID_BOUNDARY_NIETHER:
+                    if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bOK = false;
+                    else l_bOK = true;
+                    break;
+            }
+        }
+        if(l_bOK) {
             k++;
             int i, j;
             j = pGZ->m_pODPointList->GetCount();
@@ -92,7 +125,7 @@ wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
     else return wxT("");
 }
 
-bool GZMan::FindPointInGZ( GZ *pGZ, double lat, double lon )
+bool GZMan::FindPointInGZ( GZ *pGZ, double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
     wxPoint *points;
@@ -102,6 +135,42 @@ bool GZMan::FindPointInGZ( GZ *pGZ, double lat, double lon )
     wxPoint l_l2p2;
     wxPoint l_pCentre;
     wxPoint l_xy;
+    
+    bool l_bOK = false;
+    switch (state) {
+        case ID_PATH_STATE_ANY:
+            l_bOK = true;
+            break;
+        case ID_PATH_STATE_ACTIVE:
+            if(pGZ->IsActive()) l_bOK = true;
+            else l_bOK = false;
+            break;
+        case ID_PATH_STATE_INACTIVE:
+            if(!pGZ->IsActive()) l_bOK = true;
+            else l_bOK = false;
+            break;
+    }
+    
+    if(l_bOK) {
+        switch (type) {
+            case ID_BOUNDARY_ANY:
+                l_bOK = true;
+                break;
+            case ID_BOUNDARY_EXCLUSION:
+                if(pGZ->m_bExclusionGZ) l_bOK = true;
+                else l_bOK = false;
+                break;
+            case ID_BOUNDARY_INCLUSION:
+                if(pGZ->m_bInclusionGZ) l_bOK = true;
+                else l_bOK = false;
+                break;
+            case ID_BOUNDARY_NIETHER:
+                if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bOK = false;
+                else l_bOK = true;
+                break;
+        }
+    }
+    if(!l_bOK) return false;
     
     pGZ->GetLatLonPoints( g_VP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
     
@@ -133,7 +202,7 @@ wxDELETE( points );
     return bInPoly;
 }
 
-bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon )
+bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, int state )
 {
     bool bInPoly = false;
     bool bGZFound = false;
@@ -146,7 +215,42 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon )
     while( pGZ_node ) {
         pGZ = (GZ *)pGZ_node->GetData();
         if(pGZ->m_GUID == l_GUID) {
-            bGZFound = true;
+            bool l_bOK = false;
+            switch (state) {
+                case ID_PATH_STATE_ANY:
+                    l_bOK = true;
+                    break;
+                case ID_PATH_STATE_ACTIVE:
+                    if(pGZ->IsActive()) l_bOK = true;
+                    else l_bOK = false;
+                    break;
+                case ID_PATH_STATE_INACTIVE:
+                    if(!pGZ->IsActive()) l_bOK = true;
+                    else l_bOK = false;
+                    break;
+            }
+            
+            if(l_bOK) {
+                switch (type) {
+                    case ID_BOUNDARY_ANY:
+                        l_bOK = true;
+                        break;
+                    case ID_BOUNDARY_EXCLUSION:
+                        if(pGZ->m_bExclusionGZ) l_bOK = true;
+                        else l_bOK = false;
+                        break;
+                    case ID_BOUNDARY_INCLUSION:
+                        if(pGZ->m_bInclusionGZ) l_bOK = true;
+                        else l_bOK = false;
+                        break;
+                    case ID_BOUNDARY_NIETHER:
+                        if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bOK = false;
+                        else l_bOK = true;
+                        break;
+                }
+            }
+            if(l_bOK)
+                bGZFound = true;
             break;
         }
         pGZ = (GZ *)pGZ_node->GetNext();

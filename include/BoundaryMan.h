@@ -36,13 +36,13 @@ class BoundaryPoint;
 class BoundaryMan : public PathMan
 {
     public:
-        wxString    FindPointInBoundary( double lat, double lon, int type, int state = ID_PATH_STATE_ANY );
-        bool        FindPointInBoundary( Boundary *pBoundary, double lat, double lon );
-        bool        FindPointInBoundary( wxString l_GUID, double lat, double lon );
-        wxString    FindPointInBoundaryPoint( double lat, double lon, int type );
-        bool        FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, double lat, double lon );
-        bool        FindPointInBoundaryPoint( wxString l_GUID, double lat, double lon );
-        wxString    FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, double *CrossingLat, double *CrossingLon, double *Crossingdist, int type, int state );
+        wxString    FindPointInBoundary( double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        bool        FindPointInBoundary( Boundary *pBoundary, double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        bool        FindPointInBoundary( wxString l_GUID, double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        wxString    FindPointInBoundaryPoint( double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        bool        FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        bool        FindPointInBoundaryPoint( wxString l_GUID, double lat, double lon, int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
+        wxString    FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, double *CrossingLat, double *CrossingLon, double *Crossingdist,  int type = ID_BOUNDARY_ANY, int state = ID_PATH_STATE_ANY );
     private:
         struct BOUNDARYCROSSING {
             wxString    GUID;
