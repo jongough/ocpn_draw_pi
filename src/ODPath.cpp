@@ -211,15 +211,9 @@ void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2,
         else
             dc.SetPen( *g_pPathMan->GetPathPen() );
     
-    wxPoint *points;
-    int numpoints = ArcSectorPoints( *&points, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, true);
-    dc.DrawLines( numpoints, points );
-    #ifdef __WXOSX__
-    delete [] points;
-    #else
-    wxDELETE( points );
-    #endif
-    //RenderArcSegment( dc, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, VP, bdraw_arrow );
+    dc.SetBrush( *wxTRANSPARENT_BRUSH );
+        
+    RenderArcSegment(dc, rpc, rp1, rp2, rp3, rp4, VP, false);
 }
 
 void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )

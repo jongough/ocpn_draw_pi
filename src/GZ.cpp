@@ -70,6 +70,8 @@ extern wxColour     g_colourActiveGZLineColour;
 extern wxColour     g_colourInActiveGZLineColour;
 extern wxColour     g_colourActiveGZFillColour;
 extern wxColour     g_colourInActiveGZFillColour;
+extern int          g_GZLineStyle;
+extern int          g_GZLineWidth;
 extern bool         g_bExclusionGZ;
 extern bool         g_bInclusionGZ;
 extern ocpn_draw_pi *g_ocpn_draw_pi;
@@ -96,6 +98,8 @@ GZ::GZ() : ODPath()
     m_wxcInActiveLineColour = g_colourInActiveGZLineColour;
     m_wxcInActiveFillColour = g_colourInActiveGZFillColour;
     m_uiFillTransparency = g_uiGZFillTransparency;
+    m_width = g_GZLineWidth;
+    m_style = g_GZLineStyle;
     m_dFirstDistance = 0;
     m_dFirstLineDirection = 0;
     m_dSecondDistance = 0;
@@ -364,7 +368,7 @@ void GZ::UpdateGZSelectablePath( void )
         l_dStepSize = fabs(m_dFirstLineDirection-m_dSecondLineDirection) / l_iSteps;
     }
     else {
-        l_iSteps = 24 - ceil(24 * (fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection))/360) - 1;
+        l_iSteps = ceil(24 * (fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection))/360) - 1;
         l_dStepSize = fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection) / l_iSteps;
     }
     double firstDirection;

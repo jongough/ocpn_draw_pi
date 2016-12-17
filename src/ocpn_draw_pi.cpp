@@ -3413,8 +3413,6 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
         g_pGZList->Append( m_pMouseGZ );
         g_pPathList->Append( m_pMouseGZ);
         m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << ++g_iGZMaxNum;
-        m_pMouseGZ->m_width = g_GZLineWidth;
-        m_pMouseGZ->m_style = g_GZLineStyle;
         m_pMouseGZ->m_dCentreLat = g_pfFix.Lat;
         m_pMouseGZ->m_dCentreLon = g_pfFix.Lon;
         

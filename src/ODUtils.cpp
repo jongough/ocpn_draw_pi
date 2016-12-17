@@ -383,13 +383,10 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
     //if(numpoints_outer == 0) return;
     points[0].x = x1;
     points[0].y = y1;
-    int tx, ty;
     float a = l_dFirstAngle;
     for( int i = 0; i < (int) numpoints_outer; i++ ) {
         points[i + 1].x = xc + l_OuterRadius * cosf( a );
         points[i + 1].y = yc + l_OuterRadius * sinf( a );
-        tx = points[i + 1].x;
-        ty = points[i + 1].y;
         a += 2 * M_PI /outerSteps;
     }
     a = l_dSecondAngle;
