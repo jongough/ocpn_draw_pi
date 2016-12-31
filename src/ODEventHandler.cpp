@@ -897,6 +897,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 } else if(m_pFoundODPoint->m_sTypeString == wxT("EBL Point")) {
                     sMessage = _("Are you sure you want to delete this EBL Point?");
                     sCaption = _("OCPN Draw Delete EBL Point");
+                } else if(m_pFoundODPoint->m_sTypeString == wxT("PIL Point")) {
+                    sMessage = _("Are you sure you want to delete this PIL Point?");
+                    sCaption = _("OCPN Draw Delete PIL Point");
                 }
 #ifdef __WXOSX__
                 dlg_return = OCPNMessageBox_PlugIn( m_parentcanvas, sMessage, sCaption, (long) wxYES_NO | wxYES_DEFAULT | wxICON_QUESTION);
