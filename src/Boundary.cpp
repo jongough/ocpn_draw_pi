@@ -223,7 +223,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 m_bpts[ l_iBoundaryPointCount++ ] = r;
             }
             
-            if( !m_bExclusionBoundary && m_bInclusionBoundary ) {
+            if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 // surround boundary with hatching if there is more than 10 pixels different between points
                 int l_imaxpointdiffX = 0;
                 int l_imaxpointdiffY = 0;
@@ -313,7 +313,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
                 else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
-            } else if( m_bInclusionBoundary ) {
+            } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
             }
 
