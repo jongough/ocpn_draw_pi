@@ -625,6 +625,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                     sTypeLong = _("Are you sure you want to delete this DR?");
                     sTypeShort = _("OCPN Draw DR Delete");
                 }
+                else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                    sTypeLong = _("Are you sure you want to delete this Guard Zone?");
+                    sTypeShort = _("OCPN Draw GZ Delete");
+                }
                 else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
                     sTypeLong = _("Are you sure you want to delete this Parallel Index Line Group?");
                     sTypeShort = _("OCPN Draw PIL Delete");
