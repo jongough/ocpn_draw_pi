@@ -105,6 +105,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     m_radioBoxPathPersistence->SetSelection( pInEBL->m_iPersistenceType );
     m_checkBoxPathShowArrow->SetValue( pInEBL->m_bDrawArrow );
     m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
+    m_checkBoxShowEBLInfo->SetValue( pInEBL->m_bAlwaysShowInfo );
     m_checkBoxShowPerpLine->SetValue( pInEBL->m_bPerpLine );
     m_checkBoxRotateWithBoat->SetValue( pInEBL->m_bRotateWithBoat );
     m_radioBoxMaintainWith->SetSelection( pInEBL->m_iMaintainWith );
@@ -229,6 +230,7 @@ bool EBLProp::SaveChanges( void )
 
     m_pEBL->m_bDrawArrow = m_checkBoxPathShowArrow->GetValue();
     m_pEBL->m_bVRM = m_checkBoxShowVRM->GetValue();
+    m_pEBL->m_bAlwaysShowInfo = m_checkBoxShowEBLInfo->GetValue();
     if(m_pEBL->m_bVRM) {
         pFirstPoint->m_bShowODPointRangeRings = true;
     } else

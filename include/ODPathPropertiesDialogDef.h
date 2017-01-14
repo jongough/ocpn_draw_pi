@@ -75,6 +75,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlEBLAngle;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxShowVRM;
+		wxCheckBox* m_checkBoxShowEBLInfo;
 		wxCheckBox* m_checkBoxShowPerpLine;
 		wxFlexGridSizer* m_fgSizerGZ;
 		wxCheckBox* m_checkBoxRotateGZWithBoat;

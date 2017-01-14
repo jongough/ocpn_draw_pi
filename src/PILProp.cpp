@@ -137,7 +137,7 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
             m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_DESCRIPTION, it->sDescription );
         else
             m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_DESCRIPTION, _T(" ") );
-        it++;
+        ++it;
         item_line_index++;
     }
 
@@ -323,7 +323,7 @@ void PILProp::InitializeList( void )
     while(it != m_pPIL->PilLineList.end()) {
         m_listCtrlPILList->InsertItem( in, _T(""), 0);
         in++;
-        it++;
+        ++it;
     }
 }
 

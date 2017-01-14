@@ -173,6 +173,7 @@ bool        g_bEBLFixedEndPosition;
 int         g_iEBLPersistenceType;
 bool        g_bEBLShowArrow;
 bool        g_bEBLVRM;
+bool        g_bEBLAlwaysShowInfo;
 bool        g_bEBLPerpLine;
 int         g_EBLLineWidth; 
 int         g_EBLLineStyle;
@@ -1203,6 +1204,7 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
         pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
         pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
+        pConf->Write( wxS( "DefaultEBLAlwaysShowInfo" ), g_bEBLAlwaysShowInfo );
         pConf->Write( wxS( "DefaultEBLPerpLine" ), g_bEBLPerpLine );
         pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
         pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
@@ -1394,6 +1396,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
+        pConf->Read( wxS( "DefaultEBLAlwaysShowInfo" ), &g_bEBLAlwaysShowInfo, false );
         pConf->Read( wxS( "DefaultEBLPerpLine" ), &g_bEBLPerpLine, false );
         pConf->Read( wxS( "DefaultEBLPersistenceType" ),  &g_iEBLPersistenceType, 0 );
         pConf->Read( wxS( "DefaultEBLFixedEndPosition" ),  &g_bEBLFixedEndPosition, 0 );
@@ -1760,7 +1763,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                         std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
                         while( it != m_pBoundaryList.end() ) {
                             (*it)->m_bPathPropertiesBlink = false;
-                            it++;
+                            ++it;
                         }
 
                         m_pBoundaryList.clear();
@@ -1958,7 +1961,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
             while( it != m_pBoundaryList.end() ) {
                 (*it)->m_bPathPropertiesBlink = false;
-                it++;
+                ++it;
             }
 
             m_pBoundaryList.clear();
@@ -2972,7 +2975,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 pPathDraw->Draw( dc, *m_pVP );
             }
 
-            if(pPathDraw == m_pSelectedEBL && m_bODPointEditing) {
+            if(pPathDraw == m_pSelectedEBL && m_bODPointEditing && !m_pSelectedEBL->m_bAlwaysShowInfo) {
                 double brg, dist;
                 wxPoint destPoint;
                 ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
@@ -2989,7 +2992,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
                 while(it != m_pSelectedPIL->PilLineList.end()) {
                     if(it->iID == m_iPILId) break;
-                    it++;
+                    ++it;
                 }
 
                 wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
@@ -3581,7 +3584,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         if( !pTempPath )
             continue;
 
-        ODPath *pPathDraw;
+        ODPath *pPathDraw = NULL;
         Boundary *pBoundaryDraw = NULL;
         EBL *pEBLDraw = NULL;
         DR *pDRDraw = NULL;
@@ -3635,7 +3638,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             if(test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
                 pPathDraw->DrawGL( pivp );
         }
-        if(pPathDraw == m_pSelectedEBL && m_bODPointEditing) {
+        if(pPathDraw == m_pSelectedEBL && m_bODPointEditing && !m_pSelectedEBL->m_bAlwaysShowInfo) {
             ODDC dc;
             double brg, dist;
             wxPoint destPoint;

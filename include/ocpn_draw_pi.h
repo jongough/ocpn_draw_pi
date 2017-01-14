@@ -373,7 +373,10 @@ public:
     void    AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
 
     void    SetToolbarTool( void );
-
+    
+    void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
+    wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
+    
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
     wxCursor    *pCursorUp;
@@ -450,8 +453,6 @@ private:
     void    OnTimer(wxTimerEvent& ev);
 
     void    LoadConfig();
-    void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
-    wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
     void    FinishBoundary();
 //    ArrayOfGridColWidth    readCols(ArrayOfGridColWidth ar, wxString str);
 //    void                    writeCols(wxFileConfig *pConf, ArrayOfGridColWidth ar, wxString entry);

@@ -573,6 +573,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxShowPerpLine = new wxCheckBox( m_panelEBL, wxID_ANY, _("Show Perpendicular Index Line"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBLSettings->Add( m_checkBoxShowPerpLine, 0, wxALL, 5 );
 	
+	m_checkBoxEBLAllwaysShowInfo = new wxCheckBox( m_panelEBL, wxID_ANY, _("Always Show\nEBL Info"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerEBLSettings->Add( m_checkBoxEBLAllwaysShowInfo, 0, wxALL, 5 );
+	
 	wxString m_radioBoxEBLPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxEBLPersistenceNChoices = sizeof( m_radioBoxEBLPersistenceChoices ) / sizeof( wxString );
 	m_radioBoxEBLPersistence = new wxRadioBox( m_panelEBL, wxID_ANY, _("EBL Persistence"), wxDefaultPosition, wxDefaultSize, m_radioBoxEBLPersistenceNChoices, m_radioBoxEBLPersistenceChoices, 2, wxRA_SPECIFY_ROWS );

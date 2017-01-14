@@ -60,6 +60,7 @@
 WX_DEFINE_LIST ( EBLList );
 
 extern int          g_path_line_width;
+extern bool         g_bShowMag;
 
 extern wxColour     g_colourEBLLineColour;
 extern wxString     g_sEBLEndIconName;
@@ -79,6 +80,7 @@ extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
+extern bool         g_bEBLAlwaysShowInfo;
 extern bool         g_bEBLPerpLine;
 extern bool         g_bEBLRotateWithBoat;
 extern int          g_iEBLMaintainWith;
@@ -91,6 +93,7 @@ EBL::EBL() : ODPath()
     m_style = g_EBLLineStyle;
     m_bDrawArrow = g_bEBLShowArrow;
     m_bVRM = g_bEBLVRM;
+    m_bAlwaysShowInfo = g_bEBLAlwaysShowInfo;
     m_bPerpLine = g_bEBLPerpLine;
     m_bCentreOnBoat = true;
     m_bFixedEndPosition = g_bEBLFixedEndPosition;
@@ -106,6 +109,7 @@ EBL::EBL() : ODPath()
     m_dEBLAngle = 0.;
     m_dLength = 0.;
     m_bEndPointMoving = false;
+    m_bAlwaysShowInfo = g_bEBLAlwaysShowInfo;
 }
 
 EBL::~EBL()
@@ -436,7 +440,15 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 
     RenderPerpLine( dc, VP );
     ODPath::Draw( dc, VP );
-
+    
+    if(m_bAlwaysShowInfo) {
+        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        wxPoint l_Point;
+        GetCanvasPixLL( &VP, &l_Point, pEndPoint->m_lat, pEndPoint->m_lon);
+        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, 0.0, m_dLength, l_Point);
+        if(info.length() > 0)
+            g_ocpn_draw_pi->RenderExtraPathLegInfo( dc, l_Point, info );
+    }
 }
     
 void EBL::DrawGL( PlugIn_ViewPort &piVP )
@@ -445,6 +457,15 @@ void EBL::DrawGL( PlugIn_ViewPort &piVP )
     RenderPerpLine( dc, piVP );
 
     ODPath::DrawGL( piVP );
+    
+    if(m_bAlwaysShowInfo) {
+        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        wxPoint l_Point;
+        GetCanvasPixLL( &piVP, &l_Point, pEndPoint->m_lat, pEndPoint->m_lon);
+        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, 0.0, m_dLength, l_Point);
+        if(info.length() > 0)
+            g_ocpn_draw_pi->RenderExtraPathLegInfo( dc, l_Point, info );
+    }
 }
 
 void EBL::MaintainWith( void )
@@ -531,3 +552,4 @@ void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
     }
 
 }
+

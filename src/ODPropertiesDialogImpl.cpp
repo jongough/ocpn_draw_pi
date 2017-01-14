@@ -107,6 +107,7 @@ extern bool         g_bEBLFixedEndPosition;
 extern int          g_iEBLPersistenceType;
 extern bool         g_bEBLShowArrow;
 extern bool         g_bEBLVRM;
+extern bool         g_bEBLAlwaysShowInfo;
 extern bool         g_bEBLPerpLine;
 extern int          g_EBLLineWidth;
 extern int          g_EBLLineStyle;
@@ -508,6 +509,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
     g_bEBLVRM = m_checkBoxShowVRM->GetValue();
+    g_bEBLAlwaysShowInfo = m_checkBoxEBLAllwaysShowInfo->GetValue();
     g_bEBLPerpLine = m_checkBoxShowPerpLine->GetValue();
     g_iEBLPersistenceType = m_radioBoxEBLPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
@@ -894,6 +896,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxEBLPersistence->SetSelection( g_iEBLPersistenceType );
     m_checkBoxEBLShowArrow->SetValue( g_bEBLShowArrow );
     m_checkBoxShowVRM->SetValue( g_bEBLVRM );
+    m_checkBoxEBLAllwaysShowInfo->SetValue( g_bEBLAlwaysShowInfo );
     m_checkBoxShowPerpLine->SetValue( g_bEBLPerpLine );
 
     m_colourPickerPILActiveCentreLineColour->SetColour( g_colourPILActiveCentreLineColour );

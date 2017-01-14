@@ -358,7 +358,7 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
         *CrossingDist = it->Len;
         *CrossingLon = it->Lon;
         *CrossingLat = it->Lat;
-        it++;
+        ++it;
         while( it != GZCrossingList.end() ) {
             if( *CrossingDist > it->Len ) {
                 *CrossingDist = it->Len;
@@ -366,7 +366,7 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
                 *CrossingLat = it->Lat;
                 l_sGUID = it->GUID;
             }
-            it++;
+            ++it;
         }
         return l_sGUID;
     }

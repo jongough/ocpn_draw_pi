@@ -534,6 +534,8 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bDrawArrow == true ? "1" : "0" );
         child = node.append_child("opencpn:VRM");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bVRM == true ? "1" : "0" );
+        child = node.append_child("opencpn:always_show_info");
+        child.append_child(pugi::node_pcdata).set_value( pEBL->m_bAlwaysShowInfo == true ? "1" : "0" );
         child = node.append_child("opencpn:PerpLine");
         child.append_child(pugi::node_pcdata).set_value( pEBL->m_bPerpLine == true ? "1" : "0" );
         child = node.append_child("opencpn:fixed_end_position");
@@ -647,7 +649,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
             child.append_attribute("Name") = it->sName.mbc_str();
             child.append_attribute("ActiveColour") = it->wxcActiveColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str();
             child.append_attribute("InActiveColour") = it->wxcInActiveColour.GetAsString( wxC2S_CSS_SYNTAX ).utf8_str();
-            it++;
+            ++it;
         }
 
     }
@@ -1462,6 +1464,9 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             } else if( ChildName == _T ( "opencpn:VRM" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bVRM = ( s == wxT("1") );
+            } else if( ChildName == _T ( "opencpn:always_show_info" ) ) {
+                wxString s = wxString::FromUTF8( tschild.first_child().value() );
+                pTentEBL->m_bAlwaysShowInfo = ( s == wxT("1") );
             } else if( ChildName == _T ( "opencpn:PerpLine" ) ) {
                 wxString s = wxString::FromUTF8( tschild.first_child().value() );
                 pTentEBL->m_bPerpLine = ( s == wxT("1") );
@@ -1866,15 +1871,12 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
     {
         if( !strcmp(object.name(), "opencpn:ODPoint") ) {
             ODPoint *pOp = GPXLoadODPoint1( object, _T("circle"), _T(""), true, true, b_layerviz, layer_id );
-            pOp->m_bIsolatedMark = true;      // This is an isolated mark
-            
             if(pOp) {
+                pOp->m_bIsolatedMark = true;      // This is an isolated mark
                 g_pODPointMan->AddODPoint( pOp );
                 g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 n_obj++;
             }
-            else
-                delete pOp;
         }
         else{
             if( !strcmp(object.name(), "opencpn:path") ) {

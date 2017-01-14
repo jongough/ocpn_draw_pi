@@ -166,7 +166,7 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_fgSizerEBL->SetFlexibleDirection( wxBOTH );
 	m_fgSizerEBL->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_checkBoxRotateWithBoat = new wxCheckBox( this, wxID_ANY, _("Rotate with Boat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxRotateWithBoat = new wxCheckBox( this, wxID_ANY, _("Rotate with\nBoat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBL->Add( m_checkBoxRotateWithBoat, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	wxString m_radioBoxMaintainWithChoices[] = { _("Heading"), _("Course over Ground") };
@@ -184,13 +184,16 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_textCtrlEBLAngle = new wxTextCtrl( this, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
 	m_fgSizerEBL->Add( m_textCtrlEBLAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, _("EBL Fixed End Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxEBLFixedEndPosition = new wxCheckBox( this, wxID_ANY, _("EBL Fixed\nEnd Position"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBL->Add( m_checkBoxEBLFixedEndPosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 	
 	m_checkBoxShowVRM = new wxCheckBox( this, wxID_ANY, _("Show VRM"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBL->Add( m_checkBoxShowVRM, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_checkBoxShowPerpLine = new wxCheckBox( this, wxID_ANY, _("Show Perpendicular Index Line"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_checkBoxShowEBLInfo = new wxCheckBox( this, wxID_ANY, _("Always Show\nEBL Info"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerEBL->Add( m_checkBoxShowEBLInfo, 0, wxALL, 5 );
+	
+	m_checkBoxShowPerpLine = new wxCheckBox( this, wxID_ANY, _("Show Perpendicular\nIndex Line"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	m_fgSizerEBL->Add( m_checkBoxShowPerpLine, 0, wxALL, 5 );
 	
 	

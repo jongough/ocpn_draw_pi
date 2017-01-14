@@ -341,7 +341,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                             std::list<PILLINE>::iterator it = l_pPIL->PilLineList.begin();
                             while(it != l_pPIL->PilLineList.end()) {
                                 if(it->iID == pFindSel->GetUserData()) break;
-                                it++;
+                                ++it;
                             }
                             if(it != l_pPIL->PilLineList.end()) {
                                 s << _("Name: ") << it->sName << _T("\n");
@@ -711,10 +711,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
 
             std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
             LLBBox l_LLBBox = (*it)->GetBBox();
-            it++;
+            ++it;
             while( it != m_pBoundaryList.end() ) {
                 l_LLBBox.Expand((*it)->GetBBox());
-                it++;
+                ++it;
             }
 
             BoundaryPoint *l_BP1 = new BoundaryPoint(l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), g_sODPointIconName, wxS(""), wxT(""));
@@ -770,7 +770,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             it = m_pBoundaryList.begin();
             while( it != m_pBoundaryList.end() ) {
                 (*it)->m_bPathPropertiesBlink = false;
-                it++;
+                ++it;
             }
 
             if( event.GetId() == ID_BOUNDARY_LIST_DELETE_MENU) DeletePaths();
@@ -1037,9 +1037,6 @@ void ODEventHandler::PopupMenu( int seltype )
  
     wxString sString;
     
-    //  This is the default context menu
-    menuFocus = contextMenu;
-    
     if( seltype & SELTYPE_PATHSEGMENT ) {
         bool blay = false;
         if( m_pSelectedPath && m_pSelectedPath->m_bIsInLayer )
@@ -1263,7 +1260,7 @@ void ODEventHandler::PopupMenu( int seltype )
         std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
         while( it != m_pBoundaryList.end() ) {
             (*it)->m_bPathPropertiesBlink = false;
-            it++;
+            ++it;
         }
     }
 
@@ -1318,7 +1315,7 @@ void ODEventHandler::DeletePaths( void )
             g_pODPointPropDialog->ValidateMark();
             g_pODPointPropDialog->UpdateProperties();
         }
-        it++;
+        ++it;
     }
 
     // TODO implement UNDO
@@ -1336,7 +1333,7 @@ void ODEventHandler::DeletePIL( void )
     std::list<PILLINE>::iterator it = l_pPIL->PilLineList.begin();
     while(it != l_pPIL->PilLineList.end()) {
         if(it->iID == m_iFoundPIL) break;
-        it++;
+        ++it;
     }
 
     l_pPIL->PilLineList.erase(it);

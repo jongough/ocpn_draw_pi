@@ -51,6 +51,7 @@ class EBL : public ODPath
         bool        m_bFixedEndPosition;
         int         m_iPersistenceType;
         bool        m_bVRM;
+        bool        m_bAlwaysShowInfo;
         bool        m_bPerpLine;
         bool        m_bCentreOnBoat;
         bool        m_bRotateWithBoat;

@@ -152,7 +152,7 @@ void PIL::DelLine(int iID)
     std::list<PILLINE>::iterator it = PilLineList.begin();
     while(it != PilLineList.end()) {
         if(it->iID == iID) break;
-        it++;
+        ++it;
     }
     PilLineList.erase(it);
 }
@@ -165,7 +165,7 @@ void PIL::ChangeOffset(int iID, double dOffset)
             it->dOffset = dOffset;
             return;
         }
-        it++;
+        ++it;
     }
 }
 
@@ -230,7 +230,7 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
 
         RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, VP, m_bDrawArrow, m_hiliteWidth );
 
-        it++;
+        ++it;
     }
 }
 
@@ -262,7 +262,7 @@ void PIL::CentreOnBoat( bool bMoveEndPoint )
         g_pODSelect->DeleteSelectablePathSegment(this, it->iID);
         g_pODSelect->AddSelectablePathSegment( l_dLat1, l_dLon1, l_dLat2, l_dLon2, NULL, NULL, this, it->iID );
 
-        it++;
+        ++it;
     }
 }
 
@@ -348,7 +348,7 @@ void PIL::MovePILLine(double dLat, double dLon, int iPILId)
             it->dOffset = dist;
             return;
         }
-        it++;
+        ++it;
     }
 }
 

@@ -82,7 +82,7 @@ void PILPropertiesDialogImpl::SaveChanges()
     std::list<PILLINE>::iterator it = m_pPIL->PilLineList.begin();
     while(it != m_pPIL->PilLineList.end()) {
         if(it->iID == m_iID) break;
-        it++;
+        ++it;
     }
     it->sName = m_textCtrlName->GetValue();
     it->sDescription = m_textCtrlDesctription->GetValue();
@@ -106,7 +106,7 @@ void PILPropertiesDialogImpl:: UpdateProperties( PIL *pPIL, int iID )
     std::list<PILLINE>::iterator it = pPIL->PilLineList.begin();
     while(it != pPIL->PilLineList.end()) {
         if(it->iID == iID) break;
-        it++;
+        ++it;
     }
     m_textCtrlIDNum->SetValue(wxString::Format("%i", iID));
     m_textCtrlName->Clear();

@@ -154,6 +154,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLShowArrow;
 		wxCheckBox* m_checkBoxShowVRM;
 		wxCheckBox* m_checkBoxShowPerpLine;
+		wxCheckBox* m_checkBoxEBLAllwaysShowInfo;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxPanel* m_panelDR;
 		wxStaticText* m_staticTextActiveDRLineColour;

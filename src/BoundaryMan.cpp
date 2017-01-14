@@ -166,30 +166,25 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
                 break;
         }
     }
-    if(!l_bOK) return false;
-    
-    wxODPointListNode *OCPNpoint_node = ( pBoundary->m_pODPointList )->GetFirst();
-    wxODPointListNode *OCPNpoint_last_node = ( pBoundary->m_pODPointList )->GetLast();
-    if(pBoundary->m_pODPointList->GetCount() > 3) {
-        i = 0;
-        while( OCPNpoint_node ) {
-            ODPoint *pop = OCPNpoint_node->GetData();
-            polyX[i] = pop->m_lon;
-            polyY[i] = pop->m_lat;
-            i++;
-            OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-            if(OCPNpoint_node == OCPNpoint_last_node) break;
+    if(l_bOK) {
+        wxODPointListNode *OCPNpoint_node = ( pBoundary->m_pODPointList )->GetFirst();
+        wxODPointListNode *OCPNpoint_last_node = ( pBoundary->m_pODPointList )->GetLast();
+        if(pBoundary->m_pODPointList->GetCount() > 3) {
+            i = 0;
+            while( OCPNpoint_node ) {
+                ODPoint *pop = OCPNpoint_node->GetData();
+                polyX[i] = pop->m_lon;
+                polyY[i] = pop->m_lat;
+                i++;
+                OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
+                if(OCPNpoint_node == OCPNpoint_last_node) break;
+            }
+            bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
         }
-        bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
-#ifdef __WXOSX__
     }
     delete [] polyX;
     delete [] polyY;
-#else
-        delete [] polyX;
-        delete [] polyY;
-    }
-#endif
+
     return bInPoly;
 }
 
@@ -523,7 +518,7 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
         *CrossingDist = it->Len;
         *CrossingLon = it->Lon;
         *CrossingLat = it->Lat;
-        it++;
+        ++it;
         while( it != BoundaryCrossingList.end() ) {
             if( *CrossingDist > it->Len ) {
                 *CrossingDist = it->Len;
@@ -531,7 +526,7 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
                 *CrossingLat = it->Lat;
                 l_sGUID = it->GUID;
             }
-            it++;
+            ++it;
         }
         return l_sGUID;
     }
