@@ -60,7 +60,6 @@
 WX_DEFINE_LIST ( EBLList );
 
 extern int          g_path_line_width;
-extern bool         g_bShowMag;
 
 extern wxColour     g_colourEBLLineColour;
 extern wxString     g_sEBLEndIconName;
@@ -445,7 +444,7 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
         wxPoint l_Point;
         GetCanvasPixLL( &VP, &l_Point, pEndPoint->m_lat, pEndPoint->m_lon);
-        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, 0.0, m_dLength, l_Point);
+        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, m_dEBLAngle, m_dLength, l_Point);
         if(info.length() > 0)
             g_ocpn_draw_pi->RenderExtraPathLegInfo( dc, l_Point, info );
     }
@@ -462,7 +461,7 @@ void EBL::DrawGL( PlugIn_ViewPort &piVP )
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
         wxPoint l_Point;
         GetCanvasPixLL( &piVP, &l_Point, pEndPoint->m_lat, pEndPoint->m_lon);
-        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, 0.0, m_dLength, l_Point);
+        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, m_dEBLAngle, m_dLength, l_Point);
         if(info.length() > 0)
             g_ocpn_draw_pi->RenderExtraPathLegInfo( dc, l_Point, info );
     }
