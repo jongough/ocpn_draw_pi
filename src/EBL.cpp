@@ -441,10 +441,13 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     ODPath::Draw( dc, VP );
     
     if(m_bAlwaysShowInfo) {
+        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        double brg, dlength;
+        DistanceBearingMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, pEndPoint->m_lat, pEndPoint->m_lon, &brg, &dlength);
         wxPoint l_Point;
         GetCanvasPixLL( &VP, &l_Point, pEndPoint->m_lat, pEndPoint->m_lon);
-        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, m_dEBLAngle, m_dLength, l_Point);
+        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, brg, dlength, l_Point);
         if(info.length() > 0)
             g_ocpn_draw_pi->RenderExtraPathLegInfo( dc, l_Point, info );
     }
@@ -458,10 +461,13 @@ void EBL::DrawGL( PlugIn_ViewPort &piVP )
     ODPath::DrawGL( piVP );
     
     if(m_bAlwaysShowInfo) {
+        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
         ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        double brg, dlength;
+        DistanceBearingMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, pEndPoint->m_lat, pEndPoint->m_lon, &brg, &dlength);
         wxPoint l_Point;
         GetCanvasPixLL( &piVP, &l_Point, pEndPoint->m_lat, pEndPoint->m_lon);
-        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, m_dEBLAngle, m_dLength, l_Point);
+        wxString info = g_ocpn_draw_pi->CreateExtraPathLegInfo(dc, this, brg, dlength, l_Point);
         if(info.length() > 0)
             g_ocpn_draw_pi->RenderExtraPathLegInfo( dc, l_Point, info );
     }
