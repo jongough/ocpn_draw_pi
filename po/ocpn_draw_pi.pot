@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# This file is distributed under the same license as the ocpn_draw_pi package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 1.3.22\n"
+"Project-Id-Version: ocpn_draw_pi 1.3.23\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-05 14:11+1100\n"
+"POT-Creation-Date: 2017-02-06 07:05+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,10 +38,8 @@ msgid "Draw Toolbar"
 msgstr ""
 
 #: src/EBL.cpp:122 src/EBL.cpp:292 src/ODPathPropertiesDialogImpl.cpp:431
-#: src/ODPathPropertiesDialogImpl.cpp:439
-#: src/ODPathPropertiesDialogImpl.cpp:475
-#: src/ODPathPropertiesDialogImpl.cpp:556
-#: src/ODPathPropertiesDialogImpl.cpp:564
+#: src/ODPathPropertiesDialogImpl.cpp:439 src/ODPathPropertiesDialogImpl.cpp:475
+#: src/ODPathPropertiesDialogImpl.cpp:556 src/ODPathPropertiesDialogImpl.cpp:564
 #: src/ODPathPropertiesDialogImpl.cpp:599 src/ocpn_draw_pi.cpp:2436
 #: src/ocpn_draw_pi.cpp:3338 src/ocpn_draw_pi.cpp:3518
 msgid "Boat"
@@ -882,13 +880,11 @@ msgstr ""
 msgid "PIL Point &Properties"
 msgstr ""
 
-#: src/ODPathPropertiesDialogImpl.cpp:204
-#: src/ODPathPropertiesDialogImpl.cpp:222
+#: src/ODPathPropertiesDialogImpl.cpp:204 src/ODPathPropertiesDialogImpl.cpp:222
 msgid " &Properties..."
 msgstr ""
 
-#: src/ODPathPropertiesDialogImpl.cpp:208
-#: src/ODPathPropertiesDialogImpl.cpp:226
+#: src/ODPathPropertiesDialogImpl.cpp:208 src/ODPathPropertiesDialogImpl.cpp:226
 msgid "&Remove Selected"
 msgstr ""
 
@@ -1521,7 +1517,7 @@ msgstr ""
 #: src/ODPropertiesDialogDef.cpp:1202
 msgid ""
 "Please report problems using FlySpray at:\n"
-"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1\n"
+"https://www.opencpn.org/flyspray/index.php?project=34&do=index&switch=1\n"
 "\n"
 "or\n"
 "\n"
