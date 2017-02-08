@@ -18036,7 +18036,7 @@
                                                     <property name="gripper">0</property>
                                                     <property name="hidden">0</property>
                                                     <property name="id">wxID_ANY</property>
-                                                    <property name="label">Please report problems using FlySpray at:&#x0A;https://www.opencpn.org/flyspray/index.php?project=34&amp;do=index&amp;switch=1&#x0A;&#x0A;or&#x0A;&#x0A;at the OpenCPN forum:&#x0A;http://www.cruisersforum.com/forums/f134&#x0A;&#x0A;or&#x0A;&#x0A;Raise an issue in GIT at:&#x0A;https://github.com/jongough/ocpn_draw_pi/issues&#x0A;</property>
+                                                    <property name="label">Please report problems using FlySpray at:&#x0A;https://www.opencpn.org/flyspray/index.php?project=60&amp;do=index&amp;switch=1&#x0A;&#x0A;or&#x0A;&#x0A;at the OpenCPN forum:&#x0A;http://www.cruisersforum.com/forums/f134&#x0A;&#x0A;or&#x0A;&#x0A;Raise an issue in GIT at:&#x0A;https://github.com/jongough/ocpn_draw_pi/issues&#x0A;</property>
                                                     <property name="max_size"></property>
                                                     <property name="maximize_button">0</property>
                                                     <property name="maximum_size"></property>

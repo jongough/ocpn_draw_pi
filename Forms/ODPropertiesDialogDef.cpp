@@ -1199,7 +1199,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextOther->Wrap( -1 );
 	fgSizerAboutLayout->Add( m_staticTextOther, 0, wxALL, 5 );
 	
-	m_staticText34 = new wxStaticText( m_panelAbout, wxID_ANY, _("Please report problems using FlySpray at:\nhttps://www.opencpn.org/flyspray/index.php?project=34&do=index&switch=1\n\nor\n\nat the OpenCPN forum:\nhttp://www.cruisersforum.com/forums/f134\n\nor\n\nRaise an issue in GIT at:\nhttps://github.com/jongough/ocpn_draw_pi/issues\n"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText34 = new wxStaticText( m_panelAbout, wxID_ANY, _("Please report problems using FlySpray at:\nhttps://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\nor\n\nat the OpenCPN forum:\nhttp://www.cruisersforum.com/forums/f134\n\nor\n\nRaise an issue in GIT at:\nhttps://github.com/jongough/ocpn_draw_pi/issues\n"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText34->Wrap( -1 );
 	fgSizerAboutLayout->Add( m_staticText34, 0, wxALL, 5 );
 	
