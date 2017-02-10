@@ -3049,10 +3049,9 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
         nearby_sel_rad_pix = 50;
     else
         nearby_sel_rad_pix = 8;
-    //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
-    double nearby_radius_meters = nearby_sel_rad_pix / 1;
+
+    double nearby_radius_meters = nearby_sel_rad_pix / m_view_scale;
     
-//    ODPoint *pNearbyPoint = g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
     BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
 
     if( pNearbyPoint && ( pNearbyPoint != (BoundaryPoint *)m_prev_pMousePoint )
@@ -3115,8 +3114,8 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
         nearby_sel_rad_pix = 50;
     else
         nearby_sel_rad_pix = 8;
-    //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
-    double nearby_radius_meters = nearby_sel_rad_pix / 1;
+
+    double nearby_radius_meters = nearby_sel_rad_pix / m_view_scale;
     
     TextPoint *pNearbyPoint = (TextPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                                                                             nearby_radius_meters );
@@ -3193,8 +3192,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         nearby_sel_rad_pix = 50;
     else
         nearby_sel_rad_pix = 8;
-    //        double nearby_radius_meters = nearby_sel_rad_pix / m_true_scale_ppm;
-    double nearby_radius_meters = nearby_sel_rad_pix / 1;
+
+    double nearby_radius_meters = nearby_sel_rad_pix / m_view_scale;
     
     BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                                                              nearby_radius_meters );
