@@ -2033,13 +2033,16 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedPath->UpdateSegmentDistances();
                 bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
                 g_pODConfig->m_bSkipChangeSetUpdate = false;
-                if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                if(m_pSelectedPath->m_sTypeString == wxT("EBL") || m_pSelectedPath->m_sTypeString == wxT("PIL")) {
                     // Save changes done by user
                     bool l_bSaveUpdatesState = m_pSelectedPath->m_bSaveUpdates;
                     m_pSelectedPath->m_bSaveUpdates = true;
                     g_pODConfig->UpdatePath( m_pSelectedPath );
                     m_pSelectedPath->m_bSaveUpdates = l_bSaveUpdatesState;
-                    m_pSelectedEBL->m_bEndPointMoving = false;
+                    if(m_pSelectedEBL)
+                        m_pSelectedEBL->m_bEndPointMoving = false;
+                    if(m_pSelectedPIL)
+                        m_pSelectedPIL->m_bEndPointMoving = false;
                 } else
                     g_pODConfig->UpdatePath( m_pSelectedPath );
                 g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
