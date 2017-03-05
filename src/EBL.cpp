@@ -552,7 +552,7 @@ void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
         l_dPoint2.x = l_Centreppt.x + (l_result * l_dSinAngle);
         l_dPoint2.y = l_Centreppt.y - (l_result * l_dCosAngle);
 
-        RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, VP, m_bDrawArrow, m_hiliteWidth );
+        RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, VP, false, m_hiliteWidth );
 
     }
 
