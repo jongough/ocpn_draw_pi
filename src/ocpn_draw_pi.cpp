@@ -1903,7 +1903,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 //                bRefresh = FALSE;
 //                bret = FALSE;
 //            }
-        } else if( g_bAllowLeftDrag ) {
+        } else if( g_bAllowLeftDrag && !m_bEBLMoveOrigin) {
             FindSelectedObject();
 
             if( 0 != m_seltype ) {
@@ -1993,8 +1993,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             if (m_bEBLMoveOrigin) {
                 m_bEBLMoveOrigin = false;
-                m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                m_pSelectedEBL->CentreOnLatLon( m_cursor_lat, m_cursor_lon );
+                if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                    m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                    m_pSelectedEBL->CentreOnLatLon( m_cursor_lat, m_cursor_lon );
+                }
+                else {
+                    m_pSelectedPIL = (PIL *)m_pSelectedPath;
+                    m_pSelectedPIL->CentreOnLatLon( m_cursor_lat, m_cursor_lon );
+                }
                 m_bPathEditing = FALSE;
                 m_bODPointEditing = FALSE;
                 m_pCurrentCursor = NULL;
@@ -2734,12 +2740,30 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         
         wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, m_cursorPoint);
         RenderExtraPathLegInfo( dc, r_rband, info );
-    } else if( nEBL_State > 0 || m_bEBLMoveOrigin ) {
+    } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin) ) {
         EBL *ebl = new EBL();
         double brg, dist;
         wxPoint boatpoint;
         if(m_bEBLMoveOrigin) {
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+            GetCanvasPixLL( g_pVP, &boatpoint, tp->m_lat, tp->m_lon );
+            DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
+            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
+        } else {
+            GetCanvasPixLL( g_pVP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
+            DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
+            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
+        }
+        wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
+        if(info.length() > 0)
+            RenderExtraPathLegInfo( dc, m_cursorPoint, info );
+        delete ebl;
+    } else if( m_pSelectedPIL && (nPIL_State > 0 || m_bEBLMoveOrigin) ) {
+        EBL *ebl = new EBL();
+        double brg, dist;
+        wxPoint boatpoint;
+        if(m_bEBLMoveOrigin) {
+            ODPoint *tp = (ODPoint *) m_pSelectedPIL->m_pODPointList->GetLast()->GetData();
             GetCanvasPixLL( g_pVP, &boatpoint, tp->m_lat, tp->m_lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
             ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );

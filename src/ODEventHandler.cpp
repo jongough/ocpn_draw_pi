@@ -781,6 +781,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_EBL_MENU_CENTRE_ON_BOAT_LATLON:
             m_pEBL->CentreOnLatLon( g_pfFix.Lat, g_pfFix.Lon );
             break;
+        case ID_PIL_MENU_CENTRE_ON_BOAT:
+            m_pPIL->m_bSaveUpdates = true;
+            m_pPIL->CentreOnBoat(false);
+            break;
+        case ID_PIL_MENU_CENTRE_ON_BOAT_LATLON:
+            m_pPIL->CentreOnLatLon( g_pfFix.Lat, g_pfFix.Lon );
+            break;
         case ID_EBL_MENU_PICK_NEW_START:
             g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
             g_ocpn_draw_pi->m_pCurrentCursor = g_ocpn_draw_pi->m_pCursorCross;
@@ -1071,11 +1078,17 @@ void ODEventHandler::PopupMenu( int seltype )
                 if(!m_pEBL->m_bCentreOnBoat) {
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT, _("Centre on moving boat") );
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Move start point to boat lat/lon") );
-                } else
-                    MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
+                }
+                MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
                 ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
                 if(m_pEBL->GetCurrentColour() != pFirstPoint->GetODPointRangeRingsColour())
                     MenuAppend( menuPath, ID_EBL_MENU_VRM_MATCH_EBL_COLOUR, _("Match VRM colour to EBL colour"));
+            } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                if(!m_pPIL->m_bCentreOnBoat) {
+                    MenuAppend( menuPath, ID_PIL_MENU_CENTRE_ON_BOAT, _("Centre on moving boat") );
+                    MenuAppend( menuPath, ID_PIL_MENU_CENTRE_ON_BOAT_LATLON, _("Move start point to boat lat/lon") );
+                }
+                MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
             }
             else if(m_pSelectedPath->m_sTypeString == wxT("DR")) {
                 MenuAppend( menuPath, ID_DR_MENU_UPDATE_INITIAL_CONDITIONS, _("Update initial conditions") );
