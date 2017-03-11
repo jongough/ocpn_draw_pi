@@ -133,15 +133,18 @@ void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferB
     }
 }
 
-void EBL::Resize( double lat, double lon )
+void EBL::Resize( double lat, double lon, bool FixedAngle )
 {
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    pEndPoint->m_lat = lat;
-    pEndPoint->m_lon = lon;
+    //pEndPoint->m_lat = lat;
+    //pEndPoint->m_lon = lon;
     ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
     double brg;
     DistanceBearingMercator_Plugin( lat, lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength );
-    pEndPoint->m_seg_len = m_dLength;
+    if( FixedAngle ) {
+        PositionBearingDistanceMercator_Plugin( pStartPoint->m_lat, pStartPoint->m_lon, m_dEBLAngle, m_dLength, &pEndPoint->m_lat, &pEndPoint->m_lon );
+    } else
+        pEndPoint->m_seg_len = m_dLength;
 
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
         g_pEBLPropDialog->UpdateProperties();

@@ -1878,31 +1878,31 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         } else if ( m_bTextPointEditing ) {
             m_pCurrentCursor = m_pTextCursorCross;
             bret = TRUE;
-        } else if( event.ControlDown() ) {
-            FindSelectedObject();
-
-            if ( 0 != m_seltype ) {
-                if(m_pSelectedPath) {
-                    m_pSelectedBoundary = NULL;
-                    m_pSelectedEBL = NULL;
-                    m_pSelectedDR = NULL;
-                    m_pSelectedGZ = NULL;
-                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
-                        m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
-                    else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
-                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                    else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
-                        m_pSelectedDR = (DR *)m_pSelectedPath;
-                    else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
-                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
-                }
-                if(m_pSelectedBoundary) {
-                    m_pBoundaryList.push_back( m_pSelectedBoundary );
-                    m_pSelectedBoundary->m_bPathPropertiesBlink = true;
-                }
-                bRefresh = FALSE;
-                bret = FALSE;
-            }
+//        } else if( event.ControlDown() ) {
+//            FindSelectedObject();
+//            
+//            if ( 0 != m_seltype ) {
+//                if(m_pSelectedPath) {
+//                    m_pSelectedBoundary = NULL;
+//                    m_pSelectedEBL = NULL;
+//                    m_pSelectedDR = NULL;
+//                    m_pSelectedGZ = NULL;
+//                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+//                        m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
+//                    else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
+//                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
+//                    else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
+//                        m_pSelectedDR = (DR *)m_pSelectedPath;
+//                    else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone"))
+//                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
+//                }
+//                if(m_pSelectedBoundary) {
+//                    m_pBoundaryList.push_back( m_pSelectedBoundary );
+//                    m_pSelectedBoundary->m_bPathPropertiesBlink = true;
+//                }
+//                bRefresh = FALSE;
+//                bret = FALSE;
+//            }
         } else if( g_bAllowLeftDrag ) {
             FindSelectedObject();
 
@@ -1913,8 +1913,13 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedDR = NULL;
                     m_pSelectedGZ = NULL;
                     m_pSelectedPIL = NULL;
-                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary"))
+                    if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                         m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
+                        if( event.ControlDown() ) {
+                            m_pBoundaryList.push_back( m_pSelectedBoundary );
+                            m_pSelectedBoundary->m_bPathPropertiesBlink = true;
+                        }
+                    }
                     else if(m_pSelectedPath->m_sTypeString == wxT("EBL"))
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("DR"))
@@ -2122,19 +2127,30 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     if( event.Dragging() ) {
         if( event.LeftIsDown() ) {
+            if( !m_pBoundaryList.empty() ) {
+                std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
+                while( it != m_pBoundaryList.end() ) {
+                    (*it)->m_bPathPropertiesBlink = false;
+                    ++it;
+                }
+                m_pBoundaryList.clear();
+            }
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
             else if( m_pFoundODPoint && ( m_iEditMode == ID_PATH_MENU_MOVE_POINT || m_iEditMode == ID_ODPOINT_MENU_MOVE ) ) {
                 if( m_bPathEditing ) {
                     m_pCurrentCursor = m_pCursorCross;
-                    if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
-                    else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                    if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                    else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
                     else {
                         m_pFoundODPoint->m_lat = m_cursor_lat;
                         m_pFoundODPoint->m_lon = m_cursor_lon;
                     }
                     if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                         m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                        m_pSelectedEBL->Resize();
+                        if( event.ControlDown() && event.ShiftDown())
+                            m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
+                        else
+                            m_pSelectedEBL->Resize();
                     } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                         m_pSelectedPIL->Resize();
@@ -2152,8 +2168,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     bret = FALSE;
                     event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
                 } else if ( m_bODPointEditing ) {
-                    if( event.ControlDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
-                    else if( event.ShiftDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                    if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                    else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
                     else {
                         m_pFoundODPoint->m_lat = m_cursor_lat;
                         m_pFoundODPoint->m_lon = m_cursor_lon;
@@ -2161,7 +2177,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     if(m_pSelectedPath) {
                         if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                             m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                            m_pSelectedEBL->Resize( );
+                            if(event.ControlDown() && event.ShiftDown())
+                                m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
+                            else
+                                m_pSelectedEBL->Resize( );
                         } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                             m_pSelectedGZ = (GZ *)m_pSelectedPath;
                             m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );

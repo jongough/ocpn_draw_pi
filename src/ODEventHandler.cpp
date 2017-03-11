@@ -748,13 +748,9 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMinLat(), l_LLBBox.GetMinLon(), l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), l_BP3, l_BP4, l_pBoundary );
             l_pBoundary->AddPoint( l_BP4 );
 
-            BoundaryPoint *l_BP5 = new BoundaryPoint(l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), g_sODPointIconName, wxS(""), wxT(""));
-            l_BP5->SetNameShown( false );
-            l_BP5->SetTypeString( wxS("Boundary Point") );
-            g_pODConfig->AddNewODPoint( l_BP5, -1 );
-            g_pODSelect->AddSelectableODPoint( l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_BP5 );
-            g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_BP4, l_BP5, l_pBoundary );
-            l_pBoundary->AddPoint( l_BP5 );
+            // Add final point to close the boundary
+            g_pODSelect->AddSelectablePathSegment( l_LLBBox.GetMinLat(), l_LLBBox.GetMaxLon(), l_LLBBox.GetMaxLat(), l_LLBBox.GetMaxLon(), l_BP4, l_BP1, l_pBoundary );
+            l_pBoundary->AddPoint( l_BP1 );
 
             l_pBoundary->RebuildGUIDList(); // ensure the GUID list is intact and good
             l_pBoundary->SetHiLite(0);

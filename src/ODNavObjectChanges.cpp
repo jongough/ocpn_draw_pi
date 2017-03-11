@@ -1645,7 +1645,7 @@ ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
         
         //        if( pr->m_bIsInLayer ) return NULL;
         //TODO fix crash when pp->m_GUID is not valid. Why is this so? appears to be when a point is updated twice, but.....
-        if( pp->m_GUID.length() > 0 && guid == pp->m_GUID ) {
+        if( !pp->m_GUID.IsEmpty() && pp->m_GUID.length() > 0 && guid == pp->m_GUID ) {
             return pp;
         }
         node = node->GetNext();

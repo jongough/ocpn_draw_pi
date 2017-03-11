@@ -34,7 +34,7 @@ class EBL : public ODPath
         void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
-        void Resize( double lat, double lon );
+        void Resize( double lat, double lon, bool FixedAngle = false );
         void Resize( void );
         void MoveEndPoint( bool bUpdateEBL );
         void MoveEndPoint( void );
