@@ -2157,6 +2157,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                             m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
                         else
                             m_pSelectedEBL->Resize();
+                    } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                        m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
                     } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                         m_pSelectedPIL->Resize();
