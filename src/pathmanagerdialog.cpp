@@ -66,7 +66,6 @@
 #include "ODSelect.h"
 #include "chcanv.h"
 #include "georef.h"
-#include "chartbase.h"
 #include "Layer.h"
 
 #define DIALOG_MARGIN 3
