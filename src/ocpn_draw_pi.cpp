@@ -2817,18 +2817,28 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             
             delete gz;
         }
-    } else if( nPIL_State > 0 ) {
+    } else if( nPIL_State > 0 || nEBL_State > 0 ) {
         // draw line from boat to cursor
-        PIL *pil = new PIL();
+        ODPath *ptPath;
+        PIL *pil;
+        EBL *ebl;
+        if(nPIL_State > 0) {
+            pil = new PIL();
+            ptPath = pil;
+        }
+        else {
+            ebl = new EBL();
+            ptPath = ebl;
+        }
         double brg, dist;
         wxPoint boatpoint;
         GetCanvasPixLL( g_pVP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
         DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
-        pil->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
-        wxString info = CreateExtraPathLegInfo(dc, pil, brg, dist, m_cursorPoint);
+        ptPath->DrawSegment( dc, &boatpoint, &m_cursorPoint, *m_pVP, false );
+        wxString info = CreateExtraPathLegInfo(dc, ptPath, brg, dist, m_cursorPoint);
         if(info.length() > 0)
             RenderExtraPathLegInfo( dc, m_cursorPoint, info );
-        delete pil;
+        delete ptPath;    
     }
         
         
