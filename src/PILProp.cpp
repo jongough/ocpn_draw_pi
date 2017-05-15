@@ -196,13 +196,6 @@ bool PILProp::SaveChanges( void )
     ODPoint *pFirstPoint = m_pPIL->m_pODPointList->GetFirst()->GetData();
 
     bool l_bUpdatePath = false;
-    double l_dLength;
-    m_textCtrlTotalLength->GetValue().ToDouble( &l_dLength );
-    l_dLength = fromUsrDistance_Plugin( l_dLength );
-    if(m_pPIL->m_dLength != l_dLength) {
-        l_bUpdatePath = true;
-        m_pPIL->m_dLength = l_dLength;
-    }
     
     if(pFirstPoint->GetODPointRangeRingsColour() == l_PILOrigColour)
         pFirstPoint->SetODPointRangeRingsColour( m_pPIL->GetCurrentColour() );
