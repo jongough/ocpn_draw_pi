@@ -3047,16 +3047,23 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
                 wxString info = CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, destPoint);
                 if(info.length() > 0)
                     RenderExtraPathLegInfo( dc, destPoint, info );
-            } else if(pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
-                std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
-                while(it != m_pSelectedPIL->PilLineList.end()) {
-                    if(it->iID == m_iPILId) break;
-                    ++it;
+            }
+            else if (pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
+                wxString info;
+                if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
+                    std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
+                    while (it != m_pSelectedPIL->PilLineList.end()) {
+                        if (it->iID == m_iPILId) break;
+                        ++it;
+                    }
+                    if (it != m_pSelectedPIL->PilLineList.end()) {
+                        info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
+                    }
                 }
-
-                wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
-                if(info.length() > 0)
-                    RenderExtraPathLegInfo(dc, m_cursorPoint, info);
+                else
+                    info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, m_pSelectedPIL->m_dLength, m_cursorPoint);
+                if (info.length() > 0)
+                        RenderExtraPathLegInfo(dc, m_cursorPoint, info);
             }
         }
         pnode = pnode->GetNext();
@@ -3709,7 +3716,20 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
                 RenderExtraPathLegInfo( dc, destPoint, info );
         } else if(pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
             ODDC dc;
-            wxString info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, m_pSelectedPIL->m_dLength, m_cursorPoint);
+            wxString info;
+            if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
+                std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
+                while (it != m_pSelectedPIL->PilLineList.end()) {
+                    if (it->iID == m_iPILId) break;
+                    ++it;
+                }
+                if (it != m_pSelectedPIL->PilLineList.end()) {
+                    info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
+                }
+            }
+            else
+                info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, m_pSelectedPIL->m_dLength, m_cursorPoint);
+            
             if(info.length() > 0)
                 RenderExtraPathLegInfo(dc, m_cursorPoint, info);
         }
