@@ -241,29 +241,29 @@ void PIL::CentreOnBoat( bool bMoveEndPoint )
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
 
-    wxPoint l_Centreppt;
-    wxPoint l_dPoint1, l_dPoint2;
-    double l_dLat, l_dLon;
+    SetPILLineSelect( l_pCentre->m_lat, l_pCentre->m_lon );
+}
 
-    GetCanvasPixLL( &g_VP, &l_Centreppt,  l_pCentre->m_lat, l_pCentre->m_lon);
-    std::list<PILLINE>::iterator it = PilLineList.begin();
-    while(it != PilLineList.end()) {
-        double l_dAngle;
-        double l_dLat1, l_dLon1, l_dLat2, l_dLon2;
-        l_dAngle = m_dEBLAngle + 90.;
-        if(l_dAngle > 360.) l_dAngle -= 360.;
-        if(l_dAngle < 0) l_dAngle += 360.;
-
-        PositionBearingDistanceMercator_Plugin(l_pCentre->m_lat, l_pCentre->m_lon, l_dAngle, it->dOffset, &l_dLat, &l_dLon);
-        GetCanvasPixLL( &g_VP, &l_Centreppt,  l_dLat, l_dLon );
-        CalcOffsetPoints( l_Centreppt, &l_dPoint1, &l_dPoint2);
-        GetCanvasLLPix( &g_VP, l_dPoint1, &l_dLat1, &l_dLon1 );
-        GetCanvasLLPix( &g_VP, l_dPoint2, &l_dLat2, &l_dLon2 );
-        g_pODSelect->DeleteSelectablePathSegment(this, it->iID);
-        g_pODSelect->AddSelectablePathSegment( l_dLat1, l_dLon1, l_dLat2, l_dLon2, NULL, NULL, this, it->iID );
-
-        ++it;
+void PIL::CentreOnLatLon( double lat, double lon )
+{
+    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    pStartPoint->m_ODPointName = _("Start");
+    if(pStartPoint->GetIconName() == wxEmptyString) {
+        pStartPoint->SetIconName( g_sPILStartIconName );
+        pStartPoint->ReLoadIcon();
     }
+    
+    EBL::CentreOnLatLon( lat, lon );
+    SetPILLineSelect( lat, lon);
+    
+}
+
+void PIL::UpdatePIL( void )
+{
+    wxODPointListNode *node = m_pODPointList->GetFirst();
+    ODPoint *l_pCentre = node->GetData();
+    
+    SetPILLineSelect( l_pCentre->m_lat, l_pCentre->m_lon );
 }
 
 void PIL::CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint )
@@ -352,3 +352,29 @@ void PIL::MovePILLine(double dLat, double dLon, int iPILId)
     }
 }
 
+void PIL::SetPILLineSelect( double lat, double lon)
+{
+    wxPoint l_Centreppt;
+    wxPoint l_dPoint1, l_dPoint2;
+    double l_dLat, l_dLon;
+
+    GetCanvasPixLL( &g_VP, &l_Centreppt,  lat, lon);
+    std::list<PILLINE>::iterator it = PilLineList.begin();
+    while(it != PilLineList.end()) {
+        double l_dAngle;
+        double l_dLat1, l_dLon1, l_dLat2, l_dLon2;
+        l_dAngle = m_dEBLAngle + 90.;
+        if(l_dAngle > 360.) l_dAngle -= 360.;
+        if(l_dAngle < 0) l_dAngle += 360.;
+        
+        PositionBearingDistanceMercator_Plugin(lat, lon, l_dAngle, it->dOffset, &l_dLat, &l_dLon);
+        GetCanvasPixLL( &g_VP, &l_Centreppt,  l_dLat, l_dLon );
+        CalcOffsetPoints( l_Centreppt, &l_dPoint1, &l_dPoint2);
+        GetCanvasLLPix( &g_VP, l_dPoint1, &l_dLat1, &l_dLon1 );
+        GetCanvasLLPix( &g_VP, l_dPoint2, &l_dLat2, &l_dLon2 );
+        g_pODSelect->DeleteSelectablePathSegment(this, it->iID);
+        g_pODSelect->AddSelectablePathSegment( l_dLat1, l_dLon1, l_dLat2, l_dLon2, NULL, NULL, this, it->iID );
+        
+        ++it;
+    }
+}

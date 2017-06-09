@@ -51,7 +51,9 @@ class PIL :  public EBL
         void    DrawGL( PlugIn_ViewPort &piVP );
         void    DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
         void    CentreOnBoat( bool bMoveEndPoint );
+        void    CentreOnLatLon( double lat, double lon );
         void    MovePILLine(double dLat, double dLon, int iPILId);
+        void    UpdatePIL( void );
 
         std::list<PILLINE> PilLineList;
         
@@ -60,6 +62,8 @@ class PIL :  public EBL
     private:
         void    RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
         void    CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint );
+        void    SetPILLineSelect( double lat, double lon);
+        
         int     m_iStyleOffsetLine;
         int     m_iWidthOffsetLine;
 };

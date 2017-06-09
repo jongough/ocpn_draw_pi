@@ -2033,6 +2033,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 }
                 if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                     m_pSelectedGZ->UpdateGZSelectablePath();
+                } else if (m_pSelectedPIL) {
+                    m_pSelectedPIL->UpdatePIL();
                 } else {
                     g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
                     g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );

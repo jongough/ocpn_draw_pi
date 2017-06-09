@@ -322,7 +322,7 @@ void EBL::CentreOnLatLon( double lat, double lon )
     m_bRotateWithBoat = false;
     m_bCentreOnBoat = false;
     pStartPoint->m_ODPointName = _("Start");
-    if(pStartPoint->GetIconName() != wxEmptyString) {
+    if(pStartPoint->GetIconName() == wxEmptyString) {
         pStartPoint->SetIconName( g_sEBLStartIconName );
         pStartPoint->ReLoadIcon();
     }
@@ -560,4 +560,5 @@ void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
     }
 
 }
+
 

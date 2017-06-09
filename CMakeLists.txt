@@ -16,12 +16,12 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "0")
-SET(VERSION_DATE "15/05/2017")
+SET(VERSION_PATCH "1")
+SET(VERSION_DATE "09/06/2017")
 
 SET(BUNDLE_DATA FALSE)
 IF( NOT CMAKE_BUILD_TYPE )
-  SET( CMAKE_BUILD_TYPE Release CACHE STRING
+  SET( CMAKE_BUILD_TYPE Release CACHE STRINGS "None Debug Release RelWithDebInfo MinSizeRel" <docstring>
        "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
        FORCE )
 ENDIF( NOT CMAKE_BUILD_TYPE )
