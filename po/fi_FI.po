@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-14 14:59+1000\n"
-"PO-Revision-Date: 2017-02-12 03:40-0500\n"
+"POT-Creation-Date: 2017-06-13 17:32+1000\n"
+"PO-Revision-Date: 2017-06-10 12:05-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -401,7 +401,7 @@ msgid "Confirm Object Delete"
 msgstr "Vahvista kohteen poistaminen"
 #
 msgid "Control Line"
-msgstr ""
+msgstr "Tarkistuslinja"
 #
 msgid "Copy"
 msgstr "Kopioi"
@@ -719,6 +719,9 @@ msgstr "&Tuo GPX..."
 msgid "ID"
 msgstr "Tunnus"
 #
+msgid "ID Num"
+msgstr ""
+#
 msgid "ID: "
 msgstr "TUNNUS: "
 #
@@ -762,6 +765,10 @@ msgstr ""
 #
 msgid "Inclusion Boundary Size"
 msgstr "Reunan koko mukaanluettuna"
+#
+#, fuzzy
+msgid "Index Line Properties"
+msgstr "Rinnakkaisen indeksiviivan ominaisuudet"
 #
 msgid "Index Lines (+ Stbd/- Port)"
 msgstr "Indeksi linjat (+ Stbd /-Port)"
@@ -973,7 +980,7 @@ msgid "OCPN Draw Delete OD Point"
 msgstr "OCPN piirto poistaa OD pisteen"
 #
 msgid "OCPN Draw Delete PIL Point"
-msgstr ""
+msgstr "OCPN Draw Poistaa PIL piste"
 #
 msgid "OCPN Draw Delete Text Point"
 msgstr "OCPN Draw Poista teksti piste"
@@ -982,7 +989,7 @@ msgid "OCPN Draw EBL Delete"
 msgstr "OCPN piirto EBL poisto"
 #
 msgid "OCPN Draw GZ Delete"
-msgstr ""
+msgstr "OCPN Draw GZ Poisto"
 #
 msgid "OCPN Draw Manager"
 msgstr "OCPN piirronhallinta"
@@ -1044,6 +1051,10 @@ msgstr "OD\\WD"
 msgid "Offset"
 msgstr "Siirtymä"
 #
+#, fuzzy
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Indeksi linjat (+ Stbd /-Port)"
+#
 msgid "Offset Line Style"
 msgstr "Kompensaatioviivan tyyli"
 #
@@ -1081,7 +1092,7 @@ msgid "Parallel Index Line"
 msgstr "Rinnakkainen hakemistorivi"
 #
 msgid "Parallel Index Line Angle (+Stbd/-Port)"
-msgstr ""
+msgstr "Rinnakaisen indeksilinjan kulma (+Stbd/-Port)"
 #
 msgid "Parallel Index Line Persistence"
 msgstr "Rinnakkaisen indeksi viivan pysyvyys"

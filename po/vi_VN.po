@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-14 14:59+1000\n"
-"PO-Revision-Date: 2017-02-23 09:23-0500\n"
+"POT-Creation-Date: 2017-06-13 17:32+1000\n"
+"PO-Revision-Date: 2017-06-10 12:06-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -705,6 +705,9 @@ msgstr ""
 msgid "ID"
 msgstr ""
 #
+msgid "ID Num"
+msgstr ""
+#
 msgid "ID: "
 msgstr ""
 #
@@ -743,6 +746,9 @@ msgid ""
 msgstr ""
 #
 msgid "Inclusion Boundary Size"
+msgstr ""
+#
+msgid "Index Line Properties"
 msgstr ""
 #
 msgid "Index Lines (+ Stbd/- Port)"
@@ -1022,6 +1028,9 @@ msgid "OD\\WD"
 msgstr ""
 #
 msgid "Offset"
+msgstr ""
+#
+msgid "Offset (+ Stbd/- Port)"
 msgstr ""
 #
 msgid "Offset Line Style"

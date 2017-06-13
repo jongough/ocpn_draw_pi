@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-14 14:59+1000\n"
-"PO-Revision-Date: 2017-04-01 22:44-0400\n"
+"POT-Creation-Date: 2017-06-13 17:32+1000\n"
+"PO-Revision-Date: 2017-06-10 12:05-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -724,6 +724,9 @@ msgstr "I&mpordi GPX..."
 msgid "ID"
 msgstr "ID"
 #
+msgid "ID Num"
+msgstr ""
+#
 msgid "ID: "
 msgstr "ID: "
 #
@@ -767,6 +770,10 @@ msgstr ""
 #
 msgid "Inclusion Boundary Size"
 msgstr "Kaasatud piiri suurus"
+#
+#, fuzzy
+msgid "Index Line Properties"
+msgstr "Paralleelse Indeksliini omadused"
 #
 msgid "Index Lines (+ Stbd/- Port)"
 msgstr "Indeksliinid (+ tüürp /- pakp)"
@@ -1048,6 +1055,10 @@ msgstr "OD\\WD"
 #
 msgid "Offset"
 msgstr "Nihe"
+#
+#, fuzzy
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Vaikimisi nihe (+tp /-pp)"
 #
 msgid "Offset Line Style"
 msgstr "Nihkejoone stiil"

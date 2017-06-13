@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-14 14:59+1000\n"
+"POT-Creation-Date: 2017-06-13 17:32+1000\n"
 "PO-Revision-Date: 2017-03-14 08:55-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -723,6 +723,9 @@ msgstr "Ε&ισαγωγή από GPX..."
 msgid "ID"
 msgstr "ID"
 #
+msgid "ID Num"
+msgstr ""
+#
 msgid "ID: "
 msgstr "ID: "
 #
@@ -766,6 +769,10 @@ msgstr ""
 #
 msgid "Inclusion Boundary Size"
 msgstr "Μέγεθος ορίου εγκλείσματος"
+#
+#, fuzzy
+msgid "Index Line Properties"
+msgstr "Ιδιότητες παράλληλης γραμμής Index"
 #
 msgid "Index Lines (+ Stbd/- Port)"
 msgstr "Γραμμές Index (+ δεξιά/- αριστερά)"
@@ -1047,6 +1054,10 @@ msgstr "OD\\WD"
 #
 msgid "Offset"
 msgstr "Μετατόπιση"
+#
+#, fuzzy
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Προεπιλεγμένη αντιστάθμιση (+δεξιά /-αριστερά)"
 #
 msgid "Offset Line Style"
 msgstr "Στιλ γραμμής μετατόπισης"
