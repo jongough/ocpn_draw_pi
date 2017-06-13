@@ -10,6 +10,7 @@
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
+#include <wx/intl.h>
 #include <wx/string.h>
 #include <wx/stattext.h>
 #include <wx/gdicmn.h>
@@ -66,7 +67,7 @@ class PILPropertiesDialogDef : public wxDialog
 	
 	public:
 		
-		PILPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Index Line Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,260 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		PILPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Index Line Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,260 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~PILPropertiesDialogDef();
 	
 };
