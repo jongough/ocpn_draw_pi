@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-13 17:32+1000\n"
-"PO-Revision-Date: 2017-06-10 12:06-0400\n"
+"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"PO-Revision-Date: 2017-06-29 09:35-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
@@ -722,7 +722,7 @@ msgid "ID"
 msgstr "ID"
 #
 msgid "ID Num"
-msgstr ""
+msgstr "ID Num"
 #
 msgid "ID: "
 msgstr "ID: "
@@ -766,9 +766,8 @@ msgstr ""
 msgid "Inclusion Boundary Size"
 msgstr "Tamanho do limite de inclusão"
 #
-#, fuzzy
 msgid "Index Line Properties"
-msgstr "Propriedades da linha de índice paralelo"
+msgstr "Propriedades da linha de índice"
 #
 msgid "Index Lines (+ Stbd/- Port)"
 msgstr "Linhas de índice (+ Boreste/-Bombordo)"
@@ -1051,9 +1050,8 @@ msgstr "OD\\WD"
 msgid "Offset"
 msgstr "Deslocamento"
 #
-#, fuzzy
 msgid "Offset (+ Stbd/- Port)"
-msgstr "Deslocamento padrão (+ Boreste/-Bombordo)"
+msgstr "Variação (+ Estibordo/- Bombordo)"
 #
 msgid "Offset Line Style"
 msgstr "Estilo da linha de deslocamento"
