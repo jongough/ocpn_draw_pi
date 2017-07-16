@@ -46,10 +46,17 @@ ENDIF(UNIX)
 
 IF(APPLE)
   INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME LIBRARY DESTINATION ${CMAKE_BINARY_DIR}/OpenCPN.app/Contents/SharedSupport/plugins)
- FIND_PACKAGE(ZLIB REQUIRED)
- TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${ZLIB_LIBRARIES} )
-      INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME LIBRARY DESTINATION ${CMAKE_BINARY_DIR}/OpenCPN.app/Contents/PlugIns)
+  INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME LIBRARY DESTINATION ${CMAKE_BINARY_DIR}/OpenCPN.app/Contents/PlugIns)
+  IF(EXISTS ${PROJECT_SOURCE_DIR}/data)
+    INSTALL(DIRECTORY data DESTINATION ${CMAKE_BINARY_DIR}/OpenCPN.app/Contents/SharedSupport/plugins/${PACKAGE_NAME})
+  ENDIF()
+
+  FIND_PACKAGE(ZLIB REQUIRED)
+  TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${ZLIB_LIBRARIES} )
+
 ENDIF(APPLE)
+
+
 
 IF(UNIX AND NOT APPLE)
     FIND_PACKAGE(BZip2 REQUIRED)
@@ -177,3 +184,22 @@ IF(UNIX AND NOT APPLE)
     MESSAGE (STATUS "Install UserIcons: ${PREFIX_PARENTDATA}/plugins/${PACKAGE_NAME}")
   ENDIF()
 ENDIF(UNIX AND NOT APPLE)
+
+IF(APPLE)
+    # For Apple build, we need to copy the "data" directory contents to the build directory, so that the packager can pick them up.
+    if (NOT EXISTS "${PROJECT_BINARY_DIR}/data/")
+        file (MAKE_DIRECTORY "${PROJECT_BINARY_DIR}/data/")
+        message ("Generating data directory")
+        endif ()
+
+   FILE(GLOB PACKAGE_DATA_FILES ${CMAKE_SOURCE_DIR}/data/*)
+
+   FOREACH (_currentDataFile ${PACKAGE_DATA_FILES})
+        MESSAGE (STATUS "copying: ${_currentDataFile}" )
+        configure_file(${_currentDataFile} ${CMAKE_CURRENT_BINARY_DIR}/data COPYONLY)
+   ENDFOREACH (_currentDataFile )
+
+   INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME LIBRARY DESTINATION ${PACKAGE_NAME}/${PACKAGE_NAME})
+   MESSAGE (STATUS "Install Target: ${PACKAGE_NAME}/${PACKAGE_NAME}")
+
+ENDIF(APPLE)
