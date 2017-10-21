@@ -108,12 +108,12 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
                 if(OCPNpoint_node == OCPNpoint_last_node) break;
             }
             bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
+            delete [] polyX;
+            delete [] polyY;
             if(bInPoly) {
                 l_GUID = pboundary->m_GUID;
                 break;
             }
-            delete [] polyX;
-            delete [] polyY;
         }
         boundary_node = boundary_node->GetNext();                         // next boundary
     }
