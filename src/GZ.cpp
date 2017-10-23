@@ -412,30 +412,24 @@ void GZ::UpdateGZSelectablePath( void )
     }
     double firstDirection;
     double secondDirection;
+
+    firstDirection = m_dFirstLineDirection;
+    secondDirection = m_dSecondLineDirection;
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
                 if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
                 if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
         }
-    } else {
-        firstDirection = m_dFirstLineDirection;
-        secondDirection = m_dSecondLineDirection;
     }
     
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dPrevLat, &l_dPrevLon);
@@ -509,30 +503,25 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
     double l_dLon;
     double firstDirection;
     double secondDirection;
+
+    firstDirection = m_dFirstLineDirection;
+    secondDirection = m_dSecondLineDirection;
+
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
                 if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
                 if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
         }
-    } else {
-        firstDirection = m_dFirstLineDirection;
-        secondDirection = m_dSecondLineDirection;
     }
     // get x, y of first point on first line
     ODPoint *l_point = m_pODPointList->GetFirst()->GetData();
@@ -575,30 +564,24 @@ LLBBox GZ::GetBBox( void )
     double l_dLon;
     double firstDirection;
     double secondDirection;
+    firstDirection = m_dFirstLineDirection;
+    secondDirection = m_dSecondLineDirection;
+
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
                 if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
                 if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
         }
-    } else {
-        firstDirection = m_dFirstLineDirection;
-        secondDirection = m_dSecondLineDirection;
     }
     
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
