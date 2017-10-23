@@ -728,9 +728,7 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
             if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
         }
-        #ifdef __WXOSX__
         if(wxGC) {
-            #endif
             wxGC->SetPen(dc->GetPen());
             wxGC->SetBrush(dc->GetBrush());
             wxGraphicsPath gpath = wxGC->CreatePath();
@@ -743,9 +741,7 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
             gpath.AddArc( xc, yc, l_InnerRadius, l_dSecondAngle, l_dFirstAngle, false);
 
             wxGC->FillPath(gpath);
-            #ifdef __WXOSX__
         }
-        #endif
     }
 #ifdef ocpnUSE_GL
     else {
