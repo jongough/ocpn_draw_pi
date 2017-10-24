@@ -3676,29 +3676,31 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             continue;
 
         ODPath *pPathDraw = NULL;
-        Boundary *pBoundaryDraw = NULL;
-        EBL *pEBLDraw = NULL;
-        DR *pDRDraw = NULL;
-        GZ *pGZDraw = NULL;
-        PIL *pPILDraw = NULL;
+        Boundary *pBoundaryDraw;
+        {
+        EBL *pEBLDraw;
+        DR *pDRDraw;
+        GZ *pGZDraw;
+        PIL *pPILDraw;
         
         if(pTempPath->m_sTypeString == wxT("Boundary")) {
-            pBoundaryDraw = (Boundary *)pTempPath;
+            pBoundaryDraw = dynamic_cast<Boundary *>(pTempPath);
             pPathDraw = pBoundaryDraw;
         } else if(pTempPath->m_sTypeString == wxT("EBL")) {
-            pEBLDraw = (EBL *)pTempPath;
+            pEBLDraw = dynamic_cast<EBL *>(pTempPath);
             pPathDraw = pEBLDraw;
         } else if(pTempPath->m_sTypeString == wxT("DR")) {
-            pDRDraw = (DR *)pTempPath;
+            pDRDraw = dynamic_cast<DR *>(pTempPath);
             pPathDraw = pDRDraw;
         } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
-            pGZDraw = (GZ *)pTempPath;
+            pGZDraw = dynamic_cast<GZ *>(pTempPath);
             pPathDraw = pGZDraw;
         } else if(pTempPath->m_sTypeString == wxT("PIL")) {
-            pPILDraw = (PIL *)pTempPath;
+            pPILDraw = dynamic_cast<PIL *>(pTempPath);
             pPathDraw = pPILDraw;
         }
-        
+        assert(pPathDraw != 0);
+        }
         /* defer rendering active routes until later */ 
         //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
         //            continue;
