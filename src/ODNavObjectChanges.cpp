@@ -991,8 +991,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     bool    l_bODPointRangeRingsVisible = false;
     int     l_iTextPosition = g_iTextPosition;
     wxColour    l_wxcODPointRangeRingsColour;
-    int     l_iODPointRangeRingWidth;
-    int     l_iODPointRangeRingStyle;
+    int     l_iODPointRangeRingWidth = 2;
+    int     l_iODPointRangeRingStyle = wxPENSTYLE_SOLID;
     wxColour    l_colourTextColour = g_colourDefaultTextColour;
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
