@@ -817,7 +817,7 @@ void ocpn_draw_pi::SetDefaults(void)
 }
 wxBitmap *ocpn_draw_pi::GetPlugInBitmap()
 {
-    return m_pODicons->m_p_bm_ocpn_draw_pi;
+    return &m_pODicons->m_p_bm_ocpn_draw_pi;
 }
 int ocpn_draw_pi::GetToolbarToolCount(void)
 {

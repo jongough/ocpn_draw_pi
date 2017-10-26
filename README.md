@@ -13,7 +13,7 @@ There is no package for Linux at the moment, although the Linux version is likel
 platform used to develop this plugin.
 
 From OpenCPN.org Developers Manual - Compiling for Windows
-after you copy the most current opencpn.lib, WXSVG.lib, expat.lib & cairo.lib files from the most recently fetched & compiled Opencpn to the build directory, from the "build" directory issue:
+after you copy the most current opencpn.lib, expat.lib files from the most recently fetched & compiled Opencpn to the build directory, from the "build" directory issue:
 
 cmake -T v120_xp ..   <---sets up cmakelists.txt
 cmake --build .    <---compiles debug, Note the "." period
