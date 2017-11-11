@@ -12,7 +12,8 @@ script:
     fi
   - mkdir build && cd build
   - cmake -DCMAKE_BUILD_TYPE=Release ../
-  - make -sj2 package
+  # - make -sj2 package
+  - make -sj2 
 
 notifications:
     email: false
