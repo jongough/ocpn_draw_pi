@@ -338,12 +338,12 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                             << _T("\n");
                         } else {
                             PIL *l_pPIL = (PIL *)pp;
-                            std::list<PILLINE>::iterator it = l_pPIL->PilLineList.begin();
-                            while(it != l_pPIL->PilLineList.end()) {
+                            std::list<PILLINE>::iterator it = l_pPIL->m_PilLineList.begin();
+                            while(it != l_pPIL->m_PilLineList.end()) {
                                 if(it->iID == pFindSel->GetUserData()) break;
                                 ++it;
                             }
-                            if(it != l_pPIL->PilLineList.end()) {
+                            if(it != l_pPIL->m_PilLineList.end()) {
                                 s << _("Name: ") << it->sName << _T("\n");
                                 s << _("ID: ") << it->iID << _T("\n");
                                 s << _("Offset: ") << g_ocpn_draw_pi->FormatDistanceAdaptive( it->dOffset ) << _T("\n");
@@ -1339,13 +1339,13 @@ void ODEventHandler::DeletePIL( void )
     PIL *l_pPIL = (PIL *)m_pSelectedPath;
 
     g_pODSelect->DeleteSelectablePathSegment(l_pPIL, m_iFoundPIL);
-    std::list<PILLINE>::iterator it = l_pPIL->PilLineList.begin();
-    while(it != l_pPIL->PilLineList.end()) {
+    std::list<PILLINE>::iterator it = l_pPIL->m_PilLineList.begin();
+    while(it != l_pPIL->m_PilLineList.end()) {
         if(it->iID == m_iFoundPIL) break;
         ++it;
     }
 
-    l_pPIL->PilLineList.erase(it);
+    l_pPIL->m_PilLineList.erase(it);
 
     if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown()) && (m_pSelectedPath == g_pODPathPropDialog->GetPath()) ) {
         g_pODPathPropDialog->Hide();

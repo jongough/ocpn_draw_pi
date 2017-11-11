@@ -35,9 +35,11 @@ class Boundary : public ODPath
         void DrawGL( PlugIn_ViewPort &piVP );
         void DeletePoint( ODPoint *op, bool bRenamePoints );
         void SetActiveColours( void );
+        void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB );
+        void CreateColourSchemes( void );
         void MoveAllPoints( double inc_lat, double inc_lon );
         ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints );
-        
+
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;
         unsigned int    m_uiFillTransparency;
@@ -46,8 +48,19 @@ class Boundary : public ODPath
         bool            m_bInclusionBoundary;
         
     protected:
+
         wxColour    m_fillcol;
-        
+        wxColour    m_wxcSchemeActiveFillColour;
+        wxColour    m_wxcSchemeInActiveFillColour;
+        wxColour    m_wxcActiveFillColourDay;
+        wxColour    m_wxcInActiveFillColourDay;
+        wxColour    m_wxcActiveFillColourDusk;
+        wxColour    m_wxcInActiveFillColourDusk;
+        wxColour    m_wxcActiveFillColourNight;
+        wxColour    m_wxcInActiveFillColourNight;
+        wxColour    m_wxcActiveFillColourRGB;
+        wxColour    m_wxcInActiveFillColourRGB;
+
         
     private:
         

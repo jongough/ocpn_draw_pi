@@ -307,6 +307,8 @@ void ODPointPropertiesImpl::SaveChanges()
 //        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
+        m_pODPoint->CreateColourSchemes();
+
         m_pODPoint->SetName( m_textName->GetValue() );
         m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
@@ -365,6 +367,7 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
         m_pODPoint->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
         m_pODPoint->ReLoadIcon();
+        m_pODPoint->CreateColourSchemes();
 
         // Here is some logic....
         // If the Markname is completely numeric, and is part of a route,

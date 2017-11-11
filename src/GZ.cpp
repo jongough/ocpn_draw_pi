@@ -108,6 +108,8 @@ GZ::GZ() : ODPath()
     m_iMaintainWith = g_iGZMaintainWith;
     m_bSetTransparent = false;
     m_iPersistenceType = g_iGZPersistenceType;
+    CreateColourSchemes();
+    SetColourScheme();
     SetActiveColours();
     
 }
@@ -115,6 +117,47 @@ GZ::GZ() : ODPath()
 GZ::~GZ()
 {
     //dtor
+}
+
+void GZ::CreateColourSchemes(void)
+{
+    ODPath::CreateColourSchemes();
+    m_wxcActiveFillColourRGB = m_wxcActiveFillColour;
+    m_wxcInActiveFillColourRGB = m_wxcInActiveFillColour;
+    m_wxcActiveFillColourDay = m_wxcActiveFillColour;
+    m_wxcInActiveFillColourDay = m_wxcInActiveFillColour;
+    m_wxcActiveFillColourDusk.Set( m_wxcActiveFillColour.Red()/2, m_wxcActiveFillColour.Green()/2, m_wxcActiveFillColour.Blue()/2, m_wxcActiveFillColour.Alpha());
+    m_wxcInActiveFillColourDusk.Set( m_wxcInActiveFillColour.Red()/2, m_wxcInActiveFillColour.Green()/2, m_wxcInActiveFillColour.Blue()/2, m_wxcInActiveFillColour.Alpha());
+    m_wxcActiveFillColourNight.Set( m_wxcActiveFillColour.Red()/4, m_wxcActiveFillColour.Green()/4, m_wxcActiveFillColour.Blue()/4, m_wxcActiveFillColour.Alpha());
+    m_wxcInActiveFillColourNight.Set( m_wxcInActiveFillColour.Red()/4, m_wxcInActiveFillColour.Green()/4, m_wxcInActiveFillColour.Blue()/4, m_wxcInActiveFillColour.Alpha());
+}
+
+void GZ::SetColourScheme(PI_ColorScheme cs)
+{
+    ODPath::SetColourScheme(cs);
+    switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourRGB;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourRGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDay;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDusk;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourNight;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourNight;
+            break;
+        default:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDay;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
+            break;
+    }
+    
 }
 
 void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
@@ -243,8 +286,8 @@ void GZ::SetActiveColours( void )
         m_col.Set(m_col.Red(), m_col.Green(), m_col.Blue(), wxALPHA_TRANSPARENT);
 #endif // wxCHECK_VERSION(3,0,0)
     
-    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
-    else m_fillcol = m_wxcInActiveFillColour;
+    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcSchemeActiveFillColour;
+    else m_fillcol = m_wxcSchemeActiveFillColour;
 }
 
 void GZ::MoveAllPoints( double inc_lat, double inc_lon )

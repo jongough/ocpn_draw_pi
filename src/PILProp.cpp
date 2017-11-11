@@ -128,8 +128,8 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 #endif
     
     long item_line_index = 0;
-    std::list<PILLINE>::iterator it = pInPIL->PilLineList.begin();
-    while(it != pInPIL->PilLineList.end()) {
+    std::list<PILLINE>::iterator it = pInPIL->m_PilLineList.begin();
+    while(it != pInPIL->m_PilLineList.end()) {
         m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_ID, wxString::Format("%i", it->iID) );
         m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_NAME, it->sName );
         m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_OFFSET, wxString::Format("%.3f", it->dOffset) );
@@ -311,9 +311,9 @@ void PILProp::InitializeList( void )
     if( NULL == m_pPath ) return;
 
     //  Iterate on Offset lines, inserting blank fields starting with index 0
-    std::list<PILLINE>::iterator it = m_pPIL->PilLineList.begin();
+    std::list<PILLINE>::iterator it = m_pPIL->m_PilLineList.begin();
     int in = 0;
-    while(it != m_pPIL->PilLineList.end()) {
+    while(it != m_pPIL->m_PilLineList.end()) {
         m_listCtrlPILList->InsertItem( in, _T(""), 0);
         in++;
         ++it;

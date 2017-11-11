@@ -103,6 +103,8 @@ public:
       void  SetODPointRangeRingStyle( int i_ODPointRangeRingStyle ) { m_iRangeRingStyle = i_ODPointRangeRingStyle; };
       void  SetTypeString( wxString sTypeString ) { m_sTypeString = sTypeString; }
       void  SetMarkDescription( wxString sMarkDescription );
+      virtual void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
+      virtual void CreateColourSchemes( void );
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
 
@@ -184,7 +186,14 @@ public:
       wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
       
-      
+protected:
+    PI_ColorScheme  m_ColourScheme;
+    wxColour    m_wxcODPointRangeRingsSchemeColour;
+    wxColour    m_wxcODPointRangeRingsColourRGB;
+    wxColour    m_wxcODPointRangeRingsColourDay;
+    wxColour    m_wxcODPointRangeRingsColourDusk;
+    wxColour    m_wxcODPointRangeRingsColourNight;
+
 private:
       //wxString          m_ODPointName;
       //wxDateTime        m_CreateTimeX;

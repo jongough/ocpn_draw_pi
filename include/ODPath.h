@@ -95,6 +95,8 @@ public:
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
     void RenderArcSegment(ODDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     virtual void SetActiveColours( void );
+    virtual void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB );
+    virtual void CreateColourSchemes( void );
     virtual wxColour GetCurrentColour( void );
 
     bool CrossesIDL(){ return m_bcrosses_idl; }
@@ -171,7 +173,18 @@ protected:
     double      m_ArrivalRadius;
     bool        m_bcrosses_idl;
     wxColour    m_col;
-    
+
+    wxColour    m_wxcSchemeActiveLineColour;
+    wxColour    m_wxcSchemeInActiveLineColour;
+    wxColour    m_wxcActiveLineColourDay;
+    wxColour    m_wxcInActiveLineColourDay;
+    wxColour    m_wxcActiveLineColourDusk;
+    wxColour    m_wxcInActiveLineColourDusk;
+    wxColour    m_wxcActiveLineColourNight;
+    wxColour    m_wxcInActiveLineColourNight;
+    wxColour    m_wxcActiveLineColourRGB;
+    wxColour    m_wxcInActiveLineColourRGB;
+
     
 private:
 

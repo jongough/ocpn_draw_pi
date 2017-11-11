@@ -100,6 +100,8 @@ ODPath::ODPath( void )
 
     m_wxcActiveLineColour = g_colourActivePathLineColour;
     m_wxcInActiveLineColour = g_colourInActivePathLineColour;
+    CreateColourSchemes();
+    SetColourScheme();
     SetActiveColours();
     
     m_lastMousePointIndex = 0;
@@ -117,6 +119,18 @@ ODPath::~ODPath( void )
     delete m_HyperlinkList;
 }
 
+void ODPath::CreateColourSchemes(void)
+{
+    m_wxcActiveLineColourRGB = m_wxcActiveLineColour;
+    m_wxcInActiveLineColourRGB = m_wxcInActiveLineColour;
+    m_wxcActiveLineColourDay = m_wxcActiveLineColour;
+    m_wxcInActiveLineColourDay = m_wxcInActiveLineColour;
+    m_wxcActiveLineColourDusk.Set( m_wxcActiveLineColour.Red()/2, m_wxcActiveLineColour.Green()/2, m_wxcActiveLineColour.Blue()/2, m_wxcActiveLineColour.Alpha());
+    m_wxcInActiveLineColourDusk.Set( m_wxcInActiveLineColour.Red()/2, m_wxcInActiveLineColour.Green()/2, m_wxcInActiveLineColour.Blue()/2, m_wxcInActiveLineColour.Alpha());
+    m_wxcActiveLineColourNight.Set( m_wxcActiveLineColour.Red()/4, m_wxcActiveLineColour.Green()/4, m_wxcActiveLineColour.Blue()/4, m_wxcActiveLineColour.Alpha());
+    m_wxcInActiveLineColourNight.Set( m_wxcInActiveLineColour.Red()/4, m_wxcInActiveLineColour.Green()/4, m_wxcInActiveLineColour.Blue()/4, m_wxcInActiveLineColour.Alpha());
+}
+
 void ODPath::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferBoxCalc, bool b_isLoading )
 {
     if( pNewPoint->m_bIsolatedMark ) {
@@ -126,6 +140,7 @@ void ODPath::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_def
     pNewPoint->m_bIsInPath = true;
 
     m_pODPointList->Append( pNewPoint );
+    
 
     m_nPoints++;
 
@@ -206,11 +221,11 @@ void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
 void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
-    else
+    else {
         if( m_bPathIsActive ) dc.SetPen( *g_pPathMan->GetActivePathPen() );
         else
             dc.SetPen( *g_pPathMan->GetPathPen() );
-    
+    }
     dc.SetBrush( *wxTRANSPARENT_BRUSH );
         
     RenderArcSegment(dc, rpc, rp1, rp2, rp3, rp4, VP, false);
@@ -1132,16 +1147,43 @@ void ODPath::SetActiveColours( void )
     
     if( m_bVisible && m_bPathIsActive ) {
         if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
-            m_col= m_wxcInActiveLineColour;
+            m_col= m_wxcSchemeInActiveLineColour;
         else
-            m_col = m_wxcActiveLineColour;
+            m_col = m_wxcSchemeActiveLineColour;
     }
     else {
         if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
-            m_col= m_wxcActiveLineColour;
+            m_col= m_wxcSchemeActiveLineColour;
         else
-            m_col = m_wxcInActiveLineColour;
+            m_col = m_wxcSchemeInActiveLineColour;
     }
+}
+
+void ODPath::SetColourScheme(PI_ColorScheme cs)
+{
+    switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            m_wxcSchemeActiveLineColour = m_wxcActiveLineColourRGB;
+            m_wxcSchemeInActiveLineColour = m_wxcInActiveLineColourRGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_wxcSchemeActiveLineColour = m_wxcActiveLineColourDay;
+            m_wxcSchemeInActiveLineColour = m_wxcInActiveLineColourDay;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_wxcSchemeActiveLineColour = m_wxcActiveLineColourDusk;
+            m_wxcSchemeInActiveLineColour = m_wxcInActiveLineColourDusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_wxcSchemeActiveLineColour = m_wxcActiveLineColourNight;
+            m_wxcSchemeInActiveLineColour = m_wxcInActiveLineColourNight;
+            break;
+        default:
+            m_wxcSchemeActiveLineColour = m_wxcActiveLineColourDay;
+            m_wxcSchemeInActiveLineColour = m_wxcInActiveLineColourDay;
+            break;
+    }
+
 }
 
 wxColour ODPath::GetCurrentColour(void)

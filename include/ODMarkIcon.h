@@ -39,7 +39,12 @@ public:
     wxString icon_name;
     wxString icon_description;
 
-    unsigned int icon_texture, tex_w, tex_h;
+    unsigned int icon_texture;
+    unsigned int icon_texture_RGB;
+    unsigned int icon_texture_Day;
+    unsigned int icon_texture_Dusk;
+    unsigned int icon_texture_Night;
+    unsigned int tex_w, tex_h;
 };
 
 #endif
