@@ -22,7 +22,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "6")
+SET(VERSION_PATCH "7")
 SET(VERSION_DATE "11/11/2017")
 
 SET(BUNDLE_DATA FALSE)
@@ -115,6 +115,7 @@ SET(HDRS
         include/ODDRDialogDef.h
         include/ODDRDialogImpl.h
         include/ODEventHandler.h
+        include/ODMarkIcon.h
         include/ODNavObjectChanges.h
         include/ODPropertiesDialogDef.h
         include/ODPropertiesDialogImpl.h
@@ -182,7 +183,6 @@ SET(OCPNHDRS
         ocpninclude/LatLong.hpp
         ocpninclude/Layer.h
         ocpninclude/LinkPropDlg.h
-        ocpninclude/MarkIcon.h
         ocpninclude/navutil.h
         ocpninclude/nmea0183.h
         ocpninclude/nmea0183.hpp
