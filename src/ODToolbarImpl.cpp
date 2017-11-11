@@ -147,7 +147,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
                 g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
             } else {
                 m_Mode = ID_MODE_PIL;
-                if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nPIL_State = 1;
+                if( g_ocpn_draw_pi->nPIL_State == 0) g_ocpn_draw_pi->nPIL_State = 1;
             }
             break;
         }

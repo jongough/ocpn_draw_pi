@@ -204,7 +204,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             l_InclusionBoundary[ ExpandedBoundaries[0].size()].x = ExpandedBoundaries[0][0].X;
             l_InclusionBoundary[ ExpandedBoundaries[0].size()].y = ExpandedBoundaries[0][0].Y;
 
-            int *l_iPolygonPointCount = new int[2];
+            int l_iPolygonPointCount[2];
             l_iPolygonPointCount[0] = m_pODPointList->GetCount();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
             
@@ -237,6 +237,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             polys.clear();
             poly.clear();
             co.Clear();
+            delete [] l_InclusionBoundary;
         }
         wxDELETEA( m_bpts );
     }

@@ -3577,11 +3577,11 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     m_prev_rlat = rlat;
     m_prev_rlon = rlon;
     m_prev_pMousePoint = pMousePoint;
-    if(m_pMouseGZ)
+    if(m_pMouseGZ) {
         m_pMouseGZ->m_lastMousePointIndex = m_pMouseGZ->GetnPoints();
-    
-    m_pMouseGZ->RebuildGUIDList();
-    
+        m_pMouseGZ->RebuildGUIDList();
+    }
+
     nGZ_State++;
 
     RequestRefresh( m_parent_window );
