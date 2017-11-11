@@ -1316,7 +1316,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
     DR          *pTentDR = NULL;
     GZ          *pTentGZ = NULL;
     PIL         *pTentPIL = NULL;
-    ODPath        *pTentPath = NULL;
+    ODPath        *pTentPath;
     HyperlinkList *linklist = NULL;
     
     //m_ptODPointList->clear();
