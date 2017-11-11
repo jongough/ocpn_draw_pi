@@ -942,18 +942,14 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
             if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
         }
-#ifdef __WXOSX__
         if(wxGC) {
-#endif
-        wxGC->SetPen(dc->GetPen());
-        wxGC->SetBrush(dc->GetBrush());
-        wxGraphicsPath p = wxGC->CreatePath();
-        p.AddCircle( x, y, innerRadius );
-        p.AddCircle( x, y, outerRadius );
-        wxGC->FillPath(p);
-#ifdef __WXOSX__
+            wxGC->SetPen(dc->GetPen());
+            wxGC->SetBrush(dc->GetBrush());
+            wxGraphicsPath p = wxGC->CreatePath();
+            p.AddCircle( x, y, innerRadius );
+            p.AddCircle( x, y, outerRadius );
+            wxGC->FillPath(p);
         }
-#endif
     }
 #ifdef ocpnUSE_GL
     else {
