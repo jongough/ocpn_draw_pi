@@ -1193,17 +1193,20 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             
         m_ptODPointList->Append( pOP ); 
     } else {
-        if(pOP->m_sTypeString == wxT("Text Point")) 
-            pTP = (TextPoint *)pOP;
-        else if(pOP->m_sTypeString == wxT("Boundary Point"))
-            pBP = (BoundaryPoint *)pOP;
-        
+        // XXX should we assert pOP->m_sTypeString == TypeString ?
+        if(pOP->m_sTypeString == wxT("Text Point")) {
+            pTP = dynamic_cast<TextPoint *>(pOP);
+            assert(pTP);
+        } else if(pOP->m_sTypeString == wxT("Boundary Point")) {
+            pBP = dynamic_cast<BoundaryPoint *>(pOP);
+            assert(pBP);
+        }
         pOP->m_lat = rlat;
         pOP->m_lon = rlon;
         pOP->m_IconName = SymString;
         pOP->SetName( NameString );
     }
-    if( TypeString == _T("Text Point") ) {
+    if( pTP && TypeString == _T("Text Point") ) {
         pTP->SetPointText( TextString );
         pTP->m_iTextPosition = l_iTextPosition;
         pTP->m_colourTextColour = l_colourTextColour;
@@ -1221,7 +1224,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
         pTP->m_natural_scale = l_natural_scale;
         pTP->m_iDisplayTextWhen = l_display_text_when;
-    } else if ( TypeString == _T("Boundary Point") ) {
+    } else if ( pBP && TypeString == _T("Boundary Point") ) {
         pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
         pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
         pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
@@ -1347,7 +1350,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 
                 pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
                 if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
-                if(pTentPath) tpOp->m_bIsInPath = true;
+                tpOp->m_bIsInPath = true;
                 g_pODPointMan->AddODPoint(tpOp);
             }
             else if( ChildName == _T ( "name" ) ) {
