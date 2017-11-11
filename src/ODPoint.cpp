@@ -113,7 +113,10 @@ ODPoint::ODPoint()
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
-    
+
+    CreateColourSchemes();
+    SetColourScheme();
+
 }
 
 // Copy Constructor
@@ -166,7 +169,10 @@ ODPoint::ODPoint( ODPoint* orig )
     m_bShowODPointRangeRings = orig->m_bShowODPointRangeRings;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
-    
+
+    CreateColourSchemes();
+    SetColourScheme();
+
 }
 
 ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxString& name,
@@ -248,6 +254,9 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     
+    CreateColourSchemes();
+    SetColourScheme();
+    
 }
 
 ODPoint::~ODPoint( void )
@@ -260,6 +269,14 @@ ODPoint::~ODPoint( void )
         m_HyperlinkList->DeleteContents( true );
         delete m_HyperlinkList;
     }
+}
+
+void ODPoint::CreateColourSchemes(void)
+{
+    m_wxcODPointRangeRingsColourRGB = m_wxcODPointRangeRingsColour;
+    m_wxcODPointRangeRingsColourDay = m_wxcODPointRangeRingsColour;
+    m_wxcODPointRangeRingsColourDusk.Set( m_wxcODPointRangeRingsColour.Red()/2, m_wxcODPointRangeRingsColour.Green()/2, m_wxcODPointRangeRingsColour.Blue()/2, m_wxcODPointRangeRingsColour.Alpha());
+    m_wxcODPointRangeRingsColourNight.Set( m_wxcODPointRangeRingsColour.Red()/4, m_wxcODPointRangeRingsColour.Green()/4, m_wxcODPointRangeRingsColour.Blue()/4, m_wxcODPointRangeRingsColour.Alpha());
 }
 
 wxDateTime ODPoint::GetCreateTime()
@@ -420,6 +437,11 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
+        wxImage scaled_image = pbm->ConvertToImage();
+        int new_width = pbm->GetWidth() * m_fIconScaleFactor;
+        int new_height = pbm->GetHeight() * m_fIconScaleFactor;
+        m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
+
         dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
         // on MSW, the dc Bounding box is not updated on DrawBitmap() method.
         // Do it explicitely here for all platforms.
@@ -455,8 +477,8 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
 
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
-        dc.SetPen( wxPen( m_wxcODPointRangeRingsColour, m_iRangeRingWidth, m_iRangeRingStyle ) );
-        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxBRUSHSTYLE_TRANSPARENT ) );
+        dc.SetPen( wxPen( m_wxcODPointRangeRingsSchemeColour, m_iRangeRingWidth, m_iRangeRingStyle ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_TRANSPARENT ) );
 
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( r.x, r.y, i * pix_radius );
@@ -684,11 +706,11 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
         
-        wxPen ppPen1( m_wxcODPointRangeRingsColour, m_iRangeRingWidth, m_iRangeRingStyle );
+        wxPen ppPen1( m_wxcODPointRangeRingsSchemeColour, m_iRangeRingWidth, m_iRangeRingStyle );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
-        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsColour, wxBRUSHSTYLE_TRANSPARENT ) );
+        dc.SetBrush( wxBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_TRANSPARENT ) );
         dc.SetGLStipple();
         
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
@@ -785,10 +807,33 @@ wxColour ODPoint::GetODPointRangeRingsColour(void) {
     if ( m_wxcODPointRangeRingsColour.GetAsString(wxC2S_HTML_SYNTAX) == _T("#FFFFFF") )
         return g_colourODPointRangeRingsColour;
     else
-        return m_wxcODPointRangeRingsColour; 
+        return m_wxcODPointRangeRingsColour;
 }
 
 void ODPoint::SetMarkDescription(wxString sMarkDescription)
 {
     m_ODPointDescription = sMarkDescription;
+}
+
+void ODPoint::SetColourScheme(PI_ColorScheme cs)
+{
+    m_ColourScheme = cs;
+    switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            m_wxcODPointRangeRingsSchemeColour = m_wxcODPointRangeRingsColourRGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_wxcODPointRangeRingsSchemeColour = m_wxcODPointRangeRingsColourDay;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_wxcODPointRangeRingsSchemeColour = m_wxcODPointRangeRingsColourDusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_wxcODPointRangeRingsSchemeColour = m_wxcODPointRangeRingsColourNight;
+            break;
+        default:
+            m_wxcODPointRangeRingsSchemeColour = m_wxcODPointRangeRingsColourDay;
+            break;
+    }
+
 }

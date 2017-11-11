@@ -121,6 +121,9 @@ TextPoint::TextPoint() : ODPoint()
     
     m_natural_scale = g_ocpn_draw_pi->m_chart_scale;
     m_scale_factor = 0;
+
+    CreateColourSchemes();
+    SetColourScheme();
     
     //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
 }
@@ -145,6 +148,9 @@ TextPoint::TextPoint(const TextPoint& other)
     m_scale_factor = other.m_scale_factor;
     m_bShowDisplayTextOnRollover = other.m_bShowDisplayTextOnRollover;
     
+    CreateColourSchemes();
+    SetColourScheme();
+
     //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
 }
 
@@ -201,11 +207,29 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     
     m_natural_scale = g_ocpn_draw_pi->m_chart_scale;
     m_scale_factor = 0;
+
+    CreateColourSchemes();
+    SetColourScheme();
+
 }
 TextPoint::~TextPoint()
 {
     if( m_pstText ) delete m_pstText;
 
+}
+
+void TextPoint::CreateColourSchemes(void)
+{
+    m_colourTextColourRBG = m_colourTextColour;
+    m_colourTextBackgroundColourRGB = m_colourTextBackgroundColour;
+    m_colourTextColourDay = m_colourTextColour;
+    m_colourTextBackgroundColourDay = m_colourTextBackgroundColour;
+    m_colourTextColourDusk.Set( m_colourTextColour.Red()/2, m_colourTextColour.Green()/2, m_colourTextColour.Blue()/2, m_colourTextColour.Alpha());
+    m_colourTextBackgroundColourDusk.Set( m_colourTextBackgroundColour.Red()/2, m_colourTextBackgroundColour.Green()/2, m_colourTextBackgroundColour.Blue()/2, m_colourTextBackgroundColour.Alpha());
+    m_colourTextColourNight.Set( m_colourTextColour.Red()/4, m_colourTextColour.Green()/4, m_colourTextColour.Blue()/4, m_colourTextColour.Alpha());
+    m_colourTextBackgroundColourNight.Set( m_colourTextBackgroundColour.Red()/4, m_colourTextBackgroundColour.Green()/4, m_colourTextBackgroundColour.Blue()/4, m_colourTextBackgroundColour.Alpha());
+
+    ODPoint::CreateColourSchemes();
 }
 
 void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
@@ -279,8 +303,8 @@ void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
                     r.y = r.y + m_TextLocationOffsetY;
                 
                     dc.SetFont( m_DisplayTextFont );
-                    dc.SetTextForeground( m_colourTextColour );
-                    g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
+                    dc.SetTextForeground( m_colourSchemeTextColour );
+                    g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
                     if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2) )
                         dc.DrawText( m_TextPointText, r.x + 10, r.y );
                     else 
@@ -404,7 +428,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                     if(m_iDisplayTextTexture) {
                         // Draw backing box
                         ODDC ocpndc;
-                        g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourTextBackgroundColour, m_iBackgroundTransparency );
+                        g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
                                 
                         /* draw texture with text */
                         glBindTexture(GL_TEXTURE_2D, m_iDisplayTextTexture);
@@ -413,7 +437,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         glEnable(GL_BLEND);
                         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
                         
-                        glColor3ub(m_colourTextColour.Red(), m_colourTextColour.Green(), m_colourTextColour.Blue());
+                        glColor3ub(m_colourSchemeTextColour.Red(), m_colourSchemeTextColour.Green(), m_colourSchemeTextColour.Blue());
                         
                         int x = r.x, y = r.y;
                         float u = (float)teX/m_iDisplayTextTextureWidth, v = (float)teY/m_iDisplayTextTextureHeight;
@@ -484,4 +508,31 @@ void TextPoint::ShowText( void )
 void TextPoint::HideText( void )
 {
     m_pstText->Show( false );
+}
+
+void TextPoint::SetColourScheme(PI_ColorScheme cs)
+{
+    switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            m_colourSchemeTextColour = m_colourTextColourRBG;
+            m_colourSchemeTextBackgroundColour = m_colourTextBackgroundColourRGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_colourSchemeTextColour = m_colourTextColourDay;
+            m_colourSchemeTextBackgroundColour = m_colourTextBackgroundColourDay;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_colourSchemeTextColour = m_colourTextColourDusk;
+            m_colourSchemeTextBackgroundColour = m_colourTextBackgroundColourDusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_colourSchemeTextColour = m_colourTextColourNight;
+            m_colourSchemeTextBackgroundColour = m_colourTextBackgroundColourNight;
+            break;
+        default:
+            m_colourSchemeTextColour = m_colourTextColourDay;
+            m_colourSchemeTextBackgroundColour = m_colourTextBackgroundColourDay;
+            break;
+    }
+    ODPoint::SetColourScheme(cs);
 }

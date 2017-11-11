@@ -96,6 +96,8 @@ class PointMan
       
       wxArrayString     m_wxasFontFacenames;
       wxFontEnumerator  *m_pFontEnumerator;
+
+      PI_ColorScheme    m_ColourScheme;
 protected:
 private:
       //void ProcessUserIcons( ocpnStyle::Style* style );

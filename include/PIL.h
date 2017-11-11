@@ -33,6 +33,16 @@ struct PILLINE {
     double      dOffset;
     wxColour    wxcActiveColour;
     wxColour    wxcInActiveColour;
+    wxColour    wxcSchemeActiveColour;
+    wxColour    wxcSchemeInActiveColour;
+    wxColour    wxcActiveColourRGB;
+    wxColour    wxcInActiveColourRGB;
+    wxColour    wxcActiveColourDay;
+    wxColour    wxcInActiveColourDay;
+    wxColour    wxcActiveColourDusk;
+    wxColour    wxcInActiveColourDusk;
+    wxColour    wxcActiveColourNight;
+    wxColour    wxcInActiveColourNight;
     double      dStyle;
     double      dWidth;
 };
@@ -54,11 +64,12 @@ class PIL :  public EBL
         void    CentreOnLatLon( double lat, double lon );
         void    MovePILLine(double dLat, double dLon, int iPILId);
         void    UpdatePIL( void );
+        void    SetColourScheme(PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
 
-        std::list<PILLINE> PilLineList;
+        std::list<PILLINE> m_PilLineList;
         
     protected:
-
+        virtual void CreateColourSchemes(PILLINE *pl);
     private:
         void    RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
         void    CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint );

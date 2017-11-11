@@ -317,6 +317,15 @@ ODPath *PathMan::FindPathByGUID( wxString guid )
 
 void PathMan::SetColorScheme( PI_ColorScheme cs )
 {
+    //    Iterate on the RouteList
+    wxPathListNode *node = g_pPathList->GetFirst();
+    while( node ) {
+        ODPath *ppath = node->GetData();
+        ppath->SetColourScheme(cs);
+        node = node->GetNext();
+    }
+
+
     // Re-Create the pens and colors
 
     m_pActiveODPointPen = wxThePenList->FindOrCreatePen( wxColour( 0, 0, 255 ), g_path_line_width, wxPENSTYLE_SOLID );

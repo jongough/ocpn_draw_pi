@@ -79,8 +79,8 @@ PILPropertiesDialogImpl::~PILPropertiesDialogImpl()
 
 void PILPropertiesDialogImpl::SaveChanges()
 {
-    std::list<PILLINE>::iterator it = m_pPIL->PilLineList.begin();
-    while(it != m_pPIL->PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_pPIL->m_PilLineList.begin();
+    while(it != m_pPIL->m_PilLineList.end()) {
         if(it->iID == m_iID) break;
         ++it;
     }
@@ -103,8 +103,8 @@ void PILPropertiesDialogImpl:: UpdateProperties( PIL *pPIL, int iID )
 {
     m_pPIL = pPIL;
     m_iID = iID;
-    std::list<PILLINE>::iterator it = pPIL->PilLineList.begin();
-    while(it != pPIL->PilLineList.end()) {
+    std::list<PILLINE>::iterator it = pPIL->m_PilLineList.begin();
+    while(it != pPIL->m_PilLineList.end()) {
         if(it->iID == iID) break;
         ++it;
     }

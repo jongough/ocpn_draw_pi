@@ -433,6 +433,8 @@ int ocpn_draw_pi::Init(void)
     
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;
+
+    m_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     m_parent_window = GetOCPNCanvasWindow();
@@ -628,10 +630,10 @@ int ocpn_draw_pi::Init(void)
 
     
     g_pODPointMan = new PointMan();
-    g_pODPointMan->SetColorScheme( global_color_scheme );
+    g_pODPointMan->SetColorScheme( m_global_color_scheme );
     
     g_pPathMan = new PathMan();
-    g_pPathMan->SetColorScheme( global_color_scheme );
+    g_pPathMan->SetColorScheme( m_global_color_scheme );
     g_pBoundaryMan = new BoundaryMan();
     g_pGZMan = new GZMan();
     
@@ -745,10 +747,13 @@ void ocpn_draw_pi::SetOriginalColors()
 
 void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
 {
-    global_color_scheme = cs;
+    m_global_color_scheme = cs;
     m_pODicons->SetColourScheme( cs );
     g_pODToolbar->SetColourScheme( cs );
     g_pODToolbar->UpdateIcons();
+    g_pODPointMan->SetColorScheme( m_global_color_scheme );
+    g_pPathMan->SetColorScheme( m_global_color_scheme );
+
 }
 
 void ocpn_draw_pi::UpdateAuiStatus(void)
@@ -3053,12 +3058,12 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
             else if (pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
                 wxString info;
                 if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
-                    std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
-                    while (it != m_pSelectedPIL->PilLineList.end()) {
+                    std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
+                    while (it != m_pSelectedPIL->m_PilLineList.end()) {
                         if (it->iID == m_iPILId) break;
                         ++it;
                     }
-                    if (it != m_pSelectedPIL->PilLineList.end()) {
+                    if (it != m_pSelectedPIL->m_PilLineList.end()) {
                         info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
                     }
                 }
@@ -3720,12 +3725,12 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             ODDC dc;
             wxString info;
             if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
-                std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
-                while (it != m_pSelectedPIL->PilLineList.end()) {
+                std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
+                while (it != m_pSelectedPIL->m_PilLineList.end()) {
                     if (it->iID == m_iPILId) break;
                     ++it;
                 }
-                if (it != m_pSelectedPIL->PilLineList.end()) {
+                if (it != m_pSelectedPIL->m_PilLineList.end()) {
                     info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
                 }
             }

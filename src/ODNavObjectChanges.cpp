@@ -636,10 +636,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
             s.Printf(_T("%0.2f"), pPIL->m_dLength);
             child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         }
-        std::list<PILLINE>::iterator it = pPIL->PilLineList.begin();
+        std::list<PILLINE>::iterator it = pPIL->m_PilLineList.begin();
         pugi::xml_node PILchild;
         PILchild = node.append_child("opencpn:PILList");
-        while(it != pPIL->PilLineList.end()) {
+        while(it != pPIL->m_PilLineList.end()) {
             child = PILchild.append_child("opencpn:PILITEM");
             child.append_attribute("ID") = it->iID;
             child.append_attribute("Offset") = it->dOffset;
@@ -1343,6 +1343,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                 pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
                 if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
                 if(pTentPath) tpOp->m_bIsInPath = true;
+                g_pODPointMan->AddODPoint(tpOp);
             }
             else if( ChildName == _T ( "name" ) ) {
                 wxString l_name = wxString::FromUTF8( tschild.first_child().value() );
