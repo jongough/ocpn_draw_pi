@@ -1291,6 +1291,12 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     bool b_layerviz,
                     int layer_id, wxString *pPathType )
 {
+    wxString Name = wxString::FromUTF8( odpoint_node.name() );
+    if( Name != _T ( "opencpn:path" ) ) {
+        // not an OCPN path
+        return 0;
+    }
+
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
@@ -1314,8 +1320,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
     HyperlinkList *linklist = NULL;
     
     //m_ptODPointList->clear();
-    wxString Name = wxString::FromUTF8( odpoint_node.name() );
-    if( Name == _T ( "opencpn:path" ) ) {
+    {
         if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
             pTentBoundary = new Boundary();
             pTentPath = pTentBoundary;
