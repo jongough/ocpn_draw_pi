@@ -50,12 +50,16 @@ extern wxString    g_sPILEndIconName;
 extern wxString    g_sPILStartIconName;
 extern wxColour    g_colourPILActiveCentreLineColour;
 extern wxColour    g_colourPILInActiveCentreLineColour;
-extern wxColour    g_colourPILActiveOffsetLineColour;
-extern wxColour    g_colourPILInActiveOffsetLineColour;
+extern wxColour    g_colourPILActiveOffsetLine1Colour;
+extern wxColour    g_colourPILInActiveOffsetLine1Colour;
+extern wxColour    g_colourPILActiveOffsetLine2Colour;
+extern wxColour    g_colourPILInActiveOffsetLine2Colour;
 extern int         g_PILCentreLineWidth;
 extern int         g_PILCentreLineStyle;
-extern int         g_PILOffsetLineWidth;
-extern int         g_PILOffsetLineStyle;
+extern int         g_PILOffsetLine1Width;
+extern int         g_PILOffsetLine1Style;
+extern int         g_PILOffsetLine2Width;
+extern int         g_PILOffsetLine2Style;
 extern double      g_dPILOffset;
 extern int         g_iPILPersistenceType;
 
@@ -93,8 +97,10 @@ PIL::PIL() : EBL()
     m_bEndPointMoving = false;
     m_width = g_PILCentreLineWidth;
     m_style = g_PILCentreLineStyle;
-    m_iWidthOffsetLine = g_PILOffsetLineWidth;
-    m_iStyleOffsetLine = g_PILOffsetLineStyle;
+    m_iWidthOffsetLine1 = g_PILOffsetLine1Width;
+    m_iStyleOffsetLine1 = g_PILOffsetLine1Style;
+    m_iWidthOffsetLine2 = g_PILOffsetLine2Width;
+    m_iStyleOffsetLine2 = g_PILOffsetLine2Style;
     
     m_PilLineList.clear();
 }
@@ -122,17 +128,24 @@ void PIL::CreateColourSchemes(PILLINE *pPilLine)
     pPilLine->wxcInActiveColourNight.Set( pPilLine->wxcInActiveColour.Red()/4, pPilLine->wxcInActiveColour.Green()/4, pPilLine->wxcInActiveColour.Blue()/4, pPilLine->wxcInActiveColour.Alpha());
 }
 
-int PIL::AddLine(wxString sName, wxString sDescription, double dOffset)
+int PIL::AddLine(wxString sName, wxString sDescription, double dOffset, bool bDefault)
 {
     PILLINE plNewLine;
     plNewLine.iID = m_PilLineList.size() + 1;
     plNewLine.sName = sName;
     plNewLine.sDescription = sDescription;
     plNewLine.dOffset = dOffset;
-    plNewLine.wxcActiveColour = g_colourPILActiveOffsetLineColour;
-    plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLineColour;
-    plNewLine.dStyle = g_PILOffsetLineStyle;
-    plNewLine.dWidth = g_PILOffsetLineWidth;
+    if( bDefault ) {
+        plNewLine.wxcActiveColour = g_colourPILActiveOffsetLine1Colour;
+        plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLine1Colour;
+        plNewLine.dStyle = g_PILOffsetLine1Style;
+        plNewLine.dWidth = g_PILOffsetLine1Width;
+    } else {
+        plNewLine.wxcActiveColour = g_colourPILActiveOffsetLine2Colour;
+        plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLine2Colour;
+        plNewLine.dStyle = g_PILOffsetLine2Style;
+        plNewLine.dWidth = g_PILOffsetLine2Width;
+    }
     CreateColourSchemes(&plNewLine);
     m_PilLineList.push_back(plNewLine);
     SetColourScheme();

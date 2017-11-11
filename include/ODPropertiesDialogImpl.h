@@ -57,6 +57,7 @@ protected:
     void OnDrawPropertiesOKClick( wxCommandEvent& event );
     void OnDrawPropertiesCancelClick( wxCommandEvent& event );
     void OnDrawPropertiesApplyClick( wxCommandEvent& event );
+    void OnPILIndexLineChoice( wxCommandEvent& event );
     
     void SaveChanges();
     
@@ -80,6 +81,7 @@ public:
     
 private:
     void        SetTableCellBackgroundColours(void);
+    void        SetIndexLineChoice( bool choice );
     
     double      m_dODPointRangRingStepValidator;
     double      m_dSOGValidator;

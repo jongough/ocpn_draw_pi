@@ -116,13 +116,18 @@ extern wxString     g_sPILEndIconName;
 extern wxString     g_sPILStartIconName;
 extern wxColour     g_colourPILActiveCentreLineColour;
 extern wxColour     g_colourPILInActiveCentreLineColour;
-extern wxColour     g_colourPILActiveOffsetLineColour;
-extern wxColour     g_colourPILInActiveOffsetLineColour;
+extern wxColour     g_colourPILActiveOffsetLine1Colour;
+extern wxColour     g_colourPILInActiveOffsetLine1Colour;
+extern wxColour     g_colourPILActiveOffsetLine2Colour;
+extern wxColour     g_colourPILInActiveOffsetLine2Colour;
 extern int          g_iPILPersistenceType;
 extern int          g_PILCentreLineWidth;
 extern int          g_PILCentreLineStyle;
-extern int          g_PILOffsetLineWidth;
-extern int          g_PILOffsetLineStyle;
+extern int          g_PILOffsetLine1Width;
+extern int          g_PILOffsetLine1Style;
+extern int          g_PILOffsetLine2Width;
+extern int          g_PILOffsetLine2Style;
+extern int          g_PILDefaultNumIndexLines;
 extern double       g_dPILOffset;
 
 
@@ -435,6 +440,26 @@ void ODPropertiesDialogImpl::OnEBLFixedEndPosition( wxCommandEvent& event )
         m_checkBoxRotateWithBoat->SetValue(false);
 }
 
+void ODPropertiesDialogImpl::OnPILIndexLineChoice( wxCommandEvent& event )
+{
+    if(m_choiceNumIndexLines->GetSelection() == 0) 
+        SetIndexLineChoice( false );
+    else 
+        SetIndexLineChoice( true );
+}
+
+void ODPropertiesDialogImpl::SetIndexLineChoice( bool choice )
+{
+    m_staticTextPILActiveOffsetLine2Colour->Enable(choice);
+    m_colourPickerPILActiveOffsetLine2Colour->Enable(choice);
+    m_staticTextPILInactiveOffsetLine2Colour->Enable(choice);
+    m_colourPickerPILInActiveCentreLineColour->Enable(choice);
+    m_staticTextPILOffsetLine2Style->Enable(choice);
+    m_choicePILOffsetLine2Style->Enable(choice);
+    m_staticTextPILOffsetLine2Width->Enable(choice);
+    m_choicePILOffsetLine2Width->Enable(choice);
+}
+
 void ODPropertiesDialogImpl::SaveChanges()
 {
     g_bODPointShowName =m_checkBoxShowName->GetValue();
@@ -518,12 +543,17 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     g_colourPILActiveCentreLineColour = m_colourPickerPILActiveCentreLineColour->GetColour();
     g_colourPILInActiveCentreLineColour = m_colourPickerPILInActiveCentreLineColour->GetColour();
-    g_colourPILActiveOffsetLineColour = m_colourPickerPILActiveOffsetLineColour->GetColour();
-    g_colourPILInActiveOffsetLineColour = m_colourPickerPILInActiveOffsetLineColour->GetColour();
+    g_colourPILActiveOffsetLine1Colour = m_colourPickerPILActiveOffsetLine1Colour->GetColour();
+    g_colourPILInActiveOffsetLine1Colour = m_colourPickerPILInActiveOffsetLine1Colour->GetColour();
+    g_colourPILActiveOffsetLine2Colour = m_colourPickerPILActiveOffsetLine2Colour->GetColour();
+    g_colourPILInActiveOffsetLine2Colour = m_colourPickerPILInactiveOffsetLine2Colour->GetColour();
     g_PILCentreLineWidth = ::WidthValues[ m_choicePILCentreLineWidth->GetSelection() ];
     g_PILCentreLineStyle = ::StyleValues[ m_choicePILCentreLineStyle->GetSelection() ];
-    g_PILOffsetLineWidth = ::WidthValues[ m_choicePILOffsetLineWidth->GetSelection() ];
-    g_PILOffsetLineStyle = ::StyleValues[ m_choicePILOffsetLineStyle->GetSelection() ];
+    g_PILOffsetLine1Width = ::WidthValues[ m_choicePILOffsetLine1Width->GetSelection() ];
+    g_PILOffsetLine1Style = ::StyleValues[ m_choicePILOffsetLine1Style->GetSelection() ];
+    g_PILOffsetLine2Width = ::WidthValues[ m_choicePILOffsetLine2Width->GetSelection() ];
+    g_PILOffsetLine2Style = ::StyleValues[ m_choicePILOffsetLine2Style->GetSelection() ];
+    g_PILDefaultNumIndexLines = m_choiceNumIndexLines->GetSelection();
     g_iPILPersistenceType = m_radioBoxPILPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sPILEndIconName = m_bODIComboBoxPILEndIconName->GetValue();
@@ -858,8 +888,10 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             m_choiceRangeRingStyle->SetSelection( i );
         if( g_PILCentreLineStyle == ::StyleValues[i] )
             m_choicePILCentreLineStyle->SetSelection( i );
-        if( g_PILOffsetLineStyle == ::StyleValues[i] )
-            m_choicePILOffsetLineStyle->SetSelection( i );
+        if( g_PILOffsetLine1Style == ::StyleValues[i] )
+            m_choicePILOffsetLine1Style->SetSelection( i );
+        if( g_PILOffsetLine2Style == ::StyleValues[i] )
+            m_choicePILOffsetLine2Style->SetSelection( i );
     }
     for( unsigned int i = 0; i < sizeof( ::WidthValues ) / sizeof(int); i++ ) {
         if( g_BoundaryLineWidth == ::WidthValues[i] )
@@ -878,8 +910,10 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
             m_choiceGZLineWidth->SetSelection( i );
         if( g_PILCentreLineWidth == ::WidthValues[i] )
             m_choicePILCentreLineWidth->SetSelection( i );
-        if( g_PILOffsetLineWidth == ::WidthValues[i] )
-            m_choicePILOffsetLineWidth->SetSelection( i );
+        if( g_PILOffsetLine1Width == ::WidthValues[i] )
+            m_choicePILOffsetLine1Width->SetSelection( i );
+        if( g_PILOffsetLine2Width == ::WidthValues[i] )
+            m_choicePILOffsetLine2Width->SetSelection( i );
     }
     m_sliderFillTransparency->SetValue( g_uiFillTransparency );
     m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
@@ -901,8 +935,15 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 
     m_colourPickerPILActiveCentreLineColour->SetColour( g_colourPILActiveCentreLineColour );
     m_colourPickerPILInActiveCentreLineColour->SetColour( g_colourPILInActiveCentreLineColour );
-    m_colourPickerPILActiveOffsetLineColour->SetColour( g_colourPILActiveOffsetLineColour );
-    m_colourPickerPILInActiveOffsetLineColour->SetColour( g_colourPILInActiveOffsetLineColour );
+    m_colourPickerPILActiveOffsetLine1Colour->SetColour( g_colourPILActiveOffsetLine1Colour );
+    m_colourPickerPILInActiveOffsetLine1Colour->SetColour( g_colourPILInActiveOffsetLine1Colour );
+    m_colourPickerPILActiveOffsetLine2Colour->SetColour( g_colourPILActiveOffsetLine2Colour );
+    m_colourPickerPILInactiveOffsetLine2Colour->SetColour( g_colourPILInActiveOffsetLine2Colour );
+    m_choiceNumIndexLines->SetSelection( g_PILDefaultNumIndexLines );
+    if(g_PILDefaultNumIndexLines == 0)
+        SetIndexLineChoice( false );
+    else
+        SetIndexLineChoice( true );
     m_textCtrlPILDefaultOffset->SetValue( wxString::Format(wxT("%.3f"), g_dPILOffset));
     m_radioBoxPILPersistence->SetSelection( g_iPILPersistenceType );
 
