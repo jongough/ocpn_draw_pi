@@ -265,11 +265,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     wxPoint *points;
     int numpoints = ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
     dc.DrawLines( numpoints, points );
-#ifdef __WXOSX__
     delete [] points;
-#else
-    wxDELETE( points );
-#endif
     
 #endif
     
