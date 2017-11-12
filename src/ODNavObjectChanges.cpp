@@ -991,8 +991,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     bool    l_bODPointRangeRingsVisible = false;
     int     l_iTextPosition = g_iTextPosition;
     wxColour    l_wxcODPointRangeRingsColour;
-    int     l_iODPointRangeRingWidth;
-    int     l_iODPointRangeRingStyle;
+    int     l_iODPointRangeRingWidth = 2;
+    int     l_iODPointRangeRingStyle = wxPENSTYLE_SOLID;
     wxColour    l_colourTextColour = g_colourDefaultTextColour;
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
@@ -1193,17 +1193,21 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             
         m_ptODPointList->Append( pOP ); 
     } else {
-        if(pOP->m_sTypeString == wxT("Text Point")) 
-            pTP = (TextPoint *)pOP;
-        else if(pOP->m_sTypeString == wxT("Boundary Point"))
-            pBP = (BoundaryPoint *)pOP;
+        if(pOP->m_sTypeString == wxT("Text Point")) {
+            pTP = dynamic_cast<TextPoint *>(pOP);
+            assert(pTP);
+        }
+        else if(pOP->m_sTypeString == wxT("Boundary Point")){
+            pBP = dynamic_cast<BoundaryPoint *>(pOP);
+            assert(pBP);
+        }
         
         pOP->m_lat = rlat;
         pOP->m_lon = rlon;
         pOP->m_IconName = SymString;
         pOP->SetName( NameString );
     }
-    if( TypeString == _T("Text Point") ) {
+    if( pTP && TypeString == _T("Text Point") ) {
         pTP->SetPointText( TextString );
         pTP->m_iTextPosition = l_iTextPosition;
         pTP->m_colourTextColour = l_colourTextColour;
@@ -1221,7 +1225,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
         pTP->m_natural_scale = l_natural_scale;
         pTP->m_iDisplayTextWhen = l_display_text_when;
-    } else if ( TypeString == _T("Boundary Point") ) {
+    } else if ( pBP && TypeString == _T("Boundary Point") ) {
         pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
         pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
         pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
@@ -1291,6 +1295,11 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     bool b_layerviz,
                     int layer_id, wxString *pPathType )
 {
+    wxString Name = wxString::FromUTF8( odpoint_node.name() );
+    if( Name != _T( "opencpn:path" ) ) {
+        return 0;
+    }
+        
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)        
@@ -1310,276 +1319,271 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
     DR          *pTentDR = NULL;
     GZ          *pTentGZ = NULL;
     PIL         *pTentPIL = NULL;
-    ODPath        *pTentPath = NULL;
+    ODPath        *pTentPath;
     HyperlinkList *linklist = NULL;
     
-    //m_ptODPointList->clear();
-    wxString Name = wxString::FromUTF8( odpoint_node.name() );
-    if( Name == _T ( "opencpn:path" ) ) {
-        if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
-            pTentBoundary = new Boundary();
-            pTentPath = pTentBoundary;
-        } else if (!strcmp(pPathType->mb_str(), "EBL" ) ) {
-            pTentEBL = new EBL();
-            pTentPath = pTentEBL;
-        } else if (!strcmp(pPathType->mb_str(), "DR" ) ) {
-            pTentDR = new DR();
-            pTentPath = pTentDR;
-        } else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) ) {
-            pTentGZ = new GZ();
-            pTentPath = pTentGZ;
-        } else if (!strcmp(pPathType->mb_str(), "PIL" ) ) {
-            pTentPIL = new PIL();
-            pTentPath = pTentPIL;
-        } else
-            pTentPath = new ODPath();
-        
-        for( pugi::xml_node tschild = odpoint_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
-            wxString ChildName = wxString::FromUTF8( tschild.name() );
+    if (!strcmp(pPathType->mb_str(), "Boundary" ) ) {
+        pTentBoundary = new Boundary();
+        pTentPath = pTentBoundary;
+    } else if (!strcmp(pPathType->mb_str(), "EBL" ) ) {
+        pTentEBL = new EBL();
+        pTentPath = pTentEBL;
+    } else if (!strcmp(pPathType->mb_str(), "DR" ) ) {
+        pTentDR = new DR();
+        pTentPath = pTentDR;
+    } else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) ) {
+        pTentGZ = new GZ();
+        pTentPath = pTentGZ;
+    } else if (!strcmp(pPathType->mb_str(), "PIL" ) ) {
+        pTentPIL = new PIL();
+        pTentPath = pTentPIL;
+    } else
+        pTentPath = new ODPath();
+    
+    for( pugi::xml_node tschild = odpoint_node.first_child(); tschild; tschild = tschild.next_sibling() ) {
+        wxString ChildName = wxString::FromUTF8( tschild.name() );
 
-            if( ChildName == _T ( "opencpn:ODPoint" ) ) {
-                ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id, true );
-                
-                pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
-                if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
-                if(pTentPath) tpOp->m_bIsInPath = true;
-                g_pODPointMan->AddODPoint(tpOp);
-            }
-            else if( ChildName == _T ( "name" ) ) {
-                wxString l_name = wxString::FromUTF8( tschild.first_child().value() );
-                if(l_name.StartsWith(wxT("GZ ")) && pTentGZ) {
-                    long i;
-                    l_name.Mid(3).ToLong(&i);
-                    if(g_iGZMaxNum <= i)
-                        g_iGZMaxNum = i++;
-                }
-                PathName.append( wxString::FromUTF8( tschild.first_child().value() ) );
-            }
-            else if( ChildName == _T ( "desc" ) ) {
-                DescString.append( wxString::FromUTF8( tschild.first_child().value() ) );
-            }
-                
-            else if( ChildName == _T ( "link") ) {
-                wxString HrefString;
-                wxString HrefTextString;
-                wxString HrefTypeString;
-                if( linklist == NULL )
-                    linklist = new HyperlinkList;
-                HrefString = wxString::FromUTF8( tschild.first_attribute().value() );
-
-                for( pugi::xml_node child1 = tschild.first_child(); child1; child1 = child1.next_sibling() ) {
-                    wxString LinkString = wxString::FromUTF8( child1.name() );
-
-                    if( LinkString == _T ( "text" ) )
-                        HrefTextString.append( wxString::FromUTF8( child1.first_child().value() ) );
-                    if( LinkString == _T ( "type" ) ) 
-                        HrefTypeString.append( wxString::FromUTF8( child1.first_child().value() ) );
-                }
+        if( ChildName == _T ( "opencpn:ODPoint" ) ) {
+            ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id, true );
             
-                Hyperlink *link = new Hyperlink;
-                link->Link = HrefString;
-                link->DescrText = HrefTextString;
-                link->LType = HrefTypeString;
-                linklist->Append( link );
-            }
-            
-            else if( ChildName == _T ( "opencpn:viz" ) ) {
-                wxString viz = wxString::FromUTF8(tschild.first_child().value());
-                b_propviz = true;
-                b_viz = ( viz == _T("1") );
-            }
-            
-            else if( ChildName == _T ( "opencpn:active" ) ) {
-                wxString active = wxString::FromUTF8(tschild.first_child().value());
-                b_active = ( active == _T("1") );
-            }
-            else if( ChildName == _T ( "opencpn:style" ) ) {
-                for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
-                {
-                    if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
-                        pTentPath->m_wxcActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) ) {
-                        if(pTentPath->m_sTypeString == wxT("Boundary"))
-                            pTentBoundary->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                        else
-                            pTentGZ->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    }
-                    if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
-                        pTentPath->m_wxcInActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) ) {
-                        if(pTentPath->m_sTypeString == wxT("Boundary"))
-                            pTentBoundary->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                        else
-                            pTentGZ->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                    }
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
-                        pTentPath->m_style = attr.as_int();
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
-                        pTentPath->m_width = attr.as_int();
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") ) {
-                        if(pTentPath->m_sTypeString == wxT("Boundary"))
-                            pTentBoundary->m_uiFillTransparency = attr.as_uint();
-                        else
-                            pTentGZ->m_uiFillTransparency = attr.as_uint();
-                    }
-                    else if ( wxString::FromUTF8( attr.name() ) == _T("inclusion_boundary_size") )
-                        pTentBoundary->m_iInclusionBoundarySize = attr.as_uint();
-                }
-            } else if( ChildName == _T( "opencpn:boundary_type") ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                if( s == _T("Exclusion") ) {
-                    pTentBoundary->m_bExclusionBoundary = true;
-                    pTentBoundary->m_bInclusionBoundary = false;
-                } else if( s == _T("Inclusion") ) {
-                    pTentBoundary->m_bExclusionBoundary = false;
-                    pTentBoundary->m_bInclusionBoundary = true;
-                } else if( s == _T("Neither") ) {
-                    pTentBoundary->m_bExclusionBoundary = false;
-                    pTentBoundary->m_bInclusionBoundary = false;
-                } else pTentBoundary->m_bExclusionBoundary = false;
-            } else if( ChildName == _T( "opencpn:boundary_show_point_icons") ) {
-                wxString active = wxString::FromUTF8(tschild.first_child().value());
-                pTentBoundary->m_bODPointsVisible = ( active == _T("1") );
-            } else if( ChildName == _T ( "opencpn:guid" ) ) {
-                //if ( !g_bODIsNewLayer ) ) 
-                pTentPath->m_GUID.clear();
-                pTentPath->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
-            } else if( ChildName == _T ( "opencpn:time_display" ) ) {
-                pTentPath->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
-            } else if( ChildName == _T ( "opencpn:persistence" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                long v = 0;
-                if( s.ToLong( &v ) ) {
-                    if (!strcmp(pPathType->mb_str(), "EBL" ) )
-                        pTentEBL->SetPersistence( v );
-                    else if (!strcmp(pPathType->mb_str(), "DR" ) )
-                        pTentDR->SetPersistence( v );
-                    else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) )
-                        pTentGZ->SetPersistence( v );
-                    else if (!strcmp(pPathType->mb_str(), "PIL" ) )
-                        pTentPIL->SetPersistence( v );
-                }
-            } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bDrawArrow = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:VRM" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bVRM = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:always_show_info" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bAlwaysShowInfo = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:PerpLine" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bPerpLine = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:fixed_end_position" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:centre_on_boat" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                if(pTentPath->m_sTypeString == wxT("EBL"))
-                    pTentEBL->m_bCentreOnBoat = ( s == wxT("1") );
-                else
-                    pTentGZ->m_bCentreOnBoat = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:rotate_with_boat" ) ) {
-                wxString s = wxString::FromUTF8( tschild.first_child().value() );
-                if(pTentPath->m_sTypeString == wxT("EBL"))
-                    pTentEBL->m_bRotateWithBoat = ( s == wxT("1") );
-                else
-                    pTentGZ->m_bRotateWithBoat = ( s == wxT("1") );
-            } else if( ChildName == _T ( "opencpn:maintain_with" ) ) {
-                if(pTentPath->m_sTypeString == wxT("EBL"))
-                    wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentEBL->m_iMaintainWith );
-                else
-                    wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentGZ->m_iMaintainWith );
-            } else if( ChildName == _T ( "opencpn:EBL_angle" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dEBLAngle );
-            } else if( ChildName == _T ( "opencpn:PIL_angle" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentPIL->m_dEBLAngle );
-            } else if( ChildName == _T ( "opencpn:EBL_length" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dLength );
-            } else if( ChildName == _T ( "opencpn:PIL_length" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentPIL->m_dLength );
-            } else if( ChildName == _T ( "opencpn:DRSOG" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dSoG );
-            } else if( ChildName == _T ( "opencpn:DRCOG" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iCoG );
-            } else if( ChildName == _T ( "opencpn:DRLength" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPathLength );
-            } else if( ChildName == _T ( "opencpn:DRLengthNM" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dTotalLengthNM );
-            } else if( ChildName == _T ( "opencpn:DRPointIterval" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPointInterval );
-            } else if( ChildName == _T ( "opencpn:DRPointItervalNM" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPointIntervalNM );
-            } else if( ChildName == _T ( "opencpn:DRLengthType" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iLengthType );
-            } else if( ChildName == _T ( "opencpn:DRIntervalType" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iIntervalType );
-            } else if( ChildName == _T ( "opencpn:DRDistanceUnits" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iDistanceUnits );
-            } else if( ChildName == _T ( "opencpn:DRTimeUnits" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iTimeUnits );
-            } else if( ChildName == _T ( "opencpn:GZ_CentreLat" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLat );
-            } else if( ChildName == _T ( "opencpn:GZ_CentreLon" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLon );
-            } else if( ChildName == _T ( "opencpn:GZ_FirstLineDirection" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstLineDirection );
-            } else if( ChildName == _T ( "opencpn:GZ_FirstDistance" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstDistance );
-            } else if( ChildName == _T ( "opencpn:GZ_SecondLineDirection" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondLineDirection );
-            } else if( ChildName == _T ( "opencpn:GZ_SecondDistance" ) ) {
-                wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondDistance );
-            } else if( ChildName == _T( "opencpn:PILList" ) ) {
-                pugi::xml_node pilitem = tschild.child("opencpn:PILITEM");
-                for( pugi::xml_node pilchild = tschild.child("opencpn:PILITEM"); pilchild; pilchild = pilchild.next_sibling() ) {
-                    PILLINE plNewLine;
-                    for (pugi::xml_attribute attr = pilchild.first_attribute(); attr; attr = attr.next_attribute()) {
-                        if ( wxString::FromUTF8( attr.name() ) == _T("ActiveColour" ) )
-                            plNewLine.wxcActiveColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                        if ( wxString::FromUTF8( attr.name() ) == _T("InActiveColour" ) )
-                            plNewLine.wxcInActiveColour.Set( wxString::FromUTF8( attr.as_string() ) );
-                        if ( wxString::FromUTF8( attr.name() ) == _T("ID" ) )
-                            plNewLine.iID = attr.as_int();
-                        if ( wxString::FromUTF8( attr.name() ) == _T("Name" ) )
-                            plNewLine.sName = attr.as_string();
-                        if ( wxString::FromUTF8( attr.name() ) == _T("Description" ) )
-                            plNewLine.sDescription = attr.as_string();
-                        if ( wxString::FromUTF8( attr.name() ) == _T("Offset" ) )
-                            plNewLine.dOffset = attr.as_double();
-                        if ( wxString::FromUTF8( attr.name() ) == _T("Style" ) )
-                            plNewLine.dStyle = attr.as_double();
-                        if ( wxString::FromUTF8( attr.name() ) == _T("Width" ) )
-                            plNewLine.dWidth = attr.as_double();
-                    }
-                    pTentPIL->AddLine(plNewLine);
-                }
-            }
-        }   
-        pTentPath->m_PathNameString = PathName;
-        pTentPath->m_PathDescription = DescString;
-
-        pTentPath->m_wxcActiveLineColour.Set( pTentPath->m_wxcActiveLineColour.Red(), pTentPath->m_wxcActiveLineColour.Green(), pTentPath->m_wxcActiveLineColour.Blue() );
-        pTentPath->m_wxcInActiveLineColour.Set( pTentPath->m_wxcInActiveLineColour.Red(), pTentPath->m_wxcInActiveLineColour.Green(), pTentPath->m_wxcInActiveLineColour.Blue() );
-        
-        if( b_propviz )
-                pTentPath->SetVisible( b_viz );
-        else {
-            if( b_fullviz )
-                pTentPath->SetVisible();
+            pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
+            if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
+            tpOp->m_bIsInPath = true;
+            g_pODPointMan->AddODPoint(tpOp);
         }
+        else if( ChildName == _T ( "name" ) ) {
+            wxString l_name = wxString::FromUTF8( tschild.first_child().value() );
+            if(l_name.StartsWith(wxT("GZ ")) && pTentGZ) {
+                long i;
+                l_name.Mid(3).ToLong(&i);
+                if(g_iGZMaxNum <= i)
+                    g_iGZMaxNum = i++;
+            }
+            PathName.append( wxString::FromUTF8( tschild.first_child().value() ) );
+        }
+        else if( ChildName == _T ( "desc" ) ) {
+            DescString.append( wxString::FromUTF8( tschild.first_child().value() ) );
+        }
+            
+        else if( ChildName == _T ( "link") ) {
+            wxString HrefString;
+            wxString HrefTextString;
+            wxString HrefTypeString;
+            if( linklist == NULL )
+                linklist = new HyperlinkList;
+            HrefString = wxString::FromUTF8( tschild.first_attribute().value() );
 
-        pTentPath->m_bPathIsActive = b_active;
+            for( pugi::xml_node child1 = tschild.first_child(); child1; child1 = child1.next_sibling() ) {
+                wxString LinkString = wxString::FromUTF8( child1.name() );
+
+                if( LinkString == _T ( "text" ) )
+                    HrefTextString.append( wxString::FromUTF8( child1.first_child().value() ) );
+                if( LinkString == _T ( "type" ) ) 
+                    HrefTypeString.append( wxString::FromUTF8( child1.first_child().value() ) );
+            }
         
-        if( b_layer ){
-            pTentPath->SetVisible( b_layerviz );
-            pTentPath->m_bIsInLayer = true;
-            pTentPath->m_LayerID = layer_id;
-            pTentPath->SetListed( false );
-        }            
+            Hyperlink *link = new Hyperlink;
+            link->Link = HrefString;
+            link->DescrText = HrefTextString;
+            link->LType = HrefTypeString;
+            linklist->Append( link );
+        }
+        
+        else if( ChildName == _T ( "opencpn:viz" ) ) {
+            wxString viz = wxString::FromUTF8(tschild.first_child().value());
+            b_propviz = true;
+            b_viz = ( viz == _T("1") );
+        }
+        
+        else if( ChildName == _T ( "opencpn:active" ) ) {
+            wxString active = wxString::FromUTF8(tschild.first_child().value());
+            b_active = ( active == _T("1") );
+        }
+        else if( ChildName == _T ( "opencpn:style" ) ) {
+            for (pugi::xml_attribute attr = tschild.first_attribute(); attr; attr = attr.next_attribute())
+            {
+                if ( wxString::FromUTF8( attr.name() ) == _T("active_colour" ) )
+                    pTentPath->m_wxcActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                else if ( wxString::FromUTF8( attr.name() ) == _T("active_fillcolour" ) ) {
+                    if(pTentPath->m_sTypeString == wxT("Boundary"))
+                        pTentBoundary->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                    else
+                        pTentGZ->m_wxcActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                }
+                if ( wxString::FromUTF8( attr.name() ) == _T("inactive_colour" ) )
+                    pTentPath->m_wxcInActiveLineColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                else if ( wxString::FromUTF8( attr.name() ) == _T("inactive_fillcolour" ) ) {
+                    if(pTentPath->m_sTypeString == wxT("Boundary"))
+                        pTentBoundary->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                    else
+                        pTentGZ->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                }
+                else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
+                    pTentPath->m_style = attr.as_int();
+                else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
+                    pTentPath->m_width = attr.as_int();
+                else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") ) {
+                    if(pTentPath->m_sTypeString == wxT("Boundary"))
+                        pTentBoundary->m_uiFillTransparency = attr.as_uint();
+                    else
+                        pTentGZ->m_uiFillTransparency = attr.as_uint();
+                }
+                else if ( wxString::FromUTF8( attr.name() ) == _T("inclusion_boundary_size") )
+                    pTentBoundary->m_iInclusionBoundarySize = attr.as_uint();
+            }
+        } else if( ChildName == _T( "opencpn:boundary_type") ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            if( s == _T("Exclusion") ) {
+                pTentBoundary->m_bExclusionBoundary = true;
+                pTentBoundary->m_bInclusionBoundary = false;
+            } else if( s == _T("Inclusion") ) {
+                pTentBoundary->m_bExclusionBoundary = false;
+                pTentBoundary->m_bInclusionBoundary = true;
+            } else if( s == _T("Neither") ) {
+                pTentBoundary->m_bExclusionBoundary = false;
+                pTentBoundary->m_bInclusionBoundary = false;
+            } else pTentBoundary->m_bExclusionBoundary = false;
+        } else if( ChildName == _T( "opencpn:boundary_show_point_icons") ) {
+            wxString active = wxString::FromUTF8(tschild.first_child().value());
+            pTentBoundary->m_bODPointsVisible = ( active == _T("1") );
+        } else if( ChildName == _T ( "opencpn:guid" ) ) {
+            //if ( !g_bODIsNewLayer ) ) 
+            pTentPath->m_GUID.clear();
+            pTentPath->m_GUID.append( wxString::FromUTF8(tschild.first_child().value()) );
+        } else if( ChildName == _T ( "opencpn:time_display" ) ) {
+            pTentPath->m_TimeDisplayFormat.append( wxString::FromUTF8(tschild.first_child().value()) );
+        } else if( ChildName == _T ( "opencpn:persistence" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) ) {
+                if (!strcmp(pPathType->mb_str(), "EBL" ) )
+                    pTentEBL->SetPersistence( v );
+                else if (!strcmp(pPathType->mb_str(), "DR" ) )
+                    pTentDR->SetPersistence( v );
+                else if (!strcmp(pPathType->mb_str(), "Guard Zone" ) )
+                    pTentGZ->SetPersistence( v );
+                else if (!strcmp(pPathType->mb_str(), "PIL" ) )
+                    pTentPIL->SetPersistence( v );
+            }
+        } else if( ChildName == _T ( "opencpn:show_arrow" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            pTentEBL->m_bDrawArrow = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:VRM" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            pTentEBL->m_bVRM = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:always_show_info" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            pTentEBL->m_bAlwaysShowInfo = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:PerpLine" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            pTentEBL->m_bPerpLine = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:fixed_end_position" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            pTentEBL->m_bFixedEndPosition = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:centre_on_boat" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            if(pTentPath->m_sTypeString == wxT("EBL"))
+                pTentEBL->m_bCentreOnBoat = ( s == wxT("1") );
+            else
+                pTentGZ->m_bCentreOnBoat = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:rotate_with_boat" ) ) {
+            wxString s = wxString::FromUTF8( tschild.first_child().value() );
+            if(pTentPath->m_sTypeString == wxT("EBL"))
+                pTentEBL->m_bRotateWithBoat = ( s == wxT("1") );
+            else
+                pTentGZ->m_bRotateWithBoat = ( s == wxT("1") );
+        } else if( ChildName == _T ( "opencpn:maintain_with" ) ) {
+            if(pTentPath->m_sTypeString == wxT("EBL"))
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentEBL->m_iMaintainWith );
+            else
+                wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentGZ->m_iMaintainWith );
+        } else if( ChildName == _T ( "opencpn:EBL_angle" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dEBLAngle );
+        } else if( ChildName == _T ( "opencpn:PIL_angle" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentPIL->m_dEBLAngle );
+        } else if( ChildName == _T ( "opencpn:EBL_length" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentEBL->m_dLength );
+        } else if( ChildName == _T ( "opencpn:PIL_length" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentPIL->m_dLength );
+        } else if( ChildName == _T ( "opencpn:DRSOG" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dSoG );
+        } else if( ChildName == _T ( "opencpn:DRCOG" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iCoG );
+        } else if( ChildName == _T ( "opencpn:DRLength" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPathLength );
+        } else if( ChildName == _T ( "opencpn:DRLengthNM" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dTotalLengthNM );
+        } else if( ChildName == _T ( "opencpn:DRPointIterval" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPointInterval );
+        } else if( ChildName == _T ( "opencpn:DRPointItervalNM" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentDR->m_dDRPointIntervalNM );
+        } else if( ChildName == _T ( "opencpn:DRLengthType" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iLengthType );
+        } else if( ChildName == _T ( "opencpn:DRIntervalType" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iIntervalType );
+        } else if( ChildName == _T ( "opencpn:DRDistanceUnits" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iDistanceUnits );
+        } else if( ChildName == _T ( "opencpn:DRTimeUnits" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iTimeUnits );
+        } else if( ChildName == _T ( "opencpn:GZ_CentreLat" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLat );
+        } else if( ChildName == _T ( "opencpn:GZ_CentreLon" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLon );
+        } else if( ChildName == _T ( "opencpn:GZ_FirstLineDirection" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstLineDirection );
+        } else if( ChildName == _T ( "opencpn:GZ_FirstDistance" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dFirstDistance );
+        } else if( ChildName == _T ( "opencpn:GZ_SecondLineDirection" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondLineDirection );
+        } else if( ChildName == _T ( "opencpn:GZ_SecondDistance" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dSecondDistance );
+        } else if( ChildName == _T( "opencpn:PILList" ) ) {
+            for( pugi::xml_node pilchild = tschild.child("opencpn:PILITEM"); pilchild; pilchild = pilchild.next_sibling() ) {
+                PILLINE plNewLine;
+                for (pugi::xml_attribute attr = pilchild.first_attribute(); attr; attr = attr.next_attribute()) {
+                    if ( wxString::FromUTF8( attr.name() ) == _T("ActiveColour" ) )
+                        plNewLine.wxcActiveColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                    if ( wxString::FromUTF8( attr.name() ) == _T("InActiveColour" ) )
+                        plNewLine.wxcInActiveColour.Set( wxString::FromUTF8( attr.as_string() ) );
+                    if ( wxString::FromUTF8( attr.name() ) == _T("ID" ) )
+                        plNewLine.iID = attr.as_int();
+                    if ( wxString::FromUTF8( attr.name() ) == _T("Name" ) )
+                        plNewLine.sName = attr.as_string();
+                    if ( wxString::FromUTF8( attr.name() ) == _T("Description" ) )
+                        plNewLine.sDescription = attr.as_string();
+                    if ( wxString::FromUTF8( attr.name() ) == _T("Offset" ) )
+                        plNewLine.dOffset = attr.as_double();
+                    if ( wxString::FromUTF8( attr.name() ) == _T("Style" ) )
+                        plNewLine.dStyle = attr.as_double();
+                    if ( wxString::FromUTF8( attr.name() ) == _T("Width" ) )
+                        plNewLine.dWidth = attr.as_double();
+                }
+                pTentPIL->AddLine(plNewLine);
+            }
+        }
+    }   
+    pTentPath->m_PathNameString = PathName;
+    pTentPath->m_PathDescription = DescString;
 
+    pTentPath->m_wxcActiveLineColour.Set( pTentPath->m_wxcActiveLineColour.Red(), pTentPath->m_wxcActiveLineColour.Green(), pTentPath->m_wxcActiveLineColour.Blue() );
+    pTentPath->m_wxcInActiveLineColour.Set( pTentPath->m_wxcInActiveLineColour.Red(), pTentPath->m_wxcInActiveLineColour.Green(), pTentPath->m_wxcInActiveLineColour.Blue() );
+    
+    if( b_propviz )
+            pTentPath->SetVisible( b_viz );
+    else {
+        if( b_fullviz )
+            pTentPath->SetVisible();
     }
+
+    pTentPath->m_bPathIsActive = b_active;
+    
+    if( b_layer ){
+        pTentPath->SetVisible( b_layerviz );
+        pTentPath->m_bIsInLayer = true;
+        pTentPath->m_LayerID = layer_id;
+        pTentPath->SetListed( false );
+    }            
+
     if( linklist ) {
         delete pTentPath->m_HyperlinkList;                    // created in RoutePoint ctor
         pTentPath->m_HyperlinkList = linklist;

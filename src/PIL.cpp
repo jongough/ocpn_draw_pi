@@ -109,7 +109,6 @@ PIL::~PIL()
 {
     //dtor
     std::list<PILLINE>::iterator it = m_PilLineList.begin();
-    int i = m_PilLineList.size();
     while(it != m_PilLineList.end()) {
         m_PilLineList.erase(it);
         it = m_PilLineList.begin();
