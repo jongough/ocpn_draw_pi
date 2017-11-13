@@ -413,6 +413,11 @@ void PIL::SetPILLineSelect( double lat, double lon)
     }
 }
 
+void PIL::SetColourScheme(void)
+{
+    SetColourScheme(m_ColourScheme);
+}
+
 void PIL::SetColourScheme(PI_ColorScheme cs)
 {
     std::list<PILLINE>::iterator it = m_PilLineList.begin();

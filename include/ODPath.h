@@ -174,6 +174,7 @@ protected:
     bool        m_bcrosses_idl;
     wxColour    m_col;
 
+    PI_ColorScheme m_ColourScheme;
     wxColour    m_wxcSchemeActiveLineColour;
     wxColour    m_wxcSchemeInActiveLineColour;
     wxColour    m_wxcActiveLineColourDay;

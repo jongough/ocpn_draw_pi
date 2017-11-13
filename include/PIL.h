@@ -64,12 +64,14 @@ class PIL :  public EBL
         void    CentreOnLatLon( double lat, double lon );
         void    MovePILLine(double dLat, double dLon, int iPILId);
         void    UpdatePIL( void );
-        void    SetColourScheme(PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
-
+        void    SetColourScheme(PI_ColorScheme cs);
+        void    SetColourScheme(void);
+        void    CreateColourSchemes(PILLINE *pl);
+        
         std::list<PILLINE> m_PilLineList;
         
     protected:
-        virtual void CreateColourSchemes(PILLINE *pl);
+
     private:
         void    RenderPIL( ODDC &dc, PlugIn_ViewPort &piVP );
         void    CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint );

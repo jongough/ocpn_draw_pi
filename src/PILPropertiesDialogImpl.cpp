@@ -88,6 +88,8 @@ void PILPropertiesDialogImpl::SaveChanges()
     it->sDescription = m_textCtrlDesctription->GetValue();
     it->dOffset = wxAtof(m_textCtrlOffset->GetValue());
     it->wxcActiveColour = m_colourPickerLineColour->GetColour();
+    m_pPIL->CreateColourSchemes((PILLINE*)&*it);
+    m_pPIL->SetColourScheme();
     it->dStyle = ::StyleValues[m_choiceLineStyle->GetSelection()];
     it->dWidth = ::WidthValues[m_choiceLineWidth->GetSelection()];
 

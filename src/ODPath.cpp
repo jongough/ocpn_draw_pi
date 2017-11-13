@@ -98,6 +98,7 @@ ODPath::ODPath( void )
     m_LayerID = 0;
     m_bIsInLayer = false;
 
+    m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     m_wxcActiveLineColour = g_colourActivePathLineColour;
     m_wxcInActiveLineColour = g_colourInActivePathLineColour;
     CreateColourSchemes();
@@ -1161,6 +1162,7 @@ void ODPath::SetActiveColours( void )
 
 void ODPath::SetColourScheme(PI_ColorScheme cs)
 {
+    m_ColourScheme = cs;
     switch (cs) {
         case PI_GLOBAL_COLOR_SCHEME_RGB:
             m_wxcSchemeActiveLineColour = m_wxcActiveLineColourRGB;
