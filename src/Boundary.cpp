@@ -255,7 +255,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
-            wxPoint *l_AllPoints;
+            wxPoint *l_AllPoints = 0;
             int     l_iAllPointsSizes[2];
             wxPoint *l_InclusionBoundary;
             int l_iBoundaryPointCount = 0;
@@ -358,6 +358,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
+                delete [] l_AllPoints;
             }
 
             glDisable( GL_BLEND );
