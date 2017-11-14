@@ -47,7 +47,7 @@ ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
     m_bUpdateIcons = false;
-    
+    m_ColourScheme = PI_N_COLOR_SCHEMES; // invalid
     initialize_images();
 }
 
@@ -343,6 +343,7 @@ void ODicons::ChangeScheme(void)
 
 void ODicons::CreateSchemeIcons()
 {
+    m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     m_p_bm_day_ocpn_draw_grey_pi = m_p_bm_ocpn_draw_grey_pi;
     m_p_bm_day_ocpn_draw_boundary = m_p_bm_ocpn_draw_boundary;
     m_p_bm_day_ocpn_draw_boundary_grey = m_p_bm_ocpn_draw_boundary_grey;

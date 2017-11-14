@@ -45,6 +45,7 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent, id, title, pos, size, style )
 {
+    m_ColourScheme = PI_N_COLOR_SCHEMES; // invalid
     AddTools();
     
     m_Mode = ID_NONE;
