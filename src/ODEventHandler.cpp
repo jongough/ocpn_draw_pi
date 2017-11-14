@@ -104,69 +104,27 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 
 ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoint *selectedODPoint)
 {
-    m_pBoundary = NULL;
-    m_pEBL = NULL;
-    m_pDR = NULL;
-    m_pGZ = NULL;
-    m_pPIL = NULL;
+    SetPath(selectedPath);
+
     m_pFoundTextPoint = NULL;
     g_pRolloverPoint = NULL;
-    
     m_parentcanvas = parent;
-    if(selectedPath->m_sTypeString == wxT("Boundary")) {
-        m_pBoundary = (Boundary *)selectedPath;
-        m_pSelectedPath = m_pBoundary;
-    } else if(selectedPath->m_sTypeString == wxT("EBL")) {
-        m_pEBL = (EBL *)selectedPath;
-        m_pSelectedPath = m_pEBL;
-    } else if(selectedPath->m_sTypeString == wxT("DR")) {
-        m_pDR = (DR *)selectedPath;
-        m_pSelectedPath = m_pDR;
-    } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
-        m_pGZ = (GZ *)selectedPath;
-        m_pSelectedPath = m_pGZ;
-    } else if(selectedPath->m_sTypeString == wxT("PIL")) {
-        m_pPIL = (PIL *)selectedPath;
-        m_pSelectedPath = m_pPIL;
-    } else
-        m_pSelectedPath = selectedPath;
 
-    if(selectedODPoint->m_sTypeString == wxT("Text Point")) {
-        m_pFoundTextPoint = (TextPoint *)selectedODPoint;
+    if(selectedODPoint && selectedODPoint->m_sTypeString == wxT("Text Point")) {
+        m_pFoundTextPoint = dynamic_cast<TextPoint *>(selectedODPoint);
+        assert(m_pFoundTextPoint != 0);
         m_pFoundODPoint = m_pFoundTextPoint;
     } else
         m_pFoundODPoint = selectedODPoint;
-    
 }
 
 ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPoint *selectedTextPoint)
 {
-    m_pBoundary = NULL;
-    m_pEBL = NULL;
-    m_pDR = NULL;
-    m_pGZ = NULL;
-    m_pPIL = NULL;
+    SetPath(selectedPath);
+
     m_pFoundTextPoint = NULL;
     g_pRolloverPoint = NULL;
-    
     m_parentcanvas = parent;
-    if(selectedPath->m_sTypeString == wxT("Boundary")) {
-        m_pBoundary = (Boundary *)selectedPath;
-        m_pSelectedPath = m_pBoundary;
-    } else if(selectedPath->m_sTypeString == wxT("EBL")) {
-        m_pEBL = (EBL *)selectedPath;
-        m_pSelectedPath = m_pEBL;
-    } else if(selectedPath->m_sTypeString == wxT("DR")) {
-        m_pDR = (DR *)selectedPath;
-        m_pSelectedPath = m_pDR;
-    } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
-        m_pGZ = (GZ *)selectedPath;
-        m_pSelectedPath = m_pGZ;
-    } else if(selectedPath->m_sTypeString == wxT("PIL")) {
-        m_pPIL = (PIL *)selectedPath;
-        m_pSelectedPath = m_pPIL;
-    } else
-        m_pSelectedPath = selectedPath;
 
     m_pFoundODPoint = selectedTextPoint;
 }
@@ -179,25 +137,29 @@ void ODEventHandler::SetPath( ODPath *path )
     m_pGZ = NULL;
     m_pPIL = NULL;
     m_pSelectedPath = NULL;
-    if(path) {
-        if(path->m_sTypeString == wxT("Boundary")) {
-            m_pBoundary = (Boundary *)path;
-            m_pSelectedPath = m_pBoundary;
-        } else if(path->m_sTypeString == wxT("EBL")) {
-            m_pEBL = (EBL *)path;
-            m_pSelectedPath = m_pEBL;
-        } else if(path->m_sTypeString == wxT("DR")) {
-            m_pDR = (DR *)path;
-            m_pSelectedPath = m_pDR;
-        } else if(path->m_sTypeString == wxT("Guard Zone")) {
-            m_pGZ = (GZ *)path;
-            m_pSelectedPath = m_pGZ;
-        } else if(path->m_sTypeString == wxT("PIL")) {
-            m_pPIL = (PIL *)path;
-            m_pSelectedPath = m_pPIL;
-        } else
-            m_pSelectedPath = path;
-    }
+
+    if(path == 0)
+        return;
+
+    if(path->m_sTypeString == wxT("Boundary")) {
+        m_pBoundary = dynamic_cast<Boundary *>(path);
+        m_pSelectedPath = m_pBoundary;
+    } else if(path->m_sTypeString == wxT("EBL")) {
+        m_pEBL = dynamic_cast<EBL *>(path);
+        m_pSelectedPath = m_pEBL;
+    } else if(path->m_sTypeString == wxT("DR")) {
+        m_pDR = dynamic_cast<DR *>(path);
+        m_pSelectedPath = m_pDR;
+    } else if(path->m_sTypeString == wxT("Guard Zone")) {
+        m_pGZ = dynamic_cast<GZ *>(path);
+        m_pSelectedPath = m_pGZ;
+    } else if(path->m_sTypeString == wxT("PIL")) {
+        m_pPIL = dynamic_cast<PIL *>(path);
+        m_pSelectedPath = m_pPIL;
+    } else
+        m_pSelectedPath = path;
+
+    assert(m_pSelectedPath != 0);
 }
 
 void ODEventHandler::SetBoundaryList(std::list< Boundary* > pBoundaryList)
