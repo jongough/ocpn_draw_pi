@@ -282,8 +282,10 @@ void GZ::SetActiveColours( void )
         m_col.Set(m_col.Red(), m_col.Green(), m_col.Blue(), wxALPHA_TRANSPARENT);
 #endif // wxCHECK_VERSION(3,0,0)
     
-    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcSchemeActiveFillColour;
-    else m_fillcol = m_wxcSchemeActiveFillColour;
+    if( m_bVisible && m_bPathIsActive )
+        m_fillcol = m_wxcSchemeActiveFillColour;
+    else
+        m_fillcol = m_wxcSchemeInActiveFillColour;
 }
 
 void GZ::MoveAllPoints( double inc_lat, double inc_lon )
