@@ -408,6 +408,8 @@ int ocpn_draw_pi::Init(void)
     m_pMousePIL = NULL;
     m_pSelectedPIL = NULL;
     g_dVar = NAN;
+
+    m_iCallerId = 0;
     nBoundary_State = 0;
     nPoint_State = 0;
     nTextPoint_State = 0;
