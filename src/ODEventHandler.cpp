@@ -365,6 +365,10 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     showRollover = true;
                     break;
                 }
+                else {
+                   // XXX endless loop
+                   assert(false);
+                }
             } else
                 node = node->GetNext();
         }
@@ -447,6 +451,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         b_need_refresh = true;
                         showRollover = true;
                         break;
+                    }
+                    else {
+                        // XXX FIXME may leak g_pRolloverPoint = new SelectItem();
+                        // on following loops
+                        assert(false);
                     }
                 }
                 node = node->GetNext();
