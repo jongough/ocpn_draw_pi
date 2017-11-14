@@ -533,7 +533,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                             l_bFound = g_pGZMan->FindPointInGZ( (GZ *)l_path, l_dLat, l_dLon, l_BoundaryType, l_BoundaryState  );
                         else
                             l_bFound = g_pBoundaryMan->FindPointInBoundary( (Boundary*)l_path, l_dLat, l_dLon, l_BoundaryType, l_BoundaryState );
-                    } else if(l_boundarypoint) 
+                    } else
                         l_bFound = g_pBoundaryMan->FindPointInBoundaryPoint( l_boundarypoint, l_dLat, l_dLon );
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                     jMsg[wxT("Msg")] = root[wxT("Msg")];
@@ -546,12 +546,9 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         jMsg[wxS("Active")] = l_path->m_bPathIsActive;
                         jMsg[wxS("Name")] = l_path->m_PathNameString;
                         jMsg[wxS("Description")] = l_path->m_PathDescription;
-                    } else if(l_boundarypoint) {
+                    } else {
                         jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
                         jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
-                    } else {
-                        jMsg[wxS("Name")] = wxEmptyString;
-                        jMsg[wxS("Description")] = wxEmptyString;
                     }
                     
                     jMsg[wxS("GUID")] = root[wxS("GUID")];
