@@ -257,7 +257,6 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
             wxPoint *l_AllPoints = NULL;
             int     l_iAllPointsSizes[2];
-            wxPoint *l_InclusionBoundary;
             int l_iBoundaryPointCount = 0;
             m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
             wxPoint r;
@@ -293,7 +292,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
                 
                 int l_iInclusionBoundarySize = ExpandedBoundaries[0].size();
-                l_InclusionBoundary = new wxPoint[ l_iInclusionBoundarySize + 1 ];
+                wxPoint *l_InclusionBoundary = new wxPoint[ l_iInclusionBoundarySize + 1 ];
                 for( int i = 0; i < l_iInclusionBoundarySize; i++ )
                 {
                     l_InclusionBoundary[i].x = ExpandedBoundaries[0][i].X;
@@ -313,6 +312,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 for( int i = 0; i < l_iInclusionBoundarySize; i++ ) {
                     l_AllPoints[ i + l_iBoundaryPointCount ] = l_InclusionBoundary[i];
                 }
+                delete [] l_InclusionBoundary;
                 ExpandedBoundaries.clear();
             }
             

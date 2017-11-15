@@ -210,9 +210,12 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
                     ODPath *pb = (ODPath *) pRA->Item( ir );
                     if( pb == pPath)
                         continue;               // self
-                    else 
+                    else  {
+                        delete pRA;
                         return true;
+                    }
                 }
+                delete pRA;
             }
                 
             if( pnode ) pnode = pnode->GetNext();

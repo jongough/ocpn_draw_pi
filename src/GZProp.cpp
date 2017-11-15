@@ -100,6 +100,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
  
     m_bLockGZAngle = false;
     m_bLockGZLength = false;
+    m_bLockUpdate = false;
 }
 
 
@@ -171,6 +172,7 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
     
     m_radioBoxPathPersistence->SetSelection( pInGZ->m_iPersistenceType );
 
+    m_bLockUpdate = false;
     return ODPathPropertiesDialogImpl::UpdateProperties( pInGZ );
 }
 

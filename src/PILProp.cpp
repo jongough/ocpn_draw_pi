@@ -55,6 +55,7 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_bLockUpdate = false;
     m_fgSizerPIL->ShowItems( true );
 
     

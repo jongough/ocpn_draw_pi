@@ -963,6 +963,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pFoundODPoint );
                 if( ppath_array ) {
                     g_pODPointMan->DestroyODPoint( m_pFoundODPoint );
+                    delete ppath_array;
                 }
                 else {
                     g_pODSelect->DeleteSelectablePoint( m_pFoundODPoint, SELTYPE_ODPOINT );
