@@ -84,6 +84,7 @@ void PILPropertiesDialogImpl::SaveChanges()
         if(it->iID == m_iID) break;
         ++it;
     }
+    assert(it != m_pPIL->m_PilLineList.end());
     it->sName = m_textCtrlName->GetValue();
     it->sDescription = m_textCtrlDesctription->GetValue();
     it->dOffset = wxAtof(m_textCtrlOffset->GetValue());
@@ -110,6 +111,7 @@ void PILPropertiesDialogImpl:: UpdateProperties( PIL *pPIL, int iID )
         if(it->iID == iID) break;
         ++it;
     }
+    assert(it != pPIL->m_PilLineList.end());
     m_textCtrlIDNum->SetValue(wxString::Format("%i", iID));
     m_textCtrlName->Clear();
     m_textCtrlName->AppendText(it->sName);

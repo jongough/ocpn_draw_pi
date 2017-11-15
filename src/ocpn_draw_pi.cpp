@@ -3685,22 +3685,24 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         DR *pDRDraw = NULL;
         GZ *pGZDraw = NULL;
         PIL *pPILDraw = NULL;
-        
-        if(pTempPath->m_sTypeString == wxT("Boundary")) {
-            pBoundaryDraw = (Boundary *)pTempPath;
-            pPathDraw = pBoundaryDraw;
-        } else if(pTempPath->m_sTypeString == wxT("EBL")) {
-            pEBLDraw = (EBL *)pTempPath;
-            pPathDraw = pEBLDraw;
-        } else if(pTempPath->m_sTypeString == wxT("DR")) {
-            pDRDraw = (DR *)pTempPath;
-            pPathDraw = pDRDraw;
-        } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
-            pGZDraw = (GZ *)pTempPath;
-            pPathDraw = pGZDraw;
-        } else if(pTempPath->m_sTypeString == wxT("PIL")) {
-            pPILDraw = (PIL *)pTempPath;
-            pPathDraw = pPILDraw;
+        {
+            if(pTempPath->m_sTypeString == wxT("Boundary")) {
+                pBoundaryDraw = (Boundary *)pTempPath;
+                pPathDraw = pBoundaryDraw;
+            } else if(pTempPath->m_sTypeString == wxT("EBL")) {
+                pEBLDraw = (EBL *)pTempPath;
+                pPathDraw = pEBLDraw;
+            } else if(pTempPath->m_sTypeString == wxT("DR")) {
+                pDRDraw = (DR *)pTempPath;
+                pPathDraw = pDRDraw;
+            } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
+                pGZDraw = (GZ *)pTempPath;
+                pPathDraw = pGZDraw;
+            } else if(pTempPath->m_sTypeString == wxT("PIL")) {
+                pPILDraw = (PIL *)pTempPath;
+                pPathDraw = pPILDraw;
+            }
+            assert(pPathDraw != 0);
         }
         
         /* defer rendering active routes until later */ 
