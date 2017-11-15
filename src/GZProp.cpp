@@ -100,6 +100,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
  
     m_bLockGZAngle = false;
     m_bLockGZLength = false;
+    m_bLockUpdate = false;
 }
 
 
