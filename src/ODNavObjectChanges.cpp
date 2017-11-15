@@ -1201,6 +1201,16 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pOP->m_lon = rlon;
         pOP->m_IconName = SymString;
         pOP->SetName( NameString );
+        pOP->SetMarkDescription( DescString );
+        pOP->m_sTypeString = TypeString;
+        pOP->SetODPointArrivalRadius( ArrivalRadius );
+        pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
+        pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
+        pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
+        pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
+        pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
+        pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
+        pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
     }
     if( pTP && TypeString == _T("Text Point") ) {
         pTP->SetPointText( TextString );
@@ -1227,16 +1237,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pBP -> m_uiBoundaryPointFillTransparency = l_uiBoundaryPointFillTransparency;
     }
     
-    pOP->SetMarkDescription( DescString );
-    pOP->m_sTypeString = TypeString;
-    pOP->SetODPointArrivalRadius( ArrivalRadius );
-    pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
-    pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
-    pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
-    pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
-    pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
-    pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
-    pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
 
     if( b_propvizname )
         pOP->m_bShowName = bviz_name;
