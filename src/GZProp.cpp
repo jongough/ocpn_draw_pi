@@ -171,6 +171,7 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
     
     m_radioBoxPathPersistence->SetSelection( pInGZ->m_iPersistenceType );
 
+    m_bLockUpdate = false;
     return ODPathPropertiesDialogImpl::UpdateProperties( pInGZ );
 }
 

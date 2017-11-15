@@ -45,6 +45,10 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_bLockEBLLength = false;
+    m_bLockEBLAngle = false;
+    m_bLockUpdate = false;
+
     m_staticTextTotalLength->Show();
     m_textCtrlTotalLength->Show();
     m_fgSizerEBL->ShowItems( true );
