@@ -53,7 +53,7 @@ extern int          g_iODPointRangeRingsStepUnits;
 extern wxColour     g_colourODPointRangeRingsColour;
 extern bool         g_bBoundaryPointShowName;
 extern float        g_ChartScaleFactorExp;
-
+extern PI_ColorScheme    g_global_color_scheme;
 
 extern PlugIn_ViewPort  *g_pVP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
@@ -115,7 +115,7 @@ ODPoint::ODPoint()
     m_iRangeRingWidth = 2;
 
     CreateColourSchemes();
-    SetColourScheme();
+    SetColourScheme(g_global_color_scheme);
 
 }
 
@@ -171,7 +171,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_iRangeRingWidth = 2;
 
     CreateColourSchemes();
-    SetColourScheme();
+    SetColourScheme(g_global_color_scheme);
 
 }
 
@@ -255,7 +255,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_iRangeRingWidth = 2;
     
     CreateColourSchemes();
-    SetColourScheme();
+    SetColourScheme(g_global_color_scheme);
     
 }
 

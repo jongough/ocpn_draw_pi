@@ -47,6 +47,7 @@ ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
     m_bUpdateIcons = false;
+    m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
     
     initialize_images();
 }
