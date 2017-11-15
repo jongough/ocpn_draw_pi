@@ -662,6 +662,8 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         
         m_pPath->m_wxcActiveLineColour = m_colourPickerLineColour->GetColour();
         m_pPath->CreateColourSchemes();
+        m_pPath->SetColourScheme(g_ocpn_draw_pi->GetColorScheme());
+
         m_pPath->SetActiveColours();
         m_pPath->m_style = ::StyleValues[m_choiceLineStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_choiceLineWidth->GetSelection()];

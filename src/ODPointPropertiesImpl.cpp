@@ -307,8 +307,7 @@ void ODPointPropertiesImpl::SaveChanges()
 //        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
-        m_pODPoint->CreateColourSchemes();
-
+     
         m_pODPoint->SetName( m_textName->GetValue() );
         m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
@@ -354,6 +353,9 @@ void ODPointPropertiesImpl::SaveChanges()
             
             
         }
+        m_pODPoint->CreateColourSchemes();
+        m_pODPoint->SetColourScheme(g_ocpn_draw_pi->GetColorScheme());
+
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
