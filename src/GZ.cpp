@@ -86,6 +86,7 @@ extern ODConfig     *g_pODConfig;
 extern GZProp       *g_pGZPropDialog;
 extern int          g_iGZPersistenceType;
 extern int          g_iGZMaxNum;
+extern PI_ColorScheme    g_global_color_scheme;
 
 extern int g_path_line_width;
 
@@ -109,7 +110,7 @@ GZ::GZ() : ODPath()
     m_bSetTransparent = false;
     m_iPersistenceType = g_iGZPersistenceType;
     CreateColourSchemes();
-    SetColourScheme();
+    SetColourScheme(g_global_color_scheme);
     SetActiveColours();
     
 }

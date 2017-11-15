@@ -70,6 +70,7 @@ extern PathMan      *g_pPathMan;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
+extern PI_ColorScheme   g_global_color_scheme;
 //extern EBLProp      *g_pEBLPropDialog;
 
 PIL::PIL() : EBL()
@@ -147,7 +148,7 @@ int PIL::AddLine(wxString sName, wxString sDescription, double dOffset, bool bDe
     }
     CreateColourSchemes(&plNewLine);
     m_PilLineList.push_back(plNewLine);
-    SetColourScheme();
+    SetColourScheme(g_global_color_scheme);
     
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
