@@ -57,6 +57,7 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern wxString     g_sODPointIconName;
 extern wxColour    g_colourActivePathLineColour;
 extern wxColour    g_colourInActivePathLineColour;
+extern PI_ColorScheme    g_global_color_scheme;
 
 
 #include <wx/listimpl.cpp>
@@ -98,11 +99,11 @@ ODPath::ODPath( void )
     m_LayerID = 0;
     m_bIsInLayer = false;
 
-    m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_DAY;
+    m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
     m_wxcActiveLineColour = g_colourActivePathLineColour;
     m_wxcInActiveLineColour = g_colourInActivePathLineColour;
     CreateColourSchemes();
-    SetColourScheme();
+    SetColourScheme(g_global_color_scheme);
     SetActiveColours();
     
     m_lastMousePointIndex = 0;

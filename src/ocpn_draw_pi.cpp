@@ -147,6 +147,8 @@ int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
 SelectItem              *g_pRolloverPoint;
+PI_ColorScheme          g_global_color_scheme;
+
 
 wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
@@ -356,7 +358,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     nBlinkerTick = 0;
-
+    
     wxString *l_pDir = new wxString(*GetpPrivateApplicationDataLocation());
     appendOSDirSlash( l_pDir );
     l_pDir->Append(_T("plugins"));
@@ -408,7 +410,6 @@ int ocpn_draw_pi::Init(void)
     m_pMousePIL = NULL;
     m_pSelectedPIL = NULL;
     g_dVar = NAN;
-
     m_iCallerId = 0;
     nBoundary_State = 0;
     nPoint_State = 0;
@@ -442,7 +443,7 @@ int ocpn_draw_pi::Init(void)
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;
 
-    m_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
+    g_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     m_parent_window = GetOCPNCanvasWindow();
@@ -638,10 +639,10 @@ int ocpn_draw_pi::Init(void)
 
     
     g_pODPointMan = new PointMan();
-    g_pODPointMan->SetColorScheme( m_global_color_scheme );
+    g_pODPointMan->SetColorScheme( g_global_color_scheme );
     
     g_pPathMan = new PathMan();
-    g_pPathMan->SetColorScheme( m_global_color_scheme );
+    g_pPathMan->SetColorScheme( g_global_color_scheme );
     g_pBoundaryMan = new BoundaryMan();
     g_pGZMan = new GZMan();
     
@@ -755,12 +756,12 @@ void ocpn_draw_pi::SetOriginalColors()
 
 void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
 {
-    m_global_color_scheme = cs;
+    g_global_color_scheme = cs;
     m_pODicons->SetColourScheme( cs );
     g_pODToolbar->SetColourScheme( cs );
     g_pODToolbar->UpdateIcons();
-    g_pODPointMan->SetColorScheme( m_global_color_scheme );
-    g_pPathMan->SetColorScheme( m_global_color_scheme );
+    g_pODPointMan->SetColorScheme( g_global_color_scheme );
+    g_pPathMan->SetColorScheme( g_global_color_scheme );
 
 }
 

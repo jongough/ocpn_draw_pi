@@ -255,7 +255,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
-            wxPoint *l_AllPoints = 0;
+            wxPoint *l_AllPoints = NULL;
             int     l_iAllPointsSizes[2];
             int l_iBoundaryPointCount = 0;
             m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
