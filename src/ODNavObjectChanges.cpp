@@ -161,8 +161,7 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     wxString s;
     pugi::xml_node child;
     pugi::xml_attribute attr;
-    TextPoint *tp;
-    BoundaryPoint *bp;
+
     ODPoint *pp;
     
 #ifndef __WXMSW__
@@ -174,10 +173,6 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
 #endif
 #endif
     
-    if(pop->m_sTypeString == wxT("Text Point")) 
-        tp = (TextPoint *)pop;
-    else if(pop->m_sTypeString == wxT("Boundary Point"))
-        bp = (BoundaryPoint *)pop;
     pp = pop;
     
     s.Printf(_T("%.9f"), pp->m_lat);
@@ -217,6 +212,8 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     }       
 
     if(pp->m_sTypeString == wxT("Text Point")) {
+        TextPoint *tp = dynamic_cast<TextPoint *>(pp);
+        assert(tp != 0);
         if ( !tp->GetPointText().IsEmpty() && (flags & OUT_POINTTEXT) ) {
             wxCharBuffer buffer=tp->GetPointText().ToUTF8();
             if(buffer.data()) {
@@ -264,6 +261,8 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     }
     
     if(pp->m_sTypeString == wxT("Boundary Point")) {
+        BoundaryPoint *bp = dynamic_cast<BoundaryPoint *>(pp);
+        assert(bp != 0);
         child = node.append_child("opencpn:boundary_type");
         if( bp->m_bExclusionBoundaryPoint && !bp->m_bInclusionBoundaryPoint )
             child.append_child(pugi::node_pcdata).set_value( "Exclusion" );
