@@ -380,6 +380,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append(*l_pDir);
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
+    m_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     
     m_pODicons = new ODicons();
 }
