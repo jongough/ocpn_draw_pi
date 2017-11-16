@@ -651,6 +651,7 @@ int ocpn_draw_pi::Init(void)
     g_pEBLPropDialog = NULL;
     g_pDRPropDialog = NULL;
     g_pPILPropDialog = NULL;
+    g_pGZPropDialog = NULL;
     g_PILIndexLinePropDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
@@ -702,7 +703,7 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODRolloverWin = NULL;
     if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
     g_pODPointPropDialog = NULL;
-    if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
+
     g_pODPathPropDialog = NULL;
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     g_pODToolbar = NULL;
