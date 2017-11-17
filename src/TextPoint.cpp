@@ -40,8 +40,8 @@
 
 #include "GL/gl.h"
 
+extern PlugIn_ViewPort  g_VP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern PlugIn_ViewPort  *g_pVP;
 extern PointMan     *g_pODPointMan;
 extern ODText       *g_ODText;
 extern int          g_iTextPosition;
@@ -290,7 +290,7 @@ void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
                 
                 //    Calculate the mark drawing extents
                 wxPoint r;
-                GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);    
+                GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);    
                 wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
                 if( m_DisplayTextFont.IsOk() ) {
                     // Added to help with display of text (stops end clipping)
@@ -374,7 +374,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                 
                 //    Calculate the mark drawing extents
                 wxPoint r;
-                GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);    
+                GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);    
                 wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
                 if( m_DisplayTextFont.IsOk() ) {
                     // Added to help with display of text (stops end clipping)
