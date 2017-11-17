@@ -358,6 +358,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     nBlinkerTick = 0;
+    m_VP.bValid = false;
 
     wxString *l_pDir = new wxString(*GetpPrivateApplicationDataLocation());
     appendOSDirSlash( l_pDir );
@@ -898,6 +899,10 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 
 void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 {
+    // ocpn can send position before we receive a valid viewport
+    if (m_VP.bValid == false)
+        return;
+
     bool    l_bBoatChange = false;
     if(pfix.FixTime && pfix.nSats)
         m_LastFixTime = wxDateTime::Now();
