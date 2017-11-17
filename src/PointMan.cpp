@@ -57,6 +57,49 @@ extern PathMan          *g_pPathMan;
 extern ODSelect         *g_pODSelect;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
+// ODMarkIcon
+ODMarkIcon::ODMarkIcon() : picon_bitmap(0), picon_bitmap_RGB(0),
+    picon_bitmap_Day(0), picon_bitmap_Dusk(0), picon_bitmap_Night(0),
+    icon_texture_RGB(0), icon_texture_Day(0),
+    icon_texture_Dusk(0), icon_texture_Night(0)
+{
+
+}
+
+ODMarkIcon::~ODMarkIcon()
+{
+    Delete( );
+}
+
+void ODMarkIcon::Delete()
+{
+    delete picon_bitmap;
+    delete picon_bitmap_RGB;
+    delete picon_bitmap_Day;
+    delete picon_bitmap_Dusk;
+    delete picon_bitmap_Night;
+
+#ifdef ocpnUSE_GL
+    if (icon_texture_RGB != 0) {
+        glDeleteTextures(1, &icon_texture_RGB);
+        icon_texture_RGB = 0;
+    }
+    if (icon_texture_Day != 0) {
+        glDeleteTextures(1, &icon_texture_Day);
+        icon_texture_Day = 0;
+    }
+    if (icon_texture_Dusk != 0) {
+        glDeleteTextures(1, &icon_texture_Dusk);
+        icon_texture_Dusk = 0;
+    }
+
+    if (icon_texture_Night != 0) {
+        glDeleteTextures(1, &icon_texture_Night);
+        icon_texture_Night = 0;
+    }
+#endif
+}
+
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
 //--------------------------------------------------------------------------------
@@ -105,11 +148,6 @@ PointMan::~PointMan()
 
     for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
         ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
-        delete pmi->picon_bitmap;
-        delete pmi->picon_bitmap_RGB;
-        delete pmi->picon_bitmap_Day;
-        delete pmi->picon_bitmap_Dusk;
-        delete pmi->picon_bitmap_Night;
         delete pmi;
     }
 
@@ -261,11 +299,7 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
         pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( key ) ) {
             newIcon = false;
-            delete pmi->picon_bitmap;
-            delete pmi->picon_bitmap_RGB;
-            delete pmi->picon_bitmap_Day;
-            delete pmi->picon_bitmap_Dusk;
-            delete pmi->picon_bitmap_Night;
+            pmi->Delete();
             break;
         }
     }
@@ -282,11 +316,6 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
     pmi->picon_bitmap_RGB = new wxBitmap( pimage );
     pmi->picon_bitmap_Dusk = CreateDimBitmap( pmi-> picon_bitmap, 0.5 );
     pmi->picon_bitmap_Night = CreateDimBitmap( pmi->picon_bitmap, 0.25 );
-    pmi->icon_texture = 0; /* invalidate */
-    pmi->icon_texture_RGB = 0; /* invalidate */
-    pmi->icon_texture_Day = 0; /* invalidate */
-    pmi->icon_texture_Dusk = 0; /* invalidate */
-    pmi->icon_texture_Night = 0; /* invalidate */
 }
 
 wxImageList *PointMan::Getpmarkicon_image_list( void )
@@ -496,26 +525,30 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
 #ifdef ocpnUSE_GL 
     int index = GetIconIndex( pbm );
     ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
+    assert(pmi != 0);
 
-    unsigned int IconTexture = 0;
+    unsigned int *IconTexture;
     switch (m_ColourScheme) {
         case PI_GLOBAL_COLOR_SCHEME_RGB:
-            IconTexture = pmi->icon_texture_RGB;
+            IconTexture = &pmi->icon_texture_RGB;
             break;
         case PI_GLOBAL_COLOR_SCHEME_DAY:
-            IconTexture = pmi->icon_texture_Day;
+            IconTexture = &pmi->icon_texture_Day;
             break;
         case PI_GLOBAL_COLOR_SCHEME_DUSK:
-            IconTexture = pmi->icon_texture_Dusk;
+            IconTexture = &pmi->icon_texture_Dusk;
             break;
         case PI_GLOBAL_COLOR_SCHEME_NIGHT:
-            IconTexture = pmi->icon_texture_Night;
+            IconTexture = &pmi->icon_texture_Night;
+            break;
+        default:
+            IconTexture = &pmi->icon_texture_Day;
             break;
     }
-    if(!IconTexture) {
+    if(*IconTexture == 0) {
         /* make rgba texture */       
-        glGenTextures(1, &IconTexture);
-        glBindTexture(GL_TEXTURE_2D, IconTexture);
+        glGenTextures(1, IconTexture);
+        glBindTexture(GL_TEXTURE_2D, *IconTexture);
                 
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
@@ -562,7 +595,7 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
     glw = pmi->tex_w;
     glh = pmi->tex_h;
 
-    return IconTexture;
+    return *IconTexture;
     #else
     return 0;
 #endif

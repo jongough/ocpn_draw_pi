@@ -31,6 +31,11 @@
 class ODMarkIcon
 {
 public:
+    ODMarkIcon();
+    ~ODMarkIcon();
+
+    void Delete();
+
     wxBitmap *picon_bitmap;
     wxBitmap *picon_bitmap_RGB;
     wxBitmap *picon_bitmap_Day;
@@ -39,7 +44,6 @@ public:
     wxString icon_name;
     wxString icon_description;
 
-    unsigned int icon_texture;
     unsigned int icon_texture_RGB;
     unsigned int icon_texture_Day;
     unsigned int icon_texture_Dusk;
