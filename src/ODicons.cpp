@@ -75,7 +75,8 @@ void ODicons::initialize_images(void)
     wxString s = _("ocpn_draw_pi data location");
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
     
-
+    m_failedBitmapLoad = false;
+    
 #ifdef ODraw_USE_SVG
     fn.SetFullName(wxT("ODManager.svg"));
     m_s_ocpn_draw_pi = fn.GetFullPath();
@@ -135,53 +136,78 @@ void ODicons::initialize_images(void)
 #else
     fn.SetFullName(wxT("ODManager.png"));
     m_p_bm_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_pi.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("ODManagergrey.png"));
     m_p_bm_ocpn_draw_grey_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_grey_pi.IsOk())  m_failedBitmapLoad = true;
     
     fn.SetFullName(wxT("boundary.png"));
     m_p_bm_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_boundary.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("boundarygrey.png"));
     m_p_bm_ocpn_draw_boundary_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_boundary_grey.IsOk())  m_failedBitmapLoad = true;
     
     fn.SetFullName(wxT("pointbutton.png"));
     m_p_bm_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_point.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("pointbuttongrey.png"));
     m_p_bm_ocpn_draw_point_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_point_grey.IsOk())  m_failedBitmapLoad = true;
     
     fn.SetFullName(wxT("textpointbutton.png"));
     m_p_bm_ocpn_draw_textpoint = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_textpoint.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("textpointbuttongrey.png"));
     m_p_bm_ocpn_draw_textpoint_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_textpoint_grey.IsOk())  m_failedBitmapLoad = true;
     
     fn.SetFullName(wxT("EBL.png"));
     m_p_bm_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_ebl.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("EBLgrey.png"));
     m_p_bm_ocpn_draw_ebl_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_ebl_grey.IsOk())  m_failedBitmapLoad = true;
     
     fn.SetFullName(wxT("DR.png"));
     m_p_bm_ocpn_draw_dr = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_dr.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("DRgrey.png"));
     m_p_bm_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_dr_grey.IsOk())  m_failedBitmapLoad = true;
     
     fn.SetFullName(wxT("GZ.png"));
     m_p_bm_ocpn_draw_gz = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_gz.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("GZgrey.png"));
     m_p_bm_ocpn_draw_gz_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
-
+    if(!m_p_bm_ocpn_draw_gz_grey.IsOk())  m_failedBitmapLoad = true;
+    
     fn.SetFullName(wxT("PIL.png"));
     m_p_bm_ocpn_draw_pil = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_pil.IsOk())  m_failedBitmapLoad = true;
     fn.SetFullName(wxT("PILgrey.png"));
     m_p_bm_ocpn_draw_pil_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    if(!m_p_bm_ocpn_draw_pil_grey.IsOk())  m_failedBitmapLoad = true;
 #endif
     
-    CreateSchemeIcons();
-    ScaleIcons();
+    if(m_failedBitmapLoad) {
+        int ret = OCPNMessageBox_PlugIn( NULL, _("Failed to load all OCPN Draw Plugin icons, check OCPN log for details"), _("OpenCPN Alert"), wxOK );
+    } else {
+        CreateSchemeIcons();
+        ScaleIcons();
+    }
 }
 
 #ifdef ODraw_USE_SVG
 wxBitmap ODicons::LoadSVG( const wxString filename, unsigned int width, unsigned int height )
 {
-    return GetBitmapFromSVGFile(filename , width, height);
+    wxBitmap l__Bitmap = GetBitmapFromSVGFile(filename , width, height);
+    if(!l__Bitmap.IsOk()) {
+        m_failedBitmapLoad = true;
+    }
+    
+    return l__Bitmap;
 }
 
 wxBitmap ODicons::ScaleIcon( wxBitmap bitmap, const wxString filename, double sf )

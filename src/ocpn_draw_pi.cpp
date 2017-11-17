@@ -566,8 +566,9 @@ int ocpn_draw_pi::Init(void)
 #ifdef __WXOSX__
     g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP );
 #else
-    g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
-#endif
+    //g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
+    g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Tool"), wxDefaultPosition, wxDefaultSize, wxCLOSE_BOX|wxRESIZE_BORDER );
+    #endif
     wxPoint wxpToolbarPos;
     wxpToolbarPos.x = g_iToolbarPosX;
     wxpToolbarPos.y = g_iToolbarPosY;
@@ -650,6 +651,7 @@ int ocpn_draw_pi::Init(void)
     g_pBoundaryPropDialog = NULL;
     g_pEBLPropDialog = NULL;
     g_pDRPropDialog = NULL;
+    g_pGZPropDialog = NULL;
     g_pPILPropDialog = NULL;
     g_PILIndexLinePropDialog = NULL;
     
@@ -700,10 +702,33 @@ bool ocpn_draw_pi::DeInit(void)
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
-    if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
-    g_pODPointPropDialog = NULL;
-    if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
+
     g_pODPathPropDialog = NULL;
+
+    if( g_pODPointPropDialog ) g_pODPointPropDialog->Destroy();
+    g_pODPointPropDialog = NULL;
+
+    if ( g_pBoundaryPropDialog ) g_pBoundaryPropDialog->Destroy();
+    g_pBoundaryPropDialog = NULL;
+
+    if ( g_pEBLPropDialog ) g_pEBLPropDialog->Destroy();
+    g_pEBLPropDialog = NULL;
+
+    if ( g_pDRPropDialog ) g_pDRPropDialog->Destroy();
+    g_pDRPropDialog = NULL;
+
+    if ( g_pGZPropDialog ) g_pGZPropDialog->Destroy();
+    g_pGZPropDialog = NULL;
+
+    if ( g_pPILPropDialog )  g_pPILPropDialog->Destroy();
+    g_pPILPropDialog = NULL;
+
+    if ( g_PILIndexLinePropDialog )  g_PILIndexLinePropDialog->Destroy();
+    g_PILIndexLinePropDialog = NULL;
+
+    if ( g_pPathManagerDialog )  g_pPathManagerDialog->Destroy();
+    g_pPathManagerDialog = NULL;
+
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
@@ -724,6 +749,16 @@ bool ocpn_draw_pi::DeInit(void)
         g_pODConfig->UpdateNavObj();
         SaveConfig();
     }
+
+    delete g_pGZMan;
+    delete g_pBoundaryMan;
+    delete g_pPathMan;
+#if 0
+    // XXX FIXME core dump
+    // path first/last point is inserted twice in the list
+    // but points have only one manager pointer so double freed.
+    delete g_pODPointMan;
+#endif
     shutdown(false);
     return true;
 }

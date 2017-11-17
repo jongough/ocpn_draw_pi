@@ -544,10 +544,13 @@ void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
         GetGlobalColor( _T("GREY2"), &gridline );
 //TODO this does not appear to work correctly
         this->SetBackgroundColour( window_back_color );
+        this->SetForegroundColour( window_back_color );
         this->ClearBackground();
+        this->Refresh(true);
         this->m_toolBarODToolbar->SetBackgroundColour( window_back_color );
+        this->m_toolBarODToolbar->SetForegroundColour( window_back_color );
         this->m_toolBarODToolbar->ClearBackground();
+        this->m_toolBarODToolbar->Refresh(true);
     }
-    
 }
 
