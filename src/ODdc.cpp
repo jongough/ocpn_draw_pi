@@ -1457,7 +1457,7 @@ bool ODDC::ConfigurePen()
 #ifdef ocpnUSE_GL
     if(c != wxNullColour)
         glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
-    glLineWidth( width );
+    glLineWidth(wxMax(g_GLMinSymbolLineWidth, width) );
 #endif    
     return true;
 }
