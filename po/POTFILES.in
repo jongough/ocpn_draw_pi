@@ -25,6 +25,8 @@ src/ODEventHandler.cpp
 src/ODicons.cpp
 src/ODIconCombo.cpp
 src/ODJSON.cpp
+src/ODMarkIcon.cpp
+src/ocpn_draw_pi.cpp
 src/ODNavObjectChanges.cpp
 src/ODPropertiesDialogDef.cpp
 src/ODPropertiesDialogImpl.cpp
