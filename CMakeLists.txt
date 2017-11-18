@@ -22,8 +22,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "18")
-SET(VERSION_DATE "17/11/2017")
+SET(VERSION_PATCH "20")
+SET(VERSION_DATE "18/11/2017")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -68,6 +68,8 @@ SET(SRCS
         src/ODicons.cpp
         src/ODIconCombo.cpp
         src/ODJSON.cpp
+        src/ODMarkIcon.cpp
+        src/ocpn_draw_pi.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
         src/ODPropertiesDialogImpl.cpp

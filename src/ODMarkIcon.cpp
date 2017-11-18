@@ -35,18 +35,25 @@
 //      ODMarkIcon   Implementation
 //--------------------------------------------------------------------------------
 
+// ODMarkIcon
 ODMarkIcon::ODMarkIcon()
 {
-    picon_bitmap = NULL;
-    picon_bitmap_RGB = NULL;
-    
+    picon_bitmap = 0;
+    picon_bitmap_RGB = 0;
+    picon_bitmap_Day = 0;
+    picon_bitmap_Dusk = 0;
+    picon_bitmap_Night = 0;
+    icon_texture_RGB = 0;
+    icon_texture_Day = 0;
+    icon_texture_Dusk = 0;
+    icon_texture_Night = 0;
 }
-    
+
 ODMarkIcon::~ODMarkIcon()
 {
     Delete( );
 }
-    
+
 void ODMarkIcon::Delete()
 {
     delete picon_bitmap;

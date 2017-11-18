@@ -57,6 +57,7 @@ extern PathMan          *g_pPathMan;
 extern ODSelect         *g_pODSelect;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
+/*
 // ODMarkIcon
 ODMarkIcon::ODMarkIcon() : picon_bitmap(0), picon_bitmap_RGB(0),
     picon_bitmap_Day(0), picon_bitmap_Dusk(0), picon_bitmap_Night(0),
@@ -99,7 +100,7 @@ void ODMarkIcon::Delete()
     }
 #endif
 }
-
+*/
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
 //--------------------------------------------------------------------------------
@@ -596,7 +597,7 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
     glh = pmi->tex_h;
 
     return *IconTexture;
-    #else
+#else
     return 0;
 #endif
 }
