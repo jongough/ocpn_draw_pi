@@ -33,6 +33,16 @@ struct PILLINE {
     double      dOffset;
     wxColour    wxcActiveColour;
     wxColour    wxcInActiveColour;
+    wxColour    wxcSchemeActiveColour;
+    wxColour    wxcSchemeInActiveColour;
+    wxColour    wxcActiveColourRGB;
+    wxColour    wxcInActiveColourRGB;
+    wxColour    wxcActiveColourDay;
+    wxColour    wxcInActiveColourDay;
+    wxColour    wxcActiveColourDusk;
+    wxColour    wxcInActiveColourDusk;
+    wxColour    wxcActiveColourNight;
+    wxColour    wxcInActiveColourNight;
     double      dStyle;
     double      dWidth;
 };
@@ -43,7 +53,7 @@ class PIL :  public EBL
     public:
         PIL();
         virtual ~PIL();
-        int     AddLine(wxString sName, wxString sDescription, double dOffset);
+        int     AddLine(wxString sName, wxString sDescription, double dOffset, bool bDefault = true);
         void    AddLine(PILLINE PilLine);
         void    DelLine(int iID);
         void    ChangeOffset(int iID, double dOffset);
@@ -54,8 +64,11 @@ class PIL :  public EBL
         void    CentreOnLatLon( double lat, double lon );
         void    MovePILLine(double dLat, double dLon, int iPILId);
         void    UpdatePIL( void );
-
-        std::list<PILLINE> PilLineList;
+        void    SetColourScheme(PI_ColorScheme cs);
+        void    SetColourScheme(void);
+        void    CreateColourSchemes(PILLINE *pl);
+        
+        std::list<PILLINE> m_PilLineList;
         
     protected:
 
@@ -64,8 +77,10 @@ class PIL :  public EBL
         void    CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *SecondPoint );
         void    SetPILLineSelect( double lat, double lon);
         
-        int     m_iStyleOffsetLine;
-        int     m_iWidthOffsetLine;
+        int     m_iStyleOffsetLine1;
+        int     m_iWidthOffsetLine1;
+        int     m_iStyleOffsetLine2;
+        int     m_iWidthOffsetLine2;
 };
 
 WX_DECLARE_LIST(PIL, PILList); // establish class PIL list member

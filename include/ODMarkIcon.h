@@ -22,20 +22,33 @@
  ***************************************************************************
  */
 
-#ifndef __MARKICON_H__
-#define __MARKICON_H__
+#ifndef __ODMARKICON_H__
+#define __ODMARKICON_H__
 
 #include <wx/string.h>
 #include <wx/bitmap.h>
 
-class MarkIcon
+class ODMarkIcon
 {
 public:
+    ODMarkIcon();
+    ~ODMarkIcon();
+
+    void Delete();
+
     wxBitmap *picon_bitmap;
+    wxBitmap *picon_bitmap_RGB;
+    wxBitmap *picon_bitmap_Day;
+    wxBitmap *picon_bitmap_Dusk;
+    wxBitmap *picon_bitmap_Night;
     wxString icon_name;
     wxString icon_description;
 
-    unsigned int icon_texture, tex_w, tex_h;
+    unsigned int icon_texture_RGB;
+    unsigned int icon_texture_Day;
+    unsigned int icon_texture_Dusk;
+    unsigned int icon_texture_Night;
+    unsigned int tex_w, tex_h;
 };
 
 #endif

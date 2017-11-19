@@ -6,6 +6,12 @@
 
 # define minimum cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
+IF (COMMAND cmake_policy)
+  CMAKE_POLICY(SET CMP0002 OLD)
+  CMAKE_POLICY(SET CMP0003 OLD)
+  CMAKE_POLICY(SET CMP0005 OLD)
+  CMAKE_POLICY(SET CMP0011 OLD)
+ENDIF (COMMAND cmake_policy)
 
 PROJECT(ocpn_draw_pi)
 
@@ -16,15 +22,12 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "3")
-SET(VERSION_DATE "14/06/2017")
+SET(VERSION_PATCH "20")
+SET(VERSION_DATE "18/11/2017")
 
 SET(BUNDLE_DATA FALSE)
-IF( NOT CMAKE_BUILD_TYPE )
-  SET( CMAKE_BUILD_TYPE Release CACHE STRINGS "None Debug Release RelWithDebInfo MinSizeRel" <docstring>
-       "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
-       FORCE )
-ENDIF( NOT CMAKE_BUILD_TYPE )
+SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
+SET_PROPERTY( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS None Debug Release RelWithDebInfo MinSizeRel )
 
 MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
@@ -65,6 +68,8 @@ SET(SRCS
         src/ODicons.cpp
         src/ODIconCombo.cpp
         src/ODJSON.cpp
+        src/ODMarkIcon.cpp
+        src/ocpn_draw_pi.cpp
         src/ODNavObjectChanges.cpp
         src/ODPropertiesDialogDef.cpp
         src/ODPropertiesDialogImpl.cpp
@@ -112,6 +117,7 @@ SET(HDRS
         include/ODDRDialogDef.h
         include/ODDRDialogImpl.h
         include/ODEventHandler.h
+        include/ODMarkIcon.h
         include/ODNavObjectChanges.h
         include/ODPropertiesDialogDef.h
         include/ODPropertiesDialogImpl.h
@@ -179,7 +185,6 @@ SET(OCPNHDRS
         ocpninclude/LatLong.hpp
         ocpninclude/Layer.h
         ocpninclude/LinkPropDlg.h
-        ocpninclude/MarkIcon.h
         ocpninclude/navutil.h
         ocpninclude/nmea0183.h
         ocpninclude/nmea0183.hpp
@@ -243,108 +248,17 @@ IF(OD_USE_SVG)
   MESSAGE(STATUS "SVG support enabled...")
   IF(NOT QT_ANDROID)
 
-    IF(NOT WIN32)
-      #Find Cairo
-      IF( CAIRO_INCLUDE_DIR )
-        # Already in cache, be silent
-        SET( CAIRO_FIND_QUIETLY TRUE )
-      ENDIF( CAIRO_INCLUDE_DIR )
-
-      FIND_PATH( CAIRO_INCLUDE_DIR cairo.h
-              PATHS /usr/local/include /usr/include
-              PATH_SUFFIXES cairo/ libcairo/ cairo/libcairo/ )
-
-      SET( CAIRO_NAMES libcairo cairo )
-      FIND_LIBRARY( CAIRO_LIBRARY
-              NAMES ${CAIRO_NAMES}
-              PATHS /usr/lib /usr/local/lib /usr/lib/i386-linux-gnu)
-
-      GET_FILENAME_COMPONENT( CAIRO_LIBRARY_DIR ${CAIRO_LIBRARY} PATH )
-
-      # handle the QUIETLY and REQUIRED arguments and set CAIRO_FOUND to TRUE if
-      # all listed variables are TRUE
-      INCLUDE( "FindPackageHandleStandardArgs" )
-      FIND_PACKAGE_HANDLE_STANDARD_ARGS( "CAIRO" DEFAULT_MSG CAIRO_INCLUDE_DIR CAIRO_LIBRARY )
-
-      MARK_AS_ADVANCED( CAIRO_INCLUDE_DIR CAIRO_LIBRARY )
-      if ( NOT CAIRO_FOUND )
-        message(FATAL_ERROR "Cairo component required, but not found!")
-      endif()
-
-      IF(NOT WIN32 AND NOT APPLE)
-        OPTION(OCPN_FORCE_GTK3 "Force the build to use GTK3" OFF)
-
-        IF(NOT OCPN_FORCE_GTK3)
-          FIND_PACKAGE(GTK2)
-        ENDIF(NOT OCPN_FORCE_GTK3)
-
-        IF(GTK2_FOUND)
-          INCLUDE_DIRECTORIES(${GTK2_INCLUDE_DIRS})
-          SET(GTK_LIBRARIES ${GTK2_LIBRARIES})
-          MESSAGE(STATUS "Building against GTK2...")
-        ELSE(GTK2_FOUND)
-          FIND_PACKAGE(GTK3)
-          INCLUDE_DIRECTORIES(${GTK3_INCLUDE_DIRS})
-          SET(GTK_LIBRARIES ${GTK3_LIBRARIES})
-          MESSAGE(STATUS "Building against GTK3...")
-        ENDIF(GTK2_FOUND)
-      ENDIF(NOT WIN32 AND NOT APPLE)
-
-      # Find FFMPEG - we have it disabled in our wxSVG
-      #set(FFmpeg_FIND_COMPONENTS AVCODEC AVFORMAT AVUTIL SWSCALE SWRESAMPLE AVRESAMPLE)
-      #unset(FFMPEG_LIBRARIES CACHE)
-      #find_package(FFmpeg)
-      #if ( NOT AVCODEC_FOUND OR NOT AVFORMAT_FOUND OR NOT AVUTIL_FOUND OR NOT SWSCALE_FOUND )
-      #  message(FATAL_ERROR "FFmpeg component required, but not found!")
-      #endif()
-      #set(VIDEO_FFMPEG_LIBRARIES ${FFMPEG_LIBRARIES} ${SWSCALE_LIBRARIES})
-
-       FIND_PACKAGE(EXPAT REQUIRED)
-    ELSE(NOT WIN32)
-      #On Windows, we have our own expat
-      SET(EXPAT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/buildwin/expat-2.1.0/include)
-      INCLUDE_DIRECTORIES(${EXPAT_INCLUDE_DIR})
-      #And cairo
-      SET(CAIRO_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/buildwin/gtk/include)
-    ENDIF(NOT WIN32)
-
-    INCLUDE_DIRECTORIES(${CAIRO_INCLUDE_DIR})
-    IF(APPLE)
-      INCLUDE_DIRECTORIES(${CAIRO_INCLUDE_DIR}/..)
-    ENDIF(APPLE)
-    #INCLUDE_DIRECTORIES(${FFMPEG_INCLUDE_DIRS})
-
-    ADD_DEFINITIONS(-DUSE_RENDER_CAIRO)
-
     ADD_DEFINITIONS(-DODraw_USE_SVG)
-    IF(WIN32)
-#      SET(SVG_LIBS
-#            ${CMAKE_BINARY_DIR}/cairo.lib
-#            ${CMAKE_BINARY_DIR}/expat.lib
-#      )
-      SET(SVG_LIBS
-        ${CMAKE_SOURCE_DIR}/buildwin/gtk/cairo.lib
-        ${CMAKE_SOURCE_DIR}/buildwin/expat-2.1.0/expat.lib
-      )
-    ELSE(WIN32)
-      SET(SVG_LIBS ${CAIRO_LIBRARY} ${EXPAT_LIBRARIES} ${GTK_LIBRARIES})
-    ENDIF(WIN32)
-
-    INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude/wxsvg)
-    INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude/wxSVGXML)
-    IF(WIN32)
-        SET(EXTRA_LIBS ${EXTRA_LIBS} ${SVG_LIBS} ${CMAKE_BINARY_DIR}/wxSVG.lib)
-    ENDIF(WIN32)
   ENDIF(NOT QT_ANDROID)
 ENDIF(OD_USE_SVG)
 
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/src/mygdal  )
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/extinclude)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
-INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/src/mygdal  )
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
 
 IF(UNIX)

@@ -50,12 +50,16 @@ extern wxString    g_sPILEndIconName;
 extern wxString    g_sPILStartIconName;
 extern wxColour    g_colourPILActiveCentreLineColour;
 extern wxColour    g_colourPILInActiveCentreLineColour;
-extern wxColour    g_colourPILActiveOffsetLineColour;
-extern wxColour    g_colourPILInActiveOffsetLineColour;
+extern wxColour    g_colourPILActiveOffsetLine1Colour;
+extern wxColour    g_colourPILInActiveOffsetLine1Colour;
+extern wxColour    g_colourPILActiveOffsetLine2Colour;
+extern wxColour    g_colourPILInActiveOffsetLine2Colour;
 extern int         g_PILCentreLineWidth;
 extern int         g_PILCentreLineStyle;
-extern int         g_PILOffsetLineWidth;
-extern int         g_PILOffsetLineStyle;
+extern int         g_PILOffsetLine1Width;
+extern int         g_PILOffsetLine1Style;
+extern int         g_PILOffsetLine2Width;
+extern int         g_PILOffsetLine2Style;
 extern double      g_dPILOffset;
 extern int         g_iPILPersistenceType;
 
@@ -66,6 +70,7 @@ extern PathMan      *g_pPathMan;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern wxString      g_sODPointIconName;
 extern ODConfig     *g_pODConfig;
+extern PI_ColorScheme   g_global_color_scheme;
 //extern EBLProp      *g_pEBLPropDialog;
 
 PIL::PIL() : EBL()
@@ -93,30 +98,58 @@ PIL::PIL() : EBL()
     m_bEndPointMoving = false;
     m_width = g_PILCentreLineWidth;
     m_style = g_PILCentreLineStyle;
-    m_iWidthOffsetLine = g_PILOffsetLineWidth;
-    m_iStyleOffsetLine = g_PILOffsetLineStyle;
-
-    PilLineList.clear();
+    m_iWidthOffsetLine1 = g_PILOffsetLine1Width;
+    m_iStyleOffsetLine1 = g_PILOffsetLine1Style;
+    m_iWidthOffsetLine2 = g_PILOffsetLine2Width;
+    m_iStyleOffsetLine2 = g_PILOffsetLine2Style;
+    
+    m_PilLineList.clear();
 }
 
 PIL::~PIL()
 {
     //dtor
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
+        m_PilLineList.erase(it);
+        it = m_PilLineList.begin();
+    }
 }
 
-int PIL::AddLine(wxString sName, wxString sDescription, double dOffset)
+void PIL::CreateColourSchemes(PILLINE *pPilLine)
+{
+    pPilLine->wxcActiveColourRGB = pPilLine->wxcActiveColour;
+    pPilLine->wxcInActiveColourRGB = pPilLine->wxcInActiveColour;
+    pPilLine->wxcActiveColourDay = pPilLine->wxcActiveColour;
+    pPilLine->wxcInActiveColourDay = pPilLine->wxcInActiveColour;
+    pPilLine->wxcActiveColourDusk.Set( pPilLine->wxcActiveColour.Red()/2, pPilLine->wxcActiveColour.Green()/2, pPilLine->wxcActiveColour.Blue()/2, pPilLine->wxcActiveColour.Alpha());
+    pPilLine->wxcInActiveColourDusk.Set( pPilLine->wxcInActiveColour.Red()/2, pPilLine->wxcInActiveColour.Green()/2, pPilLine->wxcInActiveColour.Blue()/2, pPilLine->wxcInActiveColour.Alpha());
+    pPilLine->wxcActiveColourNight.Set( pPilLine->wxcActiveColour.Red()/4, pPilLine->wxcActiveColour.Green()/4, pPilLine->wxcActiveColour.Blue()/4, pPilLine->wxcActiveColour.Alpha());
+    pPilLine->wxcInActiveColourNight.Set( pPilLine->wxcInActiveColour.Red()/4, pPilLine->wxcInActiveColour.Green()/4, pPilLine->wxcInActiveColour.Blue()/4, pPilLine->wxcInActiveColour.Alpha());
+}
+
+int PIL::AddLine(wxString sName, wxString sDescription, double dOffset, bool bDefault)
 {
     PILLINE plNewLine;
-    plNewLine.iID = PilLineList.size() + 1;
+    plNewLine.iID = m_PilLineList.size() + 1;
     plNewLine.sName = sName;
     plNewLine.sDescription = sDescription;
     plNewLine.dOffset = dOffset;
-    plNewLine.wxcActiveColour = g_colourPILActiveOffsetLineColour;
-    plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLineColour;
-    plNewLine.dStyle = g_PILOffsetLineStyle;
-    plNewLine.dWidth = g_PILOffsetLineWidth;
-    PilLineList.push_back(plNewLine);
-
+    if( bDefault ) {
+        plNewLine.wxcActiveColour = g_colourPILActiveOffsetLine1Colour;
+        plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLine1Colour;
+        plNewLine.dStyle = g_PILOffsetLine1Style;
+        plNewLine.dWidth = g_PILOffsetLine1Width;
+    } else {
+        plNewLine.wxcActiveColour = g_colourPILActiveOffsetLine2Colour;
+        plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLine2Colour;
+        plNewLine.dStyle = g_PILOffsetLine2Style;
+        plNewLine.dWidth = g_PILOffsetLine2Width;
+    }
+    CreateColourSchemes(&plNewLine);
+    m_PilLineList.push_back(plNewLine);
+    SetColourScheme(g_global_color_scheme);
+    
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
     wxPoint l_Centreppt;
@@ -142,25 +175,27 @@ int PIL::AddLine(wxString sName, wxString sDescription, double dOffset)
 
 void PIL::AddLine(PILLINE PilLine)
 {
-    PilLineList.push_back(PilLine);
-
+    CreateColourSchemes(&PilLine);
+    m_PilLineList.push_back(PilLine);
+    SetColourScheme();
+    
     return;
 }
 
 void PIL::DelLine(int iID)
 {
-    std::list<PILLINE>::iterator it = PilLineList.begin();
-    while(it != PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
         if(it->iID == iID) break;
         ++it;
     }
-    PilLineList.erase(it);
+    m_PilLineList.erase(it);
 }
 
 void PIL::ChangeOffset(int iID, double dOffset)
 {
-    std::list<PILLINE>::iterator it = PilLineList.begin();
-    while(it != PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
         if(it->iID == iID) {
             it->dOffset = dOffset;
             return;
@@ -195,8 +230,8 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
 
     GetCanvasPixLL( &VP, &l_Centreppt,  l_pCentre->m_lat, l_pCentre->m_lon);
 
-    std::list<PILLINE>::iterator it = PilLineList.begin();
-    while(it != PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
         double l_dAngle;
         l_dAngle = m_dEBLAngle + 90.;
         if(l_dAngle > 360.) l_dAngle -= 360.;
@@ -214,15 +249,15 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
 
         if( m_bVisible && m_bPathIsActive ) {
             if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
-                l_colour = it->wxcInActiveColour;
+                l_colour = it->wxcSchemeInActiveColour;
             else
-                l_colour = it->wxcActiveColour;
+                l_colour = it->wxcSchemeActiveColour;
         }
         else {
             if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
-                l_colour= it->wxcActiveColour;
+                l_colour= it->wxcSchemeActiveColour;
             else
-                l_colour = it->wxcInActiveColour;
+                l_colour = it->wxcSchemeInActiveColour;
         }
 
         dc.SetPen( *wxThePenList->FindOrCreatePen( l_colour, it->dWidth, it->dStyle ) );
@@ -342,8 +377,8 @@ void PIL::MovePILLine(double dLat, double dLon, int iPILId)
     DistanceBearingMercator_Plugin(l_pCentre->GetLatitude(), l_pCentre->GetLongitude(), dLat, dLon, &brg, &dist);
     dist = -dist * sin((brg - m_dEBLAngle) * PI / 180);
 
-    std::list<PILLINE>::iterator it = PilLineList.begin();
-    while(it != PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
         if(it->iID == iPILId) {
             it->dOffset = dist;
             return;
@@ -359,8 +394,8 @@ void PIL::SetPILLineSelect( double lat, double lon)
     double l_dLat, l_dLon;
 
     GetCanvasPixLL( &g_VP, &l_Centreppt,  lat, lon);
-    std::list<PILLINE>::iterator it = PilLineList.begin();
-    while(it != PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
         double l_dAngle;
         double l_dLat1, l_dLon1, l_dLat2, l_dLon2;
         l_dAngle = m_dEBLAngle + 90.;
@@ -378,3 +413,40 @@ void PIL::SetPILLineSelect( double lat, double lon)
         ++it;
     }
 }
+
+void PIL::SetColourScheme(void)
+{
+    SetColourScheme(m_ColourScheme);
+}
+
+void PIL::SetColourScheme(PI_ColorScheme cs)
+{
+    std::list<PILLINE>::iterator it = m_PilLineList.begin();
+    while(it != m_PilLineList.end()) {
+        switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            it->wxcSchemeActiveColour.SetRGB(it->wxcActiveColourRGB.GetRGB());
+            it->wxcSchemeInActiveColour.SetRGB(it->wxcInActiveColourRGB.GetRGB());
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            it->wxcSchemeActiveColour.SetRGB(it->wxcActiveColourDay.GetRGB());
+            it->wxcSchemeInActiveColour.SetRGB(it->wxcInActiveColourDay.GetRGB());
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            it->wxcSchemeActiveColour.SetRGB(it->wxcActiveColourDusk.GetRGB());
+            it->wxcSchemeInActiveColour.SetRGB(it->wxcInActiveColourDusk.GetRGB());
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            it->wxcSchemeActiveColour.SetRGB(it->wxcActiveColourNight.GetRGB());
+            it->wxcSchemeInActiveColour.SetRGB(it->wxcInActiveColourNight.GetRGB());
+            break;
+        default:
+            it->wxcSchemeActiveColour.SetRGB(it->wxcActiveColourDay.GetRGB());
+            it->wxcSchemeInActiveColour.SetRGB(it->wxcInActiveColourDay.GetRGB());
+            break;
+        }
+        ++it;
+    }
+    EBL::SetColourScheme(cs);
+}
+

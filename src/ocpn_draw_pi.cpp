@@ -147,6 +147,8 @@ int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
 SelectItem              *g_pRolloverPoint;
+PI_ColorScheme          g_global_color_scheme;
+
 
 wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
@@ -184,13 +186,18 @@ wxString    g_sPILEndIconName;
 wxString    g_sPILStartIconName;
 wxColour    g_colourPILActiveCentreLineColour;
 wxColour    g_colourPILInActiveCentreLineColour;
-wxColour    g_colourPILActiveOffsetLineColour;
-wxColour    g_colourPILInActiveOffsetLineColour;
+wxColour    g_colourPILActiveOffsetLine1Colour;
+wxColour    g_colourPILInActiveOffsetLine1Colour;
+wxColour    g_colourPILActiveOffsetLine2Colour;
+wxColour    g_colourPILInActiveOffsetLine2Colour;
 int         g_PILCentreLineWidth;
 int         g_PILCentreLineStyle;
-int         g_PILOffsetLineWidth;
-int         g_PILOffsetLineStyle;
+int         g_PILOffsetLine1Width;
+int         g_PILOffsetLine1Style;
+int         g_PILOffsetLine2Width;
+int         g_PILOffsetLine2Style;
 double      g_dPILOffset;
+int         g_PILDefaultNumIndexLines;
 int         g_iPILPersistenceType;
 
 wxString    g_sDRPointIconName;
@@ -350,6 +357,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_OD_pi_manager = (PlugInManager *) ppimgr;
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
+    nBlinkerTick = 0;
     
     wxString *l_pDir = new wxString(*GetpPrivateApplicationDataLocation());
     appendOSDirSlash( l_pDir );
@@ -402,6 +410,7 @@ int ocpn_draw_pi::Init(void)
     m_pMousePIL = NULL;
     m_pSelectedPIL = NULL;
     g_dVar = NAN;
+    m_iCallerId = 0;
     nBoundary_State = 0;
     nPoint_State = 0;
     nTextPoint_State = 0;
@@ -433,6 +442,8 @@ int ocpn_draw_pi::Init(void)
     
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;
+
+    g_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     m_parent_window = GetOCPNCanvasWindow();
@@ -555,8 +566,9 @@ int ocpn_draw_pi::Init(void)
 #ifdef __WXOSX__
     g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP );
 #else
-    g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
-#endif
+    //g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
+    g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Tool"), wxDefaultPosition, wxDefaultSize, wxCLOSE_BOX|wxRESIZE_BORDER );
+    #endif
     wxPoint wxpToolbarPos;
     wxpToolbarPos.x = g_iToolbarPosX;
     wxpToolbarPos.y = g_iToolbarPosY;
@@ -628,10 +640,10 @@ int ocpn_draw_pi::Init(void)
 
     
     g_pODPointMan = new PointMan();
-    g_pODPointMan->SetColorScheme( global_color_scheme );
+    g_pODPointMan->SetColorScheme( g_global_color_scheme );
     
     g_pPathMan = new PathMan();
-    g_pPathMan->SetColorScheme( global_color_scheme );
+    g_pPathMan->SetColorScheme( g_global_color_scheme );
     g_pBoundaryMan = new BoundaryMan();
     g_pGZMan = new GZMan();
     
@@ -639,6 +651,7 @@ int ocpn_draw_pi::Init(void)
     g_pBoundaryPropDialog = NULL;
     g_pEBLPropDialog = NULL;
     g_pDRPropDialog = NULL;
+    g_pGZPropDialog = NULL;
     g_pPILPropDialog = NULL;
     g_PILIndexLinePropDialog = NULL;
     
@@ -689,10 +702,33 @@ bool ocpn_draw_pi::DeInit(void)
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
-    if( g_pODPointPropDialog ) delete g_pODPointPropDialog;
-    g_pODPointPropDialog = NULL;
-    if( g_pODPathPropDialog ) delete g_pODPathPropDialog;
+
     g_pODPathPropDialog = NULL;
+
+    if( g_pODPointPropDialog ) g_pODPointPropDialog->Destroy();
+    g_pODPointPropDialog = NULL;
+
+    if ( g_pBoundaryPropDialog ) g_pBoundaryPropDialog->Destroy();
+    g_pBoundaryPropDialog = NULL;
+
+    if ( g_pEBLPropDialog ) g_pEBLPropDialog->Destroy();
+    g_pEBLPropDialog = NULL;
+
+    if ( g_pDRPropDialog ) g_pDRPropDialog->Destroy();
+    g_pDRPropDialog = NULL;
+
+    if ( g_pGZPropDialog ) g_pGZPropDialog->Destroy();
+    g_pGZPropDialog = NULL;
+
+    if ( g_pPILPropDialog )  g_pPILPropDialog->Destroy();
+    g_pPILPropDialog = NULL;
+
+    if ( g_PILIndexLinePropDialog )  g_PILIndexLinePropDialog->Destroy();
+    g_PILIndexLinePropDialog = NULL;
+
+    if ( g_pPathManagerDialog )  g_pPathManagerDialog->Destroy();
+    g_pPathManagerDialog = NULL;
+
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
@@ -713,6 +749,16 @@ bool ocpn_draw_pi::DeInit(void)
         g_pODConfig->UpdateNavObj();
         SaveConfig();
     }
+
+    delete g_pGZMan;
+    delete g_pBoundaryMan;
+    delete g_pPathMan;
+#if 0
+    // XXX FIXME core dump
+    // path first/last point is inserted twice in the list
+    // but points have only one manager pointer so double freed.
+    delete g_pODPointMan;
+#endif
     shutdown(false);
     return true;
 }
@@ -745,10 +791,13 @@ void ocpn_draw_pi::SetOriginalColors()
 
 void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
 {
-    global_color_scheme = cs;
+    g_global_color_scheme = cs;
     m_pODicons->SetColourScheme( cs );
     g_pODToolbar->SetColourScheme( cs );
     g_pODToolbar->UpdateIcons();
+    g_pODPointMan->SetColorScheme( g_global_color_scheme );
+    g_pPathMan->SetColorScheme( g_global_color_scheme );
+
 }
 
 void ocpn_draw_pi::UpdateAuiStatus(void)
@@ -807,7 +856,7 @@ void ocpn_draw_pi::SetDefaults(void)
 }
 wxBitmap *ocpn_draw_pi::GetPlugInBitmap()
 {
-    return m_pODicons->m_p_bm_ocpn_draw_pi;
+    return &m_pODicons->m_p_bm_ocpn_draw_pi;
 }
 int ocpn_draw_pi::GetToolbarToolCount(void)
 {
@@ -1214,13 +1263,18 @@ void ocpn_draw_pi::SaveConfig()
         pConf->Write( wxS( "DefaultPILEndIcon" ), g_sPILEndIconName );
         pConf->Write( wxS( "DefaultPILActiveCentreLineColour" ), g_colourPILActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultPILInActiveCentreLineColour" ), g_colourPILInActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILActiveOffsetLineColour" ), g_colourPILActiveOffsetLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILInActiveOffsetLineColour" ), g_colourPILInActiveOffsetLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILActiveOffsetLine1Colour" ), g_colourPILActiveOffsetLine1Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILInActiveOffsetLine1Colour" ), g_colourPILInActiveOffsetLine1Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILActiveOffsetLine2Colour" ), g_colourPILActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+        pConf->Write( wxS( "DefaultPILInActiveOffsetLine2Colour" ), g_colourPILInActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
         pConf->Write( wxS( "DefaultPILCentreLineWidth" ), g_PILCentreLineWidth );
         pConf->Write( wxS( "DefaultPILCentreLineStyle" ), g_PILCentreLineStyle );
-        pConf->Write( wxS( "DefaultPILOffsetLineWidth" ), g_PILOffsetLineWidth );
-        pConf->Write( wxS( "DefaultPILOffsetLineStyle" ), g_PILOffsetLineStyle );
+        pConf->Write( wxS( "DefaultPILOffsetLine1Width" ), g_PILOffsetLine1Width );
+        pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), g_PILOffsetLine1Style );
+        pConf->Write( wxS( "DefaultPILOffsetLine2Width" ), g_PILOffsetLine2Width );
+        pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), g_PILOffsetLine2Style );
         pConf->Write( wxS( "DefaultPILPersistenceType" ), g_iPILPersistenceType );
+        pConf->Write( wxS( "DefaultPILNumIndexLines" ), g_PILDefaultNumIndexLines );
         pConf->Write( wxS( "DefaultPILOffset"), g_dPILOffset );
         pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
         pConf->Write( wxS( "DefaultShowDRPointRangeRings"), g_bDRPointShowRangeRings );
@@ -1409,14 +1463,21 @@ void ocpn_draw_pi::LoadConfig()
         g_colourPILActiveCentreLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultPILInActiveCentreLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourPILInActiveCentreLineColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultPILActiveOffsetLineColour" ), &l_wxsColour, wxS( "Red" ) );
-        g_colourPILActiveOffsetLineColour.Set( l_wxsColour );
-        pConf->Read( wxS( "DefaultPILInActiveOffsetLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
-        g_colourPILInActiveOffsetLineColour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILActiveOffsetLine1Colour" ), &l_wxsColour, wxS( "Red" ) );
+        g_colourPILActiveOffsetLine1Colour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILInActiveOffsetLine1Colour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourPILInActiveOffsetLine1Colour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILActiveOffsetLine2Colour" ), &l_wxsColour, wxS( "Red" ) );
+        g_colourPILActiveOffsetLine2Colour.Set( l_wxsColour );
+        pConf->Read( wxS( "DefaultPILInActiveOffsetLine2Colour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
+        g_colourPILInActiveOffsetLine2Colour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultPILCentreLineWidth" ), &g_PILCentreLineWidth, 2 );
         pConf->Read( wxS( "DefaultPILCentreLineStyle" ), &g_PILCentreLineStyle, wxPENSTYLE_SOLID );
-        pConf->Read( wxS( "DefaultPILOffsetLineWidth" ), &g_PILOffsetLineWidth, 2 );
-        pConf->Read( wxS( "DefaultPILOffsetLineStyle" ), &g_PILOffsetLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLine1Width" ), &g_PILOffsetLine1Width, 2 );
+        pConf->Read( wxS( "DefaultPILOffsetLine1Style" ), &g_PILOffsetLine1Style, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLine2Width" ), &g_PILOffsetLine2Width, 2 );
+        pConf->Read( wxS( "DefaultPILOffsetLine2Style" ), &g_PILOffsetLine2Style, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILNumIndexLines" ), &g_PILDefaultNumIndexLines, 0 );
         pConf->Read( wxS( "DefaultPILPersistenceType" ), &g_iPILPersistenceType, 0 );
         pConf->Read( wxS( "DefaultPILOffset"), &g_dPILOffset, 0.5 );
         pConf->Read( wxS( "DefaultDRPointIcon" ), &g_sDRPointIconName, wxS("Circle") );
@@ -3053,12 +3114,12 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
             else if (pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
                 wxString info;
                 if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
-                    std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
-                    while (it != m_pSelectedPIL->PilLineList.end()) {
+                    std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
+                    while (it != m_pSelectedPIL->m_PilLineList.end()) {
                         if (it->iID == m_iPILId) break;
                         ++it;
                     }
-                    if (it != m_pSelectedPIL->PilLineList.end()) {
+                    if (it != m_pSelectedPIL->m_PilLineList.end()) {
                         info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
                     }
                 }
@@ -3555,11 +3616,11 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     m_prev_rlat = rlat;
     m_prev_rlon = rlon;
     m_prev_pMousePoint = pMousePoint;
-    if(m_pMouseGZ)
+    if(m_pMouseGZ) {
         m_pMouseGZ->m_lastMousePointIndex = m_pMouseGZ->GetnPoints();
-    
-    m_pMouseGZ->RebuildGUIDList();
-    
+        m_pMouseGZ->RebuildGUIDList();
+    }
+
     nGZ_State++;
 
     RequestRefresh( m_parent_window );
@@ -3612,6 +3673,8 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
 
     m_pMousePIL->RebuildGUIDList();
     m_pMousePIL->AddLine( _T("Initial"), _T(""), g_dPILOffset);
+    if(g_PILDefaultNumIndexLines >=0)
+        m_pMousePIL->AddLine( _T("Second"), _T(""), -g_dPILOffset, false );
 
     if(m_pMousePIL->m_iPersistenceType == ID_PERSISTENT || m_pMousePIL->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( m_pMousePIL, -1 );    // don't save over restart
@@ -3657,22 +3720,24 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         DR *pDRDraw = NULL;
         GZ *pGZDraw = NULL;
         PIL *pPILDraw = NULL;
-        
-        if(pTempPath->m_sTypeString == wxT("Boundary")) {
-            pBoundaryDraw = (Boundary *)pTempPath;
-            pPathDraw = pBoundaryDraw;
-        } else if(pTempPath->m_sTypeString == wxT("EBL")) {
-            pEBLDraw = (EBL *)pTempPath;
-            pPathDraw = pEBLDraw;
-        } else if(pTempPath->m_sTypeString == wxT("DR")) {
-            pDRDraw = (DR *)pTempPath;
-            pPathDraw = pDRDraw;
-        } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
-            pGZDraw = (GZ *)pTempPath;
-            pPathDraw = pGZDraw;
-        } else if(pTempPath->m_sTypeString == wxT("PIL")) {
-            pPILDraw = (PIL *)pTempPath;
-            pPathDraw = pPILDraw;
+        {
+            if(pTempPath->m_sTypeString == wxT("Boundary")) {
+                pBoundaryDraw = (Boundary *)pTempPath;
+                pPathDraw = pBoundaryDraw;
+            } else if(pTempPath->m_sTypeString == wxT("EBL")) {
+                pEBLDraw = (EBL *)pTempPath;
+                pPathDraw = pEBLDraw;
+            } else if(pTempPath->m_sTypeString == wxT("DR")) {
+                pDRDraw = (DR *)pTempPath;
+                pPathDraw = pDRDraw;
+            } else if(pTempPath->m_sTypeString == wxT("Guard Zone")) {
+                pGZDraw = (GZ *)pTempPath;
+                pPathDraw = pGZDraw;
+            } else if(pTempPath->m_sTypeString == wxT("PIL")) {
+                pPILDraw = (PIL *)pTempPath;
+                pPathDraw = pPILDraw;
+            }
+            assert(pPathDraw != 0);
         }
         
         /* defer rendering active routes until later */ 
@@ -3720,12 +3785,12 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             ODDC dc;
             wxString info;
             if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
-                std::list<PILLINE>::iterator it = m_pSelectedPIL->PilLineList.begin();
-                while (it != m_pSelectedPIL->PilLineList.end()) {
+                std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
+                while (it != m_pSelectedPIL->m_PilLineList.end()) {
                     if (it->iID == m_iPILId) break;
                     ++it;
                 }
-                if (it != m_pSelectedPIL->PilLineList.end()) {
+                if (it != m_pSelectedPIL->m_PilLineList.end()) {
                     info = CreateExtraPathLegInfo(dc, m_pSelectedPIL, m_pSelectedPIL->m_dEBLAngle, it->dOffset, m_cursorPoint);
                 }
             }
@@ -3785,9 +3850,7 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
         
         //  Sometimes, on Windows, the destination image is corrupt...
         if(NULL == box) {
-#ifdef __WXOSX__
             free(d);
-#endif
             return;
         }
         

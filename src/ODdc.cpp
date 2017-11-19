@@ -728,9 +728,7 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
             if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
         }
-        #ifdef __WXOSX__
         if(wxGC) {
-            #endif
             wxGC->SetPen(dc->GetPen());
             wxGC->SetBrush(dc->GetBrush());
             wxGraphicsPath gpath = wxGC->CreatePath();
@@ -743,21 +741,15 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
             gpath.AddArc( xc, yc, l_InnerRadius, l_dSecondAngle, l_dFirstAngle, false);
 
             wxGC->FillPath(gpath);
-            #ifdef __WXOSX__
         }
-        #endif
     }
 #ifdef ocpnUSE_GL
     else {
         wxPoint *points;
         int numpoints = ArcSectorPoints( *&points, xc, yc, x1, y1, x2, y2, x3, y3, x4, y4, true);
-        
+        DrawLines( numpoints, points );
         DrawPolygonTessellated( numpoints, points, 0, 0 );
-#ifdef __WXOSX__
         delete [] points;
-#else
-        wxDELETE( points );
-#endif
     }
 #endif    
 }
@@ -950,18 +942,14 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
             if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
         }
-#ifdef __WXOSX__
         if(wxGC) {
-#endif
-        wxGC->SetPen(dc->GetPen());
-        wxGC->SetBrush(dc->GetBrush());
-        wxGraphicsPath p = wxGC->CreatePath();
-        p.AddCircle( x, y, innerRadius );
-        p.AddCircle( x, y, outerRadius );
-        wxGC->FillPath(p);
-#ifdef __WXOSX__
+            wxGC->SetPen(dc->GetPen());
+            wxGC->SetBrush(dc->GetBrush());
+            wxGraphicsPath p = wxGC->CreatePath();
+            p.AddCircle( x, y, innerRadius );
+            p.AddCircle( x, y, outerRadius );
+            wxGC->FillPath(p);
         }
-#endif
     }
 #ifdef ocpnUSE_GL
     else {
@@ -987,11 +975,7 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
         npoints[0] = (int) innerSteps;
         npoints[1] = (int) outerSteps;
         DrawPolygonsTessellated( 2, npoints, disk, 0, 0 );
-#ifdef __WXOSX__
         delete [] disk;
-#else
-        wxDELETE( disk );
-#endif
     }
 #endif    
 }
@@ -1201,7 +1185,6 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
     }
     #ifdef ocpnUSE_GL
     else {
-        
         GLUtesselator *tobj = gluNewTess();
         
         gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
@@ -1305,7 +1288,7 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
             unsigned char *a = image.GetAlpha();
 
             unsigned char mr, mg, mb;
-            if( !image.GetOrFindMaskColour( &mr, &mg, &mb ) && !a ) printf(
+            if( !a && !image.GetOrFindMaskColour( &mr, &mg, &mb ) ) printf(
                     "trying to use mask to draw a bitmap without alpha or mask\n" );
 
             unsigned char *e = new unsigned char[4 * w * h];
@@ -1313,7 +1296,7 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
                 for( int y = 0; y < h; y++ )
                     for( int x = 0; x < w; x++ ) {
                         unsigned char r, g, b;
-                        int off = ( y * image.GetWidth() + x );
+                        int off = ( y * w + x );
                         r = d[off * 3 + 0];
                         g = d[off * 3 + 1];
                         b = d[off * 3 + 2];

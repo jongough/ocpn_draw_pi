@@ -31,7 +31,7 @@
 
 #include "ocpn_draw_pi.h"
 //#include "styles.h"
-#include "MarkIcon.h"
+#include "ODMarkIcon.h"
 #include "ODConfig.h"
 #include "ODSelect.h"
 #include "PathMan.h"
@@ -57,6 +57,50 @@ extern PathMan          *g_pPathMan;
 extern ODSelect         *g_pODSelect;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
+/*
+// ODMarkIcon
+ODMarkIcon::ODMarkIcon() : picon_bitmap(0), picon_bitmap_RGB(0),
+    picon_bitmap_Day(0), picon_bitmap_Dusk(0), picon_bitmap_Night(0),
+    icon_texture_RGB(0), icon_texture_Day(0),
+    icon_texture_Dusk(0), icon_texture_Night(0)
+{
+
+}
+
+ODMarkIcon::~ODMarkIcon()
+{
+    Delete( );
+}
+
+void ODMarkIcon::Delete()
+{
+    delete picon_bitmap;
+    delete picon_bitmap_RGB;
+    delete picon_bitmap_Day;
+    delete picon_bitmap_Dusk;
+    delete picon_bitmap_Night;
+
+#ifdef ocpnUSE_GL
+    if (icon_texture_RGB != 0) {
+        glDeleteTextures(1, &icon_texture_RGB);
+        icon_texture_RGB = 0;
+    }
+    if (icon_texture_Day != 0) {
+        glDeleteTextures(1, &icon_texture_Day);
+        icon_texture_Day = 0;
+    }
+    if (icon_texture_Dusk != 0) {
+        glDeleteTextures(1, &icon_texture_Dusk);
+        icon_texture_Dusk = 0;
+    }
+
+    if (icon_texture_Night != 0) {
+        glDeleteTextures(1, &icon_texture_Night);
+        icon_texture_Night = 0;
+    }
+#endif
+}
+*/
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
 //--------------------------------------------------------------------------------
@@ -104,8 +148,7 @@ PointMan::~PointMan()
     delete m_pODPointList;
 
     for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( i );
-        delete pmi->picon_bitmap;
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         delete pmi;
     }
 
@@ -248,29 +291,32 @@ void PointMan::ProcessIcons( )
 
 void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description)
 {
-    MarkIcon *pmi;
+    ODMarkIcon *pmi;
 
     bool newIcon = true;
 
     // avoid adding duplicates
     for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        pmi = (MarkIcon *) m_pIconArray->Item( i );
+        pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( key ) ) {
             newIcon = false;
-            delete pmi->picon_bitmap;
+            pmi->Delete();
             break;
         }
     }
 
     if( newIcon ) {
-        pmi = new MarkIcon;
+        pmi = new ODMarkIcon;
         m_pIconArray->Add( (void *) pmi );
     }
 
     pmi->icon_name = key;
     pmi->icon_description = description;
     pmi->picon_bitmap = new wxBitmap( pimage );
-    pmi->icon_texture = 0; /* invalidate */
+    pmi->picon_bitmap_Day = new wxBitmap( pimage );
+    pmi->picon_bitmap_RGB = new wxBitmap( pimage );
+    pmi->picon_bitmap_Dusk = CreateDimBitmap( pmi-> picon_bitmap, 0.5 );
+    pmi->picon_bitmap_Night = CreateDimBitmap( pmi->picon_bitmap, 0.25 );
 }
 
 wxImageList *PointMan::Getpmarkicon_image_list( void )
@@ -279,10 +325,10 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
     int w = 0;
     int h = 0;
 
-    MarkIcon *pmi;
+    ODMarkIcon *pmi;
 
     for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        pmi = (MarkIcon *) m_pIconArray->Item( i );
+        pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         w = wxMax(w, pmi->picon_bitmap->GetWidth());
         h = wxMax(h, pmi->picon_bitmap->GetHeight());
 
@@ -304,7 +350,7 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
 
     // Add the icons
     for( unsigned int ii = 0; ii < m_pIconArray->GetCount(); ii++ ) {
-        pmi = (MarkIcon *) m_pIconArray->Item( ii );
+        pmi = (ODMarkIcon *) m_pIconArray->Item( ii );
         wxImage icon_image = pmi->picon_bitmap->ConvertToImage();
 
         // toh, 10.09.29
@@ -402,10 +448,11 @@ void PointMan::SetColorScheme( PI_ColorScheme cs )
     //ProcessIcons( g_ODStyleManager->GetCurrentStyle() );
 
     //    Iterate on the ODPoint list, requiring each to reload icon
-
+    m_ColourScheme = cs;
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
         ODPoint *pr = node->GetData();
+        pr->SetColourScheme(cs);
         pr->ReLoadIcon();
         node = node->GetNext();
     }
@@ -413,11 +460,11 @@ void PointMan::SetColorScheme( PI_ColorScheme cs )
 
 bool PointMan::DoesIconExist(const wxString & icon_key) const
 {
-    MarkIcon *pmi;
+    ODMarkIcon *pmi;
     unsigned int i;
 
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        pmi = (MarkIcon *) m_pIconArray->Item( i );
+        pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( icon_key ) ) return true;
         if( pmi->icon_description.IsSameAs( icon_key ) ) return true;
     }
@@ -428,11 +475,12 @@ bool PointMan::DoesIconExist(const wxString & icon_key) const
 wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
 {
     wxBitmap *pret = NULL;
-    MarkIcon *pmi = NULL;
+    wxBitmap *pret_dim = NULL;
+    ODMarkIcon *pmi = NULL;
     unsigned int i;
 
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        pmi = (MarkIcon *) m_pIconArray->Item( i );
+        pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( icon_key ) ) break;
         if( pmi->icon_description.IsSameAs( icon_key ) ) break;
     }
@@ -441,17 +489,34 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
     {
         // find and return bitmap for "circle"
         for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
-            pmi = (MarkIcon *) m_pIconArray->Item( i );
+            pmi = (ODMarkIcon *) m_pIconArray->Item( i );
             if( pmi->icon_name.IsSameAs( _T("circle") ) )
                 break;
         }
 
         if( i == m_pIconArray->GetCount() )              // "circle" not found
-            pmi = (MarkIcon *) m_pIconArray->Item( 0 );       // use item 0
+            pmi = (ODMarkIcon *) m_pIconArray->Item( 0 );       // use item 0
     }
     
-    if( pmi )
-        pret = pmi->picon_bitmap;
+    if( pmi ) {
+        switch (m_ColourScheme) {
+            case PI_GLOBAL_COLOR_SCHEME_RGB:
+                pret = pmi->picon_bitmap_RGB;
+                break;
+            case PI_GLOBAL_COLOR_SCHEME_DAY:
+                pret = pmi->picon_bitmap_Day;
+                break;
+            case PI_GLOBAL_COLOR_SCHEME_DUSK:
+                pret = pmi->picon_bitmap_Dusk;
+                break;
+            case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+                pret = pmi->picon_bitmap_Night;
+                break;
+            default:
+                pret = pmi->picon_bitmap_RGB;
+                break;
+        }
+    }
 
     return pret;
 }
@@ -460,17 +525,35 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
 {
 #ifdef ocpnUSE_GL 
     int index = GetIconIndex( pbm );
-    MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
+    ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
+    assert(pmi != 0);
 
-    if(!pmi->icon_texture) {
+    unsigned int *IconTexture;
+    switch (m_ColourScheme) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            IconTexture = &pmi->icon_texture_RGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            IconTexture = &pmi->icon_texture_Day;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            IconTexture = &pmi->icon_texture_Dusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            IconTexture = &pmi->icon_texture_Night;
+            break;
+        default:
+            IconTexture = &pmi->icon_texture_Day;
+            break;
+    }
+    if(*IconTexture == 0) {
         /* make rgba texture */       
-        glGenTextures(1, &pmi->icon_texture);
-        glBindTexture(GL_TEXTURE_2D, pmi->icon_texture);
+        glGenTextures(1, IconTexture);
+        glBindTexture(GL_TEXTURE_2D, *IconTexture);
                 
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
-        
         wxImage image = pbm->ConvertToImage();
         int w = image.GetWidth(), h = image.GetHeight();
         
@@ -481,7 +564,8 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
         unsigned char *a = image.GetAlpha();
             
         unsigned char mr, mg, mb;
-        image.GetOrFindMaskColour( &mr, &mg, &mb );
+        if(!a)
+            image.GetOrFindMaskColour( &mr, &mg, &mb );
     
         unsigned char *e = new unsigned char[4 * w * h];
         if(d && e){
@@ -512,7 +596,7 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
     glw = pmi->tex_w;
     glh = pmi->tex_h;
 
-    return pmi->icon_texture;
+    return *IconTexture;
 #else
     return 0;
 #endif
@@ -523,8 +607,25 @@ wxBitmap *PointMan::GetIconBitmap( int index )
     wxBitmap *pret = NULL;
 
     if( index >= 0 ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
-        pret = pmi->picon_bitmap;
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
+        switch (m_ColourScheme) {
+            case PI_GLOBAL_COLOR_SCHEME_RGB:
+                pret = pmi->picon_bitmap_RGB;
+                break;
+            case PI_GLOBAL_COLOR_SCHEME_DAY:
+                pret = pmi->picon_bitmap_Day;
+                break;
+            case PI_GLOBAL_COLOR_SCHEME_DUSK:
+                pret = pmi->picon_bitmap_Dusk;
+                break;
+            case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+                pret = pmi->picon_bitmap_Night;
+                break;
+            default:
+                pret = pmi->picon_bitmap_RGB;
+                break;
+        }
+
     }
     return pret;
 }
@@ -534,7 +635,7 @@ wxString *PointMan::GetIconDescription( int index )
     wxString *pret = NULL;
 
     if( index >= 0 ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
         pret = &pmi->icon_description;
     }
     return pret;
@@ -545,7 +646,7 @@ wxString *PointMan::GetIconName( wxString wxIconDescription )
     wxString *pret = NULL;
     
     for( int i = 0; i < (int)m_pIconArray->Count(); i++ ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( i );
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( wxIconDescription.IsSameAs( pmi->icon_description) ) {
             pret = &pmi->icon_name;
             break;
@@ -559,7 +660,7 @@ wxString *PointMan::GetIconName( int index )
     wxString *pret = NULL;
     
     if( index >= 0 ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
         pret = &pmi->icon_name;
     }
     return pret;
@@ -570,7 +671,7 @@ wxString *PointMan::GetIconKey( int index )
     wxString *pret = NULL;
 
     if( (index >= 0)  && ((unsigned int)index < m_pIconArray->GetCount()) ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( index );
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
         pret = &pmi->icon_name;
     }
     return pret;
@@ -581,8 +682,14 @@ int PointMan::GetIconIndex( const wxBitmap *pbm )
     unsigned int i;
 
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( i );
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
+        //if( pmi->picon_bitmap == pbm || pmi->picon_bitmap_RGB == pbm || pmi->picon_bitmap_Day == pbm || pmi->picon_bitmap_Dusk == pbm || pmi->picon_bitmap_Night == pbm) break;
         if( pmi->picon_bitmap == pbm ) break;
+        if( pmi->picon_bitmap_RGB == pbm ) break;
+        if( pmi->picon_bitmap_Day == pbm ) break;
+        if( pmi->picon_bitmap_Dusk == pbm ) break;
+        if( pmi->picon_bitmap_Night == pbm) break;
+
     }
 
     return i;                                           // index of base icon in the image list
@@ -594,7 +701,7 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
     unsigned int i;
     
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
-        MarkIcon *pmi = (MarkIcon *) m_pIconArray->Item( i );
+        ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->picon_bitmap == pbm ) break;
     }
     

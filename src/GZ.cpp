@@ -86,6 +86,7 @@ extern ODConfig     *g_pODConfig;
 extern GZProp       *g_pGZPropDialog;
 extern int          g_iGZPersistenceType;
 extern int          g_iGZMaxNum;
+extern PI_ColorScheme    g_global_color_scheme;
 
 extern int g_path_line_width;
 
@@ -108,6 +109,8 @@ GZ::GZ() : ODPath()
     m_iMaintainWith = g_iGZMaintainWith;
     m_bSetTransparent = false;
     m_iPersistenceType = g_iGZPersistenceType;
+    CreateColourSchemes();
+    SetColourScheme(g_global_color_scheme);
     SetActiveColours();
     
 }
@@ -115,6 +118,47 @@ GZ::GZ() : ODPath()
 GZ::~GZ()
 {
     //dtor
+}
+
+void GZ::CreateColourSchemes(void)
+{
+    ODPath::CreateColourSchemes();
+    m_wxcActiveFillColourRGB = m_wxcActiveFillColour;
+    m_wxcInActiveFillColourRGB = m_wxcInActiveFillColour;
+    m_wxcActiveFillColourDay = m_wxcActiveFillColour;
+    m_wxcInActiveFillColourDay = m_wxcInActiveFillColour;
+    m_wxcActiveFillColourDusk.Set( m_wxcActiveFillColour.Red()/2, m_wxcActiveFillColour.Green()/2, m_wxcActiveFillColour.Blue()/2, m_wxcActiveFillColour.Alpha());
+    m_wxcInActiveFillColourDusk.Set( m_wxcInActiveFillColour.Red()/2, m_wxcInActiveFillColour.Green()/2, m_wxcInActiveFillColour.Blue()/2, m_wxcInActiveFillColour.Alpha());
+    m_wxcActiveFillColourNight.Set( m_wxcActiveFillColour.Red()/4, m_wxcActiveFillColour.Green()/4, m_wxcActiveFillColour.Blue()/4, m_wxcActiveFillColour.Alpha());
+    m_wxcInActiveFillColourNight.Set( m_wxcInActiveFillColour.Red()/4, m_wxcInActiveFillColour.Green()/4, m_wxcInActiveFillColour.Blue()/4, m_wxcInActiveFillColour.Alpha());
+}
+
+void GZ::SetColourScheme(PI_ColorScheme cs)
+{
+    ODPath::SetColourScheme(cs);
+    switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourRGB;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourRGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDay;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDusk;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourNight;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourNight;
+            break;
+        default:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDay;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
+            break;
+    }
+    
 }
 
 void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
@@ -222,11 +266,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     wxPoint *points;
     int numpoints = ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
     dc.DrawLines( numpoints, points );
-#ifdef __WXOSX__
     delete [] points;
-#else
-    wxDELETE( points );
-#endif
     
 #endif
     
@@ -243,8 +283,10 @@ void GZ::SetActiveColours( void )
         m_col.Set(m_col.Red(), m_col.Green(), m_col.Blue(), wxALPHA_TRANSPARENT);
 #endif // wxCHECK_VERSION(3,0,0)
     
-    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
-    else m_fillcol = m_wxcInActiveFillColour;
+    if( m_bVisible && m_bPathIsActive )
+        m_fillcol = m_wxcSchemeActiveFillColour;
+    else
+        m_fillcol = m_wxcSchemeInActiveFillColour;
 }
 
 void GZ::MoveAllPoints( double inc_lat, double inc_lon )
@@ -343,12 +385,10 @@ void GZ::UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath )
     
     //    Update the PathProperties Dialog, if currently shown
     if( ( NULL != g_pGZPropDialog ) && ( g_pGZPropDialog->IsShown() ) ) {
-        if( m_pODPointList ) {
-            for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-                ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
-                if( g_pPathMan->IsPathValid(pp) ) {
-                    g_pGZPropDialog->SetPathAndUpdate( pp, true );
-                }
+        for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
+            ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
+            if( g_pPathMan->IsPathValid(pp) ) {
+                g_pGZPropDialog->SetPathAndUpdate( pp, true );
             }
         }
     }
@@ -371,8 +411,8 @@ void GZ::UpdateGZSelectablePath( void )
         l_iSteps = ceil(24 * (fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection))/360) - 1;
         l_dStepSize = fabs((360 - m_dFirstLineDirection) + m_dSecondLineDirection) / l_iSteps;
     }
-    double firstDirection;
-    double secondDirection;
+    double firstDirection = m_dFirstLineDirection;
+    double secondDirection = m_dSecondLineDirection;
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
@@ -394,10 +434,7 @@ void GZ::UpdateGZSelectablePath( void )
                 }
                 break;
         }
-    } else {
-        firstDirection = m_dFirstLineDirection;
-        secondDirection = m_dSecondLineDirection;
-    }
+    } 
     
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dPrevLat, &l_dPrevLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
@@ -468,8 +505,8 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
 {
     double l_dLat;
     double l_dLon;
-    double firstDirection;
-    double secondDirection;
+    double firstDirection = m_dFirstLineDirection;
+    double secondDirection = m_dSecondLineDirection;
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
@@ -491,10 +528,7 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
                 }
                 break;
         }
-    } else {
-        firstDirection = m_dFirstLineDirection;
-        secondDirection = m_dSecondLineDirection;
-    }
+    } 
     // get x, y of first point on first line
     ODPoint *l_point = m_pODPointList->GetFirst()->GetData();
     GetCanvasPixLL( &piVP, *&l_l1p1, l_point->m_lat, l_point->m_lon );
@@ -534,8 +568,8 @@ LLBBox GZ::GetBBox( void )
     
     double l_dLat;
     double l_dLon;
-    double firstDirection;
-    double secondDirection;
+    double firstDirection = m_dFirstLineDirection;
+    double secondDirection = m_dSecondLineDirection;
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
@@ -557,9 +591,6 @@ LLBBox GZ::GetBBox( void )
                 }
                 break;
         }
-    } else {
-        firstDirection = m_dFirstLineDirection;
-        secondDirection = m_dSecondLineDirection;
     }
     
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);

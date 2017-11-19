@@ -79,15 +79,18 @@ PILPropertiesDialogImpl::~PILPropertiesDialogImpl()
 
 void PILPropertiesDialogImpl::SaveChanges()
 {
-    std::list<PILLINE>::iterator it = m_pPIL->PilLineList.begin();
-    while(it != m_pPIL->PilLineList.end()) {
+    std::list<PILLINE>::iterator it = m_pPIL->m_PilLineList.begin();
+    while(it != m_pPIL->m_PilLineList.end()) {
         if(it->iID == m_iID) break;
         ++it;
     }
+    assert(it != m_pPIL->m_PilLineList.end());
     it->sName = m_textCtrlName->GetValue();
     it->sDescription = m_textCtrlDesctription->GetValue();
     it->dOffset = wxAtof(m_textCtrlOffset->GetValue());
     it->wxcActiveColour = m_colourPickerLineColour->GetColour();
+    m_pPIL->CreateColourSchemes((PILLINE*)&*it);
+    m_pPIL->SetColourScheme();
     it->dStyle = ::StyleValues[m_choiceLineStyle->GetSelection()];
     it->dWidth = ::WidthValues[m_choiceLineWidth->GetSelection()];
 
@@ -103,11 +106,12 @@ void PILPropertiesDialogImpl:: UpdateProperties( PIL *pPIL, int iID )
 {
     m_pPIL = pPIL;
     m_iID = iID;
-    std::list<PILLINE>::iterator it = pPIL->PilLineList.begin();
-    while(it != pPIL->PilLineList.end()) {
+    std::list<PILLINE>::iterator it = pPIL->m_PilLineList.begin();
+    while(it != pPIL->m_PilLineList.end()) {
         if(it->iID == iID) break;
         ++it;
     }
+    assert(it != pPIL->m_PilLineList.end());
     m_textCtrlIDNum->SetValue(wxString::Format("%i", iID));
     m_textCtrlName->Clear();
     m_textCtrlName->AppendText(it->sName);

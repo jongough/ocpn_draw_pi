@@ -228,24 +228,34 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextPILEndPointIcon;
 		wxFlexGridSizer* m_fgSizerPILEndPointIcon;
 		wxBitmapComboBox* m_bcomboBoxPILEndIconName;
+		wxStaticText* m_staticTextNumIndexLines;
+		wxChoice* m_choiceNumIndexLines;
 		wxStaticText* m_staticTextPILDefaultOffset;
 		wxTextCtrl* m_textCtrlPILDefaultOffset;
 		wxStaticText* m_staticTextPILActiveCentreLineColour;
 		wxColourPickerCtrl* m_colourPickerPILActiveCentreLineColour;
 		wxStaticText* m_staticTextInactiveCentreLineColour;
 		wxColourPickerCtrl* m_colourPickerPILInActiveCentreLineColour;
-		wxStaticText* m_staticTextPILActiveOffsetLineColour;
-		wxColourPickerCtrl* m_colourPickerPILActiveOffsetLineColour;
-		wxStaticText* m_staticTextPILInactiveOffsetLineColour;
-		wxColourPickerCtrl* m_colourPickerPILInActiveOffsetLineColour;
+		wxStaticText* m_staticTextPILActiveOffsetLine1Colour;
+		wxColourPickerCtrl* m_colourPickerPILActiveOffsetLine1Colour;
+		wxStaticText* m_staticTextPILInactiveOffsetLine1Colour;
+		wxColourPickerCtrl* m_colourPickerPILInActiveOffsetLine1Colour;
+		wxStaticText* m_staticTextPILActiveOffsetLine2Colour;
+		wxColourPickerCtrl* m_colourPickerPILActiveOffsetLine2Colour;
+		wxStaticText* m_staticTextPILInactiveOffsetLine2Colour;
+		wxColourPickerCtrl* m_colourPickerPILInactiveOffsetLine2Colour;
 		wxStaticText* m_staticTextPILCentreLineWidth;
 		wxChoice* m_choicePILCentreLineWidth;
 		wxStaticText* m_staticTextPILCentreLineStyle;
 		wxChoice* m_choicePILCentreLineStyle;
-		wxStaticText* m_staticTextPILOffsetLineWidth;
-		wxChoice* m_choicePILOffsetLineWidth;
-		wxStaticText* m_staticTextPILOffsetLineStyle;
-		wxChoice* m_choicePILOffsetLineStyle;
+		wxStaticText* m_staticTextPILOffsetLine1Width;
+		wxChoice* m_choicePILOffsetLine1Width;
+		wxStaticText* m_staticTextPILOffsetLine1Style;
+		wxChoice* m_choicePILOffsetLine1Style;
+		wxStaticText* m_staticTextPILOffsetLine2Width;
+		wxChoice* m_choicePILOffsetLine2Width;
+		wxStaticText* m_staticTextPILOffsetLine2Style;
+		wxChoice* m_choicePILOffsetLine2Style;
 		wxRadioBox* m_radioBoxPILPersistence;
 		wxPanel* m_panelAbout;
 		wxStaticText* m_staticTextName;
@@ -271,6 +281,7 @@ class ODPropertiesDialogDef : public wxDialog
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnPILIndexLineChoice( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesCancelClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnDrawPropertiesApplyClick( wxCommandEvent& event ) { event.Skip(); }
@@ -280,7 +291,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choiceToolbar;
 		wxGrid* m_gridODWDInteractions;
 		
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,554 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,607 ), long style = wxDEFAULT_DIALOG_STYLE ); 
 		~ODPropertiesDialogDef();
 	
 };

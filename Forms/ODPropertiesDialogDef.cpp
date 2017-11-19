@@ -83,7 +83,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -976,6 +976,16 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_fgSizerPILSettings->Add( m_fgSizerPILEndPointIcon, 1, wxEXPAND, 5 );
 	
+	m_staticTextNumIndexLines = new wxStaticText( m_panelPIL, wxID_ANY, _("Initial number of index lines"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextNumIndexLines->Wrap( -1 );
+	m_fgSizerPILSettings->Add( m_staticTextNumIndexLines, 0, wxALL, 5 );
+	
+	wxString m_choiceNumIndexLinesChoices[] = { _("1"), _("2") };
+	int m_choiceNumIndexLinesNChoices = sizeof( m_choiceNumIndexLinesChoices ) / sizeof( wxString );
+	m_choiceNumIndexLines = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choiceNumIndexLinesNChoices, m_choiceNumIndexLinesChoices, 0 );
+	m_choiceNumIndexLines->SetSelection( 0 );
+	m_fgSizerPILSettings->Add( m_choiceNumIndexLines, 0, wxALL, 5 );
+	
 	m_staticTextPILDefaultOffset = new wxStaticText( m_panelPIL, wxID_ANY, _("Default Offset (+Stbd/-Port)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILDefaultOffset->Wrap( -1 );
 	m_fgSizerPILSettings->Add( m_staticTextPILDefaultOffset, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
@@ -1010,7 +1020,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer35->Add( m_staticTextInactiveCentreLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_colourPickerPILInActiveCentreLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer35->Add( m_colourPickerPILInActiveCentreLineColour, 0, wxALL, 5 );
+	fgSizer35->Add( m_colourPickerPILInActiveCentreLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer35, 1, wxEXPAND, 5 );
@@ -1021,12 +1031,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer37->SetFlexibleDirection( wxBOTH );
 	fgSizer37->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPILActiveOffsetLineColour = new wxStaticText( m_panelPIL, wxID_ANY, _("Active Offset Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextPILActiveOffsetLineColour->Wrap( -1 );
-	fgSizer37->Add( m_staticTextPILActiveOffsetLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextPILActiveOffsetLine1Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Active Offset Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILActiveOffsetLine1Colour->Wrap( -1 );
+	fgSizer37->Add( m_staticTextPILActiveOffsetLine1Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerPILActiveOffsetLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer37->Add( m_colourPickerPILActiveOffsetLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
+	m_colourPickerPILActiveOffsetLine1Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer37->Add( m_colourPickerPILActiveOffsetLine1Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer37, 1, wxEXPAND, 5 );
@@ -1037,15 +1047,47 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer36->SetFlexibleDirection( wxBOTH );
 	fgSizer36->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPILInactiveOffsetLineColour = new wxStaticText( m_panelPIL, wxID_ANY, _("Inactive Offset Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextPILInactiveOffsetLineColour->Wrap( -1 );
-	fgSizer36->Add( m_staticTextPILInactiveOffsetLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextPILInactiveOffsetLine1Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Inactive Offset Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILInactiveOffsetLine1Colour->Wrap( -1 );
+	fgSizer36->Add( m_staticTextPILInactiveOffsetLine1Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_colourPickerPILInActiveOffsetLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer36->Add( m_colourPickerPILInActiveOffsetLineColour, 0, wxALL, 5 );
+	m_colourPickerPILInActiveOffsetLine1Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer36->Add( m_colourPickerPILInActiveOffsetLine1Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer36, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizer41;
+	fgSizer41 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer41->AddGrowableCol( 0 );
+	fgSizer41->SetFlexibleDirection( wxBOTH );
+	fgSizer41->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextPILActiveOffsetLine2Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Active Offset Line 2 Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILActiveOffsetLine2Colour->Wrap( -1 );
+	fgSizer41->Add( m_staticTextPILActiveOffsetLine2Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerPILActiveOffsetLine2Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 0, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer41->Add( m_colourPickerPILActiveOffsetLine2Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	m_fgSizerPILSettings->Add( fgSizer41, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizer42;
+	fgSizer42 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer42->AddGrowableCol( 0 );
+	fgSizer42->SetFlexibleDirection( wxBOTH );
+	fgSizer42->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextPILInactiveOffsetLine2Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Inactive Offset Line 2 Colour"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILInactiveOffsetLine2Colour->Wrap( -1 );
+	fgSizer42->Add( m_staticTextPILInactiveOffsetLine2Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_colourPickerPILInactiveOffsetLine2Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fgSizer42->Add( m_colourPickerPILInactiveOffsetLine2Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
+	
+	
+	m_fgSizerPILSettings->Add( fgSizer42, 1, wxEXPAND, 5 );
 	
 	wxFlexGridSizer* fgSizer371;
 	fgSizer371 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -1091,15 +1133,15 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer39->SetFlexibleDirection( wxBOTH );
 	fgSizer39->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPILOffsetLineWidth = new wxStaticText( m_panelPIL, wxID_ANY, _("Offset Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextPILOffsetLineWidth->Wrap( -1 );
-	fgSizer39->Add( m_staticTextPILOffsetLineWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextPILOffsetLine1Width = new wxStaticText( m_panelPIL, wxID_ANY, _("Offset Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILOffsetLine1Width->Wrap( -1 );
+	fgSizer39->Add( m_staticTextPILOffsetLine1Width, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choicePILOffsetLineWidthChoices[] = { _("1 Pixel"), _("2 Pixels"), _("3 Pixels"), _("4 Pixels"), _("5 Pixels"), _("6 Pixels"), _("7 Pixels"), _("8 Pixels"), _("9 Pixels"), _("10 Pixels") };
-	int m_choicePILOffsetLineWidthNChoices = sizeof( m_choicePILOffsetLineWidthChoices ) / sizeof( wxString );
-	m_choicePILOffsetLineWidth = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePILOffsetLineWidthNChoices, m_choicePILOffsetLineWidthChoices, 0 );
-	m_choicePILOffsetLineWidth->SetSelection( 0 );
-	fgSizer39->Add( m_choicePILOffsetLineWidth, 0, wxALL, 5 );
+	wxString m_choicePILOffsetLine1WidthChoices[] = { _("1 Pixel"), _("2 Pixels"), _("3 Pixels"), _("4 Pixels"), _("5 Pixels"), _("6 Pixels"), _("7 Pixels"), _("8 Pixels"), _("9 Pixels"), _("10 Pixels") };
+	int m_choicePILOffsetLine1WidthNChoices = sizeof( m_choicePILOffsetLine1WidthChoices ) / sizeof( wxString );
+	m_choicePILOffsetLine1Width = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePILOffsetLine1WidthNChoices, m_choicePILOffsetLine1WidthChoices, 0 );
+	m_choicePILOffsetLine1Width->SetSelection( 0 );
+	fgSizer39->Add( m_choicePILOffsetLine1Width, 0, wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer39, 1, wxEXPAND, 5 );
@@ -1110,18 +1152,56 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer40->SetFlexibleDirection( wxBOTH );
 	fgSizer40->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextPILOffsetLineStyle = new wxStaticText( m_panelPIL, wxID_ANY, _("Offset Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextPILOffsetLineStyle->Wrap( -1 );
-	fgSizer40->Add( m_staticTextPILOffsetLineStyle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextPILOffsetLine1Style = new wxStaticText( m_panelPIL, wxID_ANY, _("Offset Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILOffsetLine1Style->Wrap( -1 );
+	fgSizer40->Add( m_staticTextPILOffsetLine1Style, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	wxString m_choicePILOffsetLineStyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
-	int m_choicePILOffsetLineStyleNChoices = sizeof( m_choicePILOffsetLineStyleChoices ) / sizeof( wxString );
-	m_choicePILOffsetLineStyle = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePILOffsetLineStyleNChoices, m_choicePILOffsetLineStyleChoices, 0 );
-	m_choicePILOffsetLineStyle->SetSelection( 0 );
-	fgSizer40->Add( m_choicePILOffsetLineStyle, 0, wxALL, 5 );
+	wxString m_choicePILOffsetLine1StyleChoices[] = { _("Solid"), _("Dot"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
+	int m_choicePILOffsetLine1StyleNChoices = sizeof( m_choicePILOffsetLine1StyleChoices ) / sizeof( wxString );
+	m_choicePILOffsetLine1Style = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePILOffsetLine1StyleNChoices, m_choicePILOffsetLine1StyleChoices, 0 );
+	m_choicePILOffsetLine1Style->SetSelection( 0 );
+	fgSizer40->Add( m_choicePILOffsetLine1Style, 0, wxALL, 5 );
 	
 	
 	m_fgSizerPILSettings->Add( fgSizer40, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizer43;
+	fgSizer43 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer43->AddGrowableCol( 0 );
+	fgSizer43->SetFlexibleDirection( wxBOTH );
+	fgSizer43->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextPILOffsetLine2Width = new wxStaticText( m_panelPIL, wxID_ANY, _("Offset Line 2 Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILOffsetLine2Width->Wrap( -1 );
+	fgSizer43->Add( m_staticTextPILOffsetLine2Width, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choicePILOffsetLine2WidthChoices[] = { _("1 Pixel"), _("2 Pixels"), _("3 Pixels"), _("4 Pixels"), _("5 Pixels"), _("6 Pixels"), _("7 Pixels"), _("8 Pixels"), _("9 Pixels"), _("10 Pixels") };
+	int m_choicePILOffsetLine2WidthNChoices = sizeof( m_choicePILOffsetLine2WidthChoices ) / sizeof( wxString );
+	m_choicePILOffsetLine2Width = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePILOffsetLine2WidthNChoices, m_choicePILOffsetLine2WidthChoices, 0 );
+	m_choicePILOffsetLine2Width->SetSelection( 0 );
+	fgSizer43->Add( m_choicePILOffsetLine2Width, 0, wxALL, 5 );
+	
+	
+	m_fgSizerPILSettings->Add( fgSizer43, 1, wxEXPAND, 5 );
+	
+	wxFlexGridSizer* fgSizer44;
+	fgSizer44 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer44->AddGrowableCol( 0 );
+	fgSizer44->SetFlexibleDirection( wxBOTH );
+	fgSizer44->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextPILOffsetLine2Style = new wxStaticText( m_panelPIL, wxID_ANY, _("Offset Line 2 Style"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPILOffsetLine2Style->Wrap( -1 );
+	fgSizer44->Add( m_staticTextPILOffsetLine2Style, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	wxString m_choicePILOffsetLine2StyleChoices[] = { _("Solid"), _("Long Dash"), _("Short Dash"), _("Dot Dash") };
+	int m_choicePILOffsetLine2StyleNChoices = sizeof( m_choicePILOffsetLine2StyleChoices ) / sizeof( wxString );
+	m_choicePILOffsetLine2Style = new wxChoice( m_panelPIL, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePILOffsetLine2StyleNChoices, m_choicePILOffsetLine2StyleChoices, 0 );
+	m_choicePILOffsetLine2Style->SetSelection( 0 );
+	fgSizer44->Add( m_choicePILOffsetLine2Style, 0, wxALL, 5 );
+	
+	
+	m_fgSizerPILSettings->Add( fgSizer44, 1, wxEXPAND, 5 );
 	
 	wxString m_radioBoxPILPersistenceChoices[] = { _("Persistent"), _("Persistent over Crash"), _("Never") };
 	int m_radioBoxPILPersistenceNChoices = sizeof( m_radioBoxPILPersistenceChoices ) / sizeof( wxString );
@@ -1133,7 +1213,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelPIL->SetSizer( m_fgSizerPILSettings );
 	m_panelPIL->Layout();
 	m_fgSizerPILSettings->Fit( m_panelPIL );
-	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), false );
+	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), true );
 	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerAbout;
 	bSizerAbout = new wxBoxSizer( wxVERTICAL );
@@ -1289,6 +1369,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
 	m_checkBoxGZRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
+	m_choiceNumIndexLines->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnPILIndexLineChoice ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );
@@ -1301,6 +1382,7 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
 	m_checkBoxGZRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
+	m_choiceNumIndexLines->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ODPropertiesDialogDef::OnPILIndexLineChoice ), NULL, this );
 	m_buttonOK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesOKClick ), NULL, this );
 	m_buttonCancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesCancelClick ), NULL, this );
 	m_buttonApply->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnDrawPropertiesApplyClick ), NULL, this );

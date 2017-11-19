@@ -543,16 +543,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     jMsg[wxS("Found")] = l_bFound;
                     jMsg[wxS("lat")] = l_dLat;
                     jMsg[wxS("lon")] = l_dLon;
-                    jMsg[wxS("Active")] = l_path->m_bPathIsActive;
                     if(l_path) {
+                        jMsg[wxS("Active")] = l_path->m_bPathIsActive;
                         jMsg[wxS("Name")] = l_path->m_PathNameString;
                         jMsg[wxS("Description")] = l_path->m_PathDescription;
-                    } else if(l_boundarypoint) {
+                    } else {
                         jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
                         jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
-                    } else {
-                        jMsg[wxS("Name")] = wxEmptyString;
-                        jMsg[wxS("Description")] = wxEmptyString;
                     }
 
                     jMsg[wxS("GUID")] = root[wxS("GUID")];

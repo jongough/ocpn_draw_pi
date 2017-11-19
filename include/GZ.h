@@ -25,6 +25,7 @@
 #define GZ_H
 
 #include "ODPath.h"
+#include "ocpn_plugin.h"
 
 //forward definitions
 class ODPoint;
@@ -38,6 +39,8 @@ class GZ : public ODPath
         void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void SetActiveColours( void );
+        void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB );
+        void CreateColourSchemes( void );
         void MoveAllPoints( double inc_lat, double inc_lon );
         void UpdateGZ( bool bUpdateSelectablePath = true );
         void UpdateGZSelectablePath( void );
@@ -67,7 +70,16 @@ class GZ : public ODPath
         
     protected:
         wxColour    m_fillcol;
-        
+        wxColour    m_wxcSchemeActiveFillColour;
+        wxColour    m_wxcSchemeInActiveFillColour;
+        wxColour    m_wxcActiveFillColourDay;
+        wxColour    m_wxcInActiveFillColourDay;
+        wxColour    m_wxcActiveFillColourDusk;
+        wxColour    m_wxcInActiveFillColourDusk;
+        wxColour    m_wxcActiveFillColourNight;
+        wxColour    m_wxcInActiveFillColourNight;
+        wxColour    m_wxcActiveFillColourRGB;
+        wxColour    m_wxcInActiveFillColourRGB;
         
     private:
         bool        m_bSetTransparent;

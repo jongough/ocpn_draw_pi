@@ -482,7 +482,6 @@ private:
     int                m_config_button_id;
 
     bool              m_bLOGShowIcon;
-    PI_ColorScheme               global_color_scheme;
     
     Boundary    *m_pSelectedBoundary;
     EBL         *m_pSelectedEBL;

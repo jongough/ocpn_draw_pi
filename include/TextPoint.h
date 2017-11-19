@@ -50,7 +50,9 @@ class TextPoint : public ODPoint
         wxString GetPointText( void ) { return m_TextPointText; }
         void ShowText( void );
         void HideText( void );
-        
+        void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
+        void CreateColourSchemes(void);
+
         wxString        m_TextPointText;
         int             m_iTextPosition;
         int             m_iBackgroundTransparency;
@@ -65,7 +67,17 @@ class TextPoint : public ODPoint
         int             m_iDisplayTextWhen;
         
     protected:
-        
+        wxColour        m_colourSchemeTextColour;
+        wxColour        m_colourSchemeTextBackgroundColour;
+        wxColour        m_colourTextColourRBG;
+        wxColour        m_colourTextBackgroundColourRGB;
+        wxColour        m_colourTextColourDay;
+        wxColour        m_colourTextBackgroundColourDay;
+        wxColour        m_colourTextColourDusk;
+        wxColour        m_colourTextBackgroundColourDusk;
+        wxColour        m_colourTextColourNight;
+        wxColour        m_colourTextBackgroundColourNight;
+
     private:
         void CalculateTextExtents( void );
         

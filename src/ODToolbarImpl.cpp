@@ -45,6 +45,8 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent, id, title, pos, size, style )
 {
+    m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
+    
     AddTools();
     
     m_Mode = ID_NONE;
@@ -147,7 +149,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
                 g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
             } else {
                 m_Mode = ID_MODE_PIL;
-                if( g_ocpn_draw_pi->nEBL_State == 0) g_ocpn_draw_pi->nPIL_State = 1;
+                if( g_ocpn_draw_pi->nPIL_State == 0) g_ocpn_draw_pi->nPIL_State = 1;
             }
             break;
         }
@@ -396,90 +398,90 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
     {
         case ID_MODE_BOUNDARY:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_POINT:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_TEXT_POINT:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_EBL:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_DR:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_GZ:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         case ID_MODE_PIL:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil );
             break;
         }
         case ID_NONE:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolDR->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolGZ->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolPIL->GetId(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey );
             break;
         }
         default:
@@ -510,14 +512,14 @@ void ODToolbarImpl::AddTools(void)
 {
     Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
     
-    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
-    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, wxNullBitmap, _("Create Boundary"), wxEmptyString );
-    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, wxNullBitmap, _("Create Boundary Point"), wxEmptyString );
-    m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_TEXT_POINT, _("Text Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, wxNullBitmap, _("Create Text Point"), wxEmptyString );
-    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_MODE_EBL, _("Electronic Bearing Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, wxNullBitmap, _("Create EBL"), wxEmptyString );
-    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_MODE_DR, _("Dead Reckoning"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, wxNullBitmap, _("Create DR"), wxEmptyString );
-    m_toolGZ = m_toolBarODToolbar->AddCheckTool( ID_MODE_GZ, _("Guard Zone"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey, wxNullBitmap, _("Create GZ"), wxEmptyString );
-    m_toolPIL = m_toolBarODToolbar->AddCheckTool( ID_MODE_PIL, _("Parallel Index Line"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey, wxNullBitmap, _("Create PIL"), wxEmptyString );
+    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary.GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary.GetHeight()));
+    m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey, wxNullBitmap, _("Create Boundary"), wxEmptyString );
+    m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point_grey, wxNullBitmap, _("Create Boundary Point"), wxEmptyString );
+    m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_TEXT_POINT, _("Text Point"),  g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint_grey, wxNullBitmap, _("Create Text Point"), wxEmptyString );
+    m_toolEBL = m_toolBarODToolbar->AddCheckTool( ID_MODE_EBL, _("Electronic Bearing Line"),  g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl_grey, wxNullBitmap, _("Create EBL"), wxEmptyString );
+    m_toolDR = m_toolBarODToolbar->AddCheckTool( ID_MODE_DR, _("Dead Reckoning"),  g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_dr_grey, wxNullBitmap, _("Create DR"), wxEmptyString );
+    m_toolGZ = m_toolBarODToolbar->AddCheckTool( ID_MODE_GZ, _("Guard Zone"),  g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_gz_grey, wxNullBitmap, _("Create GZ"), wxEmptyString );
+    m_toolPIL = m_toolBarODToolbar->AddCheckTool( ID_MODE_PIL, _("Parallel Index Line"),  g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_pil_grey, wxNullBitmap, _("Create PIL"), wxEmptyString );
 
     m_toolBarODToolbar->Realize();
     m_toolBarODToolbar->SetInitialSize();
@@ -542,10 +544,13 @@ void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
         GetGlobalColor( _T("GREY2"), &gridline );
 //TODO this does not appear to work correctly
         this->SetBackgroundColour( window_back_color );
+        this->SetForegroundColour( window_back_color );
         this->ClearBackground();
+        this->Refresh(true);
         this->m_toolBarODToolbar->SetBackgroundColour( window_back_color );
+        this->m_toolBarODToolbar->SetForegroundColour( window_back_color );
         this->m_toolBarODToolbar->ClearBackground();
+        this->m_toolBarODToolbar->Refresh(true);
     }
-    
 }
 

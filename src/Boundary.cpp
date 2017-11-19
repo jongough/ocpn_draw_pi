@@ -80,6 +80,8 @@ Boundary::Boundary() : ODPath()
     m_bInclusionBoundary = g_bInclusionBoundary;
     m_iInclusionBoundarySize = g_iInclusionBoundarySize;
     m_bODPointsVisible = g_bBoundaryODPointsVisible;
+    CreateColourSchemes();
+    SetColourScheme();
     SetActiveColours();
     
 }
@@ -87,6 +89,47 @@ Boundary::Boundary() : ODPath()
 Boundary::~Boundary()
 {
     //dtor
+}
+
+void Boundary::CreateColourSchemes(void)
+{
+    ODPath::CreateColourSchemes();
+    m_wxcActiveFillColourRGB = m_wxcActiveFillColour;
+    m_wxcInActiveFillColourRGB = m_wxcInActiveFillColour;
+    m_wxcActiveFillColourDay = m_wxcActiveFillColour;
+    m_wxcInActiveFillColourDay = m_wxcInActiveFillColour;
+    m_wxcActiveFillColourDusk.Set( m_wxcActiveFillColour.Red()/2, m_wxcActiveFillColour.Green()/2, m_wxcActiveFillColour.Blue()/2, m_wxcActiveFillColour.Alpha());
+    m_wxcInActiveFillColourDusk.Set( m_wxcInActiveFillColour.Red()/2, m_wxcInActiveFillColour.Green()/2, m_wxcInActiveFillColour.Blue()/2, m_wxcInActiveFillColour.Alpha());
+    m_wxcActiveFillColourNight.Set( m_wxcActiveFillColour.Red()/4, m_wxcActiveFillColour.Green()/4, m_wxcActiveFillColour.Blue()/4, m_wxcActiveFillColour.Alpha());
+    m_wxcInActiveFillColourNight.Set( m_wxcInActiveFillColour.Red()/4, m_wxcInActiveFillColour.Green()/4, m_wxcInActiveFillColour.Blue()/4, m_wxcInActiveFillColour.Alpha());
+}
+
+void Boundary::SetColourScheme(PI_ColorScheme cs)
+{
+    ODPath::SetColourScheme(cs);
+    switch (cs) {
+        case PI_GLOBAL_COLOR_SCHEME_RGB:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourRGB;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourRGB;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DAY:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDay;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_DUSK:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDusk;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDusk;
+            break;
+        case PI_GLOBAL_COLOR_SCHEME_NIGHT:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourNight;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourNight;
+            break;
+        default:
+            m_wxcSchemeActiveFillColour = m_wxcActiveFillColourDay;
+            m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
+            break;
+    }
+
 }
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
@@ -111,6 +154,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
                 wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
                 if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
             }
+            assert(wxGC);
             
             wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
@@ -161,7 +205,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             l_InclusionBoundary[ ExpandedBoundaries[0].size()].x = ExpandedBoundaries[0][0].X;
             l_InclusionBoundary[ ExpandedBoundaries[0].size()].y = ExpandedBoundaries[0][0].Y;
 
-            int *l_iPolygonPointCount = new int[2];
+            int l_iPolygonPointCount[2];
             l_iPolygonPointCount[0] = m_pODPointList->GetCount();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
             
@@ -172,6 +216,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
                 wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
                 if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
             }
+            assert(wxGC);
             
             wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
@@ -194,6 +239,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             polys.clear();
             poly.clear();
             co.Clear();
+            delete [] l_InclusionBoundary;
         }
         wxDELETEA( m_bpts );
     }
@@ -211,9 +257,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
-            wxPoint *l_AllPoints;
+            wxPoint *l_AllPoints = NULL;
             int     l_iAllPointsSizes[2];
-            wxPoint *l_InclusionBoundary;
             int l_iBoundaryPointCount = 0;
             m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
             wxPoint r;
@@ -249,7 +294,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
                 
                 int l_iInclusionBoundarySize = ExpandedBoundaries[0].size();
-                l_InclusionBoundary = new wxPoint[ l_iInclusionBoundarySize + 1 ];
+                wxPoint *l_InclusionBoundary = new wxPoint[ l_iInclusionBoundarySize + 1 ];
                 for( int i = 0; i < l_iInclusionBoundarySize; i++ )
                 {
                     l_InclusionBoundary[i].x = ExpandedBoundaries[0][i].X;
@@ -269,6 +314,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 for( int i = 0; i < l_iInclusionBoundarySize; i++ ) {
                     l_AllPoints[ i + l_iBoundaryPointCount ] = l_InclusionBoundary[i];
                 }
+                delete [] l_InclusionBoundary;
                 ExpandedBoundaries.clear();
             }
             
@@ -309,12 +355,12 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxPENSTYLE_SOLID ) );
-
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
                 else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
+                delete [] l_AllPoints;
             }
 
             glDisable( GL_BLEND );
@@ -326,7 +372,6 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         } 
         
     }
-    
     ODPath::DrawGL( piVP );
     
 #endif
@@ -351,8 +396,8 @@ void Boundary::SetActiveColours( void )
     
     ODPath::SetActiveColours();
     
-    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcActiveFillColour;
-    else m_fillcol = m_wxcInActiveFillColour;
+    if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcSchemeActiveFillColour;
+    else m_fillcol = m_wxcSchemeInActiveFillColour;
         
 }
 

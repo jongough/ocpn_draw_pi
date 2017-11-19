@@ -111,12 +111,12 @@ wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
                 if(OCPNpoint_node == OCPNpoint_last_node) break;
             }
             bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
+            delete [] polyX;
+            delete [] polyY;
             if(bInPoly) {
                 l_GUID = pGZ->m_GUID;
                 break;
             }
-            delete [] polyX;
-            delete [] polyY;
         }
         GZ_node = GZ_node->GetNext();                         // next GZ
     }
@@ -186,18 +186,9 @@ bool GZMan::FindPointInGZ( GZ *pGZ, double lat, double lon, int type, int state 
     GetCanvasPixLL( &g_VP, &l_xy, lat, lon );
     bInPoly = pointInPolygon(numpoints, polyX, polyY, l_xy.x, l_xy.y  );
 
-#ifdef __WXOSX__
     delete [] polyX;
     delete [] polyY;
-#else
-    delete [] polyX;
-    delete [] polyY;
-#endif
-#ifdef __WXOSX__
-delete [] points;
-#else
-wxDELETE( points );
-#endif
+    delete [] points;
 
     return bInPoly;
 }
