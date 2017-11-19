@@ -566,9 +566,8 @@ int ocpn_draw_pi::Init(void)
 #ifdef __WXOSX__
     g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP );
 #else
-    //g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
-    g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Tool"), wxDefaultPosition, wxDefaultSize, wxCLOSE_BOX|wxRESIZE_BORDER );
-    #endif
+    g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
+#endif
     wxPoint wxpToolbarPos;
     wxpToolbarPos.x = g_iToolbarPosX;
     wxpToolbarPos.y = g_iToolbarPosY;

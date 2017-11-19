@@ -54,6 +54,7 @@ extern PathMan              *g_pPathMan;
 extern BoundaryMan          *g_pBoundaryMan;
 extern GZMan                *g_pGZMan;
 extern PointMan             *g_pODPointMan;
+extern BoundaryList         *g_pBoundaryList;
 
 extern double               g_dVar;
 extern ODAPI                *g_pODAPI;
@@ -557,6 +558,71 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     return;
                 }
             }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("BoundaryInformation")) {
+            
+            wxJSONValue boundaries;
+            
+            wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
+            
+            Boundary *pboundary = NULL;
+            ODPoint *popFirst;
+            ODPoint *popSecond;
+            
+            while( boundary_node ) {  //all boundaries
+                wxJSONValue current_boundary;
+                wxJSONValue boundary_points;
+                
+                pboundary = boundary_node->GetData();
+                wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
+                wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
+                
+                popFirst = OCPNpoint_node->GetData();
+                
+                while( OCPNpoint_next_node ) {  //specific boundary
+                    wxJSONValue current_point;
+                    
+                    popSecond = OCPNpoint_next_node->GetData();
+                    
+                    current_point[wxT("lat")] = popSecond->m_lat;
+                    current_point[wxT("lon")] = popSecond->m_lon;
+                    boundary_points.Append(current_point);
+                    
+                    popFirst = popSecond;
+                    OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
+                }
+                
+                current_boundary[wxT("BoundaryPoints")] = boundary_points;
+                current_boundary[wxS("GUID")] = pboundary->m_GUID;
+                current_boundary[wxS("Name")] = pboundary->m_PathNameString;
+                current_boundary[wxS("Description")] = pboundary->m_PathDescription;
+                
+                if(pboundary->IsActive())
+                    current_boundary[wxT("BoundaryState")] = wxT("Active");
+                else
+                    current_boundary[wxT("BoundaryState")] = wxT("Inactive");
+                
+                if(pboundary->m_bExclusionBoundary)
+                    current_boundary[wxT("BoundaryType")] = wxT("Exclusion");
+                else if(pboundary->m_bInclusionBoundary)
+                    current_boundary[wxT("BoundaryType")] = wxT("Inclusion");
+                else
+                    current_boundary[wxT("BoundaryType")] = wxT("Neither");
+                
+                boundaries.Append(current_boundary);
+                
+                boundary_node = boundary_node->GetNext();    // next boundary
+            }
+            
+            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+            jMsg[wxT("Msg")] = root[wxT("Msg")];
+            jMsg[wxT("Type")] = wxT("Response");
+            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+            jMsg[wxT("Boundaries")] = boundaries;
+            
+            writer.Write( jMsg, MsgString );
+            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+            
+            return;
         }
         
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
