@@ -195,7 +195,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	bSizerArrivalRadius->Add( m_staticTextArrivalRadius, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_textCtrlODPointArrivalRadius = new wxTextCtrl( m_panelBoundaryPoint, wxID_ANY, _("0.5"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerArrivalRadius->Add( m_textCtrlODPointArrivalRadius, 0, wxALIGN_RIGHT|wxALL, 5 );
+	bSizerArrivalRadius->Add( m_textCtrlODPointArrivalRadius, 0, wxALL, 5 );
 	
 	
 	bSizerOCPNPoint->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
@@ -353,10 +353,10 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_staticTextTextPointIconName = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Text Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextTextPointIconName->Wrap( -1 );
-	m_SizerTextPointIconName->Add( m_staticTextTextPointIconName, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
+	m_SizerTextPointIconName->Add( m_staticTextTextPointIconName, 1, wxALL|wxEXPAND, 5 );
 	
 	m_bcomboBoxTextPointIconName = new wxBitmapComboBox( m_panelTextPoint, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
-	m_SizerTextPointIconName->Add( m_bcomboBoxTextPointIconName, 1, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
+	m_SizerTextPointIconName->Add( m_bcomboBoxTextPointIconName, 1, wxALL|wxEXPAND, 5 );
 	
 	
 	fgSizerTextPoint->Add( m_SizerTextPointIconName, 1, wxEXPAND, 5 );
