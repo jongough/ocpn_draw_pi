@@ -485,7 +485,6 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
         
         if(!l_bNext) {
             wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
-            wxODPointListNode *OCPNpoint_last_node = ( pboundary->m_pODPointList )->GetLast();
             wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
 
             popFirst = OCPNpoint_node->GetData();

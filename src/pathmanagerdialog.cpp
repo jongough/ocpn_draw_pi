@@ -433,8 +433,7 @@ void PathManagerDialog::Create()
     m_pODPointListCtrl = NULL;
 
     m_pNotebook = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxSize( -1, -1 ), wxNB_TOP );
-    itemBoxSizer1->Add( m_pNotebook, 1,
-            wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL | wxEXPAND, 5 );
+    itemBoxSizer1->Add( m_pNotebook, 1, wxALL | wxEXPAND, 5 );
 
     //  Create "Path" panel
     m_pPanelPath = new wxPanel( m_pNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize,
@@ -468,7 +467,7 @@ void PathManagerDialog::Create()
 
     // Buttons: Delete, Properties...
     wxBoxSizer *bsPathButtons = new wxBoxSizer( wxVERTICAL );
-    sbsPaths->Add( bsPathButtons, 0, wxALIGN_RIGHT );
+    sbsPaths->Add( bsPathButtons, 0, wxALL );
 
     btnPathProperties = new wxButton( m_pPanelPath, -1, _("&Properties...") );
     bsPathButtons->Add( btnPathProperties, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
@@ -532,7 +531,7 @@ void PathManagerDialog::Create()
     m_pODPointListCtrl->InsertColumn( colOCPNPOINTDIST, _("Distance from Ownship"), wxLIST_FORMAT_LEFT, 180 );
 
     wxBoxSizer *bsODPointButtons = new wxBoxSizer( wxVERTICAL );
-    itemBoxSizer4->Add( bsODPointButtons, 0, wxALIGN_RIGHT );
+    itemBoxSizer4->Add( bsODPointButtons, 0, wxALL );
 
     btnODPointNew = new wxButton( m_pPanelODPoint, -1, _("&New") );
     bsODPointButtons->Add( btnODPointNew, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
@@ -656,7 +655,7 @@ void PathManagerDialog::Create()
     //this->Connect( -1, wxEVT_SHOW, wxCloseEventHandler(PathManagerDialog::OnOK), NULL, this);
 
     btnPathOK = new wxButton( this, -1, _("&OK") );
-    itemBoxSizer5->Add( btnPathOK, 0, wxALL | wxALIGN_RIGHT, DIALOG_MARGIN );
+    itemBoxSizer5->Add( btnPathOK, 0, wxALL, DIALOG_MARGIN );
     btnPathOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
                             wxCommandEventHandler(PathManagerDialog::OnOK), NULL, this );
     

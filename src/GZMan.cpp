@@ -316,7 +316,6 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
         
         if(!l_bNext) {
             wxODPointListNode *OCPNpoint_node = ( pGZ->m_pODPointList )->GetFirst();
-            wxODPointListNode *OCPNpoint_last_node = ( pGZ->m_pODPointList )->GetLast();
             wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
 
             popFirst = OCPNpoint_node->GetData();

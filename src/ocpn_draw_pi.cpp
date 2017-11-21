@@ -3056,7 +3056,6 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
     wxPathListNode *pnode = g_pPathList->GetFirst();
     while( pnode ) {
         bool b_run = false;
-        bool b_drawn = false;
         ODPath *pPath = pnode->GetData();
         ODPath *pPathDraw = NULL;
         Boundary *pBoundaryDraw = NULL;
@@ -3092,7 +3091,6 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
             
             if( !BltBBox.IntersectOut( test_box ) ) // Path is not wholly outside window
             {
-                b_drawn = true;
                 pPathDraw->Draw( dc, *m_pVP );
             }
 
