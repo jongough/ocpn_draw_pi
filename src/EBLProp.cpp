@@ -101,8 +101,6 @@ EBLProp::~EBLProp()
 
 bool EBLProp::UpdateProperties( EBL *pInEBL )
 {
-    SetGlobalLocale();
-    
     wxString s;
 
     m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
@@ -316,7 +314,6 @@ void EBLProp::OnClose( wxCloseEvent& event )
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnClose(event);
     
-    ResetGlobalLocale();
 }
 
 void EBLProp::OnCancel( wxCommandEvent& event )
@@ -325,7 +322,6 @@ void EBLProp::OnCancel( wxCommandEvent& event )
     m_bLockEBLAngle = false;
     ODPathPropertiesDialogImpl::OnCancel(event);
 
-    ResetGlobalLocale();
 }
 
 

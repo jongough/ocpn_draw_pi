@@ -111,8 +111,6 @@ GZProp::~GZProp()
 
 bool GZProp::UpdateProperties( GZ *pInGZ )
 {
-    SetGlobalLocale();
-    
     wxString s;
 
     m_colourPickerFillColour->SetColour( m_pGZ->m_wxcActiveFillColour );
@@ -306,8 +304,6 @@ void GZProp::OnClose( wxCloseEvent& event )
     m_bLockGZLength = false;
     m_bLockGZAngle = false;
     ODPathPropertiesDialogImpl::OnClose(event);
-    
-    ResetGlobalLocale();
 }
 
 void GZProp::OnCancel( wxCommandEvent& event )
@@ -315,8 +311,6 @@ void GZProp::OnCancel( wxCommandEvent& event )
     m_bLockGZLength = false;
     m_bLockGZAngle = false;
     ODPathPropertiesDialogImpl::OnCancel(event);
-
-    ResetGlobalLocale();
 }
 
 

@@ -77,7 +77,6 @@ extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
-    SetGlobalLocale();
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
@@ -123,14 +122,10 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
     m_pDR = NULL;
     
     this->Layout();
-    
-    ResetGlobalLocale();
 }
 
 void ODDRDialogImpl::SetupDialog()
 {
-    SetGlobalLocale();
-    
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
@@ -167,8 +162,6 @@ void ODDRDialogImpl::SetupDialog()
 
 void ODDRDialogImpl::UpdateDialog( DR * dr)
 {
-    SetGlobalLocale();
-    
     m_pDR = dr;
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
@@ -350,7 +343,6 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     EndModal(wxID_CANCEL);
 #endif
     
-    ResetGlobalLocale();
     m_pDR = NULL;
 }
 
@@ -361,7 +353,6 @@ void ODDRDialogImpl::OnCancel( wxCommandEvent& event )
     EndModal(wxID_CANCEL);
 #endif
     
-    ResetGlobalLocale();
     m_pDR = NULL;
     event.Skip();
 }

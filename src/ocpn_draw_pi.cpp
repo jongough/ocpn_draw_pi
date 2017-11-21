@@ -292,9 +292,6 @@ ODPoint       *pAnchorWatchPoint2;
 
 IDX_entry       *gpIDX;
 
-wxString        *g_ODlocale;
-int             g_iLocaleDepth;
-
 int             g_click_stop;
 bool            g_bConfirmObjectDelete;
 
@@ -430,8 +427,6 @@ int ocpn_draw_pi::Init(void)
     g_iGZMaxNum = 0;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
-    g_iLocaleDepth = 0;
-    g_ODlocale = NULL;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -734,10 +729,6 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODJSON = NULL;
     if( g_pODAPI ) delete g_pODAPI;
     g_pODAPI = NULL;
-    
-    while(g_iLocaleDepth) {
-        ResetGlobalLocale();
-    }
     
     if( m_config_button_id ) RemovePlugInTool(m_config_button_id);
     m_config_button_id = 0;
@@ -1200,15 +1191,6 @@ void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
 }
 void ocpn_draw_pi::SaveConfig()
 {
-#ifndef __WXMSW__
-    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)       
-    wxSetlocale(LC_NUMERIC, "C");
-#else
-    setlocale(LC_NUMERIC, "C");
-#endif
-#endif
-    
     wxFileConfig *pConf = m_pODConfig;
     
     if(pConf)
@@ -1351,26 +1333,10 @@ void ocpn_draw_pi::SaveConfig()
         
     }
     
-#ifndef __WXMSW__
-#if wxCHECK_VERSION(3,0,0)        
-    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
-#else
-    setlocale(LC_NUMERIC, l_locale->ToAscii());
-#endif
-    delete l_locale;
-#endif
 }
 
 void ocpn_draw_pi::LoadConfig()
 {
-#ifndef __WXMSW__
-    wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-#if wxCHECK_VERSION(3,0,0)        
-    wxSetlocale(LC_NUMERIC, "C");
-#else
-    setlocale(LC_NUMERIC, "C");
-#endif
-#endif
     
     wxFileConfig *pConf = (wxFileConfig *)m_pODConfig;
     
@@ -1609,14 +1575,6 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
     }
 
-#ifndef __WXMSW__
-#if wxCHECK_VERSION(3,0,0)        
-    wxSetlocale(LC_NUMERIC, l_locale->ToAscii());
-#else
-    setlocale(LC_NUMERIC, l_locale->ToAscii());
-#endif
-    delete l_locale;
-#endif
 }
 
 void ocpn_draw_pi::SetPluginMessage(wxString &message_id, wxString &message_body)

@@ -33,9 +33,6 @@
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
 
-extern int      g_iLocaleDepth;
-extern wxString *g_ODlocale;
-
 /*!
  * Helper stuff for calculating Path
  */
@@ -252,40 +249,6 @@ double getLMT( double ut, double lon )
         return ( t - 24. );
     else
         return ( t + 24. );
-}
-
-// International helper functions
-void SetGlobalLocale( void )
-{
-#ifndef __WXMSW__
-    if(g_iLocaleDepth == 0) { 
-        g_ODlocale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-#if wxCHECK_VERSION(3,0,0)        
-        wxSetlocale(LC_NUMERIC, "");
-#else
-        setlocale(LC_NUMERIC, "");
-#endif
-    }
-    g_iLocaleDepth++;
-#endif
-}
-
-void ResetGlobalLocale( void )
-{
-#ifndef __WXMSW__
-    g_iLocaleDepth--;
-    if(g_iLocaleDepth < 0) 
-        g_iLocaleDepth = 0;
-    if(g_iLocaleDepth == 0 && g_ODlocale) {
-#if wxCHECK_VERSION(3,0,0)        
-        wxSetlocale(LC_NUMERIC, g_ODlocale->ToAscii());
-#else
-        setlocale(LC_NUMERIC, g_ODlocale->ToAscii());
-#endif
-        delete g_ODlocale;
-        g_ODlocale = NULL;
-    } 
-#endif
 }
 
 // Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 

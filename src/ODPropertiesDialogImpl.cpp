@@ -405,7 +405,6 @@ void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 #endif
     SetClientSize(m_defaultClientSize);
 
-    ResetGlobalLocale();
     event.Skip();
 }
 
@@ -417,7 +416,6 @@ void ODPropertiesDialogImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event 
 #endif
     SetClientSize(m_defaultClientSize);
 
-    ResetGlobalLocale();
     event.Skip();
 }
 
@@ -661,7 +659,6 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
 
 void ODPropertiesDialogImpl::UpdateProperties( void )
 {
-    SetGlobalLocale();
     SetTableCellBackgroundColours();
     m_textCtrlODPointArrivalRadius->SetValue( wxString::Format( _T("%.3f"), g_n_arrival_circle_radius ) );
     

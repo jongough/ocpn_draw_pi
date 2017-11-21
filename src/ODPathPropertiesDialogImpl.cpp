@@ -177,8 +177,6 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     Hide();
     RequestRefresh( GetOCPNCanvasWindow() );
     
-    ResetGlobalLocale();
-    
     event.Skip();
 }
 
@@ -381,8 +379,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     if( NULL == pInPath ) return false;
     ::wxBeginBusyCursor();
    
-    SetGlobalLocale();
-    
     if(pInPath->m_sTypeString == wxT("Boundary")) {
         pBoundary = (Boundary *)pInPath;
         pPath = pBoundary;
@@ -541,8 +537,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
 
 bool ODPathPropertiesDialogImpl::UpdateProperties( void )
 {
-    SetGlobalLocale();
-    
     ::wxBeginBusyCursor();
     
     //  Iterate on Path Points
@@ -669,8 +663,6 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         g_pODConfig->UpdatePath( m_pPath );
         //g_ocpn_draw_pi->SaveConfig();
     }
-    
-    ResetGlobalLocale();
     
     return true;
 }

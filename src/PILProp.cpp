@@ -98,8 +98,6 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 
     ::wxBeginBusyCursor();
 
-    SetGlobalLocale();
-
     wxString s;
 
     m_textCtrlName->SetValue( pInPIL->m_PathNameString );
@@ -248,8 +246,6 @@ void PILProp::OnClose( wxCloseEvent& event )
     m_bLockPILLength = false;
     m_bLockPILAngle = false;
     ODPathPropertiesDialogImpl::OnClose(event);
-    
-    ResetGlobalLocale();
 }
 
 void PILProp::OnCancel( wxCommandEvent& event )
@@ -257,8 +253,6 @@ void PILProp::OnCancel( wxCommandEvent& event )
     m_bLockPILLength = false;
     m_bLockPILAngle = false;
     ODPathPropertiesDialogImpl::OnCancel(event);
-
-    ResetGlobalLocale();
 }
 
 

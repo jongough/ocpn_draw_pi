@@ -70,7 +70,6 @@ class GZProp : public ODPathPropertiesDialogImpl
         double  m_dODGZSecondLengthValidator;
         bool    m_bLockGZAngle;
         bool    m_bLockGZLength;
-        bool    m_bSetLocale;
         bool    m_bLockUpdate;
         
 };
