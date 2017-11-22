@@ -565,7 +565,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
             
             Boundary *pboundary = NULL;
-            ODPoint *popFirst;
             ODPoint *popSecond;
             
             while( boundary_node ) {  //all boundaries
@@ -576,8 +575,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
                 wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
                 
-                popFirst = OCPNpoint_node->GetData();
-                
                 while( OCPNpoint_next_node ) {  //specific boundary
                     wxJSONValue current_point;
                     
@@ -587,7 +584,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     current_point[wxT("lon")] = popSecond->m_lon;
                     boundary_points.Append(current_point);
                     
-                    popFirst = popSecond;
                     OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
                 }
                 

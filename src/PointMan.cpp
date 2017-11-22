@@ -475,7 +475,6 @@ bool PointMan::DoesIconExist(const wxString & icon_key) const
 wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
 {
     wxBitmap *pret = NULL;
-    wxBitmap *pret_dim = NULL;
     ODMarkIcon *pmi = NULL;
     unsigned int i;
 

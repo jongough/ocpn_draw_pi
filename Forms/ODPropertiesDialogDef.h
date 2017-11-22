@@ -108,8 +108,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextRangeRingStyle;
 		wxChoice* m_choiceRangeRingStyle;
 		wxPanel* m_panelTextPoint;
-		wxBoxSizer* m_SizerTextPointIconName;
 		wxStaticText* m_staticTextTextPointIconName;
+		wxFlexGridSizer* m_fgSizerTextPointIconName;
 		wxBitmapComboBox* m_bcomboBoxTextPointIconName;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choiceTextPosition;
@@ -119,6 +119,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerBackgroundColour;
 		wxStaticText* m_staticTextBackgroundTransparency;
 		wxSlider* m_sliderBackgroundTransparency;
+		wxFlexGridSizer* m_fgSizerTextPointFont;
 		wxStaticText* m_staticTextTextFont;
 		wxStaticText* m_staticTextFontFaceExample;
 		wxButton* m_buttonTextFont;
