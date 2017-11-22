@@ -618,7 +618,7 @@ void PathManagerDialog::Create()
     m_pLayListCtrl->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, 100 );
 
     wxBoxSizer *bsLayButtons = new wxBoxSizer( wxVERTICAL );
-    itemBoxSizer7->Add( bsLayButtons, 0, wxALIGN_RIGHT );
+    itemBoxSizer7->Add( bsLayButtons, 0, wxALL );
 
     btnLayNew = new wxButton( m_pPanelLay, -1, _("Temporary layer") );
     bsLayButtons->Add( btnLayNew, 0, wxALL | wxEXPAND, DIALOG_MARGIN );
