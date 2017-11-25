@@ -178,6 +178,8 @@ extern int          g_InitialEdgePanSensitivity;
 extern int          g_iDisplayToolbar;
 extern ODToolbarImpl   *g_pODToolbar;
 
+extern wxString     *g_SData_Locn;
+
 
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
@@ -349,6 +351,19 @@ ODPropertiesDialogDef( parent )
     delete m_bcomboBoxPILStartIconName;
     delete m_bcomboBoxPILEndIconName;
 
+    wxTextFile license_filea( g_SData_Locn->c_str() + _T("license.txt") );
+    wxString l_LicenseText = wxEmptyString;
+    if ( license_filea.Open() ) {
+        for ( wxString str = license_filea.GetFirstLine(); !license_filea.Eof() ; str = license_filea.GetNextLine() )
+            l_LicenseText.Append( str + _T("\n") );
+        license_filea.Close();
+        m_textCtrlLicense->SetDefaultStyle(wxTextAttr(*wxBLACK));
+        m_textCtrlLicense->Clear();
+        m_textCtrlLicense->SetValue(l_LicenseText);
+    } else {
+        wxLogMessage( _T("Could not open License file: ") + g_SData_Locn->c_str() );
+    }
+    
     SetDialogSize();
 }
 
