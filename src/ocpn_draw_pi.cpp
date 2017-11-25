@@ -749,6 +749,7 @@ bool ocpn_draw_pi::DeInit(void)
         SaveConfig();
     }
 
+    delete g_SData_Locn;
     delete g_pGZMan;
     delete g_pBoundaryMan;
     delete g_pPathMan;

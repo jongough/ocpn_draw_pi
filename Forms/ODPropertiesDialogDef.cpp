@@ -452,7 +452,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelTextPoint->SetSizer( fgSizerTextPoint );
 	m_panelTextPoint->Layout();
 	fgSizerTextPoint->Fit( m_panelTextPoint );
-	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), true );
+	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelPath->Enable( false );
 	m_panelPath->Hide();
@@ -605,7 +605,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelEBL->SetSizer( m_fgSizerEBLSettings );
 	m_panelEBL->Layout();
 	m_fgSizerEBLSettings->Fit( m_panelEBL );
-	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), false );
+	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), true );
 	m_panelDR = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerDRSettings;
 	fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -1361,6 +1361,22 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelHelp->Layout();
 	fgSizer22->Fit( m_panelHelp );
 	m_notebookProperties->AddPage( m_panelHelp, _("Help"), false );
+	m_panelLicense = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxFlexGridSizer* fgSizer48;
+	fgSizer48 = new wxFlexGridSizer( 0, 1, 0, 0 );
+	fgSizer48->AddGrowableCol( 0 );
+	fgSizer48->AddGrowableRow( 0 );
+	fgSizer48->SetFlexibleDirection( wxBOTH );
+	fgSizer48->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_ALL );
+	
+	m_textCtrlLicense = new wxTextCtrl( m_panelLicense, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP );
+	fgSizer48->Add( m_textCtrlLicense, 0, wxALL|wxEXPAND, 5 );
+	
+	
+	m_panelLicense->SetSizer( fgSizer48 );
+	m_panelLicense->Layout();
+	fgSizer48->Fit( m_panelLicense );
+	m_notebookProperties->AddPage( m_panelLicense, _("License"), false );
 	
 	m_SizerProperties->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
 	

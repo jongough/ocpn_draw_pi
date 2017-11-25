@@ -274,6 +274,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticText34;
 		wxPanel* m_panelHelp;
 		wxStaticText* m_staticTextHelp;
+		wxPanel* m_panelLicense;
+		wxTextCtrl* m_textCtrlLicense;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonApply;
