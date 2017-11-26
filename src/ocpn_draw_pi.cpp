@@ -3138,7 +3138,6 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
         return;
     
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-    
     while( node ) {
         ODPoint *pOP = node->GetData();
         if(node->GetData()->m_sTypeString == _T("Boundary Point"))

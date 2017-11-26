@@ -30,12 +30,15 @@
 
 #ifdef __WXMSW__
 #ifdef _DEBUG
+#include <sstream>
 #  define DEBUGSL(x) do { \
+std::ostringstream oss; \
+oss << x; \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
-std::string s1(x); \
+std::string s1(oss.str()); \
 std::string s = stime; \
 s += " :: "; \
 s += s1; \
@@ -46,23 +49,29 @@ OutputDebugString(sw); } while (0)
 
 #  define DEBUGST(x) do { \
 std::string s(""); \
+std::ostringstream oss; \
+oss << x; \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
 do { \
-std::string s1(x); \
+std::string s1(oss.str()); \
 s += stime; \
 s += " :: "; \
 s += s1; } while (0);
 
 #  define DEBUGCONT(x) do { \
-std::string s1(x); \
+std::ostringstream oss; \
+oss << x; \
+std::string s1(oss.str()); \
 s += s1 ; } while (0);
 
 #  define DEBUGEND(x) do { \
 std::string s1(""); \
-s1 = x; \
+std::ostringstream oss; \
+oss << x; \
+s1 = oss.str(); \
 s += s1; } while (0); \
 s += "\n" ; \
 std::wstring stemp = std::wstring(s.begin(), s.end()); \

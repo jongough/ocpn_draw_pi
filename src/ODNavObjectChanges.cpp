@@ -1344,7 +1344,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
             if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
             tpOp->m_bIsInPath = true;
-            g_pODPointMan->AddODPoint(tpOp);
+            if(!ODPointExists( tpOp->m_GUID ))
+                g_pODPointMan->AddODPoint(tpOp);
         }
         else if( ChildName == _T ( "name" ) ) {
             wxString l_name = wxString::FromUTF8( tschild.first_child().value() );
