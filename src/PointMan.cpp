@@ -38,6 +38,8 @@
 #include "ODUtils.h"
 #include "cutil.h"
 #include "TextPoint.h"
+#include "BoundaryPoint.h"
+
 #include <stddef.h>                     // for NULL
 
 #include <wx/dir.h>
@@ -858,4 +860,106 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
         RemoveODPoint( pRp);
 
     }
+}
+
+
+#ifndef M_PI
+#define M_PI        3.1415926535897931160E0 
+#endif
+
+static const double radius = 6371007.2;
+
+static double deg2rad(double degree) { return degree*(M_PI/180.0); }
+
+// XXX FIXME 0 and 360
+static bool DistancePointLine( double pLon, double pLat, 
+            double StartLon, double StartLat, double EndLon, double EndLat, 
+            double Distance )
+{
+   double sx, sy;
+   double ex, ey;
+   double px, py;
+   double r = Distance;
+
+   double LineMag;
+   double U;
+
+   sx = radius *cos(deg2rad(pLat)) * deg2rad(StartLon);
+   sy = radius *deg2rad(StartLat);
+
+   ex = radius *cos(deg2rad(pLat)) * deg2rad(EndLon);
+   ey = radius *deg2rad(EndLat);
+
+   // center point
+   px = radius *cos(deg2rad(pLat)) * deg2rad(pLon);
+   py = radius *deg2rad(pLat);
+
+   double a,b,c;
+   double bb4ac;
+   double x,y;
+   
+   x = ex - sx;
+   y = ey - sy;
+   a = x * x + y * y;
+   b = 2 * (x * (sx - px) + y * (sy - py));
+   c = px * px + py * py;
+   c += sx * sx + sy * sy;
+   c -= 2 * (px * sx + py * sy );
+   c -= r * r;
+   bb4ac = b * b - 4 * a * c;
+
+   if (fabs(a) < 1.e-6 || bb4ac < 0) {
+      return false;
+   }
+
+   return true;
+}
+
+wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
+{
+    // search boundary point
+    wxODPointListNode *node = GetODPointList()->GetFirst();
+    while( node ) {
+        BoundaryPoint *op = dynamic_cast<BoundaryPoint *>(node->GetData());
+        if( op && op->IsListed() ) {
+            if( op->m_bIsInPath ) {
+                if( !op->m_bKeepXPath ) {
+                    node = node->GetNext();
+                    continue;
+                }
+            }
+            // if there's no ring there's nothing to do
+            if (!op->GetShowODPointRangeRings() || 
+                op->GetODPointRangeRingsNumber() == 0 ||
+                op->GetODPointRangeRingsStep() == 0.f)
+            {
+                node = node->GetNext();
+                continue;
+            }
+            bool    l_bNext = false;
+            switch (type) {
+                case ID_BOUNDARY_ANY:
+                    l_bNext = false;
+                    break;
+                case ID_BOUNDARY_EXCLUSION:
+                    if(!op->m_bExclusionBoundaryPoint) l_bNext = true;
+                    break;
+                case ID_BOUNDARY_INCLUSION:
+                    if(!op->m_bInclusionBoundaryPoint) l_bNext = true;
+                    break;
+                case ID_BOUNDARY_NIETHER:
+                    if(op->m_bExclusionBoundaryPoint || op->m_bInclusionBoundaryPoint) l_bNext = true;
+                    break;
+            }
+            if (!l_bNext) {
+               double f = (op->m_iODPointRangeRingsStepUnits == 1)?1000.0:1852.31;
+               double dst = op->GetODPointRangeRingsNumber() * op->GetODPointRangeRingsStep() * f;
+               if (DistancePointLine( op->m_lon, op->m_lat, StartLon, StartLat, EndLon, EndLat, dst )) {
+                  return op->m_GUID;
+               }
+            }
+        }
+        node = node->GetNext();
+    }
+    return _T("");
 }
