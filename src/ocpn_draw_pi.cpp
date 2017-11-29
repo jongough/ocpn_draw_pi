@@ -380,7 +380,14 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append(*l_pDir);
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
-    
+#if defined(__WXMSW__) || defined(__WXOSX__)
+    // Windows wants 0? cf. 1b982628
+    g_GLMinSymbolLineWidth = 0.f;
+#else
+    // XXX FIXME get it from driver
+    g_GLMinSymbolLineWidth = 1.0f;
+#endif
+
     m_pODicons = new ODicons();
 }
 
