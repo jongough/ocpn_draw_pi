@@ -22,8 +22,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "28")
-SET(VERSION_DATE "29/11/2017")
+SET(VERSION_PATCH "29")
+SET(VERSION_DATE "30/11/2017")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -71,6 +71,8 @@ SET(SRCS
         src/ODMarkIcon.cpp
         src/ocpn_draw_pi.cpp
         src/ODNavObjectChanges.cpp
+        src/ODNewODPointDialogDef.cpp
+        src/ODNewODPointDialogImpl.cpp
         src/ODPropertiesDialogDef.cpp
         src/ODPropertiesDialogImpl.cpp
         src/ODPathPropertiesDialogDef.cpp
@@ -119,6 +121,8 @@ SET(HDRS
         include/ODEventHandler.h
         include/ODMarkIcon.h
         include/ODNavObjectChanges.h
+        include/ODNewODPointDialogDef.h
+        include/ODNewODPointDialogImpl.h
         include/ODPropertiesDialogDef.h
         include/ODPropertiesDialogImpl.h
         include/ODPathPropertiesDialogDef.h

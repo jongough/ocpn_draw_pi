@@ -62,6 +62,7 @@
 #include "PILProp.h"
 #include "PathMan.h"
 #include "PointMan.h"
+#include "ODNewODPointDialogImpl.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
 #include "chcanv.h"
@@ -403,6 +404,8 @@ void PathManagerDialog::OnTabSwitch( wxNotebookEvent &event )
 // implementation
 PathManagerDialog::PathManagerDialog( wxWindow *parent )
 {
+    m_wParent = parent;
+    
     long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
 #ifdef __WXOSX__
     style |= wxSTAY_ON_TOP;
@@ -1551,15 +1554,32 @@ void PathManagerDialog::OnODPointToggleVisibility( wxMouseEvent &event )
 
 void PathManagerDialog::OnODPointNewClick( wxCommandEvent &event )
 {
-    ODPoint *pWP = new ODPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString,
-            wxT("") );
-    pWP->m_bIsolatedMark = true;                      // This is an isolated mark
-    pWP->SetTypeString( wxS("Boundary Point") );
-    g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pWP );
-    g_pODConfig->AddNewODPoint( pWP, -1 );    // use auto next num
-    RequestRefresh( GetOCPNCanvasWindow() );
+    ODNewODPointDialogImpl *l_pType = new ODNewODPointDialogImpl(m_wParent);
+#ifndef __WXOSX__
+    DimeWindow( l_pType );
+#endif
+    l_pType->ShowModal();
+    
+    if(l_pType->m_bOK){
+        ODPoint *pODP = NULL;
+        if(l_pType->m_iSelection == ID_ODNEWPOINTDIALOGBUTTON_BOUNDARY) {
+            BoundaryPoint *pBP = new BoundaryPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString, wxT("") );
+            pBP->m_bIsolatedMark = true;                      // This is an isolated mark
+            pODP = pBP;
+        } else {
+            TextPoint *pTP = new TextPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString, wxT("") );
+            pTP->m_bIsolatedMark = true;                      // This is an isolated mark
+            pODP = pTP;
+        }
+        g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pODP );
+        g_pODConfig->AddNewODPoint( pODP, -1 );    // use auto next num
+        UpdateODPointsListCtrl( pODP );
+        RequestRefresh( GetOCPNCanvasWindow() );
 
-    ODPointShowPropertiesDialog( pWP, GetParent() );
+        ODPointShowPropertiesDialog( pODP, GetParent() );
+    }
+    
+    //delete l_pType;
 }
 
 void PathManagerDialog::OnODPointPropertiesClick( wxCommandEvent &event )
