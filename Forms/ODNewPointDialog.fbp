@@ -153,7 +153,7 @@
                         <property name="selection">0</property>
                         <property name="show">1</property>
                         <property name="size"></property>
-                        <property name="style"></property>
+                        <property name="style">wxRA_SPECIFY_ROWS</property>
                         <property name="subclass"></property>
                         <property name="toolbar_pane">0</property>
                         <property name="tooltip"></property>
