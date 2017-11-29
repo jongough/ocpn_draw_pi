@@ -32,6 +32,7 @@
 //#include "Select.h"
 #include "nmea0183.h"
 #include "ODPoint.h"
+#include "ocpn_draw_pi.h"
 
 //----------------------------------------------------------------------------
 //   constants
@@ -98,6 +99,9 @@ class PointMan
       wxFontEnumerator  *m_pFontEnumerator;
 
       PI_ColorScheme    m_ColourScheme;
+
+      wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );
+
 protected:
 private:
       //void ProcessUserIcons( ocpnStyle::Style* style );

@@ -119,7 +119,7 @@ bool ODAPI::OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_
     else if(pFCBLC->sBoundaryState == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
     else if(pFCBLC->sBoundaryState == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
     else l_BoundaryState = ID_BOUNDARY_ANY;
-    
+
     wxString l_sGUID = g_pBoundaryMan->FindLineCrossingBoundary( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, &pFCBLC->dCrossingLon, &pFCBLC->dCrossingLat, &pFCBLC->dCrossingDistance, l_BoundaryType, l_BoundaryState );
     if(l_sGUID.length() > 0) {
         Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
@@ -128,7 +128,20 @@ bool ODAPI::OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_
         pFCBLC->sGUID = l_sGUID;
         pFCBLC->sBoundaryObjectType = wxT("Boundary");
         return true;
-    } else
-        return false;
-    
+    }
+
+    // point state is meaningless for boundary test
+    l_BoundaryState = ID_POINT_STATE_ANY;
+
+    l_sGUID = g_pODPointMan->FindLineCrossingBoundary( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, l_BoundaryType, l_BoundaryState );
+    if(l_sGUID.length() > 0) {
+        BoundaryPoint *l_boundary = dynamic_cast<BoundaryPoint *>(g_pODPointMan->FindODPointByGUID( l_sGUID ));
+        assert (l_boundary != 0);
+        pFCBLC->sName = l_boundary->GetName();
+        pFCBLC->sDescription = l_boundary->GetDescription();
+        pFCBLC->sGUID = l_sGUID;
+        pFCBLC->sBoundaryObjectType = wxT("BoundaryPoint");
+        return true;
+    }
+    return false;
 }
