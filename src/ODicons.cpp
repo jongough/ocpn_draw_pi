@@ -54,7 +54,8 @@ ODicons::ODicons()
 
 ODicons::~ODicons()
 {
-    
+    delete g_SData_Locn;
+    g_SData_Locn = NULL;
 }
 void ODicons::initialize_images(void)
 {
