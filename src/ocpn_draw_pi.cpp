@@ -386,7 +386,11 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    
+#ifdef __WXMSW__
+#ifdef _DEBUG
+    _CrtDumpMemoryLeaks(); 
+#endif    
+#endif    
 }
 
 int ocpn_draw_pi::Init(void)
@@ -729,6 +733,7 @@ bool ocpn_draw_pi::DeInit(void)
     g_pPathManagerDialog = NULL;
 
     if( g_pODToolbar ) g_pODToolbar->Destroy();
+    delete g_pODToolbar;
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
     g_pODJSON = NULL;
@@ -753,12 +758,10 @@ bool ocpn_draw_pi::DeInit(void)
     delete g_pGZMan;
     delete g_pBoundaryMan;
     delete g_pPathMan;
-#if 0
-    // XXX FIXME core dump
-    // path first/last point is inserted twice in the list
-    // but points have only one manager pointer so double freed.
     delete g_pODPointMan;
-#endif
+    delete m_pODicons;
+    delete g_pODConfig;
+
     shutdown(false);
     return true;
 }
@@ -3670,7 +3673,7 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
 
     m_pMousePIL->RebuildGUIDList();
     m_pMousePIL->AddLine( _T("Initial"), _T(""), g_dPILOffset);
-    if(g_PILDefaultNumIndexLines >=0)
+    if(g_PILDefaultNumIndexLines == 1)
         m_pMousePIL->AddLine( _T("Second"), _T(""), -g_dPILOffset, false );
 
     if(m_pMousePIL->m_iPersistenceType == ID_PERSISTENT || m_pMousePIL->m_iPersistenceType == ID_PERSISTENT_CRASH)
