@@ -102,9 +102,9 @@ protected:
 private:
       //void ProcessUserIcons( ocpnStyle::Style* style );
       void ProcessUserIcons( );
-      ODPointList    *m_pODPointList;
       wxBitmap *CreateDimBitmap(wxBitmap *pBitmap, double factor);
 
+      ODPointList    *m_pODPointList;
       wxImageList       *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
       int               m_markicon_image_list_base_count;
       wxArrayPtrVoid    *m_pIconArray;
