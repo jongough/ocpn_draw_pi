@@ -822,26 +822,14 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
 }
 
 
-#ifndef M_PI
-#define M_PI        3.1415926535897931160E0 
-#endif
-
-static const double radius = 6371007.2;
-
-static double deg2rad(double degree) { return degree*(M_PI/180.0); }
-
 // XXX FIXME 0 and 360
-static bool DistancePointLine( double pLon, double pLat, 
-            double StartLon, double StartLat, double EndLon, double EndLat, 
-            double Distance )
+bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance )
 {
    double sx, sy;
    double ex, ey;
    double px, py;
    double r = Distance;
-
-   double LineMag;
-   double U;
+   double radius = 6371007.2;
 
    sx = radius *cos(deg2rad(pLat)) * deg2rad(StartLon);
    sy = radius *deg2rad(StartLat);

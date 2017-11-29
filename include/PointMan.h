@@ -105,8 +105,10 @@ class PointMan
 protected:
 private:
       //void ProcessUserIcons( ocpnStyle::Style* style );
-      void ProcessUserIcons( );
+      void ProcessUserIcons( void );
       wxBitmap *CreateDimBitmap(wxBitmap *pBitmap, double factor);
+      double deg2rad(double degree) { return degree*(PI/180.0); };
+      bool DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance );
 
       ODPointList    *m_pODPointList;
       wxImageList       *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
