@@ -28,6 +28,8 @@ src/ODJSON.cpp
 src/ODMarkIcon.cpp
 src/ocpn_draw_pi.cpp
 src/ODNavObjectChanges.cpp
+src/ODNewODPointDialogDef.cpp
+src/ODNewODPointDialogImpl.cpp
 src/ODPropertiesDialogDef.cpp
 src/ODPropertiesDialogImpl.cpp
 src/ODPathPropertiesDialogDef.cpp
@@ -73,6 +75,8 @@ include/ODDRDialogImpl.h
 include/ODEventHandler.h
 include/ODMarkIcon.h
 include/ODNavObjectChanges.h
+include/ODNewODPointDialogDef.h
+include/ODNewODPointDialogImpl.h
 include/ODPropertiesDialogDef.h
 include/ODPropertiesDialogImpl.h
 include/ODPathPropertiesDialogDef.h

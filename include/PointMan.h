@@ -32,6 +32,7 @@
 //#include "Select.h"
 #include "nmea0183.h"
 #include "ODPoint.h"
+#include "ocpn_draw_pi.h"
 
 //----------------------------------------------------------------------------
 //   constants
@@ -98,13 +99,18 @@ class PointMan
       wxFontEnumerator  *m_pFontEnumerator;
 
       PI_ColorScheme    m_ColourScheme;
+
+      wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );
+
 protected:
 private:
       //void ProcessUserIcons( ocpnStyle::Style* style );
-      void ProcessUserIcons( );
-      ODPointList    *m_pODPointList;
+      void ProcessUserIcons( void );
       wxBitmap *CreateDimBitmap(wxBitmap *pBitmap, double factor);
+      double deg2rad(double degree) { return degree*(PI/180.0); };
+      bool DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance );
 
+      ODPointList    *m_pODPointList;
       wxImageList       *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
       int               m_markicon_image_list_base_count;
       wxArrayPtrVoid    *m_pIconArray;

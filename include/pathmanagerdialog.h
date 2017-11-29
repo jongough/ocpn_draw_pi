@@ -166,6 +166,8 @@ class PathManagerDialog : public wxDialog {
 
             int m_lastODPointItem;
             int m_lastPathItem;
+            
+            wxWindow *m_wParent;
 };
 
 #endif // _PathManagerDialog_h_
