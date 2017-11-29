@@ -157,6 +157,8 @@ PointMan::~PointMan()
 
     if( pmarkicon_image_list ) pmarkicon_image_list->RemoveAll();
     delete pmarkicon_image_list;
+    
+    delete m_pFontEnumerator;
 }
 
 bool PointMan::AddODPoint(ODPoint *prp)
