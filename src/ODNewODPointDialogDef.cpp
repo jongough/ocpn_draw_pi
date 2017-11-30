@@ -20,7 +20,7 @@ ODNewODPointDialogDef::ODNewODPointDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	wxString m_radioBoxODPointTypeChoices[] = { _("Boundary"), _("Text") };
 	int m_radioBoxODPointTypeNChoices = sizeof( m_radioBoxODPointTypeChoices ) / sizeof( wxString );
-	m_radioBoxODPointType = new wxRadioBox( this, wxID_ANY, _("Point Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxODPointTypeNChoices, m_radioBoxODPointTypeChoices, 1, 0 );
+	m_radioBoxODPointType = new wxRadioBox( this, wxID_ANY, _("Point Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxODPointTypeNChoices, m_radioBoxODPointTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxODPointType->SetSelection( 0 );
 	fgSizer4->Add( m_radioBoxODPointType, 0, wxALL, 5 );
 	

@@ -387,10 +387,15 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     // XXX FIXME get it from driver
     g_GLMinSymbolLineWidth = 1.0f;
 #endif
+    
+    m_pODicons = new ODicons();
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
+    delete m_pODicons;
+    m_pODicons = NULL;
+    
 #ifdef __WXMSW__
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks(); 
@@ -467,8 +472,6 @@ int ocpn_draw_pi::Init(void)
     g_pODSelect = new ODSelect();
     
     LoadConfig();
-    
-    m_pODicons = new ODicons();
     
     g_pODJSON = new ODJSON;
     g_pODAPI = new ODAPI;
@@ -769,8 +772,6 @@ bool ocpn_draw_pi::DeInit(void)
     g_pPathMan = NULL;
     delete g_pODPointMan;
     g_pODPointMan = NULL;
-    delete m_pODicons;
-    m_pODicons = NULL;
     delete g_pODConfig;
     g_pODConfig = NULL;
 
@@ -1219,6 +1220,7 @@ void ocpn_draw_pi::SaveConfig()
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)       
+//#if wxCHECK_VERSION(3,0,0)       
     wxSetlocale(LC_NUMERIC, "C");
 #else
     setlocale(LC_NUMERIC, "C");
