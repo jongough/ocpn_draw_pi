@@ -1016,6 +1016,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 
     SetDialogSize();
 
+    ResetGlobalLocale();
+    
     return;
 }
 
