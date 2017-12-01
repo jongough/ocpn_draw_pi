@@ -163,6 +163,8 @@ void ODDRDialogImpl::SetupDialog()
     m_textCtrlDRPointInterval->SetValue( s );
 #endif
     this->Layout();
+    
+    ResetGlobalLocale();
 }
 
 void ODDRDialogImpl::UpdateDialog( DR * dr)
@@ -190,6 +192,8 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     m_textCtrlDRPointInterval->SetValue( s );
 #endif
     this->Layout();
+    
+    ResetGlobalLocale();
     
 }
 

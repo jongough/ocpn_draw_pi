@@ -167,6 +167,8 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 #endif
     }
 
+    ResetGlobalLocale();
+    
     ::wxEndBusyCursor();
 
     return true;
@@ -179,6 +181,8 @@ bool PILProp::UpdateProperties( void )
     
     if(m_bLockUpdate) return true;
     
+    SetGlobalLocale();
+    
     if(!m_bLockPILAngle){
         if(m_pPIL->m_dEBLAngle > 180)
             s.Printf( _T("%.2f"), m_pPIL->m_dEBLAngle - 360 );
@@ -187,6 +191,8 @@ bool PILProp::UpdateProperties( void )
         
         m_textCtrlPILAngle->SetValue(s);
     }
+    
+    ResetGlobalLocale();
     
     return  true;
 }

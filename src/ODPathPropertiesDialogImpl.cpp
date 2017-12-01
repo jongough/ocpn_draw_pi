@@ -151,6 +151,8 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     Hide();
     RequestRefresh( GetOCPNCanvasWindow() );
     
+    ResetGlobalLocale();
+    
     event.Skip();
 }
 
@@ -536,6 +538,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     
     ::wxEndBusyCursor();
     
+    ResetGlobalLocale();
+    
     return true;
 }
 
@@ -642,6 +646,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     this->Layout();
     
     ::wxEndBusyCursor();
+    
+    ResetGlobalLocale();
     
     return true;
 }

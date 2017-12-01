@@ -154,6 +154,8 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     
     m_bLockUpdate = false;
     
+    ResetGlobalLocale();
+    
     return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
 }
 
