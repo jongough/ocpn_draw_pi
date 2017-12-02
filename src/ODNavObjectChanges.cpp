@@ -257,7 +257,7 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     }
     
     if(pop->m_sTypeString == wxT("Boundary Point")) {
-        BoundaryPoint *bp = dynamic_cast<BoundaryPoint *>(pop); //Non functional as it fails the assert
+        BoundaryPoint *bp = dynamic_cast<BoundaryPoint *>(pop);
         assert(bp != 0);
         child = node.append_child("opencpn:boundary_type");
         if( bp->m_bExclusionBoundaryPoint && !bp->m_bInclusionBoundaryPoint )
