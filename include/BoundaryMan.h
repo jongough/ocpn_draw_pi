@@ -51,7 +51,6 @@ class BoundaryMan : public PathMan
             double      Lat;
         };
         
-        std::list<BOUNDARYCROSSING> BoundaryCrossingList;
 };
 
 #endif // BOUNDARYMAN_H

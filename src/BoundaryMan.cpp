@@ -446,8 +446,8 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
     ODPoint *popSecond;
     wxString l_GUID = wxEmptyString;
     bool l_bCrosses;
-    
-    BoundaryCrossingList.clear();
+
+    std::list<BOUNDARYCROSSING> BoundaryCrossingList;
     
     while( boundary_node ) {
         bool    l_bNext = false;
