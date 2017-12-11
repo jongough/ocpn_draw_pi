@@ -428,12 +428,12 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
         ODPoint *pr;
         while( node ) {
-            if(pprog) {
+            if(pprog && !(ic % 200)) {
                 wxString msg;
                 msg.Printf(_T("%d/%d"), ic, count);
                 pprog->Update( ic, msg );
-                ic++;
             }
+            ic++;
 
             pr = node->GetData();
 
