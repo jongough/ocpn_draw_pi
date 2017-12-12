@@ -38,6 +38,7 @@
 #include <wx/stdpaths.h>
 #endif
 
+#include <map>
 
 extern wxString         *g_pData;
 extern int              g_LayerIdx;
@@ -371,6 +372,7 @@ bool ODConfig::LoadLayers(wxString &path)
     return true;
 }
 
+
 void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 {
     wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, wxT ( "" ),
@@ -407,6 +409,21 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 
         //Points
         int ic = 0;
+        // build a temporary O(1)
+        std::map<ODPoint *, ODPoint *>   tp_hash;
+        wxPathListNode *node1 = g_pPathList->GetFirst();
+        while( node1 ) {
+            ODPath *pPath = node1->GetData();
+            ODPointList *pODPointList = pPath->m_pODPointList;
+            wxODPointListNode *node2 = pODPointList->GetFirst();
+            ODPoint *prp;
+            while( node2 ) {
+                prp = node2->GetData();
+                tp_hash[prp] = prp;
+                node2 = node2->GetNext();
+            }
+            node1 = node1->GetNext();
+        }
 
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
         ODPoint *pr;
@@ -428,14 +445,14 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
             if( pr->m_bIsInLayer && !blayer )
                 b_add = false;
             if( b_add) {
-                if( pr->m_bKeepXPath || !ODPointIsInPathList( pr ) )
+                if( pr->m_bKeepXPath || tp_hash.find( pr ) == tp_hash.end( ) )
                     pgpx->AddGPXODPoint( pr);
             }
 
             node = node->GetNext();
         }
         //Paths
-        wxPathListNode *node1 = g_pPathList->GetFirst();
+        node1 = g_pPathList->GetFirst();
         while( node1 ) {
             ODPath *pPath = node1->GetData();
 
