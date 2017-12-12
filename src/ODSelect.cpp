@@ -121,20 +121,15 @@ bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
 
     while( node ) {
         pFindSel = node->GetData();
+        wxSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT || pFindSel->m_seltype == SELTYPE_PIL ) {
 
             if( (ODPath *) pFindSel->m_pData3 == pr ) {
                 delete pFindSel;
                 pSelectList->DeleteNode( node );   //delete node;
-
-                node = pSelectList->GetFirst();     // reset the top node
-
-                goto got_next_outer_node;
             }
         }
-
-        node = node->GetNext();
-        got_next_outer_node: continue;
+        node = next;
     }
 
     return true;
@@ -149,20 +144,15 @@ bool ODSelect::DeleteSelectablePathSegment( ODPath *pr, int iUserData )
 
     while( node ) {
         pFindSel = node->GetData();
+        wxSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SELTYPE_PIL ) {
 
             if( (ODPath *) pFindSel->m_pData3 == pr && pFindSel->GetUserData() == iUserData) {
                 delete pFindSel;
                 pSelectList->DeleteNode( node );   //delete node;
-
-                node = pSelectList->GetFirst();     // reset the top node
-
-                goto got_next_outer_node;
             }
         }
-
-        node = node->GetNext();
-        got_next_outer_node: continue;
+        node = next;
     }
 
     return true;
@@ -178,6 +168,7 @@ bool ODSelect::DeleteAllSelectableODPoints( ODPath *pr )
 
     while( node ) {
         pFindSel = node->GetData();
+        wxSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SELTYPE_ODPOINT ) {
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
@@ -190,17 +181,13 @@ bool ODSelect::DeleteAllSelectableODPoints( ODPath *pr )
                     delete pFindSel;
                     pSelectList->DeleteNode( node );   //delete node;
                     prp->SetSelectNode( NULL );
-                    
-                    node = pSelectList->GetFirst();
-
                     goto got_next_outer_node;
                 }
                 pnode = pnode->GetNext();
             }
         }
-
-        node = node->GetNext();
-got_next_outer_node: continue;
+got_next_outer_node:
+        node = next;
     }
     return true;
 }
@@ -347,6 +334,7 @@ bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
 
     while( node ) {
         pFindSel = node->GetData();
+        wxSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SeltypeToDelete ) {
             delete node;
             
@@ -355,13 +343,9 @@ bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
                 prp->SetSelectNode( NULL );
             }
             delete pFindSel;
-            
-            node = pSelectList->GetFirst();
-            goto got_next_node;
         }
 
-        node = node->GetNext();
-        got_next_node: continue;
+        node = next;
     }
     return true;
 }
