@@ -86,6 +86,9 @@ ODPointPropertiesDialog( parent )
 
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
+    m_bLatitudeLocked = false;
+    m_bLongitudeLocked = false;
+    m_bArrivalRadiusLocked = false;
     
 #if wxCHECK_VERSION(3,0,0)
     SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
@@ -500,8 +503,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         m_text_lat = toSDMM_PlugIn( 1, m_pODPoint->m_lat );
         m_text_lon = toSDMM_PlugIn( 2, m_pODPoint->m_lon );
-        m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
-        m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
+        if(!m_bLatitudeLocked) m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
+        if(!m_bLongitudeLocked) m_textLongitude->SetValue( toSDMM_PlugIn( 2, m_pODPoint->m_lon ) );
         m_lat_save = m_pODPoint->m_lat;
         m_lon_save = m_pODPoint->m_lon;
 

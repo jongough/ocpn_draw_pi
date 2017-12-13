@@ -121,6 +121,13 @@ protected:
     void OnCopyPasteLatLon( wxCommandEvent& event );
     void OnButtonClickFonts( wxCommandEvent& event );
     void OnRadioBoxPointType( wxCommandEvent& event );
+    void OnEnterLatitude( wxFocusEvent& event ) {m_bLatitudeLocked = true;};
+    void OnLeaveLatitude( wxFocusEvent& event ) {m_bLatitudeLocked = false;};
+    void OnEnterLongitude( wxFocusEvent& event ) {m_bLongitudeLocked = true;};
+    void OnLeaveLongitude( wxFocusEvent& event ) {m_bLongitudeLocked = false;};
+    void OnEnterArrivalRadius( wxFocusEvent& event ) {m_bArrivalRadiusLocked = true;};
+    void OnLeaveArrivalRadius( wxFocusEvent& event ) {m_bArrivalRadiusLocked = false;};
+    
     void SaveChanges();
     
     wxObject*               m_contextObject;
@@ -152,6 +159,9 @@ private:
       wxFontDialog  *m_pfdDialog;
       double        m_dODPointRangeRingSteps;
       double        m_dODPointArrivalRadius;
+      bool          m_bLatitudeLocked;
+      bool          m_bLongitudeLocked;
+      bool          m_bArrivalRadiusLocked;
 };
 
 #endif // __ODPointPropertiesImpl__

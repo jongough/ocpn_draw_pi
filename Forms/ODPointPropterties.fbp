@@ -17,7 +17,7 @@
         <property name="internationalize">1</property>
         <property name="name">ODPointPropertiesImpl</property>
         <property name="namespace"></property>
-        <property name="path">/data/public/working area/opencpn/remote/jongough/plugins/ocpn_draw_pi/Forms</property>
+        <property name="path">/home/jon/opencpn/odraw/Forms</property>
         <property name="precompiled_header"></property>
         <property name="relative_path">1</property>
         <property name="skip_lua_events">1</property>
@@ -178,7 +178,7 @@
                         <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">Basic</property>
-                            <property name="select">1</property>
+                            <property name="select">0</property>
                             <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
@@ -477,7 +477,7 @@
                                                             <property name="max_size"></property>
                                                             <property name="maximize_button">0</property>
                                                             <property name="maximum_size"></property>
-                                                            <property name="maxlength"></property>
+                                                            <property name="maxlength">0</property>
                                                             <property name="min_size"></property>
                                                             <property name="minimize_button">0</property>
                                                             <property name="minimum_size"></property>
@@ -984,7 +984,7 @@
                                                             <property name="resize">Resizable</property>
                                                             <property name="show">1</property>
                                                             <property name="size"></property>
-                                                            <property name="style"></property>
+                                                            <property name="style">wxTE_PROCESS_ENTER</property>
                                                             <property name="subclass"></property>
                                                             <property name="toolbar_pane">0</property>
                                                             <property name="tooltip"></property>
@@ -1001,7 +1001,7 @@
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
                                                             <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
+                                                            <event name="OnKillFocus">OnLeaveLatitude</event>
                                                             <event name="OnLeaveWindow"></event>
                                                             <event name="OnLeftDClick"></event>
                                                             <event name="OnLeftDown"></event>
@@ -1016,7 +1016,7 @@
                                                             <event name="OnRightDClick"></event>
                                                             <event name="OnRightDown">onRightClick</event>
                                                             <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
+                                                            <event name="OnSetFocus">OnEnterLatitude</event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnText"></event>
                                                             <event name="OnTextEnter">OnPositionCtlUpdated</event>
@@ -1158,7 +1158,7 @@
                                                             <property name="resize">Resizable</property>
                                                             <property name="show">1</property>
                                                             <property name="size"></property>
-                                                            <property name="style"></property>
+                                                            <property name="style">wxTE_PROCESS_ENTER</property>
                                                             <property name="subclass"></property>
                                                             <property name="toolbar_pane">0</property>
                                                             <property name="tooltip"></property>
@@ -1175,7 +1175,7 @@
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
                                                             <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
+                                                            <event name="OnKillFocus">OnLeaveLongitude</event>
                                                             <event name="OnLeaveWindow"></event>
                                                             <event name="OnLeftDClick"></event>
                                                             <event name="OnLeftDown"></event>
@@ -1190,7 +1190,7 @@
                                                             <event name="OnRightDClick"></event>
                                                             <event name="OnRightDown">OnRightClick</event>
                                                             <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
+                                                            <event name="OnSetFocus">OnEnterLongitude</event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnText"></event>
                                                             <event name="OnTextEnter">OnPositionCtlUpdated</event>
@@ -1343,7 +1343,7 @@
                                                             <property name="resize">Resizable</property>
                                                             <property name="show">1</property>
                                                             <property name="size"></property>
-                                                            <property name="style"></property>
+                                                            <property name="style">wxTE_PROCESS_ENTER</property>
                                                             <property name="subclass"></property>
                                                             <property name="toolbar_pane">0</property>
                                                             <property name="tooltip"></property>
@@ -1360,7 +1360,7 @@
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
                                                             <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus"></event>
+                                                            <event name="OnKillFocus">OnLeaveArrivalRadius</event>
                                                             <event name="OnLeaveWindow"></event>
                                                             <event name="OnLeftDClick"></event>
                                                             <event name="OnLeftDown"></event>
@@ -1375,7 +1375,7 @@
                                                             <event name="OnRightDClick"></event>
                                                             <event name="OnRightDown"></event>
                                                             <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus"></event>
+                                                            <event name="OnSetFocus">OnEnterArrivalRadius</event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnText"></event>
                                                             <event name="OnTextEnter">OnArrivalRadiusChange</event>
@@ -3179,7 +3179,7 @@
                                                                     <property name="max_size"></property>
                                                                     <property name="maximize_button">0</property>
                                                                     <property name="maximum_size"></property>
-                                                                    <property name="maxlength"></property>
+                                                                    <property name="maxlength">0</property>
                                                                     <property name="min_size"></property>
                                                                     <property name="minimize_button">0</property>
                                                                     <property name="minimum_size">-1,60</property>
@@ -3247,8 +3247,8 @@
                         <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">Display text</property>
-                            <property name="select">0</property>
-                            <object class="wxPanel" expanded="0">
+                            <property name="select">1</property>
+                            <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>
@@ -3322,7 +3322,7 @@
                                 <event name="OnSetFocus"></event>
                                 <event name="OnSize"></event>
                                 <event name="OnUpdateUI"></event>
-                                <object class="wxBoxSizer" expanded="0">
+                                <object class="wxBoxSizer" expanded="1">
                                     <property name="minimum_size"></property>
                                     <property name="name">m_bSizerDisplayText</property>
                                     <property name="orient">wxVERTICAL</property>
@@ -3445,7 +3445,7 @@
                                             <property name="max_size"></property>
                                             <property name="maximize_button">0</property>
                                             <property name="maximum_size"></property>
-                                            <property name="maxlength"></property>
+                                            <property name="maxlength">0</property>
                                             <property name="min_size"></property>
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size"></property>
