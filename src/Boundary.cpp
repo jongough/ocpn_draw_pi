@@ -22,6 +22,7 @@
  **************************************************************************/
 
 #include "Boundary.h"
+#include "BoundaryPoint.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 #include "cutil.h"
@@ -66,6 +67,8 @@ extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern unsigned int g_uiFillTransparency;
 extern int          g_iInclusionBoundarySize;
 extern bool         g_bBoundaryODPointsVisible;
+extern wxString     g_sODPointIconName;
+
 
 Boundary::Boundary() : ODPath()
 {
@@ -418,8 +421,27 @@ void Boundary::MoveAllPoints( double inc_lat, double inc_lon )
 
 ODPoint *Boundary::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
-    ODPoint *newpoint = ODPath::InsertPointAfter( pOP, lat, lon, bRenamePoints );
+    int nOP = m_pODPointList->IndexOf( pOP );
+    if( nOP >= m_nPoints - 1 )
+        return NULL;
+    nOP++;
+    
+    BoundaryPoint *newpoint = new BoundaryPoint( lat, lon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
+    newpoint->m_bIsInPath = true;
+    newpoint->m_bDynamicName = true;
+    newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
+    
+    m_pODPointList->Insert( nOP, newpoint );
+    
+    ODPointGUIDList.Insert( pOP->m_GUID, nOP );
+    
+    m_nPoints++;
+    
+    if( bRenamePoints ) RenameODPoints();
+    
+    FinalizeForRendering();
+    UpdateSegmentDistances();
     
     return ( newpoint );
 }
