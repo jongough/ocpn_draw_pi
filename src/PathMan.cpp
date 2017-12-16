@@ -277,7 +277,6 @@ void PathMan::DeleteAllPaths( void )
         }
 
 //        g_pODConfig->m_bSkipChangeSetUpdate = true;
-        g_pODConfig->DeleteConfigPath( ppath );
         DeletePath( ppath );
         node = g_pPathList->GetFirst();                   // Path
 //        g_pODConfig->m_bSkipChangeSetUpdate = false;
