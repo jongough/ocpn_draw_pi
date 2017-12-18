@@ -658,6 +658,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
             pop = dynamic_cast<BoundaryPoint *>(node2->GetData());
         else 
             pop = node2->GetData();
+        assert(pop != 0);
             
         GPXCreateODPoint(node.append_child("opencpn:ODPoint"), pop, OPT_OCPNPOINT);
             
