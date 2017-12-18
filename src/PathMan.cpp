@@ -148,8 +148,9 @@ bool PathMan::DeletePath( ODPath *pPath )
         if(pPath->m_sTypeString == wxT("PIL")) g_pPILList->DeleteObject( (PIL *)pPath );
 
         // walk the path, tentatively deleting/marking points used only by this route
-        wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
+        wxODPointListNode *pnode = pPath->m_pODPointList->GetFirst();
         while( pnode ) {
+            wxODPointListNode *next = pnode->GetNext();
             ODPoint *prp = pnode->GetData();
 
             // check all other paths to see if this point appears in any other route
@@ -171,7 +172,6 @@ bool PathMan::DeletePath( ODPath *pPath )
                     }
 
                     if(prp->m_ODPointName == wxT("Boat") && pPath->m_sTypeString == wxT("EBL") ) g_ocpn_draw_pi->m_pEBLBoatPoint = NULL;
-                    pnode = NULL;
                     delete prp;
                 } else {
                     prp->m_bDynamicName = false;
@@ -180,9 +180,7 @@ bool PathMan::DeletePath( ODPath *pPath )
                 }
 
             }
-            if( pnode ) pnode = pnode->GetNext();
-            else
-                pnode = pPath->m_pODPointList->GetFirst();                // restart the list
+            pnode = next;
         }
 
         delete pPath;
