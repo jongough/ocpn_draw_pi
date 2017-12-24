@@ -437,11 +437,6 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
-        wxImage scaled_image = pbm->ConvertToImage();
-        int new_width = pbm->GetWidth() * m_fIconScaleFactor;
-        int new_height = pbm->GetHeight() * m_fIconScaleFactor;
-        m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
-
         dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
         // on MSW, the dc Bounding box is not updated on DrawBitmap() method.
         // Do it explicitely here for all platforms.
