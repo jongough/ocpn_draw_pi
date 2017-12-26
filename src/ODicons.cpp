@@ -242,26 +242,26 @@ bool ODicons::ScaleIcons()
     //m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
     //m_p_bm_ocpn_draw_grey_pi = ScaleIcon( m_p_svgd_ocpn_draw_grey_pi, m_p_img_ocpn_draw_grey_pi, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_boundary = ScaleIcon( m_s_ocpn_draw_boundary, m_dScaleFactor );
-    m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_s_ocpn_draw_boundary_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_boundary = ScaleIcon( LoadSVG(m_s_ocpn_draw_boundary), m_dScaleFactor );
+    m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_boundary_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_point = ScaleIcon( m_s_ocpn_draw_point, m_dScaleFactor );
-    m_p_bm_ocpn_draw_point_grey = ScaleIcon( m_s_ocpn_draw_point_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_point = ScaleIcon( LoadSVG(m_s_ocpn_draw_point), m_dScaleFactor );
+    m_p_bm_ocpn_draw_point_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_point_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_textpoint = ScaleIcon( m_s_ocpn_draw_textpoint,  m_dScaleFactor );
-    m_p_bm_ocpn_draw_textpoint_grey = ScaleIcon( m_s_ocpn_draw_textpoint_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_textpoint = ScaleIcon( LoadSVG(m_s_ocpn_draw_textpoint),  m_dScaleFactor );
+    m_p_bm_ocpn_draw_textpoint_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_textpoint_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_ebl = ScaleIcon( m_s_ocpn_draw_ebl, m_dScaleFactor );
-    m_p_bm_ocpn_draw_ebl_grey = ScaleIcon( m_s_ocpn_draw_ebl_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_ebl = ScaleIcon( LoadSVG(m_s_ocpn_draw_ebl), m_dScaleFactor );
+    m_p_bm_ocpn_draw_ebl_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_ebl_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_dr = ScaleIcon( m_s_ocpn_draw_dr, m_dScaleFactor );
-    m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_s_ocpn_draw_dr_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_dr = ScaleIcon( LoadSVG(m_s_ocpn_draw_dr), m_dScaleFactor );
+    m_p_bm_ocpn_draw_dr_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_dr_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_gz = ScaleIcon( m_s_ocpn_draw_gz, m_dScaleFactor );
-    m_p_bm_ocpn_draw_gz_grey = ScaleIcon( m_s_ocpn_draw_gz_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_gz = ScaleIcon( LoadSVG(m_s_ocpn_draw_gz), m_dScaleFactor );
+    m_p_bm_ocpn_draw_gz_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_gz_grey), m_dScaleFactor );
 
-    m_p_bm_ocpn_draw_pil = ScaleIcon( m_s_ocpn_draw_pil, m_dScaleFactor );
-    m_p_bm_ocpn_draw_pil_grey = ScaleIcon( m_s_ocpn_draw_pil_grey, m_dScaleFactor );
+    m_p_bm_ocpn_draw_pil = ScaleIcon( LoadSVG(m_s_ocpn_draw_pil), m_dScaleFactor );
+    m_p_bm_ocpn_draw_pil_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_pil_grey), m_dScaleFactor );
 #else
     m_p_bm_ocpn_draw_boundary = ScaleIcon( m_p_bm_ocpn_draw_boundary, m_dScaleFactor );
     m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_p_bm_ocpn_draw_boundary_grey, m_dScaleFactor );
