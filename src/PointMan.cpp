@@ -375,8 +375,6 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
         pmarkicon_image_list->Add( bmp );
     }
         
-        
-        
     return pmarkicon_image_list;
 }
 
@@ -663,10 +661,13 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
         ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->picon_bitmap == pbm ) break;
+        if( pmi->picon_bitmap_RGB == pbm ) break;
+        if( pmi->picon_bitmap_Day == pbm ) break;
+        if( pmi->picon_bitmap_Dusk == pbm ) break;
+        if( pmi->picon_bitmap_Night == pbm) break;
     }
-    
+
     return i + m_markicon_image_list_base_count;        // index of "X-ed out" icon in the image list
-    
 }
 
 ODPoint *PointMan::FindODPointByGUID(const wxString &guid)
