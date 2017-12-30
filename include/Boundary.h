@@ -34,6 +34,7 @@ class Boundary : public ODPath
         void Draw( ODDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void DeletePoint( ODPoint *op, bool bRenamePoints );
+        void SetColours(ODPath * );
         void SetActiveColours( void );
         void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB );
         void CreateColourSchemes( void );

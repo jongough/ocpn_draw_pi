@@ -906,14 +906,11 @@ void ODPath::SetVisible( bool visible, bool includeODPoints )
 {
     m_bVisible = visible;
 
-    if ( !includeODPoints )
-        return;
-
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *rp;
     while( node ) {
         rp = node->GetData();
-        if ( rp->m_bKeepXPath )
+        if ( !rp->m_bKeepXPath  || includeODPoints)
         {
             rp->SetVisible( visible );
         }
@@ -1221,4 +1218,10 @@ void ODPath::SetPointVisibility()
         pOp->SetVisible( m_bODPointsVisible );
     }   
     
+}
+
+void ODPath::SetColours( ODPath *pPath )
+{
+    m_wxcActiveLineColour = pPath->m_wxcActiveLineColour; 
+    m_wxcInActiveLineColour = pPath->m_wxcInActiveLineColour;
 }
