@@ -1353,7 +1353,7 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
 
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
-    int index = 0;
+    long index = 0;
     while( node ) {
         ODPoint *op = node->GetData();
         if( op && op->IsListed() ) {
@@ -1367,7 +1367,7 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
             wxListItem li;
             li.SetId( index );
             li.SetImage( op->IsVisible() ? g_pODPointMan->GetIconIndex( op->GetIconBitmap() )
-                                    : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
+                                   : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
             li.SetData( op );
             li.SetText( _T("") );
             long idx = m_pODPointListCtrl->InsertItem( li );
@@ -1536,14 +1536,14 @@ void PathManagerDialog::OnODPointToggleVisibility( wxMouseEvent &event )
     //    Clicking Visibility column?
     if( clicked_index > -1 && event.GetX() < m_pODPointListCtrl->GetColumnWidth( colPATHVISIBLE ) ) {
         // Process the clicked item
-        ODPoint *wp = (ODPoint *) m_pODPointListCtrl->GetItemData( clicked_index );
+        ODPoint *pODP = (ODPoint *) m_pODPointListCtrl->GetItemData( clicked_index );
 
-        wp->SetVisible( !wp->IsVisible() );
+        pODP->SetVisible( !pODP->IsVisible() );
         m_pODPointListCtrl->SetItemImage( clicked_index,
-                                      wp->IsVisible() ? g_pODPointMan->GetIconIndex( wp->GetIconBitmap() )
-                                                      : g_pODPointMan->GetXIconIndex( wp->GetIconBitmap() ) );
+                                      pODP->IsVisible() ? g_pODPointMan->GetIconIndex( pODP->GetIconBitmap() )
+                                                      : g_pODPointMan->GetXIconIndex( pODP->GetIconBitmap() ) );
 
-        g_pODConfig->UpdateODPoint( wp );
+        g_pODConfig->UpdateODPoint( pODP );
 
         RequestRefresh( GetOCPNCanvasWindow() );
     }
