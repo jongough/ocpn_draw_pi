@@ -72,6 +72,7 @@ extern bool                 g_bInclusionBoundary;
 extern int                  g_iInclusionBoundarySize;
 extern ODEventHandler       *g_ODEventHandler;
 extern PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
+extern PI_ColorScheme       g_global_color_scheme;
 
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
@@ -668,6 +669,7 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         
         m_pPath->m_wxcActiveLineColour = m_colourPickerLineColour->GetColour();
         m_pPath->CreateColourSchemes();
+        m_pPath->SetColourScheme(g_global_color_scheme);
         m_pPath->SetActiveColours();
         m_pPath->m_style = ::StyleValues[m_choiceLineStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_choiceLineWidth->GetSelection()];

@@ -401,7 +401,6 @@ void Boundary::SetActiveColours( void )
     
     if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcSchemeActiveFillColour;
     else m_fillcol = m_wxcSchemeInActiveFillColour;
-        
 }
 
 void Boundary::MoveAllPoints( double inc_lat, double inc_lon )
@@ -446,3 +445,11 @@ ODPoint *Boundary::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool 
     return ( newpoint );
 }
 
+void Boundary::SetColours( ODPath * pPath )
+{
+    Boundary *pBoundary = dynamic_cast<Boundary *>(pPath);
+    assert(pBoundary != 0);
+    ODPath::SetColours(pBoundary);
+    m_wxcActiveFillColour = pBoundary->m_wxcActiveFillColour;
+    m_wxcInActiveFillColour = pBoundary->m_wxcInActiveFillColour;
+}
