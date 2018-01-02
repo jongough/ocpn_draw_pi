@@ -44,6 +44,7 @@ class ODPropertiesDialogImpl : public ODPropertiesDialogDef
 {
 protected:
     // Handlers for ODPropertiesForm events.
+    void OnClickConfigFileEntries( wxCommandEvent& event );
     void OnODPointComboboxSelected( wxCommandEvent& event );
     void OnTextPointIconComboboxSelected( wxCommandEvent& event );
     void OnEBLEndIconComboboxSelected( wxCommandEvent& event );
@@ -93,7 +94,6 @@ private:
     int         m_iCOGValidator;
     wxColour    m_cRed;
     wxColour    m_cGreen;
-    
 };
 
 #endif // __ODPropertiesDialogImpl__

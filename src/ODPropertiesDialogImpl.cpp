@@ -1014,8 +1014,13 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_textCtrlDRPointInterval->SetValue( wxString::Format( _T("%.3f"), g_dDRPointInterval ) );
     
 
+    if(g_ocpn_draw_pi->m_bRecreateConfig) {
+        m_buttonConfigFileEntries->SetLabel(_("No"));
+        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (Yes)");
+    }
+    
     SetDialogSize();
-
+    
     ResetGlobalLocale();
     
     return;
@@ -1052,4 +1057,17 @@ void ODPropertiesDialogImpl::SetTableCellBackgroundColours()
     m_gridODWDInteractions->SetCellBackgroundColour(3, 4, wxGreen);
     
     return;
+}
+
+void ODPropertiesDialogImpl::OnClickConfigFileEntries( wxCommandEvent& event )
+{
+    if(!g_ocpn_draw_pi->m_bRecreateConfig) {
+        g_ocpn_draw_pi->m_bRecreateConfig = true;
+        m_buttonConfigFileEntries->SetLabel(_("No"));
+        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (Yes)");
+    } else {
+        g_ocpn_draw_pi->m_bRecreateConfig = false;
+        m_buttonConfigFileEntries->SetLabel(_("Yes"));
+        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (No)");
+    }
 }
