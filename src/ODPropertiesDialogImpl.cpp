@@ -1053,3 +1053,8 @@ void ODPropertiesDialogImpl::SetTableCellBackgroundColours()
     
     return;
 }
+
+void ODPropertiesDialogImpl::OnClickConfigFileEntries( wxCommandEvent& event )
+{
+    g_ocpn_draw_pi->RecreateConfig();
+}

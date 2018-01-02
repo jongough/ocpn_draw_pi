@@ -76,6 +76,9 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_choiceToolbar->SetSelection( 1 );
 	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
 	
+	m_buttonConfigFileEntries = new wxButton( m_panelGeneral, wxID_ANY, _("&Recreate Config File Entries"), wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer4->Add( m_buttonConfigFileEntries, 0, wxALL, 5 );
+	
 	
 	bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
 	
@@ -1400,6 +1403,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	this->Layout();
 	
 	// Connect Events
+	m_buttonConfigFileEntries->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
@@ -1413,6 +1417,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
+	m_buttonConfigFileEntries->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );

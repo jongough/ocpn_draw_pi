@@ -21,6 +21,7 @@
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
+#include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/bitmap.h>
@@ -30,7 +31,6 @@
 #include <wx/radiobox.h>
 #include <wx/textctrl.h>
 #include <wx/bmpcbox.h>
-#include <wx/button.h>
 #include <wx/grid.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
@@ -61,6 +61,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextInitialEdgePan;
 		wxSlider* m_sliderInitialEdgePan;
 		wxStaticText* m_staticTextToolbar;
+		wxButton* m_buttonConfigFileEntries;
 		wxPanel* m_panelBoundary;
 		wxStaticText* m_staticTextActiveBoundayLineColour;
 		wxColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
@@ -281,6 +282,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonApply;
 		
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClickConfigFileEntries( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
