@@ -61,6 +61,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextInitialEdgePan;
 		wxSlider* m_sliderInitialEdgePan;
 		wxStaticText* m_staticTextToolbar;
+		wxStaticText* m_staticTextConfigFileEntriesMsg;
 		wxButton* m_buttonConfigFileEntries;
 		wxPanel* m_panelBoundary;
 		wxStaticText* m_staticTextActiveBoundayLineColour;
@@ -296,7 +297,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choiceToolbar;
 		wxGrid* m_gridODWDInteractions;
 		
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,607 ), long style = wxDEFAULT_DIALOG_STYLE ); 
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,607 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP ); 
 		~ODPropertiesDialogDef();
 	
 };

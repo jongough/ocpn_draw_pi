@@ -389,6 +389,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 #endif
     
     m_pODicons = new ODicons();
+    
+    m_bRecreateConfig = false;
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
@@ -446,6 +448,7 @@ int ocpn_draw_pi::Init(void)
     g_pfFix.valid = false;
     g_iLocaleDepth = 0;
     g_ODlocale = NULL;
+    m_bRecreateConfig = false;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -891,7 +894,6 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     
     delete g_pOCPNDrawPropDialog;
     g_pOCPNDrawPropDialog = NULL;
-    
 }
 
 void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
@@ -1215,14 +1217,6 @@ void ocpn_draw_pi::OnToolbarToolUpCallback(int id)
     m_pODicons->SetScaleFactor();
     return;
 }
-void ocpn_draw_pi::RecreateConfig()
-{
-    wxFileConfig *pConf = m_pODConfig;
-    if(pConf) {
-        pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
-        pConf->DeleteGroup( "/Settings/ocpn_draw_pi" );
-    }
-}
 void ocpn_draw_pi::SaveConfig()
 {
 #ifndef __WXMSW__
@@ -1237,144 +1231,147 @@ void ocpn_draw_pi::SaveConfig()
     
     wxFileConfig *pConf = m_pODConfig;
     
-    if(pConf)
-    {
+    if(pConf) {
         pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
-        pConf->Write( wxS( "DefaultActivePathLineColour" ), g_colourActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_colourInActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_colourInActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_colourActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        int l_BoundaryType;
-        if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
-        else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
-        else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
-        else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
-        pConf->Write( wxS( "DefaultBoundaryODPointsVisible"), g_bBoundaryODPointsVisible );
-        pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
-        long l_longFillTransparency = g_uiFillTransparency;
-        pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
-        pConf->Write( wxS( "DefaultInclusionBoundarySize" ), g_iInclusionBoundarySize );
-        pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultGZFirstIcon" ), g_sGZFirstIconName );
-        pConf->Write( wxS( "DefaultGZSecondIcon" ), g_sGZSecondIconName );
-        pConf->Write( wxS( "DefaultActiveGZLineColour" ), g_colourActiveGZLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultInActiveGZLineColour" ), g_colourInActiveGZLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultActiveGZFillColour" ), g_colourActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultInActiveGZFillColour" ), g_colourInActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultGZLineWidth" ), g_GZLineWidth );
-        pConf->Write( wxS( "DefaultGZLineStyle" ), g_GZLineStyle );
-        long l_longGZFillTransparency = g_uiGZFillTransparency;
-        pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
-        pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
-        pConf->Write( wxS( "DefaultGZMaintainWith" ), g_iGZMaintainWith );
-        pConf->Write( wxS( "DefaultGZPersistenceType" ), g_iGZPersistenceType );
-        pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
-        pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
-        pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
-        pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
-        pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
-        pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
-        pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
-        pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
-        pConf->Write( wxS( "DefaultEBLAlwaysShowInfo" ), g_bEBLAlwaysShowInfo );
-        pConf->Write( wxS( "DefaultEBLPerpLine" ), g_bEBLPerpLine );
-        pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
-        pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
-        pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
-        pConf->Write( wxS( "DefaultEBLMaintainWith" ), g_iEBLMaintainWith );
-        pConf->Write( wxS( "DefaultPILStartIcon" ), g_sPILStartIconName );
-        pConf->Write( wxS( "DefaultPILEndIcon" ), g_sPILEndIconName );
-        pConf->Write( wxS( "DefaultPILActiveCentreLineColour" ), g_colourPILActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILInActiveCentreLineColour" ), g_colourPILInActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILActiveOffsetLine1Colour" ), g_colourPILActiveOffsetLine1Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILInActiveOffsetLine1Colour" ), g_colourPILInActiveOffsetLine1Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILActiveOffsetLine2Colour" ), g_colourPILActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILInActiveOffsetLine2Colour" ), g_colourPILInActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultPILCentreLineWidth" ), g_PILCentreLineWidth );
-        pConf->Write( wxS( "DefaultPILCentreLineStyle" ), g_PILCentreLineStyle );
-        pConf->Write( wxS( "DefaultPILOffsetLine1Width" ), g_PILOffsetLine1Width );
-        pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), g_PILOffsetLine1Style );
-        pConf->Write( wxS( "DefaultPILOffsetLine2Width" ), g_PILOffsetLine2Width );
-        pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), g_PILOffsetLine2Style );
-        pConf->Write( wxS( "DefaultPILPersistenceType" ), g_iPILPersistenceType );
-        pConf->Write( wxS( "DefaultPILNumIndexLines" ), g_PILDefaultNumIndexLines );
-        pConf->Write( wxS( "DefaultPILOffset"), g_dPILOffset );
-        pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
-        pConf->Write( wxS( "DefaultShowDRPointRangeRings"), g_bDRPointShowRangeRings );
-        pConf->Write( wxS( "DefaultDRPointRangeRingsNumber" ), g_iDRPointRangeRingsNumber );
-        pConf->Write( wxS( "DefaultDRPointRangeRingsStep" ), g_fDRPointRangeRingsStep );
-        pConf->Write( wxS( "DefaultDRPointRangeRingsStepUnits" ), g_iDRPointRangeRingsStepUnits );
-        pConf->Write( wxS( "DefaultDRPointRangeRingsColour" ), g_colourDRPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX) );
-        pConf->Write( wxS( "DefaultDRPointRangeRingLineWidth" ), g_iDRPointRangeRingLineWidth );
-        pConf->Write( wxS( "DefaultDRPointRangeRingLineStyle" ), g_iDRPointRangeRingLineStyle );
-        pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultInActiveDRLineColour" ), g_colourInActiveDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
-        pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
-        pConf->Write( wxS( "DefaultDRSOG" ), g_dDRSOG );
-        pConf->Write( wxS( "DefaultDRCOG" ), g_iDRCOG );
-        pConf->Write( wxS( "DefaultDRLength" ), g_dDRLength );
-        pConf->Write( wxS( "DefaultDRPointInterval" ), g_dDRPointInterval );
-        pConf->Write( wxS( "DefaultDRLengthType" ), g_iDRLengthType );
-        pConf->Write( wxS( "DefaultDRIntervalType" ), g_iDRIntervalType );
-        pConf->Write( wxS( "DefaultDRDistanceUnits" ), g_iDRDistanceUnits );
-        pConf->Write( wxS( "DefaultDRTimeUnits" ), g_iDRTimeUnits );
-        pConf->Write( wxS( "DefaultDRPersistenceType" ), g_iDRPersistenceType );
-        pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
-        pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
-        pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
-        pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
-        pConf->Write( wxS( "DefaultODPointIcon" ), g_sODPointIconName );
-        pConf->Write( wxS( "ODPointRangeRingsNumber" ), g_iODPointRangeRingsNumber );
-        pConf->Write( wxS( "ODPointRangeRingsStep" ), g_fODPointRangeRingsStep );
-        pConf->Write( wxS( "ODPointRangeRingsStepUnits" ), g_iODPointRangeRingsStepUnits );
-        pConf->Write( wxS( "ODPointRangeRingsColour" ), g_colourODPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        long l_longBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
-        pConf->Write( wxS( "DefaultBoundaryPointFillTransparency" ), l_longBoundaryPointFillTransparency );
-        pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), g_iBoundaryPointRangeRingLineWidth );
-        pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
-        pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
-        pConf->Write( wxS( "ShowMag" ), g_bShowMag );
-        pConf->Write( wxS( "AllowLeftDrag" ), g_bAllowLeftDrag );
-        pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
-        pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
-        pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
-        pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
-        pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
-        pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
-        pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
-        pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
-        pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
-        pConf->Write( wxS( "DefaultTextPointIcon" ), g_sTextPointIconName );
-        pConf->Write( wxS( "DefaultTextColour" ), g_colourDefaultTextColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultTextBackgroundColour" ), g_colourDefaultTextBackgroundColour.GetAsString( wxC2S_CSS_SYNTAX ) );
-        pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
-        pConf->Write( wxS( "DefaultTextPosition" ), g_iTextPosition );
-        pConf->Write( wxS( "DefaultTextTopOffsetX" ), g_iTextTopOffsetX );
-        pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
-        pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
-        pConf->Write( wxS( "DefaultTextBottomOffsetY" ), g_iTextBottomOffsetY );
-        pConf->Write( wxS( "DefaultTextBottomNameExtraOffsetY"), g_iTextBottomNameExtraOffsetY );
-        pConf->Write( wxS( "DefaultTextCenterOffsetX" ), g_iTextCentreOffsetX );
-        pConf->Write( wxS( "DefaultTextCentreOffsetY" ), g_iTextCentreOffsetY );
-        pConf->Write( wxS( "DefaultTextRightOffsetX" ), g_iTextRightOffsetX );
-        pConf->Write( wxS( "DefaultTextRightOffsetY" ), g_iTextRightOffsetY );
-        pConf->Write( wxS( "DefaultTextLeftOffsetX" ), g_iTextLeftOffsetX );
-        pConf->Write( wxS( "DefaultTextLeftOffsetY" ), g_iTextLeftOffsetY );
-        pConf->Write( wxS( "DefaultTextPointPointSize" ), g_DisplayTextFont.GetPointSize() );
-        pConf->Write( wxS( "DefaultTextPointFontFamily" ), (int)g_DisplayTextFont.GetFamily() );
-        pConf->Write( wxS( "DefaultTextPointFontStyle" ), (int)g_DisplayTextFont.GetStyle() );
-        pConf->Write( wxS( "DefaultTextPointFontWeight" ), (int)g_DisplayTextFont.GetWeight() );
-        pConf->Write( wxS( "DefaultTextPointFontUnderline" ), g_DisplayTextFont.GetUnderlined() );
+        if(m_bRecreateConfig) {
+            pConf->DeleteGroup( "/Settings/ocpn_draw_pi" );
+        } else {
+            pConf->Write( wxS( "DefaultActivePathLineColour" ), g_colourActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_colourInActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultInActiveBoundaryLineColour" ), g_colourInActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultActiveBoundaryFillColour" ), g_colourActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            int l_BoundaryType;
+            if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+            else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+            else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
+            else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+            pConf->Write( wxS( "DefaultBoundaryODPointsVisible"), g_bBoundaryODPointsVisible );
+            pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
+            long l_longFillTransparency = g_uiFillTransparency;
+            pConf->Write( wxS( "DefaultBoundaryFillTransparency" ), l_longFillTransparency );
+            pConf->Write( wxS( "DefaultInclusionBoundarySize" ), g_iInclusionBoundarySize );
+            pConf->Write( wxS( "DefaultInActiveBoundaryFillColour" ), g_colourInActiveBoundaryFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultGZFirstIcon" ), g_sGZFirstIconName );
+            pConf->Write( wxS( "DefaultGZSecondIcon" ), g_sGZSecondIconName );
+            pConf->Write( wxS( "DefaultActiveGZLineColour" ), g_colourActiveGZLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultInActiveGZLineColour" ), g_colourInActiveGZLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultActiveGZFillColour" ), g_colourActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultInActiveGZFillColour" ), g_colourInActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultGZLineWidth" ), g_GZLineWidth );
+            pConf->Write( wxS( "DefaultGZLineStyle" ), g_GZLineStyle );
+            long l_longGZFillTransparency = g_uiGZFillTransparency;
+            pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
+            pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
+            pConf->Write( wxS( "DefaultGZMaintainWith" ), g_iGZMaintainWith );
+            pConf->Write( wxS( "DefaultGZPersistenceType" ), g_iGZPersistenceType );
+            pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
+            pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
+            pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
+            pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
+            pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
+            pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
+            pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
+            pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
+            pConf->Write( wxS( "DefaultEBLAlwaysShowInfo" ), g_bEBLAlwaysShowInfo );
+            pConf->Write( wxS( "DefaultEBLPerpLine" ), g_bEBLPerpLine );
+            pConf->Write( wxS( "DefaultEBLPersistenceType" ), g_iEBLPersistenceType );
+            pConf->Write( wxS( "DefaultEBLFixedEndPosition" ), g_bEBLFixedEndPosition );
+            pConf->Write( wxS( "DefaultEBLRotateWithBoat" ), g_bEBLRotateWithBoat );
+            pConf->Write( wxS( "DefaultEBLMaintainWith" ), g_iEBLMaintainWith );
+            pConf->Write( wxS( "DefaultPILStartIcon" ), g_sPILStartIconName );
+            pConf->Write( wxS( "DefaultPILEndIcon" ), g_sPILEndIconName );
+            pConf->Write( wxS( "DefaultPILActiveCentreLineColour" ), g_colourPILActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultPILInActiveCentreLineColour" ), g_colourPILInActiveCentreLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultPILActiveOffsetLine1Colour" ), g_colourPILActiveOffsetLine1Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultPILInActiveOffsetLine1Colour" ), g_colourPILInActiveOffsetLine1Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultPILActiveOffsetLine2Colour" ), g_colourPILActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultPILInActiveOffsetLine2Colour" ), g_colourPILInActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultPILCentreLineWidth" ), g_PILCentreLineWidth );
+            pConf->Write( wxS( "DefaultPILCentreLineStyle" ), g_PILCentreLineStyle );
+            pConf->Write( wxS( "DefaultPILOffsetLine1Width" ), g_PILOffsetLine1Width );
+            pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), g_PILOffsetLine1Style );
+            pConf->Write( wxS( "DefaultPILOffsetLine2Width" ), g_PILOffsetLine2Width );
+            pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), g_PILOffsetLine2Style );
+            pConf->Write( wxS( "DefaultPILPersistenceType" ), g_iPILPersistenceType );
+            pConf->Write( wxS( "DefaultPILNumIndexLines" ), g_PILDefaultNumIndexLines );
+            pConf->Write( wxS( "DefaultPILOffset"), g_dPILOffset );
+            pConf->Write( wxS( "DefaultDRPointIcon" ), g_sDRPointIconName );
+            pConf->Write( wxS( "DefaultShowDRPointRangeRings"), g_bDRPointShowRangeRings );
+            pConf->Write( wxS( "DefaultDRPointRangeRingsNumber" ), g_iDRPointRangeRingsNumber );
+            pConf->Write( wxS( "DefaultDRPointRangeRingsStep" ), g_fDRPointRangeRingsStep );
+            pConf->Write( wxS( "DefaultDRPointRangeRingsStepUnits" ), g_iDRPointRangeRingsStepUnits );
+            pConf->Write( wxS( "DefaultDRPointRangeRingsColour" ), g_colourDRPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX) );
+            pConf->Write( wxS( "DefaultDRPointRangeRingLineWidth" ), g_iDRPointRangeRingLineWidth );
+            pConf->Write( wxS( "DefaultDRPointRangeRingLineStyle" ), g_iDRPointRangeRingLineStyle );
+            pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultInActiveDRLineColour" ), g_colourInActiveDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
+            pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
+            pConf->Write( wxS( "DefaultDRSOG" ), g_dDRSOG );
+            pConf->Write( wxS( "DefaultDRCOG" ), g_iDRCOG );
+            pConf->Write( wxS( "DefaultDRLength" ), g_dDRLength );
+            pConf->Write( wxS( "DefaultDRPointInterval" ), g_dDRPointInterval );
+            pConf->Write( wxS( "DefaultDRLengthType" ), g_iDRLengthType );
+            pConf->Write( wxS( "DefaultDRIntervalType" ), g_iDRIntervalType );
+            pConf->Write( wxS( "DefaultDRDistanceUnits" ), g_iDRDistanceUnits );
+            pConf->Write( wxS( "DefaultDRTimeUnits" ), g_iDRTimeUnits );
+            pConf->Write( wxS( "DefaultDRPersistenceType" ), g_iDRPersistenceType );
+            pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
+            pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
+            pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
+            pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
+            pConf->Write( wxS( "DefaultODPointIcon" ), g_sODPointIconName );
+            pConf->Write( wxS( "ODPointRangeRingsNumber" ), g_iODPointRangeRingsNumber );
+            pConf->Write( wxS( "ODPointRangeRingsStep" ), g_fODPointRangeRingsStep );
+            pConf->Write( wxS( "ODPointRangeRingsStepUnits" ), g_iODPointRangeRingsStepUnits );
+            pConf->Write( wxS( "ODPointRangeRingsColour" ), g_colourODPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            long l_longBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
+            pConf->Write( wxS( "DefaultBoundaryPointFillTransparency" ), l_longBoundaryPointFillTransparency );
+            pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), g_iBoundaryPointRangeRingLineWidth );
+            pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
+            pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
+            pConf->Write( wxS( "ShowMag" ), g_bShowMag );
+            pConf->Write( wxS( "AllowLeftDrag" ), g_bAllowLeftDrag );
+            pConf->Write( wxS( "UserMagVariation" ), wxString::Format( _T("%.2f"), g_UserVar ) );
+            pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
+            pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
+            pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
+            pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
+            pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
+            pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
+            pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
+            pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
+            pConf->Write( wxS( "DefaultTextPointIcon" ), g_sTextPointIconName );
+            pConf->Write( wxS( "DefaultTextColour" ), g_colourDefaultTextColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultTextBackgroundColour" ), g_colourDefaultTextBackgroundColour.GetAsString( wxC2S_CSS_SYNTAX ) );
+            pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
+            pConf->Write( wxS( "DefaultTextPosition" ), g_iTextPosition );
+            pConf->Write( wxS( "DefaultTextTopOffsetX" ), g_iTextTopOffsetX );
+            pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
+            pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
+            pConf->Write( wxS( "DefaultTextBottomOffsetY" ), g_iTextBottomOffsetY );
+            pConf->Write( wxS( "DefaultTextBottomNameExtraOffsetY"), g_iTextBottomNameExtraOffsetY );
+            pConf->Write( wxS( "DefaultTextCenterOffsetX" ), g_iTextCentreOffsetX );
+            pConf->Write( wxS( "DefaultTextCentreOffsetY" ), g_iTextCentreOffsetY );
+            pConf->Write( wxS( "DefaultTextRightOffsetX" ), g_iTextRightOffsetX );
+            pConf->Write( wxS( "DefaultTextRightOffsetY" ), g_iTextRightOffsetY );
+            pConf->Write( wxS( "DefaultTextLeftOffsetX" ), g_iTextLeftOffsetX );
+            pConf->Write( wxS( "DefaultTextLeftOffsetY" ), g_iTextLeftOffsetY );
+            pConf->Write( wxS( "DefaultTextPointPointSize" ), g_DisplayTextFont.GetPointSize() );
+            pConf->Write( wxS( "DefaultTextPointFontFamily" ), (int)g_DisplayTextFont.GetFamily() );
+            pConf->Write( wxS( "DefaultTextPointFontStyle" ), (int)g_DisplayTextFont.GetStyle() );
+            pConf->Write( wxS( "DefaultTextPointFontWeight" ), (int)g_DisplayTextFont.GetWeight() );
+            pConf->Write( wxS( "DefaultTextPointFontUnderline" ), g_DisplayTextFont.GetUnderlined() );
 #if wxCHECK_VERSION(3,0,0)        
-        pConf->Write( wxS( "DefaultTextPointFontStrikethrough" ), g_DisplayTextFont.GetStrikethrough() );
+            pConf->Write( wxS( "DefaultTextPointFontStrikethrough" ), g_DisplayTextFont.GetStrikethrough() );
 #endif
-        pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
-        pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
-        pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
-        
+            pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
+            pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
+            pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
+            
+        }
     }
     
 #ifndef __WXMSW__

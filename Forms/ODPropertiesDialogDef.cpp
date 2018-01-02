@@ -76,7 +76,11 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_choiceToolbar->SetSelection( 1 );
 	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
 	
-	m_buttonConfigFileEntries = new wxButton( m_panelGeneral, wxID_ANY, _("&Recreate Config File Entries"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextConfigFileEntriesMsg = new wxStaticText( m_panelGeneral, wxID_ANY, _("Delete current OCPN_Draw config entries (No)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextConfigFileEntriesMsg->Wrap( -1 );
+	fgSizer4->Add( m_staticTextConfigFileEntriesMsg, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	
+	m_buttonConfigFileEntries = new wxButton( m_panelGeneral, wxID_ANY, _("Yes"), wxDefaultPosition, wxDefaultSize, 0 );
 	fgSizer4->Add( m_buttonConfigFileEntries, 0, wxALL, 5 );
 	
 	
@@ -86,7 +90,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -608,7 +612,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelEBL->SetSizer( m_fgSizerEBLSettings );
 	m_panelEBL->Layout();
 	m_fgSizerEBLSettings->Fit( m_panelEBL );
-	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), true );
+	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), false );
 	m_panelDR = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerDRSettings;
 	fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );

@@ -382,7 +382,6 @@ public:
     void    PopupMenuHandler(wxCommandEvent& ev);
     
     void    SaveConfig( void );
-    void    RecreateConfig( void );
     
     void    AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
 
@@ -461,7 +460,8 @@ public:
     double  m_view_scale;
     
     ODicons     *m_pODicons;
-
+    
+    bool        m_bRecreateConfig;
 
 private:
     void    OnTimer(wxTimerEvent& ev);

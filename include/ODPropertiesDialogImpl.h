@@ -94,7 +94,6 @@ private:
     int         m_iCOGValidator;
     wxColour    m_cRed;
     wxColour    m_cGreen;
-    
 };
 
 #endif // __ODPropertiesDialogImpl__
