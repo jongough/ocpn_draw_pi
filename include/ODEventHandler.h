@@ -55,8 +55,6 @@ class ODEventHandler : public wxEvtHandler
 {
     public:
         ODEventHandler(ocpn_draw_pi *parent);
-        ODEventHandler(ChartCanvas *parentCanvas, ODPath *selectedPath, ODPoint *selectedODPoint);
-        ODEventHandler(ChartCanvas *parentCanvas, ODPath *selectedPath, TextPoint *selectedTextPoint);
         ~ODEventHandler();
         
         void OnODTimer1(wxTimerEvent& event);

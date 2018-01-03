@@ -101,33 +101,6 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 }
 
 
-ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoint *selectedODPoint)
-{
-    SetPath(selectedPath);
-
-    m_pFoundTextPoint = NULL;
-    g_pRolloverPoint = NULL;
-    m_parentcanvas = parent;
-
-    if(selectedODPoint && selectedODPoint->m_sTypeString == wxT("Text Point")) {
-        m_pFoundTextPoint = dynamic_cast<TextPoint *>(selectedODPoint);
-        assert(m_pFoundTextPoint != 0);
-        m_pFoundODPoint = m_pFoundTextPoint;
-    } else
-        m_pFoundODPoint = selectedODPoint;
-}
-
-ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPoint *selectedTextPoint)
-{
-    SetPath(selectedPath);
-
-    m_pFoundTextPoint = NULL;
-    g_pRolloverPoint = NULL;
-    m_parentcanvas = parent;
-
-    m_pFoundODPoint = selectedTextPoint;
-}
-
 void ODEventHandler::SetPath( ODPath *path )
 {
     m_pBoundary = NULL;
