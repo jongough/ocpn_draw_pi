@@ -1663,6 +1663,21 @@ ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
     return NULL;
 }
 
+void ODNavObjectChanges::tempODPointRemove( const wxString& guid )
+{
+    wxODPointListNode *node = m_ptODPointList->GetFirst();
+    while( node ) {
+        ODPoint *pp = node->GetData();
+        wxODPointListNode *next = node->GetNext();
+        
+        if( pp && guid == pp->m_GUID ) {
+            m_ptODPointList->DeleteNode( node );
+            return;
+        }
+        node = next;
+    }
+}
+
 void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
 {
     if( !pTentPath )
@@ -1828,8 +1843,11 @@ bool ODNavObjectChanges::ApplyChanges(void)
                         g_pODPointMan->DestroyODPoint( pExisting, false );
                 }
                 
-                else
+                else {
+                    // XXX bogus or corrupted xml ?
+                    tempODPointRemove (pOp->m_GUID);
                     delete pOp;
+                }
             }
         }
         else

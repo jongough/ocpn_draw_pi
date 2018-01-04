@@ -118,7 +118,10 @@ class ODNavObjectChanges : public pugi::xml_document
                       bool b_layer, bool b_layerviz, int layer_id, wxString *TypeString );
         ODPoint *ODPointExists( const wxString& guid );
         ODPoint *ODPointExists( const wxString& name, double lat, double lon );
+
         ODPoint *tempODPointExists( const wxString& guid );
+        void tempODPointRemove( const wxString& guid );
+
         void InsertPathA( ODPath *pTentPath );
         void UpdatePathA( ODPath *pTentPath );
         ODPath *PathExists( const wxString& guid);
