@@ -688,7 +688,6 @@ int ocpn_draw_pi::Init(void)
     WANTS_TOOLBAR_CALLBACK    |
     INSTALLS_TOOLBAR_TOOL     |
     WANTS_CONFIG              |
-    INSTALLS_TOOLBOX_PAGE     |
     INSTALLS_CONTEXTMENU_ITEMS  |
     WANTS_NMEA_EVENTS         |
     USES_AUI_MANAGER                |
@@ -698,8 +697,6 @@ int ocpn_draw_pi::Init(void)
     WANTS_OPENGL_OVERLAY_CALLBACK |
     WANTS_LATE_INIT           |
     WANTS_MOUSE_EVENTS        |
-    WANTS_VECTOR_CHART_OBJECT_INFO  |
-    INSTALLS_PLUGIN_CHART_GL  |
     WANTS_KEYBOARD_EVENTS
     );
 }
