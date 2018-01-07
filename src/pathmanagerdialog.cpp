@@ -168,6 +168,41 @@ extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern PlugIn_ViewPort  *g_pVP;
 
 // sort callback. Sort by route name.
+int sort_path_on_vis;
+#if wxCHECK_VERSION(2, 9, 0)
+int wxCALLBACK SortPathOnVis(long item1, long item2, wxIntPtr list)
+#else
+int wxCALLBACK SortPathOnVis(long item1, long item2, long list)
+#endif
+{
+    wxListCtrl *lc = (wxListCtrl*)list;
+    
+    wxListItem it1, it2;
+    it1.SetId(lc->FindItem(-1, item1));
+    it1.SetColumn(0);
+    it1.SetMask(it1.GetMask() | wxLIST_MASK_IMAGE);
+    
+    it2.SetId(lc->FindItem(-1, item2));
+    it2.SetColumn(0);
+    it2.SetMask(it2.GetMask() | wxLIST_MASK_IMAGE);
+    
+    lc->GetItem(it1);
+    lc->GetItem(it2);
+
+    if(sort_path_on_vis & 1)
+        if(it2.GetImage() > it1.GetImage())
+            return 1;
+        else
+            return 0;
+    else
+        if(it2.GetImage() <= it1.GetImage())
+            return 1;
+        else
+            return 0;
+        
+}
+
+// sort callback. Sort by route name.
 int sort_path_name_dir;
 #if wxCHECK_VERSION(2, 9, 0)
 int wxCALLBACK SortPathOnName(long item1, long item2, wxIntPtr list)
@@ -867,6 +902,7 @@ void PathManagerDialog::UpdatePathListCtrl()
         m_pPathListCtrl->SetItem( idx, colPATHNAME, name );
         wxString desc = ( *it ) ->m_PathDescription;
         m_pPathListCtrl->SetItem( idx, colPATHDESC, desc );
+//        m_pPathListCtrl->SetItemData( idx, ( *it )->IsVisible() ? 0 : 1 );
     }
 
     m_pPathListCtrl->SortItems( SortPathOnName, (long) m_pPathListCtrl );
@@ -1262,6 +1298,7 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
         }
         path->SetVisible( !path->IsVisible(), togglesharedODPoints );
         m_pPathListCtrl->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
+//        m_pPathListCtrl->SetItemData( clicked_index, path->IsVisible() ? 0 : 1);
 
         ::wxBeginBusyCursor();
 
@@ -1318,14 +1355,22 @@ void PathManagerDialog::OnPathDeSelected( wxListEvent &event )
 
 void PathManagerDialog::OnPathColumnClicked( wxListEvent &event )
 {
-    if( event.m_col == 1 ) {
-        sort_path_name_dir++;
-        m_pPathListCtrl->SortItems( SortPathOnName, (long) m_pPathListCtrl );
-    } else
-        if( event.m_col == 2 ) {
+    DEBUGST("mcol: ");
+    DEBUGEND(event.m_col);
+    switch (event.m_col) {
+        case 0:
+            sort_path_on_vis++;
+            m_pPathListCtrl->SortItems( SortPathOnVis, (long) m_pPathListCtrl );
+            break;
+        case 1:
+            sort_path_name_dir++;
+            m_pPathListCtrl->SortItems( SortPathOnName, (long) m_pPathListCtrl );
+            break;
+        case 2:
             sort_path_to_dir++;
             m_pPathListCtrl->SortItems( SortPathOnTo, (long) m_pPathListCtrl );
-        }
+            break;
+    }
 }
 
 void PathManagerDialog::OnPathDefaultAction( wxListEvent &event )
