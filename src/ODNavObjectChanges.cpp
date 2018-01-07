@@ -1208,15 +1208,16 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pOP->SetName( NameString );
         pOP->SetMarkDescription( DescString );
         pOP->m_sTypeString = TypeString;
-        pOP->SetODPointArrivalRadius( ArrivalRadius );
-        pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
-        pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
-        pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
-        pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
-        pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
-        pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
-        pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
     }
+    pOP->SetODPointArrivalRadius( ArrivalRadius );
+    pOP->SetODPointRangeRingsNumber( l_iODPointRangeRingsNumber );
+    pOP->SetODPointRangeRingsStep( l_fODPointRangeRingsStep );
+    pOP->SetODPointRangeRingsStepUnits( l_pODPointRangeRingsStepUnits );
+    pOP->SetShowODPointRangeRings( l_bODPointRangeRingsVisible );
+    pOP->SetODPointRangeRingsColour( l_wxcODPointRangeRingsColour );
+    pOP->SetODPointRangeRingWidth( l_iODPointRangeRingWidth );
+    pOP->SetODPointRangeRingStyle( l_iODPointRangeRingStyle );
+
     if( pTP && TypeString == _T("Text Point") ) {
         pTP->SetPointText( TextString );
         pTP->m_iTextPosition = l_iTextPosition;
@@ -1235,11 +1236,15 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pTP->m_iBackgroundTransparency = l_iBackgroundTransparency;
         pTP->m_natural_scale = l_natural_scale;
         pTP->m_iDisplayTextWhen = l_display_text_when;
+        pTP -> CreateColourSchemes();
+        pTP->SetColourScheme(g_global_color_scheme);
     } else if ( pBP && TypeString == _T("Boundary Point") ) {
         pBP -> m_bExclusionBoundaryPoint = l_bExclusionBoundaryPoint;
         pBP -> m_bInclusionBoundaryPoint = l_bInclusionBoundaryPoint;
         pBP -> m_iInclusionBoundaryPointSize = l_iInclusionBoundaryPointSize;
         pBP -> m_uiBoundaryPointFillTransparency = l_uiBoundaryPointFillTransparency;
+        pBP -> CreateColourSchemes();
+        pBP->SetColourScheme(g_global_color_scheme);
     }
     
 
