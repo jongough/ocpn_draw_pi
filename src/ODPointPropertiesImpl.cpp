@@ -64,6 +64,7 @@ extern int                  g_iTextPosition;
 extern int                  g_iBoundaryPointRangeRingLineWidth;
 extern int                  g_iBoundaryPointRangeRingLineStyle;
 
+extern PI_ColorScheme       g_global_color_scheme;
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :
@@ -311,6 +312,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
         m_pODPoint->CreateColourSchemes();
+        m_pODPoint->SetColourScheme(g_global_color_scheme);
 
         m_pODPoint->SetName( m_textName->GetValue() );
         m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
