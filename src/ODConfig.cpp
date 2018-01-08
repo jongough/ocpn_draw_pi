@@ -428,8 +428,11 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
         ODPoint *pr;
+        time_t l_tStart = time(0);
+        time_t l_tCurrent;
         while( node ) {
-            if(pprog) {
+            l_tCurrent = time(0);
+            if(pprog && l_tStart != l_tCurrent) {
                 wxString msg;
                 msg.Printf(_T("%d/%d"), ic, count);
                 pprog->Update( ic, msg );
