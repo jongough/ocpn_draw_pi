@@ -375,7 +375,6 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pODPoint->SetPosition( fromDMM_Plugin( m_textLatitude->GetValue() ), fromDMM_Plugin( m_textLongitude->GetValue() ) );
         m_pODPoint->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
         m_pODPoint->ReLoadIcon();
-        m_pODPoint->CreateColourSchemes();
 
         // Here is some logic....
         // If the Markname is completely numeric, and is part of a route,

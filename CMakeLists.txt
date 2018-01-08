@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "47")
-SET(VERSION_DATE "03/01/2018")
+SET(VERSION_PATCH "49")
+SET(VERSION_DATE "08/01/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -32,6 +32,33 @@ MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
+MESSAGE(STATUS "CMAKE version: ${CMAKE_VERSION}")
+if ( CMAKE_VERSION VERSION_GREATER 3.4 )
+  set(ENABLE_CLANG_TIDY OFF CACHE BOOL "Add clang-tidy automatically to builds")
+  if (ENABLE_CLANG_TIDY)
+    find_program (CLANG_TIDY_EXE NAMES "clang-tidy" PATHS /usr/local/opt/llvm/bin )
+    if (CLANG_TIDY_EXE)
+      message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+      #For more, see http://clang.llvm.org/extra/clang-tidy/
+      #set(CLANG_TIDY_CHECKS "-*,modernize-*")
+      set(CLANG_TIDY_CHECKS "-*,performance-*")
+      set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE};-checks=${CLANG_TIDY_CHECKS};-header-filter='${CMAKE_SOURCE_DIR}/*'"
+        CACHE STRING "" FORCE)
+    else()
+      message(AUTHOR_WARNING "clang-tidy not found!")
+      set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE) # delete it
+    endif()
+  endif()
+endif()
+
+if ( CMAKE_VERSION VERSION_GREATER 3.9 )
+  set(ENABLE_CPPCHECK OFF CACHE BOOL "Add cppcheck automatically to builds")
+  if (ENABLE_CPPCHECK)
+      find_program (CPPCHECK_EXECUTABLE NAMES "cppcheck" )
+      set(CMAKE_CXX_CPPCHECK ${CPPCHECK_EXECUTABLE})
+  endif()
+endif()
+
 #SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${PROJECT_SOURCE_DIR}/include/version.h)
 
 INCLUDE("cmake/PluginConfigure.cmake")
@@ -40,209 +67,209 @@ ADD_DEFINITIONS(-DUSE_S57)
 
 
 SET(SRCS
-        src/ocpn_draw_pi.cpp
-        src/Boundary.cpp
-        src/BoundaryMan.cpp
-        src/BoundaryProp.cpp
-        src/BoundaryPoint.cpp
-        src/DR.cpp
-        src/DRProp.cpp
-        src/EBL.cpp
-        src/EBLProp.cpp
-        src/GZ.cpp
-        src/GZMan.cpp
-        src/GZProp.cpp
-        src/PointMan.cpp
-        src/ODSelect.cpp
-        src/PathMan.cpp
-        src/pathmanagerdialog.cpp
-        src/ODAPI.cpp
-        src/ODPath.cpp
-        src/ODPoint.cpp
-        src/ODConfig.cpp
-        src/ODdc.cpp
-        src/ODDRDialogDef.cpp
-        src/ODDRDialogImpl.cpp
-        src/ODEventHandler.cpp
-        src/ODicons.cpp
-        src/ODIconCombo.cpp
-        src/ODJSON.cpp
-        src/ODMarkIcon.cpp
-        src/ocpn_draw_pi.cpp
-        src/ODNavObjectChanges.cpp
-        src/ODNewODPointDialogDef.cpp
-        src/ODNewODPointDialogImpl.cpp
-        src/ODPropertiesDialogDef.cpp
-        src/ODPropertiesDialogImpl.cpp
-        src/ODPathPropertiesDialogDef.cpp
-        src/ODPathPropertiesDialogImpl.cpp
-        src/ODPointPropertiesDialog.cpp
-        src/ODPointPropertiesImpl.cpp
-        src/ODPositionParser.cpp
-        src/ODRolloverWin.cpp
-        src/ODToolbarDef.cpp
-        src/ODToolbarImpl.cpp
-        src/ODUtils.cpp
-        src/PIL.cpp
-        src/PILProp.cpp
-        src/PILPropertiesDialogDef.cpp
-        src/PILPropertiesDialogImpl.cpp
-        src/TextPoint.cpp
-     )
+    src/ocpn_draw_pi.cpp
+    src/Boundary.cpp
+    src/BoundaryMan.cpp
+    src/BoundaryProp.cpp
+    src/BoundaryPoint.cpp
+    src/DR.cpp
+    src/DRProp.cpp
+    src/EBL.cpp
+    src/EBLProp.cpp
+    src/GZ.cpp
+    src/GZMan.cpp
+    src/GZProp.cpp
+    src/PointMan.cpp
+    src/ODSelect.cpp
+    src/PathMan.cpp
+    src/pathmanagerdialog.cpp
+    src/ODAPI.cpp
+    src/ODPath.cpp
+    src/ODPoint.cpp
+    src/ODConfig.cpp
+    src/ODdc.cpp
+    src/ODDRDialogDef.cpp
+    src/ODDRDialogImpl.cpp
+    src/ODEventHandler.cpp
+    src/ODicons.cpp
+    src/ODIconCombo.cpp
+    src/ODJSON.cpp
+    src/ODMarkIcon.cpp
+    src/ocpn_draw_pi.cpp
+    src/ODNavObjectChanges.cpp
+    src/ODNewODPointDialogDef.cpp
+    src/ODNewODPointDialogImpl.cpp
+    src/ODPropertiesDialogDef.cpp
+    src/ODPropertiesDialogImpl.cpp
+    src/ODPathPropertiesDialogDef.cpp
+    src/ODPathPropertiesDialogImpl.cpp
+    src/ODPointPropertiesDialog.cpp
+    src/ODPointPropertiesImpl.cpp
+    src/ODPositionParser.cpp
+    src/ODRolloverWin.cpp
+    src/ODToolbarDef.cpp
+    src/ODToolbarImpl.cpp
+    src/ODUtils.cpp
+    src/PIL.cpp
+    src/PILProp.cpp
+    src/PILPropertiesDialogDef.cpp
+    src/PILPropertiesDialogImpl.cpp
+    src/TextPoint.cpp
+)
 
 SET(HDRS
-        include/ocpn_draw_pi.h
-        include/Boundary.h
-        include/BoundaryMan.h
-        include/BoundaryProp.h
-        include/BoundaryPoint.h
-        include/DR.h
-        include/DRProp.h
-        include/EBL.h
-        include/EBLProp.h
-        include/GZ.h
-        include/GZMan.h
-        include/GZProp.h
-        include/PointMan.h
-        include/ODSelect.h
-        include/PathMan.h
-        include/pathmanagerdialog.h
-        include/ODAPI.h
-        include/ODicons.h
-        include/ODIconCombo.h
-        include/ODJSON.h
-        include/ODPath.h
-        include/ODPoint.h
-        include/ODConfig.h
-        include/ODdc.h
-        include/ODDRDialogDef.h
-        include/ODDRDialogImpl.h
-        include/ODEventHandler.h
-        include/ODMarkIcon.h
-        include/ODNavObjectChanges.h
-        include/ODNewODPointDialogDef.h
-        include/ODNewODPointDialogImpl.h
-        include/ODPropertiesDialogDef.h
-        include/ODPropertiesDialogImpl.h
-        include/ODPathPropertiesDialogDef.h
-        include/ODPathPropertiesDialogImpl.h
-        include/ODPointPropertiesDialog.h
-        include/ODPointPropertiesImpl.h
-        include/ODPositionParser.h
-        include/ODRolloverWin.h
-        include/ODToolbarDef.h
-        include/ODToolbarImpl.h
-        include/ODUtils.h
-        include/ODvector2D.h
-        include/PIL.h
-        include/PILPropertiesDialogDef.h
-        include/PILPropertiesDialogImpl.h
-        include/PILProp.h
-        include/TextPoint.h
+    include/ocpn_draw_pi.h
+    include/Boundary.h
+    include/BoundaryMan.h
+    include/BoundaryProp.h
+    include/BoundaryPoint.h
+    include/DR.h
+    include/DRProp.h
+    include/EBL.h
+    include/EBLProp.h
+    include/GZ.h
+    include/GZMan.h
+    include/GZProp.h
+    include/PointMan.h
+    include/ODSelect.h
+    include/PathMan.h
+    include/pathmanagerdialog.h
+    include/ODAPI.h
+    include/ODicons.h
+    include/ODIconCombo.h
+    include/ODJSON.h
+    include/ODPath.h
+    include/ODPoint.h
+    include/ODConfig.h
+    include/ODdc.h
+    include/ODDRDialogDef.h
+    include/ODDRDialogImpl.h
+    include/ODEventHandler.h
+    include/ODMarkIcon.h
+    include/ODNavObjectChanges.h
+    include/ODNewODPointDialogDef.h
+    include/ODNewODPointDialogImpl.h
+    include/ODPropertiesDialogDef.h
+    include/ODPropertiesDialogImpl.h
+    include/ODPathPropertiesDialogDef.h
+    include/ODPathPropertiesDialogImpl.h
+    include/ODPointPropertiesDialog.h
+    include/ODPointPropertiesImpl.h
+    include/ODPositionParser.h
+    include/ODRolloverWin.h
+    include/ODToolbarDef.h
+    include/ODToolbarImpl.h
+    include/ODUtils.h
+    include/ODvector2D.h
+    include/PIL.h
+    include/PILPropertiesDialogDef.h
+    include/PILPropertiesDialogImpl.h
+    include/PILProp.h
+    include/TextPoint.h
 )
 
 SET(OCPNSRC 
-        ocpnsrc/bbox.cpp
-        ocpnsrc/cutil.cpp
-        ocpnsrc/geodesic.cpp
-        ocpnsrc/georef.cpp
-        ocpnsrc/Hyperlink.cpp
-        ocpnsrc/Layer.cpp
-        ocpnsrc/pugixml.cpp
-        ocpnsrc/SelectItem.cpp
-        ocpnsrc/wxJSON/jsonreader.cpp
-        ocpnsrc/wxJSON/jsonval.cpp
-        ocpnsrc/wxJSON/jsonwriter.cpp
+    ocpnsrc/bbox.cpp
+    ocpnsrc/cutil.cpp
+    ocpnsrc/geodesic.cpp
+    ocpnsrc/georef.cpp
+    ocpnsrc/Hyperlink.cpp
+    ocpnsrc/Layer.cpp
+    ocpnsrc/SelectItem.cpp
+    ocpnsrc/wxJSON/jsonreader.cpp
+    ocpnsrc/wxJSON/jsonval.cpp
+    ocpnsrc/wxJSON/jsonwriter.cpp
 )
 SET(OCPNHDRS
-        ocpninclude/AISTargetAlertDialog.h
-        ocpninclude/AISTargetQueryDialog.h
-        ocpninclude/apb.hpp
-        ocpninclude/bbox.h
-        ocpninclude/canvasMenu.h
-        ocpninclude/chart1.h
-        ocpninclude/chartbarwin.h
-        ocpninclude/chartbase.h
-        ocpninclude/chartdbs.h
-        ocpninclude/chcanv.h
-        ocpninclude/CM93DSlide.h
-        ocpninclude/ConnectionParams.h
-        ocpninclude/cutil.h
-        ocpninclude/datastream.h
-        ocpninclude/dsPortType.h
-        ocpninclude/dychart.h
-        ocpninclude/emboss_data.h
-        ocpninclude/geodesic.h
-        ocpninclude/georef.h
-        ocpninclude/gga.hpp
-        ocpninclude/gll.hpp
-        ocpninclude/GoToPositionDialog.h
-        ocpninclude/GPwpl.hpp
-        ocpninclude/gpxdocument.h
-        ocpninclude/gsv.hpp
-        ocpninclude/hdg.hpp
-        ocpninclude/hdm.hpp
-        ocpninclude/hdt.hpp
-        ocpninclude/Hyperlink.h
-        ocpninclude/IDX_entry.h
-        ocpninclude/LatLong.hpp
-        ocpninclude/Layer.h
-        ocpninclude/LinkPropDlg.h
-        ocpninclude/navutil.h
-        ocpninclude/nmea0183.h
-        ocpninclude/nmea0183.hpp
-        ocpninclude/ocpCursor.h
-        ocpninclude/OCPNPlatform.h
-        ocpninclude/OCPNRegion.h
-        ocpninclude/ocpn_plugin.h
-        ocpninclude/ocpn_types.h
-        ocpninclude/pluginmanager.h
-        ocpninclude/pugiconfig.hpp
-        ocpninclude/pugixml.hpp
-        ocpninclude/Quilt.h
-        ocpninclude/Response.hpp
-        ocpninclude/RMB.hpp
-        ocpninclude/RMC.HPP
-        ocpninclude/RolloverWin.h
-        ocpninclude/Route.h
-        ocpninclude/RoutePoint.h
-        ocpninclude/routeprop.h
-        ocpninclude/rte.hpp
-        ocpninclude/s52s57.h
-        ocpninclude/s57chart.h
-        ocpninclude/S57ClassRegistrar.h
-        ocpninclude/S57Light.h
-        ocpninclude/S57QueryDialog.h
-        ocpninclude/s57RegistrarMgr.h
-        ocpninclude/S57Sector.h
-        ocpninclude/scrollingdialog.h
-        ocpninclude/SelectItem.h
-        ocpninclude/Sentence.hpp
-        ocpninclude/styles.h
-        ocpninclude/TexFont.h
-        ocpninclude/timers.h
-        ocpninclude/undo.h
-        ocpninclude/vector2D.h
-        ocpninclude/viewport.h
-        ocpninclude/vtg.hpp
-        ocpninclude/wpl.hpp
-        ocpninclude/xte.hpp
-        ocpninclude/GL/gl.h
-        ocpninclude/GL/gl_private.h
-        ocpninclude/GL/glext.h
-        ocpninclude/GL/glu.h
-        ocpninclude/wx/json_defs.h
-        ocpninclude/wx/jsonreader.h
-        ocpninclude/wx/jsonval.h
-        ocpninclude/wx/jsonwriter.h
+    ocpninclude/AISTargetAlertDialog.h
+    ocpninclude/AISTargetQueryDialog.h
+    ocpninclude/apb.hpp
+    ocpninclude/bbox.h
+    ocpninclude/canvasMenu.h
+    ocpninclude/chart1.h
+    ocpninclude/chartbarwin.h
+    ocpninclude/chartbase.h
+    ocpninclude/chartdbs.h
+    ocpninclude/chcanv.h
+    ocpninclude/CM93DSlide.h
+    ocpninclude/ConnectionParams.h
+    ocpninclude/cutil.h
+    ocpninclude/datastream.h
+    ocpninclude/dsPortType.h
+    ocpninclude/dychart.h
+    ocpninclude/emboss_data.h
+    ocpninclude/geodesic.h
+    ocpninclude/georef.h
+    ocpninclude/gga.hpp
+    ocpninclude/gll.hpp
+    ocpninclude/GoToPositionDialog.h
+    ocpninclude/GPwpl.hpp
+    ocpninclude/gpxdocument.h
+    ocpninclude/gsv.hpp
+    ocpninclude/hdg.hpp
+    ocpninclude/hdm.hpp
+    ocpninclude/hdt.hpp
+    ocpninclude/Hyperlink.h
+    ocpninclude/IDX_entry.h
+    ocpninclude/LatLong.hpp
+    ocpninclude/Layer.h
+    ocpninclude/LinkPropDlg.h
+    ocpninclude/navutil.h
+    ocpninclude/nmea0183.h
+    ocpninclude/nmea0183.hpp
+    ocpninclude/ocpCursor.h
+    ocpninclude/OCPNPlatform.h
+    ocpninclude/OCPNRegion.h
+    ocpninclude/ocpn_plugin.h
+    ocpninclude/ocpn_types.h
+    ocpninclude/pluginmanager.h
+    ocpninclude/Quilt.h
+    ocpninclude/Response.hpp
+    ocpninclude/RMB.hpp
+    ocpninclude/RMC.HPP
+    ocpninclude/RolloverWin.h
+    ocpninclude/Route.h
+    ocpninclude/RoutePoint.h
+    ocpninclude/routeprop.h
+    ocpninclude/rte.hpp
+    ocpninclude/s52s57.h
+    ocpninclude/s57chart.h
+    ocpninclude/S57ClassRegistrar.h
+    ocpninclude/S57Light.h
+    ocpninclude/S57QueryDialog.h
+    ocpninclude/s57RegistrarMgr.h
+    ocpninclude/S57Sector.h
+    ocpninclude/scrollingdialog.h
+    ocpninclude/SelectItem.h
+    ocpninclude/Sentence.hpp
+    ocpninclude/styles.h
+    ocpninclude/TexFont.h
+    ocpninclude/timers.h
+    ocpninclude/undo.h
+    ocpninclude/vector2D.h
+    ocpninclude/viewport.h
+    ocpninclude/vtg.hpp
+    ocpninclude/wpl.hpp
+    ocpninclude/xte.hpp
+    ocpninclude/GL/gl.h
+    ocpninclude/GL/gl_private.h
+    ocpninclude/GL/glext.h
+    ocpninclude/GL/glu.h
+    ocpninclude/wx/json_defs.h
+    ocpninclude/wx/jsonreader.h
+    ocpninclude/wx/jsonval.h
+    ocpninclude/wx/jsonwriter.h
 )
 
 SET(EXTSRC 
     extsrc/clipper.cpp
+    extsrc/pugixml.cpp
 )
 
 SET(EXTINCLUDE 
     extinclude/clipper.hpp
+    extinclude/pugiconfig.hpp
+    extinclude/pugixml.hpp
 )
 
 OPTION(OD_USE_SVG "Use SVG graphics" ON)
