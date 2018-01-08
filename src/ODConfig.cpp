@@ -37,7 +37,8 @@
 #ifdef __WXOSX__
 #include <wx/stdpaths.h>
 #endif
-
+#include <unordered_map>
+#include <map>
 
 extern wxString         *g_pData;
 extern int              g_LayerIdx;
@@ -408,10 +409,30 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         //Points
         int ic = 0;
 
+        //build an unordered map list for high speed access
+        std::unordered_map<ODPoint *, ODPoint *> tp_hash;
+        tp_hash.reserve(count);
+        wxPathListNode *node1 = g_pPathList->GetFirst();
+        while (node1) {
+            ODPath *pPath = node1->GetData();
+            ODPointList *pODPointList = pPath->m_pODPointList;
+            wxODPointListNode *node2 = pODPointList->GetFirst();
+            ODPoint *pop;
+            while (node2) {
+                pop = node2->GetData();
+                tp_hash[pop] = pop;
+                node2 = node2->GetNext();
+            }
+            node1 = node1->GetNext();
+        }
+        
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
         ODPoint *pr;
+        time_t l_tStart = time(0);
+        time_t l_tCurrent;
         while( node ) {
-            if(pprog) {
+            l_tCurrent = time(0);
+            if(pprog && l_tStart != l_tCurrent) {
                 wxString msg;
                 msg.Printf(_T("%d/%d"), ic, count);
                 pprog->Update( ic, msg );
@@ -428,14 +449,14 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
             if( pr->m_bIsInLayer && !blayer )
                 b_add = false;
             if( b_add) {
-                if( pr->m_bKeepXPath || !ODPointIsInPathList( pr ) )
-                    pgpx->AddGPXODPoint( pr);
+                if( pr->m_bKeepXPath || tp_hash.find( pr ) == tp_hash.end() )
+                        pgpx->AddGPXODPoint( pr);
             }
 
             node = node->GetNext();
         }
         //Paths
-        wxPathListNode *node1 = g_pPathList->GetFirst();
+        node1 = g_pPathList->GetFirst();
         while( node1 ) {
             ODPath *pPath = node1->GetData();
 

@@ -6,13 +6,6 @@
 
 SET(PLUGIN_SOURCE_DIR .)
 
-# This should be 2.8.0 to have FindGTK2 module
-IF (COMMAND cmake_policy)
-  CMAKE_POLICY(SET CMP0003 OLD)
-  CMAKE_POLICY(SET CMP0005 OLD)
-  CMAKE_POLICY(SET CMP0011 OLD)
-ENDIF (COMMAND cmake_policy)
-
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 
 #  Do the version.h & wxWTranslateCatalog configuration into the build output directory,
@@ -37,6 +30,7 @@ IF(CMAKE_BUILD_TYPE STREQUAL Debug)
   MESSAGE (STATUS "DEBUG available")
 ENDIF(CMAKE_BUILD_TYPE STREQUAL Debug)
 #  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
+
 IF(NOT MSVC)
  IF(PROFILING)
   ADD_DEFINITIONS( "-Wall -g -fprofile-arcs -ftest-coverage -fexceptions" )
@@ -50,7 +44,6 @@ IF(NOT MSVC)
  ELSE(NOT APPLE)
   SET( CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
  ENDIF(NOT APPLE)
-
 
 ENDIF(NOT MSVC)
 
