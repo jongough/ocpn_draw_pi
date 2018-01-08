@@ -907,12 +907,12 @@ void ODPath::SetVisible( bool visible, bool includeODPoints )
     m_bVisible = visible;
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *rp;
+    ODPoint *op;
     while( node ) {
-        rp = node->GetData();
-        if ( !rp->m_bKeepXPath  || includeODPoints)
+        op = node->GetData();
+        if ( (!op->m_bKeepXPath  || includeODPoints) && m_bODPointsVisible )
         {
-            rp->SetVisible( visible );
+            op->SetVisible( visible );
         }
         node = node->GetNext();
     }
