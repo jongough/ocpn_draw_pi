@@ -71,6 +71,8 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
     SelectItem *pSelItem = new SelectItem;
     pSelItem->m_slat = slat;
     pSelItem->m_slon = slon;
+    pSelItem->m_slat2 = slat;
+    pSelItem->m_slon2 = slon;
     pSelItem->m_seltype = SELTYPE_ODPOINT;
     pSelItem->m_bIsSelected = false;
     pSelItem->m_pData1 = pODPointAdd;
@@ -268,22 +270,6 @@ bool ODSelect::UpdateSelectablePathSegments( ODPoint *prp )
     }
 
     return ret;
-}
-
-SelectItem *ODSelect::AddSelectablePoint( float slat, float slon, const void *pdata, int fseltype )
-{
-    SelectItem *pSelItem = new SelectItem;
-    if( pSelItem ) {
-        pSelItem->m_slat = slat;
-        pSelItem->m_slon = slon;
-        pSelItem->m_seltype = fseltype;
-        pSelItem->m_bIsSelected = false;
-        pSelItem->m_pData1 = pdata;
-
-        pSelectList->Append( pSelItem );
-    }
-
-    return pSelItem;
 }
 
 /*

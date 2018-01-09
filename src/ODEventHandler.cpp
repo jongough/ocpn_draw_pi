@@ -55,7 +55,6 @@ extern ocpn_draw_pi                 *g_ocpn_draw_pi;
 extern PathManagerDialog            *g_pPathManagerDialog;
 extern ODSelect                     *g_pODSelect;
 extern ODConfig                     *g_pODConfig;
-extern PlugIn_ViewPort              *g_pVP;
 extern PlugIn_ViewPort              g_VP;
 extern ChartCanvas                  *ocpncc1;
 extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
@@ -102,75 +101,6 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 }
 
 
-ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, ODPoint *selectedODPoint)
-{
-    m_pBoundary = NULL;
-    m_pEBL = NULL;
-    m_pDR = NULL;
-    m_pGZ = NULL;
-    m_pPIL = NULL;
-    m_pFoundTextPoint = NULL;
-    g_pRolloverPoint = NULL;
-    
-    m_parentcanvas = parent;
-    if(selectedPath->m_sTypeString == wxT("Boundary")) {
-        m_pBoundary = (Boundary *)selectedPath;
-        m_pSelectedPath = m_pBoundary;
-    } else if(selectedPath->m_sTypeString == wxT("EBL")) {
-        m_pEBL = (EBL *)selectedPath;
-        m_pSelectedPath = m_pEBL;
-    } else if(selectedPath->m_sTypeString == wxT("DR")) {
-        m_pDR = (DR *)selectedPath;
-        m_pSelectedPath = m_pDR;
-    } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
-        m_pGZ = (GZ *)selectedPath;
-        m_pSelectedPath = m_pGZ;
-    } else if(selectedPath->m_sTypeString == wxT("PIL")) {
-        m_pPIL = (PIL *)selectedPath;
-        m_pSelectedPath = m_pPIL;
-    } else
-        m_pSelectedPath = selectedPath;
-
-    if(selectedODPoint->m_sTypeString == wxT("Text Point")) {
-        m_pFoundTextPoint = (TextPoint *)selectedODPoint;
-        m_pFoundODPoint = m_pFoundTextPoint;
-    } else
-        m_pFoundODPoint = selectedODPoint;
-    
-}
-
-ODEventHandler::ODEventHandler(ChartCanvas *parent, ODPath *selectedPath, TextPoint *selectedTextPoint)
-{
-    m_pBoundary = NULL;
-    m_pEBL = NULL;
-    m_pDR = NULL;
-    m_pGZ = NULL;
-    m_pPIL = NULL;
-    m_pFoundTextPoint = NULL;
-    g_pRolloverPoint = NULL;
-    
-    m_parentcanvas = parent;
-    if(selectedPath->m_sTypeString == wxT("Boundary")) {
-        m_pBoundary = (Boundary *)selectedPath;
-        m_pSelectedPath = m_pBoundary;
-    } else if(selectedPath->m_sTypeString == wxT("EBL")) {
-        m_pEBL = (EBL *)selectedPath;
-        m_pSelectedPath = m_pEBL;
-    } else if(selectedPath->m_sTypeString == wxT("DR")) {
-        m_pDR = (DR *)selectedPath;
-        m_pSelectedPath = m_pDR;
-    } else if(selectedPath->m_sTypeString == wxT("Guard Zone")) {
-        m_pGZ = (GZ *)selectedPath;
-        m_pSelectedPath = m_pGZ;
-    } else if(selectedPath->m_sTypeString == wxT("PIL")) {
-        m_pPIL = (PIL *)selectedPath;
-        m_pSelectedPath = m_pPIL;
-    } else
-        m_pSelectedPath = selectedPath;
-
-    m_pFoundODPoint = selectedTextPoint;
-}
-
 void ODEventHandler::SetPath( ODPath *path )
 {
     m_pBoundary = NULL;
@@ -179,25 +109,29 @@ void ODEventHandler::SetPath( ODPath *path )
     m_pGZ = NULL;
     m_pPIL = NULL;
     m_pSelectedPath = NULL;
-    if(path) {
-        if(path->m_sTypeString == wxT("Boundary")) {
-            m_pBoundary = (Boundary *)path;
-            m_pSelectedPath = m_pBoundary;
-        } else if(path->m_sTypeString == wxT("EBL")) {
-            m_pEBL = (EBL *)path;
-            m_pSelectedPath = m_pEBL;
-        } else if(path->m_sTypeString == wxT("DR")) {
-            m_pDR = (DR *)path;
-            m_pSelectedPath = m_pDR;
-        } else if(path->m_sTypeString == wxT("Guard Zone")) {
-            m_pGZ = (GZ *)path;
-            m_pSelectedPath = m_pGZ;
-        } else if(path->m_sTypeString == wxT("PIL")) {
-            m_pPIL = (PIL *)path;
-            m_pSelectedPath = m_pPIL;
-        } else
-            m_pSelectedPath = path;
-    }
+
+    if(path == 0)
+        return;
+
+    if(path->m_sTypeString == wxT("Boundary")) {
+        m_pBoundary = dynamic_cast<Boundary *>(path);
+        m_pSelectedPath = m_pBoundary;
+    } else if(path->m_sTypeString == wxT("EBL")) {
+        m_pEBL = dynamic_cast<EBL *>(path);
+        m_pSelectedPath = m_pEBL;
+    } else if(path->m_sTypeString == wxT("DR")) {
+        m_pDR = dynamic_cast<DR *>(path);
+        m_pSelectedPath = m_pDR;
+    } else if(path->m_sTypeString == wxT("Guard Zone")) {
+        m_pGZ = dynamic_cast<GZ *>(path);
+        m_pSelectedPath = m_pGZ;
+    } else if(path->m_sTypeString == wxT("PIL")) {
+        m_pPIL = dynamic_cast<PIL *>(path);
+        m_pSelectedPath = m_pPIL;
+    } else
+        m_pSelectedPath = path;
+
+    assert(m_pSelectedPath != 0);
 }
 
 void ODEventHandler::SetBoundaryList(std::list< Boundary* > pBoundaryList)
@@ -403,6 +337,10 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     showRollover = true;
                     break;
                 }
+                else {
+                   // XXX endless loop
+                   assert(false);
+                }
             } else
                 node = node->GetNext();
         }
@@ -485,6 +423,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         b_need_refresh = true;
                         showRollover = true;
                         break;
+                    }
+                    else {
+                        // XXX FIXME may leak g_pRolloverPoint = new SelectItem();
+                        // on following loops
+                        assert(false);
                     }
                 }
                 node = node->GetNext();

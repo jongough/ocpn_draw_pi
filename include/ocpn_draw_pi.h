@@ -445,7 +445,6 @@ public:
     
     Undo        *undo;
     
-    PlugIn_ViewPort *m_pVP;
     wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
 //    wxGLCanvas      *m_glcc;
@@ -488,6 +487,7 @@ private:
     
     wxTimer         m_RolloverPopupTimer;
     
+    PlugIn_ViewPort m_VP;
     
     int               m_show_id;
     int               m_hide_id;
