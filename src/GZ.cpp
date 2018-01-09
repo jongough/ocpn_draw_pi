@@ -419,22 +419,16 @@ void GZ::UpdateGZSelectablePath( void )
                 if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
                 if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
         }
-    } 
+    }
     
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dPrevLat, &l_dPrevLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
@@ -513,22 +507,16 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
                 if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
                 if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
         }
-    } 
+    }
     // get x, y of first point on first line
     ODPoint *l_point = m_pODPointList->GetFirst()->GetData();
     GetCanvasPixLL( &piVP, *&l_l1p1, l_point->m_lat, l_point->m_lon );
@@ -576,18 +564,12 @@ LLBBox GZ::GetBBox( void )
                 if(!wxIsNaN(g_pfFix.Hdt)) {
                     firstDirection = g_pfFix.Hdt + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Hdt + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
             case ID_MAINTAIN_WITH_COG:
                 if(!wxIsNaN(g_pfFix.Cog)) {
                     firstDirection = g_pfFix.Cog + m_dFirstLineDirection;
                     secondDirection = g_pfFix.Cog + m_dSecondLineDirection;
-                } else {
-                    firstDirection = m_dFirstLineDirection;
-                    secondDirection = m_dSecondLineDirection;
                 }
                 break;
         }

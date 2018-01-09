@@ -36,7 +36,7 @@
 #include "GL/gl.h"
 #include <wx/graphics.h>
 
-extern PlugIn_ViewPort  *g_pVP;
+extern PlugIn_ViewPort  g_VP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 extern bool         g_bExclusionBoundaryPoint;
 extern bool         g_bInclusionBoundaryPoint;
@@ -75,7 +75,7 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
 void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
 {
     wxPoint r;
-    GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);
+    GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
     
     double factor = 1.00;
     if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
@@ -86,7 +86,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
     double tlat, tlon;
     wxPoint r1;
     ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-    GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
+    GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
     
     double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
     pow( (double) (r.y - r1.y), 2 ) );
@@ -120,7 +120,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     ODDC dc;
     
     wxPoint r;
-    GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);
+    GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
     
     double factor = 1.00;
     if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
@@ -131,7 +131,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     double tlat, tlon;
     wxPoint r1;
     ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-    GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
+    GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
     
     double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
     pow( (double) (r.y - r1.y), 2 ) );

@@ -41,7 +41,6 @@ extern PathList         *g_pPathList;
 extern GZList           *g_pGZList;
 extern ODPointList      *g_pODPointList;
 extern PointMan         *g_pODPointMan;
-extern PlugIn_ViewPort  *g_pVP;
 extern PlugIn_ViewPort   g_VP;
 
 wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )

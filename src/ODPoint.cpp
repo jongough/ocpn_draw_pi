@@ -55,8 +55,8 @@ extern bool         g_bBoundaryPointShowName;
 extern float        g_ChartScaleFactorExp;
 extern PI_ColorScheme    g_global_color_scheme;
 
-extern PlugIn_ViewPort  *g_pVP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
+extern PlugIn_ViewPort  g_VP;
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );
@@ -350,7 +350,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     wxPoint r;
     wxRect hilitebox;
 
-    GetCanvasPixLL( g_pVP, &r,  m_lat, m_lon);
+    GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
 
     //  return the home point in this dc to allow "connect the dots"
     if( NULL != rpn ) *rpn = r;
@@ -464,7 +464,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-        GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
+        GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
 
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
                            pow( (double) (r.y - r1.y), 2 ) );
@@ -510,7 +510,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     wxRect hilitebox;
     unsigned char transparency = 150;
 
-    GetCanvasPixLL( g_pVP, &r, m_lat, m_lon );
+    GetCanvasPixLL( &g_VP, &r, m_lat, m_lon );
 
 //    Substitue icon?
     wxBitmap *pbm;
@@ -695,7 +695,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
-        GetCanvasPixLL( g_pVP, &r1,  tlat, tlon);
+        GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
         
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
         pow( (double) (r.y - r1.y), 2 ) );
