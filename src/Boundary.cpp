@@ -158,7 +158,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
                 if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
             }
             assert(wxGC);
-            
+
             wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
