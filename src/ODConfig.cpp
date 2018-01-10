@@ -37,8 +37,12 @@
 #ifdef __WXOSX__
 #include <wx/stdpaths.h>
 #endif
+
+#ifdef OD_USE_CXX11
 #include <unordered_map>
+#else
 #include <map>
+#endif
 
 extern wxString         *g_pData;
 extern int              g_LayerIdx;
@@ -409,10 +413,15 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         //Points
         int ic = 0;
 
+        wxPathListNode *node1 = g_pPathList->GetFirst();
+//#ifdef COMPILER_SUPPORTS_CXX11
+#ifdef OD_USE_CXX11
         //build an unordered map list for high speed access
         std::unordered_map<ODPoint *, ODPoint *> tp_hash;
         tp_hash.reserve(count);
-        wxPathListNode *node1 = g_pPathList->GetFirst();
+#else        
+        std::map<ODPoint *, ODPoint *> tp_hash;
+#endif        
         while (node1) {
             ODPath *pPath = node1->GetData();
             ODPointList *pODPointList = pPath->m_pODPointList;
@@ -425,7 +434,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
             }
             node1 = node1->GetNext();
         }
-        
+
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
         ODPoint *pr;
         time_t l_tStart = time(0);
