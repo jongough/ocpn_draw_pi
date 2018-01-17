@@ -2582,11 +2582,11 @@ void ocpn_draw_pi::FindSelectedObject()
             if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
             
             // Use path array to choose the appropriate path
-            // Give preference to any active path, otherwise select the first visible path in the array for this point
+            // Give preference to any visible active path, otherwise select the first visible path in the array for this point
             if( ppath_array ) {
                 for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                     ODPath *pp = (ODPath *) ppath_array->Item( ip );
-                    if( pp->m_bPathIsActive ) {
+                    if( pp->m_bPathIsActive && pp->IsVisible() ) {
                         pSelectedActivePath = pp;
                         pFoundActiveODPoint = pop;
                         break;
