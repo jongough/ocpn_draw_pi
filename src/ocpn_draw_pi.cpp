@@ -1991,7 +1991,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FindSelectedObject();
 
             if( 0 != m_seltype ) {
-                if(m_pSelectedPath) {
+                if(m_pSelectedPath && !m_pSelectedPath->m_bIsInLayer) {
                     m_pSelectedBoundary = NULL;
                     m_pSelectedEBL = NULL;
                     m_pSelectedDR = NULL;
@@ -2046,7 +2046,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_PathMove_cursor_start_lat = m_cursor_lat;
                         m_PathMove_cursor_start_lon = m_cursor_lon;
                     }
-                } else if(m_pFoundODPoint) {
+                } else if(m_pFoundODPoint && !m_pFoundODPoint->m_bIsInLayer) {
                     m_iEditMode = ID_ODPOINT_MENU_MOVE;
                     m_pCurrentCursor = m_pCursorCross;
                     m_bODPointEditing = true;
