@@ -42,7 +42,7 @@ enum TrackContextMenu {
 class wxButton;
 class ODPath;
 class ODPoint;
-class Layer;
+class ODLayer;
 
 class PathManagerDialog : public wxDialog {
       DECLARE_EVENT_TABLE()
@@ -50,11 +50,14 @@ class PathManagerDialog : public wxDialog {
       public:
             PathManagerDialog(wxWindow *parent);
             ~PathManagerDialog();
-            void SetColorScheme();
-            void UpdatePathListCtrl();     // Rebuild route list
+            void SetColorScheme( void );
+            void UpdatePathListCtrl( void );     // Rebuild route list
             void UpdateODPointsListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
-            void UpdateLayListCtrl();
-            void UpdateODPointsListCtrlViz();
+            void UpdateLayListCtrl( void );
+            void UpdateODPointsListCtrlViz( void );
+            void SelectedPathToggleVisibility( bool visible );
+            void SelectedODPointToggleVisibility( bool visible );
+            void SelectedLayerToggleVisibility( bool visible );
             
             void OnTabSwitch(wxNotebookEvent& event);
             static void ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent );
@@ -70,9 +73,9 @@ class PathManagerDialog : public wxDialog {
             void UpdateODPointButtons();
             void UpdateLayButtons();           // Correct button state
             
-            void ToggleLayerContentsOnChart(Layer *layer);
-            void ToggleLayerContentsOnListing(Layer *layer);
-            void ToggleLayerContentsNames(Layer *layer);
+            void ToggleLayerContentsOnChart(ODLayer *layer);
+            void ToggleLayerContentsOnListing(ODLayer *layer);
+            void ToggleLayerContentsNames(ODLayer *layer);
 
             // event handlers
             void OnPathSelected(wxListEvent &event);
@@ -101,7 +104,10 @@ class PathManagerDialog : public wxDialog {
             void OnODPointDeSelected(wxListEvent &event);
             void OnODPointToggleVisibility(wxMouseEvent &event);
             void OnODPointColumnClicked(wxListEvent &event);
-
+            void OnPathRightClick(wxListEvent &event);
+            void OnODPointRightClick( wxListEvent &event );
+            void OnLayerRightClick( wxListEvent &event );
+            
             void OnLayDefaultAction(wxListEvent &event);
             void OnLayNewClick(wxCommandEvent &event);
             void OnLayPropertiesClick(wxCommandEvent &event);

@@ -25,6 +25,7 @@ src/ODEventHandler.cpp
 src/ODicons.cpp
 src/ODIconCombo.cpp
 src/ODJSON.cpp
+src/ODLayer.cpp
 src/ODMarkIcon.cpp
 src/ocpn_draw_pi.cpp
 src/ODNavObjectChanges.cpp
@@ -73,6 +74,7 @@ include/ODdc.h
 include/ODDRDialogDef.h
 include/ODDRDialogImpl.h
 include/ODEventHandler.h
+include/ODLayer.h
 include/ODMarkIcon.h
 include/ODNavObjectChanges.h
 include/ODNewODPointDialogDef.h
