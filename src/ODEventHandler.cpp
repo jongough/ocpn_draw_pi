@@ -1273,8 +1273,11 @@ void ODEventHandler::DeletePaths( void )
 
     // TODO implement UNDO
     //m_parent->undo->InvalidateUndo();
+
+    // paths pointers are invalide
+    m_pBoundaryList.clear();
+
     RequestRefresh( m_parentcanvas );
-    m_pBoundaryList.empty();
 
 }
 
