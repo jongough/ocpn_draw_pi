@@ -50,11 +50,12 @@ class PathManagerDialog : public wxDialog {
       public:
             PathManagerDialog(wxWindow *parent);
             ~PathManagerDialog();
-            void SetColorScheme();
-            void UpdatePathListCtrl();     // Rebuild route list
+            void SetColorScheme( void );
+            void UpdatePathListCtrl( void );     // Rebuild route list
             void UpdateODPointsListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
-            void UpdateLayListCtrl();
-            void UpdateODPointsListCtrlViz();
+            void UpdateLayListCtrl( void );
+            void UpdateODPointsListCtrlViz( void );
+            void SelectedPathToggleVisibility( bool visible );
             
             void OnTabSwitch(wxNotebookEvent& event);
             static void ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent );
@@ -101,6 +102,7 @@ class PathManagerDialog : public wxDialog {
             void OnODPointDeSelected(wxListEvent &event);
             void OnODPointToggleVisibility(wxMouseEvent &event);
             void OnODPointColumnClicked(wxListEvent &event);
+            void OnPathRightClick(wxListEvent &event);
 
             void OnLayDefaultAction(wxListEvent &event);
             void OnLayNewClick(wxCommandEvent &event);

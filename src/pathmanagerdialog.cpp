@@ -47,6 +47,7 @@
 #include "dychart.h"
 //#include "navutil.h"
 #include "ODConfig.h"
+#include "ODEventHandler.h"
 #include "ODPath.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
@@ -163,6 +164,8 @@ extern double       gCog, gSog;
 extern bool         g_bShowLayers;
 extern wxString     g_sODPointIconName;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
+extern ODEventHandler   *g_ODEventHandler;
+
 
 //extern AIS_Decoder      *g_pAIS;
 
@@ -564,6 +567,8 @@ void PathManagerDialog::Create()
             wxMouseEventHandler(PathManagerDialog::OnPathToggleVisibility), NULL, this );
     m_pPathListCtrl->Connect( wxEVT_COMMAND_LIST_COL_CLICK,
             wxListEventHandler(PathManagerDialog::OnPathColumnClicked), NULL, this );
+    m_pPathListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
+                              wxListEventHandler(PathManagerDialog::OnPathRightClick), NULL, this );
     sbsPaths->Add( m_pPathListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
 
     // Columns: visibility ctrl, name
@@ -1388,6 +1393,29 @@ void PathManagerDialog::OnPathToggleVisibility( wxMouseEvent &event )
     event.Skip();
 }
 
+void PathManagerDialog::SelectedPathToggleVisibility( bool visible )
+{
+    PathList list;
+    
+    wxString suggested_name = _T("paths");
+    
+    long item = -1;
+    for ( ;; )
+    {
+        item = m_pPathListCtrl->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        
+        ODPath *ppath = g_pPathList->Item( m_pPathListCtrl->GetItemData( item ) )->GetData();
+        
+        if( ppath ) {
+            ppath->SetVisible(visible);
+        }
+        m_pPathListCtrl->SetItemImage( item, ppath->IsVisible() ? 0 : 1 );
+    }
+    
+}
+
 void PathManagerDialog::OnPathBtnLeftDown( wxMouseEvent &event )
 {
     m_bCtrlDown = event.ControlDown();
@@ -1440,6 +1468,14 @@ void PathManagerDialog::OnPathColumnClicked( wxListEvent &event )
             m_pPathListCtrl->SortItems( SortPathOnTo, (long) m_pPathListCtrl );
             break;
     }
+}
+
+void PathManagerDialog::OnPathRightClick( wxListEvent &event )
+{
+    g_ODEventHandler->SetWindow( ocpncc1 );
+    g_ODEventHandler->SetPath( NULL );
+    g_ODEventHandler->SetPoint( (ODPoint*)NULL );
+    g_ODEventHandler->PopupMenu( TYPE_PATHMGR_DLG );
 }
 
 void PathManagerDialog::OnPathDefaultAction( wxListEvent &event )

@@ -193,6 +193,8 @@ enum
     ID_PIL_MENU_DELETE_INDEX_LINE,
     ID_PIL_MENU_CENTRE_ON_BOAT,
     ID_PIL_MENU_CENTRE_ON_BOAT_LATLON,
+    ID_PATH_MGR_RIGHT_CLICK_HIDE,
+    ID_PATH_MGR_RIGHT_CLICK_SHOW,
     
     ID_UNDO,
     ID_REDO,
@@ -267,6 +269,14 @@ enum {
     ID_PERSISTENT_LAST
 };
 
+
+#define SELTYPE_UNKNOWN             0x0001
+#define SELTYPE_ODPOINT             0x0002
+#define SELTYPE_PATHSEGMENT         0x0004
+#define SELTYPE_PATHCREATE          0x0008
+#define SELTYPE_BOUNDARYLIST        0x0010
+#define SELTYPE_PIL                 0x0020
+#define TYPE_PATHMGR_DLG            0x0040
 
 //#define PI 3.14159265
 

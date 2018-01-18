@@ -81,6 +81,7 @@ extern int                          g_BoundaryLineStyle;
 extern wxString                     g_sODPointIconName;
 extern double                       g_dPILOffset;
 extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;
+extern PathManagerDialog            *g_pPathManagerDialog;
 
 
 // Event Handler implementation 
@@ -157,6 +158,11 @@ void ODEventHandler::SetPIL( int iPILL )
 void ODEventHandler::SetCanvas( ChartCanvas* canvas )
 {
     m_parentcanvas = canvas;
+}
+
+void ODEventHandler::SetWindow( wxWindow* window )
+{
+    m_parent_window = window;
 }
 
 void ODEventHandler::SetLatLon( double lat, double lon )
@@ -968,23 +974,32 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             break;
         }
+        case ID_PATH_MGR_RIGHT_CLICK_HIDE: {
+            g_pPathManagerDialog->SelectedPathToggleVisibility(false);
+            break;
+        }
+        case ID_PATH_MGR_RIGHT_CLICK_SHOW: {
+            g_pPathManagerDialog->SelectedPathToggleVisibility(true);
+            break;
+        }
     }
     
 } 
 
-void ODEventHandler::PopupMenu( int seltype )
+void ODEventHandler::PopupMenu( int popuptype )
 {
     wxMenu* contextMenu = new wxMenu;
     wxMenu* menuODPoint = NULL;
     wxMenu* menuPath = NULL;
     wxMenu* menuBoundaryList = NULL;
     wxMenu* menuPILList = NULL;
+    wxMenu* menuPathMgr = NULL;
     
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
  
     wxString sString;
     
-    if( seltype & SELTYPE_PATHSEGMENT ) {
+    if( popuptype & SELTYPE_PATHSEGMENT ) {
         bool blay = false;
         if( m_pSelectedPath && m_pSelectedPath->m_bIsInLayer )
             blay = true;
@@ -1096,7 +1111,7 @@ void ODEventHandler::PopupMenu( int seltype )
         menuFocus = menuPath;
     }
     
-    if( seltype & SELTYPE_ODPOINT ) {
+    if( popuptype & SELTYPE_ODPOINT ) {
         bool blay = false;
         if( m_pFoundODPoint && m_pFoundODPoint->m_bIsInLayer )
             blay = true;
@@ -1170,7 +1185,7 @@ void ODEventHandler::PopupMenu( int seltype )
         menuFocus = menuODPoint;
     }
     
-    if( seltype & SELTYPE_BOUNDARYLIST ) {
+    if( popuptype & SELTYPE_BOUNDARYLIST ) {
         menuBoundaryList = new wxMenu( _("Multiple Boundaries") );
         MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_KEEP_MENU, _( "Merge and Keep Boundaries" ) );
         MenuAppend( menuBoundaryList, ID_BOUNDARY_LIST_DELETE_MENU, _( "Merge and Delete Boundaries" ) );
@@ -1179,7 +1194,7 @@ void ODEventHandler::PopupMenu( int seltype )
         m_pFoundODPoint = NULL;
     }
 
-    if( seltype & SELTYPE_PIL ) {
+    if( popuptype & SELTYPE_PIL ) {
         menuPILList = new wxMenu( _("Parallel Index Line") );
         MenuAppend( menuPILList, ID_PIL_MENU_INDEX_LINE_PROPERTIES, _("Properties..."));
         MenuAppend( menuPILList, ID_PIL_MENU_MOVE_INDEX_LINE, _( "Move Line" ) );
@@ -1187,21 +1202,25 @@ void ODEventHandler::PopupMenu( int seltype )
         menuFocus = menuPILList;
     }
 
-    //if( !(seltype & SELTYPE_BOUNDARYLIST) ) {
-        if( ( m_pSelectedPath ) ) {
-            m_pSelectedPath->m_bPathIsSelected = true;
-            RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-        } else if( m_pFoundODPoint ) {
-            m_pFoundODPoint->m_bPtIsSelected = true;
-            RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-        }
-    //}
+    if( popuptype & TYPE_PATHMGR_DLG ) {
+        menuPathMgr = new wxMenu( _("Path Manager Dialog") );
+        MenuAppend( menuPathMgr, ID_PATH_MGR_RIGHT_CLICK_HIDE, _( "Hide" ));
+        MenuAppend( menuPathMgr, ID_PATH_MGR_RIGHT_CLICK_SHOW, _( "Show" ));
+        menuFocus = menuPathMgr;
+    }
+
+    if( ( m_pSelectedPath ) ) {
+        m_pSelectedPath->m_bPathIsSelected = true;
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    } else if( m_pFoundODPoint ) {
+        m_pFoundODPoint->m_bPtIsSelected = true;
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    }
     
     //        Invoke the correct focused drop-down menu
     m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
     m_parentcanvas->PopupMenu( menuFocus );
     m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
-    
     // Cleanup
     if( ( m_pSelectedPath ) ) m_pSelectedPath->m_bPathIsSelected = false;
     m_pSelectedPath = NULL;
@@ -1223,6 +1242,9 @@ void ODEventHandler::PopupMenu( int seltype )
     delete contextMenu;
     if(menuPath) delete menuPath;
     if( menuODPoint ) delete menuODPoint;
+    if( menuBoundaryList ) delete menuBoundaryList;
+    if( menuPILList ) delete menuPILList;
+    if( menuPathMgr ) delete menuPathMgr;
     
 }
 
