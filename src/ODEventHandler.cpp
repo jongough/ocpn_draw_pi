@@ -974,12 +974,28 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             break;
         }
-        case ID_PATH_MGR_RIGHT_CLICK_HIDE: {
+        case ID_PATH_MGR_PATH_RIGHT_CLICK_HIDE: {
             g_pPathManagerDialog->SelectedPathToggleVisibility(false);
             break;
         }
-        case ID_PATH_MGR_RIGHT_CLICK_SHOW: {
+        case ID_PATH_MGR_PATH_RIGHT_CLICK_SHOW: {
             g_pPathManagerDialog->SelectedPathToggleVisibility(true);
+            break;
+        }
+        case ID_PATH_MGR_ODPOINT_RIGHT_CLICK_HIDE: {
+            g_pPathManagerDialog->SelectedODPointToggleVisibility(false);
+            break;
+        }
+        case ID_PATH_MGR_ODPOINT_RIGHT_CLICK_SHOW: {
+            g_pPathManagerDialog->SelectedODPointToggleVisibility(true);
+            break;
+        }
+        case ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE: {
+            g_pPathManagerDialog->SelectedLayerToggleVisibility(false);
+            break;
+        }
+        case ID_PATH_MGR_LAYER_RIGHT_CLICK_SHOW: {
+            g_pPathManagerDialog->SelectedLayerToggleVisibility(true);
             break;
         }
     }
@@ -1202,13 +1218,27 @@ void ODEventHandler::PopupMenu( int popuptype )
         menuFocus = menuPILList;
     }
 
-    if( popuptype & TYPE_PATHMGR_DLG ) {
+    if( popuptype & TYPE_PATHMGR_PATH_DLG ) {
         menuPathMgr = new wxMenu( _("Path Manager Dialog") );
-        MenuAppend( menuPathMgr, ID_PATH_MGR_RIGHT_CLICK_HIDE, _( "Hide" ));
-        MenuAppend( menuPathMgr, ID_PATH_MGR_RIGHT_CLICK_SHOW, _( "Show" ));
+        MenuAppend( menuPathMgr, ID_PATH_MGR_PATH_RIGHT_CLICK_HIDE, _( "Hide Path(s)" ));
+        MenuAppend( menuPathMgr, ID_PATH_MGR_PATH_RIGHT_CLICK_SHOW, _( "Show Paths(s)" ));
         menuFocus = menuPathMgr;
     }
 
+    if( popuptype & TYPE_PATHMGR_POINT_DLG ) {
+        menuPathMgr = new wxMenu( _("Path Manager Dialog") );
+        MenuAppend( menuPathMgr, ID_PATH_MGR_ODPOINT_RIGHT_CLICK_HIDE, _( "Hide Point(s)" ));
+        MenuAppend( menuPathMgr, ID_PATH_MGR_ODPOINT_RIGHT_CLICK_SHOW, _( "Show Point(s)" ));
+        menuFocus = menuPathMgr;
+    }
+    
+    if( popuptype & TYPE_PATHMGR_LAYER_DLG ) {
+        menuPathMgr = new wxMenu( _("Path Manager Dialog") );
+        MenuAppend( menuPathMgr, ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE, _( "Hide Layer(s)" ));
+        MenuAppend( menuPathMgr, ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE, _( "Show Layer(s)" ));
+        menuFocus = menuPathMgr;
+    }
+    
     if( ( m_pSelectedPath ) ) {
         m_pSelectedPath->m_bPathIsSelected = true;
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );

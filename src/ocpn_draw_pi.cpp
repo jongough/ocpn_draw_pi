@@ -70,7 +70,7 @@
 #include "PILPropertiesDialogImpl.h"
 
 #include "chcanv.h"
-#include "Layer.h"
+#include "ODLayer.h"
 #include "OCPNPlatform.h"
 #include "pluginmanager.h"
 #include "geodesic.h"
@@ -281,7 +281,7 @@ int             g_LayerIdx;
 bool            g_bShowLayers;
 wxString        g_VisibleLayers;
 wxString        g_InvisibleLayers;
-LayerList       *pLayerList;
+ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
@@ -486,7 +486,7 @@ int ocpn_draw_pi::Init(void)
     g_pPILList = new PILList;
     g_pPathList = new PathList;
     //    Layers
-    pLayerList = new LayerList;
+    g_pLayerList = new ODLayerList;
     
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
