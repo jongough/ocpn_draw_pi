@@ -3528,6 +3528,9 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL->RebuildGUIDList();
     
     nEBL_State++;
+
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdatePathListCtrl();
     
     RequestRefresh( m_parent_window );
     
@@ -3647,6 +3650,8 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     if(m_pMouseGZ) {
         m_pMouseGZ->m_lastMousePointIndex = m_pMouseGZ->GetnPoints();
         m_pMouseGZ->RebuildGUIDList();
+        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+            g_pPathManagerDialog->UpdatePathListCtrl();
     }
 
     nGZ_State++;
@@ -3710,6 +3715,8 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMousePIL );
 
     nPIL_State++;
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdatePathListCtrl();
 
     RequestRefresh( m_parent_window );
 
