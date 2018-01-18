@@ -1121,6 +1121,9 @@ void PathManagerDialog::OnPathDeleteClick( wxCommandEvent &event )
 
         m_lastPathItem = -1;
         UpdatePathListCtrl();
+        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+            g_pODPointPropDialog->ValidateMark();
+        }
 
         // TODO fix up undo
         //ocpncc1->undo->InvalidateUndo();
@@ -1142,6 +1145,10 @@ void PathManagerDialog::OnPathDeleteAllClick( wxCommandEvent &event )
         UpdatePathListCtrl();
 
         if( g_pODPathPropDialog ) g_pODPathPropDialog->Hide();
+
+        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+            g_pODPointPropDialog->ValidateMark();
+        }
         // TODO fix up undo
         //ocpncc1->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
