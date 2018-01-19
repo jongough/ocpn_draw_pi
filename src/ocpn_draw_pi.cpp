@@ -286,9 +286,6 @@ int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
 
-ODPoint       *pAnchorWatchPoint1;
-ODPoint       *pAnchorWatchPoint2;
-
 IDX_entry       *gpIDX;
 
 wxString        *g_ODlocale;
