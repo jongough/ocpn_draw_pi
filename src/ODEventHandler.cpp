@@ -923,6 +923,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 
                 if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
                     g_pPathManagerDialog->UpdateODPointsListCtrl();
+
+                if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+                    g_pODPointPropDialog->ValidateMark();
+                }
                 
                 m_pFoundODPoint->m_bPtIsSelected = false;
 
@@ -1293,7 +1297,6 @@ void ODEventHandler::DeletePath( void )
     
     if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
         g_pODPointPropDialog->ValidateMark();
-        g_pODPointPropDialog->UpdateProperties();
     }
     
     // TODO implement UNDO
@@ -1325,8 +1328,11 @@ void ODEventHandler::DeletePaths( void )
 
     // TODO implement UNDO
     //m_parent->undo->InvalidateUndo();
+
+    // paths pointers are invalide
+    m_pBoundaryList.clear();
+
     RequestRefresh( m_parentcanvas );
-    m_pBoundaryList.empty();
 
 }
 
@@ -1352,7 +1358,6 @@ void ODEventHandler::DeletePIL( void )
 
     if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
         g_pODPointPropDialog->ValidateMark();
-        g_pODPointPropDialog->UpdateProperties();
     }
 
     // TODO implement UNDO
