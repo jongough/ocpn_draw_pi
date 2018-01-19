@@ -21,7 +21,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "56")
+SET(VERSION_PATCH "58")
 SET(VERSION_DATE "19/01/2018")
 
 SET(BUNDLE_DATA FALSE)
@@ -239,7 +239,6 @@ SET(OCPNHDRS
     ocpninclude/Hyperlink.h
     ocpninclude/IDX_entry.h
     ocpninclude/LatLong.hpp
-    ocpninclude/Layer.h
     ocpninclude/LinkPropDlg.h
     ocpninclude/navutil.h
     ocpninclude/nmea0183.h
