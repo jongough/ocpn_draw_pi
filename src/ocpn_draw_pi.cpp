@@ -1991,7 +1991,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FindSelectedObject();
 
             if( 0 != m_seltype ) {
-                if(m_pSelectedPath) {
+                if(m_pSelectedPath && !m_pSelectedPath->m_bIsInLayer) {
                     m_pSelectedBoundary = NULL;
                     m_pSelectedEBL = NULL;
                     m_pSelectedDR = NULL;
@@ -2046,7 +2046,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_PathMove_cursor_start_lat = m_cursor_lat;
                         m_PathMove_cursor_start_lon = m_cursor_lon;
                     }
-                } else if(m_pFoundODPoint) {
+                } else if(m_pFoundODPoint && !m_pFoundODPoint->m_bIsInLayer) {
                     m_iEditMode = ID_ODPOINT_MENU_MOVE;
                     m_pCurrentCursor = m_pCursorCross;
                     m_bODPointEditing = true;
@@ -2582,11 +2582,11 @@ void ocpn_draw_pi::FindSelectedObject()
             if( ( NULL == pFirstVizPoint ) && bop_viz ) pFirstVizPoint = pop;
             
             // Use path array to choose the appropriate path
-            // Give preference to any active path, otherwise select the first visible path in the array for this point
+            // Give preference to any visible active path, otherwise select the first visible path in the array for this point
             if( ppath_array ) {
                 for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                     ODPath *pp = (ODPath *) ppath_array->Item( ip );
-                    if( pp->m_bPathIsActive ) {
+                    if( pp->m_bPathIsActive && pp->IsVisible() ) {
                         pSelectedActivePath = pp;
                         pFoundActiveODPoint = pop;
                         break;

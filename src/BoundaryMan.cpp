@@ -446,6 +446,8 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
     ODPoint *popSecond;
     wxString l_GUID = wxEmptyString;
     bool l_bCrosses;
+    LLBBox RBBox;
+    RBBox.SetFromSegment(StartLat, StartLon, EndLat, EndLon);
 
     std::list<BOUNDARYCROSSING> BoundaryCrossingList;
     
@@ -483,7 +485,7 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
             }
         }
         
-        if(!l_bNext) {
+        if(!l_bNext && !RBBox.IntersectOut(pboundary->GetBBox())) {
             wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
             wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
 
