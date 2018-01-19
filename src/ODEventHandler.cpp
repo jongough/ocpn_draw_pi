@@ -1235,7 +1235,7 @@ void ODEventHandler::PopupMenu( int popuptype )
     if( popuptype & TYPE_PATHMGR_LAYER_DLG ) {
         menuPathMgr = new wxMenu( _("Path Manager Dialog") );
         MenuAppend( menuPathMgr, ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE, _( "Hide Layer(s)" ));
-        MenuAppend( menuPathMgr, ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE, _( "Show Layer(s)" ));
+        MenuAppend( menuPathMgr, ID_PATH_MGR_LAYER_RIGHT_CLICK_SHOW, _( "Show Layer(s)" ));
         menuFocus = menuPathMgr;
     }
     

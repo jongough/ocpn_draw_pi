@@ -727,6 +727,8 @@ void PathManagerDialog::Create()
             wxMouseEventHandler(PathManagerDialog::OnLayToggleVisibility), NULL, this );
     m_pLayListCtrl->Connect( wxEVT_COMMAND_LIST_COL_CLICK,
             wxListEventHandler(PathManagerDialog::OnLayColumnClicked), NULL, this );
+    m_pLayListCtrl->Connect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
+                                 wxListEventHandler(PathManagerDialog::OnLayerRightClick), NULL, this );
     itemBoxSizer7->Add( m_pLayListCtrl, 1, wxEXPAND | wxALL, DIALOG_MARGIN );
 
     m_pLayListCtrl->InsertColumn( colLAYVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 44 );
@@ -816,6 +818,8 @@ PathManagerDialog::~PathManagerDialog()
                               wxMouseEventHandler(PathManagerDialog::OnPathToggleVisibility), NULL, this );
     m_pPathListCtrl->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK,
                               wxListEventHandler(PathManagerDialog::OnPathColumnClicked), NULL, this );
+    m_pPathListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
+                              wxListEventHandler(PathManagerDialog::OnPathRightClick), NULL, this );
     btnPathProperties->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
                                 wxCommandEventHandler(PathManagerDialog::OnPathPropertiesClick), NULL, this );
     
@@ -848,6 +852,8 @@ PathManagerDialog::~PathManagerDialog()
                                  wxMouseEventHandler(PathManagerDialog::OnODPointToggleVisibility), NULL, this );
     m_pODPointListCtrl->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK,
                                  wxListEventHandler(PathManagerDialog::OnODPointColumnClicked), NULL, this );
+    m_pODPointListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
+                                 wxListEventHandler(PathManagerDialog::OnODPointRightClick), NULL, this );
     btnODPointNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
                             wxCommandEventHandler(PathManagerDialog::OnODPointNewClick), NULL, this );
     
@@ -881,6 +887,8 @@ PathManagerDialog::~PathManagerDialog()
                              wxMouseEventHandler(PathManagerDialog::OnLayToggleVisibility), NULL, this );
     m_pLayListCtrl->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK,
                              wxListEventHandler(PathManagerDialog::OnLayColumnClicked), NULL, this );
+    m_pLayListCtrl->Disconnect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,
+                             wxListEventHandler(PathManagerDialog::OnLayerRightClick), NULL, this );
     btnLayNew->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED,
                         wxCommandEventHandler(PathManagerDialog::OnLayNewClick), NULL, this );
     
@@ -987,7 +995,7 @@ void PathManagerDialog::UpdatePathListCtrl()
 
     // restore selection if possible
     // NOTE this will select a different item, if one is deleted
-    // (the next route will get that index).
+    // (the next path will get that index).
     if( selected_id > -1 ) {
         item = m_pPathListCtrl->FindItem( -1, selected_id );
         m_pPathListCtrl->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
@@ -1067,12 +1075,12 @@ void PathManagerDialog::ZoomtoPath( ODPath *path )
         if( clon < -180. ) clon += 360.;
 
     // Calculate ppm
-    double rw, rh, ppm; // route width, height, final ppm scale to use
+    double rw, rh, ppm; // path width, height, final ppm scale to use
     int ww, wh; // chart window width, height
-    // route bbox width in nm
+    // path bbox width in nm
     DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMinLat(),
             RBBox.GetMaxLon(), NULL, &rw );
-    // route bbox height in nm
+    // path bbox height in nm
     DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMaxLat(),
             RBBox.GetMinLon(), NULL, &rh );
 
@@ -1269,7 +1277,7 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
 
 void PathManagerDialog::OnPathZoomtoClick( wxCommandEvent &event )
 {
-    // Zoom into the bounding box of the selected route
+    // Zoom into the bounding box of the selected path
     long item = -1;
     item = m_pPathListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
@@ -1349,8 +1357,6 @@ void PathManagerDialog::OnPathActivateClick( wxCommandEvent &event )
     g_pODConfig->UpdatePath( ppath );
 
     RequestRefresh( GetOCPNCanvasWindow() );
-
-//      btnRteActivate->SetLabel(route->m_bRtIsActive ? wxT("Deactivate") : wxT("Activate"));
 
     m_bNeedConfigFlush = true;
 }
@@ -2050,7 +2056,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
     if ( answer == wxID_NO )
         return;
     
-    // Process Tracks and Routes in this layer
+    // Process Paths in this layer
     wxPathListNode *node1 = g_pPathList->GetFirst();
     wxPathListNode *node2;
     while( node1 ) {
@@ -2071,11 +2077,11 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
 
     while( node ) {
         node3 = node->GetNext();
-        ODPoint *rp = node->GetData();
-        if( rp && ( rp->m_LayerID == layer->m_LayerID ) ) {
-            rp->m_bIsInLayer = false;
-            rp->m_LayerID = 0;
-            g_pODPointMan->DestroyODPoint( rp, false );         // no need to update the change set on layer ops
+        ODPoint *pp = node->GetData();
+        if( pp && ( pp->m_LayerID == layer->m_LayerID ) ) {
+            pp->m_bIsInLayer = false;
+            pp->m_LayerID = 0;
+            g_pODPointMan->DestroyODPoint( pp, false );         // no need to update the change set on layer ops
         }
 
         node = node3;
@@ -2107,7 +2113,8 @@ void PathManagerDialog::SelectedLayerToggleVisibility( bool visible )
         if( player ) {
             player->SetVisible(visible);
         }
-        m_pODPointListCtrl->SetItemImage( item, player->IsVisible() ? 0 : 1 );
+        m_pLayListCtrl->SetItemImage( item, player->IsVisible() ? 0 : 1 );
+        ToggleLayerContentsOnChart( player );
     }
 }
 
@@ -2126,14 +2133,14 @@ void PathManagerDialog::OnLayToggleChartClick( wxCommandEvent &event )
     item = m_pLayListCtrl->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODLayer *layer = g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
+    ODLayer *player = g_pLayerList->Item( m_pLayListCtrl->GetItemData( item ) )->GetData();
 
-    if( !layer ) return;
+    if( !player ) return;
 
-    layer->SetVisible( !layer->IsVisible() );
-    m_pLayListCtrl->SetItemImage( item, layer->IsVisible() ? 0 : 1 );
+    player->SetVisible( !player->IsVisible() );
+    m_pLayListCtrl->SetItemImage( item, player->IsVisible() ? 0 : 1 );
 
-    ToggleLayerContentsOnChart( layer );
+    ToggleLayerContentsOnChart( player );
 }
 
 void PathManagerDialog::ToggleLayerContentsOnChart( ODLayer *layer )
@@ -2153,9 +2160,9 @@ void PathManagerDialog::ToggleLayerContentsOnChart( ODLayer *layer )
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
-        ODPoint *rp = node->GetData();
-        if( rp && ( rp->m_LayerID == layer->m_LayerID ) ) {
-            rp->SetVisible( layer->IsVisible() );
+        ODPoint *pp = node->GetData();
+        if( pp && !pp->m_bIsInPath && ( pp->m_LayerID == layer->m_LayerID ) ) {
+            pp->SetVisible( layer->IsVisible() );
         }
 
         node = node->GetNext();
@@ -2206,9 +2213,9 @@ void PathManagerDialog::ToggleLayerContentsNames( ODLayer *layer )
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     while( node ) {
-        ODPoint *rp = node->GetData();
-        if( rp && ( rp->m_LayerID == layer->m_LayerID ) ) {
-            rp->SetNameShown( layer->HasVisibleNames() );
+        ODPoint *pp = node->GetData();
+        if( pp && ( pp->m_LayerID == layer->m_LayerID ) ) {
+            pp->SetNameShown( layer->HasVisibleNames() );
         }
 
         node = node->GetNext();
@@ -2292,7 +2299,7 @@ void PathManagerDialog::UpdateLayListCtrl()
     // Delete existing items
     m_pLayListCtrl->DeleteAllItems();
 
-    // then add routes to the listctrl
+    // then add paths to the listctrl
     ODLayerList::iterator it;
     int index = 0;
     for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
@@ -2308,10 +2315,6 @@ void PathManagerDialog::UpdateLayListCtrl()
 
         wxString name = lay->m_LayerName;
         if( name.IsEmpty() ) {
-            //RoutePoint *rp = trk->GetPoint(1);
-            //if (rp)
-            //      name = rp->m_CreateTime.FormatISODate() + _T(" ") + rp->m_CreateTime.FormatISOTime();   //name = rp->m_CreateTime.Format();
-            //else
             name = _("(Unnamed Layer)");
         }
         m_pLayListCtrl->SetItem( idx, colLAYNAME, name );
@@ -2325,7 +2328,7 @@ void PathManagerDialog::UpdateLayListCtrl()
 
     // restore selection if possible
     // NOTE this will select a different item, if one is deleted
-    // (the next route will get that index).
+    // (the next path will get that index).
     if( selected_id > -1 ) {
         item = m_pLayListCtrl->FindItem( -1, selected_id );
         m_pLayListCtrl->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
