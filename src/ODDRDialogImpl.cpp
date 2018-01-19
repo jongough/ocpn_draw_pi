@@ -213,7 +213,6 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
         
         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             g_pODPointPropDialog->ValidateMark();
-            g_pODPointPropDialog->UpdateProperties();
         }
         
     }
@@ -347,6 +346,9 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     }
     if(l_pDR->m_iPersistenceType == ID_PERSISTENT || l_pDR->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( l_pDR, -1 );    // don't save over restart
+
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdatePathListCtrl();
 
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     Show( false );
