@@ -868,19 +868,22 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
     // search boundary point
     wxODPointListNode *node = GetODPointList()->GetFirst();
     while( node ) {
-        BoundaryPoint *op = dynamic_cast<BoundaryPoint *>(node->GetData());
-        if( op && op->IsListed() ) {
-            if( op->m_bIsInPath ) {
-                if( !op->m_bKeepXPath ) {
-                    node = node->GetNext();
-                    continue;
-                }
+        ODPoint *od = static_cast<ODPoint *>(node->GetData());
+        if( od->IsListed() ) {
+            if( od->m_bIsInPath && !od->m_bKeepXPath ) {
+                node = node->GetNext();
+                continue;
             }
             // if there's no ring there's nothing to do
-            if (!op->GetShowODPointRangeRings() || 
-                op->GetODPointRangeRingsNumber() == 0 ||
-                op->GetODPointRangeRingsStep() == 0.f)
+            if (!od->GetShowODPointRangeRings() || 
+                od->GetODPointRangeRingsNumber() == 0 ||
+                od->GetODPointRangeRingsStep() == 0.f)
             {
+                node = node->GetNext();
+                continue;
+            }
+            BoundaryPoint *op = dynamic_cast<BoundaryPoint *>(node->GetData());
+            if (!op) {
                 node = node->GetNext();
                 continue;
             }
