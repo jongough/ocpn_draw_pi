@@ -758,6 +758,12 @@ void ODPointPropertiesImpl::ValidateMark( void )
         node = node->GetNext();
     }
     
-    if( !b_found ) m_pODPoint = NULL;
+    if( !b_found ) {
+        m_pODPoint = NULL;
+        Hide();
+    }
+    else {
+        UpdateProperties();
+    }
 }
 
