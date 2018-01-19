@@ -316,6 +316,9 @@ int             g_iDRDistanceUnits;
 int             g_iDRTimeUnits;
 int             g_iDRPersistenceType;
 
+wxString        g_sDefaultImportPath;
+wxString        g_sDefaultImportType;
+
 ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 ODJSON          *g_pODJSON;
@@ -1371,6 +1374,8 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
             pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
             pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
+            pConf->Write( wxS( "DefaultImportPath" ), g_sDefaultImportPath );
+            pConf->Write( wxS( "DefaultImportType" ), g_sDefaultImportType );
             
         }
     }
@@ -1631,6 +1636,9 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointFontEncoding" ), &l_fontInfo, (int)l_pDisplayTextFont->GetEncoding() );
         g_DisplayTextFont.SetEncoding( (wxFontEncoding)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
+        pConf->Read( wxS( "DefaultImportPath" ), &g_sDefaultImportPath, _T("") );
+        pConf->Read( wxS( "DefaultImportType" ), &g_sDefaultImportType, _T("gpx") );
+        
     }
 
 #ifndef __WXMSW__

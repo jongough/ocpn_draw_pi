@@ -1,8 +1,10 @@
 src/ocpn_draw_pi.cpp
 src/Boundary.cpp
+src/BoundaryCSVImport.cpp
 src/BoundaryMan.cpp
 src/BoundaryProp.cpp
 src/BoundaryPoint.cpp
+src/BoundaryPointCSVImport.cpp
 src/DR.cpp
 src/DRProp.cpp
 src/EBL.cpp
@@ -49,9 +51,11 @@ src/PILPropertiesDialogImpl.cpp
 src/TextPoint.cpp
 include/ocpn_draw_pi.h
 include/Boundary.h
+include/BoundaryCSVImport.h
 include/BoundaryMan.h
 include/BoundaryProp.h
 include/BoundaryPoint.h
+include/BoundaryPointCSVImport.h
 include/DR.h
 include/DRProp.h
 include/EBL.h

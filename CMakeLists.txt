@@ -20,8 +20,8 @@ SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
-SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "59")
+SET(VERSION_MINOR "5")
+SET(VERSION_PATCH "0")
 SET(VERSION_DATE "19/01/2018")
 
 SET(BUNDLE_DATA FALSE)
@@ -95,9 +95,11 @@ ADD_DEFINITIONS(-DUSE_S57)
 SET(SRCS
     src/ocpn_draw_pi.cpp
     src/Boundary.cpp
+    src/BoundaryCSVImport.cpp
     src/BoundaryMan.cpp
     src/BoundaryProp.cpp
     src/BoundaryPoint.cpp
+    src/BoundaryPointCSVImport.cpp
     src/DR.cpp
     src/DRProp.cpp
     src/EBL.cpp
@@ -147,9 +149,11 @@ SET(SRCS
 SET(HDRS
     include/ocpn_draw_pi.h
     include/Boundary.h
+    include/BoundaryCSVImport.h
     include/BoundaryMan.h
     include/BoundaryProp.h
     include/BoundaryPoint.h
+    include/BoundaryPointCSVImport.h
     include/DR.h
     include/DRProp.h
     include/EBL.h

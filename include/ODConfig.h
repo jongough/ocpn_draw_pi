@@ -54,7 +54,8 @@ class ODConfig
 
         void ExportGPX(wxWindow* parent, bool bviz_only = false, bool blayer = false);
         void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
-
+        void UI_Import(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
+        
         bool ExportGPXPaths(wxWindow* parent, PathList *pPathss, const wxString suggestedName = _T("paths"));
         bool ExportGPXODPoints(wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName = _T("OD Points"));
         
@@ -69,8 +70,12 @@ class ODConfig
 
         bool                    m_bSkipChangeSetUpdate;
         
-        wxString                m_gpx_path;
-
+        wxString                m_sGPX_Path;
+        wxString                m_sCSV_Path;
+        wxString                m_sImport_Path;
+        wxString                m_sImport_Type;
+        wxString                m_sWildcardString;
+        
       
       
     protected:

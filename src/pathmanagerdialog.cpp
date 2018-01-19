@@ -2357,8 +2357,9 @@ void PathManagerDialog::OnImportClick( wxCommandEvent &event )
     HideWithEffect(wxSHOW_EFFECT_BLEND );
 #endif
     
-    g_pODConfig->UI_ImportGPX( this );
-
+//    g_pODConfig->UI_ImportGPX( this );
+    g_pODConfig->UI_Import( this );
+    
 #ifdef __WXOSX__
     ShowWithEffect(wxSHOW_EFFECT_BLEND );
 #endif
