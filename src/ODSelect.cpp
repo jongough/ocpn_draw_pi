@@ -284,6 +284,7 @@ bool ODSelect::DeleteAllPoints( void )
 bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
 {
     SelectItem *pFindSel;
+    bool found = false;
 
     if( NULL != pdata ) {
 //    Iterate on the list
@@ -302,13 +303,13 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                         prp->SetSelectNode( NULL );
                     }
                     
-                    return true;
+                    found = true;
                 }
             }
             node = node->GetNext();
         }
     }
-    return false;
+    return found;
 }
 
 bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
