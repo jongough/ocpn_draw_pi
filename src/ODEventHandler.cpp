@@ -1108,7 +1108,10 @@ void ODEventHandler::PopupMenu( int popuptype )
                     MenuAppend( menuPath, ID_PATH_MENU_SHOW_ICONS, _("Show Boundary Point Icons"));
             }
             sString.clear();
-            sString.append( _("Delete...") );
+            if(g_bConfirmObjectDelete)
+                sString.append( _("Delete...") );
+            else
+                sString.append( _("Delete") );
             MenuAppend( menuPath, ID_PATH_MENU_DELETE, sString );
             if(m_pSelectedPath->m_sTypeString != wxT("EBL")) {
                 if ( m_pSelectedPath->m_bPathIsActive ) MenuAppend( menuPath, ID_PATH_MENU_DEACTIVATE, _( "Deactivate") );
