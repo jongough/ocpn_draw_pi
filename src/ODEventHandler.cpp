@@ -181,9 +181,10 @@ ODEventHandler::~ODEventHandler()
 void ODEventHandler::OnODTimer1( wxTimerEvent& event )
 {
     g_ocpn_draw_pi->nBlinkerTick++; 
-    if( ( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
+    if(( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
         ( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) ||
-        ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) )
+        ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) ||
+        ( m_pSelectedPath && m_pSelectedPath->m_sTypeString == _T("Boundary") ) )
         RequestRefresh( m_parentcanvas );
 }
 
@@ -1006,6 +1007,13 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     
 } 
 
+void ODEventHandler::PopupMenuCloseHandler( wxCommandEvent & event )
+{
+    if(m_pSelectedPath) {
+        m_pSelectedPath->m_bPathPropertiesBlink = false;
+    }
+}
+
 void ODEventHandler::PopupMenu( int popuptype )
 {
     wxMenu* contextMenu = new wxMenu;
@@ -1253,8 +1261,10 @@ void ODEventHandler::PopupMenu( int popuptype )
     
     //        Invoke the correct focused drop-down menu
     m_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
+    m_parentcanvas->Connect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
     m_parentcanvas->PopupMenu( menuFocus );
     m_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
+    m_parentcanvas->Disconnect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
     // Cleanup
     if( ( m_pSelectedPath ) ) m_pSelectedPath->m_bPathIsSelected = false;
     m_pSelectedPath = NULL;
