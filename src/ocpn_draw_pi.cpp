@@ -2125,6 +2125,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 }
                 if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                     m_pSelectedGZ->UpdateGZSelectablePath();
+                } else if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+                    m_pSelectedPath->m_bPathPropertiesBlink = false;
                 } else if (m_pSelectedPIL) {
                     m_pSelectedPIL->UpdatePIL();
                 } else {
@@ -2483,6 +2485,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                 }
+                m_pSelectedPath->m_bPathPropertiesBlink = true;
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
@@ -2656,6 +2659,7 @@ void ocpn_draw_pi::FindSelectedObject()
         }
         
         if( m_pSelectedPath ) {
+            m_pSelectedPath->m_bPathPropertiesBlink = true;
             if( NULL == m_pFoundODPoint ) m_pFoundODPoint =
                 (ODPoint *) pFindPathSeg->m_pData1;
             m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
