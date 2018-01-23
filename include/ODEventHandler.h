@@ -59,6 +59,7 @@ class ODEventHandler : public wxEvtHandler
         
         void OnODTimer1(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
+        void PopupMenuCloseHandler( wxCommandEvent & event );
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
         void PopupMenu( int seltype );
         void SetPath( ODPath *path );
