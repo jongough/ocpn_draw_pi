@@ -95,6 +95,8 @@ END_EVENT_TABLE()
 ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 {
     //ctor
+    m_pSelectedPath = NULL;
+
     m_parent = parent;
     m_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
     ODTimer1.SetOwner( this );
