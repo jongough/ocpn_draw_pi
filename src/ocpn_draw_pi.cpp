@@ -2484,8 +2484,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                         m_pSelectedGZ = (GZ *)m_pSelectedPath;
                     else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
+                    m_pSelectedPath->m_bPathPropertiesBlink = true;
                 }
-                m_pSelectedPath->m_bPathPropertiesBlink = true;
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
