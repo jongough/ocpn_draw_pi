@@ -32,6 +32,7 @@ extern ODLayerList *g_pLayerList;
 
 ODLayer::ODLayer( void )
 {
+    m_bIsVisibleOnListing = false;
     m_bIsVisible = g_bShowLayers;
     m_bHasVisibleNames = true;
     m_NoOfItems = 0;
