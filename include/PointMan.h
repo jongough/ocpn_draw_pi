@@ -52,6 +52,7 @@ class ODPoint;
 class ODPointList;
 class wxFontEnumerator;
 
+class BoundaryPoint;
 //    List definitions for Point Manager Icons
 
 class markicon_bitmap_list_type;
@@ -100,7 +101,11 @@ class PointMan
 
       PI_ColorScheme    m_ColourScheme;
 
-      wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );
+      BoundaryPoint *FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, 
+                  double EndLat, int type, int state );
+
+      wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, 
+            int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );
 
 protected:
 private:

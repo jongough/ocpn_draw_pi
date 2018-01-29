@@ -863,7 +863,7 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
    return true;
 }
 
-wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
+BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
 {
     // search boundary point
     wxODPointListNode *node = GetODPointList()->GetFirst();
@@ -876,8 +876,8 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
             }
             // if there's no ring there's nothing to do
             if (!od->GetShowODPointRangeRings() || 
-                od->GetODPointRangeRingsNumber() == 0 ||
-                od->GetODPointRangeRingsStep() == 0.f)
+                    od->GetODPointRangeRingsNumber() == 0 ||
+                    od->GetODPointRangeRingsStep() == 0.f)
             {
                 node = node->GetNext();
                 continue;
@@ -887,7 +887,7 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
                 node = node->GetNext();
                 continue;
             }
-            bool    l_bNext = false;
+            bool l_bNext = false;
             switch (type) {
                 case ID_BOUNDARY_ANY:
                     l_bNext = false;
@@ -906,11 +906,22 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
                double f = (op->m_iODPointRangeRingsStepUnits == 1)?1000.0:1852.31;
                double dst = op->GetODPointRangeRingsNumber() * op->GetODPointRangeRingsStep() * f;
                if (DistancePointLine( op->m_lon, op->m_lat, StartLon, StartLat, EndLon, EndLat, dst )) {
-                  return op->m_GUID;
+                  return op;
                }
             }
         }
         node = node->GetNext();
     }
+    return 0;
+}
+
+wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
+{
+    BoundaryPoint *op;
+    wxString l_sGUID;
+    op = FindLineCrossingBoundaryPtr( StartLon, StartLat, EndLon, EndLat, type, state );
+    if ( op != 0)
+        return op->m_GUID;
     return _T("");
+    
 }
