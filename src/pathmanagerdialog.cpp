@@ -152,7 +152,6 @@ extern DRProp       *g_pDRPropDialog;
 extern GZProp       *g_pGZPropDialog;
 extern PILProp      *g_pPILPropDialog;
 extern PathMan      *g_pPathMan;
-extern ODPointList  *g_pODPointList;
 extern ODConfig     *g_pODConfig;
 extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;

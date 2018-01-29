@@ -140,7 +140,6 @@ EBLList                 *g_pEBLList;
 DRList                  *g_pDRList;
 GZList                  *g_pGZList;
 PILList                 *g_pPILList;
-ODPointList             *g_pODPointList;
 ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
 int                     g_PILToEdit;
@@ -285,9 +284,6 @@ ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
-
-ODPoint       *pAnchorWatchPoint1;
-ODPoint       *pAnchorWatchPoint2;
 
 IDX_entry       *gpIDX;
 
@@ -481,7 +477,6 @@ int ocpn_draw_pi::Init(void)
     
     g_pODJSON = new ODJSON;
     g_pODAPI = new ODAPI;
-    g_pODPointList = new ODPointList;
     g_pBoundaryList = new BoundaryList;
     g_pEBLList = new EBLList;
     g_pDRList = new DRList;
@@ -3855,7 +3850,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
     }
         
     /* ODPoints not drawn as part of routes */
-    if( pivp.bValid && g_pODPointList ) {
+    if( pivp.bValid && g_pODPointMan ) {
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
             if( ( pOP->m_lon >= pivp.lon_min && pOP->m_lon <= pivp.lon_max ) && ( pOP->m_lat >= pivp.lat_min && pOP->m_lat <= pivp.lat_max ) )

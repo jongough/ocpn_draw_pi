@@ -120,26 +120,23 @@ bool ODAPI::OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_
     else if(pFCBLC->sBoundaryState == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
     else l_BoundaryState = ID_BOUNDARY_ANY;
 
-    wxString l_sGUID = g_pBoundaryMan->FindLineCrossingBoundary( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, &pFCBLC->dCrossingLon, &pFCBLC->dCrossingLat, &pFCBLC->dCrossingDistance, l_BoundaryType, l_BoundaryState );
-    if(l_sGUID.length() > 0) {
-        Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
+    Boundary *l_boundary = g_pBoundaryMan->FindLineCrossingBoundaryPtr( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, &pFCBLC->dCrossingLon, &pFCBLC->dCrossingLat, &pFCBLC->dCrossingDistance, l_BoundaryType, l_BoundaryState );
+    if(l_boundary != 0) {
         pFCBLC->sName = l_boundary->m_PathNameString;
         pFCBLC->sDescription = l_boundary->m_PathDescription;
-        pFCBLC->sGUID = l_sGUID;
+        pFCBLC->sGUID = l_boundary->m_GUID;
         pFCBLC->sBoundaryObjectType = wxT("Boundary");
         return true;
     }
 
     // point state is meaningless for boundary test
     l_BoundaryState = ID_POINT_STATE_ANY;
-
-    l_sGUID = g_pODPointMan->FindLineCrossingBoundary( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, l_BoundaryType, l_BoundaryState );
-    if(l_sGUID.length() > 0) {
-        BoundaryPoint *l_boundary = dynamic_cast<BoundaryPoint *>(g_pODPointMan->FindODPointByGUID( l_sGUID ));
-        assert (l_boundary != 0);
-        pFCBLC->sName = l_boundary->GetName();
-        pFCBLC->sDescription = l_boundary->GetDescription();
-        pFCBLC->sGUID = l_sGUID;
+    BoundaryPoint *l_op;
+    l_op = g_pODPointMan->FindLineCrossingBoundaryPtr( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, l_BoundaryType, l_BoundaryState );
+    if(l_op != 0) {
+        pFCBLC->sName = l_op->GetName();
+        pFCBLC->sDescription = l_op->GetDescription();
+        pFCBLC->sGUID = l_op->m_GUID;
         pFCBLC->sBoundaryObjectType = wxT("BoundaryPoint");
         return true;
     }

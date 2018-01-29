@@ -52,8 +52,6 @@
 
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
 extern wxString         *g_PrivateDataDir;
-extern ODPoint          *pAnchorWatchPoint1;
-extern ODPoint          *pAnchorWatchPoint2;
 extern ODConfig         *g_pODConfig;
 extern PathMan          *g_pPathMan;
 extern ODSelect         *g_pODSelect;
@@ -744,7 +742,7 @@ bool PointMan::SharedODPointsExist()
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
         ODPoint *prp = node->GetData();
-        if (prp->m_bKeepXPath && ( prp->m_bIsInPath || prp == pAnchorWatchPoint1 || prp == pAnchorWatchPoint2))
+        if (prp->m_bKeepXPath && prp->m_bIsInPath )
             return true;
         node = node->GetNext();
     }
@@ -760,7 +758,7 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
         // if argument is false, then only delete non-path ODPoints
         if( !prp->m_bIsInLayer && ( prp->GetIconName() != _T("mob") )
             && ( ( b_delete_used && prp->m_bKeepXPath )
-                        || ( ( !prp->m_bIsInPath ) && !( prp == pAnchorWatchPoint1 ) && !( prp == pAnchorWatchPoint2 ) ) ) ) {
+                        ||  !prp->m_bIsInPath   ) ) {
             DestroyODPoint(prp);
             if(prp->m_sTypeString == wxT("ODPoint"))
                 delete prp;
@@ -813,9 +811,6 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
         
         g_pODSelect->DeleteSelectableODPoint( pRp );
 
-        //    The ODPoint might be currently in use as an anchor watch point
-        if( pRp == pAnchorWatchPoint1 ) pAnchorWatchPoint1 = NULL;
-        if( pRp == pAnchorWatchPoint2 ) pAnchorWatchPoint2 = NULL;
 
         RemoveODPoint( pRp);
 
@@ -845,7 +840,8 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
    double a,b,c;
    double bb4ac;
    double x,y;
-   
+   double t;
+
    x = ex - sx;
    y = ey - sy;
    a = x * x + y * y;
@@ -856,14 +852,27 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
    c -= r * r;
    bb4ac = b * b - 4 * a * c;
 
-   if (fabs(a) < 1.e-6 || bb4ac < 0) {
+   if (fabs(a) < 1.e-6 || bb4ac < 0.) {
       return false;
    }
-
+   else if (bb4ac == 0.) {
+      // One solution.
+      t = -b / (2 * a);
+      if (t < 0. || t > 1.)
+          return false;
+   }
+   else {
+      t = (-b + sqrt( bb4ac)) / (2. * a);
+      if (t < 0. || t > 1.) {
+          t = (-b - sqrt( bb4ac)) / (2. * a);
+          if (t < 0. || t > 1.) 
+              return false;
+      }
+   }
    return true;
 }
 
-wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
+BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
 {
     // search boundary point
     wxODPointListNode *node = GetODPointList()->GetFirst();
@@ -876,8 +885,8 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
             }
             // if there's no ring there's nothing to do
             if (!od->GetShowODPointRangeRings() || 
-                od->GetODPointRangeRingsNumber() == 0 ||
-                od->GetODPointRangeRingsStep() == 0.f)
+                    od->GetODPointRangeRingsNumber() == 0 ||
+                    od->GetODPointRangeRingsStep() == 0.f)
             {
                 node = node->GetNext();
                 continue;
@@ -887,7 +896,7 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
                 node = node->GetNext();
                 continue;
             }
-            bool    l_bNext = false;
+            bool l_bNext = false;
             switch (type) {
                 case ID_BOUNDARY_ANY:
                     l_bNext = false;
@@ -906,11 +915,22 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
                double f = (op->m_iODPointRangeRingsStepUnits == 1)?1000.0:1852.31;
                double dst = op->GetODPointRangeRingsNumber() * op->GetODPointRangeRingsStep() * f;
                if (DistancePointLine( op->m_lon, op->m_lat, StartLon, StartLat, EndLon, EndLat, dst )) {
-                  return op->m_GUID;
+                  return op;
                }
             }
         }
         node = node->GetNext();
     }
+    return 0;
+}
+
+wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
+{
+    BoundaryPoint *op;
+    wxString l_sGUID;
+    op = FindLineCrossingBoundaryPtr( StartLon, StartLat, EndLon, EndLat, type, state );
+    if ( op != 0)
+        return op->m_GUID;
     return _T("");
+    
 }
