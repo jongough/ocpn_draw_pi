@@ -39,7 +39,6 @@
 
 extern PathList         *g_pPathList;
 extern BoundaryList     *g_pBoundaryList;
-extern ODPointList      *g_pODPointList;
 extern PointMan         *g_pODPointMan;
 
 
@@ -438,7 +437,7 @@ bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double 
     return bInPoly;
 }
 
-wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
+Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
 {
     wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
     Boundary *pboundary = NULL;
@@ -499,6 +498,7 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
                     double brg;
                     double len;
                     BOUNDARYCROSSING l_BoundaryCrossing;
+                    l_BoundaryCrossing.ptr = pboundary;
                     l_BoundaryCrossing.GUID = pboundary->m_GUID;
                     l_BoundaryCrossing.Lon = l_dCrossingLon;
                     l_BoundaryCrossing.Lat = l_dCrossingLat;
@@ -515,6 +515,8 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
     // if list of crossings <> 0 then find one closest to start point
     if(!BoundaryCrossingList.empty()) {
         std::list<BOUNDARYCROSSING>::iterator it = BoundaryCrossingList.begin();
+        Boundary *pret = it->ptr;
+
         wxString l_sGUID = it->GUID;
         *CrossingDist = it->Len;
         *CrossingLon = it->Lon;
@@ -526,11 +528,20 @@ wxString BoundaryMan::FindLineCrossingBoundary( double StartLon, double StartLat
                 *CrossingLon = it->Lon;
                 *CrossingLat = it->Lat;
                 l_sGUID = it->GUID;
+                pret = it->ptr;
             }
             ++it;
         }
-        return l_sGUID;
+        return pret;
     }
-    return _T("");
+    return 0;
 }
 
+wxString BoundaryMan::FindLineCrossingBoundary(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
+{
+    Boundary *pboundary;
+    pboundary = FindLineCrossingBoundaryPtr(StartLon, StartLat, EndLon, EndLat, CrossingLon, CrossingLat, CrossingDist, type, state );
+    if ( pboundary != 0)
+        return  pboundary->m_GUID;
+    return _T("");
+}
