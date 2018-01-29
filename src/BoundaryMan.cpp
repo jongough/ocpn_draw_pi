@@ -39,7 +39,6 @@
 
 extern PathList         *g_pPathList;
 extern BoundaryList     *g_pBoundaryList;
-extern ODPointList      *g_pODPointList;
 extern PointMan         *g_pODPointMan;
 
 
