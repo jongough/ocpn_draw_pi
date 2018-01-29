@@ -845,7 +845,8 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
    double a,b,c;
    double bb4ac;
    double x,y;
-   
+   double t;
+
    x = ex - sx;
    y = ey - sy;
    a = x * x + y * y;
@@ -856,10 +857,23 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
    c -= r * r;
    bb4ac = b * b - 4 * a * c;
 
-   if (fabs(a) < 1.e-6 || bb4ac < 0) {
+   if (fabs(a) < 1.e-6 || bb4ac < 0.) {
       return false;
    }
-
+   else if (bb4ac == 0.) {
+      // One solution.
+      t = -b / (2 * a);
+      if (t < 0. || t > 1.)
+          return false;
+   }
+   else {
+      t = (-b + sqrt( bb4ac)) / (2. * a);
+      if (t < 0. || t > 1.) {
+          t = (-b - sqrt( bb4ac)) / (2. * a);
+          if (t < 0. || t > 1.) 
+              return false;
+      }
+   }
    return true;
 }
 
