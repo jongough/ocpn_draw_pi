@@ -39,7 +39,6 @@
 
 extern PathList         *g_pPathList;
 extern GZList           *g_pGZList;
-extern ODPointList      *g_pODPointList;
 extern PointMan         *g_pODPointMan;
 extern PlugIn_ViewPort   g_VP;
 
