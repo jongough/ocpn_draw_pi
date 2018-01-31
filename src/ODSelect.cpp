@@ -289,9 +289,11 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
     if( NULL != pdata ) {
 //    Iterate on the list
         wxSelectableItemListNode *node = pSelectList->GetFirst();
+        wxSelectableItemListNode *next;
 
         while( node ) {
             pFindSel = node->GetData();
+            next = node->GetNext();
             if( pFindSel->m_seltype == SeltypeToDelete ) {
                 if( pdata == pFindSel->m_pData1 ) {
                     delete pFindSel;
@@ -306,7 +308,7 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                     found = true;
                 }
             }
-            node = node->GetNext();
+            node = next;
         }
     }
     return found;
