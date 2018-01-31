@@ -78,7 +78,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
     GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
     
     double factor = 1.00;
-    if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
+    if( m_iODPointRangeRingsStepUnits == 1 )          // convert to nautical miles
         factor = 1 / 1.852;
     
     factor *= m_fODPointRangeRingsStep;
@@ -123,7 +123,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
     
     double factor = 1.00;
-    if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
+    if( m_iODPointRangeRingsStepUnits == 1 )          // convert to nautical miles
         factor = 1 / 1.852;
     
     factor *= m_fODPointRangeRingsStep;
