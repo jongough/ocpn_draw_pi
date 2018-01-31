@@ -309,7 +309,13 @@ wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type
             if(l_pBoundaryPoint->m_bShowODPointRangeRings && l_pBoundaryPoint->m_iODPointRangeRingsNumber > 0 && !l_bNext) {
                 double l_dRangeRingSize = l_pBoundaryPoint->m_iODPointRangeRingsNumber * l_pBoundaryPoint->m_fODPointRangeRingsStep;
                 double brg;
-                double l_dPointDistance;
+                double factor = 1.00;
+                if( l_pBoundaryPoint->m_iODPointRangeRingsStepUnits == 1 )          // convert kilometer to nautical miles
+                    factor = 1 / 1.852;
+
+                l_dRangeRingSize = factor * l_dRangeRingSize;
+                double l_dPointDistance; // l_dPointDistance is in nautical mile
+
                 DistanceBearingMercator_Plugin( l_pBoundaryPoint->m_lat, l_pBoundaryPoint->m_lon, lat, lon, &brg, &l_dPointDistance );
                 //l_dPointDistance = sqrt(((pboundarypoint->m_lat - lat) * (pboundarypoint->m_lat - lat)) + ((pboundarypoint->m_lon - lon) * (pboundarypoint->m_lon - lon)));
                 if( l_dRangeRingSize > l_dPointDistance ) {
