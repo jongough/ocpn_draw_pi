@@ -74,6 +74,11 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
 
 void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
 {
+    if (!(m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings )) {
+        ODPoint::Draw( dc, rpn );
+        return;
+    }
+
     wxPoint r;
     GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
     
@@ -91,24 +96,27 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
     double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
     pow( (double) (r.y - r1.y), 2 ) );
     int pix_radius = (int) lpp * m_iODPointRangeRingsNumber;
+
+    if ( pix_radius <= 10) {
+        ODPoint::Draw( dc, rpn );
+        return;
+    }
     
     // fill boundary with hatching
-    if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 10 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
-        wxColour tCol;
-        tCol.Set(m_wxcODPointRangeRingsSchemeColour.Red(), m_wxcODPointRangeRingsSchemeColour.Green(), m_wxcODPointRangeRingsSchemeColour.Blue(), m_uiBoundaryPointFillTransparency);
-        if(m_bExclusionBoundaryPoint && !m_bInclusionBoundaryPoint) {
+    wxColour tCol;
+    tCol.Set(m_wxcODPointRangeRingsSchemeColour.Red(), m_wxcODPointRangeRingsSchemeColour.Green(), m_wxcODPointRangeRingsSchemeColour.Blue(), m_uiBoundaryPointFillTransparency);
+    if(m_bExclusionBoundaryPoint && !m_bInclusionBoundaryPoint) {
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             dc.DrawDisk( r.x, r.y, 0, pix_radius );
             dc.SetPen( savePen );
-        } else if(!m_bExclusionBoundaryPoint && m_bInclusionBoundaryPoint){
+    } else if(!m_bExclusionBoundaryPoint && m_bInclusionBoundaryPoint){
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             dc.DrawDisk( r.x, r.y, pix_radius, pix_radius + m_iInclusionBoundaryPointSize );
             dc.SetPen( savePen );
-        }
     }
 
     ODPoint::Draw( dc, rpn );
@@ -117,6 +125,11 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 {
 #ifdef ocpnUSE_GL
+    if (!(m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings )) {
+        ODPoint::DrawGL( pivp );
+        return;
+    }
+
     ODDC dc;
     
     wxPoint r;
@@ -136,9 +149,14 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
     pow( (double) (r.y - r1.y), 2 ) );
     int pix_radius = (int) lpp * m_iODPointRangeRingsNumber;
+
+    if ( pix_radius <= 10) {
+        ODPoint::DrawGL( pivp );
+        return;
+    }
     
     // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
-    GLubyte slope_cross_hatch[] = {
+    static const GLubyte slope_cross_hatch[] = {
         0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
         0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
@@ -173,18 +191,16 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 
     // fill boundary with hatching
-    if ( m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && pix_radius > 10 && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
-        wxPen savePen = dc.GetPen();
-        dc.SetPen(*wxTRANSPARENT_PEN);
-        dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxPENSTYLE_SOLID ) );
-        if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
-            dc.DrawDisk( r.x, r.y , 0, pix_radius);
-        }
-        else {
-            dc.DrawDisk( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize);
-        }
-        dc.SetPen( savePen );
+    wxPen savePen = dc.GetPen();
+    dc.SetPen(*wxTRANSPARENT_PEN);
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxPENSTYLE_SOLID ) );
+    if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
+        dc.DrawDisk( r.x, r.y , 0, pix_radius);
     }
+    else {
+        dc.DrawDisk( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize);
+    }
+    dc.SetPen( savePen );
     
     glDisable( GL_BLEND );
     glDisable( GL_TEXTURE_2D );
