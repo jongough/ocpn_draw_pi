@@ -1319,6 +1319,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
             pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
             pConf->Write( wxS( "DefaultODPointIcon" ), g_sODPointIconName );
+            pConf->Write( wxS( "DefaultODPointShowRangeRings" ), g_bODPointShowRangeRings );
             pConf->Write( wxS( "ODPointRangeRingsNumber" ), g_iODPointRangeRingsNumber );
             pConf->Write( wxS( "ODPointRangeRingsStep" ), g_fODPointRangeRingsStep );
             pConf->Write( wxS( "ODPointRangeRingsStepUnits" ), g_iODPointRangeRingsStepUnits );
@@ -1531,6 +1532,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
         pConf->Read( wxS( "DefaultODPointIcon" ), &g_sODPointIconName, wxS("triangle") );
+        pConf->Read( wxS( "DefaultODPointShowRangeRings" ), &g_bODPointShowRangeRings, false );
         pConf->Read( wxS( "ODPointRangeRingsNumber" ), &g_iODPointRangeRingsNumber, 0 );
         pConf->Read( wxS( "ODPointRangeRingsStep" ), &val, wxS("1.0") );
         g_fODPointRangeRingsStep = atof( val.mb_str() );
