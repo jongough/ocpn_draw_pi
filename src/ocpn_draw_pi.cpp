@@ -3174,7 +3174,11 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
                 node = node->GetNext();
                 continue;
             } else {
-                if( BltBBox.Contains( pOP->m_lat, pOP->m_lon ) ) pOP->Draw( dc, NULL );
+                if( !pOP->m_bShowODPointRangeRings) {
+                    if( BltBBox.Contains(pOP->m_lat, pOP->m_lon) ) pOP->Draw( dc, NULL );
+                } else {
+                    if( !BltBBox.IntersectOut(pOP->m_RangeRingsBBox) ) pOP->Draw( dc, NULL );
+                }
             }
         }
         
@@ -3840,10 +3844,17 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         
     /* ODPoints not drawn as part of routes */
     if( pivp.bValid && g_pODPointMan ) {
+        LLBBox llbb;
+        llbb.Set( pivp.lat_min, pivp.lon_min, pivp.lat_max, pivp.lon_max );
+        
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
-            if( ( pOP->m_lon >= pivp.lon_min && pOP->m_lon <= pivp.lon_max ) && ( pOP->m_lat >= pivp.lat_min && pOP->m_lat <= pivp.lat_max ) )
-                pOP->DrawGL( pivp );
+            if( !pOP->m_bShowODPointRangeRings) {
+                if( llbb.Contains(pOP->m_lat, pOP->m_lon) ) pOP->DrawGL( pivp );
+            } else {
+                if( !llbb.IntersectOut(pOP->m_RangeRingsBBox) ) pOP->DrawGL( pivp );
+            }
+            
         }
     }
         

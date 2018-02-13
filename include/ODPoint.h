@@ -95,8 +95,8 @@ public:
       wxColour GetODPointRangeRingsColour(void);
       wxString GetTypeString(void) { return m_sTypeString; }
       void  SetShowODPointRangeRings(bool b_showODPointRangeRings) { m_bShowODPointRangeRings = b_showODPointRangeRings; };
-      void  SetODPointRangeRingsNumber(int i_ODPointRangeRingsNumber) { m_iODPointRangeRingsNumber = i_ODPointRangeRingsNumber; };
-      void  SetODPointRangeRingsStep(float f_ODPointRangeRingsStep) { m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; };
+      void  SetODPointRangeRingsNumber(int i_ODPointRangeRingsNumber);
+      void  SetODPointRangeRingsStep(float f_ODPointRangeRingsStep);
       void  SetODPointRangeRingsStepUnits(int i_ODPointRangeRingsStepUnits) { m_iODPointRangeRingsStepUnits = i_ODPointRangeRingsStepUnits; };
       void  SetODPointRangeRingsColour( wxColour wxc_ODPointRangeRingsColour ) { m_wxcODPointRangeRingsColour = wxc_ODPointRangeRingsColour; };
       void  SetODPointRangeRingWidth( int i_ODPointRangeRingWidth ) { m_iRangeRingWidth = i_ODPointRangeRingWidth; };
@@ -107,6 +107,7 @@ public:
       virtual void CreateColourSchemes( void );
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
+      void SetRangeRingBBox(void);
 
 
       double             m_lat;
@@ -185,6 +186,8 @@ public:
       wxString          m_ODPointName;
       wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
+      
+      LLBBox            m_RangeRingsBBox;
       
 protected:
     PI_ColorScheme  m_ColourScheme;

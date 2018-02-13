@@ -310,6 +310,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingsSteps->GetValue().mb_str() );
 //        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
+        m_pODPoint->SetRangeRingBBox();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
         m_pODPoint->CreateColourSchemes();
         m_pODPoint->SetColourScheme(g_global_color_scheme);
