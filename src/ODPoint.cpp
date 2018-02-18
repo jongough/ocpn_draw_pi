@@ -117,7 +117,7 @@ ODPoint::ODPoint()
     m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
-
+    
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
 
@@ -177,6 +177,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_wxcODPointRangeRingsColour = orig->m_wxcODPointRangeRingsColour;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
+    SetRangeRingBBox();
 
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
@@ -261,6 +262,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
+    SetRangeRingBBox();
     
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
@@ -839,4 +841,34 @@ void ODPoint::SetColourScheme(PI_ColorScheme cs)
             break;
     }
 
+}
+
+void ODPoint::SetRangeRingBBox(void)
+{
+    if(m_iODPointRangeRingsNumber > 0 && m_fODPointRangeRingsStep > 0) {
+        double l_dist = m_iODPointRangeRingsNumber * m_fODPointRangeRingsStep;
+        double l_minlat;
+        double l_minlon;
+        double l_maxlat;
+        double l_maxlon;
+        double l_lat;
+        double l_lon;
+        PositionBearingDistanceMercator_Plugin(m_lat, m_lon, 0, l_dist, &l_maxlat, &l_lon);
+        PositionBearingDistanceMercator_Plugin(m_lat, m_lon, 90, l_dist, &l_lat, &l_maxlon);
+        PositionBearingDistanceMercator_Plugin(m_lat, m_lon, 180, l_dist, &l_minlat, &l_lon);
+        PositionBearingDistanceMercator_Plugin(m_lat, m_lon, 270, l_dist, &l_lat, &l_minlon);
+        m_RangeRingsBBox.Set(l_minlat, l_minlon, l_maxlat, l_maxlon);
+    }
+}
+
+void ODPoint::SetODPointRangeRingsNumber(int i_ODPointRangeRingsNumber) 
+{ 
+    m_iODPointRangeRingsNumber = i_ODPointRangeRingsNumber; 
+    SetRangeRingBBox();
+}
+
+void ODPoint::SetODPointRangeRingsStep(float f_ODPointRangeRingsStep) 
+{ 
+    m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; 
+    SetRangeRingBBox();
 }
