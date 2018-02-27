@@ -31,8 +31,18 @@
 #endif
 
 #include "BoundaryPointCSVImport.h"
+#include "ocpn_draw_pi.h"
 
 #include <wx/tokenzr.h>
+
+extern bool        g_bExclusionBoundaryPoint;
+extern bool        g_bInclusionBoundaryPoint;
+extern bool        g_bBoundaryODPointsVisible;
+extern bool        g_bODPointShowRangeRings;
+extern int         g_iODPointRangeRingsNumber;
+extern float       g_fODPointRangeRingsStep;
+extern int         g_iODPointRangeRingsStepUnits;
+extern wxColour    g_colourODPointRangeRingsColour;
 
 BoundaryPointCSVImport::BoundaryPointCSVImport()
 {
@@ -77,30 +87,41 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCS
             m_bVisible = false;
         else
             m_bVisible = true;
-    }
+    } else
+        m_bVisible = g_bBoundaryODPointsVisible;
+    
     if(l_count >= 6) {
         wxString vis = BoundaryPointCSV.GetNextToken();
         if(vis == _T('F') || vis == _T('f'))
             m_bRangeRingsVisible = false;
         else
             m_bRangeRingsVisible = true;
-    }
+    } else
+        m_bRangeRingsVisible = g_bODPointShowRangeRings;
+    
     if(l_count >= 7) {
         BoundaryPointCSV.GetNextToken().ToLong((long int *)&m_iNumRings);
-    }
+    } else
+        m_iNumRings = g_iODPointRangeRingsNumber;
+    
     if(l_count >= 8) {
         BoundaryPointCSV.GetNextToken().ToDouble(&m_dStep);
-    }
+    } else
+        m_dStep = g_fODPointRangeRingsStep;
+    
     if(l_count >= 9) {
         wxString units = BoundaryPointCSV.GetNextToken();
         if(units == _T('K') || units == _T('k')) {
-            m_sUnits = units.Capitalize();
+            m_iUnits = ID_KILOMETERS;
         } else
-            m_sUnits = _T('N');
-    }
+            m_iUnits = ID_NAUTICAL_MILES;
+    } else
+        m_iUnits = g_iODPointRangeRingsStepUnits;
+        
     if(l_count >= 10) {
         m_RingColour.Set(BoundaryPointCSV.GetNextToken());
-    }
+    } else
+        m_RingColour = g_colourODPointRangeRingsColour;
 }
 
 BoundaryPointCSVImport::~BoundaryPointCSVImport()

@@ -273,6 +273,11 @@ enum {
     ID_PERSISTENT_LAST
 };
 
+enum {
+    ID_NAUTICAL_MILES = 0,
+    ID_KILOMETERS
+};
+
 
 #define SELTYPE_UNKNOWN             0x0001
 #define SELTYPE_ODPOINT             0x0002

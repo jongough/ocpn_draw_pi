@@ -46,7 +46,7 @@ class BoundaryPointCSVImport
         bool        m_bRangeRingsVisible;
         int         m_iNumRings;
         double      m_dStep;
-        wxString    m_sUnits;
+        int         m_iUnits;
         wxColour    m_RingColour;
     protected:
     private:

@@ -82,6 +82,12 @@ ODConfig::~ODConfig()
     //dtor
 }
 
+void ODConfig::LateInit(void)
+{
+    m_sImport_Path = g_sDefaultImportPath;
+    m_sImport_Type = g_sDefaultImportType;
+}
+
 bool ODConfig::AddNewPath( ODPath *pb, int crm )
 {
     if( pb->m_bIsInLayer )

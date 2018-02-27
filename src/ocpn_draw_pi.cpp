@@ -470,10 +470,11 @@ int ocpn_draw_pi::Init(void)
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
     wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
+
+    LoadConfig();
+    g_pODConfig->LateInit();
     
     g_pODSelect = new ODSelect();
-    
-    LoadConfig();
     
     g_pODJSON = new ODJSON;
     g_pODAPI = new ODAPI;
@@ -2493,8 +2494,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                     m_pSelectedPath->m_bPathPropertiesBlink = true;
+                } else if(m_pFoundODPoint) {
+                    m_pFoundODPoint->m_bPointPropertiesBlink = true;
                 }
-                m_pSelectedPath->m_bPathPropertiesBlink = true;
                 g_ODEventHandler->SetCanvas( ocpncc1 );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );

@@ -212,7 +212,6 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
-    m_bIsolatedMark = false;
     m_bShowName = g_bBoundaryPointShowName;
     m_bKeepXPath = false;
     m_bIsVisible = true;
@@ -243,8 +242,11 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
 
     //  Possibly add the ODPoint to the global list maintained by the ODPoint manager
 
-    if( bAddToList && NULL != g_pODPointMan )
+    if( bAddToList && NULL != g_pODPointMan ) {
         g_pODPointMan->AddODPoint( this );
+        m_bIsolatedMark = true;
+    } else
+        m_bIsolatedMark = false;
 
     m_bIsInLayer = g_bODIsNewLayer;
     if( m_bIsInLayer ) {

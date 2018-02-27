@@ -164,6 +164,7 @@ extern bool         g_bShowLayers;
 extern wxString     g_sODPointIconName;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern ODEventHandler   *g_ODEventHandler;
+extern wxString     g_sDefaultImportType;
 
 
 //extern AIS_Decoder      *g_pAIS;
@@ -691,7 +692,11 @@ void PathManagerDialog::Create()
     wxBoxSizer *itemBoxSizer6 = new wxBoxSizer( wxHORIZONTAL );
     itemBoxSizer5->Add( itemBoxSizer6, 1, wxALL | wxEXPAND | wxALIGN_LEFT );
 
-    btnImport = new wxButton( this, -1, _("I&mport GPX...") );
+    wxString l_sLabel = _("I&mport");
+    l_sLabel.Append(_T(" "));
+    l_sLabel.Append(g_sDefaultImportType);
+    l_sLabel.Append(_T("..."));
+    btnImport = new wxButton( this, -1, l_sLabel );
     itemBoxSizer6->Add( btnImport, 0, wxALL | wxALIGN_LEFT, DIALOG_MARGIN );
     btnImport->Connect( wxEVT_COMMAND_BUTTON_CLICKED,
             wxCommandEventHandler(PathManagerDialog::OnImportClick), NULL, this );
@@ -2358,6 +2363,11 @@ void PathManagerDialog::OnImportClick( wxCommandEvent &event )
     
 //    g_pODConfig->UI_ImportGPX( this );
     g_pODConfig->UI_Import( this );
+    wxString l_sLabel = _("I&mport");
+    l_sLabel.Append(_T(" "));
+    l_sLabel.Append(g_pODConfig->m_sImport_Type);
+    l_sLabel.Append(_T("..."));
+    btnImport->SetLabel(l_sLabel);
     
 #ifdef __WXOSX__
     ShowWithEffect(wxSHOW_EFFECT_BLEND );

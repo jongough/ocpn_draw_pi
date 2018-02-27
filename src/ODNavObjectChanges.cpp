@@ -65,6 +65,7 @@ extern bool             g_bInclusionBoundaryPoint;
 extern int              g_navobjbackups;
 extern int              g_iGZMaxNum;
 extern PI_ColorScheme   g_global_color_scheme;
+extern wxString         g_sODPointIconName;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -2032,6 +2033,7 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
         wxStringTokenizer l_TokenString(l_InputLine, _T(","));
         //if(l_TokenString.CountTokens() < 3) return;
         wxString l_type = l_TokenString.GetNextToken();
+
         if(l_type == _T("'B'")) {
             if(l_bBoundaryStart) {
                 wxString l_message = _("Error in import file.");
@@ -2059,16 +2061,27 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
             delete l_BCI;
         } else if(l_type == _T("'BP'")){
             l_BPCI = new BoundaryPointCSVImport(l_TokenString);
-            BoundaryPoint *l_pBP = new BoundaryPoint();
-            l_pBP->m_lat = l_BPCI->m_dLat;
-            l_pBP->m_lon = l_BPCI->m_dLon;
-            l_pBP->m_ODPointName = l_BPCI->m_sName;
-            l_boundary->AddPoint(l_pBP, false, true, true);
-            l_pBP->m_bIsInBoundary = true;
-            l_pBP->m_bIsInPath = true;
-            g_pODPointMan->AddODPoint(l_pBP);
+            BoundaryPoint *l_pBP = new BoundaryPoint(l_BPCI->m_dLat, l_BPCI->m_dLon, g_sODPointIconName, l_BPCI->m_sName, wxEmptyString, false);
+            if(l_bBoundaryStart) {
+                l_boundary->AddPoint(l_pBP, false, true, true);
+                l_pBP->m_bIsInBoundary = true;
+                l_pBP->m_bIsInPath = true;
+            } else {
+                g_pODPointMan->AddODPoint(l_pBP);
+                l_pBP->m_bIsolatedMark = true;
+                g_pODSelect->AddSelectableODPoint(l_BPCI->m_dLat, l_BPCI->m_dLon, l_pBP);
+                l_pBP->m_bIsInBoundary = false;
+                l_pBP->m_bIsInPath = false;
+            }
             l_pBP->m_bExclusionBoundaryPoint = l_BCI->m_bExclusion;
             l_pBP->m_bInclusionBoundaryPoint = l_BCI->m_bInclusion;
+            l_pBP->SetVisible(l_BPCI->m_bVisible); 
+            l_pBP->SetShowODPointRangeRings(l_BPCI->m_bRangeRingsVisible);
+            l_pBP->SetODPointRangeRingsNumber(l_BPCI->m_iNumRings);
+            l_pBP->SetODPointRangeRingsStep(l_BPCI->m_dStep);
+            l_pBP->SetODPointRangeRingsStepUnits(l_BPCI->m_iUnits);
+            l_pBP->SetODPointRangeRingsColour(l_BPCI->m_RingColour);
+            
             delete l_BPCI;
         } else if(l_type == _T("'/B'")) {
             // end boundaryg

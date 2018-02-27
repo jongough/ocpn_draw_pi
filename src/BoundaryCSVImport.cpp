@@ -38,6 +38,9 @@ extern wxColour    g_colourActiveBoundaryLineColour;
 extern wxColour    g_colourActiveBoundaryFillColour;
 extern bool        g_bExclusionBoundary;
 extern bool        g_bInclusionBoundary;
+extern wxColour    g_colourActiveBoundaryLineColour;
+extern wxColour    g_colourActiveBoundaryFillColour;
+
 
 BoundaryCSVImport::BoundaryCSVImport()
 {
@@ -75,7 +78,11 @@ BoundaryCSVImport::BoundaryCSVImport(wxStringTokenizer BoundaryCSV)
             m_bExclusion = true;
             m_bInclusion = false;
         }
-    } 
+    } else {
+        m_bExclusion = g_bExclusionBoundary;
+        m_bInclusion = g_bInclusionBoundary;
+    }
+    
     if(l_count >= 3) {
         wxString vis = BoundaryCSV.GetNextToken();
         if(vis == _T("'F'") || vis == _T("'f'"))
@@ -83,16 +90,21 @@ BoundaryCSVImport::BoundaryCSVImport(wxStringTokenizer BoundaryCSV)
         else
             m_bVisible = true;
     }
+    
     if(l_count >= 4) {
         wxString l_rgb = BoundaryCSV.GetNextToken();
         l_rgb = l_rgb.SubString(1, l_rgb.Length() - 2);
         m_LineColour.Set(l_rgb);
-    }
+    } else
+        m_LineColour = g_colourActiveBoundaryLineColour;
+    
     if(l_count >= 5) {
         wxString l_rgb = BoundaryCSV.GetNextToken();
         l_rgb = l_rgb.SubString(1, l_rgb.Length() - 2);
         m_FillColour.Set(l_rgb);
-    }
+    } else
+        m_FillColour = g_colourActiveBoundaryFillColour;
+    
 }
 
 BoundaryCSVImport::~BoundaryCSVImport()

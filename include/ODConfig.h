@@ -39,6 +39,7 @@ class ODConfig
 //        ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName) {}
         ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName);
         virtual ~ODConfig();
+        void    LateInit(void);
 
         virtual bool AddNewPath(ODPath *pr, int ConfigRouteNum = -1);
         virtual bool UpdatePath(ODPath *pr);
