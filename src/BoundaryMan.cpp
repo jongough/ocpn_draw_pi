@@ -443,7 +443,7 @@ bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double 
     return bInPoly;
 }
 
-Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
+Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state, bool FindFirst )
 {
     wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
     Boundary *pboundary = NULL;
@@ -501,16 +501,20 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
                 popSecond = OCPNpoint_next_node->GetData();
                 l_bCrosses = GetLineIntersection(StartLon, StartLat, EndLon, EndLat, popFirst->m_lon, popFirst->m_lat, popSecond->m_lon, popSecond->m_lat, &l_dCrossingLon, &l_dCrossingLat);
                 if(l_bCrosses) {
-                    double brg;
-                    double len;
-                    BOUNDARYCROSSING l_BoundaryCrossing;
-                    l_BoundaryCrossing.ptr = pboundary;
-                    l_BoundaryCrossing.GUID = pboundary->m_GUID;
-                    l_BoundaryCrossing.Lon = l_dCrossingLon;
-                    l_BoundaryCrossing.Lat = l_dCrossingLat;
-                    DistanceBearingMercator_Plugin( StartLat, StartLon, l_dCrossingLat, l_dCrossingLon, &brg, &len );
-                    l_BoundaryCrossing.Len = len;
-                    BoundaryCrossingList.push_back(l_BoundaryCrossing);
+                    if(!FindFirst) {
+                        double brg;
+                        double len;
+                        BOUNDARYCROSSING l_BoundaryCrossing;
+                        l_BoundaryCrossing.ptr = pboundary;
+                        l_BoundaryCrossing.GUID = pboundary->m_GUID;
+                        l_BoundaryCrossing.Lon = l_dCrossingLon;
+                        l_BoundaryCrossing.Lat = l_dCrossingLat;
+                        DistanceBearingMercator_Plugin( StartLat, StartLon, l_dCrossingLat, l_dCrossingLon, &brg, &len );
+                        l_BoundaryCrossing.Len = len;
+                        BoundaryCrossingList.push_back(l_BoundaryCrossing);
+                    } else {
+                        return pboundary;
+                    }
                 }
                 popFirst = popSecond;
                 OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
@@ -518,6 +522,7 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
         }
         boundary_node = boundary_node->GetNext();                         // next boundary
     }
+    
     // if list of crossings <> 0 then find one closest to start point
     if(!BoundaryCrossingList.empty()) {
         std::list<BOUNDARYCROSSING>::iterator it = BoundaryCrossingList.begin();
@@ -543,10 +548,10 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
     return 0;
 }
 
-wxString BoundaryMan::FindLineCrossingBoundary(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
+wxString BoundaryMan::FindLineCrossingBoundary(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state, bool FindFirst )
 {
     Boundary *pboundary;
-    pboundary = FindLineCrossingBoundaryPtr(StartLon, StartLat, EndLon, EndLat, CrossingLon, CrossingLat, CrossingDist, type, state );
+    pboundary = FindLineCrossingBoundaryPtr(StartLon, StartLat, EndLon, EndLat, CrossingLon, CrossingLat, CrossingDist, type, state, FindFirst );
     if ( pboundary != 0)
         return  pboundary->m_GUID;
     return _T("");

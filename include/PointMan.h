@@ -101,8 +101,7 @@ class PointMan
 
       PI_ColorScheme    m_ColourScheme;
 
-      BoundaryPoint *FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, 
-                  double EndLat, int type, int state );
+      BoundaryPoint *FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state );
 
       wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, 
             int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );

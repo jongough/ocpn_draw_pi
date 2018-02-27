@@ -142,3 +142,41 @@ bool ODAPI::OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_
     }
     return false;
 }
+
+bool ODAPI::OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC )
+{
+    int l_BoundaryType;
+    int l_BoundaryState;
+    
+    if(pFCBLC->sBoundaryType == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
+    else if(pFCBLC->sBoundaryType == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
+    else if(pFCBLC->sBoundaryType == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_ANY;
+    else l_BoundaryType = ID_BOUNDARY_ANY;
+    
+    if(pFCBLC->sBoundaryState == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
+    else if(pFCBLC->sBoundaryState == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
+    else if(pFCBLC->sBoundaryState == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
+    else l_BoundaryState = ID_BOUNDARY_ANY;
+    
+    Boundary *l_boundary = g_pBoundaryMan->FindLineCrossingBoundaryPtr( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, &pFCBLC->dCrossingLon, &pFCBLC->dCrossingLat, &pFCBLC->dCrossingDistance, l_BoundaryType, l_BoundaryState, true );
+    if(l_boundary != 0) {
+        pFCBLC->sName = l_boundary->m_PathNameString;
+        pFCBLC->sDescription = l_boundary->m_PathDescription;
+        pFCBLC->sGUID = l_boundary->m_GUID;
+        pFCBLC->sBoundaryObjectType = wxT("Boundary");
+        return true;
+    }
+    
+    // point state is meaningless for boundary test - not true 27/02/2018
+    // l_BoundaryState = ID_POINT_STATE_ANY;
+    BoundaryPoint *l_op;
+    l_op = g_pODPointMan->FindLineCrossingBoundaryPtr( pFCBLC->dStartLon, pFCBLC->dStartLat, pFCBLC->dEndLon, pFCBLC->dEndLat, l_BoundaryType, l_BoundaryState );
+    if(l_op != 0) {
+        pFCBLC->sName = l_op->GetName();
+        pFCBLC->sDescription = l_op->GetDescription();
+        pFCBLC->sGUID = l_op->m_GUID;
+        pFCBLC->sBoundaryObjectType = wxT("BoundaryPoint");
+        return true;
+    }
+    return false;
+}

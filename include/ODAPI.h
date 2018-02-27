@@ -72,6 +72,7 @@ public:
     static bool OD_FindPathByGUID( wxString sGUID, wxString *sName, wxString *sDescription );
     static bool OD_FindPointInAnyBoundary( FindPointInAnyBoundary_t *pFPIAB );
     static bool OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
+    static bool OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     
 protected:
     
@@ -81,6 +82,7 @@ private:
 typedef bool (*OD_FindPathByGUID) (wxString, wxString *, wxString *);
 typedef bool (*OD_FindPointInAnyBoundary) (FindPointInAnyBoundary_t *);
 typedef bool (*OD_FindClosestBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
+typedef bool (*OD_FindFirstBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 
 
 #endif //_ODAPI_H_
