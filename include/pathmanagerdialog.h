@@ -39,6 +39,12 @@ enum TrackContextMenu {
       TRACK_CLEAN
 };
 
+enum {
+      PATH_TAB = 0,
+      POINT_TAB,
+      LAYER_TAB
+};
+
 class wxButton;
 class ODPath;
 class ODPoint;
@@ -78,6 +84,7 @@ class PathManagerDialog : public wxDialog {
             void ToggleLayerContentsNames(ODLayer *layer);
 
             // event handlers
+            void OnNotebookPageChanged(wxBookCtrlEvent &event);
             void OnPathSelected(wxListEvent &event);
             void OnPathDeSelected(wxListEvent &event);
             void OnPathDefaultAction(wxListEvent &event);
@@ -172,6 +179,8 @@ class PathManagerDialog : public wxDialog {
 
             int m_lastODPointItem;
             int m_lastPathItem;
+            
+            int m_iPage;
             
             wxWindow *m_wParent;
 };

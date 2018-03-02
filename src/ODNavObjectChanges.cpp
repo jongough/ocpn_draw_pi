@@ -2018,7 +2018,7 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
     }
 }
 
-void ODNavObjectChanges::Load_CSV_File(wxString FileName)
+int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_layerviz)
 {
     wxTextFile l_TextFile(FileName);
     l_TextFile.Open();
@@ -2027,6 +2027,7 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
     BoundaryPointCSVImport *l_BPCI;
     Boundary *l_boundary = NULL;
     bool    l_bBoundaryStart = false;
+    int     l_NumObjs = 0;
     
     for(l_InputLine = l_TextFile.GetFirstLine(); l_TextFile.Eof() == false; l_InputLine = l_TextFile.GetNextLine()) {
         // process line
@@ -2045,7 +2046,7 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
                 }
                 OCPNMessageBox_PlugIn( NULL, l_message, _("Import Error"), wxOK );
                 if(l_boundary) g_pPathMan->DeletePath(l_boundary);
-                return;
+                return l_NumObjs;
             }
             l_bBoundaryStart = true;
             l_BCI = new BoundaryCSVImport(l_TokenString);
@@ -2058,6 +2059,13 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
             l_boundary->SetVisible(l_BCI->m_bVisible);
             l_boundary->m_wxcActiveLineColour = l_BCI->m_LineColour;
             l_boundary->m_wxcActiveFillColour = l_BCI->m_FillColour;
+            if( layer_id ){
+                l_boundary->SetVisible( b_layerviz );
+                l_boundary->m_bIsInLayer = true;
+                l_boundary->m_LayerID = layer_id;
+                l_boundary->SetListed( false );
+            }            
+            l_NumObjs++;
             delete l_BCI;
         } else if(l_type == _T("'BP'")){
             l_BPCI = new BoundaryPointCSVImport(l_TokenString);
@@ -2081,6 +2089,14 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
             l_pBP->SetODPointRangeRingsStep(l_BPCI->m_dStep);
             l_pBP->SetODPointRangeRingsStepUnits(l_BPCI->m_iUnits);
             l_pBP->SetODPointRangeRingsColour(l_BPCI->m_RingColour);
+            if( layer_id ) {
+                l_pBP->m_bIsInLayer = true;
+                l_pBP->m_LayerID = layer_id;
+                if(!l_pBP->m_bIsInPath)
+                    l_pBP->m_bIsVisible = b_layerviz;
+                l_pBP->SetListed( false );
+            }
+            l_NumObjs++;
             
             delete l_BPCI;
         } else if(l_type == _T("'/B'")) {
@@ -2102,6 +2118,7 @@ void ODNavObjectChanges::Load_CSV_File(wxString FileName)
         }
         OCPNMessageBox_PlugIn( NULL, l_message, _("Import Error"), wxOK );
         if(l_boundary) g_pPathMan->DeletePath(l_boundary);
-        return;
+        return --l_NumObjs;
     }
+    return l_NumObjs;
 }

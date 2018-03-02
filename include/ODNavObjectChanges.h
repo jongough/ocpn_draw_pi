@@ -88,7 +88,7 @@ class ODNavObjectChanges : public pugi::xml_document
     bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, unsigned int flags );
     bool LoadAllGPXObjects( bool b_full_viz = false);
     int  LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
-    void Load_CSV_File(wxString file);
+    int Load_CSV_File(wxString file, int layer_id = 0, bool b_layerviz = false);
     //bool LoadAllCSVObjects( bool b_full_viz = false);
     //ODPoint * GPXLoadODPoint1( pugi::xml_node &odpt_node, wxString def_symbol_name, wxString GUID, bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id );
 
