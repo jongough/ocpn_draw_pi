@@ -37,6 +37,14 @@
 #endif
 #endif
 
+#include    <list>
+
+enum {
+    EXCLUSION_BOUNDARY = 0,
+    INCLUSION_BOUNDARY,
+    NEITHER_BOUNDARY
+};
+
 struct FindPointInAnyBoundary_t {
     double  dLat;
     double  dLon;
@@ -64,6 +72,44 @@ struct FindClosestBoundaryLineCrossing_t {
     wxString    sBoundaryObjectType;
 };
 
+struct CreateBoundaryPoint_t {
+    wxString    name;
+    double      lat;
+    double      lon;
+    int         type;
+    bool        visible;
+    bool        ringsvisible;
+    int         ringsnumber;
+    double      ringssteps;
+    int         ringsunits;
+    wxString    ringscolour;
+    
+};
+
+struct CreateBoundary_t {
+    wxString    name;
+    int         type;
+    bool        pathIsActive;
+    bool        visible;
+    wxString    lineColour;
+    wxString    fillColour;
+    std::list   <CreateBoundaryPoint_t *> BoundaryPointsList;
+};
+
+struct CreateTextPoint_t {
+    wxString    name;
+    double      lat;
+    double      lon;
+    wxString    description;
+    wxString    TextToDisplay;
+    bool        visible;
+    bool        ringsvisible;
+    int         ringsnumber;
+    double      ringssteps;
+    int         ringsunits;
+    wxString    ringscolour;
+};
+
 class ODAPI
 {
 public:
@@ -73,6 +119,9 @@ public:
     static bool OD_FindPointInAnyBoundary( FindPointInAnyBoundary_t *pFPIAB );
     static bool OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
+    static bool OD_CreateBoundary( CreateBoundary_t *pCB );
+    static bool OD_CreateBoundaryPoint( CreateBoundaryPoint_t *pCBP );
+    static bool OD_CreateTextPoint( CreateTextPoint_t *pCTP );
     
 protected:
     
@@ -83,6 +132,9 @@ typedef bool (*OD_FindPathByGUID) (wxString, wxString *, wxString *);
 typedef bool (*OD_FindPointInAnyBoundary) (FindPointInAnyBoundary_t *);
 typedef bool (*OD_FindClosestBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_FindFirstBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
+typedef bool (*OD_CreateBoundary) (CreateBoundary_t *);
+typedef bool (*OD_CreateBoundaryPoint) (CreateBoundaryPoint_t *);
+typedef bool (*OD_CreateTextPoint) (CreateTextPoint_t *);
 
 
 #endif //_ODAPI_H_

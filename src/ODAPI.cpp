@@ -39,12 +39,16 @@
 #include "BoundaryMan.h"
 #include "BoundaryPoint.h"
 #include "ODPath.h"
+#include "ODSelect.h"
 #include "PathMan.h"
 #include "PointMan.h"
+#include "TextPoint.h"
 
 extern PathMan      *g_pPathMan;
 extern BoundaryMan  *g_pBoundaryMan;
 extern PointMan     *g_pODPointMan;
+extern ODSelect     *g_pODSelect;
+extern wxString      g_sODPointIconName;
 
 ODAPI::ODAPI()
 {
@@ -179,4 +183,142 @@ bool ODAPI::OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t 
         return true;
     }
     return false;
+}
+
+bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
+{
+    bool    l_bValidBoundary = true;
+    bool    l_test = true;
+    
+    // validate boundary information
+    if(pCB->type != EXCLUSION_BOUNDARY &&  pCB->type != INCLUSION_BOUNDARY && pCB->type != NEITHER_BOUNDARY) l_bValidBoundary = false;
+    if(pCB->BoundaryPointsList.size() <= 1) l_bValidBoundary = false;
+    wxString l_rgbLine = pCB->lineColour.SubString(1, pCB->lineColour.Length() - 2);
+    wxColour l_Colour;
+    l_test = l_Colour.Set(l_rgbLine);
+    if(!l_test) l_bValidBoundary = false;
+    wxString l_rgbFill = pCB->fillColour.SubString(1, pCB->fillColour.Length() - 2);
+    l_test = l_Colour.Set(l_rgbFill);
+    if(!l_test) l_bValidBoundary = false;
+    
+    // Create boundary
+    Boundary *l_boundary;
+    l_boundary = new Boundary();
+    
+    l_boundary->m_PathNameString = pCB->name;
+    switch (pCB->type) 
+    {
+        case EXCLUSION_BOUNDARY:
+            l_boundary->m_bExclusionBoundary = true;
+            l_boundary->m_bInclusionBoundary = false;
+            break;
+        case INCLUSION_BOUNDARY:
+            l_boundary->m_bExclusionBoundary = false;
+            l_boundary->m_bInclusionBoundary = true;
+            break;
+        case NEITHER_BOUNDARY:
+            l_boundary->m_bExclusionBoundary = false;
+            l_boundary->m_bInclusionBoundary = false;
+            break;
+    }
+    l_boundary->m_bPathIsActive = true;
+    l_boundary->SetVisible(pCB->visible);
+    l_boundary->m_wxcActiveLineColour = pCB->lineColour;
+    l_boundary->m_wxcActiveFillColour = pCB->fillColour;
+    
+    std::list<CreateBoundaryPoint_t *>::iterator it = pCB->BoundaryPointsList.begin();
+    while( it != pCB->BoundaryPointsList.end() ) {
+        BoundaryPoint *l_pBP = new BoundaryPoint((*it)->lat, (*it)->lon, g_sODPointIconName, (*it)->name, wxEmptyString, false);
+        l_boundary->AddPoint(l_pBP, false, true, true);
+        switch ((*it)->type) 
+        {
+            case EXCLUSION_BOUNDARY:
+                l_pBP->m_bExclusionBoundaryPoint = true;
+                l_pBP->m_bInclusionBoundaryPoint = false;
+                break;
+            case INCLUSION_BOUNDARY:
+                l_pBP->m_bExclusionBoundaryPoint = false;
+                l_pBP->m_bInclusionBoundaryPoint = true;
+                break;
+            case NEITHER_BOUNDARY:
+                l_pBP->m_bExclusionBoundaryPoint = false;
+                l_pBP->m_bInclusionBoundaryPoint = false;
+                break;
+        }
+        l_pBP->SetVisible((*it)->visible); 
+        l_pBP->SetShowODPointRangeRings((*it)->ringsvisible);
+        l_pBP->SetODPointRangeRingsNumber((*it)->ringsnumber);
+        l_pBP->SetODPointRangeRingsStep((*it)->ringssteps);
+        l_pBP->SetODPointRangeRingsStepUnits((*it)->ringsunits);
+        l_pBP->SetODPointRangeRingsColour((*it)->ringscolour);
+        
+        ++it;
+    }
+    
+    l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());
+    l_boundary->m_bIsBeingCreated = false;
+    ODNavObjectChanges *l_ODNavObjectChanges = new ODNavObjectChanges();
+    l_ODNavObjectChanges->InsertPathA(l_boundary);
+    l_boundary = NULL;
+    
+    delete l_ODNavObjectChanges;
+    
+    return l_bValidBoundary;
+}
+
+bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
+{
+    // create boundary point
+    bool    l_bValidBoundaryPoint = true;
+    BoundaryPoint *l_pBP = new BoundaryPoint(pCBP->lat, pCBP->lon, g_sODPointIconName, pCBP->name, wxEmptyString, false);
+
+    switch (pCBP->type) 
+    {
+        case EXCLUSION_BOUNDARY:
+            l_pBP->m_bExclusionBoundaryPoint = true;
+            l_pBP->m_bInclusionBoundaryPoint = false;
+            break;
+        case INCLUSION_BOUNDARY:
+            l_pBP->m_bExclusionBoundaryPoint = false;
+            l_pBP->m_bInclusionBoundaryPoint = true;
+            break;
+        case NEITHER_BOUNDARY:
+            l_pBP->m_bExclusionBoundaryPoint = false;
+            l_pBP->m_bInclusionBoundaryPoint = false;
+            break;
+    }
+    l_pBP->SetVisible(pCBP->visible); 
+    l_pBP->SetShowODPointRangeRings(pCBP->ringsvisible);
+    l_pBP->SetODPointRangeRingsNumber(pCBP->ringsnumber);
+    l_pBP->SetODPointRangeRingsStep(pCBP->ringssteps);
+    l_pBP->SetODPointRangeRingsStepUnits(pCBP->ringsunits);
+    l_pBP->SetODPointRangeRingsColour(pCBP->ringscolour);
+    g_pODPointMan->AddODPoint(l_pBP);
+    l_pBP->m_bIsolatedMark = true;
+    g_pODSelect->AddSelectableODPoint(pCBP->lat, pCBP->lon, l_pBP);
+    l_pBP->m_bIsInBoundary = false;
+    l_pBP->m_bIsInPath = false;
+    
+    return l_bValidBoundaryPoint;
+}
+
+bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
+{
+    // create text point
+    bool    l_bValidTextPoint = true;
+    TextPoint *l_pTP = new TextPoint(pCTP->lat, pCTP->lon, g_sODPointIconName, pCTP->name, wxEmptyString, false);
+    
+    l_pTP->m_TextPointText = pCTP->TextToDisplay;
+    l_pTP->SetMarkDescription(pCTP->description);
+    l_pTP->SetVisible(pCTP->visible); 
+    l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
+    l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
+    l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
+    l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
+    l_pTP->SetODPointRangeRingsColour(pCTP->ringscolour);
+    g_pODPointMan->AddODPoint(l_pTP);
+    l_pTP->m_bIsolatedMark = true;
+    g_pODSelect->AddSelectableODPoint(pCTP->lat, pCTP->lon, l_pTP);
+    
+    return l_bValidTextPoint;
 }

@@ -45,7 +45,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
 	
-	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, _("Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, _("OCPN_Draw Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextNavObjBackups->Wrap( -1 );
 	fgSizer4->Add( m_staticTextNavObjBackups, 0, wxALL, 5 );
 	
@@ -76,8 +76,8 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_choiceToolbar->SetSelection( 1 );
 	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
 	
-	m_staticTextConfigFileEntriesMsg = new wxStaticText( m_panelGeneral, wxID_ANY, _("Delete current OCPN_Draw config entries (No)"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextConfigFileEntriesMsg->Wrap( -1 );
+	m_staticTextConfigFileEntriesMsg = new wxStaticText( m_panelGeneral, wxID_ANY, _("Remove OCPN_Draw settings and restore to default on restart (No)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextConfigFileEntriesMsg->Wrap( 200 );
 	fgSizer4->Add( m_staticTextConfigFileEntriesMsg, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_buttonConfigFileEntries = new wxButton( m_panelGeneral, wxID_ANY, _("Yes"), wxDefaultPosition, wxDefaultSize, 0 );

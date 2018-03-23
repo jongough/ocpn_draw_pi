@@ -89,6 +89,7 @@ class ODNavObjectChanges : public pugi::xml_document
     bool LoadAllGPXObjects( bool b_full_viz = false);
     int  LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
     int Load_CSV_File(wxString file, int layer_id = 0, bool b_layerviz = false);
+    void InsertPathA( ODPath *pTentPath );
     //bool LoadAllCSVObjects( bool b_full_viz = false);
     //ODPoint * GPXLoadODPoint1( pugi::xml_node &odpt_node, wxString def_symbol_name, wxString GUID, bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id );
 
@@ -124,7 +125,6 @@ class ODNavObjectChanges : public pugi::xml_document
         ODPoint *tempODPointExists( const wxString& guid );
         void tempODPointRemove( const wxString& guid );
 
-        void InsertPathA( ODPath *pTentPath );
         void UpdatePathA( ODPath *pTentPath );
         ODPath *PathExists( const wxString& guid);
         ODPath *PathExists( ODPath * pTentPath );
