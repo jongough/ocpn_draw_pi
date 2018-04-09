@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 11:54+1000\n"
-"PO-Revision-Date: 2017-06-29 09:31-0400\n"
+"POT-Creation-Date: 2018-02-28 07:01+1100\n"
+"PO-Revision-Date: 2018-03-16 19:13-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -15,1443 +15,2004 @@ msgstr ""
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: et\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
-#
-msgid " &Properties..."
-msgstr " &Omadused..."
-#
-msgid " To: "
-msgstr " Kuhu: "
-#
-msgid ""
-" shorter than rhumbline.\n"
-"\n"
-msgstr ""
-" lühem kui rumbijoon.\n"
-"\n"
-#
-msgid " to "
-msgstr " kuni "
-#
-msgid "&Activate"
-msgstr "&Käivita"
-#
-msgid "&Apply"
-msgstr "&Rakenda"
-#
-msgid "&Cancel"
-msgstr "&Tühista"
-#
-msgid "&Center View"
-msgstr "Keskenda &vaade"
-#
-msgid "&Deactivate"
-msgstr "Peata"
-#
-msgid "&Delete"
-msgstr "K&ustuta"
-#
-msgid "&Delete All"
-msgstr "Kustut&a kõik"
-#
-msgid "&Export selected..."
-msgstr "&Ekspordi valitud..."
-#
-msgid "&New"
-msgstr "&Uus"
-#
-msgid "&OK"
-msgstr "&OK"
-#
-msgid "&Properties"
-msgstr "&Omadused"
-#
-msgid "&Properties..."
-msgstr "&Omadused..."
-#
-msgid "&Remove Selected"
-msgstr "&Kõrvalda valitud"
-#
-msgid "(Unnamed )"
-msgstr "(nimetu)"
-#
-msgid "(Unnamed Layer)"
-msgstr "(nimetu kiht)"
-#
-msgid "(Unnamed) "
-msgstr "(nimetu) "
-#
-msgid "(unnamed)"
-msgstr "(nimetu)"
-#
-msgid "0"
-msgstr "0"
-#
-msgid "0.0"
-msgstr "0,0"
-#
-msgid "0.5"
-msgstr "0,5"
-#
-msgid "1"
-msgstr "1"
-#
-msgid "1 Pixel"
-msgstr "1 piksel"
-#
-msgid "1 pixel"
-msgstr "1 piksel"
-#
-msgid "1.0"
-msgstr "1,0"
-#
-msgid "10"
-msgstr "10"
-#
-msgid "10 Pixels"
-msgstr "10 pikslit"
-#
-msgid "10 pixels"
-msgstr "10 pikslit"
-#
-msgid "2"
-msgstr "2"
-#
-msgid "2 Pixels"
-msgstr "2 pikslit"
-#
-msgid "2 pixels"
-msgstr "2 pikslit"
-#
-msgid "3"
-msgstr "3"
-#
-msgid "3 Pixels"
-msgstr "3 pikslit"
-#
-msgid "3 pixels"
-msgstr "3 pikslit"
-#
-msgid "4"
-msgstr "4"
-#
-msgid "4 Pixels"
-msgstr "4 pikslit"
-#
-msgid "4 pixels"
-msgstr "4 pikslit"
-#
-msgid "5"
-msgstr "5"
-#
-msgid "5 Pixels"
-msgstr "5 pikslit"
-#
-msgid "5 pixels"
-msgstr "5 pikslit"
-#
-msgid "6"
-msgstr "6"
-#
-msgid "6 Pixels"
-msgstr "6 pikslit"
-#
-msgid "6 pixels"
-msgstr "6 pikslit"
-#
-msgid "7"
-msgstr "7"
-#
-msgid "7 Pixels"
-msgstr "7 pikslit"
-#
-msgid "7 pixels"
-msgstr "7 pikslit"
-#
-msgid "8"
-msgstr "8"
-#
-msgid "8 Pixels"
-msgstr "8 pikslit"
-#
-msgid "8 pixels"
-msgstr "8 pikslit"
-#
-msgid "9"
-msgstr "9"
-#
-msgid "9 Pixels"
-msgstr "9 pikslit"
-#
-msgid "9 pixels"
-msgstr "9 pikslit"
-#
-msgid "About"
-msgstr "Teave"
-#
-msgid "Activate"
-msgstr "Käivita"
-#
-msgid "Active"
-msgstr "Aktiivne"
-#
-msgid "Active Centre Line Colour"
-msgstr "Aktiivse keskjoone värv"
-#
-msgid ""
-"Active DR Line\n"
-"Colour"
-msgstr ""
-"Aktiivse DR'i joon\n"
-"Värv"
-#
-msgid "Active EBL Line Colour"
-msgstr "Aktiivse EBL-joone värv"
-#
-msgid "Active Fill Colour"
-msgstr "Aktiivse täitevärv"
-#
-msgid "Active Line Colour"
-msgstr "Aktiivse joone värv"
-#
-#, fuzzy
-msgid "Active Offset Line 2 Colour"
-msgstr "Aktiivse nihkejoone värv"
-#
-msgid "Active Offset Line Colour"
-msgstr "Aktiivse nihkejoone värv"
-#
-msgid "Add Index Line"
-msgstr "Lisa indeksliin"
-#
-msgid "All"
-msgstr "Kõik"
-#
-msgid "Allow Left Mouse Button Drag"
-msgstr "Võimalda hiire vasaku klahvi lohistamine"
-#
-msgid "Always"
-msgstr "Alati"
-#
-msgid ""
-"Always Show\n"
-"EBL Info"
-msgstr ""
-"Alati näita\n"
-"EBL-infot"
-#
-msgid "Applying changes from "
-msgstr "Lisan muudatused "
-#
-msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr "Kas oled kindel, et soovid <ALL> OD-punktid kustutada?"
-#
-msgid "Are you sure you want to delete <ALL> paths?"
-msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
-#
-msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Kas kindlalt soovid valitud objekti(d) kustutada"
-#
-msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Oled kindel, et soovid selle piiripunkti kustutada?"
-#
-msgid "Are you sure you want to delete this Boundary?"
-msgstr "Oled kindel, et soovid kustutada selle piiri?"
-#
-msgid "Are you sure you want to delete this DR Point?"
-msgstr "Oled kindel, et soovid selle DR-punkti kustutada?"
-#
-msgid "Are you sure you want to delete this DR?"
-msgstr "Oled kindel, et soovid selle DR kustutada?"
-#
-msgid "Are you sure you want to delete this EBL Point?"
-msgstr "Oled kindel, et soovid selle EBL-punkti kustutada?"
-#
-msgid "Are you sure you want to delete this EBL?"
-msgstr "Oled kindel, et soovid selle EBL kustutada?"
-#
-msgid "Are you sure you want to delete this Guard Zone?"
-msgstr "Oled kindel, et soovid selle valvetsooni kustutada?"
-#
-msgid "Are you sure you want to delete this OD Point?"
-msgstr "Oled kindel, et soovid selle OD-punkti kõrvaldada?"
-#
-msgid "Are you sure you want to delete this PIL Point?"
-msgstr "Oled kindel, et soovid selle PIL-punkti kustutada?"
-#
-msgid "Are you sure you want to delete this Parallel Index Line Group?"
-msgstr ""
-"Kas soovid kindlasti kustutada selle paralleelstete indeksliinide rühma?"
-#
-msgid "Are you sure you want to delete this Parallel Index Line?"
-msgstr "Oled kindel, et soovid selle paralleelse indeksliini kõrvaldada?"
-#
-msgid "Are you sure you want to delete this Text Point?"
-msgstr "Oled kindel, et soovid selle tekstipunkti kõrvaldada?"
-#
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr ""
-"Kas oled kindel, et soovid kustutada selle kihi ja <ALL> temas sisalduva?"
-#
-msgid "Are you sure you want to remove this "
-msgstr "Kas oled kindel, et soovid eemaldada selle "
-#
-msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Oled kindel, et soovid eemaldada selle piiripunkti?"
-#
-msgid "Are you sure you want to remove this DR Point?"
-msgstr "Oled kindel, et soovid selle DR-punkti kõrvaldada?"
-#
-msgid "Are you sure you want to remove this EBL Point?"
-msgstr "Oled kindel, et soovid selle EBL-punkti kõrvaldada?"
-#
-msgid "Are you sure you want to remove this OD Point?"
-msgstr "Oled kindel, et soovid selle OD-punkti kõrvaldada?"
-#
-msgid "Are you sure you want to remove this point?"
-msgstr "Oled kindel, et soovid selle punkti kõrvaldada?"
-#
-msgid "Arrival Radius"
-msgstr "Saabumisraadius"
-#
-msgid "Background Colour"
-msgstr "Tausta värv"
-#
-msgid "Background Density"
-msgstr "Tausta tihedus"
-#
-msgid "Background Transparency"
-msgstr "Tausta läbipaistvus"
-#
-msgid "Basic"
-msgstr "Elementaarne"
-#
-msgid "Bearing"
-msgstr "Suund"
-#
-msgid "Bearing (M)"
-msgstr "Peiling (M)"
-#
-msgid "Bearing From-To"
-msgstr "Suund siit-sinna"
-#
-msgid "Bearing From-To (M)"
-msgstr "Peiling sealt-sinna (M)"
-#
-msgid "Bearing: "
-msgstr "Suund: "
-#
-msgid "Boat"
-msgstr "Paat"
-#
-msgid "Bottom"
-msgstr "Alla"
-#
-msgid "Bottom Centre"
-msgstr "All keskel"
-#
-msgid "Boundary"
-msgstr "Piir"
-#
-msgid "Boundary Point"
-msgstr "Piiripunkt"
-#
-msgid "Boundary Point &Properties"
-msgstr "Piiripunkt & omadused"
-#
-msgid ""
-"Boundary Point Inclusion\n"
-"Size"
-msgstr ""
-"Piirpunkti kaasamine\n"
-"Suurus"
-#
-msgid "Boundary Point Properties"
-msgstr "Piiripunkti omadused"
-#
-msgid "Boundary Point Properties, Layer: "
-msgstr "Piiripunkti omadused, kiht: "
-#
-msgid "Boundary Point Type"
-msgstr "Piiripunkti laad"
-#
-msgid "Boundary Properties"
-msgstr "Piiri omadused"
-#
-msgid "Boundary Properties, Layer: "
-msgstr "Piiri omadused, kiht: "
-#
-msgid "Boundary Type"
-msgstr "Piiri laad"
-#
-msgid "Centre"
-msgstr "Keskel"
-#
-msgid "Centre Line Style"
-msgstr "Keskjoone stiil"
-#
-msgid "Centre Line Width"
-msgstr "Keskjoone laius"
-#
-msgid "Centre on moving boat"
-msgstr "Keskenda liikuvale paadile"
-#
-msgid "Change all Path Point Icons"
-msgstr "Muuda kõik teepunktide ikoonid"
-#
-msgid "Combo!"
-msgstr "Mõlemad!"
-#
-msgid "Confirm"
-msgstr "Kinnita"
-#
-msgid "Confirm Object Delete"
-msgstr "Kinnita objekti kustutamine"
-#
-msgid "Control Line"
-msgstr "Kontrolljoon"
-#
-msgid "Copy"
-msgstr "Kopeeri"
-#
-msgid "Copy Boundary GUID"
-msgstr "Kopeeri piiri GUID"
-#
-msgid "Copy DR GUID"
-msgstr "Kopeeri DR GUID"
-#
-msgid "Copy EBL GUID"
-msgstr "Kopeeri EBL GUID"
-#
-msgid "Copy Guard Zone GUID"
-msgstr "Kopeeri valvetsooni GUID"
-#
-msgid "Copy Point GUID"
-msgstr "Kopeeri punkti GUID"
-#
-msgid "Copy lat/long"
-msgstr "Kopeeri laius/pikkus"
-#
-msgid "Course over Ground"
-msgstr "Kurss põhja suhtes"
-#
-msgid "Course over Ground (M)"
-msgstr "Kurss põhja suhtes (M)"
-#
-msgid "Course over Ground (T)"
-msgstr "Kurss põhja suhtes (T)"
-#
-msgid "Create Boundary"
-msgstr "Loo piir"
-#
-msgid "Create Boundary Point"
-msgstr "Loo piiripunkt"
-#
-msgid "Create DR"
-msgstr "Loo DR"
-#
-msgid "Create EBL"
-msgstr "Loo EBL"
-#
-msgid "Create GZ"
-msgstr "Loo VT"
-#
-msgid "Create PIL"
-msgstr "Loo PIL"
-#
-msgid "Create Text Point"
-msgstr "Loo teksti punkt"
-#
-msgid "DR"
-msgstr "DR"
-#
-msgid "DR Path Length"
-msgstr "DR tee pikkus"
-#
-msgid "DR Persistence"
-msgstr "DR'i püsivus"
-#
-msgid "DR Point"
-msgstr "DR-punkt"
-#
-msgid "DR Point &Properties"
-msgstr "DR-punkt & omadused"
-#
-msgid "DR Point Icon"
-msgstr "DR-punkti ikoon"
-#
-msgid "DR Point Interval"
-msgstr "DR punkti intervall"
-#
-msgid "DR Point Properties"
-msgstr "DR-punkti omadused"
-#
-msgid "DR Point Properties, Layer: "
-msgstr "DR-punkti omaduse, kiht: "
-#
-msgid "DR Properties"
-msgstr "DR omadused"
-#
-msgid "DR Properties, Layer: "
-msgstr "DR omadused, kiht: "
-#
-msgid "Date:"
-msgstr "kuupäev:"
-#
-msgid "Days"
-msgstr "päevad"
-#
-msgid "Deactivate"
-msgstr "Peata"
-#
+
+#: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:520
 msgid "Dead Reckoning"
 msgstr "Laakimine (DR)"
-#
-msgid "Default Offset (+Stbd/-Port)"
-msgstr "Vaikimisi nihe (+tp /-pp)"
-#
-msgid "Delete"
-msgstr "Kustuta"
-#
-msgid "Delete All"
-msgstr "Kustuta kõik"
-#
-msgid "Delete Line"
-msgstr "Kustuta liin"
-#
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr ""
-#
-msgid "Delete..."
-msgstr "Kustuta..."
-#
-msgid "Desc"
-msgstr "Kahanev"
-#
-msgid "Description"
-msgstr "Kirjeldus"
-#
-msgid "Display Toolbar"
-msgstr "Kuva tööriistariba"
-#
-msgid "Display text"
-msgstr "Kuva teksti"
-#
-msgid "Distance"
-msgstr "Vahemaa"
-#
-msgid "Distance Between Range Rings"
-msgstr "Vahemaaringide vaheline kaugus"
-#
-msgid "Distance From Boat"
-msgstr "Kaugus paadist"
-#
-msgid "Distance Unit"
-msgstr "Vahemaa ühik"
-#
-msgid "Distance Units"
-msgstr "Vahemaa ühikud"
-#
-msgid "Distance between Range Rings"
-msgstr "Vahemaaringide vaheline kaugus"
-#
-msgid "Distance from Ownship"
-msgstr "Vahemaa oma laevast"
-#
-msgid ""
-"Do you also want to make the shared OD Points being part of this boundary "
-"invisible?"
-msgstr ""
-"Kas sa soovid teha ka ühiskasutusega OD-punktid, mis on nendes piirides, "
-"nähtamatuks?"
-#
-msgid "Dot"
-msgstr "punktiirjoon"
-#
-msgid "Dot Dash"
-msgstr "Punkt-kriips"
-#
+
+#: include/ODNewODPointDialogDef.h:48 src/ODNewODPointDialogDef.cpp:23
+#: src/ODPointPropertiesDialog.cpp:109
+msgid "Point Type"
+msgstr "Punkti laad"
+
+#: include/ODPathPropertiesDialogDef.h:128 src/pathmanagerdialog.cpp:1248
+msgid "Path Properties"
+msgstr "Tee omadused"
+
+#: include/ODPointPropertiesDialog.h:139
+msgid "OD Point Properties"
+msgstr "OD-punkti omadused"
+
+#: include/ODPropertiesDialogDef.h:300
+msgid "OCPN Draw Properties"
+msgstr "OCPN Draw omadused"
+
+#: include/ODToolbarDef.h:46 src/ocpn_draw_pi.cpp:579 src/ocpn_draw_pi.cpp:581
 msgid "Draw Toolbar"
 msgstr "Joonistamise tööriistariba"
-#
-msgid "EBL"
-msgstr "EBL"
-#
-msgid "EBL Angle (-P/+S)"
-msgstr "EBL nurk (-P/+T)"
-#
-msgid ""
-"EBL Fixed\n"
-"End Position"
-msgstr ""
-"EBL fikseeritud\n"
-"lõpp-punkt"
-#
-msgid "EBL Fixed End Position"
-msgstr "EBL fikseeritud lõpp-punkt"
-#
-msgid "EBL Persistence"
-msgstr "EBL kestvus"
-#
-msgid "EBL Point"
-msgstr "EBL-punkt"
-#
-msgid "EBL Point &Properties"
-msgstr "EBL-punkt & omadused"
-#
-msgid "EBL Point Properties"
-msgstr "EBL-punkti omadused"
-#
-msgid "EBL Point Properties, Layer: "
-msgstr "EBL-punkti omadused, kiht: "
-#
-msgid "EBL Properties"
-msgstr "EBL omadused"
-#
-msgid "EBL Properties, Layer: "
-msgstr "EBL omadused, kiht: "
-#
-msgid ""
-"Edge Panning Sensitivity\n"
-"(percentage screen width) Default 5"
-msgstr ""
-"Nurga kerimise tundlikkus\n"
-"(protsent ekraani laiusest) vaikimisi 5"
-#
-msgid "Electronic Bearing Line"
-msgstr "Elektrooniline peilingujoon"
-#
-msgid "End"
-msgstr "Lõpp"
-#
-msgid "End Point Icon"
-msgstr "Lõpp-punkti ikoon"
-#
-msgid "Example"
-msgstr "Näide"
-#
-msgid "Exclusion"
-msgstr "Väljajätt"
-#
-msgid "Export All Visible..."
-msgstr "Ekspordi kõik nähtavad..."
-#
-msgid "Export GPX file"
-msgstr "Ekspordi GPX-fail"
-#
-msgid "Extended"
-msgstr "Laiendatud"
-#
-msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-msgstr ""
-#
-msgid "Fill Colour"
-msgstr "Täite värv"
-#
-msgid "Fill Density"
-msgstr "Täite tihedus"
-#
-msgid "First"
-msgstr "Esimene"
-#
-msgid "First Angle (-P/+S)"
-msgstr "Esimene nurk (-P/+S)"
-#
-msgid "First Point Icon"
-msgstr "Esimese punkti ikoon"
-#
-msgid "First distance"
-msgstr "Esimene kaugus"
-#
-msgid "Fonts"
-msgstr "Kirjamärgid"
-#
-msgid "For this leg the Great Circle boundary is "
-msgstr "Antud kursilõigu suurring piir on "
-#
-msgid "From Point"
-msgstr "Punktist"
-#
-msgid "From: "
-msgstr "Alates: "
-#
-msgid "GUID"
-msgstr "GUID"
-#
-msgid "GZ"
-msgstr "VT"
-#
-msgid "General"
-msgstr "Üldine"
-#
-msgid ""
-"General Drawing for OpenCPN\n"
-"\n"
-"Thanks to the community for their helpful suggestions."
-msgstr ""
-"OpenCPN'i üldine joonistamine\n"
-"\n"
-"Tänud kogukonnale abistavate ettepanekute eest."
-#
-msgid "General drawing for OpenCPN"
-msgstr "OpenCPN'i üldine joonistamine"
-#
-msgid "Guard Zone"
-msgstr "Valvetsoon (VT)"
-#
-msgid "Guard Zone Persistence"
-msgstr "Valvetsooni püsivus"
-#
-msgid "Guard Zone Point"
-msgstr "Valvetsooni punkt"
-#
-msgid "Guard Zone Point Properties"
-msgstr "Valvetsooni punkti omadused"
-#
-msgid "Guard Zone Properties"
-msgstr "Valvetsooni omadused"
-#
-msgid "Heading"
-msgstr "Suund"
-#
-msgid "Help"
-msgstr "Abi"
-#
-msgid "Hide Boundary Point Icons"
-msgstr "Peida piiri punktide ikoonid"
-#
-#, fuzzy
-msgid "Hide Layer(s)"
-msgstr "Kihid"
-#
-msgid "Hide Path(s)"
-msgstr ""
-#
-msgid "Hide Point names"
-msgstr "Peida punktinimed"
-#
-#, fuzzy
-msgid "Hide Point(s)"
-msgstr "Peida punktinimed"
-#
-msgid "Hide from chart"
-msgstr "Peida kaardilt"
-#
-msgid "Hours"
-msgstr "tunnid"
-#
-msgid "I&mport GPX..."
-msgstr "I&mpordi GPX..."
-#
-msgid "ID"
-msgstr "ID"
-#
-msgid "ID Num"
-msgstr "ID nr"
-#
-msgid "ID: "
-msgstr "ID: "
-#
-msgid "Icon"
-msgstr "Ikoon"
-#
-msgid "Import GPX file"
-msgstr "Impordi GPX-fail"
-#
-msgid "Inactive Centre Line Colour"
-msgstr "Passiivse keskjoone värv"
-#
-msgid ""
-"Inactive DR Line\n"
-"Colour"
-msgstr ""
-"Passiivse DR'i joon\n"
-"Värv"
-#
-msgid "Inactive EBL Line Colour"
-msgstr "Passiivse EBL-joone värv"
-#
-msgid "Inactive Fill Colour"
-msgstr "Passiivse täitevärv"
-#
-msgid "Inactive Line Colour"
-msgstr "Passiivse joone värv"
-#
-#, fuzzy
-msgid "Inactive Offset Line 2 Colour"
-msgstr "Passiivse nihkejoone värv"
-#
-msgid "Inactive Offset Line Colour"
-msgstr "Passiivse nihkejoone värv"
-#
-msgid "Inclusion"
-msgstr "Kaasamine"
-#
-msgid ""
-"Inclusion Boundary\n"
-"Size"
-msgstr ""
-"Kaasatud piir\n"
-"Suurus"
-#
-msgid "Inclusion Boundary Size"
-msgstr "Kaasatud piiri suurus"
-#
+
+#: include/PILPropertiesDialogDef.h:70
 msgid "Index Line Properties"
 msgstr "Indeksliini omadused"
-#
-msgid "Index Lines (+ Stbd/- Port)"
-msgstr "Indeksliinid (+ tüürp /- pakp)"
-#
-msgid ""
-"Initial Edge Panning Sensitivity\n"
-"(percentage screen width) Default 3"
-msgstr ""
-"Algne nurga kerimise tundlikkus\n"
-"(protsent ekraani laiusest) vaikimisi 3"
-#
-#, fuzzy
-msgid "Initial number of index lines"
-msgstr "Vahemaaringide arv"
-#
-msgid "Insert Boundary Point"
-msgstr "Sisesta piiripunkt"
-#
-msgid "Insert EBL Point"
-msgstr "Sisesta EBL-punkt"
-#
-msgid "Interval Type"
-msgstr "Intervalli tüüp"
-#
-msgid "Kilometres"
-msgstr "kilomeetrid"
-#
-msgid "Latitude"
-msgstr "laius"
-#
-msgid "Layer"
-msgstr "Kiht"
-#
-msgid "Layer "
-msgstr "Kiht "
-#
-msgid "Layer Boundary"
-msgstr "Piiri kiht"
-#
-msgid "Layer Boundary Point"
-msgstr "Piiripunkti kiht"
-#
-msgid "Layer DR Point"
-msgstr "DR-punktide kiht"
-#
-msgid "Layer EBL Point"
-msgstr "EBL-punktide kiht"
-#
-msgid "Layer Name"
-msgstr "Kihi nimi"
-#
-msgid "Layer Text Point"
-msgstr "Tekstipunktide kiht"
-#
-msgid "Layers"
-msgstr "Kihid"
-#
-msgid "Left"
-msgstr "Vasakul"
-#
-msgid "Leg: from "
-msgstr "Lõik: alates "
-#
-msgid "Length Type"
-msgstr "Pikkuse tüüp"
-#
-msgid "License"
-msgstr ""
-#
-msgid "Line Colour"
-msgstr "Joone värv"
-#
-msgid "Line Style"
-msgstr "Joone laad"
-#
-msgid "Line Width"
-msgstr "Joone jämedus"
-#
-msgid "List contents "
-msgstr "Loenda sisu "
-#
+
+#: src/EBL.cpp:122 src/EBL.cpp:295 src/ODPathPropertiesDialogImpl.cpp:434
+#: src/ODPathPropertiesDialogImpl.cpp:442 src/ODPathPropertiesDialogImpl.cpp:478
+#: src/ODPathPropertiesDialogImpl.cpp:561 src/ODPathPropertiesDialogImpl.cpp:569
+#: src/ODPathPropertiesDialogImpl.cpp:604 src/ocpn_draw_pi.cpp:2562
+#: src/ocpn_draw_pi.cpp:3500 src/ocpn_draw_pi.cpp:3685
+msgid "Boat"
+msgstr "Paat"
+
+#: src/EBL.cpp:122 src/EBL.cpp:324 src/EBL.cpp:371 src/EBL.cpp:381
+#: src/ODEventHandler.cpp:833 src/PIL.cpp:285
+msgid "Start"
+msgstr "Algus"
+
+#: src/EBL.cpp:130 src/ocpn_draw_pi.cpp:3506 src/ocpn_draw_pi.cpp:3691
+msgid "End"
+msgstr "Lõpp"
+
+#: src/EBLProp.cpp:63 src/ODPropertiesDialogDef.cpp:607
+msgid "EBL Persistence"
+msgstr "EBL kestvus"
+
+#: src/GZProp.cpp:77 src/ODPropertiesDialogDef.cpp:957
+msgid "Guard Zone Persistence"
+msgstr "Valvetsooni püsivus"
+
+#: src/ODConfig.cpp:160 src/ODConfig.cpp:200 src/ODConfig.cpp:381
+#: src/ODConfig.cpp:406
+msgid "Export GPX file"
+msgstr "Ekspordi GPX-fail"
+
+#: src/ODConfig.cpp:183 src/ODConfig.cpp:213 src/ODConfig.cpp:394
+msgid "Confirm"
+msgstr "Kinnita"
+
+#: src/ODConfig.cpp:183 src/ODConfig.cpp:213 src/ODConfig.cpp:394
+msgid "Overwrite existing file?"
+msgstr "Kas olemasolev fail üle kirjutada?"
+
+#: src/ODConfig.cpp:248
 msgid "Loading navobjects from "
 msgstr "Laen nav.objekte "
-#
-msgid "Long Dash"
-msgstr "Pikk kriips"
-#
-msgid "Longitude"
-msgstr "pikkus"
-#
-msgid "Maintain with"
-msgstr "Säilita koos"
-#
-msgid "Major:"
-msgstr "Peamine:"
-#
-msgid "Match VRM colour to EBL colour"
-msgstr "Sobita VRM-värv EBL-värviga"
-#
-msgid "Merge and Delete Boundaries"
-msgstr "Ühenda ja kustuta piirid"
-#
-msgid "Merge and Keep Boundaries"
-msgstr "Ühenda ja hoia piire"
-#
-msgid "Minor:"
-msgstr "Vähetähtis:"
-#
-msgid "Minutes"
-msgstr "minutid"
-#
-msgid "Move Boundary"
-msgstr "Liiguta piiri"
-#
-msgid "Move Boundary Point"
-msgstr "Liiguta piiripunkti"
-#
-msgid "Move Boundary Segment"
-msgstr "Liiguta piirilõiku"
-#
-msgid "Move DR Point"
-msgstr "Liiguta DR-punkti"
-#
-msgid "Move EBL"
-msgstr "Liiguta EBL"
-#
-msgid "Move EBL Point"
-msgstr "Liiguta EBL-punkti"
-#
-msgid "Move Guard Zone Point"
-msgstr "Liiguta valvetsooni punkti"
-#
-msgid "Move Line"
-msgstr "Liiguta liini"
-#
-msgid "Move OD Point"
-msgstr "Liiguta OD-punkti"
-#
-msgid "Move PIL Point"
-msgstr "Liiguta PIL-punkti"
-#
-msgid "Move Text Point"
-msgstr "Liiguta tekstipunkti"
-#
-msgid "Move start point to boat lat/lon"
-msgstr "Liiguta alguspunkt paadi pik/lai juurde"
-#
-msgid "Multiple Boundaries"
-msgstr "Mitmed piirid"
-#
-msgid "Name"
-msgstr "Nimi"
-#
-msgid "Name:"
-msgstr "Nimi:"
-#
-msgid "Name: "
-msgstr "Nimi: "
-#
-msgid "Nautical Miles"
-msgstr "meremiilid"
-#
-msgid "Nav Object Backups"
-msgstr "Nav.objektide varukoopiad"
-#
-msgid "Neither"
-msgstr "Mitte kumbki"
-#
-msgid "Never"
-msgstr "Mitte kunagi"
-#
+
+#: src/ODConfig.cpp:280
+msgid "Applying changes from "
+msgstr "Lisan muudatused "
+
+#: src/ODConfig.cpp:503
+msgid "Import GPX file"
+msgstr "Impordi GPX-fail"
+
+#: src/ODConfig.cpp:551
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Uus kiht %d: %s"
-#
-#, fuzzy
-msgid "No"
-msgstr "Ühtegi"
-#
-msgid "No alarm"
-msgstr "Häiret pole"
-#
-msgid "No. of items"
-msgstr "Üksuste nr"
-#
-msgid "None"
-msgstr "Ühtegi"
-#
-msgid "Number of Point Range Rings"
-msgstr "Punkti vahemaaringide arv"
-#
-msgid "Number of Range Rings"
-msgstr "Vahemaaringide arv"
-#
-msgid "OCPN Draw"
-msgstr "OCPN Draw"
-#
-msgid "OCPN Draw Boundary"
-msgstr "OCPN Draw piir"
-#
-msgid "OCPN Draw Boundary Create"
-msgstr "OCPN Draw piiri loomine"
-#
-msgid "OCPN Draw Boundary Delete"
-msgstr "OCPN Draw piiri kustutamine"
-#
-msgid "OCPN Draw DR Delete"
-msgstr "OCPN Draw DR kustutamine"
-#
-msgid "OCPN Draw Delete Boundary Point"
-msgstr "OCPN Draw piiripunkti kustutamine"
-#
-msgid "OCPN Draw Delete DR Point"
-msgstr "OCPN Draw DR-punkti kustutamine"
-#
-msgid "OCPN Draw Delete EBL Point"
-msgstr "OCPN Draw EBL-punkti kustutamine"
-#
-msgid "OCPN Draw Delete OD Point"
-msgstr "OCPN Draw OD-punkti kustutamine"
-#
-msgid "OCPN Draw Delete PIL Point"
-msgstr "OCPN Draw PIL-punkti kustutamine"
-#
-msgid "OCPN Draw Delete Text Point"
-msgstr "OCPN Draw kustuta tekstipunkt"
-#
-msgid "OCPN Draw EBL Delete"
-msgstr "OCPN Draw EBL kustutamine"
-#
-msgid "OCPN Draw GZ Delete"
-msgstr "OCPN Draw GZ kustutamine"
-#
-msgid "OCPN Draw Manager"
-msgstr "OCPN Draw haldaja"
-#
-msgid "OCPN Draw PIL Delete"
-msgstr "OCPN Draw PIL kustutamine"
-#
-msgid "OCPN Draw Parallel Index Line Delete"
-msgstr "OCPN Draw paralleelse Indeksliini kustutamine"
-#
-msgid "OCPN Draw Path &Properties"
-msgstr "OCPN Draw tee & omadused"
-#
-msgid "OCPN Draw Point"
-msgstr "OCPN Draw punkt"
-#
-msgid "OCPN Draw Point Create"
-msgstr "OCPN Draw punkti loomine"
-#
-msgid "OCPN Draw Point, Layer: "
-msgstr "OCPN Draw punkt, kiht: "
-#
-msgid "OCPN Draw Properties"
-msgstr "OCPN Draw omadused"
-#
-msgid "OCPN Draw Remove "
-msgstr "OCPN Draw eemalda "
-#
-msgid "OCPN Draw Remove Boundary Point"
-msgstr "OCPN Draw piiripunkti eemaldamine"
-#
-msgid "OCPN Draw Remove DR Point"
-msgstr "OCPN Draw DR-punkti eemaldamine"
-#
-msgid "OCPN Draw Remove EBL Point"
-msgstr "OCPN Draw EBL-punkti eemaldamine"
-#
-msgid "OCPN Draw Remove OD Point"
-msgstr "OCPN Draw OD-punkti eemaldamine"
-#
-msgid "OD"
-msgstr "OD"
-#
-msgid "OD Point"
-msgstr "OD-punkt"
-#
-msgid "OD Point Name"
-msgstr "OD-punkti nimi"
-#
-msgid "OD Point Properties"
-msgstr "OD-punkti omadused"
-#
-msgid "OD Points"
-msgstr "OD-punktid"
-#
-msgid "OD\\WD"
-msgstr "OD\\WD"
-#
-msgid "Offset"
-msgstr "Nihe"
-#
-msgid "Offset (+ Stbd/- Port)"
-msgstr "Nihe (+ pp /- vp)"
-#
-#, fuzzy
-msgid "Offset Line 2 Style"
-msgstr "Nihkejoone stiil"
-#
-#, fuzzy
-msgid "Offset Line 2 Width"
-msgstr "Nihkejoone laius"
-#
-msgid "Offset Line Style"
-msgstr "Nihkejoone stiil"
-#
-msgid "Offset Line Width"
-msgstr "Nihkejoone laius"
-#
-msgid "Offset: "
-msgstr "Nihe: "
-#
-msgid "On Rollover Only"
-msgstr "Ainult üleliikudes"
-#
-msgid "OpenCPN Alert"
-msgstr "OpenCPN'i hoiatus"
-#
-msgid "Other:"
-msgstr "Muu:"
-#
-msgid "Overwrite existing file?"
-msgstr "Kas olemasolev fail üle kirjutada?"
-#
-msgid "PIL"
-msgstr "PIL"
-#
-msgid "PIL Persistence"
-msgstr "PIL kestvus"
-#
-msgid "PIL Point"
-msgstr "PIL-punkt"
-#
-msgid "PIL Point &Properties"
-msgstr "PIL-punkt & omadused"
-#
-msgid "Parallel Index Line"
-msgstr "Paralleelne indeksliin"
-#
-msgid "Parallel Index Line Angle (+Stbd/-Port)"
-msgstr "ParalleelIndeksliini nurk (+tp/-pp)"
-#
-msgid "Parallel Index Line Persistence"
-msgstr "Paralleelse Indeksliini kestvus"
-#
-msgid "Parallel Index Line Properties"
-msgstr "Paralleelse Indeksliini omadused"
-#
-msgid "Paste"
-msgstr "Kleebi"
-#
-msgid "Paste lat/long"
-msgstr "Kleebi laius/pikkus"
-#
-msgid "Patch:"
-msgstr "Tee:"
-#
-msgid "Path"
-msgstr "Tee"
-#
-msgid "Path & Point Manager"
-msgstr "Tee & punkti haldur"
-#
-#, fuzzy
-msgid "Path Manager Dialog"
-msgstr "Tee & punkti haldur"
-#
-msgid "Path Name"
-msgstr "Tee nimi"
-#
-msgid "Path Persistence"
-msgstr "Tee püsivus"
-#
-msgid "Path Properties"
-msgstr "Tee omadused"
-#
-msgid "Path Properties, Layer: "
-msgstr "Tee omadused, kiht: "
-#
-msgid "Paths"
-msgstr "Teed"
-#
-msgid "Persistent"
-msgstr "Püsiv"
-#
-msgid "Persistent over Crash"
-msgstr "Püsiv peale kokkujooksmist"
-#
-msgid "Pick a new start point"
-msgstr "Vali uus alguspunkt"
-#
-msgid ""
-"Please report problems using FlySpray at:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-"\n"
-"or\n"
-"\n"
-"at the OpenCPN forum:\n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"or\n"
-"\n"
-"Raise an issue in GIT at:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-msgstr ""
-"Palun teavita probleemidest kasutades FlySpray'd:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-"\n"
-"või\n"
-"\n"
-" OpenCPN'i foorumis:\n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"või\n"
-"\n"
-"Tõstata teema GIT'is:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-#
-msgid "Point Inclusion Size"
-msgstr "Punkt kaasamise suurus"
-#
-msgid "Point Type"
-msgstr "Punkti laad"
-#
-msgid "Points"
-msgstr "Punktid"
-#
-msgid "Properties"
-msgstr "Omadused"
-#
-msgid "Properties..."
-msgstr "Omadused..."
-#
-msgid "Question"
-msgstr "Küsimus"
-#
-msgid "Range Ring Colours"
-msgstr "Vahemaaringide värv"
-#
-msgid "Range Ring Line Style"
-msgstr "Vahemaaringi joone stiil"
-#
-msgid "Range Ring Line Width"
-msgstr "Vahemaaringi joone laius"
-#
-msgid "Remove Point from Path"
-msgstr "Eemalda punkt teelt"
-#
-msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr "Eemaldades selle punkti muutub piir kehtetuks, see pole lubatud."
-#
-msgid "Right"
-msgstr "Paremal"
-#
-msgid "Ring"
-msgstr "Ring"
-#
-msgid ""
-"Rotate with\n"
-"Boat"
-msgstr ""
-"Pööra koos\n"
-"paadiga"
-#
-msgid "Rotate with Boat"
-msgstr "Pööra koos paadiga"
-#
-msgid "Second"
-msgstr "Teine"
-#
-msgid "Second Angle (-P/+S)"
-msgstr "Teine nurk (-P/+S)"
-#
-msgid "Second Point Icon"
-msgstr "Teise punkt ikoon"
-#
-msgid "Second distance"
-msgstr "Teine kaugus"
-#
-msgid "Short Dash"
-msgstr "Lühike kriips"
-#
-msgid "Show"
-msgstr "Näita"
-#
-msgid "Show Boundary Point Icons"
-msgstr "Näita piiri punktide ikoone"
-#
-msgid "Show DR Direction Arrow"
-msgstr "Näita DR'i suunanoolt"
-#
-msgid "Show Display Text"
-msgstr "Näita kuvatavat teksti"
-#
-msgid "Show EBL Direction Arrow"
-msgstr "Näita EBL'i suunanoolt"
-#
-#, fuzzy
-msgid "Show Layer(s)"
-msgstr "Näita nime"
-#
-msgid "Show Magnetic Bearings"
-msgstr "Näita magnetpeilinguid"
-#
-msgid "Show Name"
-msgstr "Näita nime"
-#
-msgid "Show Path Direction Arrow"
-msgstr "Kuva tee suunanoolt"
-#
-msgid "Show Paths(s)"
-msgstr ""
-#
-msgid ""
-"Show Perpendicular\n"
-"Index Line"
-msgstr ""
-"Kuva risti\n"
-"indeksliiniga"
-#
-msgid "Show Perpendicular Index Line"
-msgstr "Kuva ristindeksliini"
-#
-msgid "Show Point Range Rings"
-msgstr "Näita punkti vahemaaringe"
-#
-msgid "Show Point names"
-msgstr "Näita punktinimesid"
-#
-#, fuzzy
-msgid "Show Point(s)"
-msgstr "Näita punktinimesid"
-#
-msgid "Show Range Rings"
-msgstr "Näita vahemaaringe"
-#
-msgid "Show VRM"
-msgstr "Näita VRM"
-#
-msgid "Show name"
-msgstr "Näita nime"
-#
-msgid "Show on chart"
-msgstr "Näita kaardil"
-#
-msgid "Solid"
-msgstr "jäme"
-#
+
+#: src/ODDRDialogDef.cpp:26 src/ODPropertiesDialogDef.cpp:661
 msgid "Speed over Ground"
 msgstr "Kiirus põhja suhtes"
-#
-msgid "Start"
-msgstr "Algus"
-#
-msgid "Start Point Icon"
-msgstr "Alguspunkti ikoon"
-#
-msgid "Temporary layer"
-msgstr "Ajutine kiht"
-#
-#, fuzzy
-msgid "Text"
-msgstr "Teksti täht"
-#
-msgid "Text Colour"
-msgstr "Teksti värv"
-#
-msgid "Text Font"
-msgstr "Teksti täht"
-#
+
+#: src/ODDRDialogDef.cpp:30 src/ODDRDialogDef.cpp:46 src/ODDRDialogDef.cpp:54
+msgid "0.0"
+msgstr "0,0"
+
+#: src/ODDRDialogDef.cpp:34 src/ODPathPropertiesDialogDef.cpp:172
+#: src/ODPathPropertiesDialogDef.cpp:209 src/ODPropertiesDialogDef.cpp:584
+#: src/ODPropertiesDialogDef.cpp:668 src/ODPropertiesDialogDef.cpp:941
+msgid "Course over Ground"
+msgstr "Kurss põhja suhtes"
+
+#: src/ODDRDialogDef.cpp:38
+msgid "0"
+msgstr "0"
+
+#: src/ODDRDialogDef.cpp:42 src/ODPropertiesDialogDef.cpp:675
+msgid "DR Path Length"
+msgstr "DR tee pikkus"
+
+#: src/ODDRDialogDef.cpp:50 src/ODPropertiesDialogDef.cpp:682
+msgid "DR Point Interval"
+msgstr "DR punkti intervall"
+
+#: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
+#: src/ODPropertiesDialogDef.cpp:697 src/ODPropertiesDialogDef.cpp:703
+msgid "Distance"
+msgstr "Vahemaa"
+
+#: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
+#: src/ODPropertiesDialogDef.cpp:697 src/ODPropertiesDialogDef.cpp:703
+msgid "Time"
+msgstr "Aeg"
+
+#: src/ODDRDialogDef.cpp:60 src/ODPropertiesDialogDef.cpp:699
+msgid "Length Type"
+msgstr "Pikkuse tüüp"
+
+#: src/ODDRDialogDef.cpp:66 src/ODPropertiesDialogDef.cpp:705
+msgid "Interval Type"
+msgstr "Intervalli tüüp"
+
+#: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:172
+#: src/ODPropertiesDialogDef.cpp:311 src/ODPropertiesDialogDef.cpp:709
+#: src/ODPropertiesDialogDef.cpp:791
+msgid "Kilometres"
+msgstr "kilomeetrid"
+
+#: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:172
+#: src/ODPropertiesDialogDef.cpp:311 src/ODPropertiesDialogDef.cpp:709
+#: src/ODPropertiesDialogDef.cpp:791
+msgid "Nautical Miles"
+msgstr "meremiilid"
+
+#: src/ODDRDialogDef.cpp:80 src/ODPropertiesDialogDef.cpp:711
+msgid "Distance Units"
+msgstr "Vahemaa ühikud"
+
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:715
+msgid "Days"
+msgstr "päevad"
+
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:715
+msgid "Hours"
+msgstr "tunnid"
+
+#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:715
+msgid "Minutes"
+msgstr "minutid"
+
+#: src/ODDRDialogDef.cpp:86 src/ODPropertiesDialogDef.cpp:717
+msgid "Time Units"
+msgstr "Ajaühikud"
+
+#: src/ODDRDialogDef.cpp:96 src/ODNewODPointDialogDef.cpp:30
+#: src/ODPathPropertiesDialogDef.cpp:297 src/ODPointPropertiesDialog.cpp:351
+#: src/ODPropertiesDialogDef.cpp:1393 src/PILPropertiesDialogDef.cpp:104
+#: src/pathmanagerdialog.cpp:774
+msgid "&OK"
+msgstr "&OK"
+
+#: src/ODDRDialogDef.cpp:100 src/ODNewODPointDialogDef.cpp:33
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPointPropertiesDialog.cpp:354
+#: src/ODPropertiesDialogDef.cpp:1396 src/PILPropertiesDialogDef.cpp:107
+msgid "&Cancel"
+msgstr "&Tühista"
+
+#: src/ODDRDialogImpl.cpp:102 src/ODDRDialogImpl.cpp:135
+#: src/ODDRDialogImpl.cpp:176
+msgid "Course over Ground (M)"
+msgstr "Kurss põhja suhtes (M)"
+
+#: src/ODDRDialogImpl.cpp:103 src/ODDRDialogImpl.cpp:136
+#: src/ODDRDialogImpl.cpp:177
+msgid "Course over Ground (T)"
+msgstr "Kurss põhja suhtes (T)"
+
+#: src/ODDRDialogImpl.cpp:223 src/ODPropertiesDialogDef.cpp:738
+msgid "DR"
+msgstr "DR"
+
+#: src/ODEventHandler.cpp:261 src/ODEventHandler.cpp:1039
+msgid "Layer "
+msgstr "Kiht "
+
+#: src/ODEventHandler.cpp:271
+msgid "(unnamed)"
+msgstr "(nimetu)"
+
+#: src/ODEventHandler.cpp:278
+msgid "Total Length: "
+msgstr "Kogupikkus: "
+
+#: src/ODEventHandler.cpp:279
+msgid "Leg: from "
+msgstr "Lõik: alates "
+
+#: src/ODEventHandler.cpp:280
+msgid " to "
+msgstr " kuni "
+
+#: src/ODEventHandler.cpp:290
+msgid "Name: "
+msgstr "Nimi: "
+
+#: src/ODEventHandler.cpp:291
+msgid "ID: "
+msgstr "ID: "
+
+#: src/ODEventHandler.cpp:292
+msgid "Offset: "
+msgstr "Nihe: "
+
+#: src/ODEventHandler.cpp:295
+msgid "Bearing: "
+msgstr "Suund: "
+
+#: src/ODEventHandler.cpp:298
+msgid "From: "
+msgstr "Alates: "
+
+#: src/ODEventHandler.cpp:303
+msgid " To: "
+msgstr " Kuhu: "
+
+#: src/ODEventHandler.cpp:398
+msgid "Layer"
+msgstr "Kiht"
+
+#: src/ODEventHandler.cpp:569
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Oled kindel, et soovid kustutada selle piiri?"
+
+#: src/ODEventHandler.cpp:570
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN Draw piiri kustutamine"
+
+#: src/ODEventHandler.cpp:573
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Oled kindel, et soovid selle EBL kustutada?"
+
+#: src/ODEventHandler.cpp:574
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN Draw EBL kustutamine"
+
+#: src/ODEventHandler.cpp:577
+msgid "Are you sure you want to delete this DR?"
+msgstr "Oled kindel, et soovid selle DR kustutada?"
+
+#: src/ODEventHandler.cpp:578
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN Draw DR kustutamine"
+
+#: src/ODEventHandler.cpp:581
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Oled kindel, et soovid selle valvetsooni kustutada?"
+
+#: src/ODEventHandler.cpp:582
+msgid "OCPN Draw GZ Delete"
+msgstr "OCPN Draw GZ kustutamine"
+
+#: src/ODEventHandler.cpp:585
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Kas soovid kindlasti kustutada selle paralleelstete indeksliinide rühma?"
+
+#: src/ODEventHandler.cpp:586
+msgid "OCPN Draw PIL Delete"
+msgstr "OCPN Draw PIL kustutamine"
+
+#: src/ODEventHandler.cpp:605
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Oled kindel, et soovid selle paralleelse indeksliini kõrvaldada?"
+
+#: src/ODEventHandler.cpp:606
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "OCPN Draw paralleelse Indeksliini kustutamine"
+
+#: src/ODEventHandler.cpp:765
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr "Eemaldades selle punkti muutub piir kehtetuks, see pole lubatud."
+
+#: src/ODEventHandler.cpp:766 src/ODEventHandler.cpp:783
+msgid "OCPN Draw Remove "
+msgstr "OCPN Draw eemalda "
+
+#: src/ODEventHandler.cpp:769 src/ODEventHandler.cpp:1183
+msgid "OD Point"
+msgstr "OD-punkt"
+
+#: src/ODEventHandler.cpp:782
+msgid "Are you sure you want to remove this "
+msgstr "Kas oled kindel, et soovid eemaldada selle "
+
+#: src/ODEventHandler.cpp:786 src/ODEventHandler.cpp:798
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Oled kindel, et soovid selle OD-punkti kõrvaldada?"
+
+#: src/ODEventHandler.cpp:787 src/ODEventHandler.cpp:799
+#: src/ODPathPropertiesDialogImpl.cpp:805
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN Draw OD-punkti eemaldamine"
+
+#: src/ODEventHandler.cpp:789
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Oled kindel, et soovid eemaldada selle piiripunkti?"
+
+#: src/ODEventHandler.cpp:790
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN Draw piiripunkti eemaldamine"
+
+#: src/ODEventHandler.cpp:792
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Oled kindel, et soovid selle EBL-punkti kõrvaldada?"
+
+#: src/ODEventHandler.cpp:793
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN Draw EBL-punkti eemaldamine"
+
+#: src/ODEventHandler.cpp:795
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Oled kindel, et soovid selle DR-punkti kõrvaldada?"
+
+#: src/ODEventHandler.cpp:796
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN Draw DR-punkti eemaldamine"
+
+#: src/ODEventHandler.cpp:848 src/ODEventHandler.cpp:890
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Oled kindel, et soovid selle OD-punkti kõrvaldada?"
+
+#: src/ODEventHandler.cpp:849 src/ODEventHandler.cpp:891
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN Draw OD-punkti kustutamine"
+
+#: src/ODEventHandler.cpp:851 src/ODEventHandler.cpp:893
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Oled kindel, et soovid selle piiripunkti kustutada?"
+
+#: src/ODEventHandler.cpp:852 src/ODEventHandler.cpp:894
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN Draw piiripunkti kustutamine"
+
+#: src/ODEventHandler.cpp:854 src/ODEventHandler.cpp:899
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Oled kindel, et soovid selle DR-punkti kustutada?"
+
+#: src/ODEventHandler.cpp:855 src/ODEventHandler.cpp:900
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN Draw DR-punkti kustutamine"
+
+#: src/ODEventHandler.cpp:857 src/ODEventHandler.cpp:902
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Oled kindel, et soovid selle EBL-punkti kustutada?"
+
+#: src/ODEventHandler.cpp:858 src/ODEventHandler.cpp:903
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN Draw EBL-punkti kustutamine"
+
+#: src/ODEventHandler.cpp:860
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Oled kindel, et soovid selle PIL-punkti kustutada?"
+
+#: src/ODEventHandler.cpp:861
+msgid "OCPN Draw Delete PIL Point"
+msgstr "OCPN Draw PIL-punkti kustutamine"
+
+#: src/ODEventHandler.cpp:896
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Oled kindel, et soovid selle tekstipunkti kõrvaldada?"
+
+#: src/ODEventHandler.cpp:897
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN Draw kustuta tekstipunkt"
+
+#: src/ODEventHandler.cpp:1047 src/ODEventHandler.cpp:1061
+msgid "Control Line"
+msgstr "Kontrolljoon"
+
+#: src/ODEventHandler.cpp:1050 src/ODEventHandler.cpp:1065
+#: src/ODEventHandler.cpp:1163 src/ODEventHandler.cpp:1185
+#: src/ODEventHandler.cpp:1232
+msgid "Properties..."
+msgstr "Omadused..."
+
+#: src/ODEventHandler.cpp:1068 src/ODEventHandler.cpp:1077
+msgid "Centre on moving boat"
+msgstr "Keskenda liikuvale paadile"
+
+#: src/ODEventHandler.cpp:1069 src/ODEventHandler.cpp:1078
+msgid "Move start point to boat lat/lon"
+msgstr "Liiguta alguspunkt paadi pik/lai juurde"
+
+#: src/ODEventHandler.cpp:1071 src/ODEventHandler.cpp:1080
+msgid "Pick a new start point"
+msgstr "Vali uus alguspunkt"
+
+#: src/ODEventHandler.cpp:1074
+msgid "Match VRM colour to EBL colour"
+msgstr "Sobita VRM-värv EBL-värviga"
+
+#: src/ODEventHandler.cpp:1083
+msgid "Update initial conditions"
+msgstr "Uuenda lähtetingimusi"
+
+#: src/ODEventHandler.cpp:1088
+msgid "Move Boundary"
+msgstr "Liiguta piiri"
+
+#: src/ODEventHandler.cpp:1090
+msgid "Move EBL"
+msgstr "Liiguta EBL"
+
+#: src/ODEventHandler.cpp:1096
+msgid "Move Boundary Segment"
+msgstr "Liiguta piirilõiku"
+
+#: src/ODEventHandler.cpp:1102
+msgid "Insert Boundary Point"
+msgstr "Sisesta piiripunkt"
+
+#: src/ODEventHandler.cpp:1104
+msgid "Insert EBL Point"
+msgstr "Sisesta EBL-punkt"
+
+#: src/ODEventHandler.cpp:1111
+msgid "Add Index Line"
+msgstr "Lisa indeksliin"
+
+#: src/ODEventHandler.cpp:1116
+msgid "Hide Boundary Point Icons"
+msgstr "Peida piiri punktide ikoonid"
+
+#: src/ODEventHandler.cpp:1118 src/ODPathPropertiesDialogDef.cpp:159
+#: src/ODPropertiesDialogDef.cpp:181
+msgid "Show Boundary Point Icons"
+msgstr "Näita piiri punktide ikoone"
+
+#: src/ODEventHandler.cpp:1122
+msgid "Delete..."
+msgstr "Kustuta..."
+
+#: src/ODEventHandler.cpp:1124 src/ODEventHandler.cpp:1210
+#: src/ODEventHandler.cpp:1213
+msgid "Delete"
+msgstr "Kustuta"
+
+#: src/ODEventHandler.cpp:1127
+msgid "Deactivate"
+msgstr "Peata"
+
+#: src/ODEventHandler.cpp:1128
+msgid "Activate"
+msgstr "Käivita"
+
+#: src/ODEventHandler.cpp:1132
+msgid "Copy Boundary GUID"
+msgstr "Kopeeri piiri GUID"
+
+#: src/ODEventHandler.cpp:1134
+msgid "Copy EBL GUID"
+msgstr "Kopeeri EBL GUID"
+
+#: src/ODEventHandler.cpp:1136
+msgid "Copy DR GUID"
+msgstr "Kopeeri DR GUID"
+
+#: src/ODEventHandler.cpp:1138
+msgid "Copy Guard Zone GUID"
+msgstr "Kopeeri valvetsooni GUID"
+
+#: src/ODEventHandler.cpp:1155
+msgid "Layer Boundary Point"
+msgstr "Piiripunkti kiht"
+
+#: src/ODEventHandler.cpp:1157
+msgid "Layer Text Point"
+msgstr "Tekstipunktide kiht"
+
+#: src/ODEventHandler.cpp:1159
+msgid "Layer EBL Point"
+msgstr "EBL-punktide kiht"
+
+#: src/ODEventHandler.cpp:1161
+msgid "Layer DR Point"
+msgstr "DR-punktide kiht"
+
+#: src/ODEventHandler.cpp:1171 src/ODPropertiesDialogDef.cpp:351
+#: src/ODToolbarImpl.cpp:517
+msgid "Boundary Point"
+msgstr "Piiripunkt"
+
+#: src/ODEventHandler.cpp:1173 src/ODPropertiesDialogDef.cpp:462
+#: src/ODToolbarImpl.cpp:518
 msgid "Text Point"
 msgstr "Teksti punkt"
-#
-msgid "Text Point Icon"
-msgstr "Teksti punkt ikoon"
-#
-msgid "Text position relative to point"
-msgstr "Teksti asukoht punktiga võrreldes"
-#
+
+#: src/ODEventHandler.cpp:1175
+msgid "EBL Point"
+msgstr "EBL-punkt"
+
+#: src/ODEventHandler.cpp:1177 src/ODPropertiesDialogDef.cpp:831
+msgid "DR Point"
+msgstr "DR-punkt"
+
+#: src/ODEventHandler.cpp:1179
+msgid "Guard Zone Point"
+msgstr "Valvetsooni punkt"
+
+#: src/ODEventHandler.cpp:1181
+msgid "PIL Point"
+msgstr "PIL-punkt"
+
+#: src/ODEventHandler.cpp:1188
+msgid "Move Boundary Point"
+msgstr "Liiguta piiripunkti"
+
+#: src/ODEventHandler.cpp:1190
+msgid "Move Text Point"
+msgstr "Liiguta tekstipunkti"
+
+#: src/ODEventHandler.cpp:1192
+msgid "Move EBL Point"
+msgstr "Liiguta EBL-punkti"
+
+#: src/ODEventHandler.cpp:1194
+msgid "Move DR Point"
+msgstr "Liiguta DR-punkti"
+
+#: src/ODEventHandler.cpp:1196
+msgid "Move PIL Point"
+msgstr "Liiguta PIL-punkti"
+
+#: src/ODEventHandler.cpp:1198 src/ODEventHandler.cpp:1201
+msgid "Move OD Point"
+msgstr "Liiguta OD-punkti"
+
+#: src/ODEventHandler.cpp:1200
+msgid "Move Guard Zone Point"
+msgstr "Liiguta valvetsooni punkti"
+
+#: src/ODEventHandler.cpp:1208
+msgid "Remove Point from Path"
+msgstr "Eemalda punkt teelt"
+
+#: src/ODEventHandler.cpp:1214
+msgid "Copy Point GUID"
+msgstr "Kopeeri punkti GUID"
+
+#: src/ODEventHandler.cpp:1222
+msgid "Multiple Boundaries"
+msgstr "Mitmed piirid"
+
+#: src/ODEventHandler.cpp:1223
+msgid "Merge and Keep Boundaries"
+msgstr "Ühenda ja hoia piire"
+
+#: src/ODEventHandler.cpp:1224
+msgid "Merge and Delete Boundaries"
+msgstr "Ühenda ja kustuta piirid"
+
+#: src/ODEventHandler.cpp:1231 src/ODPropertiesDialogDef.cpp:1242
+#: src/ODToolbarImpl.cpp:522
+msgid "Parallel Index Line"
+msgstr "Paralleelne indeksliin"
+
+#: src/ODEventHandler.cpp:1233
+msgid "Move Line"
+msgstr "Liiguta liini"
+
+#: src/ODEventHandler.cpp:1234
+msgid "Delete Line"
+msgstr "Kustuta liin"
+
+#: src/ODEventHandler.cpp:1239 src/ODEventHandler.cpp:1246
+#: src/ODEventHandler.cpp:1253
+msgid "Path Manager Dialog"
+msgstr "Jäljehalduri dialoog"
+
+#: src/ODEventHandler.cpp:1240
+msgid "Hide Path(s)"
+msgstr "Peida jälg(ed)"
+
+#: src/ODEventHandler.cpp:1241
+msgid "Show Paths(s)"
+msgstr "Näita jälg(ed)"
+
+#: src/ODEventHandler.cpp:1247
+msgid "Hide Point(s)"
+msgstr "Peida punkt(id)"
+
+#: src/ODEventHandler.cpp:1248
+msgid "Show Point(s)"
+msgstr "Kuva punkt(id)"
+
+#: src/ODEventHandler.cpp:1254
+msgid "Hide Layer(s)"
+msgstr "Peida kiht(id)"
+
+#: src/ODEventHandler.cpp:1255
+msgid "Show Layer(s)"
+msgstr "Näita kiht(id)"
+
+#: src/ODNewODPointDialogDef.cpp:21 src/ODPropertiesDialogDef.cpp:192
+#: src/ODToolbarImpl.cpp:516 src/ocpn_draw_pi.cpp:2990
+msgid "Boundary"
+msgstr "Piir"
+
+#: src/ODNewODPointDialogDef.cpp:21
+msgid "Text"
+msgstr "Tekst"
+
+#: src/ODPathPropertiesDialogDef.cpp:33 src/ODPointPropertiesDialog.cpp:31
+#: src/PILProp.cpp:311 src/PILPropertiesDialogDef.cpp:35
+msgid "Name"
+msgstr "Nimi"
+
+#: src/ODPathPropertiesDialogDef.cpp:40 src/ODPathPropertiesDialogImpl.cpp:723
+#: src/ODPointPropertiesDialog.cpp:214 src/PILProp.cpp:313
+#: src/PILPropertiesDialogDef.cpp:42
+msgid "Description"
+msgstr "Kirjeldus"
+
+#: src/ODPathPropertiesDialogDef.cpp:47 src/ODPointPropertiesDialog.cpp:330
+msgid "GUID"
+msgstr "GUID"
+
+#: src/ODPathPropertiesDialogDef.cpp:65 src/PILPropertiesDialogDef.cpp:56
+msgid "Active"
+msgstr "Aktiivne"
+
+#: src/ODPathPropertiesDialogDef.cpp:69
+msgid "Total Length"
+msgstr "Kogupikkus"
+
+#: src/ODPathPropertiesDialogDef.cpp:86 src/PILPropertiesDialogDef.cpp:71
+msgid "Line Colour"
+msgstr "Joone värv"
+
+#: src/ODPathPropertiesDialogDef.cpp:93 src/ODPropertiesDialogDef.cpp:143
+#: src/ODPropertiesDialogDef.cpp:496 src/ODPropertiesDialogDef.cpp:571
+#: src/ODPropertiesDialogDef.cpp:651 src/ODPropertiesDialogDef.cpp:913
+#: src/PILPropertiesDialogDef.cpp:78
+msgid "Line Style"
+msgstr "Joone laad"
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:199
+#: src/ODPropertiesDialogDef.cpp:147 src/ODPropertiesDialogDef.cpp:338
+#: src/ODPropertiesDialogDef.cpp:500 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:655 src/ODPropertiesDialogDef.cpp:818
+#: src/ODPropertiesDialogDef.cpp:917 src/ODPropertiesDialogDef.cpp:1147
+#: src/ODPropertiesDialogDef.cpp:1185 src/PILPropertiesDialogDef.cpp:82
+msgid "Dot"
+msgstr "punktiirjoon"
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:199
+#: src/ODPropertiesDialogDef.cpp:147 src/ODPropertiesDialogDef.cpp:338
+#: src/ODPropertiesDialogDef.cpp:500 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:655 src/ODPropertiesDialogDef.cpp:818
+#: src/ODPropertiesDialogDef.cpp:917 src/ODPropertiesDialogDef.cpp:1147
+#: src/ODPropertiesDialogDef.cpp:1185 src/ODPropertiesDialogDef.cpp:1223
+#: src/PILPropertiesDialogDef.cpp:82
+msgid "Dot Dash"
+msgstr "Punkt-kriips"
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:199
+#: src/ODPropertiesDialogDef.cpp:147 src/ODPropertiesDialogDef.cpp:338
+#: src/ODPropertiesDialogDef.cpp:500 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:655 src/ODPropertiesDialogDef.cpp:818
+#: src/ODPropertiesDialogDef.cpp:917 src/ODPropertiesDialogDef.cpp:1147
+#: src/ODPropertiesDialogDef.cpp:1185 src/ODPropertiesDialogDef.cpp:1223
+#: src/PILPropertiesDialogDef.cpp:82
+msgid "Long Dash"
+msgstr "Pikk kriips"
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:199
+#: src/ODPropertiesDialogDef.cpp:147 src/ODPropertiesDialogDef.cpp:338
+#: src/ODPropertiesDialogDef.cpp:500 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:655 src/ODPropertiesDialogDef.cpp:818
+#: src/ODPropertiesDialogDef.cpp:917 src/ODPropertiesDialogDef.cpp:1147
+#: src/ODPropertiesDialogDef.cpp:1185 src/ODPropertiesDialogDef.cpp:1223
+#: src/PILPropertiesDialogDef.cpp:82
+msgid "Short Dash"
+msgstr "Lühike kriips"
+
+#: src/ODPathPropertiesDialogDef.cpp:97 src/ODPointPropertiesDialog.cpp:199
+#: src/ODPropertiesDialogDef.cpp:147 src/ODPropertiesDialogDef.cpp:338
+#: src/ODPropertiesDialogDef.cpp:500 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:655 src/ODPropertiesDialogDef.cpp:818
+#: src/ODPropertiesDialogDef.cpp:917 src/ODPropertiesDialogDef.cpp:1147
+#: src/ODPropertiesDialogDef.cpp:1185 src/ODPropertiesDialogDef.cpp:1223
+#: src/PILPropertiesDialogDef.cpp:82
+msgid "Solid"
+msgstr "jäme"
+
+#: src/ODPathPropertiesDialogDef.cpp:103 src/ODPropertiesDialogDef.cpp:133
+#: src/ODPropertiesDialogDef.cpp:486 src/ODPropertiesDialogDef.cpp:561
+#: src/ODPropertiesDialogDef.cpp:641 src/ODPropertiesDialogDef.cpp:903
+#: src/PILPropertiesDialogDef.cpp:88
+msgid "Line Width"
+msgstr "Joone jämedus"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "1 pixel"
+msgstr "1 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "10 pixels"
+msgstr "10 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "2 pixels"
+msgstr "2 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "3 pixels"
+msgstr "3 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "4 pixels"
+msgstr "4 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "5 pixels"
+msgstr "5 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "6 pixels"
+msgstr "6 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "7 pixels"
+msgstr "7 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "8 pixels"
+msgstr "8 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:107 src/ODPointPropertiesDialog.cpp:189
+#: src/ODPropertiesDialogDef.cpp:328 src/ODPropertiesDialogDef.cpp:808
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "9 pixels"
+msgstr "9 pikslit"
+
+#: src/ODPathPropertiesDialogDef.cpp:113
+msgid "Fill Colour"
+msgstr "Täite värv"
+
+#: src/ODPathPropertiesDialogDef.cpp:120 src/ODPointPropertiesDialog.cpp:118
+#: src/ODPropertiesDialogDef.cpp:153 src/ODPropertiesDialogDef.cpp:252
+#: src/ODPropertiesDialogDef.cpp:923
+msgid "Fill Density"
+msgstr "Täite tihedus"
+
+#: src/ODPathPropertiesDialogDef.cpp:127
+msgid "Inclusion Boundary\n"
+"Size"
+msgstr "Kaasatud piir\n"
+"Suurus"
+
+#: src/ODPathPropertiesDialogDef.cpp:141
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "ParalleelIndeksliini nurk (+tp/-pp)"
+
+#: src/ODPathPropertiesDialogDef.cpp:153 src/ODPointPropertiesDialog.cpp:107
+#: src/ODPropertiesDialogDef.cpp:175 src/ODPropertiesDialogDef.cpp:240
+#: src/ODPropertiesDialogDef.cpp:1345 src/ODPropertiesDialogDef.cpp:1354
+#: src/ODPropertiesDialogImpl.cpp:200 src/ODPropertiesDialogImpl.cpp:203
+msgid "Exclusion"
+msgstr "Väljajätt"
+
+#: src/ODPathPropertiesDialogDef.cpp:153 src/ODPointPropertiesDialog.cpp:107
+#: src/ODPropertiesDialogDef.cpp:175 src/ODPropertiesDialogDef.cpp:240
+#: src/ODPropertiesDialogDef.cpp:1346 src/ODPropertiesDialogDef.cpp:1355
+#: src/ODPropertiesDialogImpl.cpp:201 src/ODPropertiesDialogImpl.cpp:204
+msgid "Inclusion"
+msgstr "Kaasamine"
+
+#: src/ODPathPropertiesDialogDef.cpp:153 src/ODPointPropertiesDialog.cpp:107
+#: src/ODPropertiesDialogDef.cpp:175 src/ODPropertiesDialogDef.cpp:240
+#: src/ODPropertiesDialogDef.cpp:1347 src/ODPropertiesDialogDef.cpp:1356
+#: src/ODPropertiesDialogImpl.cpp:202 src/ODPropertiesDialogImpl.cpp:205
+msgid "Neither"
+msgstr "Mitte kumbki"
+
+#: src/ODPathPropertiesDialogDef.cpp:155 src/ODPropertiesDialogDef.cpp:177
+msgid "Boundary Type"
+msgstr "Piiri laad"
+
+#: src/ODPathPropertiesDialogDef.cpp:169
+msgid "Rotate with\n"
+"Boat"
+msgstr "Pööra koos\n"
+"paadiga"
+
+#: src/ODPathPropertiesDialogDef.cpp:172 src/ODPathPropertiesDialogDef.cpp:209
+#: src/ODPropertiesDialogDef.cpp:584 src/ODPropertiesDialogDef.cpp:941
+msgid "Heading"
+msgstr "Suund"
+
+#: src/ODPathPropertiesDialogDef.cpp:174 src/ODPathPropertiesDialogDef.cpp:211
+#: src/ODPropertiesDialogDef.cpp:586 src/ODPropertiesDialogDef.cpp:943
+msgid "Maintain with"
+msgstr "Säilita koos"
+
+#: src/ODPathPropertiesDialogDef.cpp:180
+msgid "EBL Angle (-P/+S)"
+msgstr "EBL nurk (-P/+T)"
+
+#: src/ODPathPropertiesDialogDef.cpp:187
+msgid "EBL Fixed\n"
+"End Position"
+msgstr "EBL fikseeritud\n"
+"lõpp-punkt"
+
+#: src/ODPathPropertiesDialogDef.cpp:190 src/ODPropertiesDialogDef.cpp:596
+msgid "Show VRM"
+msgstr "Näita VRM"
+
+#: src/ODPathPropertiesDialogDef.cpp:193 src/ODPropertiesDialogDef.cpp:602
+msgid "Always Show\n"
+"EBL Info"
+msgstr "Alati näita\n"
+"EBL-infot"
+
+#: src/ODPathPropertiesDialogDef.cpp:196
+msgid "Show Perpendicular\n"
+"Index Line"
+msgstr "Kuva risti\n"
+"indeksliiniga"
+
+#: src/ODPathPropertiesDialogDef.cpp:206 src/ODPropertiesDialogDef.cpp:581
+#: src/ODPropertiesDialogDef.cpp:938
+msgid "Rotate with Boat"
+msgstr "Pööra koos paadiga"
+
+#: src/ODPathPropertiesDialogDef.cpp:223
+msgid "First Angle (-P/+S)"
+msgstr "Esimene nurk (-P/+S)"
+
+#: src/ODPathPropertiesDialogDef.cpp:230
+msgid "First distance"
+msgstr "Esimene kaugus"
+
+#: src/ODPathPropertiesDialogDef.cpp:237
+msgid "Second Angle (-P/+S)"
+msgstr "Teine nurk (-P/+S)"
+
+#: src/ODPathPropertiesDialogDef.cpp:244
+msgid "Second distance"
+msgstr "Teine kaugus"
+
+#: src/ODPathPropertiesDialogDef.cpp:258
+msgid "Show Path Direction Arrow"
+msgstr "Kuva tee suunanoolt"
+
+#: src/ODPathPropertiesDialogDef.cpp:261 src/ODPointPropertiesDialog.cpp:305
+#: src/ODPropertiesDialogDef.cpp:73 src/ODPropertiesDialogDef.cpp:449
+#: src/ODPropertiesDialogDef.cpp:605 src/ODPropertiesDialogDef.cpp:725
+#: src/ODPropertiesDialogDef.cpp:955 src/ODPropertiesDialogDef.cpp:1232
+msgid "Never"
+msgstr "Mitte kunagi"
+
+#: src/ODPathPropertiesDialogDef.cpp:261 src/ODPropertiesDialogDef.cpp:605
+#: src/ODPropertiesDialogDef.cpp:725 src/ODPropertiesDialogDef.cpp:955
+#: src/ODPropertiesDialogDef.cpp:1232
+msgid "Persistent"
+msgstr "Püsiv"
+
+#: src/ODPathPropertiesDialogDef.cpp:261 src/ODPropertiesDialogDef.cpp:605
+#: src/ODPropertiesDialogDef.cpp:725 src/ODPropertiesDialogDef.cpp:955
+#: src/ODPropertiesDialogDef.cpp:1232
+msgid "Persistent over Crash"
+msgstr "Püsiv peale kokkujooksmist"
+
+#: src/ODPathPropertiesDialogDef.cpp:263
+msgid "Path Persistence"
+msgstr "Tee püsivus"
+
+#: src/ODPathPropertiesDialogDef.cpp:272
+msgid "Points"
+msgstr "Punktid"
+
+#: src/ODPathPropertiesDialogDef.cpp:284
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Indeksliinid (+ tüürp /- pakp)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:197
+msgid "OCPN Draw Path &Properties"
+msgstr "OCPN Draw tee & omadused"
+
+#: src/ODPathPropertiesDialogImpl.cpp:199
+msgid "Boundary Point &Properties"
+msgstr "Piiripunkt & omadused"
+
+#: src/ODPathPropertiesDialogImpl.cpp:201
+msgid "EBL Point &Properties"
+msgstr "EBL-punkt & omadused"
+
+#: src/ODPathPropertiesDialogImpl.cpp:203
+msgid "DR Point &Properties"
+msgstr "DR-punkt & omadused"
+
+#: src/ODPathPropertiesDialogImpl.cpp:205
+msgid "PIL Point &Properties"
+msgstr "PIL-punkt & omadused"
+
+#: src/ODPathPropertiesDialogImpl.cpp:207 src/ODPathPropertiesDialogImpl.cpp:225
+msgid " &Properties..."
+msgstr " &Omadused..."
+
+#: src/ODPathPropertiesDialogImpl.cpp:211 src/ODPathPropertiesDialogImpl.cpp:229
+msgid "&Remove Selected"
+msgstr "&Kõrvalda valitud"
+
+#: src/ODPathPropertiesDialogImpl.cpp:708
+msgid "From Point"
+msgstr "Punktist"
+
+#: src/ODPathPropertiesDialogImpl.cpp:709
+msgid "To Point"
+msgstr "Punkti"
+
+#: src/ODPathPropertiesDialogImpl.cpp:710
+msgid "Distance From Boat"
+msgstr "Kaugus paadist"
+
+#: src/ODPathPropertiesDialogImpl.cpp:713
+msgid "Bearing (M)"
+msgstr "Peiling (M)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:715
+msgid "Bearing"
+msgstr "Suund"
+
+#: src/ODPathPropertiesDialogImpl.cpp:717 src/ODPointPropertiesDialog.cpp:72
+msgid "Latitude"
+msgstr "laius"
+
+#: src/ODPathPropertiesDialogImpl.cpp:718 src/ODPointPropertiesDialog.cpp:79
+msgid "Longitude"
+msgstr "pikkus"
+
+#: src/ODPathPropertiesDialogImpl.cpp:720
+msgid "Bearing From-To (M)"
+msgstr "Peiling sealt-sinna (M)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:722
+msgid "Bearing From-To"
+msgstr "Suund siit-sinna"
+
+#: src/ODPathPropertiesDialogImpl.cpp:804
+msgid "Are you sure you want to remove this point?"
+msgstr "Oled kindel, et soovid selle punkti kõrvaldada?"
+
+#: src/ODPointPropertiesDialog.cpp:22
+msgid "Properties"
+msgstr "Omadused"
+
+#: src/ODPointPropertiesDialog.cpp:49
+msgid "Show name"
+msgstr "Näita nime"
+
+#: src/ODPointPropertiesDialog.cpp:52 src/ODPointPropertiesImpl.cpp:107
+#: src/ODPropertiesDialogDef.cpp:221 src/ODPropertiesDialogDef.cpp:374
+#: src/ODPropertiesDialogDef.cpp:526 src/ODPropertiesDialogDef.cpp:541
+#: src/ODPropertiesDialogDef.cpp:753 src/ODPropertiesDialogDef.cpp:854
+#: src/ODPropertiesDialogDef.cpp:861 src/ODPropertiesDialogDef.cpp:984
+#: src/ODPropertiesDialogDef.cpp:999 src/ODPropertiesDialogImpl.cpp:262
+#: src/ODPropertiesDialogImpl.cpp:273 src/ODPropertiesDialogImpl.cpp:282
+#: src/ODPropertiesDialogImpl.cpp:291 src/ODPropertiesDialogImpl.cpp:300
+#: src/ODPropertiesDialogImpl.cpp:309 src/ODPropertiesDialogImpl.cpp:318
+#: src/ODPropertiesDialogImpl.cpp:327 src/ODPropertiesDialogImpl.cpp:336
+msgid "Combo!"
+msgstr "Mõlemad!"
+
+#: src/ODPointPropertiesDialog.cpp:63
+msgid "Change all Path Point Icons"
+msgstr "Muuda kõik teepunktide ikoonid"
+
+#: src/ODPointPropertiesDialog.cpp:92 src/ODPropertiesDialogDef.cpp:200
+msgid "Arrival Radius"
+msgstr "Saabumisraadius"
+
+#: src/ODPointPropertiesDialog.cpp:104
+msgid "Show Point Range Rings"
+msgstr "Näita punkti vahemaaringe"
+
+#: src/ODPointPropertiesDialog.cpp:125
+msgid "Point Inclusion Size"
+msgstr "Punkt kaasamise suurus"
+
+#: src/ODPointPropertiesDialog.cpp:143
+msgid "Number of Point Range Rings"
+msgstr "Punkti vahemaaringide arv"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774 src/ODPropertiesDialogDef.cpp:1009
+msgid "1"
+msgstr "1"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "10"
+msgstr "10"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774 src/ODPropertiesDialogDef.cpp:1009
+msgid "2"
+msgstr "2"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "3"
+msgstr "3"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "4"
+msgstr "4"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "5"
+msgstr "5"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "6"
+msgstr "6"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "7"
+msgstr "7"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "8"
+msgstr "8"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "9"
+msgstr "9"
+
+#: src/ODPointPropertiesDialog.cpp:147 src/ODPropertiesDialogDef.cpp:294
+#: src/ODPropertiesDialogDef.cpp:774
+msgid "None"
+msgstr "Ühtegi"
+
+#: src/ODPointPropertiesDialog.cpp:161
+msgid "Distance between Range Rings"
+msgstr "Vahemaaringide vaheline kaugus"
+
+#: src/ODPointPropertiesDialog.cpp:168 src/ODPropertiesDialogDef.cpp:307
+#: src/ODPropertiesDialogDef.cpp:787
+msgid "Distance Unit"
+msgstr "Vahemaa ühik"
+
+#: src/ODPointPropertiesDialog.cpp:178 src/ODPropertiesDialogDef.cpp:317
+#: src/ODPropertiesDialogDef.cpp:797
+msgid "Range Ring Colours"
+msgstr "Vahemaaringide värv"
+
+#: src/ODPointPropertiesDialog.cpp:185 src/ODPropertiesDialogDef.cpp:324
+#: src/ODPropertiesDialogDef.cpp:804
+msgid "Range Ring Line Width"
+msgstr "Vahemaaringi joone laius"
+
+#: src/ODPointPropertiesDialog.cpp:195 src/ODPropertiesDialogDef.cpp:334
+#: src/ODPropertiesDialogDef.cpp:814
+msgid "Range Ring Line Style"
+msgstr "Vahemaaringi joone stiil"
+
+#: src/ODPointPropertiesDialog.cpp:239
+msgid "Basic"
+msgstr "Elementaarne"
+
+#: src/ODPointPropertiesDialog.cpp:243
 msgid "Text to Display with Point"
 msgstr "Punktiga kuvatav tekst"
-#
-msgid ""
-"The OD Point you want to delete is used in a path, do you really want to "
-"delete it?"
-msgstr ""
-"OD-punkt, mida soovid kustutda, kasutatakse tees, kas sa tõesti soovid ta "
-"kustutada?"
-#
-msgid ""
-"There are some OD points used in paths or anchor alarms.\n"
+
+#: src/ODPointPropertiesDialog.cpp:255 src/ODPropertiesDialogDef.cpp:380
+msgid "Text position relative to point"
+msgstr "Teksti asukoht punktiga võrreldes"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Bottom"
+msgstr "Alla"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Bottom Centre"
+msgstr "All keskel"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Centre"
+msgstr "Keskel"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Left"
+msgstr "Vasakul"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Right"
+msgstr "Paremal"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Top"
+msgstr "Üleval"
+
+#: src/ODPointPropertiesDialog.cpp:259 src/ODPropertiesDialogDef.cpp:384
+msgid "Top Centre"
+msgstr "Üleval keskel"
+
+#: src/ODPointPropertiesDialog.cpp:265 src/ODPropertiesDialogDef.cpp:390
+msgid "Text Colour"
+msgstr "Teksti värv"
+
+#: src/ODPointPropertiesDialog.cpp:272 src/ODPropertiesDialogDef.cpp:397
+msgid "Background Colour"
+msgstr "Tausta värv"
+
+#: src/ODPointPropertiesDialog.cpp:279
+msgid "Background Transparency"
+msgstr "Tausta läbipaistvus"
+
+#: src/ODPointPropertiesDialog.cpp:291 src/ODPropertiesDialogDef.cpp:432
+msgid "Text Font"
+msgstr "Teksti täht"
+
+#: src/ODPointPropertiesDialog.cpp:295 src/ODPropertiesDialogDef.cpp:436
+msgid "Example"
+msgstr "Näide"
+
+#: src/ODPointPropertiesDialog.cpp:302 src/ODPropertiesDialogDef.cpp:440
+msgid "Fonts"
+msgstr "Kirjamärgid"
+
+#: src/ODPointPropertiesDialog.cpp:305 src/ODPropertiesDialogDef.cpp:73
+#: src/ODPropertiesDialogDef.cpp:449
+msgid "Always"
+msgstr "Alati"
+
+#: src/ODPointPropertiesDialog.cpp:305 src/ODPropertiesDialogDef.cpp:449
+msgid "On Rollover Only"
+msgstr "Ainult üleliikudes"
+
+#: src/ODPointPropertiesDialog.cpp:307 src/ODPropertiesDialogDef.cpp:451
+msgid "Show Display Text"
+msgstr "Näita kuvatavat teksti"
+
+#: src/ODPointPropertiesDialog.cpp:318
+msgid "Display text"
+msgstr "Kuva teksti"
+
+#: src/ODPointPropertiesDialog.cpp:323 src/pathmanagerdialog.cpp:755
+#: src/pathmanagerdialog.cpp:1979 src/pathmanagerdialog.cpp:1991
+msgid "Show on chart"
+msgstr "Näita kaardil"
+
+#: src/ODPointPropertiesDialog.cpp:344
+msgid "Extended"
+msgstr "Laiendatud"
+
+#: src/ODPointPropertiesImpl.cpp:163
+msgid "Copy"
+msgstr "Kopeeri"
+
+#: src/ODPointPropertiesImpl.cpp:164
+msgid "Copy lat/long"
+msgstr "Kopeeri laius/pikkus"
+
+#: src/ODPointPropertiesImpl.cpp:165
+msgid "Paste"
+msgstr "Kleebi"
+
+#: src/ODPointPropertiesImpl.cpp:166
+msgid "Paste lat/long"
+msgstr "Kleebi laius/pikkus"
+
+#: src/ODPointPropertiesImpl.cpp:657
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN Draw punkt, kiht: "
+
+#: src/ODPointPropertiesImpl.cpp:659
+msgid "Boundary Point Properties, Layer: "
+msgstr "Piiripunkti omadused, kiht: "
+
+#: src/ODPointPropertiesImpl.cpp:661
+msgid "EBL Point Properties, Layer: "
+msgstr "EBL-punkti omadused, kiht: "
+
+#: src/ODPointPropertiesImpl.cpp:663
+msgid "DR Point Properties, Layer: "
+msgstr "DR-punkti omaduse, kiht: "
+
+#: src/ODPointPropertiesImpl.cpp:671
+msgid "OCPN Draw Point"
+msgstr "OCPN Draw punkt"
+
+#: src/ODPointPropertiesImpl.cpp:673
+msgid "Boundary Point Properties"
+msgstr "Piiripunkti omadused"
+
+#: src/ODPointPropertiesImpl.cpp:675
+msgid "EBL Point Properties"
+msgstr "EBL-punkti omadused"
+
+#: src/ODPointPropertiesImpl.cpp:677
+msgid "DR Point Properties"
+msgstr "DR-punkti omadused"
+
+#: src/ODPointPropertiesImpl.cpp:679
+msgid "Guard Zone Point Properties"
+msgstr "Valvetsooni punkti omadused"
+
+#: src/ODPropertiesDialogDef.cpp:29
+msgid "Confirm Object Delete"
+msgstr "Kinnita objekti kustutamine"
+
+#: src/ODPropertiesDialogDef.cpp:36
+msgid "Show Magnetic Bearings"
+msgstr "Näita magnetpeilinguid"
+
+#: src/ODPropertiesDialogDef.cpp:42
+msgid "Allow Left Mouse Button Drag"
+msgstr "Võimalda hiire vasaku klahvi lohistamine"
+
+#: src/ODPropertiesDialogDef.cpp:48
+msgid "Nav Object Backups"
+msgstr "Nav.objektide varukoopiad"
+
+#: src/ODPropertiesDialogDef.cpp:55
+msgid "Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr "Nurga kerimise tundlikkus\n"
+"(protsent ekraani laiusest) vaikimisi 5"
+
+#: src/ODPropertiesDialogDef.cpp:62
+msgid "Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr "Algne nurga kerimise tundlikkus\n"
+"(protsent ekraani laiusest) vaikimisi 3"
+
+#: src/ODPropertiesDialogDef.cpp:69
+msgid "Display Toolbar"
+msgstr "Kuva tööriistariba"
+
+#: src/ODPropertiesDialogDef.cpp:73
+msgid "Whilst Drawing"
+msgstr "Joonistamise ajal"
+
+#: src/ODPropertiesDialogDef.cpp:79
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Kustuta praegused OCPN_Draw seadistuskirjed (nr)"
+
+#: src/ODPropertiesDialogDef.cpp:83 src/ODPropertiesDialogImpl.cpp:1070
+msgid "Yes"
+msgstr "Jah"
+
+#: src/ODPropertiesDialogDef.cpp:93
+msgid "General"
+msgstr "Üldine"
+
+#: src/ODPropertiesDialogDef.cpp:105 src/ODPropertiesDialogDef.cpp:472
+#: src/ODPropertiesDialogDef.cpp:875
+msgid "Active Line Colour"
+msgstr "Aktiivse joone värv"
+
+#: src/ODPropertiesDialogDef.cpp:112 src/ODPropertiesDialogDef.cpp:882
+msgid "Active Fill Colour"
+msgstr "Aktiivse täitevärv"
+
+#: src/ODPropertiesDialogDef.cpp:119 src/ODPropertiesDialogDef.cpp:479
+#: src/ODPropertiesDialogDef.cpp:889
+msgid "Inactive Line Colour"
+msgstr "Passiivse joone värv"
+
+#: src/ODPropertiesDialogDef.cpp:126 src/ODPropertiesDialogDef.cpp:896
+msgid "Inactive Fill Colour"
+msgstr "Passiivse täitevärv"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "1 Pixel"
+msgstr "1 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "10 Pixels"
+msgstr "10 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "2 Pixels"
+msgstr "2 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "3 Pixels"
+msgstr "3 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "4 Pixels"
+msgstr "4 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "5 Pixels"
+msgstr "5 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "6 Pixels"
+msgstr "6 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "7 Pixels"
+msgstr "7 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "8 Pixels"
+msgstr "8 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:137 src/ODPropertiesDialogDef.cpp:490
+#: src/ODPropertiesDialogDef.cpp:565 src/ODPropertiesDialogDef.cpp:645
+#: src/ODPropertiesDialogDef.cpp:907 src/ODPropertiesDialogDef.cpp:1128
+#: src/ODPropertiesDialogDef.cpp:1166 src/ODPropertiesDialogDef.cpp:1204
+msgid "9 Pixels"
+msgstr "9 pikslit"
+
+#: src/ODPropertiesDialogDef.cpp:160
+msgid "Inclusion Boundary Size"
+msgstr "Kaasatud piiri suurus"
+
+#: src/ODPropertiesDialogDef.cpp:204 src/ODPropertiesDialogDef.cpp:304
+#: src/ODPropertiesDialogDef.cpp:784
+msgid "0.5"
+msgstr "0,5"
+
+#: src/ODPropertiesDialogDef.cpp:218
+msgid "Show Name"
+msgstr "Näita nime"
+
+#: src/ODPropertiesDialogDef.cpp:237 src/ODPropertiesDialogDef.cpp:764
+msgid "Show Range Rings"
+msgstr "Näita vahemaaringe"
+
+#: src/ODPropertiesDialogDef.cpp:242
+msgid "Boundary Point Type"
+msgstr "Piiripunkti laad"
+
+#: src/ODPropertiesDialogDef.cpp:268
+msgid "Boundary Point Inclusion\n"
+"Size"
+msgstr "Piirpunkti kaasamine\n"
+"Suurus"
+
+#: src/ODPropertiesDialogDef.cpp:290 src/ODPropertiesDialogDef.cpp:770
+msgid "Number of Range Rings"
+msgstr "Vahemaaringide arv"
+
+#: src/ODPropertiesDialogDef.cpp:300 src/ODPropertiesDialogDef.cpp:780
+msgid "Distance Between Range Rings"
+msgstr "Vahemaaringide vaheline kaugus"
+
+#: src/ODPropertiesDialogDef.cpp:365
+msgid "Text Point Icon"
+msgstr "Teksti punkt ikoon"
+
+#: src/ODPropertiesDialogDef.cpp:404
+msgid "Background Density"
+msgstr "Tausta tihedus"
+
+#: src/ODPropertiesDialogDef.cpp:510 src/ODPropertiesDialogImpl.cpp:254
+msgid "Path"
+msgstr "Tee"
+
+#: src/ODPropertiesDialogDef.cpp:517 src/ODPropertiesDialogDef.cpp:975
+msgid "Start Point Icon"
+msgstr "Alguspunkti ikoon"
+
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:990
+msgid "End Point Icon"
+msgstr "Lõpp-punkti ikoon"
+
+#: src/ODPropertiesDialogDef.cpp:547
+msgid "Active EBL Line Colour"
+msgstr "Aktiivse EBL-joone värv"
+
+#: src/ODPropertiesDialogDef.cpp:554
+msgid "Inactive EBL Line Colour"
+msgstr "Passiivse EBL-joone värv"
+
+#: src/ODPropertiesDialogDef.cpp:590
+msgid "EBL Fixed End Position"
+msgstr "EBL fikseeritud lõpp-punkt"
+
+#: src/ODPropertiesDialogDef.cpp:593
+msgid "Show EBL Direction Arrow"
+msgstr "Näita EBL'i suunanoolt"
+
+#: src/ODPropertiesDialogDef.cpp:599
+msgid "Show Perpendicular Index Line"
+msgstr "Kuva ristindeksliini"
+
+#: src/ODPropertiesDialogDef.cpp:615 src/ocpn_draw_pi.cpp:3496
+msgid "EBL"
+msgstr "EBL"
+
+#: src/ODPropertiesDialogDef.cpp:627
+msgid "Active DR Line\n"
+"Colour"
+msgstr "Aktiivse DR'i joon\n"
+"Värv"
+
+#: src/ODPropertiesDialogDef.cpp:634
+msgid "Inactive DR Line\n"
+"Colour"
+msgstr "Passiivse DR'i joon\n"
+"Värv"
+
+#: src/ODPropertiesDialogDef.cpp:721
+msgid "Show DR Direction Arrow"
+msgstr "Näita DR'i suunanoolt"
+
+#: src/ODPropertiesDialogDef.cpp:727
+msgid "DR Persistence"
+msgstr "DR'i püsivus"
+
+#: src/ODPropertiesDialogDef.cpp:749
+msgid "DR Point Icon"
+msgstr "DR-punkti ikoon"
+
+#: src/ODPropertiesDialogDef.cpp:850
+msgid "First Point Icon"
+msgstr "Esimese punkti ikoon"
+
+#: src/ODPropertiesDialogDef.cpp:857
+msgid "Second Point Icon"
+msgstr "Teise punkt ikoon"
+
+#: src/ODPropertiesDialogDef.cpp:968 src/ODToolbarImpl.cpp:521
+msgid "Guard Zone"
+msgstr "Valvetsoon (VT)"
+
+#: src/ODPropertiesDialogDef.cpp:1005
+msgid "Initial number of index lines"
+msgstr "Esialgne indeksridade arv"
+
+#: src/ODPropertiesDialogDef.cpp:1015
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Vaikimisi nihe (+tp /-pp)"
+
+#: src/ODPropertiesDialogDef.cpp:1019
+msgid "1.0"
+msgstr "1,0"
+
+#: src/ODPropertiesDialogDef.cpp:1028
+msgid "Active Centre Line Colour"
+msgstr "Aktiivse keskjoone värv"
+
+#: src/ODPropertiesDialogDef.cpp:1044
+msgid "Inactive Centre Line Colour"
+msgstr "Passiivse keskjoone värv"
+
+#: src/ODPropertiesDialogDef.cpp:1060
+msgid "Active Offset Line Colour"
+msgstr "Aktiivse nihkejoone värv"
+
+#: src/ODPropertiesDialogDef.cpp:1076
+msgid "Inactive Offset Line Colour"
+msgstr "Passiivse nihkejoone värv"
+
+#: src/ODPropertiesDialogDef.cpp:1092
+msgid "Active Offset Line 2 Colour"
+msgstr "Aktiivse 2. nihkejoone värv"
+
+#: src/ODPropertiesDialogDef.cpp:1108
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Passiivse 2. nihkejoone värv"
+
+#: src/ODPropertiesDialogDef.cpp:1124
+msgid "Centre Line Width"
+msgstr "Keskjoone laius"
+
+#: src/ODPropertiesDialogDef.cpp:1143
+msgid "Centre Line Style"
+msgstr "Keskjoone stiil"
+
+#: src/ODPropertiesDialogDef.cpp:1162
+msgid "Offset Line Width"
+msgstr "Nihkejoone laius"
+
+#: src/ODPropertiesDialogDef.cpp:1181
+msgid "Offset Line Style"
+msgstr "Nihkejoone stiil"
+
+#: src/ODPropertiesDialogDef.cpp:1200
+msgid "Offset Line 2 Width"
+msgstr "2. nihkejoone laius"
+
+#: src/ODPropertiesDialogDef.cpp:1219
+msgid "Offset Line 2 Style"
+msgstr "2. nihkejoone stiil"
+
+#: src/ODPropertiesDialogDef.cpp:1234
+msgid "Parallel Index Line Persistence"
+msgstr "Paralleelse Indeksliini kestvus"
+
+#: src/ODPropertiesDialogDef.cpp:1252
+msgid "Name:"
+msgstr "Nimi:"
+
+#: src/ODPropertiesDialogDef.cpp:1260
+msgid "Version:"
+msgstr "Versioon:"
+
+#: src/ODPropertiesDialogDef.cpp:1269
+msgid "Major:"
+msgstr "Peamine:"
+
+#: src/ODPropertiesDialogDef.cpp:1277
+msgid "Minor:"
+msgstr "Vähetähtis:"
+
+#: src/ODPropertiesDialogDef.cpp:1285
+msgid "Patch:"
+msgstr "Tee:"
+
+#: src/ODPropertiesDialogDef.cpp:1296
+msgid "Date:"
+msgstr "kuupäev:"
+
+#: src/ODPropertiesDialogDef.cpp:1304
+msgid "Other:"
+msgstr "Muu:"
+
+#: src/ODPropertiesDialogDef.cpp:1308
+msgid "Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
+"or\n\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"or\n\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr "Palun teavita probleemidest kasutades FlySpray'd:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
+"või\n\n"
+" OpenCPN'i foorumis:\n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"või\n\n"
+"Tõstata teema GIT'is:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+
+#: src/ODPropertiesDialogDef.cpp:1319
+msgid "About"
+msgstr "Teave"
+
+#: src/ODPropertiesDialogDef.cpp:1326
+msgid "This chart shows the interactions between Boundaries and WatchDog alam boundaries"
+msgstr "See kaart näitab Boundaries ja WatchDog häire piiride vastastikust toimet"
+
+#: src/ODPropertiesDialogDef.cpp:1343
+msgid "WD"
+msgstr "WD"
+
+#: src/ODPropertiesDialogDef.cpp:1344 src/ODPropertiesDialogImpl.cpp:199
+msgid "All"
+msgstr "Kõik"
+
+#: src/ODPropertiesDialogDef.cpp:1353
+msgid "OD"
+msgstr "OD"
+
+#: src/ODPropertiesDialogDef.cpp:1370
+msgid "Help"
+msgstr "Abi"
+
+#: src/ODPropertiesDialogDef.cpp:1386
+msgid "License"
+msgstr "Litsents"
+
+#: src/ODPropertiesDialogDef.cpp:1399
+msgid "&Apply"
+msgstr "&Rakenda"
+
+#: src/ODPropertiesDialogImpl.cpp:198
+msgid "OD\\WD"
+msgstr "OD\\WD"
+
+#: src/ODPropertiesDialogImpl.cpp:207 src/ODPropertiesDialogImpl.cpp:208
+#: src/ODPropertiesDialogImpl.cpp:209 src/ODPropertiesDialogImpl.cpp:210
+#: src/ODPropertiesDialogImpl.cpp:214 src/ODPropertiesDialogImpl.cpp:218
+msgid "Ring"
+msgstr "Ring"
+
+#: src/ODPropertiesDialogImpl.cpp:211 src/ODPropertiesDialogImpl.cpp:212
+#: src/ODPropertiesDialogImpl.cpp:213 src/ODPropertiesDialogImpl.cpp:215
+#: src/ODPropertiesDialogImpl.cpp:216 src/ODPropertiesDialogImpl.cpp:217
+msgid "No alarm"
+msgstr "Häiret pole"
+
+#: src/ODPropertiesDialogImpl.cpp:1018 src/ODPropertiesDialogImpl.cpp:1066
+msgid "No"
+msgstr "Ei"
+
+#: src/ODToolbarImpl.cpp:516
+msgid "Create Boundary"
+msgstr "Loo piir"
+
+#: src/ODToolbarImpl.cpp:517
+msgid "Create Boundary Point"
+msgstr "Loo piiripunkt"
+
+#: src/ODToolbarImpl.cpp:518
+msgid "Create Text Point"
+msgstr "Loo teksti punkt"
+
+#: src/ODToolbarImpl.cpp:519
+msgid "Create EBL"
+msgstr "Loo EBL"
+
+#: src/ODToolbarImpl.cpp:519
+msgid "Electronic Bearing Line"
+msgstr "Elektrooniline peilingujoon"
+
+#: src/ODToolbarImpl.cpp:520
+msgid "Create DR"
+msgstr "Loo DR"
+
+#: src/ODToolbarImpl.cpp:521
+msgid "Create GZ"
+msgstr "Loo VT"
+
+#: src/ODToolbarImpl.cpp:522
+msgid "Create PIL"
+msgstr "Loo PIL"
+
+#: src/ODicons.cpp:77
+msgid "ocpn_draw_pi data location"
+msgstr "ocpn_draw_pi andmete asukoht"
+
+#: src/ODicons.cpp:197
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr "Ei õnnestunud kõiki OCPN Draw plugina ikoone laadida, vaata detaile OCPN'i logist"
+
+#: src/ODicons.cpp:197 src/pathmanagerdialog.cpp:1102
+#: src/pathmanagerdialog.cpp:1152 src/pathmanagerdialog.cpp:1796
+#: src/pathmanagerdialog.cpp:1829 src/pathmanagerdialog.cpp:1897
+#: src/pathmanagerdialog.cpp:2061
+msgid "OpenCPN Alert"
+msgstr "OpenCPN'i hoiatus"
+
+#: src/PILProp.cpp:65
+msgid "PIL Persistence"
+msgstr "PIL kestvus"
+
+#: src/PILProp.cpp:310
+msgid "ID"
+msgstr "ID"
+
+#: src/PILProp.cpp:312
+msgid "Offset"
+msgstr "Nihe"
+
+#: src/PILPropertiesDialogDef.cpp:28
+msgid "ID Num"
+msgstr "ID nr"
+
+#: src/PILPropertiesDialogDef.cpp:49
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Nihe (+ pp /- vp)"
+
+#: src/ocpn_draw_pi.cpp:488 src/ocpn_draw_pi.cpp:489 src/ocpn_draw_pi.cpp:493
+#: src/ocpn_draw_pi.cpp:494
+msgid "OCPN Draw Manager"
+msgstr "OCPN Draw haldaja"
+
+#: src/ocpn_draw_pi.cpp:490 src/ocpn_draw_pi.cpp:495
+msgid "OCPN Draw Boundary"
+msgstr "OCPN Draw piir"
+
+#: src/ocpn_draw_pi.cpp:491 src/ocpn_draw_pi.cpp:496
+msgid "OCPN Draw"
+msgstr "OCPN Draw"
+
+#: src/ocpn_draw_pi.cpp:843
+msgid "General drawing for OpenCPN"
+msgstr "OpenCPN'i üldine joonistamine"
+
+#: src/ocpn_draw_pi.cpp:847
+msgid "General Drawing for OpenCPN\n\n"
+"Thanks to the community for their helpful suggestions."
+msgstr "OpenCPN'i üldine joonistamine\n\n"
+"Tänud kogukonnale abistavate ettepanekute eest."
+
+#: src/ocpn_draw_pi.cpp:2993
+msgid "Layer Boundary"
+msgstr "Piiri kiht"
+
+#: src/ocpn_draw_pi.cpp:3218 src/ocpn_draw_pi.cpp:3285
+msgid "Use nearby Point?"
+msgstr "Kasuta punkti läheduses?"
+
+#: src/ocpn_draw_pi.cpp:3219 src/ocpn_draw_pi.cpp:3286
+msgid "OCPN Draw Point Create"
+msgstr "OCPN Draw punkti loomine"
+
+#: src/ocpn_draw_pi.cpp:3365
+msgid "Use nearby OD Point?"
+msgstr "Kasuta läheduses olevat OD-punkti?"
+
+#: src/ocpn_draw_pi.cpp:3366 src/ocpn_draw_pi.cpp:3419
+msgid "OCPN Draw Boundary Create"
+msgstr "OCPN Draw piiri loomine"
+
+#: src/ocpn_draw_pi.cpp:3413
+msgid "For this leg the Great Circle boundary is "
+msgstr "Antud kursilõigu suurring piir on "
+
+#: src/ocpn_draw_pi.cpp:3414
+msgid " shorter than rhumbline.\n\n"
+msgstr " lühem kui rumbijoon.\n\n"
+
+#: src/ocpn_draw_pi.cpp:3415
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr "Kas sa sooviksid lisada selle lõigu jaoks suure ringi piiripunktid?"
+
+#: src/ocpn_draw_pi.cpp:3583
+msgid "GZ"
+msgstr "VT"
+
+#: src/ocpn_draw_pi.cpp:3622
+msgid "Second"
+msgstr "Teine"
+
+#: src/ocpn_draw_pi.cpp:3648
+msgid "First"
+msgstr "Esimene"
+
+#: src/ocpn_draw_pi.cpp:3681
+msgid "PIL"
+msgstr "PIL"
+
+#: src/pathmanagerdialog.cpp:522
+msgid "Path & Point Manager"
+msgstr "Tee & punkti haldur"
+
+#: src/pathmanagerdialog.cpp:554
+msgid "Paths"
+msgstr "Teed"
+
+#: src/pathmanagerdialog.cpp:577 src/pathmanagerdialog.cpp:733
+msgid "Show"
+msgstr "Näita"
+
+#: src/pathmanagerdialog.cpp:578
+msgid "Path Name"
+msgstr "Tee nimi"
+
+#: src/pathmanagerdialog.cpp:579
+msgid "Desc"
+msgstr "Kahanev"
+
+#: src/pathmanagerdialog.cpp:585
+msgid "&Properties..."
+msgstr "&Omadused..."
+
+#: src/pathmanagerdialog.cpp:590 src/pathmanagerdialog.cpp:1041
+msgid "&Activate"
+msgstr "&Käivita"
+
+#: src/pathmanagerdialog.cpp:597 src/pathmanagerdialog.cpp:661
+msgid "&Center View"
+msgstr "Keskenda &vaade"
+
+#: src/pathmanagerdialog.cpp:604 src/pathmanagerdialog.cpp:666
+#: src/pathmanagerdialog.cpp:750
+msgid "&Delete"
+msgstr "K&ustuta"
+
+#: src/pathmanagerdialog.cpp:609 src/pathmanagerdialog.cpp:671
+msgid "&Export selected..."
+msgstr "&Ekspordi valitud..."
+
+#: src/pathmanagerdialog.cpp:616
+msgid "&Delete All"
+msgstr "Kustut&a kõik"
+
+#: src/pathmanagerdialog.cpp:626
+msgid "OD Points"
+msgstr "OD-punktid"
+
+#: src/pathmanagerdialog.cpp:644
+msgid "Icon"
+msgstr "Ikoon"
+
+#: src/pathmanagerdialog.cpp:645
+msgid "OD Point Name"
+msgstr "OD-punkti nimi"
+
+#: src/pathmanagerdialog.cpp:646
+msgid "Distance from Ownship"
+msgstr "Vahemaa oma laevast"
+
+#: src/pathmanagerdialog.cpp:651
+msgid "&New"
+msgstr "&Uus"
+
+#: src/pathmanagerdialog.cpp:656
+msgid "&Properties"
+msgstr "&Omadused"
+
+#: src/pathmanagerdialog.cpp:683
+msgid "Delete All"
+msgstr "Kustuta kõik"
+
+#: src/pathmanagerdialog.cpp:694
+msgid "I&mport GPX..."
+msgstr "I&mpordi GPX..."
+
+#: src/pathmanagerdialog.cpp:704
+msgid "Export All Visible..."
+msgstr "Ekspordi kõik nähtavad..."
+
+#: src/pathmanagerdialog.cpp:714
+msgid "Layers"
+msgstr "Kihid"
+
+#: src/pathmanagerdialog.cpp:734
+msgid "Layer Name"
+msgstr "Kihi nimi"
+
+#: src/pathmanagerdialog.cpp:735
+msgid "No. of items"
+msgstr "Üksuste nr"
+
+#: src/pathmanagerdialog.cpp:740
+msgid "Temporary layer"
+msgstr "Ajutine kiht"
+
+#: src/pathmanagerdialog.cpp:760 src/pathmanagerdialog.cpp:1984
+#: src/pathmanagerdialog.cpp:1992
+msgid "Show Point names"
+msgstr "Näita punktinimesid"
+
+#: src/pathmanagerdialog.cpp:765 src/pathmanagerdialog.cpp:1989
+#: src/pathmanagerdialog.cpp:1993
+msgid "List contents "
+msgstr "Loenda sisu "
+
+#: src/pathmanagerdialog.cpp:980
+msgid "(Unnamed )"
+msgstr "(nimetu)"
+
+#: src/pathmanagerdialog.cpp:1040
+msgid "&Deactivate"
+msgstr "Peata"
+
+#: src/pathmanagerdialog.cpp:1102 src/pathmanagerdialog.cpp:1796
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Kas kindlalt soovid valitud objekti(d) kustutada"
+
+#: src/pathmanagerdialog.cpp:1152
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Kas oled kindel, et soovid kustutada <ALL> jäljed?"
+
+#: src/pathmanagerdialog.cpp:1250
+msgid "Boundary Properties"
+msgstr "Piiri omadused"
+
+#: src/pathmanagerdialog.cpp:1252
+msgid "EBL Properties"
+msgstr "EBL omadused"
+
+#: src/pathmanagerdialog.cpp:1254
+msgid "DR Properties"
+msgstr "DR omadused"
+
+#: src/pathmanagerdialog.cpp:1256
+msgid "Guard Zone Properties"
+msgstr "Valvetsooni omadused"
+
+#: src/pathmanagerdialog.cpp:1258
+msgid "Parallel Index Line Properties"
+msgstr "Paralleelse Indeksliini omadused"
+
+#: src/pathmanagerdialog.cpp:1263
+msgid "Path Properties, Layer: "
+msgstr "Tee omadused, kiht: "
+
+#: src/pathmanagerdialog.cpp:1265
+msgid "Boundary Properties, Layer: "
+msgstr "Piiri omadused, kiht: "
+
+#: src/pathmanagerdialog.cpp:1267
+msgid "EBL Properties, Layer: "
+msgstr "EBL omadused, kiht: "
+
+#: src/pathmanagerdialog.cpp:1269
+msgid "DR Properties, Layer: "
+msgstr "DR omadused, kiht: "
+
+#: src/pathmanagerdialog.cpp:1386
+msgid "Do you also want to make the shared OD Points being part of this boundary invisible?"
+msgstr "Kas sa soovid teha ka ühiskasutusega OD-punktid, mis on nendes piirides, nähtamatuks?"
+
+#: src/pathmanagerdialog.cpp:1386
+msgid "Question"
+msgstr "Küsimus"
+
+#: src/pathmanagerdialog.cpp:1536
+msgid "(Unnamed) "
+msgstr "(nimetu) "
+
+#: src/pathmanagerdialog.cpp:1829
+msgid "The OD Point you want to delete is used in a path, do you really want to delete it?"
+msgstr "OD-punkt, mida soovid kustutda, kasutatakse tees, kas sa tõesti soovid ta kustutada?"
+
+#: src/pathmanagerdialog.cpp:1887
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Kas oled kindel, et soovid <ALL> OD-punktid kustutada?"
+
+#: src/pathmanagerdialog.cpp:1893
+msgid "There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
-msgstr ""
-"Seal on mõned OD-punktid, mis on kasutatud teedes või ankruhäiretes.\n"
+msgstr "Seal on mõned OD-punktid, mis on kasutatud teedes või ankruhäiretes.\n"
 " Kas soovid ka need kustutada?\n"
 " See muudab teed ja halvab ankruhäired.\n"
 " Vastates Ei hoitakse teedes või häiretes kasutatud OCPN-punktide alles."
-#
-msgid ""
-"This chart shows the interactions between Boundaries and WatchDog alam "
-"boundaries"
-msgstr ""
-"See kaart näitab Boundaries ja WatchDog häire piiride vastastikust toimet"
-#
-msgid "Time"
-msgstr "Aeg"
-#
-msgid "Time Units"
-msgstr "Ajaühikud"
-#
-msgid "To Point"
-msgstr "Punkti"
-#
-msgid "Top"
-msgstr "Üleval"
-#
-msgid "Top Centre"
-msgstr "Üleval keskel"
-#
-msgid "Total Length"
-msgstr "Kogupikkus"
-#
-msgid "Total Length: "
-msgstr "Kogupikkus: "
-#
+
+#: src/pathmanagerdialog.cpp:1977
+msgid "Hide from chart"
+msgstr "Peida kaardilt"
+
+#: src/pathmanagerdialog.cpp:1982
+msgid "Hide Point names"
+msgstr "Peida punktinimed"
+
+#: src/pathmanagerdialog.cpp:1987
 msgid "Unlist contents "
 msgstr "Tühjenda nimekiri "
-#
-msgid "Update initial conditions"
-msgstr "Uuenda lähtetingimusi"
-#
-msgid "Use nearby OD Point?"
-msgstr "Kasuta läheduses olevat OD-punkti?"
-#
-msgid "Use nearby Point?"
-msgstr "Kasuta punkti läheduses?"
-#
-msgid "Version:"
-msgstr "Versioon:"
-#
-msgid "WD"
-msgstr "WD"
-#
-msgid "Whilst Drawing"
-msgstr "Joonistamise ajal"
-#
-msgid "Would you like include the Great Circle boundary points for this leg?"
-msgstr "Kas sa sooviksid lisada selle lõigu jaoks suure ringi piiripunktid?"
-#
-msgid "Yes"
-msgstr ""
-#
-msgid "ocpn_draw_pi data location"
-msgstr "ocpn_draw_pi andmete asukoht"
+
+#: src/pathmanagerdialog.cpp:2060
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Kas oled kindel, et soovid kustutada selle kihi ja <ALL> temas sisalduva?"
+
+#: src/pathmanagerdialog.cpp:2324
+msgid "(Unnamed Layer)"
+msgstr "(nimetu kiht)"
+
