@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-06-29 09:30-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Catalan\n"
@@ -207,6 +207,9 @@ msgid "Active Fill Colour"
 msgstr ""
 #
 msgid "Active Line Colour"
+msgstr ""
+#
+msgid "Active Offset Line 2 Colour"
 msgstr ""
 #
 msgid "Active Offset Line Colour"
@@ -504,6 +507,9 @@ msgstr "Esborra-ho Tot"
 msgid "Delete Line"
 msgstr ""
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr ""
 #
@@ -618,6 +624,9 @@ msgstr "Exportar fitxers GPX"
 msgid "Extended"
 msgstr ""
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr ""
 #
@@ -690,7 +699,17 @@ msgstr ""
 msgid "Hide Boundary Point Icons"
 msgstr ""
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Capes"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr ""
+#
+msgid "Hide Point(s)"
 msgstr ""
 #
 msgid "Hide from chart"
@@ -734,6 +753,9 @@ msgstr ""
 msgid "Inactive Line Colour"
 msgstr ""
 #
+msgid "Inactive Offset Line 2 Colour"
+msgstr ""
+#
 msgid "Inactive Offset Line Colour"
 msgstr ""
 #
@@ -757,6 +779,9 @@ msgstr ""
 msgid ""
 "Initial Edge Panning Sensitivity\n"
 "(percentage screen width) Default 3"
+msgstr ""
+#
+msgid "Initial number of index lines"
 msgstr ""
 #
 msgid "Insert Boundary Point"
@@ -808,6 +833,9 @@ msgid "Leg: from "
 msgstr "Tram: des de "
 #
 msgid "Length Type"
+msgstr ""
+#
+msgid "License"
 msgstr ""
 #
 msgid "Line Colour"
@@ -914,6 +942,9 @@ msgstr ""
 #
 #, c-format
 msgid "New layer %d: %s"
+msgstr ""
+#
+msgid "No"
 msgstr ""
 #
 msgid "No alarm"
@@ -1033,6 +1064,12 @@ msgstr ""
 msgid "Offset (+ Stbd/- Port)"
 msgstr ""
 #
+msgid "Offset Line 2 Style"
+msgstr ""
+#
+msgid "Offset Line 2 Width"
+msgstr ""
+#
 msgid "Offset Line Style"
 msgstr ""
 #
@@ -1091,6 +1128,10 @@ msgid "Path"
 msgstr ""
 #
 msgid "Path & Point Manager"
+msgstr "Gestionar camins i punts"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Gestionar camins i punts"
 #
 msgid "Path Name"
@@ -1209,6 +1250,10 @@ msgstr ""
 msgid "Show EBL Direction Arrow"
 msgstr ""
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Capes"
+#
 msgid "Show Magnetic Bearings"
 msgstr ""
 #
@@ -1216,6 +1261,9 @@ msgid "Show Name"
 msgstr ""
 #
 msgid "Show Path Direction Arrow"
+msgstr ""
+#
+msgid "Show Paths(s)"
 msgstr ""
 #
 msgid ""
@@ -1231,6 +1279,10 @@ msgstr ""
 #
 msgid "Show Point names"
 msgstr ""
+#
+#, fuzzy
+msgid "Show Point(s)"
+msgstr "Al Punt"
 #
 msgid "Show Range Rings"
 msgstr ""
@@ -1258,6 +1310,9 @@ msgstr ""
 #
 msgid "Temporary layer"
 msgstr "Capa temporal"
+#
+msgid "Text"
+msgstr ""
 #
 msgid "Text Colour"
 msgstr ""
@@ -1337,6 +1392,9 @@ msgid "Whilst Drawing"
 msgstr ""
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+#
+msgid "Yes"
 msgstr ""
 #
 msgid "ocpn_draw_pi data location"

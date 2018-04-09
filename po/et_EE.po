@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-06-29 09:31-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -212,6 +212,10 @@ msgstr "Aktiivse täitevärv"
 #
 msgid "Active Line Colour"
 msgstr "Aktiivse joone värv"
+#
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Aktiivse nihkejoone värv"
 #
 msgid "Active Offset Line Colour"
 msgstr "Aktiivse nihkejoone värv"
@@ -514,6 +518,9 @@ msgstr "Kustuta kõik"
 msgid "Delete Line"
 msgstr "Kustuta liin"
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr "Kustuta..."
 #
@@ -634,6 +641,9 @@ msgstr "Ekspordi GPX-fail"
 msgid "Extended"
 msgstr "Laiendatud"
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr "Täite värv"
 #
@@ -709,7 +719,18 @@ msgstr "Abi"
 msgid "Hide Boundary Point Icons"
 msgstr "Peida piiri punktide ikoonid"
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Kihid"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr "Peida punktinimed"
+#
+#, fuzzy
+msgid "Hide Point(s)"
 msgstr "Peida punktinimed"
 #
 msgid "Hide from chart"
@@ -755,6 +776,10 @@ msgstr "Passiivse täitevärv"
 msgid "Inactive Line Colour"
 msgstr "Passiivse joone värv"
 #
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Passiivse nihkejoone värv"
+#
 msgid "Inactive Offset Line Colour"
 msgstr "Passiivse nihkejoone värv"
 #
@@ -783,6 +808,10 @@ msgid ""
 msgstr ""
 "Algne nurga kerimise tundlikkus\n"
 "(protsent ekraani laiusest) vaikimisi 3"
+#
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Vahemaaringide arv"
 #
 msgid "Insert Boundary Point"
 msgstr "Sisesta piiripunkt"
@@ -834,6 +863,9 @@ msgstr "Lõik: alates "
 #
 msgid "Length Type"
 msgstr "Pikkuse tüüp"
+#
+msgid "License"
+msgstr ""
 #
 msgid "Line Colour"
 msgstr "Joone värv"
@@ -940,6 +972,10 @@ msgstr "Mitte kunagi"
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Uus kiht %d: %s"
+#
+#, fuzzy
+msgid "No"
+msgstr "Ühtegi"
 #
 msgid "No alarm"
 msgstr "Häiret pole"
@@ -1058,6 +1094,14 @@ msgstr "Nihe"
 msgid "Offset (+ Stbd/- Port)"
 msgstr "Nihe (+ pp /- vp)"
 #
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Nihkejoone stiil"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Nihkejoone laius"
+#
 msgid "Offset Line Style"
 msgstr "Nihkejoone stiil"
 #
@@ -1116,6 +1160,10 @@ msgid "Path"
 msgstr "Tee"
 #
 msgid "Path & Point Manager"
+msgstr "Tee & punkti haldur"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Tee & punkti haldur"
 #
 msgid "Path Name"
@@ -1248,6 +1296,10 @@ msgstr "Näita kuvatavat teksti"
 msgid "Show EBL Direction Arrow"
 msgstr "Näita EBL'i suunanoolt"
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Näita nime"
+#
 msgid "Show Magnetic Bearings"
 msgstr "Näita magnetpeilinguid"
 #
@@ -1256,6 +1308,9 @@ msgstr "Näita nime"
 #
 msgid "Show Path Direction Arrow"
 msgstr "Kuva tee suunanoolt"
+#
+msgid "Show Paths(s)"
+msgstr ""
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1271,6 +1326,10 @@ msgid "Show Point Range Rings"
 msgstr "Näita punkti vahemaaringe"
 #
 msgid "Show Point names"
+msgstr "Näita punktinimesid"
+#
+#, fuzzy
+msgid "Show Point(s)"
 msgstr "Näita punktinimesid"
 #
 msgid "Show Range Rings"
@@ -1299,6 +1358,10 @@ msgstr "Alguspunkti ikoon"
 #
 msgid "Temporary layer"
 msgstr "Ajutine kiht"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Teksti täht"
 #
 msgid "Text Colour"
 msgstr "Teksti värv"
@@ -1386,6 +1449,9 @@ msgstr "Joonistamise ajal"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Kas sa sooviksid lisada selle lõigu jaoks suure ringi piiripunktid?"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi andmete asukoht"

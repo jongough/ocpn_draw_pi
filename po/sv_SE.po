@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-07-02 12:25-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
@@ -212,6 +212,10 @@ msgstr "Färg på aktivt raster"
 #
 msgid "Active Line Colour"
 msgstr "Färg på aktiv linje"
+#
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Färg på aktiv förskjuten linje"
 #
 msgid "Active Offset Line Colour"
 msgstr "Färg på aktiv förskjuten linje"
@@ -512,6 +516,9 @@ msgstr "Radera allt"
 msgid "Delete Line"
 msgstr "Radera linjen"
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr "Ta bort..."
 #
@@ -631,6 +638,9 @@ msgstr "Exportera GPX-fil"
 msgid "Extended"
 msgstr "Utökad"
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr "Färg på raster"
 #
@@ -706,7 +716,18 @@ msgstr "Hjälp"
 msgid "Hide Boundary Point Icons"
 msgstr "Dölj gränspunkternas ikoner"
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Lager"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr "Dölj punktens namn"
+#
+#, fuzzy
+msgid "Hide Point(s)"
 msgstr "Dölj punktens namn"
 #
 msgid "Hide from chart"
@@ -752,6 +773,10 @@ msgstr "Färg på inaktivt raster"
 msgid "Inactive Line Colour"
 msgstr "Färg på inaktiv linje"
 #
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Färg på inaktiv förskjuten linje"
+#
 msgid "Inactive Offset Line Colour"
 msgstr "Färg på inaktiv förskjuten linje"
 #
@@ -780,6 +805,10 @@ msgid ""
 msgstr ""
 "Första punkten i en linje kan normalt ritas\n"
 "närmare kanten. 3 (%) är standard"
+#
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Antal avståndsringar"
 #
 msgid "Insert Boundary Point"
 msgstr "Infoga gränspunkt"
@@ -831,6 +860,9 @@ msgstr "Ben: från "
 #
 msgid "Length Type"
 msgstr "Bas för linjens längd"
+#
+msgid "License"
+msgstr ""
 #
 msgid "Line Colour"
 msgstr "Linjefärg"
@@ -937,6 +969,10 @@ msgstr "Aldrig"
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Nytt lager %d: %s"
+#
+#, fuzzy
+msgid "No"
+msgstr "Ingen"
 #
 msgid "No alarm"
 msgstr "Inga larm"
@@ -1055,6 +1091,14 @@ msgstr "Förskjutning"
 msgid "Offset (+ Stbd/- Port)"
 msgstr "Avstånd (+ Styrb /- Bab)"
 #
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Format på förskjuten linje"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Bredd på förskjuten linje"
+#
 msgid "Offset Line Style"
 msgstr "Format på förskjuten linje"
 #
@@ -1113,6 +1157,10 @@ msgid "Path"
 msgstr "Linje"
 #
 msgid "Path & Point Manager"
+msgstr "Hantering av linjer och punkter"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Hantering av linjer och punkter"
 #
 msgid "Path Name"
@@ -1246,6 +1294,10 @@ msgstr "Visa text"
 msgid "Show EBL Direction Arrow"
 msgstr "Visa riktningspilar på EBL-linjen"
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Visa namn"
+#
 msgid "Show Magnetic Bearings"
 msgstr "Visa magnetisk bäring"
 #
@@ -1254,6 +1306,9 @@ msgstr "Visa namn"
 #
 msgid "Show Path Direction Arrow"
 msgstr "Visa riktningspil"
+#
+msgid "Show Paths(s)"
+msgstr ""
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1269,6 +1324,10 @@ msgid "Show Point Range Rings"
 msgstr "Visa punktens avståndsringar"
 #
 msgid "Show Point names"
+msgstr "Visa punktnamn"
+#
+#, fuzzy
+msgid "Show Point(s)"
 msgstr "Visa punktnamn"
 #
 msgid "Show Range Rings"
@@ -1297,6 +1356,10 @@ msgstr "Ikon för startpunkt"
 #
 msgid "Temporary layer"
 msgstr "Temporärt lager"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Teckensnitt"
 #
 msgid "Text Colour"
 msgstr "Textfärg"
@@ -1384,6 +1447,9 @@ msgstr "Vid användning"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Vill du använda gränspunkter efter en storcirkel för detta ben?"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi data finns på"

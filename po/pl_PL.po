@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-06-29 09:34-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Polish\n"
@@ -213,6 +213,10 @@ msgstr "Kolor aktywnego wypełnienia"
 #
 msgid "Active Line Colour"
 msgstr "Kolor aktywnej linii"
+#
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Kolor aktywnej linii przesuniętej"
 #
 msgid "Active Offset Line Colour"
 msgstr "Kolor aktywnej linii przesuniętej"
@@ -511,6 +515,9 @@ msgstr "Usuń wszystko"
 msgid "Delete Line"
 msgstr "Skasuj linię"
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr "Skasuj..."
 #
@@ -627,6 +634,9 @@ msgstr "Eksportuj plik GPX"
 msgid "Extended"
 msgstr "Rozszerzony"
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr "Kolor wypełnienia"
 #
@@ -702,7 +712,18 @@ msgstr "Pomoc"
 msgid "Hide Boundary Point Icons"
 msgstr "Ukryj ikony punktu granicy"
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Warstwy"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr "Ukryj nazwy punktów"
+#
+#, fuzzy
+msgid "Hide Point(s)"
 msgstr "Ukryj nazwy punktów"
 #
 msgid "Hide from chart"
@@ -748,6 +769,10 @@ msgstr "Kolor wypełnienia nieaktywny"
 msgid "Inactive Line Colour"
 msgstr "Kolor nieaktywnej linii"
 #
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Kolor nieaktywnej linii przesuniętej"
+#
 msgid "Inactive Offset Line Colour"
 msgstr "Kolor nieaktywnej linii przesuniętej"
 #
@@ -776,6 +801,10 @@ msgid ""
 msgstr ""
 "Początkowa czułość zobrazowania krawędzi\n"
 "(procent szerokości ekranu) domyślne 3"
+#
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Liczba okręgów odległości"
 #
 msgid "Insert Boundary Point"
 msgstr "Wstaw punkt Granicy"
@@ -827,6 +856,9 @@ msgstr "Odcinek: od "
 #
 msgid "Length Type"
 msgstr "Typ Długości"
+#
+msgid "License"
+msgstr ""
 #
 msgid "Line Colour"
 msgstr "Kolor linii"
@@ -933,6 +965,10 @@ msgstr "Nigdy"
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Nowa warstwa %d: %s"
+#
+#, fuzzy
+msgid "No"
+msgstr "Brak"
 #
 msgid "No alarm"
 msgstr "Brak alarmu"
@@ -1051,6 +1087,14 @@ msgstr "Przesunięcie"
 msgid "Offset (+ Stbd/- Port)"
 msgstr ""
 #
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Styl linii przesuniętej"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Szerokość linii przesuniętej"
+#
 msgid "Offset Line Style"
 msgstr "Styl linii przesuniętej"
 #
@@ -1109,6 +1153,10 @@ msgid "Path"
 msgstr "Ścieżka"
 #
 msgid "Path & Point Manager"
+msgstr "Manager Ścieżki & Punktu"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Manager Ścieżki & Punktu"
 #
 msgid "Path Name"
@@ -1229,6 +1277,10 @@ msgstr "Pokaż tekst wyświetlany"
 msgid "Show EBL Direction Arrow"
 msgstr "Pokaż strzałkę kierunku kreski namiarowej (EBL)"
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Pokaż nazwę"
+#
 msgid "Show Magnetic Bearings"
 msgstr "Pokaż namiary magnetyczne"
 #
@@ -1237,6 +1289,9 @@ msgstr "Pokaż nazwę"
 #
 msgid "Show Path Direction Arrow"
 msgstr "Pokaż strzałki kierunku ścieżki"
+#
+msgid "Show Paths(s)"
+msgstr ""
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1250,6 +1305,10 @@ msgid "Show Point Range Rings"
 msgstr "Pokaż okręgi odległości wokół punktu"
 #
 msgid "Show Point names"
+msgstr "Pokaż nazwy punktów"
+#
+#, fuzzy
+msgid "Show Point(s)"
 msgstr "Pokaż nazwy punktów"
 #
 msgid "Show Range Rings"
@@ -1278,6 +1337,10 @@ msgstr "Ikona punktu start"
 #
 msgid "Temporary layer"
 msgstr "Warstwa tymczasowa"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Czcionka tekstu"
 #
 msgid "Text Colour"
 msgstr "Kolor tekstu"
@@ -1365,6 +1428,9 @@ msgstr "Podczas rysowania"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Zaplanować ten odcinek po ortodromie?"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "lokalizacja danych ocpn_draw_pi"

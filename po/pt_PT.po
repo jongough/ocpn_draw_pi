@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-06-29 09:34-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Portuguese\n"
@@ -212,6 +212,10 @@ msgstr "Cor do enchimento activo"
 #
 msgid "Active Line Colour"
 msgstr "Cor da linha activa"
+#
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Cor da linha de deslocamento activa"
 #
 msgid "Active Offset Line Colour"
 msgstr "Cor da linha de deslocamento activa"
@@ -512,6 +516,9 @@ msgstr "Apagar tudo"
 msgid "Delete Line"
 msgstr "Apagar Linha"
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr "Apagar..."
 #
@@ -630,6 +637,9 @@ msgstr "Exportar ficheiro GPX"
 msgid "Extended"
 msgstr "Estendido"
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr "Cor de enchimento"
 #
@@ -705,7 +715,18 @@ msgstr "Ajuda"
 msgid "Hide Boundary Point Icons"
 msgstr "Ocultar ícones de pontos limite"
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Camadas"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr "Esconder nomes dos pontos"
+#
+#, fuzzy
+msgid "Hide Point(s)"
 msgstr "Esconder nomes dos pontos"
 #
 msgid "Hide from chart"
@@ -749,6 +770,10 @@ msgstr "Cor do enchimento inactivo"
 msgid "Inactive Line Colour"
 msgstr "Cor da linha inactiva"
 #
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Cor da linha de deslocamento inactiva"
+#
 msgid "Inactive Offset Line Colour"
 msgstr "Cor da linha de deslocamento inactiva"
 #
@@ -777,6 +802,10 @@ msgid ""
 msgstr ""
 "Sensibilidade inicial do deslocamento dos bordos\n"
 "(percentagem da largura do ecrã) 3 por omissão"
+#
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Número de anéis de distância"
 #
 msgid "Insert Boundary Point"
 msgstr "Inserir Ponto Limite"
@@ -828,6 +857,9 @@ msgstr "Perna: de "
 #
 msgid "Length Type"
 msgstr "Tipo de comprimento"
+#
+msgid "License"
+msgstr ""
 #
 msgid "Line Colour"
 msgstr "Cor da linha"
@@ -934,6 +966,10 @@ msgstr "Nunca"
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Nova camada %d %s"
+#
+#, fuzzy
+msgid "No"
+msgstr "Nenhum"
 #
 msgid "No alarm"
 msgstr "Sem alarme"
@@ -1052,6 +1088,14 @@ msgstr "Deslocamento"
 msgid "Offset (+ Stbd/- Port)"
 msgstr "Variação (+ Estibordo/- Bombordo)"
 #
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Estilo da linha de deslocamento"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Largura da linha de deslocamento"
+#
 msgid "Offset Line Style"
 msgstr "Estilo da linha de deslocamento"
 #
@@ -1110,6 +1154,10 @@ msgid "Path"
 msgstr "Caminho"
 #
 msgid "Path & Point Manager"
+msgstr "Gestor de Pontos & Caminhos"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Gestor de Pontos & Caminhos"
 #
 msgid "Path Name"
@@ -1242,6 +1290,10 @@ msgstr "Apresentar Texto"
 msgid "Show EBL Direction Arrow"
 msgstr "Mostrar a seta de direção EBL"
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Apresentar nome"
+#
 msgid "Show Magnetic Bearings"
 msgstr "Apresentar rumos magnéticos"
 #
@@ -1250,6 +1302,9 @@ msgstr "Apresentar nome"
 #
 msgid "Show Path Direction Arrow"
 msgstr "Mostrar a seta de direção do caminho"
+#
+msgid "Show Paths(s)"
+msgstr ""
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1265,6 +1320,10 @@ msgid "Show Point Range Rings"
 msgstr "Apresentar anéis de distância"
 #
 msgid "Show Point names"
+msgstr "Apresentar nome dos pontos"
+#
+#, fuzzy
+msgid "Show Point(s)"
 msgstr "Apresentar nome dos pontos"
 #
 msgid "Show Range Rings"
@@ -1293,6 +1352,10 @@ msgstr "Ícone de ponto de partida"
 #
 msgid "Temporary layer"
 msgstr "Camada Temporária"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Fonte do texto"
 #
 msgid "Text Colour"
 msgstr "Cor do texto"
@@ -1379,6 +1442,9 @@ msgstr "Enquanto desenho"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Quer incluir o ponto do limite ortodrómico para esta perna?"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "localização dos dados do ocpn_draw_pi"

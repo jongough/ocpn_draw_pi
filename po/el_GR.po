@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-06-29 09:33-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -212,6 +212,10 @@ msgstr "Χρώμα ενεργού εσωτερικού"
 #
 msgid "Active Line Colour"
 msgstr "Xρώμα ενεργής γραμμής"
+#
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Χρώμα ενεργής γραμμής μετατόπισης"
 #
 msgid "Active Offset Line Colour"
 msgstr "Χρώμα ενεργής γραμμής μετατόπισης"
@@ -515,6 +519,9 @@ msgstr "Διαγραφή όλων"
 msgid "Delete Line"
 msgstr "Διαγραφή γραμμής"
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr "Διαγραφή..."
 #
@@ -633,6 +640,9 @@ msgstr "Εξαγωγή αρχείου GPX"
 msgid "Extended"
 msgstr "Εκτεταμένο"
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr "Εσωτερικό χρώμα"
 #
@@ -708,7 +718,18 @@ msgstr "Βοήθεια"
 msgid "Hide Boundary Point Icons"
 msgstr "Απόκρυψη εικονιδίων σημείων ορίου"
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Ταξίδια"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr "Απόκρυψη ονομάτων σημείων"
+#
+#, fuzzy
+msgid "Hide Point(s)"
 msgstr "Απόκρυψη ονομάτων σημείων"
 #
 msgid "Hide from chart"
@@ -754,6 +775,10 @@ msgstr "Χρώμα ανενεργού εσωτερικού"
 msgid "Inactive Line Colour"
 msgstr "Χρώμα ανενεργής γραμμής"
 #
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Χρώμα μη ενεργής γραμμής μετατόπισης"
+#
 msgid "Inactive Offset Line Colour"
 msgstr "Χρώμα μη ενεργής γραμμής μετατόπισης"
 #
@@ -782,6 +807,10 @@ msgid ""
 msgstr ""
 "Αρχική ευαισθησία του πάνινγκ\n"
 "(% πλάτους οθόνης) προεπιλογή 3"
+#
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Αριθμός δακτυλίων απόστασης"
 #
 msgid "Insert Boundary Point"
 msgstr "Εισαγωγή σημείου ορίου"
@@ -833,6 +862,9 @@ msgstr "Σκέλος: από "
 #
 msgid "Length Type"
 msgstr "Τύπος μήκους"
+#
+msgid "License"
+msgstr ""
 #
 msgid "Line Colour"
 msgstr "Χρώμα γραμμής"
@@ -939,6 +971,10 @@ msgstr "Ποτέ"
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Νέα ταξίδι %d: %s"
+#
+#, fuzzy
+msgid "No"
+msgstr "Καμία"
 #
 msgid "No alarm"
 msgstr "Όχι συναγερμός"
@@ -1057,6 +1093,14 @@ msgstr "Μετατόπιση"
 msgid "Offset (+ Stbd/- Port)"
 msgstr "Offset: + δεξιά, - αριστερά"
 #
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Στιλ γραμμής μετατόπισης"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Πλάτος γραμμής μετατόπισης"
+#
 msgid "Offset Line Style"
 msgstr "Στιλ γραμμής μετατόπισης"
 #
@@ -1115,6 +1159,10 @@ msgid "Path"
 msgstr "Διαδρομή"
 #
 msgid "Path & Point Manager"
+msgstr "Διαχείρηση διαδρομής & σημείων"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Διαχείρηση διαδρομής & σημείων"
 #
 msgid "Path Name"
@@ -1247,6 +1295,10 @@ msgstr "Εμφάνιση οθόνης κειμένου"
 msgid "Show EBL Direction Arrow"
 msgstr "Εμφάνιση βέλους κατεύθυνσης EBL"
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Εμφάνιση ονόματος"
+#
 msgid "Show Magnetic Bearings"
 msgstr "Εμφάνιση μαγν. διόπτευσης"
 #
@@ -1255,6 +1307,9 @@ msgstr "Εμφάνιση ονόματος"
 #
 msgid "Show Path Direction Arrow"
 msgstr "Εμφάνιση βέλους εκτ. κατεύθυνσης"
+#
+msgid "Show Paths(s)"
+msgstr ""
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1270,6 +1325,10 @@ msgid "Show Point Range Rings"
 msgstr "Εμφάνιση δακτυλίων απόστασης σημείων"
 #
 msgid "Show Point names"
+msgstr "Εμφάνιση ονομάτων σημείων"
+#
+#, fuzzy
+msgid "Show Point(s)"
 msgstr "Εμφάνιση ονομάτων σημείων"
 #
 msgid "Show Range Rings"
@@ -1298,6 +1357,10 @@ msgstr "Εικονίδιο σημείου εκκίνησης"
 #
 msgid "Temporary layer"
 msgstr "Προσωρινό ταξίδι"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Γραμματοσειρά κειμένου"
 #
 msgid "Text Colour"
 msgstr "Χρώμα κειμένου"
@@ -1389,6 +1452,9 @@ msgstr "Καθώς σχεδιάζει"
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 "Θέλετε να συμπεριλάβετε τα σημεία ορίου Μεγίστου Κύκλου για αυτό το σκέλος;"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "τοποθεσία δεδομένων ocpn_draw_pi"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-06 13:17+1000\n"
+"POT-Creation-Date: 2018-03-24 11:54+1000\n"
 "PO-Revision-Date: 2017-07-02 12:24-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
@@ -212,6 +212,10 @@ msgstr "Füllungs-Farbe Inaktiv"
 #
 msgid "Active Line Colour"
 msgstr "Linienfarbe Aktiv"
+#
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Farbe aktive Offsetlinie"
 #
 msgid "Active Offset Line Colour"
 msgstr "Farbe aktive Offsetlinie"
@@ -512,6 +516,9 @@ msgstr "&Alle Löschen"
 msgid "Delete Line"
 msgstr "Linien Löschen"
 #
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
 msgid "Delete..."
 msgstr "Löschen..."
 #
@@ -632,6 +639,9 @@ msgstr "GPX Datei exportieren"
 msgid "Extended"
 msgstr "Erweitert"
 #
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
 msgid "Fill Colour"
 msgstr "Füllfarbe"
 #
@@ -707,7 +717,18 @@ msgstr "Hilfe"
 msgid "Hide Boundary Point Icons"
 msgstr "Begrenzungspunkt Symbole ausblenden"
 #
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Ebenen"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
 msgid "Hide Point names"
+msgstr "Punkt Namen ausblenden"
+#
+#, fuzzy
+msgid "Hide Point(s)"
 msgstr "Punkt Namen ausblenden"
 #
 msgid "Hide from chart"
@@ -753,6 +774,10 @@ msgstr "Füllung-Farbe Inaktive"
 msgid "Inactive Line Colour"
 msgstr "Linienfarbe Inaktiv"
 #
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Farbe Inaktive Offsetlinie"
+#
 msgid "Inactive Offset Line Colour"
 msgstr "Farbe Inaktive Offsetlinie"
 #
@@ -781,6 +806,10 @@ msgid ""
 msgstr ""
 "Anfängliche Randerkennung für Verschieben\n"
 "(Prozent Displaybreite) Standard 3"
+#
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Anzahl Bereichsradien (range rings)"
 #
 msgid "Insert Boundary Point"
 msgstr "Begrenzungspunkt einfügen"
@@ -832,6 +861,9 @@ msgstr "Abschnitt: von "
 #
 msgid "Length Type"
 msgstr "Länge über"
+#
+msgid "License"
+msgstr ""
 #
 msgid "Line Colour"
 msgstr "Farbe der Linie"
@@ -938,6 +970,10 @@ msgstr "Nie"
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Neue Ebene-%d: %s"
+#
+#, fuzzy
+msgid "No"
+msgstr "Kein"
 #
 msgid "No alarm"
 msgstr "Kein Alarm"
@@ -1056,6 +1092,14 @@ msgstr "Offset"
 msgid "Offset (+ Stbd/- Port)"
 msgstr "Offset (+ Stbd/- Bkd)"
 #
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Linientyp Offsetlinie"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Breite Offsetlinie"
+#
 msgid "Offset Line Style"
 msgstr "Linientyp Offsetlinie"
 #
@@ -1114,6 +1158,10 @@ msgid "Path"
 msgstr "Pfad"
 #
 msgid "Path & Point Manager"
+msgstr "Pfad & Punkt Manager"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
 msgstr "Pfad & Punkt Manager"
 #
 msgid "Path Name"
@@ -1247,6 +1295,10 @@ msgstr "Text anzeigen"
 msgid "Show EBL Direction Arrow"
 msgstr "EBL Richtungspfeil anzeigen"
 #
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Namen anzeigen"
+#
 msgid "Show Magnetic Bearings"
 msgstr "Magnetische Peilung anzeigen"
 #
@@ -1255,6 +1307,9 @@ msgstr "Namen anzeigen"
 #
 msgid "Show Path Direction Arrow"
 msgstr "Pfad Richtungspfeil anzeigen"
+#
+msgid "Show Paths(s)"
+msgstr ""
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1270,6 +1325,10 @@ msgid "Show Point Range Rings"
 msgstr "Punkt Bereichsringe anzeigen"
 #
 msgid "Show Point names"
+msgstr "Punkt Namen anzeigen"
+#
+#, fuzzy
+msgid "Show Point(s)"
 msgstr "Punkt Namen anzeigen"
 #
 msgid "Show Range Rings"
@@ -1298,6 +1357,10 @@ msgstr "Start Punkt Symbol"
 #
 msgid "Temporary layer"
 msgstr "Temporäre Ebene"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Schriftart"
 #
 msgid "Text Colour"
 msgstr "Textfarbe"
@@ -1387,6 +1450,9 @@ msgstr "Beim Zeichnen"
 #
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Sollen Großkreis-Begrenzungspunkte zu diesem Abschnitt zugefügt werden?"
+#
+msgid "Yes"
+msgstr ""
 #
 msgid "ocpn_draw_pi data location"
 msgstr "Speicherort der Ocpn_draw_pi-Daten"
