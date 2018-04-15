@@ -32,6 +32,7 @@ ENDIF(CMAKE_BUILD_TYPE STREQUAL Debug)
 #  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
 
 IF(NOT MSVC)
+ ADD_DEFINITIONS( "-fvisibility=hidden" )
  IF(PROFILING)
   ADD_DEFINITIONS( "-Wall -g -fprofile-arcs -ftest-coverage -fexceptions" )
  ELSE(PROFILING)
