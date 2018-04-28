@@ -56,7 +56,6 @@
 
 #include <wx/listimpl.cpp>
 
-using namespace std;
 using namespace ClipperLib;
 
 WX_DEFINE_LIST ( GZList );

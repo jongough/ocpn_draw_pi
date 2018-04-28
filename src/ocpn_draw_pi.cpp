@@ -88,8 +88,6 @@
 
 #include <wx/jsonreader.h>
 
-using namespace std;
-
 #ifndef DECL_EXP
 #ifdef __WXMSW__
 #define DECL_EXP     __declspec(dllexport)
