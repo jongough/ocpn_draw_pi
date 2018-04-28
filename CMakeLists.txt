@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "4")
-SET(VERSION_DATE "10/04/2018")
+SET(VERSION_PATCH "5")
+SET(VERSION_DATE "28/04/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -207,6 +207,7 @@ SET(OCPNSRC
     ocpnsrc/georef.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
+    ocpnsrc/TexFont.cpp
     ocpnsrc/wxJSON/jsonreader.cpp
     ocpnsrc/wxJSON/jsonval.cpp
     ocpnsrc/wxJSON/jsonwriter.cpp
