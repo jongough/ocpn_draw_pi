@@ -52,6 +52,11 @@ BoundaryPointCSVImport::BoundaryPointCSVImport()
     m_dLon = 0;
 }
 
+BoundaryPointCSVImport::~BoundaryPointCSVImport()
+{
+    //dtor
+}
+
 BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCSV)
 {
     //ctor
@@ -122,9 +127,4 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCS
         m_RingColour.Set(BoundaryPointCSV.GetNextToken());
     } else
         m_RingColour = g_colourODPointRangeRingsColour;
-}
-
-BoundaryPointCSVImport::~BoundaryPointCSVImport()
-{
-    //dtor
 }

@@ -55,6 +55,7 @@ extern BoundaryMan          *g_pBoundaryMan;
 extern GZMan                *g_pGZMan;
 extern PointMan             *g_pODPointMan;
 extern BoundaryList         *g_pBoundaryList;
+extern wxString             g_sODPointIconName;
 
 extern double               g_dVar;
 extern ODAPI                *g_pODAPI;
@@ -704,6 +705,84 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
             
             return;
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateBoundary")) {
+            if(!root.HasMember( wxS("BoundaryName"))) {
+                wxLogMessage( wxS("No BoundaryName found in message") );
+                bFail = true;
+            }
+            
+            if(!root.HasMember( wxS("BoundaryType"))) {
+                wxLogMessage( wxS("No BoundaryType type found in message") );
+                bFail = true;
+            }
+            
+            if(!root.HasMember( wxS("BoundaryPoints"))) {
+                wxLogMessage( wxS("No BoundaryPoints type found in message") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                if(root[wxS("Type")].AsString() == _T("Request")) {
+                    Boundary *pl_boundary = new Boundary();
+                    pl_boundary->m_PathNameString = root[wxS("BoundaryName")].AsString();
+                    if(root[wxS("BoundaryType")].AsString() == _T("Exclusion")) {
+                        pl_boundary->m_bExclusionBoundary = true;
+                        pl_boundary->m_bInclusionBoundary = false;
+                    } else if(root[wxS("BoundaryType")].AsString() == _T("Inclusion")) {
+                        pl_boundary->m_bExclusionBoundary = false;
+                        pl_boundary->m_bInclusionBoundary = true;
+                    } else if(root[wxS("BoundaryType")].AsString() == _T("Neither")) {
+                        pl_boundary->m_bExclusionBoundary = false;
+                        pl_boundary->m_bInclusionBoundary = false;
+                    }
+                    pl_boundary->m_bPathIsActive = true;
+                    if(root[wxS("BoundaryVisible")].AsString() == _T("True")) pl_boundary->SetVisible(true);
+                    else pl_boundary->SetVisible(false);
+                    if(root.HasMember(wxS("LineColour"))) pl_boundary->m_wxcActiveLineColour = root[wxS("LineColour")].AsString();
+                    if(root.HasMember(wxS("FillColour"))) pl_boundary->m_wxcActiveFillColour = root[wxS("FileColour")].AsString();
+                    
+                    for(int i = 0; i< root[wxS("BoundaryPoints")].Size(); i++) {
+                        wxJSONValue jv_BoundaryPoint = root[wxS("BoundaryPoints")].Item(i);
+                        BoundaryPoint *pl_boundarypoint = new BoundaryPoint(jv_BoundaryPoint[wxS("Lat")].AsDouble(),jv_BoundaryPoint[wxS("Lon")].AsDouble(), g_sODPointIconName, jv_BoundaryPoint[wxS("Name")].AsString(),wxEmptyString, false);
+                        pl_boundary->AddPoint(pl_boundarypoint, false, true, true);
+                        if(jv_BoundaryPoint[wxS("BoundaryPointType")].AsString() == _T("Exclusion")) {
+                            pl_boundarypoint->m_bExclusionBoundaryPoint = true;
+                            pl_boundarypoint->m_bInclusionBoundaryPoint = false;
+                        } else if(jv_BoundaryPoint[wxS("BoundaryPointType")].AsString() == _T("Inclusion")) {
+                            pl_boundarypoint->m_bExclusionBoundaryPoint = false;
+                            pl_boundarypoint->m_bInclusionBoundaryPoint = true;
+                        } else if(jv_BoundaryPoint[wxS("BoundaryPointType")].AsString() == _T("Neither")) {
+                            pl_boundarypoint->m_bExclusionBoundaryPoint = false;
+                            pl_boundarypoint->m_bInclusionBoundaryPoint = false;
+                        }
+                        pl_boundarypoint->SetVisible(jv_BoundaryPoint[wxS("visible")].AsBool()); 
+                        pl_boundarypoint->SetShowODPointRangeRings(jv_BoundaryPoint[wxS("ringsvisible")].AsBool());
+                        pl_boundarypoint->SetODPointRangeRingsNumber(jv_BoundaryPoint[wxS("ringsnumber")].AsInt());
+                        pl_boundarypoint->SetODPointRangeRingsStep(jv_BoundaryPoint[wxS("ringssteps")].AsDouble());
+                        pl_boundarypoint->SetODPointRangeRingsStepUnits(jv_BoundaryPoint[wxS("ringsunits")].AsInt());
+                        pl_boundarypoint->SetODPointRangeRingsColour(jv_BoundaryPoint[wxS("ringscolour")].AsString());
+                        
+                    }
+                       
+                    pl_boundary->m_bIsBeingCreated = false;
+                    ODNavObjectChanges *l_ODNavObjectChanges = new ODNavObjectChanges();
+                    l_ODNavObjectChanges->InsertPathA(pl_boundary);
+                    pl_boundary = NULL;
+                    
+                    delete l_ODNavObjectChanges;
+                    
+                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                    jMsg[wxT("Msg")] = root[wxT("Msg")];
+                    jMsg[wxT("Type")] = wxT("Response");
+                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                    jMsg[wxS("Created")] = true;
+                    
+                    jMsg[wxS("GUID")] = pl_boundary->m_GUID;
+                    writer.Write( jMsg, MsgString );
+                    SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                    return;
+                }
+            }
         }
         
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
