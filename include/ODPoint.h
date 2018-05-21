@@ -61,6 +61,7 @@ public:
       bool IsVisible() { return m_bIsVisible; }
       bool IsListed() { return m_bIsListed; }
       bool IsNameShown() { return m_bShowName; }
+      void SetActive(bool viz = true){ m_bIsActive = viz; }
       void SetVisible(bool viz = true){ m_bIsVisible = viz; }
       void SetListed(bool viz = true){ m_bIsListed = viz; }
       void SetNameShown(bool viz = true) { m_bShowName = viz; }
@@ -122,7 +123,6 @@ public:
 
       bool              m_bIsInPath;
       bool              m_bIsInRoute;
-      bool              m_bIsInBoundary;
       bool              m_bIsInTrack;
 
       bool              m_bIsolatedMark;        // This is an isolated mark

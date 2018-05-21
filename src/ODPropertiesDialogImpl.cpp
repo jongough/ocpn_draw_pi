@@ -513,7 +513,7 @@ void ODPropertiesDialogImpl::SaveChanges()
             g_bExclusionBoundary = false;
             g_bInclusionBoundary = true;
             break;
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             g_bExclusionBoundary = false;
             g_bInclusionBoundary = false;
             break;
@@ -534,7 +534,7 @@ void ODPropertiesDialogImpl::SaveChanges()
             g_bExclusionBoundaryPoint = false;
             g_bInclusionBoundaryPoint = true;
             break;
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             g_bExclusionBoundaryPoint = false;
             g_bInclusionBoundaryPoint = false;
             break;
@@ -700,7 +700,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     
     if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+    else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NEITHER );
     else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
 
     m_bODIComboBoxODPointIconName->Clear();
@@ -942,7 +942,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
     if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
+    else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NEITHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     m_checkBoxBoundaryODPointsVisible->SetValue( g_bBoundaryODPointsVisible );
     

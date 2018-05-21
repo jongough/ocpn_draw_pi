@@ -45,6 +45,24 @@ enum {
     NEITHER_BOUNDARY
 };
 
+enum {
+    TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS = 0,
+    TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER,
+    TEXTPOINT_DISPLAY_TEXT_SHOW_NEVER
+};
+
+enum {
+    TEXT_TOP = 0,
+    TEXT_CENTRE_TOP,
+    TEXT_BOTTOM,
+    TEXT_CENTRE_BOTTOM,
+    TEXT_CENTRE,
+    TEXT_RIGHT,
+    TEXT_LEFT,
+    
+    TEXT_POSTION_LAST
+};
+
 struct FindPointInAnyBoundary_t {
     double  dLat;
     double  dLon;
@@ -74,6 +92,7 @@ struct FindClosestBoundaryLineCrossing_t {
 
 struct CreateBoundaryPoint_t {
     wxString    name;
+    wxString    iconname;
     double      lat;
     double      lon;
     int         type;
@@ -98,11 +117,18 @@ struct CreateBoundary_t {
 
 struct CreateTextPoint_t {
     wxString    name;
+    wxString    iconname;
     double      lat;
     double      lon;
     wxString    description;
     wxString    TextToDisplay;
-    bool        visible;
+    bool        Visible;
+    int         TextPosition;
+    wxString    TextColour;
+    wxString    BackgroundColour;
+    int         BackgroundTransparancy;
+    wxFont      TextFont;
+    int         TextPointDisplayTextWhen;
     bool        ringsvisible;
     int         ringsnumber;
     double      ringssteps;

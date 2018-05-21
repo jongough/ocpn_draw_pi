@@ -1355,7 +1355,12 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id, true );
             
             pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
-            if(pTentBoundary) tpOp->m_bIsInBoundary = true;                      // Hack
+            if(pTentBoundary) {
+                BoundaryPoint *l_pBP = dynamic_cast<BoundaryPoint *>(tpOp);
+                assert(l_pBP);
+                l_pBP->m_bIsInBoundary = true;
+            }
+            
             tpOp->m_bIsInPath = true;
             if(!ODPointExists( tpOp->m_GUID ))
                 g_pODPointMan->AddODPoint(tpOp);

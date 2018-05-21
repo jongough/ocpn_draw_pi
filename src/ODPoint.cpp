@@ -77,7 +77,6 @@ ODPoint::ODPoint()
     m_bPathManagerBlink = false;
     m_bIsInRoute = false;
     m_bIsInPath = false;
-    m_bIsInBoundary = false;
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
@@ -140,7 +139,6 @@ ODPoint::ODPoint( ODPoint* orig )
     m_bPathManagerBlink = orig->m_bPathManagerBlink;
     m_bIsInRoute = orig->m_bIsInRoute;
     m_bIsInPath = orig->m_bIsInPath;
-    m_bIsInBoundary = orig->m_bIsInBoundary;
     m_bIsInTrack = orig->m_bIsInTrack;
     m_CreateTimeX = orig->m_CreateTimeX;
     m_GPXTrkSegNo = orig->m_GPXTrkSegNo;
@@ -208,7 +206,6 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_bPathManagerBlink = false;
     m_bIsInRoute = false;
     m_bIsInPath = false;
-    m_bIsInBoundary = false;
     m_bIsInTrack = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;

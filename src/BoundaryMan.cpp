@@ -80,7 +80,7 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
                 case ID_BOUNDARY_INCLUSION:
                     if(!pboundary->m_bInclusionBoundary) l_bNext = true;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = true;
                     break;
             }
@@ -159,7 +159,7 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
                 if(pBoundary->m_bInclusionBoundary) l_bOK = true;
                 else l_bOK = false;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 if(pBoundary->m_bExclusionBoundary || pBoundary->m_bInclusionBoundary) l_bOK = false;
                 else l_bOK = true;
                 break;
@@ -234,7 +234,7 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon, 
                     if(l_pBoundary->m_bInclusionBoundary) l_bOK = true;
                     else l_bOK = false;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(l_pBoundary->m_bExclusionBoundary || l_pBoundary->m_bInclusionBoundary) l_bOK = false;
                     else l_bOK = true;
                     break;
@@ -301,7 +301,7 @@ wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type
                     case ID_BOUNDARY_INCLUSION:
                         if(!l_pBoundaryPoint->m_bInclusionBoundaryPoint) l_bNext = true;
                         break;
-                    case ID_BOUNDARY_NIETHER:
+                    case ID_BOUNDARY_NEITHER:
                         if(!l_pBoundaryPoint->m_bExclusionBoundaryPoint && !l_pBoundaryPoint->m_bInclusionBoundaryPoint) l_bNext = true;
                         break;
                 }
@@ -364,7 +364,7 @@ bool BoundaryMan::FindPointInBoundaryPoint( BoundaryPoint *pBoundaryPoint, doubl
                 if(pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = true;
                 else l_bOK = false;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 if(pBoundaryPoint->m_bExclusionBoundaryPoint || pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = false;
                 else l_bOK = true;
                 break;
@@ -422,7 +422,7 @@ bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double 
                     if(pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = true;
                     else l_bOK = false;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(pBoundaryPoint->m_bExclusionBoundaryPoint || pBoundaryPoint->m_bInclusionBoundaryPoint) l_bOK = false;
                     else l_bOK = true;
                     break;
@@ -484,7 +484,7 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
                 case ID_BOUNDARY_INCLUSION:
                     if(!pboundary->m_bInclusionBoundary) l_bNext = true;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(pboundary->m_bExclusionBoundary || pboundary->m_bInclusionBoundary) l_bNext = true;
                     break;
             }

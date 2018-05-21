@@ -83,7 +83,7 @@ bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
     m_sliderInclusionBoundarySize->SetValue( m_pBoundary->m_iInclusionBoundarySize );
     if(m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
+    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NEITHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     
     if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary)
@@ -112,7 +112,7 @@ bool BoundaryProp::SaveChanges( void )
                 m_pBoundary->m_bExclusionBoundary = false;
                 m_pBoundary->m_bInclusionBoundary = true;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 m_pBoundary->m_bExclusionBoundary = false;
                 m_pBoundary->m_bInclusionBoundary = false;
                 break;
@@ -134,7 +134,7 @@ void BoundaryProp::OnRadioBoxBoundaryType(wxCommandEvent& event)
 {
     switch (m_radioBoxBoundaryType->GetSelection()) {
         case ID_BOUNDARY_EXCLUSION:
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             m_sliderInclusionBoundarySize->Disable();
             break;
         case ID_BOUNDARY_INCLUSION:

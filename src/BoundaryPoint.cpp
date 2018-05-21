@@ -50,6 +50,7 @@ BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident,
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
 {
     m_sTypeString = wxT("Boundary Point");
+    m_bIsInBoundary = false;
     m_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
     m_bExclusionBoundaryPoint = g_bExclusionBoundaryPoint;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
@@ -61,11 +62,14 @@ BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident,
 BoundaryPoint::BoundaryPoint(BoundaryPoint* orig) : ODPoint( orig )
 {
     m_sTypeString = orig->m_sTypeString;
+    m_bIsInBoundary = orig->m_bIsInBoundary;
+    
 }
 
 BoundaryPoint::BoundaryPoint() : ODPoint()
 {
     m_sTypeString = wxT("Boundary Point");
+    m_bIsInBoundary = false;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     m_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
     m_iRangeRingWidth = g_iBoundaryPointRangeRingLineWidth;

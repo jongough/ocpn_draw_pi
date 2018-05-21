@@ -288,7 +288,7 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
 {
     switch (m_radioBoxBoundaryPointType->GetSelection()) {
         case ID_BOUNDARY_EXCLUSION:
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             m_sliderBoundaryPointInclusionSize->Disable();
             break;
         case ID_BOUNDARY_INCLUSION:
@@ -348,7 +348,7 @@ void ODPointPropertiesImpl::SaveChanges()
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = true;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
                     break;
@@ -564,7 +564,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             if( m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
             else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
-            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NEITHER );
             else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
             m_sliderBoundaryPointInclusionSize->SetValue( m_pBoundaryPoint->m_iInclusionBoundaryPointSize );
             m_sliderBoundaryPointFillTransparency->SetValue( m_pBoundaryPoint->m_uiBoundaryPointFillTransparency );

@@ -1242,7 +1242,7 @@ void ocpn_draw_pi::SaveConfig()
             int l_BoundaryType;
             if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
             else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
-            else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
+            else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NEITHER;
             else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
             pConf->Write( wxS( "DefaultBoundaryODPointsVisible"), g_bBoundaryODPointsVisible );
             pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
@@ -1427,7 +1427,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bExclusionBoundary = false;
                 g_bInclusionBoundary = true;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 g_bExclusionBoundary = false;
                 g_bInclusionBoundary = false;
                 break;
@@ -1560,7 +1560,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bExclusionBoundaryPoint = false;
                 g_bInclusionBoundaryPoint = true;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 g_bExclusionBoundaryPoint = false;
                 g_bInclusionBoundaryPoint = false;
                 break;
@@ -3862,7 +3862,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
-            if( !pOP->m_bShowODPointRangeRings) {
+            if( !pOP->m_bShowODPointRangeRings ||(pOP->m_bShowODPointRangeRings && pOP->m_iODPointRangeRingsNumber == 0)) {
                 if( llbb.Contains(pOP->m_lat, pOP->m_lon) ) pOP->DrawGL( pivp );
             } else {
                 if( !llbb.IntersectOut(pOP->m_RangeRingsBBox) ) pOP->DrawGL( pivp );

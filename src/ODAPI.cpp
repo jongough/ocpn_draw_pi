@@ -38,17 +38,23 @@
 #include "Boundary.h"
 #include "BoundaryMan.h"
 #include "BoundaryPoint.h"
+#include "ODConfig.h"
 #include "ODPath.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "PointMan.h"
 #include "TextPoint.h"
 
+#include "ocpn_plugin.h"
+
+extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PathMan      *g_pPathMan;
 extern BoundaryMan  *g_pBoundaryMan;
 extern PointMan     *g_pODPointMan;
 extern ODSelect     *g_pODSelect;
+extern ODConfig     *g_pODConfig;
 extern wxString      g_sODPointIconName;
+extern wxString      g_sTextPointIconName;
 
 ODAPI::ODAPI()
 {
@@ -270,7 +276,13 @@ bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 {
     // create boundary point
     bool    l_bValidBoundaryPoint = true;
-    BoundaryPoint *l_pBP = new BoundaryPoint(pCBP->lat, pCBP->lon, g_sODPointIconName, pCBP->name, wxEmptyString, false);
+    BoundaryPoint *l_pBP;
+    
+    if(pCBP->iconname.IsEmpty()) {
+        l_pBP = new BoundaryPoint(pCBP->lat, pCBP->lon, g_sODPointIconName, pCBP->name, wxEmptyString, false);
+    } else {
+        l_pBP = new BoundaryPoint(pCBP->lat, pCBP->lon, pCBP->iconname, pCBP->name, wxEmptyString, false);
+    }
 
     switch (pCBP->type) 
     {
@@ -293,11 +305,15 @@ bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
     l_pBP->SetODPointRangeRingsStep(pCBP->ringssteps);
     l_pBP->SetODPointRangeRingsStepUnits(pCBP->ringsunits);
     l_pBP->SetODPointRangeRingsColour(pCBP->ringscolour);
-    g_pODPointMan->AddODPoint(l_pBP);
     l_pBP->m_bIsolatedMark = true;
-    g_pODSelect->AddSelectableODPoint(pCBP->lat, pCBP->lon, l_pBP);
     l_pBP->m_bIsInBoundary = false;
     l_pBP->m_bIsInPath = false;
+    
+    g_pODPointMan->AddODPoint(l_pBP);
+    g_pODSelect->AddSelectableODPoint(pCBP->lat, pCBP->lon, l_pBP);
+    g_pODConfig->AddNewODPoint( l_pBP, -1 );
+
+    RequestRefresh(g_ocpn_draw_pi->m_parent_window);
     
     return l_bValidBoundaryPoint;
 }
@@ -306,19 +322,38 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
 {
     // create text point
     bool    l_bValidTextPoint = true;
-    TextPoint *l_pTP = new TextPoint(pCTP->lat, pCTP->lon, g_sODPointIconName, pCTP->name, wxEmptyString, false);
+    TextPoint *l_pTP;
+    
+    if(pCTP->iconname.IsEmpty()) {
+        l_pTP = new TextPoint(pCTP->lat, pCTP->lon, g_sTextPointIconName, pCTP->name, wxEmptyString, false);
+    } else {
+        l_pTP = new TextPoint(pCTP->lat, pCTP->lon, pCTP->iconname, pCTP->name, wxEmptyString, false);
+    }
     
     l_pTP->m_TextPointText = pCTP->TextToDisplay;
     l_pTP->SetMarkDescription(pCTP->description);
-    l_pTP->SetVisible(pCTP->visible); 
-    l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
-    l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
-    l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
-    l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
-    l_pTP->SetODPointRangeRingsColour(pCTP->ringscolour);
-    g_pODPointMan->AddODPoint(l_pTP);
+    l_pTP->SetVisible(pCTP->Visible); 
+    l_pTP->m_TextPointText = pCTP->TextToDisplay;
+    l_pTP->m_colourTextColour = pCTP->TextColour;
+    l_pTP->m_DisplayTextFont = pCTP->TextFont;
+    l_pTP->m_colourTextBackgroundColour = pCTP->BackgroundColour;
+    l_pTP->m_iBackgroundTransparency = pCTP->BackgroundTransparancy;
+    l_pTP->m_iTextPosition = pCTP->TextPosition;
+    l_pTP->m_iDisplayTextWhen = pCTP->TextPointDisplayTextWhen;
+//    l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
+//    l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
+//    l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
+//    l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
+//    l_pTP->SetODPointRangeRingsColour(pCTP->ringscolour);
     l_pTP->m_bIsolatedMark = true;
+    l_pTP->CreateColourSchemes();
+    l_pTP->SetColourScheme();
+
+    g_pODPointMan->AddODPoint(l_pTP);
     g_pODSelect->AddSelectableODPoint(pCTP->lat, pCTP->lon, l_pTP);
+    g_pODConfig->AddNewODPoint( l_pTP, -1 );
     
+    RequestRefresh(g_ocpn_draw_pi->m_parent_window);
+
     return l_bValidTextPoint;
 }
