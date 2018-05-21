@@ -146,8 +146,8 @@ public:
     static bool OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_CreateBoundary( CreateBoundary_t *pCB );
-    static bool OD_CreateBoundaryPoint( CreateBoundaryPoint_t *pCBP );
-    static bool OD_CreateTextPoint( CreateTextPoint_t *pCTP );
+    static wxString OD_CreateBoundaryPoint( CreateBoundaryPoint_t *pCBP );
+    static wxString OD_CreateTextPoint( CreateTextPoint_t *pCTP );
     
 protected:
     
@@ -159,8 +159,8 @@ typedef bool (*OD_FindPointInAnyBoundary) (FindPointInAnyBoundary_t *);
 typedef bool (*OD_FindClosestBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_FindFirstBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_CreateBoundary) (CreateBoundary_t *);
-typedef bool (*OD_CreateBoundaryPoint) (CreateBoundaryPoint_t *);
-typedef bool (*OD_CreateTextPoint) (CreateTextPoint_t *);
+typedef wxString (*OD_CreateBoundaryPoint) (CreateBoundaryPoint_t *);
+typedef wxString (*OD_CreateTextPoint) (CreateTextPoint_t *);
 
 
 #endif //_ODAPI_H_
