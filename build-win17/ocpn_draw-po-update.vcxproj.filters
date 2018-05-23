@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\CMakeLists.txt" />
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\da_DK.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\it_IT.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\nb_NO.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\tr_TR.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\pt_PT.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\ca_ES.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\fil_PH.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\de_DE.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\fr_FR.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\ro_RO.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\ja_JP.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\es_ES.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\vi_VN.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\et_EE.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\nl_NL.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\sv_SE.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\pt_BR.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\gl_ES.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\id_ID.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\cs_CZ.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\ru_RU.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\hi_IN.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\pl_PL.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\el_GR.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\ar_SA.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\fi_FI.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\hu_HU.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\mr_IN.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\th_TH.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\f1afdbe17251281a05d08e5c9f224b37\zh_TW.po.dummy.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\b310cbd7dad83f589be961330821a958\ocpn_draw-po-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\ocpn_draw-po-update" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{561D6332-BCB9-3A75-9E96-9B08029B828E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

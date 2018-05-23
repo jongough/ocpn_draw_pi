@@ -1,0 +1,293 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGUID>{877F628D-C6BB-334D-9A13-C40D5607A615}</ProjectGUID>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>ocpn_draw-pot-update</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+    <PropertyGroup>
+      <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+      <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.3\lib\vc_dll\mswu;C:\wxWidgets-3.0.3\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.3\lib\vc_dll\mswu;C:\wxWidgets-3.0.3\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.3\lib\vc_dll\mswu;C:\wxWidgets-3.0.3\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.3\lib\vc_dll\mswu;C:\wxWidgets-3.0.3\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17" --check-stamp-file "P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17" --check-stamp-file "P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17" --check-stamp-file "P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17" --check-stamp-file "P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17\CMakeFiles\3.5.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CMakeParseArguments.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.5\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\22f577044824d326651f27191d4ccad9\ocpn_draw_pi.pot.dummy.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-pot-update [ocpn_draw_pi]: Generated pot file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+cd "P:\working area\opencpn\odraw"
+if %errorlevel% neq 0 goto :cmEnd
+P:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\Poedit\GettextTools\bin\xgettext.exe" --force-po -F --package-name=ocpn_draw_pi --package-version="1.5.7" --output=po/ocpn_draw_pi.pot --keyword=_ --width=80 "--files-from=P:/working area/opencpn/odraw/po/POTFILES.in"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/22f577044824d326651f27191d4ccad9/ocpn_draw_pi.pot.dummy.rule;P:\working area\opencpn\odraw\po\POTFILES.in;P:\working area\opencpn\odraw\po\ocpn_draw_pi.pot;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-pot-update [ocpn_draw_pi]: Generated pot file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+cd "P:\working area\opencpn\odraw"
+if %errorlevel% neq 0 goto :cmEnd
+P:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\Poedit\GettextTools\bin\xgettext.exe" --force-po -F --package-name=ocpn_draw_pi --package-version="1.5.7" --output=po/ocpn_draw_pi.pot --keyword=_ --width=80 "--files-from=P:/working area/opencpn/odraw/po/POTFILES.in"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/22f577044824d326651f27191d4ccad9/ocpn_draw_pi.pot.dummy.rule;P:\working area\opencpn\odraw\po\POTFILES.in;P:\working area\opencpn\odraw\po\ocpn_draw_pi.pot;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-pot-update [ocpn_draw_pi]: Generated pot file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+cd "P:\working area\opencpn\odraw"
+if %errorlevel% neq 0 goto :cmEnd
+P:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\Poedit\GettextTools\bin\xgettext.exe" --force-po -F --package-name=ocpn_draw_pi --package-version="1.5.7" --output=po/ocpn_draw_pi.pot --keyword=_ --width=80 "--files-from=P:/working area/opencpn/odraw/po/POTFILES.in"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/22f577044824d326651f27191d4ccad9/ocpn_draw_pi.pot.dummy.rule;P:\working area\opencpn\odraw\po\POTFILES.in;P:\working area\opencpn\odraw\po\ocpn_draw_pi.pot;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-pot-update [ocpn_draw_pi]: Generated pot file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+cd "P:\working area\opencpn\odraw"
+if %errorlevel% neq 0 goto :cmEnd
+P:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\Poedit\GettextTools\bin\xgettext.exe" --force-po -F --package-name=ocpn_draw_pi --package-version="1.5.7" --output=po/ocpn_draw_pi.pot --keyword=_ --width=80 "--files-from=P:/working area/opencpn/odraw/po/POTFILES.in"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/22f577044824d326651f27191d4ccad9/ocpn_draw_pi.pot.dummy.rule;P:\working area\opencpn\odraw\po\POTFILES.in;P:\working area\opencpn\odraw\po\ocpn_draw_pi.pot;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\b310cbd7dad83f589be961330821a958\ocpn_draw-pot-update.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">[ocpn_draw_pi]-pot-update: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/b310cbd7dad83f589be961330821a958/ocpn_draw-pot-update.rule;P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\ocpn_draw-pot-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">[ocpn_draw_pi]-pot-update: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/b310cbd7dad83f589be961330821a958/ocpn_draw-pot-update.rule;P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\ocpn_draw-pot-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">[ocpn_draw_pi]-pot-update: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/b310cbd7dad83f589be961330821a958/ocpn_draw-pot-update.rule;P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\ocpn_draw-pot-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">[ocpn_draw_pi]-pot-update: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17/CMakeFiles/b310cbd7dad83f589be961330821a958/ocpn_draw-pot-update.rule;P:\working area\opencpn\odraw\build-win17\po\ocpn_draw_pi.pot.dummy;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17\CMakeFiles\ocpn_draw-pot-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="P:\working area\opencpn\odraw\build-win17\CMakeFiles\ocpn_draw-pot-update" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="P:/working area/opencpn/odraw/build-win17/ZERO_CHECK.vcxproj">
+      <Project>49A59CC5-2385-317E-9956-AD2D7181900C</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

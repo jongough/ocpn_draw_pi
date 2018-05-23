@@ -1,0 +1,12 @@
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/edit_cache.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/package_source.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/ocpn_draw-i18n.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/ocpn_draw-pot-update.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/ocpn_draw-po-update.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/ocpn_draw_pi.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/install/local.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/install.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/install/strip.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/list_install_components.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/package.dir
+/home/jon/opencpn/odraw/build-nb/CMakeFiles/rebuild_cache.dir

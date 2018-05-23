@@ -1,0 +1,312 @@
+[
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ocpn_draw_pi.cpp.o -c /home/jon/opencpn/odraw/src/ocpn_draw_pi.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ocpn_draw_pi.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/Boundary.cpp.o -c /home/jon/opencpn/odraw/src/Boundary.cpp",
+  "file": "/home/jon/opencpn/odraw/src/Boundary.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/BoundaryCSVImport.cpp.o -c /home/jon/opencpn/odraw/src/BoundaryCSVImport.cpp",
+  "file": "/home/jon/opencpn/odraw/src/BoundaryCSVImport.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/BoundaryMan.cpp.o -c /home/jon/opencpn/odraw/src/BoundaryMan.cpp",
+  "file": "/home/jon/opencpn/odraw/src/BoundaryMan.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/BoundaryProp.cpp.o -c /home/jon/opencpn/odraw/src/BoundaryProp.cpp",
+  "file": "/home/jon/opencpn/odraw/src/BoundaryProp.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/BoundaryPoint.cpp.o -c /home/jon/opencpn/odraw/src/BoundaryPoint.cpp",
+  "file": "/home/jon/opencpn/odraw/src/BoundaryPoint.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/BoundaryPointCSVImport.cpp.o -c /home/jon/opencpn/odraw/src/BoundaryPointCSVImport.cpp",
+  "file": "/home/jon/opencpn/odraw/src/BoundaryPointCSVImport.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/DR.cpp.o -c /home/jon/opencpn/odraw/src/DR.cpp",
+  "file": "/home/jon/opencpn/odraw/src/DR.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/DRProp.cpp.o -c /home/jon/opencpn/odraw/src/DRProp.cpp",
+  "file": "/home/jon/opencpn/odraw/src/DRProp.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/EBL.cpp.o -c /home/jon/opencpn/odraw/src/EBL.cpp",
+  "file": "/home/jon/opencpn/odraw/src/EBL.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/EBLProp.cpp.o -c /home/jon/opencpn/odraw/src/EBLProp.cpp",
+  "file": "/home/jon/opencpn/odraw/src/EBLProp.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/GZ.cpp.o -c /home/jon/opencpn/odraw/src/GZ.cpp",
+  "file": "/home/jon/opencpn/odraw/src/GZ.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/GZMan.cpp.o -c /home/jon/opencpn/odraw/src/GZMan.cpp",
+  "file": "/home/jon/opencpn/odraw/src/GZMan.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/GZProp.cpp.o -c /home/jon/opencpn/odraw/src/GZProp.cpp",
+  "file": "/home/jon/opencpn/odraw/src/GZProp.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/PointMan.cpp.o -c /home/jon/opencpn/odraw/src/PointMan.cpp",
+  "file": "/home/jon/opencpn/odraw/src/PointMan.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODSelect.cpp.o -c /home/jon/opencpn/odraw/src/ODSelect.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODSelect.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/PathMan.cpp.o -c /home/jon/opencpn/odraw/src/PathMan.cpp",
+  "file": "/home/jon/opencpn/odraw/src/PathMan.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/pathmanagerdialog.cpp.o -c /home/jon/opencpn/odraw/src/pathmanagerdialog.cpp",
+  "file": "/home/jon/opencpn/odraw/src/pathmanagerdialog.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODAPI.cpp.o -c /home/jon/opencpn/odraw/src/ODAPI.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODAPI.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPath.cpp.o -c /home/jon/opencpn/odraw/src/ODPath.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPath.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPoint.cpp.o -c /home/jon/opencpn/odraw/src/ODPoint.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPoint.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODConfig.cpp.o -c /home/jon/opencpn/odraw/src/ODConfig.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODConfig.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODdc.cpp.o -c /home/jon/opencpn/odraw/src/ODdc.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODdc.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODDRDialogDef.cpp.o -c /home/jon/opencpn/odraw/src/ODDRDialogDef.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODDRDialogDef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODDRDialogImpl.cpp.o -c /home/jon/opencpn/odraw/src/ODDRDialogImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODDRDialogImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODEventHandler.cpp.o -c /home/jon/opencpn/odraw/src/ODEventHandler.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODEventHandler.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODicons.cpp.o -c /home/jon/opencpn/odraw/src/ODicons.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODicons.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODIconCombo.cpp.o -c /home/jon/opencpn/odraw/src/ODIconCombo.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODIconCombo.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODJSON.cpp.o -c /home/jon/opencpn/odraw/src/ODJSON.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODJSON.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODLayer.cpp.o -c /home/jon/opencpn/odraw/src/ODLayer.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODLayer.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODMarkIcon.cpp.o -c /home/jon/opencpn/odraw/src/ODMarkIcon.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODMarkIcon.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODNavObjectChanges.cpp.o -c /home/jon/opencpn/odraw/src/ODNavObjectChanges.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODNavObjectChanges.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODNewODPointDialogDef.cpp.o -c /home/jon/opencpn/odraw/src/ODNewODPointDialogDef.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODNewODPointDialogDef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODNewODPointDialogImpl.cpp.o -c /home/jon/opencpn/odraw/src/ODNewODPointDialogImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODNewODPointDialogImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPropertiesDialogDef.cpp.o -c /home/jon/opencpn/odraw/src/ODPropertiesDialogDef.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPropertiesDialogDef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPropertiesDialogImpl.cpp.o -c /home/jon/opencpn/odraw/src/ODPropertiesDialogImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPropertiesDialogImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPathPropertiesDialogDef.cpp.o -c /home/jon/opencpn/odraw/src/ODPathPropertiesDialogDef.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPathPropertiesDialogDef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPathPropertiesDialogImpl.cpp.o -c /home/jon/opencpn/odraw/src/ODPathPropertiesDialogImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPathPropertiesDialogImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPointPropertiesDialog.cpp.o -c /home/jon/opencpn/odraw/src/ODPointPropertiesDialog.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPointPropertiesDialog.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPointPropertiesImpl.cpp.o -c /home/jon/opencpn/odraw/src/ODPointPropertiesImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPointPropertiesImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODPositionParser.cpp.o -c /home/jon/opencpn/odraw/src/ODPositionParser.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODPositionParser.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODRolloverWin.cpp.o -c /home/jon/opencpn/odraw/src/ODRolloverWin.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODRolloverWin.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODToolbarDef.cpp.o -c /home/jon/opencpn/odraw/src/ODToolbarDef.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODToolbarDef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODToolbarImpl.cpp.o -c /home/jon/opencpn/odraw/src/ODToolbarImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODToolbarImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/ODUtils.cpp.o -c /home/jon/opencpn/odraw/src/ODUtils.cpp",
+  "file": "/home/jon/opencpn/odraw/src/ODUtils.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/PIL.cpp.o -c /home/jon/opencpn/odraw/src/PIL.cpp",
+  "file": "/home/jon/opencpn/odraw/src/PIL.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/PILProp.cpp.o -c /home/jon/opencpn/odraw/src/PILProp.cpp",
+  "file": "/home/jon/opencpn/odraw/src/PILProp.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/PILPropertiesDialogDef.cpp.o -c /home/jon/opencpn/odraw/src/PILPropertiesDialogDef.cpp",
+  "file": "/home/jon/opencpn/odraw/src/PILPropertiesDialogDef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/PILPropertiesDialogImpl.cpp.o -c /home/jon/opencpn/odraw/src/PILPropertiesDialogImpl.cpp",
+  "file": "/home/jon/opencpn/odraw/src/PILPropertiesDialogImpl.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/src/TextPoint.cpp.o -c /home/jon/opencpn/odraw/src/TextPoint.cpp",
+  "file": "/home/jon/opencpn/odraw/src/TextPoint.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/bbox.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/bbox.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/bbox.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/cutil.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/cutil.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/cutil.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/geodesic.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/geodesic.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/geodesic.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/georef.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/georef.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/georef.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/Hyperlink.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/Hyperlink.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/Hyperlink.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/SelectItem.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/SelectItem.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/SelectItem.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/TexFont.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/TexFont.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/TexFont.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/wxJSON/jsonreader.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/wxJSON/jsonreader.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/wxJSON/jsonreader.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/wxJSON/jsonval.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/wxJSON/jsonval.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/wxJSON/jsonval.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/ocpnsrc/wxJSON/jsonwriter.cpp.o -c /home/jon/opencpn/odraw/ocpnsrc/wxJSON/jsonwriter.cpp",
+  "file": "/home/jon/opencpn/odraw/ocpnsrc/wxJSON/jsonwriter.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/extsrc/clipper.cpp.o -c /home/jon/opencpn/odraw/extsrc/clipper.cpp",
+  "file": "/home/jon/opencpn/odraw/extsrc/clipper.cpp"
+},
+{
+  "directory": "/home/jon/opencpn/odraw/build-kde18",
+  "command": "/usr/bin/c++   -DDEBUG_BUILD -DODraw_USE_SVG -DTIXML_USE_STL -DUSE_S57 -DWXUSINGDLL -D_FILE_OFFSET_BITS=64 -D__WXGTK__ -DocpnUSE_GL -Docpn_draw_pi_EXPORTS -I/home/jon/opencpn/odraw/ocpnsrc/bitmaps -I/home/jon/opencpn/odraw/ocpnsrc/lz4 -I/home/jon/opencpn/odraw/ocpninclude/wxcurl/include -I/home/jon/opencpn/odraw/ocpninclude/wxcurl -I/home/jon/opencpn/odraw/extinclude -I/home/jon/opencpn/odraw/ocpninclude -I/home/jon/opencpn/odraw/src/mygdal -I/home/jon/opencpn/odraw/build-kde18/CMakeFiles/include -I/home/jon/opencpn/odraw/include -I/home/jon/opencpn/odraw/src -isystem /usr/lib/x86_64-linux-gnu/wx/include/gtk2-unicode-3.0 -isystem /usr/include/wx-3.0   -pthread -g -fPIC   -fvisibility=hidden -Wall -fexceptions -o CMakeFiles/ocpn_draw_pi.dir/extsrc/pugixml.cpp.o -c /home/jon/opencpn/odraw/extsrc/pugixml.cpp",
+  "file": "/home/jon/opencpn/odraw/extsrc/pugixml.cpp"
+}
+]

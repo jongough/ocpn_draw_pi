@@ -1,0 +1,5 @@
+﻿  CPack: Create package using NSIS
+  CPack: Install projects
+  CPack: - Install project: ocpn_draw_pi
+  CPack: Create package
+  CPack: - package: P:/working area/opencpn/odraw/build-win17/ocpn_draw_pi-1.4.69-win32.exe generated.

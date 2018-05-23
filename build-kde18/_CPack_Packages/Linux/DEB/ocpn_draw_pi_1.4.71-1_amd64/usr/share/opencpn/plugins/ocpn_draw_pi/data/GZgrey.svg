@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   version="1.1"
+   id="svg9423"
+   viewBox="0 0 32 32.000001"
+   height="32"
+   width="32">
+  <defs
+     id="defs9425" />
+  <metadata
+     id="metadata9428">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(0,-1020.3622)"
+     id="layer1">
+    <rect
+       y="1020.3845"
+       x="0.031566285"
+       height="31.946074"
+       width="31.946074"
+       id="rect9560"
+       style="fill:#dbdbdb;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       transform="matrix(0.67255301,0.74004895,-0.73044081,0.682976,0,0)"
+       y="679.83466"
+       x="762.40497"
+       height="10.498852"
+       width="11.184771"
+       id="rect3561-9-2"
+       style="fill:#dbdbdb;fill-opacity:1" />
+    <path
+       id="path3503"
+       d=""
+       style="fill:#9adbe4;fill-opacity:1" />
+    <path
+       id="path3507"
+       d=""
+       style="fill:#9adbe4;fill-opacity:1" />
+    <path
+       id="path3557"
+       d=""
+       style="fill:#9adbe4;fill-opacity:1" />
+    <path
+       id="path4723-1"
+       d="m 13.632162,1025.3735 0,3.5416 a 7.8569587,6.4112267 0 0 1 5.542143,1.8952 7.8569587,6.4112267 0 0 1 2.280146,4.5668 l -7.822289,-0.051 0,0 12.131159,0.081 a 12.130754,9.9583421 0 0 0 -3.519921,-7.0936 12.130754,9.9583421 0 0 0 -8.611238,-2.9439 z"
+       style="opacity:1;fill:#ff0000;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+  </g>
+</svg>

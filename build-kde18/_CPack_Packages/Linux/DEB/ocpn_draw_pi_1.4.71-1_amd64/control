@@ -1,0 +1,11 @@
+Package: ocpn_draw_pi
+Version: 1.4.71
+Section: misc
+Priority: optional
+Architecture: amd64
+Depends: opencpn, bzip2, gzip
+Recommends: xcalib,xdg-utils
+Installed-Size: 3529
+Maintainer: Jon Gough
+Description: ocpn_draw_pi PlugIn for OpenCPN
+

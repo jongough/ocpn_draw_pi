@@ -1,0 +1,5 @@
+#!/bin/sh
+/bin/cp -R /usr/share/opencpn/plugins/ocpn_draw_pi/UserIcons /home/$SUDO_USER/.opencpn/plugins/ocpn_draw_pi/.
+/bin/rm -Rf /usr/share/opencpn/plugins/ocpn_draw_pi/UserIcons
+/bin/echo "Copied user icons"
+

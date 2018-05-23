@@ -1,0 +1,2140 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{79BF0C59-A20E-3DC8-8056-51BA62FBDFDE}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>ocpn_draw-i18n</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.2\lib\vc_dll\mswu;C:\wxWidgets-3.0.2\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.2\lib\vc_dll\mswu;C:\wxWidgets-3.0.2\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.2\lib\vc_dll\mswu;C:\wxWidgets-3.0.2\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <Midl>
+      <AdditionalIncludeDirectories>P:\working area\opencpn\odraw\ocpnsrc\bitmaps;P:\working area\opencpn\odraw\ocpnsrc\lz4;P:\working area\opencpn\odraw\ocpninclude\wxcurl\include;P:\working area\opencpn\odraw\ocpninclude\wxcurl;P:\working area\opencpn\odraw\extinclude;P:\working area\opencpn\odraw\ocpninclude;P:\working area\opencpn\odraw\src\mygdal;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\include;P:\working area\opencpn\odraw\include;P:\working area\opencpn\odraw\src;C:\wxWidgets-3.0.2\lib\vc_dll\mswu;C:\wxWidgets-3.0.2\include;P:\working area\opencpn\odraw\src\tinyxml;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17-qemu" --check-stamp-file "P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17-qemu" --check-stamp-file "P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17-qemu" --check-stamp-file "P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule P:/working area/opencpn/odraw/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\CMake\bin\cmake.exe" "-HP:/working area/opencpn/odraw" "-BP:/working area/opencpn/odraw/build-win17-qemu" --check-stamp-file "P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/CMakeLists.txt;P:\working area\opencpn\odraw\CMakeLists.txt;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInitialize.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCCompiler.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeCXXCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\WindowsPaths.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\3.10.1\CMakeRCCompiler.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CMakeCommonLanguageInclude.cmake;P:\working area\opencpn\odraw\cmake\PluginConfigure.cmake;P:\working area\opencpn\odraw\cmake\version.h.in;P:\working area\opencpn\odraw\cmake\wxWTranslateCatalog.h.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindwxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\UsewxWidgets.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindOpenGL.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindGettext.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageHandleStandardArgs.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\FindPackageMessage.cmake;P:\working area\opencpn\odraw\cmake\PluginInstall.cmake;P:\working area\opencpn\odraw\cmake\PluginLocalization.cmake;P:\working area\opencpn\odraw\po\POTFILES.in.test;P:\working area\opencpn\odraw\cmake\PluginPackage.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPack.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Modules\CPackComponent.cmake;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;C:\Program Files (x86)\CMake\share\cmake-3.10\Templates\CPackConfig.cmake.in;P:\working area\opencpn\odraw\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\ar_SA.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [ar_SA]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" "P:/working area/opencpn/odraw/po/ar_SA.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" Resources/ar_SA.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ar_SA.mo.rule;P:\working area\opencpn\odraw\po\ar_SA.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [ar_SA]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" "P:/working area/opencpn/odraw/po/ar_SA.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" Resources/ar_SA.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ar_SA.mo.rule;P:\working area\opencpn\odraw\po\ar_SA.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [ar_SA]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" "P:/working area/opencpn/odraw/po/ar_SA.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" Resources/ar_SA.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ar_SA.mo.rule;P:\working area\opencpn\odraw\po\ar_SA.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [ar_SA]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" "P:/working area/opencpn/odraw/po/ar_SA.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ar_SA.mo" Resources/ar_SA.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ar_SA.mo.rule;P:\working area\opencpn\odraw\po\ar_SA.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\ca_ES.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [ca_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" "P:/working area/opencpn/odraw/po/ca_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" Resources/ca_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ca_ES.mo.rule;P:\working area\opencpn\odraw\po\ca_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [ca_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" "P:/working area/opencpn/odraw/po/ca_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" Resources/ca_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ca_ES.mo.rule;P:\working area\opencpn\odraw\po\ca_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [ca_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" "P:/working area/opencpn/odraw/po/ca_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" Resources/ca_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ca_ES.mo.rule;P:\working area\opencpn\odraw\po\ca_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [ca_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" "P:/working area/opencpn/odraw/po/ca_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ca_ES.mo" Resources/ca_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ca_ES.mo.rule;P:\working area\opencpn\odraw\po\ca_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\cs_CZ.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [cs_CZ]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" "P:/working area/opencpn/odraw/po/cs_CZ.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" Resources/cs_CZ.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/cs_CZ.mo.rule;P:\working area\opencpn\odraw\po\cs_CZ.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [cs_CZ]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" "P:/working area/opencpn/odraw/po/cs_CZ.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" Resources/cs_CZ.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/cs_CZ.mo.rule;P:\working area\opencpn\odraw\po\cs_CZ.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [cs_CZ]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" "P:/working area/opencpn/odraw/po/cs_CZ.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" Resources/cs_CZ.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/cs_CZ.mo.rule;P:\working area\opencpn\odraw\po\cs_CZ.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [cs_CZ]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" "P:/working area/opencpn/odraw/po/cs_CZ.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/cs_CZ.mo" Resources/cs_CZ.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/cs_CZ.mo.rule;P:\working area\opencpn\odraw\po\cs_CZ.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\da_DK.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [da_DK]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" "P:/working area/opencpn/odraw/po/da_DK.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" Resources/da_DK.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/da_DK.mo.rule;P:\working area\opencpn\odraw\po\da_DK.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [da_DK]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" "P:/working area/opencpn/odraw/po/da_DK.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" Resources/da_DK.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/da_DK.mo.rule;P:\working area\opencpn\odraw\po\da_DK.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [da_DK]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" "P:/working area/opencpn/odraw/po/da_DK.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" Resources/da_DK.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/da_DK.mo.rule;P:\working area\opencpn\odraw\po\da_DK.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [da_DK]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" "P:/working area/opencpn/odraw/po/da_DK.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/da_DK.mo" Resources/da_DK.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/da_DK.mo.rule;P:\working area\opencpn\odraw\po\da_DK.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\de_DE.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [de_DE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" "P:/working area/opencpn/odraw/po/de_DE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" Resources/de_DE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/de_DE.mo.rule;P:\working area\opencpn\odraw\po\de_DE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [de_DE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" "P:/working area/opencpn/odraw/po/de_DE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" Resources/de_DE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/de_DE.mo.rule;P:\working area\opencpn\odraw\po\de_DE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [de_DE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" "P:/working area/opencpn/odraw/po/de_DE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" Resources/de_DE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/de_DE.mo.rule;P:\working area\opencpn\odraw\po\de_DE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [de_DE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" "P:/working area/opencpn/odraw/po/de_DE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/de_DE.mo" Resources/de_DE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/de_DE.mo.rule;P:\working area\opencpn\odraw\po\de_DE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\el_GR.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [el_GR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" "P:/working area/opencpn/odraw/po/el_GR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" Resources/el_GR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/el_GR.mo.rule;P:\working area\opencpn\odraw\po\el_GR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [el_GR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" "P:/working area/opencpn/odraw/po/el_GR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" Resources/el_GR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/el_GR.mo.rule;P:\working area\opencpn\odraw\po\el_GR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [el_GR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" "P:/working area/opencpn/odraw/po/el_GR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" Resources/el_GR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/el_GR.mo.rule;P:\working area\opencpn\odraw\po\el_GR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [el_GR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" "P:/working area/opencpn/odraw/po/el_GR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/el_GR.mo" Resources/el_GR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/el_GR.mo.rule;P:\working area\opencpn\odraw\po\el_GR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\es_ES.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [es_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" "P:/working area/opencpn/odraw/po/es_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" Resources/es_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/es_ES.mo.rule;P:\working area\opencpn\odraw\po\es_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [es_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" "P:/working area/opencpn/odraw/po/es_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" Resources/es_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/es_ES.mo.rule;P:\working area\opencpn\odraw\po\es_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [es_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" "P:/working area/opencpn/odraw/po/es_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" Resources/es_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/es_ES.mo.rule;P:\working area\opencpn\odraw\po\es_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [es_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" "P:/working area/opencpn/odraw/po/es_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/es_ES.mo" Resources/es_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/es_ES.mo.rule;P:\working area\opencpn\odraw\po\es_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\et_EE.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [et_EE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" "P:/working area/opencpn/odraw/po/et_EE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" Resources/et_EE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/et_EE.mo.rule;P:\working area\opencpn\odraw\po\et_EE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [et_EE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" "P:/working area/opencpn/odraw/po/et_EE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" Resources/et_EE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/et_EE.mo.rule;P:\working area\opencpn\odraw\po\et_EE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [et_EE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" "P:/working area/opencpn/odraw/po/et_EE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" Resources/et_EE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/et_EE.mo.rule;P:\working area\opencpn\odraw\po\et_EE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [et_EE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" "P:/working area/opencpn/odraw/po/et_EE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/et_EE.mo" Resources/et_EE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/et_EE.mo.rule;P:\working area\opencpn\odraw\po\et_EE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\fi_FI.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [fi_FI]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" "P:/working area/opencpn/odraw/po/fi_FI.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" Resources/fi_FI.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fi_FI.mo.rule;P:\working area\opencpn\odraw\po\fi_FI.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [fi_FI]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" "P:/working area/opencpn/odraw/po/fi_FI.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" Resources/fi_FI.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fi_FI.mo.rule;P:\working area\opencpn\odraw\po\fi_FI.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [fi_FI]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" "P:/working area/opencpn/odraw/po/fi_FI.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" Resources/fi_FI.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fi_FI.mo.rule;P:\working area\opencpn\odraw\po\fi_FI.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [fi_FI]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" "P:/working area/opencpn/odraw/po/fi_FI.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fi_FI.mo" Resources/fi_FI.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fi_FI.mo.rule;P:\working area\opencpn\odraw\po\fi_FI.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\fil_PH.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [fil_PH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" "P:/working area/opencpn/odraw/po/fil_PH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" Resources/fil_PH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fil_PH.mo.rule;P:\working area\opencpn\odraw\po\fil_PH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [fil_PH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" "P:/working area/opencpn/odraw/po/fil_PH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" Resources/fil_PH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fil_PH.mo.rule;P:\working area\opencpn\odraw\po\fil_PH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [fil_PH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" "P:/working area/opencpn/odraw/po/fil_PH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" Resources/fil_PH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fil_PH.mo.rule;P:\working area\opencpn\odraw\po\fil_PH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [fil_PH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" "P:/working area/opencpn/odraw/po/fil_PH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fil_PH.mo" Resources/fil_PH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fil_PH.mo.rule;P:\working area\opencpn\odraw\po\fil_PH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\fr_FR.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [fr_FR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" "P:/working area/opencpn/odraw/po/fr_FR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" Resources/fr_FR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fr_FR.mo.rule;P:\working area\opencpn\odraw\po\fr_FR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [fr_FR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" "P:/working area/opencpn/odraw/po/fr_FR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" Resources/fr_FR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fr_FR.mo.rule;P:\working area\opencpn\odraw\po\fr_FR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [fr_FR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" "P:/working area/opencpn/odraw/po/fr_FR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" Resources/fr_FR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fr_FR.mo.rule;P:\working area\opencpn\odraw\po\fr_FR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [fr_FR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" "P:/working area/opencpn/odraw/po/fr_FR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/fr_FR.mo" Resources/fr_FR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/fr_FR.mo.rule;P:\working area\opencpn\odraw\po\fr_FR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\gl_ES.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [gl_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" "P:/working area/opencpn/odraw/po/gl_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" Resources/gl_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/gl_ES.mo.rule;P:\working area\opencpn\odraw\po\gl_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [gl_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" "P:/working area/opencpn/odraw/po/gl_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" Resources/gl_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/gl_ES.mo.rule;P:\working area\opencpn\odraw\po\gl_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [gl_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" "P:/working area/opencpn/odraw/po/gl_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" Resources/gl_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/gl_ES.mo.rule;P:\working area\opencpn\odraw\po\gl_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [gl_ES]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" "P:/working area/opencpn/odraw/po/gl_ES.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/gl_ES.mo" Resources/gl_ES.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/gl_ES.mo.rule;P:\working area\opencpn\odraw\po\gl_ES.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\hi_IN.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [hi_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" "P:/working area/opencpn/odraw/po/hi_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" Resources/hi_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hi_IN.mo.rule;P:\working area\opencpn\odraw\po\hi_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [hi_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" "P:/working area/opencpn/odraw/po/hi_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" Resources/hi_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hi_IN.mo.rule;P:\working area\opencpn\odraw\po\hi_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [hi_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" "P:/working area/opencpn/odraw/po/hi_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" Resources/hi_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hi_IN.mo.rule;P:\working area\opencpn\odraw\po\hi_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [hi_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" "P:/working area/opencpn/odraw/po/hi_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hi_IN.mo" Resources/hi_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hi_IN.mo.rule;P:\working area\opencpn\odraw\po\hi_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\hu_HU.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [hu_HU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" "P:/working area/opencpn/odraw/po/hu_HU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" Resources/hu_HU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hu_HU.mo.rule;P:\working area\opencpn\odraw\po\hu_HU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [hu_HU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" "P:/working area/opencpn/odraw/po/hu_HU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" Resources/hu_HU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hu_HU.mo.rule;P:\working area\opencpn\odraw\po\hu_HU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [hu_HU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" "P:/working area/opencpn/odraw/po/hu_HU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" Resources/hu_HU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hu_HU.mo.rule;P:\working area\opencpn\odraw\po\hu_HU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [hu_HU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" "P:/working area/opencpn/odraw/po/hu_HU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/hu_HU.mo" Resources/hu_HU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/hu_HU.mo.rule;P:\working area\opencpn\odraw\po\hu_HU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\id_ID.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [id_ID]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" "P:/working area/opencpn/odraw/po/id_ID.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" Resources/id_ID.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/id_ID.mo.rule;P:\working area\opencpn\odraw\po\id_ID.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [id_ID]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" "P:/working area/opencpn/odraw/po/id_ID.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" Resources/id_ID.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/id_ID.mo.rule;P:\working area\opencpn\odraw\po\id_ID.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [id_ID]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" "P:/working area/opencpn/odraw/po/id_ID.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" Resources/id_ID.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/id_ID.mo.rule;P:\working area\opencpn\odraw\po\id_ID.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [id_ID]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" "P:/working area/opencpn/odraw/po/id_ID.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/id_ID.mo" Resources/id_ID.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/id_ID.mo.rule;P:\working area\opencpn\odraw\po\id_ID.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\it_IT.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [it_IT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" "P:/working area/opencpn/odraw/po/it_IT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" Resources/it_IT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/it_IT.mo.rule;P:\working area\opencpn\odraw\po\it_IT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [it_IT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" "P:/working area/opencpn/odraw/po/it_IT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" Resources/it_IT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/it_IT.mo.rule;P:\working area\opencpn\odraw\po\it_IT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [it_IT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" "P:/working area/opencpn/odraw/po/it_IT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" Resources/it_IT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/it_IT.mo.rule;P:\working area\opencpn\odraw\po\it_IT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [it_IT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" "P:/working area/opencpn/odraw/po/it_IT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/it_IT.mo" Resources/it_IT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/it_IT.mo.rule;P:\working area\opencpn\odraw\po\it_IT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\ja_JP.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [ja_JP]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" "P:/working area/opencpn/odraw/po/ja_JP.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" Resources/ja_JP.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ja_JP.mo.rule;P:\working area\opencpn\odraw\po\ja_JP.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [ja_JP]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" "P:/working area/opencpn/odraw/po/ja_JP.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" Resources/ja_JP.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ja_JP.mo.rule;P:\working area\opencpn\odraw\po\ja_JP.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [ja_JP]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" "P:/working area/opencpn/odraw/po/ja_JP.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" Resources/ja_JP.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ja_JP.mo.rule;P:\working area\opencpn\odraw\po\ja_JP.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [ja_JP]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" "P:/working area/opencpn/odraw/po/ja_JP.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ja_JP.mo" Resources/ja_JP.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ja_JP.mo.rule;P:\working area\opencpn\odraw\po\ja_JP.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\mr_IN.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [mr_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" "P:/working area/opencpn/odraw/po/mr_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" Resources/mr_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/mr_IN.mo.rule;P:\working area\opencpn\odraw\po\mr_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [mr_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" "P:/working area/opencpn/odraw/po/mr_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" Resources/mr_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/mr_IN.mo.rule;P:\working area\opencpn\odraw\po\mr_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [mr_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" "P:/working area/opencpn/odraw/po/mr_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" Resources/mr_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/mr_IN.mo.rule;P:\working area\opencpn\odraw\po\mr_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [mr_IN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" "P:/working area/opencpn/odraw/po/mr_IN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/mr_IN.mo" Resources/mr_IN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/mr_IN.mo.rule;P:\working area\opencpn\odraw\po\mr_IN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\nb_NO.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [nb_NO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" "P:/working area/opencpn/odraw/po/nb_NO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" Resources/nb_NO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nb_NO.mo.rule;P:\working area\opencpn\odraw\po\nb_NO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [nb_NO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" "P:/working area/opencpn/odraw/po/nb_NO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" Resources/nb_NO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nb_NO.mo.rule;P:\working area\opencpn\odraw\po\nb_NO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [nb_NO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" "P:/working area/opencpn/odraw/po/nb_NO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" Resources/nb_NO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nb_NO.mo.rule;P:\working area\opencpn\odraw\po\nb_NO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [nb_NO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" "P:/working area/opencpn/odraw/po/nb_NO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nb_NO.mo" Resources/nb_NO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nb_NO.mo.rule;P:\working area\opencpn\odraw\po\nb_NO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\nl_NL.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [nl_NL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" "P:/working area/opencpn/odraw/po/nl_NL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" Resources/nl_NL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nl_NL.mo.rule;P:\working area\opencpn\odraw\po\nl_NL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [nl_NL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" "P:/working area/opencpn/odraw/po/nl_NL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" Resources/nl_NL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nl_NL.mo.rule;P:\working area\opencpn\odraw\po\nl_NL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [nl_NL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" "P:/working area/opencpn/odraw/po/nl_NL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" Resources/nl_NL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nl_NL.mo.rule;P:\working area\opencpn\odraw\po\nl_NL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [nl_NL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" "P:/working area/opencpn/odraw/po/nl_NL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/nl_NL.mo" Resources/nl_NL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/nl_NL.mo.rule;P:\working area\opencpn\odraw\po\nl_NL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\pl_PL.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [pl_PL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" "P:/working area/opencpn/odraw/po/pl_PL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" Resources/pl_PL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pl_PL.mo.rule;P:\working area\opencpn\odraw\po\pl_PL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [pl_PL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" "P:/working area/opencpn/odraw/po/pl_PL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" Resources/pl_PL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pl_PL.mo.rule;P:\working area\opencpn\odraw\po\pl_PL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [pl_PL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" "P:/working area/opencpn/odraw/po/pl_PL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" Resources/pl_PL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pl_PL.mo.rule;P:\working area\opencpn\odraw\po\pl_PL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [pl_PL]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" "P:/working area/opencpn/odraw/po/pl_PL.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pl_PL.mo" Resources/pl_PL.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pl_PL.mo.rule;P:\working area\opencpn\odraw\po\pl_PL.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\pt_BR.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [pt_BR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" "P:/working area/opencpn/odraw/po/pt_BR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" Resources/pt_BR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_BR.mo.rule;P:\working area\opencpn\odraw\po\pt_BR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [pt_BR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" "P:/working area/opencpn/odraw/po/pt_BR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" Resources/pt_BR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_BR.mo.rule;P:\working area\opencpn\odraw\po\pt_BR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [pt_BR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" "P:/working area/opencpn/odraw/po/pt_BR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" Resources/pt_BR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_BR.mo.rule;P:\working area\opencpn\odraw\po\pt_BR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [pt_BR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" "P:/working area/opencpn/odraw/po/pt_BR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_BR.mo" Resources/pt_BR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_BR.mo.rule;P:\working area\opencpn\odraw\po\pt_BR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\pt_PT.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [pt_PT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" "P:/working area/opencpn/odraw/po/pt_PT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" Resources/pt_PT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_PT.mo.rule;P:\working area\opencpn\odraw\po\pt_PT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [pt_PT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" "P:/working area/opencpn/odraw/po/pt_PT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" Resources/pt_PT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_PT.mo.rule;P:\working area\opencpn\odraw\po\pt_PT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [pt_PT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" "P:/working area/opencpn/odraw/po/pt_PT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" Resources/pt_PT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_PT.mo.rule;P:\working area\opencpn\odraw\po\pt_PT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [pt_PT]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" "P:/working area/opencpn/odraw/po/pt_PT.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/pt_PT.mo" Resources/pt_PT.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/pt_PT.mo.rule;P:\working area\opencpn\odraw\po\pt_PT.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\ro_RO.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [ro_RO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" "P:/working area/opencpn/odraw/po/ro_RO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" Resources/ro_RO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ro_RO.mo.rule;P:\working area\opencpn\odraw\po\ro_RO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [ro_RO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" "P:/working area/opencpn/odraw/po/ro_RO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" Resources/ro_RO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ro_RO.mo.rule;P:\working area\opencpn\odraw\po\ro_RO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [ro_RO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" "P:/working area/opencpn/odraw/po/ro_RO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" Resources/ro_RO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ro_RO.mo.rule;P:\working area\opencpn\odraw\po\ro_RO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [ro_RO]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" "P:/working area/opencpn/odraw/po/ro_RO.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ro_RO.mo" Resources/ro_RO.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ro_RO.mo.rule;P:\working area\opencpn\odraw\po\ro_RO.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\ru_RU.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [ru_RU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" "P:/working area/opencpn/odraw/po/ru_RU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" Resources/ru_RU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ru_RU.mo.rule;P:\working area\opencpn\odraw\po\ru_RU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [ru_RU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" "P:/working area/opencpn/odraw/po/ru_RU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" Resources/ru_RU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ru_RU.mo.rule;P:\working area\opencpn\odraw\po\ru_RU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [ru_RU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" "P:/working area/opencpn/odraw/po/ru_RU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" Resources/ru_RU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ru_RU.mo.rule;P:\working area\opencpn\odraw\po\ru_RU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [ru_RU]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" "P:/working area/opencpn/odraw/po/ru_RU.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/ru_RU.mo" Resources/ru_RU.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/ru_RU.mo.rule;P:\working area\opencpn\odraw\po\ru_RU.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\sv_SE.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [sv_SE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" "P:/working area/opencpn/odraw/po/sv_SE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" Resources/sv_SE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/sv_SE.mo.rule;P:\working area\opencpn\odraw\po\sv_SE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [sv_SE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" "P:/working area/opencpn/odraw/po/sv_SE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" Resources/sv_SE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/sv_SE.mo.rule;P:\working area\opencpn\odraw\po\sv_SE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [sv_SE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" "P:/working area/opencpn/odraw/po/sv_SE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" Resources/sv_SE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/sv_SE.mo.rule;P:\working area\opencpn\odraw\po\sv_SE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [sv_SE]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" "P:/working area/opencpn/odraw/po/sv_SE.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/sv_SE.mo" Resources/sv_SE.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/sv_SE.mo.rule;P:\working area\opencpn\odraw\po\sv_SE.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\th_TH.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [th_TH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" "P:/working area/opencpn/odraw/po/th_TH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" Resources/th_TH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/th_TH.mo.rule;P:\working area\opencpn\odraw\po\th_TH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [th_TH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" "P:/working area/opencpn/odraw/po/th_TH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" Resources/th_TH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/th_TH.mo.rule;P:\working area\opencpn\odraw\po\th_TH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [th_TH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" "P:/working area/opencpn/odraw/po/th_TH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" Resources/th_TH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/th_TH.mo.rule;P:\working area\opencpn\odraw\po\th_TH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [th_TH]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" "P:/working area/opencpn/odraw/po/th_TH.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/th_TH.mo" Resources/th_TH.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/th_TH.mo.rule;P:\working area\opencpn\odraw\po\th_TH.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\tr_TR.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [tr_TR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" "P:/working area/opencpn/odraw/po/tr_TR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" Resources/tr_TR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/tr_TR.mo.rule;P:\working area\opencpn\odraw\po\tr_TR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [tr_TR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" "P:/working area/opencpn/odraw/po/tr_TR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" Resources/tr_TR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/tr_TR.mo.rule;P:\working area\opencpn\odraw\po\tr_TR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [tr_TR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" "P:/working area/opencpn/odraw/po/tr_TR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" Resources/tr_TR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/tr_TR.mo.rule;P:\working area\opencpn\odraw\po\tr_TR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [tr_TR]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" "P:/working area/opencpn/odraw/po/tr_TR.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/tr_TR.mo" Resources/tr_TR.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/tr_TR.mo.rule;P:\working area\opencpn\odraw\po\tr_TR.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\vi_VN.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [vi_VN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" "P:/working area/opencpn/odraw/po/vi_VN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" Resources/vi_VN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/vi_VN.mo.rule;P:\working area\opencpn\odraw\po\vi_VN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [vi_VN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" "P:/working area/opencpn/odraw/po/vi_VN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" Resources/vi_VN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/vi_VN.mo.rule;P:\working area\opencpn\odraw\po\vi_VN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [vi_VN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" "P:/working area/opencpn/odraw/po/vi_VN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" Resources/vi_VN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/vi_VN.mo.rule;P:\working area\opencpn\odraw\po\vi_VN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [vi_VN]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" "P:/working area/opencpn/odraw/po/vi_VN.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/vi_VN.mo" Resources/vi_VN.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/vi_VN.mo.rule;P:\working area\opencpn\odraw\po\vi_VN.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\0b13dd48c6a636108603e0cfad5c7b68\zh_TW.mo.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw-i18n [zh_TW]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" "P:/working area/opencpn/odraw/po/zh_TW.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" Resources/zh_TW.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/zh_TW.mo.rule;P:\working area\opencpn\odraw\po\zh_TW.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw-i18n [zh_TW]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" "P:/working area/opencpn/odraw/po/zh_TW.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" Resources/zh_TW.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/zh_TW.mo.rule;P:\working area\opencpn\odraw\po\zh_TW.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw-i18n [zh_TW]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" "P:/working area/opencpn/odraw/po/zh_TW.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" Resources/zh_TW.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/zh_TW.mo.rule;P:\working area\opencpn\odraw\po\zh_TW.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw-i18n [zh_TW]: Created mo file.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Poedit\GettextTools\bin\msgfmt.exe" --check -o "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" "P:/working area/opencpn/odraw/po/zh_TW.po"
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files (x86)\CMake\bin\cmake.exe" -E copy "P:/working area/opencpn/odraw/build-win17-qemu/zh_TW.mo" Resources/zh_TW.lproj/opencpn-ocpn_draw_pi.mo
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/0b13dd48c6a636108603e0cfad5c7b68/zh_TW.mo.rule;P:\working area\opencpn\odraw\po\zh_TW.po;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\175efbea9737a87925adaf45f5783cbf\ocpn_draw-i18n.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ocpn_draw_pi-i18n: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/175efbea9737a87925adaf45f5783cbf/ocpn_draw-i18n.rule;P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo;P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo;P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo;P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo;P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo;P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo;P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo;P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo;P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo;P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo;P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo;P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo;P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo;P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo;P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo;P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo;P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo;P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo;P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo;P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\ocpn_draw-i18n</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ocpn_draw_pi-i18n: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/175efbea9737a87925adaf45f5783cbf/ocpn_draw-i18n.rule;P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo;P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo;P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo;P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo;P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo;P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo;P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo;P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo;P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo;P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo;P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo;P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo;P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo;P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo;P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo;P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo;P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo;P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo;P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo;P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\ocpn_draw-i18n</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">ocpn_draw_pi-i18n: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/175efbea9737a87925adaf45f5783cbf/ocpn_draw-i18n.rule;P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo;P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo;P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo;P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo;P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo;P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo;P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo;P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo;P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo;P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo;P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo;P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo;P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo;P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo;P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo;P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo;P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo;P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo;P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo;P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\ocpn_draw-i18n</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">ocpn_draw_pi-i18n: Done.</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/175efbea9737a87925adaf45f5783cbf/ocpn_draw-i18n.rule;P:\working area\opencpn\odraw\build-win17-qemu\ar_SA.mo;P:\working area\opencpn\odraw\build-win17-qemu\ca_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\cs_CZ.mo;P:\working area\opencpn\odraw\build-win17-qemu\da_DK.mo;P:\working area\opencpn\odraw\build-win17-qemu\de_DE.mo;P:\working area\opencpn\odraw\build-win17-qemu\el_GR.mo;P:\working area\opencpn\odraw\build-win17-qemu\es_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\et_EE.mo;P:\working area\opencpn\odraw\build-win17-qemu\fi_FI.mo;P:\working area\opencpn\odraw\build-win17-qemu\fil_PH.mo;P:\working area\opencpn\odraw\build-win17-qemu\fr_FR.mo;P:\working area\opencpn\odraw\build-win17-qemu\gl_ES.mo;P:\working area\opencpn\odraw\build-win17-qemu\hi_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\hu_HU.mo;P:\working area\opencpn\odraw\build-win17-qemu\id_ID.mo;P:\working area\opencpn\odraw\build-win17-qemu\it_IT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ja_JP.mo;P:\working area\opencpn\odraw\build-win17-qemu\mr_IN.mo;P:\working area\opencpn\odraw\build-win17-qemu\nb_NO.mo;P:\working area\opencpn\odraw\build-win17-qemu\nl_NL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pl_PL.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_BR.mo;P:\working area\opencpn\odraw\build-win17-qemu\pt_PT.mo;P:\working area\opencpn\odraw\build-win17-qemu\ro_RO.mo;P:\working area\opencpn\odraw\build-win17-qemu\ru_RU.mo;P:\working area\opencpn\odraw\build-win17-qemu\sv_SE.mo;P:\working area\opencpn\odraw\build-win17-qemu\th_TH.mo;P:\working area\opencpn\odraw\build-win17-qemu\tr_TR.mo;P:\working area\opencpn\odraw\build-win17-qemu\vi_VN.mo;P:\working area\opencpn\odraw\build-win17-qemu\zh_TW.mo;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\ocpn_draw-i18n</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="P:\working area\opencpn\odraw\build-win17-qemu\CMakeFiles\ocpn_draw-i18n" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="P:\working area\opencpn\odraw\build-win17-qemu\ZERO_CHECK.vcxproj">
+      <Project>{EC4F697D-13D2-36A8-A5A3-6CA817F133A3}</Project>
+      <Name>ZERO_CHECK</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
