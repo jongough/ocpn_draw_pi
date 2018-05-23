@@ -84,37 +84,6 @@ bool PositionParser::FindSeparator(const wxString & src)
     }
 
     // Now try various separators.
-/*
-    separator = _T(", ");
-    t = wxStringTokenizer( src, separator );
-    if( t.CountTokens() == 2 ) goto found;
-
-    separator = _T(",");
-    t = wxStringTokenizer( src, separator );
-    if( t.CountTokens() == 2 ) goto found;
-
-    separator = _T(" ");
-    t = wxStringTokenizer( src, separator );
-    if( t.CountTokens() == 2 ) goto found;
-
-    separator = _T("\t");
-    t = wxStringTokenizer( src, separator );
-    if( t.CountTokens() == 2 ) goto found;
-
-    separator = _T("\n");
-    t = wxStringTokenizer( src, separator );
-    if( t.CountTokens() == 2 ) goto found;
-
-    separator = _T("N");
-    t = wxStringTokenizer( src, separator );
-    posPartOfSeparator = _T("N");
-    if( t.CountTokens() == 2 ) goto found;
-
-    separator = _T("S");
-    t = wxStringTokenizer( src, separator );
-    posPartOfSeparator = _T("S");
-    if( t.CountTokens() == 2 ) goto found;
-*/
 
     separator = _T(", ");
     wxStringTokenizer tk1(src, separator);
@@ -211,15 +180,5 @@ bool PositionParser::FindSeparator(const wxString & src)
 
     // Give up.
     return false;
-/*
-found: latitudeString = t.GetNextToken() << posPartOfSeparator;
-    latitudeString.Trim( true );
-    latitudeString.Trim( false );
-    longitudeString = t.GetNextToken();
-    longitudeString.Trim( true );
-    longitudeString.Trim( false );
-
-    return true;
-*/    
 }
 
