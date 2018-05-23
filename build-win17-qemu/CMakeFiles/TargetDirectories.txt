@@ -1,8 +1,0 @@
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/ocpn_draw_pi.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/ocpn_draw-po-update.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/ocpn_draw-pot-update.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/PACKAGE.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/ocpn_draw-i18n.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/INSTALL.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/ALL_BUILD.dir
-P:/working area/opencpn/odraw/build-win17-qemu/CMakeFiles/ZERO_CHECK.dir

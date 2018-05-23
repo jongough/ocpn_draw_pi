@@ -272,7 +272,7 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
     return l_bValidBoundary;
 }
 
-wxString ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
+bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 {
     // create boundary point
     bool    l_bValidBoundaryPoint = true;
@@ -315,10 +315,10 @@ wxString ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);
     
-    return l_pBP->m_GUID;
+    return l_bValidBoundaryPoint;
 }
 
-wxString ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
+bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
 {
     // create text point
     bool    l_bValidTextPoint = true;
@@ -355,5 +355,5 @@ wxString ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
     
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);
 
-    return l_pTP->m_GUID;
+    return l_bValidTextPoint;
 }
