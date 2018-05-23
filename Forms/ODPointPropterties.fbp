@@ -178,7 +178,7 @@
                         <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">Basic</property>
-                            <property name="select">0</property>
+                            <property name="select">1</property>
                             <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
@@ -1001,7 +1001,7 @@
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
                                                             <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus">OnLeaveLatitude</event>
+                                                            <event name="OnKillFocus"></event>
                                                             <event name="OnLeaveWindow"></event>
                                                             <event name="OnLeftDClick"></event>
                                                             <event name="OnLeftDown"></event>
@@ -1016,7 +1016,7 @@
                                                             <event name="OnRightDClick"></event>
                                                             <event name="OnRightDown">onRightClick</event>
                                                             <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus">OnEnterLatitude</event>
+                                                            <event name="OnSetFocus"></event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnText"></event>
                                                             <event name="OnTextEnter">OnPositionCtlUpdated</event>
@@ -1175,7 +1175,7 @@
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
                                                             <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus">OnLeaveLongitude</event>
+                                                            <event name="OnKillFocus"></event>
                                                             <event name="OnLeaveWindow"></event>
                                                             <event name="OnLeftDClick"></event>
                                                             <event name="OnLeftDown"></event>
@@ -1190,7 +1190,7 @@
                                                             <event name="OnRightDClick"></event>
                                                             <event name="OnRightDown">OnRightClick</event>
                                                             <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus">OnEnterLongitude</event>
+                                                            <event name="OnSetFocus"></event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnText"></event>
                                                             <event name="OnTextEnter">OnPositionCtlUpdated</event>
@@ -1360,7 +1360,7 @@
                                                             <event name="OnEraseBackground"></event>
                                                             <event name="OnKeyDown"></event>
                                                             <event name="OnKeyUp"></event>
-                                                            <event name="OnKillFocus">OnLeaveArrivalRadius</event>
+                                                            <event name="OnKillFocus"></event>
                                                             <event name="OnLeaveWindow"></event>
                                                             <event name="OnLeftDClick"></event>
                                                             <event name="OnLeftDown"></event>
@@ -1375,7 +1375,7 @@
                                                             <event name="OnRightDClick"></event>
                                                             <event name="OnRightDown"></event>
                                                             <event name="OnRightUp"></event>
-                                                            <event name="OnSetFocus">OnEnterArrivalRadius</event>
+                                                            <event name="OnSetFocus"></event>
                                                             <event name="OnSize"></event>
                                                             <event name="OnText"></event>
                                                             <event name="OnTextEnter">OnArrivalRadiusChange</event>
@@ -3247,7 +3247,7 @@
                         <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>
                             <property name="label">Display text</property>
-                            <property name="select">1</property>
+                            <property name="select">0</property>
                             <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>

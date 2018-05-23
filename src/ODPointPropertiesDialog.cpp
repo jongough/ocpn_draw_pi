@@ -236,7 +236,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_panelBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_panelBasicProperties );
-	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), false );
+	m_notebookProperties->AddPage( m_panelBasicProperties, _("Basic"), true );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_bSizerDisplayText = new wxBoxSizer( wxVERTICAL );
 	
@@ -315,7 +315,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDisplayText->SetSizer( m_bSizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_bSizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -365,16 +365,10 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	// Connect Events
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialog::OnPointPropertiesClose ) );
-	m_textLatitude->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnLeaveLatitude ), NULL, this );
 	m_textLatitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::onRightClick ), NULL, this );
-	m_textLatitude->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnEnterLatitude ), NULL, this );
 	m_textLatitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textLongitude->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnLeaveLongitude ), NULL, this );
 	m_textLongitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
-	m_textLongitude->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnEnterLongitude ), NULL, this );
 	m_textLongitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textCtrlODPointArrivalRadius->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnLeaveArrivalRadius ), NULL, this );
-	m_textCtrlODPointArrivalRadius->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnEnterArrivalRadius ), NULL, this );
 	m_textCtrlODPointArrivalRadius->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnArrivalRadiusChange ), NULL, this );
 	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_radioBoxBoundaryPointType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
@@ -389,16 +383,10 @@ ODPointPropertiesDialog::~ODPointPropertiesDialog()
 {
 	// Disconnect Events
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialog::OnPointPropertiesClose ) );
-	m_textLatitude->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnLeaveLatitude ), NULL, this );
 	m_textLatitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::onRightClick ), NULL, this );
-	m_textLatitude->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnEnterLatitude ), NULL, this );
 	m_textLatitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textLongitude->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnLeaveLongitude ), NULL, this );
 	m_textLongitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
-	m_textLongitude->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnEnterLongitude ), NULL, this );
 	m_textLongitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textCtrlODPointArrivalRadius->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnLeaveArrivalRadius ), NULL, this );
-	m_textCtrlODPointArrivalRadius->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPointPropertiesDialog::OnEnterArrivalRadius ), NULL, this );
 	m_textCtrlODPointArrivalRadius->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnArrivalRadiusChange ), NULL, this );
 	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_radioBoxBoundaryPointType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );

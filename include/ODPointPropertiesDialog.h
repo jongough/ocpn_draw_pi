@@ -115,15 +115,9 @@ class ODPointPropertiesDialog : public wxDialog
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnPointPropertiesClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void OnLeaveLatitude( wxFocusEvent& event ) { event.Skip(); }
 		virtual void onRightClick( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnEnterLatitude( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnLeaveLongitude( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnEnterLongitude( wxFocusEvent& event ) { event.Skip(); }
-		virtual void OnLeaveArrivalRadius( wxFocusEvent& event ) { event.Skip(); }
-		virtual void OnEnterArrivalRadius( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnArrivalRadiusChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowRangeRingsSelect( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioBoxPointType( wxCommandEvent& event ) { event.Skip(); }

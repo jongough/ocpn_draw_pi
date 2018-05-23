@@ -84,7 +84,7 @@ bool PositionParser::FindSeparator(const wxString & src)
     }
 
     // Now try various separators.
-
+/*
     separator = _T(", ");
     t = wxStringTokenizer( src, separator );
     if( t.CountTokens() == 2 ) goto found;
@@ -114,10 +114,104 @@ bool PositionParser::FindSeparator(const wxString & src)
     t = wxStringTokenizer( src, separator );
     posPartOfSeparator = _T("S");
     if( t.CountTokens() == 2 ) goto found;
+*/
+
+    separator = _T(", ");
+    wxStringTokenizer tk1(src, separator);
+    if (tk1.CountTokens() == 2) {
+        latitudeString = tk1.GetNextToken();
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk1.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }
+
+    separator = _T(",");
+    wxStringTokenizer tk2 (src, separator);
+    if (tk2.CountTokens() == 2) {
+        latitudeString = tk2.GetNextToken();
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk2.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }   
+
+    separator = _T(" ");
+    wxStringTokenizer tk3(src, separator);
+    if (tk3.CountTokens() == 2) {
+        latitudeString = tk3.GetNextToken();
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk3.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }
+
+    separator = _T("\t");
+    wxStringTokenizer tk4(src, separator);
+    if (tk4.CountTokens() == 2) {
+        latitudeString = tk4.GetNextToken();
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk4.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }
+
+    separator = _T("\n");
+    wxStringTokenizer tk5(src, separator);
+    if (tk5.CountTokens() == 2) {
+        latitudeString = tk5.GetNextToken();
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk5.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }
+
+    separator = _T("N");   
+    posPartOfSeparator = _T("N");
+    wxStringTokenizer tk6(src, separator);
+    if (tk6.CountTokens() == 2) {
+        latitudeString = tk6.GetNextToken() << posPartOfSeparator;
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk6.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }
+
+    separator = _T("S");   
+    posPartOfSeparator = _T("S");
+    wxStringTokenizer tk7(src, separator);
+    if (tk7.CountTokens() == 2) {
+        latitudeString = tk7.GetNextToken() << posPartOfSeparator;
+        latitudeString.Trim(true);
+        latitudeString.Trim(false);
+        longitudeString = tk7.GetNextToken();
+        longitudeString.Trim(true);
+        longitudeString.Trim(false);
+        
+        return true;
+    }   
 
     // Give up.
     return false;
-
+/*
 found: latitudeString = t.GetNextToken() << posPartOfSeparator;
     latitudeString.Trim( true );
     latitudeString.Trim( false );
@@ -126,5 +220,6 @@ found: latitudeString = t.GetNextToken() << posPartOfSeparator;
     longitudeString.Trim( false );
 
     return true;
+*/    
 }
 
