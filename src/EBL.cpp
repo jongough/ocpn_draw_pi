@@ -269,22 +269,31 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
             } else {
                 double brg;
                 double hdg = 0.;
+                bool   validHdg = false;
                 DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength);
                 switch(m_iMaintainWith) {
                     case ID_MAINTAIN_WITH_HEADING:
-                        if(!wxIsNaN(g_pfFix.Hdt))
+                        if(!wxIsNaN(g_pfFix.Hdt) && g_pfFix.validHdt) {
                             hdg = g_pfFix.Hdt;
+                            validHdg = true;
+                        }
                         break;
                     case ID_MAINTAIN_WITH_COG:
-                        if(!wxIsNaN(g_pfFix.Cog))
+                        if(!wxIsNaN(g_pfFix.Cog) && g_pfFix.validCog) {
                             hdg = g_pfFix.Cog;
+                            validHdg = true;
+                        }
                         break;
                 }
-                if(hdg > brg)
-                    m_dEBLAngle = brg + 360 - hdg;
-                else if(hdg < brg)
-                    m_dEBLAngle = hdg - brg;
-                else m_dEBLAngle = 0;
+                if(validHdg) {
+                    if(hdg > brg)
+                        m_dEBLAngle = brg + 360 - hdg;
+                    else if(hdg < brg)
+                        m_dEBLAngle = hdg - brg;
+                    else m_dEBLAngle = 0;
+                } else {
+                    m_dEBLAngle = brg;
+                }
             }
         }
     } else {

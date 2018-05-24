@@ -905,7 +905,9 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
+    g_pfFix.validCog = true;
     if(wxIsNaN(pfix.Cog)) {
+        g_pfFix.validCog = false;
         if(g_pfFix.Cog != 0.)
             l_bBoatChange = true;
         g_pfFix.Cog = 0.;
@@ -918,13 +920,17 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     }
     g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
+    g_pfFix.validHdm = true;
     if(wxIsNaN(pfix.Hdm)) {
+        g_pfFix.validHdm = true;
         if(g_pfFix.Hdm != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdm = 0.;
     }
     else g_pfFix.Hdm = pfix.Hdm;
+    g_pfFix.validHdt = true;
     if(wxIsNaN(pfix.Hdt)) {
+        g_pfFix.validHdt = false;
         if(g_pfFix.Hdt != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdt = 0.;

@@ -42,6 +42,7 @@
 #include "PointMan.h"
 #include "GZ.h"
 #include "GZMan.h"
+#include "EBL.h"
 #include "ODPositionParser.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
@@ -510,8 +511,29 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_lat_save = m_pODPoint->m_lat;
         m_lon_save = m_pODPoint->m_lon;
 
-        if(m_pODPoint->m_sTypeString == wxT("EBL Point")) m_staticTextEBLPointWarning->Show();
-        else  m_staticTextEBLPointWarning->Hide();
+        if(m_pODPoint->m_sTypeString == wxT("EBL Point")) {
+            m_bSizerOuterProperties->Show( m_bSizerEBLPointWarning );
+            m_staticTextEBLPointWarning->Show();
+            m_textLatitude->Disable();
+            m_textLongitude->Disable();
+            wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
+            
+            // Use path array (if any) to determine actual visibility for this point
+            if( ppath_array ) {
+                for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                    EBL *pe = (EBL *) ppath_array->Item( ip );
+                    if(pe->m_bFixedEndPosition) {
+                        m_textLatitude->Enable();
+                        m_textLongitude->Enable();
+                    }
+                }
+            } 
+                
+        }
+        else  {
+            m_staticTextEBLPointWarning->Hide();
+            m_bSizerOuterProperties->Hide( m_bSizerEBLPointWarning );
+        }
     
         if( positionOnly ) return true;
 

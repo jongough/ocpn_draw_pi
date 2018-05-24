@@ -308,6 +308,9 @@ class  ODPlugIn_Position_Fix_Ex : public PlugIn_Position_Fix_Ex
 {
 public:
     bool    valid;
+    bool    validHdt;
+    bool    validHdm;
+    bool    validCog;
 };
 
 
