@@ -1903,6 +1903,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
             
             DimeWindow( g_pPathManagerDialog );
+            m_pSelectedPath->m_bPathPropertiesBlink = true;
             g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             bret = true;
@@ -2668,9 +2669,8 @@ void ocpn_draw_pi::FindSelectedObject()
         }
         
         if( m_pSelectedPath ) {
-            m_pSelectedPath->m_bPathPropertiesBlink = true;
-            if( NULL == m_pFoundODPoint ) m_pFoundODPoint =
-                (ODPoint *) pFindPathSeg->m_pData1;
+            if( NULL == m_pFoundODPoint ) 
+                m_pFoundODPoint = (ODPoint *) pFindPathSeg->m_pData1;
             m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
             
             m_pSelectedPath->m_bPathIsSelected = !(m_seltype & SELTYPE_ODPOINT);

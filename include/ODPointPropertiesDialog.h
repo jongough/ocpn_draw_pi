@@ -64,6 +64,8 @@ class ODPointPropertiesDialog : public wxDialog
 		wxTextCtrl* m_textLatitude;
 		wxStaticText* m_staticTextLogitude;
 		wxTextCtrl* m_textLongitude;
+		wxBoxSizer* m_bSizerEBLPointWarning;
+		wxStaticText* m_staticTextEBLPointWarning;
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_bSizerRangeRingsControl;

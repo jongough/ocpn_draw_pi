@@ -510,6 +510,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_lat_save = m_pODPoint->m_lat;
         m_lon_save = m_pODPoint->m_lon;
 
+        if(m_pODPoint->m_sTypeString == wxT("EBL Point")) m_staticTextEBLPointWarning->Show();
+        else  m_staticTextEBLPointWarning->Hide();
+    
         if( positionOnly ) return true;
 
         //Layer or not?
