@@ -2136,8 +2136,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 }
                 if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                     m_pSelectedGZ->UpdateGZSelectablePath();
-                } else if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
-                    m_pSelectedPath->m_bPathPropertiesBlink = false;
                 } else if (m_pSelectedPIL) {
                     m_pSelectedPIL->UpdatePIL();
                 } else {

@@ -88,7 +88,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	
 	m_bSizerEBLPointWarning = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_staticTextEBLPointWarning = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Warning: Lat and Lon cannot be changed when EBL attached to Boat"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextEBLPointWarning = new wxStaticText( m_panelBasicProperties, wxID_ANY, _("Warning: Lat and Lon cannot be changed when EBL end point moving"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextEBLPointWarning->Wrap( -1 );
 	m_bSizerEBLPointWarning->Add( m_staticTextEBLPointWarning, 0, wxALL, 5 );
 	

@@ -522,7 +522,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             if( ppath_array ) {
                 for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
                     EBL *pe = (EBL *) ppath_array->Item( ip );
-                    if(pe->m_bFixedEndPosition) {
+                    if(pe->m_bFixedEndPosition || !pe->m_bCentreOnBoat) {
                         m_textLatitude->Enable();
                         m_textLongitude->Enable();
                     }
