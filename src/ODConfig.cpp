@@ -688,7 +688,11 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
                 
                 ODNavObjectChanges *pSet = new ODNavObjectChanges;
                 if(l_fn.GetExt() == _T("csv")) {
-                    l->m_NoOfItems += pSet->Load_CSV_File(path.fn_str(), l->m_LayerID, l->m_bIsVisibleOnChart);
+                    if(l) {
+                        l->m_NoOfItems += pSet->Load_CSV_File(path.fn_str(), l->m_LayerID, l->m_bIsVisibleOnChart);
+                    } else {
+                        pSet->Load_CSV_File(path.fn_str(), 0, true);
+                    }
                 }else if(l_fn.GetExt() == _T("gpx")) {
                     pSet->load_file(path.fn_str());
                     if(islayer){
