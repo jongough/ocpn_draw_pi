@@ -124,6 +124,7 @@ public:
       bool              m_bIsInPath;
       bool              m_bIsInRoute;
       bool              m_bIsInTrack;
+      bool              m_bSingleUse;           // Can only be used in one path, i.e. EBL
 
       bool              m_bIsolatedMark;        // This is an isolated mark
 

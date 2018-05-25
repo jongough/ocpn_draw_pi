@@ -78,6 +78,7 @@ ODPoint::ODPoint()
     m_bIsInRoute = false;
     m_bIsInPath = false;
     m_bIsInTrack = false;
+    m_bSingleUse = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
     m_bIsolatedMark = false;
@@ -140,6 +141,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_bIsInRoute = orig->m_bIsInRoute;
     m_bIsInPath = orig->m_bIsInPath;
     m_bIsInTrack = orig->m_bIsInTrack;
+    m_bSingleUse = orig->m_bSingleUse;
     m_CreateTimeX = orig->m_CreateTimeX;
     m_GPXTrkSegNo = orig->m_GPXTrkSegNo;
     m_bIsolatedMark = orig->m_bIsolatedMark;
@@ -207,6 +209,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_bIsInRoute = false;
     m_bIsInPath = false;
     m_bIsInTrack = false;
+    m_bSingleUse = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
     m_bIsolatedMark = false;
