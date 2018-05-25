@@ -529,8 +529,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 }
             } 
                 
-        }
-        else  {
+        } else {
+            m_textLatitude->Enable();
+            m_textLongitude->Enable();
             m_staticTextEBLPointWarning->Hide();
             m_bSizerOuterProperties->Hide( m_bSizerEBLPointWarning );
         }

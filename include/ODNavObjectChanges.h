@@ -51,6 +51,7 @@
 #define         OUT_ARRIVAL_RADIUS 1 << 18
 #define         OUT_OCPNPOINT_RANGE_RINGS 1 << 19
 #define         OUT_POINTTEXT 1 << 20
+#define         OUT_SINGLEUSE 1<<21             // Output use only in a single object
 
 #define  OPT_OCPNPOINT  (OUT_TYPE) +\
                         (OUT_TIME) +\
@@ -65,7 +66,8 @@
                         (OUT_HYPERLINKS) +\
                         (OUT_ARRIVAL_RADIUS) +\
                         (OUT_OCPNPOINT_RANGE_RINGS) +\
-                        (OUT_POINTTEXT)
+                        (OUT_POINTTEXT)+\
+                        (OUT_SINGLEUSE)
 
 //class ODNavObjectChanges : public NavObjectChanges
 class ODNavObjectChanges : public pugi::xml_document
