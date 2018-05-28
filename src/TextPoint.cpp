@@ -44,6 +44,7 @@ extern PlugIn_ViewPort  g_VP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 extern PointMan     *g_pODPointMan;
 extern ODText       *g_ODText;
+extern bool         g_bTextPointShowName;
 extern int          g_iTextPosition;
 extern wxColour     g_colourDefaultTextColour;
 extern wxFont       g_DisplayTextFont;
@@ -81,6 +82,8 @@ int round (double x) {
 TextPoint::TextPoint() : ODPoint()
 {
     m_sTypeString = wxT("Text Point");
+    m_bShowName = g_bTextPointShowName;
+    m_bIsolatedMark = true;
     switch ( g_iTextPosition )
     {
         case ID_TEXT_TOP:
@@ -159,6 +162,7 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
 {
     m_sTypeString = wxT("Text Point");
+    m_bIsolatedMark = true;
     switch ( g_iTextPosition )
     {
         case ID_TEXT_TOP:

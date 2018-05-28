@@ -225,6 +225,7 @@ enum
     ID_MODE_LAST
 };
 
+// Text Point Text information
 enum {
     ID_TEXT_TOP = 0,
     ID_TEXT_CENTRE_TOP,
@@ -236,6 +237,13 @@ enum {
     
     ID_TEXT_POSTION_LAST
 };
+
+enum {
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS = 0,
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER,
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_NEVER
+};
+
 
 // Boundary types
 enum {

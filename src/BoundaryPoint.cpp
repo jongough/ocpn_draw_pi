@@ -38,6 +38,7 @@
 
 extern PlugIn_ViewPort  g_VP;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
+extern bool         g_bBoundaryPointShowName;
 extern bool         g_bExclusionBoundaryPoint;
 extern bool         g_bInclusionBoundaryPoint;
 extern int          g_iInclusionBoundaryPointSize;
@@ -51,6 +52,7 @@ BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident,
 {
     m_sTypeString = wxT("Boundary Point");
     m_bIsInBoundary = false;
+    m_bShowName = g_bBoundaryPointShowName;
     m_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
     m_bExclusionBoundaryPoint = g_bExclusionBoundaryPoint;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
@@ -70,6 +72,7 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
 {
     m_sTypeString = wxT("Boundary Point");
     m_bIsInBoundary = false;
+    m_bShowName = g_bBoundaryPointShowName;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     m_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
     m_iRangeRingWidth = g_iBoundaryPointRangeRingLineWidth;

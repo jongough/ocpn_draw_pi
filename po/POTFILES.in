@@ -49,6 +49,7 @@ src/PILProp.cpp
 src/PILPropertiesDialogDef.cpp
 src/PILPropertiesDialogImpl.cpp
 src/TextPoint.cpp
+src/TextPointCSVImport.cpp
 include/ocpn_draw_pi.h
 include/Boundary.h
 include/BoundaryCSVImport.h
@@ -100,3 +101,4 @@ include/PILPropertiesDialogDef.h
 include/PILPropertiesDialogImpl.h
 include/PILProp.h
 include/TextPoint.h
+include/TextPointCSVImport.h

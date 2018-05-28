@@ -28,12 +28,6 @@
 
 #include "ODPoint.h"
 
-enum {
-    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS = 0,
-    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER,
-    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_NEVER
-};
-
 class ODText;
 
 class TextPoint : public ODPoint

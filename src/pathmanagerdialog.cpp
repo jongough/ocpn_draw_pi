@@ -1764,7 +1764,6 @@ void PathManagerDialog::OnODPointNewClick( wxCommandEvent &event )
             pODP = pBP;
         } else {
             TextPoint *pTP = new TextPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString, wxT("") );
-            pTP->m_bIsolatedMark = true;                      // This is an isolated mark
             pODP = pTP;
         }
         g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pODP );
@@ -2122,6 +2121,7 @@ void PathManagerDialog::OnLayDeleteClick( wxCommandEvent &event )
             pp->m_bIsInLayer = false;
             pp->m_LayerID = 0;
             g_pODPointMan->DestroyODPoint( pp, false );         // no need to update the change set on layer ops
+            delete pp;
         }
 
         node = node3;

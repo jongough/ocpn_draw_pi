@@ -90,7 +90,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -209,14 +209,18 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 	
-	m_fgSizerODPointIcon = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerODPointIcon = new wxFlexGridSizer( 0, 3, 0, 0 );
 	m_fgSizerODPointIcon->AddGrowableCol( 0 );
-	m_fgSizerODPointIcon->AddGrowableCol( 1 );
+	m_fgSizerODPointIcon->AddGrowableCol( 2 );
 	m_fgSizerODPointIcon->SetFlexibleDirection( wxBOTH );
 	m_fgSizerODPointIcon->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_checkBoxShowName = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, _("Show Name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_fgSizerODPointIcon->Add( m_checkBoxShowName, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_LEFT|wxALL, 5 );
+	m_checkBoxBoundaryPointShowName = new wxCheckBox( m_panelBoundaryPoint, wxID_ANY, _("Show Name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	m_fgSizerODPointIcon->Add( m_checkBoxBoundaryPointShowName, 1, wxALIGN_CENTER_VERTICAL|wxALIGN_LEFT|wxALL, 5 );
+	
+	m_staticTextBoundaryPointIcon = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Boundary Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextBoundaryPointIcon->Wrap( -1 );
+	m_fgSizerODPointIcon->Add( m_staticTextBoundaryPointIcon, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxODPointIconName = new wxBitmapComboBox( m_panelBoundaryPoint, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	m_fgSizerODPointIcon->Add( m_bcomboBoxODPointIconName, 1, wxALL|wxEXPAND, 5 );
@@ -348,7 +352,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelBoundaryPoint->SetSizer( bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
-	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
+	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), true );
 	m_panelTextPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerTextPoint;
 	fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -362,14 +366,17 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer21->SetFlexibleDirection( wxBOTH );
 	fgSizer21->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 	
-	m_staticTextTextPointIconName = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Text Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextTextPointIconName->Wrap( -1 );
-	fgSizer21->Add( m_staticTextTextPointIconName, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_checkBoxTextPointShowName = new wxCheckBox( m_panelTextPoint, wxID_ANY, _("Show Name"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer21->Add( m_checkBoxTextPointShowName, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
-	m_fgSizerTextPointIconName = new wxFlexGridSizer( 0, 1, 0, 0 );
-	m_fgSizerTextPointIconName->AddGrowableCol( 0 );
+	m_fgSizerTextPointIconName = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerTextPointIconName->AddGrowableCol( 1 );
 	m_fgSizerTextPointIconName->SetFlexibleDirection( wxBOTH );
 	m_fgSizerTextPointIconName->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	
+	m_staticTextTextPointIconName = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Text Point Icon"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTextPointIconName->Wrap( -1 );
+	m_fgSizerTextPointIconName->Add( m_staticTextTextPointIconName, 1, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 	
 	m_bcomboBoxTextPointIconName = new wxBitmapComboBox( m_panelTextPoint, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, 0 ); 
 	m_fgSizerTextPointIconName->Add( m_bcomboBoxTextPointIconName, 1, wxALL|wxEXPAND, 5 );

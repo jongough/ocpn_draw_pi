@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "14")
-SET(VERSION_DATE "25/05/2018")
+SET(VERSION_PATCH "15")
+SET(VERSION_DATE "27/05/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -144,6 +144,7 @@ SET(SRCS
     src/PILPropertiesDialogDef.cpp
     src/PILPropertiesDialogImpl.cpp
     src/TextPoint.cpp
+    src/TextPointCSVImport.cpp
 )
 
 SET(HDRS
@@ -198,6 +199,7 @@ SET(HDRS
     include/PILPropertiesDialogImpl.h
     include/PILProp.h
     include/TextPoint.h
+    include/TextPointCSVImport.h
 )
 
 SET(OCPNSRC 

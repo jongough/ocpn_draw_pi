@@ -88,6 +88,12 @@ void ODConfig::LateInit(void)
     m_sImport_Type = g_sDefaultImportType;
 }
 
+void ODConfig::DeInit(void)
+{
+    g_sDefaultImportPath = m_sImport_Path;
+    g_sDefaultImportType = m_sImport_Type;
+}
+
 bool ODConfig::AddNewPath( ODPath *pb, int crm )
 {
     if( pb->m_bIsInLayer )

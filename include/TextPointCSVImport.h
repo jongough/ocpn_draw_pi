@@ -23,21 +23,24 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
  
-#ifndef BOUNDARYPOINTCSVIMPORT_H
-#define BOUNDARYPOINTCSVIMPORT_H
+#ifndef TEXTPOINTCSVIMPORT_H
+#define TEXTPOINTCSVIMPORT_H
 
 class wxStringTokenizer;
 
-class BoundaryPointCSVImport 
+class TextPointCSVImport 
 {
     public:
-        BoundaryPointCSVImport();
-        BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCSV);
-        virtual ~BoundaryPointCSVImport();
+        TextPointCSVImport();
+        TextPointCSVImport(wxStringTokenizer TextPointCSV);
+        virtual ~TextPointCSVImport();
 
         wxString    m_sName;
         double      m_dLat;
         double      m_dLon;
+        int         m_iTextPosition;
+        int         m_iDisplayTextWhen;
+        wxString    m_TextPointText;
         bool        m_bExclusion;
         bool        m_bInclusion;
         bool        m_bVisible;
@@ -53,4 +56,4 @@ class BoundaryPointCSVImport
 
 };
 
-#endif // BOUNDARYPOINTCSVIMPORT_H
+#endif // TEXTPOINTCSVIMPORT_H

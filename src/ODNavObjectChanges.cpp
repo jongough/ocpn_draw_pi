@@ -40,6 +40,7 @@
 #include "ODUtils.h"
 #include "BoundaryCSVImport.h"
 #include "BoundaryPointCSVImport.h"
+#include "TextPointCSVImport.h"
 #include <wx/tokenzr.h>
 
 extern PathList         *g_pPathList;
@@ -2028,6 +2029,7 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
     wxString l_InputLine;
     BoundaryCSVImport *l_BCI;
     BoundaryPointCSVImport *l_BPCI;
+    TextPointCSVImport *l_TPCI;
     Boundary *l_boundary = NULL;
     bool    l_bBoundaryStart = false;
     int     l_NumObjs = 0;
@@ -2102,6 +2104,21 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_NumObjs++;
             
             delete l_BPCI;
+        } else if(l_type == _T("'TP'")) {
+            l_TPCI = new TextPointCSVImport(l_TokenString);
+            TextPoint *l_pTP = new TextPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, g_sODPointIconName, l_TPCI->m_sName, wxEmptyString, true);
+            l_pTP->m_iDisplayTextWhen = l_TPCI->m_iDisplayTextWhen;
+            l_pTP->m_iTextPosition = l_TPCI->m_iTextPosition;
+            l_pTP->SetPointText(wxString::Format(l_TPCI->m_TextPointText));
+            g_pODSelect->AddSelectableODPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, l_pTP);
+            if( layer_id ) {
+                l_pTP->m_bIsInLayer = true;
+                l_pTP->m_LayerID = layer_id;
+                l_pTP->SetListed( false );
+            }
+            l_NumObjs++;
+
+            delete l_TPCI;
         } else if(l_type == _T("'/B'")) {
             // end boundaryg
             l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());

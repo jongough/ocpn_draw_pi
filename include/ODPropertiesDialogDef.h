@@ -87,7 +87,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_SizerNameIcon;
 		wxFlexGridSizer* m_fgSizerODPointIcon;
-		wxCheckBox* m_checkBoxShowName;
+		wxCheckBox* m_checkBoxBoundaryPointShowName;
+		wxStaticText* m_staticTextBoundaryPointIcon;
 		wxBitmapComboBox* m_bcomboBoxODPointIconName;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxRadioBox* m_radioBoxBoundaryPointType;
@@ -110,8 +111,9 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextRangeRingStyle;
 		wxChoice* m_choiceRangeRingStyle;
 		wxPanel* m_panelTextPoint;
-		wxStaticText* m_staticTextTextPointIconName;
+		wxCheckBox* m_checkBoxTextPointShowName;
 		wxFlexGridSizer* m_fgSizerTextPointIconName;
+		wxStaticText* m_staticTextTextPointIconName;
 		wxBitmapComboBox* m_bcomboBoxTextPointIconName;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choiceTextPosition;

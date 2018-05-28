@@ -88,7 +88,7 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCS
     } 
     if(l_count >= 5) {
         wxString vis = BoundaryPointCSV.GetNextToken();
-        if(vis == _T('F') || vis == _T('f'))
+        if(vis == _T("'F'") || vis == _T("'f'"))
             m_bVisible = false;
         else
             m_bVisible = true;
@@ -97,7 +97,7 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCS
     
     if(l_count >= 6) {
         wxString vis = BoundaryPointCSV.GetNextToken();
-        if(vis == _T('F') || vis == _T('f'))
+        if(vis == _T("'F'") || vis == _T("'f'"))
             m_bRangeRingsVisible = false;
         else
             m_bRangeRingsVisible = true;
@@ -116,7 +116,7 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCS
     
     if(l_count >= 9) {
         wxString units = BoundaryPointCSV.GetNextToken();
-        if(units == _T('K') || units == _T('k')) {
+        if(units == _T("'K'") || units == _T("'k'")) {
             m_iUnits = ID_KILOMETERS;
         } else
             m_iUnits = ID_NAUTICAL_MILES;

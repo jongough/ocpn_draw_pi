@@ -71,7 +71,7 @@ extern int          g_iInclusionBoundaryPointSize;
 extern int         g_iBoundaryPointRangeRingLineWidth;
 extern int         g_iBoundaryPointRangeRingLineStyle;
 
-extern bool         g_bODPointShowName;
+extern bool         g_bBoundaryPointShowName;
 extern bool         g_bODPointShowRangeRings;
 extern int          g_iODPointRangeRingsNumber;
 extern float        g_fODPointRangeRingsStep;
@@ -81,6 +81,7 @@ extern wxString     g_sODPointIconName;
 
 extern double       g_n_arrival_circle_radius;
 
+extern bool         g_bTextPointShowName;
 extern wxString     g_sTextPointIconName;
 extern wxColour     g_colourDefaultTextColour;
 extern wxColour     g_colourDefaultTextBackgroundColour;
@@ -485,7 +486,8 @@ void ODPropertiesDialogImpl::SetIndexLineChoice( bool choice )
 
 void ODPropertiesDialogImpl::SaveChanges()
 {
-    g_bODPointShowName =m_checkBoxShowName->GetValue();
+    g_bBoundaryPointShowName = m_checkBoxBoundaryPointShowName->GetValue();
+    g_bTextPointShowName = m_checkBoxTextPointShowName->GetValue();
     //g_colourActiveBoundaryLineColour = PickerODPointRangeRingColours->GetColour();
     g_colourActiveBoundaryLineColour = m_colourPickerActiveBoundaryLineColour->GetColour();
     g_colourActiveBoundaryFillColour = m_colourPickerActiveBoundaryFillColour->GetColour();
@@ -688,7 +690,8 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     SetTableCellBackgroundColours();
     m_textCtrlODPointArrivalRadius->SetValue( wxString::Format( _T("%.3f"), g_n_arrival_circle_radius ) );
     
-    m_checkBoxShowName->SetValue( g_bODPointShowName );
+    m_checkBoxBoundaryPointShowName->SetValue( g_bBoundaryPointShowName );
+    m_checkBoxTextPointShowName->SetValue( g_bTextPointShowName );
     m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
     m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
     m_textCtrlODPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fODPointRangeRingsStep ) );
