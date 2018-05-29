@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 11:54+1000\n"
+"POT-Creation-Date: 2018-05-28 14:38+1000\n"
 "PO-Revision-Date: 2018-03-03 08:25-0500\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Romanian\n"
@@ -344,10 +344,16 @@ msgstr ""
 msgid "Boundary"
 msgstr ""
 #
+msgid "Boundary '"
+msgstr ""
+#
 msgid "Boundary Point"
 msgstr ""
 #
 msgid "Boundary Point &Properties"
+msgstr ""
+#
+msgid "Boundary Point Icon"
 msgstr ""
 #
 msgid ""
@@ -508,9 +514,6 @@ msgstr ""
 msgid "Delete Line"
 msgstr ""
 #
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr ""
-#
 msgid "Delete..."
 msgstr ""
 #
@@ -608,6 +611,9 @@ msgid "End"
 msgstr ""
 #
 msgid "End Point Icon"
+msgstr ""
+#
+msgid "Error in import file."
 msgstr ""
 #
 msgid "Example"
@@ -718,7 +724,7 @@ msgstr ""
 msgid "Hours"
 msgstr ""
 #
-msgid "I&mport GPX..."
+msgid "I&mport"
 msgstr ""
 #
 msgid "ID"
@@ -733,7 +739,16 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 #
+msgid "Import Error"
+msgstr ""
+#
 msgid "Import GPX file"
+msgstr ""
+#
+msgid "Import file"
+msgstr ""
+#
+msgid "Import incomplete."
 msgstr ""
 #
 msgid "Inactive Centre Line Colour"
@@ -931,9 +946,6 @@ msgstr ""
 msgid "Nautical Miles"
 msgstr ""
 #
-msgid "Nav Object Backups"
-msgstr ""
-#
 msgid "Neither"
 msgstr ""
 #
@@ -1038,6 +1050,9 @@ msgid "OCPN Draw Remove EBL Point"
 msgstr ""
 #
 msgid "OCPN Draw Remove OD Point"
+msgstr ""
+#
+msgid "OCPN_Draw Nav Object Backups"
 msgstr ""
 #
 msgid "OD"
@@ -1197,6 +1212,9 @@ msgid "Range Ring Line Style"
 msgstr ""
 #
 msgid "Range Ring Line Width"
+msgstr ""
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
 msgid "Remove Point from Path"
@@ -1385,6 +1403,9 @@ msgstr ""
 msgid "WD"
 msgstr ""
 #
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
 msgid "Whilst Drawing"
 msgstr ""
 #
@@ -1394,5 +1415,14 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 #
+msgid "gpx"
+msgstr ""
+#
 msgid "ocpn_draw_pi data location"
+msgstr ""
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
 msgstr ""

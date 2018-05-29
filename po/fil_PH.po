@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 11:54+1000\n"
+"POT-Creation-Date: 2018-05-28 14:38+1000\n"
 "PO-Revision-Date: 2018-03-20 18:26-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Filipino\n"
@@ -348,11 +348,19 @@ msgstr "Sentro ng Ilalim"
 msgid "Boundary"
 msgstr "Hangganan"
 #
+#, fuzzy
+msgid "Boundary '"
+msgstr "Hangganan"
+#
 msgid "Boundary Point"
 msgstr "Punto ng Hangganan"
 #
 msgid "Boundary Point &Properties"
 msgstr "Punto at mga Katangian ng Hangganan"
+#
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Itago ang mga aykon ng Punto ng Hangganan"
 #
 msgid ""
 "Boundary Point Inclusion\n"
@@ -514,9 +522,6 @@ msgstr "Burahin Lahat"
 msgid "Delete Line"
 msgstr "Tanggalin ang Linya"
 #
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr "Burahin ang kasalukuyang OCPN_Entrada ng config sa Guhit (Huwag)"
-#
 msgid "Delete..."
 msgstr "Tanggalin..."
 #
@@ -619,6 +624,9 @@ msgstr "Kataposan"
 #
 msgid "End Point Icon"
 msgstr "Aykon ng Puntong Wakas"
+#
+msgid "Error in import file."
+msgstr ""
 #
 msgid "Example"
 msgstr "Halimbawa"
@@ -733,7 +741,8 @@ msgstr "Itago mula sa tsart"
 msgid "Hours"
 msgstr "Mga Oras"
 #
-msgid "I&mport GPX..."
+#, fuzzy
+msgid "I&mport"
 msgstr "&I-angkat ang GPX..."
 #
 msgid "ID"
@@ -748,7 +757,18 @@ msgstr "Pagkakilanlan: "
 msgid "Icon"
 msgstr "Aykon"
 #
+msgid "Import Error"
+msgstr ""
+#
 msgid "Import GPX file"
+msgstr "Iangkat ang talangkas ng GPX"
+#
+#, fuzzy
+msgid "Import file"
+msgstr "Iangkat ang talangkas ng GPX"
+#
+#, fuzzy
+msgid "Import incomplete."
 msgstr "Iangkat ang talangkas ng GPX"
 #
 msgid "Inactive Centre Line Colour"
@@ -948,9 +968,6 @@ msgstr "Pangalan: "
 msgid "Nautical Miles"
 msgstr "Pandagat na Milya"
 #
-msgid "Nav Object Backups"
-msgstr "Mga Reserba para sa Bagay Pangnabigasyon"
-#
 msgid "Neither"
 msgstr ""
 #
@@ -1056,6 +1073,10 @@ msgstr "Tanggalin ang Punto ng EBL sa Guhit OCPN"
 #
 msgid "OCPN Draw Remove OD Point"
 msgstr "Tanggalin ang Punto ng DR sa Guhit OCPN"
+#
+#, fuzzy
+msgid "OCPN_Draw Nav Object Backups"
+msgstr "Mga Reserba para sa Bagay Pangnabigasyon"
 #
 msgid "OD"
 msgstr ""
@@ -1215,6 +1236,9 @@ msgstr "Estilo ng linya ng Bilog ng Saklaw"
 #
 msgid "Range Ring Line Width"
 msgstr "Lapad ng Linya ng Bilog ng Saklaw"
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
 #
 msgid "Remove Point from Path"
 msgstr "Alisin ang Punto mula sa Daan"
@@ -1411,6 +1435,9 @@ msgstr ""
 msgid "WD"
 msgstr ""
 #
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
 msgid "Whilst Drawing"
 msgstr "Habang Nagguguhit"
 #
@@ -1422,5 +1449,17 @@ msgstr ""
 msgid "Yes"
 msgstr "Oo"
 #
+msgid "gpx"
+msgstr ""
+#
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_guhit_pi lokasyon ng datos"
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+#~ msgid "Delete current OCPN_Draw config entries (No)"
+#~ msgstr "Burahin ang kasalukuyang OCPN_Entrada ng config sa Guhit (Huwag)"

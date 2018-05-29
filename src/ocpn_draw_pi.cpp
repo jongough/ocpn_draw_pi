@@ -121,7 +121,6 @@ BoundaryMan             *g_pBoundaryMan;
 GZMan                   *g_pGZMan;
 wxString                g_default_ODPoint_icon;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-ODPathPropertiesDialogImpl   *g_pPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
 DRProp                  *g_pDRPropDialog;

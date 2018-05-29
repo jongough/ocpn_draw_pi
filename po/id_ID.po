@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 11:54+1000\n"
+"POT-Creation-Date: 2018-05-28 14:38+1000\n"
 "PO-Revision-Date: 2018-03-16 19:12-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Indonesian\n"
@@ -347,11 +347,19 @@ msgstr "Bawah Pusat"
 msgid "Boundary"
 msgstr "Batas"
 #
+#, fuzzy
+msgid "Boundary '"
+msgstr "Batas"
+#
 msgid "Boundary Point"
 msgstr "Batas Titik"
 #
 msgid "Boundary Point &Properties"
 msgstr "Titik Batas &Sifat"
+#
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Menyembunyikan Titik Batas Ikon"
 #
 msgid ""
 "Boundary Point Inclusion\n"
@@ -513,9 +521,6 @@ msgstr "Hapus semua"
 msgid "Delete Line"
 msgstr "Hapus Baris"
 #
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr ""
-#
 msgid "Delete..."
 msgstr "Menhapus..."
 #
@@ -620,6 +625,9 @@ msgstr "Selesai"
 #
 msgid "End Point Icon"
 msgstr "Ikon Titik Akhir"
+#
+msgid "Error in import file."
+msgstr ""
 #
 msgid "Example"
 msgstr "Contoh"
@@ -732,7 +740,8 @@ msgstr "Sembunyikan dari grafik"
 msgid "Hours"
 msgstr "Jam"
 #
-msgid "I&mport GPX..."
+#, fuzzy
+msgid "I&mport"
 msgstr "M&asukkan GPX..."
 #
 msgid "ID"
@@ -747,7 +756,18 @@ msgstr "ID: "
 msgid "Icon"
 msgstr "Ikon"
 #
+msgid "Import Error"
+msgstr ""
+#
 msgid "Import GPX file"
+msgstr "Impor berkas GPX"
+#
+#, fuzzy
+msgid "Import file"
+msgstr "Impor berkas GPX"
+#
+#, fuzzy
+msgid "Import incomplete."
 msgstr "Impor berkas GPX"
 #
 msgid "Inactive Centre Line Colour"
@@ -949,9 +969,6 @@ msgstr "Nama: "
 msgid "Nautical Miles"
 msgstr "Mil Laut"
 #
-msgid "Nav Object Backups"
-msgstr "Pencarian Objek Nav"
-#
 msgid "Neither"
 msgstr "Tidak"
 #
@@ -1057,6 +1074,10 @@ msgstr "OCPN Menghapus tarikan titik EBL"
 #
 msgid "OCPN Draw Remove OD Point"
 msgstr "OCPN Menghapus tarikan titik OD"
+#
+#, fuzzy
+msgid "OCPN_Draw Nav Object Backups"
+msgstr "Pencarian Objek Nav"
 #
 msgid "OD"
 msgstr "OD"
@@ -1228,6 +1249,9 @@ msgstr "Gaya baris berbagai cincin"
 #
 msgid "Range Ring Line Width"
 msgstr "Berbagai cincin jalur lebar"
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
 #
 msgid "Remove Point from Path"
 msgstr "Menghapus titik dari jalan"
@@ -1428,6 +1452,9 @@ msgstr "Versi:"
 msgid "WD"
 msgstr "WD"
 #
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
 msgid "Whilst Drawing"
 msgstr "Saat Menggambar"
 #
@@ -1438,5 +1465,14 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 #
+msgid "gpx"
+msgstr ""
+#
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi lokasi data"
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""

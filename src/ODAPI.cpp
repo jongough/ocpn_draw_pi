@@ -40,6 +40,8 @@
 #include "BoundaryPoint.h"
 #include "ODConfig.h"
 #include "ODPath.h"
+#include "ODPathPropertiesDialogImpl.h"
+#include "pathmanagerdialog.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "PointMan.h"
@@ -55,6 +57,10 @@ extern ODSelect     *g_pODSelect;
 extern ODConfig     *g_pODConfig;
 extern wxString      g_sODPointIconName;
 extern wxString      g_sTextPointIconName;
+extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
+extern PathManagerDialog       *g_pPathManagerDialog;
+extern BoundaryList            *g_pBoundaryList;
+extern PathList                *g_pPathList;
 
 ODAPI::ODAPI()
 {
@@ -191,6 +197,13 @@ bool ODAPI::OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t 
     return false;
 }
 
+//bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB, wxString *GUID)
+//{
+//    bool bRet = OD_CreateBoundary(pCB);
+//    GUID->Append(*m_psGUID);
+//    return bRet;
+//}
+
 bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
 {
     bool    l_bValidBoundary = true;
@@ -199,17 +212,12 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
     // validate boundary information
     if(pCB->type != EXCLUSION_BOUNDARY &&  pCB->type != INCLUSION_BOUNDARY && pCB->type != NEITHER_BOUNDARY) l_bValidBoundary = false;
     if(pCB->BoundaryPointsList.size() <= 1) l_bValidBoundary = false;
-    wxString l_rgbLine = pCB->lineColour.SubString(1, pCB->lineColour.Length() - 2);
-    wxColour l_Colour;
-    l_test = l_Colour.Set(l_rgbLine);
-    if(!l_test) l_bValidBoundary = false;
-    wxString l_rgbFill = pCB->fillColour.SubString(1, pCB->fillColour.Length() - 2);
-    l_test = l_Colour.Set(l_rgbFill);
-    if(!l_test) l_bValidBoundary = false;
     
     // Create boundary
     Boundary *l_boundary;
     l_boundary = new Boundary();
+    g_pBoundaryList->Append( l_boundary );
+    g_pPathList->Append( l_boundary);
     
     l_boundary->m_PathNameString = pCB->name;
     switch (pCB->type) 
@@ -229,8 +237,11 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
     }
     l_boundary->m_bPathIsActive = true;
     l_boundary->SetVisible(pCB->visible);
-    l_boundary->m_wxcActiveLineColour = pCB->lineColour;
-    l_boundary->m_wxcActiveFillColour = pCB->fillColour;
+    l_boundary->m_bODPointsVisible = true;
+    if(!pCB->defaultLineColour)
+        l_boundary->m_wxcActiveLineColour = pCB->lineColour;
+    if(!pCB->defaultFillColour)
+        l_boundary->m_wxcActiveFillColour = pCB->fillColour;
     
     std::list<CreateBoundaryPoint_t *>::iterator it = pCB->BoundaryPointsList.begin();
     while( it != pCB->BoundaryPointsList.end() ) {
@@ -256,21 +267,47 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
         l_pBP->SetODPointRangeRingsNumber((*it)->ringsnumber);
         l_pBP->SetODPointRangeRingsStep((*it)->ringssteps);
         l_pBP->SetODPointRangeRingsStepUnits((*it)->ringsunits);
-        l_pBP->SetODPointRangeRingsColour((*it)->ringscolour);
+        if(!(*it)->defaultRingColour)
+            l_pBP->SetODPointRangeRingsColour((*it)->ringscolour);
         
         ++it;
     }
     
     l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());
+    l_boundary->SetPointVisibility();
     l_boundary->m_bIsBeingCreated = false;
-    ODNavObjectChanges *l_ODNavObjectChanges = new ODNavObjectChanges();
-    l_ODNavObjectChanges->InsertPathA(l_boundary);
-    l_boundary = NULL;
+    l_boundary->CreateColourSchemes();
+    l_boundary->SetColourScheme();
+    l_boundary->SetActiveColours();
     
-    delete l_ODNavObjectChanges;
+    g_pODConfig->AddNewPath( l_boundary, -1 );
+    g_pODSelect->DeleteAllSelectablePathSegments(l_boundary);
+    g_pODSelect->DeleteAllSelectableODPoints(l_boundary);
+    g_pODSelect->AddAllSelectablePathSegments(l_boundary);
+    g_pODSelect->AddAllSelectableODPoints(l_boundary);
     
-    return l_bValidBoundary;
+    l_boundary->RebuildGUIDList(); // ensure the GUID list is intact and good
+    l_boundary->SetHiLite(0);
+    if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown() ) ) {
+        g_pODPathPropDialog->SetPathAndUpdate( l_boundary, true );
+    }
+    
+    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+        g_pPathManagerDialog->UpdatePathListCtrl();
+    pCB->GUID.Clear();
+    pCB->GUID.Append(l_boundary->m_GUID);
+    RequestRefresh(g_ocpn_draw_pi->m_parent_window);
+    
+    return true;
 }
+
+//bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP, wxString *GUID)
+//{
+//    bool bRet = OD_CreateBoundaryPoint(pCBP);
+//    if(GUID != NULL) 
+//        GUID->append(*m_psGUID);
+//    return bRet;
+//}
 
 bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 {
@@ -314,9 +351,15 @@ bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
     g_pODConfig->AddNewODPoint( l_pBP, -1 );
 
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-    
-    return l_bValidBoundaryPoint;
+    return true;
 }
+
+//bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP, wxString *GUID)
+//{
+//    bool bRet = OD_CreateTextPoint(pCTP);
+//    GUID->Append(*m_psGUID);
+//    return bRet;
+//}
 
 bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
 {
@@ -354,6 +397,5 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
     g_pODConfig->AddNewODPoint( l_pTP, -1 );
     
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-
-    return l_bValidTextPoint;
+    return true;
 }

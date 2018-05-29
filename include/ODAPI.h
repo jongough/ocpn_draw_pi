@@ -101,8 +101,9 @@ struct CreateBoundaryPoint_t {
     int         ringsnumber;
     double      ringssteps;
     int         ringsunits;
-    wxString    ringscolour;
-    
+    bool        defaultRingColour;
+    wxColour    ringscolour;
+    wxString    GUID;
 };
 
 struct CreateBoundary_t {
@@ -110,8 +111,11 @@ struct CreateBoundary_t {
     int         type;
     bool        pathIsActive;
     bool        visible;
-    wxString    lineColour;
-    wxString    fillColour;
+    bool        defaultLineColour;
+    wxColour    lineColour;
+    bool        defaultFillColour;
+    wxColour    fillColour;
+    wxString    GUID;
     std::list   <CreateBoundaryPoint_t *> BoundaryPointsList;
 };
 
@@ -124,8 +128,8 @@ struct CreateTextPoint_t {
     wxString    TextToDisplay;
     bool        Visible;
     int         TextPosition;
-    wxString    TextColour;
-    wxString    BackgroundColour;
+    wxColour    TextColour;
+    wxColour    BackgroundColour;
     int         BackgroundTransparancy;
     wxFont      TextFont;
     int         TextPointDisplayTextWhen;
@@ -133,7 +137,9 @@ struct CreateTextPoint_t {
     int         ringsnumber;
     double      ringssteps;
     int         ringsunits;
-    wxString    ringscolour;
+    bool        defaultRingColour;
+    wxColour    ringscolour;
+    wxString    GUID;
 };
 
 class ODAPI
@@ -152,6 +158,7 @@ public:
 protected:
     
 private:
+    
 };
 
 typedef bool (*OD_FindPathByGUID) (wxString, wxString *, wxString *);

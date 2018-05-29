@@ -145,7 +145,6 @@ extern PathList     *g_pPathList;
 extern BoundaryList *g_pBoundaryList;
 extern ODLayerList  *g_pLayerList;
 extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
-extern ODPathPropertiesDialogImpl     *g_pPathPropDialog;
 extern BoundaryProp *g_pBoundaryPropDialog;
 extern EBLProp      *g_pEBLPropDialog;
 extern DRProp       *g_pDRPropDialog;
@@ -1268,9 +1267,9 @@ void PathManagerDialog::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pPILPropDialog->SetPath( l_pPIL );
         g_pPILPropDialog->UpdateProperties( l_pPIL );
     } else {
-        if( NULL == g_pPathPropDialog )          // There is one global instance of the PathProp Dialog
-            g_pPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
-        g_pODPathPropDialog = g_pPathPropDialog;
+        if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
+            g_pODPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
+        g_pODPathPropDialog = g_pODPathPropDialog;
         l_pPath = inpath;
         g_pODPathPropDialog->SetPath( l_pPath );
         g_pODPathPropDialog->UpdateProperties( l_pPath );
@@ -2390,16 +2389,10 @@ void PathManagerDialog::OnImportClick( wxCommandEvent &event )
     HideWithEffect(wxSHOW_EFFECT_BLEND );
 #endif
     
-//    g_pODConfig->UI_ImportGPX( this );
     wxString l_sLabel = _("I&mport");
     l_sLabel.Append(_T(" "));
-    if(m_iPage == m_pPanelLay->GetId()) {
-        g_pODConfig->UI_Import( this, true, false );
-        l_sLabel.Append(_("gpx"));
-    } else {
-        g_pODConfig->UI_Import( this );
-        l_sLabel.Append(g_pODConfig->m_sImport_Type);
-    }
+    g_pODConfig->UI_Import( this );
+    l_sLabel.Append(g_pODConfig->m_sImport_Type);
     l_sLabel.Append(_T("..."));
     btnImport->SetLabel(l_sLabel);
     
@@ -2453,11 +2446,7 @@ void PathManagerDialog::OnNotebookPageChanged(wxBookCtrlEvent &event)
     m_iPage = event.GetSelection();
     wxString l_sLabel = _("I&mport");
     l_sLabel.Append(_T(" "));
-    if(m_iPage == m_pPanelLay->GetId()) {
-        l_sLabel.Append(_("gpx"));
-    } else {
-        l_sLabel.Append(g_pODConfig->m_sImport_Type);
-    }
+    l_sLabel.Append(g_pODConfig->m_sImport_Type);
     l_sLabel.Append(_T("..."));
     btnImport->SetLabel(l_sLabel);
     
