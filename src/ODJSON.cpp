@@ -35,10 +35,16 @@
 #include <wx/jsonreader.h>
 #include "wx/jsonwriter.h"
 
+#include "json-schema.hpp"
+using nlohmann::json;
+using nlohmann::json_uri;
+using nlohmann::json_schema_draft4::json_validator;
+
 #include "ocpn_draw_pi.h"
 #include "ODJSON.h"
 #include "ODPath.h"
 #include "ODConfig.h"
+#include "ODJSONSchemas.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "Boundary.h"
@@ -48,6 +54,7 @@
 #include "GZMan.h"
 #include "ODAPI.h"
 #include "PointMan.h"
+#include "TextPoint.h"
 #include "version.h"
 
 #include <stdio.h>
@@ -67,15 +74,33 @@ extern ODAPI                *g_pODAPI;
 extern bool                 g_bExclusionBoundaryPoint;
 extern bool                 g_bInclusionBoundaryPoint;
 
+json_validator *gCreateBoundary; 
+json_validator *gCreateBoundaryPoint; 
+json_validator *gCreateTextPoint;
 
 ODJSON::ODJSON()
 {
     // ctor
+    gCreateBoundary = NULL;
+    gCreateBoundaryPoint = NULL;
+    gCreateTextPoint = NULL;
 }
 
 ODJSON::~ODJSON()
 {
     // dtor
+    if(gCreateBoundary) {
+        delete gCreateBoundary;
+        gCreateBoundary = NULL;
+    }
+    if(gCreateBoundaryPoint) {
+        delete gCreateBoundaryPoint;
+        gCreateBoundaryPoint = NULL;
+    }
+    if(gCreateTextPoint) {
+        delete gCreateTextPoint;
+        gCreateTextPoint = NULL;
+    }
 }
 
 void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
@@ -103,6 +128,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
     int         l_BoundaryState;
     bool        bFail = false;
     
+    DEBUGSL(message_body);
     if(message_id == wxS("OCPN_DRAW_PI")) {
         // now read the JSON text and store it in the 'root' structure
         // check for errors before retreiving values...
@@ -714,19 +740,33 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             
             return;
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateBoundary")) {
-            if(!root.HasMember( wxS("BoundaryName"))) {
-                wxLogMessage( wxS("No BoundaryName found in message") );
-                bFail = true;
+            if(!gCreateBoundary) {
+                gCreateBoundary = new json_validator;
+                try {
+                    gCreateBoundary->set_root_schema(BoundarySchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
             }
-            
-            if(!root.HasMember( wxS("BoundaryType"))) {
-                wxLogMessage( wxS("No BoundaryType type found in message") );
-                bFail = true;
-            }
-            
-            if(!root.HasMember( wxS("BoundaryPoints"))) {
-                wxLogMessage( wxS("No BoundaryPoints type found in message") );
-                bFail = true;
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gCreateBoundary->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
             }
             
             if(!bFail) {
@@ -799,15 +839,35 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateBoundaryPoint")) {
-            if(!root.HasMember( wxS("Lat"))) {
-                wxLogMessage( wxS("No Latitude found in message") );
-                bFail = true;
+            if(!gCreateBoundaryPoint) {
+                gCreateBoundaryPoint = new json_validator;
+                try {
+                    gCreateBoundaryPoint->set_root_schema(BoundaryPointSchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
             }
-            if(!root.HasMember( wxS("Lon"))) {
-                wxLogMessage( wxS("No Latitude found in message") );
-                bFail = true;
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gCreateBoundaryPoint->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
             }
-            
+
             if(!bFail) {
                 if(root[wxS("Type")].AsString() == _T("Request")) {
                     BoundaryPoint *pl_boundarypoint; 
@@ -865,8 +925,83 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     return;
                 }
             }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateTextPoint")) {
+            if(!gCreateTextPoint) {
+                gCreateTextPoint = new json_validator;
+                try {
+                    gCreateTextPoint->set_root_schema(TextPointSchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gCreateTextPoint->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+            
+            if(!bFail) {
+                if(root[wxS("Type")].AsString() == _T("Request")) {
+                    TextPoint *pl_textpoint; 
+                    if(root[wxS("IconName")].AsString().IsEmpty()) {
+                        pl_textpoint = new TextPoint(root[wxS("Lat")].AsDouble(), root[wxS("Lon")].AsDouble(), wxEmptyString, root[wxS("TextPointName")].AsString());
+                    } else {
+                        pl_textpoint = new TextPoint(root[wxS("Lat")].AsDouble(), root[wxS("Lon")].AsDouble(), root[wxS("IconName")].AsString(), root[wxS("TextPointName")].AsString());
+                    }
+                    
+                    if(root.HasMember("visible")) pl_textpoint->SetVisible(root[wxS("visible")].AsBool()); 
+                    if(root.HasMember("TextToDisplay")) pl_textpoint->m_TextPointText = (root[wxS("TextToDisplay")].AsString()); 
+                    if(root.HasMember("TextPosition")) pl_textpoint->m_iTextPosition = (root[wxS("TextPosition")].AsInt()); 
+                    if(root.HasMember("TextColour")) pl_textpoint->m_colourTextColour = (root[wxS("TextColour")].AsString()); 
+                    if(root.HasMember("BackgroundColour")) pl_textpoint->m_colourTextBackgroundColour = (root[wxS("BackgroundColour")].AsString()); 
+                    if(root.HasMember("BackgroundTransparency")) pl_textpoint->m_iBackgroundTransparency = (root[wxS("BackgroundTransparency")].AsInt()); 
+                    if(root.HasMember("ringsvisible")) pl_textpoint->SetShowODPointRangeRings(root[wxS("ringsvisible")].AsBool());
+                    if(root.HasMember("ringsnumber")) pl_textpoint->SetODPointRangeRingsNumber(root[wxS("ringsnumber")].AsInt());
+                    if(root.HasMember("ringssteps")) pl_textpoint->SetODPointRangeRingsStep(root[wxS("ringssteps")].AsDouble());
+                    if(root.HasMember("ringunits")) pl_textpoint->SetODPointRangeRingsStepUnits(root[wxS("ringsunits")].AsInt());
+                    if(root.HasMember("ringscolour")) pl_textpoint->SetODPointRangeRingsColour(root[wxS("ringscolour")].AsString());
+                    pl_textpoint->m_bIsolatedMark = true;
+                    pl_textpoint->m_bIsInPath = false;
+                    pl_textpoint->CreateColourSchemes();
+                    pl_textpoint->SetColourScheme();
+                    
+                    g_pODConfig->AddNewODPoint( pl_textpoint, -1 );    // use auto next num
+                    g_pODSelect->AddSelectableODPoint( root[wxS("Lat")].AsDouble(), root[wxS("Lon")].AsDouble(), pl_textpoint );
+                    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
+                        g_pPathManagerDialog->UpdateODPointsListCtrl();
+                    RequestRefresh(g_ocpn_draw_pi->m_parent_window);
+                    
+                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                    jMsg[wxT("Msg")] = root[wxT("Msg")];
+                    jMsg[wxT("Type")] = wxT("Response");
+                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                    jMsg[wxS("Created")] = true;
+                    
+                    jMsg[wxS("GUID")] = pl_textpoint->m_GUID;
+                    writer.Write( jMsg, MsgString );
+                    SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                    
+                    pl_textpoint = NULL;
+                    
+                    return;
+                }
+            }
         }
-        
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
 
     // construct the JSON root object

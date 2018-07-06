@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "19")
-SET(VERSION_DATE "04/07/2018")
+SET(VERSION_PATCH "20")
+SET(VERSION_DATE "06/07/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -32,33 +32,26 @@ MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-OPTION(OD_CXX11 "Use c++11" OFF)
-
-IF ( OD_CXX11 )
-    MESSAGE(STATUS "Attempting to use c++11")
-    include(CheckCXXCompilerFlag)
-    CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-    CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-    if(COMPILER_SUPPORTS_CXX11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-        SET(OD_USE_CXX11 ON)
-    elseif(COMPILER_SUPPORTS_CXX0X)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-        SET(OD_USE_CXX11 ON)
-    else()
+if (CMAKE_VERSION VERSION_LESS "3.1")
+  include(CheckCXXCompilerFlag)
+  CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+  CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+  if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    message(STATUS "Setting C++11 standard via CXX flags")
+  elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    message(STATUS "Setting C++0x standard via CXX FLAGS")
+  else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-        SET(OD_USE_CXX11 OFF)
-    endif()
-ELSE()
-    SET(OD_USE_CXX11 OFF)
-ENDIF()
+  endif()
+else ()
+  set (CMAKE_CXX_STANDARD 11)
+  message(STATUS "Setting C++11 standard via cmake standard mecahnism")
+endif ()
 
-IF(OD_USE_CXX11)
-    MESSAGE(STATUS "Allowing use of c++11")
-    ADD_DEFINITIONS(-DOD_USE_CXX11)
-ENDIF()
+OPTION(OCPN_USE_LIBCPP "Use C++11 and libc++ instead of libstdc++ on macOS" ON)
 
-MESSAGE(STATUS "CMAKE version: ${CMAKE_VERSION}")
 if ( CMAKE_VERSION VERSION_GREATER 3.4 )
   set(ENABLE_CLANG_TIDY OFF CACHE BOOL "Add clang-tidy automatically to builds")
   if (ENABLE_CLANG_TIDY)
@@ -74,6 +67,15 @@ if ( CMAKE_VERSION VERSION_GREATER 3.4 )
       message(AUTHOR_WARNING "clang-tidy not found!")
       set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE) # delete it
     endif()
+  endif()
+endif()
+
+# Add support for address etc sanitizers, part 1/2 (other half after ADD_EXECUTABLE)
+if ( CMAKE_VERSION VERSION_GREATER 3.4 )
+  set(ENABLE_SANITIZER "none" CACHE STRING "Add clang sanitizer to the build")
+  set_property(CACHE ENABLE_SANITIZER PROPERTY STRINGS none address memory thread undefined)
+  if (NOT "${ENABLE_SANITIZER}" MATCHES "none")
+    add_compile_options(-fsanitize=${ENABLE_SANITIZER})
   endif()
 endif()
 
@@ -177,6 +179,7 @@ SET(HDRS
     include/ODDRDialogDef.h
     include/ODDRDialogImpl.h
     include/ODEventHandler.h
+    include/ODJSONSchemas.h
     include/ODLayer.h
     include/ODMarkIcon.h
     include/ODNavObjectChanges.h
@@ -297,12 +300,17 @@ SET(OCPNHDRS
 SET(EXTSRC 
     extsrc/clipper.cpp
     extsrc/pugixml.cpp
+    extsrc/json-schema-draft4.json.cpp
+    extsrc/json-uri.cpp
+    extsrc/json-validator.cpp
 )
 
 SET(EXTINCLUDE 
     extinclude/clipper.hpp
     extinclude/pugiconfig.hpp
     extinclude/pugixml.hpp
+    extinclude/json.hpp
+    extinclude//json-schema.hpp
 )
 
 OPTION(OD_USE_SVG "Use SVG graphics" ON)

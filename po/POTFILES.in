@@ -79,6 +79,7 @@ include/ODdc.h
 include/ODDRDialogDef.h
 include/ODDRDialogImpl.h
 include/ODEventHandler.h
+include/ODJSONSchemas.h
 include/ODLayer.h
 include/ODMarkIcon.h
 include/ODNavObjectChanges.h

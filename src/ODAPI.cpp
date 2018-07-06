@@ -383,11 +383,11 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
     l_pTP->m_iBackgroundTransparency = pCTP->BackgroundTransparancy;
     l_pTP->m_iTextPosition = pCTP->TextPosition;
     l_pTP->m_iDisplayTextWhen = pCTP->TextPointDisplayTextWhen;
-//    l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
-//    l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
-//    l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
-//    l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
-//    l_pTP->SetODPointRangeRingsColour(pCTP->ringscolour);
+    l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
+    l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
+    l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
+    l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
+    l_pTP->SetODPointRangeRingsColour(pCTP->ringscolour);
     l_pTP->m_bIsolatedMark = true;
     l_pTP->CreateColourSchemes();
     l_pTP->SetColourScheme();
