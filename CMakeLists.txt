@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "20")
-SET(VERSION_DATE "06/07/2018")
+SET(VERSION_PATCH "22")
+SET(VERSION_DATE "14/07/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -300,18 +300,32 @@ SET(OCPNHDRS
 SET(EXTSRC 
     extsrc/clipper.cpp
     extsrc/pugixml.cpp
-    extsrc/json-schema-draft4.json.cpp
-    extsrc/json-uri.cpp
-    extsrc/json-validator.cpp
 )
 
 SET(EXTINCLUDE 
     extinclude/clipper.hpp
     extinclude/pugiconfig.hpp
     extinclude/pugixml.hpp
-    extinclude/json.hpp
-    extinclude//json-schema.hpp
 )
+
+OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+IF(OD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
+    ADD_DEFINITIONS(-DOD_JSON_SCHEMA_VALIDATOR)
+    SET(EXTSRC 
+        EXTSRC
+        extsrc/json-schema-draft7.json.cpp
+        extsrc/json-uri.cpp
+        extsrc/json-validator.cpp
+    )
+    SET(EXTINCLUDE 
+        EXTINCLUDE
+        extinclude/json.hpp
+        extinclude//json-schema.hpp
+    )
+ELSE(OD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
+ENDIF(OD_JSON_SCHEMA_VALIDATOR)
 
 OPTION(OD_USE_SVG "Use SVG graphics" ON)
 

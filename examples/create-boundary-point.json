@@ -1,19 +1,17 @@
 {
+   "BoundaryPoint" : {
+      "BoundaryPointType" : "Exclusion",
+      "ringsnumber" : 0,
+      "visible" : true,
+      "ringscolour" : "red",
+      "Lat" : -27.13643333,
+      "ringsunits" : 0,
+      "Lon" : 153.1349733,
+      "ringsvisible" : true,
+      "ringssteps" : 0.5
+   },
    "Msg" : "CreateBoundaryPoint",
    "Source" : "TESTPLUGIN_PI",
-   "MsgId" : -1,
-   "Type" : "Request",
-	"BoundaryPoint" {
-	   "BoundaryPointType" : "Exclusion",
-	   "ringsnumber" : 2,
-	   "visible" : true,
-	   "BoundaryPointName" : "",
-	   "ringscolour" : "rgb(71, 255, 0)",
-	   "Lat" : -27.103985,
-	   "ringsunits" : 0,
-	   "Lon" : 152.9380433,
-	   "IconName" : "",
-	   "ringsvisible" : true,
-	   "ringssteps" : 0.5
-   }
+   "MsgId" : "250",
+   "Type" : "Request"
 }

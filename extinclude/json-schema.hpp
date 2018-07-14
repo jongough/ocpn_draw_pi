@@ -198,6 +198,42 @@ public:
 };
 
 } // json_schema_draft4
+namespace json_schema_draft7
+{
+    
+    extern json draft7_schema_builtin;
+    
+    class JSON_SCHEMA_VALIDATOR_API json_validator
+    {
+        std::vector<std::shared_ptr<json>> schema_store_;
+        std::shared_ptr<json> root_schema_;
+        std::function<void(const json_uri &, json &)> schema_loader_ = nullptr;
+        std::function<void(const std::string &, const std::string &)> format_check_ = nullptr;
+        
+        std::map<json_uri, const json *> schema_refs_;
+        
+        void validate(const json &instance, const json &schema_, const std::string &name);
+        void validate_array(const json &instance, const json &schema_, const std::string &name);
+        void validate_object(const json &instance, const json &schema_, const std::string &name);
+        void validate_string(const json &instance, const json &schema, const std::string &name);
+        
+        void insert_schema(const json &input, const json_uri &id);
+        
+    public:
+        json_validator(std::function<void(const json_uri &, json &)> loader = nullptr,
+                       std::function<void(const std::string &, const std::string &)> format = nullptr)
+        : schema_loader_(loader), format_check_(format)
+        {
+        }
+        
+        // insert and set a root-schema
+        void set_root_schema(const json &);
+        
+        // validate a json-document based on the root-schema
+        void validate(const json &instance);
+    };
+    
+} // json_schema_draft7
 } // nlohmann
 
 #endif /* NLOHMANN_JSON_SCHEMA_HPP__ */

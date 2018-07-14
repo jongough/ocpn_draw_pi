@@ -31,28 +31,56 @@ IF(CMAKE_BUILD_TYPE STREQUAL Debug)
 ENDIF(CMAKE_BUILD_TYPE STREQUAL Debug)
 #  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
 
-IF(NOT MSVC)
- ADD_DEFINITIONS( "-fvisibility=hidden")
- IF(PROFILING)
-  ADD_DEFINITIONS( "-Wall -g -fprofile-arcs -ftest-coverage -fexceptions" )
- ELSE(PROFILING)
-  ADD_DEFINITIONS( "-Wall -fexceptions" )
-#  ADD_DEFINITIONS( "-Wall -Wno-unused-result -g -O2 -fexceptions" )
- ENDIF(PROFILING)
+# require proper c++
+#ADD_DEFINITIONS( "-Wall -ansi -pedantic -Wno-variadic-macros" )
+#TODO: Should we use  -fno-stack-protector
+#  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
+IF(NOT WIN32 AND NOT APPLE )
+  ADD_DEFINITIONS( "-Wall -Wno-unused -fexceptions -rdynamic -fvisibility=hidden" )
+  ADD_DEFINITIONS( " -g -fno-strict-aliasing")
+  IF(CMAKE_BUILD_TYPE MATCHES "Debug")
+    ADD_DEFINITIONS( " -O0")
+  ENDIF(CMAKE_BUILD_TYPE MATCHES "Debug")
+  
+  ADD_DEFINITIONS( " -DPREFIX=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
+  # profiling with gprof
+#    ADD_DEFINITIONS( -pg )
+#    SET(CMAKE_EXE_LINKER_FLAGS -pg)
+  # profiling with gcov
+#    ADD_DEFINITIONS( "-fprofile-arcs -ftest-coverage" )
+#    SET(EXTRA_LIBS ${EXTRA_LIBS} "gcov")
+ENDIF(NOT WIN32 AND NOT APPLE)
 
- IF(NOT APPLE)
-  SET( CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
- ELSE(NOT APPLE)
-  SET( CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
- ENDIF(NOT APPLE)
+IF(MINGW)
+  ADD_DEFINITIONS( "-Wall -Wno-unused -Wno-cpp -fexceptions" )
+  ADD_DEFINITIONS( " -g -fno-strict-aliasing")
+ENDIF(MINGW)
 
-ENDIF(NOT MSVC)
+IF( APPLE )
+  ADD_DEFINITIONS( "-Wall -Wno-unused -fexceptions -Wno-overloaded-virtual" )
+  ADD_DEFINITIONS( " -g -fno-strict-aliasing")
+  ADD_DEFINITIONS( " -Wno-deprecated -Wno-deprecated-declarations -Wno-unknown-pragmas" )
+  ADD_DEFINITIONS( " -D_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_" )
+ENDIF(APPLE)
+
+# Add some definitions to satisfy MS
+IF(MSVC)
+  ADD_DEFINITIONS(-D__MSVC__)
+  ADD_DEFINITIONS(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
+ELSE(MSVC)
+  IF(NOT APPLE)
+    SET( CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
+  ELSE(NOT APPLE)
+    SET( CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
+  ENDIF(NOT APPLE) 
+ENDIF(MSVC)
 
 # Add some definitions to satisfy MS
 IF(MSVC)
     ADD_DEFINITIONS(-D__MSVC__)
     ADD_DEFINITIONS(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
 ENDIF(MSVC)
+
 
 SET(wxWidgets_USE_LIBS base core net xml html adv)
 SET(BUILD_SHARED_LIBS TRUE)
