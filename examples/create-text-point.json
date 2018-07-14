@@ -1,0 +1,24 @@
+{
+   "Msg" : "CreateTextPoint",
+   "TextPosition" : 0,
+   "TextPointName" : "",
+   "TextToDisplay" : "These are example\nJSON messages1",
+   "TextColour" : "black",
+   "ringsnumber" : 0,
+   "visible" : true,
+   "BackgroundColour" : "yellow",
+   "BackgroundTransparancy" : 161,
+   "TextFont" : "Noto Sans 9",
+   "Source" : "TESTPLUGIN_PI",
+   "MsgId" : -1,
+   "ringscolour" : "rgb(71, 255, 0)",
+   "Lat" : -27.12928667,
+   "ringsunits" : 0,
+   "Lon" : 152.98928,
+   "IconName" : "",
+   "ringsvisible" : true,
+   "ringssteps" : 0.5,
+   "Type" : "Request",
+   "TextPointDisplayTextWhen" : "Always"
+}
+
