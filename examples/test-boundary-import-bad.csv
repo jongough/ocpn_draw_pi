@@ -1,0 +1,8 @@
+'c', 'type(B)', 'name', 'boundary_type', 'visible(t/f)', 'rgb-colour', 'rgb-fill-colour'
+'B','test boundary1','Exclusion','t','rgb(0,255,0)','rgb(255,0,0)'
+'c', 'type(BP)', 'name', lat, lon, 'boundary_type', 'visible', 'rings-visible(t/f)', 'rings-number', 'rings-step', 'rings-units(N,K)', 'rings-colour'
+'BP','first',-23.00,154.00
+'BP','second',-23.5,154.00
+'BP','third',-23.5,154.50
+'BP','fourth',-23.0,154.50
+

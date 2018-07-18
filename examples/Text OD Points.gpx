@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<OCPNDraw version="0.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opencpn="http://www.opencpn.org">
+  <opencpn:ODPoint lat="-22.414688333" lon="154.221923333">
+    <opencpn:type>Text Point</opencpn:type>
+    <time>2018-05-27T17:47:25Z</time>
+    <opencpn:text>one line
+two lines</opencpn:text>
+    <opencpn:text_position>2</opencpn:text_position>
+    <opencpn:text_colour>#000000</opencpn:text_colour>
+    <opencpn:background_colour>#FFFF00</opencpn:background_colour>
+    <opencpn:background_transparency>100</opencpn:background_transparency>
+    <opencpn:natural_scale>1897337.125000</opencpn:natural_scale>
+    <opencpn:display_text_when>0</opencpn:display_text_when>
+    <opencpn:font_info size="9" family="74" style="90" weight="90" underline="false" strikethrough="false" face="Sans" encoding="43" />
+    <sym>Circle</sym>
+    <opencpn:guid>3629a16c-c82c-4fd8-b140-1e23689e4847</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+</OCPNDraw>

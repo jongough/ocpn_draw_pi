@@ -1,0 +1,5 @@
+'c', 'type(B)','name', 'boundary_type', 'visible(t/f)', 'line rgb-colour', 'rgb-fill-colour',,,,,
+'c', 'type(BP)', 'name', lat, lon, 'boundary_type', 'visible', 'rings-visible(t/f)', 'rings-number', 'rings-step', 'rings-units(N/K)', 'rings-colour'
+'c', 'type(TP)', 'name', lat, lon, 'position (t/ct/b/cb/c/r/l)', 'show (a/r/n)', 'visible (t/f)', 'display text',,,
+'TP','my test text point',-22.7,154.7,'cb','a','t','this is one long line and should be treated as such. It is not designed to wrap',,,,
+'c','isolated BP',-22.7,154.7,,,,,,,,

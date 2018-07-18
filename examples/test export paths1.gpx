@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<OCPNDraw version="0.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opencpn="http://www.opencpn.org">
+  <opencpn:ODPoint lat="-22.966665000" lon="153.702456667">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2018-01-08T07:57:51Z</time>
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <sym>Triangle</sym>
+    <opencpn:guid>24ed5a17-c01e-477a-a51b-dfa3368b6ba0</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+  <opencpn:ODPoint lat="-23.182036667" lon="153.635186667">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2018-01-08T07:57:52Z</time>
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <sym>Triangle</sym>
+    <opencpn:guid>4013a102-5ac4-47b0-a14a-bd2c3d3197be</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+  <opencpn:ODPoint lat="-23.327897169" lon="153.454901890">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2018-01-08T07:57:53Z</time>
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <sym>triangle</sym>
+    <opencpn:guid>39b37b4d-568d-406d-8a18-214d467181f0</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+  <opencpn:ODPoint lat="-23.295772262" lon="153.282689914">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2018-01-08T07:57:54Z</time>
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <sym>triangle</sym>
+    <opencpn:guid>24ea8aca-a730-4bb9-b3df-15db1267b19d</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+</OCPNDraw>
