@@ -600,6 +600,15 @@ int ocpn_draw_pi::Init(void)
     //    The Items will be re-parented when added to the real context meenu
     wxMenu dummy_menu;
     
+    m_pODMangerContextMenuItem = new wxMenuItem(&dummy_menu, -1, _("Show OCPN Draw Manager"));
+    m_iODManagerContextId = AddCanvasContextMenuItem(m_pODMangerContextMenuItem, this);
+    SetCanvasContextMenuItemViz(m_iODManagerContextId, true);
+    
+    m_pODToolContextMenuItem = new wxMenuItem(&dummy_menu, -1, _("Use OCPN Draw Tool"));
+    m_iODToolContextId = AddCanvasContextMenuItem(m_pODToolContextMenuItem, this);
+    SetCanvasContextMenuItemViz(m_iODToolContextId, true);
+    
+    
     // Now initialize UI Style.
     //g_ODStyleManager = new ocpnStyle::StyleManager();
     //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
@@ -650,7 +659,6 @@ int ocpn_draw_pi::Init(void)
     else
         m_pCursorCross = new wxCursor ( wxCURSOR_ARROW );
 
-    
     g_pODPointMan = new PointMan();
     g_pODPointMan->SetColorScheme( g_global_color_scheme );
     
@@ -706,6 +714,9 @@ void ocpn_draw_pi::LateInit(void)
 
 bool ocpn_draw_pi::DeInit(void)
 {
+    RemoveCanvasContextMenuItem(m_iODManagerContextId);
+    RemoveCanvasContextMenuItem(m_iODToolContextId);
+    
     m_parent_window->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     if( g_ODEventHandler ) delete g_ODEventHandler;
     g_ODEventHandler = NULL;
@@ -862,6 +873,18 @@ void ocpn_draw_pi::OnContextMenuItemCallback(int id)
             //        ShowPathPropertiesDialog( wxT("Path Properties"), m_pSelectedPath );
             break;
         }
+        
+    }
+    
+    if( id == m_iODToolContextId ) {
+        OnToolbarToolDownCallback(m_draw_button_id);
+    } else if ( id == m_iODManagerContextId ) {
+        OnToolbarToolDownCallback(m_config_button_id);
+        if( !g_pPathManagerDialog->IsShown() ) {
+            m_pODMangerContextMenuItem->SetItemLabel(_("Show OCPN Draw Manager"));
+        } else {
+            m_pODMangerContextMenuItem->SetItemLabel(_("Hide OCPN Draw Manager"));
+        }
     }
 }
 void ocpn_draw_pi::SetDefaults(void)
@@ -990,7 +1013,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 
     if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
         g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
-
+    
     if ( id == m_config_button_id ) {
         if( !g_pPathManagerDialog->IsShown() ){
             
@@ -1007,7 +1030,6 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 #endif
             
         } else {
-            if( NULL != g_pPathManagerDialog )
 	        g_pPathManagerDialog->Hide();
         }
     }

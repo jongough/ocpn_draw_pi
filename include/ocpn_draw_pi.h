@@ -521,12 +521,16 @@ private:
     
     PlugIn_ViewPort m_VP;
     
-    int               m_show_id;
-    int               m_hide_id;
-    bool                show;
-    int                m_config_button_id;
+    int     m_show_id;
+    int     m_hide_id;
+    int     m_iODManagerContextId;
+    int     m_iODToolContextId;
+    wxMenuItem *m_pODMangerContextMenuItem;
+    wxMenuItem *m_pODToolContextMenuItem;
+    bool    show;
+    int     m_config_button_id;
 
-    bool              m_bLOGShowIcon;
+    bool    m_bLOGShowIcon;
     
     Boundary    *m_pSelectedBoundary;
     EBL         *m_pSelectedEBL;
