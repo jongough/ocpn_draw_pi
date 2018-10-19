@@ -105,7 +105,7 @@ ODPointPropertiesDialog( parent )
 #endif // wxCHECK_VERSION(3,0,0)
     
     // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
-    m_bODIComboBoxODPointIconName = new ODIconCombo( m_panelBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxODPointIconName = new ODIconCombo( m_scrolledWindowBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
     m_bODIComboBoxODPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
     
     //  Accomodate scaling of icon
@@ -134,31 +134,35 @@ ODPointPropertiesImpl::~ODPointPropertiesImpl()
 
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
-    //m_bSizerFill->RecalcSizes();
-/*    
-    wxSize sz = m_SizerDialogBox->CalcMin();
-    sz.IncBy( 20 );   // Account for some decorations?
     wxSize dsize = ::wxGetDisplaySize();
-    sz.y = wxMin(sz.y, dsize.y-80);
-    SetClientSize(sz);
-    m_defaultClientSize = sz;
-    //m_panelBasicProperties->SetScrollRate(5, 5);
-
     wxSize fsize = GetSize();
+    fsize.IncBy( 20 );
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-*/    
-
-    m_SizerBasicProperties->Layout();
-    m_bSizerOuterProperties->Layout();
+    wxSize sz = m_SizerBasicProperties->CalcMin();
+    sz.y /= 2;
+    m_SizerBasicProperties->SetMinSize(sz);
+    m_SizerBasicProperties->FitInside(m_scrolledWindowBasicProperties);
     m_SizerODPointRangeRingsSelect->Layout();
+    m_SizerFill->Layout();
+    m_SizerOuterProperties->Layout();
+    m_SizerBasicProperties->Layout();
+    m_scrolledWindowBasicProperties->Layout();
+    m_SizerDialogBox->RecalcSizes();
+    sz = m_SizerDialogBox->CalcMin();
+    sz.IncBy(15);
+    sz.y /= 2;
+    m_SizerDialogBox->SetMinSize(sz);
     m_SizerDialogBox->Layout();
     this->GetSizer()->Fit( this );
     this->Layout();
+    SetMinSize(sz);
+    
+    m_defaultClientSize = GetClientSize();
 }
 
-void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
+void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
 {
     wxMenu* popup = new wxMenu();
     popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
@@ -299,7 +303,6 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
     
     ODPointPropertiesDialog::OnRadioBoxPointType(event);
 }
-
 
 void ODPointPropertiesImpl::SaveChanges()
 {
@@ -477,13 +480,13 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_staticTextFillDensity->Hide();
             m_sliderBoundaryPointFillTransparency->Enable( false );
             m_sliderBoundaryPointFillTransparency->Hide();
-            m_bSizerOuterProperties->Hide( m_bSizerFill );
+            m_SizerOuterProperties->Hide( m_SizerFill );
         } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
-            m_bSizerOuterProperties->Show( m_bSizerFill );
+            m_SizerOuterProperties->Show( m_SizerFill );
             m_staticTextBoundaryPointInclusionSize->Show();
             m_sliderBoundaryPointInclusionSize->Enable( true );
             m_sliderBoundaryPointInclusionSize->Show();
@@ -501,7 +504,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_staticTextFillDensity->Hide();
             m_sliderBoundaryPointFillTransparency->Enable( false );
             m_sliderBoundaryPointFillTransparency->Hide();
-            m_bSizerOuterProperties->Hide( m_bSizerFill );
+            m_SizerOuterProperties->Hide( m_SizerFill );
         }
         
         m_text_lat = toSDMM_PlugIn( 1, m_pODPoint->m_lat );
@@ -512,7 +515,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_lon_save = m_pODPoint->m_lon;
 
         if(m_pODPoint->m_sTypeString == wxT("EBL Point")) {
-            m_bSizerOuterProperties->Show( m_bSizerEBLPointWarning );
+            m_SizerOuterProperties->Show( m_bSizerEBLPointWarning );
             m_staticTextEBLPointWarning->Show();
             m_textLatitude->Disable();
             m_textLongitude->Disable();
@@ -533,7 +536,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textLatitude->Enable();
             m_textLongitude->Enable();
             m_staticTextEBLPointWarning->Hide();
-            m_bSizerOuterProperties->Hide( m_bSizerEBLPointWarning );
+            m_SizerOuterProperties->Hide( m_bSizerEBLPointWarning );
         }
     
         if( positionOnly ) return true;
@@ -683,6 +686,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 caption.append( _("OCPN Draw Point, Layer: ") );
             else if(m_pODPoint->m_sTypeString == wxT("Boundary Point"))
                 caption.append(_("Boundary Point Properties, Layer: "));
+            else if(m_pODPoint->m_sTypeString == wxT("Text Point"))
+                caption.append(_("Text Point Properties, Layer: "));
             else if(m_pODPoint->m_sTypeString == wxT("EBL Point"))
                 caption.append(_("EBL Point Properties, Layer: "));
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
@@ -697,6 +702,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 caption.append( _("OCPN Draw Point") );
             else if(m_pODPoint->m_sTypeString == wxT("Boundary Point"))
                 caption.append(_("Boundary Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("Text Point"))
+                caption.append(_("Text Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("EBL Point"))
                 caption.append(_("EBL Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))

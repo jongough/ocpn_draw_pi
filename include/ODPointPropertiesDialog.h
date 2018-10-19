@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 16 2016)
+// C++ code generated with wxFormBuilder (version Aug  8 2018)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO "NOT" EDIT THIS FILE!
+// PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
 #ifndef __ODPOINTPROPERTIESDIALOG_H__
@@ -25,11 +25,12 @@
 #include <wx/slider.h>
 #include <wx/choice.h>
 #include <wx/clrpicker.h>
-#include <wx/panel.h>
+#include <wx/scrolwin.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
 #include <wx/button.h>
+#include <wx/panel.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
@@ -48,10 +49,10 @@ class ODPointPropertiesDialog : public wxDialog
 	protected:
 		wxBoxSizer* m_SizerDialogBox;
 		wxNotebook* m_notebookProperties;
-		wxPanel* m_panelBasicProperties;
+		wxScrolledWindow* m_scrolledWindowBasicProperties;
 		wxBoxSizer* m_SizerBasicProperties;
 		wxStaticText* m_staticText2;
-		wxBoxSizer* m_bSizerOuterProperties;
+		wxBoxSizer* m_SizerOuterProperties;
 		wxStaticText* m_staticTextName;
 		wxTextCtrl* m_textName;
 		wxBoxSizer* m_SizerNameIcon;
@@ -71,7 +72,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxBoxSizer* m_bSizerRangeRingsControl;
 		wxCheckBox* m_checkBoxShowODPointRangeRings;
 		wxRadioBox* m_radioBoxBoundaryPointType;
-		wxBoxSizer* m_bSizerFill;
+		wxBoxSizer* m_SizerFill;
 		wxStaticText* m_staticTextFillDensity;
 		wxSlider* m_sliderBoundaryPointFillTransparency;
 		wxStaticText* m_staticTextBoundaryPointInclusionSize;
@@ -90,10 +91,12 @@ class ODPointPropertiesDialog : public wxDialog
 		wxChoice* m_choiceRangeRingLineWidth;
 		wxStaticText* m_staticTextRangeRingStyle;
 		wxChoice* m_choiceRangeRingLineStyle;
+		wxBoxSizer* m_SizerDescription;
 		wxStaticText* m_staticTextDescription;
+		wxBoxSizer* m_SizerDescriptionExt;
 		wxTextCtrl* m_textDescription;
 		wxPanel* m_panelDisplayText;
-		wxBoxSizer* m_bSizerDisplayText;
+		wxBoxSizer* m_SizerDisplayText;
 		wxStaticText* m_staticTextDisplayText;
 		wxTextCtrl* m_textDisplayText;
 		wxStaticText* m_staticTextPosition;
@@ -112,14 +115,14 @@ class ODPointPropertiesDialog : public wxDialog
 		wxCheckBox* m_checkBoxVisible;
 		wxStaticText* m_staticText1;
 		wxTextCtrl* m_textCtrlGuid;
+		wxBoxSizer* m_SizerButtons;
 		wxButton* m_OK;
 		wxButton* m_Cancel;
 		
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnPointPropertiesClose( wxCloseEvent& event ) { event.Skip(); }
-		virtual void onRightClick( wxMouseEvent& event ) { event.Skip(); }
-		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
+		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnArrivalRadiusChange( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowRangeRingsSelect( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRadioBoxPointType( wxCommandEvent& event ) { event.Skip(); }

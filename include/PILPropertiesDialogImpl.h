@@ -46,7 +46,7 @@ class PILPropertiesDialogImpl : public PILPropertiesDialogDef
         void UpdateProperties( PIL *pPIL, int iID );
 
     protected:
-        void onRightClick( wxMouseEvent& event );
+        void OnRightClick( wxMouseEvent& event );
         void OnOK( wxCommandEvent& event );
         void OnCancel( wxCommandEvent& event );
         void OnClose( wxCloseEvent& event );

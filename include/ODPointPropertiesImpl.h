@@ -108,7 +108,7 @@ class ODIconCombo;
 class ODPointPropertiesImpl : public ODPointPropertiesDialog
 {
 protected:
-    void onRightClick( wxMouseEvent& event );
+    void OnRightClick( wxMouseEvent& event );
     void OnPositionCtlUpdated( wxCommandEvent& event );
     void OnArrivalRadiusChange( wxCommandEvent& event );
     void OnShowRangeRingsSelect( wxCommandEvent& event );

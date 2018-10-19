@@ -7,9 +7,9 @@ ODPointPropertiesDialog( parent )
 
 }
 
-void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
+void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
 {
-	// TODO: Implement onRightClick
+	// TODO: Implement OnRightClick
 }
 
 void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
