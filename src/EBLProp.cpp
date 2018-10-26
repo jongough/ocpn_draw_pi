@@ -52,6 +52,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_staticTextTotalLength->Show();
     m_textCtrlTotalLength->Show();
     m_fgSizerEBL->ShowItems( true );
+    m_fgSizerEBL1->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
     

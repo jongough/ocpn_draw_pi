@@ -529,17 +529,19 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     }
     
     // Set column width correctly for data
-    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
-#ifdef WIN32
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif
+    for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
+        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
     
     ::wxEndBusyCursor();
     
     ResetGlobalLocale();
+    
+    SetDialogSize();
     
     return true;
 }
@@ -635,20 +637,19 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     }
 
     // Set column width correctly for data
-    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
-#ifdef WIN32
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif
+    for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
+        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
-    
-    this->GetSizer()->Fit( this );
-    this->Layout();
     
     ::wxEndBusyCursor();
     
     ResetGlobalLocale();
+    
+    if(m_pPath->m_sTypeString != "EBL" and m_pPath->m_sTypeString != "PIL") SetDialogSize();
     
     return true;
 }
@@ -751,8 +752,7 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_checkBoxShowBoundaryPoints->Hide();
     m_checkBoxShowBoundaryPoints->Enable( false );
     m_fgSizerEBL->ShowItems( false );
-    m_checkBoxEBLFixedEndPosition->Hide();
-    m_checkBoxEBLFixedEndPosition->Enable( false );
+    m_fgSizerEBL1->ShowItems( false );
     m_radioBoxPathPersistence->Hide();
     m_radioBoxPathPersistence->Enable( false );
     m_checkBoxRotateWithBoat->Hide();
@@ -791,6 +791,55 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_listCtrlPILList->Hide();
 
     return;
+}
+
+void ODPathPropertiesDialogImpl::SetDialogSize()
+{
+    wxSize dsize = ::wxGetDisplaySize();
+    
+    wxSize sz = m_SizerOKCancel->CalcMin();
+    m_SizerOKCancel->SetMinSize(sz);
+    m_SizerOKCancel->Layout();
+    
+    m_bSizerNameDescription->Layout();
+    m_fgSizerBoundary->Layout();
+    m_bSizerBoundaryType->Layout();
+    m_fgSizerPIL->Layout();
+    m_fgSizerEBL->Layout();
+    m_fgSizerEBL1->Layout();
+    m_fgSizerGZ->Layout();
+    for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
+        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
+    }
+    m_listCtrlODPoints->Fit();
+    //m_listCtrlODPoints->SetMaxSize(m_listCtrlODPoints->GetSize());
+    m_fgSizerPath->Layout();
+    sz = m_fgSizerPathPoints->CalcMin();
+    sz.x += 15;
+    m_fgSizerPathPoints->SetMinSize(sz);
+    //m_bSizerPathPoints->SetSizeHints(m_listCtrlODPoints);
+    m_listCtrlODPoints->SetMaxClientSize(sz);
+    m_fgSizerPathPoints->Layout();
+    m_bSizerPILLines->Layout();
+    m_fgSizerProperties->Layout();
+    sz = m_bSizerListCtrl->CalcMin();
+    m_bSizerListCtrl->SetMinSize(sz);
+    sz = m_fgSizerProperties->CalcMin();
+    //m_fgSizerProperties->SetMinSize(sz);
+    sz.y += 15;
+    //m_fgSizerProperties->FitInside(m_scrolledWindowProperties);
+
+    m_scrolledWindowProperties->Layout();
+    
+    sz.y += m_SizerOKCancel->CalcMin().GetY();
+    m_bSizerDialogBox->SetMinSize(sz);
+    SetSize(sz);
+    SetMinSize(sz);
+    
 }
 
 void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )

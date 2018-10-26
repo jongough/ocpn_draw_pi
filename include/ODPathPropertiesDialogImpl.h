@@ -121,6 +121,7 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
     private:
         void    SetViewableItems();
         void    OnPathPropMenuSelected( wxCommandEvent& event );
+        void    SetDialogSize( void );
         
 };
 
