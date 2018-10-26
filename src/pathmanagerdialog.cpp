@@ -2304,7 +2304,7 @@ void PathManagerDialog::ToggleLayerContentsOnListing( ODLayer *layer )
 
     while( node ) {
         ODPoint *op = node->GetData();
-        if( op && !op->m_bIsInTrack && op->m_bIsolatedMark && ( op->m_LayerID == layer->m_LayerID ) ) {
+        if( op->m_bIsolatedMark && ( op->m_LayerID == layer->m_LayerID ) ) {
             op->SetListed( layer->IsVisibleOnListing() );
         }
 

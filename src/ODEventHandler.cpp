@@ -316,7 +316,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         if(pp->m_sTypeString != _T("PIL")) {
                             s << g_ocpn_draw_pi->FormatDistanceAdaptive( dist );
 
-                            // Compute and display cumulative distance from route start point to current
+                            // Compute and display cumulative distance from path start point to current
                             // leg end point.
 
                             if( segShow_point_a && segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
@@ -911,7 +911,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             
             if( dlg_return == wxID_YES ) {
                 // If the ODPoint belongs to an invisible path, we come here instead of to ID_PATH_MENU_DELPOINT
-                //  Check it, and if so then remove the point from its routes
+                //  Check it, and if so then remove the point from its paths
                 wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pFoundODPoint );
                 if( ppath_array ) {
                     g_pODPointMan->DestroyODPoint( m_pFoundODPoint );

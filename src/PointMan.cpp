@@ -790,7 +790,7 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
 
             }
 
-            //    Scrub the paths, looking for one-point routes
+            //    Scrub the paths, looking for one-point paths
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
                 ODPath *pb = (ODPath *) ppath_array->Item( ib );
                 if( pb->GetnPoints() < 2 ) {

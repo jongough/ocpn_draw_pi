@@ -382,7 +382,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->ReLoadIcon();
 
         // Here is some logic....
-        // If the Markname is completely numeric, and is part of a route,
+        // If the Markname is completely numeric, and is part of a path,
         // Then declare it to be of attribute m_bDynamicName = true
         // This is later used for re-numbering points on actions like
         // Insert Point, Delete Point, Append Point, etc
@@ -778,7 +778,7 @@ void ODPointPropertiesImpl::OnCopyPasteLatLon( wxCommandEvent& event )
 void ODPointPropertiesImpl::ValidateMark( void )
 {
     //    Look in the master list of ODPoints to see if the currently selected ODPpoint is still valid
-    //    It may have been deleted as part of a route
+    //    It may have been deleted as part of a path
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     
     bool b_found = false;

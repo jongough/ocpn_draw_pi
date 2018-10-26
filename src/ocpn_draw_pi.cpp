@@ -3200,7 +3200,7 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
         if(node->GetData()->m_sTypeString == _T("Boundary Point"))
             pOP = (BoundaryPoint *)node->GetData();
         if( pOP ) {
-            if( pOP->m_bIsInRoute || pOP->m_bIsInPath ) {
+            if( pOP->m_bIsInPath ) {
                 node = node->GetNext();
                 continue;
             } else {
@@ -3239,7 +3239,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
 
     if( pNearbyPoint && ( pNearbyPoint != (BoundaryPoint *)m_prev_pMousePoint )
-        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+        && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
 #ifndef __WXOSX__
@@ -3257,8 +3257,8 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
             // TODO fix up undo
             //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
             
-            // check all other boundaries and routes to see if this point appears in any other route
-            // If it appears in NO other route, then it should e considered an isolated mark
+            // check all other boundaries and paths to see if this point appears in any other path
+            // If it appears in NO other path, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
@@ -3306,7 +3306,7 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     TextPoint *pNearbyPoint = (TextPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                                                                             nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
-        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+        && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
 #ifndef __WXOSX__
@@ -3324,8 +3324,8 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
             // TODO fix up undo
             //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
             
-            // check all other boundaries and routes to see if this point appears in any other route
-            // If it appears in NO other route, then it should e considered an isolated mark
+            // check all other boundaries and paths to see if this point appears in any other path
+            // If it appears in NO other path, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
@@ -3384,7 +3384,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
     BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                                                              nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
-        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+        && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
 #ifndef __WXOSX__
@@ -3402,8 +3402,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
             // TODO fix up undo
             //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
             
-            // check all other boundaries and routes to see if this point appears in any other route
-            // If it appears in NO other route, then it should e considered an isolated mark
+            // check all other boundaries and paths to see if this point appears in any other path
+            // If it appears in NO other path, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
@@ -3432,7 +3432,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 Geodesic::GreatCircleDistBear( m_prev_rlon, m_prev_rlat, rlon, rlat, &gcDist, &gcBearing, NULL );
                 double gcDistNM = gcDist / 1852.0;
                 
-                // Empirically found expression to get reasonable route segments.
+                // Empirically found expression to get reasonable path segments.
                 int segmentCount = (3.0 + (rhumbDist - gcDistNM)) / pow(rhumbDist-gcDistNM-1, 0.5 );
                 
                 wxString msg;
@@ -3809,7 +3809,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             assert(pPathDraw != 0);
         }
         
-        /* defer rendering active routes until later */ 
+        /* defer rendering active paths until later */ 
         //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
         //            continue;
         
@@ -3872,7 +3872,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         
     }
         
-    /* ODPoints not drawn as part of routes */
+    /* ODPoints not drawn as part of paths */
     if( pivp.bValid && g_pODPointMan ) {
         LLBBox llbb;
         llbb.Set( pivp.lat_min, pivp.lon_min, pivp.lat_max, pivp.lon_max );

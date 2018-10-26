@@ -104,7 +104,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
 #endif // wxCHECK_VERSION(3,0,0)
 
     m_nSelected = 0;
-    m_pEnroutePoint = NULL;
+    m_pEnPathPoint = NULL;
     m_bStartNow = false;
     m_pPath = NULL;
     
@@ -142,7 +142,7 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     }
     
     
-    m_pEnroutePoint = NULL;
+    m_pEnPathPoint = NULL;
     m_bStartNow = false;
     
     if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) {
@@ -487,18 +487,18 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
                 m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
             
             //  Lat/Lon
-            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         } else {
             m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
 
-            wxString tlat = toSDMM_PlugIn( 1, slat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, slat, true ); 
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, slon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, slon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         }
         
@@ -615,16 +615,16 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
                 m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
             
             //  Lat/Lon
-            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         } else {
-            wxString tlat = toSDMM_PlugIn( 1, g_pfFix.Lat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, g_pfFix.Lat, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, g_pfFix.Lon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, g_pfFix.Lon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         }
 

@@ -147,19 +147,19 @@ bool PathMan::DeletePath( ODPath *pPath )
         if(pPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->DeleteObject( (GZ *)pPath );
         if(pPath->m_sTypeString == wxT("PIL")) g_pPILList->DeleteObject( (PIL *)pPath );
 
-        // walk the path, tentatively deleting/marking points used only by this route
+        // walk the path, tentatively deleting/marking points used only by this path
         wxODPointListNode *pnode = pPath->m_pODPointList->GetFirst();
         while( pnode ) {
             wxODPointListNode *next = pnode->GetNext();
             ODPoint *prp = pnode->GetData();
 
-            // check all other paths to see if this point appears in any other route
+            // check all other paths to see if this point appears in any other path
             ODPath *pcontainer_path = FindPathContainingODPoint( prp );
 
             if( pcontainer_path == NULL && prp->m_bIsInPath ) {
                 prp->m_bIsInPath = false;          // Take this point out of this (and only) path
                 if( !prp->m_bKeepXPath ) {
-//    This does not need to be done with navobj.xml storage, since the ODPoints are stored with the route
+//    This does not need to be done with navobj.xml storage, since the ODPoints are stored with the path
 //                              g_pODConfig->DeleteODPoint(prp);
 
                     g_pODSelect->DeleteSelectablePoint( prp, SELTYPE_ODPOINT );
@@ -194,13 +194,13 @@ bool PathMan::DeletePath( ODPath *pPath )
 bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
 {
     if( pPath ) {
-        // walk the route, looking at each point to see if it is used by another route
+        // walk the path, looking at each point to see if it is used by another path
         // or is isolated
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
             ODPoint *prp = pnode->GetData();
 
-            // check all other paths to see if this point appears in any other route
+            // check all other paths to see if this point appears in any other path
             wxArrayPtrVoid *pRA = GetPathArrayContaining( prp );
             
              if( pRA ) {
@@ -250,7 +250,7 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
             OCPNpoint_node = OCPNpoint_node->GetNext();           // next ODPoint
         }
 
-        path_node = path_node->GetNext();                         // next route
+        path_node = path_node->GetNext();                         // next path
     }
 
     if( pArray->GetCount() ) return pArray;
@@ -265,7 +265,7 @@ void PathMan::DeleteAllPaths( void )
 {
     ::wxBeginBusyCursor();
 
-    //    Iterate on the RouteList
+    //    Iterate on the pathList
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         ODPath *ppath = node->GetData();
@@ -317,7 +317,7 @@ ODPath *PathMan::FindPathByGUID( wxString guid )
 
 void PathMan::SetColorScheme( PI_ColorScheme cs )
 {
-    //    Iterate on the RouteList
+    //    Iterate on the pathList
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
         ODPath *ppath = node->GetData();

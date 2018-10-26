@@ -1704,7 +1704,7 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
     if( bAddpath ) {
         if( PathExists( pTentPath->m_GUID ) ) { //We are importing a different path with the same guid, so let's generate it a new guid
             pTentPath->m_GUID = GetUUID();
-            //Now also change guids for the routepoints
+            //Now also change guids for the ODPoints
             wxODPointListNode *pthisnode = ( pTentPath->m_pODPointList )->GetFirst();
             while( pthisnode ) {
                 ODPoint *pP =  pthisnode->GetData();
@@ -1769,7 +1769,7 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
             ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( pop );
             
             if( pcontainer_path == NULL ) {
-                pop->m_bIsInPath = false; // Take this point out of this (and only) track/route
+                pop->m_bIsInPath = false; // Take this point out of this (and only) path
                 if( !pop->m_bKeepXPath ) {
                     g_pODConfig->m_bSkipChangeSetUpdate = true;
                     g_pODConfig->DeleteODPoint( pop );

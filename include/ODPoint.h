@@ -81,10 +81,8 @@ public:
       void SetName(const wxString & name);
       void CalculateNameExtents(void);
 
-      void SetCourse( double course) { m_routeprop_course = course; };
-      double GetCourse() { return m_routeprop_course; };
-      void SetDistance( double distance) { m_routeprop_distance = distance; };
-      double GetDistance() { return m_routeprop_distance; };
+      void SetDistance( double distance) { m_pathprop_distance = distance; };
+      double GetDistance() { return m_pathprop_distance; };
 
       void SetODPointArrivalRadius(double dArrivalDistance) { m_ODPointArrivalRadius = dArrivalDistance; };
       void SetODPointArrivalRadius( wxString wxArrivalDistance ) { wxArrivalDistance.ToDouble( &m_ODPointArrivalRadius ); };
@@ -122,8 +120,6 @@ public:
       bool              m_bIsBeingEdited;
 
       bool              m_bIsInPath;
-      bool              m_bIsInRoute;
-      bool              m_bIsInTrack;
       bool              m_bSingleUse;           // Can only be used in one path, i.e. EBL
 
       bool              m_bIsolatedMark;        // This is an isolated mark
@@ -156,8 +152,8 @@ public:
       bool              m_bIsInLayer;
       int               m_LayerID;
 
-      double            m_routeprop_course;         // course from this waypoint to the next waypoint if in a route.
-      double            m_routeprop_distance;       // distance from this waypoint to the next waypoint if in a route.
+      double            m_pathprop_course;         // course from this ODPoint to the next ODPoint if in a path.
+      double            m_pathprop_distance;       // distance from this ODPoint to the next ODPoint if in a path.
 
       HyperlinkList     *m_HyperlinkList;
       bool              m_btemp;

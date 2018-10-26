@@ -715,11 +715,11 @@ void ODPath::RemovePoint( ODPoint *op, bool bRenamePoints )
             op->m_GUID );
     m_nPoints -= 1;
 
-    // check all other routes to see if this point appears in any other route
+    // check all other paths to see if this point appears in any other path
     ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
 
     if( pcontainer_path == NULL ) {
-        op->m_bIsInPath = false;          // Take this point out of this (and only) route
+        op->m_bIsInPath = false;          // Take this point out of this (and only) path
         op->m_bDynamicName = false;
         op->m_bIsolatedMark = true;        // This has become an isolated mark
         op->SetTypeString (wxT("Boundary Point") );
@@ -859,8 +859,8 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
     
     wxRect update_rect;
 
-    // Draw the route in skeleton form on the dc
-    // That is, draw only the route points, assuming that the segements will
+    // Draw the path in skeleton form on the dc
+    // That is, draw only the ODPoints, assuming that the segements will
     // always be fully contained within the resulting rectangle.
     // Can we prove this?
     if( m_bVisible ) {
@@ -945,7 +945,7 @@ void ODPath::AssemblePath( void )
 
 void ODPath::RenameODPoints( void )
 {
-    //    iterate on the route points.
+    //    iterate on the ODPoints.
     //    If dynamically named, rename according to current list position
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
@@ -966,16 +966,16 @@ void ODPath::RenameODPoints( void )
 
 //    Is this Path equal to another, meaning,
 //    Do all ODPoint positions and names match?
-bool ODPath::IsEqualTo( ODPath *ptargetroute )
+bool ODPath::IsEqualTo( ODPath *ptargetpath )
 {
     wxODPointListNode *pthisnode = ( this->m_pODPointList )->GetFirst();
-    wxODPointListNode *pthatnode = ( ptargetroute->m_pODPointList )->GetFirst();
+    wxODPointListNode *pthatnode = ( ptargetpath->m_pODPointList )->GetFirst();
 
     if( NULL == pthisnode ) return false;
 
-    if( this->m_bIsInLayer || ptargetroute->m_bIsInLayer ) return false;
+    if( this->m_bIsInLayer || ptargetpath->m_bIsInLayer ) return false;
 
-    if( this->GetnPoints() != ptargetroute->GetnPoints() ) return false;
+    if( this->GetnPoints() != ptargetpath->GetnPoints() ) return false;
 
     while( pthisnode ) {
         if( NULL == pthatnode ) return false;
@@ -1118,13 +1118,13 @@ void ODPath::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
 
 void ODPath::RemovePointFromPath( ODPoint* point, ODPath* path )
 {
-    //  Rebuild the route selectables
+    //  Rebuild the path selectables
     //g_pODSelect->DeleteAllSelectableODPoints( path );
     //g_pODSelect->DeleteAllSelectablePathSegments( path );
 
     path->RemovePoint( point );
 
-    //  Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
+    //  Check for 1 point paths. If we are creating a path, this is an undo, so keep the 1 point.
     if( (path->GetnPoints() <= 1) && (g_ocpn_draw_pi->nBoundary_State == 0) ) {
         g_pODConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );

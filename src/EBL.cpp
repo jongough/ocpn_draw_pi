@@ -354,7 +354,7 @@ void EBL::RemovePoint( ODPoint *op, bool bRenamePoints )
     m_pODPointList->DeleteObject( op );
     if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove( op->m_GUID );
     
-    // check all other routes to see if this point appears in any other route
+    // check all other paths to see if this point appears in any other path
     ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
     
     if( pcontainer_path == NULL ) {

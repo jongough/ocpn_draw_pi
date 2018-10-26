@@ -57,7 +57,7 @@ class PathManagerDialog : public wxDialog {
             PathManagerDialog(wxWindow *parent);
             ~PathManagerDialog();
             void SetColorScheme( void );
-            void UpdatePathListCtrl( void );     // Rebuild route list
+            void UpdatePathListCtrl( void );     // Rebuild path list
             void UpdateODPointsListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
             void UpdateLayListCtrl( void );
             void UpdateODPointsListCtrlViz( void );
