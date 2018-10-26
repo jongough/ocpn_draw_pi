@@ -816,12 +816,10 @@ void ODPathPropertiesDialogImpl::SetDialogSize()
         m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
     m_listCtrlODPoints->Fit();
-    //m_listCtrlODPoints->SetMaxSize(m_listCtrlODPoints->GetSize());
     m_fgSizerPath->Layout();
     sz = m_fgSizerPathPoints->CalcMin();
     sz.x += 15;
     m_fgSizerPathPoints->SetMinSize(sz);
-    //m_bSizerPathPoints->SetSizeHints(m_listCtrlODPoints);
     m_listCtrlODPoints->SetMaxClientSize(sz);
     m_fgSizerPathPoints->Layout();
     m_bSizerPILLines->Layout();
@@ -829,9 +827,7 @@ void ODPathPropertiesDialogImpl::SetDialogSize()
     sz = m_bSizerListCtrl->CalcMin();
     m_bSizerListCtrl->SetMinSize(sz);
     sz = m_fgSizerProperties->CalcMin();
-    //m_fgSizerProperties->SetMinSize(sz);
     sz.y += 15;
-    //m_fgSizerProperties->FitInside(m_scrolledWindowProperties);
 
     m_scrolledWindowProperties->Layout();
     

@@ -515,7 +515,9 @@ private:
 
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
-    void    FindSelectedObject( void )    ;
+    void    FindSelectedObject( void );
+    
+    void    ItemProcess(int id);
     
     wxTimer         m_RolloverPopupTimer;
     
@@ -523,9 +525,7 @@ private:
     
     int     m_show_id;
     int     m_hide_id;
-    int     m_iODManagerContextId;
     int     m_iODToolContextId;
-    wxMenuItem *m_pODMangerContextMenuItem;
     wxMenuItem *m_pODToolContextMenuItem;
     bool    show;
     int     m_config_button_id;

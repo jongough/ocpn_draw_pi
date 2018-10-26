@@ -600,10 +600,6 @@ int ocpn_draw_pi::Init(void)
     //    The Items will be re-parented when added to the real context meenu
     wxMenu dummy_menu;
     
-    m_pODMangerContextMenuItem = new wxMenuItem(&dummy_menu, -1, _("Show OCPN Draw Manager"));
-    m_iODManagerContextId = AddCanvasContextMenuItem(m_pODMangerContextMenuItem, this);
-    SetCanvasContextMenuItemViz(m_iODManagerContextId, true);
-    
     m_pODToolContextMenuItem = new wxMenuItem(&dummy_menu, -1, _("Use OCPN Draw Tool"));
     m_iODToolContextId = AddCanvasContextMenuItem(m_pODToolContextMenuItem, this);
     SetCanvasContextMenuItemViz(m_iODToolContextId, true);
@@ -714,7 +710,6 @@ void ocpn_draw_pi::LateInit(void)
 
 bool ocpn_draw_pi::DeInit(void)
 {
-    RemoveCanvasContextMenuItem(m_iODManagerContextId);
     RemoveCanvasContextMenuItem(m_iODToolContextId);
     
     m_parent_window->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
@@ -868,25 +863,11 @@ void ocpn_draw_pi::SendVectorChartObjectInfo(wxString &chart, wxString &feature,
 
 void ocpn_draw_pi::OnContextMenuItemCallback(int id)
 {
-    switch ( id ) {
-        case ID_PATH_MENU_PROPERTIES: {
-            //        ShowPathPropertiesDialog( wxT("Path Properties"), m_pSelectedPath );
-            break;
-        }
-        
-    }
-    
     if( id == m_iODToolContextId ) {
-        OnToolbarToolDownCallback(m_draw_button_id);
-    } else if ( id == m_iODManagerContextId ) {
-        OnToolbarToolDownCallback(m_config_button_id);
-        if( !g_pPathManagerDialog->IsShown() ) {
-            m_pODMangerContextMenuItem->SetItemLabel(_("Show OCPN Draw Manager"));
-        } else {
-            m_pODMangerContextMenuItem->SetItemLabel(_("Hide OCPN Draw Manager"));
-        }
+        ItemProcess(m_draw_button_id);
     }
 }
+
 void ocpn_draw_pi::SetDefaults(void)
 {
     // If the config somehow says NOT to show the icon, override it so the user gets good feedback
@@ -1007,6 +988,11 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 }
 
 void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
+{
+    ItemProcess(id);
+}
+
+void ocpn_draw_pi::ItemProcess(int id)
 {
     m_iCallerId = id;
     if( m_Mode == ID_NONE ) m_Mode = 0;
