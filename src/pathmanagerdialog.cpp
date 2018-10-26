@@ -1037,11 +1037,11 @@ void PathManagerDialog::UpdatePathListCtrl()
     UpdatePathButtons();
 
     for(int i = 0; i < m_pPathListCtrl->GetColumnCount(); i++) {
-#ifdef WIN32
         m_pPathListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
+        int h_width = m_pPathListCtrl->GetColumnWidth(i);
         m_pPathListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif 
+        int a_width = m_pPathListCtrl->GetColumnWidth(i);
+        m_pPathListCtrl->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
     
     this->GetSizer()->Fit( this );
@@ -1612,12 +1612,13 @@ void PathManagerDialog::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retai
     UpdateODPointButtons();
     
     for(int i = 0; i < m_pODPointListCtrl->GetColumnCount(); i++) {
-#ifdef WIN32
         m_pODPointListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
+        int h_width = m_pODPointListCtrl->GetColumnWidth(i);
         m_pODPointListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif
+        int a_width = m_pODPointListCtrl->GetColumnWidth(i);
+        m_pODPointListCtrl->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
+    
     this->GetSizer()->Fit( this );
     this->Layout();
     
@@ -2375,12 +2376,13 @@ void PathManagerDialog::UpdateLayListCtrl()
     UpdateLayButtons();
 
     for(int i = 0; i < m_pLayListCtrl->GetColumnCount(); i++) {
-#ifdef WIN32
         m_pLayListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
+        int h_width = m_pLayListCtrl->GetColumnWidth(i);
         m_pLayListCtrl->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif
+        int a_width = m_pLayListCtrl->GetColumnWidth(i);
+        m_pLayListCtrl->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
+    
 }
 
 void PathManagerDialog::OnImportClick( wxCommandEvent &event )
