@@ -56,6 +56,7 @@ extern ODConfig         *g_pODConfig;
 extern PathMan          *g_pPathMan;
 extern ODSelect         *g_pODSelect;
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
+extern wxString         *g_pUserIconsDir;
 
 
 //--------------------------------------------------------------------------------
@@ -148,30 +149,12 @@ bool PointMan::RemoveODPoint(ODPoint *prp)
 
 void PointMan::ProcessUserIcons( )
 {
-#ifdef __WXOSX__
-    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
-    wxString UserIconPath = std_path.GetUserConfigDir();
-    UserIconPath += wxS("/opencpn/UserIcons");
     
-    if( wxDir::Exists( UserIconPath ) ) {
+    if( wxDir::Exists( *g_pUserIconsDir ) ) {
         wxArrayString FileList;
         
-        wxDir dir( UserIconPath );
-        int n_files = dir.GetAllFiles( UserIconPath, &FileList );
-#else
-    wxString *UserIconPath = g_PrivateDataDir;
-    wxChar sep = wxFileName::GetPathSeparator();
-    if ( UserIconPath->IsNull() ) return;
-    
-    if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
-    UserIconPath->Append( _T("UserIcons") );
-    
-    if( wxDir::Exists( *UserIconPath ) ) {
-        wxArrayString FileList;
-        
-        wxDir dir( *UserIconPath );
-        int n_files = dir.GetAllFiles( *UserIconPath, &FileList );
-#endif
+        wxDir dir( *g_pUserIconsDir );
+        int n_files = dir.GetAllFiles( *g_pUserIconsDir, &FileList );
         
         for( int ifile = 0; ifile < n_files; ifile++ ) {
             wxString name = FileList.Item( ifile );

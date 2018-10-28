@@ -233,6 +233,7 @@ wxString    *g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
+wxString    *g_pUserIconsDir;
 wxString    *g_pLayerDir;
 
 ODEventHandler   *g_ODEventHandler;
@@ -372,6 +373,22 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
+    
+#ifdef __WXOSX__
+    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+    wxString *UserIconPath = new wxString(std_path.GetUserConfigDir());
+    UserIconPath->Append( _T"/opencpn/UserIcons") );
+#else
+    wxString *UserIconPath = new wxString(*g_PrivateDataDir);
+    wxChar sep = wxFileName::GetPathSeparator();
+    if ( UserIconPath->IsNull() ) return;
+    
+    if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
+    UserIconPath->Append( _T("UserIcons") );
+#endif
+    appendOSDirSlash(UserIconPath);
+    if(UserIconPath) g_pUserIconsDir = UserIconPath;
+    
     g_pLayerDir = new wxString;
     g_pLayerDir->Append(*l_pDir);
     g_pLayerDir->Append( wxT("Layers") );

@@ -180,6 +180,10 @@ extern int          g_iDisplayToolbar;
 extern ODToolbarImpl   *g_pODToolbar;
 
 extern wxString     *g_SData_Locn;
+extern wxString    *g_pData;
+extern wxString    *g_pUserIconsDir;
+extern wxString    *g_pLayerDir;
+
 
 
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
@@ -195,6 +199,9 @@ ODPropertiesDialogDef( parent )
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
     m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
+    m_staticTextDataDirectory->SetLabel( *g_pData );
+    m_staticTextIconDirectory->SetLabel( *g_pUserIconsDir );
+    m_staticTextLayersDirectory->SetLabel( *g_pLayerDir );
 
     m_gridODWDInteractions->SetCellValue(0, 0, _("OD\\WD"));
     m_gridODWDInteractions->SetCellValue(0, 1, _("All"));
