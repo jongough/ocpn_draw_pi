@@ -133,6 +133,7 @@ enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 // GLOBALS :0
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PathList     *g_pPathList;
+extern ODPointList  *g_pODPoinList;
 extern BoundaryList *g_pBoundaryList;
 extern ODLayerList  *g_pLayerList;
 extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
@@ -450,6 +451,7 @@ int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
 
 PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) : PathAndPointManagerDialogDef( parent )
 {
+    m_wParent = parent;
     m_iPage = -1;
     
     long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
@@ -464,9 +466,15 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     m_lastODPointItem = -1;
     m_lastPathItem = -1;
     
-    m_buttonImport = NULL;
-    m_buttonPointExportSelected = NULL;
-    m_buttonExportAllVisible = NULL;
+    m_listCtrlPath->InsertColumn( colPATHVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 40 );
+    m_listCtrlPath->InsertColumn( colPATHNAME, _("Path Name"), wxLIST_FORMAT_LEFT, 120 );
+    m_listCtrlPath->InsertColumn( colPATHDESC, _("Desc"), wxLIST_FORMAT_LEFT, 230 );
+    m_listCtrlODPoints->InsertColumn( colOCPNPOINTICON, _("Icon"), wxLIST_FORMAT_LEFT, 44 );
+    m_listCtrlODPoints->InsertColumn( colOCPNPOINTNAME, _("OD Point Name"), wxLIST_FORMAT_LEFT, 180 );
+    m_listCtrlODPoints->InsertColumn( colOCPNPOINTDIST, _("Distance from Ownship"), wxLIST_FORMAT_LEFT, 180 );
+    m_listCtrlLayers->InsertColumn( colLAYVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 44 );
+    m_listCtrlLayers->InsertColumn( colLAYNAME, _("Layer Name"), wxLIST_FORMAT_LEFT, 250 );
+    m_listCtrlLayers->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, 100 );
     
     Fit();
     
@@ -480,23 +488,34 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     imglist->Add( wxBitmap( eyex ) );
     m_listCtrlPath->AssignImageList( imglist, wxIMAGE_LIST_SMALL );
     // Assign will handle destroy, Set will not. It's OK, that's what we want
-    m_listCtrlPoints->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
+    m_listCtrlODPoints->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
     
     //m_listCtrlLayers->AssignImageList( imglist, wxIMAGE_LIST_SMALL );
     m_listCtrlLayers->SetImageList( imglist, wxIMAGE_LIST_SMALL );
     
     SetColorScheme();
     
+    SetImportButtonText();
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
-    UpdateLayListCtrl();
+    UpdateLayerListCtrl();
     
     // This should work under Linux :-(
     //m_notebookPathAndPointManager->Connect(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler(PathAndPointManagerDialogImpl::OnTabSwitch), NULL, this);
     
 }
 
+PathAndPointManagerDialogImpl::~PathAndPointManagerDialogImpl()
+{
+    return;
+}
+
 void PathAndPointManagerDialogImpl::OnTabSwitch( wxNotebookEvent &event )
+{
+    SetImportButtonText();
+}
+
+void PathAndPointManagerDialogImpl::SetImportButtonText(void)
 {
     if( !m_notebookPathAndPointManager ) return;
     int current_page = m_notebookPathAndPointManager->GetSelection();
@@ -517,7 +536,7 @@ void PathAndPointManagerDialogImpl::OnTabSwitch( wxNotebookEvent &event )
         }
         case 1: {
             // Point
-            if ( m_listCtrlPoints ) {
+            if ( m_listCtrlODPoints ) {
                 UpdateODPointsListCtrl();
                 wxString l_sLabel = _("I&mport");
                 l_sLabel.Append(_T(" "));
@@ -530,7 +549,7 @@ void PathAndPointManagerDialogImpl::OnTabSwitch( wxNotebookEvent &event )
         case 2: {
             // Layer
             if( m_listCtrlLayers ) {
-                UpdateLayListCtrl();
+                UpdateLayerListCtrl();
                 wxString l_sLabel = _("I&mport");
                 l_sLabel.Append(_T(" "));
                 l_sLabel.Append(_("gpx"));
@@ -686,7 +705,6 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
     } else {
         if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
             g_pODPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
-        g_pODPathPropDialog = g_pODPathPropDialog;
         l_pPath = inpath;
         g_pODPathPropDialog->SetPath( l_pPath );
         g_pODPathPropDialog->UpdateProperties( l_pPath );
@@ -842,7 +860,7 @@ void PathAndPointManagerDialogImpl::OnPathToggleVisibility( wxMouseEvent &event 
         
         //   We need to update the ODPoint list control only if the visibility of shared ODPoints might have changed.
         if( has_shared_ODPoints )
-            UpdateODPointsListCtrlViz();
+            UpdateODPointListCtrlViz();
         
         ::wxEndBusyCursor();
         
@@ -1031,7 +1049,7 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     m_buttonPathProperties->Enable( enable1 );
     m_buttonPathDeleteAll->Enable( true );
     
-    // set activate button text
+    // activate button text
     ODPath *path = NULL;
     if( enable1 ) {
         path = g_pPathList->Item( m_listCtrlPath->GetItemData( selected_index_index ) )->GetData();
@@ -1091,22 +1109,271 @@ void PathAndPointManagerDialogImpl::ZoomtoPath( ODPath *path )
         JumpToPosition( clat, clon, ppm );
 }
 
-void PathAndPointManagerDialogImpl::OnPointColumnClick( wxListEvent &event )
+void PathAndPointManagerDialogImpl::UpdatePointListCtrl( ODPoint *op_select, bool b_retain_sort )
+{
+    long selected_id = -1;
+    long item = -1;
+    
+    if( NULL == op_select ) {
+        // if an item was selected, make it selected again if it still exists
+        item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+        
+        if( item != -1 ) selected_id = m_listCtrlODPoints->GetItemData( item );
+    }
+    
+    //  Freshen the image list
+    m_listCtrlODPoints->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
+    
+    m_listCtrlODPoints->DeleteAllItems();
+    
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+    
+    long index = 0;
+    while( node ) {
+        ODPoint *op = node->GetData();
+        if( op && op->IsListed() ) {
+            if( op->m_bIsInPath ) {
+                if( !op->m_bKeepXPath ) {
+                    node = node->GetNext();
+                    continue;
+                }
+            }
+            
+            wxListItem li;
+            li.SetId( index );
+            li.SetImage( op->IsVisible() ? g_pODPointMan->GetIconIndex( op->GetIconBitmap() )
+            : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
+            li.SetData( op );
+            li.SetText( _T("") );
+            long idx = m_listCtrlODPoints->InsertItem( li );
+            
+            wxString name = op->GetName();
+            if( name.IsEmpty() ) {
+                name.append( _("(Unnamed) ") );
+                #if wxCHECK_VERSION(3,0,0)
+                name.append( _(op->m_sTypeString) );
+                #else
+                name.append( op->m_sTypeString );
+                #endif
+            }
+            m_listCtrlODPoints->SetItem( idx, colOCPNPOINTNAME, name );
+            
+            double dst;
+            DistanceBearingMercator_Plugin( op->m_lat, op->m_lon, g_pfFix.Lat, g_pfFix.Lon, NULL, &dst );
+            wxString dist;
+            dist.Printf( _T("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( dst ) );
+            m_listCtrlODPoints->SetItem( idx, colOCPNPOINTDIST, dist );
+            
+            if( op == op_select ) selected_id = (long) op_select; //index; 
+            
+            index++;
+        }
+        
+        node = node->GetNext();
+    }
+    
+    if( !b_retain_sort ) {
+        m_listCtrlODPoints->SortItems( SortODPointsOnName, (long) m_listCtrlODPoints );
+        sort_ODPoint_key = SORT_ON_NAME;
+    } else {
+        switch( sort_ODPoint_key ){
+            case SORT_ON_NAME:
+                m_listCtrlODPoints->SortItems( SortODPointsOnName, (long) m_listCtrlODPoints );
+                break;
+            case SORT_ON_DISTANCE:
+                m_listCtrlODPoints->SortItems( SortODPointsOnDistance, (long) m_listCtrlODPoints );
+                break;
+        }
+    }
+    
+    if( selected_id > -1 ) {
+        item = m_listCtrlODPoints->FindItem( -1, selected_id );
+        m_listCtrlODPoints->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
+    }
+    
+    if( (m_lastODPointItem >= 0) && (m_listCtrlODPoints->GetItemCount()) )
+        m_listCtrlODPoints->EnsureVisible( m_lastODPointItem );
+    UpdateODPointButtons();
+    
+    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
+        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
+    }
+    
+    this->GetSizer()->Fit( this );
+    this->Layout();
+    
+}
+
+void PathAndPointManagerDialogImpl::UpdateODPointListCtrlViz( )
+{
+    long item = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlODPoints->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_DONTCARE);
+        if ( item == -1 )
+            break;
+        
+        ODPoint *pRP = (ODPoint *)m_listCtrlODPoints->GetItemData(item);
+        int image = pRP->IsVisible() ? g_pODPointMan->GetIconIndex( pRP->GetIconBitmap() )
+        : g_pODPointMan->GetXIconIndex( pRP->GetIconBitmap() ) ;
+        
+        m_listCtrlODPoints->SetItemImage(item, image);
+    }
+    
+}
+
+
+void PathAndPointManagerDialogImpl::OnODPointDefaultAction( wxListEvent &event )
+{
+    wxCommandEvent evt;
+    OnODPointPropertiesClick( evt );
+}
+
+void PathAndPointManagerDialogImpl::OnODPointSelected( wxListEvent &event )
+{
+    ODPoint *point = (ODPoint *)m_listCtrlODPoints->GetItemData( event.m_itemIndex );
+    point->m_bPathManagerBlink = true;
+    UpdateODPointButtons();
+}
+
+void PathAndPointManagerDialogImpl::OnODPointDeSelected( wxListEvent &event )
+{
+    ODPoint *point = (ODPoint *)m_listCtrlODPoints->GetItemData( event.m_itemIndex );
+    point->m_bPathManagerBlink = false;
+    
+    RequestRefresh( GetOCPNCanvasWindow() );
+    
+    UpdateODPointButtons();
+}
+
+void PathAndPointManagerDialogImpl::OnODPointColumnClick( wxListEvent &event )
 {
     switch (event.m_col) {
         case 0:
             sort_ODPoint_on_vis++;
-            m_listCtrlPoints->SortItems( SortODPointsOnVis, (long) m_listCtrlPoints );
+            m_listCtrlODPoints->SortItems( SortODPointsOnVis, (long) m_listCtrlODPoints );
             break;
         case 1:
             sort_ODPoint_name_dir++;
-            m_listCtrlPoints->SortItems( SortODPointsOnName, (long) m_listCtrlPoints );
+            m_listCtrlODPoints->SortItems( SortODPointsOnName, (long) m_listCtrlODPoints );
             break;
         case 2:
             sort_ODPoint_len_dir++;
-            m_listCtrlPoints->SortItems( SortODPointsOnDistance, (long) m_listCtrlPoints );
+            m_listCtrlODPoints->SortItems( SortODPointsOnDistance, (long) m_listCtrlODPoints );
             break;
     }
+}
+
+void PathAndPointManagerDialogImpl::UpdateODPointButtons()
+{
+    long item = -1;
+    item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    bool enable1 = ( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
+    bool enablemultiple = ( m_listCtrlODPoints->GetSelectedItemCount() >= 1 );
+    
+    if( enable1 )
+        m_lastODPointItem = item;
+    else
+        m_lastODPointItem = -1;
+    
+    //  Check selection to see if it is in a layer
+    //  If so, disable the "delete" button
+    bool b_delete_enable = true;
+    item = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlODPoints->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        
+        ODPoint *wp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+        
+        if( wp && wp->m_bIsInLayer) {
+            b_delete_enable = false;
+            break;
+        }
+    }
+    
+    
+    m_buttonODPointProperties->Enable( enable1 );
+    m_buttonODPointCenterView->Enable( enable1 );
+    m_buttonODPointDeleteAll->Enable( TRUE );
+    m_buttonODPointDelete->Enable( b_delete_enable && enablemultiple );
+    //m_buttonODPointExportSelected->Enable( enablemultiple );
+   // m_buttonODPointExportSelected->Enable( enablemultiple );
+}
+
+void PathAndPointManagerDialogImpl::OnODPointToggleVisibility( wxMouseEvent &event )
+{
+    wxPoint pos = event.GetPosition();
+    int flags = 0;
+    long clicked_index = m_listCtrlODPoints->HitTest( pos, flags );
+    
+    //    Clicking Visibility column?
+    if( clicked_index > -1 && event.GetX() < m_listCtrlODPoints->GetColumnWidth( colPATHVISIBLE ) ) {
+        // Process the clicked item
+        ODPoint *pODP = (ODPoint *) m_listCtrlODPoints->GetItemData( clicked_index );
+        
+        pODP->SetVisible( !pODP->IsVisible() );
+        m_listCtrlODPoints->SetItemImage( clicked_index,
+                                          pODP->IsVisible() ? g_pODPointMan->GetIconIndex( pODP->GetIconBitmap() )
+                                          : g_pODPointMan->GetXIconIndex( pODP->GetIconBitmap() ) );
+        
+        g_pODConfig->UpdateODPoint( pODP );
+        
+        RequestRefresh( GetOCPNCanvasWindow() );
+    }
+    
+    // Allow wx to process...
+    event.Skip();
+}
+
+void PathAndPointManagerDialogImpl::OnODPointNewClick( wxCommandEvent &event )
+{
+    ODNewODPointDialogImpl *l_pType = new ODNewODPointDialogImpl(m_wParent);
+    #ifndef __WXOSX__
+    DimeWindow( l_pType );
+    #endif
+    l_pType->ShowModal();
+    
+    if(l_pType->m_bOK){
+        ODPoint *pODP = NULL;
+        if(l_pType->m_iSelection == ID_ODNEWPOINTDIALOGBUTTON_BOUNDARY) {
+            BoundaryPoint *pBP = new BoundaryPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString, wxT("") );
+            pBP->m_bIsolatedMark = true;                      // This is an isolated mark
+            pODP = pBP;
+        } else {
+            TextPoint *pTP = new TextPoint( g_dLat, g_dLon, g_sODPointIconName, wxEmptyString, wxT("") );
+            pODP = pTP;
+        }
+        g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pODP );
+        g_pODConfig->AddNewODPoint( pODP, -1 );    // use auto next num
+        UpdateODPointsListCtrl( pODP );
+        RequestRefresh( GetOCPNCanvasWindow() );
+        
+        ODPointShowPropertiesDialog( pODP, GetParent() );
+    }
+    
+    //delete l_pType;
+}
+
+void PathAndPointManagerDialogImpl::OnODPointPropertiesClick( wxCommandEvent &event )
+{
+    long item = -1;
+    item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    if( item == -1 ) return;
+    
+    ODPoint *wp = ( ODPoint *) m_listCtrlODPoints->GetItemData( item );
+    
+    if( !wp ) return;
+    
+    ODPointShowPropertiesDialog( wp, g_ocpn_draw_pi->m_parent_window );
+    
+    UpdateODPointsListCtrl();
 }
 
 void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent )
@@ -1123,8 +1390,194 @@ void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( ODPoint* wp, wx
     
 }
 
+void PathAndPointManagerDialogImpl::OnODPointCenterViewClick( wxCommandEvent &event )
+{
+    long item = -1;
+    item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    if( item == -1 ) return;
+    
+    ODPoint *wp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+    
+    if( !wp ) return;
+    
+    JumpToPosition( wp->m_lat, wp->m_lon, g_ocpn_draw_pi->m_view_scale );
+    
+}
 
-void PathAndPointManagerDialogImpl::UpdateLayButtons()
+void PathAndPointManagerDialogImpl::OnODPointDeleteClick( wxCommandEvent &event )
+{
+    ODPointList list;
+    
+    int answer = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete the selected object(s)"), wxString( _("OpenCPN Alert") ), wxYES_NO );
+    if ( answer != wxID_YES )
+        return;
+    
+    bool busy = false;
+    if( m_listCtrlODPoints->GetSelectedItemCount() ) {
+        ::wxBeginBusyCursor();
+        busy = true;
+    }
+    
+    long item = -1;
+    long item_last_selected = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlODPoints->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        
+        item_last_selected = item;
+        ODPoint *wp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+        
+        if( wp && !wp->m_bIsInLayer)
+            list.Append( wp );
+    }
+    
+    if( busy ) {
+        for(unsigned int i=0 ; i < list.GetCount() ; i++) {
+            ODPoint *wp = list.Item(i)->GetData();
+            if( wp ) {
+                
+                if ( wp->m_bIsInPath )
+                {
+                    if ( wxYES == OCPNMessageBox_PlugIn(this,  _( "The OD Point you want to delete is used in a path, do you really want to delete it?" ), _( "OpenCPN Alert" ), wxYES_NO ))
+                        g_pODPointMan->DestroyODPoint( wp );
+                }
+                else
+                    g_pODPointMan->DestroyODPoint( wp );
+                
+            }
+        }
+        
+        long item_next = m_listCtrlODPoints->GetNextItem( item_last_selected );         // next in list
+        ODPoint *wp_next = NULL;
+        if( item_next > -1 )
+            wp_next = (ODPoint *) m_listCtrlODPoints->GetItemData( item_next );
+        
+        m_lastODPointItem = item_next;
+        
+        UpdatePathListCtrl();
+        UpdateODPointsListCtrl( wp_next, true );
+        
+        // TODO fix up undo
+        //ocpncc1->undo->InvalidateUndo();
+        RequestRefresh( GetOCPNCanvasWindow() );
+        ::wxEndBusyCursor();
+    }
+    
+}
+
+void PathAndPointManagerDialogImpl::OnODPointExportSecectedClick( wxCommandEvent &event )
+{
+    ODPointList list;
+    
+    wxString suggested_name = _T("OD Points");
+    
+    long item = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlODPoints->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        
+        ODPoint *wp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+        
+        if( wp && !wp->m_bIsInLayer) {
+            list.Append( wp );
+            if( wp->GetName() != wxEmptyString )
+                suggested_name = wp->GetName();
+        }
+    }
+    
+    g_pODConfig->ExportGPXODPoints( this, &list, suggested_name );
+}
+
+void PathAndPointManagerDialogImpl::OnODPointDeleteAllClick( wxCommandEvent &event )
+{
+    wxString prompt;
+    int buttons, type;
+    if ( !g_pODPointMan->SharedODPointsExist() )
+    {
+        prompt = _("Are you sure you want to delete <ALL> OD points?");
+        buttons = wxYES_NO;
+        type = 1;
+    }
+    else
+    {
+        prompt = _("There are some OD points used in paths or anchor alarms.\n Do you want to delete them as well?\n This will change the paths and disable the anchor alarms.\n Answering No keeps the OD points used in paths or alarms.");
+        buttons = wxYES_NO | wxCANCEL;
+        type = 2;
+    }
+    int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), buttons );
+    if ( answer == wxID_YES )
+        g_pODPointMan->DeleteAllODPoints( true );
+    if ( answer == wxID_NO && type == 2 )
+        g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OD points
+    else
+        g_pODPointMan->DeleteAllODPoints( true );
+        
+        
+    m_lastODPointItem = -1;
+    UpdatePathListCtrl();
+    UpdateODPointsListCtrl();
+    // TODO fix up undo
+    //ocpncc1->undo->InvalidateUndo();
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::SelectedODPointToggleVisibility( bool visible )
+{
+    long item = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlODPoints->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        
+        wxListItem li;
+        li.SetId( item );
+        m_listCtrlODPoints->GetItem(li);
+        ODPoint *ppoint = (ODPoint *)li.GetData();
+        
+        if( ppoint ) {
+            ppoint->SetVisible(visible);
+        }
+        m_listCtrlODPoints->SetItemImage( item, ppoint->IsVisible() ? g_pODPointMan->GetIconIndex( ppoint->GetIconBitmap() ) : g_pODPointMan->GetXIconIndex( ppoint->GetIconBitmap() ) );
+    }
+}
+
+void PathAndPointManagerDialogImpl::OnODPointRightClick( wxListEvent &event )
+{
+    g_ODEventHandler->SetWindow( ocpncc1 );
+    g_ODEventHandler->SetPath( NULL );
+    g_ODEventHandler->SetPoint( (ODPoint*)NULL );
+    g_ODEventHandler->PopupMenu( TYPE_PATHMGR_POINT_DLG );
+}
+
+void PathAndPointManagerDialogImpl::OnLayerSelected( wxListEvent &event )
+{
+    UpdateLayerButtons();
+}
+
+void PathAndPointManagerDialogImpl::OnLayerColumnClick( wxListEvent &event )
+{
+    switch (event.m_col) {
+        case 0:
+            sort_layer_on_vis++;
+            m_listCtrlLayers->SortItems( SortPathOnVis, (long) m_listCtrlLayers );
+            break;
+        case 1:
+            sort_layer_name_dir++;
+            m_listCtrlLayers->SortItems( SortPathOnName, (long) m_listCtrlLayers );
+            break;
+        case 2:
+            sort_layer_len_dir++;
+            m_listCtrlLayers->SortItems( SortPathOnTo, (long) m_listCtrlLayers );
+            break;
+    }
+}
+
+void PathAndPointManagerDialogImpl::UpdateLayerButtons()
 {
     long item = -1;
     item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
@@ -1157,3 +1610,543 @@ void PathAndPointManagerDialogImpl::UpdateLayButtons()
         m_buttonLayerListContents->SetLabel( _("List contents ") );
     }
 }
+
+void PathAndPointManagerDialogImpl::OnLayerToggleVisibility( wxMouseEvent &event )
+{
+    wxPoint pos = event.GetPosition();
+    int flags = 0;
+    long clicked_index = m_listCtrlLayers->HitTest( pos, flags );
+    
+    //    Clicking Visibility column?
+    if( clicked_index > -1 && event.GetX() < m_listCtrlLayers->GetColumnWidth( colLAYVISIBLE ) ) {
+        // Process the clicked item
+        ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( clicked_index ) )->GetData();
+        
+        layer->SetVisible( !layer->IsVisible() );
+        m_listCtrlLayers->SetItemImage( clicked_index, layer->IsVisible() ? 0 : 1 );
+        
+        ToggleLayerContentsOnChart( layer );
+    }
+    
+    // Allow wx to process...
+    event.Skip();
+}
+
+void PathAndPointManagerDialogImpl::OnLayerTemporaryClick( wxCommandEvent &event )
+{
+    bool show_flag = g_bShowLayers;
+    g_bShowLayers = true;
+    
+    #ifdef __WXOSX__
+    HideWithEffect(wxSHOW_EFFECT_BLEND );
+    #endif
+    
+    //g_pODConfig->UI_ImportGPX( this, true, _T("") );
+    g_pODConfig->UI_Import( this, true, true );
+    
+    #ifdef __WXOSX__
+    ShowWithEffect(wxSHOW_EFFECT_BLEND );
+    #endif
+    
+    
+    g_bShowLayers = show_flag;
+    
+    UpdatePathListCtrl();
+    UpdateODPointsListCtrl();
+    UpdateLayerListCtrl();
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::OnLayerDeleteClick( wxCommandEvent &event )
+{
+    long item = -1;
+    item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    if( item == -1 ) return;
+    
+    ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    
+    if( !layer ) return;
+    
+    wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
+    int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), wxYES_NO );
+    if ( answer == wxID_NO )
+        return;
+    
+    // Process Paths in this layer
+    wxPathListNode *node1 = g_pPathList->GetFirst();
+    wxPathListNode *node2;
+    while( node1 ) {
+        ODPath *pPath = node1->GetData();
+        node2 = node1->GetNext();
+        if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
+            pPath->m_bIsInLayer = false;
+            pPath->m_LayerID = 0;
+            g_pPathMan->DeletePath( pPath );
+        }
+        node1 = node2;
+        node2 = NULL;
+    }
+    
+    // Process ODPoints in this layer
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+    wxODPointListNode *node3;
+    
+    while( node ) {
+        node3 = node->GetNext();
+        ODPoint *pp = node->GetData();
+        if( pp && ( pp->m_LayerID == layer->m_LayerID ) ) {
+            pp->m_bIsInLayer = false;
+            pp->m_LayerID = 0;
+            g_pODPointMan->DestroyODPoint( pp, false );         // no need to update the change set on layer ops
+            delete pp;
+        }
+        
+        node = node3;
+        node3 = NULL;
+    }
+    
+    g_pLayerList->DeleteObject( layer );
+    
+    UpdatePathListCtrl();
+    UpdateODPointsListCtrl();
+    UpdateLayerListCtrl();
+    
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::SelectedLayerToggleVisibility( bool visible )
+{
+    long item = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlLayers->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
+        
+        ODLayer *player = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+        
+        if( player ) {
+            player->SetVisible(visible);
+        }
+        m_listCtrlLayers->SetItemImage( item, player->IsVisible() ? 0 : 1 );
+        ToggleLayerContentsOnChart( player );
+    }
+}
+
+void PathAndPointManagerDialogImpl::OnLayerRightClick( wxListEvent &event )
+{
+    g_ODEventHandler->SetWindow( ocpncc1 );
+    g_ODEventHandler->SetPath( NULL );
+    g_ODEventHandler->SetPoint( (ODPoint*)NULL );
+    g_ODEventHandler->PopupMenu( TYPE_PATHMGR_LAYER_DLG );
+}
+
+void PathAndPointManagerDialogImpl::OnLayerShowOnChartClick( wxCommandEvent &event )
+{
+    // Toggle  visibility on chart for selected layer
+    long item = -1;
+    item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    if( item == -1 ) return;
+    
+    ODLayer *player = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    
+    if( !player ) return;
+    
+    player->SetVisible( !player->IsVisible() );
+    m_listCtrlLayers->SetItemImage( item, player->IsVisible() ? 0 : 1 );
+    
+    ToggleLayerContentsOnChart( player );
+}
+
+void PathAndPointManagerDialogImpl::ToggleLayerContentsOnChart( ODLayer *layer )
+{
+    // Process Paths in this layer
+    wxPathListNode *node1 = g_pPathList->GetFirst();
+    while( node1 ) {
+        ODPath *pPath = node1->GetData();
+        if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
+            pPath->SetVisible( layer->IsVisible() );
+            g_pODConfig->UpdatePath( pPath );
+        }
+        node1 = node1->GetNext();
+    }
+    
+    // Process OD points in this layer
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+    
+    while( node ) {
+        ODPoint *pp = node->GetData();
+        if( pp && !pp->m_bIsInPath && ( pp->m_LayerID == layer->m_LayerID ) ) {
+            pp->SetVisible( layer->IsVisible() );
+        }
+        
+        node = node->GetNext();
+    }
+    
+    UpdatePathListCtrl();
+    UpdateODPointsListCtrl();
+    UpdateLayerListCtrl();
+    UpdateLayerButtons();
+    
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::OnLayerShowPointNamesClick( wxCommandEvent &event )
+{
+    // Toggle Point names visibility on chart for selected layer
+    long item = -1;
+    item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    if( item == -1 ) return;
+    
+    ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    
+    if( !layer ) return;
+    
+    layer->SetVisibleNames( !layer->HasVisibleNames() );
+    
+    ToggleLayerContentsNames( layer );
+}
+
+void PathAndPointManagerDialogImpl::ToggleLayerContentsNames( ODLayer *layer )
+{
+    // Process Paths in this layer
+    wxPathListNode *node1 = g_pPathList->GetFirst();
+    while( node1 ) {
+        ODPath *pPath = node1->GetData();
+        if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
+            wxODPointListNode *node = pPath->m_pODPointList->GetFirst();
+            ODPoint *prp1 = node->GetData();
+            while( node ) {
+                prp1->m_bShowName = layer->HasVisibleNames();
+                node = node->GetNext();
+            }
+        }
+        node1 = node1->GetNext();
+    }
+    
+    // Process OD points in this layer
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+    
+    while( node ) {
+        ODPoint *pp = node->GetData();
+        if( pp && ( pp->m_LayerID == layer->m_LayerID ) ) {
+            pp->SetNameShown( layer->HasVisibleNames() );
+        }
+        
+        node = node->GetNext();
+    }
+    
+    UpdateLayerButtons();
+    
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::OnLayerListContentsClick( wxCommandEvent &event )
+{
+    // Toggle  visibility on listing for selected layer
+    long item = -1;
+    item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    if( item == -1 ) return;
+    
+    ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    
+    if( !layer ) return;
+    
+    layer->SetVisibleOnListing( !layer->IsVisibleOnListing() );
+    
+    ToggleLayerContentsOnListing( layer );
+}
+
+void PathAndPointManagerDialogImpl::ToggleLayerContentsOnListing( ODLayer *layer )
+{
+    ::wxBeginBusyCursor();
+    
+    // Process Paths in this layer
+    wxPathListNode *node1 = g_pPathList->GetFirst();
+    while( node1 ) {
+        ODPath *pPath = node1->GetData();
+        if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
+            pPath->SetListed( layer->IsVisibleOnListing() );
+            g_pODConfig->UpdatePath(pPath);
+        }
+        node1 = node1->GetNext();
+    }
+    
+    // Process OD points in this layer
+    //  n.b.  If the OD point belongs to a track, and is not shared, then do not list it.
+    //  This is a performance optimization, allowing large track support.
+    
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+    
+    while( node ) {
+        ODPoint *op = node->GetData();
+        if( op->m_bIsolatedMark && ( op->m_LayerID == layer->m_LayerID ) ) {
+            op->SetListed( layer->IsVisibleOnListing() );
+        }
+        
+        node = node->GetNext();
+    }
+    
+    UpdatePathListCtrl();
+    UpdateODPointsListCtrl();
+    UpdateLayerListCtrl();
+    
+    ::wxEndBusyCursor();
+    
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::OnLayerDefaultAction( wxListEvent &event )
+{
+    wxCommandEvent evt;
+}
+
+void PathAndPointManagerDialogImpl::UpdateLayerListCtrl()
+{
+    // if an item was selected, make it selected again if it still exist
+    long item = -1;
+    item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    
+    long selected_id = -1;
+    if( item != -1 ) selected_id = m_listCtrlLayers->GetItemData( item );
+    
+    // Delete existing items
+    m_listCtrlLayers->DeleteAllItems();
+    
+    // then add paths to the listctrl
+    ODLayerList::iterator it;
+    int index = 0;
+    for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
+        ODLayer *lay = (ODLayer *) ( *it );
+        
+        wxListItem li;
+        li.SetId( index );
+        li.SetImage( lay->IsVisible() ? 0 : 1 );
+        li.SetData( index );
+        li.SetText( _T("") );
+        
+        long idx = m_listCtrlLayers->InsertItem( li );
+        
+        wxString name = lay->m_LayerName;
+        if( name.IsEmpty() ) {
+            name = _("(Unnamed Layer)");
+        }
+        m_listCtrlLayers->SetItem( idx, colLAYNAME, name );
+        
+        wxString len;
+        len.Printf( wxT("%d"), (int) lay->m_NoOfItems );
+        m_listCtrlLayers->SetItem( idx, colLAYITEMS, len );
+    }
+    
+    m_listCtrlLayers->SortItems( SortLayersOnName, (long) m_listCtrlLayers );
+    
+    // restore selection if possible
+    // NOTE this will select a different item, if one is deleted
+    // (the next path will get that index).
+    if( selected_id > -1 ) {
+        item = m_listCtrlLayers->FindItem( -1, selected_id );
+        m_listCtrlLayers->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
+    }
+    UpdateLayerButtons();
+    
+    for(int i = 0; i < m_listCtrlLayers->GetColumnCount(); i++) {
+        m_listCtrlLayers->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+        int h_width = m_listCtrlLayers->GetColumnWidth(i);
+        m_listCtrlLayers->SetColumnWidth( i, wxLIST_AUTOSIZE );
+        int a_width = m_listCtrlLayers->GetColumnWidth(i);
+        m_listCtrlLayers->SetColumnWidth(i, (std::max)(a_width, h_width));
+    }
+    
+}
+
+void PathAndPointManagerDialogImpl::OnImportClick( wxCommandEvent &event )
+{
+    #ifdef __WXOSX__
+    HideWithEffect(wxSHOW_EFFECT_BLEND );
+    #endif
+    
+    wxString l_sLabel = _("I&mport");
+    l_sLabel.Append(_T(" "));
+    g_pODConfig->UI_Import( this );
+    l_sLabel.Append(g_pODConfig->m_sImport_Type);
+    l_sLabel.Append(_T("..."));
+    m_buttonImport->SetLabel(l_sLabel);
+    
+    #ifdef __WXOSX__
+    ShowWithEffect(wxSHOW_EFFECT_BLEND );
+    #endif
+    
+    UpdatePathListCtrl();
+    UpdateODPointsListCtrl();
+    UpdateLayerListCtrl();
+    
+    RequestRefresh( GetOCPNCanvasWindow() );
+}
+
+void PathAndPointManagerDialogImpl::OnExportAllVisibleClick( wxCommandEvent &event )
+{
+    g_pODConfig->ExportGPX( this, true, true );     // only visible objects, layers included
+}
+
+void PathAndPointManagerDialogImpl::OnOKClick(wxCommandEvent &event)
+{
+    DeSelectODPoints();
+    DeSelectPaths();
+}
+
+void PathAndPointManagerDialogImpl::DeSelectPaths( void )
+{
+    long selected_item = -1;
+    
+    for( ;; )
+    {
+        selected_item = m_listCtrlPath->GetNextItem( selected_item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+        if( selected_item == -1 ) break;
+        m_listCtrlPath->SetItemState( selected_item, 0, wxLIST_STATE_SELECTED );
+    }
+    Show( false );
+}
+
+void PathAndPointManagerDialogImpl::DeSelectODPoints( void )
+{
+    long selected_item = -1;
+    
+    for( ;; )
+    {
+        selected_item = m_listCtrlODPoints->GetNextItem( selected_item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+        if( selected_item == -1 ) break;
+        m_listCtrlODPoints->SetItemState( selected_item, 0, wxLIST_STATE_SELECTED );
+    }
+    Show( false );
+}
+
+wxString PathAndPointManagerDialogImpl::GetLayerName( int id )
+{
+    wxString name( _T("unknown layer") );
+    if( id <= 0 ) return ( name );
+    ODLayerList::iterator it;
+    int index = 0;
+    for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
+        ODLayer *lay = (ODLayer *) ( *it );
+        if( lay->m_LayerID == id ) return ( lay->m_LayerName );
+    }
+    return ( name );
+}
+
+void PathAndPointManagerDialogImpl::UpdateODPointsListCtrl( ODPoint *op_select, bool b_retain_sort )
+{
+    long selected_id = -1;
+    long item = -1;
+    
+    if( NULL == op_select ) {
+        // if an item was selected, make it selected again if it still exists
+        item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+        
+        if( item != -1 ) selected_id = m_listCtrlODPoints->GetItemData( item );
+    }
+    
+    //  Freshen the image list
+    m_listCtrlODPoints->SetImageList( g_pODPointMan->Getpmarkicon_image_list(), wxIMAGE_LIST_SMALL );
+    
+    m_listCtrlODPoints->DeleteAllItems();
+    
+    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+    
+    long index = 0;
+    while( node ) {
+        ODPoint *op = node->GetData();
+        if( op && op->IsListed() ) {
+            if( op->m_bIsInPath ) {
+                if( !op->m_bKeepXPath ) {
+                    node = node->GetNext();
+                    continue;
+                }
+            }
+            
+            wxListItem li;
+            li.SetId( index );
+            li.SetImage( op->IsVisible() ? g_pODPointMan->GetIconIndex( op->GetIconBitmap() )
+            : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
+            li.SetData( op );
+            li.SetText( _T("") );
+            long idx = m_listCtrlODPoints->InsertItem( li );
+            
+            wxString name = op->GetName();
+            if( name.IsEmpty() ) {
+                name.append( _("(Unnamed) ") );
+                #if wxCHECK_VERSION(3,0,0)
+                name.append( _(op->m_sTypeString) );
+                #else
+                name.append( op->m_sTypeString );
+                #endif
+            }
+            m_listCtrlODPoints->SetItem( idx, colOCPNPOINTNAME, name );
+            
+            double dst;
+            DistanceBearingMercator_Plugin( op->m_lat, op->m_lon, g_pfFix.Lat, g_pfFix.Lon, NULL, &dst );
+            wxString dist;
+            dist.Printf( _T("%5.2f ") + getUsrDistanceUnit_Plugin(), toUsrDistance_Plugin( dst ) );
+            m_listCtrlODPoints->SetItem( idx, colOCPNPOINTDIST, dist );
+            
+            if( op == op_select ) selected_id = (long) op_select; //index; 
+            
+            index++;
+        }
+        
+        node = node->GetNext();
+    }
+    
+    if( !b_retain_sort ) {
+        m_listCtrlODPoints->SortItems( SortODPointsOnName, (long) m_listCtrlODPoints );
+        sort_ODPoint_key = SORT_ON_NAME;
+    } else {
+        switch( sort_ODPoint_key ){
+            case SORT_ON_NAME:
+                m_listCtrlODPoints->SortItems( SortODPointsOnName, (long) m_listCtrlODPoints );
+                break;
+            case SORT_ON_DISTANCE:
+                m_listCtrlODPoints->SortItems( SortODPointsOnDistance, (long) m_listCtrlODPoints );
+                break;
+        }
+    }
+    
+    if( selected_id > -1 ) {
+        item = m_listCtrlODPoints->FindItem( -1, selected_id );
+        m_listCtrlODPoints->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
+    }
+    
+    if( (m_lastODPointItem >= 0) && (m_listCtrlODPoints->GetItemCount()) )
+        m_listCtrlODPoints->EnsureVisible( m_lastODPointItem );
+    UpdateODPointButtons();
+    
+    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
+        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
+        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
+    }
+    
+    this->GetSizer()->Fit( this );
+    this->Layout();
+    
+}
+
+void PathAndPointManagerDialogImpl::UpdateODPointsListCtrlViz( )
+{
+    long item = -1;
+    for ( ;; )
+    {
+        item = m_listCtrlODPoints->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_DONTCARE);
+        if ( item == -1 )
+            break;
+        
+        ODPoint *pRP = (ODPoint *)m_listCtrlODPoints->GetItemData(item);
+        int image = pRP->IsVisible() ? g_pODPointMan->GetIconIndex( pRP->GetIconBitmap() )
+        : g_pODPointMan->GetXIconIndex( pRP->GetIconBitmap() ) ;
+        
+        m_listCtrlODPoints->SetItemImage(item, image);
+    }
+    
+}
+

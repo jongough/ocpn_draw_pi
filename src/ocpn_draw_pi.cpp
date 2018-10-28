@@ -49,7 +49,7 @@
 #include "PILProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
-#include "pathmanagerdialog.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "PointMan.h"
 #include "ODAPI.h"
 #include "ODConfig.h"
@@ -126,7 +126,7 @@ EBLProp                 *g_pEBLPropDialog;
 DRProp                  *g_pDRPropDialog;
 GZProp                  *g_pGZPropDialog;
 PILProp                 *g_pPILPropDialog;
-PathManagerDialog       *g_pPathManagerDialog;
+PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
@@ -741,8 +741,8 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_PILIndexLinePropDialog )  g_PILIndexLinePropDialog->Destroy();
     g_PILIndexLinePropDialog = NULL;
 
-    if ( g_pPathManagerDialog )  g_pPathManagerDialog->Destroy();
-    g_pPathManagerDialog = NULL;
+    if ( g_pPathAndPointManagerDialog )  g_pPathAndPointManagerDialog->Destroy();
+    g_pPathAndPointManagerDialog = NULL;
 
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     delete g_pODToolbar;
@@ -997,26 +997,26 @@ void ocpn_draw_pi::ItemProcess(int id)
     m_iCallerId = id;
     if( m_Mode == ID_NONE ) m_Mode = 0;
 
-    if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-        g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
+    if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+        g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( m_parent_window );
     
     if ( id == m_config_button_id ) {
-        if( !g_pPathManagerDialog->IsShown() ){
+        if( !g_pPathAndPointManagerDialog->IsShown() ){
             
-            DimeWindow( g_pPathManagerDialog );
-            g_pPathManagerDialog->UpdatePathListCtrl();
-            g_pPathManagerDialog->UpdateODPointsListCtrl();
-            g_pPathManagerDialog->Show();
+            DimeWindow( g_pPathAndPointManagerDialog );
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+            g_pPathAndPointManagerDialog->Show();
             
             
             //    Required if RMDialog is not STAY_ON_TOP
 #ifdef __WXOSX__
-            g_pPathManagerDialog->Centre();
-            g_pPathManagerDialog->Raise();
+            g_pPathAndPointManagerDialog->Centre();
+            g_pPathAndPointManagerDialog->Raise();
 #endif
             
         } else {
-	        g_pPathManagerDialog->Hide();
+	        g_pPathAndPointManagerDialog->Hide();
         }
     }
     else if ( id == m_draw_button_id ) {
@@ -1918,12 +1918,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if ( event.LeftDClick() ) {
         FindSelectedObject();
         if( m_pSelectedPath && m_seltype == SELTYPE_PATHSEGMENT) {
-            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
+            if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+                g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( m_parent_window );
             
-            DimeWindow( g_pPathManagerDialog );
+            DimeWindow( g_pPathAndPointManagerDialog );
             m_pSelectedPath->m_bPathPropertiesBlink = true;
-            g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            g_pPathAndPointManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             bret = true;
         } else if(m_pSelectedPath && m_seltype == SELTYPE_PIL) {
@@ -3094,8 +3094,8 @@ void ocpn_draw_pi::FinishBoundary( void )
             g_pODPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
         }
         
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     }
     
     m_pMouseBoundary = NULL;
@@ -3272,8 +3272,8 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
         
         g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
         g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdateODPointsListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
         
     }
     
@@ -3335,8 +3335,8 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
         
         g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
         g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdateODPointsListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
         
     }
     
@@ -3563,8 +3563,8 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     
     nEBL_State++;
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     
     RequestRefresh( m_parent_window );
     
@@ -3684,8 +3684,8 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     if(m_pMouseGZ) {
         m_pMouseGZ->m_lastMousePointIndex = m_pMouseGZ->GetnPoints();
         m_pMouseGZ->RebuildGUIDList();
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     }
 
     nGZ_State++;
@@ -3749,8 +3749,8 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMousePIL );
 
     nPIL_State++;
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
     RequestRefresh( m_parent_window );
 

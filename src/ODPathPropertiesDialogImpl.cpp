@@ -31,7 +31,7 @@
 
 #include "ODPathPropertiesDialogImpl.h"
 #include "PILPropertiesDialogImpl.h"
-#include "pathmanagerdialog.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "ODPath.h"
 #include "Boundary.h"
 #include "BoundaryPoint.h"
@@ -63,7 +63,7 @@ extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern double               g_dLat, g_dLon, gSog, gCog;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern PathList             *g_pPathList;
-extern PathManagerDialog    *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODConfig             *g_pODConfig;
 extern wxColour             g_colourActivePathLineColour;
 extern wxColour             g_colourInActivePathLineColour;
@@ -126,7 +126,7 @@ void ODPathPropertiesDialogImpl::OnClose( wxCloseEvent& event )
 void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
 {
     //    Look in the path list to be sure the path is still available
-    //    (May have been deleted by PathManagerDialog...)
+    //    (May have been deleted by PathAndPointManagerDialog...)
     
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
@@ -145,8 +145,8 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     m_pEnPathPoint = NULL;
     m_bStartNow = false;
     
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) {
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) {
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     }
     
     Hide();
@@ -246,7 +246,7 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     ODPoint *op = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
     if( !op ) return;
     
-    PathManagerDialog::ODPointShowPropertiesDialog( op, this );
+    PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( op, this );
 }
 
 void ODPathPropertiesDialogImpl::OnLeftDoubleClickPIL( wxMouseEvent& event )
@@ -873,7 +873,7 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
             odp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
             if( !odp ) break;
             
-            g_pPathManagerDialog->ODPointShowPropertiesDialog( odp, GetParent() );
+            g_pPathAndPointManagerDialog->ODPointShowPropertiesDialog( odp, GetParent() );
             break;
         }
         case ID_PILPROP_MENU_EDIT_PROPERTIES: {

@@ -72,7 +72,7 @@ extern ODSelect                 *g_pODSelect;
 extern ODConfig                 *g_pODConfig;
 extern PathMan                  *g_pPathMan;
 extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-extern PathManagerDialog            *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
@@ -208,8 +208,8 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
             g_pODPathPropDialog->Hide();
         }
         
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
         
         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             g_pODPointPropDialog->ValidateMark();
@@ -347,8 +347,8 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     if(l_pDR->m_iPersistenceType == ID_PERSISTENT || l_pDR->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( l_pDR, -1 );    // don't save over restart
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
     RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     Show( false );

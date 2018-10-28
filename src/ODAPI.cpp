@@ -41,7 +41,7 @@
 #include "ODConfig.h"
 #include "ODPath.h"
 #include "ODPathPropertiesDialogImpl.h"
-#include "pathmanagerdialog.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "PointMan.h"
@@ -58,7 +58,7 @@ extern ODConfig     *g_pODConfig;
 extern wxString      g_sODPointIconName;
 extern wxString      g_sTextPointIconName;
 extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-extern PathManagerDialog       *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern BoundaryList            *g_pBoundaryList;
 extern PathList                *g_pPathList;
 
@@ -292,8 +292,8 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
         g_pODPathPropDialog->SetPathAndUpdate( l_boundary, true );
     }
     
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     pCB->GUID.Clear();
     pCB->GUID.Append(l_boundary->m_GUID);
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);

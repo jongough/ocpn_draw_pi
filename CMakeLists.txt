@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "28")
-SET(VERSION_DATE "27/10/2018")
+SET(VERSION_PATCH "29")
+SET(VERSION_DATE "28/10/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -112,7 +112,8 @@ SET(SRCS
     src/PointMan.cpp
     src/ODSelect.cpp
     src/PathMan.cpp
-    src/pathmanagerdialog.cpp
+    src/PathAndPointManagerDialogDef.cpp
+    src/PathAndPointManagerDialogImpl.cpp
     src/ODAPI.cpp
     src/ODPath.cpp
     src/ODPoint.cpp
@@ -167,7 +168,8 @@ SET(HDRS
     include/PointMan.h
     include/ODSelect.h
     include/PathMan.h
-    include/pathmanagerdialog.h
+    include/PathAndPointManagerDialogDef.h
+    include/PathAndPointManagerDialogImpl.h
     include/ODAPI.h
     include/ODicons.h
     include/ODIconCombo.h

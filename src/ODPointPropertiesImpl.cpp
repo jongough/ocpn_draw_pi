@@ -59,7 +59,7 @@ extern PointMan             *g_pODPointMan;
 extern PathMan              *g_pPathMan;
 extern GZMan                *g_pGZMan;
 extern ODConfig             *g_pODConfig;
-extern PathManagerDialog    *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern int                  g_iTextPosition;
 extern int                  g_iBoundaryPointRangeRingLineWidth;
@@ -240,8 +240,8 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     }
     Show( false );
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
         
     if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() )
         g_pODPathPropDialog->UpdateProperties(  );
@@ -693,9 +693,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
                 caption.append(_("DR Point Properties, Layer: "));
 #if wxCHECK_VERSION(3,0,0)
-            caption.Append( _(g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID )) );
+            caption.Append( _(g_pPathAndPointManagerDialog->GetLayerName( m_pODPoint->m_LayerID )) );
 #else
-            caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
+            caption.Append( g_pPathAndPointManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
 #endif
         } else {
             if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )

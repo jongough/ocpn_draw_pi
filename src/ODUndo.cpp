@@ -43,14 +43,14 @@
 //#include "navutil.h"
 //#include "styles.h"
 #include "PathMan.h"
-#include "pathmanagerdialog.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "tinyxml.h"
 #include "ODundo.h"
 
 extern PathMan *g_pPathMan;
 extern ODConfig *g_pODConfig;
 extern ODSelect *g_pODSelect;
-extern PathManagerDialog *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODPointman *g_pODPointMan;
 extern ChartCanvas *cc1;
 extern MyFrame *gFrame;
@@ -134,7 +134,7 @@ void doUndoDeleteODPoint( UndoAction* action )
     g_pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
     g_pODConfig->AddNewODPoint( point, -1 );
     if( NULL != g_pODPointMan ) g_pODPointMan->AddODPoint( point );
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
 }
 
 void doRedoDeleteODPoint( UndoAction* action )
@@ -143,7 +143,7 @@ void doRedoDeleteODPoint( UndoAction* action )
     g_pODConfig->DeleteODPoint( point );
     g_pODSelect->DeleteSelectablePoint( point, SELTYPE_ODPOINT );
     if( NULL != g_pODPointMan ) g_pODPointMan->RemoveODPoint( point );
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathAManagerDialog && g_pPathAManagerDialog->IsShown() ) g_pPathAManagerDialog->UpdateODPointsListCtrl();
 }
 
 void doUndoAppenODPoint( UndoAction* action )
@@ -194,7 +194,7 @@ void doRedoAppendWaypoint( UndoAction* action )
     pSelect->AddSelectablePathSegment( prevpoint->m_lat, prevpoint->m_lon,
             point->m_lat, point->m_lon, prevpoint, point, path );
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) g_pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
 
     if( gFrame->nPath_State > 1 ) {
         gFrame->nPath_State++;

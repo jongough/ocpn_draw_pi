@@ -52,7 +52,7 @@
 #include <wx/clipbrd.h>
 
 extern ocpn_draw_pi                 *g_ocpn_draw_pi;
-extern PathManagerDialog            *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODSelect                     *g_pODSelect;
 extern ODConfig                     *g_pODConfig;
 extern PlugIn_ViewPort              g_VP;
@@ -81,7 +81,6 @@ extern int                          g_BoundaryLineStyle;
 extern wxString                     g_sODPointIconName;
 extern double                       g_dPILOffset;
 extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;
-extern PathManagerDialog            *g_pPathManagerDialog;
 
 
 // Event Handler implementation 
@@ -184,7 +183,7 @@ void ODEventHandler::OnODTimer1( wxTimerEvent& event )
 {
     g_ocpn_draw_pi->nBlinkerTick++; 
     if(( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
-        ( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) ||
+        ( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) ||
         ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) ||
         ( m_pSelectedPath && m_pSelectedPath->m_sTypeString == _T("Boundary") ) )
         RequestRefresh( m_parentcanvas );
@@ -519,12 +518,12 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     switch( event.GetId() )
     {            
         case ID_PATH_MENU_PROPERTIES:
-            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( ocpncc1 );
+            if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+                g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( g_ocpn_draw_pi->m_parent_window );
 #ifndef __WXOSX__
-            DimeWindow( g_pPathManagerDialog );
+            DimeWindow( g_pPathAndPointManagerDialog );
 #endif
-            g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            g_pPathAndPointManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
         case ID_PATH_MENU_MOVE_POINT:
@@ -712,8 +711,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                 g_pODPathPropDialog->SetPathAndUpdate( l_pBoundary, true );
             }
 
-            if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-                g_pPathManagerDialog->UpdatePathListCtrl();
+            if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+                g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
             it = m_pBoundaryList.begin();
             while( it != m_pBoundaryList.end() ) {
@@ -750,10 +749,10 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_ODPOINT_MENU_PROPERTIES:
-            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( g_ocpn_draw_pi->m_parent_window );
+            if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+                g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( g_ocpn_draw_pi->m_parent_window );
             
-            g_pPathManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, g_ocpn_draw_pi->m_parent_window );
+            g_pPathAndPointManagerDialog->ODPointShowPropertiesDialog( m_pFoundODPoint, g_ocpn_draw_pi->m_parent_window );
             m_pFoundODPoint = NULL;
             break;
         case ID_PATH_MENU_ACTPOINT:
@@ -924,8 +923,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
                         g_pODPointMan->RemoveODPoint( m_pFoundODPoint );
                 }
                 
-                if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-                    g_pPathManagerDialog->UpdateODPointsListCtrl();
+                if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+                    g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
 
                 if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
                     g_pODPointPropDialog->ValidateMark();
@@ -982,27 +981,27 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         }
         case ID_PATH_MGR_PATH_RIGHT_CLICK_HIDE: {
-            g_pPathManagerDialog->SelectedPathToggleVisibility(false);
+            g_pPathAndPointManagerDialog->SelectedPathToggleVisibility(false);
             break;
         }
         case ID_PATH_MGR_PATH_RIGHT_CLICK_SHOW: {
-            g_pPathManagerDialog->SelectedPathToggleVisibility(true);
+            g_pPathAndPointManagerDialog->SelectedPathToggleVisibility(true);
             break;
         }
         case ID_PATH_MGR_ODPOINT_RIGHT_CLICK_HIDE: {
-            g_pPathManagerDialog->SelectedODPointToggleVisibility(false);
+            g_pPathAndPointManagerDialog->SelectedODPointToggleVisibility(false);
             break;
         }
         case ID_PATH_MGR_ODPOINT_RIGHT_CLICK_SHOW: {
-            g_pPathManagerDialog->SelectedODPointToggleVisibility(true);
+            g_pPathAndPointManagerDialog->SelectedODPointToggleVisibility(true);
             break;
         }
         case ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE: {
-            g_pPathManagerDialog->SelectedLayerToggleVisibility(false);
+            g_pPathAndPointManagerDialog->SelectedLayerToggleVisibility(false);
             break;
         }
         case ID_PATH_MGR_LAYER_RIGHT_CLICK_SHOW: {
-            g_pPathManagerDialog->SelectedLayerToggleVisibility(true);
+            g_pPathAndPointManagerDialog->SelectedLayerToggleVisibility(true);
             break;
         }
     }
@@ -1307,8 +1306,8 @@ void ODEventHandler::DeletePath( void )
         g_pODPathPropDialog->Hide();
     }
     
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     
     if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
         g_pODPointPropDialog->ValidateMark();
@@ -1331,8 +1330,8 @@ void ODEventHandler::DeletePaths( void )
             g_pODPathPropDialog->Hide();
         }
 
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             g_pODPointPropDialog->ValidateMark();
@@ -1368,8 +1367,8 @@ void ODEventHandler::DeletePIL( void )
         g_pODPathPropDialog->Hide();
     }
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
     if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
         g_pODPointPropDialog->ValidateMark();

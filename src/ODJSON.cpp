@@ -72,7 +72,7 @@ extern BoundaryList         *g_pBoundaryList;
 extern wxString             g_sODPointIconName;
 extern ODConfig             *g_pODConfig;
 extern ODSelect             *g_pODSelect;
-extern PathManagerDialog    *g_pPathManagerDialog;
+extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern double               g_dVar;
 extern ODAPI                *g_pODAPI;
 extern bool                 g_bExclusionBoundaryPoint;
@@ -1011,8 +1011,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 g_pODConfig->AddNewODPoint( pl_boundarypoint, -1 );    // use auto next num
                 g_pODSelect->AddSelectableODPoint( jv_BoundaryPoint[wxS("Lat")].AsDouble(), jv_BoundaryPoint[wxS("Lon")].AsDouble(), pl_boundarypoint );
-                if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-                    g_pPathManagerDialog->UpdateODPointsListCtrl();
+                if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+                    g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
                 
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
@@ -1103,8 +1103,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 g_pODConfig->AddNewODPoint( pl_textpoint, -1 );    // use auto next num
                 g_pODSelect->AddSelectableODPoint( jv_TextPoint[wxS("Lat")].AsDouble(), jv_TextPoint[wxS("Lon")].AsDouble(), pl_textpoint );
-                if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-                    g_pPathManagerDialog->UpdateODPointsListCtrl();
+                if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+                    g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
                 
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");

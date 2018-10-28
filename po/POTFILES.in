@@ -15,7 +15,8 @@ src/GZProp.cpp
 src/PointMan.cpp
 src/ODSelect.cpp
 src/PathMan.cpp
-src/pathmanagerdialog.cpp
+src/PathAndPointManagerDialogDef.cpp
+src/PathAndPointManagerDialogImpl.cpp
 src/ODAPI.cpp
 src/ODPath.cpp
 src/ODPoint.cpp
@@ -67,7 +68,8 @@ include/GZProp.h
 include/PointMan.h
 include/ODSelect.h
 include/PathMan.h
-include/pathmanagerdialog.h
+include/PathAndPointManagerDialogDef.h
+include/PathAndPointManagerDialogImpl.h
 include/ODAPI.h
 include/ODicons.h
 include/ODIconCombo.h
