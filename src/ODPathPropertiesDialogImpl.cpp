@@ -45,6 +45,8 @@
 #include "ODUtils.h"
 #include "chcanv.h"
 
+#include <algorithm>
+
 enum {
     ID_FROM_POINT = 0,
     ID_TO_POINT,
@@ -649,7 +651,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     
     ResetGlobalLocale();
     
-    if(m_pPath->m_sTypeString != "EBL" and m_pPath->m_sTypeString != "PIL") SetDialogSize();
+    if(m_pPath->m_sTypeString != "EBL" && m_pPath->m_sTypeString != "PIL") SetDialogSize();
     
     return true;
 }

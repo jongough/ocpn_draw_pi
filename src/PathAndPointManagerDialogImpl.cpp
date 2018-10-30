@@ -59,6 +59,8 @@
 #include "georef.h"
 #include "ODLayer.h"
 
+#include <algorithm>
+
 #define DIALOG_MARGIN 3
 
 /* XPM */
