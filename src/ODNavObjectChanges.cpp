@@ -796,7 +796,7 @@ bool ODNavObjectChanges::CreateNavObjGPXPoints( void )
     while( node ) {
         pOP = node->GetData();
         
-        if( ( pOP->m_bIsolatedMark ) && !( pOP->m_bIsInLayer ) && !(pOP->m_btemp) )
+        if( ( pOP->m_bIsolatedMark ) && !( pOP->m_bIsInLayer ) && !(pOP->m_bTemporary) )
         {
             GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pOP, OPT_OCPNPOINT);
         }

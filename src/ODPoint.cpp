@@ -88,7 +88,7 @@ ODPoint::ODPoint()
     m_NameLocationOffsetX = -10;
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
-    m_btemp = false;
+    m_bTemporary = false;
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     m_fIconScaleFactor = 1.0;
@@ -150,7 +150,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_NameLocationOffsetY = orig->m_NameLocationOffsetY;
     m_pMarkFont = orig->m_pMarkFont;
     m_ODPointDescription = orig->m_ODPointDescription;
-    m_btemp = orig->m_btemp;
+    m_bTemporary = orig->m_bTemporary;
     m_sTypeString = orig->m_sTypeString;
 
     m_HyperlinkList = new HyperlinkList;
@@ -215,7 +215,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_NameLocationOffsetX = -10;
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
-    m_btemp = false;
+    m_bTemporary = false;
     m_sTypeString = wxEmptyString;
 
     m_SelectNode = NULL;
@@ -866,4 +866,9 @@ void ODPoint::SetODPointRangeRingsStep(float f_ODPointRangeRingsStep)
 { 
     m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; 
     SetRangeRingBBox();
+}
+
+void ODPoint::AddURL(wxString URL, wxString URLDescription)
+{
+    //m_HyperlinkList-> ->insert(pURL);
 }

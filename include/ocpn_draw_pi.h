@@ -126,7 +126,6 @@ std::cout << x  << std::endl ; } while (0)
 #include "undo.h"
 #include "ODPoint.h"
 #include "ODConfig.h"
-#include "PathAndPointManagerDialogImpl.h"
 #include "ODRolloverWin.h"
 
 #include "georef.h"

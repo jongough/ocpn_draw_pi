@@ -166,6 +166,11 @@ static json jSchema = R"(
                     "type": "boolean",
                     "enum": [true,false]
                 },
+                "Temporary": {
+                "description": "Text point life, false - exists over restart, true - non persistent",
+                "type": "boolean",
+                "enum": [true,false]
+                },
                 "TextToDisplay": {
                     "description": "Text Point Text",
                     "type": "string"
@@ -255,6 +260,11 @@ static json jSchema = R"(
                     "description": "Visibility of Boundary",
                     "type": "boolean",
                     "enum": [true,false]
+                },
+                "Temporary": {
+                "description": "Boundary life, false - exists over restart, true - non persistent",
+                "type": "boolean",
+                "enum": [true,false]
                 },
                 "boundarypoints": {
                     "description": "Array of boundary points needed to define a boundary",

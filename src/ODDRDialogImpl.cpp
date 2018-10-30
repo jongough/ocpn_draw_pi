@@ -38,6 +38,7 @@
 #include "ODPointPropertiesImpl.h"
 #include "ODUtils.h"
 #include "PathMan.h"
+#include "PathAndPointManagerDialogImpl.h"
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>

@@ -39,6 +39,7 @@
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "ODPathPropertiesDialogImpl.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "PointMan.h"
 #include "GZ.h"
 #include "GZMan.h"

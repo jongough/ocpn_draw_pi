@@ -107,7 +107,8 @@ public:
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
       void SetRangeRingBBox(void);
-
+      
+      void AddURL(wxString URL, wxString URLDescription);
 
       double             m_lat;
       double             m_lon;
@@ -156,7 +157,7 @@ public:
       double            m_pathprop_distance;       // distance from this ODPoint to the next ODPoint if in a path.
 
       HyperlinkList     *m_HyperlinkList;
-      bool              m_btemp;
+      bool              m_bTemporary;
 
 #ifdef ocpnUSE_GL
       virtual void DrawGL( PlugIn_ViewPort &pivp );

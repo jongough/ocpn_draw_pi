@@ -34,6 +34,7 @@
 #include "ocpn_plugin.h"
 #include "ODSelect.h"
 #include "PathMan.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "ODPointPropertiesImpl.h"
 #include "ODRolloverWin.h"

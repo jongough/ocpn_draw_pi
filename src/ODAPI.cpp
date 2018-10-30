@@ -42,6 +42,7 @@
 #include "ODPath.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "PathAndPointManagerDialogImpl.h"
+#include "ODPointPropertiesImpl.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "PointMan.h"
@@ -61,6 +62,9 @@ extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern BoundaryList            *g_pBoundaryList;
 extern PathList                *g_pPathList;
+extern ODPointPropertiesImpl   *g_pODPointPropDialog;
+extern int          g_iTextPointDisplayTextWhen;
+
 
 ODAPI::ODAPI()
 {
@@ -242,6 +246,7 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
         l_boundary->m_wxcActiveLineColour = pCB->lineColour;
     if(!pCB->defaultFillColour)
         l_boundary->m_wxcActiveFillColour = pCB->fillColour;
+    l_boundary->m_bTemporary = pCB->temporary;
     
     std::list<CreateBoundaryPoint_t *>::iterator it = pCB->BoundaryPointsList.begin();
     while( it != pCB->BoundaryPointsList.end() ) {
@@ -367,35 +372,80 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
     bool    l_bValidTextPoint = true;
     TextPoint *l_pTP;
     
+    wxString *lGUID;
+    if(pCTP->GUID.length() > 0) lGUID = new wxString(pCTP->GUID);
+    else lGUID = new wxString(wxEmptyString);
+    
     if(pCTP->iconname.IsEmpty()) {
-        l_pTP = new TextPoint(pCTP->lat, pCTP->lon, g_sTextPointIconName, pCTP->name, wxEmptyString, false);
+        l_pTP = new TextPoint(pCTP->lat, pCTP->lon, g_sTextPointIconName, pCTP->name, *lGUID, false);
     } else {
-        l_pTP = new TextPoint(pCTP->lat, pCTP->lon, pCTP->iconname, pCTP->name, wxEmptyString, false);
+        l_pTP = new TextPoint(pCTP->lat, pCTP->lon, pCTP->iconname, pCTP->name, *lGUID, false);
     }
     
     l_pTP->m_TextPointText = pCTP->TextToDisplay;
     l_pTP->SetMarkDescription(pCTP->description);
     l_pTP->SetVisible(pCTP->Visible); 
     l_pTP->m_TextPointText = pCTP->TextToDisplay;
-    l_pTP->m_colourTextColour = pCTP->TextColour;
-    l_pTP->m_DisplayTextFont = pCTP->TextFont;
-    l_pTP->m_colourTextBackgroundColour = pCTP->BackgroundColour;
-    l_pTP->m_iBackgroundTransparency = pCTP->BackgroundTransparancy;
-    l_pTP->m_iTextPosition = pCTP->TextPosition;
-    l_pTP->m_iDisplayTextWhen = pCTP->TextPointDisplayTextWhen;
+    if(pCTP->TextColour != _T("DEFAULT"))
+        l_pTP->m_colourTextColour.Set(pCTP->TextColour);
+    if(!pCTP->defaultFont)
+        l_pTP->m_DisplayTextFont = pCTP->TextFont;
+    if(pCTP->BackgroundColour != _T("DEFAULT"))
+        l_pTP->m_colourTextBackgroundColour.Set(pCTP->BackgroundColour);
+    if(pCTP->BackgroundTransparancy == TEXTPOINT_DISPLAY_TEXT_SHOW_DEFAULT) 
+        l_pTP->m_iBackgroundTransparency = pCTP->BackgroundTransparancy;
+    if(pCTP->TextPosition != TEXT_DEFAULT)
+        l_pTP->m_iTextPosition = pCTP->TextPosition;
+    if(pCTP->TextPointDisplayTextWhen != TEXTPOINT_DISPLAY_TEXT_SHOW_DEFAULT)
+        l_pTP->m_iDisplayTextWhen = pCTP->TextPointDisplayTextWhen;
     l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
     l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
     l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
     l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
-    l_pTP->SetODPointRangeRingsColour(pCTP->ringscolour);
+    if(pCTP->ringscolour != _T("DEFAULT"))
+        l_pTP->SetODPointRangeRingsColour(wxColour(pCTP->ringscolour));
     l_pTP->m_bIsolatedMark = true;
     l_pTP->CreateColourSchemes();
     l_pTP->SetColourScheme();
+    l_pTP->m_bTemporary = pCTP->temporary;
+    l_pTP->AddURL(pCTP->URL, pCTP->URLDescription);
 
     g_pODPointMan->AddODPoint(l_pTP);
     g_pODSelect->AddSelectableODPoint(pCTP->lat, pCTP->lon, l_pTP);
-    g_pODConfig->AddNewODPoint( l_pTP, -1 );
+    if(pCTP->temporary) {
+        bool savestate = g_pODConfig->m_bSkipChangeSetUpdate;
+        g_pODConfig->m_bSkipChangeSetUpdate = true;
+        g_pODConfig->AddNewODPoint( l_pTP, -1 );
+        g_pODConfig->m_bSkipChangeSetUpdate = savestate;
+    } else
+        g_pODConfig->AddNewODPoint( l_pTP, -1 );
     
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);
     return true;
+}
+
+bool ODAPI::OD_DeleteTextPoint(DeleteTextPoint_t* pDTP)
+{
+    TextPoint *plTP = (TextPoint *)g_pODPointMan->FindODPointByGUID(pDTP->GUID);
+    if(plTP) {
+        g_pODPointMan->DestroyODPoint(plTP);
+        
+        g_pODSelect->DeleteSelectablePoint( plTP, SELTYPE_ODPOINT );
+        g_pODConfig->DeleteODPoint( plTP );
+        if( NULL != g_pODPointMan )
+            g_pODPointMan->RemoveODPoint( plTP );
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+        
+        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+            g_pODPointPropDialog->ValidateMark();
+        }
+        
+        plTP->m_bPtIsSelected = false;
+        
+        delete (TextPoint *)plTP;
+        
+        return true;
+    }
+    else return false;
 }
