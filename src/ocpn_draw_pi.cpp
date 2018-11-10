@@ -909,6 +909,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     g_pOCPNDrawPropDialog->UpdateProperties();
     g_pOCPNDrawPropDialog->SetDialogSize();
     
+    DimeWindow(g_pOCPNDrawPropDialog);
     g_pOCPNDrawPropDialog->ShowModal();
     
     delete g_pOCPNDrawPropDialog;
@@ -1961,6 +1962,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODPointPropDialog->SetODPoint( m_pFoundODPoint );
             g_pODPointPropDialog->UpdateProperties();
             
+            DimeWindow(g_pODPointPropDialog);
             if( !g_pODPointPropDialog->IsShown() )
                 g_pODPointPropDialog->Show();
             m_pFoundODPoint = NULL;

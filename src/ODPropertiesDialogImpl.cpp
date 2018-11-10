@@ -412,6 +412,7 @@ void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
     m_pfdDialog = new wxFontDialog( this, l_FontData );
     m_pfdDialog->Centre( wxBOTH );
     
+    DimeWindow(m_pfdDialog);
     int iRet = m_pfdDialog->ShowModal();
     if(iRet == wxID_OK) {
         //wxFontData wsfdData = m_pfdDialog->GetFontData();

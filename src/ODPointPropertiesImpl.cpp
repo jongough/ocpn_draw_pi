@@ -146,7 +146,6 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    m_bSizerLinks->RecalcSizes();
     wxSize sz = m_bSizerLinks->CalcMin();
     sz.y = m_sSingleLineSize.y * 2;
     m_bSizerLinks->SetMinSize(sz);
@@ -332,6 +331,7 @@ void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
     
+    DimeWindow(g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
     if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
         wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
@@ -354,6 +354,7 @@ void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
     
+    DimeWindow(g_pODLinkPropertiesDialog);
     if(m_pHyperLinkList->GetCount()) {
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
         while(l_plinknode) {

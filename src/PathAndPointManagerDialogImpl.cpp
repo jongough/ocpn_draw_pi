@@ -742,6 +742,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         
     }
     
+    DimeWindow(g_pODPathPropDialog);
     if( !g_pODPathPropDialog->IsShown() )
         g_pODPathPropDialog->Show();
     
@@ -1387,6 +1388,7 @@ void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( ODPoint* wp, wx
     g_pODPointPropDialog->SetODPoint( wp );
     g_pODPointPropDialog->UpdateProperties();
     
+    DimeWindow(g_pODPointPropDialog);
     if( !g_pODPointPropDialog->IsShown() )
         g_pODPointPropDialog->Show();
     
