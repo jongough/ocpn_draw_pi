@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "32")
-SET(VERSION_DATE "31/10/2018")
+SET(VERSION_PATCH "34")
+SET(VERSION_DATE "10/11/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -95,7 +95,6 @@ ADD_DEFINITIONS(-DUSE_S57)
 
 
 SET(SRCS
-    src/ocpn_draw_pi.cpp
     src/Boundary.cpp
     src/BoundaryCSVImport.cpp
     src/BoundaryMan.cpp
@@ -109,14 +108,8 @@ SET(SRCS
     src/GZ.cpp
     src/GZMan.cpp
     src/GZProp.cpp
-    src/PointMan.cpp
-    src/ODSelect.cpp
-    src/PathMan.cpp
-    src/PathAndPointManagerDialogDef.cpp
-    src/PathAndPointManagerDialogImpl.cpp
+    src/ocpn_draw_pi.cpp
     src/ODAPI.cpp
-    src/ODPath.cpp
-    src/ODPoint.cpp
     src/ODConfig.cpp
     src/ODdc.cpp
     src/ODDRDialogDef.cpp
@@ -126,26 +119,34 @@ SET(SRCS
     src/ODIconCombo.cpp
     src/ODJSON.cpp
     src/ODLayer.cpp
+    src/ODLinkPropertiesDialogDef.cpp
+    src/ODLinkPropertiesDialogImpl.cpp
     src/ODMarkIcon.cpp
-    src/ocpn_draw_pi.cpp
     src/ODNavObjectChanges.cpp
     src/ODNewODPointDialogDef.cpp
     src/ODNewODPointDialogImpl.cpp
-    src/ODPropertiesDialogDef.cpp
-    src/ODPropertiesDialogImpl.cpp
+    src/ODPath.cpp
     src/ODPathPropertiesDialogDef.cpp
     src/ODPathPropertiesDialogImpl.cpp
+    src/ODPoint.cpp
     src/ODPointPropertiesDialog.cpp
     src/ODPointPropertiesImpl.cpp
     src/ODPositionParser.cpp
+    src/ODPropertiesDialogDef.cpp
+    src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
+    src/ODSelect.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
+    src/PathMan.cpp
+    src/PathAndPointManagerDialogDef.cpp
+    src/PathAndPointManagerDialogImpl.cpp
     src/PIL.cpp
     src/PILProp.cpp
     src/PILPropertiesDialogDef.cpp
     src/PILPropertiesDialogImpl.cpp
+    src/PointMan.cpp
     src/TextPoint.cpp
     src/TextPointCSVImport.cpp
 )
@@ -166,39 +167,41 @@ SET(HDRS
     include/GZMan.h
     include/GZProp.h
     include/PointMan.h
-    include/ODSelect.h
-    include/PathMan.h
-    include/PathAndPointManagerDialogDef.h
-    include/PathAndPointManagerDialogImpl.h
     include/ODAPI.h
-    include/ODicons.h
-    include/ODIconCombo.h
-    include/ODJSON.h
-    include/ODPath.h
-    include/ODPoint.h
     include/ODConfig.h
     include/ODdc.h
     include/ODDRDialogDef.h
     include/ODDRDialogImpl.h
     include/ODEventHandler.h
+    include/ODicons.h
+    include/ODIconCombo.h
+    include/ODJSON.h
     include/ODJSONSchemas.h
     include/ODLayer.h
+    include/ODLinkPropertiesDialogDef.h
+    include/ODLinkPropertiesDialogImpl.h
     include/ODMarkIcon.h
     include/ODNavObjectChanges.h
     include/ODNewODPointDialogDef.h
     include/ODNewODPointDialogImpl.h
-    include/ODPropertiesDialogDef.h
-    include/ODPropertiesDialogImpl.h
+    include/ODPath.h
     include/ODPathPropertiesDialogDef.h
     include/ODPathPropertiesDialogImpl.h
+    include/ODPoint.h
     include/ODPointPropertiesDialog.h
     include/ODPointPropertiesImpl.h
     include/ODPositionParser.h
+    include/ODPropertiesDialogDef.h
+    include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
+    include/ODSelect.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
     include/ODvector2D.h
+    include/PathMan.h
+    include/PathAndPointManagerDialogDef.h
+    include/PathAndPointManagerDialogImpl.h
     include/PIL.h
     include/PILPropertiesDialogDef.h
     include/PILPropertiesDialogImpl.h

@@ -50,13 +50,13 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelPath->SetSizer( bSizer2 );
 	m_panelPath->Layout();
 	bSizer2->Fit( m_panelPath );
-	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), true );
+	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), false );
 	m_panelODPoint = new wxPanel( m_notebookPathAndPointManager, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_listCtrlODPoints = new wxListCtrl( m_panelODPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES|wxLC_REPORT|wxLC_SORT_ASCENDING|wxLC_VRULES );
-	bSizer3->Add( m_listCtrlODPoints, 1, wxALL, 5 );
+	bSizer3->Add( m_listCtrlODPoints, 1, wxALL|wxEXPAND, 5 );
 
 	m_bSizerODPointsButtons = new wxBoxSizer( wxVERTICAL );
 
@@ -85,13 +85,13 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelODPoint->SetSizer( bSizer3 );
 	m_panelODPoint->Layout();
 	bSizer3->Fit( m_panelODPoint );
-	m_notebookPathAndPointManager->AddPage( m_panelODPoint, _("OD Points"), false );
+	m_notebookPathAndPointManager->AddPage( m_panelODPoint, _("OD Points"), true );
 	m_panelLayer = new wxPanel( m_notebookPathAndPointManager, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_listCtrlLayers = new wxListCtrl( m_panelLayer, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES|wxLC_REPORT|wxLC_SORT_ASCENDING|wxLC_VRULES );
-	bSizer4->Add( m_listCtrlLayers, 1, wxALL, 5 );
+	bSizer4->Add( m_listCtrlLayers, 1, wxALL|wxEXPAND, 5 );
 
 	m_bSizerLayerButtons = new wxBoxSizer( wxVERTICAL );
 

@@ -870,5 +870,10 @@ void ODPoint::SetODPointRangeRingsStep(float f_ODPointRangeRingsStep)
 
 void ODPoint::AddURL(wxString URL, wxString URLDescription)
 {
-    //m_HyperlinkList-> ->insert(pURL);
+    Hyperlink *l_Link = new Hyperlink();
+    l_Link->Link = URL;
+    l_Link->DescrText = URLDescription;
+    l_Link->LType = wxEmptyString;
+    
+    m_HyperlinkList->Insert(l_Link);
 }

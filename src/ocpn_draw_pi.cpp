@@ -46,6 +46,7 @@
 #include "PIL.h"
 #include "GZMan.h"
 #include "GZProp.h"
+#include "ODLinkPropertiesDialogImpl.h"
 #include "PILProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
@@ -125,6 +126,7 @@ BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
 DRProp                  *g_pDRPropDialog;
 GZProp                  *g_pGZPropDialog;
+ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
 PILProp                 *g_pPILPropDialog;
 PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
@@ -687,6 +689,7 @@ int ocpn_draw_pi::Init(void)
     g_pGZPropDialog = NULL;
     g_pPILPropDialog = NULL;
     g_PILIndexLinePropDialog = NULL;
+    g_pODLinkPropertiesDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
     

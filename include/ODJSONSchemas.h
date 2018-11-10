@@ -137,7 +137,7 @@ static json jSchema = R"(
                     "enum": ["Name","Lat","Lon","IconName","BoundaryPointType","Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
             }
         },
-        "textpoint": {
+        "createtextpoint": {
             "description": "Used to create a text point",
             "type": "object",
             "properties": {
@@ -170,6 +170,11 @@ static json jSchema = R"(
                 "description": "Text point life, false - exists over restart, true - non persistent",
                 "type": "boolean",
                 "enum": [true,false]
+                },
+                "GUID": {
+                    "description": "GUID of Text Point",
+                    "type": "string",
+                    "optional": true
                 },
                 "TextToDisplay": {
                     "description": "Text Point Text",
@@ -233,10 +238,30 @@ static json jSchema = R"(
                 "Lon"
             ]
         },
-        "textpointproperties": {
+        "createtextpointproperties": {
             "propertyNames": {
             "enum":["Name","Lat","Lon","IconName","TextToDisplay", "TextPosition", "TextColour", "BackgroundColour", "BackgroundTransparancy", "TextFont", "TextPointDisplayTextWhen", "Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
             }
+        },
+        "deletetextpoint": {
+        "description": "Used to delete a text point",
+        "type": "object",
+        "properties": {
+            "GUID": {
+            "description": "GUID of Text Point",
+            "type": "string",
+            "optional": false
+            }
+        },
+        "required": [
+        "Lat",
+        "Lon"
+        ]
+        },
+        "createtextpointproperties": {
+        "propertyNames": {
+        "enum":["Name","Lat","Lon","IconName","TextToDisplay", "TextPosition", "TextColour", "BackgroundColour", "BackgroundTransparancy", "TextFont", "TextPointDisplayTextWhen", "Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
+        }
         },
         "boundary": {
             "description": "Used to create a boundary",
@@ -668,7 +693,7 @@ static json BoundarySchema = R"(
     }
 )"_json;
 
-static json TextPointSchema = R"(
+static json CreateTextPointSchema = R"(
     {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "title": "Create Text Point",
@@ -723,6 +748,11 @@ static json TextPointSchema = R"(
                 "description": "Visibility of Boundary Point",
                 "type": "string",
                 "enum": ["true","false"]
+            },
+            "GUID": {
+                "description": "GUID of Text Point",
+                "type": "string",
+                "optional": true
             },
             "TextToDisplay": {
                 "description": "Text Point Text",
@@ -802,4 +832,54 @@ static json TextPointSchema = R"(
     }
 )"_json;
     
+static json DeleteTextPointSchema = R"(
+    {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Create Text Point",
+    "TextPoint": {
+        "type": "object",
+        "properties": {
+            "Msg": {
+                "description": "Message Name",
+                "type": "string",
+                "enum": ["DeleteTextPoint"],
+                "optional": false
+            },
+            "Type": {
+                "description": "Type of Message",
+                "type": "string",
+                "const": ["Request"],
+                "optional": false
+            },
+            "Source": {
+                "description": "Source of message",
+                "type": "string",
+                "optional": false
+            },
+            "MsgID": {
+                "description": "Message Name",
+                "type": "string",
+                "optional": false
+            },
+            "GUID": {
+                "description": "GUID of Text Point",
+                "type": "string",
+                "optional": false
+            }
+        }
+    },
+    "required": [
+    "Msg",
+    "Type",
+    "Source",
+    "MsgId",
+    "Lat",
+    "Lon"
+    ],
+    "type": "object"
+    }
+    )"_json;
     
+
+
+

@@ -1076,7 +1076,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
   
             wxJSONValue jv_TextPoint;
             if(root[wxS("Type")].AsString() != _T("Request")) {
-                wxLogMessage( wxS("Delete Text Point Type not 'Request'") );
+                wxLogMessage( wxS("Create Text Point Type not 'Request'") );
                 bFail = true;
             }
             if(!root.HasMember( wxS("TextPoint"))) {
@@ -1100,6 +1100,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 if(jv_TextPoint.HasMember("visible")) pl_textpoint->SetVisible(jv_TextPoint[wxS("visible")].AsBool()); 
                 if(jv_TextPoint.HasMember("temporary")) pl_textpoint->m_bTemporary = jv_TextPoint[wxS("temporary")].AsBool(); 
+                if(jv_TextPoint.HasMember("GUID")) pl_textpoint->m_GUID = jv_TextPoint[wxS("GUID")].AsString(); 
+                else jv_TextPoint[wxS("GUID")] = wxEmptyString;
                 if(jv_TextPoint.HasMember("TextToDisplay")) pl_textpoint->m_TextPointText = (jv_TextPoint[wxS("TextToDisplay")].AsString()); 
                 if(jv_TextPoint.HasMember("TextPosition")) pl_textpoint->m_iTextPosition = (jv_TextPoint[wxS("TextPosition")].AsInt()); 
                 if(jv_TextPoint.HasMember("TextColour")) pl_textpoint->m_colourTextColour = (jv_TextPoint[wxS("TextColour")].AsString()); 
@@ -1169,18 +1171,14 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             
             wxJSONValue jv_TextPoint;
             if(root[wxS("Type")].AsString() != _T("Request")) {
-                wxLogMessage( wxS("Create Text Point Type not 'Request'") );
+                wxLogMessage( wxS("Delete Text Point Type not 'Request'") );
                 bFail = true;
             }
-            if(!root.HasMember( wxS("TextPoint"))) {
-                wxLogMessage( wxS("No Text Point found in message") );
+            if(!root.HasMember( wxS("GUID"))) {
+                wxLogMessage( wxS("No GUID for the Text Point found in message") );
                 bFail = true;
             } else {
                 jv_TextPoint = root[wxS("TextPoint")];
-            }
-            if(!jv_TextPoint.HasMember(wxS("Lat")) || !jv_TextPoint.HasMember(wxS("Lon"))) {
-                wxLogMessage( wxS("Text Point missing required information") );
-                bFail = true;
             }
             
             if(!bFail) {

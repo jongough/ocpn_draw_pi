@@ -45,6 +45,7 @@
 #include "GZMan.h"
 #include "EBL.h"
 #include "ODPositionParser.h"
+#include "ODLinkPropertiesDialogImpl.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/window.h>
@@ -62,9 +63,11 @@ extern GZMan                *g_pGZMan;
 extern ODConfig             *g_pODConfig;
 extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
+extern ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
 extern int                  g_iTextPosition;
 extern int                  g_iBoundaryPointRangeRingLineWidth;
 extern int                  g_iBoundaryPointRangeRingLineStyle;
+
 
 extern PI_ColorScheme       g_global_color_scheme;
 
@@ -115,6 +118,8 @@ ODPointPropertiesDialog( parent )
     m_bODIComboBoxODPointIconName->SetMinSize( wxSize(-1, min_size) );
     m_fgSizerNameIcon->Replace(m_bcomboBoxODPointIconName, m_bODIComboBoxODPointIconName );
     
+    m_pHyperLinkList = new HyperlinkList();
+    
     delete m_bcomboBoxODPointIconName;
     
     SetDialogSize();
@@ -141,19 +146,28 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     fsize.y = wxMin(fsize.y, dsize.y-80);
     fsize.x = wxMin(fsize.x, dsize.x-80);
     SetSize(fsize);
-    wxSize sz = m_SizerBasicProperties->CalcMin();
+    m_bSizerLinks->RecalcSizes();
+    wxSize sz = m_bSizerLinks->CalcMin();
+    sz.y = m_sSingleLineSize.y * 2;
+    m_bSizerLinks->SetMinSize(sz);
+    //m_bSizerLinks->FitInside(m_scrolledWindowLinks);
+    m_bSizerHyperlink->Layout();
+    m_scrolledWindowLinks->SetMinClientSize(sz);
+    m_scrolledWindowLinks->Layout();
+    m_bSizerHyperlinkExt->Layout();
+    m_SizerOuterProperties->Layout();
+    m_SizerBasicProperties->Layout();
+    m_SizerDialogBox->RecalcSizes();
+    sz = m_SizerBasicProperties->CalcMin();
     sz.y /= 2;
     m_SizerBasicProperties->SetMinSize(sz);
     m_SizerBasicProperties->FitInside(m_scrolledWindowBasicProperties);
     m_SizerODPointRangeRingsSelect->Layout();
     m_SizerFill->Layout();
-    m_SizerOuterProperties->Layout();
-    m_SizerBasicProperties->Layout();
     m_scrolledWindowBasicProperties->Layout();
-    m_SizerDialogBox->RecalcSizes();
     sz = m_SizerDialogBox->CalcMin();
     sz.IncBy(15);
-    sz.y /= 2;
+   sz.y /= 2;
     m_SizerDialogBox->SetMinSize(sz);
     m_SizerDialogBox->Layout();
     this->GetSizer()->Fit( this );
@@ -236,6 +250,11 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_bPointPropertiesBlink = false;
         m_pODPoint->m_bPtIsSelected = false;
+        m_pODPoint->SetVisible( m_bIsVisible_save );
+        m_pODPoint->SetNameShown( m_bShowName_save );
+        m_pODPoint->SetPosition( m_lat_save, m_lon_save );
+        m_pODPoint->SetIconName( m_IconName_save );
+        m_pODPoint->ReLoadIcon();
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
     }
@@ -275,7 +294,6 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
         m_pODPoint->SetPosition( m_lat_save, m_lon_save );
         m_pODPoint->SetIconName( m_IconName_save );
         m_pODPoint->ReLoadIcon();
-        m_pODPoint->m_HyperlinkList->Clear();
     }
 
     Show( false );
@@ -303,6 +321,77 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
     }
     
     ODPointPropertiesDialog::OnRadioBoxPointType(event);
+}
+
+void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
+{
+    m_toggleBtnDeleteLink->SetValue(false);
+    m_toggleBtnEditLink->SetValue(false);
+    m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
+    if(g_pODLinkPropertiesDialog == NULL)
+        g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
+    
+    g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
+    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
+        wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
+        if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
+        Hyperlink* h = new Hyperlink();
+        h->DescrText = desc;
+        h->Link = g_pODLinkPropertiesDialog->GetLinkURL();
+        h->LType = wxEmptyString;
+        //m_pODPoint->m_HyperlinkList->Append( h );
+        m_pHyperLinkList->Append(h);
+        UpdateProperties();
+    }
+}
+
+void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
+{
+    wxString findurl = m_pClickedLink->GetURL();
+    wxString findlabel = m_pClickedLink->GetLabel();
+    
+    if(g_pODLinkPropertiesDialog == NULL)
+        g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
+    
+    if(m_pHyperLinkList->GetCount()) {
+        wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
+        while(l_plinknode) {
+            Hyperlink *l_link = l_plinknode->GetData();
+            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+                g_pODLinkPropertiesDialog->SetLinkDescription(l_link->DescrText);
+                g_pODLinkPropertiesDialog->SetLinkURL(l_link->Link);
+                if(g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
+                    l_link->DescrText = g_pODLinkPropertiesDialog->GetLinkDescription();
+                    l_link->Link = g_pODLinkPropertiesDialog->GetLinkURL();
+                    UpdateProperties();
+                }
+                break;
+            }
+            l_plinknode = l_plinknode->GetNext();
+        }
+    }
+    
+    event.Skip();
+}
+
+void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
+{
+    wxString findurl = m_pClickedLink->GetURL();
+    wxString findlabel = m_pClickedLink->GetLabel();
+    
+    if(m_pHyperLinkList->GetCount()) {
+        wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
+        while(l_plinknode) {
+            Hyperlink *l_link = l_plinknode->GetData();
+            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+                m_pHyperLinkList->DeleteNode(l_plinknode);
+                break;
+            }
+            l_plinknode = l_plinknode->GetNext();
+        }
+        UpdateProperties();
+    }
 }
 
 void ODPointPropertiesImpl::SaveChanges()
@@ -399,6 +488,15 @@ void ODPointPropertiesImpl::SaveChanges()
         } else
             m_pODPoint->m_bDynamicName = false;
 
+        m_pODPoint->m_HyperlinkList->Clear();
+        HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
+        wxHyperlinkListNode *linknode = m_pHyperLinkList->GetFirst();
+        while( linknode ) {
+            Hyperlink *link = linknode->GetData();
+            m_pODPoint->m_HyperlinkList->Append(link);
+            linknode = linknode->GetNext();
+        }
+        
         if( m_pODPoint->m_bIsInPath ) {
             // Update the Path segment selectables
             g_pODSelect->UpdateSelectablePathSegments( m_pODPoint );
@@ -433,7 +531,6 @@ void ODPointPropertiesImpl::SaveChanges()
         } else
             g_pODConfig->UpdateODPoint( m_pODPoint );
 
-            // No general settings need be saved pConfig->UpdateSettings();
     }
     return;
 }
@@ -445,6 +542,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_pODPoint->m_bPtIsSelected = FALSE;
         m_pODPoint->m_bPointPropertiesBlink = false;
     }
+
     if(pOP->m_sTypeString == wxT("Text Point")) {
         m_pTextPoint = (TextPoint *)pOP;
         m_pODPoint = m_pTextPoint;
@@ -453,6 +551,23 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_pODPoint = m_pBoundaryPoint;
     } else {
         m_pODPoint = pOP;
+    }
+    
+    m_pHyperLinkList->clear();
+    
+    int NbrOfLinks = m_pODPoint->m_HyperlinkList->GetCount();
+    if( NbrOfLinks > 0 ) {
+        HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
+        wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
+        while( linknode ) {
+            Hyperlink *link = linknode->GetData();
+            Hyperlink* h = new Hyperlink();
+            h->DescrText = link->DescrText;
+            h->Link = link->Link;
+            h->LType = wxEmptyString;
+            m_pHyperLinkList->Append( h );
+            linknode = linknode->GetNext();
+        }
     }
     
     if( m_pODPoint ) {
@@ -465,6 +580,11 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_bIsVisible_save = m_pODPoint->m_bIsVisible;
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     }
+    
+    m_toggleBtnDeleteLink->SetValue(false);
+    m_toggleBtnEditLink->SetValue(false);
+    m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
 }
 
 bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
@@ -559,6 +679,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_choicePointRangeRingsNumber->Enable( false );
             m_textCtrlODPointRangeRingsSteps->SetEditable( false );
             m_colourPickerRangeRingsColour->Enable( false );
+            m_bSizerLinkButtons->Show( false );
+            m_buttonAddLink->Enable( false );
+            m_toggleBtnEditLink->Enable( false );
+            m_toggleBtnDeleteLink->Enable( false );
         } else {
             m_textName->SetEditable( true );
             m_textDescription->SetEditable( true );
@@ -574,6 +698,12 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_choicePointRangeRingsNumber->Enable( true );
             m_textCtrlODPointRangeRingsSteps->SetEditable( true );
             m_colourPickerRangeRingsColour->Enable( true );
+            m_bSizerLinkButtons->Show( true );
+            m_buttonAddLink->Enable( true );
+            if(m_pODPoint->m_HyperlinkList->GetCount() > 0) {
+                m_toggleBtnEditLink->Enable( true );
+                m_toggleBtnDeleteLink->Enable( true );
+            }
         }
         m_textName->SetValue( m_pODPoint->GetName() );
 
@@ -680,6 +810,44 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_checkBoxChangeAllPointIcons->SetValue( false );
         
         icons = NULL;
+        
+        
+        //if(m_pODPoint->m_HyperlinkList->GetCount() > 0) {
+        //    Hyperlink *l_HyperLink = new HyperLink();
+            //m_textCtrlLinkDescription->SetValue(m_pOD)
+            //l_HyperLink->DescrText = m_pODPoint->m_HyperlinkList->GetFirst()->
+        //}
+        int linkcount = m_bSizerLinks->GetItemCount();
+        m_bSizerLinks->Clear(true);
+        
+        int NbrOfLinks = m_pHyperLinkList->GetCount();
+        //HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
+        bool lFirstLine = true;
+        if( NbrOfLinks > 0 ) {
+            wxHyperlinkListNode *linknode = m_pHyperLinkList->GetFirst();
+            while( linknode ) {
+                Hyperlink *link = linknode->GetData();
+                wxString Link = link->Link;
+                wxString Descr = link->DescrText;
+                
+                wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
+                                                             Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
+                ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
+                               wxHyperlinkEventHandler( ODPointPropertiesImpl::OnHyperLinkClick ), NULL, this );
+                if( !m_pODPoint->m_bIsInLayer ) ctrl->Connect( wxEVT_RIGHT_DOWN,
+                    wxMouseEventHandler( ODPointPropertiesImpl::HyperLinkContextMenu ), NULL, this );
+                
+                m_bSizerLinks->Add( ctrl, 1, wxALL | wxALIGN_LEFT, 0);
+                if(lFirstLine) {
+                    lFirstLine = false;
+                    m_sSingleLineSize = m_bSizerLinks->CalcMin();
+                }
+                
+                linknode = linknode->GetNext();
+            }
+        }
+        
+        
         
         wxString caption( wxS("") );
         if(m_pODPoint->m_bIsInLayer) {
@@ -801,4 +969,104 @@ void ODPointPropertiesImpl::ValidateMark( void )
         UpdateProperties();
     }
 }
+
+void ODPointPropertiesImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
+{
+    if( m_toggleBtnEditLink->GetValue() ) {
+        m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
+        OnEditLink( event );
+        event.Skip( false );
+        return;
+    }
+    if( m_toggleBtnDeleteLink->GetValue() ) {
+        m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
+        OnDeleteLink( event );
+        event.Skip( false );
+        return;
+    }
+    //    Windows has trouble handling local file URLs with embedded anchor points, e.g file://testfile.html#point1
+    //    The trouble is with the wxLaunchDefaultBrowser with verb "open"
+    //    Workaround is to probe the registry to get the default browser, and open directly
+    //
+    //    But, we will do this only if the URL contains the anchor point charater '#'
+    //    What a hack......
+    
+    #ifdef __WXMSW__
+    
+    wxString cc = event.GetLinkURL();
+    if( cc.Find( _T("#") ) != wxNOT_FOUND ) {
+        wxRegKey RegKey( wxString( _T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command") ) );
+        if( RegKey.Exists() ) {
+            wxString command_line;
+            RegKey.QueryValue( wxString( _T("") ), command_line );
+            
+            //  Remove "
+            command_line.Replace( wxString( _T("\"") ), wxString( _T("") ) );
+            
+            //  Strip arguments
+            int l = command_line.Find( _T(".exe") );
+            if( wxNOT_FOUND == l ) l = command_line.Find( _T(".EXE") );
+            
+            if( wxNOT_FOUND != l ) {
+                wxString cl = command_line.Mid( 0, l + 4 );
+                cl += _T(" ");
+                cc.Prepend( _T("\"") );
+                cc.Append( _T("\"") );
+                cl += cc;
+                wxExecute( cl );        // Async, so Fire and Forget...
+            }
+        }
+    } else
+        event.Skip();
+    #else
+    wxString url = event.GetURL();
+    url.Replace(_T(" "), _T("%20") );
+    ::wxLaunchDefaultBrowser(url);
+    //    event.Skip();
+    #endif
+}
+
+void ODPointPropertiesImpl::HyperLinkContextMenu( wxMouseEvent &event )
+{
+    m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
+    m_scrolledWindowLinks->PopupMenu( m_menuLink,
+                                      m_pClickedLink->GetPosition().x + event.GetPosition().x,
+                                      m_pClickedLink->GetPosition().y + event.GetPosition().y );
+    
+}
+
+void ODPointPropertiesImpl::OnEditLinkToggle( wxCommandEvent& event )
+{
+    if( m_toggleBtnEditLink->GetValue() ) 
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are opened for editing.") );
+    else
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
+    if(m_toggleBtnDeleteLink->GetValue())
+        m_toggleBtnDeleteLink->SetValue(false);
+    event.Skip();
+}
+
+void ODPointPropertiesImpl::OnDeleteLinkToggle( wxCommandEvent& event )
+{
+    if( m_toggleBtnDeleteLink->GetValue() ) 
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are deleted.") );
+    else
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
+    if(m_toggleBtnEditLink->GetValue())
+        m_toggleBtnEditLink->SetValue(false);
+    event.Skip();
+}
+
+void ODPointPropertiesImpl::OnMenuSelection(wxCommandEvent& event)
+{
+    if(event.GetId() == m_menuItemDelete->GetId())
+        OnDeleteLink(event);
+    if(event.GetId() == m_menuItemEdit->GetId())
+        OnEditLink(event);
+    if(event.GetId() == m_menuItemAddNew->GetId())
+        OnAddLink(event);
+}
+
 

@@ -1016,7 +1016,6 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
 
     for( pugi::xml_node child = opt_node.first_child(); child != 0; child = child.next_sibling() ) {
         const char *pcn = child.name();
-        
         if( !strcmp( pcn, "sym" ) ) {
             SymString.clear();
             SymString.append( wxString::FromUTF8( child.first_child().value() ) );

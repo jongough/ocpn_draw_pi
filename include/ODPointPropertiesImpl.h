@@ -127,6 +127,12 @@ protected:
     void OnLeaveLongitude( wxFocusEvent& event ) {m_bLongitudeLocked = false;};
     void OnEnterArrivalRadius( wxFocusEvent& event ) {m_bArrivalRadiusLocked = true;};
     void OnLeaveArrivalRadius( wxFocusEvent& event ) {m_bArrivalRadiusLocked = false;};
+    void OnAddLink( wxCommandEvent& event );
+    void OnEditLink( wxCommandEvent& event );
+    void OnDeleteLink( wxCommandEvent& event );
+    void OnEditLinkToggle( wxCommandEvent& event );
+    void OnDeleteLinkToggle( wxCommandEvent& event );
+    void OnMenuSelection( wxCommandEvent& event );
     
     void SaveChanges();
     
@@ -145,23 +151,29 @@ public:
     void ValidateMark( void );
     
 private:
-      ODPoint       *m_pODPoint;
-      TextPoint     *m_pTextPoint;
-      BoundaryPoint *m_pBoundaryPoint;
-      wxString      m_text_lat;
-      wxString      m_text_lon;
-      double        m_lat_save;
-      double        m_lon_save;
-      wxString      m_IconName_save;
-      bool          m_bShowName_save;
-      bool          m_bIsVisible_save;
-      int           m_iFontNamePosition;
-      wxFontDialog  *m_pfdDialog;
-      double        m_dODPointRangeRingSteps;
-      double        m_dODPointArrivalRadius;
-      bool          m_bLatitudeLocked;
-      bool          m_bLongitudeLocked;
-      bool          m_bArrivalRadiusLocked;
+    void OnHyperLinkClick( wxHyperlinkEvent &event );
+    void HyperLinkContextMenu( wxMouseEvent &event );
+    
+    ODPoint         *m_pODPoint;
+    TextPoint       *m_pTextPoint;
+    BoundaryPoint   *m_pBoundaryPoint;
+    wxString        m_text_lat;
+    wxString        m_text_lon;
+    double          m_lat_save;
+    double          m_lon_save;
+    wxString        m_IconName_save;
+    bool            m_bShowName_save;
+    bool            m_bIsVisible_save;
+    int             m_iFontNamePosition;
+    wxFontDialog    *m_pfdDialog;
+    double          m_dODPointRangeRingSteps;
+    double          m_dODPointArrivalRadius;
+    bool            m_bLatitudeLocked;
+    bool            m_bLongitudeLocked;
+    bool            m_bArrivalRadiusLocked;
+    wxHyperlinkCtrl *m_pClickedLink;
+    HyperlinkList   *m_pHyperLinkList;
+    wxSize          m_sSingleLineSize;
 };
 
 #endif // __ODPointPropertiesImpl__
