@@ -71,6 +71,12 @@ enum {
     TEXTPOINT_TEXT_BACKGROUND_TRANSPARANCY_DEFAULT = -1
 };
 
+struct HyperLinkList_t {
+    wxString    sDescription;
+    wxString    sLink;
+    wxString    sType;
+};
+
 struct FindPointInAnyBoundary_t {
     double  dLat;
     double  dLon;
@@ -112,6 +118,7 @@ struct CreateBoundaryPoint_t {
     bool        defaultRingColour;
     wxColour    ringscolour;
     wxString    GUID;
+    std::list   <HyperLinkList_t *> BoundaryPointHyperLinkList;
 };
 
 struct CreateBoundary_t {
@@ -152,6 +159,7 @@ struct CreateTextPoint_t {
     wxString    GUID;
     wxString    URL;
     wxString    URLDescription;
+    std::list   <HyperLinkList_t *> TextPointHyperLinkList;
     bool        temporary;
 };
 

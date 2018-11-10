@@ -274,6 +274,11 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
         l_pBP->SetODPointRangeRingsStepUnits((*it)->ringsunits);
         if(!(*it)->defaultRingColour)
             l_pBP->SetODPointRangeRingsColour((*it)->ringscolour);
+        std::list<HyperLinkList_t *>::iterator l_it = (*it)->BoundaryPointHyperLinkList.begin();
+        while(l_it != (*it)->BoundaryPointHyperLinkList.end()) {
+            l_pBP->AddURL((*l_it)->sLink, (*l_it)->sDescription);
+            ++l_it;
+        }
         
         ++it;
     }
@@ -305,14 +310,6 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
     
     return true;
 }
-
-//bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP, wxString *GUID)
-//{
-//    bool bRet = OD_CreateBoundaryPoint(pCBP);
-//    if(GUID != NULL) 
-//        GUID->append(*m_psGUID);
-//    return bRet;
-//}
 
 bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 {
@@ -350,6 +347,11 @@ bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
     l_pBP->m_bIsolatedMark = true;
     l_pBP->m_bIsInBoundary = false;
     l_pBP->m_bIsInPath = false;
+    std::list<HyperLinkList_t *>::iterator l_it = pCBP->BoundaryPointHyperLinkList.begin();
+    while(l_it != pCBP->BoundaryPointHyperLinkList.end()) {
+        l_pBP->AddURL((*l_it)->sLink, (*l_it)->sDescription);
+        ++l_it;
+    }
     
     g_pODPointMan->AddODPoint(l_pBP);
     g_pODSelect->AddSelectableODPoint(pCBP->lat, pCBP->lon, l_pBP);
@@ -408,8 +410,12 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
     l_pTP->CreateColourSchemes();
     l_pTP->SetColourScheme();
     l_pTP->m_bTemporary = pCTP->temporary;
-    l_pTP->AddURL(pCTP->URL, pCTP->URLDescription);
-
+    std::list<HyperLinkList_t *>::iterator l_it = pCTP->TextPointHyperLinkList.begin();
+    while(l_it != pCTP->TextPointHyperLinkList.end()) {
+        l_pTP->AddURL((*l_it)->sLink, (*l_it)->sDescription);
+        ++l_it;
+    }
+    
     g_pODPointMan->AddODPoint(l_pTP);
     g_pODSelect->AddSelectableODPoint(pCTP->lat, pCTP->lon, l_pTP);
     if(pCTP->temporary) {

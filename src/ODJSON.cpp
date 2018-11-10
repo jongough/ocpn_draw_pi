@@ -834,6 +834,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
 #endif
             wxJSONValue jv_Boundary;
             wxJSONValue jv_BoundaryPoint;
+            wxJSONValue jv_BoundaryPointHyperlink;
             if(root[wxS("Type")].AsString() != _T("Request")) {
                 wxLogMessage( wxS("Create Boundary Type not 'Request'") );
                 bFail = true;
@@ -901,6 +902,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     if(jv_BoundaryPoint.HasMember("ringssteps")) pl_boundarypoint->SetODPointRangeRingsStep(jv_BoundaryPoint[wxS("ringssteps")].AsDouble());
                     if(jv_BoundaryPoint.HasMember("ringunits")) pl_boundarypoint->SetODPointRangeRingsStepUnits(jv_BoundaryPoint[wxS("ringsunits")].AsInt());
                     if(jv_BoundaryPoint.HasMember("ringscolour")) pl_boundarypoint->SetODPointRangeRingsColour(jv_BoundaryPoint[wxS("ringscolour")].AsString());
+                    if(jv_BoundaryPoint.HasMember("HyperLinks")) {
+                        for(int i = 0; i< jv_BoundaryPoint[wxS("HyperLinks")].Size(); i++) {
+                            jv_BoundaryPointHyperlink = jv_BoundaryPoint[wxS("HyperLinks")].Item(i);
+                            if(jv_BoundaryPointHyperlink.HasMember("LinkURL") && jv_BoundaryPointHyperlink.HasMember("LinkDescription"))
+                                pl_boundarypoint->AddURL(jv_BoundaryPointHyperlink[wxS("LinkURL")].AsString(), jv_BoundaryPointHyperlink[wxS("LinkDescription")].AsString());
+                        }
+                    }
                     pl_boundarypoint->CreateColourSchemes();
                     pl_boundarypoint->SetColourScheme();
                 }
@@ -967,6 +975,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
 #endif
 
             wxJSONValue jv_BoundaryPoint;
+            wxJSONValue jv_BoundaryPointHyperlink;
             if(root[wxS("Type")].AsString() != _T("Request")) {
                 wxLogMessage( wxS("Create Boundary Point Type not 'Request'") );
                 bFail = true;
@@ -1016,6 +1025,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 if(jv_BoundaryPoint.HasMember("ringssteps")) pl_boundarypoint->SetODPointRangeRingsStep(jv_BoundaryPoint[wxS("ringssteps")].AsDouble());
                 if(jv_BoundaryPoint.HasMember("ringunits")) pl_boundarypoint->SetODPointRangeRingsStepUnits(jv_BoundaryPoint[wxS("ringsunits")].AsInt());
                 if(jv_BoundaryPoint.HasMember("ringscolour")) pl_boundarypoint->SetODPointRangeRingsColour(jv_BoundaryPoint[wxS("ringscolour")].AsString());
+                if(jv_BoundaryPoint.HasMember("HyperLinks")) {
+                    for(int i = 0; i< jv_BoundaryPoint[wxS("HyperLinks")].Size(); i++) {
+                        jv_BoundaryPointHyperlink = jv_BoundaryPoint[wxS("HyperLinks")].Item(i);
+                        if(jv_BoundaryPointHyperlink.HasMember("LinkURL") && jv_BoundaryPointHyperlink.HasMember("LinkDescription"))
+                            pl_boundarypoint->AddURL(jv_BoundaryPointHyperlink[wxS("LinkURL")].AsString(), jv_BoundaryPointHyperlink[wxS("LinkDescription")].AsString());
+                    }
+                }
                 pl_boundarypoint->m_bIsolatedMark = true;
                 pl_boundarypoint->m_bIsInBoundary = false;
                 pl_boundarypoint->m_bIsInPath = false;
@@ -1075,6 +1091,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
 #endif
   
             wxJSONValue jv_TextPoint;
+            wxJSONValue jv_TextPointHyperlink;
             if(root[wxS("Type")].AsString() != _T("Request")) {
                 wxLogMessage( wxS("Create Text Point Type not 'Request'") );
                 bFail = true;
@@ -1084,10 +1101,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 bFail = true;
             } else {
                 jv_TextPoint = root[wxS("TextPoint")];
-            }
-            if(!jv_TextPoint.HasMember(wxS("GUID"))) {
-                wxLogMessage( wxS("Delete Text Point missing required GUID information") );
-                bFail = true;
             }
   
             if(!bFail) {
@@ -1112,6 +1125,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 if(jv_TextPoint.HasMember("ringssteps")) pl_textpoint->SetODPointRangeRingsStep(jv_TextPoint[wxS("ringssteps")].AsDouble());
                 if(jv_TextPoint.HasMember("ringunits")) pl_textpoint->SetODPointRangeRingsStepUnits(jv_TextPoint[wxS("ringsunits")].AsInt());
                 if(jv_TextPoint.HasMember("ringscolour")) pl_textpoint->SetODPointRangeRingsColour(jv_TextPoint[wxS("ringscolour")].AsString());
+                if(jv_TextPoint.HasMember("HyperLinks")) {
+                    for(int i = 0; i< jv_TextPoint[wxS("HyperLinks")].Size(); i++) {
+                        jv_TextPointHyperlink = jv_TextPoint[wxS("HyperLinks")].Item(i);
+                        if(jv_TextPointHyperlink.HasMember("LinkURL") && jv_TextPointHyperlink.HasMember("LinkDescription"))
+                            pl_textpoint->AddURL(jv_TextPointHyperlink[wxS("LinkURL")].AsString(), jv_TextPointHyperlink[wxS("LinkDescription")].AsString());
+                    }
+                }
                 pl_textpoint->m_bIsolatedMark = true;
                 pl_textpoint->m_bIsInPath = false;
                 pl_textpoint->CreateColourSchemes();

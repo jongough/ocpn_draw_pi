@@ -124,7 +124,28 @@ static json jSchema = R"(
                 "RingsColour": {
                     "description": "Boundary Point Range Rings Colour",
                     "type": "string"
+                },
+                "HyperLinks": {
+                    "description": "Array of hyperlinks to local or internet documents",
+                    "type": array,
+                    "Items": [
+                        {
+                            "LinkDescription": {
+                                "description": "Text description of hyper link",
+                                "type": "string"
+                            },
+                            "LinkURL": {
+                                "description": "Actual Hyperlink",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "LinkDescription",
+                            "LinkURL"
+                        ]
+                    ]
                 }
+                
             },
             "required": [
                 "Lat",
@@ -231,6 +252,26 @@ static json jSchema = R"(
                 "RingsColour": {
                     "description": "Text Point Range Rings Colour",
                     "type": "string"
+                },
+                "HyperLinks": {
+                    "description": "Array of hyperlinks to local or internet documents",
+                    "type": array,
+                    "Items": [
+                        {
+                            "LinkDescription": {
+                                "description": "Text description of hyper link",
+                                "type": "string"
+                            },
+                            "LinkURL": {
+                                "description": "Actual Hyperlink",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "LinkDescription",
+                            "LinkURL"
+                        ]
+                    ]
                 }
             },
             "required": [
@@ -254,13 +295,12 @@ static json jSchema = R"(
             }
         },
         "required": [
-        "Lat",
-        "Lon"
+        "GUID"
         ]
         },
-        "createtextpointproperties": {
+        "deletetextpointproperties": {
         "propertyNames": {
-        "enum":["Name","Lat","Lon","IconName","TextToDisplay", "TextPosition", "TextColour", "BackgroundColour", "BackgroundTransparancy", "TextFont", "TextPointDisplayTextWhen", "Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
+        "enum":["GUID"]
         }
         },
         "boundary": {
@@ -462,7 +502,28 @@ static std::string sbpSchemaBody = R"(
             "RingsColour": {
                 "description": "Boundary Point Range Rings Colour",
                 "type": "string"
+            },
+            "HyperLinks": {
+                "description": "Array of hyperlinks to local or internet documents",
+                "type": array,
+                "Items": [
+                    {
+                        "LinkDescription": {
+                        "description": "Text description of hyper link",
+                        "type": "string"
+                        },
+                        "LinkURL": {
+                        "description": "Actual Hyperlink",
+                        "type": "string"
+                        }
+                    },
+                    "required": [
+                    "LinkDescription",
+                    "LinkURL"
+                    ]
+                ]
             }
+            
         },
     }
     "required": [
@@ -557,7 +618,28 @@ static json BoundaryPointSchema = R"(
             "RingsColour": {
                 "description": "Boundary Point Range Rings Colour",
                 "type": "string"
+            },
+            "HyperLinks": {
+                "description": "Array of hyperlinks to local or internet documents",
+                "type": array,
+                "Items": [
+                    {
+                        "LinkDescription": {
+                        "description": "Text description of hyper link",
+                        "type": "string"
+                        },
+                        "LinkURL": {
+                        "description": "Actual Hyperlink",
+                        "type": "string"
+                        }
+                    },
+                    "required": [
+                        "LinkDescription",
+                        "LinkURL"
+                    ]
+                ]
             }
+            
         },
         "required": [
             "Msg",
@@ -817,7 +899,28 @@ static json CreateTextPointSchema = R"(
             "RingsStyle": {
                 "description": "Text Point Range Rings Colour",
                 "type": "string"
+            },
+            "HyperLinks": {
+                "description": "Array of hyperlinks to local or internet documents",
+                "type": array,
+                "Items": [
+                    {
+                    "LinkDescription": {
+                        "description": "Text description of hyper link",
+                        "type": "string"
+                    },
+                    "LinkURL": {
+                        "description": "Actual Hyperlink",
+                        "type": "string"
+                    }
+                    },
+                    "required": [
+                        "LinkDescription",
+                        "LinkURL"
+                    ]
+                ]
             }
+            
         }
     },
     "required": [
