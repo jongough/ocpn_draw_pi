@@ -91,7 +91,7 @@ class ViewPort
 
             LLRegion GetLLRegion( const OCPNRegion &region );
             OCPNRegion GetVPRegionIntersect( const OCPNRegion &region, const LLRegion &llregion, int chart_native_scale );
-            OCPNRegion GetVPRegionIntersect( const OCPNRegion &Region, size_t nPoints, float *llpoints,
+            OCPNRegion GetVPRegionIntersect( const OCPNRegion &Region, int nPoints, float *llpoints,
                                              int chart_native_scale, wxPoint *ppoints );
             wxRect GetVPRectIntersect( size_t n, float *llpoints );
             ViewPort BuildExpandedVP(int width, int height);
@@ -107,7 +107,7 @@ class ViewPort
             void SetProjectionType(int type){ m_projection_type = type; }
 
             LLBBox &GetBBox() { return vpBBox; }
-            LLBBox GetBBoxView();
+
             void SetBBoxDirect( const LLBBox &bbox ) { vpBBox = bbox; }
             void SetBBoxDirect( double latmin, double lonmin, double latmax, double lonmax);
 

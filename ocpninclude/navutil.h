@@ -43,7 +43,6 @@
 
 #include "bbox.h"
 #include "chcanv.h"
-#include "tinyxml.h"
 #include "chartdbs.h"
 #include "RoutePoint.h"
 #include "vector2D.h"
@@ -86,75 +85,12 @@ extern double parseLatLon(wxString latlon);
 
 class Route;
 class NavObjectCollection;
-class wxProgressDialog;
+class wxGenericProgressDialog;
 class ocpnDC;
 class NavObjectCollection1;
 class NavObjectChanges;
-
-//----------------------------------------------------------------------------
-//    Track
-//----------------------------------------------------------------------------
-class Track : public wxEvtHandler, public Route
-{
-      public:
-            Track(void);
-            ~Track(void);
-
-            void SetPrecision(int precision);
-
-            void Start(void);
-            void Stop(bool do_add_point = false);
-            Track *DoExtendDaily(void);
-            bool IsRunning(){ return m_bRunning; }
-            void Draw(ocpnDC& dc, ViewPort &VP);
-
-            RoutePoint* AddNewPoint( vector2D point, wxDateTime time );
-            Route *RouteFromTrack(wxProgressDialog *pprog);
-
-            void DouglasPeuckerReducer( std::vector<RoutePoint*>& list, int from, int to, double delta );
-            int Simplify( double maxDelta );
-            double GetXTE(RoutePoint *fm1, RoutePoint *fm2, RoutePoint *to);
-            double GetXTE( double fm1Lat, double fm1Lon, double fm2Lat, double fm2Lon, double toLat, double toLon  );
-            int GetCurrentTrackSeg(){ return m_CurrentTrackSeg; }
-            void SetCurrentTrackSeg(int seg){ m_CurrentTrackSeg = seg; }
-            
-            void AdjustCurrentTrackPoint( RoutePoint *prototype );
-            
-      private:
-            void OnTimerTrack(wxTimerEvent& event);
-            void AddPointNow(bool do_add_point = false);
-
-            bool              m_bRunning;
-            wxTimer           m_TimerTrack;
-
-            int               m_nPrecision;
-            double            m_TrackTimerSec;
-            double            m_allowedMaxXTE;
-            double            m_allowedMaxAngle;
-
-            vector2D          m_lastAddedPoint;
-            double            m_prev_dist;
-            wxDateTime        m_prev_time;
-
-            RoutePoint        *m_lastStoredTP;
-            RoutePoint        *m_removeTP;
-            RoutePoint        *m_prevFixedTP;
-            RoutePoint        *m_fixedTP;
-            int               m_track_run;
-            double            m_minTrackpoint_delta;
-            int               m_CurrentTrackSeg;
-            
-            enum eTrackPointState {
-                firstPoint,
-                secondPoint,
-                potentialPoint
-            } trackPointState;
-
-            std::deque<vector2D> skipPoints;
-            std::deque<wxDateTime> skipTimes;
-
-DECLARE_EVENT_TABLE()
-};
+class TrackPoint;
+class TrackList;
 
 //----------------------------------------------------------------------------
 //    Static XML Helpers
@@ -168,15 +104,16 @@ DECLARE_EVENT_TABLE()
 //void InsertRoute(Route *pTentRoute, int routenum);
 //void UpdateRoute(Route *pTentRoute);
 
-GpxWptElement *CreateGPXWpt ( RoutePoint *pr, char * waypoint_type, bool b_props_explicit = false, bool b_props_minimal = false );
-GpxRteElement *CreateGPXRte ( Route *pRoute );
-GpxTrkElement *CreateGPXTrk ( Route *pRoute );
+//GpxWptElement *CreateGPXWpt ( RoutePoint *pr, char * waypoint_type, bool b_props_explicit = false, bool b_props_minimal = false );
+//GpxRteElement *CreateGPXRte ( Route *pRoute );
+//GpxTrkElement *CreateGPXTrk ( Route *pRoute );
 
 bool WptIsInRouteList(RoutePoint *pr);
 RoutePoint *WaypointExists( const wxString& name, double lat, double lon);
 RoutePoint *WaypointExists( const wxString& guid);
 Route *RouteExists( const wxString& guid);
 Route *RouteExists( Route * pTentRoute );
+Track *TrackExists( const wxString& guid );
 const wxChar *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime );
 
 //----------------------------------------------------------------------------
@@ -192,15 +129,19 @@ public:
       int LoadMyConfig();
       void LoadS57Config();
       void LoadNavObjects();
-      virtual bool AddNewRoute(Route *pr, int ConfigRouteNum = -1);
-      virtual bool UpdateRoute(Route *pr);
-      virtual bool DeleteConfigRoute(Route *pr);
+      virtual void AddNewRoute(Route *pr);
+      virtual void UpdateRoute(Route *pr);
+      virtual void DeleteConfigRoute(Route *pr);
 
-      virtual bool AddNewWayPoint(RoutePoint *pWP, int ConfigRouteNum = -1);
-      virtual bool UpdateWayPoint(RoutePoint *pWP);
-      virtual bool DeleteWayPoint(RoutePoint *pWP);
-      virtual bool AddNewTrackPoint( RoutePoint *pWP, const wxString& parent_GUID );
-      
+      virtual void AddNewTrack(Track *pt);
+      virtual void UpdateTrack(Track *pt);
+      virtual void DeleteConfigTrack(Track *pt);
+
+      virtual void AddNewWayPoint(RoutePoint *pWP, int ConfigRouteNum = -1);
+      virtual void UpdateWayPoint(RoutePoint *pWP);
+      virtual void DeleteWayPoint(RoutePoint *pWP);
+      virtual void AddNewTrackPoint( TrackPoint *pWP, const wxString& parent_GUID );
+
       virtual void CreateConfigGroups ( ChartGroupArray *pGroupArray );
       virtual void DestroyConfigGroups ( void );
       virtual void LoadConfigGroups ( ChartGroupArray *pGroupArray );
@@ -217,6 +158,7 @@ public:
       void UI_ImportGPX(wxWindow* parent, bool islayer = false, wxString dirpath = _T(""), bool isdirectory = true);
 
       bool ExportGPXRoutes(wxWindow* parent, RouteList *pRoutes, const wxString suggestedName = _T("routes"));
+      bool ExportGPXTracks(wxWindow* parent, TrackList *pRoutes, const wxString suggestedName = _T("tracks"));
       bool ExportGPXWaypoints(wxWindow* parent, RoutePointList *pRoutePoints, const wxString suggestedName = _T("waypoints"));
 
       void CreateRotatingNavObjBackup();
@@ -240,7 +182,7 @@ public:
 
 };
 
-
+void SwitchInlandEcdisMode( bool Switch );
 /*
 #include <wx/fontdlg.h>
 
@@ -332,9 +274,13 @@ class WXDLLEXPORT X11FontPicker : public wxFontDialogBase
 };
 
 
-//      Simple and fast CRC32 calculator
-
-extern "C" unsigned int crc32buf(unsigned char *buf, size_t len);
-
+class GpxDocument
+{
+public:
+    static wxString GetUUID(void);
+    static void SeedRandom();
+private:
+    static int GetRandomNumber(int min, int max);
+};
 
 #endif

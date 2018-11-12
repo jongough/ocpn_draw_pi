@@ -39,19 +39,26 @@
 #define RTE_TIME_DISP_LOCAL _T("LOCAL")
 #define RTE_UNDEF_DEPARTURE wxInvalidDateTime
 
+const wxString GpxxColorNames[] = { _T("Black"), _T("DarkRed"), _T("DarkGreen"), _T("DarkYellow"), _T("DarkBlue"), _T("DarkMagenta"), _T("DarkCyan"), _T("LightGray"), _T("DarkGray"), _T("Red"), _T("Green"), _T  ("Yellow"), _T("Blue"), _T("Magenta"), _T("Cyan"), _T("White") };//The last color defined by Garmin is transparent - we ignore it
+const wxColour GpxxColors[] = { wxColour(0x00, 0x00, 0x00), wxColour(0x60, 0x00, 0x00), wxColour(0x00, 0x60, 0x00), wxColour(0x80, 0x80, 0x00), wxColour(0x00, 0x00, 0x60), wxColour(0x60, 0x00, 0x60), wxColour(  0x00, 0x80, 0x80), wxColour(0xC0, 0xC0, 0xC0), wxColour(0x60, 0x60, 0x60), wxColour(0xFF, 0x00, 0x00), wxColour(0x00, 0xFF, 0x00), wxColour(0xF0, 0xF0, 0x00), wxColour(0x00, 0x00, 0xFF), wxColour(0xFE, 0x00, 0xFE), wxColour(0x00, 0xFF, 0xFF), wxColour(0xFF, 0xFF, 0xFF) };
+const int StyleValues[] = { -1, wxSOLID, wxDOT, wxLONG_DASH, wxSHORT_DASH, wxDOT_DASH };
+const int WidthValues[] = { -1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
 class ocpnDC;
 
 class Route : public wxObject
 {
 public:
-      Route(void);
-      ~Route(void);
+      Route();
+      ~Route();
 
+      virtual void Draw(ocpnDC& dc, ViewPort &pvp, const LLBBox &box);
+      virtual int GetnPoints(void) { return pRoutePointList->GetCount(); }
+      
       void AddPoint(RoutePoint *pNewPoint,
                     bool b_rename_in_sequence = true,
                     bool b_deferBoxCalc = false);
 
-      void AddTentativePoint(const wxString& GUID);
       RoutePoint *GetPoint(int nPoint);
       RoutePoint *GetPoint ( const wxString &guid );
       int GetIndexOf(RoutePoint *prp);
@@ -59,9 +66,8 @@ public:
       RoutePoint *InsertPointAfter(RoutePoint *pRP, double rlat, double rlon, bool bRenamePoints = false);
       void DrawPointWhich(ocpnDC& dc, int iPoint, wxPoint *rpn);
       void DrawSegment(ocpnDC& dc, wxPoint *rp1, wxPoint *rp2, ViewPort &vp, bool bdraw_arrow);
-      virtual void Draw(ocpnDC& dc, ViewPort &pvp);
       void DrawGLLines( ViewPort &vp, ocpnDC *dc );
-      virtual void DrawGL( ViewPort &vp );
+      void DrawGL( ViewPort &vp );
       void DrawGLRouteLines( ViewPort &vp );
       RoutePoint *GetLastPoint();
       void DeletePoint(RoutePoint *rp, bool bRenamePoints = false);
@@ -71,9 +77,7 @@ public:
       void UpdateSegmentDistance( RoutePoint *prp0, RoutePoint *prp, double planspeed = -1.0 );
       void UpdateSegmentDistances(double planspeed = -1.0);
       void CalculateDCRect(wxDC& dc_route, wxRect *prect);
-      int GetnPoints(void){ return m_nPoints; }
       LLBBox &GetBBox();
-      void SetnPoints(void){ m_nPoints = pRoutePointList->GetCount(); }
       void SetHiLite( int width ) {m_hiliteWidth = width; }
       void Reverse(bool bRenamePoints = false);
       void RebuildGUIDList(void);
@@ -83,9 +87,6 @@ public:
       void AssembleRoute();
       bool IsEqualTo(Route *ptargetroute);
       void CloneRoute(Route *psourceroute, int start_nPoint, int end_nPoint, const wxString & suffix);
-      void CloneTrack(Route *psourceroute, int start_nPoint, int end_nPoint, const wxString & suffix);
-      void CloneAddedTrackPoint(RoutePoint *ptargetpoint, RoutePoint *psourcepoint);
-      void CloneAddedRoutePoint(RoutePoint *ptargetpoint, RoutePoint *psourcepoint);
       void ClearHighlights(void);
       void RenderSegment(ocpnDC& dc, int xa, int ya, int xb, int yb, ViewPort &vp, bool bdraw_arrow, int hilite_width = 0);
       void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, ViewPort &vp);
@@ -96,12 +97,13 @@ public:
       bool IsListed() { return m_bListed; }
       bool IsActive() { return m_bRtIsActive; }
       bool IsSelected() { return m_bRtIsSelected; }
-      bool IsTrack(){ return m_bIsTrack; }
 
       int SendToGPS(const wxString & com_name, bool bsend_waypoints, wxGauge *pProgress);
 
       double GetRouteArrivalRadius(void){ return m_ArrivalRadius;}
       void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
+    
+      wxString GetName() const { return m_RouteNameString; }
 
       int         m_ConfigRouteNum;
       bool        m_bRtIsSelected;
@@ -115,8 +117,6 @@ public:
       wxString    m_RouteStartString;
       wxString    m_RouteEndString;
       wxString    m_RouteDescription;
-      bool        m_bIsTrack;             //TODO should use class type instead
-      RoutePoint  *m_pLastAddedPoint;
       bool        m_bDeleteOnArrival;
       wxString    m_GUID;
       bool        m_bIsInLayer;
@@ -128,21 +128,17 @@ public:
       double      m_PlannedSpeed;
       wxDateTime  m_PlannedDeparture;
       wxString    m_TimeDisplayFormat;
-      HyperlinkList     *m_HyperlinkList;
 
-      wxArrayString      RoutePointGUIDList;
       RoutePointList     *pRoutePointList;
 
       wxRect      active_pt_rect;
       wxString    m_Colour;
       bool        m_btemp;
       int         m_hiliteWidth;
-
+      
 private:
-      bool m_bNeedsUpdateBBox;
       LLBBox     RBBox;
 
-      int         m_nPoints;
       int         m_nm_sequence;
       bool        m_bVisible; // should this route be drawn?
       bool        m_bListed;

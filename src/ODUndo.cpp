@@ -36,25 +36,27 @@
 #include <wx/datetime.h>
 #include <wx/clipbrd.h>
 
-#ifdef __WXOSX__
+#include "ODundo.h"
 #include "ODConfig.h"
+#include "ODSelect.h"
+#include "ODPathPropertiesDialogImpl.h"
+#include "PointMan.h"
 #include "styles.h"
-#endif
 //#include "navutil.h"
 //#include "styles.h"
 #include "PathMan.h"
 #include "PathAndPointManagerDialogImpl.h"
+#include "ODPointPropertiesImpl.h"
 #include "tinyxml.h"
-#include "ODundo.h"
 
 extern PathMan *g_pPathMan;
 extern ODConfig *g_pODConfig;
 extern ODSelect *g_pODSelect;
 extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern ODPointman *g_pODPointMan;
+extern PointMan *g_pODPointMan;
 extern ChartCanvas *cc1;
 extern MyFrame *gFrame;
-extern MarkInfoImpl *pMarkPropDialog;
+extern ODPointPropertiesImpl *g_pODPointPropDialog;
 
 Undo::Undo()
 {

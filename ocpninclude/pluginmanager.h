@@ -42,7 +42,6 @@
 #include "chartimg.h"
 
 #ifdef USE_S57
-#include "s52s57.h"
 #include "s57chart.h"               // for Object list
 #endif
 
@@ -304,6 +303,8 @@ public:
 
       bool SendMouseEventToPlugins( wxMouseEvent &event);
       bool SendKeyEventToPlugins( wxKeyEvent &event);
+
+      void SendConfigToAllPlugIns();
       
       wxArrayString GetPlugInChartClassNameArray(void);
 
@@ -323,6 +324,7 @@ private:
       wxBitmap *BuildDimmedToolBitmap(wxBitmap *pbmp_normal, unsigned char dim_ratio);
       bool UpDateChartDataTypes(void);
       bool CheckPluginCompatibility(wxString plugin_file);
+      bool LoadPlugInDirectory(const wxString &plugin_dir, bool enabled_plugins, bool b_enable_blackdialog);
 
       MyFrame                 *pParent;
 
