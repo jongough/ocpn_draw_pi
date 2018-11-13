@@ -26,7 +26,6 @@
 #ifndef POINTMAN_H
 #define POINTMAN_H
 
-#include "chart1.h"                 // for ColorScheme definition
 #include <wx/imaglist.h>
 #include "styles.h"
 //#include "Select.h"

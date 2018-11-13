@@ -37,7 +37,6 @@
 #include "ODRolloverWin.h"
 #include "ODdc.h"
 #include "timers.h"
-#include "chart1.h"
 
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
