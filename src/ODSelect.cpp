@@ -27,10 +27,9 @@
 #include "georef.h"
 #include "vector2D.h"
 //#include "navutil.h"
-#include "chcanv.h"
+//#include "chcanv.h"
 #include "ODPath.h"
 
-extern ChartCanvas                  *ocpncc1;
 extern ocpn_draw_pi                 *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex     g_pfFix;
 extern SelectItem                   *g_pRolloverPoint;

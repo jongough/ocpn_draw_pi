@@ -55,7 +55,7 @@
 #include "ODNewODPointDialogImpl.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
-#include "chcanv.h"
+//#include "chcanv.h"
 #include "georef.h"
 #include "ODLayer.h"
 
@@ -146,7 +146,6 @@ extern GZProp       *g_pGZPropDialog;
 extern PILProp      *g_pPILPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODConfig     *g_pODConfig;
-extern ChartCanvas *ocpncc1;
 extern ChartBase *Current_Ch;
 extern PointMan      *g_pODPointMan;
 extern ODPointPropertiesImpl *g_pODPointPropDialog;
@@ -453,7 +452,7 @@ int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
 
 PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) : PathAndPointManagerDialogDef( parent )
 {
-    m_wParent = parent;
+    m_parent_window = parent;
     m_iPage = -1;
     
     long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
@@ -612,7 +611,7 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
         }
         
         // TODO fix up undo
-        //ocpncc1->undo->InvalidateUndo();
+        //m_parent_window->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
         ::wxEndBusyCursor();
     }
@@ -636,7 +635,7 @@ void PathAndPointManagerDialogImpl::OnPathDeleteAllClick( wxCommandEvent &event 
             g_pODPointPropDialog->ValidateMark();
         }
         // TODO fix up undo
-        //ocpncc1->undo->InvalidateUndo();
+        //m_parent_window->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
     }
 }
@@ -947,7 +946,7 @@ void PathAndPointManagerDialogImpl::OnPathColumnClicked( wxListEvent &event )
 
 void PathAndPointManagerDialogImpl::OnPathRightClick( wxListEvent &event )
 {
-    g_ODEventHandler->SetWindow( ocpncc1 );
+    g_ODEventHandler->SetWindow( m_parent_window );
     g_ODEventHandler->SetPath( NULL );
     g_ODEventHandler->SetPoint( (ODPoint*)NULL );
     g_ODEventHandler->PopupMenu( TYPE_PATHMGR_PATH_DLG );
@@ -1103,7 +1102,7 @@ void PathAndPointManagerDialogImpl::ZoomtoPath( ODPath *path )
         DistanceBearingMercator_Plugin( RBBox.GetMinLat(), RBBox.GetMinLon(), RBBox.GetMaxLat(),
                                         RBBox.GetMinLon(), NULL, &rh );
         
-        ocpncc1->GetSize( &ww, &wh );
+        m_parent_window->GetSize( &ww, &wh );
         
         ppm = wxMin(ww/(rw*1852), wh/(rh*1852)) * ( 100 - fabs( clat ) ) / 90;
         
@@ -1337,7 +1336,7 @@ void PathAndPointManagerDialogImpl::OnODPointToggleVisibility( wxMouseEvent &eve
 
 void PathAndPointManagerDialogImpl::OnODPointNewClick( wxCommandEvent &event )
 {
-    ODNewODPointDialogImpl *l_pType = new ODNewODPointDialogImpl(m_wParent);
+    ODNewODPointDialogImpl *l_pType = new ODNewODPointDialogImpl(m_parent_window);
     #ifndef __WXOSX__
     DimeWindow( l_pType );
     #endif
@@ -1464,7 +1463,7 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteClick( wxCommandEvent &event 
         UpdateODPointsListCtrl( wp_next, true );
         
         // TODO fix up undo
-        //ocpncc1->undo->InvalidateUndo();
+        //m_parent_window->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
         ::wxEndBusyCursor();
     }
@@ -1525,7 +1524,7 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteAllClick( wxCommandEvent &eve
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
     // TODO fix up undo
-    //ocpncc1->undo->InvalidateUndo();
+    //m_parent_window->undo->InvalidateUndo();
     RequestRefresh( GetOCPNCanvasWindow() );
 }
 
@@ -1552,7 +1551,7 @@ void PathAndPointManagerDialogImpl::SelectedODPointToggleVisibility( bool visibl
 
 void PathAndPointManagerDialogImpl::OnODPointRightClick( wxListEvent &event )
 {
-    g_ODEventHandler->SetWindow( ocpncc1 );
+    g_ODEventHandler->SetWindow( m_parent_window );
     g_ODEventHandler->SetPath( NULL );
     g_ODEventHandler->SetPoint( (ODPoint*)NULL );
     g_ODEventHandler->PopupMenu( TYPE_PATHMGR_POINT_DLG );
@@ -1739,7 +1738,7 @@ void PathAndPointManagerDialogImpl::SelectedLayerToggleVisibility( bool visible 
 
 void PathAndPointManagerDialogImpl::OnLayerRightClick( wxListEvent &event )
 {
-    g_ODEventHandler->SetWindow( ocpncc1 );
+    g_ODEventHandler->SetWindow( m_parent_window );
     g_ODEventHandler->SetPath( NULL );
     g_ODEventHandler->SetPoint( (ODPoint*)NULL );
     g_ODEventHandler->PopupMenu( TYPE_PATHMGR_LAYER_DLG );

@@ -21,8 +21,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "36")
-SET(VERSION_DATE "12/11/2018")
+SET(VERSION_PATCH "37")
+SET(VERSION_DATE "21/11/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -215,6 +215,7 @@ SET(OCPNSRC
     ocpnsrc/cutil.cpp
     ocpnsrc/geodesic.cpp
     ocpnsrc/georef.cpp
+##    ocpnsrc/gshhs.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
     ocpnsrc/TexFont.cpp
@@ -228,7 +229,7 @@ SET(OCPNHDRS
     ocpninclude/apb.hpp
     ocpninclude/bbox.h
     ocpninclude/canvasMenu.h
-    ocpninclude/chart1.h
+##    ocpninclude/chart1.h
     ocpninclude/chartbarwin.h
     ocpninclude/chartbase.h
     ocpninclude/chartdbs.h
@@ -247,6 +248,7 @@ SET(OCPNHDRS
     ocpninclude/GoToPositionDialog.h
     ocpninclude/GPwpl.hpp
     ocpninclude/gpxdocument.h
+    ocpninclude/gshhs.h
     ocpninclude/gsv.hpp
     ocpninclude/hdg.hpp
     ocpninclude/hdm.hpp
@@ -263,7 +265,6 @@ SET(OCPNHDRS
     ocpninclude/OCPNRegion.h
     ocpninclude/ocpn_plugin.h
     ocpninclude/ocpn_types.h
-    ocpninclude/pluginmanager.h
     ocpninclude/Quilt.h
     ocpninclude/Response.hpp
     ocpninclude/RMB.hpp
@@ -347,9 +348,9 @@ INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
-
 
 IF(UNIX)
  INCLUDE("cmake/FindTinyXML.cmake")
@@ -377,3 +378,7 @@ ADD_DEFINITIONS(-DTIXML_USE_STL)
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")
 INCLUDE("cmake/PluginPackage.cmake")
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS "dir='${dir}'")
+endforeach()

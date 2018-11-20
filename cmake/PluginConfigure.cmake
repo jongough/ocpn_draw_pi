@@ -111,9 +111,29 @@ IF(OPENGL_GLU_FOUND)
     ADD_DEFINITIONS(-DocpnUSE_GL)
 #    MESSAGE (STATUS "ocpnUSE_GLES defined for workaround")
 #    ADD_DEFINITIONS(-DocpnUSE_GLES)
+   
+   # We need to remove GLU from the OPENGL_LIBRARIES list
+    FOREACH (_currentLibFile ${OPENGL_LIBRARIES})
+      #MESSAGE (STATUS "    Lib File: " ${_currentLibFile})
+      SET(UCNAME ${_currentLibFile})
+      string(TOUPPER ${UCNAME} UCNAME)
+      IF(NOT ${UCNAME} MATCHES   "(.*)GLU(.*)")
+        SET( REVISED_OPENGL_LIBRARIES ${_currentLibFile} ${REVISED_OPENGL_LIBRARIES})
+      ENDIF()
+    ENDFOREACH (_currentLibFile )
+
+    SET( OPENGL_LIBRARIES ${REVISED_OPENGL_LIBRARIES})
+    MESSAGE (STATUS "    Revised GL Lib: " ${OPENGL_LIBRARIES})
+
 ELSE(OPENGL_GLU_FOUND)
     MESSAGE (STATUS "OpenGL not found..." )
 ENDIF(OPENGL_GLU_FOUND)
+
+MESSAGE (STATUS "    Adding local GLU" )
+add_subdirectory(ocpnsrc/glu)
+SET( OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
+MESSAGE (STATUS "    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
+
 
 SET(BUILD_SHARED_LIBS TRUE)
 

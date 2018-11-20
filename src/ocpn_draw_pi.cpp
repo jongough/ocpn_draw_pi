@@ -70,10 +70,9 @@
 #include "TextPoint.h"
 #include "PILPropertiesDialogImpl.h"
 
-#include "chcanv.h"
+//#include "chcanv.h"
 #include "ODLayer.h"
 #include "OCPNPlatform.h"
-#include "pluginmanager.h"
 #include "geodesic.h"
 #include "IDX_entry.h"
 #include <wx/stdpaths.h>
@@ -103,6 +102,7 @@ static const long long lNaN = 0xfff8000000000000;
 #endif
 
 ocpn_draw_pi            *g_ocpn_draw_pi;
+wxWindow                *g_parent_window;
 PathList                *g_pPathList;
 PointMan                *g_pODPointMan;
 bool                    g_bODIsNewLayer;
@@ -116,7 +116,6 @@ int                     g_cursor_y;
 ODSelect                *g_pODSelect;
 ODConfig                *g_pODConfig;
 wxString                *g_SData_Locn;
-void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
 GZMan                   *g_pGZMan;
@@ -133,13 +132,11 @@ ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 ODDRDialogImpl          *g_pODDRDialog;
-PlugInManager           *g_OD_pi_manager;
 BoundaryList            *g_pBoundaryList;
 EBLList                 *g_pEBLList;
 DRList                  *g_pDRList;
 GZList                  *g_pGZList;
 PILList                 *g_pPILList;
-ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
 int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
@@ -351,8 +348,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 :opencpn_plugin_113(ppimgr)
 {
     // Create the PlugIn icons
-    g_ppimgr = ppimgr;
-    g_OD_pi_manager = (PlugInManager *) ppimgr;
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     nBlinkerTick = 0;
@@ -479,6 +474,7 @@ int ocpn_draw_pi::Init(void)
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     m_parent_window = GetOCPNCanvasWindow();
+    g_parent_window = m_parent_window;
     
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
@@ -628,8 +624,6 @@ int ocpn_draw_pi::Init(void)
     //g_ODStyleManager = new ocpnStyle::StyleManager();
     //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
     
-    ocpncc1 = (ChartCanvas *)m_parent_window;
-    
     // Create an OCPN Draw event handler
     g_ODEventHandler = new ODEventHandler( g_ocpn_draw_pi );
     
@@ -637,7 +631,7 @@ int ocpn_draw_pi::Init(void)
     g_pRolloverPathSeg = NULL;
     g_pRolloverPoint = NULL;
     
-    m_RolloverPopupTimer.SetOwner( ocpncc1, ODROPOPUP_TIMER );
+    m_RolloverPopupTimer.SetOwner( m_parent_window, ODROPOPUP_TIMER );
     m_rollover_popup_timer_msec = 20;
     m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
@@ -2505,7 +2499,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             bRefresh = TRUE;
             bret = TRUE;
         } else if( m_pBoundaryList.size() > 0 ) {
-            g_ODEventHandler->SetCanvas( ocpncc1 );
+            g_ODEventHandler->SetWindow( m_parent_window );
             g_ODEventHandler->SetBoundaryList( m_pBoundaryList );
             g_ODEventHandler->PopupMenu( SELTYPE_BOUNDARYLIST );
             m_pBoundaryList.clear();
@@ -2535,7 +2529,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 } else if(m_pFoundODPoint) {
                     m_pFoundODPoint->m_bPointPropertiesBlink = true;
                 }
-                g_ODEventHandler->SetCanvas( ocpncc1 );
+                g_ODEventHandler->SetWindow( m_parent_window );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetPIL( m_iPILId );
@@ -3596,7 +3590,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
 bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
 {
     if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
-        g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
+        g_pODDRDialog = new ODDRDialogImpl( m_parent_window );
     
     g_pODDRDialog->SetupDialog();
     DimeWindow( g_pODDRDialog );

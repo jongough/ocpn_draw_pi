@@ -50,6 +50,9 @@
 #include <wx/menu.h>
 #include <wx/window.h>
 #include <wx/fontdlg.h>
+#ifdef __WXMSW__
+#include <wx/msw/registry.h>
+#endif
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
@@ -994,7 +997,7 @@ void ODPointPropertiesImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
     
     #ifdef __WXMSW__
     
-    wxString cc = event.GetLinkURL();
+    wxString cc = event.GetURL();
     if( cc.Find( _T("#") ) != wxNOT_FOUND ) {
         wxRegKey RegKey( wxString( _T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command") ) );
         if( RegKey.Exists() ) {

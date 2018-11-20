@@ -43,7 +43,7 @@
 #include "ODConfig.h"
 #include "ODEventHandler.h"
 #include "ODUtils.h"
-#include "chcanv.h"
+//#include "chcanv.h"
 
 #include <algorithm>
 
@@ -213,10 +213,10 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
         wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
         delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
     }
-    ChartCanvas *l_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
-    l_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
-    l_parentcanvas->PopupMenu( &menu );
-    l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    wxWindow *l_parentwindow = GetOCPNCanvasWindow();
+    l_parentwindow->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    l_parentwindow->PopupMenu( &menu );
+    l_parentwindow->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
 
 void ODPathPropertiesDialogImpl::OnRightClickPIL( wxMouseEvent& event )
@@ -231,10 +231,10 @@ void ODPathPropertiesDialogImpl::OnRightClickPIL( wxMouseEvent& event )
     wxMenuItem* delItem = menu.Append( ID_PILPROP_MENU_REMOVE, _("&Remove Selected") );
     delItem->Enable( m_listCtrlPILList->GetSelectedItemCount() > 0 );
 
-    ChartCanvas *l_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
-    l_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
-    l_parentcanvas->PopupMenu( &menu );
-    l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    wxWindow *l_parentwindow = GetOCPNCanvasWindow();
+    l_parentwindow->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    l_parentwindow->PopupMenu( &menu );
+    l_parentwindow->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
 void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
 {

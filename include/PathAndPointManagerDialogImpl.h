@@ -80,7 +80,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         int m_lastPathItem;
         
         int m_iPage;
-        wxWindow *m_wParent;
+        wxWindow *m_parent_window;
         
     protected:
         // Handlers for PathAndPointManagerDialogDef events.

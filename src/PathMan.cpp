@@ -53,7 +53,7 @@
 #include "PIL.h"
 
 #include "georef.h"
-#include "pluginmanager.h"
+//#include "pluginmanager.h"
 #include "cutil.h"
 
 #include <wx/dir.h>
@@ -81,7 +81,6 @@ extern GZList       *g_pGZList;
 extern PILList      *g_pPILList;
 extern ODConfig     *g_pODConfig;
 extern ODSelect      *g_pODSelect;
-extern PlugInManager  *g_OD_pi_manager;
 extern int             g_path_line_width;
 
 //--------------------------------------------------------------------------------

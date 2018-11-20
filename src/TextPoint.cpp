@@ -64,7 +64,6 @@ extern int          g_iTextLeftOffsetX;
 extern int          g_iTextLeftOffsetY;
 extern int          g_iTextPointDisplayTextWhen;
 
-//extern ChartCanvas  *ocpncc1;
 // Fix for VS2010 not having the round function
 #if defined (_WIN32)
 #if _MSC_VER < 1700
