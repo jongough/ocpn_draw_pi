@@ -75,16 +75,14 @@ ELSE(MSVC)
   ENDIF(NOT APPLE) 
 ENDIF(MSVC)
 
-# Add some definitions to satisfy MS
-IF(MSVC)
-    ADD_DEFINITIONS(-D__MSVC__)
-    ADD_DEFINITIONS(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
-ENDIF(MSVC)
-
-
 SET(wxWidgets_USE_LIBS base core net xml html adv)
 SET(BUILD_SHARED_LIBS TRUE)
 
+# Allow multiprocess compile
+IF(MSVC)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /MP")
+ENDIF(MSVC)
 
 set (WXWIDGETS_FORCE_VERSION CACHE VERSION "Force usage of a specific wxWidgets version.")
 if(WXWIDGETS_FORCE_VERSION)
