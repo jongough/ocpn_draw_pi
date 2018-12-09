@@ -400,12 +400,14 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
         l_pTP->m_iTextPosition = pCTP->TextPosition;
     if(pCTP->TextPointDisplayTextWhen != TEXTPOINT_DISPLAY_TEXT_SHOW_DEFAULT)
         l_pTP->m_iDisplayTextWhen = pCTP->TextPointDisplayTextWhen;
-    l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
-    l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
-    l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
-    l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
-    if(pCTP->ringscolour != _T("DEFAULT"))
-        l_pTP->SetODPointRangeRingsColour(wxColour(pCTP->ringscolour));
+    if(!pCTP->defaultRangeRings) {
+        l_pTP->SetShowODPointRangeRings(pCTP->ringsvisible);
+        l_pTP->SetODPointRangeRingsNumber(pCTP->ringsnumber);
+        l_pTP->SetODPointRangeRingsStep(pCTP->ringssteps);
+        l_pTP->SetODPointRangeRingsStepUnits(pCTP->ringsunits);
+        if(pCTP->ringscolour != _T("DEFAULT"))
+            l_pTP->SetODPointRangeRingsColour(wxColour(pCTP->ringscolour));
+    }
     l_pTP->m_bIsolatedMark = true;
     l_pTP->CreateColourSchemes();
     l_pTP->SetColourScheme();

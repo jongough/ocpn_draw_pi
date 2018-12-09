@@ -1119,12 +1119,22 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 if(jv_TextPoint.HasMember("TextPosition")) pl_textpoint->m_iTextPosition = (jv_TextPoint[wxS("TextPosition")].AsInt()); 
                 if(jv_TextPoint.HasMember("TextColour")) pl_textpoint->m_colourTextColour = (jv_TextPoint[wxS("TextColour")].AsString()); 
                 if(jv_TextPoint.HasMember("BackgroundColour")) pl_textpoint->m_colourTextBackgroundColour = (jv_TextPoint[wxS("BackgroundColour")].AsString()); 
-                if(jv_TextPoint.HasMember("BackgroundTransparency")) pl_textpoint->m_iBackgroundTransparency = (jv_TextPoint[wxS("BackgroundTransparency")].AsInt()); 
-                if(jv_TextPoint.HasMember("ringsvisible")) pl_textpoint->SetShowODPointRangeRings(jv_TextPoint[wxS("ringsvisible")].AsBool());
-                if(jv_TextPoint.HasMember("ringsnumber")) pl_textpoint->SetODPointRangeRingsNumber(jv_TextPoint[wxS("ringsnumber")].AsInt());
-                if(jv_TextPoint.HasMember("ringssteps")) pl_textpoint->SetODPointRangeRingsStep(jv_TextPoint[wxS("ringssteps")].AsDouble());
-                if(jv_TextPoint.HasMember("ringunits")) pl_textpoint->SetODPointRangeRingsStepUnits(jv_TextPoint[wxS("ringsunits")].AsInt());
-                if(jv_TextPoint.HasMember("ringscolour")) pl_textpoint->SetODPointRangeRingsColour(jv_TextPoint[wxS("ringscolour")].AsString());
+                if(jv_TextPoint.HasMember("BackgroundTransparency")) pl_textpoint->m_iBackgroundTransparency = (jv_TextPoint[wxS("BackgroundTransparency")].AsInt());
+                if(jv_TextPoint.HasMember("defaultRangeRings")) {
+                    if(!jv_TextPoint[wxT("defaultRangeRings")].AsBool()) {
+                        if(jv_TextPoint.HasMember("ringsvisible")) pl_textpoint->SetShowODPointRangeRings(jv_TextPoint[wxS("ringsvisible")].AsBool());
+                        if(jv_TextPoint.HasMember("ringsnumber")) pl_textpoint->SetODPointRangeRingsNumber(jv_TextPoint[wxS("ringsnumber")].AsInt());
+                        if(jv_TextPoint.HasMember("ringssteps")) pl_textpoint->SetODPointRangeRingsStep(jv_TextPoint[wxS("ringssteps")].AsDouble());
+                        if(jv_TextPoint.HasMember("ringunits")) pl_textpoint->SetODPointRangeRingsStepUnits(jv_TextPoint[wxS("ringsunits")].AsInt());
+                        if(jv_TextPoint.HasMember("ringscolour")) pl_textpoint->SetODPointRangeRingsColour(jv_TextPoint[wxS("ringscolour")].AsString());
+                    }
+                } else {
+                    if(jv_TextPoint.HasMember("ringsvisible")) pl_textpoint->SetShowODPointRangeRings(jv_TextPoint[wxS("ringsvisible")].AsBool());
+                    if(jv_TextPoint.HasMember("ringsnumber")) pl_textpoint->SetODPointRangeRingsNumber(jv_TextPoint[wxS("ringsnumber")].AsInt());
+                    if(jv_TextPoint.HasMember("ringssteps")) pl_textpoint->SetODPointRangeRingsStep(jv_TextPoint[wxS("ringssteps")].AsDouble());
+                    if(jv_TextPoint.HasMember("ringunits")) pl_textpoint->SetODPointRangeRingsStepUnits(jv_TextPoint[wxS("ringsunits")].AsInt());
+                    if(jv_TextPoint.HasMember("ringscolour")) pl_textpoint->SetODPointRangeRingsColour(jv_TextPoint[wxS("ringscolour")].AsString());
+                }
                 if(jv_TextPoint.HasMember("HyperLinks")) {
                     for(int i = 0; i< jv_TextPoint[wxS("HyperLinks")].Size(); i++) {
                         jv_TextPointHyperlink = jv_TextPoint[wxS("HyperLinks")].Item(i);

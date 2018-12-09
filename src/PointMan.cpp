@@ -743,11 +743,7 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
             && ( ( b_delete_used && prp->m_bKeepXPath )
                         ||  !prp->m_bIsInPath   ) ) {
             DestroyODPoint(prp);
-            if(prp->m_sTypeString == wxT("ODPoint"))
-                delete prp;
-            else if(prp->m_sTypeString == wxT("Text Point")) {
-                delete (TextPoint *)node->GetData();
-            }
+			delete prp;
             node = m_pODPointList->GetFirst();
         } else
             node = node->GetNext();

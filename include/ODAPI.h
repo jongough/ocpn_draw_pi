@@ -150,6 +150,7 @@ struct CreateTextPoint_t {
     bool        defaultFont;
     wxFont      TextFont;
     int         TextPointDisplayTextWhen;
+    bool        defaultRangeRings;
     bool        ringsvisible;
     int         ringsnumber;
     double      ringssteps;
