@@ -457,3 +457,13 @@ bool ODAPI::OD_DeleteTextPoint(DeleteTextPoint_t* pDTP)
     }
     else return false;
 }
+
+void ODAPI::OD_AddPointIcon(AddPointIcon_t *pAPI)
+{
+    g_pODPointMan->ProcessIcon(pAPI->PointIcon, pAPI->PointIconName, pAPI->PointIconDescription);
+}
+
+void ODAPI::OD_DeletePointIcon(DeletePointIcon_t *pDPI)
+{
+    g_pODPointMan->RemoveIcon(pDPI->PointIconName);
+}

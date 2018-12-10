@@ -79,6 +79,7 @@ class PointMan
       void ClearODPointFonts(void);
       //void ProcessIcons( ocpnStyle::Style* style );
       void ProcessIcons( );
+      void RemoveIcon(wxString key);
       
       bool DoesIconExist(const wxString & icon_key) const;
       wxBitmap *GetIconBitmap(int index);

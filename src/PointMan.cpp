@@ -242,7 +242,7 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
         pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( key ) ) {
             newIcon = false;
-            pmi->Delete();
+            delete pmi->picon_bitmap;
             break;
         }
     }
@@ -261,6 +261,18 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
     pmi->picon_bitmap_Night = CreateDimBitmap( pmi->picon_bitmap, 0.25 );
 }
 
+void PointMan::RemoveIcon(wxString key)
+{
+    ODMarkIcon *pmi;
+    
+    for(size_t i = 0; i < m_pIconArray->GetCount(); i++) {
+        pmi = (ODMarkIcon *) m_pIconArray->Item( i );
+        if(pmi->icon_name.IsSameAs( key )) {
+            m_pIconArray->RemoveAt(i);
+            delete pmi;
+        }
+    }
+}
 wxImageList *PointMan::Getpmarkicon_image_list( void )
 {
     // First find the largest bitmap size

@@ -65,6 +65,8 @@ using nlohmann::json_schema_draft7::json_validator;
 #include "version.h"
 
 #include <stdio.h>
+#include <wx/base64.h>
+#include <wx/mstream.h>
 
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern PathMan              *g_pPathMan;
@@ -86,7 +88,9 @@ extern bool                 g_bInclusionBoundaryPoint;
 json_validator *gCreateBoundary; 
 json_validator *gCreateBoundaryPoint; 
 json_validator *gCreateTextPoint;
-json_validatro *gDeleteTextPoint;
+json_validator *gDeleteTextPoint;
+json_validator *gAddPointIcon;
+json_validator *gDeletePointIcon;
 json_validator *gODJSONMsgValidator;
 #endif
 
@@ -267,6 +271,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxT("OD_CreateTextPoint")] = wxString::From8BitData(ptr);
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeleteTextPoint );
                 jMsg[wxT("OD_DeleteTextPoint")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_AddPointIcon );
+                jMsg[wxT("OD_AddPointIcon")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeletePointIcon );
+                jMsg[wxT("OD_DeletePointIcon")] = wxString::From8BitData(ptr);
                 writer.Write( jMsg, MsgString );
                 
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
@@ -1168,7 +1176,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 return;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteTextPoint")) {
-            #ifdef OD_JSON_SCHEMA_VALIDATOR               
+#ifdef OD_JSON_SCHEMA_VALIDATOR               
             if(!gDeleteTextPoint) {
                 gDeleteTextPoint = new json_validator;
                 try {
@@ -1197,7 +1205,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     bFail = true;
                 }
             }
-            #endif
+#endif
             
             wxJSONValue jv_TextPoint;
             if(root[wxS("Type")].AsString() != _T("Request")) {
@@ -1246,6 +1254,135 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 
                 pl_textpoint = NULL;
+                
+                return;
+            }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("AddPointIcon")) {
+#ifdef OD_JSON_SCHEMA_VALIDATOR               
+            if(!gAddPointIcon) {
+                gAddPointIcon = new json_validator;
+                try {
+                    gAddPointIcon->set_root_schema(AddPointIconSchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gAddPointIcon->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+#endif
+            
+            wxJSONValue jv_AddPointIcon;
+            if(root[wxS("Type")].AsString() != _T("Request")) {
+                wxLogMessage( wxS("Add Point Icon Type not 'Request'") );
+                bFail = true;
+            }
+            if(!root.HasMember( wxS("AddPointIcon"))) {
+                wxLogMessage( wxS("No AddPointIcon not found in message") );
+                bFail = true;
+            } else {
+                jv_AddPointIcon = root[wxS("AddPointIcon")];
+            }
+            if(!jv_AddPointIcon.HasMember(wxS("PointIcon")) || !jv_AddPointIcon.HasMember(wxS("PointIconName")) || !jv_AddPointIcon.HasMember(wxS("PointIconDescription"))) {
+                wxLogMessage( wxS("Add Point Icon missing required information") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                wxMemoryBuffer l_MB = wxBase64Decode(jv_AddPointIcon[wxT("PointIcon")].AsString());
+                wxMemoryInputStream l_MIS(l_MB, l_MB.GetDataLen());
+                wxBitmap *l_PointIcon = new wxBitmap(wxImage(l_MIS));
+                
+                g_pODPointMan->ProcessIcon(*l_PointIcon, jv_AddPointIcon[wxT("PointIconName")].AsString(), jv_AddPointIcon[wxT("PointIconDescription")].AsString());
+                
+                jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                jMsg[wxT("Msg")] = root[wxT("Msg")];
+                jMsg[wxT("Type")] = wxT("Response");
+                jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                jMsg[wxS("Added")] = true;
+                
+                writer.Write( jMsg, MsgString );
+                SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                
+                return;
+            }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeletePointIcon")) {
+#ifdef OD_JSON_SCHEMA_VALIDATOR               
+            if(!gAddPointIcon) {
+                gAddPointIcon = new json_validator;
+                try {
+                    gAddPointIcon->set_root_schema(DeletePointIconSchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gAddPointIcon->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+#endif
+            
+            wxJSONValue jv_DeletePointIcon;
+            if(root[wxS("Type")].AsString() != _T("Request")) {
+                wxLogMessage( wxS("Delete Point Icon Type not 'Request'") );
+                bFail = true;
+            }
+            if(!root.HasMember( wxS("DeletePointIcon"))) {
+                wxLogMessage( wxS("No DeletePointIcon found in message") );
+                bFail = true;
+            } else {
+                jv_DeletePointIcon = root[wxS("DeletePointIcon")];
+            }
+            if(!jv_DeletePointIcon.HasMember(wxS("PointIconName"))) {
+                wxLogMessage( wxS("Delete Point Icon missing required information") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                
+                g_pODPointMan->RemoveIcon(jv_DeletePointIcon[wxT("PointIconName")].AsString());
+                
+                jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                jMsg[wxT("Msg")] = root[wxT("Msg")];
+                jMsg[wxT("Type")] = wxT("Response");
+                jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                jMsg[wxS("Deleted")] = true;
+                
+                writer.Write( jMsg, MsgString );
+                SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 
                 return;
             }

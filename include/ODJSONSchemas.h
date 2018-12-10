@@ -285,23 +285,54 @@ static json jSchema = R"(
             }
         },
         "deletetextpoint": {
-        "description": "Used to delete a text point",
-        "type": "object",
-        "properties": {
-            "GUID": {
-            "description": "GUID of Text Point",
-            "type": "string",
-            "optional": false
-            }
-        },
-        "required": [
-        "GUID"
-        ]
+            "description": "Used to delete a text point",
+            "type": "object",
+            "properties": {
+                "GUID": {
+                "description": "GUID of Text Point",
+                "type": "string",
+                "optional": false
+                }
+            },
+            "required": [
+            "GUID"
+            ]
         },
         "deletetextpointproperties": {
-        "propertyNames": {
-        "enum":["GUID"]
-        }
+            "propertyNames": {
+            "enum":["GUID"]
+            }
+        },
+        "AddPointIcon": {
+            "description": "Used to delete add an point icon",
+            "type": "object",
+            "properties": {
+                "PointIcon": {
+                    "description": "Point Icon in Base64",
+                    "type": "string",
+                    "optional": false
+                },
+                "PointIconName": {
+                    "description": "Point Icon name",
+                    "type": "string",
+                    "optional": false
+                },
+                "PointIconDescription": {
+                    "description": "Point Icon Description",
+                    "type": "string",
+                    "optional": false
+                }
+            },
+            "required": [
+                "PointIcon",
+                "PointIconName",
+                "PointIconDescription"
+            ]
+        },
+        "AddPointIconproperties": {
+            "propertyNames": {
+            "enum":["PointIcon","PointIconName","PointIconDescription"]
+            }
         },
         "boundary": {
             "description": "Used to create a boundary",
@@ -964,10 +995,68 @@ static json DeleteTextPointSchema = R"(
                 "type": "string",
                 "optional": false
             },
-            "GUID": {
-                "description": "GUID of Text Point",
+            "PointIcon": {
+                "description": "Point Icon bitmap in base64",
                 "type": "string",
                 "optional": false
+            },
+            "PointIconName": {
+            "description": "Point Icon bitmap name",
+            "type": "string",
+            "optional": false
+            },
+            "PointIconDescription": {
+            "description": "Point Icon bitmap description",
+            "type": "string",
+            "optional": true
+            }
+        }
+    },
+    "required": [
+    "Msg",
+    "Type",
+    "Source",
+    "MsgId",
+    "Lat",
+    "Lon"
+    ],
+    "type": "object"
+    }
+)"_json;
+    
+static json AddPointIconSchema = R"(
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Add Point Icon",
+    "AddPointIcon": {
+        "type": "object",
+        "properties": {
+            "Msg": {
+            "description": "Message Name",
+            "type": "string",
+            "enum": ["DeleteTextPoint"],
+            "optional": false
+            },
+            "Type": {
+            "description": "Type of Message",
+            "type": "string",
+            "const": ["Request"],
+            "optional": false
+            },
+            "Source": {
+            "description": "Source of message",
+            "type": "string",
+            "optional": false
+            },
+            "MsgID": {
+            "description": "Message Name",
+            "type": "string",
+            "optional": false
+            },
+            "GUID": {
+            "description": "GUID of Text Point",
+            "type": "string",
+            "optional": false
             }
         }
     },
@@ -982,7 +1071,7 @@ static json DeleteTextPointSchema = R"(
     "type": "object"
     }
     )"_json;
-    
-
+        
+        
 
 
