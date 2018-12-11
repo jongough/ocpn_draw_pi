@@ -136,14 +136,15 @@ struct CreateBoundary_t {
 };
 
 struct CreateTextPoint_t {
-    wxString    name;
-    wxString    iconname;
+    wxString    name;               //Point name
+    wxString    iconname;           //Icon Name
     double      lat;
     double      lon;
     wxString    description;
     wxString    TextToDisplay;
-    bool        Visible;
-    int         TextPosition;
+    bool        Visible;            //Point visible
+    bool        ShowName;           //Show name
+    int         TextPosition;       //enum, i.e. TEXT_CENTRE
     wxString    TextColour;
     wxString    BackgroundColour;
     int         BackgroundTransparancy;
@@ -158,8 +159,6 @@ struct CreateTextPoint_t {
     bool        defaultRingColour;
     wxString    ringscolour;
     wxString    GUID;
-    wxString    URL;
-    wxString    URLDescription;
     std::list   <HyperLinkList_t *> TextPointHyperLinkList;
     bool        temporary;
 };
