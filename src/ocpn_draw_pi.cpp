@@ -1623,9 +1623,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointShowName"), &g_bTextPointShowName, false );
         pConf->Read( wxS( "DefaultTextPointIcon" ), &g_sTextPointIconName, wxS("Circle") );
         wxString  l_wxsDefautlTextColour;
-        g_colourDefaultTextColour = wxColour( *wxBLACK );
         pConf->Read( wxS( "DefaultTextColour" ), &l_wxsDefautlTextColour, wxS( "BLACK" ) );
-        g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextColour );
+        g_colourDefaultTextColour.Set( l_wxsDefautlTextColour );
         wxString  l_wxsDefautlTextBackgroundColour;
         pConf->Read( wxS( "DefaultTextBackgroundColour" ), &l_wxsDefautlTextBackgroundColour, wxS( "YELLOW" ) );
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextBackgroundColour );
