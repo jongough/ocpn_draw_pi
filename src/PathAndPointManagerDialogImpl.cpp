@@ -1517,7 +1517,7 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteAllClick( wxCommandEvent &eve
     if ( answer == wxID_NO && type == 2 )
         g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OD points
     else
-        g_pODPointMan->DeleteAllODPoints( true );
+        return;
         
         
     m_lastODPointItem = -1;
