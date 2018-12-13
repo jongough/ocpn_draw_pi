@@ -42,8 +42,6 @@ class TextPoint : public ODPoint
         void DrawGL( PlugIn_ViewPort &pivp );
         void SetPointText( wxString sTextPointText );
         wxString GetPointText( void ) { return m_TextPointText; }
-        void ShowText( void );
-        void HideText( void );
         void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
         void CreateColourSchemes(void);
 
