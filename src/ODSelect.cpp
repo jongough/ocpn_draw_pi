@@ -487,6 +487,10 @@ bool ODSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem *
 {
     CalcSelectRadius();
 
+    if(pFindSel->m_seltype == SELTYPE_ODPOINT) {
+        if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
+            && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) return true;
+    }
     float a = pFindSel->m_slat;
     float b = pFindSel->m_slat2;
     float c = pFindSel->m_slon;
@@ -503,35 +507,30 @@ SelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fsel
 
     CalcSelectRadius();
     
-    // Check and see if the boat is within the selection area
-    if( ( fabs( slat - g_pfFix.Lat ) > selectRadius ) || ( fabs( slon - g_pfFix.Lon ) > selectRadius ) ) {
-    
     //    Iterate on the list
-        wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxSelectableItemListNode *node = pSelectList->GetFirst();
 
-        while( node ) {
-            pFindSel = node->GetData();
-            if( pFindSel->m_seltype & fseltype ) {
-                if(fseltype & SELTYPE_ODPOINT) {
-                    if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
-                        && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) {
-                        ret_list.Append( pFindSel );
-                    }
-                } else if(fseltype & SELTYPE_PATHSEGMENT) {
-                    a = pFindSel->m_slat;
-                    b = pFindSel->m_slat2;
-                    c = pFindSel->m_slon;
-                    d = pFindSel->m_slon2;
-
-                    if( IsSegmentSelected( a, b, c, d, slat, slon ) )
-                        ret_list.Append( pFindSel );
-                } else if(fseltype & SELTYPE_PIL) {
+    while( node ) {
+        pFindSel = node->GetData();
+        if( pFindSel->m_seltype & fseltype ) {
+            if(fseltype & SELTYPE_ODPOINT) {
+                if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
+                    && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) {
                     ret_list.Append( pFindSel );
-                }
-            }
+                    }
+            } else if(fseltype & SELTYPE_PATHSEGMENT) {
+                a = pFindSel->m_slat;
+                b = pFindSel->m_slat2;
+                c = pFindSel->m_slon;
+                d = pFindSel->m_slon2;
 
-            node = node->GetNext();
+                if( IsSegmentSelected( a, b, c, d, slat, slon ) )
+                    ret_list.Append( pFindSel );
+            } else if(fseltype & SELTYPE_PIL) {
+                ret_list.Append( pFindSel );
+            }
         }
+        node = node->GetNext();
     }
 
     return ret_list;

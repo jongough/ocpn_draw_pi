@@ -197,7 +197,6 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     bool b_need_refresh = false;
     
     bool showRollover = false;
-    
     if( !g_pRolloverPathSeg && !g_pRolloverPoint ) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
@@ -347,15 +346,25 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             } else
                 node = node->GetNext();
         }
-        
         if( !showRollover && !g_pRolloverPathSeg) {
             SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_ODPOINT );
             node = SelList.GetFirst();
+
+            if(node) {
+#ifndef __WXMSW__
+                l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
+#if wxCHECK_VERSION(3,0,0)        
+                wxSetlocale(LC_NUMERIC, "");
+#else
+                setlocale(LC_NUMERIC, "");
+#endif
+#endif
+            }
+            
             while( node ) {
                 SelectItem *pFindSel = node->GetData();
                 ODPoint *pp = (ODPoint *) pFindSel->m_pData1;        //candidate
                 if( pp && pp->IsVisible() ) {
-                    //g_pRolloverPoint = pFindSel;
                     g_pRolloverPoint = new SelectItem();
                     *g_pRolloverPoint = *pFindSel;
                     showRollover = true;
@@ -449,6 +458,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             else
                 showRollover = true;
         }
+    
     }
     
     //    If currently creating a Path, do not show this rollover window
@@ -464,7 +474,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             g_pRolloverPathSeg = NULL;
         }
 
-        if(g_pRolloverPoint) {
+        if(g_pRolloverPoint && !showRollover) {
             ODPoint *l_ODPoint = (ODPoint *)g_pRolloverPoint->m_pData1;
             if(l_ODPoint && l_ODPoint->m_GUID != wxEmptyString && l_ODPoint->m_sTypeString == wxT("Text Point")) {
                 TextPoint *tp = (TextPoint *) g_pRolloverPoint->m_pData1;
