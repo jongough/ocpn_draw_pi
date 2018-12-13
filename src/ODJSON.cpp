@@ -254,6 +254,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxT("Found")] = true;
+                jMsg[wxS("ODAPIVersionMajor")] = ODAPI_VERSION_MAJOR;
+                jMsg[wxS("ODAPIVersionMinor")] = ODAPI_VERSION_MINOR;
                 char ptr[64];
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindPathByGUID );
                 jMsg[wxT("OD_FindPathByGUID")] = wxString::From8BitData(ptr);

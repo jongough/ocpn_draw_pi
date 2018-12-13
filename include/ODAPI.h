@@ -37,6 +37,9 @@
 #endif
 #endif
 
+#define ODAPI_VERSION_MAJOR 1
+#define ODAPI_VERSION_MINOR 1
+
 #include    <list>
 
 enum {
@@ -105,6 +108,9 @@ struct FindClosestBoundaryLineCrossing_t {
 };
 
 struct CreateBoundaryPoint_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    CreateBoundaryPoint_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
     wxString    name;
     wxString    iconname;
     double      lat;
@@ -122,6 +128,9 @@ struct CreateBoundaryPoint_t {
 };
 
 struct CreateBoundary_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    CreateBoundary_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
     wxString    name;
     int         type;
     bool        pathIsActive;
@@ -136,6 +145,9 @@ struct CreateBoundary_t {
 };
 
 struct CreateTextPoint_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    CreateTextPoint_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
     wxString    name;               //Point name
     wxString    iconname;           //Icon Name
     double      lat;
@@ -164,16 +176,25 @@ struct CreateTextPoint_t {
 };
 
 struct DeleteTextPoint_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    DeleteTextPoint_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
     wxString    GUID;
 };
 
 struct AddPointIcon_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    AddPointIcon_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
     wxBitmap    PointIcon;
     wxString    PointIconName;
     wxString    PointIconDescription;
 };
 
 struct DeletePointIcon_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    DeletePointIcon_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
     wxString    PointIconName;
 };
 
@@ -190,8 +211,8 @@ public:
     static bool OD_CreateBoundaryPoint( CreateBoundaryPoint_t *pCBP );
     static bool OD_CreateTextPoint( CreateTextPoint_t *pCTP );
     static bool OD_DeleteTextPoint( DeleteTextPoint_t *pDTP );
-    static void OD_AddPointIcon( AddPointIcon_t *pAPI );
-    static void OD_DeletePointIcon( DeletePointIcon_t *pDPI );
+    static bool OD_AddPointIcon( AddPointIcon_t *pAPI );
+    static bool OD_DeletePointIcon( DeletePointIcon_t *pDPI );
     
 protected:
     
@@ -207,7 +228,7 @@ typedef bool (*OD_CreateBoundary) (CreateBoundary_t *);
 typedef bool (*OD_CreateBoundaryPoint) (CreateBoundaryPoint_t *);
 typedef bool (*OD_CreateTextPoint) (CreateTextPoint_t *);
 typedef bool (*OD_DeleteTextPoint) (DeleteTextPoint_t *);
-typedef void (*OD_AddPointIcon) (AddPointIcon_t *);
-typedef void (*OD_DeletePointIcon) (DeletePointIcon_t *);
+typedef bool (*OD_AddPointIcon) (AddPointIcon_t *);
+typedef bool (*OD_DeletePointIcon) (DeletePointIcon_t *);
 
 #endif //_ODAPI_H_

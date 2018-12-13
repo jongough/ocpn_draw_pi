@@ -210,6 +210,10 @@ bool ODAPI::OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t 
 
 bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
 {
+    if(pCB->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pCB->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
     bool    l_bValidBoundary = true;
     bool    l_test = true;
     
@@ -313,7 +317,10 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
 
 bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 {
-    // create boundary point
+    if(pCBP->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pCBP->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+
     bool    l_bValidBoundaryPoint = true;
     BoundaryPoint *l_pBP;
     
@@ -361,16 +368,12 @@ bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
     return true;
 }
 
-//bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP, wxString *GUID)
-//{
-//    bool bRet = OD_CreateTextPoint(pCTP);
-//    GUID->Append(*m_psGUID);
-//    return bRet;
-//}
-
 bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
 {
-    // create text point
+    if(pCTP->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pCTP->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
     bool    l_bValidTextPoint = true;
     TextPoint *l_pTP;
     
@@ -436,6 +439,10 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
 
 bool ODAPI::OD_DeleteTextPoint(DeleteTextPoint_t* pDTP)
 {
+    if(pDTP->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pDTP->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
     TextPoint *plTP = (TextPoint *)g_pODPointMan->FindODPointByGUID(pDTP->GUID);
     if(plTP) {
         g_pODPointMan->DestroyODPoint(plTP);
@@ -460,12 +467,20 @@ bool ODAPI::OD_DeleteTextPoint(DeleteTextPoint_t* pDTP)
     else return false;
 }
 
-void ODAPI::OD_AddPointIcon(AddPointIcon_t *pAPI)
+bool ODAPI::OD_AddPointIcon(AddPointIcon_t *pAPI)
 {
+    if(pAPI->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pAPI->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
     g_pODPointMan->ProcessIcon(pAPI->PointIcon, pAPI->PointIconName, pAPI->PointIconDescription);
 }
 
-void ODAPI::OD_DeletePointIcon(DeletePointIcon_t *pDPI)
+bool ODAPI::OD_DeletePointIcon(DeletePointIcon_t *pDPI)
 {
+    if(pDPI->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pDPI->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
     g_pODPointMan->RemoveIcon(pDPI->PointIconName);
 }
