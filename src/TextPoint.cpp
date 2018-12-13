@@ -473,44 +473,10 @@ void TextPoint::CalculateTextExtents( void )
     
 }
 
-/*void TextPoint::SetMarkDescription( wxString sMarkDescription )
-{
-    ODPoint::SetMarkDescription( sMarkDescription );
-    return;
-    bool bMarkup;
-    bMarkup = m_pstText->SetLabelMarkup( sMarkDescription );
-    if (!bMarkup)
-        m_pstText->SetLabel( sMarkDescription );
-    ShowText();
-    m_iDisplayTextTexture = 0;
-}
-*/
 void TextPoint::SetPointText( wxString sTextPointText )
 {
     m_TextPointText = ( sTextPointText );
     return;
-#if wxCHECK_VERSION(3,0,0)
-    bool bMarkup;
-    bMarkup = m_pstText->SetLabelMarkup( sTextPointText );
-    if (!bMarkup)
-#endif
-        m_pstText->SetLabel( sTextPointText );
-    ShowText();
-    m_iDisplayTextTexture = 0;
-}
-
-void TextPoint::ShowText( void )
-{
-    return;
-    if( m_ODPointDescription.Len() == 0 )
-        m_pstText->Show( false );
-  //  else
-//        m_pstText->Show( true );
-}
-
-void TextPoint::HideText( void )
-{
-    m_pstText->Show( false );
 }
 
 void TextPoint::SetColourScheme(PI_ColorScheme cs)
