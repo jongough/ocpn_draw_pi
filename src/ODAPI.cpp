@@ -384,6 +384,8 @@ bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
         l_pTP = new TextPoint(pCTP->lat, pCTP->lon, pCTP->iconname, pCTP->name, *lGUID, false);
     }
     
+    l_pTP->m_ODPointName = pCTP->name;
+    l_pTP->m_bShowName = pCTP->ShowName;
     l_pTP->m_TextPointText = pCTP->TextToDisplay;
     l_pTP->SetMarkDescription(pCTP->description);
     l_pTP->SetVisible(pCTP->Visible); 
