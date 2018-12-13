@@ -1403,6 +1403,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
             pConf->Write( wxS( "DefaultImportPath" ), g_sDefaultImportPath );
             pConf->Write( wxS( "DefaultImportType" ), g_sDefaultImportType );
+            pConf->Write( wxS( "LastChartScale" ), m_chart_scale);
             
         }
     }
@@ -1667,6 +1668,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
         pConf->Read( wxS( "DefaultImportPath" ), &g_sDefaultImportPath, _T("") );
         pConf->Read( wxS( "DefaultImportType" ), &g_sDefaultImportType, _T("gpx") );
+        pConf->Read( wxS( "LastChartScale" ), &m_chart_scale, 0);
         
     }
 
