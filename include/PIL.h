@@ -43,7 +43,7 @@ struct PILLINE {
     wxColour    wxcInActiveColourDusk;
     wxColour    wxcActiveColourNight;
     wxColour    wxcInActiveColourNight;
-    double      dStyle;
+    wxPenStyle  iStyle;
     double      dWidth;
 };
 

@@ -30,7 +30,6 @@
 #include "PointMan.h"
 
 #include "ocpn_draw_pi.h"
-//#include "styles.h"
 #include "ODMarkIcon.h"
 #include "ODConfig.h"
 #include "ODSelect.h"

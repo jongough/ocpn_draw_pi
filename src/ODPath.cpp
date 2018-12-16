@@ -42,8 +42,9 @@
 #include "ODUtils.h"
 #include "bbox.h"
 #include "ODdc.h"
-#include "dychart.h"
+//#include "dychart.h"
 #include <wx/gdicmn.h>
+#include "gl.h"
 
 extern PointMan *g_pODPointMan;
 extern bool g_bODIsNewLayer;
@@ -82,7 +83,7 @@ ODPath::ODPath( void )
     m_bPathPropertiesBlink = false;
     m_bDeleteOnArrival = false;
     m_width = STYLE_UNDEFINED;
-    m_style = STYLE_UNDEFINED;
+    m_style = wxPENSTYLE_INVALID;
     m_hiliteWidth = 0;
     m_bSaveUpdates = true;
 
@@ -236,7 +237,7 @@ void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2,
 void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
     wxString colour;
-    int style = wxPENSTYLE_SOLID;
+    wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
 
     if( m_nPoints == 0 || !m_bVisible ) return;
@@ -342,7 +343,7 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     ODDC dc;
     
     /* determine color and width */
-    int style = wxPENSTYLE_SOLID;
+    wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
     
     if( m_style != STYLE_UNDEFINED ) style = m_style;

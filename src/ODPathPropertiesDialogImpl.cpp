@@ -43,7 +43,6 @@
 #include "ODConfig.h"
 #include "ODEventHandler.h"
 #include "ODUtils.h"
-//#include "chcanv.h"
 
 #include <algorithm>
 
@@ -674,7 +673,7 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         m_pPath->CreateColourSchemes();
         m_pPath->SetColourScheme(g_global_color_scheme);
         m_pPath->SetActiveColours();
-        m_pPath->m_style = ::StyleValues[m_choiceLineStyle->GetSelection()];
+        m_pPath->m_style = (wxPenStyle)::StyleValues[m_choiceLineStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_choiceLineWidth->GetSelection()];
         
         g_pODConfig->UpdatePath( m_pPath );

@@ -26,12 +26,12 @@
 
 #include <wx/object.h>
 #include <wx/list.h>
+#include <wx/hashmap.h>
 
-#include "Quilt.h"
-#include "ocpn_types.h"
 #include "ODPoint.h"
 #include "Hyperlink.h"
 
+#include <list>
 
 #define STYLE_UNDEFINED -1
 
@@ -136,7 +136,7 @@ public:
     bool        m_bIsInLayer;
     int         m_LayerID;
     int         m_width;
-    int         m_style;
+    wxPenStyle  m_style;
     int         m_lastMousePointIndex;
     bool        m_NextLegGreatCircle;
     double      m_PlannedSpeed;

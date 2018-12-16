@@ -67,7 +67,7 @@ extern wxString     g_sEBLStartIconName;
 extern bool         g_bEBLFixedEndPosition;
 extern int          g_iEBLPersistenceType;
 extern int          g_EBLLineWidth;
-extern int          g_EBLLineStyle;
+extern wxPenStyle   g_EBLLineStyle;
 
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern EBLList      *g_pEBLList;
@@ -506,8 +506,8 @@ void EBL::MaintainWith( void )
 void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
 {
     wxString colour;
-    int style = wxPENSTYLE_SOLID;
-    int width = g_path_line_width;
+    wxPenStyle style = wxPENSTYLE_SOLID;
+	int width = g_path_line_width;
 
     if( m_nPoints == 0 || !m_bVisible ) return;
 

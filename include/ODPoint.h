@@ -23,17 +23,21 @@
 
 #ifndef __POINT_H__
 #define __POINT_H__
+class wxMemoryDC;
+class wxDialog;
 
 #include <wx/string.h>
 #include <wx/datetime.h>
 #include <wx/gdicmn.h>
 #include <wx/gauge.h>
 #include <wx/colour.h>
+#include <wx/pen.h>
 #include "Hyperlink.h"
-#include "ocpn_types.h"
 #include "ocpn_plugin.h"
-#include "OCPNRegion.h"
-#include "viewport.h"
+//#include "OCPNRegion.h"
+//#include "viewport.h"
+#include "bbox.h"
+#include "georef.h"
 
 class ODDC;
 class wxDC;
@@ -99,7 +103,7 @@ public:
       void  SetODPointRangeRingsStepUnits(int i_ODPointRangeRingsStepUnits) { m_iODPointRangeRingsStepUnits = i_ODPointRangeRingsStepUnits; };
       void  SetODPointRangeRingsColour( wxColour wxc_ODPointRangeRingsColour ) { m_wxcODPointRangeRingsColour = wxc_ODPointRangeRingsColour; };
       void  SetODPointRangeRingWidth( int i_ODPointRangeRingWidth ) { m_iRangeRingWidth = i_ODPointRangeRingWidth; };
-      void  SetODPointRangeRingStyle( int i_ODPointRangeRingStyle ) { m_iRangeRingStyle = i_ODPointRangeRingStyle; };
+      void  SetODPointRangeRingStyle( wxPenStyle i_ODPointRangeRingStyle ) { m_iRangeRingStyle = i_ODPointRangeRingStyle; };
       void  SetTypeString( wxString sTypeString ) { m_sTypeString = sTypeString; }
       void  SetMarkDescription( wxString sMarkDescription );
       virtual void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
@@ -177,7 +181,7 @@ public:
       float             m_fODPointRangeRingsStep;
       int               m_iODPointRangeRingsStepUnits;
       int               m_iRangeRingWidth;
-      int               m_iRangeRingStyle;
+      wxPenStyle        m_iRangeRingStyle;
       wxColour          m_wxcODPointRangeRingsColour;
       wxString          m_sTypeString;
       wxString          m_IconName;

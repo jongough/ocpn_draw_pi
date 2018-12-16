@@ -41,7 +41,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_bSizerPathButtons->Add( m_buttonPathExportSelected, 0, wxALL|wxEXPAND, 5 );
 
 	m_buttonPathDeleteAll = new wxButton( m_panelPath, wxID_ANY, _("Dele&te All"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_bSizerPathButtons->Add( m_buttonPathDeleteAll, 0, wxALIGN_CENTER_HORIZONTAL|wxALL|wxEXPAND, 5 );
+	m_bSizerPathButtons->Add( m_buttonPathDeleteAll, 0, wxALL|wxEXPAND, 5 );
 
 
 	bSizer2->Add( m_bSizerPathButtons, 0, 0, 5 );
@@ -50,7 +50,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelPath->SetSizer( bSizer2 );
 	m_panelPath->Layout();
 	bSizer2->Fit( m_panelPath );
-	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), false );
+	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), true );
 	m_panelODPoint = new wxPanel( m_notebookPathAndPointManager, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
@@ -85,7 +85,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelODPoint->SetSizer( bSizer3 );
 	m_panelODPoint->Layout();
 	bSizer3->Fit( m_panelODPoint );
-	m_notebookPathAndPointManager->AddPage( m_panelODPoint, _("OD Points"), true );
+	m_notebookPathAndPointManager->AddPage( m_panelODPoint, _("OD Points"), false );
 	m_panelLayer = new wxPanel( m_notebookPathAndPointManager, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxHORIZONTAL );
@@ -137,7 +137,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	bSizer8->Add( bSizer9, 1, wxEXPAND, 5 );
 
 	m_buttonOK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizer8->Add( m_buttonOK, 0, wxALIGN_RIGHT|wxALL, 5 );
+	bSizer8->Add( m_buttonOK, 0, wxALL, 5 );
 
 
 	m_bSizerDialog->Add( bSizer8, 0, wxEXPAND, 5 );

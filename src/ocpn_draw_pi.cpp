@@ -70,11 +70,10 @@
 #include "TextPoint.h"
 #include "PILPropertiesDialogImpl.h"
 
-//#include "chcanv.h"
 #include "ODLayer.h"
-#include "OCPNPlatform.h"
+//#include "OCPNPlatform.h"
 #include "geodesic.h"
-#include "IDX_entry.h"
+//#include "IDX_entry.h"
 #include <wx/stdpaths.h>
 #include <wx/timer.h>
 #include <wx/event.h>
@@ -87,6 +86,7 @@
 #include <memory>
 
 #include <wx/jsonreader.h>
+#include "GL/gl.h"
 
 #ifndef DECL_EXP
 #ifdef __WXMSW__
@@ -157,9 +157,9 @@ bool        g_bBoundaryODPointsVisible;
 unsigned int g_uiFillTransparency;
 unsigned int g_uiBoundaryPointFillTransparency;
 int         g_iBoundaryPointRangeRingLineWidth;
-int         g_iBoundaryPointRangeRingLineStyle;
+wxPenStyle  g_iBoundaryPointRangeRingLineStyle;
 int         g_BoundaryLineWidth; 
-int         g_BoundaryLineStyle;
+wxPenStyle  g_BoundaryLineStyle;
 bool        g_bBoundaryPointShowName;
 int         g_iInclusionBoundarySize;
 int         g_iInclusionBoundaryPointSize;
@@ -173,7 +173,7 @@ bool        g_bEBLVRM;
 bool        g_bEBLAlwaysShowInfo;
 bool        g_bEBLPerpLine;
 int         g_EBLLineWidth; 
-int         g_EBLLineStyle;
+wxPenStyle  g_EBLLineStyle;
 bool        g_bEBLRotateWithBoat;
 int         g_iEBLMaintainWith;
 
@@ -186,11 +186,11 @@ wxColour    g_colourPILInActiveOffsetLine1Colour;
 wxColour    g_colourPILActiveOffsetLine2Colour;
 wxColour    g_colourPILInActiveOffsetLine2Colour;
 int         g_PILCentreLineWidth;
-int         g_PILCentreLineStyle;
+wxPenStyle  g_PILCentreLineStyle;
 int         g_PILOffsetLine1Width;
-int         g_PILOffsetLine1Style;
+wxPenStyle  g_PILOffsetLine1Style;
 int         g_PILOffsetLine2Width;
-int         g_PILOffsetLine2Style;
+wxPenStyle  g_PILOffsetLine2Style;
 double      g_dPILOffset;
 int         g_PILDefaultNumIndexLines;
 int         g_iPILPersistenceType;
@@ -200,21 +200,21 @@ wxColour    g_colourDRLineColour;
 wxColour    g_colourInActiveDRLineColour;
 bool        g_bDRShowArrow;
 int         g_DRLineWidth;
-int         g_DRLineStyle;
+wxPenStyle  g_DRLineStyle;
 bool        g_bDRPointShowRangeRings;
 int         g_iDRPointRangeRingsNumber;
 float       g_fDRPointRangeRingsStep;
 int         g_iDRPointRangeRingsStepUnits;
 wxColour    g_colourDRPointRangeRingsColour;
 int         g_iDRPointRangeRingLineWidth;
-int         g_iDRPointRangeRingLineStyle;
+wxPenStyle  g_iDRPointRangeRingLineStyle;
 
 wxColour     g_colourActiveGZLineColour;
 wxColour     g_colourInActiveGZLineColour;
 wxColour     g_colourActiveGZFillColour;
 wxColour     g_colourInActiveGZFillColour;
 int          g_GZLineWidth; 
-int          g_GZLineStyle;
+wxPenStyle   g_GZLineStyle;
 unsigned int g_uiGZFillTransparency;
 bool         g_bGZRotateWithBoat;
 int          g_iGZMaintainWith;
@@ -281,8 +281,6 @@ ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
-
-IDX_entry       *gpIDX;
 
 wxString        *g_ODlocale;
 int             g_iLocaleDepth;
@@ -1288,7 +1286,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultActiveGZFillColour" ), g_colourActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultInActiveGZFillColour" ), g_colourInActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultGZLineWidth" ), g_GZLineWidth );
-            pConf->Write( wxS( "DefaultGZLineStyle" ), g_GZLineStyle );
+            pConf->Write( wxS( "DefaultGZLineStyle" ), (int)g_GZLineStyle );
             long l_longGZFillTransparency = g_uiGZFillTransparency;
             pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
             pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
@@ -1298,9 +1296,9 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
             pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
-            pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
+            pConf->Write( wxS( "DefaultBoundaryLineStyle" ), (int)g_BoundaryLineStyle );
             pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
-            pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
+            pConf->Write( wxS( "DefaultEBLLineStyle" ), (int)g_EBLLineStyle );
             pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
             pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
             pConf->Write( wxS( "DefaultEBLAlwaysShowInfo" ), g_bEBLAlwaysShowInfo );
@@ -1318,11 +1316,11 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultPILActiveOffsetLine2Colour" ), g_colourPILActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultPILInActiveOffsetLine2Colour" ), g_colourPILInActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultPILCentreLineWidth" ), g_PILCentreLineWidth );
-            pConf->Write( wxS( "DefaultPILCentreLineStyle" ), g_PILCentreLineStyle );
+            pConf->Write( wxS( "DefaultPILCentreLineStyle" ), (int)g_PILCentreLineStyle );
             pConf->Write( wxS( "DefaultPILOffsetLine1Width" ), g_PILOffsetLine1Width );
-            pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), g_PILOffsetLine1Style );
+            pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), (int)g_PILOffsetLine1Style );
             pConf->Write( wxS( "DefaultPILOffsetLine2Width" ), g_PILOffsetLine2Width );
-            pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), g_PILOffsetLine2Style );
+            pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), (int)g_PILOffsetLine2Style );
             pConf->Write( wxS( "DefaultPILPersistenceType" ), g_iPILPersistenceType );
             pConf->Write( wxS( "DefaultPILNumIndexLines" ), g_PILDefaultNumIndexLines );
             pConf->Write( wxS( "DefaultPILOffset"), g_dPILOffset );
@@ -1333,11 +1331,11 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultDRPointRangeRingsStepUnits" ), g_iDRPointRangeRingsStepUnits );
             pConf->Write( wxS( "DefaultDRPointRangeRingsColour" ), g_colourDRPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX) );
             pConf->Write( wxS( "DefaultDRPointRangeRingLineWidth" ), g_iDRPointRangeRingLineWidth );
-            pConf->Write( wxS( "DefaultDRPointRangeRingLineStyle" ), g_iDRPointRangeRingLineStyle );
+            pConf->Write( wxS( "DefaultDRPointRangeRingLineStyle" ), (int)g_iDRPointRangeRingLineStyle );
             pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultInActiveDRLineColour" ), g_colourInActiveDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
-            pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
+            pConf->Write( wxS( "DefaultDRLineStyle" ), (int)g_DRLineStyle );
             pConf->Write( wxS( "DefaultDRSOG" ), g_dDRSOG );
             pConf->Write( wxS( "DefaultDRCOG" ), g_iDRCOG );
             pConf->Write( wxS( "DefaultDRLength" ), g_dDRLength );
@@ -1348,7 +1346,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultDRTimeUnits" ), g_iDRTimeUnits );
             pConf->Write( wxS( "DefaultDRPersistenceType" ), g_iDRPersistenceType );
             pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
-            pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
+            pConf->Write( wxS( "DefaultPathLineStyle" ), (int)g_PathLineStyle );
             pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
             pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
             pConf->Write( wxS( "DefaultODPointIcon" ), g_sODPointIconName );
@@ -1360,7 +1358,7 @@ void ocpn_draw_pi::SaveConfig()
             long l_longBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
             pConf->Write( wxS( "DefaultBoundaryPointFillTransparency" ), l_longBoundaryPointFillTransparency );
             pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), g_iBoundaryPointRangeRingLineWidth );
-            pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
+            pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), (int)g_iBoundaryPointRangeRingLineStyle );
             pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
             pConf->Write( wxS( "ShowMag" ), g_bShowMag );
             pConf->Write( wxS( "AllowLeftDrag" ), g_bAllowLeftDrag );
@@ -1434,6 +1432,7 @@ void ocpn_draw_pi::LoadConfig()
     if(pConf)
     {
         wxString val;
+        int l_style;
         pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
         wxString  l_wxsColour;
         pConf->Read( wxS( "DefaultBoundaryPointShowName"), &g_bBoundaryPointShowName, false );
@@ -1477,10 +1476,12 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultBoundaryFillTransparency" ), &l_longFillTransparency, 175 );
         g_uiFillTransparency = l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), &g_iBoundaryPointRangeRingLineWidth, 2 );
-        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &g_iBoundaryPointRangeRingLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_iBoundaryPointRangeRingLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
-        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_BoundaryLineStyle = (wxPenStyle)l_style;
         
         pConf->Read( wxS( "DefaultGZFirstIcon" ), &g_sGZFirstIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultGZSecondIcon" ), &g_sGZSecondIconName, wxS("Circle") );
@@ -1493,7 +1494,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultInActiveGZFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveGZFillColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultGZLineWidth" ), &g_GZLineWidth, 2  );
-        pConf->Read( wxS( "DefaultGZLineStyle" ), &g_GZLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultGZLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_GZLineStyle = (wxPenStyle)l_style;
         long l_longGZFillTransparency;
         pConf->Read( wxS( "DefaultGZFillTransparency" ), &l_longGZFillTransparency, 175 );
         g_uiGZFillTransparency = l_longGZFillTransparency;
@@ -1504,7 +1506,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLStartIcon" ), &g_sEBLStartIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
-        pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultEBLLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_EBLLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLAlwaysShowInfo" ), &g_bEBLAlwaysShowInfo, false );
@@ -1529,11 +1532,14 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultPILInActiveOffsetLine2Colour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourPILInActiveOffsetLine2Colour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultPILCentreLineWidth" ), &g_PILCentreLineWidth, 2 );
-        pConf->Read( wxS( "DefaultPILCentreLineStyle" ), &g_PILCentreLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILCentreLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_PILCentreLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultPILOffsetLine1Width" ), &g_PILOffsetLine1Width, 2 );
-        pConf->Read( wxS( "DefaultPILOffsetLine1Style" ), &g_PILOffsetLine1Style, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLine1Style" ), &l_style, wxPENSTYLE_SOLID );
+        g_PILOffsetLine1Style = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultPILOffsetLine2Width" ), &g_PILOffsetLine2Width, 2 );
-        pConf->Read( wxS( "DefaultPILOffsetLine2Style" ), &g_PILOffsetLine2Style, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLine2Style" ), &l_style, wxPENSTYLE_SOLID );
+        g_PILOffsetLine2Style = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultPILNumIndexLines" ), &g_PILDefaultNumIndexLines, 0 );
         pConf->Read( wxS( "DefaultPILPersistenceType" ), &g_iPILPersistenceType, 0 );
         pConf->Read( wxS( "DefaultPILOffset"), &g_dPILOffset, 0.5 );
@@ -1548,13 +1554,15 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultDRPointRangeRingsColour" ), &l_wxsDRPointRangeRingsColour, wxS( "RED" ) );
         g_colourDRPointRangeRingsColour.Set( l_wxsDRPointRangeRingsColour );
         pConf->Read( wxS( "DefaultDRPointRangeRingLineWidth" ), &g_iDRPointRangeRingLineWidth, 2 );
-        pConf->Read( wxS( "DefaultDRPointRangeRingLineStyle" ), &g_iDRPointRangeRingLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultDRPointRangeRingLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_iDRPointRangeRingLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultDRLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultInActiveDRLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultDRLineWidth" ), &g_DRLineWidth, 2  );
-        pConf->Read( wxS( "DefaultDRLineStyle" ), &g_DRLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultDRLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_DRLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultDRSOG" ), &val, wxS("5.0") );
         g_dDRSOG = atof( val.mb_str() );
         pConf->Read( wxS( "DefaultDRCOG" ), &g_iDRCOG, 0 );
@@ -1566,7 +1574,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultDRTimeUnits" ), &g_iDRTimeUnits, 0 );
         pConf->Read( wxS( "DefaultDRPersistenceType" ), &g_iDRPersistenceType, 2 );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
-        pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 100 );
+        pConf->Read( wxS( "DefaultPathLineStyle" ), &l_style, 100 );
+        g_path_line_width = (wxPenStyle)l_style;
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
         pConf->Read( wxS( "DefaultODPointIcon" ), &g_sODPointIconName, wxS("triangle") );
@@ -1649,11 +1658,11 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, (int)l_pDisplayTextFont->GetPointSize() );
         g_DisplayTextFont.SetPointSize( l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, (int)l_pDisplayTextFont->GetFamily() );
-        g_DisplayTextFont.SetFamily( l_fontInfo );
+        g_DisplayTextFont.SetFamily( (wxFontFamily)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontStyle" ), &l_fontInfo, (int)l_pDisplayTextFont->GetStyle() );
-        g_DisplayTextFont.SetStyle( l_fontInfo );
+        g_DisplayTextFont.SetStyle( (wxFontStyle)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontWeight" ), &l_fontInfo, (int)l_pDisplayTextFont->GetWeight() );
-        g_DisplayTextFont.SetWeight( l_fontInfo );
+        g_DisplayTextFont.SetWeight( (wxFontWeight)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontUnderline" ), &l_bfontInfo, false );
         g_DisplayTextFont.SetUnderlined( l_bfontInfo );
 #if wxCHECK_VERSION(3,0,0)   

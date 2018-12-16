@@ -29,7 +29,7 @@
 
 
 #include "BoundaryPoint.h"
-#include "georef.h"
+//#include "georef.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 
@@ -43,8 +43,8 @@ extern bool         g_bExclusionBoundaryPoint;
 extern bool         g_bInclusionBoundaryPoint;
 extern int          g_iInclusionBoundaryPointSize;
 extern unsigned int g_uiBoundaryPointFillTransparency;
-extern int         g_iBoundaryPointRangeRingLineWidth;
-extern int         g_iBoundaryPointRangeRingLineStyle;
+extern int          g_iBoundaryPointRangeRingLineWidth;
+extern wxPenStyle   g_iBoundaryPointRangeRingLineStyle;
 
 
 BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID, bool bAddToList)
@@ -184,7 +184,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxPENSTYLE_SOLID ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_SOLID ) );
             if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
                 dc.DrawDisk( r.x, r.y , 0, pix_radius);
             }

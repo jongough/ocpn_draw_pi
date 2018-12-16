@@ -25,9 +25,7 @@
 #include "ODSelect.h"
 #include "ocpn_draw_pi.h"
 #include "georef.h"
-#include "vector2D.h"
-//#include "navutil.h"
-//#include "chcanv.h"
+//#include "vector2D.h"
 #include "ODPath.h"
 
 extern ocpn_draw_pi                 *g_ocpn_draw_pi;

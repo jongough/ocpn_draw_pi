@@ -29,7 +29,7 @@
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "ODUtils.h"
-#include "cutil.h"
+//#include "cutil.h"
 #include "clipper.hpp"
 
 #ifdef __WXMSW__
@@ -69,7 +69,7 @@ extern wxColour     g_colourActiveGZLineColour;
 extern wxColour     g_colourInActiveGZLineColour;
 extern wxColour     g_colourActiveGZFillColour;
 extern wxColour     g_colourInActiveGZFillColour;
-extern int          g_GZLineStyle;
+extern wxPenStyle   g_GZLineStyle;
 extern int          g_GZLineWidth;
 extern bool         g_bExclusionGZ;
 extern bool         g_bInclusionGZ;
@@ -207,7 +207,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     ODPath::DrawGL( piVP );
     m_bSetTransparent = false;
     
-    int style = wxPENSTYLE_SOLID;
+    wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
     
     if( m_style != STYLE_UNDEFINED ) style = m_style;
@@ -252,7 +252,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxPENSTYLE_SOLID ) );
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
     
     RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
     

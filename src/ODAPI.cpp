@@ -474,6 +474,7 @@ bool ODAPI::OD_AddPointIcon(AddPointIcon_t *pAPI)
     }
     
     g_pODPointMan->ProcessIcon(pAPI->PointIcon, pAPI->PointIconName, pAPI->PointIconDescription);
+    return true;
 }
 
 bool ODAPI::OD_DeletePointIcon(DeletePointIcon_t *pDPI)
@@ -483,4 +484,5 @@ bool ODAPI::OD_DeletePointIcon(DeletePointIcon_t *pDPI)
     }
     
     g_pODPointMan->RemoveIcon(pDPI->PointIconName);
+    return true;
 }

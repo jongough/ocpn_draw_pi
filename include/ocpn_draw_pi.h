@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <sstream>
+
 #  define DEBUGSL(x) do { \
 std::ostringstream oss; \
 oss << x; \
@@ -120,15 +121,24 @@ std::cout << x  << std::endl ; } while (0)
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
+typedef enum ColorScheme
+{
+    GLOBAL_COLOR_SCHEME_RGB,
+    GLOBAL_COLOR_SCHEME_DAY,
+    GLOBAL_COLOR_SCHEME_DUSK,
+    GLOBAL_COLOR_SCHEME_NIGHT,
+    N_COLOR_SCHEMES
+}_ColorScheme;
+
 #include "wxWTranslateCatalog.h"
 
 #include "ocpn_plugin.h"
-#include "undo.h"
+#include "ODundo.h"
 #include "ODPoint.h"
 #include "ODConfig.h"
 #include "ODRolloverWin.h"
 
-#include "georef.h"
+//#include "georef.h"
 #include "wx28compat.h"
 #include <wx/aui/aui.h>
 #include <wx/string.h>
@@ -140,6 +150,7 @@ std::cout << x  << std::endl ; } while (0)
 #include <wx/splitter.h>
 #include <wx/fileconf.h>
 #include <wx/dynarray.h>
+#include <list>
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition

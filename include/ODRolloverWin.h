@@ -26,7 +26,6 @@
 
 #include <wx/window.h>
 #include <wx/timer.h>
-#include "ocpn_types.h"
 
 
 //constants for rollovers fonts

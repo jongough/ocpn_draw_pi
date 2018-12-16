@@ -27,9 +27,7 @@
 #define POINTMAN_H
 
 #include <wx/imaglist.h>
-#include "styles.h"
-//#include "Select.h"
-#include "nmea0183.h"
+//#include "nmea0183.h"
 #include "ODPoint.h"
 #include "ocpn_draw_pi.h"
 

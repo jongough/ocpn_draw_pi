@@ -28,10 +28,6 @@
 #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include <wx/bitmap.h>
-//#include <wx/dcmemory.h>
-//#include <wx/dcscreen.h>
-
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODRolloverWin.h"

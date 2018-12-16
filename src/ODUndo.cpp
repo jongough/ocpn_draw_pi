@@ -42,8 +42,6 @@
 #include "ODPathPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "styles.h"
-//#include "navutil.h"
-//#include "styles.h"
 #include "PathMan.h"
 #include "PathAndPointManagerDialogImpl.h"
 #include "ODPointPropertiesImpl.h"

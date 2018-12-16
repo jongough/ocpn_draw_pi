@@ -647,7 +647,7 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
             child = PILchild.append_child("opencpn:PILITEM");
             child.append_attribute("ID") = it->iID;
             child.append_attribute("Offset") = it->dOffset;
-            child.append_attribute("Style") = it->dStyle;
+            child.append_attribute("Style") = it->iStyle;
             child.append_attribute("Width") = it->dWidth;
             child.append_attribute("Description") = it->sDescription.mbc_str();
             child.append_attribute("Name") = it->sName.mbc_str();
@@ -982,15 +982,15 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     double rlat = opt_node.attribute( "lat" ).as_double();
     double rlon = opt_node.attribute( "lon" ).as_double();
     double ArrivalRadius = 0;
-    int     l_iTextPointFontSize = g_DisplayTextFont.GetPointSize();
-    int     l_iTextPointFontFamily = g_DisplayTextFont.GetFamily();
-    int     l_iTextPointFontStyle = g_DisplayTextFont.GetStyle();
-    int     l_iTextPointFontWeight = g_DisplayTextFont.GetWeight();
-    bool    l_bTextPointFontUnderline = g_DisplayTextFont.GetUnderlined();
+    int            l_iTextPointFontSize = g_DisplayTextFont.GetPointSize();
+	wxFontFamily   l_iTextPointFontFamily = g_DisplayTextFont.GetFamily();
+    int            l_iTextPointFontStyle = g_DisplayTextFont.GetStyle();
+    int            l_iTextPointFontWeight = g_DisplayTextFont.GetWeight();
+    bool           l_bTextPointFontUnderline = g_DisplayTextFont.GetUnderlined();
 #if wxCHECK_VERSION(3,0,0) 
-    bool    l_bTextPointFontStrikethrough = g_DisplayTextFont.GetStrikethrough();
+    bool           l_bTextPointFontStrikethrough = g_DisplayTextFont.GetStrikethrough();
 #else
-    bool    l_bTextPointFontStrikethrough = false;
+    bool           l_bTextPointFontStrikethrough = false;
 #endif
     wxString    l_wxsTextPointFontFace = g_DisplayTextFont.GetFaceName();
     int     l_iTextPointFontEncoding = g_DisplayTextFont.GetEncoding();
@@ -1001,7 +1001,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     int     l_iTextPosition = g_iTextPosition;
     wxColour    l_wxcODPointRangeRingsColour;
     int     l_iODPointRangeRingWidth = 2;
-    int     l_iODPointRangeRingStyle = wxPENSTYLE_SOLID;
+    wxPenStyle  l_iODPointRangeRingStyle = wxPENSTYLE_SOLID;
     wxColour    l_colourTextColour = g_colourDefaultTextColour;
     wxColour    l_colourBackgroundColour = g_colourDefaultTextBackgroundColour;
     int     l_iBackgroundTransparency = g_iTextBackgroundTransparency;
@@ -1042,7 +1042,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                     if ( wxString::FromUTF8(attr.name()) == _T("size") )
                         l_iTextPointFontSize = attr.as_int();
                     else if ( wxString::FromUTF8(attr.name()) == _T("family") )
-                        l_iTextPointFontFamily = attr.as_int();
+                        l_iTextPointFontFamily = (wxFontFamily)attr.as_int();
                     else if ( wxString::FromUTF8(attr.name()) == _T("style") )
                         l_iTextPointFontStyle = attr.as_int();
                     else if ( wxString::FromUTF8(attr.name()) == _T("weight") )
@@ -1141,7 +1141,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
                 else if ( wxString::FromUTF8(attr.name()) == _T("width") )
                     l_iODPointRangeRingWidth = attr.as_int();
                 else if ( wxString::FromUTF8(attr.name()) == _T("line_style") )
-                    l_iODPointRangeRingStyle = attr.as_int();
+                    l_iODPointRangeRingStyle = (wxPenStyle)attr.as_int();
             }
         } else if ( !strcmp( pcn, "opencpn:boundary_type" ) ) {
             wxString s = wxString::FromUTF8( child.first_child().value() );
@@ -1226,8 +1226,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
         pTP->m_colourTextColour = l_colourTextColour;
         pTP->m_DisplayTextFont.SetPointSize( l_iTextPointFontSize );
         pTP->m_DisplayTextFont.SetFamily( l_iTextPointFontFamily );
-        pTP->m_DisplayTextFont.SetStyle( l_iTextPointFontStyle );
-        pTP->m_DisplayTextFont.SetWeight( l_iTextPointFontWeight );
+        pTP->m_DisplayTextFont.SetStyle( (wxFontStyle)l_iTextPointFontStyle );
+        pTP->m_DisplayTextFont.SetWeight( (wxFontWeight)l_iTextPointFontWeight );
         pTP->m_DisplayTextFont.SetUnderlined( l_bTextPointFontUnderline );
 #if wxCHECK_VERSION(3,0,0) 
         pTP->m_DisplayTextFont.SetStrikethrough( l_bTextPointFontStrikethrough );
@@ -1431,7 +1431,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                         pTentGZ->m_wxcInActiveFillColour.Set( wxString::FromUTF8( attr.as_string() ) );
                 }
                 else if ( wxString::FromUTF8( attr.name() ) == _T("style" ) )
-                    pTentPath->m_style = attr.as_int();
+                    pTentPath->m_style = (wxPenStyle)attr.as_int();
                 else if ( wxString::FromUTF8( attr.name() ) == _T("width" ) )
                     pTentPath->m_width = attr.as_int();
                 else if ( wxString::FromUTF8( attr.name() ) == _T("fill_transparency") ) {
@@ -1566,7 +1566,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
                     if ( wxString::FromUTF8( attr.name() ) == _T("Offset" ) )
                         plNewLine.dOffset = attr.as_double();
                     if ( wxString::FromUTF8( attr.name() ) == _T("Style" ) )
-                        plNewLine.dStyle = attr.as_double();
+                        plNewLine.iStyle = (wxPenStyle)attr.as_int();
                     if ( wxString::FromUTF8( attr.name() ) == _T("Width" ) )
                         plNewLine.dWidth = attr.as_double();
                 }

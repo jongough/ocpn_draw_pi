@@ -62,7 +62,7 @@ extern float        g_fDRPointRangeRingsStep;
 extern int          g_iDRPointRangeRingsStepUnits;
 extern wxColour     g_colourDRPointRangeRingsColour;
 extern int          g_iDRPointRangeRingLineWidth;
-extern int          g_iDRPointRangeRingLineStyle;
+extern wxPenStyle   g_iDRPointRangeRingLineStyle;
 
 extern wxString        g_sDRPointIconName;
 

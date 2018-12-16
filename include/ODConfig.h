@@ -26,7 +26,6 @@
 #ifndef ODCONFIG_H
 #define ODCONFIG_H
 
-//#include <navutil.h>
 #include "ODNavObjectChanges.h"
 
 class NavObjectCollection;

@@ -32,9 +32,7 @@
 #include "PathAndPointManagerDialogImpl.h"
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
-//#include "styles.h"
-#include "dychart.h"
-//#include "navutil.h"
+//#include "dychart.h"
 #include "ODConfig.h"
 #include "ODEventHandler.h"
 #include "ODPath.h"
@@ -55,7 +53,6 @@
 #include "ODNewODPointDialogImpl.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
-//#include "chcanv.h"
 #include "georef.h"
 #include "ODLayer.h"
 
@@ -146,7 +143,6 @@ extern GZProp       *g_pGZPropDialog;
 extern PILProp      *g_pPILPropDialog;
 extern PathMan      *g_pPathMan;
 extern ODConfig     *g_pODConfig;
-extern ChartBase *Current_Ch;
 extern PointMan      *g_pODPointMan;
 extern ODPointPropertiesImpl *g_pODPointPropDialog;
 extern ODSelect     *g_pODSelect;

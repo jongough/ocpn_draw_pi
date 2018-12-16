@@ -26,7 +26,6 @@
 #ifndef ODNAVOBJECTCHANGES_H
 #define ODNAVOBJECTCHANGES_H
 
-//#include <NavObjectCollection.h>
 #include "pugixml.hpp"
 #include "ODPath.h"
 

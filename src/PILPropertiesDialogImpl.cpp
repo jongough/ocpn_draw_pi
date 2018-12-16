@@ -91,7 +91,7 @@ void PILPropertiesDialogImpl::SaveChanges()
     it->wxcActiveColour = m_colourPickerLineColour->GetColour();
     m_pPIL->CreateColourSchemes((PILLINE*)&*it);
     m_pPIL->SetColourScheme();
-    it->dStyle = ::StyleValues[m_choiceLineStyle->GetSelection()];
+    it->iStyle = (wxPenStyle)::StyleValues[m_choiceLineStyle->GetSelection()];
     it->dWidth = ::WidthValues[m_choiceLineWidth->GetSelection()];
 
     if(g_pPILPropDialog)
@@ -121,7 +121,7 @@ void PILPropertiesDialogImpl:: UpdateProperties( PIL *pPIL, int iID )
     m_dPILOffsetValidator = it->dOffset;
     m_colourPickerLineColour->SetColour(it->wxcActiveColour);
     for( unsigned int i = 0; i < sizeof( ::StyleValues ) / sizeof(int); i++ ) {
-        if( it->dStyle == ::StyleValues[i] ) {
+        if( it->iStyle == ::StyleValues[i] ) {
             m_choiceLineStyle->Select( i );
             break;
         }

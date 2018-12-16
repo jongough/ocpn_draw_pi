@@ -49,7 +49,7 @@ extern int          g_path_line_width;
 extern wxString     g_OD_default_wp_icon;
 
 extern int          g_BoundaryLineWidth; 
-extern int          g_BoundaryLineStyle;
+extern wxPenStyle   g_BoundaryLineStyle;
 extern wxColour     g_colourActivePathLineColour;
 extern wxColour     g_colourInActivePathLineColour;
 extern wxColour     g_colourActiveBoundaryLineColour;
@@ -62,14 +62,14 @@ extern bool         g_bBoundaryODPointsVisible;
 extern bool         g_bExclusionBoundaryPoint;
 extern bool         g_bInclusionBoundaryPoint;
 extern int          g_PathLineWidth; 
-extern int          g_PathLineStyle;
+extern wxPenStyle   g_PathLineStyle;
 extern unsigned int g_uiFillTransparency;
 extern int          g_iInclusionBoundarySize;
 
 extern unsigned int g_uiBoundaryPointFillTransparency;
 extern int          g_iInclusionBoundaryPointSize;
-extern int         g_iBoundaryPointRangeRingLineWidth;
-extern int         g_iBoundaryPointRangeRingLineStyle;
+extern int          g_iBoundaryPointRangeRingLineWidth;
+extern wxPenStyle   g_iBoundaryPointRangeRingLineStyle;
 
 extern bool         g_bBoundaryPointShowName;
 extern bool         g_bODPointShowRangeRings;
@@ -111,7 +111,7 @@ extern bool         g_bEBLVRM;
 extern bool         g_bEBLAlwaysShowInfo;
 extern bool         g_bEBLPerpLine;
 extern int          g_EBLLineWidth;
-extern int          g_EBLLineStyle;
+extern wxPenStyle   g_EBLLineStyle;
 
 extern wxString     g_sPILEndIconName;
 extern wxString     g_sPILStartIconName;
@@ -123,11 +123,11 @@ extern wxColour     g_colourPILActiveOffsetLine2Colour;
 extern wxColour     g_colourPILInActiveOffsetLine2Colour;
 extern int          g_iPILPersistenceType;
 extern int          g_PILCentreLineWidth;
-extern int          g_PILCentreLineStyle;
+extern wxPenStyle   g_PILCentreLineStyle;
 extern int          g_PILOffsetLine1Width;
-extern int          g_PILOffsetLine1Style;
+extern wxPenStyle   g_PILOffsetLine1Style;
 extern int          g_PILOffsetLine2Width;
-extern int          g_PILOffsetLine2Style;
+extern wxPenStyle   g_PILOffsetLine2Style;
 extern int          g_PILDefaultNumIndexLines;
 extern double       g_dPILOffset;
 
@@ -146,14 +146,14 @@ extern wxColour     g_colourDRLineColour;
 extern int          g_iDRPersistenceType;
 extern bool         g_bDRShowArrow;
 extern int          g_DRLineWidth;
-extern int          g_DRLineStyle;
+extern wxPenStyle   g_DRLineStyle;
 extern bool         g_bDRPointShowRangeRings;
 extern int          g_iDRPointRangeRingsNumber;
 extern float        g_fDRPointRangeRingsStep;
 extern int          g_iDRPointRangeRingsStepUnits;
 extern wxColour     g_colourDRPointRangeRingsColour;
 extern int          g_iDRPointRangeRingLineWidth;
-extern int          g_iDRPointRangeRingLineStyle;
+extern wxPenStyle   g_iDRPointRangeRingLineStyle;
 
 extern wxString     g_sGZFirstIconName;
 extern wxString     g_sGZSecondIconName;
@@ -162,7 +162,7 @@ extern wxColour     g_colourInActiveGZLineColour;
 extern wxColour     g_colourActiveGZFillColour;
 extern wxColour     g_colourInActiveGZFillColour;
 extern int          g_GZLineWidth; 
-extern int          g_GZLineStyle;
+extern wxPenStyle   g_GZLineStyle;
 extern unsigned int g_uiGZFillTransparency;
 extern bool         g_bGZRotateWithBoat;
 extern int          g_iGZMaintainWith;
@@ -503,11 +503,11 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourInActiveBoundaryFillColour = m_colourPickerInActiveBoundaryFillColour->GetColour();
 
     g_BoundaryLineWidth = ::WidthValues[ m_choiceBoundaryLineWidth->GetSelection() ];
-    g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection() ];
+    g_BoundaryLineStyle = (wxPenStyle)::StyleValues[ m_choiceBoundaryLineStyle->GetSelection() ];
     g_uiFillTransparency = m_sliderFillTransparency->GetValue();
     g_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
     g_iBoundaryPointRangeRingLineWidth = ::WidthValues[ m_choiceRangeRingWidth->GetSelection() ];
-    g_iBoundaryPointRangeRingLineStyle = ::StyleValues[ m_choiceRangeRingStyle->GetSelection() ];
+    g_iBoundaryPointRangeRingLineStyle = (wxPenStyle)::StyleValues[ m_choiceRangeRingStyle->GetSelection() ];
     g_iInclusionBoundarySize = m_sliderInclusionBoundarySize->GetValue();
     g_iInclusionBoundaryPointSize = m_sliderInclusionBoundaryPointSize->GetValue();
     g_bBoundaryODPointsVisible = m_checkBoxBoundaryODPointsVisible->GetValue();
@@ -562,7 +562,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
     g_EBLLineWidth = ::WidthValues[ m_choiceEBLLineWidth->GetSelection() ];
-    g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
+    g_EBLLineStyle = (wxPenStyle)::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
     g_bEBLRotateWithBoat = m_checkBoxRotateWithBoat->GetValue();
     g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
@@ -581,11 +581,11 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourPILActiveOffsetLine2Colour = m_colourPickerPILActiveOffsetLine2Colour->GetColour();
     g_colourPILInActiveOffsetLine2Colour = m_colourPickerPILInactiveOffsetLine2Colour->GetColour();
     g_PILCentreLineWidth = ::WidthValues[ m_choicePILCentreLineWidth->GetSelection() ];
-    g_PILCentreLineStyle = ::StyleValues[ m_choicePILCentreLineStyle->GetSelection() ];
+    g_PILCentreLineStyle = (wxPenStyle)::StyleValues[ m_choicePILCentreLineStyle->GetSelection() ];
     g_PILOffsetLine1Width = ::WidthValues[ m_choicePILOffsetLine1Width->GetSelection() ];
-    g_PILOffsetLine1Style = ::StyleValues[ m_choicePILOffsetLine1Style->GetSelection() ];
+    g_PILOffsetLine1Style = (wxPenStyle)::StyleValues[ m_choicePILOffsetLine1Style->GetSelection() ];
     g_PILOffsetLine2Width = ::WidthValues[ m_choicePILOffsetLine2Width->GetSelection() ];
-    g_PILOffsetLine2Style = ::StyleValues[ m_choicePILOffsetLine2Style->GetSelection() ];
+    g_PILOffsetLine2Style = (wxPenStyle)::StyleValues[ m_choicePILOffsetLine2Style->GetSelection() ];
     g_PILDefaultNumIndexLines = m_choiceNumIndexLines->GetSelection();
     g_iPILPersistenceType = m_radioBoxPILPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
@@ -597,7 +597,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
     g_colourInActiveDRLineColour = m_colourPickerInActiveDRLineColour->GetColour();
     g_DRLineWidth = ::WidthValues[ m_choiceDRLineWidth->GetSelection() ];
-    g_DRLineStyle = ::StyleValues[ m_choiceDRLineStyle->GetSelection()];
+    g_DRLineStyle = (wxPenStyle)::StyleValues[ m_choiceDRLineStyle->GetSelection()];
     g_bDRShowArrow = m_checkBoxDRShowArrow->GetValue();
     m_textCtrlSOG->GetValue().ToDouble( &g_dDRSOG );
     m_textCtrlCOG->GetValue().ToLong( (long*)&g_iDRCOG );
@@ -614,14 +614,14 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_iDRPointRangeRingsStepUnits = m_choiceDRPointDistanceUnit->GetSelection();
     g_colourDRPointRangeRingsColour = m_colourPickerDRPointRangeRingColours->GetColour();
     g_iDRPointRangeRingLineWidth = ::WidthValues[ m_choiceDRPointRangeRingWidth->GetSelection() ];
-    g_iDRPointRangeRingLineStyle = ::StyleValues[ m_choiceDRPointRangeRingStyle->GetSelection() ];
+    g_iDRPointRangeRingLineStyle = (wxPenStyle)::StyleValues[ m_choiceDRPointRangeRingStyle->GetSelection() ];
     
     g_colourActiveGZLineColour = m_colourPickerActiveGZLineColour->GetColour();
     g_colourActiveGZFillColour = m_colourPickerActiveGZFillColour->GetColour();
     g_colourInActiveGZLineColour = m_colourPickerInActiveGZLineColour->GetColour();
     g_colourInActiveGZFillColour = m_colourPickerInActiveGZFillColour->GetColour();
     g_GZLineWidth = ::WidthValues[ m_choiceGZLineWidth->GetSelection() ];
-    g_GZLineStyle = ::StyleValues[ m_choiceGZLineStyle->GetSelection() ];
+    g_GZLineStyle = (wxPenStyle)::StyleValues[ m_choiceGZLineStyle->GetSelection() ];
     g_uiGZFillTransparency = m_sliderGZFillTransparency->GetValue();
     g_sGZFirstIconName = m_bODIComboBoxGZFirstIconName->GetValue();
     g_sGZSecondIconName = m_bODIComboBoxGZSecondIconName->GetValue();;

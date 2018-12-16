@@ -30,7 +30,6 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
 class Boundary;

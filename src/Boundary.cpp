@@ -25,7 +25,7 @@
 #include "BoundaryPoint.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
-#include "cutil.h"
+//#include "cutil.h"
 #include "clipper.hpp"
 
 #ifdef __WXMSW__
@@ -357,7 +357,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxPENSTYLE_SOLID ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
                 else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);

@@ -77,7 +77,7 @@ extern ODDRDialogImpl               *g_pODDRDialog;
 extern BoundaryList                 *g_pBoundaryList;
 extern PathList                     *g_pPathList;
 extern int                          g_BoundaryLineWidth;
-extern int                          g_BoundaryLineStyle;
+extern wxPenStyle                   g_BoundaryLineStyle;
 extern wxString                     g_sODPointIconName;
 extern double                       g_dPILOffset;
 extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;

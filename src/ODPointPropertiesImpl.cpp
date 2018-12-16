@@ -69,7 +69,7 @@ extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
 extern ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
 extern int                  g_iTextPosition;
 extern int                  g_iBoundaryPointRangeRingLineWidth;
-extern int                  g_iBoundaryPointRangeRingLineStyle;
+extern wxPenStyle           g_iBoundaryPointRangeRingLineStyle;
 
 
 extern PI_ColorScheme       g_global_color_scheme;
@@ -433,7 +433,7 @@ void ODPointPropertiesImpl::SaveChanges()
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
             m_pBoundaryPoint->m_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
             m_pBoundaryPoint->m_iInclusionBoundaryPointSize = m_sliderBoundaryPointInclusionSize->GetValue();
-            m_pBoundaryPoint->m_iRangeRingStyle = ::StyleValues[m_choiceRangeRingLineStyle->GetSelection()];
+            m_pBoundaryPoint->m_iRangeRingStyle = (wxPenStyle)::StyleValues[m_choiceRangeRingLineStyle->GetSelection()];
             m_pBoundaryPoint->m_iRangeRingWidth = ::WidthValues[m_choiceRangeRingLineWidth->GetSelection()];
             int l_BoundaryPointType;
             l_BoundaryPointType = m_radioBoxBoundaryPointType->GetSelection();
