@@ -66,11 +66,7 @@
 #include "ODUtils.h"
 #include "wx28compat.h"
 
-#ifdef __WXMSW__
-#define __CALL_CONVENTION __stdcall
-#else
 #define __CALL_CONVENTION
-#endif
 
 extern float g_GLMinSymbolLineWidth;
 wxArrayPtrVoid gTesselatorVertices;

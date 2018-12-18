@@ -13,6 +13,7 @@ IF (COMMAND cmake_policy)
 ENDIF (COMMAND cmake_policy)
 
 PROJECT(ocpn_draw_pi)
+SET(PARENT "opencpn")
 
 SET(PACKAGE_NAME ocpn_draw_pi)
 SET(VERBOSE_NAME ocpn_draw)
@@ -21,8 +22,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "46")
-SET(VERSION_DATE "14/12/2018")
+SET(VERSION_PATCH "48")
+SET(VERSION_DATE "18/12/2018")
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -215,13 +216,13 @@ SET(OCPNSRC
     ocpnsrc/cutil.cpp
     ocpnsrc/geodesic.cpp
     ocpnsrc/georef.cpp
-##    ocpnsrc/gshhs.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
     ocpnsrc/TexFont.cpp
     ocpnsrc/wxJSON/jsonreader.cpp
     ocpnsrc/wxJSON/jsonval.cpp
     ocpnsrc/wxJSON/jsonwriter.cpp
+
 )
 SET(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
@@ -229,7 +230,6 @@ SET(OCPNHDRS
     ocpninclude/apb.hpp
     ocpninclude/bbox.h
     ocpninclude/canvasMenu.h
-##    ocpninclude/chart1.h
     ocpninclude/chartbarwin.h
     ocpninclude/chartbase.h
     ocpninclude/chartdbs.h
@@ -345,6 +345,7 @@ ENDIF(OD_USE_SVG)
 
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/src/mygdal  )
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
