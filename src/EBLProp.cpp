@@ -35,6 +35,9 @@
 extern EBLList                  *g_pEBLList;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex g_pfFix;
+extern int                      g_iDefaultEBLPropertyDialogPostionX;
+extern int                      g_iDefaultEBLPropertyDialogPostionY;
+
 
 EBLProp::EBLProp()
 {
@@ -75,7 +78,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlEBLAngle->Show();
     m_textCtrlEBLAngle->Enable(true);
     m_textCtrlEBLAngle->SetEditable(true);
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
 
@@ -92,6 +95,8 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
+    if(g_iDefaultEBLPropertyDialogPostionX == -1 || g_iDefaultEBLPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultEBLPropertyDialogPostionX, g_iDefaultEBLPropertyDialogPostionY));
     
 }
 

@@ -319,6 +319,8 @@ int g_iDefaultBoundaryPropertyDialogPostionX;
 int g_iDefaultBoundaryPropertyDialogPostionY;
 int g_iDefaultDRPropertyDialogPostionX;
 int g_iDefaultDRPropertyDialogPostionY;
+int g_iDefaultEBLPropertyDialogPostionX;
+int g_iDefaultEBLPropertyDialogPostionY;
 int g_iDefaultGZPropertyDialogPostionX;
 int g_iDefaultGZPropertyDialogPostionY;
 int g_iDefaultPathPropertyDialogPostionX;
@@ -766,8 +768,8 @@ bool ocpn_draw_pi::DeInit(void)
 
     if ( g_pEBLPropDialog ) {
         g_pEBLPropDialog->Destroy();
-        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
-        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
+        g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
+        g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
     }
     g_pEBLPropDialog = NULL;
 
@@ -1457,6 +1459,8 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), g_iDefaultBoundaryPropertyDialogPostionY);
             pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), g_iDefaultDRPropertyDialogPostionX);
             pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), g_iDefaultDRPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultEBLPropertyDialogPositionX" ), g_iDefaultEBLPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultEBLPropertyDialogPositionY" ), g_iDefaultEBLPropertyDialogPostionY);
             pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), g_iDefaultGZPropertyDialogPostionX);
             pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), g_iDefaultGZPropertyDialogPostionY);
             pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), g_iDefaultPathPropertyDialogPostionX);
@@ -1750,6 +1754,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultBoundaryPropertyDialogPositionY" ), &g_iDefaultBoundaryPropertyDialogPostionY, -1 );
         pConf->Read( wxS( "DefaultDRPropertyDialogPositionX" ), &g_iDefaultDRPropertyDialogPostionX, -1 );
         pConf->Read( wxS( "DefaultDRPropertyDialogPositionY" ), &g_iDefaultDRPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultEBLPropertyDialogPositionX" ), &g_iDefaultEBLPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultEBLPropertyDialogPositionY" ), &g_iDefaultEBLPropertyDialogPostionY, -1 );
         pConf->Read( wxS( "DefaultGZPropertyDialogPositionX" ), &g_iDefaultGZPropertyDialogPostionX, -1 );
         pConf->Read( wxS( "DefaultGZPropertyDialogPositionY" ), &g_iDefaultGZPropertyDialogPostionY, -1 );
         pConf->Read( wxS( "DefaultPathPropertyDialogPositionX" ), &g_iDefaultPathPropertyDialogPostionX, -1 );
