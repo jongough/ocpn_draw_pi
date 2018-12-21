@@ -52,6 +52,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxNotebook* m_notebookProperties;
 		wxPanel* m_panelGeneral;
 		wxCheckBox* m_checkBoxConfirmObjectDelete;
+		wxCheckBox* m_checkBoxRememberPropertyPosition;
 		wxCheckBox* m_checkBoxShowMagBearings;
 		wxCheckBox* m_checkBoxAllowLeftDrag;
 		wxStaticText* m_staticTextNavObjBackups;

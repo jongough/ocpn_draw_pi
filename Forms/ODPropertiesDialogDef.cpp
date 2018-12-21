@@ -23,6 +23,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	wxFlexGridSizer* fgSizer4;
 	fgSizer4 = new wxFlexGridSizer( 0, 2, 0, 0 );
 	fgSizer4->AddGrowableCol( 0 );
+	fgSizer4->AddGrowableCol( 1 );
 	fgSizer4->SetFlexibleDirection( wxBOTH );
 	fgSizer4->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -30,20 +31,14 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxConfirmObjectDelete->SetValue(true);
 	fgSizer4->Add( m_checkBoxConfirmObjectDelete, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-
-	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_checkBoxRememberPropertyPosition = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Remember properties dialogs positions over a restart"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_checkBoxRememberPropertyPosition, 0, wxALL, 5 );
 
 	m_checkBoxShowMagBearings = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Show Magnetic Bearings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizer4->Add( m_checkBoxShowMagBearings, 0, wxALL, 5 );
 
-
-	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
-
 	m_checkBoxAllowLeftDrag = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Allow Left Mouse Button Drag"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizer4->Add( m_checkBoxAllowLeftDrag, 0, wxALL, 5 );
-
-
-	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, _("OCPN_Draw Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextNavObjBackups->Wrap( -1 );

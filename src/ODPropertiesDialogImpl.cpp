@@ -131,7 +131,6 @@ extern wxPenStyle   g_PILOffsetLine2Style;
 extern int          g_PILDefaultNumIndexLines;
 extern double       g_dPILOffset;
 
-
 extern double       g_dDRSOG;
 extern int          g_iDRCOG;
 extern double       g_dDRLength;
@@ -183,6 +182,8 @@ extern wxString     *g_SData_Locn;
 extern wxString    *g_pData;
 extern wxString    *g_pUserIconsDir;
 extern wxString    *g_pLayerDir;
+
+extern bool         g_bRememberPropertyDialogPosition;
 
 
 
@@ -639,6 +640,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sODPointIconName = m_bODIComboBoxODPointIconName->GetValue();
     
     g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
+    g_bRememberPropertyDialogPosition = m_checkBoxRememberPropertyPosition->GetValue();
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_bAllowLeftDrag = m_checkBoxAllowLeftDrag->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
@@ -989,6 +991,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxShowDisplayText->SetSelection( g_iTextPointDisplayTextWhen );
     
     m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
+    m_checkBoxRememberPropertyPosition->SetValue( g_bRememberPropertyDialogPosition );
     m_checkBoxShowMagBearings->SetValue( g_bShowMag );
     m_checkBoxAllowLeftDrag->SetValue( g_bAllowLeftDrag );
     m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );

@@ -315,24 +315,25 @@ ODPlugIn_Position_Fix_Ex  g_pfFix;
 ODJSON          *g_pODJSON;
 ODAPI           *g_pODAPI;
 
-int g_iDefaultBoundaryPropertyDialogPostionX;
-int g_iDefaultBoundaryPropertyDialogPostionY;
-int g_iDefaultDRPropertyDialogPostionX;
-int g_iDefaultDRPropertyDialogPostionY;
-int g_iDefaultEBLPropertyDialogPostionX;
-int g_iDefaultEBLPropertyDialogPostionY;
-int g_iDefaultGZPropertyDialogPostionX;
-int g_iDefaultGZPropertyDialogPostionY;
-int g_iDefaultPathPropertyDialogPostionX;
-int g_iDefaultPathPropertyDialogPostionY;
-int g_iDefaultPointPropertyDialogPostionX;
-int g_iDefaultPointPropertyDialogPostionY;
-int g_iDefaultPILPropertyDialogPostionX;
-int g_iDefaultPILPropertyDialogPostionY;
-int g_iDefaultPILLinePropertyDialogPostionX;
-int g_iDefaultPILLinePropertyDialogPostionY;
-int g_iDefaultPathAnPointManagerDialogPostionX;
-int g_iDefaultPathAnPointManagerDialogPostionY;
+bool    g_bRememberPropertyDialogPosition;
+int     g_iDefaultBoundaryPropertyDialogPostionX;
+int     g_iDefaultBoundaryPropertyDialogPostionY;
+int     g_iDefaultDRPropertyDialogPostionX;
+int     g_iDefaultDRPropertyDialogPostionY;
+int     g_iDefaultEBLPropertyDialogPostionX;
+int     g_iDefaultEBLPropertyDialogPostionY;
+int     g_iDefaultGZPropertyDialogPostionX;
+int     g_iDefaultGZPropertyDialogPostionY;
+int     g_iDefaultPathPropertyDialogPostionX;
+int     g_iDefaultPathPropertyDialogPostionY;
+int     g_iDefaultPointPropertyDialogPostionX;
+int     g_iDefaultPointPropertyDialogPostionY;
+int     g_iDefaultPILPropertyDialogPostionX;
+int     g_iDefaultPILPropertyDialogPostionY;
+int     g_iDefaultPILLinePropertyDialogPostionX;
+int     g_iDefaultPILLinePropertyDialogPostionY;
+int     g_iDefaultPathAnPointManagerDialogPostionX;
+int     g_iDefaultPathAnPointManagerDialogPostionY;
 
 
 wxImage ICursorLeft;
@@ -477,6 +478,7 @@ int ocpn_draw_pi::Init(void)
     g_iLocaleDepth = 0;
     g_ODlocale = NULL;
     m_bRecreateConfig = false;
+    g_bRememberPropertyDialogPosition = false;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -1418,6 +1420,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
             pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
             pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
+            pConf->Write( wxS( "RemeberPropertiesDialogPosition" ), g_bRememberPropertyDialogPosition );
             pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
             pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
             pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
@@ -1455,24 +1458,45 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultImportType" ), g_sDefaultImportType );
             pConf->Write( wxS( "LastChartScale" ), m_chart_scale);
             
-            pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionX" ), g_iDefaultBoundaryPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), g_iDefaultBoundaryPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), g_iDefaultDRPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), g_iDefaultDRPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultEBLPropertyDialogPositionX" ), g_iDefaultEBLPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultEBLPropertyDialogPositionY" ), g_iDefaultEBLPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), g_iDefaultGZPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), g_iDefaultGZPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), g_iDefaultPathPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultPathPropertyDialogPositionY" ), g_iDefaultPathPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultPointPropertyDialogPositionX" ), g_iDefaultPointPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultPointPropertyDialogPositionY" ), g_iDefaultPointPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultPILPropertyDialogPositionX" ), g_iDefaultPILPropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultPILPropertyDialogPositionY" ), g_iDefaultPILPropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionX" ), g_iDefaultPILLinePropertyDialogPostionX);
-            pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionY" ), g_iDefaultPILLinePropertyDialogPostionY);
-            pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), g_iDefaultPathAnPointManagerDialogPostionX);
-            pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), g_iDefaultPathAnPointManagerDialogPostionY);
+            if(g_bRememberPropertyDialogPosition) {
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionX" ), g_iDefaultBoundaryPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), g_iDefaultBoundaryPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), g_iDefaultDRPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), g_iDefaultDRPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionX" ), g_iDefaultEBLPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionY" ), g_iDefaultEBLPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), g_iDefaultGZPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), g_iDefaultGZPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), g_iDefaultPathPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionY" ), g_iDefaultPathPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionX" ), g_iDefaultPointPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionY" ), g_iDefaultPointPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionX" ), g_iDefaultPILPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionY" ), g_iDefaultPILPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionX" ), g_iDefaultPILLinePropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionY" ), g_iDefaultPILLinePropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), g_iDefaultPathAnPointManagerDialogPostionX);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), g_iDefaultPathAnPointManagerDialogPostionY);
+            } else {
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), -1);
+            }
             
         }
     }
@@ -1693,6 +1717,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "KeepODNavobjBackups" ), &g_navobjbackups, 0 );
         pConf->Read( wxS( "CurrentDrawMode" ), &m_Mode, 0 );
         pConf->Read( wxS( "ConfirmObjectDelete" ), &g_bConfirmObjectDelete, 0 );
+        pConf->Read( wxS( "RemeberPropertiesDialogPosition" ), &g_bRememberPropertyDialogPosition, false );
         
         pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
         pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
