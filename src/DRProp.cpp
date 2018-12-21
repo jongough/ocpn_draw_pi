@@ -27,6 +27,9 @@
 #include "DR.h"
 #include "ocpn_draw_pi.h"
 
+extern int g_iDefaultDRPropertyDialogPostionX;
+extern int g_iDefaultDRPropertyDialogPostionY;
+
 DRProp::DRProp()
 {
     //ctor
@@ -45,12 +48,14 @@ DRProp::DRProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_checkBoxPathShowArrow->Enable( true );
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
+    if(g_iDefaultDRPropertyDialogPostionX == -1 || g_iDefaultDRPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultDRPropertyDialogPostionX, g_iDefaultDRPropertyDialogPostionY));
 }
 
 

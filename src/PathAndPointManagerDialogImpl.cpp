@@ -153,6 +153,9 @@ extern wxString     g_sODPointIconName;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
 extern ODEventHandler   *g_ODEventHandler;
 extern wxString     g_sDefaultImportType;
+extern int          g_iDefaultPathAnPointManagerDialogPostionX;
+extern int          g_iDefaultPathAnPointManagerDialogPostionY;
+
         
 int sort_path_on_vis;
 #if wxCHECK_VERSION(2, 9, 0)
@@ -477,7 +480,8 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     
     SetMinSize( GetBestSize() );
     
-    Centre();
+    if(g_iDefaultPathAnPointManagerDialogPostionX == -1 || g_iDefaultPathAnPointManagerDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultPathAnPointManagerDialogPostionX, g_iDefaultPathAnPointManagerDialogPostionY));
     
     // create a image list for the list with just the eye icon
     wxImageList *imglist = new wxImageList( 20, 20, true, 1 );

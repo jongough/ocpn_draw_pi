@@ -787,7 +787,7 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_staticTextGZSecondLength->Enable( false );
     m_textCtrlGZSecondLength->Hide();
     m_textCtrlGZSecondLength->Enable( false );
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Hide();
     m_bSizerPILLines->ShowItems( false );
     m_listCtrlPILList->Hide();

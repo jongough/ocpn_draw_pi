@@ -49,6 +49,8 @@ extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern ODConfig             *g_pODConfig;
 extern PILProp              *g_pPILPropDialog;
 extern ODSelect             *g_pODSelect;
+extern int                  g_iDefaultPILLinePropertyDialogPostionX;
+extern int                  g_iDefaultPILLinePropertyDialogPostionY;
 
 
 
@@ -69,7 +71,9 @@ PILPropertiesDialogDef( parent )
 
     this->GetSizer()->Fit( this );
     this->Layout();
-
+    if(g_iDefaultPILLinePropertyDialogPostionX == -1 || g_iDefaultPILLinePropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultPILLinePropertyDialogPostionX, g_iDefaultPILLinePropertyDialogPostionY));
+    
 
 }
 

@@ -30,6 +30,9 @@
 extern BoundaryList         *g_pBoundaryList;
 extern unsigned int         g_uiFillTransparency;
 extern int                  g_iInclusionBoundarySize;
+extern int                  g_iDefaultBoundaryPropertyDialogPostionX;
+extern int                  g_iDefaultBoundaryPropertyDialogPostionY;
+
 
 
 BoundaryProp::BoundaryProp()
@@ -65,13 +68,15 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_radioBoxBoundaryType->Enable( true );
     m_checkBoxShowBoundaryPoints->Show();
     m_checkBoxShowBoundaryPoints->Enable( true );
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
     m_uiFillTransparency = g_uiFillTransparency;
+    if(g_iDefaultBoundaryPropertyDialogPostionX == -1 || g_iDefaultBoundaryPropertyDialogPostionY == -1) Center();
+    SetPosition(wxPoint(g_iDefaultBoundaryPropertyDialogPostionX, g_iDefaultBoundaryPropertyDialogPostionY));
 }
 
 

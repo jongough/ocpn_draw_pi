@@ -315,6 +315,24 @@ ODPlugIn_Position_Fix_Ex  g_pfFix;
 ODJSON          *g_pODJSON;
 ODAPI           *g_pODAPI;
 
+int g_iDefaultBoundaryPropertyDialogPostionX;
+int g_iDefaultBoundaryPropertyDialogPostionY;
+int g_iDefaultDRPropertyDialogPostionX;
+int g_iDefaultDRPropertyDialogPostionY;
+int g_iDefaultGZPropertyDialogPostionX;
+int g_iDefaultGZPropertyDialogPostionY;
+int g_iDefaultPathPropertyDialogPostionX;
+int g_iDefaultPathPropertyDialogPostionY;
+int g_iDefaultPointPropertyDialogPostionX;
+int g_iDefaultPointPropertyDialogPostionY;
+int g_iDefaultPILPropertyDialogPostionX;
+int g_iDefaultPILPropertyDialogPostionY;
+int g_iDefaultPILLinePropertyDialogPostionX;
+int g_iDefaultPILLinePropertyDialogPostionY;
+int g_iDefaultPathAnPointManagerDialogPostionX;
+int g_iDefaultPathAnPointManagerDialogPostionY;
+
+
 wxImage ICursorLeft;
 wxImage ICursorRight;
 wxImage ICursorUp;
@@ -732,28 +750,60 @@ bool ocpn_draw_pi::DeInit(void)
 
     g_pODPathPropDialog = NULL;
 
-    if( g_pODPointPropDialog ) g_pODPointPropDialog->Destroy();
+    if( g_pODPointPropDialog ) {
+        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
+        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
+        g_pODPointPropDialog->Destroy();
+    }
     g_pODPointPropDialog = NULL;
 
-    if ( g_pBoundaryPropDialog ) g_pBoundaryPropDialog->Destroy();
+    if ( g_pBoundaryPropDialog ) {
+        g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
+        g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
+        g_pBoundaryPropDialog->Destroy();
+    }
     g_pBoundaryPropDialog = NULL;
 
-    if ( g_pEBLPropDialog ) g_pEBLPropDialog->Destroy();
+    if ( g_pEBLPropDialog ) {
+        g_pEBLPropDialog->Destroy();
+        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
+        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
+    }
     g_pEBLPropDialog = NULL;
 
-    if ( g_pDRPropDialog ) g_pDRPropDialog->Destroy();
+    if ( g_pDRPropDialog ) {
+        g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
+        g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
+        g_pDRPropDialog->Destroy();
+    }
     g_pDRPropDialog = NULL;
 
-    if ( g_pGZPropDialog ) g_pGZPropDialog->Destroy();
+    if ( g_pGZPropDialog ) {
+        g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
+        g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
+        g_pGZPropDialog->Destroy();
+    }
     g_pGZPropDialog = NULL;
 
-    if ( g_pPILPropDialog )  g_pPILPropDialog->Destroy();
+    if ( g_pPILPropDialog )  {
+        g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
+        g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
+        g_pPILPropDialog->Destroy();
+    }
     g_pPILPropDialog = NULL;
 
-    if ( g_PILIndexLinePropDialog )  g_PILIndexLinePropDialog->Destroy();
+    if ( g_PILIndexLinePropDialog )  {
+        g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
+        g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
+        g_PILIndexLinePropDialog->Destroy();
+    }
     g_PILIndexLinePropDialog = NULL;
 
-    if ( g_pPathAndPointManagerDialog )  g_pPathAndPointManagerDialog->Destroy();
+    if ( g_pPathAndPointManagerDialog )  {
+        g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
+        g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
+        g_pPathAndPointManagerDialog->Destroy();
+    }
     g_pPathAndPointManagerDialog = NULL;
 
     if( g_pODToolbar ) g_pODToolbar->Destroy();
@@ -1403,6 +1453,23 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultImportType" ), g_sDefaultImportType );
             pConf->Write( wxS( "LastChartScale" ), m_chart_scale);
             
+            pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionX" ), g_iDefaultBoundaryPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), g_iDefaultBoundaryPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), g_iDefaultDRPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), g_iDefaultDRPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), g_iDefaultGZPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), g_iDefaultGZPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), g_iDefaultPathPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultPathPropertyDialogPositionY" ), g_iDefaultPathPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultPointPropertyDialogPositionX" ), g_iDefaultPointPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultPointPropertyDialogPositionY" ), g_iDefaultPointPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultPILPropertyDialogPositionX" ), g_iDefaultPILPropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultPILPropertyDialogPositionY" ), g_iDefaultPILPropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionX" ), g_iDefaultPILLinePropertyDialogPostionX);
+            pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionY" ), g_iDefaultPILLinePropertyDialogPostionY);
+            pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), g_iDefaultPathAnPointManagerDialogPostionX);
+            pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), g_iDefaultPathAnPointManagerDialogPostionY);
+            
         }
     }
     
@@ -1678,6 +1745,23 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultImportPath" ), &g_sDefaultImportPath, _T("") );
         pConf->Read( wxS( "DefaultImportType" ), &g_sDefaultImportType, _T("gpx") );
         pConf->Read( wxS( "LastChartScale" ), &m_chart_scale, 0);
+        
+        pConf->Read( wxS( "DefaultBoundaryPropertyDialogPositionX" ), &g_iDefaultBoundaryPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultBoundaryPropertyDialogPositionY" ), &g_iDefaultBoundaryPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultDRPropertyDialogPositionX" ), &g_iDefaultDRPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultDRPropertyDialogPositionY" ), &g_iDefaultDRPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultGZPropertyDialogPositionX" ), &g_iDefaultGZPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultGZPropertyDialogPositionY" ), &g_iDefaultGZPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPathPropertyDialogPositionX" ), &g_iDefaultPathPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPathPropertyDialogPositionY" ), &g_iDefaultPathPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPointPropertyDialogPositionX" ), &g_iDefaultPointPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPointPropertyDialogPositionY" ), &g_iDefaultPointPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPILPropertyDialogPositionX" ), &g_iDefaultPILPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPILPropertyDialogPositionY" ), &g_iDefaultPILPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPILLinePropertyDialogPositionX" ), &g_iDefaultPILLinePropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPILLinePropertyDialogPositionY" ), &g_iDefaultPILLinePropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPathAndPointManagerDialogPositionX" ), &g_iDefaultPathAnPointManagerDialogPostionX, -1);
+        pConf->Read( wxS( "DefaultPathAndPointManagerDialogPositionY" ), &g_iDefaultPathAnPointManagerDialogPostionY, -1);
         
     }
 

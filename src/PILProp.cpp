@@ -45,6 +45,9 @@ enum {
 extern PILList                  *g_pPILList;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex g_pfFix;
+extern int                      g_iDefaultPILPropertyDialogPostionX;
+extern int                      g_iDefaultPILPropertyDialogPostionY;
+
 
 PILProp::PILProp()
 {
@@ -57,7 +60,7 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     //ctor
     m_bLockUpdate = false;
     m_fgSizerPIL->ShowItems( true );
-    m_bSizerPathPoints->ShowItems( false );
+    m_fgSizerPathPoints->ShowItems( false );
     m_bSizerPILLines->ShowItems( true );
     
     
@@ -82,6 +85,8 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
+    if(g_iDefaultPILPropertyDialogPostionX == -1 || g_iDefaultPILPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultPILPropertyDialogPostionX, g_iDefaultPILPropertyDialogPostionY));
     
 }
 

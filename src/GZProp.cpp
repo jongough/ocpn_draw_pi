@@ -37,6 +37,9 @@ extern GZList                  *g_pGZList;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 extern ODPlugIn_Position_Fix_Ex g_pfFix;
 extern ODConfig                 *g_pODConfig;
+extern int                      g_iDefaultGZPropertyDialogPostionX;
+extern int                      g_iDefaultGZPropertyDialogPostionY;
+
 
 GZProp::GZProp()
 {
@@ -75,7 +78,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
 
@@ -98,6 +101,9 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
+    
+    if(g_iDefaultGZPropertyDialogPostionX == -1 || g_iDefaultGZPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultGZPropertyDialogPostionX, g_iDefaultGZPropertyDialogPostionY));
  
     m_bLockGZAngle = false;
     m_bLockGZLength = false;

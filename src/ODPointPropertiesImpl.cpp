@@ -70,6 +70,9 @@ extern ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
 extern int                  g_iTextPosition;
 extern int                  g_iBoundaryPointRangeRingLineWidth;
 extern wxPenStyle           g_iBoundaryPointRangeRingLineStyle;
+extern int                  g_iDefaultPointPropertyDialogPostionX;
+extern int                  g_iDefaultPointPropertyDialogPostionY;
+
 
 
 extern PI_ColorScheme       g_global_color_scheme;
@@ -126,6 +129,9 @@ ODPointPropertiesDialog( parent )
     delete m_bcomboBoxODPointIconName;
     
     SetDialogSize();
+    
+    if(g_iDefaultPointPropertyDialogPostionX == -1 || g_iDefaultPointPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultPointPropertyDialogPostionX, g_iDefaultPointPropertyDialogPostionY));
     
 }
 
