@@ -48,6 +48,7 @@ DRProp::DRProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_bSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
 }

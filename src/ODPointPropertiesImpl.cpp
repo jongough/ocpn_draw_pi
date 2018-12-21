@@ -143,38 +143,11 @@ ODPointPropertiesImpl::~ODPointPropertiesImpl()
 
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
-    wxSize dsize = ::wxGetDisplaySize();
-    wxSize fsize = GetSize();
-    fsize.IncBy( 20 );
-    fsize.y = wxMin(fsize.y, dsize.y-80);
-    fsize.x = wxMin(fsize.x, dsize.x-80);
-    SetSize(fsize);
-    wxSize sz = m_bSizerLinks->CalcMin();
-    sz.y = m_sSingleLineSize.y * 2;
-    m_bSizerLinks->SetMinSize(sz);
-    //m_bSizerLinks->FitInside(m_scrolledWindowLinks);
-    m_bSizerHyperlink->Layout();
-    m_scrolledWindowLinks->SetMinClientSize(sz);
-    m_scrolledWindowLinks->Layout();
-    m_bSizerHyperlinkExt->Layout();
-    m_SizerOuterProperties->Layout();
-    m_SizerBasicProperties->Layout();
-    m_SizerDialogBox->RecalcSizes();
-    sz = m_SizerBasicProperties->CalcMin();
-    sz.y /= 2;
-    m_SizerBasicProperties->SetMinSize(sz);
-    m_SizerBasicProperties->FitInside(m_scrolledWindowBasicProperties);
-    m_SizerODPointRangeRingsSelect->Layout();
-    m_SizerFill->Layout();
-    m_scrolledWindowBasicProperties->Layout();
-    sz = m_SizerDialogBox->CalcMin();
-    sz.IncBy(15);
-   sz.y /= 2;
-    m_SizerDialogBox->SetMinSize(sz);
-    m_SizerDialogBox->Layout();
+    m_scrolledWindowLinks->SetMinClientSize(m_bSizerLinks->ComputeFittingClientSize(this));
+    m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
+    
     this->GetSizer()->Fit( this );
     this->Layout();
-    SetMinSize(sz);
     
     m_defaultClientSize = GetClientSize();
 }

@@ -89,6 +89,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlTotalLength->SetValidator( dODEBLLength );
 #endif
     
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
     

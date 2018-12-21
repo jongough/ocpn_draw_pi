@@ -1,12 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Aug  8 2018)
+// C++ code generated with wxFormBuilder (version Oct 26 2018)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ODPATHPROPERTIESDIALOGDEF_H__
-#define __ODPATHPROPERTIESDIALOGDEF_H__
+#pragma once
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
@@ -39,10 +38,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODPathPropertiesDialogDef
 ///////////////////////////////////////////////////////////////////////////////
-class ODPathPropertiesDialogDef : public wxDialog 
+class ODPathPropertiesDialogDef : public wxDialog
 {
 	private:
-	
+
 	protected:
 		wxBoxSizer* m_bSizerDialogBox;
 		wxScrolledWindow* m_scrolledWindowProperties;
@@ -101,7 +100,6 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerPath;
 		wxCheckBox* m_checkBoxPathShowArrow;
 		wxRadioBox* m_radioBoxPathPersistence;
-		wxBoxSizer* m_bSizerPathPoints;
 		wxFlexGridSizer* m_fgSizerPathPoints;
 		wxStaticText* m_staticTextODPoints;
 		wxBoxSizer* m_bSizerListCtrl;
@@ -112,7 +110,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxBoxSizer* m_SizerOKCancel;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
-		
+
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
@@ -134,13 +132,12 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnRightClickPIL( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
-		
-	
+
+
 	public:
-		
-		ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+
+		ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~ODPathPropertiesDialogDef();
-	
+
 };
 
-#endif //__ODPATHPROPERTIESDIALOGDEF_H__

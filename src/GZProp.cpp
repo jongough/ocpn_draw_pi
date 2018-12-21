@@ -95,6 +95,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_textCtrlGZSecondLength->SetValidator( dODGZSecondLength );
     #endif
     
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
  

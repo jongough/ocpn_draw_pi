@@ -43,6 +43,9 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_fgSizerBoundary->ShowItems( true );
+    m_bSizerBoundaryType->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_staticTextTotalLength->Show();
     m_textCtrlTotalLength->Show();
     m_staticTextFillColour->Show();
@@ -65,6 +68,7 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_bSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
     m_uiFillTransparency = g_uiFillTransparency;

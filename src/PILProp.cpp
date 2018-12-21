@@ -57,9 +57,10 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     //ctor
     m_bLockUpdate = false;
     m_fgSizerPIL->ShowItems( true );
-
+    m_bSizerPathPoints->ShowItems( false );
+    m_bSizerPILLines->ShowItems( true );
     
-    //m_fgSizerPath->ShowItems( true );
+    
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("PIL Persistence") );
@@ -68,8 +69,6 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlPILAngle->Show();
     m_textCtrlPILAngle->Enable(true);
     m_textCtrlPILAngle->SetEditable(true);
-    m_bSizerPathPoints->ShowItems( false );
-    m_bSizerPILLines->ShowItems( true );
     
 
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
@@ -80,7 +79,7 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 #endif
 
     SetPointsListHeadings();
-    
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
     

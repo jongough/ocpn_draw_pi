@@ -95,6 +95,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODP
     
     SetPointsListHeadings();    
     SetViewableItems();
+
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
