@@ -307,8 +307,8 @@ enum {
 #define TYPE_PATHMGR_POINT_DLG      0x0080
 #define TYPE_PATHMGR_LAYER_DLG      0x0100
 
-#define     OCPN_API_VERSION_MAJOR    1
-#define     OCPN_API_VERSION_MINOR    13
+#define     MY_API_VERSION_MAJOR    1
+#define     MY_API_VERSION_MINOR    13
 
 //#define PI 3.14159265
 

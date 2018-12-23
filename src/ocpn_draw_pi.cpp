@@ -902,12 +902,12 @@ int ocpn_draw_pi::GetPlugInVersionMinor()
 
 int ocpn_draw_pi::GetAPIVersionMajor()
 {
-    return OCPN_API_VERSION_MAJOR;
+    return MY_API_VERSION_MAJOR;
 }
 
 int ocpn_draw_pi::GetAPIVersionMinor()
 {
-    return OCPN_API_VERSION_MINOR;
+    return MY_API_VERSION_MINOR;
 }
 wxString ocpn_draw_pi::GetCommonName()
 {
