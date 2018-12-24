@@ -384,8 +384,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     PIL *pPIL = NULL;
     
     if( NULL == pInPath ) return false;
-    ::wxBeginBusyCursor();
-   
+
     SetGlobalLocale();
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
@@ -539,8 +538,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
         m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
     
-    ::wxEndBusyCursor();
-    
     ResetGlobalLocale();
     
     SetDialogSize();
@@ -551,8 +548,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
 bool ODPathPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
-    
-    ::wxBeginBusyCursor();
     
     //  Iterate on Path Points
     wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
@@ -638,17 +633,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
         
     }
 
-    // Set column width correctly for data
-    for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
-        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
-        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
-        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
-        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
-        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
-    }
-    
-    ::wxEndBusyCursor();
-    
     ResetGlobalLocale();
     
     if(m_pPath->m_sTypeString != "EBL" && m_pPath->m_sTypeString != "PIL") SetDialogSize();
@@ -797,19 +781,6 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
 
 void ODPathPropertiesDialogImpl::SetDialogSize()
 {
-    wxSize dsize = ::wxGetDisplaySize();
-    
-    wxSize sz = m_SizerOKCancel->CalcMin();
-    m_SizerOKCancel->SetMinSize(sz);
-    m_SizerOKCancel->Layout();
-    
-    m_bSizerNameDescription->Layout();
-    m_fgSizerBoundary->Layout();
-    m_bSizerBoundaryType->Layout();
-    m_fgSizerPIL->Layout();
-    m_fgSizerEBL->Layout();
-    m_fgSizerEBL1->Layout();
-    m_fgSizerGZ->Layout();
     for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
         m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
         int a_width = m_listCtrlODPoints->GetColumnWidth(i);
@@ -819,24 +790,10 @@ void ODPathPropertiesDialogImpl::SetDialogSize()
     }
     m_listCtrlODPoints->Fit();
     m_fgSizerPath->Layout();
-    sz = m_fgSizerPathPoints->CalcMin();
-    sz.x += 15;
-    m_fgSizerPathPoints->SetMinSize(sz);
-    m_listCtrlODPoints->SetMaxClientSize(sz);
-    m_fgSizerPathPoints->Layout();
-    m_bSizerPILLines->Layout();
-    m_fgSizerProperties->Layout();
-    sz = m_bSizerListCtrl->CalcMin();
-    m_bSizerListCtrl->SetMinSize(sz);
-    sz = m_fgSizerProperties->CalcMin();
-    sz.y += 15;
 
-    m_scrolledWindowProperties->Layout();
-    
-    sz.y += m_SizerOKCancel->CalcMin().GetY();
-    m_bSizerDialogBox->SetMinSize(sz);
-    SetSize(sz);
-    SetMinSize(sz);
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
+    this->GetSizer()->Fit(this);
+    this->Layout();
     
 }
 

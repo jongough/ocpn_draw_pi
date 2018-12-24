@@ -131,8 +131,6 @@ bool PathMan::DeletePath( ODPath *pPath )
         if( pPath->m_bIsInLayer )
             return false;
             
-        ::wxBeginBusyCursor();
-
         g_pODConfig->DeleteConfigPath( pPath );
 
         //    Remove the path from associated lists
@@ -181,8 +179,6 @@ bool PathMan::DeletePath( ODPath *pPath )
         }
 
         delete pPath;
-
-        ::wxEndBusyCursor();
 
     }
     return true;
@@ -260,8 +256,6 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
 
 void PathMan::DeleteAllPaths( void )
 {
-    ::wxBeginBusyCursor();
-
     //    Iterate on the pathList
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
@@ -277,7 +271,6 @@ void PathMan::DeleteAllPaths( void )
 //        g_pODConfig->m_bSkipChangeSetUpdate = false;
     }
 
-    ::wxEndBusyCursor();
 
 }
 

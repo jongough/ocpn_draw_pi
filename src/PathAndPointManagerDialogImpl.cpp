@@ -577,7 +577,6 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
     
     bool busy = false;
     if( m_listCtrlPath->GetSelectedItemCount() ) {
-        ::wxBeginBusyCursor();
         busy = true;
     }
     
@@ -613,7 +612,6 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
         // TODO fix up undo
         //m_parent_window->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
-        ::wxEndBusyCursor();
     }
     
 }
@@ -855,16 +853,12 @@ void PathAndPointManagerDialogImpl::OnPathToggleVisibility( wxMouseEvent &event 
         m_listCtrlPath->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
         //        m_listCtrlPath->SetItemData( clicked_index, path->IsVisible() ? 0 : 1);
         
-        ::wxBeginBusyCursor();
-        
         g_pODConfig->UpdatePath( path );
         RequestRefresh( GetOCPNCanvasWindow() );
         
         //   We need to update the ODPoint list control only if the visibility of shared ODPoints might have changed.
         if( has_shared_ODPoints )
             UpdateODPointListCtrlViz();
-        
-        ::wxEndBusyCursor();
         
     }
     
@@ -1417,7 +1411,6 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteClick( wxCommandEvent &event 
     
     bool busy = false;
     if( m_listCtrlODPoints->GetSelectedItemCount() ) {
-        ::wxBeginBusyCursor();
         busy = true;
     }
     
@@ -1465,7 +1458,6 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteClick( wxCommandEvent &event 
         // TODO fix up undo
         //m_parent_window->undo->InvalidateUndo();
         RequestRefresh( GetOCPNCanvasWindow() );
-        ::wxEndBusyCursor();
     }
     
 }
@@ -1862,8 +1854,6 @@ void PathAndPointManagerDialogImpl::OnLayerListContentsClick( wxCommandEvent &ev
 
 void PathAndPointManagerDialogImpl::ToggleLayerContentsOnListing( ODLayer *layer )
 {
-    ::wxBeginBusyCursor();
-    
     // Process Paths in this layer
     wxPathListNode *node1 = g_pPathList->GetFirst();
     while( node1 ) {
@@ -1893,8 +1883,6 @@ void PathAndPointManagerDialogImpl::ToggleLayerContentsOnListing( ODLayer *layer
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
     UpdateLayerListCtrl();
-    
-    ::wxEndBusyCursor();
     
     RequestRefresh( GetOCPNCanvasWindow() );
 }

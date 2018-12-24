@@ -2432,8 +2432,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     m_pSelectedPath->SetHiLite( 0 );
                     
                     //    Update the PathProperties Dialog, if currently shown
-                    if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
-                    if( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                    if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) && m_pSelectedPath == g_pODPathPropDialog->GetPath()) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
+                    if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
                     
                     bRefresh = TRUE;
                     bret = FALSE;

@@ -100,8 +100,6 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 {
     if( NULL == pInPIL ) return false;
 
-    ::wxBeginBusyCursor();
-
     SetGlobalLocale();
 
     wxString s;
@@ -173,8 +171,6 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 
     ResetGlobalLocale();
     
-    ::wxEndBusyCursor();
-
     return true;
 
 }
