@@ -81,7 +81,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
 #endif // wxCHECK_VERSION(3,0,0)
-
+    
     SetViewableItems();
 }
 
@@ -196,22 +196,23 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
     if( ! m_pPath->m_bIsInLayer ) {
         wxString sPropertiesType(wxT(""));
         if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
-            sPropertiesType.append( _("OCPN Draw Path &Properties") );
+            sPropertiesType.append( _("OCPN Draw Path") );
         else if(m_pPath->m_sTypeString == wxT("Boundary")) 
-            sPropertiesType.append(_("Boundary Point &Properties"));
+            sPropertiesType.append(_("Boundary Point"));
         else if(m_pPath->m_sTypeString == wxT("EBL")) 
-            sPropertiesType.append(_("EBL Point &Properties"));
+            sPropertiesType.append(_("EBL Point"));
         else if(m_pPath->m_sTypeString == wxT("DR")) 
-            sPropertiesType.append(_("DR Point &Properties"));
+            sPropertiesType.append(_("DR Point"));
         else if(m_pPath->m_sTypeString == wxT("PIL"))
-            sPropertiesType.append(_("PIL Point &Properties"));
+            sPropertiesType.append(_("PIL Point"));
 
         sPropertiesType.append( _(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
-        
-        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
-        delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
+        if(m_pPath->m_sTypeString != wxT("EBL")) {
+            wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
+            delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
+        }
     }
     wxWindow *l_parentwindow = GetOCPNCanvasWindow();
     l_parentwindow->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
@@ -236,6 +237,7 @@ void ODPathPropertiesDialogImpl::OnRightClickPIL( wxMouseEvent& event )
     l_parentwindow->PopupMenu( &menu );
     l_parentwindow->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
+
 void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
 {
 // TODO: Implement OnPathPropertiesDoubleClick
