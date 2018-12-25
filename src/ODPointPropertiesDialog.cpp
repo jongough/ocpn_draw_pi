@@ -112,7 +112,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_bSizerRangeRingsControl = new wxBoxSizer( wxHORIZONTAL );
 
 	m_checkBoxShowODPointRangeRings = new wxCheckBox( m_scrolledWindowBasicProperties, wxID_ANY, _("Show Point Range Rings"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_bSizerRangeRingsControl->Add( m_checkBoxShowODPointRangeRings, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 0 );
+	m_bSizerRangeRingsControl->Add( m_checkBoxShowODPointRangeRings, 0, wxALL|wxEXPAND, 0 );
 
 	wxString m_radioBoxBoundaryPointTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
 	int m_radioBoxBoundaryPointTypeNChoices = sizeof( m_radioBoxBoundaryPointTypeChoices ) / sizeof( wxString );
@@ -172,7 +172,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_staticTextPointRangeRingSteps->Wrap( -1 );
 	m_SizerPointRangeGrid->Add( m_staticTextPointRangeRingSteps, 0, wxALIGN_CENTER_VERTICAL|wxALL, 2 );
 
-	m_textCtrlODPointRangeRingsSteps = new wxTextCtrl( m_scrolledWindowBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_textCtrlODPointRangeRingsSteps = new wxTextCtrl( m_scrolledWindowBasicProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER );
 	m_SizerPointRangeGrid->Add( m_textCtrlODPointRangeRingsSteps, 0, wxALL|wxALIGN_RIGHT, 2 );
 
 	m_staticTextDistanceUnit = new wxStaticText( m_scrolledWindowBasicProperties, wxID_ANY, _("Distance Unit"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -284,7 +284,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_bSizerLinkButtons->Add( m_toggleBtnDeleteLink, 0, wxALL, 5 );
 
 
-	m_bSizerHyperlinkExt->Add( m_bSizerLinkButtons, 0, wxALIGN_BOTTOM, 5 );
+	m_bSizerHyperlinkExt->Add( m_bSizerLinkButtons, 0, 0, 5 );
 
 
 	m_bSizerHyperlink->Add( m_bSizerHyperlinkExt, 1, wxEXPAND, 5 );
@@ -299,7 +299,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_scrolledWindowBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_scrolledWindowBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_scrolledWindowBasicProperties );
-	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), false );
+	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), true );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_SizerDisplayText = new wxBoxSizer( wxVERTICAL );
 
@@ -368,7 +368,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	wxString m_radioBoxShowDisplayTextChoices[] = { _("Always"), _("On Rollover Only"), _("Never") };
 	int m_radioBoxShowDisplayTextNChoices = sizeof( m_radioBoxShowDisplayTextChoices ) / sizeof( wxString );
 	m_radioBoxShowDisplayText = new wxRadioBox( m_panelDisplayText, wxID_ANY, _("Show Display Text"), wxDefaultPosition, wxDefaultSize, m_radioBoxShowDisplayTextNChoices, m_radioBoxShowDisplayTextChoices, 1, wxRA_SPECIFY_ROWS );
-	m_radioBoxShowDisplayText->SetSelection( 0 );
+	m_radioBoxShowDisplayText->SetSelection( 1 );
 	fgSizerTextProperties->Add( m_radioBoxShowDisplayText, 0, wxALL, 5 );
 
 
