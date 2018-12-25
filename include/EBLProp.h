@@ -48,7 +48,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
         using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( EBL *pInEBL );
+        bool UpdateProperties( ODPath *pInEBL );
         bool UpdateProperties( void );
         bool SaveChanges( void );
         

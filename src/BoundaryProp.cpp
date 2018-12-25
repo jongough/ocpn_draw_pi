@@ -85,7 +85,7 @@ BoundaryProp::~BoundaryProp()
     //dtor
 }
 
-bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
+bool BoundaryProp::UpdateProperties( ODPath *pBoundary )
 {
     m_colourPickerFillColour->SetColour( m_pBoundary->m_wxcActiveFillColour );
     m_sliderFillTransparency->SetValue( m_pBoundary->m_uiFillTransparency );

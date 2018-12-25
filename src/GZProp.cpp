@@ -116,8 +116,9 @@ GZProp::~GZProp()
     //dtor
 }
 
-bool GZProp::UpdateProperties( GZ *pInGZ )
+bool GZProp::UpdateProperties( ODPath *pInGZ )
 {
+    GZ *lpInGZ = (GZ *)pInGZ;
     SetGlobalLocale();
     
     wxString s;
@@ -137,33 +138,33 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
     
 #if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
     if(!m_bLockGZAngle) {
-        if(pInGZ->m_dFirstLineDirection > 180)
-            m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection - 360;
+        if(lpInGZ->m_dFirstLineDirection > 180)
+            m_dODGZFirstAngleValidator = lpInGZ->m_dFirstLineDirection - 360;
         else
-            m_dODGZFirstAngleValidator = pInGZ->m_dFirstLineDirection;
-        if(pInGZ->m_dSecondLineDirection > 180)
-            m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection - 360;
+            m_dODGZFirstAngleValidator = lpInGZ->m_dFirstLineDirection;
+        if(lpInGZ->m_dSecondLineDirection > 180)
+            m_dODGZSecondAngleValidator = lpInGZ->m_dSecondLineDirection - 360;
         else
-            m_dODGZSecondAngleValidator = pInGZ->m_dSecondLineDirection;
+            m_dODGZSecondAngleValidator = lpInGZ->m_dSecondLineDirection;
     }
         
     if(!m_bLockGZLength) {
-        m_dODGZFirstLengthValidator = pInGZ->m_dFirstDistance;
-        m_dODGZSecondLengthValidator = pInGZ->m_dSecondDistance;
+        m_dODGZFirstLengthValidator = lpInGZ->m_dFirstDistance;
+        m_dODGZSecondLengthValidator = lpInGZ->m_dSecondDistance;
     }
 #else
     if(!m_bLockGZAngle) {
-        if(pInGZ->m_dFirstLineDirection > 180)
-            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection - 360 );
+        if(lpInGZ->m_dFirstLineDirection > 180)
+            s.Printf( _T("%.2f"), lpInGZ->m_dFirstLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), pInGZ->m_dFirstLineDirection );
+            s.Printf( _T("%.2f"), lpInGZ->m_dFirstLineDirection );
         
         m_textCtrlGZFirstAngle->SetValue(s);
         
-        if(pInGZ->m_dSecondLineDirection > 180)
-            s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection - 360 );
+        if(lpInGZ->m_dSecondLineDirection > 180)
+            s.Printf( _T("%.2f"), lpInGZ->m_dSecondLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), pInGZ->m_dSecondLineDirection );
+            s.Printf( _T("%.2f"), lpInGZ->m_dSecondLineDirection );
         m_textCtrlGZSecondAngle->SetValue(s);
     }
 
@@ -177,7 +178,7 @@ bool GZProp::UpdateProperties( GZ *pInGZ )
     m_bLockGZAngle = false;
     m_bLockGZLength = false;
     
-    m_radioBoxPathPersistence->SetSelection( pInGZ->m_iPersistenceType );
+    m_radioBoxPathPersistence->SetSelection( lpInGZ->m_iPersistenceType );
 
     m_bLockUpdate = false;
     ResetGlobalLocale();

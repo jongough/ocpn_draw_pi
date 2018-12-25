@@ -46,7 +46,7 @@ class PILProp : public ODPathPropertiesDialogImpl
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
         using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( PIL *pInPIL );
+        bool UpdateProperties( ODPath *pInPIL );
         bool UpdateProperties( void );
         void SetPath( ODPath *pP );
         void InitializeList( void );

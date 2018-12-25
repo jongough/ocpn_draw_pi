@@ -44,7 +44,7 @@ class BoundaryProp : public ODPathPropertiesDialogImpl
         virtual ~BoundaryProp();
         
         using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( Boundary *pInBoundary );
+        bool UpdateProperties( ODPath *pInBoundary );
         
     protected:
         bool SaveChanges( void );

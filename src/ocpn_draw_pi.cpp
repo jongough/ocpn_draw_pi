@@ -2782,24 +2782,40 @@ void ocpn_draw_pi::FindSelectedObject()
         }
         
         //      Now choose the "best" selections
+        ODPath *l_pSelectedPath = NULL;
         if( pFoundActiveODPoint ) {
             m_pFoundODPoint = pFoundActiveODPoint;
-            m_pSelectedPath = pSelectedActivePath;
+            l_pSelectedPath = pSelectedActivePath;
         } else if( pFoundVizODPoint ) {
             m_pFoundODPoint = pFoundVizODPoint;
-            m_pSelectedPath = pSelectedVizPath;
+            l_pSelectedPath = pSelectedVizPath;
         } else
             // default is first visible point in list
             m_pFoundODPoint = pFirstVizPoint;
         
-        if ( m_pSelectedPath ) {
-            if ( m_pSelectedPath->IsVisible() )
+        if ( l_pSelectedPath ) {
+            if ( l_pSelectedPath->IsVisible() )
                 m_seltype |= SELTYPE_ODPOINT;
-            if( m_pSelectedPath->m_sTypeString == wxT("Boundary") ) m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("EBL") ) m_pSelectedEBL = (EBL *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("DR") ) m_pSelectedDR = (DR *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("Guard Zone") ) m_pSelectedGZ = (GZ *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("PIL") ) m_pSelectedPIL = (PIL *)m_pSelectedPath;
+            if( l_pSelectedPath->m_sTypeString == wxT("Boundary") ) {
+                m_pSelectedBoundary = (Boundary *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedBoundary;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("EBL") ) {
+                m_pSelectedEBL = (EBL *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedEBL;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("DR") ) {
+                m_pSelectedDR = (DR *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedDR;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("Guard Zone") ) {
+                m_pSelectedGZ = (GZ *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedGZ;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("PIL") ) {
+                m_pSelectedPIL = (PIL *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedPIL;
+            }
         } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_ODPOINT;
         
         

@@ -64,7 +64,7 @@ DRProp::~DRProp()
     //dtor
 }
 
-bool DRProp::UpdateProperties( DR *pDR )
+bool DRProp::UpdateProperties( ODPath *pDR )
 {
     m_checkBoxPathShowArrow->SetValue( m_pDR->m_bDrawArrow );
     m_radioBoxPathPersistence->SetSelection( m_pDR->m_iPersistenceType);
