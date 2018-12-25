@@ -31,6 +31,7 @@
 #endif //precompiled headers
 
 #include "PIL.h"
+#include "PILProp.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 #include "ODSelect.h"
@@ -66,6 +67,7 @@ extern int          g_iPILPersistenceType;
 
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PILList      *g_pPILList;
+extern PILProp      *g_pPILPropDialog;
 extern ODSelect     *g_pODSelect;
 extern PathMan      *g_pPathMan;
 extern ODPlugIn_Position_Fix_Ex  g_pfFix;
@@ -190,7 +192,8 @@ void PIL::DelLine(int iID)
         if(it->iID == iID) break;
         ++it;
     }
-    m_PilLineList.erase(it);
+    if(it->iID == iID)
+        m_PilLineList.erase(it);
 }
 
 void PIL::ChangeOffset(int iID, double dOffset)
@@ -273,11 +276,19 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
 void PIL::CentreOnBoat( bool bMoveEndPoint )
 {
     EBL::CentreOnBoat( bMoveEndPoint );
-
+    
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
 
     SetPILLineSelect( l_pCentre->m_lat, l_pCentre->m_lon );
+
+    bool l_bRequestRefresh = true;
+    if(g_pPILPropDialog && g_pPILPropDialog->IsShown())
+        l_bRequestRefresh = g_pPILPropDialog->UpdateProperties();
+    
+    if(l_bRequestRefresh)
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    
 }
 
 void PIL::CentreOnLatLon( double lat, double lon )

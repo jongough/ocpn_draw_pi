@@ -74,7 +74,7 @@ extern int                  g_iInclusionBoundarySize;
 extern ODEventHandler       *g_ODEventHandler;
 extern PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 extern PI_ColorScheme       g_global_color_scheme;
-
+extern bool                 g_bConfirmObjectDelete;
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
@@ -529,15 +529,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
         }
     }
     
-    // Set column width correctly for data
-    for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
-        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
-        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
-        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
-        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
-        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
-    }
-    
     ResetGlobalLocale();
     
     SetDialogSize();
@@ -850,6 +841,33 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
 
             if( !g_PILIndexLinePropDialog->IsShown() )
                 g_PILIndexLinePropDialog->Show();
+            break;
+        }
+        case ID_PILPROP_MENU_REMOVE: {
+            int dlg_return = wxID_YES;
+            long item = -1;
+            
+            item = m_listCtrlPILList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            
+            if( item == -1 ) break;
+
+            if( g_bConfirmObjectDelete ) {
+                wxString sTypeLong;
+                wxString sTypeShort;
+                sTypeLong = _("Are you sure you want to delete this Parallel Index Line?");
+                sTypeShort = _("OCPN Draw Parallel Index Line Delete");
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( g_ocpn_draw_pi->m_parent_window,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT| wxICON_QUESTION );
+#else
+                dlg_return = OCPNMessageBox_PlugIn( g_ocpn_draw_pi->m_parent_window,  sTypeLong, sTypeShort, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
+            }
+            
+            if( dlg_return == wxID_YES ) {
+                m_pPIL->DelLine(item);
+                UpdateProperties();
+            }
+            
             break;
         }
     }
