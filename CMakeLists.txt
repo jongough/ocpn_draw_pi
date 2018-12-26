@@ -22,7 +22,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "56")
+SET(VERSION_PATCH "57")
 SET(VERSION_DATE "26/12/2018")
 
 SET(BUNDLE_DATA FALSE)
@@ -227,75 +227,20 @@ SET(OCPNSRC
 SET(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
     ocpninclude/AISTargetQueryDialog.h
-    ocpninclude/apb.hpp
     ocpninclude/bbox.h
-    ocpninclude/canvasMenu.h
-    ocpninclude/chartbarwin.h
-    ocpninclude/chartbase.h
-    ocpninclude/chartdbs.h
-    ocpninclude/chcanv.h
-    ocpninclude/CM93DSlide.h
-    ocpninclude/ConnectionParams.h
     ocpninclude/cutil.h
-    ocpninclude/datastream.h
-    ocpninclude/dsPortType.h
-    ocpninclude/dychart.h
-    ocpninclude/emboss_data.h
     ocpninclude/geodesic.h
     ocpninclude/georef.h
-    ocpninclude/gga.hpp
-    ocpninclude/gll.hpp
-    ocpninclude/GoToPositionDialog.h
-    ocpninclude/GPwpl.hpp
-    ocpninclude/gpxdocument.h
-    ocpninclude/gshhs.h
-    ocpninclude/gsv.hpp
-    ocpninclude/hdg.hpp
-    ocpninclude/hdm.hpp
-    ocpninclude/hdt.hpp
     ocpninclude/Hyperlink.h
-    ocpninclude/IDX_entry.h
-    ocpninclude/LatLong.hpp
-    ocpninclude/LinkPropDlg.h
-    ocpninclude/navutil.h
-    ocpninclude/nmea0183.h
-    ocpninclude/nmea0183.hpp
-    ocpninclude/ocpCursor.h
-    ocpninclude/OCPNPlatform.h
-    ocpninclude/OCPNRegion.h
     ocpninclude/ocpn_plugin.h
-    ocpninclude/ocpn_types.h
-    ocpninclude/Quilt.h
-    ocpninclude/Response.hpp
-    ocpninclude/RMB.hpp
-    ocpninclude/RMC.HPP
-    ocpninclude/RolloverWin.h
-    ocpninclude/Route.h
-    ocpninclude/RoutePoint.h
-    ocpninclude/routeprop.h
-    ocpninclude/rte.hpp
-    ocpninclude/s52s57.h
-    ocpninclude/s57chart.h
-    ocpninclude/S57ClassRegistrar.h
-    ocpninclude/S57Light.h
-    ocpninclude/S57QueryDialog.h
-    ocpninclude/s57RegistrarMgr.h
-    ocpninclude/S57Sector.h
-    ocpninclude/scrollingdialog.h
     ocpninclude/SelectItem.h
-    ocpninclude/Sentence.hpp
-    ocpninclude/styles.h
     ocpninclude/TexFont.h
     ocpninclude/timers.h
-    ocpninclude/undo.h
     ocpninclude/vector2D.h
-    ocpninclude/viewport.h
-    ocpninclude/vtg.hpp
-    ocpninclude/wpl.hpp
-    ocpninclude/xte.hpp
+    ocpninclude/wx28compat.h
     ocpninclude/GL/gl.h
-    ocpninclude/GL/gl_private.h
     ocpninclude/GL/glext.h
+    ocpninclude/GL/gl_private.h
     ocpninclude/GL/glu.h
     ocpninclude/wx/json_defs.h
     ocpninclude/wx/jsonreader.h
@@ -310,8 +255,10 @@ SET(EXTSRC
 
 SET(EXTINCLUDE 
     extinclude/clipper.hpp
+    extinclude/json-schema.hpp
     extinclude/pugiconfig.hpp
     extinclude/pugixml.hpp
+    extinclude/nlohmann/json.hpp
 )
 
 OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
