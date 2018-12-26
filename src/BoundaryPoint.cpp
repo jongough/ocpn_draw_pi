@@ -65,6 +65,10 @@ BoundaryPoint::BoundaryPoint(BoundaryPoint* orig) : ODPoint( orig )
 {
     m_sTypeString = orig->m_sTypeString;
     m_bIsInBoundary = orig->m_bIsInBoundary;
+    m_uiBoundaryPointFillTransparency = orig->m_uiBoundaryPointFillTransparency;
+    m_bExclusionBoundaryPoint = orig->m_bExclusionBoundaryPoint;
+    m_bInclusionBoundaryPoint = orig->m_bInclusionBoundaryPoint;
+    m_iInclusionBoundaryPointSize = orig->m_iInclusionBoundaryPointSize;
     
 }
 
