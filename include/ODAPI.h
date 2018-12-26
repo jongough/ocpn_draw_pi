@@ -74,6 +74,12 @@ enum {
     TEXTPOINT_TEXT_BACKGROUND_TRANSPARANCY_DEFAULT = -1
 };
 
+struct ODAPIVersion_t {
+    int         ODAPIVersionMajor;
+    int         ODAPIVersionMinor;
+    ODAPIVersion_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+};
+
 struct HyperLinkList_t {
     wxString    sDescription;
     wxString    sLink;
@@ -81,8 +87,8 @@ struct HyperLinkList_t {
 };
 
 struct FindPointInAnyBoundary_t {
-    double  dLat;
-    double  dLon;
+    double      dLat;
+    double      dLon;
     wxString    sBoundaryType;
     wxString    sBoundaryState;
     wxString    sName;
@@ -107,10 +113,7 @@ struct FindClosestBoundaryLineCrossing_t {
     wxString    sBoundaryObjectType;
 };
 
-struct CreateBoundaryPoint_t {
-    int         ODAPIVersionMajor;
-    int         ODAPIVersionMinor;
-    CreateBoundaryPoint_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+struct CreateBoundaryPoint_t : public ODAPIVersion_t {
     wxString    name;
     wxString    iconname;
     double      lat;
@@ -127,10 +130,7 @@ struct CreateBoundaryPoint_t {
     std::list   <HyperLinkList_t *> BoundaryPointHyperLinkList;
 };
 
-struct CreateBoundary_t {
-    int         ODAPIVersionMajor;
-    int         ODAPIVersionMinor;
-    CreateBoundary_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+struct CreateBoundary_t : public ODAPIVersion_t {
     wxString    name;
     int         type;
     bool        pathIsActive;
@@ -144,10 +144,7 @@ struct CreateBoundary_t {
     std::list   <CreateBoundaryPoint_t *> BoundaryPointsList;
 };
 
-struct CreateTextPoint_t {
-    int         ODAPIVersionMajor;
-    int         ODAPIVersionMinor;
-    CreateTextPoint_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+struct CreateTextPoint_t : public ODAPIVersion_t{
     wxString    name;               //Point name
     wxString    iconname;           //Icon Name
     double      lat;
@@ -175,26 +172,17 @@ struct CreateTextPoint_t {
     bool        temporary;
 };
 
-struct DeleteTextPoint_t {
-    int         ODAPIVersionMajor;
-    int         ODAPIVersionMinor;
-    DeleteTextPoint_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+struct DeleteTextPoint_t : public ODAPIVersion_t {
     wxString    GUID;
 };
 
-struct AddPointIcon_t {
-    int         ODAPIVersionMajor;
-    int         ODAPIVersionMinor;
-    AddPointIcon_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+struct AddPointIcon_t : ODAPIVersion_t {
     wxBitmap    PointIcon;
     wxString    PointIconName;
     wxString    PointIconDescription;
 };
 
-struct DeletePointIcon_t {
-    int         ODAPIVersionMajor;
-    int         ODAPIVersionMinor;
-    DeletePointIcon_t() : ODAPIVersionMajor(ODAPI_VERSION_MAJOR), ODAPIVersionMinor(ODAPI_VERSION_MINOR) {}
+struct DeletePointIcon_t :ODAPIVersion_t {
     wxString    PointIconName;
 };
 
