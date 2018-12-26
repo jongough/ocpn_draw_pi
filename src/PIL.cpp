@@ -105,6 +105,7 @@ PIL::PIL() : EBL()
     m_iStyleOffsetLine1 = g_PILOffsetLine1Style;
     m_iWidthOffsetLine2 = g_PILOffsetLine2Width;
     m_iStyleOffsetLine2 = g_PILOffsetLine2Style;
+    m_iMaxPILNumber = 0;
     
     m_PilLineList.clear();
 }
@@ -134,7 +135,7 @@ void PIL::CreateColourSchemes(PILLINE *pPilLine)
 int PIL::AddLine(wxString sName, wxString sDescription, double dOffset, bool bDefault)
 {
     PILLINE plNewLine;
-    plNewLine.iID = m_PilLineList.size() + 1;
+    plNewLine.iID = ++m_iMaxPILNumber;
     plNewLine.sName = sName;
     plNewLine.sDescription = sDescription;
     plNewLine.dOffset = dOffset;
@@ -181,6 +182,7 @@ void PIL::AddLine(PILLINE PilLine)
     CreateColourSchemes(&PilLine);
     m_PilLineList.push_back(PilLine);
     SetColourScheme();
+    m_iMaxPILNumber = wxMax(PilLine.iID, m_iMaxPILNumber);
     
     return;
 }
@@ -189,11 +191,12 @@ void PIL::DelLine(int iID)
 {
     std::list<PILLINE>::iterator it = m_PilLineList.begin();
     while(it != m_PilLineList.end()) {
-        if(it->iID == iID) break;
+		if (it->iID == iID) {
+			m_PilLineList.erase(it);
+			break;
+		}
         ++it;
     }
-    if(it->iID == iID)
-        m_PilLineList.erase(it);
 }
 
 void PIL::ChangeOffset(int iID, double dOffset)

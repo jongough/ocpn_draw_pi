@@ -866,7 +866,9 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
             }
             
             if( dlg_return == wxID_YES ) {
-                m_pPIL->DelLine(item);
+                long DelItem = -1;
+                m_listCtrlPILList->GetItemText(item).ToLong(&DelItem);
+                m_pPIL->DelLine(DelItem);
                 UpdateProperties();
             }
             

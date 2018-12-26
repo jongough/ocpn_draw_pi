@@ -81,6 +81,8 @@ class PIL :  public EBL
         int     m_iWidthOffsetLine1;
         int     m_iStyleOffsetLine2;
         int     m_iWidthOffsetLine2;
+        
+        int     m_iMaxPILNumber;
 };
 
 WX_DECLARE_LIST(PIL, PILList); // establish class PIL list member
