@@ -195,7 +195,7 @@ bool PILProp::UpdateProperties( void )
     }
     
     long item_line_index = 0;
-    if(m_pPIL->m_PilLineList.size() != m_listCtrlPILList->GetItemCount()) {
+    if(m_pPIL->m_PilLineList.size() != (size_t)m_listCtrlPILList->GetItemCount()) {
         m_listCtrlPILList->DeleteAllItems();
         InitializeList();
         std::list<PILLINE>::iterator it = m_pPIL->m_PilLineList.begin();

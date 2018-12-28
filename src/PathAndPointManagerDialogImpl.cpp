@@ -532,8 +532,8 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void)
                 l_sLabel.Append(g_pODConfig->m_sImport_Type);
                 l_sLabel.Append(_T("..."));
                 m_buttonImport->SetLabel(l_sLabel);
-                break;
             }
+            break;
         }
         case 1: {
             // Point
@@ -544,8 +544,8 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void)
                 l_sLabel.Append(g_pODConfig->m_sImport_Type);
                 l_sLabel.Append(_T("..."));
                 m_buttonImport->SetLabel(l_sLabel);
-                break;
             }
+            break;
         }
         case 2: {
             // Layer
@@ -556,8 +556,8 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void)
                 l_sLabel.Append(_("gpx"));
                 l_sLabel.Append(_T("..."));
                 m_buttonImport->SetLabel(l_sLabel);
-                break;
             }
+            break;
         }            
         case wxNOT_FOUND:
             break;
