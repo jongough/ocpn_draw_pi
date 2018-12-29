@@ -113,7 +113,7 @@ public:
     double GetRouteArrivalRadius(void){ return m_ArrivalRadius;}
     void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
     
-    void RemovePointFromPath( ODPoint* point, ODPath* path );
+    virtual void RemovePointFromPath( ODPoint* point, ODPath* path );
     virtual void MoveAllPoints( double inc_lat, double inc_lon );
     virtual void MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, ODPoint* secondPoint );
     virtual void SetPointVisibility( void );

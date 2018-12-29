@@ -453,3 +453,13 @@ void Boundary::SetColours( ODPath * pPath )
     m_wxcActiveFillColour = pBoundary->m_wxcActiveFillColour;
     m_wxcInActiveFillColour = pBoundary->m_wxcInActiveFillColour;
 }
+
+void Boundary::RemovePointFromPath(ODPoint* point, ODPath* path)
+{
+    if((ODPoint *)m_pODPointList->GetFirst()->GetData() == point) {
+        m_pODPointList->DeleteObject( point );
+        m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
+    }
+    
+    ODPath::RemovePointFromPath(point, path);
+}
