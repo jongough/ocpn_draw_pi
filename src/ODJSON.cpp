@@ -39,7 +39,7 @@
 #include "json-schema.hpp"
 using nlohmann::json;
 using nlohmann::json_uri;
-using nlohmann::json_schema_draft7::json_validator;
+using nlohmann::json_schema::json_validator;
 #endif
 
 #include "ocpn_draw_pi.h"
@@ -234,7 +234,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             wxLogMessage( wxS("No MsgId found in message") );
             bFail = true;
         }
-
+        
         if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
             jMsg[wxT("Msg")] = root[wxT("Msg")];
@@ -296,34 +296,34 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 if(l_sType == wxS("Request")) {
                     ODPath *l_path = NULL;
-                        l_path = g_pPathMan->FindPathByGUID( l_sGUID );
-                        if(!l_path) {
-                            wxString l_msg;
-                            l_msg.append( wxS("Path, with GUID: ") );
-                            l_msg.append( l_sGUID );
-                            l_msg.append( wxS(", not found") );
-                            wxLogMessage( l_msg );
-                            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
-                            jMsg[wxT("Msg")] = root[wxT("Msg")];
-                            jMsg[wxT("Type")] = wxT("Response");
-                            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                            jMsg[wxS("Found")] = false;
-                            jMsg[wxS("GUID")] = root[wxS("GUID")];
-                            writer.Write( jMsg, MsgString );
-                            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                            return;
-                        }
+                    l_path = g_pPathMan->FindPathByGUID( l_sGUID );
+                    if(!l_path) {
+                        wxString l_msg;
+                        l_msg.append( wxS("Path, with GUID: ") );
+                        l_msg.append( l_sGUID );
+                        l_msg.append( wxS(", not found") );
+                        wxLogMessage( l_msg );
                         jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                         jMsg[wxT("Msg")] = root[wxT("Msg")];
                         jMsg[wxT("Type")] = wxT("Response");
                         jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-                        jMsg[wxT("Found")] = true;
-                        jMsg[wxT("GUID")] = root[wxS("GUID")];
-                        jMsg[wxT("Name")] = l_path->m_PathNameString;
-                        jMsg[wxT("Description")] = l_path->m_PathDescription;
+                        jMsg[wxS("Found")] = false;
+                        jMsg[wxS("GUID")] = root[wxS("GUID")];
                         writer.Write( jMsg, MsgString );
                         SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                         return;
+                    }
+                    jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                    jMsg[wxT("Msg")] = root[wxT("Msg")];
+                    jMsg[wxT("Type")] = wxT("Response");
+                    jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                    jMsg[wxT("Found")] = true;
+                    jMsg[wxT("GUID")] = root[wxS("GUID")];
+                    jMsg[wxT("Name")] = l_path->m_PathNameString;
+                    jMsg[wxT("Description")] = l_path->m_PathDescription;
+                    writer.Write( jMsg, MsgString );
+                    SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                    return;
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
@@ -461,7 +461,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     wxString l_sGUID = g_pBoundaryMan->FindLineCrossingBoundary( l_dStartLon, l_dStartLat, l_dEndLon, l_dEndLat, &l_dCrossingLon, &l_dCrossingLat, &l_dCrossingDist, l_BoundaryType, l_BoundaryState );
                     if(l_sGUID.length() > 0) 
                         l_bFoundBoundary = true;
-
+                    
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                     jMsg[wxT("Msg")] = root[wxT("Msg")];
                     jMsg[wxT("Type")] = wxT("Response");
@@ -686,7 +686,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 if(l_sType == wxS("Request")) {
                     ODPath *l_path = NULL;
                     BoundaryPoint *l_boundarypoint = NULL;
-
+                    
                     l_path = g_pPathMan->FindPathByGUID( l_sGUID );
                     if(!l_path) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
                     if(!l_path && !l_boundarypoint) {
@@ -814,8 +814,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!gCreateBoundary) {
                 gCreateBoundary = new json_validator;
                 try {
-//                    gCreateBoundary->set_root_schema(BoundarySchema);
-//                    gCreateBoundary->set_root_schema(bSchemaFull);
+                    //                    gCreateBoundary->set_root_schema(BoundarySchema);
+                    //                    gCreateBoundary->set_root_schema(bSchemaFull);
                     gCreateBoundary->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
@@ -866,13 +866,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     for(int i = 0; i< jv_Boundary[wxS("BoundaryPoints")].Size(); i++) {
                         jv_BoundaryPoint = jv_Boundary[wxS("BoundaryPoints")].Item(i);
                         if(!jv_BoundaryPoint.HasMember(wxS("Lat")) || !jv_BoundaryPoint.HasMember(wxS("Lon")) || !jv_BoundaryPoint.HasMember(wxS("BoundaryPointType")))
-                        bFail = true;
+                            bFail = true;
                     }
                     if(bFail)
                         wxLogMessage( wxS("Boundary Points missing required information"));
                 }
             }
-
+            
             if(!bFail && jv_Boundary.IsValid() && jv_BoundaryPoint.IsValid()) {
                 Boundary *pl_boundary = new Boundary();
                 pl_boundary->m_PathNameString = jv_Boundary[wxS("BoundaryName")].AsString();
@@ -922,7 +922,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     pl_boundarypoint->CreateColourSchemes();
                     pl_boundarypoint->SetColourScheme();
                 }
-                    
+                
                 pl_boundary->AddPoint(pl_boundary->m_pODPointList->GetFirst()->GetData());
                 pl_boundary->m_bIsBeingCreated = false;
                 pl_boundary->CreateColourSchemes();
@@ -944,7 +944,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxS("GUID")] = pl_boundary->m_GUID;
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-
+                
                 pl_boundary = NULL;
                 return;
             }
@@ -952,12 +952,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
             if(!gCreateBoundaryPoint) {
                 DEBUGSL(jSchema);
-//                json bpSchemaFull = json::parse(sbpSchemaFull);
+                //                json bpSchemaFull = json::parse(sbpSchemaFull);
                 gCreateBoundaryPoint = new json_validator;
                 try {
-//                    gCreateBoundaryPoint->set_root_schema(BoundaryPointSchema);
+                    //                    gCreateBoundaryPoint->set_root_schema(BoundaryPointSchema);
                     gCreateBoundaryPoint->set_root_schema(jSchema);
-//                    gCreateBoundaryPoint->set_root_schema(bpSchemaFull);
+                    //                    gCreateBoundaryPoint->set_root_schema(bpSchemaFull);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -983,7 +983,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
 #endif
-
+            
             wxJSONValue jv_BoundaryPoint;
             wxJSONValue jv_BoundaryPointHyperlink;
             if(root[wxS("Type")].AsString() != _T("Request")) {
@@ -1000,7 +1000,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("Boundary Point missing required information") );
                 bFail = true;
             }
-
+            
             if(!bFail) {
                 BoundaryPoint *pl_boundarypoint; 
                 wxString l_name = wxEmptyString;
@@ -1063,7 +1063,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxS("GUID")] = pl_boundarypoint->m_GUID;
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-
+                
                 pl_boundarypoint = NULL;
                 
                 return;
@@ -1099,7 +1099,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
 #endif
-  
+            
             wxJSONValue jv_TextPoint;
             wxJSONValue jv_TextPointHyperlink;
             if(root[wxS("Type")].AsString() != _T("Request")) {
@@ -1112,7 +1112,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             } else {
                 jv_TextPoint = root[wxS("TextPoint")];
             }
-  
+            
             if(!bFail) {
                 TextPoint *pl_textpoint; 
                 if(jv_TextPoint[wxS("IconName")].AsString().IsEmpty()) {
@@ -1390,25 +1390,25 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
         }
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
-
-    // construct the JSON root object
+        
+        // construct the JSON root object
         wxJSONValue  root;
-    // construct a JSON parser
+        // construct a JSON parser
         wxJSONReader reader;
-
-    // now read the JSON text and store it in the 'root' structure
-    // check for errors before retreiving values...
+        
+        // now read the JSON text and store it in the 'root' structure
+        // check for errors before retreiving values...
         int numErrors = reader.Parse( message_body, &root );
         if ( numErrors > 0 )  {
-//              const wxArrayString& errors = reader.GetErrors();
+            //              const wxArrayString& errors = reader.GetErrors();
             return;
         }
-
+        
         // get the DECL value from the JSON message
         wxString decl = root[_T("Decl")].AsString();
         double decl_val;
         decl.ToDouble(&decl_val);
-
+        
         g_dVar = decl_val;
     }
     

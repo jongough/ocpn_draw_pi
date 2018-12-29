@@ -1,10 +1,19 @@
-#include <json-schema.hpp>
+/*
+ * JSON schema validator for JSON for modern C++
+ *
+ * Copyright (c) 2016-2019 Patrick Boettcher <p@yai.se>.
+ *
+ * SPDX-License-Identifier: MIT
+ *
+ */
+#include <nlohmann/json.hpp>
 
 namespace nlohmann
 {
-    namespace json_schema_draft7
+namespace json_schema
 {
-    json draft7_schema_builtin = R"( {
+
+json draft7_schema_builtin = R"( {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "http://json-schema.org/draft-07/schema#",
     "title": "Core schema meta-schema",
@@ -173,4 +182,4 @@ namespace nlohmann
     "default": true
 } )"_json;
 }
-}
+} // namespace nlohmann
