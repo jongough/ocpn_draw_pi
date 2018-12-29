@@ -995,20 +995,15 @@ static json DeleteTextPointSchema = R"(
                 "type": "string",
                 "optional": false
             },
-            "PointIcon": {
-                "description": "Point Icon bitmap in base64",
+            "GUID": {
+                "description": "GUID of Text Point",
                 "type": "string",
-                "optional": false
+                "optional": true
             },
             "PointIconName": {
-            "description": "Point Icon bitmap name",
-            "type": "string",
-            "optional": false
-            },
-            "PointIconDescription": {
-            "description": "Point Icon bitmap description",
-            "type": "string",
-            "optional": true
+                "description": "Point Icon bitmap name",
+                "type": "string",
+                "optional": false
             }
         }
     },
@@ -1017,8 +1012,8 @@ static json DeleteTextPointSchema = R"(
     "Type",
     "Source",
     "MsgId",
-    "Lat",
-    "Lon"
+    "GUID",
+    "PointIconName"
     ],
     "type": "object"
     }
@@ -1057,7 +1052,19 @@ static json AddPointIconSchema = R"(
             "description": "GUID of Text Point",
             "type": "string",
             "optional": false
-            }
+            },
+            "PointIconName": {
+            "description": "Point Icon bitmap name",
+            "type": "string",
+            "optional": false
+            },
+            "PointIcon": {
+            "description": "Point Icon bitmap in base64",
+            "type": "string",
+            "optional": false
+            },
+            
+            
         }
     },
     "required": [
@@ -1065,13 +1072,59 @@ static json AddPointIconSchema = R"(
     "Type",
     "Source",
     "MsgId",
-    "Lat",
-    "Lon"
+    "PointIconName",
+    "PointIcon"
     ],
     "type": "object"
     }
-    )"_json;
+)"_json;
         
+static json DeletePointIconSchema = R"(
+    {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Delete Point Icon",
+        "DeletePointIcon": {
+            "type": "object",
+            "properties": {
+                "Msg": {
+                    "description": "Message Name",
+                    "type": "string",
+                    "enum": ["DeleteTextPoint"],
+                    "optional": false
+                },
+                "Type": {
+                    "description": "Type of Message",
+                    "type": "string",
+                    "const": ["Request"],
+                    "optional": false
+                },
+                "Source": {
+                    "description": "Source of message",
+                    "type": "string",
+                    "optional": false
+                },
+                "MsgID": {
+                    "description": "Message Name",
+                    "type": "string",
+                    "optional": false
+                },
+                "GUID": {
+                    "description": "GUID of Text Point",
+                    "type": "string",
+                    "optional": false
+                }
+            }
+        },
+        "required": [
+            "Msg",
+            "Type",
+            "Source",
+            "MsgId",
+            "GUID"
+        ],
+        "type": "object"
+    }
+)"_json;
         
 
 
