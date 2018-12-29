@@ -130,7 +130,7 @@ TextPoint::TextPoint() : ODPoint()
     //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
 }
 
-TextPoint::TextPoint(const TextPoint& other)
+TextPoint::TextPoint(const TextPoint& other) : ODPoint(other)
 {
     m_sTypeString = wxT("Text Point");
     m_TextLocationOffsetX = other.m_TextLocationOffsetX;
