@@ -1073,7 +1073,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!gCreateTextPoint) {
                 gCreateTextPoint = new json_validator;
                 try {
-                    gCreateTextPoint->set_root_schema(TextPointSchema);
+                    gCreateTextPoint->set_root_schema(CreateTextPointSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1182,7 +1182,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!gDeleteTextPoint) {
                 gDeleteTextPoint = new json_validator;
                 try {
-                    gDeleteTextPoint->set_root_schema(TextPointSchema);
+                    gDeleteTextPoint->set_root_schema(DeleteTextPointSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
