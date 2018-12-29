@@ -31,7 +31,7 @@
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
-#include <algorith>
+#include <algorithm>
 
 enum {
     ID_INDEX_ID = 0,
