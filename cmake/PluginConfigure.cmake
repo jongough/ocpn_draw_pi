@@ -175,6 +175,29 @@ add_subdirectory(ocpnsrc/glu)
 SET( OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
 MESSAGE (STATUS "    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
 
+OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+IF(OD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
+    ADD_DEFINITIONS(-DOD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Adding JSON Schema validation")
+
+    SET(EXTSRC
+        ${EXTSRC}
+        extsrc/json-schema-validator/json-schema-draft7.json.cpp
+        extsrc/json-schema-validator/json-uri.cpp
+        extsrc/json-schema-validator/json-validator.cpp
+    )
+    SET(EXTINCLUDE
+        ${EXTINCLUDE}
+        extinclude/nlohmann/json.hpp
+        extinclude/json-schema-validator/json-schema.hpp
+    )
+    INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
+
+ELSE(OD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
+ENDIF(OD_JSON_SCHEMA_VALIDATOR)
+
 IF(NOT QT_ANDROID)
   # Find wxWidgets here, and the setting get inherited by all plugins.
   # These options can be used to set the linux widgets build type
