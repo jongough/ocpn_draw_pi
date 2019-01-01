@@ -27,16 +27,6 @@
 #ifndef _ODAPI_H_
 #define _ODAPI_H_
 
-#ifndef DECL_EXP
-#ifdef __WXMSW__
-#  define DECL_EXP     __declspec(dllexport)
-#else
-# ifdef __GNUC__
-# define DECL_EXP       __attribute__((visibility("default")))
-# endif
-#endif
-#endif
-
 #define ODAPI_VERSION_MAJOR 1
 #define ODAPI_VERSION_MINOR 1
 
