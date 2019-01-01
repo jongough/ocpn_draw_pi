@@ -13,8 +13,9 @@ link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 #add_definitions(-g -O2 )
 
 IF(NOT WIN32 AND NOT APPLE )
-  ADD_DEFINITIONS( "-Wall -Wno-unused -fexceptions -rdynamic" )
-  ADD_DEFINITIONS( " -g -fno-strict-aliasing -O2")
+  #Removed as duplicating settings 20181231
+  #ADD_DEFINITIONS( "-Wall -Wno-unused -fexceptions -rdynamic" )
+  #ADD_DEFINITIONS( " -g -fno-strict-aliasing -O2")
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/glu/include)

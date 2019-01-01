@@ -38,7 +38,6 @@
 #ifdef OD_JSON_SCHEMA_VALIDATOR 
 #include "json-schema.hpp"
 using nlohmann::json;
-using nlohmann::json_uri;
 using nlohmann::json_schema::json_validator;
 #endif
 

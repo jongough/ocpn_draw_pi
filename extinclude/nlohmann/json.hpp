@@ -50,8 +50,6 @@ SOFTWARE.
 #ifndef NLOHMANN_JSON_FWD_HPP
 #define NLOHMANN_JSON_FWD_HPP
 
-//#define _snprintf_s(a,b,c,...) snprintf(a,b,__VA_ARGS__)
-
 #include <cstdint> // int64_t, uint64_t
 #include <map> // map
 #include <memory> // allocator
@@ -3929,7 +3927,7 @@ scan_number_done:
             {
                 // escape control characters
                 char cs[9];
-				snprintf(cs, 9, "<U+%.4X>", static_cast<unsigned char>(c));
+                (std::snprintf)(cs, 9, "<U+%.4X>", static_cast<unsigned char>(c));
                 result += cs;
             }
             else
@@ -6719,7 +6717,7 @@ class binary_reader
             default: // anything else not supported (yet)
             {
                 char cr[3];
-                snprintf(cr, sizeof(cr), "%.2hhX", static_cast<unsigned char>(element_type));
+                (std::snprintf)(cr, sizeof(cr), "%.2hhX", static_cast<unsigned char>(element_type));
                 return sax->parse_error(element_type_parse_position, std::string(cr), parse_error::create(114, element_type_parse_position, "Unsupported BSON record type 0x" + std::string(cr)));
             }
         }
@@ -8376,7 +8374,7 @@ class binary_reader
     std::string get_token_string() const
     {
         char cr[3];
-        snprintf(cr, 3, "%.2hhX", static_cast<unsigned char>(current));
+        (std::snprintf)(cr, 3, "%.2hhX", static_cast<unsigned char>(current));
         return std::string{cr};
     }
 
@@ -11257,15 +11255,15 @@ class serializer
                             {
                                 if (codepoint <= 0xFFFF)
                                 {
-                                    snprintf(string_buffer.data() + bytes, 7, "\\u%04x",
+                                    (std::snprintf)(string_buffer.data() + bytes, 7, "\\u%04x",
                                                     static_cast<uint16_t>(codepoint));
                                     bytes += 6;
                                 }
                                 else
                                 {
-									snprintf(string_buffer.data() + bytes, 13, "\\u%04x\\u%04x",
-										static_cast<uint16_t>(0xD7C0 + (codepoint >> 10)),
-										static_cast<uint16_t>(0xDC00 + (codepoint & 0x3FF)));
+                                    (std::snprintf)(string_buffer.data() + bytes, 13, "\\u%04x\\u%04x",
+                                                    static_cast<uint16_t>(0xD7C0 + (codepoint >> 10)),
+                                                    static_cast<uint16_t>(0xDC00 + (codepoint & 0x3FF)));
                                     bytes += 12;
                                 }
                             }
@@ -11301,7 +11299,7 @@ class serializer
                         case error_handler_t::strict:
                         {
                             std::string sn(3, '\0');
-							snprintf(&sn[0], sn.size(), "%.2X", byte);
+                            (std::snprintf)(&sn[0], sn.size(), "%.2X", byte);
                             JSON_THROW(type_error::create(316, "invalid UTF-8 byte at index " + std::to_string(i) + ": 0x" + sn));
                         }
 
@@ -11382,7 +11380,7 @@ class serializer
                 case error_handler_t::strict:
                 {
                     std::string sn(3, '\0');
-                    snprintf(&sn[0], sn.size(), "%.2X", static_cast<uint8_t>(s.back()));
+                    (std::snprintf)(&sn[0], sn.size(), "%.2X", static_cast<uint8_t>(s.back()));
                     JSON_THROW(type_error::create(316, "incomplete UTF-8 string; last byte: 0x" + sn));
                 }
 
@@ -11501,7 +11499,7 @@ class serializer
         static constexpr auto d = std::numeric_limits<number_float_t>::max_digits10;
 
         // the actual conversion
-        std::ptrdiff_t len = snprintf(number_buffer.data(), number_buffer.size(), "%.*g", d, x);
+        std::ptrdiff_t len = (std::snprintf)(number_buffer.data(), number_buffer.size(), "%.*g", d, x);
 
         // negative value indicates an error
         assert(len > 0);
