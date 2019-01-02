@@ -445,10 +445,10 @@ bool ODAPI::OD_DeleteTextPoint(DeleteTextPoint_t* pDTP)
     
     TextPoint *plTP = (TextPoint *)g_pODPointMan->FindODPointByGUID(pDTP->GUID);
     if(plTP) {
-        g_pODPointMan->DestroyODPoint(plTP);
+        g_pODPointMan->DestroyODPoint(plTP, false);
         
         g_pODSelect->DeleteSelectablePoint( plTP, SELTYPE_ODPOINT );
-        g_pODConfig->DeleteODPoint( plTP );
+        
         if( NULL != g_pODPointMan )
             g_pODPointMan->RemoveODPoint( plTP );
         if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
