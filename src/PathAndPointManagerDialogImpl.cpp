@@ -1504,9 +1504,9 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteAllClick( wxCommandEvent &eve
         type = 2;
     }
     int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), buttons );
-    if ( answer == wxID_YES )
+    if ( answer == wxID_YES && type == 1)
         g_pODPointMan->DeleteAllODPoints( true );
-    if ( answer == wxID_NO && type == 2 )
+    else if ( answer == wxID_NO && type == 2 )
         g_pODPointMan->DeleteAllODPoints( false );          // only delete unused OD points
     else
         return;
@@ -1515,7 +1515,6 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteAllClick( wxCommandEvent &eve
     m_lastODPointItem = -1;
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
-    // TODO fix up undo
     //m_parent_window->undo->InvalidateUndo();
     RequestRefresh( GetOCPNCanvasWindow() );
 }
