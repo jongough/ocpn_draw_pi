@@ -152,7 +152,7 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     }
     
     Hide();
-    RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetCanvasUnderMouse() );
     
     ResetGlobalLocale();
     
@@ -180,7 +180,7 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     m_bStartNow = false;
     
     Hide();
-    RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetCanvasUnderMouse() );
     
     ResetGlobalLocale();
     

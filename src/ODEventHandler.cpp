@@ -82,6 +82,10 @@ extern wxString                     g_sODPointIconName;
 extern double                       g_dPILOffset;
 extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;
 
+wxWindow *g_canvas0;
+wxWindow *g_canvas1;
+wxWindow *g_current_canvas;
+wxWindow *g_current_timer_canvas;
 
 // Event Handler implementation 
 
@@ -98,6 +102,11 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 
     m_parent = parent;
     m_parent_window = GetOCPNCanvasWindow();
+    m_canvas0 = NULL;
+    m_canvas1 = NULL;
+    g_canvas0 = NULL;
+    g_canvas1 = NULL;
+    g_current_canvas = g_parent_window;
     ODTimer1.SetOwner( this );
     ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
 }
@@ -156,9 +165,23 @@ void ODEventHandler::SetPIL( int iPILL )
     m_iFoundPIL = iPILL;
 }
 
-void ODEventHandler::SetWindow( wxWindow* window )
+void ODEventHandler::SetWindow( wxWindow *window )
 {
     m_parent_window = window;
+}
+
+void ODEventHandler::SetCanvas( wxWindow *window )
+{
+    if(!m_canvas0)
+        m_canvas0 = window;
+    else if(!m_canvas1 && m_canvas0 != window)
+        m_canvas1 = window;
+    if(!g_canvas0)
+        g_canvas0 = window;
+    else if(!g_canvas1 && g_canvas0 != window)
+        g_canvas1 = window;
+    
+    g_current_canvas = window;
 }
 
 void ODEventHandler::SetLatLon( double lat, double lon )
@@ -180,8 +203,9 @@ void ODEventHandler::OnODTimer1( wxTimerEvent& event )
     if(( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
         ( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) ||
         ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) ||
-        ( m_pSelectedPath && m_pSelectedPath->m_sTypeString == _T("Boundary") ) )
-        RequestRefresh( m_parent_window );
+        ( m_pSelectedPath && m_pSelectedPath->m_sTypeString == _T("Boundary") ) ) {
+        ODERequestRefresh( g_current_timer_canvas, TRUE );
+    }
 }
 
 void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
@@ -197,7 +221,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     bool b_need_refresh = false;
     
     bool showRollover = false;
-    if( !g_pRolloverPathSeg && !g_pRolloverPoint ) {
+    if( !g_pRolloverPathSeg && !g_pRolloverPoint && g_current_canvas) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
         
@@ -221,10 +245,15 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                 g_pRolloverPathSeg = new SelectItem;
                 *g_pRolloverPathSeg = *pFindSel;
                 
-                if( NULL == g_pODRolloverWin ) {
-                    g_pODRolloverWin = new ODRolloverWin( g_parent_window );
-                    g_pODRolloverWin->IsActive( false );
+                if(g_pODRolloverWin) {
+                    g_pODRolloverWin->Destroy();
+                    g_pODRolloverWin = NULL;
                 }
+                
+                if( NULL == g_pODRolloverWin ) {
+                    g_pODRolloverWin = new ODRolloverWin( g_current_canvas );
+                    g_pODRolloverWin->IsActive( false );
+                } 
                 
                 if( !g_pODRolloverWin->IsActive() ) {
                     wxString s;
@@ -369,10 +398,15 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     *g_pRolloverPoint = *pFindSel;
                     showRollover = true;
                     
-                    if( NULL == g_pODRolloverWin ) {
-                        g_pODRolloverWin = new ODRolloverWin( g_parent_window );
-                        g_pODRolloverWin->IsActive( false );
+                    if(g_pODRolloverWin) {
+                        g_pODRolloverWin->Destroy();
+                        g_pODRolloverWin = NULL;
                     }
+                    
+                    if( NULL == g_pODRolloverWin ) {
+                        g_pODRolloverWin = new ODRolloverWin( g_current_canvas );
+                        g_pODRolloverWin->IsActive( false );
+                    } 
                     
                     TextPoint *tp = NULL;
                     if( pp->m_sTypeString == wxT("Text Point") ) tp = (TextPoint *) pFindSel->m_pData1;
@@ -497,7 +531,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     }
     
     if( b_need_refresh )
-        RequestRefresh( g_parent_window );
+        ODERequestRefresh( g_current_canvas );
 
 #ifndef __WXMSW__
     if(l_locale) {
@@ -519,7 +553,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     wxPoint r;
     
     g_ocpn_draw_pi->m_iEditMode = event.GetId();
-
+    
     switch( event.GetId() )
     {            
         case ID_PATH_MENU_PROPERTIES:
@@ -617,7 +651,6 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
 
             if( dlg_return == wxID_YES ) {
                 DeletePIL();
-
             }
             break;
         }
@@ -981,7 +1014,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_pODDRDialog->Raise();
 #endif
             
-            RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+            ODERequestRefresh( g_ocpn_draw_pi->m_parent_window );
             
             break;
         }
@@ -1032,6 +1065,8 @@ void ODEventHandler::PopupMenu( int popuptype )
     wxMenu *menuFocus = contextMenu;    // This is the one that will be shown
  
     wxString sString;
+    
+    g_current_timer_canvas = GetCanvasUnderMouse();
     
     if( popuptype & SELTYPE_PATHSEGMENT ) {
         bool blay = false;
@@ -1262,18 +1297,25 @@ void ODEventHandler::PopupMenu( int popuptype )
     
     if( ( m_pSelectedPath ) ) {
         m_pSelectedPath->m_bPathIsSelected = true;
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        ODERequestRefresh( g_current_canvas );
     } else if( m_pFoundODPoint ) {
         m_pFoundODPoint->m_bPtIsSelected = true;
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        ODERequestRefresh( g_current_canvas );
     }
     
     //        Invoke the correct focused drop-down menu
-    m_parent_window->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
-    m_parent_window->Connect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
-    m_parent_window->PopupMenu( menuFocus );
-    m_parent_window->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
-    m_parent_window->Disconnect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
+    
+//    m_parent_window->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
+//    m_parent_window->Connect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
+//    m_parent_window->PopupMenu( menuFocus );
+//    m_parent_window->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
+//    m_parent_window->Disconnect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
+
+    g_current_canvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
+    g_current_canvas->Connect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
+    g_current_canvas->PopupMenu( menuFocus );
+    g_current_canvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODEventHandler::PopupMenuHandler ), NULL, this );
+    g_current_canvas->Disconnect( wxEVT_MENU_CLOSE, wxCommandEventHandler( ODEventHandler::PopupMenuCloseHandler ), NULL, this );
     // Cleanup
     if( ( m_pSelectedPath ) ) m_pSelectedPath->m_bPathIsSelected = false;
     m_pSelectedPath = NULL;
@@ -1320,7 +1362,7 @@ void ODEventHandler::DeletePath( void )
     
     // TODO implement UNDO
     //m_parent->undo->InvalidateUndo();
-    RequestRefresh( m_parent_window );
+    ODERequestRefresh( m_parent_window, TRUE );
     m_pSelectedPath = NULL;
     
 }
@@ -1351,7 +1393,7 @@ void ODEventHandler::DeletePaths( void )
     // paths pointers are invalide
     m_pBoundaryList.clear();
 
-    RequestRefresh( m_parent_window );
+    ODERequestRefresh( m_parent_window, TRUE );
 
 }
 
@@ -1381,7 +1423,17 @@ void ODEventHandler::DeletePIL( void )
 
     // TODO implement UNDO
     //m_parent->undo->InvalidateUndo();
-    RequestRefresh( m_parent_window );
+    ODERequestRefresh( m_parent_window, TRUE );
     m_pSelectedPath = NULL;
 
+}
+
+void ODEventHandler::ODERequestRefresh( wxWindow *window, bool bFullRefresh )
+{
+    if(!bFullRefresh)
+        RequestRefresh(window);
+    else {
+        if(m_canvas0) RequestRefresh(m_canvas0);
+        if(m_canvas1) RequestRefresh(m_canvas1);
+    }
 }

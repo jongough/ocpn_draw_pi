@@ -335,7 +335,7 @@ public:
 };
 
 
-class ocpn_draw_pi : public opencpn_plugin_113
+class ocpn_draw_pi : public opencpn_plugin_116
 {
 public:
 
@@ -410,8 +410,10 @@ public:
     void SetCursorLatLon(double lat, double lon);
     void SetCurrentViewPort(PlugIn_ViewPort &vp);
     bool RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
+    bool RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
+    bool RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp );
@@ -532,6 +534,8 @@ private:
     
     void    ItemProcess(int id);
     
+    void    ODRequestRefresh( wxWindow *window, bool bFullRefresh = FALSE );
+    
     wxTimer         m_RolloverPopupTimer;
     
     PlugIn_ViewPort m_VP;
@@ -571,6 +575,9 @@ private:
     wxDateTime  m_LastFixTime;
 
     std::list<Boundary*> m_pBoundaryList;
+    
+    wxWindow    *m_canvas0;
+    wxWindow    *m_canvas1;
     
 };
 

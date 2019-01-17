@@ -364,7 +364,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
-:opencpn_plugin_113(ppimgr)
+:opencpn_plugin_116(ppimgr)
 {
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
@@ -479,6 +479,8 @@ int ocpn_draw_pi::Init(void)
     g_ODlocale = NULL;
     m_bRecreateConfig = false;
     g_bRememberPropertyDialogPosition = false;
+    m_canvas0 = NULL;
+    m_canvas1 = NULL;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -493,7 +495,8 @@ int ocpn_draw_pi::Init(void)
     g_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
-    m_parent_window = GetOCPNCanvasWindow();
+    //m_parent_window = GetOCPNCanvasWindow();
+    m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
     
     m_pODConfig = GetOCPNConfigObject();
@@ -2028,9 +2031,14 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 {
     bool bret = FALSE;
     bool bRefresh = FALSE;
+    bool bFullRefresh = FALSE;
+    wxWindow *l_window = GetCanvasUnderMouse();
+    g_ODEventHandler->SetCanvas(l_window);
     
     g_cursor_x = event.GetX();
     g_cursor_y = event.GetY();
+    double l_x = event.GetPosition().x;
+    double l_y = event.GetPosition().y;
     m_cursorPoint.x = g_cursor_x;
     m_cursorPoint.y = g_cursor_y;
     
@@ -2654,26 +2662,25 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 } else if(m_pFoundODPoint) {
                     m_pFoundODPoint->m_bPointPropertiesBlink = true;
                 }
-                g_ODEventHandler->SetWindow( m_parent_window );
+                g_ODEventHandler->SetCanvas( l_window );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetPIL( m_iPILId );
                 g_ODEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
                 g_ODEventHandler->PopupMenu( m_seltype );
                 
-                //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
                 bret = true;
             } else bret = FALSE;
             
-            //end           
         }
+        if(bRefresh) bFullRefresh = TRUE;
     }
     
     //      Check to see if there is a path under the cursor
     //      If so, start the rollover timer which creates the popup
     bool b_start_rollover = false;
-    if(!b_start_rollover && !m_bPathEditing){
+    if(!b_start_rollover && !m_bPathEditing && !bRefresh){
         SelectableItemList SelList = g_pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
@@ -2694,7 +2701,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     SetCursor_PlugIn( m_pCurrentCursor );
     
-    if( bRefresh ) RequestRefresh( m_parent_window );
+    if( bRefresh ) ODRequestRefresh( l_window, bFullRefresh );
+
     return bret;
 }
 
@@ -2868,7 +2876,10 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     m_cursor_lat = lat;
     m_cursor_lon = lon;
-    if( g_ODEventHandler ) g_ODEventHandler->SetLatLon( lat, lon );
+    
+    if( g_ODEventHandler ) {
+        g_ODEventHandler->SetLatLon( lat, lon );
+    }
 }
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
@@ -2937,6 +2948,13 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
+    //wxWindow *l_window = PluginGetFocusCanvas();
+    //g_ODEventHandler->SetWindow(l_window);
+    return RenderGLOverlays(pcontext, pivp);
+}
+
+bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
+{
     m_pcontext = pcontext;
     m_VP = *pivp;
     g_VP = *pivp;
@@ -2954,14 +2972,20 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     
     DrawAllPathsAndODPoints( *pivp );
 
-    if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && g_pODRolloverWin->GetBitmap() != NULL ) {
-        g_pDC->DrawBitmap( *(g_pODRolloverWin->GetBitmap()),
-                       g_pODRolloverWin->GetPosition().x,
-                       g_pODRolloverWin->GetPosition().y, false );
-    }
-    
     delete g_pDC;
     return TRUE;
+}
+
+bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas) 
+{
+    wxWindow*  l_current_canvas = GetCanvasUnderMouse();
+    if(m_canvas0 == NULL) {
+        m_canvas0 = l_current_canvas;
+    } else if(m_canvas0 != l_current_canvas)
+        m_canvas1 = l_current_canvas;
+    
+    bool bRet = RenderGLOverlays(pcontext, vp);
+    return bRet;
 }
 
 void ocpn_draw_pi::RenderPathLegs( ODDC &dc ) 
@@ -4212,7 +4236,8 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nEBL_State = 0;
                 nDR_State = 0;
                 nGZ_State = 0;
-                nPIL_State = 0;
+                nPIL_State = 0;            //end           
+                
                 break;
                 
             case ID_MODE_EBL:
@@ -4226,11 +4251,13 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
-                nTextPoint_State = 0;
+                nTextPoint_State = 0;            //end           
+                
                 nEBL_State = 1;
                 nDR_State = 0;
                 nGZ_State = 0;
-                nPIL_State = 0;
+                nPIL_State = 0;            //end           
+                
                 RequestRefresh( m_parent_window );
                 break;
                 
@@ -4311,5 +4338,16 @@ void ocpn_draw_pi::SetToolbarTool( void )
         }
     }
     
+}
+
+void ocpn_draw_pi::ODRequestRefresh(wxWindow* window, bool bFullRefresh)
+{
+    if(!bFullRefresh) {
+        if(window) RequestRefresh(window);
+    }
+    else {
+        if(m_canvas0) RequestRefresh(m_canvas0);
+        if(m_canvas1) RequestRefresh(m_canvas1);
+    }
 }
 
