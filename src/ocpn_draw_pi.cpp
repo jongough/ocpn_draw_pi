@@ -2033,6 +2033,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     bool bRefresh = FALSE;
     bool bFullRefresh = FALSE;
     wxWindow *l_window = GetCanvasUnderMouse();
+    if(l_window == NULL) {
+        l_window = g_parent_window;
+        m_canvas0 = NULL;
+        m_canvas1 = NULL;
+    }
     g_ODEventHandler->SetCanvas(l_window);
     
     g_cursor_x = event.GetX();
@@ -2691,6 +2696,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             if( pp && pp->IsVisible() ){
                 b_start_rollover = true;
+                bRefresh = true;
                 break;
             }
             node = node->GetNext();
@@ -4360,6 +4366,14 @@ void ocpn_draw_pi::SetToolbarTool( void )
 
 void ocpn_draw_pi::ODRequestRefresh(wxWindow* window, bool bFullRefresh)
 {
+    DEBUGST("Full refresh: ");
+    DEBUGCONT(bFullRefresh);
+    DEBUGCONT(", window: ");
+    DEBUGCONT(window);
+    DEBUGCONT(", canvas0: ");
+    DEBUGCONT(m_canvas0);
+    DEBUGCONT(", canvas1: ");
+    DEBUGEND(m_canvas1);
     if(!bFullRefresh) {
         if(window) RequestRefresh(window);
     }
