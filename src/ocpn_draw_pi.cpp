@@ -2399,6 +2399,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             m_iEditMode = ID_MENU_NOITEM;
         }
+        if(bRefresh) bFullRefresh = TRUE;
     }
         
     if( event.Dragging() ) {
@@ -2929,6 +2930,11 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
+    return RenderOverlays(dc, pivp);
+}
+
+bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
+{
     m_VP = *pivp;
     g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
@@ -2944,6 +2950,18 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     
     delete g_pDC;
     return TRUE;
+}
+
+bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int max_canvas)
+{
+    wxWindow*  l_current_canvas = GetCanvasUnderMouse();
+    if(m_canvas0 == NULL) {
+        m_canvas0 = l_current_canvas;
+    } else if(m_canvas0 != l_current_canvas)
+        m_canvas1 = l_current_canvas;
+    
+    bool bRet = RenderOverlays(dc, vp);
+    return bRet;
 }
 
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)

@@ -501,6 +501,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if(g_ocpn_draw_pi->m_bODPointEditing || g_ocpn_draw_pi->m_bPathEditing)
         showRollover = false;
     
+    
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && !showRollover ) {
         g_pODRolloverWin->IsActive( false );
         if(g_pRolloverPathSeg) {
@@ -527,11 +528,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     } else if( g_pODRolloverWin && showRollover ) {
         g_pODRolloverWin->IsActive( true );
         g_pODRolloverWin->Show();
+        g_pODRolloverWin->Raise();
         b_need_refresh = true;
     }
     
-    if( b_need_refresh )
+    if( b_need_refresh ) {
         ODERequestRefresh( g_current_canvas );
+    }
 
 #ifndef __WXMSW__
     if(l_locale) {

@@ -411,9 +411,11 @@ public:
     void SetCurrentViewPort(PlugIn_ViewPort &vp);
     bool RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
     bool RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *vp);
+    bool RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas);
     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
-    bool RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas);
+    bool RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp);
+    bool RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int max_canvas);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp );
