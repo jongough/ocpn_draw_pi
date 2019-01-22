@@ -1436,7 +1436,9 @@ void ODEventHandler::ODERequestRefresh( wxWindow *window, bool bFullRefresh )
     if(!bFullRefresh)
         RequestRefresh(window);
     else {
-        if(m_canvas0) RequestRefresh(m_canvas0);
-        if(m_canvas1) RequestRefresh(m_canvas1);
+        std::vector<wxWindow *>canvases = GetCanvasArray();
+        for(size_t i = 0; i < canvases.size(); ++i) {
+            RequestRefresh(canvases[i]);
+        }
     }
 }

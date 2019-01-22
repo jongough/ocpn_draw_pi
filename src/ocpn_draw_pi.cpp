@@ -479,6 +479,7 @@ int ocpn_draw_pi::Init(void)
     g_ODlocale = NULL;
     m_bRecreateConfig = false;
     g_bRememberPropertyDialogPosition = false;
+    m_canvas = NULL;
     m_canvas0 = NULL;
     m_canvas1 = NULL;
     
@@ -2022,7 +2023,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 break;
         }
     }
-    SetCursor_PlugIn( m_pCurrentCursor );
+    SetMUICursor_PlugIn( m_pCurrentCursor, GetCanvasUnderMouse() );
     if(bret) RequestRefresh(m_parent_window);
     return bret;
 }
@@ -2032,18 +2033,17 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     bool bret = FALSE;
     bool bRefresh = FALSE;
     bool bFullRefresh = FALSE;
-    wxWindow *l_window = GetCanvasUnderMouse();
-    if(l_window == NULL) {
-        l_window = g_parent_window;
+    wxWindow *m_canvas = GetCanvasUnderMouse();
+    
+    if(m_canvas == NULL) {
+        m_canvas = g_parent_window;
         m_canvas0 = NULL;
         m_canvas1 = NULL;
     }
-    g_ODEventHandler->SetCanvas(l_window);
+    g_ODEventHandler->SetCanvas(m_canvas);
     
     g_cursor_x = event.GetX();
     g_cursor_y = event.GetY();
-    double l_x = event.GetPosition().x;
-    double l_y = event.GetPosition().y;
     m_cursorPoint.x = g_cursor_x;
     m_cursorPoint.y = g_cursor_y;
     
@@ -2055,7 +2055,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 || nEBL_State > 0 || nGZ_State > 0 || nPIL_State > 0
         || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || m_bEBLMoveOrigin) {
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2 );
+        CheckMUIEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2, m_canvas );
         bRefresh = TRUE;
     }
     
@@ -2403,11 +2403,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = TRUE;
             }
             m_iEditMode = ID_MENU_NOITEM;
+            if(bRefresh) bFullRefresh = TRUE;
         }
-        if(bRefresh) bFullRefresh = TRUE;
     }
         
-    if( event.Dragging() ) {
+    if( event.Dragging()) {
         if( event.LeftIsDown() ) {
             if( !m_pBoundaryList.empty() ) {
                 std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
@@ -2554,6 +2554,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
             bret = TRUE;
         } else if ( nPoint_State > 1) {
             m_iCallerId = 0;
@@ -2668,7 +2669,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 } else if(m_pFoundODPoint) {
                     m_pFoundODPoint->m_bPointPropertiesBlink = true;
                 }
-                g_ODEventHandler->SetCanvas( l_window );
+                g_ODEventHandler->SetCanvas( m_canvas );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetPIL( m_iPILId );
@@ -2680,7 +2681,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             } else bret = FALSE;
             
         }
-        if(bRefresh) bFullRefresh = TRUE;
     }
     
     //      Check to see if there is a path under the cursor
@@ -2706,10 +2706,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if( b_start_rollover )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
     
-    SetCursor_PlugIn( m_pCurrentCursor );
+    SetMUICursor_PlugIn( m_pCurrentCursor, m_canvas );
     
-    if( bRefresh ) ODRequestRefresh( l_window, bFullRefresh );
-
+    if( bRefresh ) ODRequestRefresh( m_canvas, bFullRefresh );
+    m_canvas = NULL;
+    
     return bret;
 }
 
@@ -2974,6 +2975,7 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
     //wxWindow *l_window = PluginGetFocusCanvas();
     //g_ODEventHandler->SetWindow(l_window);
+    DEBUGSL("RenderGLOverlay");
     return RenderGLOverlays(pcontext, pivp);
 }
 
@@ -3002,6 +3004,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas) 
 {
+    DEBUGSL("RenderGLOverlayMultiCanvas");
     wxWindow*  l_current_canvas = GetCanvasUnderMouse();
     if(m_canvas0 == NULL) {
         m_canvas0 = l_current_canvas;
@@ -3044,40 +3047,42 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         
         //        if( !IsTouchInterface_PlugIn) {
         boundary->DrawPointWhich( dc, boundary->m_lastMousePointIndex, &lastPoint );
+        GetCanvasPixLL( &m_VP, &destPoint, m_cursor_lat, m_cursor_lon);
+        
         if( boundary->m_NextLegGreatCircle ) {
             for( int i=1; i<=milesDiff; i++ ) {
                 double p = (double)i * (1.0/(double)milesDiff);
                 double pLat, pLon;
                 Geodesic::GreatCircleTravel( m_prev_rlon, m_prev_rlat, gcDist*p, brg, &pLon, &pLat, &gcBearing2 );
-                GetCanvasPixLL( &m_VP, &destPoint, m_cursor_lat, m_cursor_lon);
                 //destPoint = VPoint.GetPixFromLL( pLat, pLon );
                 boundary->DrawSegment( dc, &lastPoint, &destPoint, m_VP, false );
-                wxPoint rpn;
-                boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                boundary->DrawSegment( dc, &rpn , &destPoint, m_VP, false );
+                wxPoint odp;
+                boundary->GetPoint( 1 )->Draw( dc, &odp);
+                boundary->DrawSegment( dc, &odp, &destPoint, m_VP, false );
                 lastPoint = destPoint;
             }
         }
         else {
-            boundary->DrawSegment( dc, &lastPoint, &r_rband, m_VP, false );
+            boundary->DrawSegment( dc, &lastPoint, &destPoint, m_VP, false );
             if ( nBoundary_State >= 2) { 
-                wxPoint rpn;
-                boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                boundary->DrawSegment( dc, &rpn , &r_rband, m_VP, false );
+                wxPoint odp;
+                boundary->GetPoint( 1 )->Draw( dc, &odp);
+                boundary->DrawSegment( dc, &odp, &destPoint, m_VP, false );
             }
         }
         
-        wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, m_cursorPoint);
-        RenderExtraPathLegInfo( dc, r_rband, info );
+        wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, destPoint);
+        RenderExtraPathLegInfo( dc, destPoint, info );
     } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin) ) {
         EBL *ebl = new EBL();
         double brg, dist;
-        wxPoint boatpoint;
+        wxPoint boatpoint, l_cursorPoint;
+        GetCanvasPixLL( &g_VP, &l_cursorPoint, m_cursor_lat, m_cursor_lon);
         if(m_bEBLMoveOrigin) {
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
             GetCanvasPixLL( &g_VP, &boatpoint, tp->m_lat, tp->m_lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
-            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, m_VP, false );
+            ebl->DrawSegment( dc, &boatpoint, &l_cursorPoint, m_VP, false );
         } else {
             GetCanvasPixLL( &g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
@@ -3109,13 +3114,14 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         // draw line from boat to cursor
         EBL *ebl = new EBL();
         double brg, dist;
-        wxPoint boatpoint;
+        wxPoint boatpoint, l_cursorPoint;
+        GetCanvasPixLL( &g_VP, &l_cursorPoint, m_cursor_lat, m_cursor_lon);
         GetCanvasPixLL( &g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
         DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
-        ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, m_VP, false );
-        wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
+        ebl->DrawSegment( dc, &boatpoint, &l_cursorPoint, m_VP, false );
+        wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, l_cursorPoint);
         if(info.length() > 0)
-            RenderExtraPathLegInfo( dc, m_cursorPoint, info );
+            RenderExtraPathLegInfo( dc, l_cursorPoint, info );
         delete ebl;
         
         // rubber band guard zone
@@ -3134,7 +3140,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, m_pMouseGZ->m_dFirstLineDirection, dist, &l_dLat, &l_dLon);
             GetCanvasPixLL( &g_VP, &l_l1p2, l_dLat, l_dLon );
             // get x, y of second point on second line
-            l_l2p2 = m_cursorPoint;
+            l_l2p2 = l_cursorPoint;
             // get x, y of first point on second line
             PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, brg, m_pMouseGZ->m_dFirstDistance, &l_dLat, &l_dLon);
             GetCanvasPixLL( &g_VP, &l_l2p1, l_dLat, l_dLon);
@@ -3197,12 +3203,12 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     int w, h;
     int xp, yp;
     int hilite_offset = 3;
-    #ifdef __WXMAC__
+#ifdef __WXMAC__
     wxScreenDC sdc;
     sdc.GetTextExtent( pathInfo, &w, &h, NULL, NULL, dFont );
-    #else
+#else
     dc.GetTextExtent( pathInfo, &w, &h );
-    #endif
+#endif
     xp = ref_point.x - w;
     yp = ref_point.y;
     yp += hilite_offset;
@@ -3547,7 +3553,7 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     
     nTextPoint_State++;
     
-    RequestRefresh( m_parent_window );
+    RequestRefresh( m_canvas );
     
     return TRUE;
 }
@@ -3586,8 +3592,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
     double nearby_radius_meters = nearby_sel_rad_pix / m_view_scale;
     
-    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
-                                                             nearby_radius_meters );
+    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
         && !pNearbyPoint->m_bIsInLayer )
     {
@@ -3708,7 +3713,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         m_pMouseBoundary->m_lastMousePointIndex = m_pMouseBoundary->GetnPoints();
     
     nBoundary_State++;
-    RequestRefresh( m_parent_window );
+    ODRequestRefresh( m_canvas );
     
     return TRUE;
 } 
@@ -4370,16 +4375,22 @@ void ocpn_draw_pi::ODRequestRefresh(wxWindow* window, bool bFullRefresh)
     DEBUGCONT(bFullRefresh);
     DEBUGCONT(", window: ");
     DEBUGCONT(window);
-    DEBUGCONT(", canvas0: ");
-    DEBUGCONT(m_canvas0);
-    DEBUGCONT(", canvas1: ");
-    DEBUGEND(m_canvas1);
     if(!bFullRefresh) {
         if(window) RequestRefresh(window);
     }
     else {
-        if(m_canvas0) RequestRefresh(m_canvas0);
-        if(m_canvas1) RequestRefresh(m_canvas1);
+        std::vector<wxWindow *>canvases = GetCanvasArray();
+        for(size_t i = 0; i < canvases.size(); ++i) {
+            DEBUGCONT(", canvas");
+            DEBUGCONT(i);
+            DEBUGCONT(": ");
+            DEBUGCONT(canvases[i]);
+            RequestRefresh(canvases[i]);
+        }
+            
+        //if(m_canvas0) RequestRefresh(m_canvas0);
+        //if(m_canvas1) RequestRefresh(m_canvas1);
     }
+    DEBUGEND(".");
 }
 

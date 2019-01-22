@@ -296,7 +296,6 @@ enum {
     ID_KILOMETERS
 };
 
-
 #define SELTYPE_UNKNOWN             0x0001
 #define SELTYPE_ODPOINT             0x0002
 #define SELTYPE_PATHSEGMENT         0x0004
@@ -307,10 +306,9 @@ enum {
 #define TYPE_PATHMGR_POINT_DLG      0x0080
 #define TYPE_PATHMGR_LAYER_DLG      0x0100
 
+// API version of OCPN to use
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    13
-
-//#define PI 3.14159265
+#define     MY_API_VERSION_MINOR    16
 
 class Boundary;
 class BoundaryProp;
@@ -578,6 +576,8 @@ private:
 
     std::list<Boundary*> m_pBoundaryList;
     
+    wxWindow    *m_canvas;
+    wxWindow    *m_current_canvas;
     wxWindow    *m_canvas0;
     wxWindow    *m_canvas1;
     
