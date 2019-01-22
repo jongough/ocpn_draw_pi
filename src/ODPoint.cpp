@@ -350,15 +350,15 @@ void ODPoint::ReLoadIcon( void )
     m_fIconScaleFactor = -1;
 }
 
-void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
+void ODPoint::Draw( ODDC& dc, wxPoint *odp)
 {
-    wxPoint r;
+    wxPoint l_odp;
     wxRect hilitebox;
 
-    GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
+    GetCanvasPixLL( &g_VP, &l_odp,  m_lat, m_lon);
 
     //  return the home point in this dc to allow "connect the dots"
-    if( NULL != rpn ) *rpn = r;
+    if( NULL != odp) *odp= l_odp;
 
     if( !m_bIsVisible /*&& !m_bIsInTrack*/)     // pjotrc 2010.02.13, 2011.02.24
         return;
@@ -393,7 +393,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     int sy2 = pbm->GetHeight() / 2;
 
 //    Calculate the mark drawing extents
-    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
+    wxRect r1( l_odp.x - sx2, l_odp.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
 
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
@@ -403,15 +403,15 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         }
 
         if( m_pMarkFont ) {
-            wxRect r2( r.x + (m_NameLocationOffsetX * m_fIconScaleFactor), r.y + (m_NameLocationOffsetY * m_fIconScaleFactor), m_NameExtents.x,
+            wxRect r2( l_odp.x + (m_NameLocationOffsetX * m_fIconScaleFactor), l_odp.y + (m_NameLocationOffsetY * m_fIconScaleFactor), m_NameExtents.x,
                     m_NameExtents.y );
             r1.Union( r2 );
         }
     }
 
     hilitebox = r1;
-    hilitebox.x -= r.x;
-    hilitebox.y -= r.y;
+    hilitebox.x -= l_odp.x;
+    hilitebox.y -= l_odp.y;
     float radius;
     if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
@@ -433,8 +433,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         
     //  Highlite any selected point
     if( m_bPtIsSelected || m_bIsBeingEdited ) {
-        g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
-                hi_colour, transparency );
+        g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius, hi_colour, transparency );
     }
 
     bool bDrawHL = false;
@@ -442,11 +441,11 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
-        dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
+        dc.DrawBitmap( *pbm, l_odp.x - sx2, l_odp.y - sy2, true );
         // on MSW, the dc Bounding box is not updated on DrawBitmap() method.
         // Do it explicitely here for all platforms.
-        dc.CalcBoundingBox( r.x - sx2, r.y - sy2 );
-        dc.CalcBoundingBox( r.x + sx2, r.y + sy2 );
+        dc.CalcBoundingBox( l_odp.x - sx2, l_odp.y - sy2 );
+        dc.CalcBoundingBox( l_odp.x + sx2, l_odp.y + sy2 );
     }
 
     if( m_bShowName ) {
@@ -454,7 +453,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
             dc.SetFont( *m_pMarkFont );
             dc.SetTextForeground( m_FontColor );
 
-            dc.DrawText( m_ODPointName, r.x + (m_NameLocationOffsetX * m_fIconScaleFactor), r.y + (m_NameLocationOffsetY * m_fIconScaleFactor) );
+            dc.DrawText( m_ODPointName, l_odp.x + (m_NameLocationOffsetX * m_fIconScaleFactor), l_odp.y + (m_NameLocationOffsetY * m_fIconScaleFactor) );
         }
     }
 
@@ -471,8 +470,8 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
 
-        double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
-                           pow( (double) (r.y - r1.y), 2 ) );
+        double lpp = sqrt( pow( (double) (l_odp.x - r1.x), 2) +
+                           pow( (double) (l_odp.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
 
         wxBrush saveBrush = dc.GetBrush();
@@ -481,15 +480,15 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         dc.SetBrush( wxBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_TRANSPARENT ) );
 
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
-            dc.StrokeCircle( r.x, r.y, i * pix_radius );
+            dc.StrokeCircle( l_odp.x, l_odp.y, i * pix_radius );
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }
     
     //  Save the current draw rectangle in the current DC
     //    This will be useful for fast icon redraws
-    CurrentRect_in_DC.x = r.x + hilitebox.x;
-    CurrentRect_in_DC.y = r.y + hilitebox.y;
+    CurrentRect_in_DC.x = l_odp.x + hilitebox.x;
+    CurrentRect_in_DC.y = l_odp.y + hilitebox.y;
     CurrentRect_in_DC.width = hilitebox.width;
     CurrentRect_in_DC.height = hilitebox.height;
 
@@ -511,11 +510,11 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         pivp.rotation == m_wpBBox_rotation) {
     }
 
-    wxPoint r;
+    wxPoint l_odp;
     wxRect hilitebox;
     unsigned char transparency = 150;
 
-    GetCanvasPixLL( &g_VP, &r, m_lat, m_lon );
+    GetCanvasPixLL( &g_VP, &l_odp, m_lat, m_lon );
 
 //    Substitue icon?
     wxBitmap *pbm;
@@ -528,7 +527,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     int sy2 = pbm->GetHeight() / 2;
 
 //    Calculate the mark drawing extents
-    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );          // the bitmap extents
+    wxRect r1( l_odp.x - sx2, l_odp.y - sy2, sx2 * 2, sy2 * 2 );          // the bitmap extents
     
     float  l_fIconScaleFactor = GetOCPNChartScaleFactor_Plugin();
     wxRect r3 = r1;
@@ -540,15 +539,15 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         }
 
         if( m_pMarkFont ) {
-            wxRect r2( r.x + (m_NameLocationOffsetX * l_fIconScaleFactor), r.y + (m_NameLocationOffsetY * l_fIconScaleFactor),
+            wxRect r2( l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor),
                        m_NameExtents.x, m_NameExtents.y );
             r3.Union( r2 );
         }
     }
 
     hilitebox = r3;
-    hilitebox.x -= r.x;
-    hilitebox.y -= r.y;
+    hilitebox.x -= l_odp.x;
+    hilitebox.y -= l_odp.y;
     float radius;
     if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
@@ -563,11 +562,11 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if(!m_wpBBox.GetValid() || pivp.chart_scale != m_wpBBox_chart_scale || pivp.rotation != m_wpBBox_rotation) {
         double lat1, lon1, lat2, lon2;
         wxPoint wxpoint;
-        wxpoint.x = r.x+hilitebox.x;
-        wxpoint.y = r.y + hilitebox.height;
+        wxpoint.x = l_odp.x+hilitebox.x;
+        wxpoint.y = l_odp.y + hilitebox.height;
         GetCanvasLLPix( &pivp, wxpoint, &lat1, &lon1 );
-        wxpoint.x = r.x + hilitebox.x + hilitebox.width;
-        wxpoint.y = r.y + hilitebox.y;
+        wxpoint.x = l_odp.x + hilitebox.x + hilitebox.width;
+        wxpoint.y = l_odp.y + hilitebox.y;
         GetCanvasLLPix( &pivp, wxpoint, &lat2, &lon2 );
 
         if(lon1 > lon2)
@@ -591,7 +590,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
             GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         }
         
-        g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
+        g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                        hi_colour, transparency );
     }
     
@@ -615,8 +614,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
         float w = r1.width * l_ChartScaleFactorExp;
         float h = r1.height * l_ChartScaleFactorExp;
-        float x = r.x - w/2; 
-        float y = r.y - h/2;
+        float x = l_odp.x - w/2; 
+        float y = l_odp.y - h/2;
         float u = (float)r1.width/glw, v = (float)r1.height/glh;
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0); glVertex2f(x, y);
@@ -676,7 +675,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         
             glColor3ub(m_FontColor.Red(), m_FontColor.Green(), m_FontColor.Blue());
             
-            int x = r.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = r.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
+            int x = l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
             float u = (float)w/m_iTextTextureWidth, v = (float)h/m_iTextTextureHeight;
             glBegin(GL_QUADS);
             glTexCoord2f(0, 0); glVertex2f(x, y);
@@ -702,8 +701,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
         
-        double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
-        pow( (double) (r.y - r1.y), 2 ) );
+        double lpp = sqrt( pow( (double) (l_odp.x - r1.x), 2) +
+        pow( (double) (l_odp.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
         
         wxPen ppPen1( m_wxcODPointRangeRingsSchemeColour, m_iRangeRingWidth, m_iRangeRingStyle );
@@ -714,7 +713,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         dc.SetGLStipple();
         
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
-            dc.StrokeCircle( r.x, r.y, i * pix_radius );
+            dc.StrokeCircle( l_odp.x, l_odp.y, i * pix_radius );
         
         glDisable( GL_LINE_STIPPLE );
         
@@ -725,8 +724,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
     
     //    This will be useful for fast icon redraws
-    CurrentRect_in_DC.x = r.x + hilitebox.x;
-    CurrentRect_in_DC.y = r.y + hilitebox.y;
+    CurrentRect_in_DC.x = l_odp.x + hilitebox.x;
+    CurrentRect_in_DC.y = l_odp.y + hilitebox.y;
     CurrentRect_in_DC.width = hilitebox.width;
     CurrentRect_in_DC.height = hilitebox.height;
 

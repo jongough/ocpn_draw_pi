@@ -32,7 +32,7 @@ public:
     BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID = wxT(""), bool bAddToList = true);
     BoundaryPoint(BoundaryPoint* orig);
     BoundaryPoint();
-    void Draw(ODDC& dc, wxPoint* rpn );
+    void Draw(ODDC& dc, wxPoint* odp);
     void DrawGL(PlugIn_ViewPort& pivp);
     
     int             m_iInclusionBoundaryPointSize;

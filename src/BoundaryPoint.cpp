@@ -83,7 +83,7 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
     m_iRangeRingStyle = g_iBoundaryPointRangeRingLineStyle;
 }
 
-void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
+void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
 {
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
@@ -123,7 +123,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
             }
         }
     }
-    ODPoint::Draw( dc, rpn );
+    ODPoint::Draw( dc, odp);
 }
 
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)

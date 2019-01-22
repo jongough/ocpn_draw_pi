@@ -235,7 +235,7 @@ void TextPoint::CreateColourSchemes(void)
     ODPoint::CreateColourSchemes();
 }
 
-void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
+void TextPoint::Draw( ODDC& dc, wxPoint *odp)
 {
     if( !m_bIsVisible )
         return;
@@ -316,7 +316,7 @@ void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
             }
         }
     }
-    ODPoint::Draw( dc, rpn );
+    ODPoint::Draw( dc, odp);
 }
 
 void TextPoint::DrawGL( PlugIn_ViewPort &pivp )

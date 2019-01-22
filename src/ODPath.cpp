@@ -204,10 +204,10 @@ ODPoint *ODPath::GetPoint( const wxString &guid )
     return ( NULL );
 }
 
-void ODPath::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *rpn )
+void ODPath::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *odp)
 {
     if( iPoint <= GetnPoints() )
-        GetPoint( iPoint )->Draw( dc, rpn );
+        GetPoint( iPoint )->Draw( dc, odp);
 }
 
 void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
