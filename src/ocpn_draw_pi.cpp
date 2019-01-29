@@ -346,6 +346,9 @@ wxImage ICursorCross;
 // Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 float g_GLMinSymbolLineWidth;
 
+int     g_mouse_canvas_index;
+int     g_drawing_canvas_index;
+
 // the class factories, used to create and destroy instances of the PlugIn
 
 extern "C" DECL_EXP opencpn_plugin* create_pi(void *ppimgr)
@@ -479,9 +482,12 @@ int ocpn_draw_pi::Init(void)
     g_ODlocale = NULL;
     m_bRecreateConfig = false;
     g_bRememberPropertyDialogPosition = false;
-    m_canvas = NULL;
-    m_canvas0 = NULL;
-    m_canvas1 = NULL;
+    m_drawing_canvas = NULL;
+    m_mouse_canvas = NULL;
+    m_mouse_canvas_index = -1;
+    m_drawing_canvas_index = -1;
+    g_mouse_canvas_index = -1;
+    g_drawing_canvas_index = -1;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -2023,7 +2029,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 break;
         }
     }
-    SetMUICursor_PlugIn( m_pCurrentCursor, GetCanvasUnderMouse() );
+    SetMUICursor_PlugIn( m_pCurrentCursor, GetCanvasIndexUnderMouse() );
     if(bret) RequestRefresh(m_parent_window);
     return bret;
 }
@@ -2033,19 +2039,27 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     bool bret = FALSE;
     bool bRefresh = FALSE;
     bool bFullRefresh = FALSE;
-    wxWindow *m_canvas = GetCanvasUnderMouse();
+    wxWindow *m_mouse_canvas = GetCanvasUnderMouse();
+    int m_mouse_canvas_index = GetCanvasIndexUnderMouse();
+    g_mouse_canvas_index = GetCanvasIndexUnderMouse();
     
-    if(m_canvas == NULL) {
-        m_canvas = g_parent_window;
-        m_canvas0 = NULL;
-        m_canvas1 = NULL;
+//    if(!m_mouse_canvas) {
+//        m_mouse_canvas = g_parent_window;
+//    }
+    g_ODEventHandler->SetCanvas(m_mouse_canvas);
+    g_ODEventHandler->SetCanvasIndex(m_mouse_canvas_index);
+    
+    if(m_drawing_canvas_index == -1 || m_mouse_canvas_index == m_drawing_canvas_index) {
+        g_cursor_x = event.GetX();
+        g_cursor_y = event.GetY();
+        m_cursorPoint.x = g_cursor_x;
+        m_cursorPoint.y = g_cursor_y;
     }
-    g_ODEventHandler->SetCanvas(m_canvas);
-    
-    g_cursor_x = event.GetX();
-    g_cursor_y = event.GetY();
-    m_cursorPoint.x = g_cursor_x;
-    m_cursorPoint.y = g_cursor_y;
+    if(m_drawing_canvas_index != -1 && m_mouse_canvas_index != m_drawing_canvas_index) {
+        return false;
+    } else {
+        
+    }
     
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() )
         m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
@@ -2055,7 +2069,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 || nEBL_State > 0 || nGZ_State > 0 || nPIL_State > 0
         || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || m_bEBLMoveOrigin) {
-        CheckMUIEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2, m_canvas );
+        CheckMUIEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2, m_mouse_canvas_index );
         bRefresh = TRUE;
     }
     
@@ -2064,8 +2078,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_bDrawingBoundary = true;
         
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_EdgePanSensitivity, 2 );
+        bool l_bret = CheckMUIEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_EdgePanSensitivity, 2, m_drawing_canvas_index );
         bRefresh = TRUE;
+        if(l_bret)
+            return l_bret;
     }
     
     if ( event.LeftDClick() ) {
@@ -2104,9 +2120,12 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     if ( event.LeftDown() ) {
         if( m_iCallerId == m_draw_button_id ) {
-            if (nBoundary_State > 0 ) {   
-                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_BOUNDARY);
+            if(m_drawing_canvas == NULL) m_drawing_canvas = m_mouse_canvas;
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
+            if (nBoundary_State > 0 ) {
                 bret = CreateBoundaryLeftClick( event );
+                
+                g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_BOUNDARY);
             } else if ( nPoint_State > 0) {
                 g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_POINT);
                 bret = CreatePointLeftClick( event );
@@ -2127,17 +2146,25 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = CreatePILLeftClick( event );
             }
         } else if( m_bPathEditing && ( m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT || m_iEditMode == ID_ODPOINT_MENU_MOVE )) {
+            if(m_drawing_canvas == NULL) m_drawing_canvas = m_mouse_canvas;
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pCursorCross;
             m_PathMove_cursor_start_lat = m_cursor_lat;
             m_PathMove_cursor_start_lon = m_cursor_lon;
             bRefresh = TRUE;
         } else if( m_bPathEditing && m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE) {
+            if(m_drawing_canvas == NULL) m_drawing_canvas = m_mouse_canvas;
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pCursorCross;
             bRefresh = TRUE;
         } else if ( m_bODPointEditing ) {
+            if(m_drawing_canvas == NULL) m_drawing_canvas = m_mouse_canvas;
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pCursorCross;
             bret = TRUE;
         } else if ( m_bTextPointEditing ) {
+            if(m_drawing_canvas == NULL) m_drawing_canvas = m_mouse_canvas;
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pTextCursorCross;
             bret = TRUE;
 //        } else if( event.ControlDown() ) {
@@ -2169,6 +2196,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FindSelectedObject();
 
             if( 0 != m_seltype ) {
+                if(m_drawing_canvas == NULL) m_drawing_canvas = m_mouse_canvas;
+                if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
                 if(m_pSelectedPath && !m_pSelectedPath->m_bIsInLayer) {
                     m_pSelectedBoundary = NULL;
                     m_pSelectedEBL = NULL;
@@ -2286,6 +2315,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
+                m_drawing_canvas = NULL;
+                m_drawing_canvas_index = -1;
                 bret = TRUE;
             } else if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
                 m_bPathEditing = FALSE;
@@ -2372,6 +2403,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedGZ = NULL;
                 m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
+                m_drawing_canvas = NULL;
+                m_drawing_canvas_index = -1;
                 bRefresh = TRUE;
                 bret = TRUE;
             } else if( m_pFoundODPoint && m_bODPointEditing ) {
@@ -2393,6 +2426,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedGZ = NULL;
                 m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
+                m_drawing_canvas = NULL;
+                m_drawing_canvas_index = -1;
                 
                 bret = TRUE;
             } else if( m_pFoundODPoint ) {
@@ -2419,53 +2454,21 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
             else if( m_pFoundODPoint && ( m_iEditMode == ID_PATH_MENU_MOVE_POINT || m_iEditMode == ID_ODPOINT_MENU_MOVE ) ) {
-                if( m_bPathEditing ) {
-                    m_pCurrentCursor = m_pCursorCross;
-                    if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
-                    else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
-                    else {
-                        m_pFoundODPoint->m_lat = m_cursor_lat;
-                        m_pFoundODPoint->m_lon = m_cursor_lon;
-                    }
-                    if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
-                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                        if( event.ControlDown() && event.ShiftDown())
-                            m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
-                        else
-                            m_pSelectedEBL->Resize();
-                    } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
-                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
-                        m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
-                    } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
-                        m_pSelectedPIL = (PIL *)m_pSelectedPath;
-                        m_pSelectedPIL->Resize();
-                    }
-                    g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
-                    m_pSelectedPath->FinalizeForRendering();
-                    m_pSelectedPath->UpdateSegmentDistances();
-                    m_pSelectedPath->SetHiLite( 0 );
-                    
-                    //    Update the PathProperties Dialog, if currently shown
-                    if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) && m_pSelectedPath == g_pODPathPropDialog->GetPath()) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
-                    if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                    
-                    bRefresh = TRUE;
-                    bret = FALSE;
-                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
-                } else if ( m_bODPointEditing ) {
-                    if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
-                    else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
-                    else {
-                        m_pFoundODPoint->m_lat = m_cursor_lat;
-                        m_pFoundODPoint->m_lon = m_cursor_lon;
-                    }
-                    if(m_pSelectedPath) {
+                if(m_drawing_canvas_index == m_mouse_canvas_index ) { 
+                    if( m_bPathEditing ) {
+                        m_pCurrentCursor = m_pCursorCross;
+                        if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                        else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                        else {
+                            m_pFoundODPoint->m_lat = m_cursor_lat;
+                            m_pFoundODPoint->m_lon = m_cursor_lon;
+                        }
                         if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                             m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                            if(event.ControlDown() && event.ShiftDown())
+                            if( event.ControlDown() && event.ShiftDown())
                                 m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
                             else
-                                m_pSelectedEBL->Resize( );
+                                m_pSelectedEBL->Resize();
                         } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                             m_pSelectedGZ = (GZ *)m_pSelectedPath;
                             m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
@@ -2473,14 +2476,50 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                             m_pSelectedPIL = (PIL *)m_pSelectedPath;
                             m_pSelectedPIL->Resize();
                         }
-                    }
+                        g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
+                        m_pSelectedPath->FinalizeForRendering();
+                        m_pSelectedPath->UpdateSegmentDistances();
+                        m_pSelectedPath->SetHiLite( 0 );
+                        
+                        //    Update the PathProperties Dialog, if currently shown
+                        if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) && m_pSelectedPath == g_pODPathPropDialog->GetPath()) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
+                        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                        
+                        bRefresh = TRUE;
+                        bret = FALSE;
+                        event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                    } else if ( m_bODPointEditing ) {
+                        if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                        else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                        else {
+                            m_pFoundODPoint->m_lat = m_cursor_lat;
+                            m_pFoundODPoint->m_lon = m_cursor_lon;
+                        }
+                        if(m_pSelectedPath) {
+                            if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                                m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                                if(event.ControlDown() && event.ShiftDown())
+                                    m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
+                                else
+                                    m_pSelectedEBL->Resize( );
+                            } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                                m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                                m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
+                            } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                                m_pSelectedPIL = (PIL *)m_pSelectedPath;
+                                m_pSelectedPIL->Resize();
+                            }
+                        }
 
-                    if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                    
-                    m_pCurrentCursor = m_pCursorCross;
-                    bRefresh = TRUE;
-                    bret = FALSE;
-                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                        if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                        
+                        m_pCurrentCursor = m_pCursorCross;
+                        bRefresh = TRUE;
+                        bret = FALSE;
+                        event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                    }
+                } else {
+                    bret = TRUE;
                 }
             } else if(m_bPathEditing && (m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT)) {
                 // Do move of whole path
@@ -2520,7 +2559,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = FALSE;
                 event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
             }
-            
         }
         
     }
@@ -2555,6 +2593,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
             bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nPoint_State > 1) {
             m_iCallerId = 0;
@@ -2669,7 +2708,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 } else if(m_pFoundODPoint) {
                     m_pFoundODPoint->m_bPointPropertiesBlink = true;
                 }
-                g_ODEventHandler->SetCanvas( m_canvas );
+                g_ODEventHandler->SetCanvas( GetCanvasByIndex(m_mouse_canvas_index) );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetPIL( m_iPILId );
@@ -2706,10 +2745,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if( b_start_rollover )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
     
-    SetMUICursor_PlugIn( m_pCurrentCursor, m_canvas );
+    SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
     
-    if( bRefresh ) ODRequestRefresh( m_canvas, bFullRefresh );
-    m_canvas = NULL;
+    if( bRefresh ) ODRequestRefresh( m_mouse_canvas, bFullRefresh );
     
     return bret;
 }
@@ -2961,21 +2999,12 @@ bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int max_canvas)
 {
-    wxWindow*  l_current_canvas = GetCanvasUnderMouse();
-    if(m_canvas0 == NULL) {
-        m_canvas0 = l_current_canvas;
-    } else if(m_canvas0 != l_current_canvas)
-        m_canvas1 = l_current_canvas;
-    
     bool bRet = RenderOverlays(dc, vp);
     return bRet;
 }
 
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
-    //wxWindow *l_window = PluginGetFocusCanvas();
-    //g_ODEventHandler->SetWindow(l_window);
-    DEBUGSL("RenderGLOverlay");
     return RenderGLOverlays(pcontext, pivp);
 }
 
@@ -3004,13 +3033,6 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas) 
 {
-    DEBUGSL("RenderGLOverlayMultiCanvas");
-    wxWindow*  l_current_canvas = GetCanvasUnderMouse();
-    if(m_canvas0 == NULL) {
-        m_canvas0 = l_current_canvas;
-    } else if(m_canvas0 != l_current_canvas)
-        m_canvas1 = l_current_canvas;
-    
     bool bRet = RenderGLOverlays(pcontext, vp);
     return bRet;
 }
@@ -3553,7 +3575,7 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     
     nTextPoint_State++;
     
-    RequestRefresh( m_canvas );
+    RequestRefresh( m_mouse_canvas );
     
     return TRUE;
 }
@@ -3578,7 +3600,11 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_dStartLat = m_cursor_lat;
         m_dStartLon = m_cursor_lon;
+        //m_drawing_canvas = m_mouse_canvas;
+        //m_drawing_canvas_index = m_mouse_canvas_index;
     }
+    
+    if(m_drawing_canvas_index != g_mouse_canvas_index) return false;
     
     //    Check to see if there is a nearby point which may be reused
     BoundaryPoint *pMousePoint = NULL;
@@ -3713,7 +3739,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         m_pMouseBoundary->m_lastMousePointIndex = m_pMouseBoundary->GetnPoints();
     
     nBoundary_State++;
-    ODRequestRefresh( m_canvas );
+    ODRequestRefresh( GetCanvasByIndex(g_drawing_canvas_index) );
     
     return TRUE;
 } 
@@ -4371,26 +4397,13 @@ void ocpn_draw_pi::SetToolbarTool( void )
 
 void ocpn_draw_pi::ODRequestRefresh(wxWindow* window, bool bFullRefresh)
 {
-    DEBUGST("Full refresh: ");
-    DEBUGCONT(bFullRefresh);
-    DEBUGCONT(", window: ");
-    DEBUGCONT(window);
     if(!bFullRefresh) {
         if(window) RequestRefresh(window);
     }
     else {
-        std::vector<wxWindow *>canvases = GetCanvasArray();
-        for(size_t i = 0; i < canvases.size(); ++i) {
-            DEBUGCONT(", canvas");
-            DEBUGCONT(i);
-            DEBUGCONT(": ");
-            DEBUGCONT(canvases[i]);
-            RequestRefresh(canvases[i]);
+        for(int i = 1; i < GetCanvasCount(); ++i) {
+            RequestRefresh(GetCanvasByIndex(i));
         }
-            
-        //if(m_canvas0) RequestRefresh(m_canvas0);
-        //if(m_canvas1) RequestRefresh(m_canvas1);
     }
-    DEBUGEND(".");
 }
 

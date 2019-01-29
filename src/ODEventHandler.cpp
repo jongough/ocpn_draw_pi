@@ -82,10 +82,10 @@ extern wxString                     g_sODPointIconName;
 extern double                       g_dPILOffset;
 extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;
 
-wxWindow *g_canvas0;
-wxWindow *g_canvas1;
 wxWindow *g_current_canvas;
 wxWindow *g_current_timer_canvas;
+int     g_current_canvas_index;
+int     g_current_timer_canvas_index;
 
 // Event Handler implementation 
 
@@ -102,11 +102,8 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 
     m_parent = parent;
     m_parent_window = GetOCPNCanvasWindow();
-    m_canvas0 = NULL;
-    m_canvas1 = NULL;
-    g_canvas0 = NULL;
-    g_canvas1 = NULL;
     g_current_canvas = g_parent_window;
+    g_current_canvas_index = 0;
     ODTimer1.SetOwner( this );
     ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
 }
@@ -172,16 +169,12 @@ void ODEventHandler::SetWindow( wxWindow *window )
 
 void ODEventHandler::SetCanvas( wxWindow *window )
 {
-    if(!m_canvas0)
-        m_canvas0 = window;
-    else if(!m_canvas1 && m_canvas0 != window)
-        m_canvas1 = window;
-    if(!g_canvas0)
-        g_canvas0 = window;
-    else if(!g_canvas1 && g_canvas0 != window)
-        g_canvas1 = window;
-    
     g_current_canvas = window;
+}
+
+void ODEventHandler::SetCanvasIndex( int canvasindex )
+{
+    g_current_canvas_index = canvasindex;
 }
 
 void ODEventHandler::SetLatLon( double lat, double lon )
@@ -221,7 +214,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     bool b_need_refresh = false;
     
     bool showRollover = false;
-    if( !g_pRolloverPathSeg && !g_pRolloverPoint && g_current_canvas) {
+    if( !g_pRolloverPathSeg && !g_pRolloverPoint) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
         
@@ -251,7 +244,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                 }
                 
                 if( NULL == g_pODRolloverWin ) {
-                    g_pODRolloverWin = new ODRolloverWin( g_current_canvas );
+                    g_pODRolloverWin = new ODRolloverWin( GetCanvasByIndex(g_current_canvas_index) );
                     g_pODRolloverWin->IsActive( false );
                 } 
                 
@@ -404,7 +397,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     }
                     
                     if( NULL == g_pODRolloverWin ) {
-                        g_pODRolloverWin = new ODRolloverWin( g_current_canvas );
+                        g_pODRolloverWin = new ODRolloverWin( GetCanvasByIndex(g_current_canvas_index) );
                         g_pODRolloverWin->IsActive( false );
                     } 
                     
@@ -1436,9 +1429,8 @@ void ODEventHandler::ODERequestRefresh( wxWindow *window, bool bFullRefresh )
     if(!bFullRefresh)
         RequestRefresh(window);
     else {
-        std::vector<wxWindow *>canvases = GetCanvasArray();
-        for(size_t i = 0; i < canvases.size(); ++i) {
-            RequestRefresh(canvases[i]);
+        for(int i = 1; i < GetCanvasCount(); ++i) {
+            RequestRefresh(GetCanvasByIndex(i));
         }
     }
 }

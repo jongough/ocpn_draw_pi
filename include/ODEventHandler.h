@@ -69,6 +69,7 @@ class ODEventHandler : public wxEvtHandler
         void SetPIL( int iPIL );
         void SetWindow( wxWindow *window );
         void SetCanvas( wxWindow *window );
+        void SetCanvasIndex(int canvasindex);
         void SetLatLon( double lat, double lon );
         void DeletePath( void );
         void DeletePaths( void );
@@ -79,8 +80,6 @@ class ODEventHandler : public wxEvtHandler
         void ODERequestRefresh( wxWindow *window, bool bFullRefresh = FALSE );
         
         ocpn_draw_pi    *m_parent;
-        wxWindow        *m_canvas0;
-        wxWindow        *m_canvas1;
         wxWindow        *m_parent_window;
         ODPath          *m_pSelectedPath;
         ODPoint         *m_pFoundODPoint;

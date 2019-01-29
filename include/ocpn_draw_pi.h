@@ -573,13 +573,14 @@ private:
     double      m_PathMove_cursor_start_lon;
     
     wxDateTime  m_LastFixTime;
-
+    
+    wxWindow    *m_mouse_canvas;
+    wxWindow    *m_drawing_canvas;
+    int         m_mouse_canvas_index;
+    int         m_drawing_canvas_index;
+    
     std::list<Boundary*> m_pBoundaryList;
     
-    wxWindow    *m_canvas;
-    wxWindow    *m_current_canvas;
-    wxWindow    *m_canvas0;
-    wxWindow    *m_canvas1;
     
 };
 
