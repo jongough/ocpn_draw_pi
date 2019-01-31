@@ -534,7 +534,7 @@ private:
     
     void    ItemProcess(int id);
     
-    void    ODRequestRefresh( wxWindow *window, bool bFullRefresh = FALSE );
+    void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
     
     wxTimer         m_RolloverPopupTimer;
     
@@ -574,8 +574,6 @@ private:
     
     wxDateTime  m_LastFixTime;
     
-    wxWindow    *m_mouse_canvas;
-    wxWindow    *m_drawing_canvas;
     int         m_mouse_canvas_index;
     int         m_drawing_canvas_index;
     

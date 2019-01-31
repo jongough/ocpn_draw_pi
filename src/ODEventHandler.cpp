@@ -197,7 +197,7 @@ void ODEventHandler::OnODTimer1( wxTimerEvent& event )
         ( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) ||
         ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) ||
         ( m_pSelectedPath && m_pSelectedPath->m_sTypeString == _T("Boundary") ) ) {
-        ODERequestRefresh( g_current_timer_canvas, TRUE );
+        ODERequestRefresh( g_current_timer_canvas_index, TRUE );
     }
 }
 
@@ -526,7 +526,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     }
     
     if( b_need_refresh ) {
-        ODERequestRefresh( g_current_canvas );
+        ODERequestRefresh( g_current_canvas_index );
     }
 
 #ifndef __WXMSW__
@@ -1010,7 +1010,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_pODDRDialog->Raise();
 #endif
             
-            ODERequestRefresh( g_ocpn_draw_pi->m_parent_window );
+            ODERequestRefresh( g_current_canvas_index );
             
             break;
         }
@@ -1293,10 +1293,10 @@ void ODEventHandler::PopupMenu( int popuptype )
     
     if( ( m_pSelectedPath ) ) {
         m_pSelectedPath->m_bPathIsSelected = true;
-        ODERequestRefresh( g_current_canvas );
+        ODERequestRefresh( g_current_canvas_index );
     } else if( m_pFoundODPoint ) {
         m_pFoundODPoint->m_bPtIsSelected = true;
-        ODERequestRefresh( g_current_canvas );
+        ODERequestRefresh( g_current_canvas_index );
     }
     
     //        Invoke the correct focused drop-down menu
@@ -1358,7 +1358,7 @@ void ODEventHandler::DeletePath( void )
     
     // TODO implement UNDO
     //m_parent->undo->InvalidateUndo();
-    ODERequestRefresh( m_parent_window, TRUE );
+    ODERequestRefresh( g_current_canvas_index, TRUE );
     m_pSelectedPath = NULL;
     
 }
@@ -1389,7 +1389,7 @@ void ODEventHandler::DeletePaths( void )
     // paths pointers are invalide
     m_pBoundaryList.clear();
 
-    ODERequestRefresh( m_parent_window, TRUE );
+    ODERequestRefresh( g_current_canvas_index, TRUE );
 
 }
 
@@ -1419,17 +1419,17 @@ void ODEventHandler::DeletePIL( void )
 
     // TODO implement UNDO
     //m_parent->undo->InvalidateUndo();
-    ODERequestRefresh( m_parent_window, TRUE );
+    ODERequestRefresh( g_current_canvas_index, TRUE );
     m_pSelectedPath = NULL;
 
 }
 
-void ODEventHandler::ODERequestRefresh( wxWindow *window, bool bFullRefresh )
+void ODEventHandler::ODERequestRefresh( int canvas_index, bool bFullRefresh )
 {
     if(!bFullRefresh)
-        RequestRefresh(window);
+        if(canvas_index != -1) RequestRefresh(GetCanvasByIndex(canvas_index));
     else {
-        for(int i = 1; i < GetCanvasCount(); ++i) {
+        for(int i = 0; i < GetCanvasCount(); ++i) {
             RequestRefresh(GetCanvasByIndex(i));
         }
     }
