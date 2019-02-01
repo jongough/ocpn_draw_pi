@@ -133,7 +133,7 @@ typedef enum ColorScheme
 #include "wxWTranslateCatalog.h"
 
 #include "ocpn_plugin.h"
-#include "ODundo.h"
+#include "ODUndo.h"
 #include "ODPoint.h"
 #include "ODConfig.h"
 #include "ODRolloverWin.h"
