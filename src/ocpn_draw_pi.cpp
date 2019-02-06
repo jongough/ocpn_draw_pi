@@ -396,7 +396,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 #ifdef __WXOSX__
     wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
     wxString *UserIconPath = new wxString(std_path.GetUserConfigDir());
-    UserIconPath->Append( _T"/opencpn/UserIcons") );
+    UserIconPath->Append( _T("/opencpn/UserIcons") );
 #else
     wxString *UserIconPath = new wxString(*g_PrivateDataDir);
     wxChar sep = wxFileName::GetPathSeparator();
