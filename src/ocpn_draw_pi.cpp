@@ -2614,6 +2614,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nDR_State > 1 ) {
             m_iCallerId = 0;
@@ -2642,6 +2644,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nPIL_State > 1 ) {
             m_iCallerId = 0;
@@ -2654,6 +2658,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( m_bEBLMoveOrigin ) {
             m_bEBLMoveOrigin = false;
@@ -3734,6 +3740,8 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     rlat = m_cursor_lat;
     rlon = m_cursor_lon;
     
+    if(m_drawing_canvas_index != g_mouse_canvas_index) return false;
+    
     m_pMouseEBL = new EBL();
     g_pEBLList->Append( m_pMouseEBL );
     g_pPathList->Append( m_pMouseEBL );
@@ -3784,7 +3792,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
         g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     
-    RequestRefresh( m_parent_window );
+    ODRequestRefresh( m_drawing_canvas_index );
     
     return TRUE;
 }
