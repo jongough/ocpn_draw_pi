@@ -2589,6 +2589,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nTextPoint_State > 1) {
             m_iCallerId = 0;
@@ -2601,6 +2603,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nEBL_State > 1 ) {
             m_iCallerId = 0;
@@ -2665,6 +2669,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_bEBLMoveOrigin = false;
             m_pCurrentCursor = NULL;
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if( m_pBoundaryList.size() > 0 ) {
             g_ODEventHandler->SetWindow( m_parent_window );
@@ -2914,6 +2920,7 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     if( g_ODEventHandler ) {
         g_ODEventHandler->SetLatLon( lat, lon );
+        g_ODEventHandler->SetWindow(GetCanvasUnderMouse());
     }
 }
 
@@ -2986,7 +2993,7 @@ bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
     return TRUE;
 }
 
-bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int max_canvas)
+bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index)
 {
     bool bRet = RenderOverlays(dc, vp);
     return bRet;
@@ -3020,8 +3027,12 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
     return TRUE;
 }
 
-bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int max_canvas) 
+bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index) 
 {
+    DEBUGST("Passed Canvas Index: ");
+    DEBUGCONT(canvas_index);
+    DEBUGCONT("Current Canvas: ");
+    DEBUGEND(GetCanvasIndexUnderMouse());
     bool bRet = RenderGLOverlays(pcontext, vp);
     return bRet;
 }

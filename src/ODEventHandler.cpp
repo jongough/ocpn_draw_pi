@@ -354,6 +354,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     
                     wxSize win_size = g_parent_window->GetSize();
                     wxPoint point;
+                    g_pODRolloverWin->SetParent(GetCanvasByIndex(g_current_canvas_index));
                     g_pODRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, 16, 16, PATH_ROLLOVER, win_size );
                     g_pODRolloverWin->SetBitmap( PATH_ROLLOVER );
                     g_pODRolloverWin->IsActive( true );
@@ -409,64 +410,65 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         showRollover = true;
                         b_need_refresh = true;
                         break;
-                    } else 
-                        
+                    } else {
                         if( !g_pODRolloverWin->IsActive() ) {
-                        wxString s;
-                        if( !pp->m_bIsInLayer ) {
-                            wxString wxsText;
+                            wxString s;
+                            if( !pp->m_bIsInLayer ) {
+                                wxString wxsText;
 #if wxCHECK_VERSION(3,0,0)
-                            wxsText.append( _(pp->m_sTypeString) );
+                                wxsText.append( _(pp->m_sTypeString) );
 #else
-                            wxsText.append( pp->m_sTypeString );
+                                wxsText.append( pp->m_sTypeString );
 #endif
-                            wxsText.append( wxT(": ") );
-                            s.append( wxsText );
+                                wxsText.append( wxT(": ") );
+                                s.append( wxsText );
+                            }
+                            else {
+                                wxString wxsText;
+                                wxsText.append( _("Layer") );
+                                wxsText.append( wxT(" ") );
+#if wxCHECK_VERSION(3,0,0)
+                                wxsText.append( _(pp->m_sTypeString) );
+#else
+                                wxsText.append( pp->m_sTypeString );
+#endif
+                                wxsText.append( wxT(": ") );
+                                s.Append( wxsText );
+                            }
+                            if( pp->m_ODPointName.length() > 0 ) {
+                                wxString wxsText;
+                                wxsText.append( pp->m_ODPointName );
+                                s.Append( wxsText );
+                            }
+                            g_pODRolloverWin->SetString( s );
+                            
+                            wxSize win_size = g_parent_window->GetSize();
+                            //if( console && console->IsShown() ) win_size.x -= console->().x;
+                            int l_OffsetX;
+                            int l_OffsetY;
+                            if(pp->m_bShowName) {
+                                l_OffsetX = 16;
+                                l_OffsetY = 28;
+                            } else {
+                                l_OffsetX = 16;
+                                l_OffsetY = 16;
+                            }
+                            g_pODRolloverWin->SetParent(GetCanvasByIndex(g_current_canvas_index));
+                            g_pODRolloverWin->SetBestPosition( g_cursor_x, g_cursor_y, l_OffsetX, l_OffsetY, POINT_ROLLOVER, win_size );
+                            g_pODRolloverWin->SetBitmap( POINT_ROLLOVER );
+                            g_pODRolloverWin->IsActive( true );
+                            b_need_refresh = true;
+                            showRollover = true;
+                            break;
                         }
                         else {
-                            wxString wxsText;
-                            wxsText.append( _("Layer") );
-                            wxsText.append( wxT(" ") );
-#if wxCHECK_VERSION(3,0,0)
-                            wxsText.append( _(pp->m_sTypeString) );
-#else
-                            wxsText.append( pp->m_sTypeString );
-#endif
-                            wxsText.append( wxT(": ") );
-                            s.Append( wxsText );
+                            // XXX FIXME may leak g_pRolloverPoint = new SelectItem();
+                            // on following loops
+                            assert(false);
                         }
-                        if( pp->m_ODPointName.length() > 0 ) {
-                            wxString wxsText;
-                            wxsText.append( pp->m_ODPointName );
-                            s.Append( wxsText );
-                        }
-                        g_pODRolloverWin->SetString( s );
-                        
-                        wxSize win_size = g_parent_window->GetSize();
-                        //if( console && console->IsShown() ) win_size.x -= console->().x;
-                        wxPoint point;
-                        GetCanvasPixLL( &g_VP, &point, pp->m_lat, pp->m_lon );
-                        PlugInNormalizeViewport( &g_VP );
-                        int l_OffsetX;
-                        int l_OffsetY;
-                        if(pp->m_bShowName) {
-                            l_OffsetX = 16;
-                            l_OffsetY = 28;
-                        } else {
-                            l_OffsetX = 16;
-                            l_OffsetY = 16;
-                        }
-                        g_pODRolloverWin->SetBestPosition( point.x, point.y, l_OffsetX, l_OffsetY, POINT_ROLLOVER, win_size );
-                        g_pODRolloverWin->SetBitmap( POINT_ROLLOVER );
-                        g_pODRolloverWin->IsActive( true );
-                        b_need_refresh = true;
                         showRollover = true;
+                        b_need_refresh = true;
                         break;
-                    }
-                    else {
-                        // XXX FIXME may leak g_pRolloverPoint = new SelectItem();
-                        // on following loops
-                        assert(false);
                     }
                 }
                 node = node->GetNext();
@@ -1426,8 +1428,9 @@ void ODEventHandler::DeletePIL( void )
 
 void ODEventHandler::ODERequestRefresh( int canvas_index, bool bFullRefresh )
 {
-    if(!bFullRefresh)
+    if(!bFullRefresh) {
         if(canvas_index != -1) RequestRefresh(GetCanvasByIndex(canvas_index));
+    }
     else {
         for(int i = 0; i < GetCanvasCount(); ++i) {
             RequestRefresh(GetCanvasByIndex(i));

@@ -196,6 +196,8 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
 
 void ODRolloverWin::SetParent(wxWindow* parent)
 {
-    m_parent = parent;
-    Reparent(parent);
+    if(m_parent != parent) {
+        m_parent = parent;
+        Reparent(parent);
+    }
 }
