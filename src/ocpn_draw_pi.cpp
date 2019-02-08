@@ -3030,10 +3030,6 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index) 
 {
-    DEBUGST("Passed Canvas Index: ");
-    DEBUGCONT(canvas_index);
-    DEBUGCONT("Current Canvas: ");
-    DEBUGEND(GetCanvasIndexUnderMouse());
     bool bRet = RenderGLOverlays(pcontext, vp);
     return bRet;
 }
