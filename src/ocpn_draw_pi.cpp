@@ -2633,6 +2633,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nGZ_State > 1 ) {
             m_iCallerId = 0;
@@ -3823,7 +3825,7 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     
     nDR_State++;
     
-    RequestRefresh( m_parent_window );
+    ODRequestRefresh( m_drawing_canvas_index, TRUE );
     
     return true;
 }
