@@ -2011,6 +2011,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     bKey_EBL_Pressed = false;
                     bKey_DR_Pressed = false;
                     bKey_GZ_Pressed = false;
+                    m_drawing_canvas_index = -1;
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
 
@@ -2028,7 +2029,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
         }
     }
     SetMUICursor_PlugIn( m_pCurrentCursor, GetCanvasIndexUnderMouse() );
-    if(bret) RequestRefresh(m_parent_window);
+    if(bret) ODRequestRefresh(m_drawing_canvas_index, TRUE);
     return bret;
 }
 
