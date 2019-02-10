@@ -436,6 +436,8 @@ public:
     
     void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
     wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
+
+    void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
     
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
@@ -533,8 +535,6 @@ private:
     void    FindSelectedObject( void );
     
     void    ItemProcess(int id);
-    
-    void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
     
     wxTimer         m_RolloverPopupTimer;
     
