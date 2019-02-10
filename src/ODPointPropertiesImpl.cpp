@@ -152,7 +152,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     m_scrolledWindowLinks->SetMinClientSize(m_bSizerLinks->ComputeFittingClientSize(this));
     m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
     
-    this->GetSizer()->Fit( this );
+    this->GetSizer()->Fit( m_scrolledWindowBasicProperties );
     this->Layout();
     
     m_defaultClientSize = GetClientSize();
