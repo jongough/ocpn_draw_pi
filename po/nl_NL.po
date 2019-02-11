@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
-"PO-Revision-Date: 2018-04-19 20:45-0400\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"PO-Revision-Date: 2019-02-10 14:12\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Dutch\n"
 "Language: nl_NL\n"
@@ -35,6 +35,9 @@ msgstr " naar "
 msgid "&Activate"
 msgstr "&Activeren"
 #
+msgid "&Add"
+msgstr ""
+#
 msgid "&Apply"
 msgstr "&Toepassen"
 #
@@ -50,11 +53,20 @@ msgstr "&Deactiveren"
 msgid "&Delete"
 msgstr "&Verwijderen"
 #
-msgid "&Delete All"
-msgstr "Alles &verwijderen"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "Selectie &weghalen"
 #
-msgid "&Export selected..."
+msgid "&Edit"
+msgstr ""
+#
+#, fuzzy
+msgid "&Export Selected..."
 msgstr "&Exporteer selectie ..."
+#
+#, fuzzy
+msgid "&List contents"
+msgstr "Toon inhoud"
 #
 msgid "&New"
 msgstr "&Nieuw"
@@ -65,11 +77,12 @@ msgstr "&OK"
 msgid "&Properties"
 msgstr "&Eigenschappen"
 #
-msgid "&Properties..."
-msgstr "&Eigenschappen ..."
-#
 msgid "&Remove Selected"
 msgstr "Selectie &weghalen"
+#
+#, fuzzy
+msgid "&Temporary layer"
+msgstr "Tijdelijke kaartlaag"
 #
 msgid "(Unnamed )"
 msgstr "(naamloos)"
@@ -82,6 +95,9 @@ msgstr "(naamloos) "
 #
 msgid "(unnamed)"
 msgstr "(naamloos)"
+#
+msgid "*.*"
+msgstr ""
 #
 msgid "0"
 msgstr "0"
@@ -214,13 +230,16 @@ msgid "Active Line Colour"
 msgstr "Lijnkleur actief"
 #
 msgid "Active Offset Line 2 Colour"
-msgstr ""
+msgstr "Kleur actieve offsetlijn 2"
 #
 msgid "Active Offset Line Colour"
 msgstr "Actieve offsetlijnkleur"
 #
 msgid "Add Index Line"
 msgstr "Indexlijn toevoegen"
+#
+msgid "Add New"
+msgstr ""
 #
 msgid "All"
 msgstr "elk"
@@ -290,6 +309,10 @@ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 "Weet u zeker dat u deze kaartlaag en ALLE inhoud ervan wilt verwijderen?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Weet u zeker dat u dit OD-punt wilt verwijderen? "
+#
 msgid "Are you sure you want to remove this "
 msgstr "Weet u zeker dat u dit wilt weghalen? "
 #
@@ -356,9 +379,6 @@ msgstr "Lijn (of Rechtlijnig gebied)"
 #
 msgid "Boundary Point"
 msgstr "Punt (of Cirkelgebied)"
-#
-msgid "Boundary Point &Properties"
-msgstr "&Eigenschappen Punt (of cirkelgebied)"
 #
 #, fuzzy
 msgid "Boundary Point Icon"
@@ -479,9 +499,6 @@ msgstr "Vasthouden gegist traject"
 msgid "DR Point"
 msgstr "Gegist Punt"
 #
-msgid "DR Point &Properties"
-msgstr "&Eigenschappen Gegist Punt"
-#
 msgid "DR Point Icon"
 msgstr "Pictogram gegist punt"
 #
@@ -500,6 +517,12 @@ msgstr "Eigenschappen Gegist Traject"
 msgid "DR Properties, Layer: "
 msgstr "Eigenschappen Gegiste Traject, kaartlaag: "
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr "Datum:"
 #
@@ -515,11 +538,12 @@ msgstr "Instellingen Trackvoorspelling"
 msgid "Default Offset (+Stbd/-Port)"
 msgstr "Standaard offset (+SB / -BB)"
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Alles verwijderen"
+#
 msgid "Delete"
 msgstr "Verwijderen"
-#
-msgid "Delete All"
-msgstr "Alles verwijderen"
 #
 msgid "Delete Line"
 msgstr "Lijn verwijderen"
@@ -576,6 +600,10 @@ msgstr "punt-streep"
 msgid "Draw Toolbar"
 msgstr "Tekenwerkbalk"
 #
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Exporteer wat zichtbaar is ..."
+#
 msgid "EBL"
 msgstr "Peilinglijn"
 #
@@ -598,9 +626,6 @@ msgstr "Vasthouden peilinglijn"
 msgid "EBL Point"
 msgstr "Peilinglijn-punt"
 #
-msgid "EBL Point &Properties"
-msgstr "&Eigenschappen Peilinglijn-punt"
-#
 msgid "EBL Point Properties"
 msgstr "Eigenschappen Peilinglijn-punt"
 #
@@ -620,6 +645,9 @@ msgstr ""
 "Gevoeligheid randwaarneming\n"
 "(percentage schermbreedte; standaard 5)"
 #
+msgid "Edit"
+msgstr ""
+#
 msgid "Electronic Bearing Line"
 msgstr "Peilinglijn"
 #
@@ -638,9 +666,6 @@ msgstr "Voorbeeld"
 msgid "Exclusion"
 msgstr "te ontwijken"
 #
-msgid "Export All Visible..."
-msgstr "Exporteer wat zichtbaar is ..."
-#
 msgid "Export GPX file"
 msgstr "Exporteer GPX-bestand"
 #
@@ -649,6 +674,8 @@ msgstr "Uitgebreid"
 #
 msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
 msgstr ""
+"Fout bij laden van pictogrammen van OCPN Draw Plugin. Controleer OCPN-"
+"logbestand voor details."
 #
 msgid "Fill Colour"
 msgstr "Vulkleur"
@@ -725,16 +752,16 @@ msgid "Hide Boundary Point Icons"
 msgstr "Pictogrammen gebiedspunten verbergen"
 #
 msgid "Hide Layer(s)"
-msgstr ""
+msgstr "Verberg lagen"
 #
 msgid "Hide Path(s)"
-msgstr ""
+msgstr "Verberg lijn(en)"
 #
 msgid "Hide Point names"
 msgstr "Verberg puntnamen"
 #
 msgid "Hide Point(s)"
-msgstr ""
+msgstr "Verberg punten"
 #
 msgid "Hide from chart"
 msgstr "Niet tonen op kaart"
@@ -757,6 +784,13 @@ msgstr "ID: "
 #
 msgid "Icon"
 msgstr "Pictogram"
+#
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "I&mporteer GPX-bestand ..."
 #
 msgid "Import Error"
 msgstr ""
@@ -792,7 +826,7 @@ msgid "Inactive Line Colour"
 msgstr "Lijnkleur niet-actief"
 #
 msgid "Inactive Offset Line 2 Colour"
-msgstr ""
+msgstr "Kleur inactieve offsetlijn 2"
 #
 msgid "Inactive Offset Line Colour"
 msgstr "Kleur inactieve offsetlijn"
@@ -826,7 +860,7 @@ msgstr ""
 "(percentage schermbreedte; standaard 3)"
 #
 msgid "Initial number of index lines"
-msgstr ""
+msgstr "Initieel aantal indexlijnen"
 #
 msgid "Insert Boundary Point"
 msgstr "Punt toevoegen"
@@ -870,8 +904,24 @@ msgstr "Kaartlaagtekstpunt"
 msgid "Layers"
 msgstr "Kaartlagen"
 #
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Kaartlaag: Gegist punt"
+#
 msgid "Left"
 msgstr "links"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
 #
 msgid "Leg: from "
 msgstr "Lijndeel: van "
@@ -880,7 +930,7 @@ msgid "Length Type"
 msgstr "Lengtetype"
 #
 msgid "License"
-msgstr ""
+msgstr "Licentie"
 #
 msgid "Line Colour"
 msgstr "Lijnkleur"
@@ -891,11 +941,24 @@ msgstr "Lijnstijl"
 msgid "Line Width"
 msgstr "Lijndikte"
 #
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Beschrijving"
+#
+msgid "Links"
+msgstr ""
+#
 msgid "List contents "
 msgstr "Toon inhoud"
 #
 msgid "Loading navobjects from "
 msgstr "Objecten laden van "
+#
+msgid "Local file..."
+msgstr ""
 #
 msgid "Long Dash"
 msgstr "lange streep"
@@ -986,7 +1049,7 @@ msgid "New layer %d: %s"
 msgstr "Nieuwe laag %d: %s"
 #
 msgid "No"
-msgstr ""
+msgstr "Nee"
 #
 msgid "No alarm"
 msgstr "geen alarm"
@@ -1036,6 +1099,10 @@ msgstr "OCPN Draw: punt PI-lijn verwijderen "
 msgid "OCPN Draw Delete Text Point"
 msgstr "OCPN Draw: Tekstpunt verwijderen"
 #
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Instellingen OCPN Draw"
+#
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Draw: Peilinglijn verwijderen "
 #
@@ -1051,8 +1118,9 @@ msgstr "OCPN Draw: PI-lijn verwjderen"
 msgid "OCPN Draw Parallel Index Line Delete"
 msgstr "OCPN Draw: Parallel-Index lijn verwijderen"
 #
-msgid "OCPN Draw Path &Properties"
-msgstr "OCPN Draw: Eigenschappen Lijn"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "OCPN Draw: Punt of Cirkelgebied"
 #
 msgid "OCPN Draw Point"
 msgstr "OCPN Draw: Punt of Cirkelgebied"
@@ -1110,10 +1178,10 @@ msgid "Offset (+ Stbd/- Port)"
 msgstr "Offset (+ Sb/- Bb)"
 #
 msgid "Offset Line 2 Style"
-msgstr ""
+msgstr "Stijl offsetlijn 2"
 #
 msgid "Offset Line 2 Width"
-msgstr ""
+msgstr "Dikte offsetlijn 2"
 #
 msgid "Offset Line Style"
 msgstr "Offsetlijnstijl"
@@ -1145,9 +1213,6 @@ msgstr "Vasthouden PI-lijn"
 msgid "PIL Point"
 msgstr "Punt PI-lijn"
 #
-msgid "PIL Point &Properties"
-msgstr "Eigenschappen punt PI-lijn"
-#
 msgid "Parallel Index Line"
 msgstr "Parallel-Index lijn"
 #
@@ -1176,7 +1241,7 @@ msgid "Path & Point Manager"
 msgstr "Lijn- en Puntmanager"
 #
 msgid "Path Manager Dialog"
-msgstr ""
+msgstr "Dialoogvenster lijn- en puntmanager"
 #
 msgid "Path Name"
 msgstr "Lijn- of gebiedsnaam"
@@ -1192,6 +1257,9 @@ msgstr "Eigenschappen Lijn, kaartlaag: "
 #
 msgid "Paths"
 msgstr "Lijnen en Rechtlijnige gebieden"
+#
+msgid "Permanent Layers:"
+msgstr ""
 #
 msgid "Persistent"
 msgstr "vasthouden"
@@ -1258,6 +1326,9 @@ msgstr "Lijnstijl afstandscirkels"
 msgid "Range Ring Line Width"
 msgstr "Lijndikte afstandscirkels"
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1303,6 +1374,10 @@ msgstr "korte streep"
 msgid "Show"
 msgstr "Toon"
 #
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Toon puntnamen"
+#
 msgid "Show Boundary Point Icons"
 msgstr "Pictogrammen gebiedspunten tonen"
 #
@@ -1316,7 +1391,7 @@ msgid "Show EBL Direction Arrow"
 msgstr "Toon peilinglijn met pijl"
 #
 msgid "Show Layer(s)"
-msgstr ""
+msgstr "Toon lagen"
 #
 msgid "Show Magnetic Bearings"
 msgstr "Toon richtingen t.o.v. magn. noorden"
@@ -1328,7 +1403,7 @@ msgid "Show Path Direction Arrow"
 msgstr "Toon lijnpijl"
 #
 msgid "Show Paths(s)"
-msgstr ""
+msgstr "Toon lijn(en)"
 #
 msgid ""
 "Show Perpendicular\n"
@@ -1347,7 +1422,7 @@ msgid "Show Point names"
 msgstr "Toon puntnamen"
 #
 msgid "Show Point(s)"
-msgstr ""
+msgstr "Toon punten"
 #
 msgid "Show Range Rings"
 msgstr "Toon afstandscirkels"
@@ -1357,6 +1432,10 @@ msgstr "Toon afstandscirkel"
 #
 msgid "Show name"
 msgstr "Toon puntnaam"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Toon op kaart"
 #
 msgid "Show on chart"
 msgstr "Toon op kaart"
@@ -1373,11 +1452,8 @@ msgstr "Start"
 msgid "Start Point Icon"
 msgstr "Pictogram startpunt peilinglijn"
 #
-msgid "Temporary layer"
-msgstr "Tijdelijke kaartlaag"
-#
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 #
 msgid "Text Colour"
 msgstr "Kleur tekst"
@@ -1390,6 +1466,14 @@ msgstr "Tekstpunt"
 #
 msgid "Text Point Icon"
 msgstr "Pictogram tekstpunt"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Eigenschappen OD-punt"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Eigenschappen Gegist Punt, kaartlaag: "
 #
 msgid "Text position relative to point"
 msgstr "Tekstpositie t.o.v. punt"
@@ -1443,17 +1527,27 @@ msgstr "Totale lengte"
 msgid "Total Length: "
 msgstr "Totale lengte: "
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr "Haal inhoud weg"
 #
 msgid "Update initial conditions"
 msgstr "Initiële instellingen aanpassen"
 #
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "OCPN Draw: Punt of Cirkelgebied"
+#
 msgid "Use nearby OD Point?"
 msgstr "Gebruik nabij OD-punt"
 #
 msgid "Use nearby Point?"
 msgstr "Gebruik nabij punt?"
+#
+msgid "User Icons:"
+msgstr ""
 #
 msgid "Version:"
 msgstr "Versie:"
@@ -1471,7 +1565,7 @@ msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Wilt u voor dit lijndeel ook grootcirkelpunten toevoegen?"
 #
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 #
 msgid "gpx"
 msgstr ""
@@ -1484,3 +1578,30 @@ msgstr ""
 #
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Delete All"
+#~ msgstr "Alles &verwijderen"
+#
+#~ msgid "&Properties..."
+#~ msgstr "&Eigenschappen ..."
+#
+#~ msgid "Boundary Point &Properties"
+#~ msgstr "&Eigenschappen Punt (of cirkelgebied)"
+#
+#~ msgid "DR Point &Properties"
+#~ msgstr "&Eigenschappen Gegist Punt"
+#
+#~ msgid "Delete current OCPN_Draw config entries (No)"
+#~ msgstr "Verwijder huidige waarden van OCPN Draw configuratie"
+#
+#~ msgid "EBL Point &Properties"
+#~ msgstr "&Eigenschappen Peilinglijn-punt"
+#
+#~ msgid "OCPN Draw Path &Properties"
+#~ msgstr "OCPN Draw: Eigenschappen Lijn"
+#
+#~ msgid "PIL Point &Properties"
+#~ msgstr "Eigenschappen punt PI-lijn"

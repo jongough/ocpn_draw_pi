@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
-"PO-Revision-Date: 2018-03-11 10:38-0400\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"PO-Revision-Date: 2019-01-26 08:26\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -33,6 +33,9 @@ msgstr " a "
 msgid "&Activate"
 msgstr ""
 #
+msgid "&Add"
+msgstr ""
+#
 msgid "&Apply"
 msgstr ""
 #
@@ -48,10 +51,18 @@ msgstr ""
 msgid "&Delete"
 msgstr ""
 #
-msgid "&Delete All"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Rimuovi Selezione"
+#
+msgid "&Edit"
 msgstr ""
 #
-msgid "&Export selected..."
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Rimuovi Selezione"
+#
+msgid "&List contents"
 msgstr ""
 #
 msgid "&New"
@@ -63,11 +74,11 @@ msgstr "&OK"
 msgid "&Properties"
 msgstr ""
 #
-msgid "&Properties..."
-msgstr "&Proprietà..."
-#
 msgid "&Remove Selected"
 msgstr "&Rimuovi Selezione"
+#
+msgid "&Temporary layer"
+msgstr ""
 #
 msgid "(Unnamed )"
 msgstr ""
@@ -80,6 +91,9 @@ msgstr ""
 #
 msgid "(unnamed)"
 msgstr "(senza nome)"
+#
+msgid "*.*"
+msgstr ""
 #
 msgid "0"
 msgstr ""
@@ -218,6 +232,9 @@ msgstr ""
 msgid "Add Index Line"
 msgstr ""
 #
+msgid "Add New"
+msgstr ""
+#
 msgid "All"
 msgstr ""
 #
@@ -284,6 +301,10 @@ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 "Sei sicuro di voler eliminare questo layer e <TUTTO> dei suoi contenuti?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Sei sicuro di voler eliminare questo punto OD?"
+#
 msgid "Are you sure you want to remove this "
 msgstr "Sei sicuro di voler eliminare questo "
 #
@@ -348,9 +369,6 @@ msgid "Boundary '"
 msgstr ""
 #
 msgid "Boundary Point"
-msgstr ""
-#
-msgid "Boundary Point &Properties"
 msgstr ""
 #
 msgid "Boundary Point Icon"
@@ -469,9 +487,6 @@ msgstr ""
 msgid "DR Point"
 msgstr ""
 #
-msgid "DR Point &Properties"
-msgstr ""
-#
 msgid "DR Point Icon"
 msgstr ""
 #
@@ -490,6 +505,12 @@ msgstr ""
 msgid "DR Properties, Layer: "
 msgstr ""
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr ""
 #
@@ -505,11 +526,12 @@ msgstr ""
 msgid "Default Offset (+Stbd/-Port)"
 msgstr ""
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Elimina tutto"
+#
 msgid "Delete"
 msgstr "Rimuovi"
-#
-msgid "Delete All"
-msgstr "Elimina tutto"
 #
 msgid "Delete Line"
 msgstr ""
@@ -564,6 +586,10 @@ msgstr ""
 msgid "Draw Toolbar"
 msgstr ""
 #
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Esporta file GPX"
+#
 msgid "EBL"
 msgstr ""
 #
@@ -584,9 +610,6 @@ msgstr ""
 msgid "EBL Point"
 msgstr ""
 #
-msgid "EBL Point &Properties"
-msgstr ""
-#
 msgid "EBL Point Properties"
 msgstr ""
 #
@@ -602,6 +625,9 @@ msgstr ""
 msgid ""
 "Edge Panning Sensitivity\n"
 "(percentage screen width) Default 5"
+msgstr ""
+#
+msgid "Edit"
 msgstr ""
 #
 msgid "Electronic Bearing Line"
@@ -620,9 +646,6 @@ msgid "Example"
 msgstr "Esempio"
 #
 msgid "Exclusion"
-msgstr ""
-#
-msgid "Export All Visible..."
 msgstr ""
 #
 msgid "Export GPX file"
@@ -744,6 +767,12 @@ msgstr "ID: "
 msgid "Icon"
 msgstr "Icona"
 #
+msgid "Icon Directory"
+msgstr ""
+#
+msgid "Import"
+msgstr ""
+#
 msgid "Import Error"
 msgstr ""
 #
@@ -848,8 +877,23 @@ msgstr ""
 msgid "Layers"
 msgstr ""
 #
+msgid "Layers Directory"
+msgstr ""
+#
 msgid "Left"
 msgstr "Sinistra"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
 #
 msgid "Leg: from "
 msgstr ""
@@ -869,10 +913,23 @@ msgstr ""
 msgid "Line Width"
 msgstr ""
 #
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Descrizione"
+#
+msgid "Links"
+msgstr ""
+#
 msgid "List contents "
 msgstr ""
 #
 msgid "Loading navobjects from "
+msgstr ""
+#
+msgid "Local file..."
 msgstr ""
 #
 msgid "Long Dash"
@@ -1014,6 +1071,9 @@ msgstr ""
 msgid "OCPN Draw Delete Text Point"
 msgstr ""
 #
+msgid "OCPN Draw Directories:"
+msgstr ""
+#
 msgid "OCPN Draw EBL Delete"
 msgstr ""
 #
@@ -1029,7 +1089,7 @@ msgstr ""
 msgid "OCPN Draw Parallel Index Line Delete"
 msgstr ""
 #
-msgid "OCPN Draw Path &Properties"
+msgid "OCPN Draw Path"
 msgstr ""
 #
 msgid "OCPN Draw Point"
@@ -1122,9 +1182,6 @@ msgstr ""
 msgid "PIL Point"
 msgstr ""
 #
-msgid "PIL Point &Properties"
-msgstr ""
-#
 msgid "Parallel Index Line"
 msgstr ""
 #
@@ -1168,6 +1225,9 @@ msgid "Path Properties, Layer: "
 msgstr ""
 #
 msgid "Paths"
+msgstr ""
+#
+msgid "Permanent Layers:"
 msgstr ""
 #
 msgid "Persistent"
@@ -1221,6 +1281,9 @@ msgstr ""
 msgid "Range Ring Line Width"
 msgstr ""
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1261,6 +1324,9 @@ msgid "Short Dash"
 msgstr ""
 #
 msgid "Show"
+msgstr ""
+#
+msgid "Show &Point names"
 msgstr ""
 #
 msgid "Show Boundary Point Icons"
@@ -1316,6 +1382,9 @@ msgstr "Mostra VRM"
 msgid "Show name"
 msgstr ""
 #
+msgid "Show on &chart"
+msgstr ""
+#
 msgid "Show on chart"
 msgstr ""
 #
@@ -1331,9 +1400,6 @@ msgstr "Inizio"
 msgid "Start Point Icon"
 msgstr ""
 #
-msgid "Temporary layer"
-msgstr ""
-#
 msgid "Text"
 msgstr ""
 #
@@ -1347,6 +1413,13 @@ msgid "Text Point"
 msgstr ""
 #
 msgid "Text Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr " &Proprietà..."
+#
+msgid "Text Point Properties, Layer: "
 msgstr ""
 #
 msgid "Text position relative to point"
@@ -1399,16 +1472,25 @@ msgstr ""
 msgid "Total Length: "
 msgstr ""
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr ""
 #
 msgid "Update initial conditions"
 msgstr ""
 #
+msgid "Use OCPN Draw Tool"
+msgstr ""
+#
 msgid "Use nearby OD Point?"
 msgstr ""
 #
 msgid "Use nearby Point?"
+msgstr ""
+#
+msgid "User Icons:"
 msgstr ""
 #
 msgid "Version:"
@@ -1441,3 +1523,9 @@ msgstr ""
 #
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Properties..."
+#~ msgstr "&Proprietà..."

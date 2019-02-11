@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
-"PO-Revision-Date: 2018-05-27 08:16-0400\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"PO-Revision-Date: 2019-02-08 02:19\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -37,6 +37,9 @@ msgstr " до  "
 msgid "&Activate"
 msgstr "&Активировать"
 #
+msgid "&Add"
+msgstr ""
+#
 msgid "&Apply"
 msgstr "&Применить"
 #
@@ -52,11 +55,20 @@ msgstr "&Деактивировать"
 msgid "&Delete"
 msgstr "&Удалить"
 #
-msgid "&Delete All"
-msgstr "&Удалить все"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Удалить выделенное"
 #
-msgid "&Export selected..."
+msgid "&Edit"
+msgstr ""
+#
+#, fuzzy
+msgid "&Export Selected..."
 msgstr "&Экспортировать..."
+#
+#, fuzzy
+msgid "&List contents"
+msgstr "Раскрыть содержимое "
 #
 msgid "&New"
 msgstr "&Создать"
@@ -67,11 +79,12 @@ msgstr "&OK"
 msgid "&Properties"
 msgstr "&Параметры"
 #
-msgid "&Properties..."
-msgstr "&Параметры..."
-#
 msgid "&Remove Selected"
 msgstr "&Удалить выделенное"
+#
+#, fuzzy
+msgid "&Temporary layer"
+msgstr "Создать временный"
 #
 msgid "(Unnamed )"
 msgstr "(Безымянный )"
@@ -84,6 +97,9 @@ msgstr "(Безымянный) "
 #
 msgid "(unnamed)"
 msgstr "(безымянный)"
+#
+msgid "*.*"
+msgstr ""
 #
 msgid "0"
 msgstr "0"
@@ -222,6 +238,9 @@ msgstr "Цвет Активной Смещенной Линии"
 msgid "Add Index Line"
 msgstr "Добавить индексную строку"
 #
+msgid "Add New"
+msgstr ""
+#
 msgid "All"
 msgstr "Все"
 #
@@ -286,6 +305,10 @@ msgstr "Вы действительно хотите удалить эту те�
 #
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr "Уверены, что хотите удалить слой и ВСЁ его содержимое?"
+#
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Вы уверены, что хотите удалить эту точку OD?"
 #
 msgid "Are you sure you want to remove this "
 msgstr "Вы уверены, что хотите удалить этот "
@@ -353,9 +376,6 @@ msgstr "Геозона (Полигон)"
 #
 msgid "Boundary Point"
 msgstr "Геозона (Круг)"
-#
-msgid "Boundary Point &Properties"
-msgstr "Параметры Точки Геозоны"
 #
 #, fuzzy
 msgid "Boundary Point Icon"
@@ -474,9 +494,6 @@ msgstr "Сохранность АС"
 msgid "DR Point"
 msgstr "Точка АС"
 #
-msgid "DR Point &Properties"
-msgstr "Параметры Точки АС"
-#
 msgid "DR Point Icon"
 msgstr "Значок точки АС"
 #
@@ -495,6 +512,12 @@ msgstr "Параметры АС"
 msgid "DR Properties, Layer: "
 msgstr "Параметры АС, слой: "
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr "Дата:"
 #
@@ -510,11 +533,12 @@ msgstr "Аналитическое Счисление"
 msgid "Default Offset (+Stbd/-Port)"
 msgstr "Смещение по умолчанию (+ Правый борт/- Левый борт)"
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Удалить все"
+#
 msgid "Delete"
 msgstr "Удалить"
-#
-msgid "Delete All"
-msgstr "Удалить все"
 #
 msgid "Delete Line"
 msgstr "Удалить Линию"
@@ -571,6 +595,10 @@ msgstr "Точечный пунктир"
 msgid "Draw Toolbar"
 msgstr "Инструменты Штурманских Задач"
 #
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Экспортировать видимые..."
+#
 msgid "EBL"
 msgstr "Электронный Визир Направления"
 #
@@ -591,9 +619,6 @@ msgstr "Сохранность ЭВН"
 msgid "EBL Point"
 msgstr "Точка ЭВН"
 #
-msgid "EBL Point &Properties"
-msgstr "Параметры Точки ЭВН"
-#
 msgid "EBL Point Properties"
 msgstr "Параметры Точки ЭВН"
 #
@@ -613,6 +638,9 @@ msgstr ""
 "Чувствительность сдвига ребра\n"
 "(процентная ширина экрана) по умолчанию 5"
 #
+msgid "Edit"
+msgstr ""
+#
 msgid "Electronic Bearing Line"
 msgstr "Электронный Визир Направления"
 #
@@ -630,9 +658,6 @@ msgstr "Пример >"
 #
 msgid "Exclusion"
 msgstr "Вход в Зону"
-#
-msgid "Export All Visible..."
-msgstr "Экспортировать видимые..."
 #
 msgid "Export GPX file"
 msgstr "Экспорт в файл"
@@ -754,6 +779,13 @@ msgstr "ID: "
 msgid "Icon"
 msgstr "Значок"
 #
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "&Импортировать…"
+#
 msgid "Import Error"
 msgstr ""
 #
@@ -862,8 +894,24 @@ msgstr "Слой Точки Текста"
 msgid "Layers"
 msgstr "Слои"
 #
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Слой Точки АС"
+#
 msgid "Left"
 msgstr "Слева"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
 #
 msgid "Leg: from "
 msgstr "Участок: от  "
@@ -883,11 +931,24 @@ msgstr "Стиль линии"
 msgid "Line Width"
 msgstr "Ширина линии"
 #
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Описание"
+#
+msgid "Links"
+msgstr ""
+#
 msgid "List contents "
 msgstr "Раскрыть содержимое "
 #
 msgid "Loading navobjects from "
 msgstr "Загрузить нав. объекты из "
+#
+msgid "Local file..."
+msgstr ""
 #
 msgid "Long Dash"
 msgstr "Длинный пунктир"
@@ -1028,6 +1089,10 @@ msgstr "Удалить точку ЛПП"
 msgid "OCPN Draw Delete Text Point"
 msgstr "OCPN Draw Удалить текстовую точку"
 #
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Параметры"
+#
 msgid "OCPN Draw EBL Delete"
 msgstr "Удалить ЭВН"
 #
@@ -1043,8 +1108,9 @@ msgstr "Удалить ЛПП"
 msgid "OCPN Draw Parallel Index Line Delete"
 msgstr "Удалить Линию Предварительной прокладки"
 #
-msgid "OCPN Draw Path &Properties"
-msgstr "Параметры Полигона"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "Точка"
 #
 msgid "OCPN Draw Point"
 msgstr "Точка"
@@ -1137,9 +1203,6 @@ msgstr "Сохранность ЛПП"
 msgid "PIL Point"
 msgstr "Точка ЛПП"
 #
-msgid "PIL Point &Properties"
-msgstr "Параметры точки ЛПП"
-#
 msgid "Parallel Index Line"
 msgstr "Предварительная Прокладка"
 #
@@ -1184,6 +1247,9 @@ msgstr "Параметры Полигона, слой: "
 #
 msgid "Paths"
 msgstr "Пути"
+#
+msgid "Permanent Layers:"
+msgstr ""
 #
 msgid "Persistent"
 msgstr "Всегда"
@@ -1246,6 +1312,9 @@ msgstr "Стиль Линии Кольца"
 msgid "Range Ring Line Width"
 msgstr "Ширина Линии Кольца"
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1286,6 +1355,10 @@ msgstr "Короткий пунктир"
 #
 msgid "Show"
 msgstr "Показать"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Показать Названия точек"
 #
 msgid "Show Boundary Point Icons"
 msgstr "Показать значки"
@@ -1342,6 +1415,10 @@ msgstr "Показать ПКД (VRM)"
 msgid "Show name"
 msgstr "Показать название"
 #
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Показывать на карте"
+#
 msgid "Show on chart"
 msgstr "Показывать на карте"
 #
@@ -1357,9 +1434,6 @@ msgstr "Начало"
 msgid "Start Point Icon"
 msgstr "Значок начальной точки"
 #
-msgid "Temporary layer"
-msgstr "Создать временный"
-#
 msgid "Text"
 msgstr "Текст"
 #
@@ -1374,6 +1448,14 @@ msgstr "Точка Текста"
 #
 msgid "Text Point Icon"
 msgstr "Значок точки Текста"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Параметры Точки"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Параметры точки АС, слой: "
 #
 msgid "Text position relative to point"
 msgstr "Положение текста относительно точки"
@@ -1425,17 +1507,27 @@ msgstr "Общая длина"
 msgid "Total Length: "
 msgstr "Общая длина: "
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr "Закрыть содержимое "
 #
 msgid "Update initial conditions"
 msgstr "Обновить начальные условия"
 #
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "Точка"
+#
 msgid "Use nearby OD Point?"
 msgstr "Использовать ближайшую точку?"
 #
 msgid "Use nearby Point?"
 msgstr "Использовать ближайшую точку?"
+#
+msgid "User Icons:"
+msgstr ""
 #
 msgid "Version:"
 msgstr "Версия:"
@@ -1467,5 +1559,29 @@ msgstr ""
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
 #
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Delete All"
+#~ msgstr "&Удалить все"
+#
+#~ msgid "&Properties..."
+#~ msgstr "&Параметры..."
+#
+#~ msgid "Boundary Point &Properties"
+#~ msgstr "Параметры Точки Геозоны"
+#
+#~ msgid "DR Point &Properties"
+#~ msgstr "Параметры Точки АС"
+#
 #~ msgid "Delete current OCPN_Draw config entries (No)"
 #~ msgstr "Удаление текущей записи конфигурации (Нет)"
+#
+#~ msgid "EBL Point &Properties"
+#~ msgstr "Параметры Точки ЭВН"
+#
+#~ msgid "OCPN Draw Path &Properties"
+#~ msgstr "Параметры Полигона"
+#
+#~ msgid "PIL Point &Properties"
+#~ msgstr "Параметры точки ЛПП"

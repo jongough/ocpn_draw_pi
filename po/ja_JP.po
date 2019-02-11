@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
-"PO-Revision-Date: 2018-05-27 08:16-0400\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"PO-Revision-Date: 2019-01-26 08:27\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Japanese\n"
 "Language: ja_JP\n"
@@ -20,7 +20,7 @@ msgid " &Properties..."
 msgstr " プロパティ...（&P）"
 #
 msgid " To: "
-msgstr ""
+msgstr " 着: "
 #
 msgid ""
 " shorter than rhumbline.\n"
@@ -32,6 +32,9 @@ msgstr " to "
 #
 msgid "&Activate"
 msgstr "有効にする（&A）"
+#
+msgid "&Add"
+msgstr ""
 #
 msgid "&Apply"
 msgstr "適用（&A）"
@@ -48,11 +51,19 @@ msgstr "無効にする（&D）"
 msgid "&Delete"
 msgstr "削除（&D）"
 #
-msgid "&Delete All"
-msgstr "全て削除（&D）"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "選択項目を削除（&R）"
 #
-msgid "&Export selected..."
+msgid "&Edit"
+msgstr ""
+#
+#, fuzzy
+msgid "&Export Selected..."
 msgstr "選択したものをエクスポート（&E）"
+#
+msgid "&List contents"
+msgstr ""
 #
 msgid "&New"
 msgstr "新規（&N）"
@@ -63,11 +74,11 @@ msgstr "&OK"
 msgid "&Properties"
 msgstr "プロパティ（&P）"
 #
-msgid "&Properties..."
-msgstr "プロパティ...（&P）"
-#
 msgid "&Remove Selected"
 msgstr "選択項目を削除（&R）"
+#
+msgid "&Temporary layer"
+msgstr ""
 #
 msgid "(Unnamed )"
 msgstr ""
@@ -81,11 +92,14 @@ msgstr ""
 msgid "(unnamed)"
 msgstr "(名前なし)"
 #
-msgid "0"
+msgid "*.*"
 msgstr ""
 #
+msgid "0"
+msgstr "0"
+#
 msgid "0.0"
-msgstr ""
+msgstr "0.0"
 #
 msgid "0.5"
 msgstr ""
@@ -97,7 +111,7 @@ msgid "1 Pixel"
 msgstr ""
 #
 msgid "1 pixel"
-msgstr ""
+msgstr "1 ピクセル"
 #
 msgid "1.0"
 msgstr ""
@@ -109,7 +123,7 @@ msgid "10 Pixels"
 msgstr ""
 #
 msgid "10 pixels"
-msgstr ""
+msgstr "10ピクセル"
 #
 msgid "2"
 msgstr ""
@@ -118,7 +132,7 @@ msgid "2 Pixels"
 msgstr ""
 #
 msgid "2 pixels"
-msgstr ""
+msgstr "2 ピクセル"
 #
 msgid "3"
 msgstr ""
@@ -127,7 +141,7 @@ msgid "3 Pixels"
 msgstr ""
 #
 msgid "3 pixels"
-msgstr ""
+msgstr "3 ピクセル"
 #
 msgid "4"
 msgstr ""
@@ -136,7 +150,7 @@ msgid "4 Pixels"
 msgstr ""
 #
 msgid "4 pixels"
-msgstr ""
+msgstr "4 ピクセル"
 #
 msgid "5"
 msgstr ""
@@ -145,7 +159,7 @@ msgid "5 Pixels"
 msgstr ""
 #
 msgid "5 pixels"
-msgstr ""
+msgstr "5 ピクセル"
 #
 msgid "6"
 msgstr ""
@@ -154,7 +168,7 @@ msgid "6 Pixels"
 msgstr ""
 #
 msgid "6 pixels"
-msgstr ""
+msgstr "6 ピクセル"
 #
 msgid "7"
 msgstr ""
@@ -163,7 +177,7 @@ msgid "7 Pixels"
 msgstr ""
 #
 msgid "7 pixels"
-msgstr ""
+msgstr "7 ピクセル"
 #
 msgid "8"
 msgstr ""
@@ -172,7 +186,7 @@ msgid "8 Pixels"
 msgstr ""
 #
 msgid "8 pixels"
-msgstr ""
+msgstr "8 ピクセル"
 #
 msgid "9"
 msgstr ""
@@ -181,16 +195,16 @@ msgid "9 Pixels"
 msgstr ""
 #
 msgid "9 pixels"
-msgstr ""
+msgstr "9 ピクセル"
 #
 msgid "About"
 msgstr ""
 #
 msgid "Activate"
-msgstr ""
+msgstr "アクティベート"
 #
 msgid "Active"
-msgstr ""
+msgstr "アクティブ"
 #
 msgid "Active Centre Line Colour"
 msgstr ""
@@ -216,6 +230,9 @@ msgid "Active Offset Line Colour"
 msgstr ""
 #
 msgid "Add Index Line"
+msgstr ""
+#
+msgid "Add New"
 msgstr ""
 #
 msgid "All"
@@ -248,22 +265,22 @@ msgid "Are you sure you want to delete this Boundary Point?"
 msgstr ""
 #
 msgid "Are you sure you want to delete this Boundary?"
-msgstr ""
+msgstr "この範囲を削除してもよろしいですか。"
 #
 msgid "Are you sure you want to delete this DR Point?"
 msgstr ""
 #
 msgid "Are you sure you want to delete this DR?"
-msgstr ""
+msgstr "この推測位置を削除してもよろしいですか？"
 #
 msgid "Are you sure you want to delete this EBL Point?"
 msgstr ""
 #
 msgid "Are you sure you want to delete this EBL?"
-msgstr ""
+msgstr "このEBLを削除してもよろしいですか？"
 #
 msgid "Are you sure you want to delete this Guard Zone?"
-msgstr ""
+msgstr "このガードゾーンを削除してもよろしいですか？"
 #
 msgid "Are you sure you want to delete this OD Point?"
 msgstr ""
@@ -272,10 +289,10 @@ msgid "Are you sure you want to delete this PIL Point?"
 msgstr ""
 #
 msgid "Are you sure you want to delete this Parallel Index Line Group?"
-msgstr ""
+msgstr "このパラレルインデックスのグループを削除してもよろしいですか。"
 #
 msgid "Are you sure you want to delete this Parallel Index Line?"
-msgstr ""
+msgstr "このパラレルインデックスを削除してもよろしいですか。"
 #
 msgid "Are you sure you want to delete this Text Point?"
 msgstr ""
@@ -283,8 +300,12 @@ msgstr ""
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 #
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "この推測位置を削除してもよろしいですか？"
+#
 msgid "Are you sure you want to remove this "
-msgstr ""
+msgstr "これを削除してよろしいですね？"
 #
 msgid "Are you sure you want to remove this Boundary Point?"
 msgstr ""
@@ -329,10 +350,10 @@ msgid "Bearing From-To (M)"
 msgstr ""
 #
 msgid "Bearing: "
-msgstr ""
+msgstr "方位: "
 #
 msgid "Boat"
-msgstr ""
+msgstr "船"
 #
 msgid "Bottom"
 msgstr ""
@@ -341,16 +362,14 @@ msgid "Bottom Centre"
 msgstr ""
 #
 msgid "Boundary"
-msgstr ""
+msgstr "領域"
 #
+#, fuzzy
 msgid "Boundary '"
-msgstr ""
+msgstr "領域"
 #
 msgid "Boundary Point"
 msgstr ""
-#
-msgid "Boundary Point &Properties"
-msgstr "境界点 プロパティ（&P）"
 #
 #, fuzzy
 msgid "Boundary Point Icon"
@@ -398,7 +417,7 @@ msgid "Combo!"
 msgstr ""
 #
 msgid "Confirm"
-msgstr ""
+msgstr "確認"
 #
 msgid "Confirm Object Delete"
 msgstr ""
@@ -410,16 +429,16 @@ msgid "Copy"
 msgstr "コピー"
 #
 msgid "Copy Boundary GUID"
-msgstr ""
+msgstr "領域のGUID をコピーします。"
 #
 msgid "Copy DR GUID"
-msgstr ""
+msgstr "推測位置のGUIDをコピー"
 #
 msgid "Copy EBL GUID"
-msgstr ""
+msgstr "EBL GUID をコピーします。"
 #
 msgid "Copy Guard Zone GUID"
-msgstr ""
+msgstr "ガードゾーンのGUIDをコピー"
 #
 msgid "Copy Point GUID"
 msgstr ""
@@ -428,13 +447,13 @@ msgid "Copy lat/long"
 msgstr "緯度/経度をコピーします。"
 #
 msgid "Course over Ground"
-msgstr ""
+msgstr "対地針路"
 #
 msgid "Course over Ground (M)"
-msgstr ""
+msgstr "対地針路(M)"
 #
 msgid "Course over Ground (T)"
-msgstr ""
+msgstr "対地針路(T)"
 #
 msgid "Create Boundary"
 msgstr ""
@@ -458,10 +477,10 @@ msgid "Create Text Point"
 msgstr ""
 #
 msgid "DR"
-msgstr ""
+msgstr "DR"
 #
 msgid "DR Path Length"
-msgstr ""
+msgstr "推測位置の長さ"
 #
 msgid "DR Persistence"
 msgstr ""
@@ -469,14 +488,11 @@ msgstr ""
 msgid "DR Point"
 msgstr ""
 #
-msgid "DR Point &Properties"
-msgstr "DR ポイント プロパティ（&P）"
-#
 msgid "DR Point Icon"
 msgstr ""
 #
 msgid "DR Point Interval"
-msgstr ""
+msgstr "推測位置の間隔"
 #
 msgid "DR Point Properties"
 msgstr ""
@@ -490,38 +506,45 @@ msgstr ""
 msgid "DR Properties, Layer: "
 msgstr ""
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr ""
 #
 msgid "Days"
-msgstr ""
+msgstr "日"
 #
 msgid "Deactivate"
-msgstr ""
+msgstr "非アクティブ化する"
 #
 msgid "Dead Reckoning"
-msgstr ""
+msgstr "推測航法"
 #
 msgid "Default Offset (+Stbd/-Port)"
 msgstr ""
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "全て削除（&D）"
+#
 msgid "Delete"
 msgstr "削除"
 #
-msgid "Delete All"
-msgstr ""
-#
 msgid "Delete Line"
-msgstr ""
+msgstr "線の削除"
 #
 msgid "Delete..."
-msgstr ""
+msgstr "削除しています..."
 #
 msgid "Desc"
 msgstr ""
 #
 msgid "Description"
-msgstr ""
+msgstr "概要："
 #
 msgid "Display Toolbar"
 msgstr ""
@@ -530,7 +553,7 @@ msgid "Display text"
 msgstr ""
 #
 msgid "Distance"
-msgstr ""
+msgstr "距離"
 #
 msgid "Distance Between Range Rings"
 msgstr ""
@@ -542,7 +565,7 @@ msgid "Distance Unit"
 msgstr ""
 #
 msgid "Distance Units"
-msgstr ""
+msgstr "距離の単位"
 #
 msgid "Distance between Range Rings"
 msgstr ""
@@ -556,13 +579,17 @@ msgid ""
 msgstr ""
 #
 msgid "Dot"
-msgstr ""
+msgstr "点線"
 #
 msgid "Dot Dash"
-msgstr ""
+msgstr "一点鎖線"
 #
 msgid "Draw Toolbar"
-msgstr ""
+msgstr "描画ツールバー"
+#
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "GPX ファイルにエクスポート"
 #
 msgid "EBL"
 msgstr ""
@@ -579,13 +606,10 @@ msgid "EBL Fixed End Position"
 msgstr ""
 #
 msgid "EBL Persistence"
-msgstr ""
+msgstr "EBLの永続性"
 #
 msgid "EBL Point"
 msgstr ""
-#
-msgid "EBL Point &Properties"
-msgstr "EBL ポイント プロパティ（&P）"
 #
 msgid "EBL Point Properties"
 msgstr ""
@@ -604,11 +628,14 @@ msgid ""
 "(percentage screen width) Default 5"
 msgstr ""
 #
+msgid "Edit"
+msgstr ""
+#
 msgid "Electronic Bearing Line"
 msgstr ""
 #
 msgid "End"
-msgstr ""
+msgstr "終了"
 #
 msgid "End Point Icon"
 msgstr ""
@@ -622,11 +649,8 @@ msgstr ""
 msgid "Exclusion"
 msgstr ""
 #
-msgid "Export All Visible..."
-msgstr ""
-#
 msgid "Export GPX file"
-msgstr "GPX ファイルにエクスポートします。"
+msgstr "GPX ファイルにエクスポート"
 #
 msgid "Extended"
 msgstr ""
@@ -635,10 +659,10 @@ msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
 msgstr ""
 #
 msgid "Fill Colour"
-msgstr ""
+msgstr "塗りつぶし色"
 #
 msgid "Fill Density"
-msgstr ""
+msgstr "濃度"
 #
 msgid "First"
 msgstr ""
@@ -662,10 +686,10 @@ msgid "From Point"
 msgstr ""
 #
 msgid "From: "
-msgstr ""
+msgstr "発: "
 #
 msgid "GUID"
-msgstr ""
+msgstr "GUID"
 #
 msgid "GZ"
 msgstr ""
@@ -686,7 +710,7 @@ msgid "Guard Zone"
 msgstr ""
 #
 msgid "Guard Zone Persistence"
-msgstr ""
+msgstr "ガード ゾーンの永続性"
 #
 msgid "Guard Zone Point"
 msgstr ""
@@ -707,7 +731,7 @@ msgid "Hide Boundary Point Icons"
 msgstr ""
 #
 msgid "Hide Layer(s)"
-msgstr ""
+msgstr "レイヤーを非表示"
 #
 msgid "Hide Path(s)"
 msgstr ""
@@ -722,7 +746,7 @@ msgid "Hide from chart"
 msgstr ""
 #
 msgid "Hours"
-msgstr ""
+msgstr "時間"
 #
 #, fuzzy
 msgid "I&mport"
@@ -735,10 +759,17 @@ msgid "ID Num"
 msgstr ""
 #
 msgid "ID: "
-msgstr ""
+msgstr "ID: "
 #
 msgid "Icon"
 msgstr ""
+#
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "インポートGPX...（&m）"
 #
 msgid "Import Error"
 msgstr ""
@@ -789,7 +820,7 @@ msgid "Inclusion Boundary Size"
 msgstr ""
 #
 msgid "Index Line Properties"
-msgstr ""
+msgstr "インデックス行のプロパティ"
 #
 msgid "Index Lines (+ Stbd/- Port)"
 msgstr ""
@@ -806,22 +837,22 @@ msgid "Insert Boundary Point"
 msgstr ""
 #
 msgid "Insert EBL Point"
-msgstr ""
+msgstr "EBLポイントの挿入"
 #
 msgid "Interval Type"
-msgstr ""
+msgstr "間隔の種類"
 #
 msgid "Kilometres"
-msgstr ""
+msgstr "km"
 #
 msgid "Latitude"
 msgstr ""
 #
 msgid "Layer"
-msgstr ""
+msgstr "レイヤー"
 #
 msgid "Layer "
-msgstr ""
+msgstr "レイヤー "
 #
 msgid "Layer Boundary"
 msgstr ""
@@ -844,11 +875,26 @@ msgstr ""
 msgid "Layers"
 msgstr ""
 #
+msgid "Layers Directory"
+msgstr ""
+#
 msgid "Left"
 msgstr ""
 #
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
+#
 msgid "Leg: from "
-msgstr "Leg: from "
+msgstr "区間：発 "
 #
 msgid "Length Type"
 msgstr ""
@@ -857,12 +903,22 @@ msgid "License"
 msgstr ""
 #
 msgid "Line Colour"
-msgstr ""
+msgstr "線の色"
 #
 msgid "Line Style"
-msgstr ""
+msgstr "線のスタイル"
 #
 msgid "Line Width"
+msgstr "線の幅"
+#
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "概要："
+#
+msgid "Links"
 msgstr ""
 #
 msgid "List contents "
@@ -871,8 +927,11 @@ msgstr ""
 msgid "Loading navobjects from "
 msgstr ""
 #
-msgid "Long Dash"
+msgid "Local file..."
 msgstr ""
+#
+msgid "Long Dash"
+msgstr "破線"
 #
 msgid "Longitude"
 msgstr ""
@@ -884,22 +943,22 @@ msgid "Major:"
 msgstr ""
 #
 msgid "Match VRM colour to EBL colour"
-msgstr ""
+msgstr "VRMの色をEBLの色に一致させる"
 #
 msgid "Merge and Delete Boundaries"
-msgstr ""
+msgstr "領域の統合と消去"
 #
 msgid "Merge and Keep Boundaries"
-msgstr ""
+msgstr "領域の統合と維持"
 #
 msgid "Minor:"
 msgstr ""
 #
 msgid "Minutes"
-msgstr ""
+msgstr "分"
 #
 msgid "Move Boundary"
-msgstr ""
+msgstr "領域の移動"
 #
 msgid "Move Boundary Point"
 msgstr ""
@@ -911,7 +970,7 @@ msgid "Move DR Point"
 msgstr ""
 #
 msgid "Move EBL"
-msgstr ""
+msgstr "EBL を移動します。"
 #
 msgid "Move EBL Point"
 msgstr ""
@@ -920,7 +979,7 @@ msgid "Move Guard Zone Point"
 msgstr ""
 #
 msgid "Move Line"
-msgstr ""
+msgstr "線を移動"
 #
 msgid "Move OD Point"
 msgstr ""
@@ -938,16 +997,16 @@ msgid "Multiple Boundaries"
 msgstr ""
 #
 msgid "Name"
-msgstr ""
+msgstr "名前"
 #
 msgid "Name:"
 msgstr ""
 #
 msgid "Name: "
-msgstr ""
+msgstr "名前: "
 #
 msgid "Nautical Miles"
-msgstr ""
+msgstr "海里"
 #
 msgid "Neither"
 msgstr ""
@@ -957,7 +1016,7 @@ msgstr ""
 #
 #, c-format
 msgid "New layer %d: %s"
-msgstr ""
+msgstr "新しいレイヤー %d: %s"
 #
 msgid "No"
 msgstr ""
@@ -987,10 +1046,10 @@ msgid "OCPN Draw Boundary Create"
 msgstr ""
 #
 msgid "OCPN Draw Boundary Delete"
-msgstr ""
+msgstr "OCPN 描画範囲の削除"
 #
 msgid "OCPN Draw DR Delete"
-msgstr ""
+msgstr "OCPNの推測位置の削除"
 #
 msgid "OCPN Draw Delete Boundary Point"
 msgstr ""
@@ -1010,11 +1069,15 @@ msgstr ""
 msgid "OCPN Draw Delete Text Point"
 msgstr ""
 #
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "OCPNの推測位置の削除"
+#
 msgid "OCPN Draw EBL Delete"
-msgstr ""
+msgstr "OCPNのEBL削除"
 #
 msgid "OCPN Draw GZ Delete"
-msgstr ""
+msgstr "OCPNのガードゾーンの削除"
 #
 msgid "OCPN Draw Manager"
 msgstr ""
@@ -1023,9 +1086,10 @@ msgid "OCPN Draw PIL Delete"
 msgstr ""
 #
 msgid "OCPN Draw Parallel Index Line Delete"
-msgstr ""
+msgstr "OCPNパラレルインデックスの削除"
 #
-msgid "OCPN Draw Path &Properties"
+#, fuzzy
+msgid "OCPN Draw Path"
 msgstr "OCPN 描画パス プロパティ（&P）"
 #
 msgid "OCPN Draw Point"
@@ -1095,7 +1159,7 @@ msgid "Offset Line Width"
 msgstr ""
 #
 msgid "Offset: "
-msgstr ""
+msgstr "オフセット："
 #
 msgid "On Rollover Only"
 msgstr ""
@@ -1107,7 +1171,7 @@ msgid "Other:"
 msgstr ""
 #
 msgid "Overwrite existing file?"
-msgstr "既存のファイルを上書きしますか？"
+msgstr "既存のファイルに上書きしますか？"
 #
 msgid "PIL"
 msgstr ""
@@ -1118,14 +1182,11 @@ msgstr ""
 msgid "PIL Point"
 msgstr ""
 #
-msgid "PIL Point &Properties"
-msgstr ""
-#
 msgid "Parallel Index Line"
-msgstr ""
+msgstr "パラレルインデックス"
 #
 msgid "Parallel Index Line Angle (+Stbd/-Port)"
-msgstr ""
+msgstr "パラレルインデックスの角度 (+ 右舷/- 左舷)"
 #
 msgid "Parallel Index Line Persistence"
 msgstr ""
@@ -1166,6 +1227,9 @@ msgstr ""
 msgid "Paths"
 msgstr ""
 #
+msgid "Permanent Layers:"
+msgstr ""
+#
 msgid "Persistent"
 msgstr ""
 #
@@ -1173,7 +1237,7 @@ msgid "Persistent over Crash"
 msgstr ""
 #
 msgid "Pick a new start point"
-msgstr ""
+msgstr "新しい開始点を選択します。"
 #
 msgid ""
 "Please report problems using FlySpray at:\n"
@@ -1217,6 +1281,9 @@ msgstr ""
 msgid "Range Ring Line Width"
 msgstr ""
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1253,10 +1320,14 @@ msgid "Second distance"
 msgstr ""
 #
 msgid "Short Dash"
-msgstr ""
+msgstr "短破線"
 #
 msgid "Show"
 msgstr "表示"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "パス と ポイント マネージャー"
 #
 msgid "Show Boundary Point Icons"
 msgstr ""
@@ -1271,7 +1342,7 @@ msgid "Show EBL Direction Arrow"
 msgstr ""
 #
 msgid "Show Layer(s)"
-msgstr ""
+msgstr "レイヤーを表示"
 #
 msgid "Show Magnetic Bearings"
 msgstr ""
@@ -1311,26 +1382,26 @@ msgstr ""
 msgid "Show name"
 msgstr ""
 #
+msgid "Show on &chart"
+msgstr ""
+#
 msgid "Show on chart"
 msgstr ""
 #
 msgid "Solid"
-msgstr ""
+msgstr "実線"
 #
 msgid "Speed over Ground"
-msgstr ""
+msgstr "対地速力"
 #
 msgid "Start"
-msgstr ""
+msgstr "開始"
 #
 msgid "Start Point Icon"
 msgstr ""
 #
-msgid "Temporary layer"
-msgstr ""
-#
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 #
 msgid "Text Colour"
 msgstr ""
@@ -1343,6 +1414,14 @@ msgstr ""
 #
 msgid "Text Point Icon"
 msgstr ""
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "DR ポイント プロパティ（&P）"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "DR ポイント プロパティ（&P）"
 #
 msgid "Text position relative to point"
 msgstr ""
@@ -1368,10 +1447,10 @@ msgid ""
 msgstr ""
 #
 msgid "Time"
-msgstr ""
+msgstr "時間"
 #
 msgid "Time Units"
-msgstr ""
+msgstr "時間の単位"
 #
 msgid "To Point"
 msgstr ""
@@ -1388,16 +1467,26 @@ msgstr ""
 msgid "Total Length: "
 msgstr "全長: "
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr ""
 #
 msgid "Update initial conditions"
-msgstr ""
+msgstr "初期条件を更新します。"
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "描画ツールバー"
 #
 msgid "Use nearby OD Point?"
 msgstr ""
 #
 msgid "Use nearby Point?"
+msgstr ""
+#
+msgid "User Icons:"
 msgstr ""
 #
 msgid "Version:"
@@ -1429,3 +1518,12 @@ msgstr ""
 #
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Properties..."
+#~ msgstr "プロパティ...（&P）"
+#
+#~ msgid "EBL Point &Properties"
+#~ msgstr "EBL ポイント プロパティ（&P）"

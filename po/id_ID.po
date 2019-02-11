@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
 "PO-Revision-Date: 2018-03-16 19:12-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Indonesian\n"
@@ -35,6 +35,9 @@ msgstr " ke "
 msgid "&Activate"
 msgstr "&Mengaktifkan"
 #
+msgid "&Add"
+msgstr ""
+#
 msgid "&Apply"
 msgstr "&Menerapkan"
 #
@@ -50,11 +53,20 @@ msgstr "&Menonaktifkan"
 msgid "&Delete"
 msgstr "&Menghapus"
 #
-msgid "&Delete All"
-msgstr "&Hapus semua"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Hapus yang dipilih"
 #
-msgid "&Export selected..."
+msgid "&Edit"
+msgstr ""
+#
+#, fuzzy
+msgid "&Export Selected..."
 msgstr "&Ekspor yang dipilih..."
+#
+#, fuzzy
+msgid "&List contents"
+msgstr "Daftar isi "
 #
 msgid "&New"
 msgstr "&Baru"
@@ -65,11 +77,12 @@ msgstr "&Baik"
 msgid "&Properties"
 msgstr "&Properti"
 #
-msgid "&Properties..."
-msgstr "&Properti..."
-#
 msgid "&Remove Selected"
 msgstr "&Hapus yang dipilih"
+#
+#, fuzzy
+msgid "&Temporary layer"
+msgstr "Lapisan sementara"
 #
 msgid "(Unnamed )"
 msgstr "(Tidak ada nama )"
@@ -82,6 +95,9 @@ msgstr "(Tidak ada nama) "
 #
 msgid "(unnamed)"
 msgstr "(tidak disebutkan namanya)"
+#
+msgid "*.*"
+msgstr ""
 #
 msgid "0"
 msgstr "0"
@@ -220,6 +236,9 @@ msgstr "Aktif mengimbangi jalur warna"
 msgid "Add Index Line"
 msgstr "Tambahkan Indeks Garis"
 #
+msgid "Add New"
+msgstr ""
+#
 msgid "All"
 msgstr "Semua"
 #
@@ -287,6 +306,10 @@ msgstr "Apakah anda yakin ingin untuk menghapus Titik Teks ini?"
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr "Apakah anda yakin anda ingin menghapus lapisan ini dan <ALL> isinya?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik OD ini?"
+#
 msgid "Are you sure you want to remove this "
 msgstr "Apakah anda yakin ingin untuk menghapus ini "
 #
@@ -353,9 +376,6 @@ msgstr "Batas"
 #
 msgid "Boundary Point"
 msgstr "Batas Titik"
-#
-msgid "Boundary Point &Properties"
-msgstr "Titik Batas &Sifat"
 #
 #, fuzzy
 msgid "Boundary Point Icon"
@@ -476,9 +496,6 @@ msgstr "Kegigihan DR"
 msgid "DR Point"
 msgstr "Titik DR"
 #
-msgid "DR Point &Properties"
-msgstr "DR Point &Properties"
-#
 msgid "DR Point Icon"
 msgstr "Ikon titik DR"
 #
@@ -497,6 +514,12 @@ msgstr "Properti DR"
 msgid "DR Properties, Layer: "
 msgstr "DR Properties, Lapisan: "
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr "Tanggal:"
 #
@@ -512,11 +535,12 @@ msgstr "Perhitungan Yang Salah"
 msgid "Default Offset (+Stbd/-Port)"
 msgstr "Mengimbangi bawaan (+Stbd/-Port)"
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Hapus semua"
+#
 msgid "Delete"
 msgstr "Hapus"
-#
-msgid "Delete All"
-msgstr "Hapus semua"
 #
 msgid "Delete Line"
 msgstr "Hapus Baris"
@@ -573,6 +597,10 @@ msgstr "Titik Garis"
 msgid "Draw Toolbar"
 msgstr "Gambar Toolbar"
 #
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Ekspor semua yang terlihat..."
+#
 msgid "EBL"
 msgstr "EBL"
 #
@@ -595,9 +623,6 @@ msgstr "Kegigihan EBL"
 msgid "EBL Point"
 msgstr "Titik EBL"
 #
-msgid "EBL Point &Properties"
-msgstr "Titik EBL &Properti"
-#
 msgid "EBL Point Properties"
 msgstr "EBL Titik Properti"
 #
@@ -617,6 +642,9 @@ msgstr ""
 "Sensitivitas Panning Edge\n"
 "(lebar layar persentase) Default 5"
 #
+msgid "Edit"
+msgstr ""
+#
 msgid "Electronic Bearing Line"
 msgstr "Bantalan Jalur Elektronik"
 #
@@ -634,9 +662,6 @@ msgstr "Contoh"
 #
 msgid "Exclusion"
 msgstr "Pengecualian"
-#
-msgid "Export All Visible..."
-msgstr "Ekspor semua yang terlihat..."
 #
 msgid "Export GPX file"
 msgstr "Ekspor berkas GPX"
@@ -756,6 +781,13 @@ msgstr "ID: "
 msgid "Icon"
 msgstr "Ikon"
 #
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "M&asukkan GPX..."
+#
 msgid "Import Error"
 msgstr ""
 #
@@ -864,8 +896,24 @@ msgstr "Lapisan titik teks"
 msgid "Layers"
 msgstr "Lapisan"
 #
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Lapisan titik DR"
+#
 msgid "Left"
 msgstr "Kiri"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
 #
 msgid "Leg: from "
 msgstr "Kaki: dari "
@@ -885,11 +933,24 @@ msgstr "Gaya Baris"
 msgid "Line Width"
 msgstr "Lebar garis"
 #
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Keterangan"
+#
+msgid "Links"
+msgstr ""
+#
 msgid "List contents "
 msgstr "Daftar isi "
 #
 msgid "Loading navobjects from "
 msgstr "Memuat objek navigasi dari "
+#
+msgid "Local file..."
+msgstr ""
 #
 msgid "Long Dash"
 msgstr "Garis Panjang"
@@ -1030,6 +1091,10 @@ msgstr "OCPN Hapus tarikan titik PIL"
 msgid "OCPN Draw Delete Text Point"
 msgstr "OCPN Hapus tarikan titik teks"
 #
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "OCPN Menarik DR Hapus"
+#
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Menarik EBL Hapus"
 #
@@ -1045,8 +1110,9 @@ msgstr "OCPN Menarik PIL Hapus"
 msgid "OCPN Draw Parallel Index Line Delete"
 msgstr "OCPN Menggambar Paralel Indeks Menghapus Baris"
 #
-msgid "OCPN Draw Path &Properties"
-msgstr "OCPN Menggambar Path &Sifat"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "OCPN poin undian"
 #
 msgid "OCPN Draw Point"
 msgstr "OCPN poin undian"
@@ -1139,9 +1205,6 @@ msgstr "Kegigihan PIL"
 msgid "PIL Point"
 msgstr "Titik PIL"
 #
-msgid "PIL Point &Properties"
-msgstr "PIL Point &Properties"
-#
 msgid "Parallel Index Line"
 msgstr "Penunjuk garis sejajar"
 #
@@ -1186,6 +1249,9 @@ msgstr ""
 #
 msgid "Paths"
 msgstr "Jalan"
+#
+msgid "Permanent Layers:"
+msgstr ""
 #
 msgid "Persistent"
 msgstr "Teguh"
@@ -1250,6 +1316,9 @@ msgstr "Gaya baris berbagai cincin"
 msgid "Range Ring Line Width"
 msgstr "Berbagai cincin jalur lebar"
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1294,6 +1363,10 @@ msgstr "Garis Pendek"
 #
 msgid "Show"
 msgstr "Menunjukkan"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Tampilkan nama titik"
 #
 msgid "Show Boundary Point Icons"
 msgstr "Menunjukkan Titik Batas Ikon"
@@ -1350,6 +1423,10 @@ msgstr "Tampilkan VRM"
 msgid "Show name"
 msgstr "Tampilkan nama"
 #
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Tunjukkan pada grafik"
+#
 msgid "Show on chart"
 msgstr "Tunjukkan pada grafik"
 #
@@ -1365,9 +1442,6 @@ msgstr "Mulai"
 msgid "Start Point Icon"
 msgstr "Ikon Titik Awal"
 #
-msgid "Temporary layer"
-msgstr "Lapisan sementara"
-#
 msgid "Text"
 msgstr ""
 #
@@ -1382,6 +1456,14 @@ msgstr "Titik teks"
 #
 msgid "Text Point Icon"
 msgstr "Ikon Pusat Teks"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "EBL Titik Properti"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "DR titik Properti, Lapisan: "
 #
 msgid "Text position relative to point"
 msgstr "Teks posisi relatif terhadap titik"
@@ -1434,17 +1516,27 @@ msgstr "Panjang Total"
 msgid "Total Length: "
 msgstr "Panjang Total: "
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr ""
 #
 msgid "Update initial conditions"
 msgstr "Memperbarui kondisi awal"
 #
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "OCPN poin undian"
+#
 msgid "Use nearby OD Point?"
 msgstr "Gunakan titik OD terdekat?"
 #
 msgid "Use nearby Point?"
 msgstr "Gunakan titik terdekat?"
+#
+msgid "User Icons:"
+msgstr ""
 #
 msgid "Version:"
 msgstr "Versi:"
@@ -1476,3 +1568,27 @@ msgstr ""
 #
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Delete All"
+#~ msgstr "&Hapus semua"
+#
+#~ msgid "&Properties..."
+#~ msgstr "&Properti..."
+#
+#~ msgid "Boundary Point &Properties"
+#~ msgstr "Titik Batas &Sifat"
+#
+#~ msgid "DR Point &Properties"
+#~ msgstr "DR Point &Properties"
+#
+#~ msgid "EBL Point &Properties"
+#~ msgstr "Titik EBL &Properti"
+#
+#~ msgid "OCPN Draw Path &Properties"
+#~ msgstr "OCPN Menggambar Path &Sifat"
+#
+#~ msgid "PIL Point &Properties"
+#~ msgstr "PIL Point &Properties"

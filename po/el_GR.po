@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
-"PO-Revision-Date: 2018-04-16 21:57-0400\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"PO-Revision-Date: 2019-01-26 08:25\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -35,6 +35,9 @@ msgstr " προς "
 msgid "&Activate"
 msgstr "&Ενεργοποίηση"
 #
+msgid "&Add"
+msgstr ""
+#
 msgid "&Apply"
 msgstr "&Εφαρμογή"
 #
@@ -50,11 +53,20 @@ msgstr "&Απενεργοποίηση"
 msgid "&Delete"
 msgstr "&Διαγραφή"
 #
-msgid "&Delete All"
-msgstr "&Διαγραφή όλων"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "Α&φαίρεση επιλεγμένων"
 #
-msgid "&Export selected..."
+msgid "&Edit"
+msgstr ""
+#
+#, fuzzy
+msgid "&Export Selected..."
 msgstr "Ε&ξαγωγή επιλεγμένων..."
+#
+#, fuzzy
+msgid "&List contents"
+msgstr "Περιεχόμενα "
 #
 msgid "&New"
 msgstr "&Νέο"
@@ -65,11 +77,12 @@ msgstr "&Εντάξει"
 msgid "&Properties"
 msgstr "&Ιδιότητες"
 #
-msgid "&Properties..."
-msgstr "&Ιδιότητες..."
-#
 msgid "&Remove Selected"
 msgstr "Α&φαίρεση επιλεγμένων"
+#
+#, fuzzy
+msgid "&Temporary layer"
+msgstr "Προσωρινό ταξίδι"
 #
 msgid "(Unnamed )"
 msgstr "(Χωρίς όνομα)"
@@ -82,6 +95,9 @@ msgstr "(Χωρίς όνομα) "
 #
 msgid "(unnamed)"
 msgstr "(ανώνυμο)"
+#
+msgid "*.*"
+msgstr ""
 #
 msgid "0"
 msgstr "0"
@@ -222,6 +238,9 @@ msgstr "Χρώμα ενεργής γραμμής μετατόπισης"
 msgid "Add Index Line"
 msgstr "Προσθέστε γραμμή Index"
 #
+msgid "Add New"
+msgstr ""
+#
 msgid "All"
 msgstr "Όλα"
 #
@@ -292,6 +311,10 @@ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 "Σίγουρα θέλετε να διαγράψετε αυτό το ταξίδι και <όλα> τα περιεχόμενά του;"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτό το σημείο OD;"
+#
 msgid "Are you sure you want to remove this "
 msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτό το "
 #
@@ -358,9 +381,6 @@ msgstr "Όριο"
 #
 msgid "Boundary Point"
 msgstr "Σημείο ορίου"
-#
-msgid "Boundary Point &Properties"
-msgstr "&Ιδιότητες σημείου ορίου"
 #
 #, fuzzy
 msgid "Boundary Point Icon"
@@ -481,9 +501,6 @@ msgstr "Παραμένουσα DR"
 msgid "DR Point"
 msgstr "Σημείο DR"
 #
-msgid "DR Point &Properties"
-msgstr "&Ιδιότητες σημείου DR"
-#
 msgid "DR Point Icon"
 msgstr "Εικονίδιο σημείου DR"
 #
@@ -502,6 +519,12 @@ msgstr "Ιδιότητες DR"
 msgid "DR Properties, Layer: "
 msgstr "Ιδιότητες DR, ταξίδι: "
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr "Ημερομηνία:"
 #
@@ -517,11 +540,12 @@ msgstr "Εκτίμηση θέσης"
 msgid "Default Offset (+Stbd/-Port)"
 msgstr "Προεπιλεγμένη αντιστάθμιση (+δεξιά /-αριστερά)"
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Διαγραφή όλων"
+#
 msgid "Delete"
 msgstr "Διαγραφή"
-#
-msgid "Delete All"
-msgstr "Διαγραφή όλων"
 #
 msgid "Delete Line"
 msgstr "Διαγραφή γραμμής"
@@ -576,6 +600,10 @@ msgstr "Τελεία-παύλα"
 msgid "Draw Toolbar"
 msgstr "Λωρίδα εργαλείων"
 #
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Εξαγωγή όλων των παρόντων..."
+#
 msgid "EBL"
 msgstr "EBL"
 #
@@ -598,9 +626,6 @@ msgstr "Πaραμένουσα EBL"
 msgid "EBL Point"
 msgstr "Σημείο EBL"
 #
-msgid "EBL Point &Properties"
-msgstr "&Ιδιότητες σημείου EBL"
-#
 msgid "EBL Point Properties"
 msgstr "Ιδιότητες σημείου EBL"
 #
@@ -620,6 +645,9 @@ msgstr ""
 "Ευαισθησία άκρης του πάνινγκ\n"
 "(% πλάτους οθόνης) προεπιλογή 5"
 #
+msgid "Edit"
+msgstr ""
+#
 msgid "Electronic Bearing Line"
 msgstr "Γραμμή ηλεκτρονικής διόπτευσης"
 #
@@ -637,9 +665,6 @@ msgstr "Παράδειγμα"
 #
 msgid "Exclusion"
 msgstr "Αποκλεισμένη"
-#
-msgid "Export All Visible..."
-msgstr "Εξαγωγή όλων των παρόντων..."
 #
 msgid "Export GPX file"
 msgstr "Εξαγωγή αρχείου GPX"
@@ -761,6 +786,13 @@ msgstr "ID: "
 msgid "Icon"
 msgstr "Εικονίδιο"
 #
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "Ε&ισαγωγή από GPX..."
+#
 msgid "Import Error"
 msgstr ""
 #
@@ -871,8 +903,24 @@ msgstr "Σημείο κειμένου ταξιδιού"
 msgid "Layers"
 msgstr "Ταξίδια"
 #
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Σημείο DR ταξιδιού"
+#
 msgid "Left"
 msgstr "Αριστερά"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
 #
 msgid "Leg: from "
 msgstr "Σκέλος: από "
@@ -892,11 +940,24 @@ msgstr "Στυλ γραμμής"
 msgid "Line Width"
 msgstr "Πλάτος Γραμμής"
 #
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Περιγραφή"
+#
+msgid "Links"
+msgstr ""
+#
 msgid "List contents "
 msgstr "Περιεχόμενα "
 #
 msgid "Loading navobjects from "
 msgstr "Φόρτωση navobjects από "
+#
+msgid "Local file..."
+msgstr ""
 #
 msgid "Long Dash"
 msgstr "Μεγάλη παύλα"
@@ -1037,6 +1098,10 @@ msgstr "Διαγραφή σημείου PIL"
 msgid "OCPN Draw Delete Text Point"
 msgstr "Διαγραφή σημείου κειμένου"
 #
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Ιδιότητες OCPN Draw"
+#
 msgid "OCPN Draw EBL Delete"
 msgstr "Διαγραφή εκτ. πορείας OCPN Draw"
 #
@@ -1052,8 +1117,9 @@ msgstr "Διαγραφή PIL"
 msgid "OCPN Draw Parallel Index Line Delete"
 msgstr "Διαγραφή γραμμής Parallel Index"
 #
-msgid "OCPN Draw Path &Properties"
-msgstr "&Ιδιότητες διαδρομής"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "Σημείο OCPN Draw"
 #
 msgid "OCPN Draw Point"
 msgstr "Σημείο OCPN Draw"
@@ -1146,9 +1212,6 @@ msgstr "Διάρκεια PIL"
 msgid "PIL Point"
 msgstr "Σημείο PIL"
 #
-msgid "PIL Point &Properties"
-msgstr "&Ιδιότητες σημείου PIL"
-#
 msgid "Parallel Index Line"
 msgstr "Παράλληλη γραμμή Index"
 #
@@ -1193,6 +1256,9 @@ msgstr "Ιδιότητες διαδρομής, ταξίδι: "
 #
 msgid "Paths"
 msgstr "Διαδρομές"
+#
+msgid "Permanent Layers:"
+msgstr ""
 #
 msgid "Persistent"
 msgstr "Παραμένον"
@@ -1257,6 +1323,9 @@ msgstr "Στυλ γραμμής δακτυλίων απόστασης"
 msgid "Range Ring Line Width"
 msgstr "Πλάτος γραμμής δακτυλίων απόστασης"
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1299,6 +1368,10 @@ msgstr "Με κοντές παύλες"
 #
 msgid "Show"
 msgstr "Εμφάνιση"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Εμφάνιση ονομάτων σημείων"
 #
 msgid "Show Boundary Point Icons"
 msgstr "Εμφάνιση εικονιδίων σημείων ορίου"
@@ -1355,6 +1428,10 @@ msgstr "Εμφάνιση δακτυλίων"
 msgid "Show name"
 msgstr "Εμφάνιση ονόματος"
 #
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Εμφάνιση στον χάρτη"
+#
 msgid "Show on chart"
 msgstr "Εμφάνιση στον χάρτη"
 #
@@ -1370,9 +1447,6 @@ msgstr "Αρχή"
 msgid "Start Point Icon"
 msgstr "Εικονίδιο σημείου εκκίνησης"
 #
-msgid "Temporary layer"
-msgstr "Προσωρινό ταξίδι"
-#
 msgid "Text"
 msgstr "Κείμενο"
 #
@@ -1387,6 +1461,14 @@ msgstr "Σημείο κειμένου"
 #
 msgid "Text Point Icon"
 msgstr "Εικονίδιο σημείου κειμένου"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Ιδιότητες σημείου OD"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου DR, ταξίδι: "
 #
 msgid "Text position relative to point"
 msgstr "Θέση κειμένου σε σχέση με το σημείο"
@@ -1442,17 +1524,27 @@ msgstr "Συνολικό μήκος"
 msgid "Total Length: "
 msgstr "Συνολικό μήκος: "
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr "Απόκρυψη περιεχομένων "
 #
 msgid "Update initial conditions"
 msgstr "Ανανέωσε τις αρχικές συνθήκες"
 #
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "Σημείο OCPN Draw"
+#
 msgid "Use nearby OD Point?"
 msgstr "Χρήση κοντινού σημείου OD;"
 #
 msgid "Use nearby Point?"
 msgstr "Χρήση κοντινού σημείου;"
+#
+msgid "User Icons:"
+msgstr ""
 #
 msgid "Version:"
 msgstr "Έκδοση:"
@@ -1485,5 +1577,29 @@ msgstr ""
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
 #
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Delete All"
+#~ msgstr "&Διαγραφή όλων"
+#
+#~ msgid "&Properties..."
+#~ msgstr "&Ιδιότητες..."
+#
+#~ msgid "Boundary Point &Properties"
+#~ msgstr "&Ιδιότητες σημείου ορίου"
+#
+#~ msgid "DR Point &Properties"
+#~ msgstr "&Ιδιότητες σημείου DR"
+#
 #~ msgid "Delete current OCPN_Draw config entries (No)"
 #~ msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Όχι)"
+#
+#~ msgid "EBL Point &Properties"
+#~ msgstr "&Ιδιότητες σημείου EBL"
+#
+#~ msgid "OCPN Draw Path &Properties"
+#~ msgstr "&Ιδιότητες διαδρομής"
+#
+#~ msgid "PIL Point &Properties"
+#~ msgstr "&Ιδιότητες σημείου PIL"

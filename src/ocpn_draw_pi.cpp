@@ -2115,9 +2115,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         if( m_iCallerId == m_draw_button_id ) {
             if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             if (nBoundary_State > 0 ) {
-                bret = CreateBoundaryLeftClick( event );
-                
                 g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_BOUNDARY);
+                bret = CreateBoundaryLeftClick( event );
             } else if ( nPoint_State > 0) {
                 g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_POINT);
                 bret = CreatePointLeftClick( event );

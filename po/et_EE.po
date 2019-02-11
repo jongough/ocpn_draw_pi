@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-28 14:38+1000\n"
-"PO-Revision-Date: 2018-05-27 08:15-0400\n"
+"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"PO-Revision-Date: 2019-02-08 02:21\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
 "Language: et_EE\n"
@@ -35,6 +35,9 @@ msgstr " kuni "
 msgid "&Activate"
 msgstr "&Käivita"
 #
+msgid "&Add"
+msgstr ""
+#
 msgid "&Apply"
 msgstr "&Rakenda"
 #
@@ -50,11 +53,20 @@ msgstr "Peata"
 msgid "&Delete"
 msgstr "K&ustuta"
 #
-msgid "&Delete All"
-msgstr "Kustut&a kõik"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Kõrvalda valitud"
 #
-msgid "&Export selected..."
+msgid "&Edit"
+msgstr ""
+#
+#, fuzzy
+msgid "&Export Selected..."
 msgstr "&Ekspordi valitud..."
+#
+#, fuzzy
+msgid "&List contents"
+msgstr "Loenda sisu "
 #
 msgid "&New"
 msgstr "&Uus"
@@ -65,11 +77,12 @@ msgstr "&OK"
 msgid "&Properties"
 msgstr "&Omadused"
 #
-msgid "&Properties..."
-msgstr "&Omadused..."
-#
 msgid "&Remove Selected"
 msgstr "&Kõrvalda valitud"
+#
+#, fuzzy
+msgid "&Temporary layer"
+msgstr "Ajutine kiht"
 #
 msgid "(Unnamed )"
 msgstr "(nimetu)"
@@ -82,6 +95,9 @@ msgstr "(nimetu) "
 #
 msgid "(unnamed)"
 msgstr "(nimetu)"
+#
+msgid "*.*"
+msgstr ""
 #
 msgid "0"
 msgstr "0"
@@ -222,6 +238,9 @@ msgstr "Aktiivse nihkejoone värv"
 msgid "Add Index Line"
 msgstr "Lisa indeksliin"
 #
+msgid "Add New"
+msgstr ""
+#
 msgid "All"
 msgstr "Kõik"
 #
@@ -291,6 +310,10 @@ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 "Kas oled kindel, et soovid kustutada selle kihi ja <ALL> temas sisalduva?"
 #
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Oled kindel, et soovid selle OD-punkti kõrvaldada?"
+#
 msgid "Are you sure you want to remove this "
 msgstr "Kas oled kindel, et soovid eemaldada selle "
 #
@@ -357,9 +380,6 @@ msgstr "Piir"
 #
 msgid "Boundary Point"
 msgstr "Piiripunkt"
-#
-msgid "Boundary Point &Properties"
-msgstr "Piiripunkt & omadused"
 #
 #, fuzzy
 msgid "Boundary Point Icon"
@@ -480,9 +500,6 @@ msgstr "DR'i püsivus"
 msgid "DR Point"
 msgstr "DR-punkt"
 #
-msgid "DR Point &Properties"
-msgstr "DR-punkt & omadused"
-#
 msgid "DR Point Icon"
 msgstr "DR-punkti ikoon"
 #
@@ -501,6 +518,12 @@ msgstr "DR omadused"
 msgid "DR Properties, Layer: "
 msgstr "DR omadused, kiht: "
 #
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
 msgid "Date:"
 msgstr "kuupäev:"
 #
@@ -516,11 +539,12 @@ msgstr "Laakimine (DR)"
 msgid "Default Offset (+Stbd/-Port)"
 msgstr "Vaikimisi nihe (+tp /-pp)"
 #
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Kustuta kõik"
+#
 msgid "Delete"
 msgstr "Kustuta"
-#
-msgid "Delete All"
-msgstr "Kustuta kõik"
 #
 msgid "Delete Line"
 msgstr "Kustuta liin"
@@ -577,6 +601,10 @@ msgstr "Punkt-kriips"
 msgid "Draw Toolbar"
 msgstr "Joonistamise tööriistariba"
 #
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Ekspordi kõik nähtavad..."
+#
 msgid "EBL"
 msgstr "EBL"
 #
@@ -599,9 +627,6 @@ msgstr "EBL kestvus"
 msgid "EBL Point"
 msgstr "EBL-punkt"
 #
-msgid "EBL Point &Properties"
-msgstr "EBL-punkt & omadused"
-#
 msgid "EBL Point Properties"
 msgstr "EBL-punkti omadused"
 #
@@ -621,6 +646,9 @@ msgstr ""
 "Nurga kerimise tundlikkus\n"
 "(protsent ekraani laiusest) vaikimisi 5"
 #
+msgid "Edit"
+msgstr ""
+#
 msgid "Electronic Bearing Line"
 msgstr "Elektrooniline peilingujoon"
 #
@@ -638,9 +666,6 @@ msgstr "Näide"
 #
 msgid "Exclusion"
 msgstr "Väljajätt"
-#
-msgid "Export All Visible..."
-msgstr "Ekspordi kõik nähtavad..."
 #
 msgid "Export GPX file"
 msgstr "Ekspordi GPX-fail"
@@ -762,6 +787,13 @@ msgstr "ID: "
 msgid "Icon"
 msgstr "Ikoon"
 #
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "I&mpordi GPX..."
+#
 msgid "Import Error"
 msgstr ""
 #
@@ -872,8 +904,24 @@ msgstr "Tekstipunktide kiht"
 msgid "Layers"
 msgstr "Kihid"
 #
+#, fuzzy
+msgid "Layers Directory"
+msgstr "DR-punktide kiht"
+#
 msgid "Left"
 msgstr "Vasakul"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
 #
 msgid "Leg: from "
 msgstr "Lõik: alates "
@@ -893,11 +941,24 @@ msgstr "Joone laad"
 msgid "Line Width"
 msgstr "Joone jämedus"
 #
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Kirjeldus"
+#
+msgid "Links"
+msgstr ""
+#
 msgid "List contents "
 msgstr "Loenda sisu "
 #
 msgid "Loading navobjects from "
 msgstr "Laen nav.objekte "
+#
+msgid "Local file..."
+msgstr ""
 #
 msgid "Long Dash"
 msgstr "Pikk kriips"
@@ -1038,6 +1099,10 @@ msgstr "OCPN Draw PIL-punkti kustutamine"
 msgid "OCPN Draw Delete Text Point"
 msgstr "OCPN Draw kustuta tekstipunkt"
 #
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "OCPN Draw omadused"
+#
 msgid "OCPN Draw EBL Delete"
 msgstr "OCPN Draw EBL kustutamine"
 #
@@ -1053,8 +1118,9 @@ msgstr "OCPN Draw PIL kustutamine"
 msgid "OCPN Draw Parallel Index Line Delete"
 msgstr "OCPN Draw paralleelse Indeksliini kustutamine"
 #
-msgid "OCPN Draw Path &Properties"
-msgstr "OCPN Draw tee & omadused"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "OCPN Draw punkt"
 #
 msgid "OCPN Draw Point"
 msgstr "OCPN Draw punkt"
@@ -1147,9 +1213,6 @@ msgstr "PIL kestvus"
 msgid "PIL Point"
 msgstr "PIL-punkt"
 #
-msgid "PIL Point &Properties"
-msgstr "PIL-punkt & omadused"
-#
 msgid "Parallel Index Line"
 msgstr "Paralleelne indeksliin"
 #
@@ -1194,6 +1257,9 @@ msgstr "Tee omadused, kiht: "
 #
 msgid "Paths"
 msgstr "Teed"
+#
+msgid "Permanent Layers:"
+msgstr ""
 #
 msgid "Persistent"
 msgstr "Püsiv"
@@ -1258,6 +1324,9 @@ msgstr "Vahemaaringi joone stiil"
 msgid "Range Ring Line Width"
 msgstr "Vahemaaringi joone laius"
 #
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
 msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
 msgstr ""
 #
@@ -1300,6 +1369,10 @@ msgstr "Lühike kriips"
 #
 msgid "Show"
 msgstr "Näita"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Näita punktinimesid"
 #
 msgid "Show Boundary Point Icons"
 msgstr "Näita piiri punktide ikoone"
@@ -1356,6 +1429,10 @@ msgstr "Näita VRM"
 msgid "Show name"
 msgstr "Näita nime"
 #
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Näita kaardil"
+#
 msgid "Show on chart"
 msgstr "Näita kaardil"
 #
@@ -1371,9 +1448,6 @@ msgstr "Algus"
 msgid "Start Point Icon"
 msgstr "Alguspunkti ikoon"
 #
-msgid "Temporary layer"
-msgstr "Ajutine kiht"
-#
 msgid "Text"
 msgstr "Tekst"
 #
@@ -1388,6 +1462,14 @@ msgstr "Teksti punkt"
 #
 msgid "Text Point Icon"
 msgstr "Teksti punkt ikoon"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "OD-punkti omadused"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "DR-punkti omaduse, kiht: "
 #
 msgid "Text position relative to point"
 msgstr "Teksti asukoht punktiga võrreldes"
@@ -1440,17 +1522,27 @@ msgstr "Kogupikkus"
 msgid "Total Length: "
 msgstr "Kogupikkus: "
 #
+msgid "URL"
+msgstr ""
+#
 msgid "Unlist contents "
 msgstr "Tühjenda nimekiri "
 #
 msgid "Update initial conditions"
 msgstr "Uuenda lähtetingimusi"
 #
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "OCPN Draw punkt"
+#
 msgid "Use nearby OD Point?"
 msgstr "Kasuta läheduses olevat OD-punkti?"
 #
 msgid "Use nearby Point?"
 msgstr "Kasuta punkti läheduses?"
+#
+msgid "User Icons:"
+msgstr ""
 #
 msgid "Version:"
 msgstr "Versioon:"
@@ -1482,5 +1574,29 @@ msgstr ""
 msgid "will be deleted. No further boundaries will be imported"
 msgstr ""
 #
+msgid "wxFB Website"
+msgstr ""
+#
+#~ msgid "&Delete All"
+#~ msgstr "Kustut&a kõik"
+#
+#~ msgid "&Properties..."
+#~ msgstr "&Omadused..."
+#
+#~ msgid "Boundary Point &Properties"
+#~ msgstr "Piiripunkt & omadused"
+#
+#~ msgid "DR Point &Properties"
+#~ msgstr "DR-punkt & omadused"
+#
 #~ msgid "Delete current OCPN_Draw config entries (No)"
 #~ msgstr "Kustuta praegused OCPN_Draw seadistuskirjed (nr)"
+#
+#~ msgid "EBL Point &Properties"
+#~ msgstr "EBL-punkt & omadused"
+#
+#~ msgid "OCPN Draw Path &Properties"
+#~ msgstr "OCPN Draw tee & omadused"
+#
+#~ msgid "PIL Point &Properties"
+#~ msgstr "PIL-punkt & omadused"
