@@ -76,6 +76,9 @@ extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 
+extern int     g_drawing_canvas_index;
+
+
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
     SetGlobalLocale();
@@ -351,7 +354,8 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
         g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    g_ocpn_draw_pi->ODRequestRefresh( g_drawing_canvas_index, FALSE );
+    g_drawing_canvas_index = -1;
     Show( false );
 #ifdef __WXOSX__    
     EndModal(wxID_CANCEL);
