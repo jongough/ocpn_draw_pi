@@ -54,6 +54,7 @@ script:
         cp /tmp/cairo_macos107/lib/libcairo.2.dylib /tmp/opencpn/bin/OpenCPN.app/Contents/MacOS/;
         make install;
         make create-pkg;
+        ls -l;
      fi
 
 notifications:
