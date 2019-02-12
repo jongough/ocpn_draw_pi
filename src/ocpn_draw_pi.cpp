@@ -2780,7 +2780,10 @@ void ocpn_draw_pi::FindSelectedObject()
             SelectItem *pFindSel = node->GetData();
             
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
-            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) continue;
+            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) {
+                node = node->GetNext();
+                continue;
+            }
             
             //    Get an array of all paths using this point
             wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );
