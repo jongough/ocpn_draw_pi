@@ -1030,7 +1030,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 
     if(g_ocpn_draw_pi->m_bRecreateConfig) {
         m_buttonConfigFileEntries->SetLabel(_("No"));
-        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (Yes)");
+        m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (Yes)"));
     }
     
     SetDialogSize();
@@ -1078,10 +1078,10 @@ void ODPropertiesDialogImpl::OnClickConfigFileEntries( wxCommandEvent& event )
     if(!g_ocpn_draw_pi->m_bRecreateConfig) {
         g_ocpn_draw_pi->m_bRecreateConfig = true;
         m_buttonConfigFileEntries->SetLabel(_("No"));
-        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (Yes)");
+        m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (Yes)"));
     } else {
         g_ocpn_draw_pi->m_bRecreateConfig = false;
         m_buttonConfigFileEntries->SetLabel(_("Yes"));
-        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (No)");
+        m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (No)"));
     }
 }
