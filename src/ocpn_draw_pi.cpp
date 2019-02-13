@@ -478,6 +478,18 @@ int ocpn_draw_pi::Init(void)
     g_iGZMaxNum = 0;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
+    g_pfFix.validCog = false;
+    g_pfFix.validHdm = false;
+    g_pfFix.validHdt = false;
+    g_pfFix.Cog = 0.;
+    g_pfFix.FixTime = 0;
+    g_pfFix.Hdm = 0.;
+    g_pfFix.Hdt = 0.;
+    g_pfFix.Lat = 0.;
+    g_pfFix.Lon = 0.;
+    g_pfFix.nSats = 0;
+    g_pfFix.Sog = 0.;
+    g_pfFix.Var = 0.;
     g_iLocaleDepth = 0;
     g_ODlocale = NULL;
     m_bRecreateConfig = false;
@@ -991,14 +1003,12 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
         if(g_pfFix.Cog != 0.)
             l_bBoatChange = true;
         g_pfFix.Cog = 0.;
-    }
-    else g_pfFix.Cog = pfix.Cog;
+    } else g_pfFix.Cog = pfix.Cog;
     if(wxIsNaN(pfix.Sog)) {
         if(g_pfFix.Sog != 0.)
             l_bBoatChange = true;
         g_pfFix.Sog = 0.;
-    }
-    g_pfFix.Sog = pfix.Sog;
+    } else g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
     g_pfFix.validHdm = true;
     if(wxIsNaN(pfix.Hdm)) {
@@ -1006,16 +1016,14 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
         if(g_pfFix.Hdm != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdm = 0.;
-    }
-    else g_pfFix.Hdm = pfix.Hdm;
+    } else g_pfFix.Hdm = pfix.Hdm;
     g_pfFix.validHdt = true;
     if(wxIsNaN(pfix.Hdt)) {
         g_pfFix.validHdt = false;
         if(g_pfFix.Hdt != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdt = 0.;
-    }
-    else g_pfFix.Hdt = pfix.Hdt;
+    } else g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
     if(!g_pfFix.valid) {

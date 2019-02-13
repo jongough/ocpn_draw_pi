@@ -547,6 +547,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 void ODEventHandler::PopupMenuHandler(wxCommandEvent& event ) 
 {
     int dlg_return;
+    bool bFullRefresh = FALSE;
     
     wxPoint r;
     
@@ -764,16 +765,20 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_EBL_MENU_CENTRE_ON_BOAT:
             m_pEBL->m_bSaveUpdates = true;
             m_pEBL->CentreOnBoat(false);
+            bFullRefresh = TRUE;
             break;
         case ID_EBL_MENU_CENTRE_ON_BOAT_LATLON:
             m_pEBL->CentreOnLatLon( g_pfFix.Lat, g_pfFix.Lon );
+            bFullRefresh = TRUE;
             break;
         case ID_PIL_MENU_CENTRE_ON_BOAT:
             m_pPIL->m_bSaveUpdates = true;
             m_pPIL->CentreOnBoat(false);
+            bFullRefresh = TRUE;
             break;
         case ID_PIL_MENU_CENTRE_ON_BOAT_LATLON:
             m_pPIL->CentreOnLatLon( g_pfFix.Lat, g_pfFix.Lon );
+            bFullRefresh = TRUE;
             break;
         case ID_EBL_MENU_PICK_NEW_START:
             g_ocpn_draw_pi->m_bEBLMoveOrigin = true;
@@ -1012,7 +1017,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_pODDRDialog->Raise();
 #endif
             
-            ODERequestRefresh( g_current_canvas_index );
+            ODERequestRefresh( g_current_canvas_index, bFullRefresh );
             
             break;
         }
