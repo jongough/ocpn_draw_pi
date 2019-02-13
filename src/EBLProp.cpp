@@ -231,10 +231,10 @@ bool EBLProp::SaveChanges( void )
     } else if(!m_pEBL->m_bFixedEndPosition) {
         switch (m_pEBL->m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
-                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Hdm;
+                m_pEBL->m_dEBLAngle = l_dEBLAngle;
                 break;
             case ID_MAINTAIN_WITH_COG:
-                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Cog;
+                m_pEBL->m_dEBLAngle = l_dEBLAngle;
                 break;
         }
     }
