@@ -2933,7 +2933,7 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     if( g_ODEventHandler ) {
         g_ODEventHandler->SetLatLon( lat, lon );
-        g_ODEventHandler->SetWindow(GetCanvasUnderMouse());
+        g_ODEventHandler->SetWindow(g_parent_window);
     }
 }
 
