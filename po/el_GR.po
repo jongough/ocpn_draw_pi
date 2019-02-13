@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-01-26 08:25\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -549,6 +549,13 @@ msgstr "Διαγραφή"
 #
 msgid "Delete Line"
 msgstr "Διαγραφή γραμμής"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Όχι)"
+#
+#, fuzzy
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Όχι)"
 #
 msgid "Delete..."
 msgstr "Διαγραφή..."
@@ -1580,26 +1587,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Διαγραφή όλων"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Ιδιότητες..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "&Ιδιότητες σημείου ορίου"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "&Ιδιότητες σημείου DR"
 #
-#~ msgid "Delete current OCPN_Draw config entries (No)"
-#~ msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Όχι)"
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "&Ιδιότητες σημείου EBL"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "&Ιδιότητες διαδρομής"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "&Ιδιότητες σημείου PIL"

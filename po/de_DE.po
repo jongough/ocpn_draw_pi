@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-02-08 02:15\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
@@ -546,6 +546,12 @@ msgstr "Löschen"
 #
 msgid "Delete Line"
 msgstr "Linien Löschen"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
 msgid "Delete..."
 msgstr "Löschen..."
@@ -1576,23 +1582,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Alle Löschen"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Eigenschaften..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Begrenzungspunkt &Eigenschaften"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "DR-Punkt &Eigenschaften"
 #
+#
 #~ msgid "EBL Point &Properties"
 #~ msgstr "EBL-Punkt &Eigenschaften"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "OCPN Draw Path &Eigenschaften"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "PIL-Punkt &Eigenschaften"

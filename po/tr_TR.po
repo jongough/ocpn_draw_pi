@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-01-26 08:29\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Turkish\n"
@@ -546,6 +546,12 @@ msgstr "Sil"
 #
 msgid "Delete Line"
 msgstr "Hattı sil"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
 msgid "Delete..."
 msgstr "Sil..."
@@ -1574,23 +1580,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Tümünü sil"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Özellikler..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Sınır noktası%Özellikleri"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "Dr noktası &Özellikleri"
 #
+#
 #~ msgid "EBL Point &Properties"
 #~ msgstr "Ebl noktası &özellikleri"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "OCPN çizim yol &Özellikleri"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "PIL noktası &Özellikleri"

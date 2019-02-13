@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-01-26 08:27\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Japanese\n"
@@ -536,6 +536,12 @@ msgstr "削除"
 #
 msgid "Delete Line"
 msgstr "線の削除"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
 msgid "Delete..."
 msgstr "削除しています..."
@@ -1522,8 +1528,10 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Properties..."
 #~ msgstr "プロパティ...（&P）"
+#
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "EBL ポイント プロパティ（&P）"

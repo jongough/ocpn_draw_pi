@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-02-10 14:12\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
@@ -546,6 +546,13 @@ msgstr "Radera"
 #
 msgid "Delete Line"
 msgstr "Radera linjen"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Ta bort gällande inställningar för OCPN_Draw (Nej)"
+#
+#, fuzzy
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Ta bort gällande inställningar för OCPN_Draw (Nej)"
 #
 msgid "Delete..."
 msgstr "Ta bort..."
@@ -1574,26 +1581,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "Ra&dera alla"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Egenskaper..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Gränspunkt, egenskaper"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "DR-punkt, egenskaper"
 #
-#~ msgid "Delete current OCPN_Draw config entries (No)"
-#~ msgstr "Ta bort gällande inställningar för OCPN_Draw (Nej)"
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "EBL-punkt, egenskaper"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "OCPN Rita: Linjer & Egenskaper"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "PIL Punkt & Egenskaper"

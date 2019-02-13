@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-02-08 02:21\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Estonian\n"
@@ -548,6 +548,13 @@ msgstr "Kustuta"
 #
 msgid "Delete Line"
 msgstr "Kustuta liin"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Kustuta praegused OCPN_Draw seadistuskirjed (nr)"
+#
+#, fuzzy
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Kustuta praegused OCPN_Draw seadistuskirjed (nr)"
 #
 msgid "Delete..."
 msgstr "Kustuta..."
@@ -1577,26 +1584,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "Kustut&a kõik"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Omadused..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Piiripunkt & omadused"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "DR-punkt & omadused"
 #
-#~ msgid "Delete current OCPN_Draw config entries (No)"
-#~ msgstr "Kustuta praegused OCPN_Draw seadistuskirjed (nr)"
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "EBL-punkt & omadused"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "OCPN Draw tee & omadused"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "PIL-punkt & omadused"

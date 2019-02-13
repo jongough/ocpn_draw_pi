@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2018-03-16 19:12-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Indonesian\n"
@@ -544,6 +544,12 @@ msgstr "Hapus"
 #
 msgid "Delete Line"
 msgstr "Hapus Baris"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
 msgid "Delete..."
 msgstr "Menhapus..."
@@ -1572,23 +1578,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Hapus semua"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Properti..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Titik Batas &Sifat"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "DR Point &Properties"
 #
+#
 #~ msgid "EBL Point &Properties"
 #~ msgstr "Titik EBL &Properti"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "OCPN Menggambar Path &Sifat"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "PIL Point &Properties"

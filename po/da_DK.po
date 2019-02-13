@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-01-26 08:25\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Danish\n"
@@ -529,6 +529,12 @@ msgid "Delete"
 msgstr ""
 #
 msgid "Delete Line"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
 msgstr ""
 #
 msgid "Delete..."

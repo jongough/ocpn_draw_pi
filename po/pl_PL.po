@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-01-26 08:27\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Polish\n"
@@ -548,6 +548,13 @@ msgstr "Skasuj"
 #
 msgid "Delete Line"
 msgstr "Skasuj linię"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Usuń bieżące wpisy ustawień OCPN_Draw (No)"
+#
+#, fuzzy
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Usuń bieżące wpisy ustawień OCPN_Draw (No)"
 #
 msgid "Delete..."
 msgstr "Skasuj..."
@@ -1575,26 +1582,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Usuń wszystkie"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Właściwości..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Granica Punkt i właściwości"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "Pozycja Zliczona- DR Punkt i właściwości"
 #
-#~ msgid "Delete current OCPN_Draw config entries (No)"
-#~ msgstr "Usuń bieżące wpisy ustawień OCPN_Draw (No)"
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "Kreska Namiarowa- EBL Punkt i właściwości"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "OCPN Draw ścieżka & właściwości"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "Linie Równoległe- PIL punkt i właściwości"

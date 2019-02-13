@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2019-02-08 02:19\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Russian\n"
@@ -542,6 +542,13 @@ msgstr "Удалить"
 #
 msgid "Delete Line"
 msgstr "Удалить Линию"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Удаление текущей записи конфигурации (Нет)"
+#
+#, fuzzy
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Удаление текущей записи конфигурации (Нет)"
 #
 msgid "Delete..."
 msgstr "Удалить..."
@@ -1562,26 +1569,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Удалить все"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Параметры..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Параметры Точки Геозоны"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "Параметры Точки АС"
 #
-#~ msgid "Delete current OCPN_Draw config entries (No)"
-#~ msgstr "Удаление текущей записи конфигурации (Нет)"
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "Параметры Точки ЭВН"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "Параметры Полигона"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "Параметры точки ЛПП"

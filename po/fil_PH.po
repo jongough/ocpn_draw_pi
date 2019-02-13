@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-11 17:33+1100\n"
+"POT-Creation-Date: 2019-02-13 09:42+1100\n"
 "PO-Revision-Date: 2018-03-20 18:26-0400\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Filipino\n"
@@ -545,6 +545,13 @@ msgstr "Tanggalin"
 #
 msgid "Delete Line"
 msgstr "Tanggalin ang Linya"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Burahin ang kasalukuyang OCPN_Entrada ng config sa Guhit (Huwag)"
+#
+#, fuzzy
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Burahin ang kasalukuyang OCPN_Entrada ng config sa Guhit (Huwag)"
 #
 msgid "Delete..."
 msgstr "Tanggalin..."
@@ -1556,26 +1563,30 @@ msgstr ""
 msgid "wxFB Website"
 msgstr ""
 #
+#
 #~ msgid "&Delete All"
 #~ msgstr "&Tanggalin Lahat"
+#
 #
 #~ msgid "&Properties..."
 #~ msgstr "&Mga Katangian..."
 #
+#
 #~ msgid "Boundary Point &Properties"
 #~ msgstr "Punto at mga Katangian ng Hangganan"
+#
 #
 #~ msgid "DR Point &Properties"
 #~ msgstr "Punto at mga katangian ng DR"
 #
-#~ msgid "Delete current OCPN_Draw config entries (No)"
-#~ msgstr "Burahin ang kasalukuyang OCPN_Entrada ng config sa Guhit (Huwag)"
 #
 #~ msgid "EBL Point &Properties"
 #~ msgstr "Punto at Katangian ng EBL"
 #
+#
 #~ msgid "OCPN Draw Path &Properties"
 #~ msgstr "Daanan &mga katangian ng Guhit OCPN"
+#
 #
 #~ msgid "PIL Point &Properties"
 #~ msgstr "Punto at mga katangian ng PIL"
