@@ -73,10 +73,10 @@ addons:
 # for tagged commits to GitHub Releases.
 deploy:
 - provider: releases
-  api_key: $GitHub_auth_token
+  #api_key: $GitHub_auth_token
   file_glob: true
   file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
-  script: if [[ -f ~/.dropbox_uploader ]]; ./dropbox_uploader.sh] upload $TRAVIS_BUILD_DIR/build/*.dmg *; fi
+  script: if [[ -f ~/.dropbox_uploader ]]; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm *; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb *;fi
   skip_cleanup: true
   on: # Set deploy conditions
       # Deploy only when tag is not specified
