@@ -74,7 +74,7 @@ addons:
 deploy:
 - provider: script
   file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
-  script: if [[ -f ~/.dropbox_uploader ]]; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm *; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb *;fi
+  script: if [[ -f ~/.dropbox_uploader ]]; then ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm *; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb *;fi
   skip_cleanup: true
   on: # Set deploy conditions
       # Deploy only when tag is not specified
