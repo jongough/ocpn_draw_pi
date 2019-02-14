@@ -76,12 +76,13 @@ deploy:
   api_key: $GitHub_auth_token
   file_glob: true
   file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
+  script: if [[ -f ~/.dropbox_uploader ]]; ./dropbox_uploader.sh] upload $TRAVIS_BUILD_DIR/build/*.dmg *; fi
   skip_cleanup: true
   on: # Set deploy conditions
-      # Deploy only when tag is specified
-      tags: true
+      # Deploy only when tag is not specified
+      #tags: false
       # or this branch
-      branch: dev
+      branch: master_1.5
       # and only when API token is set
       # condition: "${#GitHub_auth_token} != 0 && $BUILD_TYPE = Release"
-      condition: "${#GitHub_auth_token} != 0" 
+      #condition: "${#GitHub_auth_token} != 0" 
