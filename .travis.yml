@@ -56,6 +56,11 @@ git:
 
 before_install:
       - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
+      - '[ -f ~/.dropbox_uploader ] && ./dropbox_uploader.sh upload t/results/ travis-artifacts/$TRAVIS_JOB_NUMBER/'
+
+after_failure:
+      - '[ -f ~/.dropbox_uploader ] && ./dropbox_uploader.sh upload t/results/ travis-artifacts/$TRAVIS_JOB_NUMBER/'
+
 addons:
   apt:
     sources:
