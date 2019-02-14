@@ -56,7 +56,7 @@ git:
 
 before_install:
       - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
-      - '[ -f ~/.dropbox_uploader ] && ./dropbox_uploader.sh upload t/results/ travis-artifacts/$TRAVIS_JOB_NUMBER/'
+      - '[ "$TRAVIS_SECURE_ENV_VARS" == "false" ] || openssl aes-256-cbc -K $encrypted_..._key -iv $encrypted_..._iv -in .dropbox_uploader.enc -out ~/.dropbox_uploader -d'
 
 after_failure:
       - '[ -f ~/.dropbox_uploader ] && ./dropbox_uploader.sh upload t/results/ travis-artifacts/$TRAVIS_JOB_NUMBER/'
