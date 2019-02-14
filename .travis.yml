@@ -72,15 +72,13 @@ addons:
 # Set encrypted variable 'GitHub_auth_token' in Travis repo settings to deploy packages
 # for tagged commits to GitHub Releases.
 deploy:
-- provider: releases
-  #api_key: $GitHub_auth_token
-  file_glob: true
+- provider: script
   file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
   script: if [[ -f ~/.dropbox_uploader ]]; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm *; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb *;fi
   skip_cleanup: true
   on: # Set deploy conditions
       # Deploy only when tag is not specified
-      #tags: false
+      tags: false
       # or this branch
       branch: master_1.5
       # and only when API token is set
