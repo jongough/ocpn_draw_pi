@@ -71,19 +71,19 @@ addons:
 deploy:
 - provider: script
     file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
-    script: if [ -f ~/.dropbox_uploader ]; 
-        then 
-            if [[ "$TRAVIS_OS_NAME" == "osx" ]];
-            then
-                bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg /;
-            fi;
-            if [[ "$TRAVIS_OS_NAME" == "linux" ]];
-            then
-                bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /;
-                bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb /;
-            fi;
-        fi
-    
+    script: if [ -f ~/.dropbox_uploader ];
+    then
+      if [[ "$TRAVIS_OS_NAME" == "osx" ]];
+      then
+        bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg / ;
+      fi;
+      if [[ "$TRAVIS_OS_NAME" == "linux" ]];
+      then
+        bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /;
+        bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb /;
+      fi;
+    fi
+
   skip_cleanup: true
   on: # Set deploy conditions
       # Deploy only when tag is not specified
