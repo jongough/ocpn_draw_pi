@@ -73,11 +73,11 @@ deploy:
   file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
   script: if [ -f ~/.dropbox_uploader ];
       then
-        if [[ "$TRAVIS_OS_NAME" == "osx" ]];
+        if [ "$TRAVIS_OS_NAME" == "osx" ];
         then
             bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg / ;
         fi;
-        if [[ "$TRAVIS_OS_NAME" == "linux" ]];
+        if [ "$TRAVIS_OS_NAME" == "linux" ];
         then
             bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /;
             bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb /;
