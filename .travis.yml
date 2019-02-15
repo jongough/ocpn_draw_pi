@@ -2,8 +2,8 @@ language: cpp
 
 matrix:
   include:
-#    - dist: trusty
-#      compiler: gcc
+    - dist: trusty
+      compiler: gcc
     - os: osx
       compiler: clang
 
