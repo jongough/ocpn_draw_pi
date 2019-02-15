@@ -74,7 +74,7 @@ addons:
 deploy:
 - provider: script
   file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
-  script: if [ -f ~/.dropbox_uploader ]; then find ../ -iname "*dropbox_up*"; chmod +x dropbox_uploader.sh; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg ./; bash ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm ./; bash ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb ./;fi
+  script: if [ -f ~/.dropbox_uploader ]; then find ../ -iname "*dropbox_up*"; pwd; ls -l; chmod +x dropbox_uploader.sh; ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg ./; bash ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm ./; bash ./dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb ./;fi
 
   skip_cleanup: true
   on: # Set deploy conditions
