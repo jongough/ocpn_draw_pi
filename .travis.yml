@@ -58,9 +58,6 @@ before_install:
       - if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
       - '[ "$TRAVIS_SECURE_ENV_VARS" == "false" ] || openssl aes-256-cbc -K $encrypted_d0e843cd38d7_key -iv $encrypted_d0e843cd38d7_iv -in .dropbox_uploader.enc -out ~/.dropbox_uploader -d'
 
-after_failure:
-      - '[ -f ~/.dropbox_uploader ] && ./dropbox_uploader.sh upload t/results/ travis-artifacts/$TRAVIS_JOB_NUMBER/'
-
 addons:
   apt:
     sources:
@@ -73,9 +70,20 @@ addons:
 # for tagged commits to GitHub Releases.
 deploy:
 - provider: script
-  file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
-  script: if [ -f ~/.dropbox_uploader ]; then find ~/ -iname "*pkg"; pwd; ls -l ; chmod +x ../dropbox_uploader.sh; ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg .; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm ./; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb ./; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.bz2 ./;fi
-
+    file: $TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}
+    script: if [ -f ~/.dropbox_uploader ]; 
+    then 
+        if [[ "$TRAVIS_OS_NAME" == "osx" ]];
+        then
+            bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg /;
+        fi;
+        if [[ "$TRAVIS_OS_NAME" == "linux" ]];
+        then
+            bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /;
+            bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb /;
+        fi;
+    fi
+    
   skip_cleanup: true
   on: # Set deploy conditions
       # Deploy only when tag is not specified
