@@ -22,7 +22,7 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "5")
-SET(VERSION_PATCH "91")
+SET(VERSION_PATCH "92")
 SET(VERSION_DATE "16/02/2019")
 SET(OCPN_MIN_VERSION "ov50")
 
@@ -134,7 +134,7 @@ SET(SRCS
     src/ODPointPropertiesDialog.cpp
     src/ODPointPropertiesImpl.cpp
     src/ODPositionParser.cpp
-    src/ODPropertiesDialogDef.c002pp
+    src/ODPropertiesDialogDef.cpp
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
