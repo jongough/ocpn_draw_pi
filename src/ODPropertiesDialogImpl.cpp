@@ -43,6 +43,7 @@
 #include <wx/valnum.h>
 #endif
 
+/*
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern PointMan     *g_pODPointMan;
 extern int          g_path_line_width;
@@ -79,7 +80,7 @@ extern int          g_iODPointRangeRingsStepUnits;
 extern wxColour     g_colourODPointRangeRingsColour;
 extern wxString     g_sODPointIconName;
 
-extern double       g_n_arrival_circle_radius;
+extern double       g_dODPointArrivalCircleRadius;
 
 extern bool         g_bTextPointShowName;
 extern wxString     g_sTextPointIconName;
@@ -184,7 +185,7 @@ extern wxString    *g_pUserIconsDir;
 extern wxString    *g_pLayerDir;
 
 extern bool         g_bRememberPropertyDialogPosition;
-
+*/
 
 
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
@@ -495,6 +496,7 @@ void ODPropertiesDialogImpl::SetIndexLineChoice( bool choice )
 
 void ODPropertiesDialogImpl::SaveChanges()
 {
+    TransferDataFromWindow();
     g_bBoundaryPointShowName = m_checkBoxBoundaryPointShowName->GetValue();
     g_bTextPointShowName = m_checkBoxTextPointShowName->GetValue();
     //g_colourActiveBoundaryLineColour = PickerODPointRangeRingColours->GetColour();
@@ -632,10 +634,11 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
+    g_fODPointRangeRingsStep = m_dODPointRangRingStepValidator;
     g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
     g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
     g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
-    m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
+    g_dODPointArrivalCircleRadius = m_dODPointArrivalRadiusValidator;
     g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
     g_sODPointIconName = m_bODIComboBoxODPointIconName->GetValue();
     
@@ -698,13 +701,14 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
     SetTableCellBackgroundColours();
-    m_textCtrlODPointArrivalRadius->SetValue( wxString::Format( _T("%.3f"), g_n_arrival_circle_radius ) );
+    m_dODPointArrivalRadiusValidator = g_dODPointArrivalCircleRadius;
     
     m_checkBoxBoundaryPointShowName->SetValue( g_bBoundaryPointShowName );
     m_checkBoxTextPointShowName->SetValue( g_bTextPointShowName );
     m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
     m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
-    m_textCtrlODPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fODPointRangeRingsStep ) );
+    m_dODPointRangRingStepValidator = g_fODPointRangeRingsStep;
+    //m_textCtrlODPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fODPointRangeRingsStep ) );
     m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
     m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
     
@@ -1032,7 +1036,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         m_buttonConfigFileEntries->SetLabel(_("No"));
         m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (Yes)"));
     }
-    
+    TransferDataToWindow();
     SetDialogSize();
     
     ResetGlobalLocale();

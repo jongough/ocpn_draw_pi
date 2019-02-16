@@ -57,7 +57,7 @@
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
-
+/*
 extern ODSelect             *g_pODSelect;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern PointMan             *g_pODPointMan;
@@ -73,9 +73,8 @@ extern wxPenStyle           g_iBoundaryPointRangeRingLineStyle;
 extern int                  g_iDefaultPointPropertyDialogPostionX;
 extern int                  g_iDefaultPointPropertyDialogPostionY;
 
-
-
 extern PI_ColorScheme       g_global_color_scheme;
+*/
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :
@@ -151,6 +150,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
 {
     m_scrolledWindowLinks->SetMinClientSize(m_bSizerLinks->ComputeFittingClientSize(this));
     m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
+    m_SizerDialogBox->Fit(m_scrolledWindowBasicProperties);
     
     this->GetSizer()->Fit( m_scrolledWindowBasicProperties );
     this->Layout();
@@ -379,6 +379,7 @@ void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::SaveChanges()
 {
+    TransferDataFromWindow();
     if( m_pODPoint ) {
         if( m_pODPoint->m_bIsInLayer ) return;
 
@@ -690,9 +691,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         }
         m_textName->SetValue( m_pODPoint->GetName() );
 
-        wxString s_ArrivalRadius;
-        s_ArrivalRadius.Printf( _T("%.3f"), m_pODPoint->GetODPointArrivalRadius() );
-        m_textCtrlODPointArrivalRadius->SetValue( s_ArrivalRadius );        
+        m_dODPointArrivalRadius = m_pODPoint->GetODPointArrivalRadius();
         
         m_textDescription->SetValue( m_pODPoint->m_ODPointDescription );
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
@@ -733,10 +732,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_checkBoxShowODPointRangeRings->SetValue( m_pODPoint->GetShowODPointRangeRings() );
         m_choicePointRangeRingsNumber->SetSelection( m_pODPoint->GetODPointRangeRingsNumber() );
         m_choiceDistanceUnitsString->SetSelection( m_pODPoint->GetODPointRangeRingsStepUnits() );
-        wxString buf;
-        buf.Printf( _T("%.3f" ), m_pODPoint->GetODPointRangeRingsStep() );
-        m_textCtrlODPointRangeRingsSteps->SetValue( buf );
-//        m_RangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
+        m_dODPointRangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
 
@@ -866,8 +862,11 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         SetTitle( caption );
         
         m_notebookProperties->SetSelection(1);
+        
         m_notebookProperties->SetSelection(0);
     }
+    
+    TransferDataToWindow();
     SetDialogSize();
     
     return true;

@@ -270,7 +270,7 @@ bool            g_bShowMag;
 bool            g_bAllowLeftDrag;
 double          g_dVar;
 double          g_UserVar;
-double          g_n_arrival_circle_radius;
+double          g_dODPointArrivalCircleRadius;
 wxRect          g_blink_rect;
 
 int             g_LayerIdx;
@@ -1419,6 +1419,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultPathLineStyle" ), (int)g_PathLineStyle );
             pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
             pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
+            pConf->Write( wxS( "DefaultODPointArrivalCircle_Radius" ), g_dODPointArrivalCircleRadius);
             pConf->Write( wxS( "DefaultODPointIcon" ), g_sODPointIconName );
             pConf->Write( wxS( "DefaultODPointShowRangeRings" ), g_bODPointShowRangeRings );
             pConf->Write( wxS( "ODPointRangeRingsNumber" ), g_iODPointRangeRingsNumber );
@@ -1689,6 +1690,7 @@ void ocpn_draw_pi::LoadConfig()
         g_path_line_width = (wxPenStyle)l_style;
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
+        pConf->Read( wxS( "DefaultODPointArrivalCircle_Radius" ), &g_dODPointArrivalCircleRadius, 0.5 );
         pConf->Read( wxS( "DefaultODPointIcon" ), &g_sODPointIconName, wxS("triangle") );
         pConf->Read( wxS( "DefaultODPointShowRangeRings" ), &g_bODPointShowRangeRings, false );
         pConf->Read( wxS( "ODPointRangeRingsNumber" ), &g_iODPointRangeRingsNumber, 0 );

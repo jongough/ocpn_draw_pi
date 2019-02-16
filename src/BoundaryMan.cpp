@@ -25,10 +25,10 @@
 
 
 #include "BoundaryMan.h"
+#include "ocpn_draw_pi.h"
 #include "Boundary.h"
 #include "BoundaryPoint.h"
 #include "PointMan.h"
-#include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 
 #ifdef __WXOSX__

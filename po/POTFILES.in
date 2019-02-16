@@ -35,7 +35,7 @@ src/ODPoint.cpp
 src/ODPointPropertiesDialog.cpp
 src/ODPointPropertiesImpl.cpp
 src/ODPositionParser.cpp
-src/ODPropertiesDialogDef.cpp
+src/ODPropertiesDialogDef.c002pp
 src/ODPropertiesDialogImpl.cpp
 src/ODRolloverWin.cpp
 src/ODSelect.cpp
@@ -63,6 +63,7 @@ include/DR.h
 include/DRProp.h
 include/EBL.h
 include/EBLProp.h
+include/globals.h
 include/GZ.h
 include/GZMan.h
 include/GZProp.h

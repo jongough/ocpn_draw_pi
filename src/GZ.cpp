@@ -59,6 +59,7 @@
 using namespace ClipperLib;
 
 WX_DEFINE_LIST ( GZList );
+/*
 extern wxColour     g_colourActiveBoundaryLineColour;
 extern wxColour     g_colourInActiveBoundaryLineColour;
 extern wxColour     g_colourActiveBoundaryFillColour;
@@ -88,6 +89,7 @@ extern int          g_iGZMaxNum;
 extern PI_ColorScheme    g_global_color_scheme;
 
 extern int g_path_line_width;
+*/
 
 GZ::GZ() : ODPath()
 {

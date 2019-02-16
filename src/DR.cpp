@@ -57,7 +57,7 @@
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( DRList );
-
+/*
 extern wxColour    g_colourDRLineColour;
 extern wxColour    g_colourInActiveDRLineColour;
 extern wxString    g_sDRPointIconName;
@@ -82,7 +82,7 @@ extern ODConfig     *g_pODConfig;
 extern EBLProp      *g_pEBLPropDialog;
 extern bool         g_bShowMag;
 extern double       g_dVar;
-
+*/
 DR::DR() : ODPath()
 {
     m_sTypeString = _T("DR");

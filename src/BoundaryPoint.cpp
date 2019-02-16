@@ -36,15 +36,15 @@
 #include "GL/gl.h"
 #include <wx/graphics.h>
 
-extern PlugIn_ViewPort  g_VP;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern bool         g_bBoundaryPointShowName;
-extern bool         g_bExclusionBoundaryPoint;
-extern bool         g_bInclusionBoundaryPoint;
-extern int          g_iInclusionBoundaryPointSize;
-extern unsigned int g_uiBoundaryPointFillTransparency;
-extern int          g_iBoundaryPointRangeRingLineWidth;
-extern wxPenStyle   g_iBoundaryPointRangeRingLineStyle;
+//extern PlugIn_ViewPort  g_VP;
+//extern ocpn_draw_pi     *g_ocpn_draw_pi;
+//extern bool         g_bBoundaryPointShowName;
+//extern bool         g_bExclusionBoundaryPoint;
+//extern bool         g_bInclusionBoundaryPoint;
+//extern int          g_iInclusionBoundaryPointSize;
+//extern unsigned int g_uiBoundaryPointFillTransparency;
+//extern int          g_iBoundaryPointRangeRingLineWidth;
+//extern wxPenStyle   g_iBoundaryPointRangeRingLineStyle;
 
 
 BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID, bool bAddToList)

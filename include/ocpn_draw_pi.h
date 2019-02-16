@@ -121,7 +121,7 @@ std::cout << x  << std::endl ; } while (0)
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
-typedef enum ColorScheme
+typedef enum ColorScheme : int
 {
     GLOBAL_COLOR_SCHEME_RGB,
     GLOBAL_COLOR_SCHEME_DAY,
@@ -131,7 +131,8 @@ typedef enum ColorScheme
 }_ColorScheme;
 
 #include "wxWTranslateCatalog.h"
-
+#include "ocpn_plugin.h"
+#include "globals.h"
 #include "ocpn_plugin.h"
 #include "ODUndo.h"
 #include "ODPoint.h"

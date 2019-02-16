@@ -36,7 +36,7 @@
 #include "ODdc.h"
 
 #include "GL/gl.h"
-
+/*
 extern PointMan     *g_pODPointMan;
 extern bool         g_bODIsNewLayer;
 extern int          g_ODLayerIdx;
@@ -45,7 +45,7 @@ extern PathList     *g_pPathList;
 extern wxRect       g_blink_rect;
 extern bool         g_bresponsive;
 //extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern double       g_n_arrival_circle_radius;
+extern double       g_dODPointArrivalCircleRadius;
 extern bool         g_bODPointShowRangeRings;
 extern int          g_iODPointRangeRingsNumber;
 extern float        g_fODPointRangeRingsStep;
@@ -57,6 +57,7 @@ extern PI_ColorScheme    g_global_color_scheme;
 
 extern ocpn_draw_pi     *g_ocpn_draw_pi;
 extern PlugIn_ViewPort  g_VP;
+*/
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );
@@ -106,7 +107,7 @@ ODPoint::ODPoint()
     m_bIsInLayer = false;
     m_LayerID = 0;
     
-    m_ODPointArrivalRadius = g_n_arrival_circle_radius;
+    m_ODPointArrivalRadius = g_dODPointArrivalCircleRadius;
     
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
@@ -248,7 +249,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     } else
         m_LayerID = 0;
     
-    SetODPointArrivalRadius( g_n_arrival_circle_radius );
+    SetODPointArrivalRadius( g_dODPointArrivalCircleRadius );
 
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
@@ -774,11 +775,11 @@ bool ODPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
 
 double ODPoint::GetODPointArrivalRadius() {
     if (m_ODPointArrivalRadius < 0.001) {
-        SetODPointArrivalRadius( g_n_arrival_circle_radius );
-        return g_n_arrival_circle_radius;
+        double l_arrive_radius = g_dODPointArrivalCircleRadius;
+        l_arrive_radius += 0.1;
+        SetODPointArrivalRadius( l_arrive_radius );
     }
-    else
-        return m_ODPointArrivalRadius;
+    return m_ODPointArrivalRadius;
 }
 
 int   ODPoint::GetODPointRangeRingsNumber() { 

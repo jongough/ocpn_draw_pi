@@ -59,6 +59,7 @@ enum {
     ID_POINTS_LIST_LAST
 };
 
+/*
 extern bool                 g_bShowMag;
 extern ocpn_draw_pi         *g_ocpn_draw_pi;
 extern double               g_dLat, g_dLon, gSog, gCog;
@@ -75,6 +76,7 @@ extern ODEventHandler       *g_ODEventHandler;
 extern PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 extern PI_ColorScheme       g_global_color_scheme;
 extern bool                 g_bConfirmObjectDelete;
+*/
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
@@ -542,6 +544,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     
     ResetGlobalLocale();
     
+    TransferDataToWindow();
     SetDialogSize();
     
     return true;
@@ -649,7 +652,7 @@ void ODPathPropertiesDialogImpl::SetDialogTitle(const wxString & title)
 
 bool ODPathPropertiesDialogImpl::SaveChanges( void )
 {
-    
+    TransferDataFromWindow();
     if( m_pPath && !m_pPath->m_bIsInLayer ) {
         //  Get User input Text Fields
         m_pPath->m_PathNameString = m_textCtrlName->GetValue();
