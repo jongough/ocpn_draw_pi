@@ -35,7 +35,7 @@ src/ODPoint.cpp
 src/ODPointPropertiesDialog.cpp
 src/ODPointPropertiesImpl.cpp
 src/ODPositionParser.cpp
-src/ODPropertiesDialogDef.c002pp
+src/ODPropertiesDialogDef.cpp
 src/ODPropertiesDialogImpl.cpp
 src/ODRolloverWin.cpp
 src/ODSelect.cpp

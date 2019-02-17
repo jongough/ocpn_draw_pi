@@ -231,7 +231,7 @@ ODPropertiesDialogDef( parent )
     
     m_pfdDialog = NULL;
     
-#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadiusVal(3, &m_dODPointArrivalRadiusValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dDRPathLengthVal(3, &m_dDRPathLengthValidator, wxNUM_VAL_DEFAULT);
@@ -594,7 +594,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sPILEndIconName = m_bODIComboBoxPILEndIconName->GetValue();
     g_sPILStartIconName = m_bODIComboBoxPILStartIconName->GetValue();
-    m_textCtrlPILDefaultOffset->GetValue().ToDouble( &g_dPILOffset );
+    g_dPILOffset = m_dPILOffsetValidator;
 
     g_sDRPointIconName = m_bODIComboBoxDRPointIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
@@ -602,18 +602,18 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_DRLineWidth = ::WidthValues[ m_choiceDRLineWidth->GetSelection() ];
     g_DRLineStyle = (wxPenStyle)::StyleValues[ m_choiceDRLineStyle->GetSelection()];
     g_bDRShowArrow = m_checkBoxDRShowArrow->GetValue();
-    m_textCtrlSOG->GetValue().ToDouble( &g_dDRSOG );
-    m_textCtrlCOG->GetValue().ToLong( (long*)&g_iDRCOG );
+    g_dDRSOG = m_dSOGValidator;
+    g_iDRCOG = m_iCOGValidator;
     g_iDRLengthType = m_radioBoxDRLengthType->GetSelection();
     g_iDRIntervalType = m_radioBoxDRIntervalType->GetSelection();
     g_iDRDistanceUnits = m_radioBoxDRDistanceUnits->GetSelection();
     g_iDRTimeUnits = m_radioBoxDRTimeUnits->GetSelection();
     g_iDRPersistenceType = m_radioBoxDRPersistence->GetSelection();
-    m_textCtrlDRPathLength->GetValue().ToDouble( &g_dDRLength );
-    m_textCtrlDRPointInterval->GetValue().ToDouble( &g_dDRPointInterval );
+    g_dDRLength = m_dDRPathLengthValidator;
+    g_dDRPointInterval = m_dODPointIntervalValidator;
     g_bDRPointShowRangeRings = m_checkBoxShowDRPointRangeRings->GetValue();
     g_iDRPointRangeRingsNumber = m_choiceDRPointRangeRingNumber->GetSelection();
-    g_fDRPointRangeRingsStep = atof( m_textCtrlDRPointRangeRingSteps->GetValue().mb_str() );
+    g_fDRPointRangeRingsStep = m_dDRPointRangRingStepValidator;
     g_iDRPointRangeRingsStepUnits = m_choiceDRPointDistanceUnit->GetSelection();
     g_colourDRPointRangeRingsColour = m_colourPickerDRPointRangeRingColours->GetColour();
     g_iDRPointRangeRingLineWidth = ::WidthValues[ m_choiceDRPointRangeRingWidth->GetSelection() ];
@@ -984,7 +984,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         SetIndexLineChoice( false );
     else
         SetIndexLineChoice( true );
-    m_textCtrlPILDefaultOffset->SetValue( wxString::Format(wxT("%.3f"), g_dPILOffset));
+    m_dPILOffsetValidator = g_dPILOffset;
     m_radioBoxPILPersistence->SetSelection( g_iPILPersistenceType );
 
     m_choiceTextPosition->SetSelection( g_iTextPosition );
@@ -1013,7 +1013,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxDRPersistence->SetSelection( g_iDRPersistenceType );
     m_checkBoxShowDRPointRangeRings->SetValue( g_bDRPointShowRangeRings );
     m_choiceDRPointRangeRingNumber->SetSelection( g_iDRPointRangeRingsNumber );
-    m_textCtrlDRPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fDRPointRangeRingsStep ) );
+    m_dDRPointRangRingStepValidator = g_fDRPointRangeRingsStep;
     m_choiceDRPointDistanceUnit->SetSelection( g_iDRPointRangeRingsStepUnits );
     m_colourPickerDRPointRangeRingColours->SetColour( g_colourDRPointRangeRingsColour );
     
@@ -1026,10 +1026,10 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_sliderGZFillTransparency->SetValue( g_uiGZFillTransparency );
     m_radioBoxGZPersistence->SetSelection( g_iGZPersistenceType );
 
-    m_textCtrlSOG->SetValue( wxString::Format( _T("%.3f"), g_dDRSOG ) );
-    m_textCtrlCOG->SetValue( wxString::Format( _T("%i"), g_iDRCOG ) );
-    m_textCtrlDRPathLength->SetValue( wxString::Format( _T("%.3f"), g_dDRLength ) );
-    m_textCtrlDRPointInterval->SetValue( wxString::Format( _T("%.3f"), g_dDRPointInterval ) );
+    m_dSOGValidator = g_dDRSOG;
+    m_iCOGValidator = g_iDRCOG;
+    m_dDRPathLengthValidator = g_dDRLength;
+    m_dODPointIntervalValidator = g_dDRPointInterval;
     
 
     if(g_ocpn_draw_pi->m_bRecreateConfig) {

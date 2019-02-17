@@ -74,7 +74,7 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlPILAngle->SetEditable(true);
     
 
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODPILAngle(2, &m_dODPILAngleValidator, wxNUM_VAL_DEFAULT);
     dODPILAngle.SetRange(-180, 180);
     
@@ -112,7 +112,7 @@ bool PILProp::UpdateProperties( ODPath *pInPIL )
 
     m_radioBoxPathPersistence->SetSelection( lpInPIL->m_iPersistenceType );
     
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     if(lpInPIL->m_dEBLAngle > 180)
         m_dODPILAngleValidator = lpInPIL->m_dEBLAngle - 360;
     else

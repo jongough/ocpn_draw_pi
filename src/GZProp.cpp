@@ -82,7 +82,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_listCtrlODPoints->Show();
     
 
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODGZFirstAngle(2, &m_dODGZFirstAngleValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODGZSecondAngle(2, &m_dODGZSecondAngleValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODGZFirstLength(2, &m_dODGZFirstLengthValidator, wxNUM_VAL_DEFAULT);
@@ -136,7 +136,7 @@ bool GZProp::UpdateProperties( ODPath *pInGZ )
     m_textCtrlGZFirstLength->SetEditable(true);
     m_textCtrlGZSecondLength->SetEditable(true);
     
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     if(!m_bLockGZAngle) {
         if(lpInGZ->m_dFirstLineDirection > 180)
             m_dODGZFirstAngleValidator = lpInGZ->m_dFirstLineDirection - 360;

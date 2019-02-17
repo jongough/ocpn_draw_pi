@@ -43,7 +43,7 @@
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
-
+/*
 extern ocpn_draw_pi *g_ocpn_draw_pi;
 extern bool         g_bShowMag;
 extern double       g_dVar;
@@ -77,12 +77,12 @@ extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 extern ODPointPropertiesImpl        *g_pODPointPropDialog;
 
 extern int     g_drawing_canvas_index;
-
+*/
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
     SetGlobalLocale();
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dIntervalVal(3, &m_dIntervalValidator, wxNUM_VAL_DEFAULT);
@@ -139,24 +139,24 @@ void ODDRDialogImpl::SetupDialog()
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    if(g_pfFix.Sog != g_pfFix.Sog )
+#if wxCHECK_VERSION(3,0,0)
+    if(g_pfFix.Sog == 0)
         m_dSOGValidator = g_dDRSOG;
     else
         m_dSOGValidator = g_pfFix.Sog;
-    if(g_pfFix.Cog != g_pfFix.Cog )
+    if(g_pfFix.Cog < 0.0 || g_pfFix.Cog > 360.0)
         m_iCOGValidator = g_iDRCOG;
     else
         m_iCOGValidator = g_pfFix.Cog;
     m_dLengthValidator = g_dDRLength;
     m_dIntervalValidator = g_dDRPointInterval;
 #else
-    if(g_pfFix.Sog != g_pfFix.Sog )
+    if(g_pfFix.Sog == 0 )
         s.Printf( _T("%.3f"), g_dDRSOG );
     else
         s.Printf( _T("%.3f"), g_pfFix.Sog );
     m_textCtrlSOG->SetValue( s );
-    if(g_pfFix.Cog != g_pfFix.Cog )
+    if(g_pfFix.Cog < 0.0 || g_pfFix.Cog > 360.0)
         s.Printf( _T("%i"), g_iDRCOG );
     else
         s.Printf( _T("%.3f"), g_pfFix.Cog );
@@ -179,7 +179,7 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
-#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)
+#if wxCHECK_VERSION(3,0,0)
     m_dSOGValidator = dr->m_dSoG;
     m_iCOGValidator = dr->m_iCoG;
     m_dLengthValidator = dr->m_dDRPathLength;

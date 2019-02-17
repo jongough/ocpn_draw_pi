@@ -103,14 +103,12 @@ ODPointPropertiesDialog( parent )
     
 #if wxCHECK_VERSION(3,0,0)
     SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
-#ifndef __WXMSW__
     wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
     dODPointRangeRingSteps.SetMin(0);
     dODPointArrivalRadius.SetMin(0);
     m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingSteps );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
-#endif // not defined __WXMSW__ 
 #endif // wxCHECK_VERSION(3,0,0)
     
     // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
@@ -385,8 +383,7 @@ void ODPointPropertiesImpl::SaveChanges()
 
         // Get User input Text Fields
         m_pODPoint->m_iODPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
-        m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingsSteps->GetValue().mb_str() );
-//        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
+        m_pODPoint->m_fODPointRangeRingsStep = m_dODPointRangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->SetRangeRingBBox();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
@@ -394,7 +391,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetColourScheme(g_global_color_scheme);
 
         m_pODPoint->SetName( m_textName->GetValue() );
-        m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
+        m_pODPoint->SetODPointArrivalRadius(m_dODPointArrivalRadius);
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_ODPointDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
