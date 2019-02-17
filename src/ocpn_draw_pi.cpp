@@ -3018,6 +3018,7 @@ bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index)
 {
+    m_current_canvas_index = canvas_index;
     bool bRet = RenderOverlays(dc, vp);
     return bRet;
 }
@@ -3052,6 +3053,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index) 
 {
+    m_current_canvas_index = canvas_index;
     bool bRet = RenderGLOverlays(pcontext, vp);
     return bRet;
 }
@@ -3114,7 +3116,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         
         wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, destPoint);
         RenderExtraPathLegInfo( dc, destPoint, info );
-    } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin) ) {
+    } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin)) {
         EBL *ebl = new EBL();
         double brg, dist;
         wxPoint boatpoint, l_cursorPoint;
@@ -3190,7 +3192,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             
             delete gz;
         }
-    } else if( nPIL_State > 0 || nEBL_State > 0 ) {
+    } else if( (nPIL_State > 0 || nEBL_State > 0) && m_mouse_canvas_index == m_current_canvas_index ) {
         // draw line from boat to cursor
         ODPath *ptPath;
         PIL *pil;

@@ -578,6 +578,7 @@ private:
     wxDateTime  m_LastFixTime;
     
     int         m_mouse_canvas_index;
+    int         m_current_canvas_index;
     
     std::list<Boundary*> m_pBoundaryList;
     
