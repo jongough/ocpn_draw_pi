@@ -36,28 +36,6 @@
 #include "ODdc.h"
 
 #include "GL/gl.h"
-/*
-extern PointMan     *g_pODPointMan;
-extern bool         g_bODIsNewLayer;
-extern int          g_ODLayerIdx;
-extern PathMan      *g_pPathMan;
-extern PathList     *g_pPathList;
-extern wxRect       g_blink_rect;
-extern bool         g_bresponsive;
-//extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern double       g_dODPointArrivalCircleRadius;
-extern bool         g_bODPointShowRangeRings;
-extern int          g_iODPointRangeRingsNumber;
-extern float        g_fODPointRangeRingsStep;
-extern int          g_iODPointRangeRingsStepUnits;
-extern wxColour     g_colourODPointRangeRingsColour;
-extern bool         g_bBoundaryPointShowName;
-extern float        g_ChartScaleFactorExp;
-extern PI_ColorScheme    g_global_color_scheme;
-
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern PlugIn_ViewPort  g_VP;
-*/
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );

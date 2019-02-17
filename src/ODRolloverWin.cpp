@@ -34,8 +34,6 @@
 #include "ODdc.h"
 #include "timers.h"
 
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-
 BEGIN_EVENT_TABLE(ODRolloverWin, wxWindow)
     EVT_PAINT(ODRolloverWin::OnPaint)
     EVT_TIMER(ROLLOVER_TIMER, ODRolloverWin::OnTimer)

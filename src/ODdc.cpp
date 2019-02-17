@@ -68,7 +68,6 @@
 
 #define __CALL_CONVENTION
 
-extern float g_GLMinSymbolLineWidth;
 wxArrayPtrVoid gTesselatorVertices;
 
 // These are only global to this module to allow tessellation callbacks to access them. Tessellation does not handle classes and methods

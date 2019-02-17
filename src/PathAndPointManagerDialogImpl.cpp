@@ -129,34 +129,6 @@ enum { colPATHVISIBLE = 0, colPATHNAME, colPATHDESC };
 enum { colLAYVISIBLE = 0, colLAYNAME, colLAYITEMS };
 enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 
-// GLOBALS :0
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PathList     *g_pPathList;
-extern ODPointList  *g_pODPoinList;
-extern BoundaryList *g_pBoundaryList;
-extern ODLayerList  *g_pLayerList;
-extern ODPathPropertiesDialogImpl     *g_pODPathPropDialog;
-extern BoundaryProp *g_pBoundaryPropDialog;
-extern EBLProp      *g_pEBLPropDialog;
-extern DRProp       *g_pDRPropDialog;
-extern GZProp       *g_pGZPropDialog;
-extern PILProp      *g_pPILPropDialog;
-extern PathMan      *g_pPathMan;
-extern ODConfig     *g_pODConfig;
-extern PointMan      *g_pODPointMan;
-extern ODPointPropertiesImpl *g_pODPointPropDialog;
-extern ODSelect     *g_pODSelect;
-extern double       g_dLat, g_dLon;
-extern double       gCog, gSog;
-extern bool         g_bShowLayers;
-extern wxString     g_sODPointIconName;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern ODEventHandler   *g_ODEventHandler;
-extern wxString     g_sDefaultImportType;
-extern int          g_iDefaultPathAnPointManagerDialogPostionX;
-extern int          g_iDefaultPathAnPointManagerDialogPostionY;
-
-        
 int sort_path_on_vis;
 #if wxCHECK_VERSION(2, 9, 0)
 int wxCALLBACK SortPathOnVis(long item1, long item2, wxIntPtr list)

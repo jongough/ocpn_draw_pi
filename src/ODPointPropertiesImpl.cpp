@@ -57,24 +57,6 @@
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
-/*
-extern ODSelect             *g_pODSelect;
-extern ocpn_draw_pi         *g_ocpn_draw_pi;
-extern PointMan             *g_pODPointMan;
-extern PathMan              *g_pPathMan;
-extern GZMan                *g_pGZMan;
-extern ODConfig             *g_pODConfig;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
-extern ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
-extern int                  g_iTextPosition;
-extern int                  g_iBoundaryPointRangeRingLineWidth;
-extern wxPenStyle           g_iBoundaryPointRangeRingLineStyle;
-extern int                  g_iDefaultPointPropertyDialogPostionX;
-extern int                  g_iDefaultPointPropertyDialogPostionY;
-
-extern PI_ColorScheme       g_global_color_scheme;
-*/
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :

@@ -312,7 +312,9 @@ extern wxImage ICursorCross;
 // Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 extern float g_GLMinSymbolLineWidth;
 
-extern int     g_mouse_canvas_index;
-extern int     g_drawing_canvas_index;
+extern wxWindow *g_current_canvas;
+extern wxWindow *g_current_timer_canvas;
+extern int      g_current_canvas_index;
+extern int      g_current_timer_canvas_index;
 
 #endif

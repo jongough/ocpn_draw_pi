@@ -57,19 +57,6 @@ using namespace ClipperLib;
 
 WX_DEFINE_LIST ( BoundaryList );
 
-extern wxColour     g_colourActiveBoundaryLineColour;
-extern wxColour     g_colourInActiveBoundaryLineColour;
-extern wxColour     g_colourActiveBoundaryFillColour;
-extern wxColour     g_colourInActiveBoundaryFillColour;
-extern bool          g_bExclusionBoundary;
-extern bool         g_bInclusionBoundary;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern unsigned int g_uiFillTransparency;
-extern int          g_iInclusionBoundarySize;
-extern bool         g_bBoundaryODPointsVisible;
-extern wxString     g_sODPointIconName;
-
-
 Boundary::Boundary() : ODPath()
 {
     m_sTypeString = _T("Boundary");

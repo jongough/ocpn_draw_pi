@@ -37,12 +37,6 @@
 #include "math.h"
 #endif
 
-extern PathList         *g_pPathList;
-extern BoundaryList     *g_pBoundaryList;
-extern PointMan         *g_pODPointMan;
-
-
-
 wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int state )
 {
     wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();

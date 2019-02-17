@@ -50,22 +50,6 @@
 
 #include "ocpn_plugin.h"
 
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PathMan      *g_pPathMan;
-extern BoundaryMan  *g_pBoundaryMan;
-extern PointMan     *g_pODPointMan;
-extern ODSelect     *g_pODSelect;
-extern ODConfig     *g_pODConfig;
-extern wxString      g_sODPointIconName;
-extern wxString      g_sTextPointIconName;
-extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern BoundaryList            *g_pBoundaryList;
-extern PathList                *g_pPathList;
-extern ODPointPropertiesImpl   *g_pODPointPropDialog;
-extern int          g_iTextPointDisplayTextWhen;
-
-
 ODAPI::ODAPI()
 {
     // ctor

@@ -33,9 +33,6 @@
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
 
-extern int      g_iLocaleDepth;
-extern wxString *g_ODlocale;
-
 /*!
  * Helper stuff for calculating Path
  */

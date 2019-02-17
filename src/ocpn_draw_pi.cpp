@@ -346,8 +346,10 @@ wxImage ICursorCross;
 // Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 float g_GLMinSymbolLineWidth;
 
-int     g_mouse_canvas_index;
-int     g_drawing_canvas_index;
+wxWindow *g_current_canvas;
+wxWindow *g_current_timer_canvas;
+int      g_current_canvas_index;
+int      g_current_timer_canvas_index;
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -496,8 +498,6 @@ int ocpn_draw_pi::Init(void)
     g_bRememberPropertyDialogPosition = false;
     m_mouse_canvas_index = -1;
     m_drawing_canvas_index = -1;
-    g_mouse_canvas_index = -1;
-    g_drawing_canvas_index = -1;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -1125,7 +1125,9 @@ void ocpn_draw_pi::ItemProcess(int id)
                     bKey_Boundary_Pressed = false;
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
-                    SetCursor_PlugIn( m_pCurrentCursor );
+                    m_drawing_canvas_index = -1;
+                    SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
+                    //SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1153,6 +1155,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     nPIL_State = 0;
                     bKey_Point_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1181,6 +1184,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     nPIL_State = 0;
                     bKey_TextPoint_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1209,6 +1213,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     nPIL_State = 0;
                     bKey_EBL_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1236,8 +1241,10 @@ void ocpn_draw_pi::ItemProcess(int id)
                     nGZ_State = 0;
                     nPIL_State = 0;
                     bKey_DR_Pressed = false;
+                    m_drawing_canvas_index = -1;
                     m_pCurrentCursor = NULL;
-                    SetCursor_PlugIn( m_pCurrentCursor );
+                    //SetCursor_PlugIn( m_pCurrentCursor );
+                    SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1265,6 +1272,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     nPIL_State = 0;
                     bKey_GZ_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1293,6 +1301,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     nPIL_State = 0;
                     bKey_PIL_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -2048,8 +2057,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     bool bret = FALSE;
     bool bRefresh = FALSE;
     bool bFullRefresh = FALSE;
-    int m_mouse_canvas_index = GetCanvasIndexUnderMouse();
-    g_mouse_canvas_index = GetCanvasIndexUnderMouse();
+    m_mouse_canvas_index = GetCanvasIndexUnderMouse();
     
     g_ODEventHandler->SetCanvasIndex(m_mouse_canvas_index);
     
@@ -3614,7 +3622,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         //m_drawing_canvas_index = m_mouse_canvas_index;
     }
     
-    if(m_drawing_canvas_index != g_mouse_canvas_index) return false;
+    if(m_drawing_canvas_index != m_mouse_canvas_index) return false;
     
     //    Check to see if there is a nearby point which may be reused
     BoundaryPoint *pMousePoint = NULL;
@@ -3762,7 +3770,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     rlat = m_cursor_lat;
     rlon = m_cursor_lon;
     
-    if(m_drawing_canvas_index != g_mouse_canvas_index) return false;
+    if(m_drawing_canvas_index != m_mouse_canvas_index) return false;
     
     m_pMouseEBL = new EBL();
     g_pEBLList->Append( m_pMouseEBL );
@@ -3824,7 +3832,6 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
         g_pODDRDialog = new ODDRDialogImpl( m_parent_window );
     
-    g_drawing_canvas_index = m_drawing_canvas_index;
     g_pODDRDialog->SetupDialog();
     DimeWindow( g_pODDRDialog );
     g_pODDRDialog->Show();

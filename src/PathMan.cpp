@@ -71,17 +71,6 @@ WX_DEFINE_LIST(markicon_bitmap_list_type);
 WX_DEFINE_LIST(markicon_key_list_type);
 WX_DEFINE_LIST(markicon_description_list_type);
 
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PathList     *g_pPathList;
-extern BoundaryList *g_pBoundaryList;
-extern EBLList      *g_pEBLList;
-extern DRList       *g_pDRList;
-extern GZList       *g_pGZList;
-extern PILList      *g_pPILList;
-extern ODConfig     *g_pODConfig;
-extern ODSelect      *g_pODSelect;
-extern int             g_path_line_width;
-
 //--------------------------------------------------------------------------------
 //      Pathman   "Path Manager"
 //--------------------------------------------------------------------------------

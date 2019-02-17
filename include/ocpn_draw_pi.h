@@ -501,7 +501,7 @@ public:
     
     int         nBlinkerTick;
     int         m_Mode;
-    int                m_draw_button_id;
+    int         m_draw_button_id;
     
     void    appendOSDirSlash(wxString* pString);  
     
@@ -511,7 +511,9 @@ public:
     ODicons     *m_pODicons;
     
     bool        m_bRecreateConfig;
-
+    
+    int         m_drawing_canvas_index;
+    
 private:
     void    OnTimer(wxTimerEvent& ev);
 
@@ -576,7 +578,6 @@ private:
     wxDateTime  m_LastFixTime;
     
     int         m_mouse_canvas_index;
-    int         m_drawing_canvas_index;
     
     std::list<Boundary*> m_pBoundaryList;
     

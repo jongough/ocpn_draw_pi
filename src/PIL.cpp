@@ -44,38 +44,6 @@
 
 WX_DEFINE_LIST ( PILList );
 
-extern int          g_path_line_width;
-
-extern PlugIn_ViewPort g_VP;
-
-extern wxString     g_sPILEndIconName;
-extern wxString     g_sPILStartIconName;
-extern wxColour     g_colourPILActiveCentreLineColour;
-extern wxColour     g_colourPILInActiveCentreLineColour;
-extern wxColour     g_colourPILActiveOffsetLine1Colour;
-extern wxColour     g_colourPILInActiveOffsetLine1Colour;
-extern wxColour     g_colourPILActiveOffsetLine2Colour;
-extern wxColour     g_colourPILInActiveOffsetLine2Colour;
-extern int          g_PILCentreLineWidth;
-extern wxPenStyle   g_PILCentreLineStyle;
-extern int          g_PILOffsetLine1Width;
-extern wxPenStyle   g_PILOffsetLine1Style;
-extern int          g_PILOffsetLine2Width;
-extern wxPenStyle   g_PILOffsetLine2Style;
-extern double       g_dPILOffset;
-extern int          g_iPILPersistenceType;
-
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PILList      *g_pPILList;
-extern PILProp      *g_pPILPropDialog;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern wxString      g_sODPointIconName;
-extern ODConfig     *g_pODConfig;
-extern PI_ColorScheme   g_global_color_scheme;
-//extern EBLProp      *g_pEBLPropDialog;
-
 PIL::PIL() : EBL()
 {
     m_sTypeString = _T("PIL");

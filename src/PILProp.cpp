@@ -42,13 +42,6 @@ enum {
     ID_POINTS_LIST_LAST
 };
 
-
-extern PILList                  *g_pPILList;
-extern ocpn_draw_pi             *g_ocpn_draw_pi;
-extern ODPlugIn_Position_Fix_Ex g_pfFix;
-extern int                      g_iDefaultPILPropertyDialogPostionX;
-extern int                      g_iDefaultPILPropertyDialogPostionY;
-
 PILProp::PILProp()
 {
     //ctor

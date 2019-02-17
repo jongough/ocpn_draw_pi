@@ -27,9 +27,6 @@
 #include "DR.h"
 #include "ocpn_draw_pi.h"
 
-extern int g_iDefaultDRPropertyDialogPostionX;
-extern int g_iDefaultDRPropertyDialogPostionY;
-
 DRProp::DRProp()
 {
     //ctor

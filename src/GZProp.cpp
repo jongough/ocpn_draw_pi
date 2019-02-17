@@ -33,14 +33,6 @@
 #include <wx/valnum.h>
 #endif
 
-extern GZList                  *g_pGZList;
-extern ocpn_draw_pi             *g_ocpn_draw_pi;
-extern ODPlugIn_Position_Fix_Ex g_pfFix;
-extern ODConfig                 *g_pODConfig;
-extern int                      g_iDefaultGZPropertyDialogPostionX;
-extern int                      g_iDefaultGZPropertyDialogPostionY;
-
-
 GZProp::GZProp()
 {
     //ctor

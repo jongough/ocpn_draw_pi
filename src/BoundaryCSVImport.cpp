@@ -31,16 +31,9 @@
 #endif
 
 #include "BoundaryCSVImport.h"
+#include "ocpn_draw_pi.h"
 
 #include <wx/tokenzr.h>
-
-extern wxColour    g_colourActiveBoundaryLineColour;
-extern wxColour    g_colourActiveBoundaryFillColour;
-extern bool        g_bExclusionBoundary;
-extern bool        g_bInclusionBoundary;
-extern wxColour    g_colourActiveBoundaryLineColour;
-extern wxColour    g_colourActiveBoundaryFillColour;
-
 
 BoundaryCSVImport::BoundaryCSVImport()
 {

@@ -59,31 +59,6 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( EBLList );
 
-extern int          g_path_line_width;
-
-extern wxColour     g_colourEBLLineColour;
-extern wxString     g_sEBLEndIconName;
-extern wxString     g_sEBLStartIconName;
-extern bool         g_bEBLFixedEndPosition;
-extern int          g_iEBLPersistenceType;
-extern int          g_EBLLineWidth;
-extern wxPenStyle   g_EBLLineStyle;
-
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern EBLList      *g_pEBLList;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern wxString      g_sODPointIconName;
-extern ODConfig     *g_pODConfig;
-extern EBLProp      *g_pEBLPropDialog;
-extern bool         g_bEBLShowArrow;
-extern bool         g_bEBLVRM;
-extern bool         g_bEBLAlwaysShowInfo;
-extern bool         g_bEBLPerpLine;
-extern bool         g_bEBLRotateWithBoat;
-extern int          g_iEBLMaintainWith;
-
 EBL::EBL() : ODPath()
 {
     m_sTypeString = _T("EBL");

@@ -28,12 +28,6 @@
 //#include "vector2D.h"
 #include "ODPath.h"
 
-extern ocpn_draw_pi                 *g_ocpn_draw_pi;
-extern ODPlugIn_Position_Fix_Ex     g_pfFix;
-extern SelectItem                   *g_pRolloverPoint;
-extern PlugIn_ViewPort              g_VP;
-
-
 ODSelect::ODSelect()
 {
     pSelectList = new SelectableItemList;

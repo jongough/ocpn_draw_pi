@@ -46,21 +46,6 @@
 #include <wx/gdicmn.h>
 #include "gl.h"
 
-extern PointMan *g_pODPointMan;
-extern bool g_bODIsNewLayer;
-extern int g_ODLayerIdx;
-extern PathMan *g_pPathMan;
-extern int g_path_line_width;
-extern ODSelect *g_pODSelect;
-extern ODConfig *g_pODConfig;
-extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern wxString     g_sODPointIconName;
-extern wxColour    g_colourActivePathLineColour;
-extern wxColour    g_colourInActivePathLineColour;
-extern PI_ColorScheme    g_global_color_scheme;
-
-
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
 

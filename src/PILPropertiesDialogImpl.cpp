@@ -45,15 +45,6 @@
 #include <wx/valnum.h>
 #endif
 
-extern ocpn_draw_pi         *g_ocpn_draw_pi;
-extern ODConfig             *g_pODConfig;
-extern PILProp              *g_pPILPropDialog;
-extern ODSelect             *g_pODSelect;
-extern int                  g_iDefaultPILLinePropertyDialogPostionX;
-extern int                  g_iDefaultPILLinePropertyDialogPostionY;
-
-
-
 PILPropertiesDialogImpl::PILPropertiesDialogImpl( wxWindow* parent )
 :
 PILPropertiesDialogDef( parent )

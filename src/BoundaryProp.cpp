@@ -27,14 +27,6 @@
 #include "Boundary.h"
 #include "ocpn_draw_pi.h"
 
-extern BoundaryList         *g_pBoundaryList;
-extern unsigned int         g_uiFillTransparency;
-extern int                  g_iInclusionBoundarySize;
-extern int                  g_iDefaultBoundaryPropertyDialogPostionX;
-extern int                  g_iDefaultBoundaryPropertyDialogPostionY;
-
-
-
 BoundaryProp::BoundaryProp()
 {
     //ctor

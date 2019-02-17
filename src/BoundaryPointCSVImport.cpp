@@ -35,15 +35,6 @@
 
 #include <wx/tokenzr.h>
 
-extern bool        g_bExclusionBoundaryPoint;
-extern bool        g_bInclusionBoundaryPoint;
-extern bool        g_bBoundaryODPointsVisible;
-extern bool        g_bODPointShowRangeRings;
-extern int         g_iODPointRangeRingsNumber;
-extern float       g_fODPointRangeRingsStep;
-extern int         g_iODPointRangeRingsStepUnits;
-extern wxColour    g_colourODPointRangeRingsColour;
-
 BoundaryPointCSVImport::BoundaryPointCSVImport()
 {
     //ctor

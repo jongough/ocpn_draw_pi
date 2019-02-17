@@ -40,30 +40,6 @@
 
 #include "GL/gl.h"
 
-extern PlugIn_ViewPort  g_VP;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern PointMan     *g_pODPointMan;
-extern ODText       *g_ODText;
-extern bool         g_bTextPointShowName;
-extern int          g_iTextPosition;
-extern wxColour     g_colourDefaultTextColour;
-extern wxFont       g_DisplayTextFont;
-extern int          g_DisplayTextFontPointSize;
-extern wxColour     g_colourDefaultTextBackgroundColour;
-extern int          g_iTextBackgroundTransparency;
-extern int          g_iTextTopOffsetX;
-extern int          g_iTextTopOffsetY;
-extern int          g_iTextBottomOffsetX;
-extern int          g_iTextBottomOffsetY;
-extern int          g_iTextBottomNameExtraOffsetY;
-extern int          g_iTextCentreOffsetX;
-extern int          g_iTextCentreOffsetY;
-extern int          g_iTextRightOffsetX;
-extern int          g_iTextRightOffsetY;
-extern int          g_iTextLeftOffsetX;
-extern int          g_iTextLeftOffsetY;
-extern int          g_iTextPointDisplayTextWhen;
-
 // Fix for VS2010 not having the round function
 #if defined (_WIN32)
 #if _MSC_VER < 1700

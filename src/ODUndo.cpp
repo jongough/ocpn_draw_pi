@@ -47,15 +47,6 @@
 #include "ODPointPropertiesImpl.h"
 #include "tinyxml.h"
 
-extern PathMan *g_pPathMan;
-extern ODConfig *g_pODConfig;
-extern ODSelect *g_pODSelect;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern PointMan *g_pODPointMan;
-extern ChartCanvas *cc1;
-extern MyFrame *gFrame;
-extern ODPointPropertiesImpl *g_pODPointPropDialog;
-
 Undo::Undo()
 {
     depthSetting = 10;

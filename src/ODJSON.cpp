@@ -67,22 +67,6 @@ using nlohmann::json_schema::json_validator;
 #include <wx/base64.h>
 #include <wx/mstream.h>
 
-extern ocpn_draw_pi         *g_ocpn_draw_pi;
-extern PathMan              *g_pPathMan;
-extern BoundaryMan          *g_pBoundaryMan;
-extern GZMan                *g_pGZMan;
-extern PointMan             *g_pODPointMan;
-extern BoundaryList         *g_pBoundaryList;
-extern wxString             g_sODPointIconName;
-extern ODConfig             *g_pODConfig;
-extern ODSelect             *g_pODSelect;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern ODPointPropertiesImpl *g_pODPointPropDialog;
-extern double               g_dVar;
-extern ODAPI                *g_pODAPI;
-extern bool                 g_bExclusionBoundaryPoint;
-extern bool                 g_bInclusionBoundaryPoint;
-
 #ifdef OD_JSON_SCHEMA_VALIDATOR 
 json_validator *gCreateBoundary; 
 json_validator *gCreateBoundaryPoint; 

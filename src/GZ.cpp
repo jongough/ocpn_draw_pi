@@ -59,37 +59,6 @@
 using namespace ClipperLib;
 
 WX_DEFINE_LIST ( GZList );
-/*
-extern wxColour     g_colourActiveBoundaryLineColour;
-extern wxColour     g_colourInActiveBoundaryLineColour;
-extern wxColour     g_colourActiveBoundaryFillColour;
-extern wxColour     g_colourInActiveBoundaryFillColour;
-
-
-extern wxColour     g_colourActiveGZLineColour;
-extern wxColour     g_colourInActiveGZLineColour;
-extern wxColour     g_colourActiveGZFillColour;
-extern wxColour     g_colourInActiveGZFillColour;
-extern wxPenStyle   g_GZLineStyle;
-extern int          g_GZLineWidth;
-extern bool         g_bExclusionGZ;
-extern bool         g_bInclusionGZ;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern unsigned int g_uiGZFillTransparency;
-extern int          g_iInclusionGZSize;
-extern bool         g_bGZRotateWithBoat;
-extern int          g_iGZMaintainWith;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODConfig     *g_pODConfig;
-extern GZProp       *g_pGZPropDialog;
-extern int          g_iGZPersistenceType;
-extern int          g_iGZMaxNum;
-extern PI_ColorScheme    g_global_color_scheme;
-
-extern int g_path_line_width;
-*/
 
 GZ::GZ() : ODPath()
 {

@@ -43,41 +43,6 @@
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
-/*
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern bool         g_bShowMag;
-extern double       g_dVar;
-extern double       g_dDRSOG;
-extern int          g_iDRCOG;
-extern double       g_dDRLength;
-extern double       g_dDRPointInterval;
-extern int          g_iDRLengthType;
-extern int          g_iDRIntervalType;
-extern int          g_iDRDistanceUnits;
-extern int          g_iDRTimeUnits;
-extern int          g_iDRPersistenceType;
-extern bool         g_bDRPointShowRangeRings;
-extern int          g_iDRPointRangeRingsNumber;
-extern float        g_fDRPointRangeRingsStep;
-extern int          g_iDRPointRangeRingsStepUnits;
-extern wxColour     g_colourDRPointRangeRingsColour;
-extern int          g_iDRPointRangeRingLineWidth;
-extern wxPenStyle   g_iDRPointRangeRingLineStyle;
-
-extern wxString        g_sDRPointIconName;
-
-extern ODPlugIn_Position_Fix_Ex g_pfFix;
-extern DRList                   *g_pDRList;
-extern PathList                 *g_pPathList;
-extern ODSelect                 *g_pODSelect;
-extern ODConfig                 *g_pODConfig;
-extern PathMan                  *g_pPathMan;
-extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern ODPointPropertiesImpl        *g_pODPointPropDialog;
-
-extern int     g_drawing_canvas_index;
-*/
 
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
@@ -354,8 +319,8 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
         g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
-    g_ocpn_draw_pi->ODRequestRefresh( g_drawing_canvas_index, FALSE );
-    g_drawing_canvas_index = -1;
+    g_ocpn_draw_pi->ODRequestRefresh( g_ocpn_draw_pi->m_drawing_canvas_index, FALSE );
+    g_ocpn_draw_pi->m_drawing_canvas_index = -1;
     Show( false );
 #ifdef __WXOSX__    
     EndModal(wxID_CANCEL);

@@ -37,12 +37,6 @@
 
 #include <wx/stdpaths.h>
 
-
-extern wxString *g_SData_Locn;
-extern wxString *g_pHome_locn;
-extern wxString *g_pData;
-extern wxString *g_pImage;
-
 ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;

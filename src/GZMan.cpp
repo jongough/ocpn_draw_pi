@@ -37,11 +37,6 @@
 #include "math.h"
 #endif
 
-extern PathList         *g_pPathList;
-extern GZList           *g_pGZList;
-extern PointMan         *g_pODPointMan;
-extern PlugIn_ViewPort   g_VP;
-
 wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
 {
     wxGZListNode *GZ_node = g_pGZList->GetFirst();

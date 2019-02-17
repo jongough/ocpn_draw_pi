@@ -44,23 +44,6 @@
 #include <map>
 #endif
 
-extern wxString         *g_pData;
-extern int              g_LayerIdx;
-extern bool             g_bShowLayers;
-extern wxString         g_VisibleLayers;
-extern wxString         g_InvisibleLayers;
-extern ODLayerList      *g_pLayerList;
-extern PointMan         *g_pODPointMan;  
-extern PathList         *g_pPathList;
-extern int              g_navobjbackups;
-extern EBLList          *g_pEBLList;
-extern wxString        g_sDefaultImportPath;
-extern wxString        g_sDefaultImportType;
-
-
-
-//ODConfig::ODConfig(const wxString &appName, const wxString &vendorName,
-//                              const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName)
 ODConfig::ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName)
 {
     //ODConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );

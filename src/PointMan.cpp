@@ -49,15 +49,6 @@
 
 #include "GL/gl.h"
 
-//extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern wxString         *g_PrivateDataDir;
-extern ODConfig         *g_pODConfig;
-extern PathMan          *g_pPathMan;
-extern ODSelect         *g_pODSelect;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern wxString         *g_pUserIconsDir;
-
-
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
 //--------------------------------------------------------------------------------

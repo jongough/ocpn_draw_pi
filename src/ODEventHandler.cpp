@@ -51,49 +51,12 @@
 #include <wx/window.h>
 #include <wx/clipbrd.h>
 
-extern ocpn_draw_pi                 *g_ocpn_draw_pi;
-extern wxWindow                     *g_parent_window;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern ODSelect                     *g_pODSelect;
-extern ODConfig                     *g_pODConfig;
-extern PlugIn_ViewPort              g_VP;
-extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-extern PathMan                      *g_pPathMan;
-
-extern ODPointPropertiesImpl        *g_pODPointPropDialog;
-extern ODPath                       *g_PathToEdit;
-extern int                          g_PILToEdit;
-extern PointMan                     *g_pODPointMan;
-extern bool                         g_bShowMag;
-extern bool                         g_bConfirmObjectDelete;
-extern ODRolloverWin                *g_pODRolloverWin;
-extern SelectItem                   *g_pRolloverPathSeg;
-extern SelectItem                   *g_pRolloverPoint;
-extern int                          g_cursor_x;
-extern int                          g_cursor_y;
-extern ODPlugIn_Position_Fix_Ex     g_pfFix;
-extern ODDRDialogImpl               *g_pODDRDialog;
-
-extern BoundaryList                 *g_pBoundaryList;
-extern PathList                     *g_pPathList;
-extern int                          g_BoundaryLineWidth;
-extern wxPenStyle                   g_BoundaryLineStyle;
-extern wxString                     g_sODPointIconName;
-extern double                       g_dPILOffset;
-extern PILPropertiesDialogImpl      *g_PILIndexLinePropDialog;
-
-wxWindow *g_current_canvas;
-wxWindow *g_current_timer_canvas;
-int     g_current_canvas_index;
-int     g_current_timer_canvas_index;
-
 // Event Handler implementation 
 
 BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler ) 
     //EVT_TIMER( OD_TIMER_1, ODEventHandler::OnODTimer1 )
     EVT_TIMER( -1, ODEventHandler::OnODTimer1 )
 END_EVENT_TABLE()
-
 
 ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 {

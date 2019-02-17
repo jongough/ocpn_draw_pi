@@ -59,25 +59,6 @@ enum {
     ID_POINTS_LIST_LAST
 };
 
-/*
-extern bool                 g_bShowMag;
-extern ocpn_draw_pi         *g_ocpn_draw_pi;
-extern double               g_dLat, g_dLon, gSog, gCog;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern PathList             *g_pPathList;
-extern PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-extern ODConfig             *g_pODConfig;
-extern wxColour             g_colourActivePathLineColour;
-extern wxColour             g_colourInActivePathLineColour;
-extern bool                 g_bExclusionBoundary;
-extern bool                 g_bInclusionBoundary;
-extern int                  g_iInclusionBoundarySize;
-extern ODEventHandler       *g_ODEventHandler;
-extern PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
-extern PI_ColorScheme       g_global_color_scheme;
-extern bool                 g_bConfirmObjectDelete;
-*/
-
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
 #if wxCHECK_VERSION(3,0,0)
