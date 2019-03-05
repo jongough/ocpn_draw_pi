@@ -3060,7 +3060,9 @@ bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_View
 
 void ocpn_draw_pi::RenderPathLegs( ODDC &dc ) 
 {
-    if( nBoundary_State >= 2) {
+    if(m_mouse_canvas_index != m_current_canvas_index) return;
+    
+    if( nBoundary_State >= 2 ) {
         
         Boundary* boundary = 0;
         boundary = m_pMouseBoundary;
@@ -3116,7 +3118,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         
         wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, destPoint);
         RenderExtraPathLegInfo( dc, destPoint, info );
-    } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin)) {
+    } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin) ) {
         EBL *ebl = new EBL();
         double brg, dist;
         wxPoint boatpoint, l_cursorPoint;
@@ -3192,7 +3194,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             
             delete gz;
         }
-    } else if( (nPIL_State > 0 || nEBL_State > 0) && m_mouse_canvas_index == m_current_canvas_index ) {
+    } else if( (nPIL_State > 0 || nEBL_State > 0) ) {
         // draw line from boat to cursor
         ODPath *ptPath;
         PIL *pil;
