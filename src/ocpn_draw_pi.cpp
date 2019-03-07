@@ -4044,16 +4044,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         ODPath *pTempPath = node->GetData();
         if( !pTempPath )
             continue;
-        DEBUGST("In DrawAllPathsAndODPoints: Mouse Index: ");;
-        DEBUGCONT(m_mouse_canvas_index);
-        DEBUGCONT(", Canvas Index: ");
-        DEBUGCONT(m_current_canvas_index);
-        DEBUGCONT(", Path Editing: ");
-        DEBUGCONT(m_bPathEditing);
-        DEBUGCONT(", Being Edited: ");
-        DEBUGEND(pTempPath->m_bIsBeingEdited);
         if(pTempPath->m_bIsBeingEdited && m_mouse_canvas_index != m_current_canvas_index) {
-            DEBUGSL("Being Edited");
             continue;
         }
         
