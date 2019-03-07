@@ -2232,6 +2232,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                     m_bPathEditing = true;
+                    m_pSelectedPath->m_bIsBeingEdited = true;
                     if(m_seltype & SELTYPE_ODPOINT) {
                         if(m_pSelectedBoundary || m_pSelectedDR || m_pSelectedGZ) {
                             m_iEditMode = ID_PATH_MENU_MOVE_POINT;
@@ -2323,6 +2324,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = TRUE;
             } else if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
                 m_bPathEditing = FALSE;
+                m_pSelectedPath->m_bIsBeingEdited = false;
                 m_bODPointEditing = FALSE;
                 m_pCurrentCursor = NULL;
                 m_pSelectedPath->m_bIsBeingEdited = FALSE;
@@ -4042,7 +4044,19 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         ODPath *pTempPath = node->GetData();
         if( !pTempPath )
             continue;
-
+        DEBUGST("In DrawAllPathsAndODPoints: Mouse Index: ");;
+        DEBUGCONT(m_mouse_canvas_index);
+        DEBUGCONT(", Canvas Index: ");
+        DEBUGCONT(m_current_canvas_index);
+        DEBUGCONT(", Path Editing: ");
+        DEBUGCONT(m_bPathEditing);
+        DEBUGCONT(", Being Edited: ");
+        DEBUGEND(pTempPath->m_bIsBeingEdited);
+        if(pTempPath->m_bIsBeingEdited && m_mouse_canvas_index != m_current_canvas_index) {
+            DEBUGSL("Being Edited");
+            continue;
+        }
+        
         ODPath *pPathDraw = NULL;
         Boundary *pBoundaryDraw = NULL;
         EBL *pEBLDraw = NULL;
