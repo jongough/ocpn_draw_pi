@@ -3824,6 +3824,8 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL->RebuildGUIDList();
     
     nEBL_State++;
+    
+    m_pMouseEBL->m_bIsBeingCreated = false;
 
     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
         g_pPathAndPointManagerDialog->UpdatePathListCtrl();
@@ -3902,7 +3904,6 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     
-    //if( nGZ_State > 1 )
     // TODO fix up undo
     //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_IsOrphanded, NULL );
     
@@ -3934,6 +3935,7 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
                 else m_pMouseGZ->m_bTemporary = false;
                 g_pODConfig->AddNewPath( m_pMouseGZ, -1 );    // don't save over restart
             }
+            m_pMouseGZ->m_bIsBeingCreated = false;
         } else {
             pMousePoint->SetName(_("First"));
             pMousePoint->SetIconName( g_sGZFirstIconName );
@@ -4011,6 +4013,9 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMousePIL );
 
     nPIL_State++;
+    
+    m_pMousePIL->m_bIsBeingCreated = false;
+    
     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
         g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
