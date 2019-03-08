@@ -124,7 +124,6 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
-    //ODPath::Draw( dc, piVP );
     if ( m_bVisible && m_pODPointList->GetCount() > 2) {
         int l_iBoundaryPointCount = 0;
         m_bpts = new wxPoint[ m_pODPointList->GetCount() ];

@@ -3045,7 +3045,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
     //    DrawAllODPointsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
-    if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp );
+    if (m_pMouseBoundary && m_mouse_canvas_index == m_current_canvas_index) m_pMouseBoundary->DrawGL( *pivp );
     
     DrawAllPathsAndODPoints( *pivp );
 
@@ -3773,10 +3773,10 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     ODPoint *pMousePoint = NULL;
     double rlat, rlon;
     
+    if(m_drawing_canvas_index != m_mouse_canvas_index) return false;
+    
     rlat = m_cursor_lat;
     rlon = m_cursor_lon;
-    
-    if(m_drawing_canvas_index != m_mouse_canvas_index) return false;
     
     m_pMouseEBL = new EBL();
     g_pEBLList->Append( m_pMouseEBL );
@@ -4044,7 +4044,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         ODPath *pTempPath = node->GetData();
         if( !pTempPath )
             continue;
-        if(pTempPath->m_bIsBeingEdited && m_mouse_canvas_index != m_current_canvas_index) {
+        if((pTempPath->m_bIsBeingEdited || pTempPath->m_bIsBeingCreated) && m_mouse_canvas_index != m_current_canvas_index) {
             continue;
         }
         
@@ -4144,6 +4144,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
+            if(pOP->m_bIsInPath) continue;
             if( !pOP->m_bShowODPointRangeRings ||(pOP->m_bShowODPointRangeRings && pOP->m_iODPointRangeRingsNumber == 0)) {
                 if( llbb.Contains(pOP->m_lat, pOP->m_lon) ) pOP->DrawGL( pivp );
             } else {
