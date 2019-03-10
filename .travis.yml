@@ -6,34 +6,52 @@ matrix:
   - os: osx
     compiler: clang
 install:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get -qq update; sudo apt-get
-  install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev
-  libbz2-dev libtinyxml-dev; sudo apt-get install libexpat1-dev libcairo2-dev; sudo
-  apt-get install rpm; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install cairo libexif xz libarchive;
-  wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; tar xJf
-  wx312_opencpn50_macos109.tar.xz -C /tmp; export PATH="/usr/local/opt/gettext/bin:$PATH";
-  echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; wget http://opencpn.navnux.org/build_deps/Packages.dmg;
-  hdiutil attach Packages.dmg; sudo installer -pkg "/Volumes/Packages 1.2.5/Install
-  Packages.pkg" -target "/"; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
+    then 
+      sudo apt-get -qq update; 
+      sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
+      sudo apt-get install libexpat1-dev libcairo2-dev; 
+      sudo apt-get install rpm; 
+    fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
+  then 
+    brew install cairo libexif xz libarchive;
+    wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
+    tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; export PATH="/usr/local/opt/gettext/bin:$PATH";
+    echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
+    wget http://opencpn.navnux.org/build_deps/Packages.dmg;
+    hdiutil attach Packages.dmg; 
+    sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
+  fi
 script:
-- if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; then echo "Don't build on coverty_scan
-  branch."; exit 0; fi
+- if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
+  then 
+    echo "Don't build on coverty_scan branch."; 
+    exit 0; 
+  fi
 - mkdir build && cd build
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then cmake -DCMAKE_BUILD_TYPE=Release ../
-  && make -sj2 && sudo make package; fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then cmake -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx312_opencpn50_macos109/bin/wx-config
-  -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx312_opencpn50_macos109" -DCMAKE_INSTALL_PREFIX=/tmp/opencpn
-  -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 .. && make -sj2 && make create-pkg; fi
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
+  then 
+    cmake -DCMAKE_BUILD_TYPE=Release ../ && make -sj2 && sudo make package; 
+  fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
+  then 
+    cmake -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx312_opencpn50_macos109/bin/wx-config -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx312_opencpn50_macos109" -DCMAKE_INSTALL_PREFIX=/tmp/opencpn -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 .. && make -sj2 && make create-pkg; 
+  fi
 - ls -l;
 notifications:
   email: false
 git:
   depth: 10
 before_install:
-- if [ "$CXX" = "g++" ]; then export CXX="g++-6" CC="gcc-6"; fi
-- if [ "${#OAUTH_ACCESS_TOKEN}" != 0 ]; then (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN}
-  > ~/.dropbox_uploader); fi
+- if [ "$CXX" = "g++" ]; 
+  then 
+    export CXX="g++-6" CC="gcc-6";
+  fi
+- if [ "${#OAUTH_ACCESS_TOKEN}" != 0 ]; 
+  then 
+    (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN} > ~/.dropbox_uploader); 
+  fi
 addons:
   apt:
     sources:
@@ -52,13 +70,25 @@ deploy:
       "upload deb"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb
       /; fi; fi
     skip_cleanup: true
-    on:
+    on: # Set Deploy conditions
+      # Deploy only when tag is not specified
       tags: false
+      # or this branch
       branch: master_1.5
+      # and only when API token is set
+      # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
       condition: "${#OAUTH_ACCESS_TOKEN} != 0"
   - provider: launchpad
-    slug: "~jonsgough/opencpn-plugin-draw/+git/master"
+    slug: "~jonsgough/opencpn-plugin-draw/+git/master:master_1.5"
   oauth_token:
     secure: dV3a1VYVe8lRfqdt0/UJct61Mz3+mR01E8b7BBYjTuqGgZvZ/+p63tn/zN4Pebqtn4/bqmTJXiGLmUmTaI6AN3xac6ukENhyf0w+TjN8HlfwZlnBYKANG6uPILUH61VfSJTQ8OHChcBJOe98bAa10jGSXVIdvED1EV1UvKnQEdGAsCcLCMSD2QVOyxshTHfaAA/l739qaWaG9xhw8EG4raMBZlER4bFL/68j649ZueWgK4D7qJUc1II8U1/OCwc32iGI0tDUfDj+uMg/YwqLkSXB5ScEaxxb54g2qxHWsLKaErJrP/6WZ0KbLapl3slr+165gHcvr3w/5TmA7WHISDNkJUPrfY3Xm7MQd7zcc99CSDevevysknHjpiVtZmNjep/GGrhauN1Av3b6s4XrXCvHr7a/iYWc+0pgRyp3vizkMMXaNt1gTcB4edxl1Vkte2LE7rW0bqlj1aIbwQOsOaDwdqtRjrUy8iUFtJnE6PbbNzMFip2ZtnQaw7+ZXTaaGywThV9o7CFZ35y/8aRLNVDMYi173z/HVJpuM/61UKpVwLMQKT4LXbSSoyVE451Tz4AWmA8jXBi7s1D4L7gqAXea0pqPVT6baMcn8IRZH9OV+NLhpmkrKppNPQePn4fqZbm/fKa//A6j8uxoNn53SoUAM9o12x0Hdlskg9Mjyts=
   oauth_token_secret:
     secure: dlnqe9EBLkuJVfndsExvdmMRSoVgnK+a1WxM10B3pFg0Kzb1FfXsyc9+7KtQ0RDi5YIPLsPCAD3uS7vckLGua9A82ObAXy3jA+thFD1u4KWxtBhCIb6j50g3hO7x/R5D1HhCw9T48eMIT8db+ArAwHdN363KW/LZRTjWzwttb7sT3A+esSFAM76Kq7CTGAQYoiAAKrzeDs/3vis0zzbPVsURGShGDCpsydffzbMr0e06PI03Kfvd3jyXnSMAt+GiRxZ4oWTTyZlxz9kX+vbkF1NKL/0FA9Lumo3kk0aWSkAO62GsImugMvUJmI5PZA2iHVLXV8iLwJS5eKbXTXSpyi3hwbnfVSvAk0FyEMkwOVZC75bkV1Ez39NQTMaYZ+Ls0DyUncV0KA55JefycRRDS/2si++p1REw38MuZuSYbfxkxR0jOx6CyqvXXiBELr0UNubbwZVvKtKthezLMIo7wojSk+vuzMYzi7qpnwFK31mCSDPIRvfsUKagGuD5d++TiErWx0+f8eGiD/J7ieZiuLd6XJrdTFcaLBV67gfhvnVkNrFlWdY0Ny6r8VnIhoYvqOSKjfhAK4MwPmCgIvowybJKKO+px/Ryd+aSxOh3mdkKwFaVbIuSALgmTHCHv0/lpw/qynwgc5q7e1TC6lraYtLJplaGovoSeFbwjuV1254=
+    on: # Set Deploy conditions
+      # Deploy only when tag is not specified
+      tags: false
+      # or this branch
+      branch: master_1.5
+      # and only when API token is set
+      # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
+      condition: "${#OAUTH_ACCESS_TOKEN} != 0"
