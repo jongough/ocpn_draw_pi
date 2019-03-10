@@ -89,6 +89,3 @@ deploy:
       tags: false
       # or this branch
       branch: master_1.5
-      # and only when API token is set
-      # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
-      condition: "${#OAUTH_ACCESS_TOKEN} != 0"
