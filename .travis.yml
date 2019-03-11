@@ -95,4 +95,4 @@ deploy:
       #     - master_1.5
       all_branches: true
       condition: "$TRAVIS_OS_NAME = linux"
-      repo: jonsgough/ocpn_draw_pi
+      repo: jongough/ocpn_draw_pi
