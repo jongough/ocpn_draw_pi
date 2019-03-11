@@ -80,18 +80,14 @@ deploy:
       condition: "${#OAUTH_ACCESS_TOKEN} != 0"
   - provider: launchpad
     slug: "~jonsgough/opencpn-plugin-draw/+git/ocpn_draw_pi"
-#  oauth_token_secret:
-#    secure: IfEUz16VPprAn/N00bPI08Nm8JCJ17IVbQzm9L1Vm+LEI/ZCuk40gRyeAxLkQm0X8YFgPJbm5mUocDIgAmdzQYSOpCIaz+WRUNMuKJF8TaiuxBmz7vMLq8NTYMNyNnDR47l8McWOGI24VWCZDpSIwqr3vsa6r/6B2d1OnNlGJK38EdIokR+FeOv1MH7UBQJINgpirC1Jwb9Pbnu1i1/88pXhNuSGOKJq26wSNCOzqDDHTof2TtfJoDQXZg1HwV4xnHl28uAtFyZUc/JcoQmaGamHQhIISvL45uUISots0ulyMHW5SbsIDuOU0/bQKyf0mpfd9V0GDuSj1AdIImhTTtkOgIK7kDPTU1uv9NW2SsuoBHZzUc6MS8uRLWcleOMO4PW7L1xt/RxBxV6c/1QOJoXMqqCgLIu36WmLoGK9OQm5ixAgouL48iGDZgyNBqLDw7STnT2R70PzKfe08QAEuKn9V9vvAHR6hEk9oVs9lQIqp3jXkPpTUi9ikIIYOvbh6wZ0bU/Ca5NHCkbZl04xwCGlwEv1zlHjQTEXty6zlAWeEN3htfckkoRUhGhFAe4ZJsA7qEyl0aLreyqEj+yUIDxb0yOrMU+yB140H4wgU2IZAKfXWXbRninDNdtyXtUZDtnG7o+5DdBr+OAlz/3UpxLuEizTU7R4xamyqrfOaCU=
-#  oauth_token:
-#    secure: T4x4xON2lDkfn+8qjW23hQh7o8l+TyCyeCDqagxrCGBt/eK01AsGiGKk1xU/WZCOjwhf/QNkKLf0+cuy5C+xw+/2BAObUiMsw+ByWmqqtRj+iCrgj4yjB20KSBh6aKjrYv97ZH4rr2xB4/M/qI4z7/b/gh23Fcmucqm07fBubXKDT6sEJT9tWsh7IRfn3rOUBOzVOPVyabAY6zYI5EVKZ90eOm2Voj6oV1/Npn1nao0oWYAO1oG6PS+XTt712Ua/tUdgaXK2Kq5kOZwVufjeVbru7OeqOkqjloGQT6vXPNiiHuv/UcecnlPup2Zo3hGeZzPI0PjsGgXyD5MweOW7+IIvxbUJtjaz/MzzsojdahqCzM4xbsRN6MfrQtsoCTJuwebeqwUEOvY8qB2GrbCu2+0jdLeT4XWkVMQQ9AzljoiHCSJlnxHrmRj7JVo1OcBdgu4+QYvQCoKp+d0NnxXpeVgII7wmYyc3dmXhsCv7eACNg6fJHaxNSgc/95Rk2fbOsZlaYipdlQjXP3jAxR++eeJF3SOlh4hTMsnHTM3VyTF98M8yhUucRdPbGt9aykisRXruYe8h/ZqM19bOvW/DT7T6GMOR29lqetTpxyQ8nEC0NpEzGejPwCEtCyXnhdx2Y9tXofSlzvaz5yJ0oRvKxZsWVNIteep/UhaxkMciOZU=
-  oauth_token: DbnBlwBlBxhRCGBBMVWQ
-  oauth_token_secret: 71tfcBmJL3CKRQZFPHNbm94RsDFkmXm4JK7fBSWM74czq527qWT3Z5w9bC0TbmQCsXL84LkcGSxVnhk5
-    on: # Set Deploy conditions
+    oauth_token: DbnBlwBlBxhRCGBBMVWQ
+    oauth_token_secret: 71tfcBmJL3CKRQZFPHNbm94RsDFkmXm4JK7fBSWM74czq527qWT3Z5w9bC0TbmQCsXL84LkcGSxVnhk5
+    #on: # Set Deploy conditions
       # Deploy only when tag is not specified
-      tags: false
+     # tags: false
       # or this branch
       #branches:
       #   only:
       #     - master
       #     - master_1.5
-      all_branches: true
+      #all_branches: true
