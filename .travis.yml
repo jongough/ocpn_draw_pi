@@ -87,12 +87,12 @@ deploy:
     skip_cleanup: true
     on: # Set Deploy conditions
       # Deploy only when tag is not specified
-     # tags: false
+      # tags: false
       # or this branch
       #branches:
       #   only:
       #     - master
       #     - master_1.5
-      all_branches: true
+      #all_branches: true
       condition: "$TRAVIS_OS_NAME = linux"
       repo: jongough/ocpn_draw_pi
