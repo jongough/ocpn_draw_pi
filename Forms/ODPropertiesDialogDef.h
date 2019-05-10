@@ -124,6 +124,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerBackgroundColour;
 		wxStaticText* m_staticTextBackgroundTransparency;
 		wxSlider* m_sliderBackgroundTransparency;
+		wxStaticText* m_staticTextMaxWidth;
+		wxTextCtrl* m_textCtrlTextMaxWidth;
 		wxFlexGridSizer* m_fgSizerTextPointFont;
 		wxStaticText* m_staticTextTextFont;
 		wxStaticText* m_staticTextFontFaceExample;

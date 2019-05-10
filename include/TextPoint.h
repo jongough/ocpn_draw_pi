@@ -47,6 +47,7 @@ class TextPoint : public ODPoint
 
         wxString        m_TextPointText;
         int             m_iTextPosition;
+        int             m_iWrapLen;
         int             m_iBackgroundTransparency;
         wxColour        m_colourTextColour;
         wxColour        m_colourTextBackgroundColour;
@@ -72,13 +73,13 @@ class TextPoint : public ODPoint
 
     private:
         void CalculateTextExtents( void );
+        void CalculateTextExtents( wxString TextPointText );
         
         wxStaticText    *m_pstText;
         wxTextCtrl      *m_ptcText;
         wxSize          m_TextExtents;
         int             m_TextLocationOffsetX;
         int             m_TextLocationOffsetY;
-        int             m_iWrapLen;
         
         unsigned int    m_iDisplayTextTexture;
         int             m_iDisplayTextTextureWidth, m_iDisplayTextTextureHeight;

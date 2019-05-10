@@ -87,10 +87,13 @@ ODPointPropertiesDialog( parent )
     SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
     wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
+    wxIntegerValidator<int> iTextPointTextMaxWidth( &m_iTextPointTextMaxWidth, wxNUM_VAL_THOUSANDS_SEPARATOR);
     dODPointRangeRingSteps.SetMin(0);
     dODPointArrivalRadius.SetMin(0);
+    iTextPointTextMaxWidth.SetMin(0);
     m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingSteps );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
+    m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
 #endif // wxCHECK_VERSION(3,0,0)
     
     // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
@@ -379,6 +382,7 @@ void ODPointPropertiesImpl::SaveChanges()
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
             m_pTextPoint->m_bTextChanged = true;
+            m_pTextPoint->m_iWrapLen = m_iTextPointTextMaxWidth;
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
@@ -677,6 +681,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textDisplayText->Clear();
             m_textDisplayText->SetValue( m_pTextPoint->m_TextPointText );
             m_choicePosition->SetSelection( m_pTextPoint->m_iTextPosition );
+            m_iTextPointTextMaxWidth = m_pTextPoint->m_iWrapLen;
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );

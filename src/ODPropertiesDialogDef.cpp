@@ -347,7 +347,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelBoundaryPoint->SetSizer( bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
-	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), true );
+	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
 	m_panelTextPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerTextPoint;
 	fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -423,6 +423,13 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 
 	fgSizer21->Add( fgSizer47, 1, wxEXPAND, 5 );
 
+	m_staticTextMaxWidth = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Maximum Text Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextMaxWidth->Wrap( -1 );
+	fgSizer21->Add( m_staticTextMaxWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+	m_textCtrlTextMaxWidth = new wxTextCtrl( m_panelTextPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizer21->Add( m_textCtrlTextMaxWidth, 0, wxALL, 5 );
+
 
 	fgSizerTextPoint->Add( fgSizer21, 1, wxEXPAND, 5 );
 
@@ -461,7 +468,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelTextPoint->SetSizer( fgSizerTextPoint );
 	m_panelTextPoint->Layout();
 	fgSizerTextPoint->Fit( m_panelTextPoint );
-	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
+	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), true );
 	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelPath->Enable( false );
 	m_panelPath->Hide();

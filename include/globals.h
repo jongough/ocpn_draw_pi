@@ -230,6 +230,7 @@ extern int             g_iTextRightOffsetY;
 extern int             g_iTextLeftOffsetX;
 extern int             g_iTextLeftOffsetY;
 extern int             g_iTextPointDisplayTextWhen;
+extern int             g_iTextMaxWidth;
 
 extern PlugIn_ViewPort g_VP;
 extern ODDC            *g_pDC;

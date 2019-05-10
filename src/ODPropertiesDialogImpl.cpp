@@ -95,6 +95,8 @@ ODPropertiesDialogDef( parent )
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dPILOffset(3, &m_dPILOffsetValidator, wxNUM_VAL_DEFAULT);
     wxIntegerValidator<int> iCOGVal(&m_iCOGValidator, wxNUM_VAL_DEFAULT);
+    wxIntegerValidator<int> iTextPointTextMaxWidth( &m_iTextPointTextMaxWidth, wxNUM_VAL_THOUSANDS_SEPARATOR);
+    
     dODPointRangeRingStepVal.SetMin(0);
     dODPointArrivalRadiusVal.SetMin(0);
     dDRPathLengthVal.SetMin(0);
@@ -102,6 +104,7 @@ ODPropertiesDialogDef( parent )
     dDRPointRangeRingStepVal.SetMin(0);
     dSOGVal.SetMin(0);
     iCOGVal.SetRange(0, 360);
+    iTextPointTextMaxWidth.SetMin(0);
 
     m_textCtrlODPointRangeRingSteps->SetValidator( dODPointRangeRingStepVal );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadiusVal );
@@ -111,6 +114,7 @@ ODPropertiesDialogDef( parent )
     m_textCtrlDRPointInterval->SetValidator( dDRPointIntervalVal );
     m_textCtrlDRPointRangeRingSteps->SetValidator( dDRPointRangeRingStepVal );
     m_textCtrlPILDefaultOffset->SetValidator( dPILOffset );
+    m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
     
     int l_iPage = m_notebookProperties->FindPage(m_panelPath);
     m_notebookProperties->DeletePage(l_iPage);
@@ -505,6 +509,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();
     g_iTextPosition = m_choiceTextPosition->GetSelection();
+    g_iTextMaxWidth = m_iTextPointTextMaxWidth;
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
     g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
@@ -843,6 +848,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxPILPersistence->SetSelection( g_iPILPersistenceType );
 
     m_choiceTextPosition->SetSelection( g_iTextPosition );
+    m_iTextPointTextMaxWidth = g_iTextMaxWidth;
     m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
     m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
     m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );

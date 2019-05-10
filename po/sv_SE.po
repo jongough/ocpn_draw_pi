@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-13 09:42+1100\n"
+"POT-Creation-Date: 2019-05-10 17:57+1000\n"
 "PO-Revision-Date: 2019-03-18 02:54\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Swedish\n"
@@ -15,2177 +15,1547 @@ msgstr ""
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
-
-#: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:520
-msgid "Dead Reckoning"
-msgstr "Död räkning (DR)"
-
-#: include/ODNewODPointDialogDef.h:48 src/ODNewODPointDialogDef.cpp:23
-#: src/ODPointPropertiesDialog.cpp:119
-msgid "Point Type"
-msgstr "Punktyp"
-
-#: include/ODPathPropertiesDialogDef.h:139
-#: src/PathAndPointManagerDialogImpl.cpp:714
-msgid "Path Properties"
-msgstr "Linjeegenskaper"
-
-#: include/ODPointPropertiesDialog.h:159
-msgid "OD Point Properties"
-msgstr "OR punktegenskaper"
-
-#: include/ODPropertiesDialogDef.h:312
-msgid "OCPN Draw Properties"
-msgstr "OCPN Ritverktyg. Egenskaper"
-
-#: include/ODToolbarDef.h:46 src/ocpn_draw_pi.cpp:623 src/ocpn_draw_pi.cpp:625
-msgid "Draw Toolbar"
-msgstr "Ritverktyg"
-
-#: include/PILPropertiesDialogDef.h:72
-msgid "Index Line Properties"
-msgstr "Egenskaper för parallell indexlinje"
-
-#: include/PathAndPointManagerDialogDef.h:115
-msgid "Path & Point Manager"
-msgstr "Hantering av linjer och punkter"
-
-#: src/EBL.cpp:122 src/EBL.cpp:304 src/ODPathPropertiesDialogImpl.cpp:446
-#: src/ODPathPropertiesDialogImpl.cpp:454 src/ODPathPropertiesDialogImpl.cpp:490
-#: src/ODPathPropertiesDialogImpl.cpp:562 src/ODPathPropertiesDialogImpl.cpp:570
-#: src/ODPathPropertiesDialogImpl.cpp:605 src/ocpn_draw_pi.cpp:2783
-#: src/ocpn_draw_pi.cpp:3764 src/ocpn_draw_pi.cpp:3952
-msgid "Boat"
-msgstr "Båt"
-
-#: src/EBL.cpp:122 src/EBL.cpp:333 src/EBL.cpp:380 src/EBL.cpp:390
-#: src/ODEventHandler.cpp:873 src/PIL.cpp:300
-msgid "Start"
-msgstr "Start"
-
-#: src/EBL.cpp:130 src/ocpn_draw_pi.cpp:3771 src/ocpn_draw_pi.cpp:3958
-msgid "End"
-msgstr "Slut"
-
-#: src/EBLProp.cpp:67 src/ODPropertiesDialogDef.cpp:609
-msgid "EBL Persistence"
-msgstr "Spara EBL"
-
-#: src/GZProp.cpp:80 src/ODPropertiesDialogDef.cpp:959
-msgid "Guard Zone Persistence"
-msgstr "Spara larmzon"
-
-#: src/ODConfig.cpp:175 src/ODConfig.cpp:215 src/ODConfig.cpp:396
-#: src/ODConfig.cpp:421
-msgid "Export GPX file"
-msgstr "Exportera GPX-fil"
-
-#: src/ODConfig.cpp:198 src/ODConfig.cpp:228 src/ODConfig.cpp:409
-msgid "Confirm"
-msgstr "Bekräfta"
-
-#: src/ODConfig.cpp:198 src/ODConfig.cpp:228 src/ODConfig.cpp:409
-msgid "Overwrite existing file?"
-msgstr "Skriv över befintlig fil?"
-
-#: src/ODConfig.cpp:263
-msgid "Loading navobjects from "
-msgstr "Laddar navigeringsobjekt från "
-
-#: src/ODConfig.cpp:295
+#
+msgid " &Properties..."
+msgstr " &Egenskaper..."
+#
+msgid " To: "
+msgstr " Till: "
+#
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+" kortare än loxodrom.\n"
+"\n"
+#
+msgid " to "
+msgstr " till "
+#
+msgid "&Activate"
+msgstr "&Aktivera"
+#
+msgid "&Add"
+msgstr "&Lägg till"
+#
+msgid "&Apply"
+msgstr "&Använd"
+#
+msgid "&Cancel"
+msgstr "A&vsluta"
+#
+msgid "&Center View"
+msgstr "&Centrera vy"
+#
+msgid "&Deactivate"
+msgstr "&Inaktivera"
+#
+msgid "&Delete"
+msgstr "Ra&dera"
+#
+msgid "&Delete Selected"
+msgstr "&Ta bort markerade"
+#
+msgid "&Edit"
+msgstr "&Ändra"
+#
+msgid "&Export Selected..."
+msgstr "&Exportera markerade..."
+#
+msgid "&List contents"
+msgstr "&Visa innehåll"
+#
+msgid "&New"
+msgstr "&Ny"
+#
+msgid "&OK"
+msgstr "&OK"
+#
+msgid "&Properties"
+msgstr "&Egenskaper"
+#
+msgid "&Remove Selected"
+msgstr "&Ta bort markerade"
+#
+msgid "&Temporary layer"
+msgstr "&Temporärt lager"
+#
+msgid "(Unnamed )"
+msgstr "(Namnlös)"
+#
+msgid "(Unnamed Layer)"
+msgstr "(Ej namngivet lager)"
+#
+msgid "(Unnamed) "
+msgstr "(Namnlös) "
+#
+msgid "(unnamed)"
+msgstr "(namnlös)"
+#
+msgid "*.*"
+msgstr "*.*"
+#
+msgid "0"
+msgstr "0"
+#
+msgid "0.0"
+msgstr "0,0"
+#
+msgid "0.5"
+msgstr "0,5"
+#
+msgid "1"
+msgstr "1"
+#
+msgid "1 Pixel"
+msgstr "1 pixel"
+#
+msgid "1 pixel"
+msgstr "1 pixel"
+#
+msgid "1.0"
+msgstr "1.0"
+#
+msgid "10"
+msgstr "10"
+#
+msgid "10 Pixels"
+msgstr "10 pixlar"
+#
+msgid "10 pixels"
+msgstr "10 pixel"
+#
+msgid "2"
+msgstr "2"
+#
+msgid "2 Pixels"
+msgstr "2 pixlar"
+#
+msgid "2 pixels"
+msgstr "2 pixel"
+#
+msgid "3"
+msgstr "3"
+#
+msgid "3 Pixels"
+msgstr "3 pixlar"
+#
+msgid "3 pixels"
+msgstr "3 pixel"
+#
+msgid "4"
+msgstr "4"
+#
+msgid "4 Pixels"
+msgstr "4 pixlar"
+#
+msgid "4 pixels"
+msgstr "4 pixel"
+#
+msgid "5"
+msgstr "5"
+#
+msgid "5 Pixels"
+msgstr "5 pixlar"
+#
+msgid "5 pixels"
+msgstr "5 pixel"
+#
+msgid "6"
+msgstr "6"
+#
+msgid "6 Pixels"
+msgstr "6 pixlar"
+#
+msgid "6 pixels"
+msgstr "6 pixel"
+#
+msgid "7"
+msgstr "7"
+#
+msgid "7 Pixels"
+msgstr "7 pixlar"
+#
+msgid "7 pixels"
+msgstr "7 pixel"
+#
+msgid "8"
+msgstr "8"
+#
+msgid "8 Pixels"
+msgstr "8 pixlar"
+#
+msgid "8 pixels"
+msgstr "8 pixel"
+#
+msgid "9"
+msgstr "9"
+#
+msgid "9 Pixels"
+msgstr "9 pixlar"
+#
+msgid "9 pixels"
+msgstr "9 pixel"
+#
+msgid "About"
+msgstr "Om"
+#
+msgid "Activate"
+msgstr "Aktivera"
+#
+msgid "Active"
+msgstr "Aktiv"
+#
+msgid "Active Centre Line Colour"
+msgstr "Färg på aktiv linje"
+#
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr ""
+"Aktiv DR Linje\n"
+"Kulör"
+#
+msgid "Active EBL Line Colour"
+msgstr "Kulör på aktiv EBL"
+#
+msgid "Active Fill Colour"
+msgstr "Färg på aktivt raster"
+#
+msgid "Active Line Colour"
+msgstr "Färg på aktiv linje"
+#
+msgid "Active Offset Line 2 Colour"
+msgstr "Kulör på aktiv sidolinje 2"
+#
+msgid "Active Offset Line Colour"
+msgstr "Färg på aktiv sidolinje"
+#
+msgid "Add Index Line"
+msgstr "Infoga indexlinje PIL"
+#
+msgid "Add New"
+msgstr "Lägg till ny"
+#
+msgid "All"
+msgstr "Allt"
+#
+msgid "Allow Left Mouse Button Drag"
+msgstr "Använd vänster musknapp för att dra"
+#
+msgid "Always"
+msgstr "Alltid"
+#
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
+"Visa alltid\n"
+"EBL info"
+#
 msgid "Applying changes from "
 msgstr "Tillämpar ändringar från "
-
-#: src/ODConfig.cpp:519
+#
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Är du säker på att du vill ta bort <ALLA> OR-punkter?"
+#
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Vill du radera <ALLA> linjer?"
+#
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Är du säker på att du vill radera utvalda objekt"
+#
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Är du säker på att du vill ta bort denna gränspunkt?"
+#
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Är du säker på att du vill ta bort denna gränsmarkering?"
+#
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Är du säker på att du vill ta bort denna DR-punkt?"
+#
+msgid "Are you sure you want to delete this DR?"
+msgstr "Är du säker på att du vill ta bort denna DR?"
+#
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Är du säker på att du vill ta bort denna EBL-punkt?"
+#
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Är du säker på att du vill ta bort denna EBL?"
+#
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Är du säker på att du vill ta bort denna bevakningszone?"
+#
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Är du säker på att du vill ta bort denna punkt?"
+#
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Är du säker på att du vill ta bort denna PIL-punkt?"
+#
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Är du säker på att du vill ta bort den här linjegruppen?"
+#
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Är du säker på att du vill ta bort den här linjegruppen?"
+#
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Är du säker på att du vill ta bort denna Textpunkt?"
+#
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Är du säker du vill ta bort detta lager och <ALLT> innehåll?"
+#
+msgid "Are you sure you want to delete this point?"
+msgstr "Är du säker på att du vill ta bort denna punkt?"
+#
+msgid "Are you sure you want to remove this "
+msgstr "Är du säker du vill ta bort denna "
+#
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Är du säker på att du vill ta bort denna gränspunkt?"
+#
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Är du säker på att du vill ta bort denna DR-punkt?"
+#
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Är du säker på att du vill ta bort denna EBL-punkt?"
+#
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Är du säker på att du vill ta bort denna punkt?"
+#
+msgid "Are you sure you want to remove this point?"
+msgstr "Är du säker på att du vill ta bort denna punkt?"
+#
+msgid "Arrival Radius"
+msgstr "Ankomstradie"
+#
+msgid "Background Colour"
+msgstr "Bakgrundsfärg"
+#
+msgid "Background Density"
+msgstr "Bakgrundens fyllnad"
+#
+msgid "Background Transparency"
+msgstr "Bakgrundstransparens"
+#
+msgid "Basic"
+msgstr "Enkel"
+#
+msgid "Bearing"
+msgstr "Bäring"
+#
+msgid "Bearing (M)"
+msgstr "Bäring (M)"
+#
+msgid "Bearing From-To"
+msgstr "Bäring från-till"
+#
+msgid "Bearing From-To (M)"
+msgstr "Bäring från-till (M)"
+#
+msgid "Bearing: "
+msgstr "Bäring: "
+#
+msgid "Boat"
+msgstr "Båt"
+#
+msgid "Bottom"
+msgstr "Nere"
+#
+msgid "Bottom Centre"
+msgstr "Ned i mitten"
+#
+msgid "Boundary"
+msgstr "Gränser"
+#
+msgid "Boundary '"
+msgstr "Gränser '"
+#
+msgid "Boundary Point"
+msgstr "Gränslinjepunkt"
+#
+msgid "Boundary Point Icon"
+msgstr "Gränslinjepunktens ikon"
+#
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+"Yttre gränspunkt\n"
+"Storlek"
+#
+msgid "Boundary Point Properties"
+msgstr "Egenskaper gränslinjepunkt"
+#
+msgid "Boundary Point Properties, Layer: "
+msgstr "Egenskaper Gränslinjepunkt, Lager: "
+#
+msgid "Boundary Point Type"
+msgstr "Typ av gränslinjepunkter"
+#
+msgid "Boundary Properties"
+msgstr "Egenskaper för gränslinjen"
+#
+msgid "Boundary Properties, Layer: "
+msgstr "Egenskaper för gränslinje, Lager: "
+#
+msgid "Boundary Type"
+msgstr "Gränstyp"
+#
+msgid "Centre"
+msgstr "Mitten"
+#
+msgid "Centre Line Style"
+msgstr "Format på centrumlinjen"
+#
+msgid "Centre Line Width"
+msgstr "Bredd på centrumlinjen"
+#
+msgid "Centre on moving boat"
+msgstr "Centrera på båten"
+#
+msgid "Change all Path Point Icons"
+msgstr "Ändra alla punkter i linjen"
+#
+msgid "Combo!"
+msgstr "Kombo!"
+#
+msgid "Confirm"
+msgstr "Bekräfta"
+#
+msgid "Confirm Object Delete"
+msgstr "Bekräfta borttagning av objektet"
+#
+msgid "Control Line"
+msgstr "Egenskaper"
+#
+msgid "Copy"
+msgstr "Kopiera"
+#
+msgid "Copy Boundary GUID"
+msgstr "Kopiera gräns-GUID"
+#
+msgid "Copy DR GUID"
+msgstr "Kopiera DR-GUID"
+#
+msgid "Copy EBL GUID"
+msgstr "Kopiera EBL-GUID"
+#
+msgid "Copy Guard Zone GUID"
+msgstr "Kopiera larmzonens id, GUID"
+#
+msgid "Copy Point GUID"
+msgstr "Kopiera punktens GUID"
+#
+msgid "Copy lat/long"
+msgstr "Kopiera lat/lon"
+#
+msgid "Course over Ground"
+msgstr "Kurs över grund (COG)"
+#
+msgid "Course over Ground (M)"
+msgstr "Kurs över grund (M)"
+#
+msgid "Course over Ground (T)"
+msgstr "Kurs (Sann)"
+#
+msgid "Create Boundary"
+msgstr "Skapa gränser"
+#
+msgid "Create Boundary Point"
+msgstr "Skapa gränslinjepunkt"
+#
+msgid "Create DR"
+msgstr "Skapa DR"
+#
+msgid "Create EBL"
+msgstr "Skapa EBL"
+#
+msgid "Create GZ"
+msgstr "Skapa Larmzon LZ"
+#
+msgid "Create PIL"
+msgstr "Skapa PIL"
+#
+msgid "Create Text Point"
+msgstr "Skapa Textpunkt"
+#
+msgid "DR"
+msgstr "DR"
+#
+msgid "DR Path Length"
+msgstr "DR Linjelängd"
+#
+msgid "DR Persistence"
+msgstr "DR linjens beständighet"
+#
+msgid "DR Point"
+msgstr "DR-punkt"
+#
+msgid "DR Point Icon"
+msgstr "Ikon för DR-punkter"
+#
+msgid "DR Point Interval"
+msgstr "DR Punktavstånd"
+#
+msgid "DR Point Properties"
+msgstr "Egenskaper DR-punkt"
+#
+msgid "DR Point Properties, Layer: "
+msgstr "Egenskaper DR-punkt, Lager: "
+#
+msgid "DR Properties"
+msgstr "Egenskaper för DR"
+#
+msgid "DR Properties, Layer: "
+msgstr "Egenskaper DR, Lager: "
+#
+msgid "Data Directory"
+msgstr "Datakatalog"
+#
+msgid "Data:"
+msgstr "Data:"
+#
+msgid "Date:"
+msgstr "Datum:"
+#
+msgid "Days"
+msgstr "Dagar"
+#
+msgid "Deactivate"
+msgstr "Inaktivera"
+#
+msgid "Dead Reckoning"
+msgstr "Död räkning (DR)"
+#
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Standard Offset (+ Sb/-Bb)"
+#
+msgid "Dele&te All"
+msgstr "Ta bort alla"
+#
+msgid "Delete"
+msgstr "Radera"
+#
+msgid "Delete Line"
+msgstr "Radera linjen"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Ta bort gällande inställningar för OCPN_Draw (Nej)"
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Ta bort gällande inställningar för OCPN_Draw (Ja)"
+#
+msgid "Delete..."
+msgstr "Ta bort..."
+#
+msgid "Desc"
+msgstr "Beskrivn"
+#
+msgid "Description"
+msgstr "Beskrivning"
+#
+msgid "Display Toolbar"
+msgstr "Visa verktygslist"
+#
+msgid "Display text"
+msgstr "Visningstext"
+#
+msgid "Distance"
+msgstr "Distans"
+#
+msgid "Distance Between Range Rings"
+msgstr "Avstånd mellan ringarna"
+#
+msgid "Distance From Boat"
+msgstr "Avstånd från båt"
+#
+msgid "Distance Unit"
+msgstr "Enhet för avstånd"
+#
+msgid "Distance Units"
+msgstr "Enhet för avstånd"
+#
+msgid "Distance between Range Rings"
+msgstr "Avstånd mellan ringarna"
+#
+msgid "Distance from Ownship"
+msgstr "Avstånd från eget fartyg"
+#
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr "Skall de OR-punkter som ingår i denna gräns också vara osynliga?"
+#
+msgid "Dot"
+msgstr "Prickad"
+#
+msgid "Dot Dash"
+msgstr "Punkt-streck"
+#
+msgid "Draw Toolbar"
+msgstr "Ritverktyg"
+#
+msgid "E&xport All Visible"
+msgstr "Exportera alla synliga"
+#
+msgid "EBL"
+msgstr "EBL"
+#
+msgid "EBL Angle (-P/+S)"
+msgstr "EBL Bäring (-Bb/+Sb)"
+#
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr ""
+"Fixerad EBL\n"
+"\n"
+"Slutposition"
+#
+msgid "EBL Fixed End Position"
+msgstr "EBL - fast slutposition"
+#
+msgid "EBL Persistence"
+msgstr "Spara EBL"
+#
+msgid "EBL Point"
+msgstr "EBL punkt"
+#
+msgid "EBL Point Properties"
+msgstr "Egenskaper EBL-punkt"
+#
+msgid "EBL Point Properties, Layer: "
+msgstr "Egenskaper EBL-punkt, Lager: "
+#
+msgid "EBL Properties"
+msgstr "Egenskaper för EBL"
+#
+msgid "EBL Properties, Layer: "
+msgstr "Egenskaper EBL, Lager: "
+#
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+"Anger hur nära skärmkanten en punkt kan ritas\n"
+"innan panorering. 5 (% av skärmvidd) är standard"
+#
+msgid "Edit"
+msgstr "Redigera"
+#
+msgid "Electronic Bearing Line"
+msgstr "Elektronisk Bäring-Linje"
+#
+msgid "End"
+msgstr "Slut"
+#
+msgid "End Point Icon"
+msgstr "Ikon för ändpunkt"
+#
+msgid "Error in import file."
+msgstr "Fel när filen importerades."
+#
+msgid "Example"
+msgstr "Exempel"
+#
+msgid "Exclusion"
+msgstr "Inre"
+#
+msgid "Export GPX file"
+msgstr "Exportera GPX-fil"
+#
+msgid "Extended"
+msgstr "Utökad"
+#
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+"Kunde inte ladda alla OCPN-Draw ikoner, kontrollera OCPN logg för detaljer"
+#
+msgid "Fill Colour"
+msgstr "Färg på raster"
+#
+msgid "Fill Density"
+msgstr "Rastertäthet"
+#
+msgid "First"
+msgstr "Första"
+#
+msgid "First Angle (-P/+S)"
+msgstr "Första vinkeln (-B/-S)"
+#
+msgid "First Point Icon"
+msgstr "Ikon för första punkten"
+#
+msgid "First distance"
+msgstr "Första avstånd"
+#
+msgid "Fonts"
+msgstr "Typsnitt"
+#
+msgid "For this leg the Great Circle boundary is "
+msgstr "Storcirkelgränsen för detta ben är "
+#
+msgid "From Point"
+msgstr "Från punkt"
+#
+msgid "From: "
+msgstr "Från: "
+#
+msgid "GUID"
+msgstr "GUID"
+#
+msgid "GZ"
+msgstr "LZ"
+#
+msgid "General"
+msgstr "Generellt"
+#
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"Ritverktyg för OpenCPN\n"
+"\n"
+"Tack alla som hjälpt till med värdefulla synpunkter."
+#
+msgid "General drawing for OpenCPN"
+msgstr "Ritverktyg för OpenCPN"
+#
+msgid "Guard Zone"
+msgstr "Larmzon"
+#
+msgid "Guard Zone Persistence"
+msgstr "Spara larmzon"
+#
+msgid "Guard Zone Point"
+msgstr "Larmzonspunkt"
+#
+msgid "Guard Zone Point Properties"
+msgstr "Larmzon. Punkt-egenskaper"
+#
+msgid "Guard Zone Properties"
+msgstr "Larmzonens egenskaper"
+#
+msgid "Heading"
+msgstr "Kurs (K/T)"
+#
+msgid "Help"
+msgstr "Hjälp"
+#
+msgid "Hide Boundary Point Icons"
+msgstr "Dölj gränspunkternas ikoner"
+#
+msgid "Hide Layer(s)"
+msgstr "Dölj lager"
+#
+msgid "Hide Path(s)"
+msgstr "Dölj bibliotekssökväg"
+#
+msgid "Hide Point names"
+msgstr "Dölj punktens namn"
+#
+msgid "Hide Point(s)"
+msgstr "Dölj punkter"
+#
+msgid "Hide from chart"
+msgstr "Visa inte på sjökorten"
+#
+msgid "Hours"
+msgstr "Timmar"
+#
+msgid "I&mport"
+msgstr "Importera"
+#
+msgid "ID"
+msgstr "ID"
+#
+msgid "ID Num"
+msgstr "ID-Nummer"
+#
+msgid "ID: "
+msgstr "ID: "
+#
+msgid "Icon"
+msgstr "Ikon"
+#
+msgid "Icon Directory"
+msgstr "Ikonkatalog"
+#
+msgid "Import"
+msgstr "Importera"
+#
+msgid "Import Error"
+msgstr "Fel vid import"
+#
 msgid "Import GPX file"
 msgstr "Importera GPX-fil"
-
-#: src/ODConfig.cpp:567 src/ODConfig.cpp:684
+#
+msgid "Import file"
+msgstr "Importera fil"
+#
+msgid "Import incomplete."
+msgstr "Ofullständig import."
+#
+msgid "Inactive Centre Line Colour"
+msgstr "Färg på aktiv linje"
+#
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+"Inaktiv DR-linje\n"
+"Kulör"
+#
+msgid "Inactive EBL Line Colour"
+msgstr "Kulör på inaktiv EBL"
+#
+msgid "Inactive Fill Colour"
+msgstr "Färg på inaktivt raster"
+#
+msgid "Inactive Line Colour"
+msgstr "Färg på inaktiv linje"
+#
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Kulör på inaktiv sidolinje 2"
+#
+msgid "Inactive Offset Line Colour"
+msgstr "Färg på inaktiv sidolinje"
+#
+msgid "Inclusion"
+msgstr "Yttre"
+#
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+"Yttre gräns\n"
+"storlek"
+#
+msgid "Inclusion Boundary Size"
+msgstr "Storlek på yttre gräns"
+#
+msgid "Index Line Properties"
+msgstr "Egenskaper för parallell indexlinje"
+#
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Indexlinjer (+ Styrb /-Bab)"
+#
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+"Första punkten i en linje kan normalt ritas\n"
+"närmare kanten. 3 (%) är standard"
+#
+msgid "Initial number of index lines"
+msgstr "Antal indexlinjer från början"
+#
+msgid "Insert Boundary Point"
+msgstr "Infoga gränspunkt"
+#
+msgid "Insert EBL Point"
+msgstr "Infoga EBL-punkt"
+#
+msgid "Interval Type"
+msgstr "Bas för linjedelning"
+#
+msgid "Kilometres"
+msgstr "Kilometer"
+#
+msgid "Latitude"
+msgstr "Latitude"
+#
+msgid "Layer"
+msgstr "Lager"
+#
+msgid "Layer "
+msgstr "Lager "
+#
+msgid "Layer Boundary"
+msgstr "Gräns i lager"
+#
+msgid "Layer Boundary Point"
+msgstr "Lager - Gränspunkter"
+#
+msgid "Layer DR Point"
+msgstr "Lager - DR-punkter"
+#
+msgid "Layer EBL Point"
+msgstr "Lager - EBL-punkter"
+#
+msgid "Layer Name"
+msgstr "Lagernamn"
+#
+msgid "Layer Text Point"
+msgstr "Lager - Textpunkter"
+#
+msgid "Layers"
+msgstr "Lager"
+#
+msgid "Layers Directory"
+msgstr "Lagerkatalog"
+#
+msgid "Left"
+msgstr "Vänster"
+#
+msgid "Left Click links are deleted."
+msgstr "Vänster klick och länkarna tas bort."
+#
+msgid "Left Click links are opened for editing."
+msgstr "Vänster klick och länkarna öppnas för redigering."
+#
+msgid "Left Click links are opened in the default browser."
+msgstr "Vänster klick på länkarna öppnar i standardwebbläsaren."
+#
+msgid "Left click opens in browser"
+msgstr "Vänster klick öppnar i webbläsare"
+#
+msgid "Leg: from "
+msgstr "Ben: från "
+#
+msgid "Length Type"
+msgstr "Bas för linjens längd"
+#
+msgid "License"
+msgstr "Licens"
+#
+msgid "Line Colour"
+msgstr "Linjefärg"
+#
+msgid "Line Style"
+msgstr "Linjestil"
+#
+msgid "Line Width"
+msgstr "Linjebredd"
+#
+msgid "Link"
+msgstr "Länk"
+#
+msgid "Link Description"
+msgstr "Beskrivning"
+#
+msgid "Links"
+msgstr "Länkar"
+#
+msgid "List contents "
+msgstr "Visa innehåll "
+#
+msgid "Loading navobjects from "
+msgstr "Laddar navigeringsobjekt från "
+#
+msgid "Local file..."
+msgstr "Lokal fil..."
+#
+msgid "Long Dash"
+msgstr "Långa streck"
+#
+msgid "Longitude"
+msgstr "Longitud"
+#
+msgid "Maintain with"
+msgstr "Låt linjen rotera med båtens:"
+#
+msgid "Major:"
+msgstr "Huvud:"
+#
+msgid "Match VRM colour to EBL colour"
+msgstr "Matcha VRM färg som EBL färg"
+#
+msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Merge and Delete Boundaries"
+msgstr "Sammanfoga och ta bort gränser"
+#
+msgid "Merge and Keep Boundaries"
+msgstr "Sammanfoga och behåll gränslinjer"
+#
+msgid "Minor:"
+msgstr "Del:"
+#
+msgid "Minutes"
+msgstr "Minuter"
+#
+msgid "Move Boundary"
+msgstr "Flytta gränsen"
+#
+msgid "Move Boundary Point"
+msgstr "Flytta gränspunkt"
+#
+msgid "Move Boundary Segment"
+msgstr "Flytta gränslinjesektion"
+#
+msgid "Move DR Point"
+msgstr "Flytta DR-punkt"
+#
+msgid "Move EBL"
+msgstr "Flytta EBL"
+#
+msgid "Move EBL Point"
+msgstr "Flytta EBL-punkt"
+#
+msgid "Move Guard Zone Point"
+msgstr "Flytta larmzonspunkten"
+#
+msgid "Move Line"
+msgstr "Flytta linjen"
+#
+msgid "Move OD Point"
+msgstr "Flytta OD-punkt"
+#
+msgid "Move PIL Point"
+msgstr "Flytta PIL-punkt"
+#
+msgid "Move Text Point"
+msgstr "Flytta Textpunkt"
+#
+msgid "Move start point to boat lat/lon"
+msgstr "Flytta startpunkten till båtens position"
+#
+msgid "Multiple Boundaries"
+msgstr "Flera gränserlinjer"
+#
+msgid "Name"
+msgstr "Namn"
+#
+msgid "Name:"
+msgstr "Namn:"
+#
+msgid "Name: "
+msgstr "Namn: "
+#
+msgid "Nautical Miles"
+msgstr "Nautisk Mil"
+#
+msgid "Neither"
+msgstr "Oberoende"
+#
+msgid "Never"
+msgstr "Aldrig"
+#
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Nytt lager %d: %s"
-
-#: src/ODConfig.cpp:633
-msgid "Import file"
-msgstr "Importera fil"
-
-#: src/ODDRDialogDef.cpp:26 src/ODPropertiesDialogDef.cpp:663
-msgid "Speed over Ground"
-msgstr "Fart över grund"
-
-#: src/ODDRDialogDef.cpp:30 src/ODDRDialogDef.cpp:46 src/ODDRDialogDef.cpp:54
-msgid "0.0"
-msgstr "0,0"
-
-#: src/ODDRDialogDef.cpp:34 src/ODPathPropertiesDialogDef.cpp:170
-#: src/ODPathPropertiesDialogDef.cpp:214 src/ODPropertiesDialogDef.cpp:586
-#: src/ODPropertiesDialogDef.cpp:670 src/ODPropertiesDialogDef.cpp:943
-msgid "Course over Ground"
-msgstr "Kurs över grund (COG)"
-
-#: src/ODDRDialogDef.cpp:38
-msgid "0"
-msgstr "0"
-
-#: src/ODDRDialogDef.cpp:42 src/ODPropertiesDialogDef.cpp:677
-msgid "DR Path Length"
-msgstr "DR Linjelängd"
-
-#: src/ODDRDialogDef.cpp:50 src/ODPropertiesDialogDef.cpp:684
-msgid "DR Point Interval"
-msgstr "DR Punktavstånd"
-
-#: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
-#: src/ODPropertiesDialogDef.cpp:699 src/ODPropertiesDialogDef.cpp:705
-msgid "Distance"
-msgstr "Distans"
-
-#: src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:64
-#: src/ODPropertiesDialogDef.cpp:699 src/ODPropertiesDialogDef.cpp:705
-msgid "Time"
-msgstr "Tid"
-
-#: src/ODDRDialogDef.cpp:60 src/ODPropertiesDialogDef.cpp:701
-msgid "Length Type"
-msgstr "Bas för linjens längd"
-
-#: src/ODDRDialogDef.cpp:66 src/ODPropertiesDialogDef.cpp:707
-msgid "Interval Type"
-msgstr "Bas för linjedelning"
-
-#: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:182
-#: src/ODPropertiesDialogDef.cpp:310 src/ODPropertiesDialogDef.cpp:711
-#: src/ODPropertiesDialogDef.cpp:793
-msgid "Kilometres"
-msgstr "Kilometer"
-
-#: src/ODDRDialogDef.cpp:78 src/ODPointPropertiesDialog.cpp:182
-#: src/ODPropertiesDialogDef.cpp:310 src/ODPropertiesDialogDef.cpp:711
-#: src/ODPropertiesDialogDef.cpp:793
-msgid "Nautical Miles"
-msgstr "Nautisk Mil"
-
-#: src/ODDRDialogDef.cpp:80 src/ODPropertiesDialogDef.cpp:713
-msgid "Distance Units"
-msgstr "Enhet för avstånd"
-
-#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:717
-msgid "Days"
-msgstr "Dagar"
-
-#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:717
-msgid "Hours"
-msgstr "Timmar"
-
-#: src/ODDRDialogDef.cpp:84 src/ODPropertiesDialogDef.cpp:717
-msgid "Minutes"
-msgstr "Minuter"
-
-#: src/ODDRDialogDef.cpp:86 src/ODPropertiesDialogDef.cpp:719
-msgid "Time Units"
-msgstr "Tidsenheter"
-
-#: src/ODDRDialogDef.cpp:96 src/ODLinkPropertiesDialogDef.cpp:45
-#: src/ODNewODPointDialogDef.cpp:30 src/ODPathPropertiesDialogDef.cpp:314
-#: src/ODPointPropertiesDialog.cpp:413 src/ODPropertiesDialogDef.cpp:1445
-#: src/PILPropertiesDialogDef.cpp:104 src/PathAndPointManagerDialogDef.cpp:139
-msgid "&OK"
-msgstr "&OK"
-
-#: src/ODDRDialogDef.cpp:100 src/ODLinkPropertiesDialogDef.cpp:48
-#: src/ODNewODPointDialogDef.cpp:33 src/ODPathPropertiesDialogDef.cpp:319
-#: src/ODPointPropertiesDialog.cpp:416 src/ODPropertiesDialogDef.cpp:1448
-#: src/PILPropertiesDialogDef.cpp:107
-msgid "&Cancel"
-msgstr "A&vsluta"
-
-#: src/ODDRDialogImpl.cpp:106 src/ODDRDialogImpl.cpp:139
-#: src/ODDRDialogImpl.cpp:180
-msgid "Course over Ground (M)"
-msgstr "Kurs över grund (M)"
-
-#: src/ODDRDialogImpl.cpp:107 src/ODDRDialogImpl.cpp:140
-#: src/ODDRDialogImpl.cpp:181
-msgid "Course over Ground (T)"
-msgstr "Kurs (Sann)"
-
-#: src/ODDRDialogImpl.cpp:227 src/ODPropertiesDialogDef.cpp:740
-msgid "DR"
-msgstr "DR"
-
-#: src/ODEventHandler.cpp:276 src/ODEventHandler.cpp:1081
-msgid "Layer "
-msgstr "Lager "
-
-#: src/ODEventHandler.cpp:286
-msgid "(unnamed)"
-msgstr "(namnlös)"
-
-#: src/ODEventHandler.cpp:293
-msgid "Total Length: "
-msgstr "Total längd: "
-
-#: src/ODEventHandler.cpp:294
-msgid "Leg: from "
-msgstr "Ben: från "
-
-#: src/ODEventHandler.cpp:295
-msgid " to "
-msgstr " till "
-
-#: src/ODEventHandler.cpp:305
-msgid "Name: "
-msgstr "Namn: "
-
-#: src/ODEventHandler.cpp:306
-msgid "ID: "
-msgstr "ID: "
-
-#: src/ODEventHandler.cpp:307
-msgid "Offset: "
-msgstr "Förskjutning: "
-
-#: src/ODEventHandler.cpp:310
-msgid "Bearing: "
-msgstr "Bäring: "
-
-#: src/ODEventHandler.cpp:313
-msgid "From: "
-msgstr "Från: "
-
-#: src/ODEventHandler.cpp:318
-msgid " To: "
-msgstr " Till: "
-
-#: src/ODEventHandler.cpp:428
-msgid "Layer"
-msgstr "Lager"
-
-#: src/ODEventHandler.cpp:606
-msgid "Are you sure you want to delete this Boundary?"
-msgstr "Är du säker på att du vill ta bort denna gränsmarkering?"
-
-#: src/ODEventHandler.cpp:607
-msgid "OCPN Draw Boundary Delete"
-msgstr "Ta bort OD gränser"
-
-#: src/ODEventHandler.cpp:610
-msgid "Are you sure you want to delete this EBL?"
-msgstr "Är du säker på att du vill ta bort denna EBL?"
-
-#: src/ODEventHandler.cpp:611
-msgid "OCPN Draw EBL Delete"
-msgstr "Ta bort OD EBL"
-
-#: src/ODEventHandler.cpp:614
-msgid "Are you sure you want to delete this DR?"
-msgstr "Är du säker på att du vill ta bort denna DR?"
-
-#: src/ODEventHandler.cpp:615
-msgid "OCPN Draw DR Delete"
-msgstr "Ta bort OD DR"
-
-#: src/ODEventHandler.cpp:618
-msgid "Are you sure you want to delete this Guard Zone?"
-msgstr "Är du säker på att du vill ta bort denna bevakningszone?"
-
-#: src/ODEventHandler.cpp:619
-msgid "OCPN Draw GZ Delete"
-msgstr "Ta bort OD zone"
-
-#: src/ODEventHandler.cpp:622
-msgid "Are you sure you want to delete this Parallel Index Line Group?"
-msgstr "Är du säker på att du vill ta bort den här linjegruppen?"
-
-#: src/ODEventHandler.cpp:623
-msgid "OCPN Draw PIL Delete"
-msgstr "Ta bort OD PIL"
-
-#: src/ODEventHandler.cpp:642 src/ODPathPropertiesDialogImpl.cpp:887
-msgid "Are you sure you want to delete this Parallel Index Line?"
-msgstr "Är du säker på att du vill ta bort den här linjegruppen?"
-
-#: src/ODEventHandler.cpp:643 src/ODPathPropertiesDialogImpl.cpp:888
-msgid "OCPN Draw Parallel Index Line Delete"
-msgstr "OCPN Ritverktyg, ta bort en parallell indexlinje"
-
-#: src/ODEventHandler.cpp:805
-msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr "Du kan inte ta bort denna punkt eftersom det förstör gränsmarkeringen."
-
-#: src/ODEventHandler.cpp:806 src/ODEventHandler.cpp:823
-msgid "OCPN Draw Remove "
-msgstr "OCPN Ta bort från Ritaren "
-
-#: src/ODEventHandler.cpp:809 src/ODEventHandler.cpp:1225
-msgid "OD Point"
-msgstr "OD Punkt"
-
-#: src/ODEventHandler.cpp:822
-msgid "Are you sure you want to remove this "
-msgstr "Är du säker du vill ta bort denna "
-
-#: src/ODEventHandler.cpp:826 src/ODEventHandler.cpp:838
-msgid "Are you sure you want to remove this OD Point?"
-msgstr "Är du säker på att du vill ta bort denna punkt?"
-
-#: src/ODEventHandler.cpp:827 src/ODEventHandler.cpp:839
-#: src/ODPathPropertiesDialogImpl.cpp:827
-msgid "OCPN Draw Remove OD Point"
-msgstr "Ta bort OD punkt"
-
-#: src/ODEventHandler.cpp:829
-msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Är du säker på att du vill ta bort denna gränspunkt?"
-
-#: src/ODEventHandler.cpp:830
-msgid "OCPN Draw Remove Boundary Point"
-msgstr "Ta bort gränspunkt"
-
-#: src/ODEventHandler.cpp:832
-msgid "Are you sure you want to remove this EBL Point?"
-msgstr "Är du säker på att du vill ta bort denna EBL-punkt?"
-
-#: src/ODEventHandler.cpp:833
-msgid "OCPN Draw Remove EBL Point"
-msgstr "Ta bort EBL-punkt"
-
-#: src/ODEventHandler.cpp:835
-msgid "Are you sure you want to remove this DR Point?"
-msgstr "Är du säker på att du vill ta bort denna DR-punkt?"
-
-#: src/ODEventHandler.cpp:836
-msgid "OCPN Draw Remove DR Point"
-msgstr "Ta bort DR-punkt"
-
-#: src/ODEventHandler.cpp:888 src/ODEventHandler.cpp:930
-msgid "Are you sure you want to delete this OD Point?"
-msgstr "Är du säker på att du vill ta bort denna punkt?"
-
-#: src/ODEventHandler.cpp:889 src/ODEventHandler.cpp:931
-#: src/ODPathPropertiesDialogImpl.cpp:807
-msgid "OCPN Draw Delete OD Point"
-msgstr "Ta bort punkt"
-
-#: src/ODEventHandler.cpp:891 src/ODEventHandler.cpp:933
-msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Är du säker på att du vill ta bort denna gränspunkt?"
-
-#: src/ODEventHandler.cpp:892 src/ODEventHandler.cpp:934
-msgid "OCPN Draw Delete Boundary Point"
-msgstr "Ta bort gränspunkt"
-
-#: src/ODEventHandler.cpp:894 src/ODEventHandler.cpp:939
-msgid "Are you sure you want to delete this DR Point?"
-msgstr "Är du säker på att du vill ta bort denna DR-punkt?"
-
-#: src/ODEventHandler.cpp:895 src/ODEventHandler.cpp:940
-msgid "OCPN Draw Delete DR Point"
-msgstr "Ta bort DR-punkt"
-
-#: src/ODEventHandler.cpp:897 src/ODEventHandler.cpp:942
-msgid "Are you sure you want to delete this EBL Point?"
-msgstr "Är du säker på att du vill ta bort denna EBL-punkt?"
-
-#: src/ODEventHandler.cpp:898 src/ODEventHandler.cpp:943
-msgid "OCPN Draw Delete EBL Point"
-msgstr "Ta bort EBL-punkt"
-
-#: src/ODEventHandler.cpp:900
-msgid "Are you sure you want to delete this PIL Point?"
-msgstr "Är du säker på att du vill ta bort denna PIL-punkt?"
-
-#: src/ODEventHandler.cpp:901
-msgid "OCPN Draw Delete PIL Point"
-msgstr "Ta bort OD punkt"
-
-#: src/ODEventHandler.cpp:936
-msgid "Are you sure you want to delete this Text Point?"
-msgstr "Är du säker på att du vill ta bort denna Textpunkt?"
-
-#: src/ODEventHandler.cpp:937
-msgid "OCPN Draw Delete Text Point"
-msgstr "OCPN Ritverktyg; Radera textpunkt"
-
-#: src/ODEventHandler.cpp:1089 src/ODEventHandler.cpp:1103
-msgid "Control Line"
-msgstr "Egenskaper"
-
-#: src/ODEventHandler.cpp:1092 src/ODEventHandler.cpp:1107
-#: src/ODEventHandler.cpp:1205 src/ODEventHandler.cpp:1227
-#: src/ODEventHandler.cpp:1274
-msgid "Properties..."
-msgstr "Egenskaper..."
-
-#: src/ODEventHandler.cpp:1110 src/ODEventHandler.cpp:1119
-msgid "Centre on moving boat"
-msgstr "Centrera på båten"
-
-#: src/ODEventHandler.cpp:1111 src/ODEventHandler.cpp:1120
-msgid "Move start point to boat lat/lon"
-msgstr "Flytta startpunkten till båtens position"
-
-#: src/ODEventHandler.cpp:1113 src/ODEventHandler.cpp:1122
-msgid "Pick a new start point"
-msgstr "Ange en ny startpunkt"
-
-#: src/ODEventHandler.cpp:1116
-msgid "Match VRM colour to EBL colour"
-msgstr "Matcha VRM färg som EBL färg"
-
-#: src/ODEventHandler.cpp:1125
-msgid "Update initial conditions"
-msgstr "Uppdatera ursprungliga inställningar"
-
-#: src/ODEventHandler.cpp:1130
-msgid "Move Boundary"
-msgstr "Flytta gränsen"
-
-#: src/ODEventHandler.cpp:1132
-msgid "Move EBL"
-msgstr "Flytta EBL"
-
-#: src/ODEventHandler.cpp:1138
-msgid "Move Boundary Segment"
-msgstr "Flytta gränslinjesektion"
-
-#: src/ODEventHandler.cpp:1144
-msgid "Insert Boundary Point"
-msgstr "Infoga gränspunkt"
-
-#: src/ODEventHandler.cpp:1146
-msgid "Insert EBL Point"
-msgstr "Infoga EBL-punkt"
-
-#: src/ODEventHandler.cpp:1153
-msgid "Add Index Line"
-msgstr "Infoga indexlinje PIL"
-
-#: src/ODEventHandler.cpp:1158
-msgid "Hide Boundary Point Icons"
-msgstr "Dölj gränspunkternas ikoner"
-
-#: src/ODEventHandler.cpp:1160 src/ODPathPropertiesDialogDef.cpp:143
-#: src/ODPropertiesDialogDef.cpp:176
-msgid "Show Boundary Point Icons"
-msgstr "Visa gränspunkternas ikoner"
-
-#: src/ODEventHandler.cpp:1164
-msgid "Delete..."
-msgstr "Ta bort..."
-
-#: src/ODEventHandler.cpp:1166 src/ODEventHandler.cpp:1252
-#: src/ODEventHandler.cpp:1255 src/ODPointPropertiesDialog.cpp:258
-msgid "Delete"
-msgstr "Radera"
-
-#: src/ODEventHandler.cpp:1169
-msgid "Deactivate"
-msgstr "Inaktivera"
-
-#: src/ODEventHandler.cpp:1170
-msgid "Activate"
-msgstr "Aktivera"
-
-#: src/ODEventHandler.cpp:1174
-msgid "Copy Boundary GUID"
-msgstr "Kopiera gräns-GUID"
-
-#: src/ODEventHandler.cpp:1176
-msgid "Copy EBL GUID"
-msgstr "Kopiera EBL-GUID"
-
-#: src/ODEventHandler.cpp:1178
-msgid "Copy DR GUID"
-msgstr "Kopiera DR-GUID"
-
-#: src/ODEventHandler.cpp:1180
-msgid "Copy Guard Zone GUID"
-msgstr "Kopiera larmzonens id, GUID"
-
-#: src/ODEventHandler.cpp:1197
-msgid "Layer Boundary Point"
-msgstr "Lager - Gränspunkter"
-
-#: src/ODEventHandler.cpp:1199
-msgid "Layer Text Point"
-msgstr "Lager - Textpunkter"
-
-#: src/ODEventHandler.cpp:1201
-msgid "Layer EBL Point"
-msgstr "Lager - EBL-punkter"
-
-#: src/ODEventHandler.cpp:1203
-msgid "Layer DR Point"
-msgstr "Lager - DR-punkter"
-
-#: src/ODEventHandler.cpp:1213 src/ODPathPropertiesDialogImpl.cpp:202
-#: src/ODPropertiesDialogDef.cpp:350 src/ODToolbarImpl.cpp:517
-msgid "Boundary Point"
-msgstr "Gränslinjepunkt"
-
-#: src/ODEventHandler.cpp:1215 src/ODPropertiesDialogDef.cpp:464
-#: src/ODToolbarImpl.cpp:518
-msgid "Text Point"
-msgstr "Textpunkt"
-
-#: src/ODEventHandler.cpp:1217 src/ODPathPropertiesDialogImpl.cpp:206
-msgid "EBL Point"
-msgstr "EBL punkt"
-
-#: src/ODEventHandler.cpp:1219 src/ODPathPropertiesDialogImpl.cpp:208
-#: src/ODPropertiesDialogDef.cpp:833
-msgid "DR Point"
-msgstr "DR-punkt"
-
-#: src/ODEventHandler.cpp:1221
-msgid "Guard Zone Point"
-msgstr "Larmzonspunkt"
-
-#: src/ODEventHandler.cpp:1223 src/ODPathPropertiesDialogImpl.cpp:210
-msgid "PIL Point"
-msgstr "PIL-punkt"
-
-#: src/ODEventHandler.cpp:1230
-msgid "Move Boundary Point"
-msgstr "Flytta gränspunkt"
-
-#: src/ODEventHandler.cpp:1232
-msgid "Move Text Point"
-msgstr "Flytta Textpunkt"
-
-#: src/ODEventHandler.cpp:1234
-msgid "Move EBL Point"
-msgstr "Flytta EBL-punkt"
-
-#: src/ODEventHandler.cpp:1236
-msgid "Move DR Point"
-msgstr "Flytta DR-punkt"
-
-#: src/ODEventHandler.cpp:1238
-msgid "Move PIL Point"
-msgstr "Flytta PIL-punkt"
-
-#: src/ODEventHandler.cpp:1240 src/ODEventHandler.cpp:1243
-msgid "Move OD Point"
-msgstr "Flytta OD-punkt"
-
-#: src/ODEventHandler.cpp:1242
-msgid "Move Guard Zone Point"
-msgstr "Flytta larmzonspunkten"
-
-#: src/ODEventHandler.cpp:1250
-msgid "Remove Point from Path"
-msgstr "Ta bort denna punk från linjen"
-
-#: src/ODEventHandler.cpp:1256
-msgid "Copy Point GUID"
-msgstr "Kopiera punktens GUID"
-
-#: src/ODEventHandler.cpp:1264
-msgid "Multiple Boundaries"
-msgstr "Flera gränserlinjer"
-
-#: src/ODEventHandler.cpp:1265
-msgid "Merge and Keep Boundaries"
-msgstr "Sammanfoga och behåll gränslinjer"
-
-#: src/ODEventHandler.cpp:1266
-msgid "Merge and Delete Boundaries"
-msgstr "Sammanfoga och ta bort gränser"
-
-#: src/ODEventHandler.cpp:1273 src/ODPropertiesDialogDef.cpp:1244
-#: src/ODToolbarImpl.cpp:522
-msgid "Parallel Index Line"
-msgstr "Parallell Indexlinje PIL"
-
-#: src/ODEventHandler.cpp:1275
-msgid "Move Line"
-msgstr "Flytta linjen"
-
-#: src/ODEventHandler.cpp:1276
-msgid "Delete Line"
-msgstr "Radera linjen"
-
-#: src/ODEventHandler.cpp:1281 src/ODEventHandler.cpp:1288
-#: src/ODEventHandler.cpp:1295
-msgid "Path Manager Dialog"
-msgstr "Sökvägshantering"
-
-#: src/ODEventHandler.cpp:1282
-msgid "Hide Path(s)"
-msgstr "Dölj bibliotekssökväg"
-
-#: src/ODEventHandler.cpp:1283
-msgid "Show Paths(s)"
-msgstr "Visa sökvägar"
-
-#: src/ODEventHandler.cpp:1289
-msgid "Hide Point(s)"
-msgstr "Dölj punkter"
-
-#: src/ODEventHandler.cpp:1290
-msgid "Show Point(s)"
-msgstr "Visa punkter"
-
-#: src/ODEventHandler.cpp:1296
-msgid "Hide Layer(s)"
-msgstr "Dölj lager"
-
-#: src/ODEventHandler.cpp:1297
-msgid "Show Layer(s)"
-msgstr "Visa lager"
-
-#: src/ODLinkPropertiesDialogDef.cpp:20
-msgid "Link"
-msgstr "Länk"
-
-#: src/ODLinkPropertiesDialogDef.cpp:22
-msgid "Link Description"
-msgstr "Beskrivning"
-
-#: src/ODLinkPropertiesDialogDef.cpp:29
-msgid "URL"
-msgstr "URL"
-
-#: src/ODLinkPropertiesDialogDef.cpp:36
-msgid "*.*"
-msgstr "*.*"
-
-#: src/ODLinkPropertiesDialogDef.cpp:36
-msgid "Local file..."
-msgstr "Lokal fil..."
-
-#: src/ODNavObjectChanges.cpp:2044
-msgid "Error in import file."
-msgstr "Fel när filen importerades."
-
-#: src/ODNavObjectChanges.cpp:2046 src/ODNavObjectChanges.cpp:2133
-msgid "Boundary '"
-msgstr "Gränser '"
-
-#: src/ODNavObjectChanges.cpp:2049
-msgid "will be deleted. No further boundaries will be imported"
-msgstr "kommer att raderas. Inga ytterligare gränser kommer att importeras"
-
-#: src/ODNavObjectChanges.cpp:2051 src/ODNavObjectChanges.cpp:2138
-msgid "Import Error"
-msgstr "Fel vid import"
-
-#: src/ODNavObjectChanges.cpp:2131
-msgid "Import incomplete."
-msgstr "Ofullständig import."
-
-#: src/ODNavObjectChanges.cpp:2136
-msgid "will be deleted."
-msgstr "kommer att raderas."
-
-#: src/ODNewODPointDialogDef.cpp:21 src/ODPropertiesDialogDef.cpp:187
-#: src/ODToolbarImpl.cpp:516 src/ocpn_draw_pi.cpp:3252
-msgid "Boundary"
-msgstr "Gränser"
-
-#: src/ODNewODPointDialogDef.cpp:21
-msgid "Text"
-msgstr "Text"
-
-#: src/ODPathPropertiesDialogDef.cpp:32 src/ODPointPropertiesDialog.cpp:32
-#: src/PILProp.cpp:340 src/PILPropertiesDialogDef.cpp:35
-msgid "Name"
-msgstr "Namn"
-
-#: src/ODPathPropertiesDialogDef.cpp:39 src/ODPathPropertiesDialogImpl.cpp:712
-#: src/ODPointPropertiesDialog.cpp:223 src/PILProp.cpp:342
-#: src/PILPropertiesDialogDef.cpp:42
-msgid "Description"
-msgstr "Beskrivning"
-
-#: src/ODPathPropertiesDialogDef.cpp:46 src/ODPointPropertiesDialog.cpp:393
-msgid "GUID"
-msgstr "GUID"
-
-#: src/ODPathPropertiesDialogDef.cpp:63 src/PILPropertiesDialogDef.cpp:56
-msgid "Active"
-msgstr "Aktiv"
-
-#: src/ODPathPropertiesDialogDef.cpp:67
-msgid "Total Length"
-msgstr "Total längd"
-
-#: src/ODPathPropertiesDialogDef.cpp:84 src/PILPropertiesDialogDef.cpp:71
-msgid "Line Colour"
-msgstr "Linjefärg"
-
-#: src/ODPathPropertiesDialogDef.cpp:91 src/ODPropertiesDialogDef.cpp:138
-#: src/ODPropertiesDialogDef.cpp:498 src/ODPropertiesDialogDef.cpp:573
-#: src/ODPropertiesDialogDef.cpp:653 src/ODPropertiesDialogDef.cpp:915
-#: src/PILPropertiesDialogDef.cpp:78
-msgid "Line Style"
-msgstr "Linjestil"
-
-#: src/ODPathPropertiesDialogDef.cpp:95 src/ODPointPropertiesDialog.cpp:209
-#: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:337
-#: src/ODPropertiesDialogDef.cpp:502 src/ODPropertiesDialogDef.cpp:577
-#: src/ODPropertiesDialogDef.cpp:657 src/ODPropertiesDialogDef.cpp:820
-#: src/ODPropertiesDialogDef.cpp:919 src/ODPropertiesDialogDef.cpp:1149
-#: src/ODPropertiesDialogDef.cpp:1187 src/PILPropertiesDialogDef.cpp:82
-msgid "Dot"
-msgstr "Prickad"
-
-#: src/ODPathPropertiesDialogDef.cpp:95 src/ODPointPropertiesDialog.cpp:209
-#: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:337
-#: src/ODPropertiesDialogDef.cpp:502 src/ODPropertiesDialogDef.cpp:577
-#: src/ODPropertiesDialogDef.cpp:657 src/ODPropertiesDialogDef.cpp:820
-#: src/ODPropertiesDialogDef.cpp:919 src/ODPropertiesDialogDef.cpp:1149
-#: src/ODPropertiesDialogDef.cpp:1187 src/ODPropertiesDialogDef.cpp:1225
-#: src/PILPropertiesDialogDef.cpp:82
-msgid "Dot Dash"
-msgstr "Punkt-streck"
-
-#: src/ODPathPropertiesDialogDef.cpp:95 src/ODPointPropertiesDialog.cpp:209
-#: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:337
-#: src/ODPropertiesDialogDef.cpp:502 src/ODPropertiesDialogDef.cpp:577
-#: src/ODPropertiesDialogDef.cpp:657 src/ODPropertiesDialogDef.cpp:820
-#: src/ODPropertiesDialogDef.cpp:919 src/ODPropertiesDialogDef.cpp:1149
-#: src/ODPropertiesDialogDef.cpp:1187 src/ODPropertiesDialogDef.cpp:1225
-#: src/PILPropertiesDialogDef.cpp:82
-msgid "Long Dash"
-msgstr "Långa streck"
-
-#: src/ODPathPropertiesDialogDef.cpp:95 src/ODPointPropertiesDialog.cpp:209
-#: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:337
-#: src/ODPropertiesDialogDef.cpp:502 src/ODPropertiesDialogDef.cpp:577
-#: src/ODPropertiesDialogDef.cpp:657 src/ODPropertiesDialogDef.cpp:820
-#: src/ODPropertiesDialogDef.cpp:919 src/ODPropertiesDialogDef.cpp:1149
-#: src/ODPropertiesDialogDef.cpp:1187 src/ODPropertiesDialogDef.cpp:1225
-#: src/PILPropertiesDialogDef.cpp:82
-msgid "Short Dash"
-msgstr "Korta streck"
-
-#: src/ODPathPropertiesDialogDef.cpp:95 src/ODPointPropertiesDialog.cpp:209
-#: src/ODPropertiesDialogDef.cpp:142 src/ODPropertiesDialogDef.cpp:337
-#: src/ODPropertiesDialogDef.cpp:502 src/ODPropertiesDialogDef.cpp:577
-#: src/ODPropertiesDialogDef.cpp:657 src/ODPropertiesDialogDef.cpp:820
-#: src/ODPropertiesDialogDef.cpp:919 src/ODPropertiesDialogDef.cpp:1149
-#: src/ODPropertiesDialogDef.cpp:1187 src/ODPropertiesDialogDef.cpp:1225
-#: src/PILPropertiesDialogDef.cpp:82
-msgid "Solid"
-msgstr "Fylld"
-
-#: src/ODPathPropertiesDialogDef.cpp:101 src/ODPropertiesDialogDef.cpp:128
-#: src/ODPropertiesDialogDef.cpp:488 src/ODPropertiesDialogDef.cpp:563
-#: src/ODPropertiesDialogDef.cpp:643 src/ODPropertiesDialogDef.cpp:905
-#: src/PILPropertiesDialogDef.cpp:88
-msgid "Line Width"
-msgstr "Linjebredd"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "1 pixel"
-msgstr "1 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "10 pixels"
-msgstr "10 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "2 pixels"
-msgstr "2 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "3 pixels"
-msgstr "3 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "4 pixels"
-msgstr "4 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "5 pixels"
-msgstr "5 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "6 pixels"
-msgstr "6 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "7 pixels"
-msgstr "7 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "8 pixels"
-msgstr "8 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:105 src/ODPointPropertiesDialog.cpp:199
-#: src/ODPropertiesDialogDef.cpp:327 src/ODPropertiesDialogDef.cpp:810
-#: src/PILPropertiesDialogDef.cpp:92
-msgid "9 pixels"
-msgstr "9 pixel"
-
-#: src/ODPathPropertiesDialogDef.cpp:111
-msgid "Fill Colour"
-msgstr "Färg på raster"
-
-#: src/ODPathPropertiesDialogDef.cpp:118 src/ODPointPropertiesDialog.cpp:128
-#: src/ODPropertiesDialogDef.cpp:148 src/ODPropertiesDialogDef.cpp:251
-#: src/ODPropertiesDialogDef.cpp:925
-msgid "Fill Density"
-msgstr "Rastertäthet"
-
-#: src/ODPathPropertiesDialogDef.cpp:125
-msgid "Inclusion Boundary\n"
-"Size"
-msgstr "Yttre gräns\n"
-"storlek"
-
-#: src/ODPathPropertiesDialogDef.cpp:137 src/ODPointPropertiesDialog.cpp:117
-#: src/ODPropertiesDialogDef.cpp:170 src/ODPropertiesDialogDef.cpp:239
-#: src/ODPropertiesDialogDef.cpp:1397 src/ODPropertiesDialogDef.cpp:1406
-#: src/ODPropertiesDialogImpl.cpp:209 src/ODPropertiesDialogImpl.cpp:212
-msgid "Exclusion"
-msgstr "Inre"
-
-#: src/ODPathPropertiesDialogDef.cpp:137 src/ODPointPropertiesDialog.cpp:117
-#: src/ODPropertiesDialogDef.cpp:170 src/ODPropertiesDialogDef.cpp:239
-#: src/ODPropertiesDialogDef.cpp:1398 src/ODPropertiesDialogDef.cpp:1407
-#: src/ODPropertiesDialogImpl.cpp:210 src/ODPropertiesDialogImpl.cpp:213
-msgid "Inclusion"
-msgstr "Yttre"
-
-#: src/ODPathPropertiesDialogDef.cpp:137 src/ODPointPropertiesDialog.cpp:117
-#: src/ODPropertiesDialogDef.cpp:170 src/ODPropertiesDialogDef.cpp:239
-#: src/ODPropertiesDialogDef.cpp:1399 src/ODPropertiesDialogDef.cpp:1408
-#: src/ODPropertiesDialogImpl.cpp:211 src/ODPropertiesDialogImpl.cpp:214
-msgid "Neither"
-msgstr "Oberoende"
-
-#: src/ODPathPropertiesDialogDef.cpp:139 src/ODPropertiesDialogDef.cpp:172
-msgid "Boundary Type"
-msgstr "Gränstyp"
-
-#: src/ODPathPropertiesDialogDef.cpp:153
-msgid "Parallel Index Line Angle (+Stbd/-Port)"
-msgstr "Vinkel för parallell Indexlinje (+Sb/-Bb)"
-
-#: src/ODPathPropertiesDialogDef.cpp:167 src/ODPathPropertiesDialogDef.cpp:211
-msgid "Rotate with\n"
-"Boat"
-msgstr "Rotera med\n"
-"Båten"
-
-#: src/ODPathPropertiesDialogDef.cpp:170 src/ODPathPropertiesDialogDef.cpp:214
-#: src/ODPropertiesDialogDef.cpp:586 src/ODPropertiesDialogDef.cpp:943
-msgid "Heading"
-msgstr "Kurs (K/T)"
-
-#: src/ODPathPropertiesDialogDef.cpp:172 src/ODPathPropertiesDialogDef.cpp:216
-#: src/ODPropertiesDialogDef.cpp:588 src/ODPropertiesDialogDef.cpp:945
-msgid "Maintain with"
-msgstr "Låt linjen rotera med båtens:"
-
-#: src/ODPathPropertiesDialogDef.cpp:178
-msgid "EBL Angle (-P/+S)"
-msgstr "EBL Bäring (-Bb/+Sb)"
-
-#: src/ODPathPropertiesDialogDef.cpp:192
-msgid "EBL Fixed\n"
-"End Position"
-msgstr "Fixerad EBL\n"
-"\n"
-"Slutposition"
-
-#: src/ODPathPropertiesDialogDef.cpp:195 src/ODPropertiesDialogDef.cpp:598
-msgid "Show VRM"
-msgstr "Visa VRM"
-
-#: src/ODPathPropertiesDialogDef.cpp:198 src/ODPropertiesDialogDef.cpp:604
-msgid "Always Show\n"
-"EBL Info"
-msgstr "Visa alltid\n"
-"EBL info"
-
-#: src/ODPathPropertiesDialogDef.cpp:201
-msgid "Show Perpendicular\n"
-"Index Line"
-msgstr "Visa vinkelrät\n"
-"Indexlinje"
-
-#: src/ODPathPropertiesDialogDef.cpp:228
-msgid "First Angle (-P/+S)"
-msgstr "Första vinkeln (-B/-S)"
-
-#: src/ODPathPropertiesDialogDef.cpp:235
-msgid "First distance"
-msgstr "Första avstånd"
-
-#: src/ODPathPropertiesDialogDef.cpp:242
-msgid "Second Angle (-P/+S)"
-msgstr "Andra vinkeln (-B/-S)"
-
-#: src/ODPathPropertiesDialogDef.cpp:249
-msgid "Second distance"
-msgstr "Andra avståndet"
-
-#: src/ODPathPropertiesDialogDef.cpp:263
-msgid "Show Path Direction Arrow"
-msgstr "Visa riktningspil"
-
-#: src/ODPathPropertiesDialogDef.cpp:266 src/ODPointPropertiesDialog.cpp:368
-#: src/ODPropertiesDialogDef.cpp:68 src/ODPropertiesDialogDef.cpp:451
-#: src/ODPropertiesDialogDef.cpp:607 src/ODPropertiesDialogDef.cpp:727
-#: src/ODPropertiesDialogDef.cpp:957 src/ODPropertiesDialogDef.cpp:1234
-msgid "Never"
-msgstr "Aldrig"
-
-#: src/ODPathPropertiesDialogDef.cpp:266 src/ODPropertiesDialogDef.cpp:607
-#: src/ODPropertiesDialogDef.cpp:727 src/ODPropertiesDialogDef.cpp:957
-#: src/ODPropertiesDialogDef.cpp:1234
-msgid "Persistent"
-msgstr "Alltid"
-
-#: src/ODPathPropertiesDialogDef.cpp:266 src/ODPropertiesDialogDef.cpp:607
-#: src/ODPropertiesDialogDef.cpp:727 src/ODPropertiesDialogDef.cpp:957
-#: src/ODPropertiesDialogDef.cpp:1234
-msgid "Persistent over Crash"
-msgstr "Bevara vid programkrasch"
-
-#: src/ODPathPropertiesDialogDef.cpp:268
-msgid "Path Persistence"
-msgstr "Hur sparas linjen"
-
-#: src/ODPathPropertiesDialogDef.cpp:279
-msgid "Points"
-msgstr "Punkter"
-
-#: src/ODPathPropertiesDialogDef.cpp:296
-msgid "Index Lines (+ Stbd/- Port)"
-msgstr "Indexlinjer (+ Styrb /-Bab)"
-
-#: src/ODPathPropertiesDialogImpl.cpp:200
-msgid "OCPN Draw Path"
-msgstr "OCPN Rita sökväg"
-
-#: src/ODPathPropertiesDialogImpl.cpp:212 src/ODPathPropertiesDialogImpl.cpp:237
-msgid " &Properties..."
-msgstr " &Egenskaper..."
-
-#: src/ODPathPropertiesDialogImpl.cpp:217 src/ODPathPropertiesDialogImpl.cpp:241
-msgid "&Remove Selected"
-msgstr "&Ta bort markerade"
-
-#: src/ODPathPropertiesDialogImpl.cpp:220
-msgid "&Delete Selected"
-msgstr "&Ta bort markerade"
-
-#: src/ODPathPropertiesDialogImpl.cpp:697
-msgid "From Point"
-msgstr "Från punkt"
-
-#: src/ODPathPropertiesDialogImpl.cpp:698
-msgid "To Point"
-msgstr "Till punkt"
-
-#: src/ODPathPropertiesDialogImpl.cpp:699
-msgid "Distance From Boat"
-msgstr "Avstånd från båt"
-
-#: src/ODPathPropertiesDialogImpl.cpp:702
-msgid "Bearing (M)"
-msgstr "Bäring (M)"
-
-#: src/ODPathPropertiesDialogImpl.cpp:704
-msgid "Bearing"
-msgstr "Bäring"
-
-#: src/ODPathPropertiesDialogImpl.cpp:706 src/ODPointPropertiesDialog.cpp:73
-msgid "Latitude"
-msgstr "Latitude"
-
-#: src/ODPathPropertiesDialogImpl.cpp:707 src/ODPointPropertiesDialog.cpp:80
-msgid "Longitude"
-msgstr "Longitud"
-
-#: src/ODPathPropertiesDialogImpl.cpp:709
-msgid "Bearing From-To (M)"
-msgstr "Bäring från-till (M)"
-
-#: src/ODPathPropertiesDialogImpl.cpp:711
-msgid "Bearing From-To"
-msgstr "Bäring från-till"
-
-#: src/ODPathPropertiesDialogImpl.cpp:806
-msgid "Are you sure you want to delete this point?"
-msgstr "Är du säker på att du vill ta bort denna punkt?"
-
-#: src/ODPathPropertiesDialogImpl.cpp:826
-msgid "Are you sure you want to remove this point?"
-msgstr "Är du säker på att du vill ta bort denna punkt?"
-
-#: src/ODPointPropertiesDialog.cpp:23
-msgid "Properties"
-msgstr "Egenskaper"
-
-#: src/ODPointPropertiesDialog.cpp:50
-msgid "Show name"
-msgstr "Visa namn"
-
-#: src/ODPointPropertiesDialog.cpp:53 src/ODPointPropertiesImpl.cpp:118
-#: src/ODPropertiesDialogDef.cpp:220 src/ODPropertiesDialogDef.cpp:376
-#: src/ODPropertiesDialogDef.cpp:528 src/ODPropertiesDialogDef.cpp:543
-#: src/ODPropertiesDialogDef.cpp:755 src/ODPropertiesDialogDef.cpp:856
-#: src/ODPropertiesDialogDef.cpp:863 src/ODPropertiesDialogDef.cpp:986
-#: src/ODPropertiesDialogDef.cpp:1001 src/ODPropertiesDialogImpl.cpp:271
-#: src/ODPropertiesDialogImpl.cpp:282 src/ODPropertiesDialogImpl.cpp:291
-#: src/ODPropertiesDialogImpl.cpp:300 src/ODPropertiesDialogImpl.cpp:309
-#: src/ODPropertiesDialogImpl.cpp:318 src/ODPropertiesDialogImpl.cpp:327
-#: src/ODPropertiesDialogImpl.cpp:336 src/ODPropertiesDialogImpl.cpp:345
-msgid "Combo!"
-msgstr "Kombo!"
-
-#: src/ODPointPropertiesDialog.cpp:64
-msgid "Change all Path Point Icons"
-msgstr "Ändra alla punkter i linjen"
-
-#: src/ODPointPropertiesDialog.cpp:92
-msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
-msgstr "Varning: Lat och Lon kan inte ändras när EBL slutpunkt flyttas"
-
-#: src/ODPointPropertiesDialog.cpp:102 src/ODPropertiesDialogDef.cpp:195
-msgid "Arrival Radius"
-msgstr "Ankomstradie"
-
-#: src/ODPointPropertiesDialog.cpp:114
-msgid "Show Point Range Rings"
-msgstr "Visa punktens avståndsringar"
-
-#: src/ODPointPropertiesDialog.cpp:135
-msgid "Point Inclusion Size"
-msgstr "Yttre punktstorlek"
-
-#: src/ODPointPropertiesDialog.cpp:153
-msgid "Number of Point Range Rings"
-msgstr "Antal avståndsringar för en punkt"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776 src/ODPropertiesDialogDef.cpp:1011
-msgid "1"
-msgstr "1"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "10"
-msgstr "10"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776 src/ODPropertiesDialogDef.cpp:1011
-msgid "2"
-msgstr "2"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "3"
-msgstr "3"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "4"
-msgstr "4"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "5"
-msgstr "5"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "6"
-msgstr "6"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "7"
-msgstr "7"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "8"
-msgstr "8"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "9"
-msgstr "9"
-
-#: src/ODPointPropertiesDialog.cpp:157 src/ODPropertiesDialogDef.cpp:293
-#: src/ODPropertiesDialogDef.cpp:776
-msgid "None"
-msgstr "Ingen"
-
-#: src/ODPointPropertiesDialog.cpp:171
-msgid "Distance between Range Rings"
-msgstr "Avstånd mellan ringarna"
-
-#: src/ODPointPropertiesDialog.cpp:178 src/ODPropertiesDialogDef.cpp:306
-#: src/ODPropertiesDialogDef.cpp:789
-msgid "Distance Unit"
-msgstr "Enhet för avstånd"
-
-#: src/ODPointPropertiesDialog.cpp:188 src/ODPropertiesDialogDef.cpp:316
-#: src/ODPropertiesDialogDef.cpp:799
-msgid "Range Ring Colours"
-msgstr "Färg på avståndsringar"
-
-#: src/ODPointPropertiesDialog.cpp:195 src/ODPropertiesDialogDef.cpp:323
-#: src/ODPropertiesDialogDef.cpp:806
-msgid "Range Ring Line Width"
-msgstr "Linjetjocklek för avståndsringar"
-
-#: src/ODPointPropertiesDialog.cpp:205 src/ODPropertiesDialogDef.cpp:333
-#: src/ODPropertiesDialogDef.cpp:816
-msgid "Range Ring Line Style"
-msgstr "Linjetyp för avståndsringar"
-
-#: src/ODPointPropertiesDialog.cpp:240
-msgid "Links"
-msgstr "Länkar"
-
-#: src/ODPointPropertiesDialog.cpp:250
-msgid "wxFB Website"
-msgstr "wxFB hemsida"
-
-#: src/ODPointPropertiesDialog.cpp:261
-msgid "Edit"
-msgstr "Redigera"
-
-#: src/ODPointPropertiesDialog.cpp:264
-msgid "Add New"
-msgstr "Lägg till ny"
-
-#: src/ODPointPropertiesDialog.cpp:271
-msgid "Left click opens in browser"
-msgstr "Vänster klick öppnar i webbläsare"
-
-#: src/ODPointPropertiesDialog.cpp:277
-msgid "&Add"
-msgstr "&Lägg till"
-
-#: src/ODPointPropertiesDialog.cpp:280
-msgid "&Edit"
-msgstr "&Ändra"
-
-#: src/ODPointPropertiesDialog.cpp:283 src/PathAndPointManagerDialogDef.cpp:37
-#: src/PathAndPointManagerDialogDef.cpp:72
-#: src/PathAndPointManagerDialogDef.cpp:101
-msgid "&Delete"
-msgstr "Ra&dera"
-
-#: src/ODPointPropertiesDialog.cpp:302
-msgid "Basic"
-msgstr "Enkel"
-
-#: src/ODPointPropertiesDialog.cpp:306
-msgid "Text to Display with Point"
-msgstr "Text vid punkten"
-
-#: src/ODPointPropertiesDialog.cpp:318 src/ODPropertiesDialogDef.cpp:382
-msgid "Text position relative to point"
-msgstr "Text position i förhållande till punkten"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Bottom"
-msgstr "Nere"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Bottom Centre"
-msgstr "Ned i mitten"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Centre"
-msgstr "Mitten"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Left"
-msgstr "Vänster"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Right"
-msgstr "Höger"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Top"
-msgstr "Överst"
-
-#: src/ODPointPropertiesDialog.cpp:322 src/ODPropertiesDialogDef.cpp:386
-msgid "Top Centre"
-msgstr "Övre mitten"
-
-#: src/ODPointPropertiesDialog.cpp:328 src/ODPropertiesDialogDef.cpp:392
-msgid "Text Colour"
-msgstr "Textfärg"
-
-#: src/ODPointPropertiesDialog.cpp:335 src/ODPropertiesDialogDef.cpp:399
-msgid "Background Colour"
-msgstr "Bakgrundsfärg"
-
-#: src/ODPointPropertiesDialog.cpp:342
-msgid "Background Transparency"
-msgstr "Bakgrundstransparens"
-
-#: src/ODPointPropertiesDialog.cpp:354 src/ODPropertiesDialogDef.cpp:434
-msgid "Text Font"
-msgstr "Teckensnitt"
-
-#: src/ODPointPropertiesDialog.cpp:358 src/ODPropertiesDialogDef.cpp:438
-msgid "Example"
-msgstr "Exempel"
-
-#: src/ODPointPropertiesDialog.cpp:365 src/ODPropertiesDialogDef.cpp:442
-msgid "Fonts"
-msgstr "Typsnitt"
-
-#: src/ODPointPropertiesDialog.cpp:368 src/ODPropertiesDialogDef.cpp:68
-#: src/ODPropertiesDialogDef.cpp:451
-msgid "Always"
-msgstr "Alltid"
-
-#: src/ODPointPropertiesDialog.cpp:368 src/ODPropertiesDialogDef.cpp:451
-msgid "On Rollover Only"
-msgstr "Bara vid mus-över"
-
-#: src/ODPointPropertiesDialog.cpp:370 src/ODPropertiesDialogDef.cpp:453
-msgid "Show Display Text"
-msgstr "Visa text"
-
-#: src/ODPointPropertiesDialog.cpp:381
-msgid "Display text"
-msgstr "Visningstext"
-
-#: src/ODPointPropertiesDialog.cpp:386
-#: src/PathAndPointManagerDialogImpl.cpp:1590
-#: src/PathAndPointManagerDialogImpl.cpp:1602
-msgid "Show on chart"
-msgstr "Visa på sjökort"
-
-#: src/ODPointPropertiesDialog.cpp:407
-msgid "Extended"
-msgstr "Utökad"
-
-#: src/ODPointPropertiesImpl.cpp:164
-msgid "Copy"
-msgstr "Kopiera"
-
-#: src/ODPointPropertiesImpl.cpp:165
-msgid "Copy lat/long"
-msgstr "Kopiera lat/lon"
-
-#: src/ODPointPropertiesImpl.cpp:166
-msgid "Paste"
-msgstr "Klistra in"
-
-#: src/ODPointPropertiesImpl.cpp:167
-msgid "Paste lat/long"
-msgstr "Klistra in lat/lon"
-
-#: src/ODPointPropertiesImpl.cpp:311 src/ODPointPropertiesImpl.cpp:569
-#: src/ODPointPropertiesImpl.cpp:1026 src/ODPointPropertiesImpl.cpp:1038
-msgid "Left Click links are opened in the default browser."
-msgstr "Vänster klick på länkarna öppnar i standardwebbläsaren."
-
-#: src/ODPointPropertiesImpl.cpp:838
-msgid "OCPN Draw Point, Layer: "
-msgstr "OCPN Rita punk, Lager: "
-
-#: src/ODPointPropertiesImpl.cpp:840
-msgid "Boundary Point Properties, Layer: "
-msgstr "Egenskaper Gränslinjepunkt, Lager: "
-
-#: src/ODPointPropertiesImpl.cpp:842
-msgid "Text Point Properties, Layer: "
-msgstr "Egenskaper Textpunkt, Lager: "
-
-#: src/ODPointPropertiesImpl.cpp:844
-msgid "EBL Point Properties, Layer: "
-msgstr "Egenskaper EBL-punkt, Lager: "
-
-#: src/ODPointPropertiesImpl.cpp:846
-msgid "DR Point Properties, Layer: "
-msgstr "Egenskaper DR-punkt, Lager: "
-
-#: src/ODPointPropertiesImpl.cpp:854
-msgid "OCPN Draw Point"
-msgstr "OCPN Rita punkt"
-
-#: src/ODPointPropertiesImpl.cpp:856
-msgid "Boundary Point Properties"
-msgstr "Egenskaper gränslinjepunkt"
-
-#: src/ODPointPropertiesImpl.cpp:858
-msgid "Text Point Properties"
-msgstr "Egenskaper för text-punkt"
-
-#: src/ODPointPropertiesImpl.cpp:860
-msgid "EBL Point Properties"
-msgstr "Egenskaper EBL-punkt"
-
-#: src/ODPointPropertiesImpl.cpp:862
-msgid "DR Point Properties"
-msgstr "Egenskaper DR-punkt"
-
-#: src/ODPointPropertiesImpl.cpp:864
-msgid "Guard Zone Point Properties"
-msgstr "Larmzon. Punkt-egenskaper"
-
-#: src/ODPointPropertiesImpl.cpp:1024
-msgid "Left Click links are opened for editing."
-msgstr "Vänster klick och länkarna öppnas för redigering."
-
-#: src/ODPointPropertiesImpl.cpp:1036
-msgid "Left Click links are deleted."
-msgstr "Vänster klick och länkarna tas bort."
-
-#: src/ODPropertiesDialogDef.cpp:30
-msgid "Confirm Object Delete"
-msgstr "Bekräfta borttagning av objektet"
-
-#: src/ODPropertiesDialogDef.cpp:34
-msgid "Remember properties dialogs positions over a restart"
-msgstr "Kom ihåg dialogrutors positioner efter omstart"
-
-#: src/ODPropertiesDialogDef.cpp:37
-msgid "Show Magnetic Bearings"
-msgstr "Visa magnetisk bäring"
-
-#: src/ODPropertiesDialogDef.cpp:40
-msgid "Allow Left Mouse Button Drag"
-msgstr "Använd vänster musknapp för att dra"
-
-#: src/ODPropertiesDialogDef.cpp:43
-msgid "OCPN_Draw Nav Object Backups"
-msgstr "OCPN_Draw, säkerhetskopior för ritade objekt"
-
-#: src/ODPropertiesDialogDef.cpp:50
-msgid "Edge Panning Sensitivity\n"
-"(percentage screen width) Default 5"
-msgstr "Anger hur nära skärmkanten en punkt kan ritas\n"
-"innan panorering. 5 (% av skärmvidd) är standard"
-
-#: src/ODPropertiesDialogDef.cpp:57
-msgid "Initial Edge Panning Sensitivity\n"
-"(percentage screen width) Default 3"
-msgstr "Första punkten i en linje kan normalt ritas\n"
-"närmare kanten. 3 (%) är standard"
-
-#: src/ODPropertiesDialogDef.cpp:64
-msgid "Display Toolbar"
-msgstr "Visa verktygslist"
-
-#: src/ODPropertiesDialogDef.cpp:68
-msgid "Whilst Drawing"
-msgstr "Vid användning"
-
-#: src/ODPropertiesDialogDef.cpp:74
-msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
-msgstr "Ta bort egna inställningar och återställ till standard efter omstart"
-
-#: src/ODPropertiesDialogDef.cpp:78 src/ODPropertiesDialogImpl.cpp:1084
-msgid "Yes"
-msgstr "Ja"
-
-#: src/ODPropertiesDialogDef.cpp:88
-msgid "General"
-msgstr "Generellt"
-
-#: src/ODPropertiesDialogDef.cpp:100 src/ODPropertiesDialogDef.cpp:474
-#: src/ODPropertiesDialogDef.cpp:877
-msgid "Active Line Colour"
-msgstr "Färg på aktiv linje"
-
-#: src/ODPropertiesDialogDef.cpp:107 src/ODPropertiesDialogDef.cpp:884
-msgid "Active Fill Colour"
-msgstr "Färg på aktivt raster"
-
-#: src/ODPropertiesDialogDef.cpp:114 src/ODPropertiesDialogDef.cpp:481
-#: src/ODPropertiesDialogDef.cpp:891
-msgid "Inactive Line Colour"
-msgstr "Färg på inaktiv linje"
-
-#: src/ODPropertiesDialogDef.cpp:121 src/ODPropertiesDialogDef.cpp:898
-msgid "Inactive Fill Colour"
-msgstr "Färg på inaktivt raster"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "1 Pixel"
-msgstr "1 pixel"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "10 Pixels"
-msgstr "10 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "2 Pixels"
-msgstr "2 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "3 Pixels"
-msgstr "3 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "4 Pixels"
-msgstr "4 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "5 Pixels"
-msgstr "5 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "6 Pixels"
-msgstr "6 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "7 Pixels"
-msgstr "7 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "8 Pixels"
-msgstr "8 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:132 src/ODPropertiesDialogDef.cpp:492
-#: src/ODPropertiesDialogDef.cpp:567 src/ODPropertiesDialogDef.cpp:647
-#: src/ODPropertiesDialogDef.cpp:909 src/ODPropertiesDialogDef.cpp:1130
-#: src/ODPropertiesDialogDef.cpp:1168 src/ODPropertiesDialogDef.cpp:1206
-msgid "9 Pixels"
-msgstr "9 pixlar"
-
-#: src/ODPropertiesDialogDef.cpp:155
-msgid "Inclusion Boundary Size"
-msgstr "Storlek på yttre gräns"
-
-#: src/ODPropertiesDialogDef.cpp:199 src/ODPropertiesDialogDef.cpp:303
-#: src/ODPropertiesDialogDef.cpp:786
-msgid "0.5"
-msgstr "0,5"
-
-#: src/ODPropertiesDialogDef.cpp:213 src/ODPropertiesDialogDef.cpp:364
-msgid "Show Name"
-msgstr "Visa namn"
-
-#: src/ODPropertiesDialogDef.cpp:216
-msgid "Boundary Point Icon"
-msgstr "Gränslinjepunktens ikon"
-
-#: src/ODPropertiesDialogDef.cpp:236 src/ODPropertiesDialogDef.cpp:766
-msgid "Show Range Rings"
-msgstr "Visa avståndsringar"
-
-#: src/ODPropertiesDialogDef.cpp:241
-msgid "Boundary Point Type"
-msgstr "Typ av gränslinjepunkter"
-
-#: src/ODPropertiesDialogDef.cpp:267
-msgid "Boundary Point Inclusion\n"
-"Size"
-msgstr "Yttre gränspunkt\n"
-"Storlek"
-
-#: src/ODPropertiesDialogDef.cpp:289 src/ODPropertiesDialogDef.cpp:772
-msgid "Number of Range Rings"
-msgstr "Antal avståndsringar"
-
-#: src/ODPropertiesDialogDef.cpp:299 src/ODPropertiesDialogDef.cpp:782
-msgid "Distance Between Range Rings"
-msgstr "Avstånd mellan ringarna"
-
-#: src/ODPropertiesDialogDef.cpp:372
-msgid "Text Point Icon"
-msgstr "Ikon textpunkt"
-
-#: src/ODPropertiesDialogDef.cpp:406
-msgid "Background Density"
-msgstr "Bakgrundens fyllnad"
-
-#: src/ODPropertiesDialogDef.cpp:512 src/ODPropertiesDialogImpl.cpp:263
-msgid "Path"
-msgstr "Linje"
-
-#: src/ODPropertiesDialogDef.cpp:519 src/ODPropertiesDialogDef.cpp:977
-msgid "Start Point Icon"
-msgstr "Ikon för startpunkt"
-
-#: src/ODPropertiesDialogDef.cpp:534 src/ODPropertiesDialogDef.cpp:992
-msgid "End Point Icon"
-msgstr "Ikon för ändpunkt"
-
-#: src/ODPropertiesDialogDef.cpp:549
-msgid "Active EBL Line Colour"
-msgstr "Kulör på aktiv EBL"
-
-#: src/ODPropertiesDialogDef.cpp:556
-msgid "Inactive EBL Line Colour"
-msgstr "Kulör på inaktiv EBL"
-
-#: src/ODPropertiesDialogDef.cpp:583 src/ODPropertiesDialogDef.cpp:940
-msgid "Rotate with Boat"
-msgstr "Rotera med båten"
-
-#: src/ODPropertiesDialogDef.cpp:592
-msgid "EBL Fixed End Position"
-msgstr "EBL - fast slutposition"
-
-#: src/ODPropertiesDialogDef.cpp:595
-msgid "Show EBL Direction Arrow"
-msgstr "Visa riktningspilar på EBL-linjen"
-
-#: src/ODPropertiesDialogDef.cpp:601
-msgid "Show Perpendicular Index Line"
-msgstr "Visa vinkelrät Indexlinje"
-
-#: src/ODPropertiesDialogDef.cpp:617 src/ocpn_draw_pi.cpp:3760
-msgid "EBL"
-msgstr "EBL"
-
-#: src/ODPropertiesDialogDef.cpp:629
-msgid "Active DR Line\n"
-"Colour"
-msgstr "Aktiv DR Linje\n"
-"Kulör"
-
-#: src/ODPropertiesDialogDef.cpp:636
-msgid "Inactive DR Line\n"
-"Colour"
-msgstr "Inaktiv DR-linje\n"
-"Kulör"
-
-#: src/ODPropertiesDialogDef.cpp:723
-msgid "Show DR Direction Arrow"
-msgstr "Vis riktningspilar på DR-linjen"
-
-#: src/ODPropertiesDialogDef.cpp:729
-msgid "DR Persistence"
-msgstr "DR linjens beständighet"
-
-#: src/ODPropertiesDialogDef.cpp:751
-msgid "DR Point Icon"
-msgstr "Ikon för DR-punkter"
-
-#: src/ODPropertiesDialogDef.cpp:852
-msgid "First Point Icon"
-msgstr "Ikon för första punkten"
-
-#: src/ODPropertiesDialogDef.cpp:859
-msgid "Second Point Icon"
-msgstr "Ikon för andra punkten"
-
-#: src/ODPropertiesDialogDef.cpp:970 src/ODToolbarImpl.cpp:521
-msgid "Guard Zone"
-msgstr "Larmzon"
-
-#: src/ODPropertiesDialogDef.cpp:1007
-msgid "Initial number of index lines"
-msgstr "Antal indexlinjer från början"
-
-#: src/ODPropertiesDialogDef.cpp:1017
-msgid "Default Offset (+Stbd/-Port)"
-msgstr "Standard Offset (+ Sb/-Bb)"
-
-#: src/ODPropertiesDialogDef.cpp:1021
-msgid "1.0"
-msgstr "1.0"
-
-#: src/ODPropertiesDialogDef.cpp:1030
-msgid "Active Centre Line Colour"
-msgstr "Färg på aktiv linje"
-
-#: src/ODPropertiesDialogDef.cpp:1046
-msgid "Inactive Centre Line Colour"
-msgstr "Färg på aktiv linje"
-
-#: src/ODPropertiesDialogDef.cpp:1062
-msgid "Active Offset Line Colour"
-msgstr "Färg på aktiv sidolinje"
-
-#: src/ODPropertiesDialogDef.cpp:1078
-msgid "Inactive Offset Line Colour"
-msgstr "Färg på inaktiv sidolinje"
-
-#: src/ODPropertiesDialogDef.cpp:1094
-msgid "Active Offset Line 2 Colour"
-msgstr "Kulör på aktiv sidolinje 2"
-
-#: src/ODPropertiesDialogDef.cpp:1110
-msgid "Inactive Offset Line 2 Colour"
-msgstr "Kulör på inaktiv sidolinje 2"
-
-#: src/ODPropertiesDialogDef.cpp:1126
-msgid "Centre Line Width"
-msgstr "Bredd på centrumlinjen"
-
-#: src/ODPropertiesDialogDef.cpp:1145
-msgid "Centre Line Style"
-msgstr "Format på centrumlinjen"
-
-#: src/ODPropertiesDialogDef.cpp:1164
-msgid "Offset Line Width"
-msgstr "Bredd på sidolinje"
-
-#: src/ODPropertiesDialogDef.cpp:1183
-msgid "Offset Line Style"
-msgstr "Format på sidolinje"
-
-#: src/ODPropertiesDialogDef.cpp:1202
-msgid "Offset Line 2 Width"
-msgstr "Bredd på sidolinje 2"
-
-#: src/ODPropertiesDialogDef.cpp:1221
-msgid "Offset Line 2 Style"
-msgstr "Format på sidolinje 2"
-
-#: src/ODPropertiesDialogDef.cpp:1236
-msgid "Parallel Index Line Persistence"
-msgstr "Livslängd för parallella indexlinjer"
-
-#: src/ODPropertiesDialogDef.cpp:1254
-msgid "Name:"
-msgstr "Namn:"
-
-#: src/ODPropertiesDialogDef.cpp:1262
-msgid "Version:"
-msgstr "Version:"
-
-#: src/ODPropertiesDialogDef.cpp:1271
-msgid "Major:"
-msgstr "Huvud:"
-
-#: src/ODPropertiesDialogDef.cpp:1279
-msgid "Minor:"
-msgstr "Del:"
-
-#: src/ODPropertiesDialogDef.cpp:1287
-msgid "Patch:"
-msgstr "Fix:"
-
-#: src/ODPropertiesDialogDef.cpp:1298
-msgid "Date:"
-msgstr "Datum:"
-
-#: src/ODPropertiesDialogDef.cpp:1312
-msgid "OCPN Draw Directories:"
-msgstr "OCPN Draw Kataloger:"
-
-#: src/ODPropertiesDialogDef.cpp:1321
-msgid "Data:"
-msgstr "Data:"
-
-#: src/ODPropertiesDialogDef.cpp:1325
-msgid "Data Directory"
-msgstr "Datakatalog"
-
-#: src/ODPropertiesDialogDef.cpp:1329
-msgid "User Icons:"
-msgstr "Egna ikoner:"
-
-#: src/ODPropertiesDialogDef.cpp:1333
-msgid "Icon Directory"
-msgstr "Ikonkatalog"
-
-#: src/ODPropertiesDialogDef.cpp:1337
-msgid "Permanent Layers:"
-msgstr "Permanenta lager:"
-
-#: src/ODPropertiesDialogDef.cpp:1341
-msgid "Layers Directory"
-msgstr "Lagerkatalog"
-
-#: src/ODPropertiesDialogDef.cpp:1356
-msgid "Other:"
-msgstr "Övrigt:"
-
-#: src/ODPropertiesDialogDef.cpp:1360
-msgid "Please report problems using FlySpray at:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
-"or\n\n"
-"at the OpenCPN forum:\n"
-"http://www.cruisersforum.com/forums/f134\n\n"
-"or\n\n"
-"Raise an issue in GIT at:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-msgstr "Samtliga refererade länkar för att anmäla problem är på Engelska:\n"
-"Please report problems using FlySpray at:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
-"or\n\n"
-"at the OpenCPN forum:\n"
-"http://www.cruisersforum.com/forums/f134\n\n"
-"or\n\n"
-"Raise an issue in GIT at:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-
-#: src/ODPropertiesDialogDef.cpp:1371
-msgid "About"
-msgstr "Om"
-
-#: src/ODPropertiesDialogDef.cpp:1378
-msgid "This chart shows the interactions between Boundaries and WatchDog alam boundaries"
-msgstr "Tabellen visar hur olika gränstyper, OR, interagerar med inställningar i  Vakthunden, WD."
-
-#: src/ODPropertiesDialogDef.cpp:1395
-msgid "WD"
-msgstr "WD"
-
-#: src/ODPropertiesDialogDef.cpp:1396 src/ODPropertiesDialogImpl.cpp:208
-msgid "All"
-msgstr "Allt"
-
-#: src/ODPropertiesDialogDef.cpp:1405
-msgid "OD"
-msgstr "OR"
-
-#: src/ODPropertiesDialogDef.cpp:1422
-msgid "Help"
-msgstr "Hjälp"
-
-#: src/ODPropertiesDialogDef.cpp:1438
-msgid "License"
-msgstr "Licens"
-
-#: src/ODPropertiesDialogDef.cpp:1451
-msgid "&Apply"
-msgstr "&Använd"
-
-#: src/ODPropertiesDialogImpl.cpp:207
-msgid "OD\\WD"
-msgstr "OD\\WD"
-
-#: src/ODPropertiesDialogImpl.cpp:216 src/ODPropertiesDialogImpl.cpp:217
-#: src/ODPropertiesDialogImpl.cpp:218 src/ODPropertiesDialogImpl.cpp:219
-#: src/ODPropertiesDialogImpl.cpp:223 src/ODPropertiesDialogImpl.cpp:227
-msgid "Ring"
-msgstr "Ring"
-
-#: src/ODPropertiesDialogImpl.cpp:220 src/ODPropertiesDialogImpl.cpp:221
-#: src/ODPropertiesDialogImpl.cpp:222 src/ODPropertiesDialogImpl.cpp:224
-#: src/ODPropertiesDialogImpl.cpp:225 src/ODPropertiesDialogImpl.cpp:226
-msgid "No alarm"
-msgstr "Inga larm"
-
-#: src/ODPropertiesDialogImpl.cpp:1032 src/ODPropertiesDialogImpl.cpp:1080
+#
 msgid "No"
 msgstr "Nej"
-
-#: src/ODPropertiesDialogImpl.cpp:1033 src/ODPropertiesDialogImpl.cpp:1081
-msgid "Delete current OCPN_Draw config entries (Yes)"
-msgstr "Ta bort gällande inställningar för OCPN_Draw (Ja)"
-
-#: src/ODPropertiesDialogImpl.cpp:1085
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr "Ta bort gällande inställningar för OCPN_Draw (Nej)"
-
-#: src/ODToolbarImpl.cpp:516
-msgid "Create Boundary"
-msgstr "Skapa gränser"
-
-#: src/ODToolbarImpl.cpp:517
-msgid "Create Boundary Point"
-msgstr "Skapa gränslinjepunkt"
-
-#: src/ODToolbarImpl.cpp:518
-msgid "Create Text Point"
-msgstr "Skapa Textpunkt"
-
-#: src/ODToolbarImpl.cpp:519
-msgid "Create EBL"
-msgstr "Skapa EBL"
-
-#: src/ODToolbarImpl.cpp:519
-msgid "Electronic Bearing Line"
-msgstr "Elektronisk Bäring-Linje"
-
-#: src/ODToolbarImpl.cpp:520
-msgid "Create DR"
-msgstr "Skapa DR"
-
-#: src/ODToolbarImpl.cpp:521
-msgid "Create GZ"
-msgstr "Skapa Larmzon LZ"
-
-#: src/ODToolbarImpl.cpp:522
-msgid "Create PIL"
-msgstr "Skapa PIL"
-
-#: src/ODicons.cpp:77
-msgid "ocpn_draw_pi data location"
-msgstr "ocpn_draw_pi data finns på"
-
-#: src/ODicons.cpp:197
-msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-msgstr "Kunde inte ladda alla OCPN-Draw ikoner, kontrollera OCPN logg för detaljer"
-
-#: src/ODicons.cpp:197 src/PathAndPointManagerDialogImpl.cpp:574
-#: src/PathAndPointManagerDialogImpl.cpp:621
-#: src/PathAndPointManagerDialogImpl.cpp:1408
-#: src/PathAndPointManagerDialogImpl.cpp:1439
-#: src/PathAndPointManagerDialogImpl.cpp:1506
-#: src/PathAndPointManagerDialogImpl.cpp:1665
-msgid "OpenCPN Alert"
-msgstr "OpenCPN Varning"
-
-#: src/PILProp.cpp:69
-msgid "PIL Persistence"
-msgstr "PIL livslängd"
-
-#: src/PILProp.cpp:339
-msgid "ID"
-msgstr "ID"
-
-#: src/PILProp.cpp:341
-msgid "Offset"
-msgstr "Sidlinjer"
-
-#: src/PILPropertiesDialogDef.cpp:28
-msgid "ID Num"
-msgstr "ID-Nummer"
-
-#: src/PILPropertiesDialogDef.cpp:49
-msgid "Offset (+ Stbd/- Port)"
-msgstr "Avstånd (+ Styrb /- Bab)"
-
-#: src/PathAndPointManagerDialogDef.cpp:28
-#: src/PathAndPointManagerDialogDef.cpp:66
-msgid "&Properties"
-msgstr "&Egenskaper"
-
-#: src/PathAndPointManagerDialogDef.cpp:31
-#: src/PathAndPointManagerDialogImpl.cpp:1055
-msgid "&Activate"
-msgstr "&Aktivera"
-
-#: src/PathAndPointManagerDialogDef.cpp:34
-#: src/PathAndPointManagerDialogDef.cpp:69
-msgid "&Center View"
-msgstr "&Centrera vy"
-
-#: src/PathAndPointManagerDialogDef.cpp:40
-#: src/PathAndPointManagerDialogDef.cpp:75
-msgid "&Export Selected..."
-msgstr "&Exportera markerade..."
-
-#: src/PathAndPointManagerDialogDef.cpp:43
-#: src/PathAndPointManagerDialogDef.cpp:78
-msgid "Dele&te All"
-msgstr "Ta bort alla"
-
-#: src/PathAndPointManagerDialogDef.cpp:53
-msgid "Paths"
-msgstr "Linjer"
-
-#: src/PathAndPointManagerDialogDef.cpp:63
-msgid "&New"
-msgstr "&Ny"
-
-#: src/PathAndPointManagerDialogDef.cpp:88
-msgid "OD Points"
-msgstr "OR Punkt"
-
-#: src/PathAndPointManagerDialogDef.cpp:98
-msgid "&Temporary layer"
-msgstr "&Temporärt lager"
-
-#: src/PathAndPointManagerDialogDef.cpp:104
-msgid "Show on &chart"
-msgstr "Visa på sjökort"
-
-#: src/PathAndPointManagerDialogDef.cpp:107
-msgid "Show &Point names"
-msgstr "Visa punktnamn"
-
-#: src/PathAndPointManagerDialogDef.cpp:110
-msgid "&List contents"
-msgstr "&Visa innehåll"
-
-#: src/PathAndPointManagerDialogDef.cpp:120
-msgid "Layers"
-msgstr "Lager"
-
-#: src/PathAndPointManagerDialogDef.cpp:130
-msgid "Import"
-msgstr "Importera"
-
-#: src/PathAndPointManagerDialogDef.cpp:133
-msgid "E&xport All Visible"
-msgstr "Exportera alla synliga"
-
-#: src/PathAndPointManagerDialogImpl.cpp:469
-#: src/PathAndPointManagerDialogImpl.cpp:475
-msgid "Show"
-msgstr "Visa"
-
-#: src/PathAndPointManagerDialogImpl.cpp:470
-msgid "Path Name"
-msgstr "Linjens namn"
-
-#: src/PathAndPointManagerDialogImpl.cpp:471
-msgid "Desc"
-msgstr "Beskrivn"
-
-#: src/PathAndPointManagerDialogImpl.cpp:472
-msgid "Icon"
-msgstr "Ikon"
-
-#: src/PathAndPointManagerDialogImpl.cpp:473
-msgid "OD Point Name"
-msgstr "OR Punktnamn"
-
-#: src/PathAndPointManagerDialogImpl.cpp:474
-msgid "Distance from Ownship"
-msgstr "Avstånd från eget fartyg"
-
-#: src/PathAndPointManagerDialogImpl.cpp:476
-msgid "Layer Name"
-msgstr "Lagernamn"
-
-#: src/PathAndPointManagerDialogImpl.cpp:477
+#
+msgid "No alarm"
+msgstr "Inga larm"
+#
 msgid "No. of items"
 msgstr "Antal förekomster"
-
-#: src/PathAndPointManagerDialogImpl.cpp:530
-#: src/PathAndPointManagerDialogImpl.cpp:542
-#: src/PathAndPointManagerDialogImpl.cpp:554
-#: src/PathAndPointManagerDialogImpl.cpp:1958
-msgid "I&mport"
-msgstr "Importera"
-
-#: src/PathAndPointManagerDialogImpl.cpp:556
-msgid "gpx"
-msgstr "gpx"
-
-#: src/PathAndPointManagerDialogImpl.cpp:574
-#: src/PathAndPointManagerDialogImpl.cpp:1408
-msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Är du säker på att du vill radera utvalda objekt"
-
-#: src/PathAndPointManagerDialogImpl.cpp:621
-msgid "Are you sure you want to delete <ALL> paths?"
-msgstr "Vill du radera <ALLA> linjer?"
-
-#: src/PathAndPointManagerDialogImpl.cpp:716
-msgid "Boundary Properties"
-msgstr "Egenskaper för gränslinjen"
-
-#: src/PathAndPointManagerDialogImpl.cpp:718
-msgid "EBL Properties"
-msgstr "Egenskaper för EBL"
-
-#: src/PathAndPointManagerDialogImpl.cpp:720
-msgid "DR Properties"
-msgstr "Egenskaper för DR"
-
-#: src/PathAndPointManagerDialogImpl.cpp:722
-msgid "Guard Zone Properties"
-msgstr "Larmzonens egenskaper"
-
-#: src/PathAndPointManagerDialogImpl.cpp:724
+#
+msgid "None"
+msgstr "Ingen"
+#
+msgid "Number of Point Range Rings"
+msgstr "Antal avståndsringar för en punkt"
+#
+msgid "Number of Range Rings"
+msgstr "Antal avståndsringar"
+#
+msgid "OCPN Draw"
+msgstr "OCPN Ritmodul (OR)"
+#
+msgid "OCPN Draw Boundary"
+msgstr "OCPN Rita gränser"
+#
+msgid "OCPN Draw Boundary Create"
+msgstr "OCPN ritverktyg. Skapa en gränslinje"
+#
+msgid "OCPN Draw Boundary Delete"
+msgstr "Ta bort OD gränser"
+#
+msgid "OCPN Draw DR Delete"
+msgstr "Ta bort OD DR"
+#
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Ta bort gränspunkt"
+#
+msgid "OCPN Draw Delete DR Point"
+msgstr "Ta bort DR-punkt"
+#
+msgid "OCPN Draw Delete EBL Point"
+msgstr "Ta bort EBL-punkt"
+#
+msgid "OCPN Draw Delete OD Point"
+msgstr "Ta bort punkt"
+#
+msgid "OCPN Draw Delete PIL Point"
+msgstr "Ta bort OD punkt"
+#
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN Ritverktyg; Radera textpunkt"
+#
+msgid "OCPN Draw Directories:"
+msgstr "OCPN Draw Kataloger:"
+#
+msgid "OCPN Draw EBL Delete"
+msgstr "Ta bort OD EBL"
+#
+msgid "OCPN Draw GZ Delete"
+msgstr "Ta bort OD zone"
+#
+msgid "OCPN Draw Manager"
+msgstr "OCPN Ritverktyg"
+#
+msgid "OCPN Draw PIL Delete"
+msgstr "Ta bort OD PIL"
+#
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "OCPN Ritverktyg, ta bort en parallell indexlinje"
+#
+msgid "OCPN Draw Path"
+msgstr "OCPN Rita sökväg"
+#
+msgid "OCPN Draw Point"
+msgstr "OCPN Rita punkt"
+#
+msgid "OCPN Draw Point Create"
+msgstr "OCPN ritverktyg. Skapa en punkt"
+#
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN Rita punk, Lager: "
+#
+msgid "OCPN Draw Properties"
+msgstr "OCPN Ritverktyg. Egenskaper"
+#
+msgid "OCPN Draw Remove "
+msgstr "OCPN Ta bort från Ritaren "
+#
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "Ta bort gränspunkt"
+#
+msgid "OCPN Draw Remove DR Point"
+msgstr "Ta bort DR-punkt"
+#
+msgid "OCPN Draw Remove EBL Point"
+msgstr "Ta bort EBL-punkt"
+#
+msgid "OCPN Draw Remove OD Point"
+msgstr "Ta bort OD punkt"
+#
+msgid "OCPN_Draw Nav Object Backups"
+msgstr "OCPN_Draw, säkerhetskopior för ritade objekt"
+#
+msgid "OD"
+msgstr "OR"
+#
+msgid "OD Point"
+msgstr "OD Punkt"
+#
+msgid "OD Point Name"
+msgstr "OR Punktnamn"
+#
+msgid "OD Point Properties"
+msgstr "OR punktegenskaper"
+#
+msgid "OD Points"
+msgstr "OR Punkt"
+#
+msgid "OD\\WD"
+msgstr "OD\\WD"
+#
+msgid "Offset"
+msgstr "Sidlinjer"
+#
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Avstånd (+ Styrb /- Bab)"
+#
+msgid "Offset Line 2 Style"
+msgstr "Format på sidolinje 2"
+#
+msgid "Offset Line 2 Width"
+msgstr "Bredd på sidolinje 2"
+#
+msgid "Offset Line Style"
+msgstr "Format på sidolinje"
+#
+msgid "Offset Line Width"
+msgstr "Bredd på sidolinje"
+#
+msgid "Offset: "
+msgstr "Förskjutning: "
+#
+msgid "On Rollover Only"
+msgstr "Bara vid mus-över"
+#
+msgid "OpenCPN Alert"
+msgstr "OpenCPN Varning"
+#
+msgid "Other:"
+msgstr "Övrigt:"
+#
+msgid "Overwrite existing file?"
+msgstr "Skriv över befintlig fil?"
+#
+msgid "PIL"
+msgstr "PIL"
+#
+msgid "PIL Persistence"
+msgstr "PIL livslängd"
+#
+msgid "PIL Point"
+msgstr "PIL-punkt"
+#
+msgid "Parallel Index Line"
+msgstr "Parallell Indexlinje PIL"
+#
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Vinkel för parallell Indexlinje (+Sb/-Bb)"
+#
+msgid "Parallel Index Line Persistence"
+msgstr "Livslängd för parallella indexlinjer"
+#
 msgid "Parallel Index Line Properties"
 msgstr "Egenskaper för parallell indexlinje"
-
-#: src/PathAndPointManagerDialogImpl.cpp:729
+#
+msgid "Paste"
+msgstr "Klistra in"
+#
+msgid "Paste lat/long"
+msgstr "Klistra in lat/lon"
+#
+msgid "Patch:"
+msgstr "Fix:"
+#
+msgid "Path"
+msgstr "Linje"
+#
+msgid "Path & Point Manager"
+msgstr "Hantering av linjer och punkter"
+#
+msgid "Path Manager Dialog"
+msgstr "Sökvägshantering"
+#
+msgid "Path Name"
+msgstr "Linjens namn"
+#
+msgid "Path Persistence"
+msgstr "Hur sparas linjen"
+#
+msgid "Path Properties"
+msgstr "Linjeegenskaper"
+#
 msgid "Path Properties, Layer: "
 msgstr "Linjeegenskaper. Lager: "
-
-#: src/PathAndPointManagerDialogImpl.cpp:731
-msgid "Boundary Properties, Layer: "
-msgstr "Egenskaper för gränslinje, Lager: "
-
-#: src/PathAndPointManagerDialogImpl.cpp:733
-msgid "EBL Properties, Layer: "
-msgstr "Egenskaper EBL, Lager: "
-
-#: src/PathAndPointManagerDialogImpl.cpp:735
-msgid "DR Properties, Layer: "
-msgstr "Egenskaper DR, Lager: "
-
-#: src/PathAndPointManagerDialogImpl.cpp:849
-msgid "Do you also want to make the shared OD Points being part of this boundary invisible?"
-msgstr "Skall de OR-punkter som ingår i denna gräns också vara osynliga?"
-
-#: src/PathAndPointManagerDialogImpl.cpp:849
+#
+msgid "Paths"
+msgstr "Linjer"
+#
+msgid "Permanent Layers:"
+msgstr "Permanenta lager:"
+#
+msgid "Persistent"
+msgstr "Alltid"
+#
+msgid "Persistent over Crash"
+msgstr "Bevara vid programkrasch"
+#
+msgid "Pick a new start point"
+msgstr "Ange en ny startpunkt"
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+"Samtliga refererade länkar för att anmäla problem är på Engelska:\n"
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+#
+msgid "Point Inclusion Size"
+msgstr "Yttre punktstorlek"
+#
+msgid "Point Type"
+msgstr "Punktyp"
+#
+msgid "Points"
+msgstr "Punkter"
+#
+msgid "Properties"
+msgstr "Egenskaper"
+#
+msgid "Properties..."
+msgstr "Egenskaper..."
+#
 msgid "Question"
 msgstr "Fråga"
-
-#: src/PathAndPointManagerDialogImpl.cpp:994
-msgid "(Unnamed )"
-msgstr "(Namnlös)"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1054
-msgid "&Deactivate"
-msgstr "&Inaktivera"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1148
-#: src/PathAndPointManagerDialogImpl.cpp:2066
-msgid "(Unnamed) "
-msgstr "(Namnlös) "
-
-#: src/PathAndPointManagerDialogImpl.cpp:1439
-msgid "The OD Point you want to delete is used in a path, do you really want to delete it?"
-msgstr "Den här OR-punkten används i en gränslinje. Vill du verkligen ta bort den?"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1496
-msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr "Är du säker på att du vill ta bort <ALLA> OR-punkter?"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1502
-msgid "There are some OD points used in paths or anchor alarms.\n"
+#
+msgid "Range Ring Colours"
+msgstr "Färg på avståndsringar"
+#
+msgid "Range Ring Line Style"
+msgstr "Linjetyp för avståndsringar"
+#
+msgid "Range Ring Line Width"
+msgstr "Linjetjocklek för avståndsringar"
+#
+msgid "Remember properties dialogs positions over a restart"
+msgstr "Kom ihåg dialogrutors positioner efter omstart"
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr "Ta bort egna inställningar och återställ till standard efter omstart"
+#
+msgid "Remove Point from Path"
+msgstr "Ta bort denna punk från linjen"
+#
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr "Du kan inte ta bort denna punkt eftersom det förstör gränsmarkeringen."
+#
+msgid "Right"
+msgstr "Höger"
+#
+msgid "Ring"
+msgstr "Ring"
+#
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+"Rotera med\n"
+"Båten"
+#
+msgid "Rotate with Boat"
+msgstr "Rotera med båten"
+#
+msgid "Second"
+msgstr "Andra"
+#
+msgid "Second Angle (-P/+S)"
+msgstr "Andra vinkeln (-B/-S)"
+#
+msgid "Second Point Icon"
+msgstr "Ikon för andra punkten"
+#
+msgid "Second distance"
+msgstr "Andra avståndet"
+#
+msgid "Short Dash"
+msgstr "Korta streck"
+#
+msgid "Show"
+msgstr "Visa"
+#
+msgid "Show &Point names"
+msgstr "Visa punktnamn"
+#
+msgid "Show Boundary Point Icons"
+msgstr "Visa gränspunkternas ikoner"
+#
+msgid "Show DR Direction Arrow"
+msgstr "Vis riktningspilar på DR-linjen"
+#
+msgid "Show Display Text"
+msgstr "Visa text"
+#
+msgid "Show EBL Direction Arrow"
+msgstr "Visa riktningspilar på EBL-linjen"
+#
+msgid "Show Layer(s)"
+msgstr "Visa lager"
+#
+msgid "Show Magnetic Bearings"
+msgstr "Visa magnetisk bäring"
+#
+msgid "Show Name"
+msgstr "Visa namn"
+#
+msgid "Show Path Direction Arrow"
+msgstr "Visa riktningspil"
+#
+msgid "Show Paths(s)"
+msgstr "Visa sökvägar"
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+"Visa vinkelrät\n"
+"Indexlinje"
+#
+msgid "Show Perpendicular Index Line"
+msgstr "Visa vinkelrät Indexlinje"
+#
+msgid "Show Point Range Rings"
+msgstr "Visa punktens avståndsringar"
+#
+msgid "Show Point names"
+msgstr "Visa punktnamn"
+#
+msgid "Show Point(s)"
+msgstr "Visa punkter"
+#
+msgid "Show Range Rings"
+msgstr "Visa avståndsringar"
+#
+msgid "Show VRM"
+msgstr "Visa VRM"
+#
+msgid "Show name"
+msgstr "Visa namn"
+#
+msgid "Show on &chart"
+msgstr "Visa på sjökort"
+#
+msgid "Show on chart"
+msgstr "Visa på sjökort"
+#
+msgid "Solid"
+msgstr "Fylld"
+#
+msgid "Speed over Ground"
+msgstr "Fart över grund"
+#
+msgid "Start"
+msgstr "Start"
+#
+msgid "Start Point Icon"
+msgstr "Ikon för startpunkt"
+#
+msgid "Text"
+msgstr "Text"
+#
+msgid "Text Colour"
+msgstr "Textfärg"
+#
+msgid "Text Font"
+msgstr "Teckensnitt"
+#
+msgid "Text Point"
+msgstr "Textpunkt"
+#
+msgid "Text Point Icon"
+msgstr "Ikon textpunkt"
+#
+msgid "Text Point Properties"
+msgstr "Egenskaper för text-punkt"
+#
+msgid "Text Point Properties, Layer: "
+msgstr "Egenskaper Textpunkt, Lager: "
+#
+msgid "Text position relative to point"
+msgstr "Text position i förhållande till punkten"
+#
+msgid "Text to Display with Point"
+msgstr "Text vid punkten"
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"Den här OR-punkten används i en gränslinje. Vill du verkligen ta bort den?"
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
-msgstr "Det finns OR-punkter som används i gränser eller ankarvakter\n"
+msgstr ""
+"Det finns OR-punkter som används i gränser eller ankarvakter\n"
 "Vill du ta bort dessa också?\n"
 "Gränslinjerna kommer att ändras och ankarvakten att inaktiveras\n"
 "Klicka på Nej för att behålla punkterna i gränslinjer och larm."
-
-#: src/PathAndPointManagerDialogImpl.cpp:1588
-msgid "Hide from chart"
-msgstr "Visa inte på sjökorten"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1593
-msgid "Hide Point names"
-msgstr "Dölj punktens namn"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1595
-#: src/PathAndPointManagerDialogImpl.cpp:1603
-msgid "Show Point names"
-msgstr "Visa punktnamn"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1598
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+"Tabellen visar hur olika gränstyper, OR, interagerar med inställningar i  "
+"Vakthunden, WD."
+#
+msgid "Time"
+msgstr "Tid"
+#
+msgid "Time Units"
+msgstr "Tidsenheter"
+#
+msgid "To Point"
+msgstr "Till punkt"
+#
+msgid "Top"
+msgstr "Överst"
+#
+msgid "Top Centre"
+msgstr "Övre mitten"
+#
+msgid "Total Length"
+msgstr "Total längd"
+#
+msgid "Total Length: "
+msgstr "Total längd: "
+#
+msgid "URL"
+msgstr "URL"
+#
 msgid "Unlist contents "
 msgstr "Dölj innehåll "
-
-#: src/PathAndPointManagerDialogImpl.cpp:1600
-#: src/PathAndPointManagerDialogImpl.cpp:1604
-msgid "List contents "
-msgstr "Visa innehåll "
-
-#: src/PathAndPointManagerDialogImpl.cpp:1664
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr "Är du säker du vill ta bort detta lager och <ALLT> innehåll?"
-
-#: src/PathAndPointManagerDialogImpl.cpp:1922
-msgid "(Unnamed Layer)"
-msgstr "(Ej namngivet lager)"
-
-#: src/ocpn_draw_pi.cpp:532 src/ocpn_draw_pi.cpp:533 src/ocpn_draw_pi.cpp:537
-#: src/ocpn_draw_pi.cpp:538
-msgid "OCPN Draw Manager"
-msgstr "OCPN Ritverktyg"
-
-#: src/ocpn_draw_pi.cpp:534 src/ocpn_draw_pi.cpp:539
-msgid "OCPN Draw Boundary"
-msgstr "OCPN Rita gränser"
-
-#: src/ocpn_draw_pi.cpp:535 src/ocpn_draw_pi.cpp:540
-msgid "OCPN Draw"
-msgstr "OCPN Ritmodul (OR)"
-
-#: src/ocpn_draw_pi.cpp:646
+#
+msgid "Update initial conditions"
+msgstr "Uppdatera ursprungliga inställningar"
+#
 msgid "Use OCPN Draw Tool"
 msgstr "Verktyg för OCPN_Rita"
-
-#: src/ocpn_draw_pi.cpp:926
-msgid "General drawing for OpenCPN"
-msgstr "Ritverktyg för OpenCPN"
-
-#: src/ocpn_draw_pi.cpp:930
-msgid "General Drawing for OpenCPN\n\n"
-"Thanks to the community for their helpful suggestions."
-msgstr "Ritverktyg för OpenCPN\n\n"
-"Tack alla som hjälpt till med värdefulla synpunkter."
-
-#: src/ocpn_draw_pi.cpp:3255
-msgid "Layer Boundary"
-msgstr "Gräns i lager"
-
-#: src/ocpn_draw_pi.cpp:3480 src/ocpn_draw_pi.cpp:3547
-msgid "Use nearby Point?"
-msgstr "Använd närmaste punkt?"
-
-#: src/ocpn_draw_pi.cpp:3481 src/ocpn_draw_pi.cpp:3548
-msgid "OCPN Draw Point Create"
-msgstr "OCPN ritverktyg. Skapa en punkt"
-
-#: src/ocpn_draw_pi.cpp:3627
+#
 msgid "Use nearby OD Point?"
 msgstr "Använd närmaste OR-punkt?"
-
-#: src/ocpn_draw_pi.cpp:3628 src/ocpn_draw_pi.cpp:3681
-msgid "OCPN Draw Boundary Create"
-msgstr "OCPN ritverktyg. Skapa en gränslinje"
-
-#: src/ocpn_draw_pi.cpp:3675
-msgid "For this leg the Great Circle boundary is "
-msgstr "Storcirkelgränsen för detta ben är "
-
-#: src/ocpn_draw_pi.cpp:3676
-msgid " shorter than rhumbline.\n\n"
-msgstr " kortare än loxodrom.\n\n"
-
-#: src/ocpn_draw_pi.cpp:3677
+#
+msgid "Use nearby Point?"
+msgstr "Använd närmaste punkt?"
+#
+msgid "User Icons:"
+msgstr "Egna ikoner:"
+#
+msgid "Version:"
+msgstr "Version:"
+#
+msgid "WD"
+msgstr "WD"
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr "Varning: Lat och Lon kan inte ändras när EBL slutpunkt flyttas"
+#
+msgid "Whilst Drawing"
+msgstr "Vid användning"
+#
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Vill du använda gränspunkter efter en storcirkel för detta ben?"
-
-#: src/ocpn_draw_pi.cpp:3850
-msgid "GZ"
-msgstr "LZ"
-
-#: src/ocpn_draw_pi.cpp:3889
-msgid "Second"
-msgstr "Andra"
-
-#: src/ocpn_draw_pi.cpp:3915
-msgid "First"
-msgstr "Första"
-
-#: src/ocpn_draw_pi.cpp:3948
-msgid "PIL"
-msgstr "PIL"
-
+#
+msgid "Yes"
+msgstr "Ja"
+#
+msgid "gpx"
+msgstr "gpx"
+#
+msgid "ocpn_draw_pi data location"
+msgstr "ocpn_draw_pi data finns på"
+#
+msgid "will be deleted."
+msgstr "kommer att raderas."
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr "kommer att raderas. Inga ytterligare gränser kommer att importeras"
+#
+msgid "wxFB Website"
+msgstr "wxFB hemsida"

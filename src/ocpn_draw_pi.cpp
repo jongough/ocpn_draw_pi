@@ -263,6 +263,7 @@ int             g_iTextRightOffsetY;
 int             g_iTextLeftOffsetX;
 int             g_iTextLeftOffsetY;
 int             g_iTextPointDisplayTextWhen;
+int             g_iTextMaxWidth;
 
 PlugIn_ViewPort g_VP;
 ODDC            *g_pDC;
@@ -1458,6 +1459,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultTextBackgroundColour" ), g_colourDefaultTextBackgroundColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
             pConf->Write( wxS( "DefaultTextPosition" ), g_iTextPosition );
+            pConf->Write( wxS( "DefaultTextMaxWidth" ), g_iTextMaxWidth );
             pConf->Write( wxS( "DefaultTextTopOffsetX" ), g_iTextTopOffsetX );
             pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
             pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
@@ -1763,6 +1765,7 @@ void ocpn_draw_pi::LoadConfig()
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextBackgroundColour );
         pConf->Read( wxS( "DefaultTextBackgroundTransparency" ), &g_iTextBackgroundTransparency, 100 );
         pConf->Read( wxS( "DefaultTextPosition" ), &g_iTextPosition, ID_TEXT_BOTTOM );
+        pConf->Read( wxS( "DefaultTextMaxWidth" ), &g_iTextMaxWidth, 250 );
         pConf->Read( wxS( "DefaultTextTopOffsetX" ), &g_iTextTopOffsetX, -10 );
         pConf->Read( wxS( "DefaultTextTopOffsetY" ), &g_iTextTopOffsetY, -5 );
         pConf->Read( wxS( "DefaultTextBottomOffsetX" ), &g_iTextBottomOffsetX, -10 );
@@ -2526,8 +2529,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 }
             } else if(m_bPathEditing && (m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT)) {
                 // Do move of whole path
-                double l_move_lat;
-                double l_move_lon;
+                double l_move_lat = 0;
+                double l_move_lon = 0;
                 if( event.ControlDown()) l_move_lat = m_PathMove_cursor_start_lat - m_cursor_lat;
                 else if( event.ShiftDown()) l_move_lon = m_PathMove_cursor_start_lon - m_cursor_lon;
                 else {

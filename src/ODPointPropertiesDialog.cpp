@@ -299,7 +299,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_scrolledWindowBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_scrolledWindowBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_scrolledWindowBasicProperties );
-	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), true );
+	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), false );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_SizerDisplayText = new wxBoxSizer( wxVERTICAL );
 
@@ -348,6 +348,13 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 
 	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
 
+	m_staticTextMaxWidth = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Maximum Text Width"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextMaxWidth->Wrap( -1 );
+	fgSizerTextProperties->Add( m_staticTextMaxWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+
+	m_textCtrlTextMaxWidth = new wxTextCtrl( m_panelDisplayText, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	fgSizerTextProperties->Add( m_textCtrlTextMaxWidth, 0, wxALL, 5 );
+
 	wxBoxSizer* bSizerFontFace;
 	bSizerFontFace = new wxBoxSizer( wxHORIZONTAL );
 
@@ -378,7 +385,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDisplayText->SetSizer( m_SizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_SizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );

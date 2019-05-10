@@ -174,6 +174,7 @@ private:
     wxHyperlinkCtrl *m_pClickedLink;
     HyperlinkList   *m_pHyperLinkList;
     wxSize          m_sSingleLineSize;
+    int             m_iTextPointTextMaxWidth;
 };
 
 #endif // __ODPointPropertiesImpl__

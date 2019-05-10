@@ -28,6 +28,7 @@
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
+#include <wx/textwrapper.h>
  
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
@@ -402,3 +403,30 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
     points[ npoints[0] -1 ].y = y1;
     return npoints[0];
 }
+
+wxString WrapText(wxWindow *win, const wxString& text, int widthMax)
+{
+    class HardBreakWrapper : public wxTextWrapper
+    {
+    public:
+        HardBreakWrapper(wxWindow *win, const wxString& text, int widthMax)
+        {
+            Wrap(win, text, widthMax);
+        }
+        wxString const& GetWrapped() const { return m_wrapped; }
+    protected:
+        virtual void OnOutputLine(const wxString& line)
+        {
+            m_wrapped += line;
+        }
+        virtual void OnNewLine()
+        {
+            m_wrapped += '\n';
+        }
+    private:
+        wxString m_wrapped;
+    };
+    HardBreakWrapper wrapper(win, text, widthMax);
+    return wrapper.GetWrapped();
+}
+
