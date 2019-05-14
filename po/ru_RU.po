@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-18 02:54\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Russian\n"
@@ -412,6 +412,9 @@ msgstr "Центр на движущейся лодке"
 msgid "Change all Path Point Icons"
 msgstr "Изменить все значки точек путей"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Комбинация! (Фаталити?)!"
 #
@@ -685,6 +688,14 @@ msgstr "Первый значок точки"
 msgid "First distance"
 msgstr "Первое расстояние"
 #
+#, fuzzy
+msgid "Font Base"
+msgstr "Шрифты"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Шрифты"
+#
 msgid "Fonts"
 msgstr "Шрифты"
 #
@@ -957,6 +968,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Совместите цвет VRM с цветом EBL"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

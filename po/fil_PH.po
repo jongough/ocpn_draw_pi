@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-02-23 17:40\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Filipino\n"
@@ -415,6 +415,9 @@ msgstr "Sentro ng gumagalaw na barko"
 msgid "Change all Path Point Icons"
 msgstr "Palitan ang lahat ng mga Aykon sa Puntong Daanan"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Combo!"
 #
@@ -688,6 +691,14 @@ msgstr ""
 msgid "First distance"
 msgstr ""
 #
+#, fuzzy
+msgid "Font Base"
+msgstr "Mga Font"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Mga Font"
+#
 msgid "Fonts"
 msgstr "Mga Font"
 #
@@ -958,6 +969,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Iparehass ang kulay ng VRM sa Kulay ng EBL"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

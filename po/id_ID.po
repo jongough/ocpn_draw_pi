@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-02-23 17:39\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Indonesian\n"
@@ -414,6 +414,9 @@ msgstr "Pusat gerakan perahu"
 msgid "Change all Path Point Icons"
 msgstr "Mengubah semua Ikon Titik Jalan"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Combo!"
 #
@@ -687,6 +690,14 @@ msgstr "Ikon titik pertama"
 msgid "First distance"
 msgstr "Jarak pertama"
 #
+#, fuzzy
+msgid "Font Base"
+msgstr "Font"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Font"
+#
 msgid "Fonts"
 msgstr "Font"
 #
@@ -959,6 +970,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Sesuai warna VRM ke warna EBL"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

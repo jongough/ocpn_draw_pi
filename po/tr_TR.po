@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-23 15:23\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Turkish\n"
@@ -416,6 +416,9 @@ msgstr "Tekne hareket merkezi"
 msgid "Change all Path Point Icons"
 msgstr "Tüm yol nokta ikonlarını değiştir"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Açılır menü!"
 #
@@ -688,6 +691,14 @@ msgstr "Birinci nokta ikonu"
 #
 msgid "First distance"
 msgstr "İlk mesafe"
+#
+#, fuzzy
+msgid "Font Base"
+msgstr "Yazı tipleri"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Yazı tipleri"
 #
 msgid "Fonts"
 msgstr "Yazı tipleri"
@@ -963,6 +974,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "VRM rengini EBL rengine denkle"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

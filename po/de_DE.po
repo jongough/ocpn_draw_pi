@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-18 02:51\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: German\n"
@@ -416,6 +416,9 @@ msgstr "Auf fahrendem Boot fixieren"
 msgid "Change all Path Point Icons"
 msgstr "Ändere alle Symbole des Pfades"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Combo!"
 #
@@ -689,6 +692,14 @@ msgstr "Symbol erster Punkt"
 #
 msgid "First distance"
 msgstr "Erster Abstand"
+#
+#, fuzzy
+msgid "Font Base"
+msgstr "Schriftarten"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Schriftarten"
 #
 msgid "Fonts"
 msgstr "Schriftarten"
@@ -964,6 +975,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "VRM Farbe an EBL Farbe angleichen"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

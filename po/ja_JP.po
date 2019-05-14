@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-02-23 17:34\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Japanese\n"
@@ -408,6 +408,9 @@ msgstr ""
 msgid "Change all Path Point Icons"
 msgstr ""
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr ""
 #
@@ -675,6 +678,12 @@ msgstr ""
 msgid "First distance"
 msgstr ""
 #
+msgid "Font Base"
+msgstr ""
+#
+msgid "Font Based"
+msgstr ""
+#
 msgid "Fonts"
 msgstr ""
 #
@@ -940,6 +949,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "VRMの色をEBLの色に一致させる"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

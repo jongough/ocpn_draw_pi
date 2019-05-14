@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-18 02:53\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Dutch\n"
@@ -417,6 +417,9 @@ msgstr "Maak startpunt=vaartuigpositie (dynamisch)"
 msgid "Change all Path Point Icons"
 msgstr "Aanpassen alle punt-pictogrammen"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Combo!"
 #
@@ -691,6 +694,14 @@ msgstr "Pictogram 1e punt"
 #
 msgid "First distance"
 msgstr "Eerste afstand"
+#
+#, fuzzy
+msgid "Font Base"
+msgstr "Lettertypes"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Lettertypes"
 #
 msgid "Fonts"
 msgstr "Lettertypes"
@@ -967,6 +978,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Maak cirkelkleur gelijk aan kleur peilinglijn"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

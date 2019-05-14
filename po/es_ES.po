@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-18 02:49\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Spanish\n"
@@ -416,6 +416,9 @@ msgstr "Centro del barco desplazándose"
 msgid "Change all Path Point Icons"
 msgstr "Cambiar todos los iconos de puntos de línea"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "¡Combo!"
 #
@@ -689,6 +692,14 @@ msgstr "Primer icono de punto"
 #
 msgid "First distance"
 msgstr "Primera distancia"
+#
+#, fuzzy
+msgid "Font Base"
+msgstr "Fuentes"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Fuentes"
 #
 msgid "Fonts"
 msgstr "Fuentes"
@@ -964,6 +975,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Emplear color de EBL en VRM"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

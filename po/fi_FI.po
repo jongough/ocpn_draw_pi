@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-18 02:52\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Finnish\n"
@@ -417,6 +417,9 @@ msgstr "Keskitä liikkuvaan veneeseen"
 msgid "Change all Path Point Icons"
 msgstr "Vaihda kaikkien polkupisteiden kuvakkeet"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Yhdistelmä!"
 #
@@ -692,6 +695,14 @@ msgstr "Alkupisteen kuvake"
 msgid "First distance"
 msgstr "Ensimmäinen etäisyys"
 #
+#, fuzzy
+msgid "Font Base"
+msgstr "Kirjasimet"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Kirjasimet"
+#
 msgid "Fonts"
 msgstr "Kirjasimet"
 #
@@ -966,6 +977,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Sovita VRM väri EBL väriin"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"

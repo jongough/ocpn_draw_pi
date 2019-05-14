@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-10 17:57+1000\n"
+"POT-Creation-Date: 2019-05-14 17:13+1000\n"
 "PO-Revision-Date: 2019-03-23 15:21\n"
 "Last-Translator: nohal <pavel@kalian.cz>\n"
 "Language-Team: Greek\n"
@@ -419,6 +419,9 @@ msgstr "Κεντράρισε στο κινούμενο πλοίο"
 msgid "Change all Path Point Icons"
 msgstr "Αλλαγή όλων των εικονιδίων των σημείων διαδρομής"
 #
+msgid "Character Based"
+msgstr ""
+#
 msgid "Combo!"
 msgstr "Συνδυασμός!"
 #
@@ -691,6 +694,14 @@ msgstr "Εικονίδιο πρώτου σημείου"
 #
 msgid "First distance"
 msgstr "Πρώτη απόσταση"
+#
+#, fuzzy
+msgid "Font Base"
+msgstr "Γραμματοσειρές"
+#
+#, fuzzy
+msgid "Font Based"
+msgstr "Γραμματοσειρές"
 #
 msgid "Fonts"
 msgstr "Γραμματοσειρές"
@@ -966,6 +977,9 @@ msgid "Match VRM colour to EBL colour"
 msgstr "Ταίριαξε το χρώμα του δακτυλίου με το χρώμα της EBL"
 #
 msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
 msgstr ""
 #
 msgid "Merge and Delete Boundaries"
