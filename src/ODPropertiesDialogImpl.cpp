@@ -104,7 +104,7 @@ ODPropertiesDialogDef( parent )
     dDRPointRangeRingStepVal.SetMin(0);
     dSOGVal.SetMin(0);
     iCOGVal.SetRange(0, 360);
-    iTextPointTextMaxWidth.SetMin(0);
+    iTextPointTextMaxWidth.SetMin(-1);
 
     m_textCtrlODPointRangeRingSteps->SetValidator( dODPointRangeRingStepVal );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadiusVal );
@@ -510,6 +510,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();
     g_iTextPosition = m_choiceTextPosition->GetSelection();
     g_iTextMaxWidth = m_iTextPointTextMaxWidth;
+    g_iTextMaxWidthType = m_radioBoxWidthType->GetSelection();
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
     g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
@@ -849,6 +850,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 
     m_choiceTextPosition->SetSelection( g_iTextPosition );
     m_iTextPointTextMaxWidth = g_iTextMaxWidth;
+    m_radioBoxWidthType->SetSelection(g_iTextMaxWidthType);
     m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
     m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
     m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );

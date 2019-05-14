@@ -93,6 +93,7 @@ private:
     double      m_dPILOffsetValidator;
     int         m_iCOGValidator;
     int         m_iTextPointTextMaxWidth;
+    int         m_iTextPointTextMaxWidthType;
     wxColour    m_cRed;
     wxColour    m_cGreen;
 };

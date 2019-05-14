@@ -348,6 +348,15 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 
 	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
 
+	wxString m_radioBoxWidthTypeChoices[] = { _("Font Based"), _("Character Based") };
+	int m_radioBoxWidthTypeNChoices = sizeof( m_radioBoxWidthTypeChoices ) / sizeof( wxString );
+	m_radioBoxWidthType = new wxRadioBox( m_panelDisplayText, wxID_ANY, _("Maximum Width Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxWidthTypeNChoices, m_radioBoxWidthTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxWidthType->SetSelection( 0 );
+	fgSizerTextProperties->Add( m_radioBoxWidthType, 0, wxALL, 5 );
+
+
+	fgSizerTextProperties->Add( 0, 0, 1, wxEXPAND, 5 );
+
 	m_staticTextMaxWidth = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Maximum Text Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextMaxWidth->Wrap( -1 );
 	fgSizerTextProperties->Add( m_staticTextMaxWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );

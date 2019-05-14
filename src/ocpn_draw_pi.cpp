@@ -264,6 +264,7 @@ int             g_iTextLeftOffsetX;
 int             g_iTextLeftOffsetY;
 int             g_iTextPointDisplayTextWhen;
 int             g_iTextMaxWidth;
+int             g_iTextMaxWidthType;
 
 PlugIn_ViewPort g_VP;
 ODDC            *g_pDC;
@@ -1460,6 +1461,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
             pConf->Write( wxS( "DefaultTextPosition" ), g_iTextPosition );
             pConf->Write( wxS( "DefaultTextMaxWidth" ), g_iTextMaxWidth );
+            pConf->Write( wxS( "DefaultTextMaxWidthType" ), g_iTextMaxWidthType );
             pConf->Write( wxS( "DefaultTextTopOffsetX" ), g_iTextTopOffsetX );
             pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
             pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
@@ -1766,6 +1768,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextBackgroundTransparency" ), &g_iTextBackgroundTransparency, 100 );
         pConf->Read( wxS( "DefaultTextPosition" ), &g_iTextPosition, ID_TEXT_BOTTOM );
         pConf->Read( wxS( "DefaultTextMaxWidth" ), &g_iTextMaxWidth, 250 );
+        pConf->Read( wxS( "DefaultTextMaxWidthType" ), &g_iTextMaxWidthType, 0 );
         pConf->Read( wxS( "DefaultTextTopOffsetX" ), &g_iTextTopOffsetX, -10 );
         pConf->Read( wxS( "DefaultTextTopOffsetY" ), &g_iTextTopOffsetY, -5 );
         pConf->Read( wxS( "DefaultTextBottomOffsetX" ), &g_iTextBottomOffsetX, -10 );

@@ -430,3 +430,48 @@ wxString WrapText(wxWindow *win, const wxString& text, int widthMax)
     return wrapper.GetWrapped();
 }
 
+wxString WrapString(const wxString &text, int widthMax)
+{
+    wxString l_string = wxEmptyString;
+    int textlen = text.Len();
+    int l_count = 0;
+    int l_spacePos = 0;
+    int l_lastSpacePos = 0;
+    for(int i = 0; i < textlen; ++i) {
+        auto c = text[i].GetValue();
+        ++l_count;
+        if(c == ' ') l_spacePos = i;
+        if(widthMax <= l_count) {
+            if(l_spacePos != i) {
+                if(l_spacePos == l_lastSpacePos) {
+                    l_string.append(text.SubString(l_lastSpacePos, i));
+                    l_string.append('\n');
+                    l_spacePos = i;
+                    l_lastSpacePos = l_spacePos;
+                    l_count = 0;
+                } else {
+                    l_string.append(text.SubString(l_lastSpacePos, l_spacePos));
+                    l_string.append('\n');
+                    ++l_spacePos;
+                    i = l_spacePos;
+                    l_lastSpacePos = l_spacePos;
+                    l_count = 0;
+                }
+                continue;
+            } else {
+                l_string.append(text.SubString(l_lastSpacePos, i));
+                l_string.append('\n');
+                l_spacePos = i;
+                l_lastSpacePos = l_spacePos;
+                l_count = 0;
+            }
+        }
+        if(c == '\n') {
+            l_string.append(text.SubString(l_lastSpacePos, i));
+            l_spacePos = i + 1;
+            l_lastSpacePos = l_spacePos;
+            l_count = 0;
+        }
+    }
+    return l_string;
+}

@@ -90,6 +90,7 @@ TextPoint::TextPoint() : ODPoint()
     m_colourTextColour = g_colourDefaultTextColour;
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = g_iTextMaxWidth;
+    m_iTextMaxWidthType = g_iTextMaxWidthType;
     m_DisplayTextFont = g_DisplayTextFont;
     m_bTextChanged = true;
     m_bShowDisplayTextOnRollover = false;
@@ -117,6 +118,7 @@ TextPoint::TextPoint(const TextPoint& other) : ODPoint(other)
     m_colourTextColour = other.m_colourTextColour;
     m_colourTextBackgroundColour = other.m_colourTextBackgroundColour;
     m_iWrapLen = other.m_iWrapLen;
+    m_iTextMaxWidthType = other.m_iTextMaxWidthType;
     m_DisplayTextFont = other.m_DisplayTextFont;
     m_bTextChanged = true;
     m_iDisplayTextWhen = other.m_iDisplayTextWhen;
@@ -169,6 +171,7 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     m_colourTextColour = g_colourDefaultTextColour;
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
     m_iWrapLen = g_iTextMaxWidth;
+    m_iTextMaxWidthType = g_iTextMaxWidthType;
     if(g_DisplayTextFont.IsOk()) m_DisplayTextFont = g_DisplayTextFont;
     m_bTextChanged = true;
     m_bShowDisplayTextOnRollover = false;
@@ -222,7 +225,10 @@ void TextPoint::Draw( ODDC& dc, wxPoint *odp)
         if( m_TextPointText.Len() > 0 ) {
             wxString l_TextPointText;
             if(m_TextPointText.Len() > (size_t)m_iWrapLen)
-                l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
+                if(m_iTextMaxWidthType == 0)
+                    l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
+                else
+                    l_TextPointText = WrapString(m_TextPointText, m_iWrapLen);
             else 
                 l_TextPointText = m_TextPointText;
             
@@ -313,8 +319,11 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         if( m_TextPointText.Len() > 0 ) {
             wxString l_TextPointText;
             if(m_TextPointText.Len() > (size_t)m_iWrapLen)
-                l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
-            else 
+                if(m_iTextMaxWidthType == 0)
+                    l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
+                else
+                    l_TextPointText = WrapString(m_TextPointText, m_iWrapLen);
+                else 
                 l_TextPointText = m_TextPointText;
 
             CalculateTextExtents(l_TextPointText);

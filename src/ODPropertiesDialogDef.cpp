@@ -423,6 +423,15 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 
 	fgSizer21->Add( fgSizer47, 1, wxEXPAND, 5 );
 
+	wxString m_radioBoxWidthTypeChoices[] = { _("Font Base"), _("Character Based") };
+	int m_radioBoxWidthTypeNChoices = sizeof( m_radioBoxWidthTypeChoices ) / sizeof( wxString );
+	m_radioBoxWidthType = new wxRadioBox( m_panelTextPoint, wxID_ANY, _("Maximum Width Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxWidthTypeNChoices, m_radioBoxWidthTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxWidthType->SetSelection( 0 );
+	fgSizer21->Add( m_radioBoxWidthType, 0, wxALL, 5 );
+
+
+	fgSizer21->Add( 0, 0, 1, wxEXPAND, 5 );
+
 	m_staticTextMaxWidth = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Maximum Text Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextMaxWidth->Wrap( -1 );
 	fgSizer21->Add( m_staticTextMaxWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );

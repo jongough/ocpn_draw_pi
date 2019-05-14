@@ -383,6 +383,7 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
             m_pTextPoint->m_bTextChanged = true;
             m_pTextPoint->m_iWrapLen = m_iTextPointTextMaxWidth;
+            m_pTextPoint->m_iTextMaxWidthType = m_radioBoxWidthType->GetSelection();
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
@@ -682,6 +683,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textDisplayText->SetValue( m_pTextPoint->m_TextPointText );
             m_choicePosition->SetSelection( m_pTextPoint->m_iTextPosition );
             m_iTextPointTextMaxWidth = m_pTextPoint->m_iWrapLen;
+            m_radioBoxWidthType->SetSelection(m_pTextPoint->m_iTextMaxWidthType);
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
