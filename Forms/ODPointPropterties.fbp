@@ -18,7 +18,7 @@
         <property name="internationalize">1</property>
         <property name="name">ODPointPropertiesImpl</property>
         <property name="namespace"></property>
-        <property name="path">/home/jon/opencpn/odraw/Forms</property>
+        <property name="path">/data/public/working area/opencpn/odraw/Forms</property>
         <property name="precompiled_header"></property>
         <property name="relative_path">1</property>
         <property name="skip_lua_events">1</property>
@@ -46,7 +46,7 @@
             <property name="name">ODPointPropertiesDialog</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
-            <property name="style">wxDEFAULT_DIALOG_STYLE</property>
+            <property name="style">wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</property>
             <property name="subclass"></property>
             <property name="title">OD Point Properties</property>
             <property name="tooltip"></property>
