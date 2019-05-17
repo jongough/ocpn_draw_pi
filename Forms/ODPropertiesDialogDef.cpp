@@ -1311,6 +1311,62 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 
 	fgSizerAboutLayout->Add( fgSizer6, 1, wxEXPAND, 5 );
 
+	m_staticTextAPIVersion = new wxStaticText( m_panelAbout, wxID_ANY, _("OCPN Draw API Version:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextAPIVersion->Wrap( -1 );
+	fgSizerAboutLayout->Add( m_staticTextAPIVersion, 0, wxALL, 5 );
+
+	wxFlexGridSizer* fgSizer51;
+	fgSizer51 = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizer51->SetFlexibleDirection( wxBOTH );
+	fgSizer51->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	m_staticTextAPIVersionMajor = new wxStaticText( m_panelAbout, wxID_ANY, _("Major:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextAPIVersionMajor->Wrap( -1 );
+	fgSizer51->Add( m_staticTextAPIVersionMajor, 0, wxALL, 5 );
+
+	m_staticTextAPIVersionMajorVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextAPIVersionMajorVal->Wrap( -1 );
+	fgSizer51->Add( m_staticTextAPIVersionMajorVal, 0, wxALL, 5 );
+
+	m_staticTextAPIVersionMinor = new wxStaticText( m_panelAbout, wxID_ANY, _("Minor:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextAPIVersionMinor->Wrap( -1 );
+	fgSizer51->Add( m_staticTextAPIVersionMinor, 0, wxALL, 5 );
+
+	m_staticTextAPIVersionMinorVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextAPIVersionMinorVal->Wrap( -1 );
+	fgSizer51->Add( m_staticTextAPIVersionMinorVal, 0, wxALL, 5 );
+
+
+	fgSizerAboutLayout->Add( fgSizer51, 1, wxEXPAND, 5 );
+
+	m_staticTextOCPNVersionMajor = new wxStaticText( m_panelAbout, wxID_ANY, _("OCPN API Version:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOCPNVersionMajor->Wrap( -1 );
+	fgSizerAboutLayout->Add( m_staticTextOCPNVersionMajor, 0, wxALL, 5 );
+
+	wxFlexGridSizer* fgSizer52;
+	fgSizer52 = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizer52->SetFlexibleDirection( wxBOTH );
+	fgSizer52->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
+	m_staticTextOCPNAPIVersionMajor = new wxStaticText( m_panelAbout, wxID_ANY, _("Major:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOCPNAPIVersionMajor->Wrap( -1 );
+	fgSizer52->Add( m_staticTextOCPNAPIVersionMajor, 0, wxALL, 5 );
+
+	m_staticTextOCPNAPIVersionMajorVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOCPNAPIVersionMajorVal->Wrap( -1 );
+	fgSizer52->Add( m_staticTextOCPNAPIVersionMajorVal, 0, wxALL, 5 );
+
+	m_staticTextOCPNAPIVersionMinor = new wxStaticText( m_panelAbout, wxID_ANY, _("Minor:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOCPNAPIVersionMinor->Wrap( -1 );
+	fgSizer52->Add( m_staticTextOCPNAPIVersionMinor, 0, wxALL, 5 );
+
+	m_staticTextOCPNAPIVersionMinorVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextOCPNAPIVersionMinorVal->Wrap( -1 );
+	fgSizer52->Add( m_staticTextOCPNAPIVersionMinorVal, 0, wxALL, 5 );
+
+
+	fgSizerAboutLayout->Add( fgSizer52, 1, wxEXPAND, 5 );
+
 	m_staticTextDate = new wxStaticText( m_panelAbout, wxID_ANY, _("Date:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextDate->Wrap( -1 );
 	fgSizerAboutLayout->Add( m_staticTextDate, 0, wxALL, 5 );

@@ -56,6 +56,10 @@ ODPropertiesDialogDef( parent )
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
     m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
+    m_staticTextAPIVersionMajorVal->SetLabel( wxT(TOSTRING(OD_API_VERSION_MAJOR)) );
+    m_staticTextAPIVersionMinorVal->SetLabel( wxT(TOSTRING(OD_API_VERSION_MINOR)) );
+    m_staticTextOCPNAPIVersionMajorVal->SetLabel( wxT(TOSTRING(OCPN_API_VERSION_MAJOR)) );
+    m_staticTextOCPNAPIVersionMinorVal->SetLabel( wxT(TOSTRING(OCPN_API_VERSION_MINOR)) );
     m_staticTextDataDirectory->SetLabel( *g_pData );
     m_staticTextIconDirectory->SetLabel( *g_pUserIconsDir );
     m_staticTextLayersDirectory->SetLabel( *g_pLayerDir );

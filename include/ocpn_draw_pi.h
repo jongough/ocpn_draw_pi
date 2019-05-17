@@ -307,10 +307,6 @@ enum {
 #define TYPE_PATHMGR_POINT_DLG      0x0080
 #define TYPE_PATHMGR_LAYER_DLG      0x0100
 
-// API version of OCPN to use
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    16
-
 class Boundary;
 class BoundaryProp;
 class Boundarylist;

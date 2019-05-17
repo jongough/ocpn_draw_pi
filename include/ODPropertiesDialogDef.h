@@ -276,6 +276,16 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextMinorVal;
 		wxStaticText* m_staticTextPatcvh;
 		wxStaticText* m_staticTextPatchVal;
+		wxStaticText* m_staticTextAPIVersion;
+		wxStaticText* m_staticTextAPIVersionMajor;
+		wxStaticText* m_staticTextAPIVersionMajorVal;
+		wxStaticText* m_staticTextAPIVersionMinor;
+		wxStaticText* m_staticTextAPIVersionMinorVal;
+		wxStaticText* m_staticTextOCPNVersionMajor;
+		wxStaticText* m_staticTextOCPNAPIVersionMajor;
+		wxStaticText* m_staticTextOCPNAPIVersionMajorVal;
+		wxStaticText* m_staticTextOCPNAPIVersionMinor;
+		wxStaticText* m_staticTextOCPNAPIVersionMinorVal;
 		wxStaticText* m_staticTextDate;
 		wxStaticText* m_staticTextDateVal;
 		wxStaticLine* m_staticline1;
