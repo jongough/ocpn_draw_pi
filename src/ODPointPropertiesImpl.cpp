@@ -115,6 +115,7 @@ ODPointPropertiesDialog( parent )
     if(g_iDefaultPointPropertyDialogPostionX == -1 || g_iDefaultPointPropertyDialogPostionY == -1) Center();
     else SetPosition(wxPoint(g_iDefaultPointPropertyDialogPostionX, g_iDefaultPointPropertyDialogPostionY));
     
+    m_bShowingDisplayText = true;
 }
 
 ODPointPropertiesImpl::~ODPointPropertiesImpl()
@@ -135,6 +136,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
     m_SizerDialogBox->Fit(m_scrolledWindowBasicProperties);
     
+    this->Layout();
     this->GetSizer()->Fit( m_scrolledWindowBasicProperties );
     this->Layout();
     
@@ -559,6 +561,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 {
     if( m_pODPoint ) {
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            if(!m_bShowingDisplayText) {
+                m_notebookProperties->InsertPage(1, m_panelDisplayText, _("Display Text"), true);
+                m_bShowingDisplayText = true;
+            }
             m_panelDisplayText->Enable( true );
             m_panelDisplayText->Show();
             m_radioBoxWidthType->Enable( true );
@@ -573,6 +579,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Hide();
             m_SizerOuterProperties->Hide( m_SizerFill );
         } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
+            if(m_bShowingDisplayText) {
+                m_notebookProperties->RemovePage(1);
+                m_bShowingDisplayText = false;
+            }
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
             m_radioBoxWidthType->Enable( false );

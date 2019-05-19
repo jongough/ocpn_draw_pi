@@ -175,7 +175,7 @@ private:
     HyperlinkList   *m_pHyperLinkList;
     wxSize          m_sSingleLineSize;
     int             m_iTextPointTextMaxWidth;
-//    int             m_iTextPointTextMaxWidthType;
+    bool            m_bShowingDisplayText;
 };
 
 #endif // __ODPointPropertiesImpl__
