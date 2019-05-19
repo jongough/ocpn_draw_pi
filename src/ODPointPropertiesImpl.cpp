@@ -561,6 +561,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_panelDisplayText->Enable( true );
             m_panelDisplayText->Show();
+            m_radioBoxWidthType->Enable( true );
+            m_radioBoxShowDisplayText->Enable( true );
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -573,6 +575,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
+            m_radioBoxWidthType->Enable( false );
+            m_radioBoxShowDisplayText->Enable( false );
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
             m_SizerOuterProperties->Show( m_SizerFill );
@@ -585,6 +589,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point") || m_pODPoint->m_sTypeString == wxT("PIL Point")) {
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
+            m_radioBoxWidthType->Enable( false );
+            m_radioBoxShowDisplayText->Enable( false );
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -678,6 +684,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_dODPointArrivalRadius = m_pODPoint->GetODPointArrivalRadius();
         
         m_textDescription->SetValue( m_pODPoint->m_ODPointDescription );
+        m_textDisplayText->Clear();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_textDisplayText->Clear();
             m_textDisplayText->SetValue( m_pTextPoint->m_TextPointText );

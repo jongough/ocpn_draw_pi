@@ -310,59 +310,58 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_textDisplayText = new wxTextCtrl( m_panelDisplayText, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_WORDWRAP );
 	m_SizerDisplayText->Add( m_textDisplayText, 1, wxALL|wxEXPAND, 5 );
 
-	wxFlexGridSizer* fgSizerTextProperties;
-	fgSizerTextProperties = new wxFlexGridSizer( 0, 2, 0, 0 );
-	fgSizerTextProperties->SetFlexibleDirection( wxBOTH );
-	fgSizerTextProperties->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_fgSizerTextProperties = new wxFlexGridSizer( 0, 2, 0, 0 );
+	m_fgSizerTextProperties->SetFlexibleDirection( wxBOTH );
+	m_fgSizerTextProperties->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_staticTextPosition = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPosition->Wrap( -1 );
-	fgSizerTextProperties->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_staticTextPosition, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	wxString m_choicePositionChoices[] = { _("Top"), _("Top Centre"), _("Bottom"), _("Bottom Centre"), _("Centre"), _("Right"), _("Left") };
 	int m_choicePositionNChoices = sizeof( m_choicePositionChoices ) / sizeof( wxString );
 	m_choicePosition = new wxChoice( m_panelDisplayText, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choicePositionNChoices, m_choicePositionChoices, 0 );
 	m_choicePosition->SetSelection( 0 );
-	fgSizerTextProperties->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_choicePosition, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextColour = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Text Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextColour->Wrap( -1 );
-	fgSizerTextProperties->Add( m_staticTextColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_staticTextColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_colourPickerText = new wxColourPickerCtrl( m_panelDisplayText, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerTextProperties->Add( m_colourPickerText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_colourPickerText, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextBackgroundColour = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Background Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBackgroundColour->Wrap( -1 );
-	fgSizerTextProperties->Add( m_staticTextBackgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_staticTextBackgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_colourPickerBacgroundColour = new wxColourPickerCtrl( m_panelDisplayText, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizerTextProperties->Add( m_colourPickerBacgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_colourPickerBacgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextBackgroundTransparency = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Background Transparency"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBackgroundTransparency->Wrap( -1 );
-	fgSizerTextProperties->Add( m_staticTextBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_staticTextBackgroundTransparency, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_sliderBackgroundTransparency = new wxSlider( m_panelDisplayText, wxID_ANY, 100, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_sliderBackgroundTransparency->SetMinSize( wxSize( 100,-1 ) );
 
-	fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
+	m_fgSizerTextProperties->Add( m_sliderBackgroundTransparency, 0, wxALL|wxEXPAND, 5 );
 
 	wxString m_radioBoxWidthTypeChoices[] = { _("Font Based"), _("Character Based") };
 	int m_radioBoxWidthTypeNChoices = sizeof( m_radioBoxWidthTypeChoices ) / sizeof( wxString );
 	m_radioBoxWidthType = new wxRadioBox( m_panelDisplayText, wxID_ANY, _("Maximum Width Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxWidthTypeNChoices, m_radioBoxWidthTypeChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxWidthType->SetSelection( 0 );
-	fgSizerTextProperties->Add( m_radioBoxWidthType, 0, wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_radioBoxWidthType, 0, wxALL, 5 );
 
 
-	fgSizerTextProperties->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_fgSizerTextProperties->Add( 0, 0, 1, wxEXPAND, 5 );
 
 	m_staticTextMaxWidth = new wxStaticText( m_panelDisplayText, wxID_ANY, _("Maximum Text Width"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextMaxWidth->Wrap( -1 );
-	fgSizerTextProperties->Add( m_staticTextMaxWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_staticTextMaxWidth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_textCtrlTextMaxWidth = new wxTextCtrl( m_panelDisplayText, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerTextProperties->Add( m_textCtrlTextMaxWidth, 0, wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_textCtrlTextMaxWidth, 0, wxALL, 5 );
 
 	wxBoxSizer* bSizerFontFace;
 	bSizerFontFace = new wxBoxSizer( wxHORIZONTAL );
@@ -376,19 +375,19 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	bSizerFontFace->Add( m_staticTextFontFaceExample, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 
-	fgSizerTextProperties->Add( bSizerFontFace, 1, wxEXPAND, 5 );
+	m_fgSizerTextProperties->Add( bSizerFontFace, 1, wxEXPAND, 5 );
 
 	m_buttonTextFont = new wxButton( m_panelDisplayText, wxID_ANY, _("Fonts"), wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizerTextProperties->Add( m_buttonTextFont, 0, wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_buttonTextFont, 0, wxALL, 5 );
 
 	wxString m_radioBoxShowDisplayTextChoices[] = { _("Always"), _("On Rollover Only"), _("Never") };
 	int m_radioBoxShowDisplayTextNChoices = sizeof( m_radioBoxShowDisplayTextChoices ) / sizeof( wxString );
 	m_radioBoxShowDisplayText = new wxRadioBox( m_panelDisplayText, wxID_ANY, _("Show Display Text"), wxDefaultPosition, wxDefaultSize, m_radioBoxShowDisplayTextNChoices, m_radioBoxShowDisplayTextChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxShowDisplayText->SetSelection( 1 );
-	fgSizerTextProperties->Add( m_radioBoxShowDisplayText, 0, wxALL, 5 );
+	m_fgSizerTextProperties->Add( m_radioBoxShowDisplayText, 0, wxALL, 5 );
 
 
-	m_SizerDisplayText->Add( fgSizerTextProperties, 1, wxEXPAND, 5 );
+	m_SizerDisplayText->Add( m_fgSizerTextProperties, 1, wxEXPAND, 5 );
 
 
 	m_panelDisplayText->SetSizer( m_SizerDisplayText );
