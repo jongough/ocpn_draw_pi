@@ -446,7 +446,7 @@ wxString WrapString(const wxString &text, int widthMax)
                 if(l_spacePos == l_lastSpacePos) {
                     l_string.append(text.SubString(l_lastSpacePos, i));
                     l_string.append('\n');
-                    l_spacePos = i;
+                    l_spacePos = i + 1;
                     l_lastSpacePos = l_spacePos;
                     l_count = 0;
                 } else {
@@ -472,6 +472,9 @@ wxString WrapString(const wxString &text, int widthMax)
             l_lastSpacePos = l_spacePos;
             l_count = 0;
         }
+    }
+    if(l_count != 0) {
+        l_string.append(text.SubString(l_lastSpacePos, textlen));
     }
     return l_string;
 }
