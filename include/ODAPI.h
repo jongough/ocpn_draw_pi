@@ -120,6 +120,10 @@ struct CreateBoundaryPoint_t : public ODAPIVersion_t {
     std::list   <HyperLinkList_t *> BoundaryPointHyperLinkList;
 };
 
+struct DeleteBoundaryPoint_t : public ODAPIVersion_t {
+    wxString    GUID;
+};
+
 struct CreateBoundary_t : public ODAPIVersion_t {
     wxString    name;
     int         type;
@@ -132,6 +136,10 @@ struct CreateBoundary_t : public ODAPIVersion_t {
     wxString    GUID;
     bool        temporary;
     std::list   <CreateBoundaryPoint_t *> BoundaryPointsList;
+};
+
+struct DeleteBoundary_t : public ODAPIVersion_t {
+    wxString    GUID;
 };
 
 struct CreateTextPoint_t : public ODAPIVersion_t{
@@ -186,7 +194,9 @@ public:
     static bool OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_CreateBoundary( CreateBoundary_t *pCB );
+    static bool OD_DeleteBoundary( DeleteBoundary_t *pDB );
     static bool OD_CreateBoundaryPoint( CreateBoundaryPoint_t *pCBP );
+    static bool OD_DeleteBoundaryPoint( DeleteBoundaryPoint_t *pDBP );
     static bool OD_CreateTextPoint( CreateTextPoint_t *pCTP );
     static bool OD_DeleteTextPoint( DeleteTextPoint_t *pDTP );
     static bool OD_AddPointIcon( AddPointIcon_t *pAPI );
@@ -203,7 +213,9 @@ typedef bool (*OD_FindPointInAnyBoundary) (FindPointInAnyBoundary_t *);
 typedef bool (*OD_FindClosestBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_FindFirstBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_CreateBoundary) (CreateBoundary_t *);
+typedef bool (*OD_DeleteBoundary) (DeleteBoundary_t *);
 typedef bool (*OD_CreateBoundaryPoint) (CreateBoundaryPoint_t *);
+typedef bool (*OD_DeleteBoundaryPoint) (DeleteBoundaryPoint_t *);
 typedef bool (*OD_CreateTextPoint) (CreateTextPoint_t *);
 typedef bool (*OD_DeleteTextPoint) (DeleteTextPoint_t *);
 typedef bool (*OD_AddPointIcon) (AddPointIcon_t *);

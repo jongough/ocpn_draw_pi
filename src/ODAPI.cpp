@@ -299,6 +299,20 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB)
     return true;
 }
 
+bool ODAPI::OD_DeleteBoundary(DeleteBoundary_t* pDB)
+{
+    if(pDB->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pDB->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
+    Boundary *plB = (Boundary *)g_pBoundaryMan->FindPathByGUID(pDB->GUID);
+    if(plB) {
+        return g_pBoundaryMan->DeletePath(plB);
+    } else
+        return false;
+    
+}
+
 bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 {
     if(pCBP->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pCBP->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
@@ -350,6 +364,53 @@ bool ODAPI::OD_CreateBoundaryPoint(CreateBoundaryPoint_t* pCBP)
 
     RequestRefresh(g_ocpn_draw_pi->m_parent_window);
     return true;
+}
+
+bool ODAPI::OD_DeleteBoundaryPoint(DeleteBoundaryPoint_t* pDBP)
+{
+    if(pDBP->ODAPIVersionMajor != ODAPI_VERSION_MAJOR || pDBP->ODAPIVersionMinor != ODAPI_VERSION_MINOR) {
+        return false;
+    }
+    
+    BoundaryPoint *plBP = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID(pDBP->GUID);
+    if(plBP) {
+        if(plBP->m_bIsInBoundary) {
+            wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining(plBP);
+            if( ppath_array ) {
+                for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                    ODPath *pp = (ODPath *) ppath_array->Item( ip );
+                    if(pp->GetnPoints() <= 3)
+                        g_pPathMan->DeletePath(pp);
+                    else {
+                        pp->DeletePoint( plBP );
+                        if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) g_pODPathPropDialog->SetPathAndUpdate( pp, true );
+                    }
+                }
+                return true;
+            } else
+                return false;
+        } else {
+            g_pODPointMan->DestroyODPoint(plBP, false);
+            
+            g_pODSelect->DeleteSelectablePoint( plBP, SELTYPE_ODPOINT );
+            
+            if( NULL != g_pODPointMan )
+                g_pODPointMan->RemoveODPoint( plBP );
+            if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+                g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+            
+            if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+                g_pODPointPropDialog->ValidateMark();
+            }
+            
+            plBP->m_bPtIsSelected = false;
+            
+            delete (BoundaryPoint *)plBP;
+            
+            return true;
+        }
+    }
+    else return false;
 }
 
 bool ODAPI::OD_CreateTextPoint(CreateTextPoint_t* pCTP)
