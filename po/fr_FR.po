@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-18 14:14+1000\n"
-"PO-Revision-Date: 2019-05-18 04:19\n"
+"POT-Creation-Date: 2019-05-18 16:59+1000\n"
+"PO-Revision-Date: 2019-05-22 04:46\n"
 "Last-Translator: Pavel Kalian (nohal)\n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -1248,15 +1248,15 @@ msgstr "Transparence de l'arrière plan"
 
 #: src/ODPointPropertiesDialog.cpp:351 src/ODPropertiesDialogDef.cpp:426
 msgid "Character Based"
-msgstr ""
+msgstr "Basé sur les caractères"
 
-#: src/ODPointPropertiesDialog.cpp:351
+#: src/ODPointPropertiesDialog.cpp:351 src/ODPropertiesDialogDef.cpp:426
 msgid "Font Based"
-msgstr ""
+msgstr "Basé sur la police de caractère"
 
 #: src/ODPointPropertiesDialog.cpp:353 src/ODPropertiesDialogDef.cpp:428
 msgid "Maximum Width Type"
-msgstr ""
+msgstr "Largeur maximale"
 
 #: src/ODPointPropertiesDialog.cpp:360 src/ODPropertiesDialogDef.cpp:435
 msgid "Maximum Text Width"
@@ -1561,10 +1561,6 @@ msgstr "Icône d’une note"
 msgid "Background Density"
 msgstr "Opacité de l'arrière plan"
 
-#: src/ODPropertiesDialogDef.cpp:426
-msgid "Font Base"
-msgstr ""
-
 #: src/ODPropertiesDialogDef.cpp:528 src/ODPropertiesDialogImpl.cpp:127
 msgid "Path"
 msgstr "Chemin"
@@ -1727,11 +1723,11 @@ msgstr "Patch :"
 
 #: src/ODPropertiesDialogDef.cpp:1314
 msgid "OCPN Draw API Version:"
-msgstr ""
+msgstr "Version de l'API OCPN Draw :"
 
 #: src/ODPropertiesDialogDef.cpp:1342
 msgid "OCPN API Version:"
-msgstr ""
+msgstr "Version de l'API OpenCPN :"
 
 #: src/ODPropertiesDialogDef.cpp:1370
 msgid "Date:"

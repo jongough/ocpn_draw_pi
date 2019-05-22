@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-18 14:14+1000\n"
-"PO-Revision-Date: 2019-05-18 04:19\n"
+"POT-Creation-Date: 2019-05-18 16:59+1000\n"
+"PO-Revision-Date: 2019-05-22 04:46\n"
 "Last-Translator: Pavel Kalian (nohal)\n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -1246,7 +1246,7 @@ msgstr ""
 msgid "Character Based"
 msgstr ""
 
-#: src/ODPointPropertiesDialog.cpp:351
+#: src/ODPointPropertiesDialog.cpp:351 src/ODPropertiesDialogDef.cpp:426
 msgid "Font Based"
 msgstr ""
 
@@ -1552,10 +1552,6 @@ msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:406
 msgid "Background Density"
-msgstr ""
-
-#: src/ODPropertiesDialogDef.cpp:426
-msgid "Font Base"
 msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:528 src/ODPropertiesDialogImpl.cpp:127
