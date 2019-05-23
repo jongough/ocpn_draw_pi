@@ -223,6 +223,12 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
                 child = node.append_child("opencpn:text_position");
                 s.Printf(_T("%i"), tp->m_iTextPosition);
                 child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+                child = node.append_child("opencpn:text_maximum_width_type");
+                s.Printf(_T("%i"), tp->m_iTextMaxWidthType);
+                child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
+                child = node.append_child("opencpn:text_maximum_width");
+                s.Printf(_T("%i"), tp->m_iWrapLen);
+                child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
             }
             child = node.append_child( "opencpn:text_colour" );
             child.append_child(pugi::node_pcdata).set_value( tp->m_colourTextColour.GetAsString( wxC2S_HTML_SYNTAX ).utf8_str() );
@@ -999,6 +1005,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     int     l_pODPointRangeRingsStepUnits = -1;
     bool    l_bODPointRangeRingsVisible = false;
     int     l_iTextPosition = g_iTextPosition;
+    int     l_iTextMaxWidthType = g_iTextMaxWidthType;
+    int     l_iWrapLen = g_iTextMaxWidth;
     wxColour    l_wxcODPointRangeRingsColour;
     int     l_iODPointRangeRingWidth = 2;
     wxPenStyle  l_iODPointRangeRingStyle = wxPENSTYLE_SOLID;
@@ -1009,7 +1017,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     bool    l_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     int     l_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
     unsigned int l_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
-    double  l_natural_scale = 0.0;
+    double  l_natural_scale = g_ocpn_draw_pi->m_chart_scale;
     int     l_display_text_when = ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS;
     
     l_wxcODPointRangeRingsColour.Set( _T( "#FFFFFF" ) );
@@ -1034,6 +1042,16 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             long v = 0;
             if( s.ToLong( &v ) )
                 l_iTextPosition = v;
+        } else if( !strcmp( pcn, "opencpn:text_width_type") ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                l_iTextMaxWidthType = v;
+        } else if( !strcmp( pcn, "opencpn:text_maximum_width") ) {
+            wxString s = wxString::FromUTF8( child.first_child().value() );
+            long v = 0;
+            if( s.ToLong( &v ) )
+                l_iWrapLen = v;
         } else if( !strcmp( pcn, "opencpn:text_colour") ) {
             l_colourTextColour.Set( wxString::FromUTF8( child.first_child().value() ) );
 
@@ -1223,6 +1241,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     if( pTP && TypeString == _T("Text Point") ) {
         pTP->SetPointText( TextString );
         pTP->m_iTextPosition = l_iTextPosition;
+        pTP->m_iTextMaxWidthType = l_iTextMaxWidthType;
+        pTP->m_iWrapLen = l_iWrapLen;
         pTP->m_colourTextColour = l_colourTextColour;
         pTP->m_DisplayTextFont.SetPointSize( l_iTextPointFontSize );
         pTP->m_DisplayTextFont.SetFamily( l_iTextPointFontFamily );
