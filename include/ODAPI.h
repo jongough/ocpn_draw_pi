@@ -194,13 +194,13 @@ public:
     static bool OD_FindClosestBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_FindFirstBoundaryLineCrossing( FindClosestBoundaryLineCrossing_t *pFCBLC );
     static bool OD_CreateBoundary( CreateBoundary_t *pCB );
-    static bool OD_DeleteBoundary( DeleteBoundary_t *pDB );
     static bool OD_CreateBoundaryPoint( CreateBoundaryPoint_t *pCBP );
-    static bool OD_DeleteBoundaryPoint( DeleteBoundaryPoint_t *pDBP );
     static bool OD_CreateTextPoint( CreateTextPoint_t *pCTP );
-    static bool OD_DeleteTextPoint( DeleteTextPoint_t *pDTP );
     static bool OD_AddPointIcon( AddPointIcon_t *pAPI );
     static bool OD_DeletePointIcon( DeletePointIcon_t *pDPI );
+    static bool OD_DeleteBoundary( DeleteBoundary_t *pDB );
+    static bool OD_DeleteBoundaryPoint( DeleteBoundaryPoint_t *pDBP );
+    static bool OD_DeleteTextPoint( DeleteTextPoint_t *pDTP );
     
 protected:
     
@@ -213,12 +213,12 @@ typedef bool (*OD_FindPointInAnyBoundary) (FindPointInAnyBoundary_t *);
 typedef bool (*OD_FindClosestBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_FindFirstBoundaryLineCrossing) (FindClosestBoundaryLineCrossing_t *);
 typedef bool (*OD_CreateBoundary) (CreateBoundary_t *);
-typedef bool (*OD_DeleteBoundary) (DeleteBoundary_t *);
 typedef bool (*OD_CreateBoundaryPoint) (CreateBoundaryPoint_t *);
-typedef bool (*OD_DeleteBoundaryPoint) (DeleteBoundaryPoint_t *);
 typedef bool (*OD_CreateTextPoint) (CreateTextPoint_t *);
-typedef bool (*OD_DeleteTextPoint) (DeleteTextPoint_t *);
 typedef bool (*OD_AddPointIcon) (AddPointIcon_t *);
 typedef bool (*OD_DeletePointIcon) (DeletePointIcon_t *);
+typedef bool (*OD_DeleteBoundary) (DeleteBoundary_t *);
+typedef bool (*OD_DeleteBoundaryPoint) (DeleteBoundaryPoint_t *);
+typedef bool (*OD_DeleteTextPoint) (DeleteTextPoint_t *);
 
 #endif //_ODAPI_H_

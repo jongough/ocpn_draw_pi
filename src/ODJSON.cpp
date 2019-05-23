@@ -60,6 +60,7 @@ using nlohmann::json_schema::json_validator;
 #include "PointMan.h"
 #include "TextPoint.h"
 #include "ODPointPropertiesImpl.h"
+#include "ODPathPropertiesDialogImpl.h"
 
 #include "version.h"
 
@@ -254,6 +255,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxT("OD_CreateBoundaryPoint")] = wxString::From8BitData(ptr);
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_CreateTextPoint );
                 jMsg[wxT("OD_CreateTextPoint")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeleteBoundary );
+                jMsg[wxT("OD_DeleteBoundary")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeleteBoundaryPoint );
+                jMsg[wxT("OD_DeleteBoundaryPoint")] = wxString::From8BitData(ptr);
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeleteTextPoint );
                 jMsg[wxT("OD_DeleteTextPoint")] = wxString::From8BitData(ptr);
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_AddPointIcon );
@@ -1160,6 +1165,165 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 return;
             }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteBoundary")) {
+#ifdef OD_JSON_SCHEMA_VALIDATOR               
+            if(!gDeleteBoundary) {
+                gDeleteBoundary = new json_validator;
+                try {
+                    gDeleteBoundary->set_root_schema(DeleteBoundarySchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gDeleteBoundary->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+#endif
+            
+            wxJSONValue jv_Boundary;
+            if(root[wxS("Type")].AsString() != _T("Request")) {
+                wxLogMessage( wxS("Delete Text Point Type not 'Request'") );
+                bFail = true;
+            }
+            if(!root.HasMember( wxS("GUID"))) {
+                wxLogMessage( wxS("No GUID for the Text Point found in message") );
+                bFail = true;
+            } 
+            
+            if(!bFail) {
+                Boundary *plB = (Boundary *)g_pBoundaryMan->FindPathByGUID(root[wxS("GUID")].AsString());
+                if(plB) {
+                    g_pBoundaryMan->DeletePath(plB);
+                } 
+                
+                RequestRefresh(g_ocpn_draw_pi->m_parent_window);
+                
+                jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                jMsg[wxT("Msg")] = root[wxT("Msg")];
+                jMsg[wxT("Type")] = wxT("Response");
+                jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                jMsg[wxS("Deleted")] = true;
+                
+                jMsg[wxS("GUID")] = root[wxS("GUID")].AsString();
+                writer.Write( jMsg, MsgString );
+                SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                
+                plB = NULL;
+                
+                return;
+                
+            }
+        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteBoundaryPoint")) {
+#ifdef OD_JSON_SCHEMA_VALIDATOR               
+            if(!gDeleteBoundaryPoint) {
+                gDeleteBoundaryPoint = new json_validator;
+                try {
+                    gDeleteBoundaryPoint->set_root_schema(DeleteBoundaryPointSchema);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation of schema failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+            if(!bFail) {
+                try {
+                    json message = json::parse(static_cast<const char*>(message_body));
+                    gDeleteBoundaryPoint->validate(message);
+                } catch (const std::exception &e) {
+                    DEBUGST("Validation failed, here is why: ");
+                    DEBUGEND(e.what());
+                    wxString l_errorMsg;
+                    l_errorMsg.Append("Validation of schema failed, here is why: ");
+                    l_errorMsg.Append(e.what());
+                    wxLogMessage( l_errorMsg );
+                    bFail = true;
+                }
+            }
+#endif
+            
+            if(root[wxS("Type")].AsString() != _T("Request")) {
+                wxLogMessage( wxS("Delete Text Point Type not 'Request'") );
+                bFail = true;
+            }
+            if(!root.HasMember( wxS("GUID"))) {
+                wxLogMessage( wxS("No GUID for the Text Point found in message") );
+                bFail = true;
+            }
+            
+            if(!bFail) {
+                BoundaryPoint *plBP = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID(root[wxS("GUID")].AsString());
+                if(plBP) {
+                    if(plBP->m_bIsInBoundary) {
+                        wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining(plBP);
+                        if( ppath_array ) {
+                            for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                                ODPath *pp = (ODPath *) ppath_array->Item( ip );
+                                if(pp->GetnPoints() <= 3)
+                                    g_pPathMan->DeletePath(pp);
+                                else {
+                                    pp->DeletePoint( plBP );
+                                    if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) g_pODPathPropDialog->SetPathAndUpdate( pp, true );
+                                }
+                            }
+                        }
+                    } else {
+                        g_pODPointMan->DestroyODPoint(plBP, false);
+                        
+                        g_pODSelect->DeleteSelectablePoint( plBP, SELTYPE_ODPOINT );
+                        
+                        if( NULL != g_pODPointMan )
+                            g_pODPointMan->RemoveODPoint( plBP );
+                        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+                            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+                        
+                        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
+                            g_pODPointPropDialog->ValidateMark();
+                        }
+                        
+                        plBP->m_bPtIsSelected = false;
+                        
+                        delete (BoundaryPoint *)plBP;
+                        
+                    }
+                }
+                RequestRefresh(g_ocpn_draw_pi->m_parent_window);
+                
+                jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+                jMsg[wxT("Msg")] = root[wxT("Msg")];
+                jMsg[wxT("Type")] = wxT("Response");
+                jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+                jMsg[wxS("Deleted")] = true;
+                
+                jMsg[wxS("GUID")] = root[wxT("GUID")].AsString();
+                writer.Write( jMsg, MsgString );
+                SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+                
+                plBP = NULL;
+                
+                return;
+                
+            }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteTextPoint")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
             if(!gDeleteTextPoint) {
@@ -1192,7 +1356,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
 #endif
             
-            wxJSONValue jv_TextPoint;
             if(root[wxS("Type")].AsString() != _T("Request")) {
                 wxLogMessage( wxS("Delete Text Point Type not 'Request'") );
                 bFail = true;
@@ -1200,12 +1363,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID for the Text Point found in message") );
                 bFail = true;
-            } else {
-                jv_TextPoint = root[wxS("TextPoint")];
-            }
+            } 
             
             if(!bFail) {
-                TextPoint *pl_textpoint = (TextPoint *)g_pODPointMan->FindODPointByGUID(jv_TextPoint[wxS("GUID")].AsString());
+                TextPoint *pl_textpoint = (TextPoint *)g_pODPointMan->FindODPointByGUID(root[wxS("GUID")].AsString());
                 
                 if(pl_textpoint) {
                     g_pODPointMan->DestroyODPoint(pl_textpoint);
@@ -1234,7 +1395,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Deleted")] = true;
                 
-                jMsg[wxS("GUID")] = pl_textpoint->m_GUID;
+                jMsg[wxS("GUID")] = root[wxS("GUID")].AsString();
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 
