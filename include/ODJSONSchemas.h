@@ -284,6 +284,34 @@ static json jSchema = R"(
             "enum":["Name","Lat","Lon","IconName","TextToDisplay", "TextPosition", "TextColour", "BackgroundColour", "BackgroundTransparancy", "TextFont", "TextPointDisplayTextWhen", "Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
             }
         },
+        "deleteboundary": {
+            "description": "Used to delete a boundary",
+            "type": "object",
+            "properties": {
+                "GUID": {
+                    "description": "GUID of Boundary",
+                    "type": "string",
+                    "optional": false
+                }
+            },
+            "required": [
+                "GUID"
+            ]
+        },
+        "deleteboundarypoint": {
+            "description": "Used to delete a boundary point",
+            "type": "object",
+            "properties": {
+                "GUID": {
+                    "description": "GUID of Boundary Point",
+                    "type": "string",
+                    "optional": false
+                }
+            },
+            "required": [
+                "GUID"
+            ]
+        },
         "deletetextpoint": {
             "description": "Used to delete a text point",
             "type": "object",
@@ -963,6 +991,112 @@ static json CreateTextPointSchema = R"(
     "Lon"
     ],
     "type": "object"
+    }
+)"_json;
+    
+static json DeleteBoundarySchema = R"(
+    {
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Delete Boundary",
+    "Boundary": {
+        "type": "object",
+        "properties": {
+            "Msg": {
+                "description": "Message Name",
+                "type": "string",
+                "enum": ["DeleteTextPoint"],
+                "optional": false
+            },
+            "Type": {
+                "description": "Type of Message",
+                "type": "string",
+                "const": ["Request"],
+                "optional": false
+            },
+            "Source": {
+                "description": "Source of message",
+                "type": "string",
+                "optional": false
+            },
+            "MsgID": {
+                "description": "Message Name",
+                "type": "string",
+                "optional": false
+            },
+            "GUID": {
+                "description": "GUID of Text Point",
+                "type": "string",
+                "optional": fase
+            },
+            "PointIconName": {
+                "description": "Point Icon bitmap name",
+                "type": "string",
+                "optional": true
+            }
+        }
+    },
+    "required": [
+        "Msg",
+        "Type",
+        "Source",
+        "MsgId",
+        "GUID",
+        "PointIconName"
+    ],
+    "type": "object"
+    }
+)"_json;
+    
+    static json DeleteBoundaryPointSchema = R"(
+    {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "Delete Boundary Point",
+        "BoundaryPoint": {
+            "type": "object",
+            "properties": {
+                "Msg": {
+                    "description": "Message Name",
+                    "type": "string",
+                    "enum": ["DeleteTextPoint"],
+                    "optional": false
+                },
+                "Type": {
+                    "description": "Type of Message",
+                    "type": "string",
+                    "const": ["Request"],
+                    "optional": false
+                },
+                "Source": {
+                    "description": "Source of message",
+                    "type": "string",
+                    "optional": false
+                },
+                "MsgID": {
+                    "description": "Message Name",
+                    "type": "string",
+                    "optional": false
+                },
+                "GUID": {
+                    "description": "GUID of Text Point",
+                    "type": "string",
+                    "optional": false
+                },
+                "PointIconName": {
+                    "description": "Point Icon bitmap name",
+                    "type": "string",
+                    "optional": true
+                }
+            }
+        },
+        "required": [
+            "Msg",
+            "Type",
+            "Source",
+            "MsgId",
+            "GUID",
+            "PointIconName"
+        ],
+        "type": "object"
     }
 )"_json;
     
