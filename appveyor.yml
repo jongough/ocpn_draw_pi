@@ -58,3 +58,7 @@ deploy:
   on:
     appveyor_repo_tag: true # deploy on tag push only
     configuration: Release  # Debug contains non-redist MS DLLs
+
+environment:
+  GitHub_auth_token:
+    secure: OIqJeLohefVWvPklh+LxxIZdzVCXU4T++cJqkbaQUiT1HDWvleojgGNARPMG3STP
