@@ -96,3 +96,8 @@ deploy:
       all_branches: true
       condition: "$TRAVIS_OS_NAME = linux"
       repo: jongough/ocpn_draw_pi
+
+env:
+  global:
+    secure: X8SIkblj4PNEJG9hbn8GHobagals4xbX9QSFarca2nhnD/SIXQB9me2Cr5fPzxsXjlZ7gH8OgkZmcq8bwghgTl6bhBEvx2vJk1jOkMjSqWbe8StzGWFUt7lBEZMpsFKH7hRd93N47urzU92Jd7EtioYtGkLnqedXOmflIlDW49TkOTyocWoZf53gDT68N/m1oGQ1roZNBb6PEM6MlH22UWG1sdaD75TNQ9QFHlMQY/dCDy5PoR1lRuOLhZJRRdgx11Wcha8QMNro7U9UULC49ohwNWGsDH5/h6DS17N711C0yyxix6BXC4kz3EfAzF05DsAq37cj/TjQsmEetqwP13Xj0XOlyS0uKSqJEcMRNbK05YR1ykeRCwx72vMLb0zfBn7jpeac/dAfwSIiNMD84iKkguDjSf7WYblNWZP2FR3tSwhtkyfCB6mAi+faAdyDR6BeD44peRLeQutIiyLWp8pjUbC5efmrnOYyfqeDEcoDWF5X0tV3+ruuw5j7wzgP4TgMA/3TDkj0nfl8yoUqUIdlAijcSq+Qc9uQzLMMntE2fCd+5Q1GFFdIifbEGZl+1I2yZJBRy95Dg3qEheyBla2zEe47c8fxrsuyT1U4Y8Rxsy+62A9TJ6+wVJf7HbpRhI6MZgTasXELQ96EKSNjir5yMRP3oeV+etYqYY27VWU=
+
