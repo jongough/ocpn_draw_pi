@@ -32,6 +32,7 @@
  * it is not robust and it is possible to crash OpenCPN if the values are not valid.
  * 
  */
+
 static json jSchema = R"(
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -43,12 +44,10 @@ static json jSchema = R"(
             "properties": {
                 "Msg": {
                     "description": "Message Name",
-                    "type": "string",
-                    "enum": ["Version", "GetAPIAddresses", "CreateBoundaryPoint", "CreateBoundary", "CreateTextPoint"]
+                    "enum": ["Version", "GetAPIAddresses", "CreateBoundaryPoint", "CreateBoundary", "CreateTextPoint", "DeleteTextPoint", "DeleteBoundaryPoint", "DeleteBoundary"]
                 },
                 "Type": {
                     "description": "Type of Message",
-                    "type": "string",
                     "enum": ["Request","Response"]
                 },
                 "Source": {
@@ -63,13 +62,10 @@ static json jSchema = R"(
             "required": ["Msg", "Type", "Source", "MsgId"],
             "addtionalProperties": false
         },
-        "propertieshead": {
-            "propertyNames": { "enum": ["Msg","Type","Source","MsgId"] }
-        },
-        "boundarypoint": {
-            "description": "Used to create a boundary point",
+        "ODPoint": {
+            "description": "Generic OD Point",
             "type": "object",
-            "properties": {
+            "properties" : {
                 "Name": {
                     "description": "Boundary Point Name",
                     "type": "string"
@@ -90,20 +86,15 @@ static json jSchema = R"(
                     "description": "Boundary Point Icon Name",
                     "type": "string"
                 },
-                "BoundaryPointType": {
-                    "description": "Boundary Point Type",
-                    "type": "string",
-                    "enum": ["Exclusion","Inclusion","Neither"]
-                },
                 "Visible": {
                     "description": "Visibility of Boundary Point",
                     "type": "boolean",
-                    "enum": [true,false]
+                    "default": false
                 },
                 "RingsVisible": {
                     "description": "Visibility of Boundary Point Range Rings",
                     "type": "boolean",
-                    "enum": [true,false]
+                    "default": false
                 },
                 "RingsNumber": {
                     "description": "Number of Boundary Point Rings",
@@ -118,7 +109,6 @@ static json jSchema = R"(
                 },
                 "RingUnits": {
                     "description": "Boundary Point Range Ring Step Units",
-                    "type": "number",
                     "enum": [0,1,2,3,4,5,6,7,8,9,10]
                 },
                 "RingsColour": {
@@ -127,70 +117,57 @@ static json jSchema = R"(
                 },
                 "HyperLinks": {
                     "description": "Array of hyperlinks to local or internet documents",
-                    "type": array,
-                    "Items": [
-                        {
-                            "LinkDescription": {
-                                "description": "Text description of hyper link",
-                                "type": "string"
+                    "type": "array",
+                    "Items": {
+                        "allOf" : [
+                            {
+                                "LinkDescription": {
+                                    "description": "Text description of hyper link",
+                                    "type": "string"
+                                }
                             },
-                            "LinkURL": {
-                                "description": "Actual Hyperlink",
-                                "type": "string"
+                            {
+                                "LinkURL": {
+                                    "description": "Actual Hyperlink",
+                                    "type": "string"
+                                }
                             }
-                        },
-                        "required": [
-                            "LinkDescription",
-                            "LinkURL"
                         ]
-                    ]
+                    }
                 }
-                
             },
             "required": [
                 "Lat",
-                "Lon",
+                "Lon"
+            ]
+        },
+        "boundarypoint": {
+            "description": "Used to create a boundary point",
+            "type": "object",
+            "properties": {
+                "items": {
+                    "$ref": "#/definitions/ODPoint"
+                },
+                "BoundaryPointType": {
+                    "description": "Boundary Point Type",
+                    "enum": ["Exclusion", "Inclusion", "Neither"]
+                }
+            },
+            "required": [
                 "BoundaryPointType"
             ]
         },
-        "boundarypointproperties": {
-            "propertyNames": {
-                    "enum": ["Name","Lat","Lon","IconName","BoundaryPointType","Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
-            }
-        },
-        "createtextpoint": {
+        "textpoint": {
             "description": "Used to create a text point",
             "type": "object",
             "properties": {
-                "Name": {
-                    "description": "Text Point Name",
-                    "type": "string"
-                },
-                "Lat": {
-                    "description": "Latitude of Text Point",
-                    "type": "number",
-                    "minimum": -90,
-                    "maximum": 90
-                },
-                "Lon": {
-                    "description": "Longitude of Text Point",
-                    "type": "number",
-                    "minimum": -180,
-                    "maximum": 180
-                },
-                "IconName": {
-                    "description": "Text Point Icon Name",
-                    "type": "string"
-                },
-                "Visible": {
-                    "description": "Visibility of Text Point",
-                    "type": "boolean",
-                    "enum": [true,false]
+                "items": {
+                    "$ref": "#/definitions/ODPoint"
                 },
                 "Temporary": {
-                "description": "Text point life, false - exists over restart, true - non persistent",
-                "type": "boolean",
-                "enum": [true,false]
+                    "description": "Text point life, false - exists over restart, true - non persistent",
+                    "type": "boolean",
+                    "default": false
                 },
                 "GUID": {
                     "description": "GUID of Text Point",
@@ -203,7 +180,6 @@ static json jSchema = R"(
                 },
                 "TextPosition": {
                     "description": "Text Point Text Position",
-                    "type": "number",
                     "enum": [0,1,2,3,4,5,6]
                 },
                 "TextColour": {
@@ -227,111 +203,23 @@ static json jSchema = R"(
                 "TextPointDisplayTextWhen": {
                     "description": "Text Point When To Display",
                     "type": "string"
-                },
-                "RingsVisible": {
-                    "description": "Visibility of TextPoint Range Rings",
-                    "type": "boolean",
-                    "enum": [true,false]
-                },
-                "RingsNumber": {
-                    "description": "Number of Text Point Rings",
-                    "type": "number",
-                    "minimum": 0,
-                    "maximum": 10
-                },
-                "RingsSteps": {
-                    "description": "Steps between Text Point Rings",
-                    "type": "number",
-                    "minimum": 0.0
-                },
-                "RingUnits": {
-                    "description": "Text Point Range Ring Step Units",
-                    "type": "number",
-                    "enum": [0,1,2,3,4,5,6,7,8,9,10]
-                },
-                "RingsColour": {
-                    "description": "Text Point Range Rings Colour",
+                }
+            }
+        },
+        "ODObject": {
+            "description": "Used to delete an object",
+            "type": "object",
+            "properties": {
+                "GUID": {
+                    "description": "GUID of object",
                     "type": "string"
-                },
-                "HyperLinks": {
-                    "description": "Array of hyperlinks to local or internet documents",
-                    "type": array,
-                    "Items": [
-                        {
-                            "LinkDescription": {
-                                "description": "Text description of hyper link",
-                                "type": "string"
-                            },
-                            "LinkURL": {
-                                "description": "Actual Hyperlink",
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "LinkDescription",
-                            "LinkURL"
-                        ]
-                    ]
-                }
-            },
-            "required": [
-                "Lat",
-                "Lon"
-            ]
-        },
-        "createtextpointproperties": {
-            "propertyNames": {
-            "enum":["Name","Lat","Lon","IconName","TextToDisplay", "TextPosition", "TextColour", "BackgroundColour", "BackgroundTransparancy", "TextFont", "TextPointDisplayTextWhen", "Visible","RingsVisible","RingsNumber","RingsSteps","RingsUnits","RingsColour"]
-            }
-        },
-        "deleteboundary": {
-            "description": "Used to delete a boundary",
-            "type": "object",
-            "properties": {
-                "GUID": {
-                    "description": "GUID of Boundary",
-                    "type": "string",
-                    "optional": false
                 }
             },
             "required": [
                 "GUID"
             ]
         },
-        "deleteboundarypoint": {
-            "description": "Used to delete a boundary point",
-            "type": "object",
-            "properties": {
-                "GUID": {
-                    "description": "GUID of Boundary Point",
-                    "type": "string",
-                    "optional": false
-                }
-            },
-            "required": [
-                "GUID"
-            ]
-        },
-        "deletetextpoint": {
-            "description": "Used to delete a text point",
-            "type": "object",
-            "properties": {
-                "GUID": {
-                "description": "GUID of Text Point",
-                "type": "string",
-                "optional": false
-                }
-            },
-            "required": [
-            "GUID"
-            ]
-        },
-        "deletetextpointproperties": {
-            "propertyNames": {
-            "enum":["GUID"]
-            }
-        },
-        "AddPointIcon": {
+        "PointIcon": {
             "description": "Used to delete add an point icon",
             "type": "object",
             "properties": {
@@ -357,13 +245,8 @@ static json jSchema = R"(
                 "PointIconDescription"
             ]
         },
-        "AddPointIconproperties": {
-            "propertyNames": {
-            "enum":["PointIcon","PointIconName","PointIconDescription"]
-            }
-        },
         "boundary": {
-            "description": "Used to create a boundary",
+            "description": "Used to create or modify a boundary",
             "type": "object",
             "properties": {
                 "BoundaryName": {
@@ -372,893 +255,86 @@ static json jSchema = R"(
                 },
                 "BoundaryType": {
                     "description": "Boundary Type",
-                    "type": "string",
                     "enum": ["Exclusion","Inclusion","Neither"]
                 },
                 "Active": {
                     "description": "Is Boundary Active",
                     "type": "boolean",
-                    "enum": [true,false]
+                    "boolean": true
                 },
                 "Visible": {
                     "description": "Visibility of Boundary",
                     "type": "boolean",
-                    "enum": [true,false]
+                    "default": true
                 },
                 "Temporary": {
-                "description": "Boundary life, false - exists over restart, true - non persistent",
-                "type": "boolean",
-                "enum": [true,false]
+                    "description": "Boundary life, false - exists over restart, true - non persistent",
+                    "type": "boolean",
+                    "default": false
                 },
-                "boundarypoints": {
+                "BoundaryPoints": {
                     "description": "Array of boundary points needed to define a boundary",
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/boundarypoint"
+                    "$ref": "#/definitions/boundarypoint"
                     },
                     "minItems": 3,
                     "additionalItems": false
                 }
             },
             "required": [
-                "boundarypoints"
+                "BoundaryPoints", 
+                "BoundaryType"
             ]
-        },
-        "boundaryproperties": {
-            "propertyNames": {
-                    "enum": ["BoundaryName","BoundaryType","Active","Visible","boundarypoints"]
-            }
         }
     },
     "type": "object",
-    "oneOf": [
+    "allOf": [
+        {"$ref": "#/definitions/schemahead"},
         {
-            "allOf": [
-                {"$ref": "#/definitions/schemahead"}
-            ],
-            "anyOf": [
-                {"$ref": "#/definitions/propertieshead"}
-            ]
+            "if": { "properties": {"Msg": {"const": "CreateBoundary"}}
+            },
+            "then": {
+                "$ref": "#/definitions/boundary"
+            } 
         },
         {
-            "allOf": [
-                {"$ref": "#/definitions/schemahead"},
-                {
-                    "BoundaryPoint": {
-                        "type": "object",
-                        "properties": {
-                            "$ref": "#/definitions/boundarypoint"
-                        }
-                    }
-                },
-                {"$ref": "#/definitions/propertieshead"},
-                {"$ref": "#/definitions/boundarypointproperties"}
-            ]
+            "if": { "properties": {"Msg": {"const": "CreateBoundaryPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/boundarypoint"
+            } 
         },
         {
-            "allOf": [
-                {"$ref": "#/definitions/schemahead"},
-                {
-                    "TextPoint": {
-                        "type": "object",
-                        "properties": {
-                            "$ref": "#/definitions/textpoint"
-                        }
-                    }
-                },
-                {"$ref": "#/definitions/propertieshead"},
-                {"$ref": "#/definitions/textpointproperties"}
-            ]
+            "if": { "properties": {"Msg": {"const": "CreateTextPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/textpoint"
+            } 
         },
         {
-            "allOf": [
-                {"$ref": "#/definitions/schemahead"},
-                {"$ref": "#/definitions/boundary"},
-                {"$ref": "#/definitions/propertieshead"},
-                {"$ref": "#/definitions/boundaryproperties"},
-                {"$ref": "#/definitions/boundarypointproperties"}
-            ]
+            "if": { "properties": {"Msg": {"const": "DeleteTextPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject"
+            } 
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "DeleteBoundaryPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject"
+            } 
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "DeleteBoundary"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject"
+            } 
         }
+        
     ]
 }
-    )"_json;
-
-static std::string sSchemaHead = R"(
-{
-    "title": "Schema Head",
-    "properties": {
-        "Msg": {
-            "description": "Message Name",
-            "type": "string",
-            "enum": ["CreateBoundaryPoint"],
-            "optional": false
-        },
-        "Type": {
-            "description": "Type of Message",
-            "type": "string",
-            "const": ["Request"],
-            "optional": false
-        },
-        "Source": {
-            "description": "Source of message",
-            "type": "string",
-            "optional": false
-        },
-        "MsgID": {
-            "description": "Message Name",
-            "type": "string",
-            "optional": false
-        }
-    },
-    "required": [
-        "Msg",
-        "Type",
-        "Source",
-        "MsgId"
-    ]
-}
-)";
-
-static std::string sbpSchemaBody = R"(
-{
-    "title": "Boundary Point Schema Body",
-    "BoundaryPoint": {
-        "type": "object,"
-        "properties": {
-            "Name": {
-                "description": "Boundary Point Name",
-                "type": "string"
-            },
-            "Lat": {
-                "description": "Latitude of Boundary Point",
-                "type": "number",
-                "minimum": -90,
-                "maximum": 90,
-                "optional": false
-            },
-            "Lon": {
-                "description": "Longitude of Boundary Point",
-                "type": "number",
-                "minimum": -180,
-                "maximum": 180,
-                "optional": false
-            },
-            "IconName": {
-                "description": "Boundary Point Icon Name",
-                "type": "string"
-            },
-            "BoundaryPointType": {
-                "description": "Boundary Point Type",
-                "type": "string",
-                "enum": ["Exclusion","Inclusion","Neither"]
-            },
-            "Visible": {
-                "description": "Visibility of Boundary Point",
-                "type": "string",
-                "enum": ["true","false"]
-            },
-            "RingsVisible": {
-                "description": "Visibility of Boundary Point Range Rings",
-                "type": "string",
-                "enum": ["true","false"]
-            },
-            "RingsNumber": {
-                "description": "Number of Boundary Point Rings",
-                "type": "number",
-                "minimun": 0,
-                "maximum": 10
-            },
-            "RingsSteps": {
-                "description": "Steps between Boundary Point Rings",
-                "type": "number",
-                "minimun": 0.0
-            },
-            "RingUnits": {
-                "description": "Boundary Point Range Ring Step Units",
-                "type": "number",
-                "enum": [0,1]
-            },
-            "RingsColour": {
-                "description": "Boundary Point Range Rings Colour",
-                "type": "string"
-            },
-            "HyperLinks": {
-                "description": "Array of hyperlinks to local or internet documents",
-                "type": array,
-                "Items": [
-                    {
-                        "LinkDescription": {
-                        "description": "Text description of hyper link",
-                        "type": "string"
-                        },
-                        "LinkURL": {
-                        "description": "Actual Hyperlink",
-                        "type": "string"
-                        }
-                    },
-                    "required": [
-                    "LinkDescription",
-                    "LinkURL"
-                    ]
-                ]
-            }
-            
-        },
-    }
-    "required": [
-        "Lat",
-        "Lon",
-        "BoundaryPointType"
-    ]
-    }
-    )";
-
-
-static json BoundaryPointSchema = R"(
-    {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "Create Boundary Point",
-        "properties": {
-            "Msg": {
-                "description": "Message Name",
-                "type": "string",
-                "enum": ["CreateBoundaryPoint"],
-                "optional": false
-            },
-            "Type": {
-                "description": "Type of Message",
-                "type": "string",
-                "const": ["Request"],
-                "optional": false
-            },
-            "Source": {
-                "description": "Source of message",
-                "type": "string",
-                "optional": false
-            },
-            "MsgID": {
-                "description": "Message Name",
-                "type": "string",
-                "optional": false
-            },
-            "Name": {
-                "description": "Boundary Point Name",
-                "type": "string"
-            },
-            "Lat": {
-                "description": "Latitude of Boundary Point",
-                "type": "number",
-                "minimum": -90,
-                "maximum": 90,
-                "optional": false
-            },
-            "Lon": {
-                "description": "Longitude of Boundary Point",
-                "type": "number",
-                "minimum": -180,
-                "maximum": 180,
-                "optional": false
-            },
-            "IconName": {
-                "description": "Boundary Point Icon Name",
-                "type": "string"
-            },
-            "BoundaryPointType": {
-                "description": "Boundary Point Type",
-                "type": "string",
-                "enum": ["Exclusion","Inclusion","Neither"]
-            },
-            "Visible": {
-                "description": "Visibility of Boundary Point",
-                "type": "string",
-                "enum": ["true","false"]
-            },
-            "RingsVisible": {
-                "description": "Visibility of Boundary Point Range Rings",
-                "type": "string",
-                "enum": ["true","false"]
-            },
-            "RingsNumber": {
-                "description": "Number of Boundary Point Rings",
-                "type": "number",
-                "minimun": 0,
-                "maximum": 10
-            },
-            "RingsSteps": {
-                "description": "Steps between Boundary Point Rings",
-                "type": "number",
-                "minimun": 0.0
-            },
-            "RingUnits": {
-                "description": "Boundary Point Range Ring Step Units",
-                "type": "number",
-                "enum": [0,1]
-            },
-            "RingsColour": {
-                "description": "Boundary Point Range Rings Colour",
-                "type": "string"
-            },
-            "HyperLinks": {
-                "description": "Array of hyperlinks to local or internet documents",
-                "type": array,
-                "Items": [
-                    {
-                        "LinkDescription": {
-                        "description": "Text description of hyper link",
-                        "type": "string"
-                        },
-                        "LinkURL": {
-                        "description": "Actual Hyperlink",
-                        "type": "string"
-                        }
-                    },
-                    "required": [
-                        "LinkDescription",
-                        "LinkURL"
-                    ]
-                ]
-            }
-            
-        },
-        "required": [
-            "Msg",
-            "Type",
-            "Source",
-            "MsgId",
-            "Lat",
-            "Lon",
-            "BoundaryPointType"
-        ],
-        "type": "object"
-    }
-)"_json;
-
-static json BoundarySchema = R"(
-    {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Create Boundary",
-    "properties": {
-        "Msg": {
-            "description": "Message Name",
-            "type": "string",
-            "enum": ["CreateBoundary"],
-            "optional": false
-        },
-        "Type": {
-            "description": "Type of Message",
-            "type": "string",
-            "const": ["Request"],
-            "optional": false
-        },
-        "Source": {
-            "description": "Source of message",
-            "type": "string",
-            "optional": false
-        },
-        "MsgID": {
-            "description": "Message Name",
-            "type": "string",
-            "optional": false
-        },
-        "Name": {
-            "description": "Boundary Name",
-            "type": "string"
-        },
-        "BoundaryType": {
-            "description": "Boundary Type",
-            "type": "string",
-            "enum": ["Exclusion","Inclusion","Neither"]
-        },
-        "Visible": {
-            "description": "Visibility of Boundary",
-            "type": "string",
-            "enum": ["true","false"]
-        },
-        "BoundaryPoints": {
-            "items": [
-                {
-                    "Name": {
-                        "description": "Boundary Point Name",
-                        "type": "string"
-                    },
-                    "Lat": {
-                        "description": "Latitude of Boundary Point",
-                        "type": "number",
-                        "minimum": -90,
-                        "maximum": 90,
-                        "optional": false
-                    },
-                    "Lon": {
-                        "description": "Longitude of Boundary Point",
-                        "type": "number",
-                        "minimum": -180,
-                        "maximum": 180,
-                        "optional": false
-                    },
-                    "IconName": {
-                        "description": "Boundary Point Icon Name",
-                        "type": "string"
-                    },
-                    "BoundaryPointType": {
-                        "description": "Boundary Point Type",
-                        "type": "string",
-                        "enum": ["Exclusion","Inclusion","Neither"]
-                    },
-                    "Visible": {
-                        "description": "Visibility of Boundary Point",
-                        "type": "string",
-                        "enum": ["true","false"]
-                    },
-                    "RingsVisible": {
-                        "description": "Visibility of Boundary Point Range Rings",
-                        "type": "string",
-                        "enum": ["true","false"]
-                    },
-                    "RingsNumber": {
-                        "description": "Number of Boundary Point Rings",
-                        "type": "number",
-                        "minimun": 0,
-                        "maximum": 10
-                    },
-                    "RingsSteps": {
-                        "description": "Steps between Boundary Point Rings",
-                        "type": "number",
-                        "minimun": 0.0
-                    },
-                    "RingUnits": {
-                        "description": "Boundary Point Range Ring Step Units",
-                        "type": "number",
-                        "enum": [0,1]
-                    },
-                    "RingsColour": {
-                        "description": "Boundary Point Range Rings Colour",
-                        "type": "string"
-                    }
-                }
-            ],
-            "minItems": 3,
-            "required": [
-                "Lat",
-                "Lon",
-                "BoundaryPointType"
-            ]
-        }
-    },
-    "required": [
-    "Msg",
-    "Type",
-    "Source",
-    "MsgId"
-    ],
-    "type": "object"
-    }
-)"_json;
-
-static json CreateTextPointSchema = R"(
-    {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Create Text Point",
-    "TextPoint": {
-        "type": "object",
-        "properties": {
-            "Msg": {
-                "description": "Message Name",
-                "type": "string",
-                "enum": ["CreateTextPoint"],
-                "optional": false
-            },
-            "Type": {
-                "description": "Type of Message",
-                "type": "string",
-                "const": ["Request"],
-                "optional": false
-            },
-            "Source": {
-                "description": "Source of message",
-                "type": "string",
-                "optional": false
-            },
-            "MsgID": {
-                "description": "Message Name",
-                "type": "string",
-                "optional": false
-            },
-            "Name": {
-                "description": "Text Point Name",
-                "type": "string"
-            },
-            "Lat": {
-                "description": "Latitude of Text Point",
-                "type": "number",
-                "minimum": -90,
-                "maximum": 90,
-                "optional": false
-            },
-            "Lon": {
-                "description": "Longitude of Text Point",
-                "type": "number",
-                "minimum": -180,
-                "maximum": 180,
-                "optional": false
-            },
-            "IconName": {
-                "description": "Text Point Icon Name",
-                "type": "string"
-            },
-            "Visible": {
-                "description": "Visibility of Boundary Point",
-                "type": "string",
-                "enum": ["true","false"]
-            },
-            "GUID": {
-                "description": "GUID of Text Point",
-                "type": "string",
-                "optional": true
-            },
-            "TextToDisplay": {
-                "description": "Text Point Text",
-                "type": "string"
-            },
-            "TextPosition": {
-                "description": "Text Point Text Position",
-                "type": "number",
-                "enum": [0,1,2,3,4,5,6]
-            },
-            "TextColour": {
-                "description": "Text Point Text Colour",
-                "type": "string"
-            },
-            "BackgroundColour": {
-                "description": "Text Point Text BackgroundColour",
-                "type": "string"
-            },
-            "BackgroundTransparancy": {
-                "description": "Text Point Text BackgroundTransparancy",
-                "type": "number",
-                "minimum": 0,
-                "maximum": 255
-            },
-            "TextFont": {
-                "description": "Text Point Font",
-                "type": "string"
-            },
-            "TextPointDisplayTextWhen": {
-                "description": "Text Point When To Display",
-                "type": "string"
-            },
-            "RingsVisible": {
-                "description": "Visibility of Boundary Point Range Rings",
-                "type": "string",
-                "enum": ["true","false"]
-            },
-            "RingsNumber": {
-                "description": "Number of Text Point Rings",
-                "type": "number",
-                "minimun": 0,
-                "maximum": 10
-            },
-            "RingsSteps": {
-                "description": "Steps between Text Point Rings",
-                "type": "number",
-                "minimun": 0.0
-            },
-            "RingUnits": {
-                "description": "Text Point Range Ring Step Units",
-                "type": "number",
-                "enum": [0,1]
-            },
-            "RingsColour": {
-                "description": "Text Point Range Rings Colour",
-                "type": "string"
-            },
-            "RingsWidth": {
-                "description": "Text Point Range Rings Colour",
-                "type": "number"
-            },
-            "RingsStyle": {
-                "description": "Text Point Range Rings Colour",
-                "type": "string"
-            },
-            "HyperLinks": {
-                "description": "Array of hyperlinks to local or internet documents",
-                "type": array,
-                "Items": [
-                    {
-                    "LinkDescription": {
-                        "description": "Text description of hyper link",
-                        "type": "string"
-                    },
-                    "LinkURL": {
-                        "description": "Actual Hyperlink",
-                        "type": "string"
-                    }
-                    },
-                    "required": [
-                        "LinkDescription",
-                        "LinkURL"
-                    ]
-                ]
-            }
-            
-        }
-    },
-    "required": [
-    "Msg",
-    "Type",
-    "Source",
-    "MsgId",
-    "Lat",
-    "Lon"
-    ],
-    "type": "object"
-    }
 )"_json;
     
-static json DeleteBoundarySchema = R"(
-    {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Delete Boundary",
-    "Boundary": {
-        "type": "object",
-        "properties": {
-            "Msg": {
-                "description": "Message Name",
-                "type": "string",
-                "enum": ["DeleteTextPoint"],
-                "optional": false
-            },
-            "Type": {
-                "description": "Type of Message",
-                "type": "string",
-                "const": ["Request"],
-                "optional": false
-            },
-            "Source": {
-                "description": "Source of message",
-                "type": "string",
-                "optional": false
-            },
-            "MsgID": {
-                "description": "Message Name",
-                "type": "string",
-                "optional": false
-            },
-            "GUID": {
-                "description": "GUID of Text Point",
-                "type": "string",
-                "optional": fase
-            },
-            "PointIconName": {
-                "description": "Point Icon bitmap name",
-                "type": "string",
-                "optional": true
-            }
-        }
-    },
-    "required": [
-        "Msg",
-        "Type",
-        "Source",
-        "MsgId",
-        "GUID",
-        "PointIconName"
-    ],
-    "type": "object"
-    }
-)"_json;
-    
-    static json DeleteBoundaryPointSchema = R"(
-    {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "Delete Boundary Point",
-        "BoundaryPoint": {
-            "type": "object",
-            "properties": {
-                "Msg": {
-                    "description": "Message Name",
-                    "type": "string",
-                    "enum": ["DeleteTextPoint"],
-                    "optional": false
-                },
-                "Type": {
-                    "description": "Type of Message",
-                    "type": "string",
-                    "const": ["Request"],
-                    "optional": false
-                },
-                "Source": {
-                    "description": "Source of message",
-                    "type": "string",
-                    "optional": false
-                },
-                "MsgID": {
-                    "description": "Message Name",
-                    "type": "string",
-                    "optional": false
-                },
-                "GUID": {
-                    "description": "GUID of Text Point",
-                    "type": "string",
-                    "optional": false
-                },
-                "PointIconName": {
-                    "description": "Point Icon bitmap name",
-                    "type": "string",
-                    "optional": true
-                }
-            }
-        },
-        "required": [
-            "Msg",
-            "Type",
-            "Source",
-            "MsgId",
-            "GUID",
-            "PointIconName"
-        ],
-        "type": "object"
-    }
-)"_json;
-    
-static json DeleteTextPointSchema = R"(
-    {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Create Text Point",
-    "TextPoint": {
-        "type": "object",
-        "properties": {
-            "Msg": {
-                "description": "Message Name",
-                "type": "string",
-                "enum": ["DeleteTextPoint"],
-                "optional": false
-            },
-            "Type": {
-                "description": "Type of Message",
-                "type": "string",
-                "const": ["Request"],
-                "optional": false
-            },
-            "Source": {
-                "description": "Source of message",
-                "type": "string",
-                "optional": false
-            },
-            "MsgID": {
-                "description": "Message Name",
-                "type": "string",
-                "optional": false
-            },
-            "GUID": {
-                "description": "GUID of Text Point",
-                "type": "string",
-                "optional": true
-            },
-            "PointIconName": {
-                "description": "Point Icon bitmap name",
-                "type": "string",
-                "optional": false
-            }
-        }
-    },
-    "required": [
-    "Msg",
-    "Type",
-    "Source",
-    "MsgId",
-    "GUID",
-    "PointIconName"
-    ],
-    "type": "object"
-    }
-)"_json;
-    
-static json AddPointIconSchema = R"(
-{
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "Add Point Icon",
-    "AddPointIcon": {
-        "type": "object",
-        "properties": {
-            "Msg": {
-            "description": "Message Name",
-            "type": "string",
-            "enum": ["DeleteTextPoint"],
-            "optional": false
-            },
-            "Type": {
-            "description": "Type of Message",
-            "type": "string",
-            "const": ["Request"],
-            "optional": false
-            },
-            "Source": {
-            "description": "Source of message",
-            "type": "string",
-            "optional": false
-            },
-            "MsgID": {
-            "description": "Message Name",
-            "type": "string",
-            "optional": false
-            },
-            "GUID": {
-            "description": "GUID of Text Point",
-            "type": "string",
-            "optional": false
-            },
-            "PointIconName": {
-            "description": "Point Icon bitmap name",
-            "type": "string",
-            "optional": false
-            },
-            "PointIcon": {
-            "description": "Point Icon bitmap in base64",
-            "type": "string",
-            "optional": false
-            },
-            
-            
-        }
-    },
-    "required": [
-    "Msg",
-    "Type",
-    "Source",
-    "MsgId",
-    "PointIconName",
-    "PointIcon"
-    ],
-    "type": "object"
-    }
-)"_json;
-        
-static json DeletePointIconSchema = R"(
-    {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "Delete Point Icon",
-        "DeletePointIcon": {
-            "type": "object",
-            "properties": {
-                "Msg": {
-                    "description": "Message Name",
-                    "type": "string",
-                    "enum": ["DeleteTextPoint"],
-                    "optional": false
-                },
-                "Type": {
-                    "description": "Type of Message",
-                    "type": "string",
-                    "const": ["Request"],
-                    "optional": false
-                },
-                "Source": {
-                    "description": "Source of message",
-                    "type": "string",
-                    "optional": false
-                },
-                "MsgID": {
-                    "description": "Message Name",
-                    "type": "string",
-                    "optional": false
-                },
-                "GUID": {
-                    "description": "GUID of Text Point",
-                    "type": "string",
-                    "optional": false
-                }
-            }
-        },
-        "required": [
-            "Msg",
-            "Type",
-            "Source",
-            "MsgId",
-            "GUID"
-        ],
-        "type": "object"
-    }
-)"_json;
-        
-
-

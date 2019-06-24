@@ -35,7 +35,7 @@
 #include <wx/jsonreader.h>
 #include "wx/jsonwriter.h"
 
-#ifdef OD_JSON_SCHEMA_VALIDATOR 
+#ifdef OD_JSON_SCHEMA_VALIDATOR
 #include "json-schema.hpp"
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
@@ -45,7 +45,7 @@ using nlohmann::json_schema::json_validator;
 #include "ODJSON.h"
 #include "ODPath.h"
 #include "ODConfig.h"
-#ifdef OD_JSON_SCHEMA_VALIDATOR 
+#ifdef OD_JSON_SCHEMA_VALIDATOR
 #include "ODJSONSchemas.h"
 #endif
 #include "ODSelect.h"
@@ -69,12 +69,6 @@ using nlohmann::json_schema::json_validator;
 #include <wx/mstream.h>
 
 #ifdef OD_JSON_SCHEMA_VALIDATOR 
-json_validator *gCreateBoundary; 
-json_validator *gCreateBoundaryPoint; 
-json_validator *gCreateTextPoint;
-json_validator *gDeleteTextPoint;
-json_validator *gAddPointIcon;
-json_validator *gDeletePointIcon;
 json_validator *gODJSONMsgValidator;
 #endif
 
@@ -82,10 +76,6 @@ ODJSON::ODJSON()
 {
     // ctor
 #ifdef OD_JSON_SCHEMA_VALIDATOR     
-    gCreateBoundary = NULL;
-    gCreateBoundaryPoint = NULL;
-    gCreateTextPoint = NULL;
-    gDeleteTextPoint = NULL;
     gODJSONMsgValidator = NULL;
 #endif    
 }
@@ -94,22 +84,6 @@ ODJSON::~ODJSON()
 {
     // dtor
 #ifdef OD_JSON_SCHEMA_VALIDATOR 
-    if(gCreateBoundary) {
-        delete gCreateBoundary;
-        gCreateBoundary = NULL;
-    }
-    if(gCreateBoundaryPoint) {
-        delete gCreateBoundaryPoint;
-        gCreateBoundaryPoint = NULL;
-    }
-    if(gCreateTextPoint) {
-        delete gCreateTextPoint;
-        gCreateTextPoint = NULL;
-    }
-    if(gDeleteTextPoint) {
-        delete gDeleteTextPoint;
-        gDeleteTextPoint = NULL;
-    }
     if(gODJSONMsgValidator) {
         delete gODJSONMsgValidator;
         gODJSONMsgValidator = NULL;
@@ -799,12 +773,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             return;
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateBoundary")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR         
-            if(!gCreateBoundary) {
-                gCreateBoundary = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    //                    gCreateBoundary->set_root_schema(BoundarySchema);
-                    //                    gCreateBoundary->set_root_schema(bSchemaFull);
-                    gCreateBoundary->set_root_schema(jSchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -818,7 +790,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gCreateBoundary->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of message against schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -935,17 +907,17 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 pl_boundary = NULL;
                 return;
+            } else {
+                jMsg[wxS("Created")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateBoundaryPoint")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gCreateBoundaryPoint) {
+            if(!gODJSONMsgValidator) {
                 DEBUGSL(jSchema);
                 //                json bpSchemaFull = json::parse(sbpSchemaFull);
-                gCreateBoundaryPoint = new json_validator;
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    //                    gCreateBoundaryPoint->set_root_schema(BoundaryPointSchema);
-                    gCreateBoundaryPoint->set_root_schema(jSchema);
-                    //                    gCreateBoundaryPoint->set_root_schema(bpSchemaFull);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -959,7 +931,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gCreateBoundaryPoint->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1055,13 +1027,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 pl_boundarypoint = NULL;
                 
                 return;
+            } else {
+                jMsg[wxS("Created")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateTextPoint")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gCreateTextPoint) {
-                gCreateTextPoint = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    gCreateTextPoint->set_root_schema(CreateTextPointSchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1070,12 +1044,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     l_errorMsg.Append(e.what());
                     wxLogMessage( l_errorMsg );
                     bFail = true;
+                    jMsg[wxS("Created")] = false;
                 }
             }
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gCreateTextPoint->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1084,6 +1059,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     l_errorMsg.Append(e.what());
                     wxLogMessage( l_errorMsg );
                     bFail = true;
+                    jMsg[wxS("Created")] = false;
                 }
             }
 #endif
@@ -1092,10 +1068,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             wxJSONValue jv_TextPointHyperlink;
             if(root[wxS("Type")].AsString() != _T("Request")) {
                 wxLogMessage( wxS("Create Text Point Type not 'Request'") );
+                jMsg[wxS("Created")] = false;
                 bFail = true;
             }
             if(!root.HasMember( wxS("TextPoint"))) {
                 wxLogMessage( wxS("No Text Point found in message") );
+                    jMsg[wxS("Created")] = false;
                 bFail = true;
             } else {
                 jv_TextPoint = root[wxS("TextPoint")];
@@ -1164,13 +1142,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 pl_textpoint = NULL;
                 
                 return;
+            } else {
+                jMsg[wxS("Created")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteBoundary")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gDeleteBoundary) {
-                gDeleteBoundary = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    gDeleteBoundary->set_root_schema(DeleteBoundarySchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1184,7 +1164,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gDeleteBoundary->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1229,13 +1209,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 return;
                 
+            } else {
+                jMsg[wxS("Deleted")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteBoundaryPoint")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gDeleteBoundaryPoint) {
-                gDeleteBoundaryPoint = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    gDeleteBoundaryPoint->set_root_schema(DeleteBoundaryPointSchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1249,7 +1231,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gDeleteBoundaryPoint->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1323,13 +1305,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 return;
                 
+            } else {
+                jMsg[wxS("Deleted")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeleteTextPoint")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gDeleteTextPoint) {
-                gDeleteTextPoint = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    gDeleteTextPoint->set_root_schema(DeleteTextPointSchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1343,7 +1327,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gDeleteTextPoint->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1402,13 +1386,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 pl_textpoint = NULL;
                 
                 return;
+            } else {
+                jMsg[wxS("Deleted")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("AddPointIcon")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gAddPointIcon) {
-                gAddPointIcon = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    gAddPointIcon->set_root_schema(AddPointIconSchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1422,7 +1408,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gAddPointIcon->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1468,13 +1454,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 
                 return;
+            } else {
+                jMsg[wxS("Added")] = false;
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("DeletePointIcon")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR               
-            if(!gAddPointIcon) {
-                gAddPointIcon = new json_validator;
+            if(!gODJSONMsgValidator) {
+                gODJSONMsgValidator = new json_validator;
                 try {
-                    gAddPointIcon->set_root_schema(DeletePointIconSchema);
+                    gODJSONMsgValidator->set_root_schema(jSchema);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation of schema failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1488,7 +1476,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!bFail) {
                 try {
                     json message = json::parse(static_cast<const char*>(message_body));
-                    gAddPointIcon->validate(message);
+                    gODJSONMsgValidator->validate(message);
                 } catch (const std::exception &e) {
                     DEBUGST("Validation failed, here is why: ");
                     DEBUGEND(e.what());
@@ -1531,6 +1519,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 
                 return;
+            } else {
+                jMsg[wxS("Deleted")] = false;
             }
         }
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
@@ -1555,7 +1545,17 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
         
         g_dVar = decl_val;
     }
-    
+
+    if(bFail) {
+        jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+        jMsg[wxT("Msg")] = root[wxT("Msg")];
+        jMsg[wxT("Type")] = wxT("Response");
+        jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+        
+        writer.Write( jMsg, MsgString );
+        SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+        
+    }
     return;
 }
 
