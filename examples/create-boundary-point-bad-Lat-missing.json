@@ -1,0 +1,16 @@
+{
+   "BoundaryPoint" : {
+      "BoundaryPointType" : "Exclusion",
+      "ringsnumber" : 0,
+      "visible" : true,
+      "ringscolour" : "red",
+      "ringsunits" : 0,
+      "Lon" : 153.1349733,
+      "ringsvisible" : true,
+      "ringssteps" : 0.5
+   },
+   "Msg" : "CreateBoundaryPoint",
+   "Source" : "TESTPLUGIN_PI",
+   "MsgId" : "250",
+   "Type" : "Request"
+}

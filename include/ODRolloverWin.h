@@ -26,7 +26,6 @@
 
 #include <wx/window.h>
 #include <wx/timer.h>
-#include "ocpn_types.h"
 
 
 //constants for rollovers fonts
@@ -55,6 +54,8 @@ public:
     void SetMousePropogation( int level ) { m_mmouse_propogate = level; }
     bool IsActive() { return isActive; }
     void IsActive( bool state ) { isActive = state; }
+    void SetParent( wxWindow *parent );
+    wxWindow *GetParent( void ) { return m_parent; }
 
 private:
     wxWindow    *m_parent;

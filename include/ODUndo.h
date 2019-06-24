@@ -33,10 +33,10 @@
 #include <deque>
 
 enum UndoType {
-    Undo_CreateWaypoint,
-    Undo_DeleteWaypoint,
-    Undo_AppendWaypoint,
-    Undo_MoveWaypoint
+    Undo_CreateODPoint,
+    Undo_DeleteODPoint,
+    Undo_AppendODPoint,
+    Undo_MoveODPoint
 };
 
 enum UndoBeforePointerType {

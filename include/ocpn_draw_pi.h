@@ -34,6 +34,7 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <sstream>
+
 #  define DEBUGSL(x) do { \
 std::ostringstream oss; \
 oss << x; \
@@ -120,16 +121,25 @@ std::cout << x  << std::endl ; } while (0)
 #define STRINGIFY(x) #x
 #define TOSTRING(x) STRINGIFY(x)
 
-#include "wxWTranslateCatalog.h"
+typedef enum ColorScheme : int
+{
+    GLOBAL_COLOR_SCHEME_RGB,
+    GLOBAL_COLOR_SCHEME_DAY,
+    GLOBAL_COLOR_SCHEME_DUSK,
+    GLOBAL_COLOR_SCHEME_NIGHT,
+    N_COLOR_SCHEMES
+}_ColorScheme;
 
+#include "wxWTranslateCatalog.h"
 #include "ocpn_plugin.h"
-#include "undo.h"
+#include "globals.h"
+#include "ocpn_plugin.h"
+#include "ODUndo.h"
 #include "ODPoint.h"
 #include "ODConfig.h"
-#include "pathmanagerdialog.h"
 #include "ODRolloverWin.h"
 
-#include "georef.h"
+//#include "georef.h"
 #include "wx28compat.h"
 #include <wx/aui/aui.h>
 #include <wx/string.h>
@@ -141,6 +151,7 @@ std::cout << x  << std::endl ; } while (0)
 #include <wx/splitter.h>
 #include <wx/fileconf.h>
 #include <wx/dynarray.h>
+#include <list>
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition
@@ -225,6 +236,7 @@ enum
     ID_MODE_LAST
 };
 
+// Text Point Text information
 enum {
     ID_TEXT_TOP = 0,
     ID_TEXT_CENTRE_TOP,
@@ -237,11 +249,18 @@ enum {
     ID_TEXT_POSTION_LAST
 };
 
+enum {
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS = 0,
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER,
+    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_NEVER
+};
+
+
 // Boundary types
 enum {
     ID_BOUNDARY_EXCLUSION = 0,
     ID_BOUNDARY_INCLUSION,
-    ID_BOUNDARY_NIETHER,
+    ID_BOUNDARY_NEITHER,
     ID_BOUNDARY_ANY,
     
     ID_BOUNDARY_TYPE_LAST
@@ -273,6 +292,10 @@ enum {
     ID_PERSISTENT_LAST
 };
 
+enum {
+    ID_NAUTICAL_MILES = 0,
+    ID_KILOMETERS
+};
 
 #define SELTYPE_UNKNOWN             0x0001
 #define SELTYPE_ODPOINT             0x0002
@@ -283,8 +306,6 @@ enum {
 #define TYPE_PATHMGR_PATH_DLG       0x0040
 #define TYPE_PATHMGR_POINT_DLG      0x0080
 #define TYPE_PATHMGR_LAYER_DLG      0x0100
-
-//#define PI 3.14159265
 
 class Boundary;
 class BoundaryProp;
@@ -303,10 +324,13 @@ class  ODPlugIn_Position_Fix_Ex : public PlugIn_Position_Fix_Ex
 {
 public:
     bool    valid;
+    bool    validHdt;
+    bool    validHdm;
+    bool    validCog;
 };
 
 
-class ocpn_draw_pi : public opencpn_plugin_113
+class ocpn_draw_pi : public opencpn_plugin_116
 {
 public:
 
@@ -381,8 +405,12 @@ public:
     void SetCursorLatLon(double lat, double lon);
     void SetCurrentViewPort(PlugIn_ViewPort &vp);
     bool RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *vp);
+    bool RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *vp);
+    bool RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index);
     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
     bool RenderOverlay(wxDC &dc, PlugIn_ViewPort *vp);
+    bool RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp);
+    bool RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index);
     wxString FormatDistanceAdaptive( double distance );
     void DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp );
@@ -405,6 +433,8 @@ public:
     
     void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
     wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
+
+    void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
     
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
@@ -467,7 +497,7 @@ public:
     
     int         nBlinkerTick;
     int         m_Mode;
-    int                m_draw_button_id;
+    int         m_draw_button_id;
     
     void    appendOSDirSlash(wxString* pString);  
     
@@ -477,7 +507,9 @@ public:
     ODicons     *m_pODicons;
     
     bool        m_bRecreateConfig;
-
+    
+    int         m_drawing_canvas_index;
+    
 private:
     void    OnTimer(wxTimerEvent& ev);
 
@@ -499,18 +531,22 @@ private:
 
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
-    void    FindSelectedObject( void )    ;
+    void    FindSelectedObject( void );
+    
+    void    ItemProcess(int id);
     
     wxTimer         m_RolloverPopupTimer;
     
     PlugIn_ViewPort m_VP;
     
-    int               m_show_id;
-    int               m_hide_id;
-    bool                show;
-    int                m_config_button_id;
+    int     m_show_id;
+    int     m_hide_id;
+    int     m_iODToolContextId;
+    wxMenuItem *m_pODToolContextMenuItem;
+    bool    show;
+    int     m_config_button_id;
 
-    bool              m_bLOGShowIcon;
+    bool    m_bLOGShowIcon;
     
     Boundary    *m_pSelectedBoundary;
     EBL         *m_pSelectedEBL;
@@ -536,8 +572,12 @@ private:
     double      m_PathMove_cursor_start_lon;
     
     wxDateTime  m_LastFixTime;
-
+    
+    int         m_mouse_canvas_index;
+    int         m_current_canvas_index;
+    
     std::list<Boundary*> m_pBoundaryList;
+    
     
 };
 

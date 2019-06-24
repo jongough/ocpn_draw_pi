@@ -27,7 +27,6 @@
 #ifndef ODJSON_H
 #define ODJSON_H
 
-
 class ODJSON
 {
     public:
@@ -38,6 +37,7 @@ class ODJSON
     protected:
         
     private:
+        
 };
 
 #endif // ODJSON_H

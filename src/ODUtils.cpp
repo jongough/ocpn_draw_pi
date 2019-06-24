@@ -28,13 +28,11 @@
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
+#include <wx/textwrapper.h>
  
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
-
-extern int      g_iLocaleDepth;
-extern wxString *g_ODlocale;
 
 /*!
  * Helper stuff for calculating Path
@@ -404,4 +402,79 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
     points[ npoints[0] -1 ].x = x1;
     points[ npoints[0] -1 ].y = y1;
     return npoints[0];
+}
+
+wxString WrapText(wxWindow *win, const wxString& text, int widthMax)
+{
+    class HardBreakWrapper : public wxTextWrapper
+    {
+    public:
+        HardBreakWrapper(wxWindow *win, const wxString& text, int widthMax)
+        {
+            Wrap(win, text, widthMax);
+        }
+        wxString const& GetWrapped() const { return m_wrapped; }
+    protected:
+        virtual void OnOutputLine(const wxString& line)
+        {
+            m_wrapped += line;
+        }
+        virtual void OnNewLine()
+        {
+            m_wrapped += '\n';
+        }
+    private:
+        wxString m_wrapped;
+    };
+    HardBreakWrapper wrapper(win, text, widthMax);
+    return wrapper.GetWrapped();
+}
+
+wxString WrapString(const wxString &text, int widthMax)
+{
+    wxString l_string = wxEmptyString;
+    int textlen = text.Len();
+    int l_count = 0;
+    int l_spacePos = 0;
+    int l_lastSpacePos = 0;
+    for(int i = 0; i < textlen; ++i) {
+        auto c = text[i].GetValue();
+        ++l_count;
+        if(c == ' ') l_spacePos = i;
+        if(widthMax <= l_count) {
+            if(l_spacePos != i) {
+                if(l_spacePos == l_lastSpacePos) {
+                    l_string.append(text.SubString(l_lastSpacePos, i));
+                    l_string.append('\n');
+                    l_spacePos = i + 1;
+                    l_lastSpacePos = l_spacePos;
+                    l_count = 0;
+                } else {
+                    l_string.append(text.SubString(l_lastSpacePos, l_spacePos));
+                    l_string.append('\n');
+                    ++l_spacePos;
+                    i = l_spacePos;
+                    l_lastSpacePos = l_spacePos;
+                    l_count = 0;
+                }
+                continue;
+            } else {
+                l_string.append(text.SubString(l_lastSpacePos, i));
+                l_string.append('\n');
+                l_spacePos = i;
+                l_lastSpacePos = l_spacePos;
+                l_count = 0;
+            }
+        }
+        if(c == '\n') {
+            l_string.append(text.SubString(l_lastSpacePos, i));
+            l_spacePos = i + 1;
+            l_lastSpacePos = l_spacePos;
+            l_count = 0;
+        }
+    }
+    if(l_count != 0) {
+        l_string.append(text.SubString(l_lastSpacePos, textlen));
+    }
+    return l_string;
 }

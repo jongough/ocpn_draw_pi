@@ -43,144 +43,6 @@
 #include <wx/valnum.h>
 #endif
 
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PointMan     *g_pODPointMan;
-extern int          g_path_line_width;
-extern wxString     g_OD_default_wp_icon;
-
-extern int          g_BoundaryLineWidth; 
-extern int          g_BoundaryLineStyle;
-extern wxColour     g_colourActivePathLineColour;
-extern wxColour     g_colourInActivePathLineColour;
-extern wxColour     g_colourActiveBoundaryLineColour;
-extern wxColour     g_colourInActiveBoundaryLineColour;
-extern wxColour     g_colourActiveBoundaryFillColour;
-extern wxColour     g_colourInActiveBoundaryFillColour;
-extern bool         g_bExclusionBoundary;
-extern bool         g_bInclusionBoundary;
-extern bool         g_bBoundaryODPointsVisible;
-extern bool         g_bExclusionBoundaryPoint;
-extern bool         g_bInclusionBoundaryPoint;
-extern int          g_PathLineWidth; 
-extern int          g_PathLineStyle;
-extern unsigned int g_uiFillTransparency;
-extern int          g_iInclusionBoundarySize;
-
-extern unsigned int g_uiBoundaryPointFillTransparency;
-extern int          g_iInclusionBoundaryPointSize;
-extern int         g_iBoundaryPointRangeRingLineWidth;
-extern int         g_iBoundaryPointRangeRingLineStyle;
-
-extern bool         g_bODPointShowName;
-extern bool         g_bODPointShowRangeRings;
-extern int          g_iODPointRangeRingsNumber;
-extern float        g_fODPointRangeRingsStep;
-extern int          g_iODPointRangeRingsStepUnits;
-extern wxColour     g_colourODPointRangeRingsColour;
-extern wxString     g_sODPointIconName;
-
-extern double       g_n_arrival_circle_radius;
-
-extern wxString     g_sTextPointIconName;
-extern wxColour     g_colourDefaultTextColour;
-extern wxColour     g_colourDefaultTextBackgroundColour;
-extern int          g_iTextBackgroundTransparency;
-extern wxFont       g_DisplayTextFont;
-extern int          g_iTextPosition;
-extern int          g_iTextTopOffsetX;
-extern int          g_iTextTopOffsetY;
-extern int          g_iTextBottomOffsetX;
-extern int          g_iTextBottomOffsetY;
-extern int          g_iTextRightOffsetX;
-extern int          g_iTextRightOffsetY;
-extern int          g_iTextLeftOffsetX;
-extern int          g_iTextLeftOffsetY;
-extern int          g_iTextPointDisplayTextWhen;
-
-extern wxString     g_sEBLEndIconName;
-extern wxString     g_sEBLStartIconName;
-extern wxColour     g_colourEBLLineColour;
-extern wxColour     g_colourInActiveDRLineColour;
-extern bool         g_bEBLRotateWithBoat;
-extern int          g_iEBLMaintainWith;
-extern bool         g_bEBLFixedEndPosition;
-extern int          g_iEBLPersistenceType;
-extern bool         g_bEBLShowArrow;
-extern bool         g_bEBLVRM;
-extern bool         g_bEBLAlwaysShowInfo;
-extern bool         g_bEBLPerpLine;
-extern int          g_EBLLineWidth;
-extern int          g_EBLLineStyle;
-
-extern wxString     g_sPILEndIconName;
-extern wxString     g_sPILStartIconName;
-extern wxColour     g_colourPILActiveCentreLineColour;
-extern wxColour     g_colourPILInActiveCentreLineColour;
-extern wxColour     g_colourPILActiveOffsetLine1Colour;
-extern wxColour     g_colourPILInActiveOffsetLine1Colour;
-extern wxColour     g_colourPILActiveOffsetLine2Colour;
-extern wxColour     g_colourPILInActiveOffsetLine2Colour;
-extern int          g_iPILPersistenceType;
-extern int          g_PILCentreLineWidth;
-extern int          g_PILCentreLineStyle;
-extern int          g_PILOffsetLine1Width;
-extern int          g_PILOffsetLine1Style;
-extern int          g_PILOffsetLine2Width;
-extern int          g_PILOffsetLine2Style;
-extern int          g_PILDefaultNumIndexLines;
-extern double       g_dPILOffset;
-
-
-extern double       g_dDRSOG;
-extern int          g_iDRCOG;
-extern double       g_dDRLength;
-extern double       g_dDRPointInterval;
-extern int          g_iDRLengthType;
-extern int          g_iDRIntervalType;
-extern int          g_iDRDistanceUnits;
-extern int          g_iDRTimeUnits;
-extern int          g_iDRPersistenceType;
-extern wxString     g_sDRPointIconName;
-extern wxColour     g_colourDRLineColour;
-extern int          g_iDRPersistenceType;
-extern bool         g_bDRShowArrow;
-extern int          g_DRLineWidth;
-extern int          g_DRLineStyle;
-extern bool         g_bDRPointShowRangeRings;
-extern int          g_iDRPointRangeRingsNumber;
-extern float        g_fDRPointRangeRingsStep;
-extern int          g_iDRPointRangeRingsStepUnits;
-extern wxColour     g_colourDRPointRangeRingsColour;
-extern int          g_iDRPointRangeRingLineWidth;
-extern int          g_iDRPointRangeRingLineStyle;
-
-extern wxString     g_sGZFirstIconName;
-extern wxString     g_sGZSecondIconName;
-extern wxColour     g_colourActiveGZLineColour;
-extern wxColour     g_colourInActiveGZLineColour;
-extern wxColour     g_colourActiveGZFillColour;
-extern wxColour     g_colourInActiveGZFillColour;
-extern int          g_GZLineWidth; 
-extern int          g_GZLineStyle;
-extern unsigned int g_uiGZFillTransparency;
-extern bool         g_bGZRotateWithBoat;
-extern int          g_iGZMaintainWith;
-extern int          g_iGZPersistenceType;
-
-extern bool         g_bConfirmObjectDelete;
-extern bool         g_bShowMag;
-extern bool         g_bAllowLeftDrag;
-extern int          g_navobjbackups;
-
-extern int          g_EdgePanSensitivity;
-extern int          g_InitialEdgePanSensitivity;
-
-extern int          g_iDisplayToolbar;
-extern ODToolbarImpl   *g_pODToolbar;
-
-extern wxString     *g_SData_Locn;
-
-
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
 ODPropertiesDialogDef( parent )
@@ -194,6 +56,13 @@ ODPropertiesDialogDef( parent )
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
     m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
+    m_staticTextAPIVersionMajorVal->SetLabel( wxT(TOSTRING(OD_API_VERSION_MAJOR)) );
+    m_staticTextAPIVersionMinorVal->SetLabel( wxT(TOSTRING(OD_API_VERSION_MINOR)) );
+    m_staticTextOCPNAPIVersionMajorVal->SetLabel( wxT(TOSTRING(OCPN_API_VERSION_MAJOR)) );
+    m_staticTextOCPNAPIVersionMinorVal->SetLabel( wxT(TOSTRING(OCPN_API_VERSION_MINOR)) );
+    m_staticTextDataDirectory->SetLabel( *g_pData );
+    m_staticTextIconDirectory->SetLabel( *g_pUserIconsDir );
+    m_staticTextLayersDirectory->SetLabel( *g_pLayerDir );
 
     m_gridODWDInteractions->SetCellValue(0, 0, _("OD\\WD"));
     m_gridODWDInteractions->SetCellValue(0, 1, _("All"));
@@ -221,7 +90,7 @@ ODPropertiesDialogDef( parent )
     
     m_pfdDialog = NULL;
     
-#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadiusVal(3, &m_dODPointArrivalRadiusValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dDRPathLengthVal(3, &m_dDRPathLengthValidator, wxNUM_VAL_DEFAULT);
@@ -230,6 +99,8 @@ ODPropertiesDialogDef( parent )
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dPILOffset(3, &m_dPILOffsetValidator, wxNUM_VAL_DEFAULT);
     wxIntegerValidator<int> iCOGVal(&m_iCOGValidator, wxNUM_VAL_DEFAULT);
+    wxIntegerValidator<int> iTextPointTextMaxWidth( &m_iTextPointTextMaxWidth, wxNUM_VAL_THOUSANDS_SEPARATOR);
+    
     dODPointRangeRingStepVal.SetMin(0);
     dODPointArrivalRadiusVal.SetMin(0);
     dDRPathLengthVal.SetMin(0);
@@ -237,6 +108,7 @@ ODPropertiesDialogDef( parent )
     dDRPointRangeRingStepVal.SetMin(0);
     dSOGVal.SetMin(0);
     iCOGVal.SetRange(0, 360);
+    iTextPointTextMaxWidth.SetMin(-1);
 
     m_textCtrlODPointRangeRingSteps->SetValidator( dODPointRangeRingStepVal );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadiusVal );
@@ -246,6 +118,7 @@ ODPropertiesDialogDef( parent )
     m_textCtrlDRPointInterval->SetValidator( dDRPointIntervalVal );
     m_textCtrlDRPointRangeRingSteps->SetValidator( dDRPointRangeRingStepVal );
     m_textCtrlPILDefaultOffset->SetValidator( dPILOffset );
+    m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
     
     int l_iPage = m_notebookProperties->FindPage(m_panelPath);
     m_notebookProperties->DeletePage(l_iPage);
@@ -404,6 +277,7 @@ void ODPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
     m_pfdDialog = new wxFontDialog( this, l_FontData );
     m_pfdDialog->Centre( wxBOTH );
     
+    DimeWindow(m_pfdDialog);
     int iRet = m_pfdDialog->ShowModal();
     if(iRet == wxID_OK) {
         //wxFontData wsfdData = m_pfdDialog->GetFontData();
@@ -485,7 +359,9 @@ void ODPropertiesDialogImpl::SetIndexLineChoice( bool choice )
 
 void ODPropertiesDialogImpl::SaveChanges()
 {
-    g_bODPointShowName =m_checkBoxShowName->GetValue();
+    TransferDataFromWindow();
+    g_bBoundaryPointShowName = m_checkBoxBoundaryPointShowName->GetValue();
+    g_bTextPointShowName = m_checkBoxTextPointShowName->GetValue();
     //g_colourActiveBoundaryLineColour = PickerODPointRangeRingColours->GetColour();
     g_colourActiveBoundaryLineColour = m_colourPickerActiveBoundaryLineColour->GetColour();
     g_colourActiveBoundaryFillColour = m_colourPickerActiveBoundaryFillColour->GetColour();
@@ -493,11 +369,11 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourInActiveBoundaryFillColour = m_colourPickerInActiveBoundaryFillColour->GetColour();
 
     g_BoundaryLineWidth = ::WidthValues[ m_choiceBoundaryLineWidth->GetSelection() ];
-    g_BoundaryLineStyle = ::StyleValues[ m_choiceBoundaryLineStyle->GetSelection() ];
+    g_BoundaryLineStyle = (wxPenStyle)::StyleValues[ m_choiceBoundaryLineStyle->GetSelection() ];
     g_uiFillTransparency = m_sliderFillTransparency->GetValue();
     g_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
     g_iBoundaryPointRangeRingLineWidth = ::WidthValues[ m_choiceRangeRingWidth->GetSelection() ];
-    g_iBoundaryPointRangeRingLineStyle = ::StyleValues[ m_choiceRangeRingStyle->GetSelection() ];
+    g_iBoundaryPointRangeRingLineStyle = (wxPenStyle)::StyleValues[ m_choiceRangeRingStyle->GetSelection() ];
     g_iInclusionBoundarySize = m_sliderInclusionBoundarySize->GetValue();
     g_iInclusionBoundaryPointSize = m_sliderInclusionBoundaryPointSize->GetValue();
     g_bBoundaryODPointsVisible = m_checkBoxBoundaryODPointsVisible->GetValue();
@@ -513,7 +389,7 @@ void ODPropertiesDialogImpl::SaveChanges()
             g_bExclusionBoundary = false;
             g_bInclusionBoundary = true;
             break;
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             g_bExclusionBoundary = false;
             g_bInclusionBoundary = false;
             break;
@@ -534,7 +410,7 @@ void ODPropertiesDialogImpl::SaveChanges()
             g_bExclusionBoundaryPoint = false;
             g_bInclusionBoundaryPoint = true;
             break;
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             g_bExclusionBoundaryPoint = false;
             g_bInclusionBoundaryPoint = false;
             break;
@@ -552,7 +428,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
     g_EBLLineWidth = ::WidthValues[ m_choiceEBLLineWidth->GetSelection() ];
-    g_EBLLineStyle = ::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
+    g_EBLLineStyle = (wxPenStyle)::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
     g_bEBLRotateWithBoat = m_checkBoxRotateWithBoat->GetValue();
     g_iEBLMaintainWith = m_radioBoxMaintainWith->GetSelection();
     g_bEBLShowArrow = m_checkBoxEBLShowArrow->GetValue();
@@ -571,47 +447,47 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_colourPILActiveOffsetLine2Colour = m_colourPickerPILActiveOffsetLine2Colour->GetColour();
     g_colourPILInActiveOffsetLine2Colour = m_colourPickerPILInactiveOffsetLine2Colour->GetColour();
     g_PILCentreLineWidth = ::WidthValues[ m_choicePILCentreLineWidth->GetSelection() ];
-    g_PILCentreLineStyle = ::StyleValues[ m_choicePILCentreLineStyle->GetSelection() ];
+    g_PILCentreLineStyle = (wxPenStyle)::StyleValues[ m_choicePILCentreLineStyle->GetSelection() ];
     g_PILOffsetLine1Width = ::WidthValues[ m_choicePILOffsetLine1Width->GetSelection() ];
-    g_PILOffsetLine1Style = ::StyleValues[ m_choicePILOffsetLine1Style->GetSelection() ];
+    g_PILOffsetLine1Style = (wxPenStyle)::StyleValues[ m_choicePILOffsetLine1Style->GetSelection() ];
     g_PILOffsetLine2Width = ::WidthValues[ m_choicePILOffsetLine2Width->GetSelection() ];
-    g_PILOffsetLine2Style = ::StyleValues[ m_choicePILOffsetLine2Style->GetSelection() ];
+    g_PILOffsetLine2Style = (wxPenStyle)::StyleValues[ m_choicePILOffsetLine2Style->GetSelection() ];
     g_PILDefaultNumIndexLines = m_choiceNumIndexLines->GetSelection();
     g_iPILPersistenceType = m_radioBoxPILPersistence->GetSelection();
     g_bEBLFixedEndPosition = m_checkBoxEBLFixedEndPosition->GetValue();
     g_sPILEndIconName = m_bODIComboBoxPILEndIconName->GetValue();
     g_sPILStartIconName = m_bODIComboBoxPILStartIconName->GetValue();
-    m_textCtrlPILDefaultOffset->GetValue().ToDouble( &g_dPILOffset );
+    g_dPILOffset = m_dPILOffsetValidator;
 
     g_sDRPointIconName = m_bODIComboBoxDRPointIconName->GetValue();
     g_colourDRLineColour = m_colourPickerDRLineColour->GetColour();
     g_colourInActiveDRLineColour = m_colourPickerInActiveDRLineColour->GetColour();
     g_DRLineWidth = ::WidthValues[ m_choiceDRLineWidth->GetSelection() ];
-    g_DRLineStyle = ::StyleValues[ m_choiceDRLineStyle->GetSelection()];
+    g_DRLineStyle = (wxPenStyle)::StyleValues[ m_choiceDRLineStyle->GetSelection()];
     g_bDRShowArrow = m_checkBoxDRShowArrow->GetValue();
-    m_textCtrlSOG->GetValue().ToDouble( &g_dDRSOG );
-    m_textCtrlCOG->GetValue().ToLong( (long*)&g_iDRCOG );
+    g_dDRSOG = m_dSOGValidator;
+    g_iDRCOG = m_iCOGValidator;
     g_iDRLengthType = m_radioBoxDRLengthType->GetSelection();
     g_iDRIntervalType = m_radioBoxDRIntervalType->GetSelection();
     g_iDRDistanceUnits = m_radioBoxDRDistanceUnits->GetSelection();
     g_iDRTimeUnits = m_radioBoxDRTimeUnits->GetSelection();
     g_iDRPersistenceType = m_radioBoxDRPersistence->GetSelection();
-    m_textCtrlDRPathLength->GetValue().ToDouble( &g_dDRLength );
-    m_textCtrlDRPointInterval->GetValue().ToDouble( &g_dDRPointInterval );
+    g_dDRLength = m_dDRPathLengthValidator;
+    g_dDRPointInterval = m_dODPointIntervalValidator;
     g_bDRPointShowRangeRings = m_checkBoxShowDRPointRangeRings->GetValue();
     g_iDRPointRangeRingsNumber = m_choiceDRPointRangeRingNumber->GetSelection();
-    g_fDRPointRangeRingsStep = atof( m_textCtrlDRPointRangeRingSteps->GetValue().mb_str() );
+    g_fDRPointRangeRingsStep = m_dDRPointRangRingStepValidator;
     g_iDRPointRangeRingsStepUnits = m_choiceDRPointDistanceUnit->GetSelection();
     g_colourDRPointRangeRingsColour = m_colourPickerDRPointRangeRingColours->GetColour();
     g_iDRPointRangeRingLineWidth = ::WidthValues[ m_choiceDRPointRangeRingWidth->GetSelection() ];
-    g_iDRPointRangeRingLineStyle = ::StyleValues[ m_choiceDRPointRangeRingStyle->GetSelection() ];
+    g_iDRPointRangeRingLineStyle = (wxPenStyle)::StyleValues[ m_choiceDRPointRangeRingStyle->GetSelection() ];
     
     g_colourActiveGZLineColour = m_colourPickerActiveGZLineColour->GetColour();
     g_colourActiveGZFillColour = m_colourPickerActiveGZFillColour->GetColour();
     g_colourInActiveGZLineColour = m_colourPickerInActiveGZLineColour->GetColour();
     g_colourInActiveGZFillColour = m_colourPickerInActiveGZFillColour->GetColour();
     g_GZLineWidth = ::WidthValues[ m_choiceGZLineWidth->GetSelection() ];
-    g_GZLineStyle = ::StyleValues[ m_choiceGZLineStyle->GetSelection() ];
+    g_GZLineStyle = (wxPenStyle)::StyleValues[ m_choiceGZLineStyle->GetSelection() ];
     g_uiGZFillTransparency = m_sliderGZFillTransparency->GetValue();
     g_sGZFirstIconName = m_bODIComboBoxGZFirstIconName->GetValue();
     g_sGZSecondIconName = m_bODIComboBoxGZSecondIconName->GetValue();;
@@ -621,20 +497,24 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
+    g_fODPointRangeRingsStep = m_dODPointRangRingStepValidator;
     g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
     g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
     g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
-    m_textCtrlODPointArrivalRadius->GetValue().ToDouble( &g_n_arrival_circle_radius );
+    g_dODPointArrivalCircleRadius = m_dODPointArrivalRadiusValidator;
     g_bODPointShowRangeRings = m_checkBoxShowODPointRangeRings->GetValue();
     g_sODPointIconName = m_bODIComboBoxODPointIconName->GetValue();
     
     g_bConfirmObjectDelete = m_checkBoxConfirmObjectDelete->GetValue();
+    g_bRememberPropertyDialogPosition = m_checkBoxRememberPropertyPosition->GetValue();
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_bAllowLeftDrag = m_checkBoxAllowLeftDrag->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
     g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();
     g_iTextPosition = m_choiceTextPosition->GetSelection();
+    g_iTextMaxWidth = m_iTextPointTextMaxWidth;
+    g_iTextMaxWidthType = m_radioBoxWidthType->GetSelection();
     g_colourDefaultTextColour = m_colourPickerTextColour->GetColour();
     g_colourDefaultTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
     g_iTextBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
@@ -686,12 +566,14 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
     SetTableCellBackgroundColours();
-    m_textCtrlODPointArrivalRadius->SetValue( wxString::Format( _T("%.3f"), g_n_arrival_circle_radius ) );
+    m_dODPointArrivalRadiusValidator = g_dODPointArrivalCircleRadius;
     
-    m_checkBoxShowName->SetValue( g_bODPointShowName );
+    m_checkBoxBoundaryPointShowName->SetValue( g_bBoundaryPointShowName );
+    m_checkBoxTextPointShowName->SetValue( g_bTextPointShowName );
     m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
     m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
-    m_textCtrlODPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fODPointRangeRingsStep ) );
+    m_dODPointRangRingStepValidator = g_fODPointRangeRingsStep;
+    //m_textCtrlODPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fODPointRangeRingsStep ) );
     m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
     m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );
     
@@ -700,7 +582,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     
     if( g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if( !g_bExclusionBoundaryPoint && g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+    else if( !g_bExclusionBoundaryPoint && !g_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NEITHER );
     else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
 
     m_bODIComboBoxODPointIconName->Clear();
@@ -942,7 +824,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_sliderInclusionBoundarySize->SetValue( g_iInclusionBoundarySize );
     if( g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if( !g_bExclusionBoundary && g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
+    else if( !g_bExclusionBoundary && !g_bInclusionBoundary ) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NEITHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     m_checkBoxBoundaryODPointsVisible->SetValue( g_bBoundaryODPointsVisible );
     
@@ -967,10 +849,12 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
         SetIndexLineChoice( false );
     else
         SetIndexLineChoice( true );
-    m_textCtrlPILDefaultOffset->SetValue( wxString::Format(wxT("%.3f"), g_dPILOffset));
+    m_dPILOffsetValidator = g_dPILOffset;
     m_radioBoxPILPersistence->SetSelection( g_iPILPersistenceType );
 
     m_choiceTextPosition->SetSelection( g_iTextPosition );
+    m_iTextPointTextMaxWidth = g_iTextMaxWidth;
+    m_radioBoxWidthType->SetSelection(g_iTextMaxWidthType);
     m_colourPickerTextColour->SetColour( g_colourDefaultTextColour );
     m_colourPickerBackgroundColour->SetColour( g_colourDefaultTextBackgroundColour );
     m_sliderBackgroundTransparency->SetValue( g_iTextBackgroundTransparency );
@@ -978,6 +862,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxShowDisplayText->SetSelection( g_iTextPointDisplayTextWhen );
     
     m_checkBoxConfirmObjectDelete->SetValue( g_bConfirmObjectDelete );
+    m_checkBoxRememberPropertyPosition->SetValue( g_bRememberPropertyDialogPosition );
     m_checkBoxShowMagBearings->SetValue( g_bShowMag );
     m_checkBoxAllowLeftDrag->SetValue( g_bAllowLeftDrag );
     m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
@@ -995,7 +880,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_radioBoxDRPersistence->SetSelection( g_iDRPersistenceType );
     m_checkBoxShowDRPointRangeRings->SetValue( g_bDRPointShowRangeRings );
     m_choiceDRPointRangeRingNumber->SetSelection( g_iDRPointRangeRingsNumber );
-    m_textCtrlDRPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fDRPointRangeRingsStep ) );
+    m_dDRPointRangRingStepValidator = g_fDRPointRangeRingsStep;
     m_choiceDRPointDistanceUnit->SetSelection( g_iDRPointRangeRingsStepUnits );
     m_colourPickerDRPointRangeRingColours->SetColour( g_colourDRPointRangeRingsColour );
     
@@ -1008,17 +893,17 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_sliderGZFillTransparency->SetValue( g_uiGZFillTransparency );
     m_radioBoxGZPersistence->SetSelection( g_iGZPersistenceType );
 
-    m_textCtrlSOG->SetValue( wxString::Format( _T("%.3f"), g_dDRSOG ) );
-    m_textCtrlCOG->SetValue( wxString::Format( _T("%i"), g_iDRCOG ) );
-    m_textCtrlDRPathLength->SetValue( wxString::Format( _T("%.3f"), g_dDRLength ) );
-    m_textCtrlDRPointInterval->SetValue( wxString::Format( _T("%.3f"), g_dDRPointInterval ) );
+    m_dSOGValidator = g_dDRSOG;
+    m_iCOGValidator = g_iDRCOG;
+    m_dDRPathLengthValidator = g_dDRLength;
+    m_dODPointIntervalValidator = g_dDRPointInterval;
     
 
     if(g_ocpn_draw_pi->m_bRecreateConfig) {
         m_buttonConfigFileEntries->SetLabel(_("No"));
-        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (Yes)");
+        m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (Yes)"));
     }
-    
+    TransferDataToWindow();
     SetDialogSize();
     
     ResetGlobalLocale();
@@ -1064,10 +949,10 @@ void ODPropertiesDialogImpl::OnClickConfigFileEntries( wxCommandEvent& event )
     if(!g_ocpn_draw_pi->m_bRecreateConfig) {
         g_ocpn_draw_pi->m_bRecreateConfig = true;
         m_buttonConfigFileEntries->SetLabel(_("No"));
-        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (Yes)");
+        m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (Yes)"));
     } else {
         g_ocpn_draw_pi->m_bRecreateConfig = false;
         m_buttonConfigFileEntries->SetLabel(_("Yes"));
-        m_staticTextConfigFileEntriesMsg->SetLabel("Delete current OCPN_Draw config entries (No)");
+        m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (No)"));
     }
 }

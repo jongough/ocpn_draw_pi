@@ -27,11 +27,6 @@
 #include "Boundary.h"
 #include "ocpn_draw_pi.h"
 
-extern BoundaryList         *g_pBoundaryList;
-extern unsigned int         g_uiFillTransparency;
-extern int                  g_iInclusionBoundarySize;
-
-
 BoundaryProp::BoundaryProp()
 {
     //ctor
@@ -43,6 +38,9 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
     //ctor
+    m_fgSizerBoundary->ShowItems( true );
+    m_bSizerBoundaryType->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_staticTextTotalLength->Show();
     m_textCtrlTotalLength->Show();
     m_staticTextFillColour->Show();
@@ -62,12 +60,15 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_radioBoxBoundaryType->Enable( true );
     m_checkBoxShowBoundaryPoints->Show();
     m_checkBoxShowBoundaryPoints->Enable( true );
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
     m_uiFillTransparency = g_uiFillTransparency;
+    if(g_iDefaultBoundaryPropertyDialogPostionX == -1 || g_iDefaultBoundaryPropertyDialogPostionY == -1) Center();
+    SetPosition(wxPoint(g_iDefaultBoundaryPropertyDialogPostionX, g_iDefaultBoundaryPropertyDialogPostionY));
 }
 
 
@@ -76,14 +77,14 @@ BoundaryProp::~BoundaryProp()
     //dtor
 }
 
-bool BoundaryProp::UpdateProperties( Boundary *pBoundary )
+bool BoundaryProp::UpdateProperties( ODPath *pBoundary )
 {
     m_colourPickerFillColour->SetColour( m_pBoundary->m_wxcActiveFillColour );
     m_sliderFillTransparency->SetValue( m_pBoundary->m_uiFillTransparency );
     m_sliderInclusionBoundarySize->SetValue( m_pBoundary->m_iInclusionBoundarySize );
     if(m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     else if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_INCLUSION );
-    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NIETHER );
+    else if(!m_pBoundary->m_bExclusionBoundary && !m_pBoundary->m_bInclusionBoundary) m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_NEITHER );
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     
     if(!m_pBoundary->m_bExclusionBoundary && m_pBoundary->m_bInclusionBoundary)
@@ -112,7 +113,7 @@ bool BoundaryProp::SaveChanges( void )
                 m_pBoundary->m_bExclusionBoundary = false;
                 m_pBoundary->m_bInclusionBoundary = true;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 m_pBoundary->m_bExclusionBoundary = false;
                 m_pBoundary->m_bInclusionBoundary = false;
                 break;
@@ -134,7 +135,7 @@ void BoundaryProp::OnRadioBoxBoundaryType(wxCommandEvent& event)
 {
     switch (m_radioBoxBoundaryType->GetSelection()) {
         case ID_BOUNDARY_EXCLUSION:
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             m_sliderInclusionBoundarySize->Disable();
             break;
         case ID_BOUNDARY_INCLUSION:

@@ -38,47 +38,16 @@
 #include "ODPointPropertiesImpl.h"
 #include "ODUtils.h"
 #include "PathMan.h"
+#include "PathAndPointManagerDialogImpl.h"
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
 
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern bool         g_bShowMag;
-extern double       g_dVar;
-extern double       g_dDRSOG;
-extern int          g_iDRCOG;
-extern double       g_dDRLength;
-extern double       g_dDRPointInterval;
-extern int          g_iDRLengthType;
-extern int          g_iDRIntervalType;
-extern int          g_iDRDistanceUnits;
-extern int          g_iDRTimeUnits;
-extern int          g_iDRPersistenceType;
-extern bool         g_bDRPointShowRangeRings;
-extern int          g_iDRPointRangeRingsNumber;
-extern float        g_fDRPointRangeRingsStep;
-extern int          g_iDRPointRangeRingsStepUnits;
-extern wxColour     g_colourDRPointRangeRingsColour;
-extern int          g_iDRPointRangeRingLineWidth;
-extern int          g_iDRPointRangeRingLineStyle;
-
-extern wxString        g_sDRPointIconName;
-
-extern ODPlugIn_Position_Fix_Ex g_pfFix;
-extern DRList                   *g_pDRList;
-extern PathList                 *g_pPathList;
-extern ODSelect                 *g_pODSelect;
-extern ODConfig                 *g_pODConfig;
-extern PathMan                  *g_pPathMan;
-extern ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-extern PathManagerDialog            *g_pPathManagerDialog;
-extern ODPointPropertiesImpl        *g_pODPointPropDialog;
-
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
     SetGlobalLocale();
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dIntervalVal(3, &m_dIntervalValidator, wxNUM_VAL_DEFAULT);
@@ -135,24 +104,24 @@ void ODDRDialogImpl::SetupDialog()
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
     m_staticTextCOG->SetLabel( s );
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    if(g_pfFix.Sog != g_pfFix.Sog )
+#if wxCHECK_VERSION(3,0,0)
+    if(g_pfFix.Sog == 0)
         m_dSOGValidator = g_dDRSOG;
     else
         m_dSOGValidator = g_pfFix.Sog;
-    if(g_pfFix.Cog != g_pfFix.Cog )
+    if(g_pfFix.Cog < 0.0 || g_pfFix.Cog > 360.0)
         m_iCOGValidator = g_iDRCOG;
     else
         m_iCOGValidator = g_pfFix.Cog;
     m_dLengthValidator = g_dDRLength;
     m_dIntervalValidator = g_dDRPointInterval;
 #else
-    if(g_pfFix.Sog != g_pfFix.Sog )
+    if(g_pfFix.Sog == 0 )
         s.Printf( _T("%.3f"), g_dDRSOG );
     else
         s.Printf( _T("%.3f"), g_pfFix.Sog );
     m_textCtrlSOG->SetValue( s );
-    if(g_pfFix.Cog != g_pfFix.Cog )
+    if(g_pfFix.Cog < 0.0 || g_pfFix.Cog > 360.0)
         s.Printf( _T("%i"), g_iDRCOG );
     else
         s.Printf( _T("%.3f"), g_pfFix.Cog );
@@ -175,7 +144,7 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
-#if wxCHECK_VERSION(3,0,0)  && !defined(_WXMSW_)
+#if wxCHECK_VERSION(3,0,0)
     m_dSOGValidator = dr->m_dSoG;
     m_iCOGValidator = dr->m_iCoG;
     m_dLengthValidator = dr->m_dDRPathLength;
@@ -208,8 +177,8 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
             g_pODPathPropDialog->Hide();
         }
         
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
         
         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             g_pODPointPropDialog->ValidateMark();
@@ -347,10 +316,11 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     if(l_pDR->m_iPersistenceType == ID_PERSISTENT || l_pDR->m_iPersistenceType == ID_PERSISTENT_CRASH)
         g_pODConfig->AddNewPath( l_pDR, -1 );    // don't save over restart
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    g_ocpn_draw_pi->ODRequestRefresh( g_ocpn_draw_pi->m_drawing_canvas_index, FALSE );
+    g_ocpn_draw_pi->m_drawing_canvas_index = -1;
     Show( false );
 #ifdef __WXOSX__    
     EndModal(wxID_CANCEL);

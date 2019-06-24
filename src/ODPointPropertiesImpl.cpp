@@ -39,32 +39,24 @@
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "ODPathPropertiesDialogImpl.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "PointMan.h"
 #include "GZ.h"
 #include "GZMan.h"
+#include "EBL.h"
 #include "ODPositionParser.h"
+#include "ODLinkPropertiesDialogImpl.h"
 #include <wx/clipbrd.h>
 #include <wx/menu.h>
 #include <wx/window.h>
 #include <wx/fontdlg.h>
+#ifdef __WXMSW__
+#include <wx/msw/registry.h>
+#endif
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
-
-extern ODSelect             *g_pODSelect;
-extern ocpn_draw_pi         *g_ocpn_draw_pi;
-extern PointMan             *g_pODPointMan;
-extern PathMan              *g_pPathMan;
-extern GZMan                *g_pGZMan;
-extern ODConfig             *g_pODConfig;
-extern PathManagerDialog    *g_pPathManagerDialog;
-extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
-extern int                  g_iTextPosition;
-extern int                  g_iBoundaryPointRangeRingLineWidth;
-extern int                  g_iBoundaryPointRangeRingLineStyle;
-
-extern PI_ColorScheme       g_global_color_scheme;
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :
@@ -93,18 +85,19 @@ ODPointPropertiesDialog( parent )
     
 #if wxCHECK_VERSION(3,0,0)
     SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
-#ifndef __WXMSW__
     wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
+    wxIntegerValidator<int> iTextPointTextMaxWidth( &m_iTextPointTextMaxWidth, wxNUM_VAL_THOUSANDS_SEPARATOR);
     dODPointRangeRingSteps.SetMin(0);
     dODPointArrivalRadius.SetMin(0);
+    iTextPointTextMaxWidth.SetMin(0);
     m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingSteps );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
-#endif // not defined __WXMSW__ 
+    m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
 #endif // wxCHECK_VERSION(3,0,0)
     
     // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
-    m_bODIComboBoxODPointIconName = new ODIconCombo( m_panelBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
+    m_bODIComboBoxODPointIconName = new ODIconCombo( m_scrolledWindowBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
     m_bODIComboBoxODPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
     
     //  Accomodate scaling of icon
@@ -113,10 +106,16 @@ ODPointPropertiesDialog( parent )
     m_bODIComboBoxODPointIconName->SetMinSize( wxSize(-1, min_size) );
     m_fgSizerNameIcon->Replace(m_bcomboBoxODPointIconName, m_bODIComboBoxODPointIconName );
     
+    m_pHyperLinkList = new HyperlinkList();
+    
     delete m_bcomboBoxODPointIconName;
     
     SetDialogSize();
     
+    if(g_iDefaultPointPropertyDialogPostionX == -1 || g_iDefaultPointPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultPointPropertyDialogPostionX, g_iDefaultPointPropertyDialogPostionY));
+    
+    m_bShowingDisplayText = true;
 }
 
 ODPointPropertiesImpl::~ODPointPropertiesImpl()
@@ -133,31 +132,18 @@ ODPointPropertiesImpl::~ODPointPropertiesImpl()
 
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
-    //m_bSizerFill->RecalcSizes();
-/*    
-    wxSize sz = m_SizerDialogBox->CalcMin();
-    sz.IncBy( 20 );   // Account for some decorations?
-    wxSize dsize = ::wxGetDisplaySize();
-    sz.y = wxMin(sz.y, dsize.y-80);
-    SetClientSize(sz);
-    m_defaultClientSize = sz;
-    //m_panelBasicProperties->SetScrollRate(5, 5);
-
-    wxSize fsize = GetSize();
-    fsize.y = wxMin(fsize.y, dsize.y-80);
-    fsize.x = wxMin(fsize.x, dsize.x-80);
-    SetSize(fsize);
-*/    
-
-    m_SizerBasicProperties->Layout();
-    m_bSizerOuterProperties->Layout();
-    m_SizerODPointRangeRingsSelect->Layout();
-    m_SizerDialogBox->Layout();
-    this->GetSizer()->Fit( this );
+    m_scrolledWindowLinks->SetMinClientSize(m_bSizerLinks->ComputeFittingClientSize(this));
+    m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
+    m_SizerDialogBox->Fit(m_scrolledWindowBasicProperties);
+    
     this->Layout();
+    this->GetSizer()->Fit( m_scrolledWindowBasicProperties );
+    this->Layout();
+    
+    m_defaultClientSize = GetClientSize();
 }
 
-void ODPointPropertiesImpl::onRightClick( wxMouseEvent& event )
+void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
 {
     wxMenu* popup = new wxMenu();
     popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
@@ -230,13 +216,18 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_bPointPropertiesBlink = false;
         m_pODPoint->m_bPtIsSelected = false;
+        m_pODPoint->SetVisible( m_bIsVisible_save );
+        m_pODPoint->SetNameShown( m_bShowName_save );
+        m_pODPoint->SetPosition( m_lat_save, m_lon_save );
+        m_pODPoint->SetIconName( m_IconName_save );
+        m_pODPoint->ReLoadIcon();
         SaveChanges(); // write changes to globals and update config
         OnPositionCtlUpdated( event );
     }
     Show( false );
 
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdateODPointsListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
         
     if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() )
         g_pODPathPropDialog->UpdateProperties(  );
@@ -269,7 +260,6 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
         m_pODPoint->SetPosition( m_lat_save, m_lon_save );
         m_pODPoint->SetIconName( m_IconName_save );
         m_pODPoint->ReLoadIcon();
-        m_pODPoint->m_HyperlinkList->Clear();
     }
 
     Show( false );
@@ -288,7 +278,7 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
 {
     switch (m_radioBoxBoundaryPointType->GetSelection()) {
         case ID_BOUNDARY_EXCLUSION:
-        case ID_BOUNDARY_NIETHER:
+        case ID_BOUNDARY_NEITHER:
             m_sliderBoundaryPointInclusionSize->Disable();
             break;
         case ID_BOUNDARY_INCLUSION:
@@ -299,16 +289,88 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
     ODPointPropertiesDialog::OnRadioBoxPointType(event);
 }
 
+void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
+{
+    m_toggleBtnDeleteLink->SetValue(false);
+    m_toggleBtnEditLink->SetValue(false);
+    m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
+    if(g_pODLinkPropertiesDialog == NULL)
+        g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
+    
+    DimeWindow(g_pODLinkPropertiesDialog);
+    g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
+    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
+        wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
+        if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
+        Hyperlink* h = new Hyperlink();
+        h->DescrText = desc;
+        h->Link = g_pODLinkPropertiesDialog->GetLinkURL();
+        h->LType = wxEmptyString;
+        //m_pODPoint->m_HyperlinkList->Append( h );
+        m_pHyperLinkList->Append(h);
+        UpdateProperties();
+    }
+}
+
+void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
+{
+    wxString findurl = m_pClickedLink->GetURL();
+    wxString findlabel = m_pClickedLink->GetLabel();
+    
+    if(g_pODLinkPropertiesDialog == NULL)
+        g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
+    
+    DimeWindow(g_pODLinkPropertiesDialog);
+    if(m_pHyperLinkList->GetCount()) {
+        wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
+        while(l_plinknode) {
+            Hyperlink *l_link = l_plinknode->GetData();
+            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+                g_pODLinkPropertiesDialog->SetLinkDescription(l_link->DescrText);
+                g_pODLinkPropertiesDialog->SetLinkURL(l_link->Link);
+                if(g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
+                    l_link->DescrText = g_pODLinkPropertiesDialog->GetLinkDescription();
+                    l_link->Link = g_pODLinkPropertiesDialog->GetLinkURL();
+                    UpdateProperties();
+                }
+                break;
+            }
+            l_plinknode = l_plinknode->GetNext();
+        }
+    }
+    
+    event.Skip();
+}
+
+void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
+{
+    wxString findurl = m_pClickedLink->GetURL();
+    wxString findlabel = m_pClickedLink->GetLabel();
+    
+    if(m_pHyperLinkList->GetCount()) {
+        wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
+        while(l_plinknode) {
+            Hyperlink *l_link = l_plinknode->GetData();
+            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+                m_pHyperLinkList->DeleteNode(l_plinknode);
+                break;
+            }
+            l_plinknode = l_plinknode->GetNext();
+        }
+        UpdateProperties();
+    }
+}
 
 void ODPointPropertiesImpl::SaveChanges()
 {
+    TransferDataFromWindow();
     if( m_pODPoint ) {
         if( m_pODPoint->m_bIsInLayer ) return;
 
         // Get User input Text Fields
         m_pODPoint->m_iODPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
-        m_pODPoint->m_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingsSteps->GetValue().mb_str() );
-//        m_pODPoint->m_fODPointRangeRingsStep = m_RangeRingSteps;
+        m_pODPoint->m_fODPointRangeRingsStep = m_dODPointRangeRingSteps;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->SetRangeRingBBox();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
@@ -316,12 +378,14 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetColourScheme(g_global_color_scheme);
 
         m_pODPoint->SetName( m_textName->GetValue() );
-        m_pODPoint->SetODPointArrivalRadius( m_textCtrlODPointArrivalRadius->GetValue() );
+        m_pODPoint->SetODPointArrivalRadius(m_dODPointArrivalRadius);
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_ODPointDescription = m_textDescription->GetValue();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_pTextPoint->m_TextPointText = m_textDisplayText->GetValue();
             m_pTextPoint->m_bTextChanged = true;
+            m_pTextPoint->m_iWrapLen = m_iTextPointTextMaxWidth;
+            m_pTextPoint->m_iTextMaxWidthType = m_radioBoxWidthType->GetSelection();
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
@@ -335,7 +399,7 @@ void ODPointPropertiesImpl::SaveChanges()
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")){
             m_pBoundaryPoint->m_uiBoundaryPointFillTransparency = m_sliderBoundaryPointFillTransparency->GetValue();
             m_pBoundaryPoint->m_iInclusionBoundaryPointSize = m_sliderBoundaryPointInclusionSize->GetValue();
-            m_pBoundaryPoint->m_iRangeRingStyle = ::StyleValues[m_choiceRangeRingLineStyle->GetSelection()];
+            m_pBoundaryPoint->m_iRangeRingStyle = (wxPenStyle)::StyleValues[m_choiceRangeRingLineStyle->GetSelection()];
             m_pBoundaryPoint->m_iRangeRingWidth = ::WidthValues[m_choiceRangeRingLineWidth->GetSelection()];
             int l_BoundaryPointType;
             l_BoundaryPointType = m_radioBoxBoundaryPointType->GetSelection();
@@ -348,7 +412,7 @@ void ODPointPropertiesImpl::SaveChanges()
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = true;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     m_pBoundaryPoint->m_bExclusionBoundaryPoint = false;
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
                     break;
@@ -378,7 +442,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->ReLoadIcon();
 
         // Here is some logic....
-        // If the Markname is completely numeric, and is part of a route,
+        // If the Markname is completely numeric, and is part of a path,
         // Then declare it to be of attribute m_bDynamicName = true
         // This is later used for re-numbering points on actions like
         // Insert Point, Delete Point, Append Point, etc
@@ -394,6 +458,15 @@ void ODPointPropertiesImpl::SaveChanges()
         } else
             m_pODPoint->m_bDynamicName = false;
 
+        m_pODPoint->m_HyperlinkList->Clear();
+        HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
+        wxHyperlinkListNode *linknode = m_pHyperLinkList->GetFirst();
+        while( linknode ) {
+            Hyperlink *link = linknode->GetData();
+            m_pODPoint->m_HyperlinkList->Append(link);
+            linknode = linknode->GetNext();
+        }
+        
         if( m_pODPoint->m_bIsInPath ) {
             // Update the Path segment selectables
             g_pODSelect->UpdateSelectablePathSegments( m_pODPoint );
@@ -428,7 +501,6 @@ void ODPointPropertiesImpl::SaveChanges()
         } else
             g_pODConfig->UpdateODPoint( m_pODPoint );
 
-            // No general settings need be saved pConfig->UpdateSettings();
     }
     return;
 }
@@ -440,6 +512,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_pODPoint->m_bPtIsSelected = FALSE;
         m_pODPoint->m_bPointPropertiesBlink = false;
     }
+
     if(pOP->m_sTypeString == wxT("Text Point")) {
         m_pTextPoint = (TextPoint *)pOP;
         m_pODPoint = m_pTextPoint;
@@ -448,6 +521,23 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_pODPoint = m_pBoundaryPoint;
     } else {
         m_pODPoint = pOP;
+    }
+    
+    m_pHyperLinkList->clear();
+    
+    int NbrOfLinks = m_pODPoint->m_HyperlinkList->GetCount();
+    if( NbrOfLinks > 0 ) {
+        HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
+        wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
+        while( linknode ) {
+            Hyperlink *link = linknode->GetData();
+            Hyperlink* h = new Hyperlink();
+            h->DescrText = link->DescrText;
+            h->Link = link->Link;
+            h->LType = wxEmptyString;
+            m_pHyperLinkList->Append( h );
+            linknode = linknode->GetNext();
+        }
     }
     
     if( m_pODPoint ) {
@@ -460,14 +550,25 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_bIsVisible_save = m_pODPoint->m_bIsVisible;
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
     }
+    
+    m_toggleBtnDeleteLink->SetValue(false);
+    m_toggleBtnEditLink->SetValue(false);
+    m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
 }
 
 bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 {
     if( m_pODPoint ) {
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
+            if(!m_bShowingDisplayText) {
+                m_notebookProperties->InsertPage(1, m_panelDisplayText, _("Display Text"), true);
+                m_bShowingDisplayText = true;
+            }
             m_panelDisplayText->Enable( true );
             m_panelDisplayText->Show();
+            m_radioBoxWidthType->Enable( true );
+            m_radioBoxShowDisplayText->Enable( true );
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -476,13 +577,19 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_staticTextFillDensity->Hide();
             m_sliderBoundaryPointFillTransparency->Enable( false );
             m_sliderBoundaryPointFillTransparency->Hide();
-            m_bSizerOuterProperties->Hide( m_bSizerFill );
+            m_SizerOuterProperties->Hide( m_SizerFill );
         } else if (m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
+            if(m_bShowingDisplayText) {
+                m_notebookProperties->RemovePage(1);
+                m_bShowingDisplayText = false;
+            }
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
+            m_radioBoxWidthType->Enable( false );
+            m_radioBoxShowDisplayText->Enable( false );
             m_radioBoxBoundaryPointType->Enable( true );
             m_radioBoxBoundaryPointType->Show();
-            m_bSizerOuterProperties->Show( m_bSizerFill );
+            m_SizerOuterProperties->Show( m_SizerFill );
             m_staticTextBoundaryPointInclusionSize->Show();
             m_sliderBoundaryPointInclusionSize->Enable( true );
             m_sliderBoundaryPointInclusionSize->Show();
@@ -492,6 +599,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         } else if (m_pODPoint->m_sTypeString == wxT("EBL Point") || m_pODPoint->m_sTypeString == wxT("DR Point") || m_pODPoint->m_sTypeString == wxT("Guard Zone Point") || m_pODPoint->m_sTypeString == wxT("PIL Point")) {
             m_panelDisplayText->Enable( false );
             m_panelDisplayText->Hide();
+            m_radioBoxWidthType->Enable( false );
+            m_radioBoxShowDisplayText->Enable( false );
             m_radioBoxBoundaryPointType->Enable( false );
             m_radioBoxBoundaryPointType->Hide();
             m_staticTextBoundaryPointInclusionSize->Hide();
@@ -500,7 +609,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_staticTextFillDensity->Hide();
             m_sliderBoundaryPointFillTransparency->Enable( false );
             m_sliderBoundaryPointFillTransparency->Hide();
-            m_bSizerOuterProperties->Hide( m_bSizerFill );
+            m_SizerOuterProperties->Hide( m_SizerFill );
         }
         
         m_text_lat = toSDMM_PlugIn( 1, m_pODPoint->m_lat );
@@ -510,6 +619,31 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_lat_save = m_pODPoint->m_lat;
         m_lon_save = m_pODPoint->m_lon;
 
+        if(m_pODPoint->m_sTypeString == wxT("EBL Point")) {
+            m_SizerOuterProperties->Show( m_bSizerEBLPointWarning );
+            m_staticTextEBLPointWarning->Show();
+            m_textLatitude->Disable();
+            m_textLongitude->Disable();
+            wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
+            
+            // Use path array (if any) to determine actual visibility for this point
+            if( ppath_array ) {
+                for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
+                    EBL *pe = (EBL *) ppath_array->Item( ip );
+                    if(pe->m_bFixedEndPosition || !pe->m_bCentreOnBoat) {
+                        m_textLatitude->Enable();
+                        m_textLongitude->Enable();
+                    }
+                }
+            } 
+                
+        } else {
+            m_textLatitude->Enable();
+            m_textLongitude->Enable();
+            m_staticTextEBLPointWarning->Hide();
+            m_SizerOuterProperties->Hide( m_bSizerEBLPointWarning );
+        }
+    
         if( positionOnly ) return true;
 
         //Layer or not?
@@ -529,6 +663,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_choicePointRangeRingsNumber->Enable( false );
             m_textCtrlODPointRangeRingsSteps->SetEditable( false );
             m_colourPickerRangeRingsColour->Enable( false );
+            m_bSizerLinkButtons->Show( false );
+            m_buttonAddLink->Enable( false );
+            m_toggleBtnEditLink->Enable( false );
+            m_toggleBtnDeleteLink->Enable( false );
         } else {
             m_textName->SetEditable( true );
             m_textDescription->SetEditable( true );
@@ -544,18 +682,25 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_choicePointRangeRingsNumber->Enable( true );
             m_textCtrlODPointRangeRingsSteps->SetEditable( true );
             m_colourPickerRangeRingsColour->Enable( true );
+            m_bSizerLinkButtons->Show( true );
+            m_buttonAddLink->Enable( true );
+            if(m_pODPoint->m_HyperlinkList->GetCount() > 0) {
+                m_toggleBtnEditLink->Enable( true );
+                m_toggleBtnDeleteLink->Enable( true );
+            }
         }
         m_textName->SetValue( m_pODPoint->GetName() );
 
-        wxString s_ArrivalRadius;
-        s_ArrivalRadius.Printf( _T("%.3f"), m_pODPoint->GetODPointArrivalRadius() );
-        m_textCtrlODPointArrivalRadius->SetValue( s_ArrivalRadius );        
+        m_dODPointArrivalRadius = m_pODPoint->GetODPointArrivalRadius();
         
         m_textDescription->SetValue( m_pODPoint->m_ODPointDescription );
+        m_textDisplayText->Clear();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
             m_textDisplayText->Clear();
             m_textDisplayText->SetValue( m_pTextPoint->m_TextPointText );
             m_choicePosition->SetSelection( m_pTextPoint->m_iTextPosition );
+            m_iTextPointTextMaxWidth = m_pTextPoint->m_iWrapLen;
+            m_radioBoxWidthType->SetSelection(m_pTextPoint->m_iTextMaxWidthType);
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
             m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
@@ -564,7 +709,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         } else if(m_pODPoint->m_sTypeString == wxT("Boundary Point")) {
             if( m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
             else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_INCLUSION );
-            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NIETHER );
+            else if( !m_pBoundaryPoint->m_bExclusionBoundaryPoint && !m_pBoundaryPoint->m_bInclusionBoundaryPoint ) m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_NEITHER );
             else m_radioBoxBoundaryPointType->SetSelection( ID_BOUNDARY_EXCLUSION );
             m_sliderBoundaryPointInclusionSize->SetValue( m_pBoundaryPoint->m_iInclusionBoundaryPointSize );
             m_sliderBoundaryPointFillTransparency->SetValue( m_pBoundaryPoint->m_uiBoundaryPointFillTransparency );
@@ -590,10 +735,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_checkBoxShowODPointRangeRings->SetValue( m_pODPoint->GetShowODPointRangeRings() );
         m_choicePointRangeRingsNumber->SetSelection( m_pODPoint->GetODPointRangeRingsNumber() );
         m_choiceDistanceUnitsString->SetSelection( m_pODPoint->GetODPointRangeRingsStepUnits() );
-        wxString buf;
-        buf.Printf( _T("%.3f" ), m_pODPoint->GetODPointRangeRingsStep() );
-        m_textCtrlODPointRangeRingsSteps->SetValue( buf );
-//        m_RangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
+        m_dODPointRangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
 
@@ -651,38 +793,89 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         
         icons = NULL;
         
+        
+        //if(m_pODPoint->m_HyperlinkList->GetCount() > 0) {
+        //    Hyperlink *l_HyperLink = new HyperLink();
+            //m_textCtrlLinkDescription->SetValue(m_pOD)
+            //l_HyperLink->DescrText = m_pODPoint->m_HyperlinkList->GetFirst()->
+        //}
+        int linkcount = m_bSizerLinks->GetItemCount();
+        m_bSizerLinks->Clear(true);
+        
+        int NbrOfLinks = m_pHyperLinkList->GetCount();
+        //HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
+        bool lFirstLine = true;
+        if( NbrOfLinks > 0 ) {
+            wxHyperlinkListNode *linknode = m_pHyperLinkList->GetFirst();
+            while( linknode ) {
+                Hyperlink *link = linknode->GetData();
+                wxString Link = link->Link;
+                wxString Descr = link->DescrText;
+                
+                wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
+                                                             Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
+                ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
+                               wxHyperlinkEventHandler( ODPointPropertiesImpl::OnHyperLinkClick ), NULL, this );
+                if( !m_pODPoint->m_bIsInLayer ) ctrl->Connect( wxEVT_RIGHT_DOWN,
+                    wxMouseEventHandler( ODPointPropertiesImpl::HyperLinkContextMenu ), NULL, this );
+                
+                m_bSizerLinks->Add( ctrl, 1, wxALL | wxALIGN_LEFT, 0);
+                if(lFirstLine) {
+                    lFirstLine = false;
+                    m_sSingleLineSize = m_bSizerLinks->CalcMin();
+                }
+                
+                linknode = linknode->GetNext();
+            }
+        }
+        
+        
+        
         wxString caption( wxS("") );
         if(m_pODPoint->m_bIsInLayer) {
             if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
                 caption.append( _("OCPN Draw Point, Layer: ") );
             else if(m_pODPoint->m_sTypeString == wxT("Boundary Point"))
                 caption.append(_("Boundary Point Properties, Layer: "));
+            else if(m_pODPoint->m_sTypeString == wxT("Text Point"))
+                caption.append(_("Text Point Properties, Layer: "));
             else if(m_pODPoint->m_sTypeString == wxT("EBL Point"))
                 caption.append(_("EBL Point Properties, Layer: "));
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
                 caption.append(_("DR Point Properties, Layer: "));
+            else if(m_pODPoint->m_sTypeString == wxT("PIL Point"))
+                caption.append(_("PIL Point Properties, Layer: "));
+            else if(m_pODPoint->m_sTypeString == wxT("GZ Point"))
+                caption.append(_("GZ Point Properties, Layer: "));
 #if wxCHECK_VERSION(3,0,0)
-            caption.Append( _(g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID )) );
+            caption.Append( _(g_pPathAndPointManagerDialog->GetLayerName( m_pODPoint->m_LayerID )) );
 #else
-            caption.Append( g_pPathManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
+            caption.Append( g_pPathAndPointManagerDialog->GetLayerName( m_pODPoint->m_LayerID ) );
 #endif
         } else {
             if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
                 caption.append( _("OCPN Draw Point") );
             else if(m_pODPoint->m_sTypeString == wxT("Boundary Point"))
                 caption.append(_("Boundary Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("Text Point"))
+                caption.append(_("Text Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("EBL Point"))
                 caption.append(_("EBL Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("DR Point"))
                 caption.append(_("DR Point Properties"));
+            else if(m_pODPoint->m_sTypeString == wxT("PIL Point"))
+                caption.append(_("PIL Point Properties"));
             else if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point"))
                 caption.append(_("Guard Zone Point Properties"));
         }
         SetTitle( caption );
         
         m_notebookProperties->SetSelection(1);
+        
         m_notebookProperties->SetSelection(0);
     }
+    
+    TransferDataToWindow();
     SetDialogSize();
     
     return true;
@@ -745,7 +938,7 @@ void ODPointPropertiesImpl::OnCopyPasteLatLon( wxCommandEvent& event )
 void ODPointPropertiesImpl::ValidateMark( void )
 {
     //    Look in the master list of ODPoints to see if the currently selected ODPpoint is still valid
-    //    It may have been deleted as part of a route
+    //    It may have been deleted as part of a path
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     
     bool b_found = false;
@@ -767,4 +960,104 @@ void ODPointPropertiesImpl::ValidateMark( void )
         UpdateProperties();
     }
 }
+
+void ODPointPropertiesImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
+{
+    if( m_toggleBtnEditLink->GetValue() ) {
+        m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
+        OnEditLink( event );
+        event.Skip( false );
+        return;
+    }
+    if( m_toggleBtnDeleteLink->GetValue() ) {
+        m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
+        OnDeleteLink( event );
+        event.Skip( false );
+        return;
+    }
+    //    Windows has trouble handling local file URLs with embedded anchor points, e.g file://testfile.html#point1
+    //    The trouble is with the wxLaunchDefaultBrowser with verb "open"
+    //    Workaround is to probe the registry to get the default browser, and open directly
+    //
+    //    But, we will do this only if the URL contains the anchor point charater '#'
+    //    What a hack......
+    
+    #ifdef __WXMSW__
+    
+    wxString cc = event.GetURL();
+    if( cc.Find( _T("#") ) != wxNOT_FOUND ) {
+        wxRegKey RegKey( wxString( _T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command") ) );
+        if( RegKey.Exists() ) {
+            wxString command_line;
+            RegKey.QueryValue( wxString( _T("") ), command_line );
+            
+            //  Remove "
+            command_line.Replace( wxString( _T("\"") ), wxString( _T("") ) );
+            
+            //  Strip arguments
+            int l = command_line.Find( _T(".exe") );
+            if( wxNOT_FOUND == l ) l = command_line.Find( _T(".EXE") );
+            
+            if( wxNOT_FOUND != l ) {
+                wxString cl = command_line.Mid( 0, l + 4 );
+                cl += _T(" ");
+                cc.Prepend( _T("\"") );
+                cc.Append( _T("\"") );
+                cl += cc;
+                wxExecute( cl );        // Async, so Fire and Forget...
+            }
+        }
+    } else
+        event.Skip();
+    #else
+    wxString url = event.GetURL();
+    url.Replace(_T(" "), _T("%20") );
+    ::wxLaunchDefaultBrowser(url);
+    //    event.Skip();
+    #endif
+}
+
+void ODPointPropertiesImpl::HyperLinkContextMenu( wxMouseEvent &event )
+{
+    m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
+    m_scrolledWindowLinks->PopupMenu( m_menuLink,
+                                      m_pClickedLink->GetPosition().x + event.GetPosition().x,
+                                      m_pClickedLink->GetPosition().y + event.GetPosition().y );
+    
+}
+
+void ODPointPropertiesImpl::OnEditLinkToggle( wxCommandEvent& event )
+{
+    if( m_toggleBtnEditLink->GetValue() ) 
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are opened for editing.") );
+    else
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
+    if(m_toggleBtnDeleteLink->GetValue())
+        m_toggleBtnDeleteLink->SetValue(false);
+    event.Skip();
+}
+
+void ODPointPropertiesImpl::OnDeleteLinkToggle( wxCommandEvent& event )
+{
+    if( m_toggleBtnDeleteLink->GetValue() ) 
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are deleted.") );
+    else
+        m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
+    
+    if(m_toggleBtnEditLink->GetValue())
+        m_toggleBtnEditLink->SetValue(false);
+    event.Skip();
+}
+
+void ODPointPropertiesImpl::OnMenuSelection(wxCommandEvent& event)
+{
+    if(event.GetId() == m_menuItemDelete->GetId())
+        OnDeleteLink(event);
+    if(event.GetId() == m_menuItemEdit->GetId())
+        OnEditLink(event);
+    if(event.GetId() == m_menuItemAddNew->GetId())
+        OnAddLink(event);
+}
+
 

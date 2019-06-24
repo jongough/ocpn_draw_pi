@@ -32,10 +32,6 @@
 #include <wx/valnum.h>
 #endif
 
-extern EBLList                  *g_pEBLList;
-extern ocpn_draw_pi             *g_ocpn_draw_pi;
-extern ODPlugIn_Position_Fix_Ex g_pfFix;
-
 EBLProp::EBLProp()
 {
     //ctor
@@ -52,6 +48,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_staticTextTotalLength->Show();
     m_textCtrlTotalLength->Show();
     m_fgSizerEBL->ShowItems( true );
+    m_fgSizerEBL1->ShowItems( true );
     m_checkBoxEBLFixedEndPosition->Show();
     m_checkBoxEBLFixedEndPosition->Enable( true );
     
@@ -74,11 +71,11 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlEBLAngle->Show();
     m_textCtrlEBLAngle->Enable(true);
     m_textCtrlEBLAngle->SetEditable(true);
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
 
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODEBLAngle(2, &m_dODEBLAngleValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODEBLLength(2, &m_dODEBLLengthValidator, wxNUM_VAL_DEFAULT);
     dODEBLAngle.SetRange(-180, 180);
@@ -88,8 +85,11 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlTotalLength->SetValidator( dODEBLLength );
 #endif
     
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
+    if(g_iDefaultEBLPropertyDialogPostionX == -1 || g_iDefaultEBLPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultEBLPropertyDialogPostionX, g_iDefaultEBLPropertyDialogPostionY));
     
 }
 
@@ -99,25 +99,26 @@ EBLProp::~EBLProp()
     //dtor
 }
 
-bool EBLProp::UpdateProperties( EBL *pInEBL )
+bool EBLProp::UpdateProperties( ODPath *pInEBL )
 {
+    EBL *lpInEBL = (EBL *)pInEBL;
     SetGlobalLocale();
     
     wxString s;
 
-    m_checkBoxEBLFixedEndPosition->SetValue( pInEBL->m_bFixedEndPosition );
-    m_radioBoxPathPersistence->SetSelection( pInEBL->m_iPersistenceType );
-    m_checkBoxPathShowArrow->SetValue( pInEBL->m_bDrawArrow );
-    m_checkBoxShowVRM->SetValue( pInEBL->m_bVRM );
-    m_checkBoxShowEBLInfo->SetValue( pInEBL->m_bAlwaysShowInfo );
-    m_checkBoxShowPerpLine->SetValue( pInEBL->m_bPerpLine );
-    m_checkBoxRotateWithBoat->SetValue( pInEBL->m_bRotateWithBoat );
-    m_radioBoxMaintainWith->SetSelection( pInEBL->m_iMaintainWith );
-    if(pInEBL->m_bCentreOnBoat)
+    m_checkBoxEBLFixedEndPosition->SetValue( lpInEBL->m_bFixedEndPosition );
+    m_radioBoxPathPersistence->SetSelection( lpInEBL->m_iPersistenceType );
+    m_checkBoxPathShowArrow->SetValue( lpInEBL->m_bDrawArrow );
+    m_checkBoxShowVRM->SetValue( lpInEBL->m_bVRM );
+    m_checkBoxShowEBLInfo->SetValue( lpInEBL->m_bAlwaysShowInfo );
+    m_checkBoxShowPerpLine->SetValue( lpInEBL->m_bPerpLine );
+    m_checkBoxRotateWithBoat->SetValue( lpInEBL->m_bRotateWithBoat );
+    m_radioBoxMaintainWith->SetSelection( lpInEBL->m_iMaintainWith );
+    if(lpInEBL->m_bCentreOnBoat)
         m_checkBoxRotateWithBoat->Enable(true);
     else
         m_checkBoxRotateWithBoat->Enable(false);
-    if(pInEBL->m_bFixedEndPosition) {
+    if(lpInEBL->m_bFixedEndPosition) {
         m_radioBoxMaintainWith->Enable(false);
         m_textCtrlEBLAngle->Enable(false);
         m_textCtrlTotalLength->SetEditable(false);
@@ -127,18 +128,18 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
         m_textCtrlTotalLength->SetEditable(true);
     }
     
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    if(pInEBL->m_dEBLAngle > 180)
-        m_dODEBLAngleValidator = pInEBL->m_dEBLAngle - 360;
+#if wxCHECK_VERSION(3,0,0)
+    if(lpInEBL->m_dEBLAngle > 180)
+        m_dODEBLAngleValidator = lpInEBL->m_dEBLAngle - 360;
     else
-        m_dODEBLAngleValidator = pInEBL->m_dEBLAngle;
+        m_dODEBLAngleValidator = lpInEBL->m_dEBLAngle;
     
-    m_dODEBLLengthValidator = toUsrDistance_Plugin(pInEBL->m_dLength);
+    m_dODEBLLengthValidator = toUsrDistance_Plugin(lpInEBL->m_dLength);
 #else
-    if(pInEBL->m_dEBLAngle > 180)
-        s.Printf( _T("%.2f"), pInEBL->m_dEBLAngle - 360 );
+    if(lpInEBL->m_dEBLAngle > 180)
+        s.Printf( _T("%.2f"), lpInEBL->m_dEBLAngle - 360 );
     else
-        s.Printf( _T("%.2f"), pInEBL->m_dEBLAngle );
+        s.Printf( _T("%.2f"), lpInEBL->m_dEBLAngle );
     
     m_textCtrlEBLAngle->SetValue(s);
     
@@ -146,7 +147,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     m_textCtrlTotalLength->SetValue(s);
 #endif
     
-    if(pInEBL->m_bRotateWithBoat) {
+    if(lpInEBL->m_bRotateWithBoat) {
         m_checkBoxEBLFixedEndPosition->Enable(false);
     } else {
         m_checkBoxEBLFixedEndPosition->Enable(true);
@@ -156,7 +157,7 @@ bool EBLProp::UpdateProperties( EBL *pInEBL )
     
     ResetGlobalLocale();
     
-    return ODPathPropertiesDialogImpl::UpdateProperties( pInEBL );
+    return ODPathPropertiesDialogImpl::UpdateProperties( lpInEBL );
 }
 
 bool EBLProp::UpdateProperties( void )
@@ -223,10 +224,10 @@ bool EBLProp::SaveChanges( void )
     } else if(!m_pEBL->m_bFixedEndPosition) {
         switch (m_pEBL->m_iMaintainWith) {
             case ID_MAINTAIN_WITH_HEADING:
-                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Hdm;
+                m_pEBL->m_dEBLAngle = l_dEBLAngle;
                 break;
             case ID_MAINTAIN_WITH_COG:
-                m_pEBL->m_dEBLAngle = l_dEBLAngle + g_pfFix.Cog;
+                m_pEBL->m_dEBLAngle = l_dEBLAngle;
                 break;
         }
     }

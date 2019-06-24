@@ -25,7 +25,7 @@
 #include "BoundaryPoint.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
-#include "cutil.h"
+//#include "cutil.h"
 #include "clipper.hpp"
 
 #ifdef __WXMSW__
@@ -56,19 +56,6 @@ using namespace std;
 using namespace ClipperLib;
 
 WX_DEFINE_LIST ( BoundaryList );
-
-extern wxColour     g_colourActiveBoundaryLineColour;
-extern wxColour     g_colourInActiveBoundaryLineColour;
-extern wxColour     g_colourActiveBoundaryFillColour;
-extern wxColour     g_colourInActiveBoundaryFillColour;
-extern bool          g_bExclusionBoundary;
-extern bool         g_bInclusionBoundary;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern unsigned int g_uiFillTransparency;
-extern int          g_iInclusionBoundarySize;
-extern bool         g_bBoundaryODPointsVisible;
-extern wxString     g_sODPointIconName;
-
 
 Boundary::Boundary() : ODPath()
 {
@@ -137,7 +124,6 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
-    //ODPath::Draw( dc, piVP );
     if ( m_bVisible && m_pODPointList->GetCount() > 2) {
         int l_iBoundaryPointCount = 0;
         m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
@@ -357,7 +343,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxPENSTYLE_SOLID ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
                 else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
@@ -452,4 +438,14 @@ void Boundary::SetColours( ODPath * pPath )
     ODPath::SetColours(pBoundary);
     m_wxcActiveFillColour = pBoundary->m_wxcActiveFillColour;
     m_wxcInActiveFillColour = pBoundary->m_wxcInActiveFillColour;
+}
+
+void Boundary::RemovePointFromPath(ODPoint* point, ODPath* path)
+{
+    if((ODPoint *)m_pODPointList->GetFirst()->GetData() == point) {
+        m_pODPointList->DeleteObject( point );
+        m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
+    }
+    
+    ODPath::RemovePointFromPath(point, path);
 }

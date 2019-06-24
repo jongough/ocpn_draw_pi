@@ -58,31 +58,6 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( DRList );
 
-extern wxColour    g_colourDRLineColour;
-extern wxColour    g_colourInActiveDRLineColour;
-extern wxString    g_sDRPointIconName;
-extern int         g_iDRPersistenceType;
-extern bool        g_bDRShowArrow;
-extern int         g_DRLineWidth; 
-extern int         g_DRLineStyle;
-extern bool        g_bDRPointShowRangeRings;
-extern int         g_iDRPointRangeRingsNumber;
-extern float       g_fDRPointRangeRingsStep;
-extern int         g_iDRPointRangeRingsStepUnits;
-extern wxColour    g_colourDRPointRangeRingsColour;
-extern int         g_iDRPointRangeRingLineWidth;
-extern int         g_iDRPointRangeRingLineStyle;
-
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern DRList       *g_pDRList;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern ODConfig     *g_pODConfig;
-extern EBLProp      *g_pEBLPropDialog;
-extern bool         g_bShowMag;
-extern double       g_dVar;
-
 DR::DR() : ODPath()
 {
     m_sTypeString = _T("DR");

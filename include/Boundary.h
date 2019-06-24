@@ -40,6 +40,7 @@ class Boundary : public ODPath
         void CreateColourSchemes( void );
         void MoveAllPoints( double inc_lat, double inc_lon );
         ODPoint *InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints );
+        void RemovePointFromPath( ODPoint* point, ODPath* path );
 
         wxColour        m_wxcActiveFillColour;
         wxColour        m_wxcInActiveFillColour;

@@ -37,11 +37,6 @@
 #include "math.h"
 #endif
 
-extern PathList         *g_pPathList;
-extern GZList           *g_pGZList;
-extern PointMan         *g_pODPointMan;
-extern PlugIn_ViewPort   g_VP;
-
 wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
 {
     wxGZListNode *GZ_node = g_pGZList->GetFirst();
@@ -82,7 +77,7 @@ wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
                     if(pGZ->m_bInclusionGZ) l_bOK = true;
                     else l_bOK = false;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bOK = false;
                     else l_bOK = true;
                     break;
@@ -162,7 +157,7 @@ bool GZMan::FindPointInGZ( GZ *pGZ, double lat, double lon, int type, int state 
                 if(pGZ->m_bInclusionGZ) l_bOK = true;
                 else l_bOK = false;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bOK = false;
                 else l_bOK = true;
                 break;
@@ -232,7 +227,7 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, in
                         if(pGZ->m_bInclusionGZ) l_bOK = true;
                         else l_bOK = false;
                         break;
-                    case ID_BOUNDARY_NIETHER:
+                    case ID_BOUNDARY_NEITHER:
                         if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bOK = false;
                         else l_bOK = true;
                         break;
@@ -306,7 +301,7 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
                 case ID_BOUNDARY_INCLUSION:
                     if(!pGZ->m_bInclusionGZ) l_bNext = true;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(pGZ->m_bExclusionGZ || pGZ->m_bInclusionGZ) l_bNext = true;
                     break;
             }

@@ -1,100 +1,32 @@
 #!/bin/sh
 #cp ../$OCPNDIR/include/
 # ./ocpninclude/.
-#OCPNDIR="OpenCPN"
-OCPNDIR="OpenCPN-4.4.0"
+OCPNDIR="OpenCPN"
+#OCPNDIR="OpenCPN-4.4.0"
 
 cp ../$OCPNDIR/src/bbox.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/cutil.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/geodesic.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/georef.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/Hyperlink.cpp ./ocpnsrc/.
-cp ../$OCPNDIR/src/Layer.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/ocpndc.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/pugixml.cpp ./ocpnsrc/.
 cp ../$OCPNDIR/src/SelectItem.cpp ./ocpnsrc/.
+cp ../$OCPNDIR/src/TexFont.cpp ./ocpnsrc/.
+cp -R ../$OCPNDIR/src/glu ./ocpnsrc/.
+cp -R ../$OCPNDIR/src/wxJSON ./ocpnsrc/.
 
-cp ../$OCPNDIR/include/AISTargetAlertDialog.h ./ocpninclude/.
-cp ../$OCPNDIR/include/AISTargetQueryDialog.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/apb.hpp ./ocpninclude/.
 cp ../$OCPNDIR/include/bbox.h ./ocpninclude/.
-cp ../$OCPNDIR/include/canvasMenu.h ./ocpninclude/.
-cp ../$OCPNDIR/include/chart1.h ./ocpninclude/.
-cp ../$OCPNDIR/include/chartbarwin.h ./ocpninclude/.
-cp ../$OCPNDIR/include/chartbase.h ./ocpninclude/.
-cp ../$OCPNDIR/include/chartdbs.h ./ocpninclude/.
-cp ../$OCPNDIR/include/chartimg.h ./ocpninclude/.
-cp ../$OCPNDIR/include/chcanv.h ./ocpninclude/.
-cp ../$OCPNDIR/include/CM93DSlide.h ./ocpninclude/.
-cp ../$OCPNDIR/include/ConnectionParams.h ./ocpninclude/.
 cp ../$OCPNDIR/include/cutil.h ./ocpninclude/.
-cp ../$OCPNDIR/include/datastream.h ./ocpninclude/.
-cp ../$OCPNDIR/include/dsPortType.h ./ocpninclude/.
-cp ../$OCPNDIR/include/dychart.h ./ocpninclude/.
-cp ../$OCPNDIR/include/emboss_data.h ./ocpninclude/.
 cp ../$OCPNDIR/include/geodesic.h ./ocpninclude/.
 cp ../$OCPNDIR/include/georef.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/gga.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/gll.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/GoToPositionDialog.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/GPwpl.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/gpxdocument.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/gsv.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/hdg.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/hdm.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/hdt.hpp ./ocpninclude/.
 cp ../$OCPNDIR/include/Hyperlink.h ./ocpninclude/.
-cp ../$OCPNDIR/include/IDX_entry.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/LatLong.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/Layer.h ./ocpninclude/.
-cp ../$OCPNDIR/include/LinkPropDlg.h ./ocpninclude/.
-cp ../$OCPNDIR/include/LLRegion.h ./ocpninclude/.
-cp ../$OCPNDIR/include/MarkIcon.h ./ocpninclude/.
-cp ../$OCPNDIR/include/navutil.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/nmea0183.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/nmea0183.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/ocpCursor.h ./ocpninclude/.
-cp ../$OCPNDIR/include/ocpndc.h ./ocpninclude/.
-cp ../$OCPNDIR/include/OCPNPlatform.h ./ocpninclude/.
-cp ../$OCPNDIR/include/ocpn_plugin.h ./ocpninclude/.
-cp ../$OCPNDIR/include/OCPNRegion.h ./ocpninclude/.
-cp ../$OCPNDIR/include/ocpn_types.h ./ocpninclude/.
-cp ../$OCPNDIR/include/pluginmanager.h ./ocpninclude/.
-cp ../$OCPNDIR/include/pugiconfig.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/pugixml.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/Quilt.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/Response.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/RMB.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/RMC.HPP ./ocpninclude/.
-cp ../$OCPNDIR/include/RolloverWin.h ./ocpninclude/.
-cp ../$OCPNDIR/include/Route.h ./ocpninclude/.
-cp ../$OCPNDIR/include/RoutePoint.h ./ocpninclude/.
-cp ../$OCPNDIR/include/routeprop.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/rte.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/s52s57.h ./ocpninclude/.
-cp ../$OCPNDIR/include/s57chart.h ./ocpninclude/.
-cp ../$OCPNDIR/include/S57ClassRegistrar.h ./ocpninclude/.
-cp ../$OCPNDIR/include/S57Light.h ./ocpninclude/.
-cp ../$OCPNDIR/include/S57QueryDialog.h ./ocpninclude/.
-cp ../$OCPNDIR/include/s57RegistrarMgr.h ./ocpninclude/.
-cp ../$OCPNDIR/include/S57Sector.h ./ocpninclude/.
-cp ../$OCPNDIR/include/scrollingdialog.h ./ocpninclude/.
+#cp ../$OCPNDIR/include/ocpn_plugin.h ./ocpninclude/.
 cp ../$OCPNDIR/include/SelectItem.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/Sentence.hpp ./ocpninclude/.
-cp ../$OCPNDIR/include/styles.h ./ocpninclude/.
 cp ../$OCPNDIR/include/TexFont.h ./ocpninclude/.
 cp ../$OCPNDIR/include/timers.h ./ocpninclude/.
-cp ../$OCPNDIR/include/undo.h ./ocpninclude/.
-cp ../$OCPNDIR/include/vector2D.h ./ocpninclude/.
-cp ../$OCPNDIR/include/viewport.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/vtg.hpp ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/wpl.hpp ./ocpninclude/.
 cp ../$OCPNDIR/include/wx28compat.h ./ocpninclude/.
-cp ../$OCPNDIR/src/nmea0183/xte.hpp ./ocpninclude/.
+cp -R ../$OCPNDIR/include/GL ./ocpninclude/.
+cp -R ../$OCPNDIR/include/wx ./ocpninclude/.
 
-cp -R ../$OCPNDIR/src/wxcurl/include ./ocpninclude/wxcurl/.
-cp -R ../$OCPNDIR/src/wxcurl/wx ./ocpninclude/wxcurl/.
 
-cp ../$OCPNDIR/src/wxsvg/include/wxSVG/* ./ocpninclude/wxsvg/.
-
-cp ../$OCPNDIR/src/wxsvg/include/wxSVGXML/svgxml.h ./ocpninclude/wxSVGXML/.

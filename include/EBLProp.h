@@ -30,7 +30,6 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
 class EBL;
@@ -49,7 +48,7 @@ class EBLProp : public ODPathPropertiesDialogImpl
         void OnSetFocus( wxFocusEvent& event );
         void OnKillFocus( wxFocusEvent& event );
         using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( EBL *pInEBL );
+        bool UpdateProperties( ODPath *pInEBL );
         bool UpdateProperties( void );
         bool SaveChanges( void );
         

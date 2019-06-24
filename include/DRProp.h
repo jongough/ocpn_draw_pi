@@ -44,7 +44,7 @@ class DRProp : public ODPathPropertiesDialogImpl
         virtual ~DRProp();
         
         using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( DR *pInDR );
+        bool UpdateProperties( ODPath *pInDR );
         
     protected:
         bool SaveChanges( void );

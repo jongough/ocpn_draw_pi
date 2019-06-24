@@ -59,31 +59,6 @@
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( EBLList );
 
-extern int          g_path_line_width;
-
-extern wxColour     g_colourEBLLineColour;
-extern wxString     g_sEBLEndIconName;
-extern wxString     g_sEBLStartIconName;
-extern bool         g_bEBLFixedEndPosition;
-extern int          g_iEBLPersistenceType;
-extern int          g_EBLLineWidth;
-extern int          g_EBLLineStyle;
-
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern EBLList      *g_pEBLList;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern wxString      g_sODPointIconName;
-extern ODConfig     *g_pODConfig;
-extern EBLProp      *g_pEBLPropDialog;
-extern bool         g_bEBLShowArrow;
-extern bool         g_bEBLVRM;
-extern bool         g_bEBLAlwaysShowInfo;
-extern bool         g_bEBLPerpLine;
-extern bool         g_bEBLRotateWithBoat;
-extern int          g_iEBLMaintainWith;
-
 EBL::EBL() : ODPath()
 {
     m_sTypeString = _T("EBL");
@@ -269,22 +244,31 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
             } else {
                 double brg;
                 double hdg = 0.;
+                bool   validHdg = false;
                 DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength);
                 switch(m_iMaintainWith) {
                     case ID_MAINTAIN_WITH_HEADING:
-                        if(!wxIsNaN(g_pfFix.Hdt))
+                        if(!wxIsNaN(g_pfFix.Hdt) && g_pfFix.validHdt) {
                             hdg = g_pfFix.Hdt;
+                            validHdg = true;
+                        }
                         break;
                     case ID_MAINTAIN_WITH_COG:
-                        if(!wxIsNaN(g_pfFix.Cog))
+                        if(!wxIsNaN(g_pfFix.Cog) && g_pfFix.validCog) {
                             hdg = g_pfFix.Cog;
+                            validHdg = true;
+                        }
                         break;
                 }
-                if(hdg > brg)
-                    m_dEBLAngle = brg + 360 - hdg;
-                else if(hdg < brg)
-                    m_dEBLAngle = hdg - brg;
-                else m_dEBLAngle = 0;
+                if(validHdg) {
+                    if(hdg > brg)
+                        m_dEBLAngle = brg + 360 - hdg;
+                    else if(hdg < brg)
+                        m_dEBLAngle = hdg - brg;
+                    else m_dEBLAngle = 0;
+                } else {
+                    m_dEBLAngle = brg;
+                }
             }
         }
     } else {
@@ -345,7 +329,7 @@ void EBL::RemovePoint( ODPoint *op, bool bRenamePoints )
     m_pODPointList->DeleteObject( op );
     if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove( op->m_GUID );
     
-    // check all other routes to see if this point appears in any other route
+    // check all other paths to see if this point appears in any other path
     ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
     
     if( pcontainer_path == NULL ) {
@@ -497,8 +481,8 @@ void EBL::MaintainWith( void )
 void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
 {
     wxString colour;
-    int style = wxPENSTYLE_SOLID;
-    int width = g_path_line_width;
+    wxPenStyle style = wxPENSTYLE_SOLID;
+	int width = g_path_line_width;
 
     if( m_nPoints == 0 || !m_bVisible ) return;
 

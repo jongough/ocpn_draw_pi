@@ -28,18 +28,11 @@
 #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include <wx/bitmap.h>
-//#include <wx/dcmemory.h>
-//#include <wx/dcscreen.h>
-
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODRolloverWin.h"
 #include "ODdc.h"
 #include "timers.h"
-#include "chart1.h"
-
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
 
 BEGIN_EVENT_TABLE(ODRolloverWin, wxWindow)
     EVT_PAINT(ODRolloverWin::OnPaint)
@@ -86,7 +79,7 @@ void ODRolloverWin::SetBitmap( int rollover )
 {
     wxDC* cdc = new wxScreenDC();
 //    wxPoint canvasPos = GetParent()->GetScreenPosition();
-    wxPoint canvasPos = g_ocpn_draw_pi->m_parent_window->GetScreenPosition();
+    wxPoint canvasPos = m_parent->GetScreenPosition();
     
     wxMemoryDC mdc;
     delete m_pbm;
@@ -132,6 +125,7 @@ void ODRolloverWin::SetBitmap( int rollover )
 
 void ODRolloverWin::OnPaint( wxPaintEvent& event )
 {
+    if(m_parent == GetCanvasUnderMouse()){}
     int width, height;
     GetClientSize( &width, &height );
     wxPaintDC dc( this );
@@ -158,7 +152,6 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
     case POINT_ROLLOVER:
         dFont = GetOCPNScaledFont_PlugIn( wxT("OD_PointInfoRollover") );
         break;
-        
     }
 
     int font_size = wxMax(8, dFont->GetPointSize());
@@ -171,7 +164,7 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
         sdc.GetMultiLineTextExtent(m_string, &w, &h, NULL, m_plabelFont);
 #else
 //        wxClientDC cdc( GetParent() );
-        wxClientDC cdc( g_ocpn_draw_pi->m_parent_window );
+        wxClientDC cdc( m_parent );
         cdc.GetMultiLineTextExtent( m_string, &w, &h, NULL, m_plabelFont );
 #endif
     }
@@ -199,3 +192,10 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
 
 }
 
+void ODRolloverWin::SetParent(wxWindow* parent)
+{
+    if(m_parent != parent) {
+        m_parent = parent;
+        Reparent(parent);
+    }
+}

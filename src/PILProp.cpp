@@ -31,6 +31,7 @@
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
 #endif
+#include <algorithm>
 
 enum {
     ID_INDEX_ID = 0,
@@ -40,11 +41,6 @@ enum {
 
     ID_POINTS_LIST_LAST
 };
-
-
-extern PILList                  *g_pPILList;
-extern ocpn_draw_pi             *g_ocpn_draw_pi;
-extern ODPlugIn_Position_Fix_Ex g_pfFix;
 
 PILProp::PILProp()
 {
@@ -57,9 +53,10 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     //ctor
     m_bLockUpdate = false;
     m_fgSizerPIL->ShowItems( true );
-
+    m_fgSizerPathPoints->ShowItems( false );
+    m_bSizerPILLines->ShowItems( true );
     
-    //m_fgSizerPath->ShowItems( true );
+    
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("PIL Persistence") );
@@ -68,11 +65,9 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlPILAngle->Show();
     m_textCtrlPILAngle->Enable(true);
     m_textCtrlPILAngle->SetEditable(true);
-    m_bSizerPathPoints->ShowItems( false );
-    m_bSizerPILLines->ShowItems( true );
     
 
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
+#if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODPILAngle(2, &m_dODPILAngleValidator, wxNUM_VAL_DEFAULT);
     dODPILAngle.SetRange(-180, 180);
     
@@ -80,9 +75,11 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
 #endif
 
     SetPointsListHeadings();
-    
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
+    if(g_iDefaultPILPropertyDialogPostionX == -1 || g_iDefaultPILPropertyDialogPostionY == -1) Center();
+    else SetPosition(wxPoint(g_iDefaultPILPropertyDialogPostionX, g_iDefaultPILPropertyDialogPostionY));
     
 }
 
@@ -92,11 +89,10 @@ PILProp::~PILProp()
     //dtor
 }
 
-bool PILProp::UpdateProperties( PIL *pInPIL )
+bool PILProp::UpdateProperties( ODPath *pInPIL )
 {
+    PIL *lpInPIL = (PIL *)pInPIL;
     if( NULL == pInPIL ) return false;
-
-    ::wxBeginBusyCursor();
 
     SetGlobalLocale();
 
@@ -107,20 +103,22 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
     m_textCtrlGUID->SetValue( pInPIL->m_GUID );
     m_checkBoxActive->SetValue( pInPIL->IsActive() );
 
-    m_radioBoxPathPersistence->SetSelection( pInPIL->m_iPersistenceType );
+    m_radioBoxPathPersistence->SetSelection( lpInPIL->m_iPersistenceType );
     
-#if wxCHECK_VERSION(3,0,0) && !defined(__WXMSW__)
-    if(pInPIL->m_dEBLAngle > 180)
-        m_dODPILAngleValidator = pInPIL->m_dEBLAngle - 360;
+#if wxCHECK_VERSION(3,0,0)
+    if(lpInPIL->m_dEBLAngle > 180)
+        m_dODPILAngleValidator = lpInPIL->m_dEBLAngle - 360;
     else
-        m_dODPILAngleValidator = pInPIL->m_dEBLAngle;
+        m_dODPILAngleValidator = lpInPIL->m_dEBLAngle;
+    s.Printf( _T("%.2f"), m_dODPILAngleValidator );
+    m_textCtrlPILAngle->SetValue(s);
     
-    m_dODPILLengthValidator = toUsrDistance_Plugin(pInPIL->m_dLength);
+    m_dODPILLengthValidator = toUsrDistance_Plugin(lpInPIL->m_dLength);
 #else
-    if(pInPIL->m_dEBLAngle > 180)
-        s.Printf( _T("%.2f"), pInPIL->m_dEBLAngle - 360 );
+    if(lpInPIL->m_dEBLAngle > 180)
+        s.Printf( _T("%.2f"), lpInPIL->m_dEBLAngle - 360 );
     else
-        s.Printf( _T("%.2f"), pInPIL->m_dEBLAngle );
+        s.Printf( _T("%.2f"), lpInPIL->m_dEBLAngle );
     
     m_textCtrlPILAngle->SetValue(s);
     
@@ -129,8 +127,8 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 #endif
     
     long item_line_index = 0;
-    std::list<PILLINE>::iterator it = pInPIL->m_PilLineList.begin();
-    while(it != pInPIL->m_PilLineList.end()) {
+    std::list<PILLINE>::iterator it = lpInPIL->m_PilLineList.begin();
+    while(it != lpInPIL->m_PilLineList.end()) {
         m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_ID, wxString::Format("%i", it->iID) );
         m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_NAME, it->sName );
         m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_OFFSET, wxString::Format("%.3f", it->dOffset) );
@@ -169,8 +167,6 @@ bool PILProp::UpdateProperties( PIL *pInPIL )
 
     ResetGlobalLocale();
     
-    ::wxEndBusyCursor();
-
     return true;
 
 }
@@ -190,6 +186,32 @@ bool PILProp::UpdateProperties( void )
             s.Printf( _T("%.2f"), m_pPIL->m_dEBLAngle );
         
         m_textCtrlPILAngle->SetValue(s);
+    }
+    
+    long item_line_index = 0;
+    if(m_pPIL->m_PilLineList.size() != (size_t)m_listCtrlPILList->GetItemCount()) {
+        m_listCtrlPILList->DeleteAllItems();
+        InitializeList();
+        std::list<PILLINE>::iterator it = m_pPIL->m_PilLineList.begin();
+        while(it != m_pPIL->m_PilLineList.end()) {
+            m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_ID, wxString::Format("%i", it->iID) );
+            m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_NAME, it->sName );
+            m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_OFFSET, wxString::Format("%.3f", it->dOffset) );
+            if(it->sDescription.Len() > 0)
+                m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_DESCRIPTION, it->sDescription );
+            else
+                m_listCtrlPILList->SetItem( item_line_index, ID_INDEX_DESCRIPTION, _T(" ") );
+            ++it;
+            item_line_index++;
+        }
+        // Set column width correctly for data
+        for(int i = 0; i < m_listCtrlPILList->GetColumnCount(); ++i) {
+            m_listCtrlPILList->SetColumnWidth(i, wxLIST_AUTOSIZE);
+            int a_width = m_listCtrlPILList->GetColumnWidth(i);
+            m_listCtrlPILList->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+            int h_width = m_listCtrlPILList->GetColumnWidth(i);
+            m_listCtrlPILList->SetColumnWidth(i, (std::max)(a_width, h_width));
+        }
     }
     
     ResetGlobalLocale();

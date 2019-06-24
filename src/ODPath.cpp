@@ -42,23 +42,9 @@
 #include "ODUtils.h"
 #include "bbox.h"
 #include "ODdc.h"
-#include "dychart.h"
+//#include "dychart.h"
 #include <wx/gdicmn.h>
-
-extern PointMan *g_pODPointMan;
-extern bool g_bODIsNewLayer;
-extern int g_ODLayerIdx;
-extern PathMan *g_pPathMan;
-extern int g_path_line_width;
-extern ODSelect *g_pODSelect;
-extern ODConfig *g_pODConfig;
-extern ODPathPropertiesDialogImpl *g_pODPathPropDialog;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern wxString     g_sODPointIconName;
-extern wxColour    g_colourActivePathLineColour;
-extern wxColour    g_colourInActivePathLineColour;
-extern PI_ColorScheme    g_global_color_scheme;
-
+#include "gl.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -82,7 +68,7 @@ ODPath::ODPath( void )
     m_bPathPropertiesBlink = false;
     m_bDeleteOnArrival = false;
     m_width = STYLE_UNDEFINED;
-    m_style = STYLE_UNDEFINED;
+    m_style = wxPENSTYLE_INVALID;
     m_hiliteWidth = 0;
     m_bSaveUpdates = true;
 
@@ -203,10 +189,10 @@ ODPoint *ODPath::GetPoint( const wxString &guid )
     return ( NULL );
 }
 
-void ODPath::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *rpn )
+void ODPath::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *odp)
 {
     if( iPoint <= GetnPoints() )
-        GetPoint( iPoint )->Draw( dc, rpn );
+        GetPoint( iPoint )->Draw( dc, odp);
 }
 
 void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
@@ -236,7 +222,7 @@ void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2,
 void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 {
     wxString colour;
-    int style = wxPENSTYLE_SOLID;
+    wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
 
     if( m_nPoints == 0 || !m_bVisible ) return;
@@ -342,7 +328,7 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     ODDC dc;
     
     /* determine color and width */
-    int style = wxPENSTYLE_SOLID;
+    wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
     
     if( m_style != STYLE_UNDEFINED ) style = m_style;
@@ -715,11 +701,11 @@ void ODPath::RemovePoint( ODPoint *op, bool bRenamePoints )
             op->m_GUID );
     m_nPoints -= 1;
 
-    // check all other routes to see if this point appears in any other route
+    // check all other paths to see if this point appears in any other path
     ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( op );
 
     if( pcontainer_path == NULL ) {
-        op->m_bIsInPath = false;          // Take this point out of this (and only) route
+        op->m_bIsInPath = false;          // Take this point out of this (and only) path
         op->m_bDynamicName = false;
         op->m_bIsolatedMark = true;        // This has become an isolated mark
         op->SetTypeString (wxT("Boundary Point") );
@@ -859,8 +845,8 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
     
     wxRect update_rect;
 
-    // Draw the route in skeleton form on the dc
-    // That is, draw only the route points, assuming that the segements will
+    // Draw the path in skeleton form on the dc
+    // That is, draw only the ODPoints, assuming that the segements will
     // always be fully contained within the resulting rectangle.
     // Can we prove this?
     if( m_bVisible ) {
@@ -945,7 +931,7 @@ void ODPath::AssemblePath( void )
 
 void ODPath::RenameODPoints( void )
 {
-    //    iterate on the route points.
+    //    iterate on the ODPoints.
     //    If dynamically named, rename according to current list position
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
@@ -966,16 +952,16 @@ void ODPath::RenameODPoints( void )
 
 //    Is this Path equal to another, meaning,
 //    Do all ODPoint positions and names match?
-bool ODPath::IsEqualTo( ODPath *ptargetroute )
+bool ODPath::IsEqualTo( ODPath *ptargetpath )
 {
     wxODPointListNode *pthisnode = ( this->m_pODPointList )->GetFirst();
-    wxODPointListNode *pthatnode = ( ptargetroute->m_pODPointList )->GetFirst();
+    wxODPointListNode *pthatnode = ( ptargetpath->m_pODPointList )->GetFirst();
 
     if( NULL == pthisnode ) return false;
 
-    if( this->m_bIsInLayer || ptargetroute->m_bIsInLayer ) return false;
+    if( this->m_bIsInLayer || ptargetpath->m_bIsInLayer ) return false;
 
-    if( this->GetnPoints() != ptargetroute->GetnPoints() ) return false;
+    if( this->GetnPoints() != ptargetpath->GetnPoints() ) return false;
 
     while( pthisnode ) {
         if( NULL == pthatnode ) return false;
@@ -1118,13 +1104,13 @@ void ODPath::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
 
 void ODPath::RemovePointFromPath( ODPoint* point, ODPath* path )
 {
-    //  Rebuild the route selectables
+    //  Rebuild the path selectables
     //g_pODSelect->DeleteAllSelectableODPoints( path );
     //g_pODSelect->DeleteAllSelectablePathSegments( path );
 
     path->RemovePoint( point );
 
-    //  Check for 1 point routes. If we are creating a route, this is an undo, so keep the 1 point.
+    //  Check for 1 point paths. If we are creating a path, this is an undo, so keep the 1 point.
     if( (path->GetnPoints() <= 1) && (g_ocpn_draw_pi->nBoundary_State == 0) ) {
         g_pODConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );

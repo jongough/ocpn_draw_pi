@@ -29,7 +29,7 @@
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "ODUtils.h"
-#include "cutil.h"
+//#include "cutil.h"
 #include "clipper.hpp"
 
 #ifdef __WXMSW__
@@ -56,39 +56,9 @@
 
 #include <wx/listimpl.cpp>
 
-using namespace std;
 using namespace ClipperLib;
 
 WX_DEFINE_LIST ( GZList );
-extern wxColour     g_colourActiveBoundaryLineColour;
-extern wxColour     g_colourInActiveBoundaryLineColour;
-extern wxColour     g_colourActiveBoundaryFillColour;
-extern wxColour     g_colourInActiveBoundaryFillColour;
-
-
-extern wxColour     g_colourActiveGZLineColour;
-extern wxColour     g_colourInActiveGZLineColour;
-extern wxColour     g_colourActiveGZFillColour;
-extern wxColour     g_colourInActiveGZFillColour;
-extern int          g_GZLineStyle;
-extern int          g_GZLineWidth;
-extern bool         g_bExclusionGZ;
-extern bool         g_bInclusionGZ;
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern unsigned int g_uiGZFillTransparency;
-extern int          g_iInclusionGZSize;
-extern bool         g_bGZRotateWithBoat;
-extern int          g_iGZMaintainWith;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODConfig     *g_pODConfig;
-extern GZProp       *g_pGZPropDialog;
-extern int          g_iGZPersistenceType;
-extern int          g_iGZMaxNum;
-extern PI_ColorScheme    g_global_color_scheme;
-
-extern int g_path_line_width;
 
 GZ::GZ() : ODPath()
 {
@@ -208,7 +178,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     ODPath::DrawGL( piVP );
     m_bSetTransparent = false;
     
-    int style = wxPENSTYLE_SOLID;
+    wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
     
     if( m_style != STYLE_UNDEFINED ) style = m_style;
@@ -253,7 +223,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxPENSTYLE_SOLID ) );
+    dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
     
     RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
     

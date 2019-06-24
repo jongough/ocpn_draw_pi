@@ -29,16 +29,18 @@
 class BoundaryPoint : public ODPoint
 {
 public:
-    BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID, bool bAddToList = true);
+    BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID = wxT(""), bool bAddToList = true);
     BoundaryPoint(BoundaryPoint* orig);
     BoundaryPoint();
-    void Draw(ODDC& dc, wxPoint* rpn );
+    void Draw(ODDC& dc, wxPoint* odp);
     void DrawGL(PlugIn_ViewPort& pivp);
     
     int             m_iInclusionBoundaryPointSize;
     bool            m_bExclusionBoundaryPoint;
     bool            m_bInclusionBoundaryPoint;
     unsigned int    m_uiBoundaryPointFillTransparency;
+    bool            m_bIsInBoundary;
+    
 };
 
 #endif // BOUNDARYPOINT_H

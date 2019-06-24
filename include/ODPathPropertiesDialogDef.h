@@ -1,12 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Feb 16 2016)
+// C++ code generated with wxFormBuilder (version Oct 26 2018)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO "NOT" EDIT THIS FILE!
+// PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ODPATHPROPERTIESDIALOGDEF_H__
-#define __ODPATHPROPERTIESDIALOGDEF_H__
+#pragma once
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
@@ -25,6 +24,10 @@
 #include <wx/slider.h>
 #include <wx/radiobox.h>
 #include <wx/listctrl.h>
+#include <wx/scrolwin.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
 
@@ -35,17 +38,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODPathPropertiesDialogDef
 ///////////////////////////////////////////////////////////////////////////////
-class ODPathPropertiesDialogDef : public wxDialog 
+class ODPathPropertiesDialogDef : public wxDialog
 {
 	private:
-	
+
 	protected:
+		wxBoxSizer* m_bSizerDialogBox;
+		wxScrolledWindow* m_scrolledWindowProperties;
+		wxFlexGridSizer* m_fgSizerProperties;
+		wxBoxSizer* m_bSizerNameDescription;
 		wxStaticText* m_staticTextName;
 		wxTextCtrl* m_textCtrlName;
 		wxStaticText* m_staticTextDescription;
 		wxTextCtrl* m_textCtrlDesctiption;
 		wxStaticText* m_staticTextGUID;
 		wxTextCtrl* m_textCtrlGUID;
+		wxFlexGridSizer* m_fgSizerBoundary;
 		wxCheckBox* m_checkBoxActive;
 		wxStaticText* m_staticTextTotalLength;
 		wxTextCtrl* m_textCtrlTotalLength;
@@ -62,17 +70,18 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxSlider* m_sliderFillTransparency;
 		wxStaticText* m_staticTextIncluseionBoundarySize;
 		wxSlider* m_sliderInclusionBoundarySize;
-		wxFlexGridSizer* m_fgSizerPIL;
-		wxStaticText* m_staticTextPILAngle;
-		wxTextCtrl* m_textCtrlPILAngle;
 		wxBoxSizer* m_bSizerBoundaryType;
 		wxRadioBox* m_radioBoxBoundaryType;
 		wxCheckBox* m_checkBoxShowBoundaryPoints;
+		wxFlexGridSizer* m_fgSizerPIL;
+		wxStaticText* m_staticTextPILAngle;
+		wxTextCtrl* m_textCtrlPILAngle;
 		wxFlexGridSizer* m_fgSizerEBL;
 		wxCheckBox* m_checkBoxRotateWithBoat;
 		wxRadioBox* m_radioBoxMaintainWith;
 		wxStaticText* m_staticTextEBLAngle;
 		wxTextCtrl* m_textCtrlEBLAngle;
+		wxFlexGridSizer* m_fgSizerEBL1;
 		wxCheckBox* m_checkBoxEBLFixedEndPosition;
 		wxCheckBox* m_checkBoxShowVRM;
 		wxCheckBox* m_checkBoxShowEBLInfo;
@@ -91,15 +100,17 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerPath;
 		wxCheckBox* m_checkBoxPathShowArrow;
 		wxRadioBox* m_radioBoxPathPersistence;
-		wxBoxSizer* m_bSizerPathPoints;
+		wxFlexGridSizer* m_fgSizerPathPoints;
 		wxStaticText* m_staticTextODPoints;
+		wxBoxSizer* m_bSizerListCtrl;
 		wxListCtrl* m_listCtrlODPoints;
 		wxBoxSizer* m_bSizerPILLines;
 		wxStaticText* m_staticTextPILLines;
 		wxListCtrl* m_listCtrlPILList;
+		wxBoxSizer* m_SizerOKCancel;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
-		
+
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
@@ -121,13 +132,12 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnRightClickPIL( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
-		
-	
+
+
 	public:
-		
-		ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+
+		ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~ODPathPropertiesDialogDef();
-	
+
 };
 
-#endif //__ODPATHPROPERTIESDIALOGDEF_H__

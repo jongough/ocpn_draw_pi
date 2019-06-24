@@ -41,4 +41,6 @@
  bool           pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y);
  bool           GetLineIntersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double *i_x, double *i_y);
  int            ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4, bool bHighQuality );
+ wxString       WrapText(wxWindow *win, const wxString& text, int widthMax);
+ wxString       WrapString(const wxString &text, int widthMax);
 #endif

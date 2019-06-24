@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<OCPNDraw version="0.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opencpn="http://www.opencpn.org">
+  <opencpn:path>
+    <opencpn:type>Boundary</opencpn:type>
+    <opencpn:guid>63b03b1d-7bd5-444c-b961-cc1246e9f5f7</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:active>1</opencpn:active>
+    <opencpn:style active_colour="rgb(255, 0, 0)" active_fillcolour="rgb(255, 0, 0)" inactive_colour="rgb(211, 211, 211)" inactive_fillcolour="rgb(211, 211, 211)" width="2" style="100" fill_transparency="175" inclusion_boundary_size="15" />
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <opencpn:boundary_show_point_icons>1</opencpn:boundary_show_point_icons>
+    <opencpn:ODPoint lat="-22.656622483" lon="152.981318956">
+      <opencpn:type>Boundary Point</opencpn:type>
+      <time>2018-01-07T11:54:13Z</time>
+      <name>001</name>
+      <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+      <sym>triangle</sym>
+      <opencpn:guid>5f591f3d-3b7a-44d7-a506-628858b9648c</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:viz_name>0</opencpn:viz_name>
+      <opencpn:auto_name>1</opencpn:auto_name>
+      <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+      <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+    </opencpn:ODPoint>
+    <opencpn:ODPoint lat="-22.974097890" lon="153.274617477">
+      <opencpn:type>Boundary Point</opencpn:type>
+      <time>2018-01-07T11:54:14Z</time>
+      <name>002</name>
+      <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+      <sym>triangle</sym>
+      <opencpn:guid>53c4564e-2ca8-4c66-be55-70fb26b5f34f</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:viz_name>0</opencpn:viz_name>
+      <opencpn:auto_name>1</opencpn:auto_name>
+      <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+      <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+    </opencpn:ODPoint>
+    <opencpn:ODPoint lat="-22.619369999" lon="153.511408945">
+      <opencpn:type>Boundary Point</opencpn:type>
+      <time>2018-01-07T11:54:14Z</time>
+      <name>003</name>
+      <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+      <sym>triangle</sym>
+      <opencpn:guid>74281788-8c81-4203-a60f-0e592225a66b</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:viz_name>0</opencpn:viz_name>
+      <opencpn:auto_name>1</opencpn:auto_name>
+      <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+      <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+    </opencpn:ODPoint>
+    <opencpn:ODPoint lat="-22.656622483" lon="152.981318956">
+      <opencpn:type>Boundary Point</opencpn:type>
+      <time>2018-01-07T11:54:13Z</time>
+      <name>001</name>
+      <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+      <sym>triangle</sym>
+      <opencpn:guid>5f591f3d-3b7a-44d7-a506-628858b9648c</opencpn:guid>
+      <opencpn:viz>1</opencpn:viz>
+      <opencpn:viz_name>0</opencpn:viz_name>
+      <opencpn:auto_name>1</opencpn:auto_name>
+      <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+      <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+    </opencpn:ODPoint>
+  </opencpn:path>
+</OCPNDraw>

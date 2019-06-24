@@ -31,25 +31,7 @@
 #ifndef __ODDC_H__
 #define __ODDC_H__
 
-#include <vector>
-
 #include "TexFont.h"
-
-#ifndef DECL_EXP
-#ifdef __WXMSW__
-#  define DECL_EXP     __declspec(dllexport)
-#else
-#  define DECL_EXP
-#endif
-#endif
-
-
-#ifdef __GNUC__
-#undef  DECL_EXP
-#define DECL_EXP       __attribute__((visibility("default")))
-#endif
-
-void DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_hiqual );
 
 //----------------------------------------------------------------------------
 // ODDC
@@ -57,7 +39,7 @@ void DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_
 
 class wxGLCanvas;
 
-class DECL_EXP ODDC
+class ODDC
 {
 public:
      ODDC(wxGLCanvas &canvas);
@@ -127,7 +109,10 @@ protected:
 
      void GLDrawBlendData(wxCoord x, wxCoord y, wxCoord w, wxCoord h,
                           int format, const unsigned char *data);
-
+     void DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_hiqual );
+	 void DrawGLThickLines(int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, wxPen pen, bool b_hiqual);
+	 void DrawEndCap(float x1, float y1, float t1, float angle);
+     
      wxGLCanvas *glcanvas;
      wxDC *dc;
      wxPen m_pen;

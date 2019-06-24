@@ -37,27 +37,6 @@
 
 #include "GL/gl.h"
 
-extern PointMan     *g_pODPointMan;
-extern bool         g_bODIsNewLayer;
-extern int          g_ODLayerIdx;
-extern PathMan      *g_pPathMan;
-extern PathList     *g_pPathList;
-extern wxRect       g_blink_rect;
-extern bool         g_bresponsive;
-//extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern double       g_n_arrival_circle_radius;
-extern bool         g_bODPointShowRangeRings;
-extern int          g_iODPointRangeRingsNumber;
-extern float        g_fODPointRangeRingsStep;
-extern int          g_iODPointRangeRingsStepUnits;
-extern wxColour     g_colourODPointRangeRingsColour;
-extern bool         g_bBoundaryPointShowName;
-extern float        g_ChartScaleFactorExp;
-extern PI_ColorScheme    g_global_color_scheme;
-
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern PlugIn_ViewPort  g_VP;
-
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );
 
@@ -75,10 +54,8 @@ ODPoint::ODPoint()
     m_bIsActive = false;
     m_bPointPropertiesBlink = false;
     m_bPathManagerBlink = false;
-    m_bIsInRoute = false;
     m_bIsInPath = false;
-    m_bIsInBoundary = false;
-    m_bIsInTrack = false;
+    m_bSingleUse = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
     m_bIsolatedMark = false;
@@ -90,7 +67,7 @@ ODPoint::ODPoint()
     m_NameLocationOffsetX = -10;
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
-    m_btemp = false;
+    m_bTemporary = false;
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     m_fIconScaleFactor = 1.0;
@@ -108,7 +85,7 @@ ODPoint::ODPoint()
     m_bIsInLayer = false;
     m_LayerID = 0;
     
-    m_ODPointArrivalRadius = g_n_arrival_circle_radius;
+    m_ODPointArrivalRadius = g_dODPointArrivalCircleRadius;
     
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
@@ -117,7 +94,6 @@ ODPoint::ODPoint()
     m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
-    SetRangeRingBBox();
     
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
@@ -139,10 +115,8 @@ ODPoint::ODPoint( ODPoint* orig )
     m_bIsActive = orig->m_bIsActive;
     m_bPointPropertiesBlink = orig->m_bPointPropertiesBlink;
     m_bPathManagerBlink = orig->m_bPathManagerBlink;
-    m_bIsInRoute = orig->m_bIsInRoute;
     m_bIsInPath = orig->m_bIsInPath;
-    m_bIsInBoundary = orig->m_bIsInBoundary;
-    m_bIsInTrack = orig->m_bIsInTrack;
+    m_bSingleUse = orig->m_bSingleUse;
     m_CreateTimeX = orig->m_CreateTimeX;
     m_GPXTrkSegNo = orig->m_GPXTrkSegNo;
     m_bIsolatedMark = orig->m_bIsolatedMark;
@@ -155,7 +129,7 @@ ODPoint::ODPoint( ODPoint* orig )
     m_NameLocationOffsetY = orig->m_NameLocationOffsetY;
     m_pMarkFont = orig->m_pMarkFont;
     m_ODPointDescription = orig->m_ODPointDescription;
-    m_btemp = orig->m_btemp;
+    m_bTemporary = orig->m_bTemporary;
     m_sTypeString = orig->m_sTypeString;
 
     m_HyperlinkList = new HyperlinkList;
@@ -172,10 +146,10 @@ ODPoint::ODPoint( ODPoint* orig )
     m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
     
     m_bShowODPointRangeRings = orig->m_bShowODPointRangeRings;
-    m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
-    m_fODPointRangeRingsStep = g_fODPointRangeRingsStep;
-    m_iODPointRangeRingsStepUnits = g_iODPointRangeRingsStepUnits;
-    m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
+    m_iODPointRangeRingsNumber = orig->m_iODPointRangeRingsNumber;
+    m_fODPointRangeRingsStep = orig->m_fODPointRangeRingsStep;
+    m_iODPointRangeRingsStepUnits = orig->m_iODPointRangeRingsStepUnits;
+    m_wxcODPointRangeRingsColour = orig->m_wxcODPointRangeRingsColour;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     SetRangeRingBBox();
@@ -207,14 +181,12 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_bIsActive = false;
     m_bPointPropertiesBlink = false;
     m_bPathManagerBlink = false;
-    m_bIsInRoute = false;
     m_bIsInPath = false;
-    m_bIsInBoundary = false;
-    m_bIsInTrack = false;
+    m_bSingleUse = false;
     m_CreateTimeX = wxDateTime::Now();
     m_GPXTrkSegNo = 1;
     m_bIsolatedMark = false;
-    m_bShowName = g_bBoundaryPointShowName;
+    m_bShowName = false;
     m_bKeepXPath = false;
     m_bIsVisible = true;
     m_bIsListed = true;
@@ -222,7 +194,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_NameLocationOffsetX = -10;
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
-    m_btemp = false;
+    m_bTemporary = false;
     m_sTypeString = wxEmptyString;
 
     m_SelectNode = NULL;
@@ -244,8 +216,9 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
 
     //  Possibly add the ODPoint to the global list maintained by the ODPoint manager
 
-    if( bAddToList && NULL != g_pODPointMan )
+    if( bAddToList && NULL != g_pODPointMan ) {
         g_pODPointMan->AddODPoint( this );
+    }
 
     m_bIsInLayer = g_bODIsNewLayer;
     if( m_bIsInLayer ) {
@@ -254,7 +227,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     } else
         m_LayerID = 0;
     
-    SetODPointArrivalRadius( g_n_arrival_circle_radius );
+    SetODPointArrivalRadius( g_dODPointArrivalCircleRadius );
 
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
@@ -356,15 +329,15 @@ void ODPoint::ReLoadIcon( void )
     m_fIconScaleFactor = -1;
 }
 
-void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
+void ODPoint::Draw( ODDC& dc, wxPoint *odp)
 {
-    wxPoint r;
+    wxPoint l_odp;
     wxRect hilitebox;
 
-    GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
+    GetCanvasPixLL( &g_VP, &l_odp,  m_lat, m_lon);
 
     //  return the home point in this dc to allow "connect the dots"
-    if( NULL != rpn ) *rpn = r;
+    if( NULL != odp) *odp= l_odp;
 
     if( !m_bIsVisible /*&& !m_bIsInTrack*/)     // pjotrc 2010.02.13, 2011.02.24
         return;
@@ -399,7 +372,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     int sy2 = pbm->GetHeight() / 2;
 
 //    Calculate the mark drawing extents
-    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
+    wxRect r1( l_odp.x - sx2, l_odp.y - sy2, sx2 * 2, sy2 * 2 );           // the bitmap extents
 
     if( m_bShowName ) {
         if( 0 == m_pMarkFont ) {
@@ -409,15 +382,15 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         }
 
         if( m_pMarkFont ) {
-            wxRect r2( r.x + (m_NameLocationOffsetX * m_fIconScaleFactor), r.y + (m_NameLocationOffsetY * m_fIconScaleFactor), m_NameExtents.x,
+            wxRect r2( l_odp.x + (m_NameLocationOffsetX * m_fIconScaleFactor), l_odp.y + (m_NameLocationOffsetY * m_fIconScaleFactor), m_NameExtents.x,
                     m_NameExtents.y );
             r1.Union( r2 );
         }
     }
 
     hilitebox = r1;
-    hilitebox.x -= r.x;
-    hilitebox.y -= r.y;
+    hilitebox.x -= l_odp.x;
+    hilitebox.y -= l_odp.y;
     float radius;
     if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
@@ -439,8 +412,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         
     //  Highlite any selected point
     if( m_bPtIsSelected || m_bIsBeingEdited ) {
-        g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
-                hi_colour, transparency );
+        g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius, hi_colour, transparency );
     }
 
     bool bDrawHL = false;
@@ -448,11 +420,11 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
-        dc.DrawBitmap( *pbm, r.x - sx2, r.y - sy2, true );
+        dc.DrawBitmap( *pbm, l_odp.x - sx2, l_odp.y - sy2, true );
         // on MSW, the dc Bounding box is not updated on DrawBitmap() method.
         // Do it explicitely here for all platforms.
-        dc.CalcBoundingBox( r.x - sx2, r.y - sy2 );
-        dc.CalcBoundingBox( r.x + sx2, r.y + sy2 );
+        dc.CalcBoundingBox( l_odp.x - sx2, l_odp.y - sy2 );
+        dc.CalcBoundingBox( l_odp.x + sx2, l_odp.y + sy2 );
     }
 
     if( m_bShowName ) {
@@ -460,7 +432,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
             dc.SetFont( *m_pMarkFont );
             dc.SetTextForeground( m_FontColor );
 
-            dc.DrawText( m_ODPointName, r.x + (m_NameLocationOffsetX * m_fIconScaleFactor), r.y + (m_NameLocationOffsetY * m_fIconScaleFactor) );
+            dc.DrawText( m_ODPointName, l_odp.x + (m_NameLocationOffsetX * m_fIconScaleFactor), l_odp.y + (m_NameLocationOffsetY * m_fIconScaleFactor) );
         }
     }
 
@@ -477,8 +449,8 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
 
-        double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
-                           pow( (double) (r.y - r1.y), 2 ) );
+        double lpp = sqrt( pow( (double) (l_odp.x - r1.x), 2) +
+                           pow( (double) (l_odp.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
 
         wxBrush saveBrush = dc.GetBrush();
@@ -487,15 +459,15 @@ void ODPoint::Draw( ODDC& dc, wxPoint *rpn )
         dc.SetBrush( wxBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_TRANSPARENT ) );
 
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
-            dc.StrokeCircle( r.x, r.y, i * pix_radius );
+            dc.StrokeCircle( l_odp.x, l_odp.y, i * pix_radius );
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }
     
     //  Save the current draw rectangle in the current DC
     //    This will be useful for fast icon redraws
-    CurrentRect_in_DC.x = r.x + hilitebox.x;
-    CurrentRect_in_DC.y = r.y + hilitebox.y;
+    CurrentRect_in_DC.x = l_odp.x + hilitebox.x;
+    CurrentRect_in_DC.y = l_odp.y + hilitebox.y;
     CurrentRect_in_DC.width = hilitebox.width;
     CurrentRect_in_DC.height = hilitebox.height;
 
@@ -517,11 +489,11 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         pivp.rotation == m_wpBBox_rotation) {
     }
 
-    wxPoint r;
+    wxPoint l_odp;
     wxRect hilitebox;
     unsigned char transparency = 150;
 
-    GetCanvasPixLL( &g_VP, &r, m_lat, m_lon );
+    GetCanvasPixLL( &g_VP, &l_odp, m_lat, m_lon );
 
 //    Substitue icon?
     wxBitmap *pbm;
@@ -534,7 +506,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     int sy2 = pbm->GetHeight() / 2;
 
 //    Calculate the mark drawing extents
-    wxRect r1( r.x - sx2, r.y - sy2, sx2 * 2, sy2 * 2 );          // the bitmap extents
+    wxRect r1( l_odp.x - sx2, l_odp.y - sy2, sx2 * 2, sy2 * 2 );          // the bitmap extents
     
     float  l_fIconScaleFactor = GetOCPNChartScaleFactor_Plugin();
     wxRect r3 = r1;
@@ -546,15 +518,15 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         }
 
         if( m_pMarkFont ) {
-            wxRect r2( r.x + (m_NameLocationOffsetX * l_fIconScaleFactor), r.y + (m_NameLocationOffsetY * l_fIconScaleFactor),
+            wxRect r2( l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor),
                        m_NameExtents.x, m_NameExtents.y );
             r3.Union( r2 );
         }
     }
 
     hilitebox = r3;
-    hilitebox.x -= r.x;
-    hilitebox.y -= r.y;
+    hilitebox.x -= l_odp.x;
+    hilitebox.y -= l_odp.y;
     float radius;
     if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
@@ -569,11 +541,11 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if(!m_wpBBox.GetValid() || pivp.chart_scale != m_wpBBox_chart_scale || pivp.rotation != m_wpBBox_rotation) {
         double lat1, lon1, lat2, lon2;
         wxPoint wxpoint;
-        wxpoint.x = r.x+hilitebox.x;
-        wxpoint.y = r.y + hilitebox.height;
+        wxpoint.x = l_odp.x+hilitebox.x;
+        wxpoint.y = l_odp.y + hilitebox.height;
         GetCanvasLLPix( &pivp, wxpoint, &lat1, &lon1 );
-        wxpoint.x = r.x + hilitebox.x + hilitebox.width;
-        wxpoint.y = r.y + hilitebox.y;
+        wxpoint.x = l_odp.x + hilitebox.x + hilitebox.width;
+        wxpoint.y = l_odp.y + hilitebox.y;
         GetCanvasLLPix( &pivp, wxpoint, &lat2, &lon2 );
 
         if(lon1 > lon2)
@@ -597,7 +569,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
             GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         }
         
-        g_ocpn_draw_pi->AlphaBlending( dc, r.x + hilitebox.x, r.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
+        g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                        hi_colour, transparency );
     }
     
@@ -621,8 +593,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
         float w = r1.width * l_ChartScaleFactorExp;
         float h = r1.height * l_ChartScaleFactorExp;
-        float x = r.x - w/2; 
-        float y = r.y - h/2;
+        float x = l_odp.x - w/2; 
+        float y = l_odp.y - h/2;
         float u = (float)r1.width/glw, v = (float)r1.height/glh;
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0); glVertex2f(x, y);
@@ -682,7 +654,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         
             glColor3ub(m_FontColor.Red(), m_FontColor.Green(), m_FontColor.Blue());
             
-            int x = r.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = r.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
+            int x = l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
             float u = (float)w/m_iTextTextureWidth, v = (float)h/m_iTextTextureHeight;
             glBegin(GL_QUADS);
             glTexCoord2f(0, 0); glVertex2f(x, y);
@@ -708,8 +680,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
         
-        double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
-        pow( (double) (r.y - r1.y), 2 ) );
+        double lpp = sqrt( pow( (double) (l_odp.x - r1.x), 2) +
+        pow( (double) (l_odp.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
         
         wxPen ppPen1( m_wxcODPointRangeRingsSchemeColour, m_iRangeRingWidth, m_iRangeRingStyle );
@@ -720,7 +692,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         dc.SetGLStipple();
         
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
-            dc.StrokeCircle( r.x, r.y, i * pix_radius );
+            dc.StrokeCircle( l_odp.x, l_odp.y, i * pix_radius );
         
         glDisable( GL_LINE_STIPPLE );
         
@@ -731,8 +703,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
     
     //    This will be useful for fast icon redraws
-    CurrentRect_in_DC.x = r.x + hilitebox.x;
-    CurrentRect_in_DC.y = r.y + hilitebox.y;
+    CurrentRect_in_DC.x = l_odp.x + hilitebox.x;
+    CurrentRect_in_DC.y = l_odp.y + hilitebox.y;
     CurrentRect_in_DC.width = hilitebox.width;
     CurrentRect_in_DC.height = hilitebox.height;
 
@@ -781,11 +753,11 @@ bool ODPoint::SendToGPS(const wxString & com_name, wxGauge *pProgress)
 
 double ODPoint::GetODPointArrivalRadius() {
     if (m_ODPointArrivalRadius < 0.001) {
-        SetODPointArrivalRadius( g_n_arrival_circle_radius );
-        return g_n_arrival_circle_radius;
+        double l_arrive_radius = g_dODPointArrivalCircleRadius;
+        l_arrive_radius += 0.1;
+        SetODPointArrivalRadius( l_arrive_radius );
     }
-    else
-        return m_ODPointArrivalRadius;
+    return m_ODPointArrivalRadius;
 }
 
 int   ODPoint::GetODPointRangeRingsNumber() { 
@@ -872,4 +844,14 @@ void ODPoint::SetODPointRangeRingsStep(float f_ODPointRangeRingsStep)
 { 
     m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; 
     SetRangeRingBBox();
+}
+
+void ODPoint::AddURL(wxString URL, wxString URLDescription)
+{
+    Hyperlink *l_Link = new Hyperlink();
+    l_Link->Link = URL;
+    l_Link->DescrText = URLDescription;
+    l_Link->LType = wxEmptyString;
+    
+    m_HyperlinkList->Insert(l_Link);
 }

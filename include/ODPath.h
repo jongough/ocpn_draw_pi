@@ -26,12 +26,12 @@
 
 #include <wx/object.h>
 #include <wx/list.h>
+#include <wx/hashmap.h>
 
-#include "Quilt.h"
-#include "ocpn_types.h"
 #include "ODPoint.h"
 #include "Hyperlink.h"
 
+#include <list>
 
 #define STYLE_UNDEFINED -1
 
@@ -113,7 +113,7 @@ public:
     double GetRouteArrivalRadius(void){ return m_ArrivalRadius;}
     void SetRouteArrivalRadius(double radius){m_ArrivalRadius = radius;}
     
-    void RemovePointFromPath( ODPoint* point, ODPath* path );
+    virtual void RemovePointFromPath( ODPoint* point, ODPath* path );
     virtual void MoveAllPoints( double inc_lat, double inc_lon );
     virtual void MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, ODPoint* secondPoint );
     virtual void SetPointVisibility( void );
@@ -136,7 +136,7 @@ public:
     bool        m_bIsInLayer;
     int         m_LayerID;
     int         m_width;
-    int         m_style;
+    wxPenStyle  m_style;
     int         m_lastMousePointIndex;
     bool        m_NextLegGreatCircle;
     double      m_PlannedSpeed;

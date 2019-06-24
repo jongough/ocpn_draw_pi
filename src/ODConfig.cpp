@@ -44,20 +44,6 @@
 #include <map>
 #endif
 
-extern wxString         *g_pData;
-extern int              g_LayerIdx;
-extern bool             g_bShowLayers;
-extern wxString         g_VisibleLayers;
-extern wxString         g_InvisibleLayers;
-extern ODLayerList      *g_pLayerList;
-extern PointMan         *g_pODPointMan;  
-extern PathList         *g_pPathList;
-extern int              g_navobjbackups;
-extern EBLList          *g_pEBLList;
-
-
-//ODConfig::ODConfig(const wxString &appName, const wxString &vendorName,
-//                              const wxString &LocalFileName) : MyConfig( appName, vendorName, LocalFileName)
 ODConfig::ODConfig(const wxString &appName, const wxString &vendorName, const wxString &LocalFileName)
 {
     //ODConfig *pCF = new MyConfig::MyConfig( wxString( _T("") ), wxString( _T("") ), gConfig_File );
@@ -77,6 +63,18 @@ ODConfig::ODConfig(const wxString &appName, const wxString &vendorName, const wx
 ODConfig::~ODConfig()
 {
     //dtor
+}
+
+void ODConfig::LateInit(void)
+{
+    m_sImport_Path = g_sDefaultImportPath;
+    m_sImport_Type = g_sDefaultImportType;
+}
+
+void ODConfig::DeInit(void)
+{
+    g_sDefaultImportPath = m_sImport_Path;
+    g_sDefaultImportType = m_sImport_Type;
 }
 
 bool ODConfig::AddNewPath( ODPath *pb, int crm )
@@ -157,7 +155,7 @@ bool ODConfig::DeleteODPoint( ODPoint *pWP )
 
 bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxString suggestedName )
 {
-    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, suggestedName,
+    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_sGPX_Path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
 
 #ifdef __WXOSX__
@@ -174,7 +172,7 @@ bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxStrin
 
     wxString path = saveDialog.GetPath();
     wxFileName fn( path );
-    m_gpx_path = fn.GetPath();
+    m_sGPX_Path = fn.GetPath();
 
     if( response == wxID_OK ) {
         fn.SetExt( _T ( "gpx" ) );
@@ -197,14 +195,14 @@ bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxStrin
 
 bool ODConfig::ExportGPXODPoints( wxWindow* parent, ODPointList *pODPoints, const wxString suggestedName )
 {
-    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, suggestedName,
+    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_sGPX_Path, suggestedName,
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
 
     int response = saveDialog.ShowModal();
 
     wxString path = saveDialog.GetPath();
     wxFileName fn( path );
-    m_gpx_path = fn.GetPath();
+    m_sGPX_Path = fn.GetPath();
 
     if( response == wxID_OK ) {
         fn.SetExt( _T ( "gpx" ) );
@@ -378,14 +376,14 @@ bool ODConfig::LoadLayers(wxString &path)
 
 void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 {
-    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_gpx_path, wxT ( "" ),
+    wxFileDialog saveDialog( NULL, _( "Export GPX file" ), m_sGPX_Path, wxT ( "" ),
             wxT ( "GPX files (*.gpx)|*.gpx" ), wxFD_SAVE );
 
     int response = saveDialog.ShowModal();
 
     wxString path = saveDialog.GetPath();
     wxFileName fn( path );
-    m_gpx_path = fn.GetPath();
+    m_sGPX_Path = fn.GetPath();
 
     if( response == wxID_OK ) {
         fn.SetExt( _T ( "gpx" ) );
@@ -500,8 +498,9 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
     ODLayer *l = NULL;
 
     if( !islayer || dirpath.IsSameAs( _T("") ) ) {
-        wxFileDialog openDialog( NULL, _( "Import GPX file" ), m_gpx_path, wxT ( "" ),
-                wxT ( "GPX files (*.gpx)|*.gpx|All files (*.*)|*.*" ),
+        wxString l_ext_list = "";
+        wxFileDialog openDialog( NULL, _( "Import GPX file" ), m_sImport_Path, wxT ( "" ),
+                wxT ( "GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*" ),
                 wxFD_OPEN | wxFD_MULTIPLE );
         openDialog.Centre();
         response = openDialog.ShowModal();
@@ -511,7 +510,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
             //    Record the currently selected directory for later use
             if( file_array.GetCount() ) {
                 wxFileName fn( file_array[0] );
-                m_gpx_path = fn.GetPath();
+                m_sGPX_Path = fn.GetPath();
             }
         }
 
@@ -534,7 +533,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
             if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL,
                     &( l->m_LayerName ), NULL, NULL );
             else {
-                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_gpx_path, NULL, NULL,
+                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sGPX_Path, NULL, NULL,
                         &( l->m_LayerName ), NULL, NULL );
                 else
                     wxFileName::SplitPath( dirpath, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
@@ -560,18 +559,143 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
             if( wxFileExists( path ) ) {
 
                 ODNavObjectChanges *pSet = new ODNavObjectChanges;
-                pSet->load_file(path.fn_str());
-
-                if(islayer){
-                    l->m_NoOfItems += pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisible);
+                if(m_sImport_Type == _T("gpx")) {
+                    pSet->load_file(path.fn_str());
+                    if(islayer){
+                        l->m_NoOfItems += pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisible);
+                    }
+                    else
+                        pSet->LoadAllGPXObjects( true );    // Import with full vizibility of names and objects
+                } else {
+                    if(islayer) {
+                        l->m_NoOfItems += pSet->Load_CSV_File(path.fn_str(), l->m_LayerID, l->m_bIsVisible);
+                    } else {
+                        pSet->Load_CSV_File(path.fn_str());
+                        
+                    }
                 }
-                else
-                    pSet->LoadAllGPXObjects( true );    // Import with full vizibility of names and objects
 
                 delete pSet;
             }
         }
 
+        // make sure any EBL hanging off the boat is repositioned
+        wxEBLListNode *node = g_pEBLList->GetFirst();
+        for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {
+            EBL *ebl = (EBL *)node->GetData();
+            if(ebl->m_bCentreOnBoat)  {
+                bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
+                ebl->m_bSaveUpdates = false;
+                ebl->CentreOnBoat(true);
+                ebl->m_bSaveUpdates = l_bSaveUpdatesState;
+            }
+            node = node->GetNext();
+        }
+    }
+}
+
+void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxString dirpath, bool isdirectory )
+{
+    int response = wxID_CANCEL;
+    wxArrayString file_array;
+    ODLayer *l = NULL;
+    
+    if(islayer && !isTemporary) {
+        m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|All files (*.*)|*.*");
+    } else {
+        if(m_sImport_Type == _T("csv")) {
+            m_sWildcardString = _T("CSV files (*.csv)|*.csv|GPX files (*.gpx)|*.gpx|All files (*.*)|*.*");
+        } else if(m_sImport_Type == _T("gpx")) {
+            m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
+        } else if(m_sImport_Type == _T("*")) {
+            m_sWildcardString = _T("All files (*.*)|*.*|GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv");
+        } else {
+            m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
+        }
+    }
+    wxFileDialog openDialog( NULL, _( "Import file" ), m_sImport_Path, _T(""), m_sWildcardString,
+                                wxFD_OPEN | wxFD_MULTIPLE );
+    openDialog.Centre();
+    response = openDialog.ShowModal();
+    if( response == wxID_OK ) {
+        openDialog.GetPaths( file_array );
+        
+        //    Record the currently selected directory for later use
+        if( file_array.GetCount() ) {
+            wxFileName fn( file_array[0] );
+            m_sImport_Path = fn.GetPath();
+            m_sImport_Type = fn.GetExt();
+        }
+        
+    } else { 
+        if(dirpath.IsEmpty())
+            response = wxID_CANCEL;
+        else {
+            if( isdirectory ) {
+                if( wxDir::GetAllFiles( dirpath, &file_array, wxT("*.gpx") ) )
+                    response = wxID_OK;
+            } else {
+                file_array.Add( dirpath );
+                response = wxID_OK;
+            }
+        }
+    }
+    
+    if( response == wxID_OK ) {
+        
+        if( islayer ) {
+            l = new ODLayer();
+            l->m_LayerID = ++g_LayerIdx;
+            l->m_LayerFileName = file_array[0];
+            if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL,
+                &( l->m_LayerName ), NULL, NULL );
+            else {
+                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sGPX_Path, NULL, NULL,
+                    &( l->m_LayerName ), NULL, NULL );
+                else
+                    wxFileName::SplitPath( dirpath, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+            }
+            
+            bool bLayerViz = g_bShowLayers;
+            if( g_VisibleLayers.Contains( l->m_LayerName ) )
+                bLayerViz = true;
+            if( g_InvisibleLayers.Contains( l->m_LayerName ) )
+                bLayerViz = false;
+            l->m_bIsVisibleOnChart = bLayerViz;
+            
+            wxString laymsg;
+            laymsg.Printf( _("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
+            wxLogMessage( laymsg );
+            
+            g_pLayerList->Insert( l );
+        }
+        for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
+            wxString path = file_array[i];
+            wxFileName l_fn(file_array[i]);
+            
+            if( wxFileExists( path ) ) {
+                
+                ODNavObjectChanges *pSet = new ODNavObjectChanges;
+                if(l_fn.GetExt() == _T("csv")) {
+                    if(l) {
+                        l->m_NoOfItems += pSet->Load_CSV_File(path.fn_str(), l->m_LayerID, l->m_bIsVisibleOnChart);
+                    } else {
+                        pSet->Load_CSV_File(path.fn_str(), 0, true);
+                    }
+                }else if(l_fn.GetExt() == _T("gpx")) {
+                    pSet->load_file(path.fn_str());
+                    if(islayer){
+                        l->m_NoOfItems += pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisibleOnChart);
+                    }
+                    else
+                        pSet->LoadAllGPXObjects( true );    // Import with full vizibility of names and objects
+                }
+                
+                    
+                delete pSet;
+            }
+        }
+        
         // make sure any EBL hanging of the boat is repositioned
         wxEBLListNode *node = g_pEBLList->GetFirst();
         for(size_t i = 0; i < g_pEBLList->GetCount(); i++) {

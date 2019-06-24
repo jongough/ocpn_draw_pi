@@ -29,27 +29,30 @@
 
 
 #include "BoundaryPoint.h"
-#include "georef.h"
+//#include "georef.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 
 #include "GL/gl.h"
 #include <wx/graphics.h>
 
-extern PlugIn_ViewPort  g_VP;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern bool         g_bExclusionBoundaryPoint;
-extern bool         g_bInclusionBoundaryPoint;
-extern int          g_iInclusionBoundaryPointSize;
-extern unsigned int g_uiBoundaryPointFillTransparency;
-extern int         g_iBoundaryPointRangeRingLineWidth;
-extern int         g_iBoundaryPointRangeRingLineStyle;
+//extern PlugIn_ViewPort  g_VP;
+//extern ocpn_draw_pi     *g_ocpn_draw_pi;
+//extern bool         g_bBoundaryPointShowName;
+//extern bool         g_bExclusionBoundaryPoint;
+//extern bool         g_bInclusionBoundaryPoint;
+//extern int          g_iInclusionBoundaryPointSize;
+//extern unsigned int g_uiBoundaryPointFillTransparency;
+//extern int          g_iBoundaryPointRangeRingLineWidth;
+//extern wxPenStyle   g_iBoundaryPointRangeRingLineStyle;
 
 
 BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString& pGUID, bool bAddToList)
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
 {
     m_sTypeString = wxT("Boundary Point");
+    m_bIsInBoundary = false;
+    m_bShowName = g_bBoundaryPointShowName;
     m_uiBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
     m_bExclusionBoundaryPoint = g_bExclusionBoundaryPoint;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
@@ -61,18 +64,26 @@ BoundaryPoint::BoundaryPoint(double lat, double lon, const wxString& icon_ident,
 BoundaryPoint::BoundaryPoint(BoundaryPoint* orig) : ODPoint( orig )
 {
     m_sTypeString = orig->m_sTypeString;
+    m_bIsInBoundary = orig->m_bIsInBoundary;
+    m_uiBoundaryPointFillTransparency = orig->m_uiBoundaryPointFillTransparency;
+    m_bExclusionBoundaryPoint = orig->m_bExclusionBoundaryPoint;
+    m_bInclusionBoundaryPoint = orig->m_bInclusionBoundaryPoint;
+    m_iInclusionBoundaryPointSize = orig->m_iInclusionBoundaryPointSize;
+    
 }
 
 BoundaryPoint::BoundaryPoint() : ODPoint()
 {
     m_sTypeString = wxT("Boundary Point");
+    m_bIsInBoundary = false;
+    m_bShowName = g_bBoundaryPointShowName;
     m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
     m_iInclusionBoundaryPointSize = g_iInclusionBoundaryPointSize;
     m_iRangeRingWidth = g_iBoundaryPointRangeRingLineWidth;
     m_iRangeRingStyle = g_iBoundaryPointRangeRingLineStyle;
 }
 
-void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
+void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
 {
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
@@ -112,7 +123,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* rpn )
             }
         }
     }
-    ODPoint::Draw( dc, rpn );
+    ODPoint::Draw( dc, odp);
 }
 
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
@@ -177,7 +188,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
-            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxPENSTYLE_SOLID ) );
+            dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_SOLID ) );
             if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
                 dc.DrawDisk( r.x, r.y , 0, pix_radius);
             }

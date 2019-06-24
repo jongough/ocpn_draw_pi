@@ -46,10 +46,11 @@
 #include "PIL.h"
 #include "GZMan.h"
 #include "GZProp.h"
+#include "ODLinkPropertiesDialogImpl.h"
 #include "PILProp.h"
 #include "ODPath.h"
 #include "PathMan.h"
-#include "pathmanagerdialog.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "PointMan.h"
 #include "ODAPI.h"
 #include "ODConfig.h"
@@ -69,12 +70,10 @@
 #include "TextPoint.h"
 #include "PILPropertiesDialogImpl.h"
 
-#include "chcanv.h"
 #include "ODLayer.h"
-#include "OCPNPlatform.h"
-#include "pluginmanager.h"
+//#include "OCPNPlatform.h"
 #include "geodesic.h"
-#include "IDX_entry.h"
+//#include "IDX_entry.h"
 #include <wx/stdpaths.h>
 #include <wx/timer.h>
 #include <wx/event.h>
@@ -87,8 +86,7 @@
 #include <memory>
 
 #include <wx/jsonreader.h>
-
-using namespace std;
+#include "GL/gl.h"
 
 #ifndef DECL_EXP
 #ifdef __WXMSW__
@@ -104,6 +102,7 @@ static const long long lNaN = 0xfff8000000000000;
 #endif
 
 ocpn_draw_pi            *g_ocpn_draw_pi;
+wxWindow                *g_parent_window;
 PathList                *g_pPathList;
 PointMan                *g_pODPointMan;
 bool                    g_bODIsNewLayer;
@@ -117,30 +116,27 @@ int                     g_cursor_y;
 ODSelect                *g_pODSelect;
 ODConfig                *g_pODConfig;
 wxString                *g_SData_Locn;
-void                    *g_ppimgr;
 PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
 GZMan                   *g_pGZMan;
 wxString                g_default_ODPoint_icon;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
-ODPathPropertiesDialogImpl   *g_pPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
 DRProp                  *g_pDRPropDialog;
 GZProp                  *g_pGZPropDialog;
+ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
 PILProp                 *g_pPILPropDialog;
-PathManagerDialog       *g_pPathManagerDialog;
+PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
 ODPointPropertiesImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 ODDRDialogImpl          *g_pODDRDialog;
-PlugInManager           *g_OD_pi_manager;
 BoundaryList            *g_pBoundaryList;
 EBLList                 *g_pEBLList;
 DRList                  *g_pDRList;
 GZList                  *g_pGZList;
 PILList                 *g_pPILList;
-ChartCanvas             *ocpncc1;
 ODPath                  *g_PathToEdit;
 int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
@@ -161,9 +157,9 @@ bool        g_bBoundaryODPointsVisible;
 unsigned int g_uiFillTransparency;
 unsigned int g_uiBoundaryPointFillTransparency;
 int         g_iBoundaryPointRangeRingLineWidth;
-int         g_iBoundaryPointRangeRingLineStyle;
+wxPenStyle  g_iBoundaryPointRangeRingLineStyle;
 int         g_BoundaryLineWidth; 
-int         g_BoundaryLineStyle;
+wxPenStyle  g_BoundaryLineStyle;
 bool        g_bBoundaryPointShowName;
 int         g_iInclusionBoundarySize;
 int         g_iInclusionBoundaryPointSize;
@@ -177,7 +173,7 @@ bool        g_bEBLVRM;
 bool        g_bEBLAlwaysShowInfo;
 bool        g_bEBLPerpLine;
 int         g_EBLLineWidth; 
-int         g_EBLLineStyle;
+wxPenStyle  g_EBLLineStyle;
 bool        g_bEBLRotateWithBoat;
 int         g_iEBLMaintainWith;
 
@@ -190,11 +186,11 @@ wxColour    g_colourPILInActiveOffsetLine1Colour;
 wxColour    g_colourPILActiveOffsetLine2Colour;
 wxColour    g_colourPILInActiveOffsetLine2Colour;
 int         g_PILCentreLineWidth;
-int         g_PILCentreLineStyle;
+wxPenStyle  g_PILCentreLineStyle;
 int         g_PILOffsetLine1Width;
-int         g_PILOffsetLine1Style;
+wxPenStyle  g_PILOffsetLine1Style;
 int         g_PILOffsetLine2Width;
-int         g_PILOffsetLine2Style;
+wxPenStyle  g_PILOffsetLine2Style;
 double      g_dPILOffset;
 int         g_PILDefaultNumIndexLines;
 int         g_iPILPersistenceType;
@@ -204,21 +200,21 @@ wxColour    g_colourDRLineColour;
 wxColour    g_colourInActiveDRLineColour;
 bool        g_bDRShowArrow;
 int         g_DRLineWidth;
-int         g_DRLineStyle;
+wxPenStyle  g_DRLineStyle;
 bool        g_bDRPointShowRangeRings;
 int         g_iDRPointRangeRingsNumber;
 float       g_fDRPointRangeRingsStep;
 int         g_iDRPointRangeRingsStepUnits;
 wxColour    g_colourDRPointRangeRingsColour;
 int         g_iDRPointRangeRingLineWidth;
-int         g_iDRPointRangeRingLineStyle;
+wxPenStyle  g_iDRPointRangeRingLineStyle;
 
 wxColour     g_colourActiveGZLineColour;
 wxColour     g_colourInActiveGZLineColour;
 wxColour     g_colourActiveGZFillColour;
 wxColour     g_colourInActiveGZFillColour;
 int          g_GZLineWidth; 
-int          g_GZLineStyle;
+wxPenStyle   g_GZLineStyle;
 unsigned int g_uiGZFillTransparency;
 bool         g_bGZRotateWithBoat;
 int          g_iGZMaintainWith;
@@ -236,17 +232,18 @@ wxString    *g_PrivateDataDir;
 
 wxString    *g_pHome_Locn;
 wxString    *g_pData;
+wxString    *g_pUserIconsDir;
 wxString    *g_pLayerDir;
 
 ODEventHandler   *g_ODEventHandler;
 
-bool            g_bODPointShowName;
 bool            g_bODPointShowRangeRings;
 int             g_iODPointRangeRingsNumber;
 float           g_fODPointRangeRingsStep;
 int             g_iODPointRangeRingsStepUnits;
 wxColour        g_colourODPointRangeRingsColour;
 wxString        g_sODPointIconName;
+bool            g_bTextPointShowName;
 wxString        g_sTextPointIconName;
 wxColour        g_colourDefaultTextColour;
 wxFont          g_DisplayTextFont;
@@ -266,6 +263,8 @@ int             g_iTextRightOffsetY;
 int             g_iTextLeftOffsetX;
 int             g_iTextLeftOffsetY;
 int             g_iTextPointDisplayTextWhen;
+int             g_iTextMaxWidth;
+int             g_iTextMaxWidthType;
 
 PlugIn_ViewPort g_VP;
 ODDC            *g_pDC;
@@ -273,7 +272,7 @@ bool            g_bShowMag;
 bool            g_bAllowLeftDrag;
 double          g_dVar;
 double          g_UserVar;
-double          g_n_arrival_circle_radius;
+double          g_dODPointArrivalCircleRadius;
 wxRect          g_blink_rect;
 
 int             g_LayerIdx;
@@ -284,8 +283,6 @@ ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
-
-IDX_entry       *gpIDX;
 
 wxString        *g_ODlocale;
 int             g_iLocaleDepth;
@@ -312,10 +309,34 @@ int             g_iDRDistanceUnits;
 int             g_iDRTimeUnits;
 int             g_iDRPersistenceType;
 
+wxString        g_sDefaultImportPath;
+wxString        g_sDefaultImportType;
+
 ODPlugIn_Position_Fix_Ex  g_pfFix;
 
 ODJSON          *g_pODJSON;
 ODAPI           *g_pODAPI;
+
+bool    g_bRememberPropertyDialogPosition;
+int     g_iDefaultBoundaryPropertyDialogPostionX;
+int     g_iDefaultBoundaryPropertyDialogPostionY;
+int     g_iDefaultDRPropertyDialogPostionX;
+int     g_iDefaultDRPropertyDialogPostionY;
+int     g_iDefaultEBLPropertyDialogPostionX;
+int     g_iDefaultEBLPropertyDialogPostionY;
+int     g_iDefaultGZPropertyDialogPostionX;
+int     g_iDefaultGZPropertyDialogPostionY;
+int     g_iDefaultPathPropertyDialogPostionX;
+int     g_iDefaultPathPropertyDialogPostionY;
+int     g_iDefaultPointPropertyDialogPostionX;
+int     g_iDefaultPointPropertyDialogPostionY;
+int     g_iDefaultPILPropertyDialogPostionX;
+int     g_iDefaultPILPropertyDialogPostionY;
+int     g_iDefaultPILLinePropertyDialogPostionX;
+int     g_iDefaultPILLinePropertyDialogPostionY;
+int     g_iDefaultPathAnPointManagerDialogPostionX;
+int     g_iDefaultPathAnPointManagerDialogPostionY;
+
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -326,6 +347,11 @@ wxImage ICursorCross;
 
 // Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
 float g_GLMinSymbolLineWidth;
+
+wxWindow *g_current_canvas;
+wxWindow *g_current_timer_canvas;
+int      g_current_canvas_index;
+int      g_current_timer_canvas_index;
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -345,11 +371,9 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
-:opencpn_plugin_113(ppimgr)
+:opencpn_plugin_116(ppimgr)
 {
     // Create the PlugIn icons
-    g_ppimgr = ppimgr;
-    g_OD_pi_manager = (PlugInManager *) ppimgr;
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     nBlinkerTick = 0;
@@ -372,6 +396,22 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash( g_pData );
     if ( !wxDir::Exists(*g_pData))
         wxMkdir( *g_pData );
+    
+#ifdef __WXOSX__
+    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
+    wxString *UserIconPath = new wxString(std_path.GetUserConfigDir());
+    UserIconPath->Append( _T("/opencpn/UserIcons") );
+#else
+    wxString *UserIconPath = new wxString(*g_PrivateDataDir);
+    wxChar sep = wxFileName::GetPathSeparator();
+    if ( UserIconPath->IsNull() ) return;
+    
+    if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
+    UserIconPath->Append( _T("UserIcons") );
+#endif
+    appendOSDirSlash(UserIconPath);
+    if(UserIconPath) g_pUserIconsDir = UserIconPath;
+    
     g_pLayerDir = new wxString;
     g_pLayerDir->Append(*l_pDir);
     g_pLayerDir->Append( wxT("Layers") );
@@ -442,9 +482,24 @@ int ocpn_draw_pi::Init(void)
     g_iGZMaxNum = 0;
     m_chart_scale = 0.;
     g_pfFix.valid = false;
+    g_pfFix.validCog = false;
+    g_pfFix.validHdm = false;
+    g_pfFix.validHdt = false;
+    g_pfFix.Cog = 0.;
+    g_pfFix.FixTime = 0;
+    g_pfFix.Hdm = 0.;
+    g_pfFix.Hdt = 0.;
+    g_pfFix.Lat = 0.;
+    g_pfFix.Lon = 0.;
+    g_pfFix.nSats = 0;
+    g_pfFix.Sog = 0.;
+    g_pfFix.Var = 0.;
     g_iLocaleDepth = 0;
     g_ODlocale = NULL;
     m_bRecreateConfig = false;
+    g_bRememberPropertyDialogPosition = false;
+    m_mouse_canvas_index = -1;
+    m_drawing_canvas_index = -1;
     
     // Drawing modes from toolbar
     m_Mode = 0;
@@ -459,7 +514,9 @@ int ocpn_draw_pi::Init(void)
     g_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
-    m_parent_window = GetOCPNCanvasWindow();
+    //m_parent_window = GetOCPNCanvasWindow();
+    m_parent_window = PluginGetFocusCanvas();
+    g_parent_window = m_parent_window;
     
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
@@ -467,10 +524,11 @@ int ocpn_draw_pi::Init(void)
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
     wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
+
+    LoadConfig();
+    g_pODConfig->LateInit();
     
     g_pODSelect = new ODSelect();
-    
-    LoadConfig();
     
     g_pODJSON = new ODJSON;
     g_pODAPI = new ODAPI;
@@ -599,11 +657,14 @@ int ocpn_draw_pi::Init(void)
     //    The Items will be re-parented when added to the real context meenu
     wxMenu dummy_menu;
     
+    m_pODToolContextMenuItem = new wxMenuItem(&dummy_menu, -1, _("Use OCPN Draw Tool"));
+    m_iODToolContextId = AddCanvasContextMenuItem(m_pODToolContextMenuItem, this);
+    SetCanvasContextMenuItemViz(m_iODToolContextId, true);
+    
+    
     // Now initialize UI Style.
     //g_ODStyleManager = new ocpnStyle::StyleManager();
     //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
-    
-    ocpncc1 = (ChartCanvas *)m_parent_window;
     
     // Create an OCPN Draw event handler
     g_ODEventHandler = new ODEventHandler( g_ocpn_draw_pi );
@@ -612,7 +673,7 @@ int ocpn_draw_pi::Init(void)
     g_pRolloverPathSeg = NULL;
     g_pRolloverPoint = NULL;
     
-    m_RolloverPopupTimer.SetOwner( ocpncc1, ODROPOPUP_TIMER );
+    m_RolloverPopupTimer.SetOwner( m_parent_window, ODROPOPUP_TIMER );
     m_rollover_popup_timer_msec = 20;
     m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     
@@ -649,7 +710,6 @@ int ocpn_draw_pi::Init(void)
     else
         m_pCursorCross = new wxCursor ( wxCURSOR_ARROW );
 
-    
     g_pODPointMan = new PointMan();
     g_pODPointMan->SetColorScheme( g_global_color_scheme );
     
@@ -665,6 +725,7 @@ int ocpn_draw_pi::Init(void)
     g_pGZPropDialog = NULL;
     g_pPILPropDialog = NULL;
     g_PILIndexLinePropDialog = NULL;
+    g_pODLinkPropertiesDialog = NULL;
     
     g_pODConfig->LoadNavObjects();
     
@@ -705,6 +766,8 @@ void ocpn_draw_pi::LateInit(void)
 
 bool ocpn_draw_pi::DeInit(void)
 {
+    RemoveCanvasContextMenuItem(m_iODToolContextId);
+    
     m_parent_window->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
     if( g_ODEventHandler ) delete g_ODEventHandler;
     g_ODEventHandler = NULL;
@@ -713,29 +776,61 @@ bool ocpn_draw_pi::DeInit(void)
 
     g_pODPathPropDialog = NULL;
 
-    if( g_pODPointPropDialog ) g_pODPointPropDialog->Destroy();
+    if( g_pODPointPropDialog ) {
+        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
+        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
+        g_pODPointPropDialog->Destroy();
+    }
     g_pODPointPropDialog = NULL;
 
-    if ( g_pBoundaryPropDialog ) g_pBoundaryPropDialog->Destroy();
+    if ( g_pBoundaryPropDialog ) {
+        g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
+        g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
+        g_pBoundaryPropDialog->Destroy();
+    }
     g_pBoundaryPropDialog = NULL;
 
-    if ( g_pEBLPropDialog ) g_pEBLPropDialog->Destroy();
+    if ( g_pEBLPropDialog ) {
+        g_pEBLPropDialog->Destroy();
+        g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
+        g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
+    }
     g_pEBLPropDialog = NULL;
 
-    if ( g_pDRPropDialog ) g_pDRPropDialog->Destroy();
+    if ( g_pDRPropDialog ) {
+        g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
+        g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
+        g_pDRPropDialog->Destroy();
+    }
     g_pDRPropDialog = NULL;
 
-    if ( g_pGZPropDialog ) g_pGZPropDialog->Destroy();
+    if ( g_pGZPropDialog ) {
+        g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
+        g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
+        g_pGZPropDialog->Destroy();
+    }
     g_pGZPropDialog = NULL;
 
-    if ( g_pPILPropDialog )  g_pPILPropDialog->Destroy();
+    if ( g_pPILPropDialog )  {
+        g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
+        g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
+        g_pPILPropDialog->Destroy();
+    }
     g_pPILPropDialog = NULL;
 
-    if ( g_PILIndexLinePropDialog )  g_PILIndexLinePropDialog->Destroy();
+    if ( g_PILIndexLinePropDialog )  {
+        g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
+        g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
+        g_PILIndexLinePropDialog->Destroy();
+    }
     g_PILIndexLinePropDialog = NULL;
 
-    if ( g_pPathManagerDialog )  g_pPathManagerDialog->Destroy();
-    g_pPathManagerDialog = NULL;
+    if ( g_pPathAndPointManagerDialog )  {
+        g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
+        g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
+        g_pPathAndPointManagerDialog->Destroy();
+    }
+    g_pPathAndPointManagerDialog = NULL;
 
     if( g_pODToolbar ) g_pODToolbar->Destroy();
     delete g_pODToolbar;
@@ -756,6 +851,8 @@ bool ocpn_draw_pi::DeInit(void)
     m_draw_button_id = 0;
     if( g_pODConfig ) {
         g_pODConfig->UpdateNavObj();
+        g_pODConfig->DeInit();
+        
         SaveConfig();
     }
 
@@ -827,12 +924,12 @@ int ocpn_draw_pi::GetPlugInVersionMinor()
 
 int ocpn_draw_pi::GetAPIVersionMajor()
 {
-    return API_VERSION_MAJOR;
+    return OCPN_API_VERSION_MAJOR;
 }
 
 int ocpn_draw_pi::GetAPIVersionMinor()
 {
-    return API_VERSION_MINOR;
+    return OCPN_API_VERSION_MINOR;
 }
 wxString ocpn_draw_pi::GetCommonName()
 {
@@ -854,13 +951,11 @@ void ocpn_draw_pi::SendVectorChartObjectInfo(wxString &chart, wxString &feature,
 
 void ocpn_draw_pi::OnContextMenuItemCallback(int id)
 {
-    switch ( id ) {
-        case ID_PATH_MENU_PROPERTIES: {
-            //        ShowPathPropertiesDialog( wxT("Path Properties"), m_pSelectedPath );
-            break;
-        }
+    if( id == m_iODToolContextId ) {
+        ItemProcess(m_draw_button_id);
     }
 }
+
 void ocpn_draw_pi::SetDefaults(void)
 {
     // If the config somehow says NOT to show the icon, override it so the user gets good feedback
@@ -882,6 +977,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     g_pOCPNDrawPropDialog->UpdateProperties();
     g_pOCPNDrawPropDialog->SetDialogSize();
     
+    DimeWindow(g_pOCPNDrawPropDialog);
     g_pOCPNDrawPropDialog->ShowModal();
     
     delete g_pOCPNDrawPropDialog;
@@ -903,31 +999,33 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
     
     g_pfFix.Lat = pfix.Lat;
     g_pfFix.Lon = pfix.Lon;
+    g_pfFix.validCog = true;
     if(wxIsNaN(pfix.Cog)) {
+        g_pfFix.validCog = false;
         if(g_pfFix.Cog != 0.)
             l_bBoatChange = true;
         g_pfFix.Cog = 0.;
-    }
-    else g_pfFix.Cog = pfix.Cog;
+    } else g_pfFix.Cog = pfix.Cog;
     if(wxIsNaN(pfix.Sog)) {
         if(g_pfFix.Sog != 0.)
             l_bBoatChange = true;
         g_pfFix.Sog = 0.;
-    }
-    g_pfFix.Sog = pfix.Sog;
+    } else g_pfFix.Sog = pfix.Sog;
     g_pfFix.Var = pfix.Var;
+    g_pfFix.validHdm = true;
     if(wxIsNaN(pfix.Hdm)) {
+        g_pfFix.validHdm = true;
         if(g_pfFix.Hdm != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdm = 0.;
-    }
-    else g_pfFix.Hdm = pfix.Hdm;
+    } else g_pfFix.Hdm = pfix.Hdm;
+    g_pfFix.validHdt = true;
     if(wxIsNaN(pfix.Hdt)) {
+        g_pfFix.validHdt = false;
         if(g_pfFix.Hdt != 0.)
             l_bBoatChange = true;
         g_pfFix.Hdt = 0.;
-    }
-    else g_pfFix.Hdt = pfix.Hdt;
+    } else g_pfFix.Hdt = pfix.Hdt;
     g_pfFix.FixTime = pfix.FixTime;
     g_pfFix.nSats = pfix.nSats;
     if(!g_pfFix.valid) {
@@ -976,30 +1074,34 @@ void ocpn_draw_pi::SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix )
 
 void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
 {
+    ItemProcess(id);
+}
+
+void ocpn_draw_pi::ItemProcess(int id)
+{
     m_iCallerId = id;
     if( m_Mode == ID_NONE ) m_Mode = 0;
 
-    if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-        g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
-
+    if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+        g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( m_parent_window );
+    
     if ( id == m_config_button_id ) {
-        if( !g_pPathManagerDialog->IsShown() ){
+        if( !g_pPathAndPointManagerDialog->IsShown() ){
             
-            DimeWindow( g_pPathManagerDialog );
-            g_pPathManagerDialog->UpdatePathListCtrl();
-            g_pPathManagerDialog->UpdateODPointsListCtrl();
-            g_pPathManagerDialog->Show();
+            DimeWindow( g_pPathAndPointManagerDialog );
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+            g_pPathAndPointManagerDialog->Show();
             
             
             //    Required if RMDialog is not STAY_ON_TOP
 #ifdef __WXOSX__
-            g_pPathManagerDialog->Centre();
-            g_pPathManagerDialog->Raise();
+            g_pPathAndPointManagerDialog->Centre();
+            g_pPathAndPointManagerDialog->Raise();
 #endif
             
         } else {
-            if( NULL != g_pPathManagerDialog )
-	        g_pPathManagerDialog->Hide();
+	        g_pPathAndPointManagerDialog->Hide();
         }
     }
     else if ( id == m_draw_button_id ) {
@@ -1025,7 +1127,9 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     bKey_Boundary_Pressed = false;
                     FinishBoundary();
                     m_pCurrentCursor = NULL;
-                    SetCursor_PlugIn( m_pCurrentCursor );
+                    m_drawing_canvas_index = -1;
+                    SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
+                    //SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1053,6 +1157,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPIL_State = 0;
                     bKey_Point_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1081,6 +1186,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPIL_State = 0;
                     bKey_TextPoint_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1109,6 +1215,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPIL_State = 0;
                     bKey_EBL_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1136,8 +1243,10 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nGZ_State = 0;
                     nPIL_State = 0;
                     bKey_DR_Pressed = false;
+                    m_drawing_canvas_index = -1;
                     m_pCurrentCursor = NULL;
-                    SetCursor_PlugIn( m_pCurrentCursor );
+                    //SetCursor_PlugIn( m_pCurrentCursor );
+                    SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
                     g_pODToolbar->SetToolbarTool( ID_NONE );
@@ -1165,6 +1274,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPIL_State = 0;
                     bKey_GZ_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1193,6 +1303,7 @@ void ocpn_draw_pi::OnToolbarToolDownCallback(int id)
                     nPIL_State = 0;
                     bKey_PIL_Pressed = false;
                     m_pCurrentCursor = NULL;
+                    m_drawing_canvas_index = -1;
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, false );
                     g_pODToolbar->SetToolbarToolEnableAll();
@@ -1232,6 +1343,7 @@ void ocpn_draw_pi::SaveConfig()
         if(m_bRecreateConfig) {
             pConf->DeleteGroup( "/Settings/ocpn_draw_pi" );
         } else {
+            pConf->Write( wxS( "DefaultBoundaryPointShowName"), g_bBoundaryPointShowName );
             pConf->Write( wxS( "DefaultActivePathLineColour" ), g_colourActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultInActivePathLineColour" ), g_colourInActivePathLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultActiveBoundaryLineColour" ), g_colourActiveBoundaryLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
@@ -1240,7 +1352,7 @@ void ocpn_draw_pi::SaveConfig()
             int l_BoundaryType;
             if(g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
             else if(!g_bExclusionBoundary && g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_INCLUSION;
-            else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NIETHER;
+            else if(!g_bExclusionBoundary && !g_bInclusionBoundary) l_BoundaryType = ID_BOUNDARY_NEITHER;
             else l_BoundaryType = ID_BOUNDARY_EXCLUSION;
             pConf->Write( wxS( "DefaultBoundaryODPointsVisible"), g_bBoundaryODPointsVisible );
             pConf->Write( wxS( "DefaultBoundaryType" ), l_BoundaryType );
@@ -1255,7 +1367,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultActiveGZFillColour" ), g_colourActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultInActiveGZFillColour" ), g_colourInActiveGZFillColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultGZLineWidth" ), g_GZLineWidth );
-            pConf->Write( wxS( "DefaultGZLineStyle" ), g_GZLineStyle );
+            pConf->Write( wxS( "DefaultGZLineStyle" ), (int)g_GZLineStyle );
             long l_longGZFillTransparency = g_uiGZFillTransparency;
             pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
             pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
@@ -1265,9 +1377,9 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
             pConf->Write( wxS( "DefaultEBLLineColour" ), g_colourEBLLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultBoundaryLineWidth" ), g_BoundaryLineWidth );
-            pConf->Write( wxS( "DefaultBoundaryLineStyle" ), g_BoundaryLineStyle );
+            pConf->Write( wxS( "DefaultBoundaryLineStyle" ), (int)g_BoundaryLineStyle );
             pConf->Write( wxS( "DefaultEBLLineWidth" ), g_EBLLineWidth );
-            pConf->Write( wxS( "DefaultEBLLineStyle" ), g_EBLLineStyle );
+            pConf->Write( wxS( "DefaultEBLLineStyle" ), (int)g_EBLLineStyle );
             pConf->Write( wxS( "DefaultEBLShowArrow" ), g_bEBLShowArrow );
             pConf->Write( wxS( "DefaultEBLVRM" ), g_bEBLVRM );
             pConf->Write( wxS( "DefaultEBLAlwaysShowInfo" ), g_bEBLAlwaysShowInfo );
@@ -1285,11 +1397,11 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultPILActiveOffsetLine2Colour" ), g_colourPILActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultPILInActiveOffsetLine2Colour" ), g_colourPILInActiveOffsetLine2Colour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultPILCentreLineWidth" ), g_PILCentreLineWidth );
-            pConf->Write( wxS( "DefaultPILCentreLineStyle" ), g_PILCentreLineStyle );
+            pConf->Write( wxS( "DefaultPILCentreLineStyle" ), (int)g_PILCentreLineStyle );
             pConf->Write( wxS( "DefaultPILOffsetLine1Width" ), g_PILOffsetLine1Width );
-            pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), g_PILOffsetLine1Style );
+            pConf->Write( wxS( "DefaultPILOffsetLine1Style" ), (int)g_PILOffsetLine1Style );
             pConf->Write( wxS( "DefaultPILOffsetLine2Width" ), g_PILOffsetLine2Width );
-            pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), g_PILOffsetLine2Style );
+            pConf->Write( wxS( "DefaultPILOffsetLine2Style" ), (int)g_PILOffsetLine2Style );
             pConf->Write( wxS( "DefaultPILPersistenceType" ), g_iPILPersistenceType );
             pConf->Write( wxS( "DefaultPILNumIndexLines" ), g_PILDefaultNumIndexLines );
             pConf->Write( wxS( "DefaultPILOffset"), g_dPILOffset );
@@ -1300,11 +1412,11 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultDRPointRangeRingsStepUnits" ), g_iDRPointRangeRingsStepUnits );
             pConf->Write( wxS( "DefaultDRPointRangeRingsColour" ), g_colourDRPointRangeRingsColour.GetAsString( wxC2S_CSS_SYNTAX) );
             pConf->Write( wxS( "DefaultDRPointRangeRingLineWidth" ), g_iDRPointRangeRingLineWidth );
-            pConf->Write( wxS( "DefaultDRPointRangeRingLineStyle" ), g_iDRPointRangeRingLineStyle );
+            pConf->Write( wxS( "DefaultDRPointRangeRingLineStyle" ), (int)g_iDRPointRangeRingLineStyle );
             pConf->Write( wxS( "DefaultDRLineColour" ), g_colourDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultInActiveDRLineColour" ), g_colourInActiveDRLineColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultDRLineWidth" ), g_DRLineWidth );
-            pConf->Write( wxS( "DefaultDRLineStyle" ), g_DRLineStyle );
+            pConf->Write( wxS( "DefaultDRLineStyle" ), (int)g_DRLineStyle );
             pConf->Write( wxS( "DefaultDRSOG" ), g_dDRSOG );
             pConf->Write( wxS( "DefaultDRCOG" ), g_iDRCOG );
             pConf->Write( wxS( "DefaultDRLength" ), g_dDRLength );
@@ -1315,9 +1427,10 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultDRTimeUnits" ), g_iDRTimeUnits );
             pConf->Write( wxS( "DefaultDRPersistenceType" ), g_iDRPersistenceType );
             pConf->Write( wxS( "DefaultPathLineWidth" ), g_PathLineWidth );
-            pConf->Write( wxS( "DefaultPathLineStyle" ), g_PathLineStyle );
+            pConf->Write( wxS( "DefaultPathLineStyle" ), (int)g_PathLineStyle );
             pConf->Write( wxS( "ShowLOGIcon" ), m_bLOGShowIcon );
             pConf->Write( wxS( "PathLineWidth" ), g_path_line_width );
+            pConf->Write( wxS( "DefaultODPointArrivalCircle_Radius" ), g_dODPointArrivalCircleRadius);
             pConf->Write( wxS( "DefaultODPointIcon" ), g_sODPointIconName );
             pConf->Write( wxS( "DefaultODPointShowRangeRings" ), g_bODPointShowRangeRings );
             pConf->Write( wxS( "ODPointRangeRingsNumber" ), g_iODPointRangeRingsNumber );
@@ -1327,7 +1440,7 @@ void ocpn_draw_pi::SaveConfig()
             long l_longBoundaryPointFillTransparency = g_uiBoundaryPointFillTransparency;
             pConf->Write( wxS( "DefaultBoundaryPointFillTransparency" ), l_longBoundaryPointFillTransparency );
             pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), g_iBoundaryPointRangeRingLineWidth );
-            pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), g_iBoundaryPointRangeRingLineStyle );
+            pConf->Write( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), (int)g_iBoundaryPointRangeRingLineStyle );
             pConf->Write( wxS( "DefaultInclusionBoundaryPointSize" ), g_iInclusionBoundaryPointSize );
             pConf->Write( wxS( "ShowMag" ), g_bShowMag );
             pConf->Write( wxS( "AllowLeftDrag" ), g_bAllowLeftDrag );
@@ -1335,16 +1448,20 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "KeepODNavobjBackups" ), g_navobjbackups );
             pConf->Write( wxS( "CurrentDrawMode" ), m_Mode );
             pConf->Write( wxS( "ConfirmObjectDelete" ), g_bConfirmObjectDelete );
+            pConf->Write( wxS( "RemeberPropertiesDialogPosition" ), g_bRememberPropertyDialogPosition );
             pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
             pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
             pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
             pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
             pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
+            pConf->Write( wxS( "DefaultTextPointShowName"), g_bTextPointShowName );
             pConf->Write( wxS( "DefaultTextPointIcon" ), g_sTextPointIconName );
             pConf->Write( wxS( "DefaultTextColour" ), g_colourDefaultTextColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultTextBackgroundColour" ), g_colourDefaultTextBackgroundColour.GetAsString( wxC2S_CSS_SYNTAX ) );
             pConf->Write( wxS( "DefaultTextBackgroundTransparency" ), g_iTextBackgroundTransparency );
             pConf->Write( wxS( "DefaultTextPosition" ), g_iTextPosition );
+            pConf->Write( wxS( "DefaultTextMaxWidth" ), g_iTextMaxWidth );
+            pConf->Write( wxS( "DefaultTextMaxWidthType" ), g_iTextMaxWidthType );
             pConf->Write( wxS( "DefaultTextTopOffsetX" ), g_iTextTopOffsetX );
             pConf->Write( wxS( "DefaultTextTopOffsetY" ), g_iTextTopOffsetY );
             pConf->Write( wxS( "DefaultTextBottomffsetX" ), g_iTextBottomOffsetX );
@@ -1367,6 +1484,49 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultTextPointFaceName" ), g_DisplayTextFont.GetFaceName() );
             pConf->Write( wxS( "DefaultTextPointFontEncoding" ), (int)g_DisplayTextFont.GetEncoding() );
             pConf->Write( wxS( "DefaultTextPointDisplayTextWhen"), g_iTextPointDisplayTextWhen );
+            pConf->Write( wxS( "DefaultImportPath" ), g_sDefaultImportPath );
+            pConf->Write( wxS( "DefaultImportType" ), g_sDefaultImportType );
+            pConf->Write( wxS( "LastChartScale" ), m_chart_scale);
+            
+            if(g_bRememberPropertyDialogPosition) {
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionX" ), g_iDefaultBoundaryPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), g_iDefaultBoundaryPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), g_iDefaultDRPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), g_iDefaultDRPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionX" ), g_iDefaultEBLPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionY" ), g_iDefaultEBLPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), g_iDefaultGZPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), g_iDefaultGZPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), g_iDefaultPathPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionY" ), g_iDefaultPathPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionX" ), g_iDefaultPointPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionY" ), g_iDefaultPointPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionX" ), g_iDefaultPILPropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionY" ), g_iDefaultPILPropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionX" ), g_iDefaultPILLinePropertyDialogPostionX);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionY" ), g_iDefaultPILLinePropertyDialogPostionY);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), g_iDefaultPathAnPointManagerDialogPostionX);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), g_iDefaultPathAnPointManagerDialogPostionY);
+            } else {
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultBoundaryPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultDRPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultEBLPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultGZPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPathPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPointPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPILPropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPILLinePropertyDialogPositionY" ), -1);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), -1);
+                pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), -1);
+            }
             
         }
     }
@@ -1397,8 +1557,10 @@ void ocpn_draw_pi::LoadConfig()
     if(pConf)
     {
         wxString val;
+        int l_style;
         pConf->SetPath( wxS( "/Settings/ocpn_draw_pi" ) );
         wxString  l_wxsColour;
+        pConf->Read( wxS( "DefaultBoundaryPointShowName"), &g_bBoundaryPointShowName, false );
         pConf->Read( wxS( "DefaultActivePathLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourActivePathLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultInActivePathLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
@@ -1423,7 +1585,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bExclusionBoundary = false;
                 g_bInclusionBoundary = true;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 g_bExclusionBoundary = false;
                 g_bInclusionBoundary = false;
                 break;
@@ -1439,10 +1601,12 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultBoundaryFillTransparency" ), &l_longFillTransparency, 175 );
         g_uiFillTransparency = l_longFillTransparency;
         pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineWidth" ), &g_iBoundaryPointRangeRingLineWidth, 2 );
-        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &g_iBoundaryPointRangeRingLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultBoundaryPointRangeRingLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_iBoundaryPointRangeRingLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultInclusionBoundarySize" ), &g_iInclusionBoundarySize, 15 );
         pConf->Read( wxS( "DefaultBoundaryLineWidth" ), &g_BoundaryLineWidth, 2  );
-        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &g_BoundaryLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultBoundaryLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_BoundaryLineStyle = (wxPenStyle)l_style;
         
         pConf->Read( wxS( "DefaultGZFirstIcon" ), &g_sGZFirstIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultGZSecondIcon" ), &g_sGZSecondIconName, wxS("Circle") );
@@ -1455,7 +1619,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultInActiveGZFillColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveGZFillColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultGZLineWidth" ), &g_GZLineWidth, 2  );
-        pConf->Read( wxS( "DefaultGZLineStyle" ), &g_GZLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultGZLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_GZLineStyle = (wxPenStyle)l_style;
         long l_longGZFillTransparency;
         pConf->Read( wxS( "DefaultGZFillTransparency" ), &l_longGZFillTransparency, 175 );
         g_uiGZFillTransparency = l_longGZFillTransparency;
@@ -1466,7 +1631,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLStartIcon" ), &g_sEBLStartIconName, wxS("Circle") );
         pConf->Read( wxS( "DefaultEBLLineWidth" ), &g_EBLLineWidth, 2  );
-        pConf->Read( wxS( "DefaultEBLLineStyle" ), &g_EBLLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultEBLLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_EBLLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultEBLShowArrow" ), &g_bEBLShowArrow, false );
         pConf->Read( wxS( "DefaultEBLVRM" ), &g_bEBLVRM, false );
         pConf->Read( wxS( "DefaultEBLAlwaysShowInfo" ), &g_bEBLAlwaysShowInfo, false );
@@ -1491,11 +1657,14 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultPILInActiveOffsetLine2Colour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourPILInActiveOffsetLine2Colour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultPILCentreLineWidth" ), &g_PILCentreLineWidth, 2 );
-        pConf->Read( wxS( "DefaultPILCentreLineStyle" ), &g_PILCentreLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILCentreLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_PILCentreLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultPILOffsetLine1Width" ), &g_PILOffsetLine1Width, 2 );
-        pConf->Read( wxS( "DefaultPILOffsetLine1Style" ), &g_PILOffsetLine1Style, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLine1Style" ), &l_style, wxPENSTYLE_SOLID );
+        g_PILOffsetLine1Style = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultPILOffsetLine2Width" ), &g_PILOffsetLine2Width, 2 );
-        pConf->Read( wxS( "DefaultPILOffsetLine2Style" ), &g_PILOffsetLine2Style, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultPILOffsetLine2Style" ), &l_style, wxPENSTYLE_SOLID );
+        g_PILOffsetLine2Style = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultPILNumIndexLines" ), &g_PILDefaultNumIndexLines, 0 );
         pConf->Read( wxS( "DefaultPILPersistenceType" ), &g_iPILPersistenceType, 0 );
         pConf->Read( wxS( "DefaultPILOffset"), &g_dPILOffset, 0.5 );
@@ -1510,13 +1679,15 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultDRPointRangeRingsColour" ), &l_wxsDRPointRangeRingsColour, wxS( "RED" ) );
         g_colourDRPointRangeRingsColour.Set( l_wxsDRPointRangeRingsColour );
         pConf->Read( wxS( "DefaultDRPointRangeRingLineWidth" ), &g_iDRPointRangeRingLineWidth, 2 );
-        pConf->Read( wxS( "DefaultDRPointRangeRingLineStyle" ), &g_iDRPointRangeRingLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultDRPointRangeRingLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_iDRPointRangeRingLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultDRLineColour" ), &l_wxsColour, wxS( "RED" ) );
         g_colourDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultInActiveDRLineColour" ), &l_wxsColour, wxS( "LIGHT GREY" ) );
         g_colourInActiveDRLineColour.Set( l_wxsColour );
         pConf->Read( wxS( "DefaultDRLineWidth" ), &g_DRLineWidth, 2  );
-        pConf->Read( wxS( "DefaultDRLineStyle" ), &g_DRLineStyle, wxPENSTYLE_SOLID );
+        pConf->Read( wxS( "DefaultDRLineStyle" ), &l_style, wxPENSTYLE_SOLID );
+        g_DRLineStyle = (wxPenStyle)l_style;
         pConf->Read( wxS( "DefaultDRSOG" ), &val, wxS("5.0") );
         g_dDRSOG = atof( val.mb_str() );
         pConf->Read( wxS( "DefaultDRCOG" ), &g_iDRCOG, 0 );
@@ -1528,9 +1699,11 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultDRTimeUnits" ), &g_iDRTimeUnits, 0 );
         pConf->Read( wxS( "DefaultDRPersistenceType" ), &g_iDRPersistenceType, 2 );
         pConf->Read( wxS( "DefaulPathLineWidth" ), &g_PathLineWidth, 2  );
-        pConf->Read( wxS( "DefaultPathLineStyle" ), &g_PathLineStyle, 100 );
+        pConf->Read( wxS( "DefaultPathLineStyle" ), &l_style, 100 );
+        g_path_line_width = (wxPenStyle)l_style;
         pConf->Read( wxS( "ShowLOGIcon" ),  &m_bLOGShowIcon, 1 );
         pConf->Read( wxS( "PathLineWidth" ), &g_path_line_width, 2 );
+        pConf->Read( wxS( "DefaultODPointArrivalCircle_Radius" ), &g_dODPointArrivalCircleRadius, 0.5 );
         pConf->Read( wxS( "DefaultODPointIcon" ), &g_sODPointIconName, wxS("triangle") );
         pConf->Read( wxS( "DefaultODPointShowRangeRings" ), &g_bODPointShowRangeRings, false );
         pConf->Read( wxS( "ODPointRangeRingsNumber" ), &g_iODPointRangeRingsNumber, 0 );
@@ -1556,7 +1729,7 @@ void ocpn_draw_pi::LoadConfig()
                 g_bExclusionBoundaryPoint = false;
                 g_bInclusionBoundaryPoint = true;
                 break;
-            case ID_BOUNDARY_NIETHER:
+            case ID_BOUNDARY_NEITHER:
                 g_bExclusionBoundaryPoint = false;
                 g_bInclusionBoundaryPoint = false;
                 break;
@@ -1575,6 +1748,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "KeepODNavobjBackups" ), &g_navobjbackups, 0 );
         pConf->Read( wxS( "CurrentDrawMode" ), &m_Mode, 0 );
         pConf->Read( wxS( "ConfirmObjectDelete" ), &g_bConfirmObjectDelete, 0 );
+        pConf->Read( wxS( "RemeberPropertiesDialogPosition" ), &g_bRememberPropertyDialogPosition, false );
         
         pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
         pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
@@ -1583,16 +1757,18 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
         pConf->Read( wxS( "DisplayToolbar" ), &g_iDisplayToolbar, 1 );
 
+        pConf->Read( wxS( "DefaultTextPointShowName"), &g_bTextPointShowName, false );
         pConf->Read( wxS( "DefaultTextPointIcon" ), &g_sTextPointIconName, wxS("Circle") );
         wxString  l_wxsDefautlTextColour;
-        g_colourDefaultTextColour = wxColour( *wxBLACK );
         pConf->Read( wxS( "DefaultTextColour" ), &l_wxsDefautlTextColour, wxS( "BLACK" ) );
-        g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextColour );
+        g_colourDefaultTextColour.Set( l_wxsDefautlTextColour );
         wxString  l_wxsDefautlTextBackgroundColour;
         pConf->Read( wxS( "DefaultTextBackgroundColour" ), &l_wxsDefautlTextBackgroundColour, wxS( "YELLOW" ) );
         g_colourDefaultTextBackgroundColour.Set( l_wxsDefautlTextBackgroundColour );
         pConf->Read( wxS( "DefaultTextBackgroundTransparency" ), &g_iTextBackgroundTransparency, 100 );
         pConf->Read( wxS( "DefaultTextPosition" ), &g_iTextPosition, ID_TEXT_BOTTOM );
+        pConf->Read( wxS( "DefaultTextMaxWidth" ), &g_iTextMaxWidth, 250 );
+        pConf->Read( wxS( "DefaultTextMaxWidthType" ), &g_iTextMaxWidthType, 0 );
         pConf->Read( wxS( "DefaultTextTopOffsetX" ), &g_iTextTopOffsetX, -10 );
         pConf->Read( wxS( "DefaultTextTopOffsetY" ), &g_iTextTopOffsetY, -5 );
         pConf->Read( wxS( "DefaultTextBottomOffsetX" ), &g_iTextBottomOffsetX, -10 );
@@ -1611,11 +1787,11 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointPointSize" ), &l_fontInfo, (int)l_pDisplayTextFont->GetPointSize() );
         g_DisplayTextFont.SetPointSize( l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontFamily" ), &l_fontInfo, (int)l_pDisplayTextFont->GetFamily() );
-        g_DisplayTextFont.SetFamily( l_fontInfo );
+        g_DisplayTextFont.SetFamily( (wxFontFamily)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontStyle" ), &l_fontInfo, (int)l_pDisplayTextFont->GetStyle() );
-        g_DisplayTextFont.SetStyle( l_fontInfo );
+        g_DisplayTextFont.SetStyle( (wxFontStyle)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontWeight" ), &l_fontInfo, (int)l_pDisplayTextFont->GetWeight() );
-        g_DisplayTextFont.SetWeight( l_fontInfo );
+        g_DisplayTextFont.SetWeight( (wxFontWeight)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointFontUnderline" ), &l_bfontInfo, false );
         g_DisplayTextFont.SetUnderlined( l_bfontInfo );
 #if wxCHECK_VERSION(3,0,0)   
@@ -1628,6 +1804,29 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultTextPointFontEncoding" ), &l_fontInfo, (int)l_pDisplayTextFont->GetEncoding() );
         g_DisplayTextFont.SetEncoding( (wxFontEncoding)l_fontInfo );
         pConf->Read( wxS( "DefaultTextPointDisplayTextWhen" ), &g_iTextPointDisplayTextWhen, ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS );
+        pConf->Read( wxS( "DefaultImportPath" ), &g_sDefaultImportPath, _T("") );
+        pConf->Read( wxS( "DefaultImportType" ), &g_sDefaultImportType, _T("gpx") );
+        pConf->Read( wxS( "LastChartScale" ), &m_chart_scale, 0);
+        
+        pConf->Read( wxS( "DefaultBoundaryPropertyDialogPositionX" ), &g_iDefaultBoundaryPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultBoundaryPropertyDialogPositionY" ), &g_iDefaultBoundaryPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultDRPropertyDialogPositionX" ), &g_iDefaultDRPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultDRPropertyDialogPositionY" ), &g_iDefaultDRPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultEBLPropertyDialogPositionX" ), &g_iDefaultEBLPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultEBLPropertyDialogPositionY" ), &g_iDefaultEBLPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultGZPropertyDialogPositionX" ), &g_iDefaultGZPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultGZPropertyDialogPositionY" ), &g_iDefaultGZPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPathPropertyDialogPositionX" ), &g_iDefaultPathPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPathPropertyDialogPositionY" ), &g_iDefaultPathPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPointPropertyDialogPositionX" ), &g_iDefaultPointPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPointPropertyDialogPositionY" ), &g_iDefaultPointPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPILPropertyDialogPositionX" ), &g_iDefaultPILPropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPILPropertyDialogPositionY" ), &g_iDefaultPILPropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPILLinePropertyDialogPositionX" ), &g_iDefaultPILLinePropertyDialogPostionX, -1 );
+        pConf->Read( wxS( "DefaultPILLinePropertyDialogPositionY" ), &g_iDefaultPILLinePropertyDialogPostionY, -1 );
+        pConf->Read( wxS( "DefaultPathAndPointManagerDialogPositionX" ), &g_iDefaultPathAnPointManagerDialogPostionX, -1);
+        pConf->Read( wxS( "DefaultPathAndPointManagerDialogPositionY" ), &g_iDefaultPathAnPointManagerDialogPostionY, -1);
+        
     }
 
 #ifndef __WXMSW__
@@ -1837,6 +2036,7 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                     bKey_EBL_Pressed = false;
                     bKey_DR_Pressed = false;
                     bKey_GZ_Pressed = false;
+                    m_drawing_canvas_index = -1;
                     g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
                     if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
 
@@ -1853,8 +2053,8 @@ bool ocpn_draw_pi::KeyboardEventHook( wxKeyEvent &event )
                 break;
         }
     }
-    SetCursor_PlugIn( m_pCurrentCursor );
-    if(bret) RequestRefresh(m_parent_window);
+    SetMUICursor_PlugIn( m_pCurrentCursor, GetCanvasIndexUnderMouse() );
+    if(bret) ODRequestRefresh(m_drawing_canvas_index, TRUE);
     return bret;
 }
 
@@ -1862,11 +2062,21 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
 {
     bool bret = FALSE;
     bool bRefresh = FALSE;
+    bool bFullRefresh = FALSE;
+    m_mouse_canvas_index = GetCanvasIndexUnderMouse();
     
-    g_cursor_x = event.GetX();
-    g_cursor_y = event.GetY();
-    m_cursorPoint.x = g_cursor_x;
-    m_cursorPoint.y = g_cursor_y;
+    g_ODEventHandler->SetCanvasIndex(m_mouse_canvas_index);
+    
+    if(GetCanvasCount() == 1 || m_drawing_canvas_index == -1 || m_mouse_canvas_index == m_drawing_canvas_index) {
+        g_cursor_x = event.GetX();
+        g_cursor_y = event.GetY();
+        m_cursorPoint.x = g_cursor_x;
+        m_cursorPoint.y = g_cursor_y;
+    }
+    
+    if(GetCanvasCount() > 1 && m_drawing_canvas_index != -1 && m_mouse_canvas_index != m_drawing_canvas_index) {
+        return false;
+    } 
     
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() )
         m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
@@ -1876,7 +2086,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 || nEBL_State > 0 || nGZ_State > 0 || nPIL_State > 0
         || m_bPathEditing || m_bODPointEditing || m_bTextPointEditing || m_bEBLMoveOrigin) {
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2 );
+        CheckMUIEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_InitialEdgePanSensitivity, 2, m_mouse_canvas_index );
         bRefresh = TRUE;
     }
     
@@ -1885,18 +2095,21 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_bDrawingBoundary = true;
         
-        CheckEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_EdgePanSensitivity, 2 );
+        bool l_bret = CheckMUIEdgePan_PlugIn( g_cursor_x, g_cursor_y, event.Dragging(), g_EdgePanSensitivity, 2, m_drawing_canvas_index );
         bRefresh = TRUE;
+//        if(l_bret)
+//            return l_bret;
     }
     
     if ( event.LeftDClick() ) {
         FindSelectedObject();
         if( m_pSelectedPath && m_seltype == SELTYPE_PATHSEGMENT) {
-            if( NULL == g_pPathManagerDialog )         // There is one global instance of the Dialog
-                g_pPathManagerDialog = new PathManagerDialog( m_parent_window );
+            if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+                g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( m_parent_window );
             
-            DimeWindow( g_pPathManagerDialog );
-            g_pPathManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            DimeWindow( g_pPathAndPointManagerDialog );
+            m_pSelectedPath->m_bPathPropertiesBlink = true;
+            g_pPathAndPointManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             bret = true;
         } else if(m_pSelectedPath && m_seltype == SELTYPE_PIL) {
@@ -1914,6 +2127,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODPointPropDialog->SetODPoint( m_pFoundODPoint );
             g_pODPointPropDialog->UpdateProperties();
             
+            DimeWindow(g_pODPointPropDialog);
             if( !g_pODPointPropDialog->IsShown() )
                 g_pODPointPropDialog->Show();
             m_pFoundODPoint = NULL;
@@ -1923,7 +2137,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
         
     if ( event.LeftDown() ) {
         if( m_iCallerId == m_draw_button_id ) {
-            if (nBoundary_State > 0 ) {   
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
+            if (nBoundary_State > 0 ) {
                 g_pODToolbar->SetToolbarToolEnableOnly(ID_MODE_BOUNDARY);
                 bret = CreateBoundaryLeftClick( event );
             } else if ( nPoint_State > 0) {
@@ -1946,17 +2161,21 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = CreatePILLeftClick( event );
             }
         } else if( m_bPathEditing && ( m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT || m_iEditMode == ID_ODPOINT_MENU_MOVE )) {
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pCursorCross;
             m_PathMove_cursor_start_lat = m_cursor_lat;
             m_PathMove_cursor_start_lon = m_cursor_lon;
             bRefresh = TRUE;
         } else if( m_bPathEditing && m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE) {
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pCursorCross;
             bRefresh = TRUE;
         } else if ( m_bODPointEditing ) {
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pCursorCross;
             bret = TRUE;
         } else if ( m_bTextPointEditing ) {
+            if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
             m_pCurrentCursor = m_pTextCursorCross;
             bret = TRUE;
 //        } else if( event.ControlDown() ) {
@@ -1988,6 +2207,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             FindSelectedObject();
 
             if( 0 != m_seltype ) {
+                if(m_drawing_canvas_index == -1) m_drawing_canvas_index = m_mouse_canvas_index;
                 if(m_pSelectedPath && !m_pSelectedPath->m_bIsInLayer) {
                     m_pSelectedBoundary = NULL;
                     m_pSelectedEBL = NULL;
@@ -2018,6 +2238,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                     m_bPathEditing = true;
+                    m_pSelectedPath->m_bIsBeingEdited = true;
                     if(m_seltype & SELTYPE_ODPOINT) {
                         if(m_pSelectedBoundary || m_pSelectedDR || m_pSelectedGZ) {
                             m_iEditMode = ID_PATH_MENU_MOVE_POINT;
@@ -2105,9 +2326,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
                 bRefresh = TRUE;
+                m_drawing_canvas_index = -1;
                 bret = TRUE;
             } else if( m_bPathEditing || ( m_bODPointEditing && m_pSelectedPath )) {
                 m_bPathEditing = FALSE;
+                m_pSelectedPath->m_bIsBeingEdited = false;
                 m_bODPointEditing = FALSE;
                 m_pCurrentCursor = NULL;
                 m_pSelectedPath->m_bIsBeingEdited = FALSE;
@@ -2191,6 +2414,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedGZ = NULL;
                 m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
+                m_drawing_canvas_index = -1;
                 bRefresh = TRUE;
                 bret = TRUE;
             } else if( m_pFoundODPoint && m_bODPointEditing ) {
@@ -2212,6 +2436,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_pSelectedGZ = NULL;
                 m_pSelectedPIL = NULL;
                 m_pFoundODPoint = NULL;
+                m_drawing_canvas_index = -1;
                 
                 bret = TRUE;
             } else if( m_pFoundODPoint ) {
@@ -2222,10 +2447,11 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = TRUE;
             }
             m_iEditMode = ID_MENU_NOITEM;
+            if(bRefresh) bFullRefresh = TRUE;
         }
     }
         
-    if( event.Dragging() ) {
+    if( event.Dragging()) {
         if( event.LeftIsDown() ) {
             if( !m_pBoundaryList.empty() ) {
                 std::list<Boundary *>::iterator it = m_pBoundaryList.begin();
@@ -2237,53 +2463,21 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             }
             if ( nBoundary_State > 0 || nPoint_State > 0 ) bret = true;
             else if( m_pFoundODPoint && ( m_iEditMode == ID_PATH_MENU_MOVE_POINT || m_iEditMode == ID_ODPOINT_MENU_MOVE ) ) {
-                if( m_bPathEditing ) {
-                    m_pCurrentCursor = m_pCursorCross;
-                    if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
-                    else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
-                    else {
-                        m_pFoundODPoint->m_lat = m_cursor_lat;
-                        m_pFoundODPoint->m_lon = m_cursor_lon;
-                    }
-                    if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
-                        m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                        if( event.ControlDown() && event.ShiftDown())
-                            m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
-                        else
-                            m_pSelectedEBL->Resize();
-                    } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
-                        m_pSelectedGZ = (GZ *)m_pSelectedPath;
-                        m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
-                    } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
-                        m_pSelectedPIL = (PIL *)m_pSelectedPath;
-                        m_pSelectedPIL->Resize();
-                    }
-                    g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
-                    m_pSelectedPath->FinalizeForRendering();
-                    m_pSelectedPath->UpdateSegmentDistances();
-                    m_pSelectedPath->SetHiLite( 0 );
-                    
-                    //    Update the PathProperties Dialog, if currently shown
-                    if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) ) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
-                    if( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                    
-                    bRefresh = TRUE;
-                    bret = FALSE;
-                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
-                } else if ( m_bODPointEditing ) {
-                    if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
-                    else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
-                    else {
-                        m_pFoundODPoint->m_lat = m_cursor_lat;
-                        m_pFoundODPoint->m_lon = m_cursor_lon;
-                    }
-                    if(m_pSelectedPath) {
+                if(m_drawing_canvas_index == m_mouse_canvas_index ) { 
+                    if( m_bPathEditing ) {
+                        m_pCurrentCursor = m_pCursorCross;
+                        if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                        else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                        else {
+                            m_pFoundODPoint->m_lat = m_cursor_lat;
+                            m_pFoundODPoint->m_lon = m_cursor_lon;
+                        }
                         if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
                             m_pSelectedEBL = (EBL *)m_pSelectedPath;
-                            if(event.ControlDown() && event.ShiftDown())
+                            if( event.ControlDown() && event.ShiftDown())
                                 m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
                             else
-                                m_pSelectedEBL->Resize( );
+                                m_pSelectedEBL->Resize();
                         } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                             m_pSelectedGZ = (GZ *)m_pSelectedPath;
                             m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
@@ -2291,19 +2485,55 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                             m_pSelectedPIL = (PIL *)m_pSelectedPath;
                             m_pSelectedPIL->Resize();
                         }
-                    }
+                        g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
+                        m_pSelectedPath->FinalizeForRendering();
+                        m_pSelectedPath->UpdateSegmentDistances();
+                        m_pSelectedPath->SetHiLite( 0 );
+                        
+                        //    Update the PathProperties Dialog, if currently shown
+                        if( ( NULL != g_pODPathPropDialog ) && ( g_pODPathPropDialog->IsShown() ) && m_pSelectedPath == g_pODPathPropDialog->GetPath()) g_pODPathPropDialog->UpdateProperties( m_pSelectedPath );
+                        if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                        
+                        bRefresh = TRUE;
+                        bret = FALSE;
+                        event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                    } else if ( m_bODPointEditing ) {
+                        if( event.ControlDown() && !event.ShiftDown()) m_pFoundODPoint->m_lat = m_cursor_lat;
+                        else if( event.ShiftDown() && !event.ControlDown()) m_pFoundODPoint->m_lon = m_cursor_lon;
+                        else {
+                            m_pFoundODPoint->m_lat = m_cursor_lat;
+                            m_pFoundODPoint->m_lon = m_cursor_lon;
+                        }
+                        if(m_pSelectedPath) {
+                            if(m_pSelectedPath->m_sTypeString == wxT("EBL")) {
+                                m_pSelectedEBL = (EBL *)m_pSelectedPath;
+                                if(event.ControlDown() && event.ShiftDown())
+                                    m_pSelectedEBL->Resize( m_cursor_lat, m_cursor_lon, true );
+                                else
+                                    m_pSelectedEBL->Resize( );
+                            } else if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
+                                m_pSelectedGZ = (GZ *)m_pSelectedPath;
+                                m_pSelectedGZ->UpdateGZ( m_pFoundODPoint, false );
+                            } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
+                                m_pSelectedPIL = (PIL *)m_pSelectedPath;
+                                m_pSelectedPIL->Resize();
+                            }
+                        }
 
-                    if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
-                    
-                    m_pCurrentCursor = m_pCursorCross;
-                    bRefresh = TRUE;
-                    bret = FALSE;
-                    event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                        if ( g_pODPointPropDialog && m_pFoundODPoint == g_pODPointPropDialog->GetODPoint() ) g_pODPointPropDialog->UpdateProperties( TRUE );
+                        
+                        m_pCurrentCursor = m_pCursorCross;
+                        bRefresh = TRUE;
+                        bret = FALSE;
+                        event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
+                    }
+                } else {
+                    bret = TRUE;
                 }
             } else if(m_bPathEditing && (m_iEditMode == ID_PATH_MENU_MOVE_PATH || m_iEditMode == ID_PATH_MENU_MOVE_PATH_SEGMENT)) {
                 // Do move of whole path
-                double l_move_lat;
-                double l_move_lon;
+                double l_move_lat = 0;
+                double l_move_lon = 0;
                 if( event.ControlDown()) l_move_lat = m_PathMove_cursor_start_lat - m_cursor_lat;
                 else if( event.ShiftDown()) l_move_lon = m_PathMove_cursor_start_lon - m_cursor_lon;
                 else {
@@ -2338,7 +2568,6 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 bret = FALSE;
                 event.SetEventType(wxEVT_MOVING); // stop dragging canvas on event flow through
             }
-            
         }
         
     }
@@ -2372,6 +2601,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nPoint_State > 1) {
             m_iCallerId = 0;
@@ -2384,6 +2615,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nTextPoint_State > 1) {
             m_iCallerId = 0;
@@ -2396,6 +2629,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nEBL_State > 1 ) {
             m_iCallerId = 0;
@@ -2409,6 +2644,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nDR_State > 1 ) {
             m_iCallerId = 0;
@@ -2421,6 +2658,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nGZ_State > 1 ) {
             m_iCallerId = 0;
@@ -2437,6 +2676,8 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( nPIL_State > 1 ) {
             m_iCallerId = 0;
@@ -2449,14 +2690,18 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_pODToolbar->GetPosition( &g_iToolbarPosX, &g_iToolbarPosY );
             if( g_iDisplayToolbar != ID_DISPLAY_ALWAYS ) g_pODToolbar->Hide();
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if ( m_bEBLMoveOrigin ) {
             m_bEBLMoveOrigin = false;
             m_pCurrentCursor = NULL;
             bRefresh = TRUE;
+            bFullRefresh = TRUE;
+            m_drawing_canvas_index = -1;
             bret = TRUE;
         } else if( m_pBoundaryList.size() > 0 ) {
-            g_ODEventHandler->SetCanvas( ocpncc1 );
+            g_ODEventHandler->SetWindow( m_parent_window );
             g_ODEventHandler->SetBoundaryList( m_pBoundaryList );
             g_ODEventHandler->PopupMenu( SELTYPE_BOUNDARYLIST );
             m_pBoundaryList.clear();
@@ -2483,27 +2728,27 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                     else if(m_pSelectedPath->m_sTypeString == wxT("PIL"))
                         m_pSelectedPIL = (PIL *)m_pSelectedPath;
                     m_pSelectedPath->m_bPathPropertiesBlink = true;
+                } else if(m_pFoundODPoint) {
+                    m_pFoundODPoint->m_bPointPropertiesBlink = true;
                 }
-                g_ODEventHandler->SetCanvas( ocpncc1 );
+                g_ODEventHandler->SetCanvas( GetCanvasByIndex(m_mouse_canvas_index) );
                 g_ODEventHandler->SetPath( m_pSelectedPath );
                 g_ODEventHandler->SetPoint( m_pFoundODPoint );
                 g_ODEventHandler->SetPIL( m_iPILId );
                 g_ODEventHandler->SetLatLon( m_cursor_lat, m_cursor_lon );
                 g_ODEventHandler->PopupMenu( m_seltype );
                 
-                //RequestRefresh( m_parent_window );
                 bRefresh = TRUE;
                 bret = true;
             } else bret = FALSE;
             
-            //end           
         }
     }
     
     //      Check to see if there is a path under the cursor
     //      If so, start the rollover timer which creates the popup
     bool b_start_rollover = false;
-    if(!b_start_rollover && !m_bPathEditing){
+    if(!b_start_rollover && !m_bPathEditing && !bRefresh){
         SelectableItemList SelList = g_pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
         wxSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
@@ -2513,6 +2758,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             
             if( pp && pp->IsVisible() ){
                 b_start_rollover = true;
+                bRefresh = true;
                 break;
             }
             node = node->GetNext();
@@ -2522,9 +2768,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     if( b_start_rollover )
         m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
     
-    SetCursor_PlugIn( m_pCurrentCursor );
+    SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
     
-    if( bRefresh ) RequestRefresh( m_parent_window );
+    if( bRefresh ) ODRequestRefresh( m_mouse_canvas_index, bFullRefresh );
+    
     return bret;
 }
 
@@ -2559,7 +2806,10 @@ void ocpn_draw_pi::FindSelectedObject()
             SelectItem *pFindSel = node->GetData();
             
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
-            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) continue;
+            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) {
+                node = node->GetNext();
+                continue;
+            }
             
             //    Get an array of all paths using this point
             wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pop );
@@ -2612,24 +2862,40 @@ void ocpn_draw_pi::FindSelectedObject()
         }
         
         //      Now choose the "best" selections
+        ODPath *l_pSelectedPath = NULL;
         if( pFoundActiveODPoint ) {
             m_pFoundODPoint = pFoundActiveODPoint;
-            m_pSelectedPath = pSelectedActivePath;
+            l_pSelectedPath = pSelectedActivePath;
         } else if( pFoundVizODPoint ) {
             m_pFoundODPoint = pFoundVizODPoint;
-            m_pSelectedPath = pSelectedVizPath;
+            l_pSelectedPath = pSelectedVizPath;
         } else
             // default is first visible point in list
             m_pFoundODPoint = pFirstVizPoint;
         
-        if ( m_pSelectedPath ) {
-            if ( m_pSelectedPath->IsVisible() )
+        if ( l_pSelectedPath ) {
+            if ( l_pSelectedPath->IsVisible() )
                 m_seltype |= SELTYPE_ODPOINT;
-            if( m_pSelectedPath->m_sTypeString == wxT("Boundary") ) m_pSelectedBoundary = (Boundary *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("EBL") ) m_pSelectedEBL = (EBL *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("DR") ) m_pSelectedDR = (DR *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("Guard Zone") ) m_pSelectedGZ = (GZ *)m_pSelectedPath;
-            else if( m_pSelectedPath->m_sTypeString == wxT("PIL") ) m_pSelectedPIL = (PIL *)m_pSelectedPath;
+            if( l_pSelectedPath->m_sTypeString == wxT("Boundary") ) {
+                m_pSelectedBoundary = (Boundary *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedBoundary;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("EBL") ) {
+                m_pSelectedEBL = (EBL *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedEBL;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("DR") ) {
+                m_pSelectedDR = (DR *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedDR;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("Guard Zone") ) {
+                m_pSelectedGZ = (GZ *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedGZ;
+            }
+            else if( l_pSelectedPath->m_sTypeString == wxT("PIL") ) {
+                m_pSelectedPIL = (PIL *)l_pSelectedPath;
+                m_pSelectedPath = m_pSelectedPIL;
+            }
         } else if( m_pFoundODPoint ) m_seltype |= SELTYPE_ODPOINT;
         
         
@@ -2657,9 +2923,8 @@ void ocpn_draw_pi::FindSelectedObject()
         }
         
         if( m_pSelectedPath ) {
-            m_pSelectedPath->m_bPathPropertiesBlink = true;
-            if( NULL == m_pFoundODPoint ) m_pFoundODPoint =
-                (ODPoint *) pFindPathSeg->m_pData1;
+            if( NULL == m_pFoundODPoint ) 
+                m_pFoundODPoint = (ODPoint *) pFindPathSeg->m_pData1;
             m_pFoundODPointSecond = (ODPoint *) pFindPathSeg->m_pData2;
             
             m_pSelectedPath->m_bPathIsSelected = !(m_seltype & SELTYPE_ODPOINT);
@@ -2683,7 +2948,11 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon)
     
     m_cursor_lat = lat;
     m_cursor_lon = lon;
-    if( g_ODEventHandler ) g_ODEventHandler->SetLatLon( lat, lon );
+    
+    if( g_ODEventHandler ) {
+        g_ODEventHandler->SetLatLon( lat, lon );
+        g_ODEventHandler->SetWindow(g_parent_window);
+    }
 }
 
 wxString ocpn_draw_pi::FormatDistanceAdaptive( double distance ) 
@@ -2733,6 +3002,11 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
+    return RenderOverlays(dc, pivp);
+}
+
+bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
+{
     m_VP = *pivp;
     g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
@@ -2750,7 +3024,19 @@ bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
     return TRUE;
 }
 
+bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index)
+{
+    m_current_canvas_index = canvas_index;
+    bool bRet = RenderOverlays(dc, vp);
+    return bRet;
+}
+
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
+{
+    return RenderGLOverlays(pcontext, pivp);
+}
+
+bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
     m_pcontext = pcontext;
     m_VP = *pivp;
@@ -2765,23 +3051,26 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
     //    DrawAllODPointsInBBox( *g_pDC, llbb );
     RenderPathLegs( *g_pDC );
     
-    if (m_pMouseBoundary) m_pMouseBoundary->DrawGL( *pivp );
+    if (m_pMouseBoundary && m_mouse_canvas_index == m_current_canvas_index) m_pMouseBoundary->DrawGL( *pivp );
     
     DrawAllPathsAndODPoints( *pivp );
 
-    if( g_pODRolloverWin && g_pODRolloverWin->IsActive() && g_pODRolloverWin->GetBitmap() != NULL ) {
-        g_pDC->DrawBitmap( *(g_pODRolloverWin->GetBitmap()),
-                       g_pODRolloverWin->GetPosition().x,
-                       g_pODRolloverWin->GetPosition().y, false );
-    }
-    
     delete g_pDC;
     return TRUE;
 }
 
+bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index) 
+{
+    m_current_canvas_index = canvas_index;
+    bool bRet = RenderGLOverlays(pcontext, vp);
+    return bRet;
+}
+
 void ocpn_draw_pi::RenderPathLegs( ODDC &dc ) 
 {
-    if( nBoundary_State >= 2) {
+    if(m_mouse_canvas_index != m_current_canvas_index) return;
+    
+    if( nBoundary_State >= 2 ) {
         
         Boundary* boundary = 0;
         boundary = m_pMouseBoundary;
@@ -2811,44 +3100,46 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         
         //        if( !IsTouchInterface_PlugIn) {
         boundary->DrawPointWhich( dc, boundary->m_lastMousePointIndex, &lastPoint );
+        GetCanvasPixLL( &m_VP, &destPoint, m_cursor_lat, m_cursor_lon);
+        
         if( boundary->m_NextLegGreatCircle ) {
             for( int i=1; i<=milesDiff; i++ ) {
                 double p = (double)i * (1.0/(double)milesDiff);
                 double pLat, pLon;
                 Geodesic::GreatCircleTravel( m_prev_rlon, m_prev_rlat, gcDist*p, brg, &pLon, &pLat, &gcBearing2 );
-                GetCanvasPixLL( &m_VP, &destPoint, m_cursor_lat, m_cursor_lon);
                 //destPoint = VPoint.GetPixFromLL( pLat, pLon );
                 boundary->DrawSegment( dc, &lastPoint, &destPoint, m_VP, false );
-                wxPoint rpn;
-                boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                boundary->DrawSegment( dc, &rpn , &destPoint, m_VP, false );
+                wxPoint odp;
+                boundary->GetPoint( 1 )->Draw( dc, &odp);
+                boundary->DrawSegment( dc, &odp, &destPoint, m_VP, false );
                 lastPoint = destPoint;
             }
         }
         else {
-            boundary->DrawSegment( dc, &lastPoint, &r_rband, m_VP, false );
+            boundary->DrawSegment( dc, &lastPoint, &destPoint, m_VP, false );
             if ( nBoundary_State >= 2) { 
-                wxPoint rpn;
-                boundary->GetPoint( 1 )->Draw( dc, &rpn );
-                boundary->DrawSegment( dc, &rpn , &r_rband, m_VP, false );
+                wxPoint odp;
+                boundary->GetPoint( 1 )->Draw( dc, &odp);
+                boundary->DrawSegment( dc, &odp, &destPoint, m_VP, false );
             }
         }
         
-        wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, m_cursorPoint);
-        RenderExtraPathLegInfo( dc, r_rband, info );
+        wxString info = CreateExtraPathLegInfo(dc, boundary, brg, dist, destPoint);
+        RenderExtraPathLegInfo( dc, destPoint, info );
     } else if( m_pSelectedEBL && (nEBL_State > 0 || m_bEBLMoveOrigin) ) {
         EBL *ebl = new EBL();
         double brg, dist;
-        wxPoint boatpoint;
+        wxPoint boatpoint, l_cursorPoint;
+        GetCanvasPixLL( &g_VP, &l_cursorPoint, m_cursor_lat, m_cursor_lon);
         if(m_bEBLMoveOrigin) {
             ODPoint *tp = (ODPoint *) m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
             GetCanvasPixLL( &g_VP, &boatpoint, tp->m_lat, tp->m_lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, tp->m_lat, tp->m_lon, &brg, &dist );
-            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, m_VP, false );
+            ebl->DrawSegment( dc, &boatpoint, &l_cursorPoint, m_VP, false );
         } else {
             GetCanvasPixLL( &g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
             DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
-            ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, m_VP, false );
+            ebl->DrawSegment( dc, &boatpoint, &l_cursorPoint, m_VP, false );
         }
         wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
         if(info.length() > 0)
@@ -2876,13 +3167,14 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
         // draw line from boat to cursor
         EBL *ebl = new EBL();
         double brg, dist;
-        wxPoint boatpoint;
+        wxPoint boatpoint, l_cursorPoint;
+        GetCanvasPixLL( &g_VP, &l_cursorPoint, m_cursor_lat, m_cursor_lon);
         GetCanvasPixLL( &g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon );
         DistanceBearingMercator_Plugin( m_cursor_lat, m_cursor_lon, g_pfFix.Lat, g_pfFix.Lon, &brg, &dist );
-        ebl->DrawSegment( dc, &boatpoint, &m_cursorPoint, m_VP, false );
-        wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
+        ebl->DrawSegment( dc, &boatpoint, &l_cursorPoint, m_VP, false );
+        wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, l_cursorPoint);
         if(info.length() > 0)
-            RenderExtraPathLegInfo( dc, m_cursorPoint, info );
+            RenderExtraPathLegInfo( dc, l_cursorPoint, info );
         delete ebl;
         
         // rubber band guard zone
@@ -2901,7 +3193,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, m_pMouseGZ->m_dFirstLineDirection, dist, &l_dLat, &l_dLon);
             GetCanvasPixLL( &g_VP, &l_l1p2, l_dLat, l_dLon );
             // get x, y of second point on second line
-            l_l2p2 = m_cursorPoint;
+            l_l2p2 = l_cursorPoint;
             // get x, y of first point on second line
             PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, brg, m_pMouseGZ->m_dFirstDistance, &l_dLat, &l_dLon);
             GetCanvasPixLL( &g_VP, &l_l2p1, l_dLat, l_dLon);
@@ -2910,7 +3202,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             
             delete gz;
         }
-    } else if( nPIL_State > 0 || nEBL_State > 0 ) {
+    } else if( (nPIL_State > 0 || nEBL_State > 0) ) {
         // draw line from boat to cursor
         ODPath *ptPath;
         PIL *pil;
@@ -2964,12 +3256,12 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     int w, h;
     int xp, yp;
     int hilite_offset = 3;
-    #ifdef __WXMAC__
+#ifdef __WXMAC__
     wxScreenDC sdc;
     sdc.GetTextExtent( pathInfo, &w, &h, NULL, NULL, dFont );
-    #else
+#else
     dc.GetTextExtent( pathInfo, &w, &h );
-    #endif
+#endif
     xp = ref_point.x - w;
     yp = ref_point.y;
     yp += hilite_offset;
@@ -3066,8 +3358,8 @@ void ocpn_draw_pi::FinishBoundary( void )
             g_pODPathPropDialog->SetPathAndUpdate( m_pMouseBoundary, true );
         }
         
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     }
     
     m_pMouseBoundary = NULL;
@@ -3172,7 +3464,7 @@ void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
         if(node->GetData()->m_sTypeString == _T("Boundary Point"))
             pOP = (BoundaryPoint *)node->GetData();
         if( pOP ) {
-            if( pOP->m_bIsInRoute || pOP->m_bIsInPath ) {
+            if( pOP->m_bIsInPath ) {
                 node = node->GetNext();
                 continue;
             } else {
@@ -3211,7 +3503,7 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
     BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
 
     if( pNearbyPoint && ( pNearbyPoint != (BoundaryPoint *)m_prev_pMousePoint )
-        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+        && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
 #ifndef __WXOSX__
@@ -3229,8 +3521,8 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
             // TODO fix up undo
             //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
             
-            // check all other boundaries and routes to see if this point appears in any other route
-            // If it appears in NO other route, then it should e considered an isolated mark
+            // check all other boundaries and paths to see if this point appears in any other path
+            // If it appears in NO other path, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
@@ -3244,8 +3536,8 @@ bool ocpn_draw_pi::CreatePointLeftClick( wxMouseEvent &event )
         
         g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
         g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdateODPointsListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
         
     }
     
@@ -3278,7 +3570,7 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
     TextPoint *pNearbyPoint = (TextPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
                                                                             nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
-        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+        && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
 #ifndef __WXOSX__
@@ -3296,27 +3588,25 @@ bool ocpn_draw_pi::CreateTextPointLeftClick( wxMouseEvent &event )
             // TODO fix up undo
             //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
             
-            // check all other boundaries and routes to see if this point appears in any other route
-            // If it appears in NO other route, then it should e considered an isolated mark
+            // check all other boundaries and paths to see if this point appears in any other path
+            // If it appears in NO other path, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
     
     if( NULL == pMousePoint ) {                 // need a new point
         pMousePoint = new TextPoint( rlat, rlon, g_sTextPointIconName, wxS(""), wxT("") );
-        pMousePoint->SetNameShown( false );
-        pMousePoint->m_bIsolatedMark = TRUE;
         
         g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
         g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdateODPointsListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
         
     }
     
     nTextPoint_State++;
     
-    RequestRefresh( m_parent_window );
+    ODRequestRefresh( m_mouse_canvas_index );
     
     return TRUE;
 }
@@ -3341,7 +3631,10 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_dStartLat = m_cursor_lat;
         m_dStartLon = m_cursor_lon;
+        //m_drawing_canvas_index = m_mouse_canvas_index;
     }
+    
+    if(m_drawing_canvas_index != m_mouse_canvas_index) return false;
     
     //    Check to see if there is a nearby point which may be reused
     BoundaryPoint *pMousePoint = NULL;
@@ -3355,10 +3648,9 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
 
     double nearby_radius_meters = nearby_sel_rad_pix / m_view_scale;
     
-    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon,
-                                                             nearby_radius_meters );
+    BoundaryPoint *pNearbyPoint = (BoundaryPoint *)g_pODPointMan->GetNearbyODPoint( rlat, rlon, nearby_radius_meters );
     if( pNearbyPoint && ( pNearbyPoint != m_prev_pMousePoint )
-        && !pNearbyPoint->m_bIsInTrack && !pNearbyPoint->m_bIsInLayer )
+        && !pNearbyPoint->m_bIsInLayer )
     {
         int dlg_return;
 #ifndef __WXOSX__
@@ -3376,8 +3668,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
             // TODO fix up undo
             //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_HasParent, NULL );
             
-            // check all other boundaries and routes to see if this point appears in any other route
-            // If it appears in NO other route, then it should e considered an isolated mark
+            // check all other boundaries and paths to see if this point appears in any other path
+            // If it appears in NO other path, then it should e considered an isolated mark
             if( !g_pPathMan->FindPathContainingODPoint( pMousePoint ) ) pMousePoint->m_bKeepXPath = true;
         }
     }
@@ -3406,7 +3698,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
                 Geodesic::GreatCircleDistBear( m_prev_rlon, m_prev_rlat, rlon, rlat, &gcDist, &gcBearing, NULL );
                 double gcDistNM = gcDist / 1852.0;
                 
-                // Empirically found expression to get reasonable route segments.
+                // Empirically found expression to get reasonable path segments.
                 int segmentCount = (3.0 + (rhumbDist - gcDistNM)) / pow(rhumbDist-gcDistNM-1, 0.5 );
                 
                 wxString msg;
@@ -3477,7 +3769,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         m_pMouseBoundary->m_lastMousePointIndex = m_pMouseBoundary->GetnPoints();
     
     nBoundary_State++;
-    RequestRefresh( m_parent_window );
+    ODRequestRefresh( m_drawing_canvas_index );
     
     return TRUE;
 } 
@@ -3486,6 +3778,8 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
 {
     ODPoint *pMousePoint = NULL;
     double rlat, rlon;
+    
+    if(m_drawing_canvas_index != m_mouse_canvas_index) return false;
     
     rlat = m_cursor_lat;
     rlon = m_cursor_lon;
@@ -3501,6 +3795,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     beginPoint->SetNameShown( false );
     beginPoint->SetTypeString( wxT("EBL Point"));
     beginPoint->m_bIsolatedMark = false;
+    beginPoint->m_bSingleUse = true;
     m_pMouseEBL->AddPoint( beginPoint, false );
     
     pMousePoint = new ODPoint( rlat, rlon, g_sEBLEndIconName, _("End"), wxT("") );
@@ -3508,6 +3803,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     pMousePoint->SetNameShown( false );
     pMousePoint->SetTypeString( wxS("EBL Point") );
     pMousePoint->m_bIsolatedMark = FALSE;
+    pMousePoint->m_bSingleUse = true;
     m_pMouseEBL->AddPoint( pMousePoint );
     m_pMouseEBL->m_bCentreOnBoat = true;
     DistanceBearingMercator_Plugin(rlat, rlon, m_dStartLat, m_dStartLon, &m_pMouseEBL->m_dEBLAngle, &m_pMouseEBL->m_dLength);
@@ -3534,11 +3830,13 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
     m_pMouseEBL->RebuildGUIDList();
     
     nEBL_State++;
-
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
     
-    RequestRefresh( m_parent_window );
+    m_pMouseEBL->m_bIsBeingCreated = false;
+
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
+    
+    ODRequestRefresh( m_drawing_canvas_index );
     
     return TRUE;
 }
@@ -3546,7 +3844,7 @@ bool ocpn_draw_pi::CreateEBLLeftClick( wxMouseEvent &event )
 bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
 {
     if( NULL == g_pODDRDialog )         // There is one global instance of the Dialog
-        g_pODDRDialog = new ODDRDialogImpl( ocpncc1 );
+        g_pODDRDialog = new ODDRDialogImpl( m_parent_window );
     
     g_pODDRDialog->SetupDialog();
     DimeWindow( g_pODDRDialog );
@@ -3561,7 +3859,7 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     
     nDR_State++;
     
-    RequestRefresh( m_parent_window );
+    ODRequestRefresh( m_drawing_canvas_index, TRUE );
     
     return true;
 }
@@ -3612,7 +3910,6 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     g_pODConfig->AddNewODPoint( pMousePoint, -1 );    // use auto next num
     g_pODSelect->AddSelectableODPoint( rlat, rlon, pMousePoint );
     
-    //if( nGZ_State > 1 )
     // TODO fix up undo
     //undo->BeforeUndoableAction( Undo_AppendWaypoint, pMousePoint, Undo_IsOrphanded, NULL );
     
@@ -3644,6 +3941,7 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
                 else m_pMouseGZ->m_bTemporary = false;
                 g_pODConfig->AddNewPath( m_pMouseGZ, -1 );    // don't save over restart
             }
+            m_pMouseGZ->m_bIsBeingCreated = false;
         } else {
             pMousePoint->SetName(_("First"));
             pMousePoint->SetIconName( g_sGZFirstIconName );
@@ -3656,8 +3954,8 @@ bool ocpn_draw_pi::CreateGZLeftClick( wxMouseEvent &event )
     if(m_pMouseGZ) {
         m_pMouseGZ->m_lastMousePointIndex = m_pMouseGZ->GetnPoints();
         m_pMouseGZ->RebuildGUIDList();
-        if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-            g_pPathManagerDialog->UpdatePathListCtrl();
+        if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+            g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     }
 
     nGZ_State++;
@@ -3721,8 +4019,11 @@ bool ocpn_draw_pi::CreatePILLeftClick( wxMouseEvent &event )
     g_pODSelect->AddSelectablePathSegment( g_pfFix.Lat, g_pfFix.Lon, rlat, rlon, beginPoint, pMousePoint, m_pMousePIL );
 
     nPIL_State++;
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() )
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    
+    m_pMousePIL->m_bIsBeingCreated = false;
+    
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
 
     RequestRefresh( m_parent_window );
 
@@ -3754,7 +4055,10 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         ODPath *pTempPath = node->GetData();
         if( !pTempPath )
             continue;
-
+        if((pTempPath->m_bIsBeingEdited || pTempPath->m_bIsBeingCreated) && m_mouse_canvas_index != m_current_canvas_index) {
+            continue;
+        }
+        
         ODPath *pPathDraw = NULL;
         Boundary *pBoundaryDraw = NULL;
         EBL *pEBLDraw = NULL;
@@ -3781,7 +4085,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             assert(pPathDraw != 0);
         }
         
-        /* defer rendering active routes until later */ 
+        /* defer rendering active paths until later */ 
         //if( pPathDraw->IsActive() || pPathDraw->IsSelected() )
         //            continue;
         
@@ -3844,14 +4148,15 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
         
     }
         
-    /* ODPoints not drawn as part of routes */
+    /* ODPoints not drawn as part of paths */
     if( pivp.bValid && g_pODPointMan ) {
         LLBBox llbb;
         llbb.Set( pivp.lat_min, pivp.lon_min, pivp.lat_max, pivp.lon_max );
         
         for(wxODPointListNode *pnode = g_pODPointMan->GetODPointList()->GetFirst(); pnode; pnode = pnode->GetNext() ) {
             ODPoint *pOP = pnode->GetData();
-            if( !pOP->m_bShowODPointRangeRings) {
+            if(pOP->m_bIsInPath) continue;
+            if( !pOP->m_bShowODPointRangeRings ||(pOP->m_bShowODPointRangeRings && pOP->m_iODPointRangeRingsNumber == 0)) {
                 if( llbb.Contains(pOP->m_lat, pOP->m_lon) ) pOP->DrawGL( pivp );
             } else {
                 if( !llbb.IntersectOut(pOP->m_RangeRingsBBox) ) pOP->DrawGL( pivp );
@@ -4027,7 +4332,8 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 nEBL_State = 0;
                 nDR_State = 0;
                 nGZ_State = 0;
-                nPIL_State = 0;
+                nPIL_State = 0;            //end           
+                
                 break;
                 
             case ID_MODE_EBL:
@@ -4041,11 +4347,13 @@ void ocpn_draw_pi::SetToolbarTool( void )
                 SetToolbarItemState( m_draw_button_id, true );
                 nPoint_State = 0;
                 nBoundary_State = 0;
-                nTextPoint_State = 0;
+                nTextPoint_State = 0;            //end           
+                
                 nEBL_State = 1;
                 nDR_State = 0;
                 nGZ_State = 0;
-                nPIL_State = 0;
+                nPIL_State = 0;            //end           
+                
                 RequestRefresh( m_parent_window );
                 break;
                 
@@ -4126,5 +4434,17 @@ void ocpn_draw_pi::SetToolbarTool( void )
         }
     }
     
+}
+
+void ocpn_draw_pi::ODRequestRefresh(int canvas_index, bool bFullRefresh)
+{
+    if(!bFullRefresh) {
+        if(canvas_index != -1) RequestRefresh(GetCanvasByIndex(canvas_index));
+    }
+    else {
+        for(int i = 0; i < GetCanvasCount(); ++i) {
+            RequestRefresh(GetCanvasByIndex(i));
+        }
+    }
 }
 

@@ -28,12 +28,6 @@
 
 #include "ODPoint.h"
 
-enum {
-    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS = 0,
-    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER,
-    ID_TEXTPOINT_DISPLAY_TEXT_SHOW_NEVER
-};
-
 class ODText;
 
 class TextPoint : public ODPoint
@@ -44,17 +38,17 @@ class TextPoint : public ODPoint
         TextPoint(const TextPoint& other);
         ~TextPoint();
         
-        void Draw(ODDC& dc, wxPoint *rpn = NULL );
+        void Draw(ODDC& dc, wxPoint *odp= NULL );
         void DrawGL( PlugIn_ViewPort &pivp );
         void SetPointText( wxString sTextPointText );
         wxString GetPointText( void ) { return m_TextPointText; }
-        void ShowText( void );
-        void HideText( void );
         void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
         void CreateColourSchemes(void);
 
         wxString        m_TextPointText;
         int             m_iTextPosition;
+        int             m_iWrapLen;
+        int             m_iTextMaxWidthType;
         int             m_iBackgroundTransparency;
         wxColour        m_colourTextColour;
         wxColour        m_colourTextBackgroundColour;
@@ -80,13 +74,13 @@ class TextPoint : public ODPoint
 
     private:
         void CalculateTextExtents( void );
+        void CalculateTextExtents( wxString TextPointText );
         
         wxStaticText    *m_pstText;
         wxTextCtrl      *m_ptcText;
         wxSize          m_TextExtents;
         int             m_TextLocationOffsetX;
         int             m_TextLocationOffsetY;
-        int             m_iWrapLen;
         
         unsigned int    m_iDisplayTextTexture;
         int             m_iDisplayTextTextureWidth, m_iDisplayTextTextureHeight;

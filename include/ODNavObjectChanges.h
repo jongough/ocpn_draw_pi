@@ -26,7 +26,6 @@
 #ifndef ODNAVOBJECTCHANGES_H
 #define ODNAVOBJECTCHANGES_H
 
-//#include <NavObjectCollection.h>
 #include "pugixml.hpp"
 #include "ODPath.h"
 
@@ -51,6 +50,7 @@
 #define         OUT_ARRIVAL_RADIUS 1 << 18
 #define         OUT_OCPNPOINT_RANGE_RINGS 1 << 19
 #define         OUT_POINTTEXT 1 << 20
+#define         OUT_SINGLEUSE 1<<21             // Output use only in a single object
 
 #define  OPT_OCPNPOINT  (OUT_TYPE) +\
                         (OUT_TIME) +\
@@ -65,7 +65,8 @@
                         (OUT_HYPERLINKS) +\
                         (OUT_ARRIVAL_RADIUS) +\
                         (OUT_OCPNPOINT_RANGE_RINGS) +\
-                        (OUT_POINTTEXT)
+                        (OUT_POINTTEXT)+\
+                        (OUT_SINGLEUSE)
 
 //class ODNavObjectChanges : public NavObjectChanges
 class ODNavObjectChanges : public pugi::xml_document
@@ -88,6 +89,9 @@ class ODNavObjectChanges : public pugi::xml_document
     bool GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, unsigned int flags );
     bool LoadAllGPXObjects( bool b_full_viz = false);
     int  LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz);
+    int Load_CSV_File(wxString file, int layer_id = 0, bool b_layerviz = false);
+    void InsertPathA( ODPath *pTentPath );
+    //bool LoadAllCSVObjects( bool b_full_viz = false);
     //ODPoint * GPXLoadODPoint1( pugi::xml_node &odpt_node, wxString def_symbol_name, wxString GUID, bool b_fullviz, bool b_layer, bool b_layerviz, int layer_id );
 
     bool CreateAllGPXObjects();
@@ -122,7 +126,6 @@ class ODNavObjectChanges : public pugi::xml_document
         ODPoint *tempODPointExists( const wxString& guid );
         void tempODPointRemove( const wxString& guid );
 
-        void InsertPathA( ODPath *pTentPath );
         void UpdatePathA( ODPath *pTentPath );
         ODPath *PathExists( const wxString& guid);
         ODPath *PathExists( ODPath * pTentPath );

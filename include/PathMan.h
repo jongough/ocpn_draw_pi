@@ -84,7 +84,6 @@ class PathMan
     private:
         void DoAdvance(void);
 
-        MyApp       *m_pparent_app;
         ODPath      *pActivePath;
         ODPoint     *pActivePoint;
         double      PathBrgToActivePoint;        

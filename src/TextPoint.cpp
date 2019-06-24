@@ -32,6 +32,7 @@
 #include "TextPoint.h"
 #include "ocpn_draw_pi.h"
 #include "ODdc.h"
+#include "ODUtils.h"
 #include "PointMan.h"
 #include "cutil.h"
 
@@ -40,30 +41,6 @@
 
 #include "GL/gl.h"
 
-extern PlugIn_ViewPort  g_VP;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-extern PointMan     *g_pODPointMan;
-extern ODText       *g_ODText;
-extern int          g_iTextPosition;
-extern wxColour     g_colourDefaultTextColour;
-extern wxFont       g_DisplayTextFont;
-extern int          g_DisplayTextFontPointSize;
-extern wxColour     g_colourDefaultTextBackgroundColour;
-extern int          g_iTextBackgroundTransparency;
-extern int          g_iTextTopOffsetX;
-extern int          g_iTextTopOffsetY;
-extern int          g_iTextBottomOffsetX;
-extern int          g_iTextBottomOffsetY;
-extern int          g_iTextBottomNameExtraOffsetY;
-extern int          g_iTextCentreOffsetX;
-extern int          g_iTextCentreOffsetY;
-extern int          g_iTextRightOffsetX;
-extern int          g_iTextRightOffsetY;
-extern int          g_iTextLeftOffsetX;
-extern int          g_iTextLeftOffsetY;
-extern int          g_iTextPointDisplayTextWhen;
-
-//extern ChartCanvas  *ocpncc1;
 // Fix for VS2010 not having the round function
 #if defined (_WIN32)
 #if _MSC_VER < 1700
@@ -81,6 +58,8 @@ int round (double x) {
 TextPoint::TextPoint() : ODPoint()
 {
     m_sTypeString = wxT("Text Point");
+    m_bShowName = g_bTextPointShowName;
+    m_bIsolatedMark = true;
     switch ( g_iTextPosition )
     {
         case ID_TEXT_TOP:
@@ -110,7 +89,8 @@ TextPoint::TextPoint() : ODPoint()
     m_iBackgroundTransparency = g_iTextBackgroundTransparency;
     m_colourTextColour = g_colourDefaultTextColour;
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
-    m_iWrapLen = 250;
+    m_iWrapLen = g_iTextMaxWidth;
+    m_iTextMaxWidthType = g_iTextMaxWidthType;
     m_DisplayTextFont = g_DisplayTextFont;
     m_bTextChanged = true;
     m_bShowDisplayTextOnRollover = false;
@@ -128,7 +108,7 @@ TextPoint::TextPoint() : ODPoint()
     //m_pstText = new wxStaticText( g_ocpn_draw_pi->m_parent_window, wxID_ANY, wxT(""));
 }
 
-TextPoint::TextPoint(const TextPoint& other)
+TextPoint::TextPoint(const TextPoint& other) : ODPoint(other)
 {
     m_sTypeString = wxT("Text Point");
     m_TextLocationOffsetX = other.m_TextLocationOffsetX;
@@ -137,7 +117,8 @@ TextPoint::TextPoint(const TextPoint& other)
     m_iBackgroundTransparency = other.m_iBackgroundTransparency;
     m_colourTextColour = other.m_colourTextColour;
     m_colourTextBackgroundColour = other.m_colourTextBackgroundColour;
-    m_iWrapLen = 250;
+    m_iWrapLen = other.m_iWrapLen;
+    m_iTextMaxWidthType = other.m_iTextMaxWidthType;
     m_DisplayTextFont = other.m_DisplayTextFont;
     m_bTextChanged = true;
     m_iDisplayTextWhen = other.m_iDisplayTextWhen;
@@ -159,6 +140,7 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
 : ODPoint( lat, lon, icon_ident, name, pGUID, bAddToList )
 {
     m_sTypeString = wxT("Text Point");
+    m_bIsolatedMark = true;
     switch ( g_iTextPosition )
     {
         case ID_TEXT_TOP:
@@ -188,7 +170,8 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     m_iBackgroundTransparency = g_iTextBackgroundTransparency;
     m_colourTextColour = g_colourDefaultTextColour;
     m_colourTextBackgroundColour = g_colourDefaultTextBackgroundColour;
-    m_iWrapLen = 250;
+    m_iWrapLen = g_iTextMaxWidth;
+    m_iTextMaxWidthType = g_iTextMaxWidthType;
     if(g_DisplayTextFont.IsOk()) m_DisplayTextFont = g_DisplayTextFont;
     m_bTextChanged = true;
     m_bShowDisplayTextOnRollover = false;
@@ -232,7 +215,7 @@ void TextPoint::CreateColourSchemes(void)
     ODPoint::CreateColourSchemes();
 }
 
-void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
+void TextPoint::Draw( ODDC& dc, wxPoint *odp)
 {
     if( !m_bIsVisible )
         return;
@@ -240,7 +223,17 @@ void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
     if( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS || 
         ( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER && m_bShowDisplayTextOnRollover)  ) {
         if( m_TextPointText.Len() > 0 ) {
-            CalculateTextExtents();
+            wxString l_TextPointText;
+            if(m_TextPointText.Len() > (size_t)m_iWrapLen)
+                if(m_iTextMaxWidthType == 0)
+                    l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
+                else
+                    l_TextPointText = WrapString(m_TextPointText, m_iWrapLen);
+            else 
+                l_TextPointText = m_TextPointText;
+            
+            CalculateTextExtents(l_TextPointText);
+
             int teX, teY;
             int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_natural_scale);
             
@@ -306,14 +299,14 @@ void TextPoint::Draw( ODDC& dc, wxPoint *rpn )
                     dc.SetTextForeground( m_colourSchemeTextColour );
                     g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
                     if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2) )
-                        dc.DrawText( m_TextPointText, r.x + 10, r.y );
+                        dc.DrawText( l_TextPointText, r.x + 10, r.y );
                     else 
                         dc.DrawText( wxT(" "), r.x + 10, r.y );
                 }
             }
         }
     }
-    ODPoint::Draw( dc, rpn );
+    ODPoint::Draw( dc, odp);
 }
 
 void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
@@ -324,7 +317,17 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS || 
         ( m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER && m_bShowDisplayTextOnRollover)  ) {
         if( m_TextPointText.Len() > 0 ) {
-            CalculateTextExtents();
+            wxString l_TextPointText;
+            if(m_TextPointText.Len() > (size_t)m_iWrapLen)
+                if(m_iTextMaxWidthType == 0)
+                    l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
+                else
+                    l_TextPointText = WrapString(m_TextPointText, m_iWrapLen);
+                else 
+                l_TextPointText = m_TextPointText;
+
+            CalculateTextExtents(l_TextPointText);
+            
             int teX, teY;
             int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_natural_scale);
             
@@ -396,7 +399,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         dc.SetFont( m_DisplayTextFont );
                         dc.SetTextForeground(* wxWHITE );
                         if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2))
-                            dc.DrawText( m_TextPointText, 10, 0);
+                            dc.DrawText( l_TextPointText, 10, 0);
                         //else
                         //    dc.DrawText( wxT(""), 10, 0 );
                         dc.SelectObject( wxNullBitmap );
@@ -470,44 +473,22 @@ void TextPoint::CalculateTextExtents( void )
     
 }
 
-/*void TextPoint::SetMarkDescription( wxString sMarkDescription )
+void TextPoint::CalculateTextExtents( wxString TextPointText )
 {
-    ODPoint::SetMarkDescription( sMarkDescription );
-    return;
-    bool bMarkup;
-    bMarkup = m_pstText->SetLabelMarkup( sMarkDescription );
-    if (!bMarkup)
-        m_pstText->SetLabel( sMarkDescription );
-    ShowText();
-    m_iDisplayTextTexture = 0;
+    if( m_DisplayTextFont.IsOk() ) {
+        wxScreenDC dc;
+        
+        dc.SetFont( m_DisplayTextFont );
+        m_TextExtents = dc.GetMultiLineTextExtent( TextPointText );
+    } else
+        m_TextExtents = wxSize( 0, 0 );
+    
 }
-*/
+
 void TextPoint::SetPointText( wxString sTextPointText )
 {
     m_TextPointText = ( sTextPointText );
     return;
-#if wxCHECK_VERSION(3,0,0)
-    bool bMarkup;
-    bMarkup = m_pstText->SetLabelMarkup( sTextPointText );
-    if (!bMarkup)
-#endif
-        m_pstText->SetLabel( sTextPointText );
-    ShowText();
-    m_iDisplayTextTexture = 0;
-}
-
-void TextPoint::ShowText( void )
-{
-    return;
-    if( m_ODPointDescription.Len() == 0 )
-        m_pstText->Show( false );
-  //  else
-//        m_pstText->Show( true );
-}
-
-void TextPoint::HideText( void )
-{
-    m_pstText->Show( false );
 }
 
 void TextPoint::SetColourScheme(PI_ColorScheme cs)

@@ -30,7 +30,6 @@
 #include "PointMan.h"
 
 #include "ocpn_draw_pi.h"
-//#include "styles.h"
 #include "ODMarkIcon.h"
 #include "ODConfig.h"
 #include "ODSelect.h"
@@ -49,14 +48,6 @@
 #include <wx/fontenum.h>
 
 #include "GL/gl.h"
-
-//extern ocpnStyle::StyleManager* g_ODStyleManager;
-extern wxString         *g_PrivateDataDir;
-extern ODConfig         *g_pODConfig;
-extern PathMan          *g_pPathMan;
-extern ODSelect         *g_pODSelect;
-extern ocpn_draw_pi     *g_ocpn_draw_pi;
-
 
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
@@ -148,30 +139,12 @@ bool PointMan::RemoveODPoint(ODPoint *prp)
 
 void PointMan::ProcessUserIcons( )
 {
-#ifdef __WXOSX__
-    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
-    wxString UserIconPath = std_path.GetUserConfigDir();
-    UserIconPath += wxS("/opencpn/UserIcons");
     
-    if( wxDir::Exists( UserIconPath ) ) {
+    if( wxDir::Exists( *g_pUserIconsDir ) ) {
         wxArrayString FileList;
         
-        wxDir dir( UserIconPath );
-        int n_files = dir.GetAllFiles( UserIconPath, &FileList );
-#else
-    wxString *UserIconPath = g_PrivateDataDir;
-    wxChar sep = wxFileName::GetPathSeparator();
-    if ( UserIconPath->IsNull() ) return;
-    
-    if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
-    UserIconPath->Append( _T("UserIcons") );
-    
-    if( wxDir::Exists( *UserIconPath ) ) {
-        wxArrayString FileList;
-        
-        wxDir dir( *UserIconPath );
-        int n_files = dir.GetAllFiles( *UserIconPath, &FileList );
-#endif
+        wxDir dir( *g_pUserIconsDir );
+        int n_files = dir.GetAllFiles( *g_pUserIconsDir, &FileList );
         
         for( int ifile = 0; ifile < n_files; ifile++ ) {
             wxString name = FileList.Item( ifile );
@@ -259,7 +232,7 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
         pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->icon_name.IsSameAs( key ) ) {
             newIcon = false;
-            pmi->Delete();
+            delete pmi->picon_bitmap;
             break;
         }
     }
@@ -278,6 +251,18 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
     pmi->picon_bitmap_Night = CreateDimBitmap( pmi->picon_bitmap, 0.25 );
 }
 
+void PointMan::RemoveIcon(wxString key)
+{
+    ODMarkIcon *pmi;
+    
+    for(size_t i = 0; i < m_pIconArray->GetCount(); i++) {
+        pmi = (ODMarkIcon *) m_pIconArray->Item( i );
+        if(pmi->icon_name.IsSameAs( key )) {
+            m_pIconArray->RemoveAt(i);
+            delete pmi;
+        }
+    }
+}
 wxImageList *PointMan::Getpmarkicon_image_list( void )
 {
     // First find the largest bitmap size
@@ -694,7 +679,7 @@ ODPoint *PointMan::GetNearbyODPoint( double lat, double lon, double radius_meter
         double b = lon - pr->m_lon;
         double l = sqrt( ( a * a ) + ( b * b ) );
 
-        if( ( l * 60. * 1852. ) < radius_meters ) return pr;
+        if( !pr->m_bSingleUse && ( l * 60. * 1852. ) < radius_meters ) return pr;
 
         node = node->GetNext();
     }
@@ -760,11 +745,7 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
             && ( ( b_delete_used && prp->m_bKeepXPath )
                         ||  !prp->m_bIsInPath   ) ) {
             DestroyODPoint(prp);
-            if(prp->m_sTypeString == wxT("ODPoint"))
-                delete prp;
-            else if(prp->m_sTypeString == wxT("Text Point")) {
-                delete (TextPoint *)node->GetData();
-            }
+			delete prp;
             node = m_pODPointList->GetFirst();
         } else
             node = node->GetNext();
@@ -790,7 +771,7 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
 
             }
 
-            //    Scrub the paths, looking for one-point routes
+            //    Scrub the paths, looking for one-point paths
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
                 ODPath *pb = (ODPath *) ppath_array->Item( ib );
                 if( pb->GetnPoints() < 2 ) {
@@ -907,7 +888,7 @@ BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double St
                 case ID_BOUNDARY_INCLUSION:
                     if(!op->m_bInclusionBoundaryPoint) l_bNext = true;
                     break;
-                case ID_BOUNDARY_NIETHER:
+                case ID_BOUNDARY_NEITHER:
                     if(op->m_bExclusionBoundaryPoint || op->m_bInclusionBoundaryPoint) l_bNext = true;
                     break;
             }

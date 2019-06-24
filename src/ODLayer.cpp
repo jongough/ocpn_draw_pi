@@ -22,13 +22,17 @@
  ***************************************************************************
  */
 
+#include "wx/wxprec.h"
+
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
 #include "ODLayer.h"
+#include "ocpn_draw_pi.h"
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST(ODLayerList);
-
-extern bool g_bShowLayers;
-extern ODLayerList *g_pLayerList;
 
 ODLayer::ODLayer( void )
 {

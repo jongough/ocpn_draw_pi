@@ -13,7 +13,7 @@ class ODPointPropertiesImpl : public ODPointPropertiesDialog
 {
 protected:
 	// Handlers for ODPointPropertiesDialog events.
-	void onRightClick( wxMouseEvent& event );
+	void OnRightClick( wxMouseEvent& event );
 	void OnPositionCtlUpdated( wxCommandEvent& event );
 	void OnRightClick( wxMouseEvent& event );
 	void OnArrivalRadiusChange( wxCommandEvent& event );

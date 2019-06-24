@@ -38,6 +38,7 @@
 
 #ifdef __WXMSW__
     #include "GL/gl.h"            // local copy for Windows
+    #include "GL/glext.h"
     #include <GL/glu.h>
 #else
 
@@ -65,13 +66,8 @@
 #include "ODUtils.h"
 #include "wx28compat.h"
 
-#ifdef __WXMSW__
-#define __CALL_CONVENTION __stdcall
-#else
 #define __CALL_CONVENTION
-#endif
 
-extern float g_GLMinSymbolLineWidth;
 wxArrayPtrVoid gTesselatorVertices;
 
 // These are only global to this module to allow tessellation callbacks to access them. Tessellation does not handle classes and methods
@@ -262,7 +258,7 @@ void ODDC::SetGLStipple() const
 
 #ifdef ocpnUSE_GL
 /* draw a half circle using triangles */
-void DrawEndCap(float x1, float y1, float t1, float angle)
+void ODDC::DrawEndCap(float x1, float y1, float t1, float angle)
 {
     const int steps = 16;
     float xa, ya;
@@ -285,7 +281,7 @@ void DrawEndCap(float x1, float y1, float t1, float angle)
 #endif
 
 // Draws a line between (x1,y1) - (x2,y2) with a start thickness of t1
-void DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_hiqual )
+void ODDC::DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_hiqual )
 {
 #ifdef ocpnUSE_GL
     
@@ -457,8 +453,7 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
 }
 
 // Draws thick lines from triangles
-void DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset,
-                       wxCoord yoffset, wxPen pen, bool b_hiqual )
+void ODDC::DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset, wxCoord yoffset, wxPen pen, bool b_hiqual )
 {
 #ifdef ocpnUSE_GL
     if(n < 2)

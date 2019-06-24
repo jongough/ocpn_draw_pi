@@ -1,0 +1,19 @@
+'c', 'type(B)','name', 'boundary_type', 'visible(t/f)', 'line rgb-colour', 'rgb-fill-colour'
+'B','test boundary1','Exclusion','t','rgb(0,255,0)','rgb(255,0,0)'
+'c', 'type(BP)', 'name', lat, lon, 'boundary_type', 'visible', 'rings-visible(t/f)', 'rings-number', 'rings-step', 'rings-units(N/K)', 'rings-colour'
+'BP','first',-23.00,154.00
+'BP','second',-23.5,154.00
+'BP','third',-23.5,154.50
+'BP','fourth',-23.0,154.50
+'/B'
+'B','test boundary2','Exclusion'
+'BP','first',-22.00,154.00
+'BP','second',-22.5,154.00
+'BP','third',-22.5,154.50
+'BP','fourth',-22.0,154.50
+'/B'
+'BP','isolated',-22.70,154.70
+'c', 'type(TP)', 'name', lat, lon, 'position (t/ct/b/cb/c/r/l)', 'show (a/r/n)', 'visible (t/f)', 'display text'
+'TP','my test text point',-22.70,154.70,'cb','a','t','this is one long line and should be treated as such. It is not designed to wrap'
+'TP','my multiline text point',-22.90,154.70,'cb','a','t','this is not one long line\n and should not be treated as such.\nIt is designed to wrap'
+

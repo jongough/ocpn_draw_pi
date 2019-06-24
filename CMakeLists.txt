@@ -13,6 +13,7 @@ IF (COMMAND cmake_policy)
 ENDIF (COMMAND cmake_policy)
 
 PROJECT(ocpn_draw_pi)
+SET(PARENT "opencpn")
 
 SET(PACKAGE_NAME ocpn_draw_pi)
 SET(VERBOSE_NAME ocpn_draw)
@@ -20,45 +21,45 @@ SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
-SET(VERSION_MINOR "4")
-SET(VERSION_PATCH "71")
-SET(VERSION_DATE "23/05/2018")
+SET(VERSION_MINOR "6")
+SET(VERSION_PATCH "0")
+SET(VERSION_DATE "24/06/2019")
+SET(OCPN_MIN_VERSION "ov50")
+SET(OD_COMMENT "  * Initial release for O5 using CI")
+SET(OCPN_API_VERSION_MAJOR "1")
+SET(OCPN_API_VERSION_MINOR "16")
+SET(OD_API_VERSION_MAJOR "1")
+SET(OD_API_VERSION_MINOR "1")
+
 
 SET(BUNDLE_DATA FALSE)
 SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
-SET_PROPERTY( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS None Debug Release RelWithDebInfo MinSizeRel )
+SET_PROPERTY( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "RelWithDebInfo" "MinSizeRel" )
 
 MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-OPTION(OD_CXX11 "Use c++11" OFF)
-
-IF ( OD_CXX11 )
-    MESSAGE(STATUS "Attempting to use c++11")
-    include(CheckCXXCompilerFlag)
-    CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-    CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-    if(COMPILER_SUPPORTS_CXX11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-        SET(OD_USE_CXX11 ON)
-    elseif(COMPILER_SUPPORTS_CXX0X)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-        SET(OD_USE_CXX11 ON)
-    else()
+if (CMAKE_VERSION VERSION_LESS "3.1")
+  include(CheckCXXCompilerFlag)
+  CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+  CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+  if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    message(STATUS "Setting C++11 standard via CXX flags")
+  elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    message(STATUS "Setting C++0x standard via CXX FLAGS")
+  else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-        SET(OD_USE_CXX11 OFF)
-    endif()
-ELSE()
-    SET(OD_USE_CXX11 OFF)
-ENDIF()
+  endif()
+else ()
+  set (CMAKE_CXX_STANDARD 11)
+  message(STATUS "Setting C++11 standard via cmake standard mecahnism")
+endif ()
 
-IF(OD_USE_CXX11)
-    MESSAGE(STATUS "Allowing use of c++11")
-    ADD_DEFINITIONS(-DOD_USE_CXX11)
-ENDIF()
+OPTION(OCPN_USE_LIBCPP "Use C++11 and libc++ instead of libstdc++ on macOS" ON)
 
-MESSAGE(STATUS "CMAKE version: ${CMAKE_VERSION}")
 if ( CMAKE_VERSION VERSION_GREATER 3.4 )
   set(ENABLE_CLANG_TIDY OFF CACHE BOOL "Add clang-tidy automatically to builds")
   if (ENABLE_CLANG_TIDY)
@@ -74,6 +75,15 @@ if ( CMAKE_VERSION VERSION_GREATER 3.4 )
       message(AUTHOR_WARNING "clang-tidy not found!")
       set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE) # delete it
     endif()
+  endif()
+endif()
+
+# Add support for address etc sanitizers, part 1/2 (other half after ADD_EXECUTABLE)
+if ( CMAKE_VERSION VERSION_GREATER 3.4 )
+  set(ENABLE_SANITIZER "none" CACHE STRING "Add clang sanitizer to the build")
+  set_property(CACHE ENABLE_SANITIZER PROPERTY STRINGS none address memory thread undefined)
+  if (NOT "${ENABLE_SANITIZER}" MATCHES "none")
+    add_compile_options(-fsanitize=${ENABLE_SANITIZER})
   endif()
 endif()
 
@@ -93,11 +103,12 @@ ADD_DEFINITIONS(-DUSE_S57)
 
 
 SET(SRCS
-    src/ocpn_draw_pi.cpp
     src/Boundary.cpp
+    src/BoundaryCSVImport.cpp
     src/BoundaryMan.cpp
     src/BoundaryProp.cpp
     src/BoundaryPoint.cpp
+    src/BoundaryPointCSVImport.cpp
     src/DR.cpp
     src/DRProp.cpp
     src/EBL.cpp
@@ -105,13 +116,8 @@ SET(SRCS
     src/GZ.cpp
     src/GZMan.cpp
     src/GZProp.cpp
-    src/PointMan.cpp
-    src/ODSelect.cpp
-    src/PathMan.cpp
-    src/pathmanagerdialog.cpp
+    src/ocpn_draw_pi.cpp
     src/ODAPI.cpp
-    src/ODPath.cpp
-    src/ODPoint.cpp
     src/ODConfig.cpp
     src/ODdc.cpp
     src/ODDRDialogDef.cpp
@@ -121,79 +127,96 @@ SET(SRCS
     src/ODIconCombo.cpp
     src/ODJSON.cpp
     src/ODLayer.cpp
+    src/ODLinkPropertiesDialogDef.cpp
+    src/ODLinkPropertiesDialogImpl.cpp
     src/ODMarkIcon.cpp
-    src/ocpn_draw_pi.cpp
     src/ODNavObjectChanges.cpp
     src/ODNewODPointDialogDef.cpp
     src/ODNewODPointDialogImpl.cpp
-    src/ODPropertiesDialogDef.cpp
-    src/ODPropertiesDialogImpl.cpp
+    src/ODPath.cpp
     src/ODPathPropertiesDialogDef.cpp
     src/ODPathPropertiesDialogImpl.cpp
+    src/ODPoint.cpp
     src/ODPointPropertiesDialog.cpp
     src/ODPointPropertiesImpl.cpp
     src/ODPositionParser.cpp
+    src/ODPropertiesDialogDef.cpp
+    src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
+    src/ODSelect.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
+    src/PathMan.cpp
+    src/PathAndPointManagerDialogDef.cpp
+    src/PathAndPointManagerDialogImpl.cpp
     src/PIL.cpp
     src/PILProp.cpp
     src/PILPropertiesDialogDef.cpp
     src/PILPropertiesDialogImpl.cpp
+    src/PointMan.cpp
     src/TextPoint.cpp
+    src/TextPointCSVImport.cpp
 )
 
 SET(HDRS
     include/ocpn_draw_pi.h
     include/Boundary.h
+    include/BoundaryCSVImport.h
     include/BoundaryMan.h
     include/BoundaryProp.h
     include/BoundaryPoint.h
+    include/BoundaryPointCSVImport.h
     include/DR.h
     include/DRProp.h
     include/EBL.h
     include/EBLProp.h
+    include/globals.h
     include/GZ.h
     include/GZMan.h
     include/GZProp.h
     include/PointMan.h
-    include/ODSelect.h
-    include/PathMan.h
-    include/pathmanagerdialog.h
     include/ODAPI.h
-    include/ODicons.h
-    include/ODIconCombo.h
-    include/ODJSON.h
-    include/ODPath.h
-    include/ODPoint.h
     include/ODConfig.h
     include/ODdc.h
     include/ODDRDialogDef.h
     include/ODDRDialogImpl.h
     include/ODEventHandler.h
+    include/ODicons.h
+    include/ODIconCombo.h
+    include/ODJSON.h
+    include/ODJSONSchemas.h
     include/ODLayer.h
+    include/ODLinkPropertiesDialogDef.h
+    include/ODLinkPropertiesDialogImpl.h
     include/ODMarkIcon.h
     include/ODNavObjectChanges.h
     include/ODNewODPointDialogDef.h
     include/ODNewODPointDialogImpl.h
-    include/ODPropertiesDialogDef.h
-    include/ODPropertiesDialogImpl.h
+    include/ODPath.h
     include/ODPathPropertiesDialogDef.h
     include/ODPathPropertiesDialogImpl.h
+    include/ODPoint.h
     include/ODPointPropertiesDialog.h
     include/ODPointPropertiesImpl.h
     include/ODPositionParser.h
+    include/ODPropertiesDialogDef.h
+    include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
+    include/ODSelect.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
     include/ODvector2D.h
+    include/PathMan.h
+    include/PathAndPointManagerDialogDef.h
+    include/PathAndPointManagerDialogImpl.h
     include/PIL.h
     include/PILPropertiesDialogDef.h
     include/PILPropertiesDialogImpl.h
     include/PILProp.h
     include/TextPoint.h
+    include/TextPointCSVImport.h
 )
 
 SET(OCPNSRC 
@@ -203,83 +226,29 @@ SET(OCPNSRC
     ocpnsrc/georef.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
+    ocpnsrc/TexFont.cpp
     ocpnsrc/wxJSON/jsonreader.cpp
     ocpnsrc/wxJSON/jsonval.cpp
     ocpnsrc/wxJSON/jsonwriter.cpp
+
 )
 SET(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
     ocpninclude/AISTargetQueryDialog.h
-    ocpninclude/apb.hpp
     ocpninclude/bbox.h
-    ocpninclude/canvasMenu.h
-    ocpninclude/chart1.h
-    ocpninclude/chartbarwin.h
-    ocpninclude/chartbase.h
-    ocpninclude/chartdbs.h
-    ocpninclude/chcanv.h
-    ocpninclude/CM93DSlide.h
-    ocpninclude/ConnectionParams.h
     ocpninclude/cutil.h
-    ocpninclude/datastream.h
-    ocpninclude/dsPortType.h
-    ocpninclude/dychart.h
-    ocpninclude/emboss_data.h
     ocpninclude/geodesic.h
     ocpninclude/georef.h
-    ocpninclude/gga.hpp
-    ocpninclude/gll.hpp
-    ocpninclude/GoToPositionDialog.h
-    ocpninclude/GPwpl.hpp
-    ocpninclude/gpxdocument.h
-    ocpninclude/gsv.hpp
-    ocpninclude/hdg.hpp
-    ocpninclude/hdm.hpp
-    ocpninclude/hdt.hpp
     ocpninclude/Hyperlink.h
-    ocpninclude/IDX_entry.h
-    ocpninclude/LatLong.hpp
-    ocpninclude/LinkPropDlg.h
-    ocpninclude/navutil.h
-    ocpninclude/nmea0183.h
-    ocpninclude/nmea0183.hpp
-    ocpninclude/ocpCursor.h
-    ocpninclude/OCPNPlatform.h
-    ocpninclude/OCPNRegion.h
     ocpninclude/ocpn_plugin.h
-    ocpninclude/ocpn_types.h
-    ocpninclude/pluginmanager.h
-    ocpninclude/Quilt.h
-    ocpninclude/Response.hpp
-    ocpninclude/RMB.hpp
-    ocpninclude/RMC.HPP
-    ocpninclude/RolloverWin.h
-    ocpninclude/Route.h
-    ocpninclude/RoutePoint.h
-    ocpninclude/routeprop.h
-    ocpninclude/rte.hpp
-    ocpninclude/s52s57.h
-    ocpninclude/s57chart.h
-    ocpninclude/S57ClassRegistrar.h
-    ocpninclude/S57Light.h
-    ocpninclude/S57QueryDialog.h
-    ocpninclude/s57RegistrarMgr.h
-    ocpninclude/S57Sector.h
-    ocpninclude/scrollingdialog.h
     ocpninclude/SelectItem.h
-    ocpninclude/Sentence.hpp
-    ocpninclude/styles.h
     ocpninclude/TexFont.h
     ocpninclude/timers.h
-    ocpninclude/undo.h
     ocpninclude/vector2D.h
-    ocpninclude/viewport.h
-    ocpninclude/vtg.hpp
-    ocpninclude/wpl.hpp
-    ocpninclude/xte.hpp
+    ocpninclude/wx28compat.h
     ocpninclude/GL/gl.h
-    ocpninclude/GL/gl_private.h
     ocpninclude/GL/glext.h
+    ocpninclude/GL/gl_private.h
     ocpninclude/GL/glu.h
     ocpninclude/wx/json_defs.h
     ocpninclude/wx/jsonreader.h
@@ -287,12 +256,14 @@ SET(OCPNHDRS
     ocpninclude/wx/jsonwriter.h
 )
 
-SET(EXTSRC 
+SET(EXTSRC
+    ${EXTSRC}
     extsrc/clipper.cpp
     extsrc/pugixml.cpp
 )
 
-SET(EXTINCLUDE 
+SET(EXTINCLUDE
+    ${EXTINCLUDE}
     extinclude/clipper.hpp
     extinclude/pugiconfig.hpp
     extinclude/pugixml.hpp
@@ -308,14 +279,22 @@ IF(OD_USE_SVG)
   ENDIF(NOT QT_ANDROID)
 ENDIF(OD_USE_SVG)
 
+IF(OCPN_MIN_VERSION)
+  MESSAGE(STATUS "Using O5 MUI")
+  IF(NOT QT_ANDROID)
+    ADD_DEFINITIONS(-DODraw_USE_MUI)
+  ENDIF(NOT QT_ANDROID)
+ENDIF(OCPN_MIN_VERSION)
+
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/src/mygdal  )
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
-
 
 IF(UNIX)
  INCLUDE("cmake/FindTinyXML.cmake")
@@ -343,3 +322,7 @@ ADD_DEFINITIONS(-DTIXML_USE_STL)
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")
 INCLUDE("cmake/PluginPackage.cmake")
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+  message(STATUS "dir='${dir}'")
+endforeach()

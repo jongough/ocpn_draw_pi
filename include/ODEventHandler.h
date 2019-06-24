@@ -67,8 +67,9 @@ class ODEventHandler : public wxEvtHandler
         void SetPoint ( ODPoint *point );
         void SetPoint ( TextPoint *point );
         void SetPIL( int iPIL );
-        void SetCanvas( ChartCanvas *canvas );
         void SetWindow( wxWindow *window );
+        void SetCanvas( wxWindow *window );
+        void SetCanvasIndex(int canvasindex);
         void SetLatLon( double lat, double lon );
         void DeletePath( void );
         void DeletePaths( void );
@@ -76,8 +77,9 @@ class ODEventHandler : public wxEvtHandler
         
     protected:
     private:
+        void ODERequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
+        
         ocpn_draw_pi    *m_parent;
-        ChartCanvas     *m_parentcanvas;
         wxWindow        *m_parent_window;
         ODPath          *m_pSelectedPath;
         ODPoint         *m_pFoundODPoint;

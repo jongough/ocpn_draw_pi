@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<OCPNDraw version="0.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opencpn="http://www.opencpn.org">
+  <opencpn:ODPoint lat="-22.985963667" lon="153.323471896">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2018-01-10T19:13:32Z</time>
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <sym>triangle</sym>
+    <opencpn:guid>40eb91d5-b6aa-4df8-a556-538e7cdbe427</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+  <opencpn:ODPoint lat="-23.611335823" lon="153.434316069">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2018-01-10T19:13:32Z</time>
+    <opencpn:boundary_type>Exclusion</opencpn:boundary_type>
+    <sym>triangle</sym>
+    <opencpn:guid>1b84fe51-5e51-4bca-802a-e7c74a846fef</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+</OCPNDraw>

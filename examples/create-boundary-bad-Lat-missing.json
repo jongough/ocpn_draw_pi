@@ -1,0 +1,52 @@
+{
+   "Boundary" : {
+      "BoundaryType" : "Exclusion",
+      "lineColour" : "red",
+      "Active" : true,
+      "visible" : true,
+      "fillColour" : "red",
+      "BoundaryName" : "",
+      "BoundaryPoints" : [
+         {
+            "BoundaryPointType" : "Exclusion",
+            "ringsnumber" : 0,
+            "visible" : true,
+            "ringscolour" : "red",
+            "ringsunits" : 0,
+            "Lon" : 153.141375,
+            "ringsvisible" : false,
+            "ringssteps" : 0.5,
+            "Name" : "Corner"
+         },
+         {
+            "BoundaryPointType" : "Exclusion",
+            "ringsnumber" : 0,
+            "visible" : true,
+            "ringscolour" : "red",
+            "Lat" : -27.13421833,
+            "ringsunits" : 0,
+            "Lon" : 153.158075,
+            "ringsvisible" : false,
+            "ringssteps" : 0.5,
+            "Name" : "id 1"
+         },
+         {
+            "BoundaryPointType" : "Exclusion",
+            "ringsnumber" : 0,
+            "visible" : true,
+            "ringscolour" : "red",
+            "Lat" : -27.11751833,
+            "ringsunits" : 0,
+            "Lon" : 153.141375,
+            "ringsvisible" : false,
+            "ringssteps" : 0.5,
+            "Name" : "id 2"
+         }
+      ]
+   },
+   "Msg" : "CreateBoundary",
+   "Source" : "TESTPLUGIN_PI",
+   "MsgId" : "3119",
+   "Type" : "Request"
+}
+

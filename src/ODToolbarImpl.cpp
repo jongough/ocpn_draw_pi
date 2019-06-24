@@ -41,8 +41,6 @@
 #include "ODicons.h"
 #include "ocpn_draw_pi.h"
 
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent, id, title, pos, size, style )
 {
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;

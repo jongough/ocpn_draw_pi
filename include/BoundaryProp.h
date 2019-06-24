@@ -30,7 +30,6 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include "PathProp.h"
 #include "ODPathPropertiesDialogImpl.h"
 
 class Boundary;
@@ -45,7 +44,7 @@ class BoundaryProp : public ODPathPropertiesDialogImpl
         virtual ~BoundaryProp();
         
         using ODPathPropertiesDialogImpl::UpdateProperties;
-        bool UpdateProperties( Boundary *pInBoundary );
+        bool UpdateProperties( ODPath *pInBoundary );
         
     protected:
         bool SaveChanges( void );

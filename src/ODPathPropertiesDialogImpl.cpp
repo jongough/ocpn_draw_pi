@@ -31,7 +31,7 @@
 
 #include "ODPathPropertiesDialogImpl.h"
 #include "PILPropertiesDialogImpl.h"
-#include "pathmanagerdialog.h"
+#include "PathAndPointManagerDialogImpl.h"
 #include "ODPath.h"
 #include "Boundary.h"
 #include "BoundaryPoint.h"
@@ -43,7 +43,8 @@
 #include "ODConfig.h"
 #include "ODEventHandler.h"
 #include "ODUtils.h"
-#include "chcanv.h"
+
+#include <algorithm>
 
 enum {
     ID_FROM_POINT = 0,
@@ -58,29 +59,12 @@ enum {
     ID_POINTS_LIST_LAST
 };
 
-extern bool                 g_bShowMag;
-extern ocpn_draw_pi         *g_ocpn_draw_pi;
-extern double               g_dLat, g_dLon, gSog, gCog;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern PathList             *g_pPathList;
-extern PathManagerDialog    *g_pPathManagerDialog;
-extern ODConfig             *g_pODConfig;
-extern wxColour             g_colourActivePathLineColour;
-extern wxColour             g_colourInActivePathLineColour;
-extern bool                 g_bExclusionBoundary;
-extern bool                 g_bInclusionBoundary;
-extern int                  g_iInclusionBoundarySize;
-extern ODEventHandler       *g_ODEventHandler;
-extern PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
-extern PI_ColorScheme       g_global_color_scheme;
-
-
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
 {
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
 #endif // wxCHECK_VERSION(3,0,0)
-
+    
     SetViewableItems();
 }
 
@@ -94,6 +78,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODP
     
     SetPointsListHeadings();    
     SetViewableItems();
+
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
@@ -104,7 +89,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
 #endif // wxCHECK_VERSION(3,0,0)
 
     m_nSelected = 0;
-    m_pEnroutePoint = NULL;
+    m_pEnPathPoint = NULL;
     m_bStartNow = false;
     m_pPath = NULL;
     
@@ -126,7 +111,7 @@ void ODPathPropertiesDialogImpl::OnClose( wxCloseEvent& event )
 void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
 {
     //    Look in the path list to be sure the path is still available
-    //    (May have been deleted by PathManagerDialog...)
+    //    (May have been deleted by PathAndPointManagerDialog...)
     
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
@@ -142,15 +127,15 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     }
     
     
-    m_pEnroutePoint = NULL;
+    m_pEnPathPoint = NULL;
     m_bStartNow = false;
     
-    if( g_pPathManagerDialog && g_pPathManagerDialog->IsShown() ) {
-        g_pPathManagerDialog->UpdatePathListCtrl();
+    if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) {
+        g_pPathAndPointManagerDialog->UpdatePathListCtrl();
     }
     
     Hide();
-    RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetCanvasUnderMouse() );
     
     ResetGlobalLocale();
     
@@ -178,7 +163,7 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     m_bStartNow = false;
     
     Hide();
-    RequestRefresh( GetOCPNCanvasWindow() );
+    RequestRefresh( GetCanvasUnderMouse() );
     
     ResetGlobalLocale();
     
@@ -191,30 +176,40 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
     wxMenu menu;
     if( m_listCtrlODPoints->GetSelectedItemCount() == 0 ) return;
     
+    Boundary *l_pBoundary = NULL;
     if( ! m_pPath->m_bIsInLayer ) {
         wxString sPropertiesType(wxT(""));
         if ( m_pPath->m_sTypeString.IsNull() || m_pPath->m_sTypeString.IsEmpty() )
-            sPropertiesType.append( _("OCPN Draw Path &Properties") );
-        else if(m_pPath->m_sTypeString == wxT("Boundary")) 
-            sPropertiesType.append(_("Boundary Point &Properties"));
+            sPropertiesType.append( _("OCPN Draw Path") );
+        else if(m_pPath->m_sTypeString == wxT("Boundary")) {
+                sPropertiesType.append(_("Boundary Point"));
+                l_pBoundary = (Boundary *)m_pPath;
+        }
         else if(m_pPath->m_sTypeString == wxT("EBL")) 
-            sPropertiesType.append(_("EBL Point &Properties"));
+            sPropertiesType.append(_("EBL Point"));
         else if(m_pPath->m_sTypeString == wxT("DR")) 
-            sPropertiesType.append(_("DR Point &Properties"));
+            sPropertiesType.append(_("DR Point"));
         else if(m_pPath->m_sTypeString == wxT("PIL"))
-            sPropertiesType.append(_("PIL Point &Properties"));
+            sPropertiesType.append(_("PIL Point"));
 
         sPropertiesType.append( _(" &Properties...") );
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
-        
-        wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
-        delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
+        if(m_pPath->m_sTypeString != wxT("EBL")) {
+            if(!l_pBoundary || (l_pBoundary && l_pBoundary->GetnPoints() > 4)) {
+                wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
+                delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
+                if(l_pBoundary) {
+                    wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_DELETE, _("&Delete Selected") );
+                    delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
+                }
+            }
+        }
     }
-    ChartCanvas *l_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
-    l_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
-    l_parentcanvas->PopupMenu( &menu );
-    l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    wxWindow *l_parentwindow = GetOCPNCanvasWindow();
+    l_parentwindow->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    l_parentwindow->PopupMenu( &menu );
+    l_parentwindow->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
 
 void ODPathPropertiesDialogImpl::OnRightClickPIL( wxMouseEvent& event )
@@ -229,11 +224,12 @@ void ODPathPropertiesDialogImpl::OnRightClickPIL( wxMouseEvent& event )
     wxMenuItem* delItem = menu.Append( ID_PILPROP_MENU_REMOVE, _("&Remove Selected") );
     delItem->Enable( m_listCtrlPILList->GetSelectedItemCount() > 0 );
 
-    ChartCanvas *l_parentcanvas = (ChartCanvas *)GetOCPNCanvasWindow();
-    l_parentcanvas->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
-    l_parentcanvas->PopupMenu( &menu );
-    l_parentcanvas->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    wxWindow *l_parentwindow = GetOCPNCanvasWindow();
+    l_parentwindow->Connect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
+    l_parentwindow->PopupMenu( &menu );
+    l_parentwindow->Disconnect( wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogImpl::OnPathPropMenuSelected ), NULL, this );
 }
+
 void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
 {
 // TODO: Implement OnPathPropertiesDoubleClick
@@ -246,7 +242,7 @@ void ODPathPropertiesDialogImpl::OnLeftDoubleClick( wxMouseEvent& event )
     ODPoint *op = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
     if( !op ) return;
     
-    PathManagerDialog::ODPointShowPropertiesDialog( op, this );
+    PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( op, this );
 }
 
 void ODPathPropertiesDialogImpl::OnLeftDoubleClickPIL( wxMouseEvent& event )
@@ -382,8 +378,7 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     PIL *pPIL = NULL;
     
     if( NULL == pInPath ) return false;
-    ::wxBeginBusyCursor();
-   
+
     SetGlobalLocale();
     
     if(pInPath->m_sTypeString == wxT("Boundary")) {
@@ -487,18 +482,18 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
                 m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
             
             //  Lat/Lon
-            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         } else {
             m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
 
-            wxString tlat = toSDMM_PlugIn( 1, slat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, slat, true ); 
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, slon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, slon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         }
         
@@ -528,18 +523,10 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
         }
     }
     
-    // Set column width correctly for data
-    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
-#ifdef WIN32
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif
-    }
-    
-    ::wxEndBusyCursor();
-    
     ResetGlobalLocale();
+    
+    TransferDataToWindow();
+    SetDialogSize();
     
     return true;
 }
@@ -547,8 +534,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
 bool ODPathPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
-    
-    ::wxBeginBusyCursor();
     
     //  Iterate on Path Points
     wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
@@ -613,16 +598,16 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
                 m_listCtrlODPoints->SetItem( item_line_index, ID_BEARING_FROM_TO, nullify );
             
             //  Lat/Lon
-            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, pOp->m_lat, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, pOp->m_lon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         } else {
-            wxString tlat = toSDMM_PlugIn( 1, g_pfFix.Lat, pOp->m_bIsInTrack );  // low precision for routes
+            wxString tlat = toSDMM_PlugIn( 1, g_pfFix.Lat, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LATITUDE, tlat );
             
-            wxString tlon = toSDMM_PlugIn( 2, g_pfFix.Lon, pOp->m_bIsInTrack );
+            wxString tlon = toSDMM_PlugIn( 2, g_pfFix.Lon, true );
             m_listCtrlODPoints->SetItem( item_line_index, ID_LONGITUDE, tlon );
         }
 
@@ -634,21 +619,9 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
         
     }
 
-    // Set column width correctly for data
-    for(int i = 0; i < m_listCtrlODPoints->GetColumnCount(); i++) {
-#ifdef WIN32
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE_USEHEADER );
-#else
-        m_listCtrlODPoints->SetColumnWidth( i, wxLIST_AUTOSIZE );
-#endif
-    }
-    
-    this->GetSizer()->Fit( this );
-    this->Layout();
-    
-    ::wxEndBusyCursor();
-    
     ResetGlobalLocale();
+    
+    if(m_pPath->m_sTypeString != "EBL" && m_pPath->m_sTypeString != "PIL") SetDialogSize();
     
     return true;
 }
@@ -660,7 +633,7 @@ void ODPathPropertiesDialogImpl::SetDialogTitle(const wxString & title)
 
 bool ODPathPropertiesDialogImpl::SaveChanges( void )
 {
-    
+    TransferDataFromWindow();
     if( m_pPath && !m_pPath->m_bIsInLayer ) {
         //  Get User input Text Fields
         m_pPath->m_PathNameString = m_textCtrlName->GetValue();
@@ -671,7 +644,7 @@ bool ODPathPropertiesDialogImpl::SaveChanges( void )
         m_pPath->CreateColourSchemes();
         m_pPath->SetColourScheme(g_global_color_scheme);
         m_pPath->SetActiveColours();
-        m_pPath->m_style = ::StyleValues[m_choiceLineStyle->GetSelection()];
+        m_pPath->m_style = (wxPenStyle)::StyleValues[m_choiceLineStyle->GetSelection()];
         m_pPath->m_width = ::WidthValues[m_choiceLineWidth->GetSelection()];
         
         g_pODConfig->UpdatePath( m_pPath );
@@ -751,8 +724,7 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_checkBoxShowBoundaryPoints->Hide();
     m_checkBoxShowBoundaryPoints->Enable( false );
     m_fgSizerEBL->ShowItems( false );
-    m_checkBoxEBLFixedEndPosition->Hide();
-    m_checkBoxEBLFixedEndPosition->Enable( false );
+    m_fgSizerEBL1->ShowItems( false );
     m_radioBoxPathPersistence->Hide();
     m_radioBoxPathPersistence->Enable( false );
     m_checkBoxRotateWithBoat->Hide();
@@ -785,7 +757,7 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_staticTextGZSecondLength->Enable( false );
     m_textCtrlGZSecondLength->Hide();
     m_textCtrlGZSecondLength->Enable( false );
-    m_bSizerPathPoints->ShowItems( true );
+    m_fgSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Hide();
     m_bSizerPILLines->ShowItems( false );
     m_listCtrlPILList->Hide();
@@ -793,11 +765,45 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     return;
 }
 
+void ODPathPropertiesDialogImpl::SetDialogSize()
+{
+    for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
+        int a_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE_USEHEADER);
+        int h_width = m_listCtrlODPoints->GetColumnWidth(i);
+        m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
+    }
+    m_listCtrlODPoints->Fit();
+    m_fgSizerPath->Layout();
+
+    m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
+    this->GetSizer()->Fit(this);
+    this->Layout();
+    
+}
+
 void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
 {
     switch( event.GetId() ) {
         case ID_PATHPROP_MENU_DELETE: {
-            //OnRoutepropCopyTxtClick( event );
+            int dlg_return = OCPNMessageBox_PlugIn( this, _("Are you sure you want to delete this point?"),
+                                                    _("OCPN Draw Delete OD Point"), (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT );
+            
+            if( dlg_return == wxID_YES ) {
+                long item = -1;
+                item = m_listCtrlODPoints->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+                
+                if( item == -1 ) break;
+                
+                ODPoint *odp;
+                odp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
+                
+                m_pPath->DeletePoint( odp );
+                m_listCtrlODPoints->DeleteAllItems();
+                InitializeList();
+                UpdateProperties();
+            }
             break;
         }
         case ID_PATHPROP_MENU_REMOVE: {
@@ -814,6 +820,9 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
                 odp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
                 
                 m_pPath->RemovePointFromPath( odp, m_pPath );
+                m_listCtrlODPoints->DeleteAllItems();
+                InitializeList();
+                UpdateProperties();
             }
             break;
         }
@@ -828,7 +837,7 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
             odp = (ODPoint *) m_listCtrlODPoints->GetItemData( item );
             if( !odp ) break;
             
-            g_pPathManagerDialog->ODPointShowPropertiesDialog( odp, GetParent() );
+            g_pPathAndPointManagerDialog->ODPointShowPropertiesDialog( odp, GetParent() );
             break;
         }
         case ID_PILPROP_MENU_EDIT_PROPERTIES: {
@@ -846,6 +855,35 @@ void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
 
             if( !g_PILIndexLinePropDialog->IsShown() )
                 g_PILIndexLinePropDialog->Show();
+            break;
+        }
+        case ID_PILPROP_MENU_REMOVE: {
+            int dlg_return = wxID_YES;
+            long item = -1;
+            
+            item = m_listCtrlPILList->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            
+            if( item == -1 ) break;
+
+            if( g_bConfirmObjectDelete ) {
+                wxString sTypeLong;
+                wxString sTypeShort;
+                sTypeLong = _("Are you sure you want to delete this Parallel Index Line?");
+                sTypeShort = _("OCPN Draw Parallel Index Line Delete");
+#ifdef __WXOSX__
+                dlg_return = OCPNMessageBox_PlugIn( g_ocpn_draw_pi->m_parent_window,  sTypeLong, sTypeShort, (long) wxYES_NO | wxCANCEL | wxYES_DEFAULT| wxICON_QUESTION );
+#else
+                dlg_return = OCPNMessageBox_PlugIn( g_ocpn_draw_pi->m_parent_window,  sTypeLong, sTypeShort, (long) wxYES_NO | wxYES_DEFAULT );
+#endif
+            }
+            
+            if( dlg_return == wxID_YES ) {
+                long DelItem = -1;
+                m_listCtrlPILList->GetItemText(item).ToLong(&DelItem);
+                m_pPIL->DelLine(DelItem);
+                UpdateProperties();
+            }
+            
             break;
         }
     }

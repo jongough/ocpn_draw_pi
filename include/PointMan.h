@@ -26,11 +26,8 @@
 #ifndef POINTMAN_H
 #define POINTMAN_H
 
-#include "chart1.h"                 // for ColorScheme definition
 #include <wx/imaglist.h>
-#include "styles.h"
-//#include "Select.h"
-#include "nmea0183.h"
+//#include "nmea0183.h"
 #include "ODPoint.h"
 #include "ocpn_draw_pi.h"
 
@@ -80,6 +77,7 @@ class PointMan
       void ClearODPointFonts(void);
       //void ProcessIcons( ocpnStyle::Style* style );
       void ProcessIcons( );
+      void RemoveIcon(wxString key);
       
       bool DoesIconExist(const wxString & icon_key) const;
       wxBitmap *GetIconBitmap(int index);
@@ -101,8 +99,7 @@ class PointMan
 
       PI_ColorScheme    m_ColourScheme;
 
-      BoundaryPoint *FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, 
-                  double EndLat, int type, int state );
+      BoundaryPoint *FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state );
 
       wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, 
             int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );

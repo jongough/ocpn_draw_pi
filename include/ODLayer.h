@@ -51,6 +51,7 @@ public:
       wxString          m_LayerName;
       wxString          m_LayerFileName;
       wxString          m_LayerDescription;
+      bool              m_bIsVisibleOnChart;
       wxDateTime        m_CreateTime;
 };
 

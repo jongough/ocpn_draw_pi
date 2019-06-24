@@ -31,6 +31,7 @@
 #endif //precompiled headers
 
 #include "PIL.h"
+#include "PILProp.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 #include "ODSelect.h"
@@ -40,38 +41,8 @@
 #include "ocpn_plugin.h"
 
 #include <wx/listimpl.cpp>
+
 WX_DEFINE_LIST ( PILList );
-
-extern int          g_path_line_width;
-
-extern PlugIn_ViewPort g_VP;
-
-extern wxString    g_sPILEndIconName;
-extern wxString    g_sPILStartIconName;
-extern wxColour    g_colourPILActiveCentreLineColour;
-extern wxColour    g_colourPILInActiveCentreLineColour;
-extern wxColour    g_colourPILActiveOffsetLine1Colour;
-extern wxColour    g_colourPILInActiveOffsetLine1Colour;
-extern wxColour    g_colourPILActiveOffsetLine2Colour;
-extern wxColour    g_colourPILInActiveOffsetLine2Colour;
-extern int         g_PILCentreLineWidth;
-extern int         g_PILCentreLineStyle;
-extern int         g_PILOffsetLine1Width;
-extern int         g_PILOffsetLine1Style;
-extern int         g_PILOffsetLine2Width;
-extern int         g_PILOffsetLine2Style;
-extern double      g_dPILOffset;
-extern int         g_iPILPersistenceType;
-
-extern ocpn_draw_pi *g_ocpn_draw_pi;
-extern PILList      *g_pPILList;
-extern ODSelect     *g_pODSelect;
-extern PathMan      *g_pPathMan;
-extern ODPlugIn_Position_Fix_Ex  g_pfFix;
-extern wxString      g_sODPointIconName;
-extern ODConfig     *g_pODConfig;
-extern PI_ColorScheme   g_global_color_scheme;
-//extern EBLProp      *g_pEBLPropDialog;
 
 PIL::PIL() : EBL()
 {
@@ -102,6 +73,7 @@ PIL::PIL() : EBL()
     m_iStyleOffsetLine1 = g_PILOffsetLine1Style;
     m_iWidthOffsetLine2 = g_PILOffsetLine2Width;
     m_iStyleOffsetLine2 = g_PILOffsetLine2Style;
+    m_iMaxPILNumber = 0;
     
     m_PilLineList.clear();
 }
@@ -131,19 +103,19 @@ void PIL::CreateColourSchemes(PILLINE *pPilLine)
 int PIL::AddLine(wxString sName, wxString sDescription, double dOffset, bool bDefault)
 {
     PILLINE plNewLine;
-    plNewLine.iID = m_PilLineList.size() + 1;
+    plNewLine.iID = ++m_iMaxPILNumber;
     plNewLine.sName = sName;
     plNewLine.sDescription = sDescription;
     plNewLine.dOffset = dOffset;
     if( bDefault ) {
         plNewLine.wxcActiveColour = g_colourPILActiveOffsetLine1Colour;
         plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLine1Colour;
-        plNewLine.dStyle = g_PILOffsetLine1Style;
+        plNewLine.iStyle = g_PILOffsetLine1Style;
         plNewLine.dWidth = g_PILOffsetLine1Width;
     } else {
         plNewLine.wxcActiveColour = g_colourPILActiveOffsetLine2Colour;
         plNewLine.wxcInActiveColour = g_colourPILInActiveOffsetLine2Colour;
-        plNewLine.dStyle = g_PILOffsetLine2Style;
+        plNewLine.iStyle = g_PILOffsetLine2Style;
         plNewLine.dWidth = g_PILOffsetLine2Width;
     }
     CreateColourSchemes(&plNewLine);
@@ -178,6 +150,7 @@ void PIL::AddLine(PILLINE PilLine)
     CreateColourSchemes(&PilLine);
     m_PilLineList.push_back(PilLine);
     SetColourScheme();
+    m_iMaxPILNumber = wxMax(PilLine.iID, m_iMaxPILNumber);
     
     return;
 }
@@ -186,10 +159,12 @@ void PIL::DelLine(int iID)
 {
     std::list<PILLINE>::iterator it = m_PilLineList.begin();
     while(it != m_PilLineList.end()) {
-        if(it->iID == iID) break;
+		if (it->iID == iID) {
+			m_PilLineList.erase(it);
+			break;
+		}
         ++it;
     }
-    m_PilLineList.erase(it);
 }
 
 void PIL::ChangeOffset(int iID, double dOffset)
@@ -260,7 +235,7 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
                 l_colour = it->wxcSchemeInActiveColour;
         }
 
-        dc.SetPen( *wxThePenList->FindOrCreatePen( l_colour, it->dWidth, it->dStyle ) );
+        dc.SetPen( *wxThePenList->FindOrCreatePen( l_colour, it->dWidth, it->iStyle ) );
         dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( l_colour, wxBRUSHSTYLE_SOLID ) );
 
         RenderSegment( dc, l_dPoint1.x, l_dPoint1.y, l_dPoint2.x, l_dPoint2.y, VP, m_bDrawArrow, m_hiliteWidth );
@@ -272,11 +247,19 @@ void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
 void PIL::CentreOnBoat( bool bMoveEndPoint )
 {
     EBL::CentreOnBoat( bMoveEndPoint );
-
+    
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();
 
     SetPILLineSelect( l_pCentre->m_lat, l_pCentre->m_lon );
+
+    bool l_bRequestRefresh = true;
+    if(g_pPILPropDialog && g_pPILPropDialog->IsShown())
+        l_bRequestRefresh = g_pPILPropDialog->UpdateProperties();
+    
+    if(l_bRequestRefresh)
+        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    
 }
 
 void PIL::CentreOnLatLon( double lat, double lon )

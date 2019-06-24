@@ -94,7 +94,7 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
         virtual void SetPointsListHeadings();
         
         int         m_nSelected; // index of point selected in Properties dialog row
-        ODPoint     *m_pEnroutePoint;
+        ODPoint     *m_pEnPathPoint;
         bool        m_bStartNow;
         int         m_tz_selection;
         
@@ -121,6 +121,7 @@ class ODPathPropertiesDialogImpl : public ODPathPropertiesDialogDef
     private:
         void    SetViewableItems();
         void    OnPathPropMenuSelected( wxCommandEvent& event );
+        void    SetDialogSize( void );
         
 };
 
