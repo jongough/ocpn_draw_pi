@@ -74,7 +74,8 @@ deploy:
       # Deploy only when tag is not specified
       tags: false
       # or this branch
-      branch: master_1.5
+      #branch: master_1.5
+      all_branches: true
       # and only when API token is set
       # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
       condition: "${#OAUTH_ACCESS_TOKEN} != 0"
