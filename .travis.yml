@@ -106,7 +106,7 @@ deploy:
     skip_cleanup: true
     on:
       repo: jongough/ocpn_draw_pi
-      tags: true
+      tags: false
       all_branches: true
 
 
