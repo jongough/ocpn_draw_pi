@@ -109,7 +109,7 @@ deploy:
     draft: true
     on:
       repo: jongough/ocpn_draw_pi
-      tags: true
+      #tags: true
       all_branches: true
 
 
