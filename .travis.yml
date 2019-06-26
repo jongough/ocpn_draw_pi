@@ -106,7 +106,7 @@ deploy:
     file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,txz,pkg,pkg.tar.xz}"
     skip_cleanup: true
 ##    draft: true
-#    on:
+    on:
 #      repo: jongough/ocpn_draw_pi
       tags: true
       all_branches: true
