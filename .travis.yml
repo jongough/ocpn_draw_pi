@@ -82,21 +82,21 @@ deploy:
 #      condition: "${#OAUTH_ACCESS_TOKEN} != 0"
   - provider: launchpad
     slug: "~jonsgough/opencpn-plugin-draw/+git/ocpn_draw_pi"
-    oauth_token_secret:
-      secure: IfEUz16VPprAn/N00bPI08Nm8JCJ17IVbQzm9L1Vm+LEI/ZCuk40gRyeAxLkQm0X8YFgPJbm5mUocDIgAmdzQYSOpCIaz+WRUNMuKJF8TaiuxBmz7vMLq8NTYMNyNnDR47l8McWOGI24VWCZDpSIwqr3vsa6r/6B2d1OnNlGJK38EdIokR+FeOv1MH7UBQJINgpirC1Jwb9Pbnu1i1/88pXhNuSGOKJq26wSNCOzqDDHTof2TtfJoDQXZg1HwV4xnHl28uAtFyZUc/JcoQmaGamHQhIISvL45uUISots0ulyMHW5SbsIDuOU0/bQKyf0mpfd9V0GDuSj1AdIImhTTtkOgIK7kDPTU1uv9NW2SsuoBHZzUc6MS8uRLWcleOMO4PW7L1xt/RxBxV6c/1QOJoXMqqCgLIu36WmLoGK9OQm5ixAgouL48iGDZgyNBqLDw7STnT2R70PzKfe08QAEuKn9V9vvAHR6hEk9oVs9lQIqp3jXkPpTUi9ikIIYOvbh6wZ0bU/Ca5NHCkbZl04xwCGlwEv1zlHjQTEXty6zlAWeEN3htfckkoRUhGhFAe4ZJsA7qEyl0aLreyqEj+yUIDxb0yOrMU+yB140H4wgU2IZAKfXWXbRninDNdtyXtUZDtnG7o+5DdBr+OAlz/3UpxLuEizTU7R4xamyqrfOaCU=
     oauth_token:
-      secure: T4x4xON2lDkfn+8qjW23hQh7o8l+TyCyeCDqagxrCGBt/eK01AsGiGKk1xU/WZCOjwhf/QNkKLf0+cuy5C+xw+/2BAObUiMsw+ByWmqqtRj+iCrgj4yjB20KSBh6aKjrYv97ZH4rr2xB4/M/qI4z7/b/gh23Fcmucqm07fBubXKDT6sEJT9tWsh7IRfn3rOUBOzVOPVyabAY6zYI5EVKZ90eOm2Voj6oV1/Npn1nao0oWYAO1oG6PS+XTt712Ua/tUdgaXK2Kq5kOZwVufjeVbru7OeqOkqjloGQT6vXPNiiHuv/UcecnlPup2Zo3hGeZzPI0PjsGgXyD5MweOW7+IIvxbUJtjaz/MzzsojdahqCzM4xbsRN6MfrQtsoCTJuwebeqwUEOvY8qB2GrbCu2+0jdLeT4XWkVMQQ9AzljoiHCSJlnxHrmRj7JVo1OcBdgu4+QYvQCoKp+d0NnxXpeVgII7wmYyc3dmXhsCv7eACNg6fJHaxNSgc/95Rk2fbOsZlaYipdlQjXP3jAxR++eeJF3SOlh4hTMsnHTM3VyTF98M8yhUucRdPbGt9aykisRXruYe8h/ZqM19bOvW/DT7T6GMOR29lqetTpxyQ8nEC0NpEzGejPwCEtCyXnhdx2Y9tXofSlzvaz5yJ0oRvKxZsWVNIteep/UhaxkMciOZU=
+      secure: BfjlnC7JHlm1zIelgNMo0WlMWIhRDJvQwQ5UEqdWG4i9ezCRFQVLCQ8sz8vY8mGd2fJSK+OLmz4VGa3Lwg5vsinmRTJ+mJrvJxC65mCWUoTXP7nA2yYuZgqcY740IvPX73pJ8asnXtb7HUWLUYU2FiiiiXWP6ILG7pLIKaXDfqwcJtEINUNmoZMfktixru4Ig8KuoStBtHdHS8xqZ1rVqL5Ug8uZXoi3Xf13pqrdrjlTe7LJiiDxCaNuFc8mTRjBbHofJHgbIwjhvrUpRBNlOsKDddg4lWh7Gz/J2yZD0zzCOPDkxORym4wodVHDtk/FFJ/SgrVTaXVonDYogu/nz+qvYS3K32Rr0dIIDj9/+Zyg0BSBNHFsRd13R4oQWZ/6yV43lxtWTiXGYXfOpg1/iKCt1wmLhkNAJ00VvZKPIwHs6SjaSPy/2NTBy+ZU2acd0vRuFs/TBEdcs5bZxt4epYZeGbjMgnN8Vo96mSvoa/myTeDR0dC1bLoJN0sDUBBsMqfcMH0ab2oEUblQckknexgwpyez2RgR1PEfcxCc9BWLudBbvraZQRlx3W9uEMPhyNqDBe3q1BDGoLEzRLhFtU1XhLAxItBHbL2r8seulkKvISRMhopXI1JLgufgzGI1Eo5OGYZwLUT6DP9+2pI5cF2J8VjKboLPO00GxQQjQhQ=
+    oauth_token_secret:
+      secure: 0SYsEcYGRu/f3R68LQkkcMkHIGmv3JriN4U0C2kwvsgl/jFbRkm+iE+nHf3UrIh8dCgWpcrVWp1Xt7u7hwJS+v2PKgielN6SEcPIL45o6QXZjDqKNXXWM2B8ydUeCZSJkH4e0ZXs67qNn2bj6uXpgRj2C0xelZFXpov4FOhO5nn/YAWogo+qI7WLQbdy/Kqk0Arz05wLqgH5LnxmKFmNRElx8FHhYC1/w1tYQtzxVYJSjZ/U+0PHzXhjCreYhIGoisw2bfAYUMeKpSIH4tbfRruJQ2/7tuWX3a8vc635aZNmhwM2BUdvMTlZCktuoie/mt2pcZD3+NVvrDNQHnFGeWMemqYxlGmUvPanZJOXNL54nRjkfNRlMY4BkSvXHibihAjkjMZeH2JgMIjSNEUoZOrsL9cQCGDef+iZlTtKXxPEt81Gn08FPJeohGspPq6nl3XTj3sIPbOKih0BtBRo7LR9ol0zx5gyQepH5Ef6r4KhdKqdEV04nFQD4Zht36Ia+854b103RCeNX7zWezcgGCebQpBOIsuDAZQgj5RDIG/Y3r4n1+PgoC2Uw0HSf7D9vyFNAJHTiSIAFvqpco+XsYNJINlgM9HIBvVmcx2UeRquxixjEQjmi7/CTuQ7xq75mRbQJ3UTmpVMEbx2H5YZ2s8l8ZQDXpyHOtcIU8ZTtKE=
     skip_cleanup: true
     on: # Set Deploy conditions
       # Deploy only when tag is not specified
       # tags: false
       # or this branch
-      branches:
-         only:
-           - master
+      #branches:
+      #   only:
+      #     - master
       #     - master_1.5
       tags: true
-      #all_branches: true
+      all_branches: true
       condition: "$TRAVIS_OS_NAME = linux"
 
   - provider: releases
