@@ -60,7 +60,6 @@ addons:
     - gcc-6
     - g++-6
 deploy:
-  matrix:
   - provider: script
     file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}"
     script: if [ -f ~/.dropbox_uploader ] ; then echo "OSX"; if [ "$TRAVIS_OS_NAME"
@@ -105,8 +104,8 @@ deploy:
     file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,txz,pkg,pkg.tar.xz}"
     skip_cleanup: true
     on:
-#      repo: jongough/ocpn_draw_pi
-      tags: true
+      #repo: jongough/ocpn_draw_pi
+      #tags: true
       all_branches: true
 
       #  provider: releases
