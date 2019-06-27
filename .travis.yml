@@ -6,52 +6,54 @@ matrix:
   - os: osx
     compiler: clang
 install:
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
     then 
       sudo apt-get -qq update; 
       sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
       sudo apt-get install libexpat1-dev libcairo2-dev; 
       sudo apt-get install rpm; 
     fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
-  then 
-    brew install cairo libexif xz libarchive;
-    wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
-    tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; export PATH="/usr/local/opt/gettext/bin:$PATH";
-    echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
-    wget http://opencpn.navnux.org/build_deps/Packages.dmg;
-    hdiutil attach Packages.dmg; 
-    sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
-  fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
+    then 
+      brew install cairo libexif xz libarchive;
+      wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
+      tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; 
+      export PATH="/usr/local/opt/gettext/bin:$PATH";
+      echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
+      wget http://opencpn.navnux.org/build_deps/Packages.dmg;
+      hdiutil attach Packages.dmg; 
+      sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
+    fi
 script:
-- if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
-  then 
-    echo "Don't build on coverty_scan branch."; 
-    exit 0; 
-  fi
-- mkdir build && cd build
-- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
-  then 
-    cmake -DCMAKE_BUILD_TYPE=Release ../ && make -sj2 && sudo make package; 
-  fi
-- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
-  then 
-    cmake -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx312_opencpn50_macos109/bin/wx-config -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx312_opencpn50_macos109" -DCMAKE_INSTALL_PREFIX=/tmp/opencpn -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 .. && make -sj2 && make create-pkg; 
-  fi
-- ls -l;
+  - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
+    then 
+      echo "Don't build on coverty_scan branch."; 
+      exit 0; 
+    fi
+  - mkdir build && cd build
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
+    then 
+      cmake -DCMAKE_BUILD_TYPE=Release ../ && make -sj2 && sudo make package; 
+    fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
+    then 
+      cmake -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx312_opencpn50_macos109/bin/wx-config -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx312_opencpn50_macos109" -DCMAKE_INSTALL_PREFIX=/tmp/opencpn -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 .. && make -sj2 && make create-pkg; 
+    fi
+  - ls -l;
+  
 notifications:
   email: false
 git:
   depth: 10
 before_install:
-- if [ "$CXX" = "g++" ]; 
-  then 
-    export CXX="g++-6" CC="gcc-6";
-  fi
-- if [ "${#OAUTH_ACCESS_TOKEN}" != 0 ]; 
-  then 
-    (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN} > ~/.dropbox_uploader); 
-  fi
+  - if [ "$CXX" = "g++" ]; 
+    then 
+      export CXX="g++-6" CC="gcc-6";
+    fi
+  - if [ "${#OAUTH_ACCESS_TOKEN}" != 0 ]; 
+    then 
+      (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN} > ~/.dropbox_uploader); 
+    fi
 addons:
   apt:
     sources:
@@ -60,24 +62,24 @@ addons:
     - gcc-6
     - g++-6
 deploy:
-  - provider: script
-    file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}"
-    script: if [ -f ~/.dropbox_uploader ] ; then echo "OSX"; if [ "$TRAVIS_OS_NAME"
-      = "osx" ] ; then echo "upload pkg"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg
-      / ; fi; echo "Linux"; if [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo "upload
-      rpm"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /; echo
-      "upload deb"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb
-      /; fi; fi
-    skip_cleanup: true
-    on: # Set Deploy conditions
-      # Deploy only when tag is not specified
-      tags: false
-      # or this branch
-      #branch: master_1.5
-      all_branches: true
-      # and only when API token is set
-      # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
-      condition: "${#OAUTH_ACCESS_TOKEN} != 0"
+#  - provider: script
+#    file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}"
+#    script: if [ -f ~/.dropbox_uploader ] ; then echo "OSX"; if [ "$TRAVIS_OS_NAME"
+#      = "osx" ] ; then echo "upload pkg"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg
+#      / ; fi; echo "Linux"; if [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo "upload
+#      rpm"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /; echo
+#      "upload deb"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb
+#      /; fi; fi
+#    skip_cleanup: true
+#    on: # Set Deploy conditions
+#      # Deploy only when tag is not specified
+#      tags: false
+#      # or this branch
+#      #branch: master_1.5
+#      all_branches: true
+#      # and only when API token is set
+#      # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
+#      condition: "${#OAUTH_ACCESS_TOKEN} != 0"
   - provider: launchpad
     slug: "~jonsgough/opencpn-plugin-draw/+git/ocpn_draw_pi"
     oauth_token_secret:
@@ -93,9 +95,9 @@ deploy:
       #   only:
       #     - master
       #     - master_1.5
+      tags: true
       all_branches: true
       condition: "$TRAVIS_OS_NAME = linux"
-      repo: jongough/ocpn_draw_pi
 
   - provider: releases
     api_key:
@@ -104,16 +106,10 @@ deploy:
     file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,txz,pkg,pkg.tar.xz}"
     skip_cleanup: true
     on:
-      #repo: jongough/ocpn_draw_pi
-      #tags: true
+      tags: true
       all_branches: true
 
-      #  provider: releases
-#  api_key:
-    #secure: uvijOhBh2yARa7YAdktWQP22NgAtgaotsNlkqTFgGbF+3MIWeRV5/AbhfsB3/lyZ6LtaSc1EURqkgTMbJEOAplzswhpQr9H/gUdUewG3uRSPNA1MdLeg911i7Bs8vFG8eihT9vcEJcsEiu76RsnTdmzWj3csHYxhW6eAuJuad3oPOuOFrUnKGaPTTiq5wzmZjMnBpkzpOTroEITM99TFLL4zpBBFNvhP2W0uRJYEDEO/3yPuMotuiCayoR+ddVjmuUtUq7AvVBaAqJIo/qahtGHTWIYVs1+aUj+w7Pp1svs/no8upILiQM54wqt9unvnDJwUVpkV64ulXlRLtUnHjddvbiSfW6xVXrb/rnu95PktuwihMJp6QRmh5Okhypq6WBjPSYXP2a0OeDVbtpehUArSY0Qe3qJRFrYC9yE8huq3zmLN94FL8hTbA+XbzjXLLfulo2CVLb3TuJV2w7b4H3FweGRxaIiDKLrZ5YgwPVY6Zt6l0ZjBIyJKIYK8ffgDgxZKP26aXy4DSs9GYZ8gEe99SwgKD+E0bbUl2IoihjKYA0i9RzS7YjECsLXSxua1WWU/bs8lE4z3TCBLTppkOILFMKEweMrtnjrwgC/sUlUHKQSQDx+SDByfMqo8BuX2wpqFOkzxakvcjWnUqhw4SF9h8poAmtplwPO2Cx9sk64=
-#  file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,txz,pkg,pkg.tar.xz}"
-#  on:
-#    repo: jongough/ocpn_draw_pi
 
-        #secure: "AvI/FuuiHrL/ZvN56SqKbNeAxkyoszoB+cIQyJvcJfeyr0tMrzxwde2dzh7Dmz/dOMh2jfaQIUV6KVyfbTTELa3OeytqoaysWafSYnuC+TbjUqBC/qLqQimzrdtg9xjb0hjKIDsxr3Cs41ZrEHZ3RAMEK7VYhnrAg0h2zhb8h1jHoKAbsVHjfiZCSYGazLbsgRJwevh+lguaGCVdabMAxV7Kmb74EVr64lnVAK/5o53PnZfMOAoBP97YtEPJHfs9vZAlSOZsjchMJCmDy38NUdfmC4gWSZ0lacSXkNc0yYmWAe/5LZrMGJCXQZrW2YYVpXskxajRzxJ3rCvI3hZ02SdXK66bQ2rMgfSefLUGXlOoVjW+W5pyRziUCUh3d3jSUMgLahZilPh/Sdl1ErllYCvKc1InLcAVjsQRqIB6XJfh9RCZP25YKjR1MirnpuV8LTL7/9GXxU9l/PeX8t2gweYdNunaOTdmfdCer4b1RRb980en78WT57qrtaVrGa1MXqbdZTHzTLXZlbprm2dzRUnduCP8YWH1qdJtH/L7GpyJLSx9G8ycnSexP0/k/QPDuZf3TDum/4gsqXZtJd6PO/6MnCloTn7OxYPyu8TBYduI56gFb2iFvatWwX5Qd/AVR99LeqKPRjAA6LaiDCf8CEOjacKf4gttZalcH/mCI8o="
-
+#environment:
+#  OAUTH_ACCESS_TOKEN:
+#    secure: OIqJeLohefVWvPklh+LxxIZdzVCXU4T++cJqkbaQUiT1HDWvleojgGNARPMG3STP
