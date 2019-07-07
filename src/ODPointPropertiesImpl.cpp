@@ -77,6 +77,7 @@ ODPointPropertiesDialog( parent )
     
     DimeWindow( this );
 
+    m_parent_window = parent;
     m_pODPoint = NULL;
     m_pfdDialog = NULL;
     m_bLatitudeLocked = false;
@@ -167,7 +168,7 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
     }
 
     // Update the mark position dynamically
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    RequestRefresh( m_parent_window );
 }
 
 void ODPointPropertiesImpl::OnArrivalRadiusChange( wxCommandEvent& event )
@@ -238,7 +239,7 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
     
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    RequestRefresh( m_parent_window );
     
     event.Skip();
 }
@@ -269,7 +270,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
 
-    RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+    RequestRefresh( m_parent_window );
     
     event.Skip();
 }
@@ -548,7 +549,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_IconName_save = m_pODPoint->GetIconName();
         m_bShowName_save = m_pODPoint->m_bShowName;
         m_bIsVisible_save = m_pODPoint->m_bIsVisible;
-        RequestRefresh( g_ocpn_draw_pi->m_parent_window );
+        RequestRefresh( m_parent_window );
     }
     
     m_toggleBtnDeleteLink->SetValue(false);
