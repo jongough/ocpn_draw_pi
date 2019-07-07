@@ -154,6 +154,7 @@ private:
     void OnHyperLinkClick( wxHyperlinkEvent &event );
     void HyperLinkContextMenu( wxMouseEvent &event );
     
+    wxWindow        *m_parent_window;
     ODPoint         *m_pODPoint;
     TextPoint       *m_pTextPoint;
     BoundaryPoint   *m_pBoundaryPoint;
