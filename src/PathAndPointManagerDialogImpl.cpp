@@ -635,7 +635,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
     
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
         if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
-            g_pBoundaryPropDialog = new BoundaryProp( g_ocpn_draw_pi->m_parent_window );
+            g_pBoundaryPropDialog = new BoundaryProp( m_parent_window );
         g_pODPathPropDialog = g_pBoundaryPropDialog;
         l_pBoundary = (Boundary *) inpath;
         l_pPath = l_pBoundary;
@@ -643,7 +643,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
     } else if(inpath->m_sTypeString == wxT("EBL")) {
         if( NULL == g_pEBLPropDialog )          // There is one global instance of the ELBProp Dialog
-            g_pEBLPropDialog = new EBLProp( GetParent() );
+            g_pEBLPropDialog = new EBLProp( m_parent_window );
         g_pODPathPropDialog = g_pEBLPropDialog;
         l_pEBL = (EBL *) inpath;
         l_pPath = l_pEBL;
@@ -651,7 +651,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pEBLPropDialog->UpdateProperties( l_pEBL );
     } else if(inpath->m_sTypeString == wxT("DR")) {
         if( NULL == g_pDRPropDialog )          // There is one global instance of the DRProp Dialog
-            g_pDRPropDialog = new DRProp( GetParent() );
+            g_pDRPropDialog = new DRProp( m_parent_window );
         g_pODPathPropDialog = g_pDRPropDialog;
         l_pDR = (DR *) inpath;
         l_pPath = l_pDR;
@@ -659,7 +659,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pDRPropDialog->UpdateProperties( l_pDR );
     } else if(inpath->m_sTypeString == wxT("Guard Zone")) {
         if( NULL == g_pGZPropDialog )          // There is one global instance of the DRProp Dialog
-            g_pGZPropDialog = new GZProp( GetParent() );
+            g_pGZPropDialog = new GZProp( m_parent_window );
         g_pODPathPropDialog = g_pGZPropDialog;
         l_pGZ = (GZ *) inpath;
         l_pPath = l_pGZ;
@@ -667,7 +667,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pGZPropDialog->UpdateProperties( l_pGZ );
     } else if(inpath->m_sTypeString == wxT("PIL")) {
         if( NULL == g_pPILPropDialog )          // There is one global instance of the ELBProp Dialog
-            g_pPILPropDialog = new PILProp( GetParent() );
+            g_pPILPropDialog = new PILProp( m_parent_window );
         g_pODPathPropDialog = g_pPILPropDialog;
         l_pPIL = (PIL *) inpath;
         l_pPath = l_pPIL;
@@ -675,7 +675,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pPILPropDialog->UpdateProperties( l_pPIL );
     } else {
         if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
-            g_pODPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
+            g_pODPathPropDialog = new ODPathPropertiesDialogImpl( m_parent_window );
         l_pPath = inpath;
         g_pODPathPropDialog->SetPath( l_pPath );
         g_pODPathPropDialog->UpdateProperties( l_pPath );
@@ -1302,7 +1302,8 @@ void PathAndPointManagerDialogImpl::OnODPointToggleVisibility( wxMouseEvent &eve
 
 void PathAndPointManagerDialogImpl::OnODPointNewClick( wxCommandEvent &event )
 {
-    ODNewODPointDialogImpl *l_pType = new ODNewODPointDialogImpl(m_parent_window);
+    ODNewODPointDialogImpl *l_pType = new ODNewODPointDialogImpl(this);
+        
     #ifndef __WXOSX__
     DimeWindow( l_pType );
     #endif
@@ -1320,13 +1321,14 @@ void PathAndPointManagerDialogImpl::OnODPointNewClick( wxCommandEvent &event )
         }
         g_pODSelect->AddSelectableODPoint( g_dLat, g_dLon, pODP );
         g_pODConfig->AddNewODPoint( pODP, -1 );    // use auto next num
-        UpdateODPointsListCtrl( pODP );
+        
         RequestRefresh( GetOCPNCanvasWindow() );
         
-        ODPointShowPropertiesDialog( pODP, GetParent() );
-    }
+        ODPointShowPropertiesDialog( pODP, m_parent_window );
+        UpdateODPointsListCtrl( pODP );
+    }  
     
-    //delete l_pType;
+    l_pType->Destroy();
 }
 
 void PathAndPointManagerDialogImpl::OnODPointPropertiesClick( wxCommandEvent &event )
@@ -1339,7 +1341,7 @@ void PathAndPointManagerDialogImpl::OnODPointPropertiesClick( wxCommandEvent &ev
     
     if( !wp ) return;
     
-    ODPointShowPropertiesDialog( wp, g_ocpn_draw_pi->m_parent_window );
+    ODPointShowPropertiesDialog( wp, m_parent_window );
     
     UpdateODPointsListCtrl();
 }
@@ -1349,7 +1351,6 @@ void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( ODPoint* wp, wx
     if( NULL == g_pODPointPropDialog )
         g_pODPointPropDialog = new ODPointPropertiesImpl( parent );
     
-    DimeWindow( g_pODPointPropDialog );
     g_pODPointPropDialog->SetODPoint( wp );
     g_pODPointPropDialog->UpdateProperties();
     
@@ -2027,8 +2028,7 @@ void PathAndPointManagerDialogImpl::UpdateODPointsListCtrl( ODPoint *op_select, 
             
             wxListItem li;
             li.SetId( index );
-            li.SetImage( op->IsVisible() ? g_pODPointMan->GetIconIndex( op->GetIconBitmap() )
-            : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
+            li.SetImage( op->IsVisible() ? g_pODPointMan->GetIconIndex( op->GetIconBitmap() ) : g_pODPointMan->GetXIconIndex( op->GetIconBitmap() ) );
             li.SetData( op );
             li.SetText( _T("") );
             long idx = m_listCtrlODPoints->InsertItem( li );
