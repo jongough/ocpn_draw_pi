@@ -83,10 +83,13 @@
   <g id="Spread" transform="translate(0 -18)">
    <g id="Layer 1">
     <path d="M 25.057,9.418 L 49.057,9.418 L 49.057,-14.582 L 25.057,-14.582 L 25.057,9.418" stroke="none"/>
-    <path d="M 18.006,0.002 L 18.006,18.003 L 0.005,18.003 L 0.005,0.002 L 18.006,0.002 Z" fill="#898989" stroke-linejoin="miter" stroke-width="0.75" stroke="none" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
-    <g id="Group" stroke-linejoin="miter" stroke="#b4b4b4" stroke-width="2.425" stroke-miterlimit="79.8403193612775">
-     <path d="M 9.014,2.147 L 2.15,8.995 L 8.998,15.859 L 15.862,9.011 L 9.014,2.147 Z" marker-start="none" marker-end="none"/>
-     <path d="M 9.823,8.103 C 10.317,8.557 10.357,9.325 9.903,9.818 C 9.45,10.311 8.682,10.352 8.189,9.898 C 7.695,9.445 7.655,8.677 8.109,8.184 C 8.562,7.69 9.33,7.65 9.823,8.103 Z" marker-start="none" marker-end="none"/>
+    <path d="M 33.471,-1.769 C 33.471,0.472 35.351,2.291 37.667,2.291 C 39.983,2.291 41.863,0.472 41.863,-1.769 C 41.863,-4.01 39.983,-5.829 37.667,-5.829 C 35.351,-5.829 33.471,-4.01 33.471,-1.769 Z" stroke="none" stroke-opacity="0.850980" fill="#800000" stroke-width="0" fill-rule="evenodd" stroke-linejoin="round" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775" fill-opacity="0.000000"/>
+    <g id="Group" stroke-linejoin="miter" stroke-miterlimit="79.8403193612775">
+     <path d="M 18.006,0.002 L 18.006,18.003 L 0.005,18.003 L 0.005,0.002 L 18.006,0.002 Z" stroke-width="0.75" fill="#282828" stroke="none" marker-start="none" marker-end="none" stroke-miterlimit="5.98802395209581"/>
+     <g id="Group_1" stroke="#b4b4b4" stroke-width="2.425" stroke-miterlimit="5.98802395209581">
+      <path d="M 9.014,2.147 L 2.15,8.995 L 8.998,15.859 L 15.862,9.011 L 9.014,2.147 Z" marker-start="none" marker-end="none"/>
+      <path d="M 9.823,8.103 C 10.317,8.557 10.357,9.325 9.903,9.818 C 9.45,10.311 8.682,10.352 8.189,9.898 C 7.695,9.445 7.655,8.677 8.109,8.184 C 8.562,7.69 9.33,7.65 9.823,8.103 Z" marker-start="none" marker-end="none"/>
+     </g>
     </g>
    </g>
   </g>

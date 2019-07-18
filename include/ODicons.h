@@ -46,29 +46,29 @@ public:
     void    SetColourScheme( PI_ColorScheme cs );
     void    ChangeScheme(void);
     
-    wxBitmap    m_p_bm_ocpn_draw_pi;
-    wxBitmap    m_p_bm_ocpn_draw_grey_pi;
+    wxBitmap    *m_p_bm_ocpn_draw_pi;
+    wxBitmap    *m_p_bm_ocpn_draw_grey_pi;
 
-    wxBitmap    m_p_bm_ocpn_draw_boundary;
-    wxBitmap    m_p_bm_ocpn_draw_boundary_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_boundary;
+    wxBitmap    *m_p_bm_ocpn_draw_boundary_grey;
 
-    wxBitmap    m_p_bm_ocpn_draw_point;
-    wxBitmap    m_p_bm_ocpn_draw_point_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_point;
+    wxBitmap    *m_p_bm_ocpn_draw_point_grey;
 
-    wxBitmap    m_p_bm_ocpn_draw_textpoint;
-    wxBitmap    m_p_bm_ocpn_draw_textpoint_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_textpoint;
+    wxBitmap    *m_p_bm_ocpn_draw_textpoint_grey;
 
-    wxBitmap    m_p_bm_ocpn_draw_ebl;
-    wxBitmap    m_p_bm_ocpn_draw_ebl_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_ebl;
+    wxBitmap    *m_p_bm_ocpn_draw_ebl_grey;
 
-    wxBitmap    m_p_bm_ocpn_draw_dr;
-    wxBitmap    m_p_bm_ocpn_draw_dr_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_dr;
+    wxBitmap    *m_p_bm_ocpn_draw_dr_grey;
 
-    wxBitmap    m_p_bm_ocpn_draw_gz;
-    wxBitmap    m_p_bm_ocpn_draw_gz_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_gz;
+    wxBitmap    *m_p_bm_ocpn_draw_gz_grey;
 
-    wxBitmap    m_p_bm_ocpn_draw_pil;
-    wxBitmap    m_p_bm_ocpn_draw_pil_grey;
+    wxBitmap    *m_p_bm_ocpn_draw_pil;
+    wxBitmap    *m_p_bm_ocpn_draw_pil_grey;
 
     wxString    m_s_ocpn_draw_pi;
     wxString    m_s_ocpn_draw_grey_pi;
@@ -94,62 +94,78 @@ private:
     void        CreateSchemeIcons(void);
     wxBitmap    BuildDimmedToolBitmap(wxBitmap bmp_nosrmal, unsigned char dim_ratio);
     
-#ifdef ODraw_USE_SVG
+#if defined ODraw_USE_SVG || defined ODraw_USE_MUI
     wxBitmap    LoadSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1 );
     wxBitmap    ScaleIcon( wxBitmap bitmap, const wxString filename, double sf );
     
 #endif
-    
-    wxBitmap    m_p_bm_day_ocpn_draw_pi;
-    wxBitmap    m_p_bm_day_ocpn_draw_grey_pi;
-    wxBitmap    m_p_bm_day_ocpn_draw_boundary;
-    wxBitmap    m_p_bm_day_ocpn_draw_boundary_grey;
-    wxBitmap    m_p_bm_day_ocpn_draw_point;
-    wxBitmap    m_p_bm_day_ocpn_draw_point_grey;
-    wxBitmap    m_p_bm_day_ocpn_draw_textpoint;
-    wxBitmap    m_p_bm_day_ocpn_draw_textpoint_grey;
-    wxBitmap    m_p_bm_day_ocpn_draw_ebl;
-    wxBitmap    m_p_bm_day_ocpn_draw_ebl_grey;
-    wxBitmap    m_p_bm_day_ocpn_draw_dr;
-    wxBitmap    m_p_bm_day_ocpn_draw_dr_grey;
-    wxBitmap    m_p_bm_day_ocpn_draw_gz;
-    wxBitmap    m_p_bm_day_ocpn_draw_gz_grey;
-    wxBitmap    m_p_bm_day_ocpn_draw_pil;
-    wxBitmap    m_p_bm_day_ocpn_draw_pil_grey;
+    wxBitmap    m_bm_ocpn_draw_pi;
+    wxBitmap    m_bm_ocpn_draw_grey_pi;
+    wxBitmap    m_bm_ocpn_draw_boundary;
+    wxBitmap    m_bm_ocpn_draw_boundary_grey;
+    wxBitmap    m_bm_ocpn_draw_point;
+    wxBitmap    m_bm_ocpn_draw_point_grey;
+    wxBitmap    m_bm_ocpn_draw_textpoint;
+    wxBitmap    m_bm_ocpn_draw_textpoint_grey;
+    wxBitmap    m_bm_ocpn_draw_ebl;
+    wxBitmap    m_bm_ocpn_draw_ebl_grey;
+    wxBitmap    m_bm_ocpn_draw_dr;
+    wxBitmap    m_bm_ocpn_draw_dr_grey;
+    wxBitmap    m_bm_ocpn_draw_gz;
+    wxBitmap    m_bm_ocpn_draw_gz_grey;
+    wxBitmap    m_bm_ocpn_draw_pil;
+    wxBitmap    m_bm_ocpn_draw_pil_grey;
 
-    wxBitmap    m_p_bm_dusk_ocpn_draw_pi;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_grey_pi;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_boundary;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_boundary_grey;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_point;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_point_grey;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_textpoint;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_textpoint_grey;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_ebl;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_ebl_grey;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_dr;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_dr_grey;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_gz;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_gz_grey;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_pil;
-    wxBitmap    m_p_bm_dusk_ocpn_draw_pil_grey;
+    wxBitmap    m_bm_day_ocpn_draw_pi;
+    wxBitmap    m_bm_day_ocpn_draw_grey_pi;
+    wxBitmap    m_bm_day_ocpn_draw_boundary;
+    wxBitmap    m_bm_day_ocpn_draw_boundary_grey;
+    wxBitmap    m_bm_day_ocpn_draw_point;
+    wxBitmap    m_bm_day_ocpn_draw_point_grey;
+    wxBitmap    m_bm_day_ocpn_draw_textpoint;
+    wxBitmap    m_bm_day_ocpn_draw_textpoint_grey;
+    wxBitmap    m_bm_day_ocpn_draw_ebl;
+    wxBitmap    m_bm_day_ocpn_draw_ebl_grey;
+    wxBitmap    m_bm_day_ocpn_draw_dr;
+    wxBitmap    m_bm_day_ocpn_draw_dr_grey;
+    wxBitmap    m_bm_day_ocpn_draw_gz;
+    wxBitmap    m_bm_day_ocpn_draw_gz_grey;
+    wxBitmap    m_bm_day_ocpn_draw_pil;
+    wxBitmap    m_bm_day_ocpn_draw_pil_grey;
 
-    wxBitmap    m_p_bm_night_ocpn_draw_pi;
-    wxBitmap    m_p_bm_night_ocpn_draw_grey_pi;
-    wxBitmap    m_p_bm_night_ocpn_draw_boundary;
-    wxBitmap    m_p_bm_night_ocpn_draw_boundary_grey;
-    wxBitmap    m_p_bm_night_ocpn_draw_point;
-    wxBitmap    m_p_bm_night_ocpn_draw_point_grey;
-    wxBitmap    m_p_bm_night_ocpn_draw_textpoint;
-    wxBitmap    m_p_bm_night_ocpn_draw_textpoint_grey;
-    wxBitmap    m_p_bm_night_ocpn_draw_ebl;
-    wxBitmap    m_p_bm_night_ocpn_draw_ebl_grey;
-    wxBitmap    m_p_bm_night_ocpn_draw_dr;
-    wxBitmap    m_p_bm_night_ocpn_draw_dr_grey;
-    wxBitmap    m_p_bm_night_ocpn_draw_gz;
-    wxBitmap    m_p_bm_night_ocpn_draw_gz_grey;
-    wxBitmap    m_p_bm_night_ocpn_draw_pil;
-    wxBitmap    m_p_bm_night_ocpn_draw_pil_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_pi;
+    wxBitmap    m_bm_dusk_ocpn_draw_grey_pi;
+    wxBitmap    m_bm_dusk_ocpn_draw_boundary;
+    wxBitmap    m_bm_dusk_ocpn_draw_boundary_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_point;
+    wxBitmap    m_bm_dusk_ocpn_draw_point_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_textpoint;
+    wxBitmap    m_bm_dusk_ocpn_draw_textpoint_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_ebl;
+    wxBitmap    m_bm_dusk_ocpn_draw_ebl_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_dr;
+    wxBitmap    m_bm_dusk_ocpn_draw_dr_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_gz;
+    wxBitmap    m_bm_dusk_ocpn_draw_gz_grey;
+    wxBitmap    m_bm_dusk_ocpn_draw_pil;
+    wxBitmap    m_bm_dusk_ocpn_draw_pil_grey;
+
+    wxBitmap    m_bm_night_ocpn_draw_pi;
+    wxBitmap    m_bm_night_ocpn_draw_grey_pi;
+    wxBitmap    m_bm_night_ocpn_draw_boundary;
+    wxBitmap    m_bm_night_ocpn_draw_boundary_grey;
+    wxBitmap    m_bm_night_ocpn_draw_point;
+    wxBitmap    m_bm_night_ocpn_draw_point_grey;
+    wxBitmap    m_bm_night_ocpn_draw_textpoint;
+    wxBitmap    m_bm_night_ocpn_draw_textpoint_grey;
+    wxBitmap    m_bm_night_ocpn_draw_ebl;
+    wxBitmap    m_bm_night_ocpn_draw_ebl_grey;
+    wxBitmap    m_bm_night_ocpn_draw_dr;
+    wxBitmap    m_bm_night_ocpn_draw_dr_grey;
+    wxBitmap    m_bm_night_ocpn_draw_gz;
+    wxBitmap    m_bm_night_ocpn_draw_gz_grey;
+    wxBitmap    m_bm_night_ocpn_draw_pil;
+    wxBitmap    m_bm_night_ocpn_draw_pil_grey;
 
     double          m_dScaleFactor;
     PI_ColorScheme  m_ColourScheme;
