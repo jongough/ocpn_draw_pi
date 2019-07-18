@@ -72,120 +72,138 @@ void ODicons::initialize_images(void)
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
     
     m_failedBitmapLoad = false;
+    
+    m_p_bm_ocpn_draw_pi = &m_bm_ocpn_draw_pi;
+    m_p_bm_ocpn_draw_grey_pi = &m_bm_ocpn_draw_grey_pi;
+    m_p_bm_ocpn_draw_boundary = &m_bm_ocpn_draw_boundary;
+    m_p_bm_ocpn_draw_boundary_grey = &m_bm_ocpn_draw_boundary_grey;
+    m_p_bm_ocpn_draw_point = &m_bm_ocpn_draw_point;
+    m_p_bm_ocpn_draw_point_grey = &m_bm_ocpn_draw_point_grey;
+    m_p_bm_ocpn_draw_textpoint = &m_bm_ocpn_draw_textpoint;
+    m_p_bm_ocpn_draw_textpoint_grey = &m_bm_ocpn_draw_textpoint_grey;
+    m_p_bm_ocpn_draw_ebl = &m_bm_ocpn_draw_ebl;
+    m_p_bm_ocpn_draw_ebl_grey = &m_bm_ocpn_draw_ebl_grey;
+    m_p_bm_ocpn_draw_dr = &m_bm_ocpn_draw_dr;
+    m_p_bm_ocpn_draw_dr_grey = &m_bm_ocpn_draw_dr_grey;
+    m_p_bm_ocpn_draw_gz = &m_bm_ocpn_draw_gz;
+    m_p_bm_ocpn_draw_gz_grey = &m_bm_ocpn_draw_gz_grey;
+    m_p_bm_ocpn_draw_pil = &m_bm_ocpn_draw_pil;
+    m_p_bm_ocpn_draw_pil_grey = &m_bm_ocpn_draw_pil_grey;
+    
 
 #ifdef ODraw_USE_MUI    
     fn.SetFullName(wxT("ODManager_MUI.svg"));
     m_s_ocpn_draw_pi = fn.GetFullPath();
-    m_p_bm_ocpn_draw_pi = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_pi = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("ODManagergrey_MUI.svg"));
     m_s_ocpn_draw_grey_pi = fn.GetFullPath();
-    m_p_bm_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("boundary_MUI.svg"));
-    m_p_bm_ocpn_draw_boundary = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_boundary = LoadSVG( fn.GetFullPath() );
     m_s_ocpn_draw_boundary = fn.GetFullPath();
     fn.SetFullName(wxT("boundarygrey_MUI.svg"));
     m_s_ocpn_draw_boundary_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("pointbutton_MUI.svg"));
     m_s_ocpn_draw_point = fn.GetFullPath();
-    m_p_bm_ocpn_draw_point = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_point = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("pointbuttongrey_MUI.svg"));
     m_s_ocpn_draw_point_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("textpointbutton_MUI.svg"));
     m_s_ocpn_draw_textpoint = fn.GetFullPath();
-    m_p_bm_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("textpointbuttongrey_MUI.svg"));
     m_s_ocpn_draw_textpoint_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("EBL_MUI.svg"));
     m_s_ocpn_draw_ebl = fn.GetFullPath();
-    m_p_bm_ocpn_draw_ebl = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_ebl = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("EBLgrey_MUI.svg"));
     m_s_ocpn_draw_ebl_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("DR_MUI.svg"));
     m_s_ocpn_draw_dr = fn.GetFullPath();
-    m_p_bm_ocpn_draw_dr = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_dr = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("DRgrey_MUI.svg"));
     m_s_ocpn_draw_dr_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("GZ_MUI.svg"));
     m_s_ocpn_draw_gz = fn.GetFullPath();
-    m_p_bm_ocpn_draw_gz = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_gz = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("GZgrey_MUI.svg"));
     m_s_ocpn_draw_gz_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_gz_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_gz_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("PIL_MUI.svg"));
     m_s_ocpn_draw_pil = fn.GetFullPath();
-    m_p_bm_ocpn_draw_pil = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_pil = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("PILgrey_MUI.svg"));
     m_s_ocpn_draw_pil_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_pil_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_pil_grey = LoadSVG( fn.GetFullPath() );
 #else
 #ifdef ODraw_USE_SVG
     fn.SetFullName(wxT("ODManager.svg"));
     m_s_ocpn_draw_pi = fn.GetFullPath();
-    m_p_bm_ocpn_draw_pi = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_pi = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("ODManagergrey.svg"));
     m_s_ocpn_draw_grey_pi = fn.GetFullPath();
-    m_p_bm_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_grey_pi = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("boundary.svg"));
-    m_p_bm_ocpn_draw_boundary = LoadSVG( fn.GetFullPath() );
     m_s_ocpn_draw_boundary = fn.GetFullPath();
+    m_bm_ocpn_draw_boundary = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("boundarygrey.svg"));
     m_s_ocpn_draw_boundary_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_boundary_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("pointbutton.svg"));
     m_s_ocpn_draw_point = fn.GetFullPath();
-    m_p_bm_ocpn_draw_point = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_point = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("pointbuttongrey.svg"));
     m_s_ocpn_draw_point_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_point_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("textpointbutton.svg"));
     m_s_ocpn_draw_textpoint = fn.GetFullPath();
-    m_p_bm_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_textpoint = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("textpointbuttongrey.svg"));
     m_s_ocpn_draw_textpoint_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_textpoint_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("EBL.svg"));
     m_s_ocpn_draw_ebl = fn.GetFullPath();
-    m_p_bm_ocpn_draw_ebl = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_ebl = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("EBLgrey.svg"));
     m_s_ocpn_draw_ebl_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_ebl_grey = LoadSVG( fn.GetFullPath() );
     
     fn.SetFullName(wxT("DR.svg"));
     m_s_ocpn_draw_dr = fn.GetFullPath();
-    m_p_bm_ocpn_draw_dr = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_dr = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("DRgrey.svg"));
     m_s_ocpn_draw_dr_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_dr_grey = LoadSVG( fn.GetFullPath() );
 
     fn.SetFullName(wxT("GZ.svg"));
     m_s_ocpn_draw_gz = fn.GetFullPath();
-    m_p_bm_ocpn_draw_gz = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_gz = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("GZgrey.svg"));
     m_s_ocpn_draw_gz_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_gz_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_gz_grey = LoadSVG( fn.GetFullPath() );
 
     fn.SetFullName(wxT("PIL.svg"));
     m_s_ocpn_draw_pil = fn.GetFullPath();
-    m_p_bm_ocpn_draw_pil = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_pil = LoadSVG( fn.GetFullPath() );
     fn.SetFullName(wxT("PILgrey.svg"));
     m_s_ocpn_draw_pil_grey = fn.GetFullPath();
-    m_p_bm_ocpn_draw_pil_grey = LoadSVG( fn.GetFullPath() );
+    m_bm_ocpn_draw_pil_grey = LoadSVG( fn.GetFullPath() );
 #else
     fn.SetFullName(wxT("ODManager.png"));
     m_p_bm_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
@@ -293,47 +311,47 @@ bool ODicons::ScaleIcons()
     //m_p_bm_ocpn_draw_pi = ScaleIcon( m_p_svgd_ocpn_draw_pi, m_p_img_ocpn_draw_pi, m_dScaleFactor );
     //m_p_bm_ocpn_draw_grey_pi = ScaleIcon( m_p_svgd_ocpn_draw_grey_pi, m_p_img_ocpn_draw_grey_pi, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_boundary = ScaleIcon( LoadSVG(m_s_ocpn_draw_boundary), m_dScaleFactor );
-    m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_boundary_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_boundary = ScaleIcon( LoadSVG(m_s_ocpn_draw_boundary), m_dScaleFactor );
+    m_bm_ocpn_draw_boundary_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_boundary_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_point = ScaleIcon( LoadSVG(m_s_ocpn_draw_point), m_dScaleFactor );
-    m_p_bm_ocpn_draw_point_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_point_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_point = ScaleIcon( LoadSVG(m_s_ocpn_draw_point), m_dScaleFactor );
+    m_bm_ocpn_draw_point_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_point_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_textpoint = ScaleIcon( LoadSVG(m_s_ocpn_draw_textpoint),  m_dScaleFactor );
-    m_p_bm_ocpn_draw_textpoint_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_textpoint_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_textpoint = ScaleIcon( LoadSVG(m_s_ocpn_draw_textpoint),  m_dScaleFactor );
+    m_bm_ocpn_draw_textpoint_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_textpoint_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_ebl = ScaleIcon( LoadSVG(m_s_ocpn_draw_ebl), m_dScaleFactor );
-    m_p_bm_ocpn_draw_ebl_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_ebl_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_ebl = ScaleIcon( LoadSVG(m_s_ocpn_draw_ebl), m_dScaleFactor );
+    m_bm_ocpn_draw_ebl_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_ebl_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_dr = ScaleIcon( LoadSVG(m_s_ocpn_draw_dr), m_dScaleFactor );
-    m_p_bm_ocpn_draw_dr_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_dr_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_dr = ScaleIcon( LoadSVG(m_s_ocpn_draw_dr), m_dScaleFactor );
+    m_bm_ocpn_draw_dr_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_dr_grey), m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_gz = ScaleIcon( LoadSVG(m_s_ocpn_draw_gz), m_dScaleFactor );
-    m_p_bm_ocpn_draw_gz_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_gz_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_gz = ScaleIcon( LoadSVG(m_s_ocpn_draw_gz), m_dScaleFactor );
+    m_bm_ocpn_draw_gz_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_gz_grey), m_dScaleFactor );
 
-    m_p_bm_ocpn_draw_pil = ScaleIcon( LoadSVG(m_s_ocpn_draw_pil), m_dScaleFactor );
-    m_p_bm_ocpn_draw_pil_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_pil_grey), m_dScaleFactor );
+    m_bm_ocpn_draw_pil = ScaleIcon( LoadSVG(m_s_ocpn_draw_pil), m_dScaleFactor );
+    m_bm_ocpn_draw_pil_grey = ScaleIcon( LoadSVG(m_s_ocpn_draw_pil_grey), m_dScaleFactor );
 #else
-    m_p_bm_ocpn_draw_boundary = ScaleIcon( m_p_bm_ocpn_draw_boundary, m_dScaleFactor );
-    m_p_bm_ocpn_draw_boundary_grey = ScaleIcon( m_p_bm_ocpn_draw_boundary_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_boundary = ScaleIcon( m_bm_ocpn_draw_boundary, m_dScaleFactor );
+    m_bm_ocpn_draw_boundary_grey = ScaleIcon( m_bm_ocpn_draw_boundary_grey, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_point = ScaleIcon( m_p_bm_ocpn_draw_point, m_dScaleFactor );
-    m_p_bm_ocpn_draw_point_grey = ScaleIcon( m_p_bm_ocpn_draw_point_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_point = ScaleIcon( m_bm_ocpn_draw_point, m_dScaleFactor );
+    m_bm_ocpn_draw_point_grey = ScaleIcon( m_bm_ocpn_draw_point_grey, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_textpoint = ScaleIcon( m_p_bm_ocpn_draw_textpoint, m_dScaleFactor );
-    m_p_bm_ocpn_draw_textpoint_grey = ScaleIcon( m_p_bm_ocpn_draw_textpoint_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_textpoint = ScaleIcon( m_bm_ocpn_draw_textpoint, m_dScaleFactor );
+    m_bm_ocpn_draw_textpoint_grey = ScaleIcon( m_bm_ocpn_draw_textpoint_grey, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_ebl = ScaleIcon( m_p_bm_ocpn_draw_ebl, m_dScaleFactor );
-    m_p_bm_ocpn_draw_ebl_grey = ScaleIcon( m_p_bm_ocpn_draw_ebl_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_ebl = ScaleIcon( m_bm_ocpn_draw_ebl, m_dScaleFactor );
+    m_bm_ocpn_draw_ebl_grey = ScaleIcon( m_bm_ocpn_draw_ebl_grey, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_dr = ScaleIcon( m_p_bm_ocpn_draw_dr, m_dScaleFactor );
-    m_p_bm_ocpn_draw_dr_grey = ScaleIcon( m_p_bm_ocpn_draw_dr_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_dr = ScaleIcon( m_bm_ocpn_draw_dr, m_dScaleFactor );
+    m_bm_ocpn_draw_dr_grey = ScaleIcon( m_bm_ocpn_draw_dr_grey, m_dScaleFactor );
     
-    m_p_bm_ocpn_draw_gz = ScaleIcon( m_p_bm_ocpn_draw_gz, m_dScaleFactor );
-    m_p_bm_ocpn_draw_gz_grey = ScaleIcon( m_p_bm_ocpn_draw_gz_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_gz = ScaleIcon( m_bm_ocpn_draw_gz, m_dScaleFactor );
+    m_bm_ocpn_draw_gz_grey = ScaleIcon( m_bm_ocpn_draw_gz_grey, m_dScaleFactor );
 
-    m_p_bm_ocpn_draw_pil = ScaleIcon( m_p_bm_ocpn_draw_pil, m_dScaleFactor );
-    m_p_bm_ocpn_draw_pil_grey = ScaleIcon( m_p_bm_ocpn_draw_pil_grey, m_dScaleFactor );
+    m_bm_ocpn_draw_pil = ScaleIcon( m_bm_ocpn_draw_pil, m_dScaleFactor );
+    m_bm_ocpn_draw_pil_grey = ScaleIcon( m_bm_ocpn_draw_pil_grey, m_dScaleFactor );
 
 #endif // OD_USE_SVG
     
@@ -366,55 +384,55 @@ void ODicons::ChangeScheme(void)
     switch(m_ColourScheme) {
         case PI_GLOBAL_COLOR_SCHEME_RGB:
         case PI_GLOBAL_COLOR_SCHEME_DAY:
-            m_p_bm_ocpn_draw_grey_pi = m_p_bm_day_ocpn_draw_grey_pi;
-            m_p_bm_ocpn_draw_boundary = m_p_bm_day_ocpn_draw_boundary;
-            m_p_bm_ocpn_draw_boundary_grey = m_p_bm_day_ocpn_draw_boundary_grey;
-            m_p_bm_ocpn_draw_point = m_p_bm_day_ocpn_draw_point;
-            m_p_bm_ocpn_draw_point_grey = m_p_bm_day_ocpn_draw_point_grey;
-            m_p_bm_ocpn_draw_textpoint = m_p_bm_day_ocpn_draw_textpoint;
-            m_p_bm_ocpn_draw_textpoint_grey = m_p_bm_day_ocpn_draw_textpoint_grey;
-            m_p_bm_ocpn_draw_ebl = m_p_bm_day_ocpn_draw_ebl;
-            m_p_bm_ocpn_draw_ebl_grey = m_p_bm_day_ocpn_draw_ebl_grey;
-            m_p_bm_ocpn_draw_dr = m_p_bm_day_ocpn_draw_dr;
-            m_p_bm_ocpn_draw_dr_grey = m_p_bm_day_ocpn_draw_dr_grey;
-            m_p_bm_ocpn_draw_gz = m_p_bm_day_ocpn_draw_gz;
-            m_p_bm_ocpn_draw_gz_grey = m_p_bm_day_ocpn_draw_gz_grey;
-            m_p_bm_ocpn_draw_pil = m_p_bm_day_ocpn_draw_pil;
-            m_p_bm_ocpn_draw_pil_grey = m_p_bm_day_ocpn_draw_pil_grey;
+            m_bm_ocpn_draw_grey_pi = m_bm_day_ocpn_draw_grey_pi;
+            m_bm_ocpn_draw_boundary = m_bm_day_ocpn_draw_boundary;
+            m_bm_ocpn_draw_boundary_grey = m_bm_day_ocpn_draw_boundary_grey;
+            m_bm_ocpn_draw_point = m_bm_day_ocpn_draw_point;
+            m_bm_ocpn_draw_point_grey = m_bm_day_ocpn_draw_point_grey;
+            m_bm_ocpn_draw_textpoint = m_bm_day_ocpn_draw_textpoint;
+            m_bm_ocpn_draw_textpoint_grey = m_bm_day_ocpn_draw_textpoint_grey;
+            m_bm_ocpn_draw_ebl = m_bm_day_ocpn_draw_ebl;
+            m_bm_ocpn_draw_ebl_grey = m_bm_day_ocpn_draw_ebl_grey;
+            m_bm_ocpn_draw_dr = m_bm_day_ocpn_draw_dr;
+            m_bm_ocpn_draw_dr_grey = m_bm_day_ocpn_draw_dr_grey;
+            m_bm_ocpn_draw_gz = m_bm_day_ocpn_draw_gz;
+            m_bm_ocpn_draw_gz_grey = m_bm_day_ocpn_draw_gz_grey;
+            m_bm_ocpn_draw_pil = m_bm_day_ocpn_draw_pil;
+            m_bm_ocpn_draw_pil_grey = m_bm_day_ocpn_draw_pil_grey;
             break;
         case PI_GLOBAL_COLOR_SCHEME_DUSK:
-            m_p_bm_ocpn_draw_grey_pi = m_p_bm_dusk_ocpn_draw_grey_pi;
-            m_p_bm_ocpn_draw_boundary = m_p_bm_dusk_ocpn_draw_boundary;
-            m_p_bm_ocpn_draw_boundary_grey = m_p_bm_dusk_ocpn_draw_boundary_grey;
-            m_p_bm_ocpn_draw_point = m_p_bm_dusk_ocpn_draw_point;
-            m_p_bm_ocpn_draw_point_grey = m_p_bm_dusk_ocpn_draw_point_grey;
-            m_p_bm_ocpn_draw_textpoint = m_p_bm_dusk_ocpn_draw_textpoint;
-            m_p_bm_ocpn_draw_textpoint_grey = m_p_bm_dusk_ocpn_draw_textpoint_grey;
-            m_p_bm_ocpn_draw_ebl = m_p_bm_dusk_ocpn_draw_ebl;
-            m_p_bm_ocpn_draw_ebl_grey = m_p_bm_dusk_ocpn_draw_ebl_grey;
-            m_p_bm_ocpn_draw_dr = m_p_bm_dusk_ocpn_draw_dr;
-            m_p_bm_ocpn_draw_dr_grey = m_p_bm_dusk_ocpn_draw_dr_grey;
-            m_p_bm_ocpn_draw_gz = m_p_bm_dusk_ocpn_draw_gz;
-            m_p_bm_ocpn_draw_gz_grey = m_p_bm_dusk_ocpn_draw_gz_grey;
-            m_p_bm_ocpn_draw_pil = m_p_bm_dusk_ocpn_draw_pil;
-            m_p_bm_ocpn_draw_pil_grey = m_p_bm_dusk_ocpn_draw_pil_grey;
+            m_bm_ocpn_draw_grey_pi = m_bm_dusk_ocpn_draw_grey_pi;
+            m_bm_ocpn_draw_boundary = m_bm_dusk_ocpn_draw_boundary;
+            m_bm_ocpn_draw_boundary_grey = m_bm_dusk_ocpn_draw_boundary_grey;
+            m_bm_ocpn_draw_point = m_bm_dusk_ocpn_draw_point;
+            m_bm_ocpn_draw_point_grey = m_bm_dusk_ocpn_draw_point_grey;
+            m_bm_ocpn_draw_textpoint = m_bm_dusk_ocpn_draw_textpoint;
+            m_bm_ocpn_draw_textpoint_grey = m_bm_dusk_ocpn_draw_textpoint_grey;
+            m_bm_ocpn_draw_ebl = m_bm_dusk_ocpn_draw_ebl;
+            m_bm_ocpn_draw_ebl_grey = m_bm_dusk_ocpn_draw_ebl_grey;
+            m_bm_ocpn_draw_dr = m_bm_dusk_ocpn_draw_dr;
+            m_bm_ocpn_draw_dr_grey = m_bm_dusk_ocpn_draw_dr_grey;
+            m_bm_ocpn_draw_gz = m_bm_dusk_ocpn_draw_gz;
+            m_bm_ocpn_draw_gz_grey = m_bm_dusk_ocpn_draw_gz_grey;
+            m_bm_ocpn_draw_pil = m_bm_dusk_ocpn_draw_pil;
+            m_bm_ocpn_draw_pil_grey = m_bm_dusk_ocpn_draw_pil_grey;
             break;
         case PI_GLOBAL_COLOR_SCHEME_NIGHT:
-            m_p_bm_ocpn_draw_grey_pi = m_p_bm_night_ocpn_draw_grey_pi;
-            m_p_bm_ocpn_draw_boundary = m_p_bm_night_ocpn_draw_boundary;
-            m_p_bm_ocpn_draw_boundary_grey = m_p_bm_night_ocpn_draw_boundary_grey;
-            m_p_bm_ocpn_draw_point = m_p_bm_night_ocpn_draw_point;
-            m_p_bm_ocpn_draw_point_grey = m_p_bm_night_ocpn_draw_point_grey;
-            m_p_bm_ocpn_draw_textpoint = m_p_bm_night_ocpn_draw_textpoint;
-            m_p_bm_ocpn_draw_textpoint_grey = m_p_bm_night_ocpn_draw_textpoint_grey;
-            m_p_bm_ocpn_draw_ebl = m_p_bm_night_ocpn_draw_ebl;
-            m_p_bm_ocpn_draw_ebl_grey = m_p_bm_night_ocpn_draw_ebl_grey;
-            m_p_bm_ocpn_draw_dr = m_p_bm_night_ocpn_draw_dr;
-            m_p_bm_ocpn_draw_dr_grey = m_p_bm_night_ocpn_draw_dr_grey;
-            m_p_bm_ocpn_draw_gz = m_p_bm_night_ocpn_draw_gz;
-            m_p_bm_ocpn_draw_gz_grey = m_p_bm_night_ocpn_draw_gz_grey;
-            m_p_bm_ocpn_draw_pil = m_p_bm_night_ocpn_draw_pil;
-            m_p_bm_ocpn_draw_pil_grey = m_p_bm_night_ocpn_draw_pil_grey;
+            m_bm_ocpn_draw_grey_pi = m_bm_night_ocpn_draw_grey_pi;
+            m_bm_ocpn_draw_boundary = m_bm_night_ocpn_draw_boundary;
+            m_bm_ocpn_draw_boundary_grey = m_bm_night_ocpn_draw_boundary_grey;
+            m_bm_ocpn_draw_point = m_bm_night_ocpn_draw_point;
+            m_bm_ocpn_draw_point_grey = m_bm_night_ocpn_draw_point_grey;
+            m_bm_ocpn_draw_textpoint = m_bm_night_ocpn_draw_textpoint;
+            m_bm_ocpn_draw_textpoint_grey = m_bm_night_ocpn_draw_textpoint_grey;
+            m_bm_ocpn_draw_ebl = m_bm_night_ocpn_draw_ebl;
+            m_bm_ocpn_draw_ebl_grey = m_bm_night_ocpn_draw_ebl_grey;
+            m_bm_ocpn_draw_dr = m_bm_night_ocpn_draw_dr;
+            m_bm_ocpn_draw_dr_grey = m_bm_night_ocpn_draw_dr_grey;
+            m_bm_ocpn_draw_gz = m_bm_night_ocpn_draw_gz;
+            m_bm_ocpn_draw_gz_grey = m_bm_night_ocpn_draw_gz_grey;
+            m_bm_ocpn_draw_pil = m_bm_night_ocpn_draw_pil;
+            m_bm_ocpn_draw_pil_grey = m_bm_night_ocpn_draw_pil_grey;
             break;
         default:
             break;
@@ -424,53 +442,53 @@ void ODicons::ChangeScheme(void)
 void ODicons::CreateSchemeIcons()
 {
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_DAY;
-    m_p_bm_day_ocpn_draw_grey_pi = m_p_bm_ocpn_draw_grey_pi;
-    m_p_bm_day_ocpn_draw_boundary = m_p_bm_ocpn_draw_boundary;
-    m_p_bm_day_ocpn_draw_boundary_grey = m_p_bm_ocpn_draw_boundary_grey;
-    m_p_bm_day_ocpn_draw_point = m_p_bm_ocpn_draw_point;
-    m_p_bm_day_ocpn_draw_point_grey = m_p_bm_ocpn_draw_point_grey;
-    m_p_bm_day_ocpn_draw_textpoint = m_p_bm_ocpn_draw_textpoint;
-    m_p_bm_day_ocpn_draw_textpoint_grey = m_p_bm_ocpn_draw_textpoint_grey;
-    m_p_bm_day_ocpn_draw_ebl = m_p_bm_ocpn_draw_ebl;
-    m_p_bm_day_ocpn_draw_ebl_grey = m_p_bm_ocpn_draw_ebl_grey;
-    m_p_bm_day_ocpn_draw_dr = m_p_bm_ocpn_draw_dr;
-    m_p_bm_day_ocpn_draw_dr_grey = m_p_bm_ocpn_draw_dr_grey;
-    m_p_bm_day_ocpn_draw_gz = m_p_bm_ocpn_draw_gz;
-    m_p_bm_day_ocpn_draw_gz_grey = m_p_bm_ocpn_draw_gz_grey;
-    m_p_bm_day_ocpn_draw_pil = m_p_bm_ocpn_draw_pil;
-    m_p_bm_day_ocpn_draw_pil_grey = m_p_bm_ocpn_draw_pil_grey;
+    m_bm_day_ocpn_draw_grey_pi = m_bm_ocpn_draw_grey_pi;
+    m_bm_day_ocpn_draw_boundary = m_bm_ocpn_draw_boundary;
+    m_bm_day_ocpn_draw_boundary_grey = m_bm_ocpn_draw_boundary_grey;
+    m_bm_day_ocpn_draw_point = m_bm_ocpn_draw_point;
+    m_bm_day_ocpn_draw_point_grey = m_bm_ocpn_draw_point_grey;
+    m_bm_day_ocpn_draw_textpoint = m_bm_ocpn_draw_textpoint;
+    m_bm_day_ocpn_draw_textpoint_grey = m_bm_ocpn_draw_textpoint_grey;
+    m_bm_day_ocpn_draw_ebl = m_bm_ocpn_draw_ebl;
+    m_bm_day_ocpn_draw_ebl_grey = m_bm_ocpn_draw_ebl_grey;
+    m_bm_day_ocpn_draw_dr = m_bm_ocpn_draw_dr;
+    m_bm_day_ocpn_draw_dr_grey = m_bm_ocpn_draw_dr_grey;
+    m_bm_day_ocpn_draw_gz = m_bm_ocpn_draw_gz;
+    m_bm_day_ocpn_draw_gz_grey = m_bm_ocpn_draw_gz_grey;
+    m_bm_day_ocpn_draw_pil = m_bm_ocpn_draw_pil;
+    m_bm_day_ocpn_draw_pil_grey = m_bm_ocpn_draw_pil_grey;
 
-    m_p_bm_dusk_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_grey_pi, 128);
-    m_p_bm_dusk_ocpn_draw_boundary = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary, 128);
-    m_p_bm_dusk_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary_grey, 128);
-    m_p_bm_dusk_ocpn_draw_point = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point, 128);
-    m_p_bm_dusk_ocpn_draw_point_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point_grey, 128);
-    m_p_bm_dusk_ocpn_draw_textpoint = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint, 128);
-    m_p_bm_dusk_ocpn_draw_textpoint_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint_grey, 128);
-    m_p_bm_dusk_ocpn_draw_ebl = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl, 128);
-    m_p_bm_dusk_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl_grey, 128);
-    m_p_bm_dusk_ocpn_draw_dr = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr, 128);
-    m_p_bm_dusk_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr_grey, 128);
-    m_p_bm_dusk_ocpn_draw_gz = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz, 128);
-    m_p_bm_dusk_ocpn_draw_gz_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz_grey, 128);
-    m_p_bm_dusk_ocpn_draw_pil = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_pil, 128);
-    m_p_bm_dusk_ocpn_draw_pil_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_pil_grey, 128);
+    m_bm_dusk_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_bm_ocpn_draw_grey_pi, 128);
+    m_bm_dusk_ocpn_draw_boundary = BuildDimmedToolBitmap(m_bm_ocpn_draw_boundary, 128);
+    m_bm_dusk_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_boundary_grey, 128);
+    m_bm_dusk_ocpn_draw_point = BuildDimmedToolBitmap(m_bm_ocpn_draw_point, 128);
+    m_bm_dusk_ocpn_draw_point_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_point_grey, 128);
+    m_bm_dusk_ocpn_draw_textpoint = BuildDimmedToolBitmap(m_bm_ocpn_draw_textpoint, 128);
+    m_bm_dusk_ocpn_draw_textpoint_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_textpoint_grey, 128);
+    m_bm_dusk_ocpn_draw_ebl = BuildDimmedToolBitmap(m_bm_ocpn_draw_ebl, 128);
+    m_bm_dusk_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_ebl_grey, 128);
+    m_bm_dusk_ocpn_draw_dr = BuildDimmedToolBitmap(m_bm_ocpn_draw_dr, 128);
+    m_bm_dusk_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_dr_grey, 128);
+    m_bm_dusk_ocpn_draw_gz = BuildDimmedToolBitmap(m_bm_ocpn_draw_gz, 128);
+    m_bm_dusk_ocpn_draw_gz_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_gz_grey, 128);
+    m_bm_dusk_ocpn_draw_pil = BuildDimmedToolBitmap(m_bm_ocpn_draw_pil, 128);
+    m_bm_dusk_ocpn_draw_pil_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_pil_grey, 128);
 
-    m_p_bm_night_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_grey_pi, 32);
-    m_p_bm_night_ocpn_draw_boundary = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary, 32);
-    m_p_bm_night_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_boundary_grey, 32);
-    m_p_bm_night_ocpn_draw_point = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point, 32);
-    m_p_bm_night_ocpn_draw_point_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_point_grey, 32);
-    m_p_bm_night_ocpn_draw_textpoint = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint, 32);
-    m_p_bm_night_ocpn_draw_textpoint_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_textpoint_grey, 32);
-    m_p_bm_night_ocpn_draw_ebl = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl, 32);
-    m_p_bm_night_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_ebl_grey, 32);
-    m_p_bm_night_ocpn_draw_dr = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr, 32);
-    m_p_bm_night_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_dr_grey, 32);
-    m_p_bm_night_ocpn_draw_gz = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz, 32);
-    m_p_bm_night_ocpn_draw_gz_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_gz_grey, 32);
-    m_p_bm_night_ocpn_draw_pil = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_pil, 32);
-    m_p_bm_night_ocpn_draw_pil_grey = BuildDimmedToolBitmap(m_p_bm_ocpn_draw_pil_grey, 32);
+    m_bm_night_ocpn_draw_grey_pi = BuildDimmedToolBitmap(m_bm_ocpn_draw_grey_pi, 32);
+    m_bm_night_ocpn_draw_boundary = BuildDimmedToolBitmap(m_bm_ocpn_draw_boundary, 32);
+    m_bm_night_ocpn_draw_boundary_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_boundary_grey, 32);
+    m_bm_night_ocpn_draw_point = BuildDimmedToolBitmap(m_bm_ocpn_draw_point, 32);
+    m_bm_night_ocpn_draw_point_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_point_grey, 32);
+    m_bm_night_ocpn_draw_textpoint = BuildDimmedToolBitmap(m_bm_ocpn_draw_textpoint, 32);
+    m_bm_night_ocpn_draw_textpoint_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_textpoint_grey, 32);
+    m_bm_night_ocpn_draw_ebl = BuildDimmedToolBitmap(m_bm_ocpn_draw_ebl, 32);
+    m_bm_night_ocpn_draw_ebl_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_ebl_grey, 32);
+    m_bm_night_ocpn_draw_dr = BuildDimmedToolBitmap(m_bm_ocpn_draw_dr, 32);
+    m_bm_night_ocpn_draw_dr_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_dr_grey, 32);
+    m_bm_night_ocpn_draw_gz = BuildDimmedToolBitmap(m_bm_ocpn_draw_gz, 32);
+    m_bm_night_ocpn_draw_gz_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_gz_grey, 32);
+    m_bm_night_ocpn_draw_pil = BuildDimmedToolBitmap(m_bm_ocpn_draw_pil, 32);
+    m_bm_night_ocpn_draw_pil_grey = BuildDimmedToolBitmap(m_bm_ocpn_draw_pil_grey, 32);
 
 }
 

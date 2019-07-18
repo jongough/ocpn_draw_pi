@@ -497,6 +497,7 @@ public:
     
     int         nBlinkerTick;
     int         m_Mode;
+    int         m_config_button_id;
     int         m_draw_button_id;
     
     void    appendOSDirSlash(wxString* pString);  
@@ -544,7 +545,6 @@ private:
     int     m_iODToolContextId;
     wxMenuItem *m_pODToolContextMenuItem;
     bool    show;
-    int     m_config_button_id;
 
     bool    m_bLOGShowIcon;
     

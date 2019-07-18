@@ -1953,8 +1953,14 @@ void PathAndPointManagerDialogImpl::OnExportAllVisibleClick( wxCommandEvent &eve
 
 void PathAndPointManagerDialogImpl::OnOKClick(wxCommandEvent &event)
 {
+    g_ocpn_draw_pi->OnToolbarToolDownCallback(g_ocpn_draw_pi->m_config_button_id);
     DeSelectODPoints();
     DeSelectPaths();
+}
+
+void PathAndPointManagerDialogImpl::OnClose(wxCloseEvent &event)
+{
+    g_ocpn_draw_pi->OnToolbarToolDownCallback(g_ocpn_draw_pi->m_config_button_id);
 }
 
 void PathAndPointManagerDialogImpl::DeSelectPaths( void )

@@ -69,6 +69,7 @@ class PathAndPointManagerDialogDef : public wxDialog
 		wxButton* m_buttonOK;
 
 		// Virtual event handlers, overide them in your derived class
+		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnTabSwitch( wxNotebookEvent& event ) { event.Skip(); }
 		virtual void OnPathToggleVisibility( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPathColumnClicked( wxListEvent& event ) { event.Skip(); }

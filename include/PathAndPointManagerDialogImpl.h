@@ -123,6 +123,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void OnImportClick( wxCommandEvent& event );
         void OnExportAllVisibleClick( wxCommandEvent& event );
         void OnOKClick( wxCommandEvent& event );
+        void OnClose( wxCloseEvent& event );
         
     public:
         PathAndPointManagerDialogImpl(wxWindow* parent);

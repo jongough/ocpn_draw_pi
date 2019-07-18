@@ -149,6 +149,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	this->Centre( wxBOTH );
 
 	// Connect Events
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( PathAndPointManagerDialogDef::OnClose ) );
 	m_notebookPathAndPointManager->Connect( wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler( PathAndPointManagerDialogDef::OnTabSwitch ), NULL, this );
 	m_listCtrlPath->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( PathAndPointManagerDialogDef::OnPathToggleVisibility ), NULL, this );
 	m_listCtrlPath->Connect( wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler( PathAndPointManagerDialogDef::OnPathColumnClicked ), NULL, this );
@@ -194,6 +195,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 PathAndPointManagerDialogDef::~PathAndPointManagerDialogDef()
 {
 	// Disconnect Events
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( PathAndPointManagerDialogDef::OnClose ) );
 	m_notebookPathAndPointManager->Disconnect( wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler( PathAndPointManagerDialogDef::OnTabSwitch ), NULL, this );
 	m_listCtrlPath->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( PathAndPointManagerDialogDef::OnPathToggleVisibility ), NULL, this );
 	m_listCtrlPath->Disconnect( wxEVT_COMMAND_LIST_COL_CLICK, wxListEventHandler( PathAndPointManagerDialogDef::OnPathColumnClicked ), NULL, this );

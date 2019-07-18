@@ -84,32 +84,32 @@
    <g id="Layer 1">
     <path d="M 25.057,9.418 L 49.057,9.418 L 49.057,-14.582 L 25.057,-14.582 L 25.057,9.418" stroke="none"/>
     <path d="M 33.471,-1.769 C 33.471,0.472 35.351,2.291 37.667,2.291 C 39.983,2.291 41.863,0.472 41.863,-1.769 C 41.863,-4.01 39.983,-5.829 37.667,-5.829 C 35.351,-5.829 33.471,-4.01 33.471,-1.769 Z" stroke="none" stroke-opacity="0.850980" fill="#800000" stroke-width="0" fill-rule="evenodd" stroke-linejoin="round" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775" fill-opacity="0.000000"/>
-    <g id="Group">
-     <path d="M 18.001,0 L 18.001,18.001 L 0,18.001 L 0,0 L 18.001,0 Z" fill="#898989" stroke-width="0.75" stroke="none" stroke-linejoin="miter" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
-     <g id="Group_1" stroke="#b4b4b4" stroke-width="0.852" stroke-miterlimit="79.8403193612775">
+    <path d="M 18.006,0.002 L 18.006,18.003 L 0.005,18.003 L 0.005,0.002 L 18.006,0.002 Z" fill="#282828" stroke-width="0.75" stroke="none" stroke-linejoin="miter" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
+    <g id="Group" stroke="#b4b4b4">
+     <g id="Group_1" stroke-width="0.852" stroke-miterlimit="79.8403193612775">
       <g id="Group_2" stroke-linejoin="miter" stroke-miterlimit="46.9483568075117">
-       <path d="M 7.258,2.632 L 7.254,6.04 L 10.662,6.044 L 10.666,2.636 L 7.258,2.632 Z" marker-start="none" marker-end="none"/>
-       <path d="M 8.94,3.912 C 9.175,3.902 9.376,4.083 9.386,4.318 C 9.396,4.553 9.215,4.754 8.979,4.764 C 8.744,4.774 8.543,4.593 8.533,4.358 C 8.523,4.122 8.704,3.922 8.94,3.912 Z" marker-start="none" marker-end="none"/>
+       <path d="M 7.263,2.634 L 7.259,6.042 L 10.667,6.046 L 10.671,2.638 L 7.263,2.634 Z" marker-start="none" marker-end="none"/>
+       <path d="M 8.945,3.914 C 9.18,3.904 9.381,4.085 9.391,4.32 C 9.401,4.555 9.22,4.756 8.984,4.766 C 8.749,4.776 8.548,4.595 8.538,4.36 C 8.528,4.124 8.709,3.924 8.945,3.914 Z" marker-start="none" marker-end="none"/>
       </g>
       <g id="Group_3" stroke-linejoin="miter" stroke-miterlimit="46.9483568075117">
-       <path d="M 1.174,12.032 L 1.17,15.44 L 4.578,15.444 L 4.582,12.036 L 1.174,12.032 Z" marker-start="none" marker-end="none"/>
-       <path d="M 2.856,13.311 C 3.091,13.301 3.292,13.482 3.302,13.717 C 3.312,13.953 3.131,14.153 2.896,14.163 C 2.66,14.173 2.46,13.992 2.45,13.757 C 2.44,13.522 2.621,13.321 2.856,13.311 Z" marker-start="none" marker-end="none"/>
+       <path d="M 1.179,12.034 L 1.175,15.442 L 4.583,15.446 L 4.587,12.038 L 1.179,12.034 Z" marker-start="none" marker-end="none"/>
+       <path d="M 2.861,13.313 C 3.096,13.303 3.297,13.484 3.307,13.719 C 3.317,13.955 3.136,14.155 2.901,14.165 C 2.665,14.175 2.465,13.994 2.455,13.759 C 2.445,13.524 2.626,13.323 2.861,13.313 Z" marker-start="none" marker-end="none"/>
       </g>
       <g id="Group_4" stroke-linejoin="miter" stroke-miterlimit="46.9483568075117">
-       <path d="M 13.424,12.048 L 13.42,15.456 L 16.828,15.46 L 16.832,12.052 L 13.424,12.048 Z" marker-start="none" marker-end="none"/>
-       <path d="M 15.105,13.327 C 15.34,13.317 15.541,13.498 15.551,13.733 C 15.561,13.968 15.38,14.169 15.145,14.179 C 14.91,14.189 14.709,14.008 14.699,13.773 C 14.689,13.538 14.87,13.337 15.105,13.327 Z" marker-start="none" marker-end="none"/>
+       <path d="M 13.429,12.05 L 13.425,15.458 L 16.833,15.462 L 16.837,12.054 L 13.429,12.05 Z" marker-start="none" marker-end="none"/>
+       <path d="M 15.11,13.329 C 15.345,13.319 15.546,13.5 15.556,13.735 C 15.566,13.97 15.385,14.171 15.15,14.181 C 14.915,14.191 14.714,14.01 14.704,13.775 C 14.694,13.54 14.875,13.339 15.11,13.329 Z" marker-start="none" marker-end="none"/>
       </g>
-      <path d="M 11.608,8.964 L 13.377,12.02 L 13.375,13.511 L 8.988,13.517 L 4.617,13.524 L 4.619,11.987 L 6.353,8.972 L 8.042,6.035 L 9.912,6.036" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M 11.613,8.966 L 13.382,12.022 L 13.38,13.513 L 8.993,13.519 L 4.622,13.526 L 4.624,11.989 L 6.358,8.974 L 8.047,6.037 L 9.917,6.038" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
      </g>
-     <g id="Group_5" stroke="#b4b4b4">
+     <g id="Group_5">
       <g id="Group_6" stroke-width="0.774" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="79.8403193612775">
-       <path d="M 9.135,12.212 L 10.264,8.798" fill="none"/>
-       <path d="M 9.128,12.208 L 12.108,10.191" fill="none"/>
-       <path d="M 10.3,8.751 L 10.802,9.907" fill="none"/>
-       <path d="M 12.128,10.133 L 10.877,9.962" fill="none"/>
+       <path d="M 9.14,12.214 L 10.269,8.8" fill="none"/>
+       <path d="M 9.133,12.21 L 12.113,10.193" fill="none"/>
+       <path d="M 10.305,8.753 L 10.807,9.909" fill="none"/>
+       <path d="M 12.133,10.135 L 10.882,9.964" fill="none"/>
       </g>
-      <path d="M 10.538,8.586 L 13.193,5.074 L 14.933,6.39 L 12.277,9.902 L 10.538,8.586 Z" stroke-linejoin="miter" stroke-width="0.943" fill="#b4b4b4" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
-      <path d="M 14.331,3.571 L 14.936,2.77 C 15.089,2.568 15.379,2.528 15.581,2.68 L 16.586,3.442 C 16.788,3.594 16.829,3.884 16.674,4.087 L 16.069,4.888 L 14.331,3.571 Z" stroke-linejoin="miter" stroke-width="0.943" fill="#b4b4b4" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
+      <path d="M 10.543,8.588 L 13.198,5.076 L 14.938,6.392 L 12.282,9.904 L 10.543,8.588 Z" stroke-linejoin="miter" stroke-width="0.943" fill="#b4b4b4" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
+      <path d="M 14.336,3.573 L 14.941,2.772 C 15.094,2.57 15.384,2.53 15.586,2.682 L 16.591,3.444 C 16.793,3.596 16.834,3.886 16.679,4.089 L 16.074,4.89 L 14.336,3.573 Z" stroke-linejoin="miter" stroke-width="0.943" fill="#b4b4b4" marker-start="none" marker-end="none" stroke-miterlimit="79.8403193612775"/>
      </g>
     </g>
    </g>
