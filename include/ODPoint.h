@@ -163,7 +163,6 @@ public:
       HyperlinkList     *m_HyperlinkList;
       bool              m_bTemporary;
 
-#ifdef ocpnUSE_GL
       virtual void DrawGL( PlugIn_ViewPort &pivp );
       unsigned int m_iTextTexture;
       int m_iTextTextureWidth, m_iTextTextureHeight;
@@ -172,7 +171,6 @@ public:
       double m_wpBBox_chart_scale, m_wpBBox_rotation;
 
       static bool s_bUpdateWaypointsDisplayList;
-#endif
 
       double m_ODPointArrivalRadius;
 

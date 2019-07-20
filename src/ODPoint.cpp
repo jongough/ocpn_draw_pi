@@ -475,9 +475,9 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
 
 }
 
-#ifdef ocpnUSE_GL
 void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
+#ifdef ocpnUSE_GL
     if( !m_bIsVisible )
     return;
 
@@ -709,8 +709,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     CurrentRect_in_DC.height = hilitebox.height;
 
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
-}
 #endif
+}
 
 void ODPoint::SetPosition( double lat, double lon )
 {

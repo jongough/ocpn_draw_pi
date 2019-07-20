@@ -2105,8 +2105,8 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
                 l_pBP->m_bIsInBoundary = false;
                 l_pBP->m_bIsInPath = false;
             }
-            l_pBP->m_bExclusionBoundaryPoint = l_BCI->m_bExclusion;
-            l_pBP->m_bInclusionBoundaryPoint = l_BCI->m_bInclusion;
+            l_pBP->m_bExclusionBoundaryPoint = l_BPCI->m_bExclusion;
+            l_pBP->m_bInclusionBoundaryPoint = l_BPCI->m_bInclusion;
             l_pBP->SetVisible(l_BPCI->m_bVisible); 
             l_pBP->SetShowODPointRangeRings(l_BPCI->m_bRangeRingsVisible);
             l_pBP->SetODPointRangeRingsNumber(l_BPCI->m_iNumRings);

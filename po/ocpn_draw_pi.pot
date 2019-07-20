@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 1.6.4\n"
+"Project-Id-Version: ocpn_draw_pi 1.6.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-04 13:53+1000\n"
+"POT-Creation-Date: 2019-07-20 10:21+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -47,15 +47,15 @@ msgstr ""
 msgid "Index Line Properties"
 msgstr ""
 
-#: include/PathAndPointManagerDialogDef.h:115
+#: include/PathAndPointManagerDialogDef.h:116
 msgid "Path & Point Manager"
 msgstr ""
 
 #: src/EBL.cpp:97 src/EBL.cpp:279 src/ODPathPropertiesDialogImpl.cpp:429
 #: src/ODPathPropertiesDialogImpl.cpp:437 src/ODPathPropertiesDialogImpl.cpp:473
 #: src/ODPathPropertiesDialogImpl.cpp:546 src/ODPathPropertiesDialogImpl.cpp:554
-#: src/ODPathPropertiesDialogImpl.cpp:589 src/ocpn_draw_pi.cpp:2809
-#: src/ocpn_draw_pi.cpp:3794 src/ocpn_draw_pi.cpp:3983
+#: src/ODPathPropertiesDialogImpl.cpp:589 src/ocpn_draw_pi.cpp:2810
+#: src/ocpn_draw_pi.cpp:3795 src/ocpn_draw_pi.cpp:3984
 msgid "Boat"
 msgstr ""
 
@@ -64,7 +64,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: src/EBL.cpp:105 src/ocpn_draw_pi.cpp:3801 src/ocpn_draw_pi.cpp:3989
+#: src/EBL.cpp:105 src/ocpn_draw_pi.cpp:3802 src/ocpn_draw_pi.cpp:3990
 msgid "End"
 msgstr ""
 
@@ -682,7 +682,7 @@ msgid "will be deleted."
 msgstr ""
 
 #: src/ODNewODPointDialogDef.cpp:21 src/ODPropertiesDialogDef.cpp:187
-#: src/ODToolbarImpl.cpp:514 src/ocpn_draw_pi.cpp:3282
+#: src/ODToolbarImpl.cpp:514 src/ocpn_draw_pi.cpp:3283
 msgid "Boundary"
 msgstr ""
 
@@ -1046,7 +1046,7 @@ msgstr ""
 msgid "Show name"
 msgstr ""
 
-#: src/ODPointPropertiesDialog.cpp:53 src/ODPointPropertiesImpl.cpp:100
+#: src/ODPointPropertiesDialog.cpp:53 src/ODPointPropertiesImpl.cpp:101
 #: src/ODPropertiesDialogDef.cpp:220 src/ODPropertiesDialogDef.cpp:376
 #: src/ODPropertiesDialogDef.cpp:544 src/ODPropertiesDialogDef.cpp:559
 #: src/ODPropertiesDialogDef.cpp:771 src/ODPropertiesDialogDef.cpp:872
@@ -1294,8 +1294,8 @@ msgid "Display text"
 msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:401
-#: src/PathAndPointManagerDialogImpl.cpp:1562
-#: src/PathAndPointManagerDialogImpl.cpp:1574
+#: src/PathAndPointManagerDialogImpl.cpp:1563
+#: src/PathAndPointManagerDialogImpl.cpp:1575
 msgid "Show on chart"
 msgstr ""
 
@@ -1303,92 +1303,92 @@ msgstr ""
 msgid "Extended"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:149
+#: src/ODPointPropertiesImpl.cpp:150
 msgid "Copy"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:150
+#: src/ODPointPropertiesImpl.cpp:151
 msgid "Copy lat/long"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:151
+#: src/ODPointPropertiesImpl.cpp:152
 msgid "Paste"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:152
+#: src/ODPointPropertiesImpl.cpp:153
 msgid "Paste lat/long"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:296 src/ODPointPropertiesImpl.cpp:556
-#: src/ODPointPropertiesImpl.cpp:1034 src/ODPointPropertiesImpl.cpp:1046
+#: src/ODPointPropertiesImpl.cpp:297 src/ODPointPropertiesImpl.cpp:557
+#: src/ODPointPropertiesImpl.cpp:1035 src/ODPointPropertiesImpl.cpp:1047
 msgid "Left Click links are opened in the default browser."
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:565
+#: src/ODPointPropertiesImpl.cpp:566
 msgid "Display Text"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:837
+#: src/ODPointPropertiesImpl.cpp:838
 msgid "OCPN Draw Point, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:839
+#: src/ODPointPropertiesImpl.cpp:840
 msgid "Boundary Point Properties, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:841
+#: src/ODPointPropertiesImpl.cpp:842
 msgid "Text Point Properties, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:843
+#: src/ODPointPropertiesImpl.cpp:844
 msgid "EBL Point Properties, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:845
+#: src/ODPointPropertiesImpl.cpp:846
 msgid "DR Point Properties, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:847
+#: src/ODPointPropertiesImpl.cpp:848
 msgid "PIL Point Properties, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:849
+#: src/ODPointPropertiesImpl.cpp:850
 msgid "GZ Point Properties, Layer: "
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:857
+#: src/ODPointPropertiesImpl.cpp:858
 msgid "OCPN Draw Point"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:859
+#: src/ODPointPropertiesImpl.cpp:860
 msgid "Boundary Point Properties"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:861
+#: src/ODPointPropertiesImpl.cpp:862
 msgid "Text Point Properties"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:863
+#: src/ODPointPropertiesImpl.cpp:864
 msgid "EBL Point Properties"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:865
+#: src/ODPointPropertiesImpl.cpp:866
 msgid "DR Point Properties"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:867
+#: src/ODPointPropertiesImpl.cpp:868
 msgid "PIL Point Properties"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:869
+#: src/ODPointPropertiesImpl.cpp:870
 msgid "Guard Zone Point Properties"
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:1032
+#: src/ODPointPropertiesImpl.cpp:1033
 msgid "Left Click links are opened for editing."
 msgstr ""
 
-#: src/ODPointPropertiesImpl.cpp:1044
+#: src/ODPointPropertiesImpl.cpp:1045
 msgid "Left Click links are deleted."
 msgstr ""
 
@@ -1615,7 +1615,7 @@ msgstr ""
 msgid "Show Perpendicular Index Line"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:633 src/ocpn_draw_pi.cpp:3790
+#: src/ODPropertiesDialogDef.cpp:633 src/ocpn_draw_pi.cpp:3791
 msgid "EBL"
 msgstr ""
 
@@ -1899,16 +1899,16 @@ msgstr ""
 msgid "ocpn_draw_pi data location"
 msgstr ""
 
-#: src/ODicons.cpp:248
+#: src/ODicons.cpp:266
 msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
 msgstr ""
 
-#: src/ODicons.cpp:248 src/PathAndPointManagerDialogImpl.cpp:546
+#: src/ODicons.cpp:266 src/PathAndPointManagerDialogImpl.cpp:546
 #: src/PathAndPointManagerDialogImpl.cpp:593
-#: src/PathAndPointManagerDialogImpl.cpp:1380
-#: src/PathAndPointManagerDialogImpl.cpp:1411
-#: src/PathAndPointManagerDialogImpl.cpp:1478
-#: src/PathAndPointManagerDialogImpl.cpp:1637
+#: src/PathAndPointManagerDialogImpl.cpp:1381
+#: src/PathAndPointManagerDialogImpl.cpp:1412
+#: src/PathAndPointManagerDialogImpl.cpp:1479
+#: src/PathAndPointManagerDialogImpl.cpp:1638
 msgid "OpenCPN Alert"
 msgstr ""
 
@@ -2033,7 +2033,7 @@ msgstr ""
 #: src/PathAndPointManagerDialogImpl.cpp:502
 #: src/PathAndPointManagerDialogImpl.cpp:514
 #: src/PathAndPointManagerDialogImpl.cpp:526
-#: src/PathAndPointManagerDialogImpl.cpp:1930
+#: src/PathAndPointManagerDialogImpl.cpp:1931
 msgid "I&mport"
 msgstr ""
 
@@ -2042,7 +2042,7 @@ msgid "gpx"
 msgstr ""
 
 #: src/PathAndPointManagerDialogImpl.cpp:546
-#: src/PathAndPointManagerDialogImpl.cpp:1380
+#: src/PathAndPointManagerDialogImpl.cpp:1381
 msgid "Are you sure you want to delete the selected object(s)"
 msgstr ""
 
@@ -2105,21 +2105,21 @@ msgid "&Deactivate"
 msgstr ""
 
 #: src/PathAndPointManagerDialogImpl.cpp:1120
-#: src/PathAndPointManagerDialogImpl.cpp:2038
+#: src/PathAndPointManagerDialogImpl.cpp:2044
 msgid "(Unnamed) "
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1411
+#: src/PathAndPointManagerDialogImpl.cpp:1412
 msgid ""
 "The OD Point you want to delete is used in a path, do you really want to "
 "delete it?"
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1468
+#: src/PathAndPointManagerDialogImpl.cpp:1469
 msgid "Are you sure you want to delete <ALL> OD points?"
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1474
+#: src/PathAndPointManagerDialogImpl.cpp:1475
 msgid ""
 "There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
@@ -2127,33 +2127,33 @@ msgid ""
 " Answering No keeps the OD points used in paths or alarms."
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1560
+#: src/PathAndPointManagerDialogImpl.cpp:1561
 msgid "Hide from chart"
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1565
+#: src/PathAndPointManagerDialogImpl.cpp:1566
 msgid "Hide Point names"
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1567
-#: src/PathAndPointManagerDialogImpl.cpp:1575
+#: src/PathAndPointManagerDialogImpl.cpp:1568
+#: src/PathAndPointManagerDialogImpl.cpp:1576
 msgid "Show Point names"
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1570
+#: src/PathAndPointManagerDialogImpl.cpp:1571
 msgid "Unlist contents "
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1572
-#: src/PathAndPointManagerDialogImpl.cpp:1576
+#: src/PathAndPointManagerDialogImpl.cpp:1573
+#: src/PathAndPointManagerDialogImpl.cpp:1577
 msgid "List contents "
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1636
+#: src/PathAndPointManagerDialogImpl.cpp:1637
 msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
 msgstr ""
 
-#: src/PathAndPointManagerDialogImpl.cpp:1894
+#: src/PathAndPointManagerDialogImpl.cpp:1895
 msgid "(Unnamed Layer)"
 msgstr ""
 
@@ -2185,52 +2185,52 @@ msgid ""
 "Thanks to the community for their helpful suggestions."
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3285
+#: src/ocpn_draw_pi.cpp:3286
 msgid "Layer Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3510 src/ocpn_draw_pi.cpp:3577
+#: src/ocpn_draw_pi.cpp:3511 src/ocpn_draw_pi.cpp:3578
 msgid "Use nearby Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3511 src/ocpn_draw_pi.cpp:3578
+#: src/ocpn_draw_pi.cpp:3512 src/ocpn_draw_pi.cpp:3579
 msgid "OCPN Draw Point Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3657
+#: src/ocpn_draw_pi.cpp:3658
 msgid "Use nearby OD Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3658 src/ocpn_draw_pi.cpp:3711
+#: src/ocpn_draw_pi.cpp:3659 src/ocpn_draw_pi.cpp:3712
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3705
+#: src/ocpn_draw_pi.cpp:3706
 msgid "For this leg the Great Circle boundary is "
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3706
+#: src/ocpn_draw_pi.cpp:3707
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3707
+#: src/ocpn_draw_pi.cpp:3708
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3881
+#: src/ocpn_draw_pi.cpp:3882
 msgid "GZ"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3919
+#: src/ocpn_draw_pi.cpp:3920
 msgid "Second"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3946
+#: src/ocpn_draw_pi.cpp:3947
 msgid "First"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3979
+#: src/ocpn_draw_pi.cpp:3980
 msgid "PIL"
 msgstr ""
