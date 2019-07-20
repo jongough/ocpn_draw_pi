@@ -22,8 +22,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "10")
-SET(VERSION_DATE "19/07/2019")
+SET(VERSION_PATCH "11")
+SET(VERSION_DATE "20/07/2019")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OD_COMMENT "  * Initial release for O5 using CI")
 SET(OCPN_API_VERSION_MAJOR "1")
@@ -320,7 +320,30 @@ ELSE(TINYXML_FOUND)
  )
  ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
 ENDIF(TINYXML_FOUND)
+
 ADD_DEFINITIONS(-DTIXML_USE_STL)
+
+IF(UNIX AND NOT APPLE)
+  IF(OD_JSON_SCHEMA_VALIDATOR)
+    # Change OS/ABI to be UNIX - System V to make it run with OCPN
+    SET(lib_name lib${PACKAGE_NAME}.so)
+    MESSAGE(STATUS "lib-name: ${lib_name}")
+    FIND_FILE(elfedit elfedit) 
+    IF(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
+      MESSAGE(STATUS "Will ensure OS/ABI is set to 0 to match OCPN")
+      ADD_CUSTOM_COMMAND(
+        TARGET ${PACKAGE_NAME}
+        POST_BUILD
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${PACKAGE_NAME}
+        COMMENT " Running post build action on ${lib_name}."
+        COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} || (echo 0)'
+      )
+    ELSE(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
+      MESSAGE(STATUS "Cannot correct OS/ABI to match OCPN if it is generated incorrectly. Package binutils needed")
+    ENDIF(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
+  ENDIF(OD_JSON_SCHEMA_VALIDATOR)
+ENDIF(UNIX AND NOT APPLE)
 
 
 INCLUDE("cmake/PluginInstall.cmake")
