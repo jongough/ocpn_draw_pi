@@ -36,6 +36,9 @@
 #include "wx/jsonwriter.h"
 
 #ifdef OD_JSON_SCHEMA_VALIDATOR
+#if defined(snprintf) && defined(_MSC_VER)
+    #undef snprintf
+#endif
 #include "json-schema.hpp"
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
