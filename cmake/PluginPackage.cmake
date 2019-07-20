@@ -122,14 +122,19 @@ IF(UNIX AND NOT APPLE)
     # Change OS/ABI to be UNIX - System V to make it run with OCPN
     SET(lib_name lib${PACKAGE_NAME}.so)
     MESSAGE(STATUS "lib-name: ${lib_name}")
-    ADD_CUSTOM_COMMAND(
-      TARGET ${PACKAGE_NAME}
-      POST_BUILD
-      COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} 2>/dev/null || (exit 0)'
-      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-      DEPENDS ${PACKAGE_NAME}
-      COMMENT " Running post build action."
-    )
+    FIND_PACKAGE(binutils)
+    IF(BINUTILS_FOUND)
+      ADD_CUSTOM_COMMAND(
+        TARGET ${PACKAGE_NAME}
+        POST_BUILD
+        COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} 2>/dev/null || (exit 0)'
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        DEPENDS ${PACKAGE_NAME}
+        COMMENT " Running post build action."
+      )
+    ELSE(BINUTILS_FOUND)
+      MESSAGE(STATUS "Cannot correct OS/ABI to match OCPN if it is generated incorrectly. Package binutils needed")
+    ENDIF(BINUTILS_FOUND)
   ENDIF(OD_JSON_SCHEMA_VALIDATOR)
 ENDIF(UNIX AND NOT APPLE)
 
