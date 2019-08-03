@@ -5,25 +5,32 @@
 ##---------------------------------------------------------------------------
 
 # define minimum cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1.1)
 IF (COMMAND cmake_policy)
   if (POLICY CMP0043)
     CMAKE_POLICY(SET CMP0043 NEW)
   endif (POLICY CMP0043)
+  if (POLICY CMP0077)
+    CMAKE_POLICY(SET CMP0077 NEW)
+  endif (POLICY CMP0077)
 ENDIF (COMMAND cmake_policy)
+
+# Prefer libGL.so to libOpenGL.so, see CMP0072
+set(OpenGL_GL_PREFERENCE "LEGACY")
 
 PROJECT(ocpn_draw_pi)
 SET(PARENT "opencpn")
 
 SET(PACKAGE_NAME ocpn_draw_pi)
+SET(PACKAGE_FILE_NAME "opencpn-plugin-draw")
 SET(VERBOSE_NAME ocpn_draw)
 SET(TITLE_NAME OCPNDRAW)
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "112")
-SET(VERSION_DATE "23/07/2019")
+SET(VERSION_PATCH "13")
+SET(VERSION_DATE "03/08/2019")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OD_COMMENT "  * Initial release for O5 using CI")
 SET(OCPN_API_VERSION_MAJOR "1")
@@ -337,7 +344,7 @@ IF(UNIX AND NOT APPLE)
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         DEPENDS ${PACKAGE_NAME}
         COMMENT " Running post build action on ${lib_name}."
-        COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} || (echo 0)'
+        COMMAND sh -c 'elfedit --input-osabi=Linux --output-osabi=none ${lib_name} || (echo 0) '
       )
     ELSE(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
       MESSAGE(STATUS "Cannot correct OS/ABI to match OCPN if it is generated incorrectly. Package binutils needed")

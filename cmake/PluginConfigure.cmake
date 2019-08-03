@@ -221,10 +221,10 @@ IF(NOT QT_ANDROID)
 
   set (WXWIDGETS_FORCE_VERSION CACHE STRING "Force usage of a specific wxWidgets version.")
   if(WXWIDGETS_FORCE_VERSION)
-    #set (wxWidgets_CONFIG_OPTIONS --version=${WXWIDGETS_FORCE_VERSION})
+    set (wxWidgets_CONFIG_OPTIONS --version=${WXWIDGETS_FORCE_VERSION})
   endif()
   
-  FIND_PACKAGE(wxWidgets REQUIRED)
+  FIND_PACKAGE(wxWidgets REQUIRED COMPONENTS ${wxWidgets_FIND_COMPONENTS})
 
   IF(MSVC)
     # Exclude wxexpat.lib, since we use our own version.
