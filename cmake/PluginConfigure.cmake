@@ -189,7 +189,12 @@ add_subdirectory(ocpnsrc/glu)
 SET( OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
 MESSAGE (STATUS "    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
 
-OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+IF(APPLE)
+    OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+ELSE(APPLE)
+    OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
+ENDIF(APPLE)
+
 IF(OD_JSON_SCHEMA_VALIDATOR)
     MESSAGE(STATUS "Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
     ADD_DEFINITIONS(-DOD_JSON_SCHEMA_VALIDATOR)
