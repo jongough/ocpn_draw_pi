@@ -163,10 +163,10 @@ configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/pkg_background.jpg
  # Patch the pkgproj.in file to make the output package name conform to Xxx-Plugin_x.x.pkg format
  #  Key is:
  #  <key>NAME</key>
- #  <string>${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}</string>
+ #  <string>${VERBOSE_NAME}-plugin_${VERSION_MAJOR}.${VERSION_MINOR}</string>
 
  configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/${PACKAGE_NAME}.pkgproj.in
-            ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}.pkgproj)
+            ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_FILE_NAME}.pkgproj)
 
  ADD_CUSTOM_COMMAND(
    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-${OCPN_MIN_VERSION}.pkg

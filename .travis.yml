@@ -94,7 +94,7 @@ deploy:
       #branches:
       #   only:
       #     - master
-      tags: false
+      tags: true
       all_branches: true
       condition: "$TRAVIS_OS_NAME = linux"
 
@@ -105,7 +105,7 @@ deploy:
     file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,txz,pkg,pkg.tar.xz}"
     skip_cleanup: true
     on:
-      tags: false
+      tags: true
       all_branches: true
 
 
