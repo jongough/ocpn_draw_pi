@@ -196,7 +196,7 @@ void ODPathPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
         wxMenuItem* editItem = menu.Append( ID_PATHPROP_MENU_EDIT_PROPERTIES, sPropertiesType );
         editItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() == 1 );
         if(m_pPath->m_sTypeString != wxT("EBL")) {
-            if(!l_pBoundary || (l_pBoundary && l_pBoundary->GetnPoints() > 4)) {
+            if(!l_pBoundary || l_pBoundary->GetnPoints() > 4) {
                 wxMenuItem* delItem = menu.Append( ID_PATHPROP_MENU_REMOVE, _("&Remove Selected") );
                 delItem->Enable( m_listCtrlODPoints->GetSelectedItemCount() > 0 );
                 if(l_pBoundary) {

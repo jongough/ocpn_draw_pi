@@ -139,7 +139,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
         }
         if(!bFail) {
             try {
-                std::string test = static_cast<const char*>(message_body);
                 json message = json::parse(static_cast<const char*>(message_body));
                 gODJSONMsgValidator->validate(message);
             } catch (const std::exception &e) {
