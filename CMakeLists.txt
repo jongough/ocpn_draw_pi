@@ -29,8 +29,8 @@ SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "20")
-SET(VERSION_DATE "17/08/2019")
+SET(VERSION_PATCH "21")
+SET(VERSION_DATE "20/08/2019")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OD_COMMENT "  * Initial release for O5 using CI")
 SET(OCPN_API_VERSION_MAJOR "1")
@@ -297,7 +297,7 @@ IF(OCPN_MIN_VERSION)
   ENDIF(NOT QT_ANDROID)
 ENDIF(OCPN_MIN_VERSION)
 
-INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/src/mygdal  )
+INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extsrc/mygdal  )
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
 INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
@@ -319,11 +319,11 @@ IF(TINYXML_FOUND)
  TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
 ELSE(TINYXML_FOUND)
  message (STATUS "Building with embedded tinyxml")
- INCLUDE_DIRECTORIES(src/tinyxml/)
+ INCLUDE_DIRECTORIES(extsrc/tinyxml/)
  SET(SRC_LTINYXML
-            src/tinyxml/tinyxml.cpp
-            src/tinyxml/tinyxmlparser.cpp
-            src/tinyxml/tinyxmlerror.cpp
+            extsrc/tinyxml/tinyxml.cpp
+            extsrc/tinyxml/tinyxmlparser.cpp
+            extsrc/tinyxml/tinyxmlerror.cpp
  )
  ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
 ENDIF(TINYXML_FOUND)
