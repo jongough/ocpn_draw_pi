@@ -55,6 +55,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxRememberPropertyPosition;
 		wxCheckBox* m_checkBoxShowMagBearings;
 		wxCheckBox* m_checkBoxAllowLeftDrag;
+		wxCheckBox* m_checkBoxShowLayers;
 		wxStaticText* m_staticTextNavObjBackups;
 		wxSpinCtrl* m_spinCtrlNavObjBackups;
 		wxStaticText* m_staticTextEdgePan;

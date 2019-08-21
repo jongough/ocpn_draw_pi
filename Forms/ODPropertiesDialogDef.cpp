@@ -40,6 +40,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_checkBoxAllowLeftDrag = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Allow Left Mouse Button Drag"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizer4->Add( m_checkBoxAllowLeftDrag, 0, wxALL, 5 );
 
+	m_checkBoxShowLayers = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Show Layers"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_checkBoxShowLayers, 0, wxALL, 5 );
+
+
+	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
+
 	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, _("OCPN_Draw Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextNavObjBackups->Wrap( -1 );
 	fgSizer4->Add( m_staticTextNavObjBackups, 0, wxALL, 5 );
