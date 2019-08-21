@@ -1642,6 +1642,10 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick( wxCommandEvent &event )
     if ( answer == wxID_NO )
         return;
     
+    // if layer is permanent delete file
+    if(wxFileExists(layer->m_LayerFileName))
+        wxRemoveFile(layer->m_LayerFileName);
+    
     // Process Paths in this layer
     wxPathListNode *node1 = g_pPathList->GetFirst();
     wxPathListNode *node2;
