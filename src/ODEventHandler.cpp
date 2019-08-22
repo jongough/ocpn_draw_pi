@@ -467,7 +467,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             g_pRolloverPathSeg = NULL;
         }
 
-        if(g_pRolloverPoint && !showRollover) {
+        if(g_pRolloverPoint) {
             ODPoint *l_ODPoint = (ODPoint *)g_pRolloverPoint->m_pData1;
             if(l_ODPoint && l_ODPoint->m_GUID != wxEmptyString && l_ODPoint->m_sTypeString == wxT("Text Point")) {
                 TextPoint *tp = (TextPoint *) g_pRolloverPoint->m_pData1;

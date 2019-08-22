@@ -509,6 +509,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_bRememberPropertyDialogPosition = m_checkBoxRememberPropertyPosition->GetValue();
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_bAllowLeftDrag = m_checkBoxAllowLeftDrag->GetValue();
+    g_bShowLayers = m_checkBoxShowLayers->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
     
     g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();
@@ -865,6 +866,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_checkBoxRememberPropertyPosition->SetValue( g_bRememberPropertyDialogPosition );
     m_checkBoxShowMagBearings->SetValue( g_bShowMag );
     m_checkBoxAllowLeftDrag->SetValue( g_bAllowLeftDrag );
+    m_checkBoxShowLayers->SetValue( g_bShowLayers );
     m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
     m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
     m_sliderEdgePan->SetValue( g_EdgePanSensitivity );

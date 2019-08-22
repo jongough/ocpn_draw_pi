@@ -1,5 +1,6 @@
 # ocpn_draw_pi
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d1c6fafba804b1c91d5e9da9f5de88c)](https://www.codacy.com/app/jongough/ocpn_draw_pi?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jongough/ocpn_draw_pi&amp;utm_campaign=Badge_Grade)
+
 OpenCPN general drawing plug in
 
 Requires latest OCPN 5.x.x as it is using version 1.16 of the plugin API
