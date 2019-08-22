@@ -425,6 +425,7 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
 {
     m_parent_window = parent;
     m_iPage = -1;
+    m_bCtrlDown = false;
     
     long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
     #ifdef __WXOSX__
@@ -743,6 +744,7 @@ void PathAndPointManagerDialogImpl::OnPathCenterViewClick( wxCommandEvent &event
     }
     
     ZoomtoPath( path );
+    m_bCtrlDown = false;
 }
 
 void PathAndPointManagerDialogImpl::OnPathExportSelectedClick( wxCommandEvent &event )
@@ -801,6 +803,7 @@ void PathAndPointManagerDialogImpl::OnPathActivateClick( wxCommandEvent &event )
     UpdatePathListCtrl();
     
     g_pODConfig->UpdatePath( ppath );
+    m_bCtrlDown = false;
     
     RequestRefresh( GetOCPNCanvasWindow() );
 }

@@ -161,6 +161,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_buttonPathActivate->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathActivateClick ), NULL, this );
 	m_buttonPathActivate->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( PathAndPointManagerDialogDef::OnPathButtonLeftDown ), NULL, this );
 	m_buttonPathCenterView->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathCenterViewClick ), NULL, this );
+	m_buttonPathCenterView->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( PathAndPointManagerDialogDef::OnPathButtonLeftDown ), NULL, this );
 	m_buttonPathDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathDeleteClick ), NULL, this );
 	m_buttonPathExportSelected->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathExportSelectedClick ), NULL, this );
 	m_buttonPathDeleteAll->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathDeleteAllClick ), NULL, this );
@@ -207,6 +208,7 @@ PathAndPointManagerDialogDef::~PathAndPointManagerDialogDef()
 	m_buttonPathActivate->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathActivateClick ), NULL, this );
 	m_buttonPathActivate->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( PathAndPointManagerDialogDef::OnPathButtonLeftDown ), NULL, this );
 	m_buttonPathCenterView->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathCenterViewClick ), NULL, this );
+	m_buttonPathCenterView->Disconnect( wxEVT_LEFT_DOWN, wxMouseEventHandler( PathAndPointManagerDialogDef::OnPathButtonLeftDown ), NULL, this );
 	m_buttonPathDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathDeleteClick ), NULL, this );
 	m_buttonPathExportSelected->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathExportSelectedClick ), NULL, this );
 	m_buttonPathDeleteAll->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnPathDeleteAllClick ), NULL, this );

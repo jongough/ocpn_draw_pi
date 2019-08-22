@@ -472,6 +472,7 @@
                                                     <property name="window_name"></property>
                                                     <property name="window_style"></property>
                                                     <event name="OnButtonClick">OnPathCenterViewClick</event>
+                                                    <event name="OnLeftDown">OnPathButtonLeftDown</event>
                                                 </object>
                                             </object>
                                             <object class="sizeritem" expanded="0">
