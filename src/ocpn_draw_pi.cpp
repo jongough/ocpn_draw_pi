@@ -102,6 +102,7 @@ static const long long lNaN = 0xfff8000000000000;
 #endif
 
 ocpn_draw_pi            *g_ocpn_draw_pi;
+wxString                *g_ocpn_draw_display_name;
 wxWindow                *g_parent_window;
 PathList                *g_pPathList;
 PointMan                *g_pODPointMan;
@@ -501,6 +502,7 @@ int ocpn_draw_pi::Init(void)
     m_mouse_canvas_index = -1;
     m_drawing_canvas_index = -1;
     g_bShowLayers = false;
+    g_ocpn_draw_display_name = new wxString("OCPN Draw");
     
     // Drawing modes from toolbar
     m_Mode = 0;

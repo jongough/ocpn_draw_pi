@@ -69,6 +69,7 @@ class SelectItem;
 
 
 extern ocpn_draw_pi            *g_ocpn_draw_pi;
+extern wxString                *g_ocpn_draw_display_name;
 extern wxWindow                *g_parent_window;
 extern PathList                *g_pPathList;
 extern PointMan                *g_pODPointMan;
