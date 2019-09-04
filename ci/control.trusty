@@ -1,4 +1,4 @@
-Source: opencpn
+Source: ocpn_draw_pi
 Build-Depends: debhelper (>= 9),
  cmake,
  libarchive-dev,
@@ -22,7 +22,7 @@ Build-Depends: debhelper (>= 9),
 Standards-Version: 4.3.0
 Homepage: https://opencpn.org
 
-Description: Packages needed to build opencpn on debian.
+Description: Packages needed to build ocpn_draw_pi on debian.
  The Build-Depends field can be used to install dependencies
  using mk-build-deps.
  .
