@@ -20,7 +20,7 @@ matrix:
       os: osx
       compiler: clang
       script:
-        - bash ./ci/travis-build-debian.sh
+        - bash ./ci/travis-build-osx.sh
         
 #install:
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
