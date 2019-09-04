@@ -67,7 +67,7 @@ before_install:
     then 
       export CXX="g++-6" CC="gcc-6";
     fi
-  - if [ "${#OAUTH_ACCESS_TOKEN}" != 0 ]; 
+  - if [ "${OAUTH_ACCESS_TOKEN}" != 0 ]; 
     then 
       (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN} > ~/.dropbox_uploader); 
     fi

@@ -147,35 +147,51 @@ INCLUDE(CPack)
 
 
 IF(APPLE)
+  # -- Run the BundleUtilities cmake code
+  set(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
 
- #  Copy a bunch of files so the Packages installer builder can find them
- #  relative to ${CMAKE_CURRENT_BINARY_DIR}
- #  This avoids absolute paths in the chartdldr_pi.pkgproj file
+  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app")
+  set(DIRS "")
 
-configure_file(${PROJECT_SOURCE_DIR}/cmake/gpl.txt
-            ${CMAKE_CURRENT_BINARY_DIR}/license.txt COPYONLY)
-
-configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/pkg_background.jpg
-            ${CMAKE_CURRENT_BINARY_DIR}/pkg_background.jpg COPYONLY)
-
- # Patch the pkgproj.in file to make the output package name conform to Xxx-Plugin_x.x.pkg format
- #  Key is:
- #  <key>NAME</key>
- #  <string>${VERBOSE_NAME}-plugin_${VERSION_MAJOR}.${VERSION_MINOR}</string>
-
- configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/${PACKAGE_NAME}.pkgproj.in
-            ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}.pkgproj)
-
- ADD_CUSTOM_COMMAND(
-   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-${OCPN_MIN_VERSION}.pkg
-   COMMAND /usr/local/bin/packagesbuild -F ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}.pkgproj
-   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-   DEPENDS ${PACKAGE_NAME}
-   COMMENT "create-pkg [${PACKAGE_NAME}]: Generating pkg file."
-)
-
- ADD_CUSTOM_TARGET(create-pkg COMMENT "create-pkg: Done."
- DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}-${OCPN_MIN_VERSION}.pkg )
-
+  # INSTALL(DIRECTORY DESTINATION "bin/OpenCPN.app/Contents/PlugIns")
+#  install(
+#    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/dashboard_pi/libdashboard_pi.dylib
+#    DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
+#  )
+#  set(
+#    LIBS
+#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libdashboard_pi.dylib"
+#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libgrib_pi.dylib"
+#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libchartdldr_pi.dylib"
+#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libwmm_pi.dylib"
+#  )
+#  install(CODE "
+#    include(BundleUtilities)
+#    fixup_bundle(\"${APPS}\"   \"${LIBS}\"   \"${DIRS}\")
+#    " COMPONENT Runtime)
+  add_custom_command(
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+    COMMAND
+      ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
+      --volname "OpenCPN Installer"
+      --background ${CMAKE_SOURCE_DIR}/buildosx/background.png
+      --window-pos 200 120
+      --window-size 500 300
+      --icon-size 80
+      --icon OpenCPN.app 120 150
+      --hide-extension OpenCPN.app
+      --app-drop-link
+        390 145
+        ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+        ${CMAKE_INSTALL_PREFIX}/bin/
+    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMENT "create-dmg [${PACKAGE_NAME}]: Generated dmg file."
+  )
+  add_custom_target(
+    create-dmg
+    COMMENT "create-dmg: Done."
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+  )
 
 ENDIF(APPLE)
