@@ -8,17 +8,17 @@ matrix:
       script:
         - sh ./ci/travis-build-debian.sh
 
-    - env:
-        - OCPN_TARGET=trusty
-      dist: trusty
-      compiler: gcc
-      script:
-        - sh ./ci/travis-build-debian.sh
+#    - env:
+#        - OCPN_TARGET=trusty
+#      dist: trusty
+#      compiler: gcc
+#      script:
+#        - sh ./ci/travis-build-debian.sh
 
-    - env:
-        - OCPN_TARGET=osx
-      os: osx
-      compiler: clang
+#    - env:
+#        - OCPN_TARGET=osx
+#      os: osx
+#      compiler: clang
         
 #install:
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 

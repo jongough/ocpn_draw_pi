@@ -1,4 +1,4 @@
-#Source: ocpn_draw_pi
+Source: opencpn-plugin-draw
 Build-Depends: debhelper (>= 9),
  cmake,
  libarchive-dev,
