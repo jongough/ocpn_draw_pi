@@ -1,10 +1,26 @@
 language: cpp
 matrix:
   include:
-  - dist: trusty
-    compiler: gcc
-  - os: osx
-    compiler: clang
+    - env:
+        - OCPN_TARGET=xenial
+      dist: xenial
+      compiler: gcc
+      script:
+        - sh ./ci/travis-build-debian.sh
+
+    - env:
+        - OCPN_TARGET=trusty
+      dist: trusty
+      compiler: gcc
+      script:
+        - sh ./ci/travis-build-debian.sh
+
+    - env:
+        - OCPN_TARGET=osx
+      os: osx
+      compiler: clang
+      script:
+        - sh ./ci/travis-build-osx.sh
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
     then 
