@@ -19,6 +19,8 @@ matrix:
         - OCPN_TARGET=osx
       os: osx
       compiler: clang
+      script:
+        - bash ./ci/travis-build-debian.sh
         
 #install:
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
