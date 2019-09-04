@@ -20,25 +20,25 @@ matrix:
       os: osx
       compiler: clang
         
-install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
-    then 
-      sudo apt-get -qq update; 
-      sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
-      sudo apt-get install libexpat1-dev libcairo2-dev; 
-      sudo apt-get install rpm; 
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
-    then 
-      brew install cairo libexif xz libarchive;
-      wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
-      tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; 
-      export PATH="/usr/local/opt/gettext/bin:$PATH";
-      echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
-      wget http://opencpn.navnux.org/build_deps/Packages.dmg;
-      hdiutil attach Packages.dmg; 
-      sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
-    fi
+#install:
+#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
+#    then 
+#      sudo apt-get -qq update; 
+#      sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
+#      sudo apt-get install libexpat1-dev libcairo2-dev; 
+#      sudo apt-get install rpm; 
+#    fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
+#    then 
+#      brew install cairo libexif xz libarchive;
+#      wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
+#      tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; 
+#      export PATH="/usr/local/opt/gettext/bin:$PATH";
+#      echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
+#      wget http://opencpn.navnux.org/build_deps/Packages.dmg;
+#      hdiutil attach Packages.dmg; 
+#      sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
+#    fi
 script:
   - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
     then 
