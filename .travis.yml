@@ -1,28 +1,28 @@
 language: cpp
 matrix:
   include:
-#    - env:
-#        - OCPN_TARGET=xenial
-#      dist: xenial
-#      compiler: gcc
-#      script:
-#        - sh ./ci/travis-build-debian.sh
-
-#    - env:
-#        - OCPN_TARGET=trusty
-#      dist: trusty
-#      compiler: gcc
-#      script:
-#        - sh ./ci/travis-build-debian.sh
+    - env:
+        - OCPN_TARGET=xenial
+      dist: xenial
+      compiler: gcc
+      script:
+        - sh ./ci/travis-build-debian.sh
 
     - env:
-        - OCPN_TARGET=osx
-      os: osx
-      compiler: clang
+        - OCPN_TARGET=trusty
+      dist: trusty
+      compiler: gcc
       script:
-        - bash ./ci/travis-build-osx.sh
+        - sh ./ci/travis-build-debian.sh
+
+#    - env:
+#        - OCPN_TARGET=osx
+#      os: osx
+#      compiler: clang
+#      script:
+#        - bash ./ci/travis-build-osx.sh
         
-#install:
+install:
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
 #    then 
 #      sudo apt-get -qq update; 
@@ -30,17 +30,17 @@ matrix:
 #      sudo apt-get install libexpat1-dev libcairo2-dev; 
 #      sudo apt-get install rpm; 
 #    fi
-#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
-#    then 
-#      brew install cairo libexif xz libarchive;
-#      wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
-#      tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; 
-#      export PATH="/usr/local/opt/gettext/bin:$PATH";
-#      echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
-#      wget http://opencpn.navnux.org/build_deps/Packages.dmg;
-#      hdiutil attach Packages.dmg; 
-#      sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
-#    fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
+    then 
+      brew install cairo libexif xz libarchive;
+      wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
+      tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; 
+      export PATH="/usr/local/opt/gettext/bin:$PATH";
+      echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
+      wget http://opencpn.navnux.org/build_deps/Packages.dmg;
+      hdiutil attach Packages.dmg; 
+      sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
+    fi
 #script:
 #  - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
 #    then 
