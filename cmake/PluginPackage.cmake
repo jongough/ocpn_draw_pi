@@ -154,26 +154,26 @@ IF(APPLE)
   set(DIRS "")
 
   # INSTALL(DIRECTORY DESTINATION "bin/OpenCPN.app/Contents/PlugIns")
-#  install(
-#    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/dashboard_pi/libdashboard_pi.dylib
-#    DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
-#  )
-#  set(
-#    LIBS
-#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libdashboard_pi.dylib"
+  install(
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/ocpn_draw_pi/libocpn_draw_pi.dylib
+    DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
+  )
+  set(
+    LIBS
+    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libocpn_draw_pi.dylib"
 #    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libgrib_pi.dylib"
 #    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libchartdldr_pi.dylib"
 #    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libwmm_pi.dylib"
-#  )
-#  install(CODE "
-#    include(BundleUtilities)
-#    fixup_bundle(\"${APPS}\"   \"${LIBS}\"   \"${DIRS}\")
-#    " COMPONENT Runtime)
+  )
+  install(CODE "
+    include(BundleUtilities)
+    fixup_bundle(\"${APPS}\"   \"${LIBS}\"   \"${DIRS}\")
+    " COMPONENT Runtime)
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
     COMMAND
       ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
-      --volname "opencpn-plugin-draw Installer"
+      --volname "ocpn_draw_pi Installer"
       --background ${CMAKE_SOURCE_DIR}/buildosx/background.png
       --window-pos 200 120
       --window-size 500 300
@@ -184,7 +184,7 @@ IF(APPLE)
         390 145
         ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
         ${CMAKE_INSTALL_PREFIX}/bin/
-    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/opencpn-plugin-app.app
+    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/opencpn-plugin-draw.app
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "create-dmg [${PACKAGE_NAME}]: Generated dmg file."
   )
