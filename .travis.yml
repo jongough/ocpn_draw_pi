@@ -22,7 +22,7 @@ matrix:
       script:
         - bash ./ci/travis-build-osx.sh
         
-install:
+#install:
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
 #    then 
 #      sudo apt-get -qq update; 
@@ -47,7 +47,7 @@ script:
       echo "Don't build on coverty_scan branch."; 
       exit 0; 
     fi
-  - mkdir build && cd build
+#  - mkdir build && cd build
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
 #    then 
 #      cmake -DCMAKE_BUILD_TYPE=Release ../ && make -sj2 && sudo make package; 
