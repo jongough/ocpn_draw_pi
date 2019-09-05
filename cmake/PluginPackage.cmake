@@ -186,7 +186,7 @@ IF(APPLE)
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
     COMMAND
-      ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
+      bash -c '${CMAKE_SOURCE_DIR}/buildosx/create-dmg'
       --volname "ocpn_draw_pi Installer"
       --background ${CMAKE_SOURCE_DIR}/buildosx/background.png
 #      --window-pos 200 120
