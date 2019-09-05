@@ -145,13 +145,22 @@ ENDIF(TWIN32 AND NOT UNIX)
 
 INCLUDE(CPack)
 
+option(OCPN_CI_BUILD "Use CI build versioning rules" OFF)
+if (OCPN_CI_BUILD)
+  include(Utils)
+  today(DATE)
+  commit_id(COMMIT)
+  set(VERSION_TAIL "+${COMMIT}")
+  set(VERSION_DATE "${DATE}")
+endif (OCPN_CI_BUILD)
 
 IF(APPLE)
   MESSAGE (STATUS "*** Staging to build PlugIn OSX Package the new way ***")
 # -- Run the BundleUtilities cmake code
   set(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
 
-  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app")
+#  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app")
+  set(APPS "")
   set(DIRS "")
 
   # INSTALL(DIRECTORY DESTINATION "bin/OpenCPN.app/Contents/PlugIns")
