@@ -146,7 +146,7 @@ ENDIF(TWIN32 AND NOT UNIX)
 INCLUDE(CPack)
 
 
-IF(APPLE1)
+IF(APPLE)
   # -- Run the BundleUtilities cmake code
   set(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
 
@@ -198,8 +198,8 @@ IF(APPLE1)
     DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
   )
 
-ENDIF(APPLE1)
-IF(APPLE)
+ENDIF(APPLE)
+IF(APPLE1)
 MESSAGE (STATUS "*** Staging to build PlugIn OSX Package ***")
 
  #  Copy a bunch of files so the Packages installer builder can find them
@@ -232,4 +232,4 @@ configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/pkg_background.jpg
 
  DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_${OCPN_MIN_VERSION}.pkg )
 
-ENDIF(APPLE)
+ENDIF(APPLE1)
