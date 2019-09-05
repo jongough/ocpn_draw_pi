@@ -172,19 +172,19 @@ IF(APPLE)
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
     COMMAND
-      bash -c '${CMAKE_SOURCE_DIR}/buildosx/create-dmg'
-      --volname "OpenCPN Installer"
+      ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
+      --volname "opencpn-plugin-draw Installer"
       --background ${CMAKE_SOURCE_DIR}/buildosx/background.png
       --window-pos 200 120
       --window-size 500 300
       --icon-size 80
-      --icon OpenCPN.app 120 150
-      --hide-extension OpenCPN.app
+      --icon opencpn-plugin-draw.app 120 150
+      --hide-extension opencpn-plugin-draw.app
       --app-drop-link
         390 145
         ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
         ${CMAKE_INSTALL_PREFIX}/bin/
-    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app
+    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/opencpn-plugin-app.app
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "create-dmg [${PACKAGE_NAME}]: Generated dmg file."
   )
