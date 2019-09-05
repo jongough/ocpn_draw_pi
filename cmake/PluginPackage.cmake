@@ -198,7 +198,7 @@ IF(APPLE)
         390 145
         ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
         ${CMAKE_INSTALL_PREFIX}/bin/
-    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugiIns/libocpn_draw_pi.dylib
+    DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libocpn_draw_pi.dylib
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "create-dmg [${PACKAGE_NAME}]: Generated dmg file."
   )
