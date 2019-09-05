@@ -154,8 +154,12 @@ IF(APPLE)
   set(DIRS "")
 
   # INSTALL(DIRECTORY DESTINATION "bin/OpenCPN.app/Contents/PlugIns")
+#  install(
+#    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/ocpn_draw_pi/libocpn_draw_pi.dylib
+#    DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
+#  )
   install(
-    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/ocpn_draw_pi/libocpn_draw_pi.dylib
+    FILES /tmp/opencpn/ocpn_draw_pi/ocpn_draw_pi/libocpn_draw_pi.dylib
     DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
   )
   set(
