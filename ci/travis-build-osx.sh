@@ -43,3 +43,4 @@ make install
 #make install # Dunno why the second is needed but it is, otherwise
              # plugin data is not included in the bundle
 make create-dmg
+make create-dmg
