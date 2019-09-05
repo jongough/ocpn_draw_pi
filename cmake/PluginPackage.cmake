@@ -147,7 +147,7 @@ INCLUDE(CPack)
 
 option(OCPN_CI_BUILD "Use CI build versioning rules" OFF)
 if (OCPN_CI_BUILD)
-  include(Utils)
+  include("cmake/Utils.cmake")
   today(DATE)
   commit_id(COMMIT)
   set(VERSION_TAIL "+${COMMIT}")
