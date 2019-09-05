@@ -189,13 +189,13 @@ IF(APPLE)
       ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
       --volname "ocpn_draw_pi Installer"
       --background ${CMAKE_SOURCE_DIR}/buildosx/background.png
-      --window-pos 200 120
-      --window-size 500 300
-      --icon-size 80
-      --icon opencpn-plugin-draw.app 120 150
-      --hide-extension opencpn-plugin-draw.app
-      --app-drop-link
-        390 145
+#      --window-pos 200 120
+#      --window-size 500 300
+#      --icon-size 80
+#      --icon opencpn-plugin-draw.app 120 150
+#      --hide-extension opencpn-plugin-draw.app
+#      --app-drop-link
+#        390 145
         ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
         ${CMAKE_INSTALL_PREFIX}/bin/
     DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libocpn_draw_pi.dylib
