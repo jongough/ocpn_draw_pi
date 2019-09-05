@@ -179,10 +179,10 @@ IF(APPLE)
 #    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libchartdldr_pi.dylib"
 #    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libwmm_pi.dylib"
   )
-  install(CODE "
-    include(BundleUtilities)
-    fixup_bundle(\"${APPS}\"   \"${LIBS}\"   \"${DIRS}\")
-    " COMPONENT Runtime)
+#  install(CODE "
+#    include(BundleUtilities)
+#    fixup_bundle(\"${APPS}\"   \"${LIBS}\"   \"${DIRS}\")
+#    " COMPONENT Runtime)
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
     COMMAND
