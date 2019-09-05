@@ -23,13 +23,13 @@ matrix:
 #        - bash ./ci/travis-build-osx.sh
         
 install:
-#  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
-#    then 
-#      sudo apt-get -qq update; 
-#      sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
-#      sudo apt-get install libexpat1-dev libcairo2-dev; 
-#      sudo apt-get install rpm; 
-#    fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
+    then 
+      sudo apt-get -qq update; 
+      sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
+      sudo apt-get install libexpat1-dev libcairo2-dev; 
+      sudo apt-get install rpm; 
+    fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
     then 
       brew install cairo libexif xz libarchive;
@@ -47,7 +47,7 @@ script:
 #      echo "Don't build on coverty_scan branch."; 
 #      exit 0; 
 #    fi
-#  - mkdir build && cd build
+  - mkdir build && cd build
 #  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
 #    then 
 #      cmake -DCMAKE_BUILD_TYPE=Release ../ && make -sj2 && sudo make package; 
