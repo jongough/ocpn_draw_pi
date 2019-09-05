@@ -36,7 +36,6 @@ cmake -DOCPN_CI_BUILD=$CI_BUILD \
   
 make -sj2
 make create-pkg
-
 mkdir -p /tmp/opencpn/bin/ocpn_draw_pi.app/Contents/MacOS
 mkdir -p /tmp/opencpn/bin/ocpn_draw_pi.app/Contents/SharedSupport/plugins
 chmod 644 /usr/local/lib/lib*.dylib
