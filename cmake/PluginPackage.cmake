@@ -168,21 +168,19 @@ IF(APPLE)
 #    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/ocpn_draw_pi/libocpn_draw_pi.dylib
 #    DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
 #  )
+
+#  install(
+#    FILES /tmp/opencpn/ocpn_draw_pi/ocpn_draw_pi/libocpn_draw_pi.dylib
+#    DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
+#  )
   install(
-    FILES /tmp/opencpn/ocpn_draw_pi/ocpn_draw_pi/libocpn_draw_pi.dylib
+    FILES ${CMAKE_CURRENT_BINARY_DIR}/plugins/ocpn_draw_pi/libocpn_draw_pi.dylib
     DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
   )
   set(
     LIBS
     "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libocpn_draw_pi.dylib"
-#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libgrib_pi.dylib"
-#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libchartdldr_pi.dylib"
-#    "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libwmm_pi.dylib"
   )
-#  install(CODE "
-#    include(BundleUtilities)
-#    fixup_bundle(\"${APPS}\"   \"${LIBS}\"   \"${DIRS}\")
-#    " COMPONENT Runtime)
   add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
     COMMAND chmod +x ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
@@ -209,11 +207,6 @@ IF(APPLE)
   configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/pkg_background.jpg
             ${CMAKE_CURRENT_BINARY_DIR}/pkg_background.jpg COPYONLY)
 
- # Patch the pkgproj.in file to make the output package name conform to Xxx-Plugin_x.x.pkg format
- #  Key is:
- #  <key>NAME</key>
- #  <string>${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}</string>
-
   configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/${PACKAGE_NAME}.pkgproj.in
             ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}.pkgproj)
 
@@ -229,37 +222,3 @@ IF(APPLE)
   DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_${OCPN_MIN_VERSION}.pkg )
 
 ENDIF(APPLE)
-IF(APPLE1)
-MESSAGE (STATUS "*** Staging to build PlugIn OSX Package ***")
-
- #  Copy a bunch of files so the Packages installer builder can find them
- #  relative to ${CMAKE_CURRENT_BINARY_DIR}
- #  This avoids absolute paths in the chartdldr_pi.pkgproj file
-
-configure_file(${PROJECT_SOURCE_DIR}/cmake/gpl.txt
-            ${CMAKE_CURRENT_BINARY_DIR}/license.txt COPYONLY)
-	    
-configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/pkg_background.jpg
-            ${CMAKE_CURRENT_BINARY_DIR}/pkg_background.jpg COPYONLY)
-
- # Patch the pkgproj.in file to make the output package name conform to Xxx-Plugin_x.x.pkg format
- #  Key is:
- #  <key>NAME</key>
- #  <string>${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}</string>
-
- configure_file(${PROJECT_SOURCE_DIR}/buildosx/InstallOSX/${PACKAGE_NAME}.pkgproj.in
-            ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}.pkgproj)
-
- ADD_CUSTOM_COMMAND(
-   OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_${OCPN_MIN_VERSION}.pkg
-   COMMAND /usr/local/bin/packagesbuild -F ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}.pkgproj
-   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-   DEPENDS ${PACKAGE_NAME}
-   COMMENT "create-pkg [${PACKAGE_NAME}]: Generating pkg file."
-)
-
- ADD_CUSTOM_TARGET(create-pkg COMMENT "create-pkg: Done."
-
- DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${VERBOSE_NAME}-Plugin_${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}_${OCPN_MIN_VERSION}.pkg )
-
-ENDIF(APPLE1)
