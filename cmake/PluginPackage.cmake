@@ -175,7 +175,7 @@ IF(APPLE)
 #  )
 MESSAGE(STATUS "Prefix: ${CMAKE_INSTALL_PREFIX}, ${PREFIX_PARENTLIB}")
   install(
-    FILES ${PREFIX_PARENTLIB}/plugins/ocpn_draw_pi/libocpn_draw_pi.dylib
+    FILES ${PREFIX_PARENTLIB}/lib/opencpn/libocpn_draw_pi.dylib
     DESTINATION "bin/OpenCPN.app/Contents/PlugIns"
   )
   set(
