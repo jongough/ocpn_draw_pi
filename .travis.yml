@@ -1,43 +1,32 @@
 language: cpp
 matrix:
   include:
-  - dist: trusty
-    compiler: gcc
-  - os: osx
-    compiler: clang
-install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
-    then 
-      sudo apt-get -qq update; 
-      sudo apt-get install libwxgtk3.0-dev libwxgtk3.0-0 libgps-dev libglu1-mesa-dev libgtk2.0-dev libbz2-dev libtinyxml-dev; 
-      sudo apt-get install libexpat1-dev libcairo2-dev; 
-      sudo apt-get install rpm; 
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
-    then 
-      brew install cairo libexif xz libarchive;
-      wget http://opencpn.navnux.org/build_deps/wx312_opencpn50_macos109.tar.xz; 
-      tar xJf wx312_opencpn50_macos109.tar.xz -C /tmp; 
-      export PATH="/usr/local/opt/gettext/bin:$PATH";
-      echo 'export PATH="/usr/local/opt/gettext/bin:$PATH"' >> ~/.bash_profile; 
-      wget http://opencpn.navnux.org/build_deps/Packages.dmg;
-      hdiutil attach Packages.dmg; 
-      sudo installer -pkg "/Volumes/Packages 1.2.5/Install Packages.pkg" -target "/"; 
-    fi
+    - env:
+        - OCPN_TARGET=xenial
+      dist: xenial
+      compiler: gcc
+      script:
+        - sh ./ci/travis-build-debian.sh
+
+    - env:
+        - OCPN_TARGET=trusty
+      dist: trusty
+      compiler: gcc
+      script:
+        - sh ./ci/travis-build-debian.sh
+
+    - env:
+        - OCPN_TARGET=osx
+      os: osx
+      compiler: clang
+      script:
+        - bash ./ci/travis-build-osx.sh
+        
 script:
   - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
     then 
       echo "Don't build on coverty_scan branch."; 
       exit 0; 
-    fi
-  - mkdir build && cd build
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; 
-    then 
-      cmake -DCMAKE_BUILD_TYPE=Release ../ && make -sj2 && sudo make package; 
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; 
-    then 
-      cmake -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx312_opencpn50_macos109/bin/wx-config -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx312_opencpn50_macos109" -DCMAKE_INSTALL_PREFIX=/tmp/opencpn -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 .. && make -sj2 && make create-pkg; 
     fi
   - ls -l;
   
@@ -50,7 +39,7 @@ before_install:
     then 
       export CXX="g++-6" CC="gcc-6";
     fi
-  - if [ "${#OAUTH_ACCESS_TOKEN}" != 0 ]; 
+  - if [ "${OAUTH_ACCESS_TOKEN}" != 0 ]; 
     then 
       (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN} > ~/.dropbox_uploader); 
     fi
@@ -62,24 +51,6 @@ addons:
     - gcc-6
     - g++-6
 deploy:
-#  - provider: script
-#    file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,pkg,txz,pkg.tar.xz}"
-#    script: if [ -f ~/.dropbox_uploader ] ; then echo "OSX"; if [ "$TRAVIS_OS_NAME"
-#      = "osx" ] ; then echo "upload pkg"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.pkg
-#      / ; fi; echo "Linux"; if [ "$TRAVIS_OS_NAME" = "linux" ] ; then echo "upload
-#      rpm"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.rpm /; echo
-#      "upload deb"; bash ../dropbox_uploader.sh upload $TRAVIS_BUILD_DIR/build/*.deb
-#      /; fi; fi
-#    skip_cleanup: true
-#    on: # Set Deploy conditions
-#      # Deploy only when tag is not specified
-#      tags: false
-#      # or this branch
-#      #branch: master_1.5
-#      all_branches: true
-#      # and only when API token is set
-#      # condition: ""${#OAUTH_ACCESS_TOKEN} != 0 && $BUILD_TYPE = Release
-#      condition: "${#OAUTH_ACCESS_TOKEN} != 0"
   - provider: launchpad
     slug: "~jonsgough/opencpn-plugin-draw/+git/ocpn_draw_pi"
     oauth_token:
