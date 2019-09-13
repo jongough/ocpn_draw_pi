@@ -35,7 +35,7 @@ IF(WIN32)
 
 #  These lines set the name of the Windows Start Menu shortcut and the icon that goes with it
 #  SET(CPACK_NSIS_INSTALLED_ICON_NAME "${PACKAGE_NAME}")
-SET(CPACK_NSIS_DISPLAY_NAME "OpenCPN ${PACKAGE_NAME}")
+  SET(CPACK_NSIS_DISPLAY_NAME "OpenCPN ${PACKAGE_NAME}")
 
   SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_FILE_NAME}_${CPACK_PACKAGE_VERSION}_setup" )
 
@@ -67,6 +67,8 @@ set(CPACK_SOURCE_IGNORE_FILES
 "^${CPACK_PACKAGE_INSTALL_DIRECTORY}/*"
 )
 
+SET(PACKAGE_RELEASE ${OCPN_MIN_VERSION})
+
 IF(UNIX AND NOT APPLE)
 #    INCLUDE(UseRPMTools)
 #    IF(RPMTools_FOUND)
@@ -75,7 +77,6 @@ IF(UNIX AND NOT APPLE)
 
 # need apt-get install rpm, for rpmbuild
     SET(PACKAGE_DEPS "opencpn, bzip2, gzip")
-    SET(PACKAGE_RELEASE ${OCPN_MIN_VERSION})
 
 
   IF (CMAKE_SYSTEM_PROCESSOR MATCHES "arm*")
@@ -158,6 +159,9 @@ IF(APPLE)
   MESSAGE (STATUS "*** Staging to build PlugIn OSX Package the new way ***")
 # -- Run the BundleUtilities cmake code
   set(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
+  
+  SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_FILE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}" )
+
 
 #  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app")
   set(APPS "")
@@ -173,13 +177,13 @@ IF(APPLE)
     "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libocpn_draw_pi.dylib"
   )
   add_custom_command(
-    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+    OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.dmg
     COMMAND chmod +x ${CMAKE_SOURCE_DIR}/buildosx/create-dmg
     COMMAND
       ${CMAKE_SOURCE_DIR}/buildosx/create-dmg 
       --volname "ocpn_draw_pi Installer" 
       --background ${CMAKE_SOURCE_DIR}/buildosx/background.png
-        ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+        ${CMAKE_CURRENT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.dmg
         ${CMAKE_INSTALL_PREFIX}/bin/
     DEPENDS ${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app/Contents/PlugIns/libocpn_draw_pi.dylib
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
@@ -188,7 +192,7 @@ IF(APPLE)
   add_custom_target(
     create-dmg
     COMMENT "create-dmg: Done."
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.dmg
   )
 
   MESSAGE (STATUS "*** Staging to build PlugIn OSX Package the old way ***")
