@@ -188,7 +188,7 @@ IF(APPLE)
   add_custom_target(
     create-dmg
     COMMENT "create-dmg: Done."
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}_${PACKAGE_VERSION}.dmg
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/{CPACK_PACKAGE_FILE_NAME}.dmg
   )
 
   MESSAGE (STATUS "*** Staging to build PlugIn OSX Package the old way ***")
