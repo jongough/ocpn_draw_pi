@@ -158,6 +158,9 @@ IF(APPLE)
   MESSAGE (STATUS "*** Staging to build PlugIn OSX Package the new way ***")
 # -- Run the BundleUtilities cmake code
   set(CPACK_BUNDLE_PLIST "${CMAKE_SOURCE_DIR}/buildosx/Info.plist.in")
+  
+  SET(CPACK_PACKAGE_FILE_NAME "${PACKAGE_FILE_NAME}_${PACKAGE_VERSION}-${PACKAGE_RELEASE}" )
+
 
 #  set(APPS "\${CMAKE_INSTALL_PREFIX}/bin/OpenCPN.app")
   set(APPS "")
@@ -188,7 +191,7 @@ IF(APPLE)
   add_custom_target(
     create-dmg
     COMMENT "create-dmg: Done."
-    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/{CPACK_PACKAGE_FILE_NAME}.dmg
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/${CPACK_PACKAGE_FILE_NAME}.dmg
   )
 
   MESSAGE (STATUS "*** Staging to build PlugIn OSX Package the old way ***")
