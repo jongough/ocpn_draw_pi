@@ -22,9 +22,6 @@ install:
   # install dependencies:
   - choco install poedit
 
-  - ps: Start-FileDownload http://opencpn.navnux.org/build_deps/nsis-3.04-setup.exe
-  - cmd: nsis-3.04-setup.exe /S
-
   # Download and unzip wxwidgets
   - ps: Start-FileDownload http://opencpn.navnux.org/build_deps/wxWidgets-3.1.2.7z
   - cmd: 7z x wxWidgets-3.1.2.7z -o%WXWIN% > null
