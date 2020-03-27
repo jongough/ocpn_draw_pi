@@ -497,6 +497,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_sGZSecondIconName = m_bODIComboBoxGZSecondIconName->GetValue();;
     g_bGZRotateWithBoat = m_checkBoxGZRotateWithBoat->GetValue();
     g_iGZMaintainWith = m_radioBoxGZMaintainWith->GetSelection();
+    g_iGZLineType = m_radioBoxGZLineType->GetSelection();
     g_iGZPersistenceType = m_radioBoxGZPersistence->GetSelection();
     
     
@@ -896,6 +897,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_colourPickerInActiveGZFillColour->SetColour( g_colourInActiveGZFillColour );
     m_checkBoxGZRotateWithBoat->SetValue( g_bGZRotateWithBoat);
     m_radioBoxGZMaintainWith->SetSelection( g_iGZMaintainWith );
+    m_radioBoxGZLineType->SetSelection( g_iGZLineType);
     m_sliderGZFillTransparency->SetValue( g_uiGZFillTransparency );
     m_radioBoxGZPersistence->SetSelection( g_iGZPersistenceType );
 

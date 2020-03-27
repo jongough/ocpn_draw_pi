@@ -955,7 +955,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerGZSettings->Add( fgSizerGZSettingsColours, 1, wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizerGZRotate;
-	fgSizerGZRotate = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizerGZRotate = new wxFlexGridSizer( 0, 3, 0, 0 );
 	fgSizerGZRotate->SetFlexibleDirection( wxBOTH );
 	fgSizerGZRotate->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -967,6 +967,12 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_radioBoxGZMaintainWith = new wxRadioBox( m_panelGZ, wxID_ANY, _("Maintain with"), wxDefaultPosition, wxDefaultSize, m_radioBoxGZMaintainWithNChoices, m_radioBoxGZMaintainWithChoices, 1, wxRA_SPECIFY_ROWS );
 	m_radioBoxGZMaintainWith->SetSelection( 1 );
 	fgSizerGZRotate->Add( m_radioBoxGZMaintainWith, 0, wxALL, 5 );
+
+	wxString m_radioBoxGZLineTypeChoices[] = { _("Arc"), _("Straight") };
+	int m_radioBoxGZLineTypeNChoices = sizeof( m_radioBoxGZLineTypeChoices ) / sizeof( wxString );
+	m_radioBoxGZLineType = new wxRadioBox( m_panelGZ, wxID_ANY, _("Line Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxGZLineTypeNChoices, m_radioBoxGZLineTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxGZLineType->SetSelection( 0 );
+	fgSizerGZRotate->Add( m_radioBoxGZLineType, 0, wxALL, 5 );
 
 
 	fgSizerGZSettings->Add( fgSizerGZRotate, 1, wxEXPAND, 5 );
@@ -989,7 +995,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGZ->SetSizer( fgSizerGZSettings );
 	m_panelGZ->Layout();
 	fgSizerGZSettings->Fit( m_panelGZ );
-	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), false );
+	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), true );
 	m_panelPIL = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_fgSizerPILSettings = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerPILSettings->AddGrowableCol( 1 );
@@ -1446,7 +1452,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelAbout->SetSizer( bSizerAbout );
 	m_panelAbout->Layout();
 	bSizerAbout->Fit( m_panelAbout );
-	m_notebookProperties->AddPage( m_panelAbout, _("About"), true );
+	m_notebookProperties->AddPage( m_panelAbout, _("About"), false );
 	m_panelHelp = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizer22;
 	fgSizer22 = new wxFlexGridSizer( 0, 1, 0, 0 );

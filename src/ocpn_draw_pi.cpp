@@ -219,6 +219,7 @@ wxPenStyle   g_GZLineStyle;
 unsigned int g_uiGZFillTransparency;
 bool         g_bGZRotateWithBoat;
 int          g_iGZMaintainWith;
+int          g_iGZLineType;
 wxString    g_sGZFirstIconName;
 wxString    g_sGZSecondIconName;
 int         g_iGZPersistenceType;
@@ -1376,6 +1377,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "DefaultGZFillTransparency" ), l_longGZFillTransparency );
             pConf->Write( wxS( "DefaultGZRotateWithBoat" ), g_bGZRotateWithBoat );
             pConf->Write( wxS( "DefaultGZMaintainWith" ), g_iGZMaintainWith );
+            pConf->Write( wxS( "DefaultGZLineType" ), g_iGZLineType );
             pConf->Write( wxS( "DefaultGZPersistenceType" ), g_iGZPersistenceType );
             pConf->Write( wxS( "DefaultEBLStartIcon" ), g_sEBLStartIconName );
             pConf->Write( wxS( "DefaultEBLEndIcon" ), g_sEBLEndIconName );
@@ -1631,6 +1633,7 @@ void ocpn_draw_pi::LoadConfig()
         g_uiGZFillTransparency = l_longGZFillTransparency;
         pConf->Read( wxS( "DefaultGZRotateWithBoat" ), &g_bGZRotateWithBoat, false );
         pConf->Read( wxS( "DefaultGZMaintainWith" ), &g_iGZMaintainWith, ID_MAINTAIN_WITH_HEADING );
+        pConf->Read( wxS( "DefaultGZLineType" ), &g_iGZLineType, ID_LINE_TYPE_ARC );
         pConf->Read( wxS( "DefaultGZPersistenceType" ),  &g_iGZPersistenceType, 0 );
         
         pConf->Read( wxS( "DefaultEBLEndIcon" ), &g_sEBLEndIconName, wxS("Circle") );
@@ -3204,7 +3207,14 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
             PositionBearingDistanceMercator_Plugin( g_pfFix.Lat, g_pfFix.Lon, brg, m_pMouseGZ->m_dFirstDistance, &l_dLat, &l_dLon);
             GetCanvasPixLL( &g_VP, &l_l2p1, l_dLat, l_dLon);
             
-            gz->DrawArcSegment( dc, &boatpoint, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, m_VP, false );
+            if(g_iGZLineType == ID_LINE_TYPE_ARC)
+                gz->DrawArcSegment( dc, &boatpoint, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, m_VP, false );
+            else {
+                gz->RenderSegment( dc, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, m_VP, false );
+                gz->RenderSegment( dc, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, m_VP, false );
+                gz->RenderSegment( dc, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, m_VP, false );
+                gz->RenderSegment( dc, l_l2p1.x, l_l2p1.y, l_l1p1.x, l_l1p1.y, m_VP, false );
+            }
             
             delete gz;
         }
