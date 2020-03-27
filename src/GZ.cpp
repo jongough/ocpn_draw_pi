@@ -77,6 +77,7 @@ GZ::GZ() : ODPath()
     m_dSecondLineDirection = 0;
     m_bRotateWithBoat = g_bGZRotateWithBoat;
     m_iMaintainWith = g_iGZMaintainWith;
+    m_iLineType = g_iGZLineType;
     m_bSetTransparent = false;
     m_iPersistenceType = g_iGZPersistenceType;
     CreateColourSchemes();
@@ -154,7 +155,40 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width, m_style ) );
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
 
-    RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
+    if(m_iLineType == ID_LINE_TYPE_ARC)
+        RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
+    else {
+        RenderSegment( dc, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, piVP, false );
+        RenderSegment( dc, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, piVP, false );
+        RenderSegment( dc, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, piVP, false );
+        RenderSegment( dc, l_l2p1.x, l_l2p1.y, l_l1p1.x, l_l1p1.y, piVP, false );
+
+        // fill GZ
+        wxGraphicsContext *wxGC = NULL;
+        wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
+        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        else {
+            wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
+            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+        }
+        assert(wxGC);
+
+        wxGC->SetPen(*wxTRANSPARENT_PEN);
+        wxColour tCol;
+        tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
+        wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
+        wxGraphicsPath path = wxGC->CreatePath();
+        path.MoveToPoint(l_l1p1.x, l_l1p1.y);
+        path.AddLineToPoint(l_l1p2.x, l_l1p2.y);
+        path.AddLineToPoint(l_l2p2.x, l_l2p2.y);
+        path.AddLineToPoint(l_l2p1.x, l_l2p1.y);
+        path.AddLineToPoint(l_l1p1.x, l_l1p1.y);
+        path.CloseSubpath();
+        wxGC->StrokePath(path);
+        wxGC->FillPath( path );
+        delete wxGC;
+
+    }
     
 }
 
@@ -169,6 +203,8 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     wxPoint l_l2p1;
     wxPoint l_l2p2;
     wxPoint l_pCentre;
+    wxPoint *points;
+    int numpoints;
     
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
 
@@ -225,7 +261,32 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
     
-    RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
+    if(m_iLineType == ID_LINE_TYPE_ARC)
+        RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
+    else {
+        RenderSegment( dc, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, piVP, false );
+        RenderSegment( dc, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, piVP, false );
+        RenderSegment( dc, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, piVP, false );
+        RenderSegment( dc, l_l2p1.x, l_l2p1.y, l_l1p1.x, l_l1p1.y, piVP, false );
+
+        numpoints = 5;
+        points = new wxPoint[ numpoints ];
+        points[0].x = l_l1p1.x;
+        points[0].y = l_l1p1.y;
+        points[1].x = l_l1p2.x;
+        points[1].y = l_l1p2.y;
+        points[2].x = l_l2p2.x;
+        points[2].y = l_l2p2.y;
+        points[3].x = l_l2p1.x;
+        points[3].y = l_l2p1.y;
+        points[4].x = l_l1p1.x;
+        points[4].y = l_l1p1.y;
+
+        //Fill
+        if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), points, 0, 0);
+        else dc.DrawPolygonTessellated( numpoints - 1, points, 0, 0);
+    }
+
     
     glDisable( GL_LINE_STIPPLE );
     glDisable( GL_BLEND );
@@ -233,8 +294,9 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     glDeleteTextures(1, &textureID);
     
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
-    wxPoint *points;
-    int numpoints = ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
+    if(m_iLineType == ID_LINE_TYPE_ARC)
+        numpoints = ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
+
     dc.DrawLines( numpoints, points );
     delete [] points;
     
@@ -373,6 +435,8 @@ void GZ::UpdateGZSelectablePath( void )
     double  l_dPrevLat, l_dPrevLon;
     int l_iSteps;
     double l_dStepSize;
+    double l_dDirection;
+
     if(m_dFirstLineDirection < m_dSecondLineDirection) {
         l_iSteps = ceil(24 * (fabs(m_dFirstLineDirection-m_dSecondLineDirection))/360);
         l_dStepSize = fabs(m_dFirstLineDirection-m_dSecondLineDirection) / l_iSteps;
@@ -405,13 +469,15 @@ void GZ::UpdateGZSelectablePath( void )
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_pODPointList->GetFirst()->GetData(), NULL, this );
     l_dPrevLat = l_dLat;
     l_dPrevLon = l_dLon;
-    double l_dDirection = firstDirection + l_dStepSize;
-    for( int i = 0; i < l_iSteps; i++) {
-        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, l_dDirection, m_dSecondDistance, &l_dLat, &l_dLon);
-        g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, NULL, this );
-        l_dPrevLat = l_dLat;
-        l_dPrevLon = l_dLon;
-        l_dDirection += l_dStepSize;
+    if(m_iLineType == ID_LINE_TYPE_ARC) {
+        l_dDirection = firstDirection + l_dStepSize;
+        for( int i = 0; i < l_iSteps; i++) {
+            PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, l_dDirection, m_dSecondDistance, &l_dLat, &l_dLon);
+            g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, NULL, this );
+            l_dPrevLat = l_dLat;
+            l_dPrevLon = l_dLon;
+            l_dDirection += l_dStepSize;
+        }
     }
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_pODPointList->GetLast()->GetData(), this );
@@ -421,13 +487,15 @@ void GZ::UpdateGZSelectablePath( void )
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_pODPointList->GetLast()->GetData(), NULL, this );
     l_dPrevLat = l_dLat;
     l_dPrevLon = l_dLon;
-    l_dDirection = secondDirection - l_dStepSize;
-    for( int i = 0; i < l_iSteps; i++) {
-        PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, l_dDirection, m_dFirstDistance, &l_dLat, &l_dLon);
-        g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, NULL, this );
-        l_dPrevLat = l_dLat;
-        l_dPrevLon = l_dLon;
-        l_dDirection -= l_dStepSize;
+    if(m_iLineType == ID_LINE_TYPE_ARC) {
+        l_dDirection = secondDirection - l_dStepSize;
+        for( int i = 0; i < l_iSteps; i++) {
+            PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, l_dDirection, m_dFirstDistance, &l_dLat, &l_dLon);
+            g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, NULL, this );
+            l_dPrevLat = l_dLat;
+            l_dPrevLon = l_dLon;
+            l_dDirection -= l_dStepSize;
+        }
     }
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_pODPointList->GetFirst()->GetData(), this );
@@ -499,7 +567,7 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
     // get x, y of first point on second line
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
     GetCanvasPixLL( &piVP, *&l_l2p1, l_dLat, l_dLon);
-    
+
     GetCanvasPixLL( &piVP, *&l_pCentre, m_dCentreLat, m_dCentreLon );
 }
 

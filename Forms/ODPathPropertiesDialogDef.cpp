@@ -204,12 +204,17 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 
 	m_fgSizerProperties->Add( m_fgSizerEBL1, 1, wxEXPAND, 5 );
 
-	m_fgSizerGZ = new wxFlexGridSizer( 0, 4, 0, 0 );
+	m_fgSizerGZ = new wxFlexGridSizer( 0, 1, 0, 0 );
 	m_fgSizerGZ->SetFlexibleDirection( wxBOTH );
 	m_fgSizerGZ->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
+	wxFlexGridSizer* fgSizer10;
+	fgSizer10 = new wxFlexGridSizer( 0, 3, 0, 0 );
+	fgSizer10->SetFlexibleDirection( wxBOTH );
+	fgSizer10->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+
 	m_checkBoxRotateGZWithBoat = new wxCheckBox( m_scrolledWindowProperties, wxID_ANY, _("Rotate with\nBoat"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	m_fgSizerGZ->Add( m_checkBoxRotateGZWithBoat, 0, wxALL, 5 );
+	fgSizer10->Add( m_checkBoxRotateGZWithBoat, 0, wxALL, 5 );
 
 	wxString m_radioBoxMaintainGZWithChoices[] = { _("Heading"), _("Course over Ground") };
 	int m_radioBoxMaintainGZWithNChoices = sizeof( m_radioBoxMaintainGZWithChoices ) / sizeof( wxString );
@@ -217,41 +222,52 @@ ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindow
 	m_radioBoxMaintainGZWith->SetSelection( 0 );
 	m_radioBoxMaintainGZWith->Enable( false );
 
-	m_fgSizerGZ->Add( m_radioBoxMaintainGZWith, 0, wxALL, 5 );
+	fgSizer10->Add( m_radioBoxMaintainGZWith, 0, wxALL, 5 );
+
+	wxString m_radioBoxGZLineTypeChoices[] = { _("Arc"), _("Straight") };
+	int m_radioBoxGZLineTypeNChoices = sizeof( m_radioBoxGZLineTypeChoices ) / sizeof( wxString );
+	m_radioBoxGZLineType = new wxRadioBox( m_scrolledWindowProperties, wxID_ANY, _("Line Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxGZLineTypeNChoices, m_radioBoxGZLineTypeChoices, 1, wxRA_SPECIFY_ROWS );
+	m_radioBoxGZLineType->SetSelection( 0 );
+	fgSizer10->Add( m_radioBoxGZLineType, 0, wxALL, 5 );
 
 
-	m_fgSizerGZ->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_fgSizerGZ->Add( fgSizer10, 1, wxEXPAND, 5 );
 
-
-	m_fgSizerGZ->Add( 0, 0, 1, wxEXPAND, 5 );
+	wxFlexGridSizer* fgSizer11;
+	fgSizer11 = new wxFlexGridSizer( 0, 4, 0, 0 );
+	fgSizer11->SetFlexibleDirection( wxBOTH );
+	fgSizer11->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_staticTextGZFirstAngle = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("First Angle (-P/+S)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextGZFirstAngle->Wrap( -1 );
-	m_fgSizerGZ->Add( m_staticTextGZFirstAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer11->Add( m_staticTextGZFirstAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_textCtrlGZFirstAngle = new wxTextCtrl( m_scrolledWindowProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-	m_fgSizerGZ->Add( m_textCtrlGZFirstAngle, 0, wxALL, 5 );
+	fgSizer11->Add( m_textCtrlGZFirstAngle, 0, wxALL, 5 );
 
 	m_staticTextGZFirstLength = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("First distance"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextGZFirstLength->Wrap( -1 );
-	m_fgSizerGZ->Add( m_staticTextGZFirstLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer11->Add( m_staticTextGZFirstLength, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_textCtrlGZFirstLength = new wxTextCtrl( m_scrolledWindowProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-	m_fgSizerGZ->Add( m_textCtrlGZFirstLength, 0, wxALL, 5 );
+	fgSizer11->Add( m_textCtrlGZFirstLength, 0, wxALL, 5 );
 
 	m_staticTextGZSecondAngle = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Second Angle (-P/+S)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextGZSecondAngle->Wrap( -1 );
-	m_fgSizerGZ->Add( m_staticTextGZSecondAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	fgSizer11->Add( m_staticTextGZSecondAngle, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_textCtrlGZSecondAngle = new wxTextCtrl( m_scrolledWindowProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-	m_fgSizerGZ->Add( m_textCtrlGZSecondAngle, 0, wxALL, 5 );
+	fgSizer11->Add( m_textCtrlGZSecondAngle, 0, wxALL, 5 );
 
 	m_staticTextGZSecondLength = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Second distance"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextGZSecondLength->Wrap( -1 );
-	m_fgSizerGZ->Add( m_staticTextGZSecondLength, 0, wxALL, 5 );
+	fgSizer11->Add( m_staticTextGZSecondLength, 0, wxALL, 5 );
 
 	m_textCtrlGZSecondLength = new wxTextCtrl( m_scrolledWindowProperties, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_READONLY );
-	m_fgSizerGZ->Add( m_textCtrlGZSecondLength, 0, wxALL, 5 );
+	fgSizer11->Add( m_textCtrlGZSecondLength, 0, wxALL, 5 );
+
+
+	m_fgSizerGZ->Add( fgSizer11, 1, wxEXPAND, 5 );
 
 
 	m_fgSizerProperties->Add( m_fgSizerGZ, 0, wxEXPAND, 5 );

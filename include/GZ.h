@@ -27,6 +27,11 @@
 #include "ODPath.h"
 #include "ocpn_plugin.h"
 
+enum {
+    ID_LINE_TYPE_ARC = 0,
+    ID_LINE_TYPE_STRAIGHT
+};
+
 //forward definitions
 class ODPoint;
 class ODDC;
@@ -62,6 +67,7 @@ class GZ : public ODPath
         double          m_dSecondDistance;
         bool            m_bRotateWithBoat;
         int             m_iMaintainWith;
+        int             m_iLineType;
         bool            m_bCentreOnBoat;
         double          m_dBoatHeading;
         double          m_dBoatCOG;
