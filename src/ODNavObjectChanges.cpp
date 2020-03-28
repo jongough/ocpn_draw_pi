@@ -629,10 +629,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         s.Printf(_T("%0.2f"), pGZ->m_dSecondLineDirection);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_FirstDistance");
-        s.Printf(_T("%0.2f"), pGZ->m_dFirstDistance);
+        s.Printf(_T("%0.3f"), pGZ->m_dFirstDistance);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_SecondDistance");
-        s.Printf(_T("%0.2f"), pGZ->m_dSecondDistance);
+        s.Printf(_T("%0.3f"), pGZ->m_dSecondDistance);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
     }
     if(pPIL) {
