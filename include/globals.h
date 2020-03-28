@@ -186,6 +186,7 @@ extern wxPenStyle   g_GZLineStyle;
 extern unsigned int g_uiGZFillTransparency;
 extern bool         g_bGZRotateWithBoat;
 extern int          g_iGZMaintainWith;
+extern int          g_iGZLineType;
 extern wxString    g_sGZFirstIconName;
 extern wxString    g_sGZSecondIconName;
 extern int         g_iGZPersistenceType;

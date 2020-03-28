@@ -89,6 +89,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerGZ;
 		wxCheckBox* m_checkBoxRotateGZWithBoat;
 		wxRadioBox* m_radioBoxMaintainGZWith;
+		wxRadioBox* m_radioBoxGZLineType;
 		wxStaticText* m_staticTextGZFirstAngle;
 		wxTextCtrl* m_textCtrlGZFirstAngle;
 		wxStaticText* m_staticTextGZFirstLength;

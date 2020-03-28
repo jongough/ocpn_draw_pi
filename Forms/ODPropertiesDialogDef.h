@@ -229,6 +229,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxSlider* m_sliderGZFillTransparency;
 		wxCheckBox* m_checkBoxGZRotateWithBoat;
 		wxRadioBox* m_radioBoxGZMaintainWith;
+		wxRadioBox* m_radioBoxGZLineType;
 		wxRadioBox* m_radioBoxGZPersistence;
 		wxPanel* m_panelPIL;
 		wxFlexGridSizer* m_fgSizerPILSettings;

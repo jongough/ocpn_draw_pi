@@ -21,16 +21,16 @@ set(OpenGL_GL_PREFERENCE "LEGACY")
 PROJECT(ocpn_draw_pi)
 SET(PARENT "opencpn")
 
-SET(PACKAGE_NAME ocpn_draw_pi)
+SET(PACKAGE_NAME "ocpn_draw_pi")
 SET(PACKAGE_FILE_NAME "opencpn-plugin-draw")
-SET(VERBOSE_NAME ocpn_draw)
-SET(TITLE_NAME OCPNDRAW)
+SET(VERBOSE_NAME "ocpn_draw")
+SET(TITLE_NAME "OCPNDRAW")
 SET(CPACK_PACKAGE_CONTACT "Jon Gough")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "31")
-SET(VERSION_DATE "09/09/2019")
+SET(VERSION_PATCH "34")
+SET(VERSION_DATE "29/03/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OD_COMMENT "  * Initial release for O5 using CI")
 SET(OCPN_API_VERSION_MAJOR "1")
@@ -43,8 +43,11 @@ MESSAGE(STATUS "OD API Version: ${OD_API_VERSION_MAJOR}.${OD_API_VERSION_MINOR}"
 MESSAGE(STATUS "OCPN API Verson: ${OCPN_API_VERSION_MAJOR}.${OCPN_API_VERSION_MINOR}")
 MESSAGE(STATUS "OCPN Min Verson: ${OCPN_MIN_VERSION}")
 
+# Use local version of GLU library
+SET(USE_LOCAL_GLU TRUE)
+
 SET(BUNDLE_DATA FALSE)
-SET( CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
+SET(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
 SET_PROPERTY( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "RelWithDebInfo" "MinSizeRel" )
 
 MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
@@ -230,7 +233,7 @@ SET(HDRS
     include/TextPointCSVImport.h
 )
 
-SET(OCPNSRC 
+SET(OCPNSRC
     ocpnsrc/bbox.cpp
     ocpnsrc/cutil.cpp
     ocpnsrc/geodesic.cpp
@@ -279,6 +282,33 @@ SET(EXTINCLUDE
     extinclude/pugiconfig.hpp
     extinclude/pugixml.hpp
 )
+
+IF(APPLE)
+    OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+ELSE(APPLE)
+    OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
+ENDIF(APPLE)
+
+IF(OD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
+    ADD_DEFINITIONS(-DOD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Adding JSON Schema validation")
+
+    SET(EXTSRC
+        ${EXTSRC}
+        extsrc/json-schema-validator/json-schema-draft7.json.cpp
+        extsrc/json-schema-validator/json-uri.cpp
+        extsrc/json-schema-validator/json-validator.cpp
+    )
+    SET(EXTINCLUDE
+        ${EXTINCLUDE}
+        extinclude/nlohmann/json.hpp
+        extinclude/json-schema-validator/json-schema.hpp
+    )
+    INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
+ELSE(OD_JSON_SCHEMA_VALIDATOR)
+    MESSAGE(STATUS "Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
+ENDIF(OD_JSON_SCHEMA_VALIDATOR)
 
 OPTION(OD_USE_SVG "Use SVG graphics" ON)
 
@@ -335,7 +365,7 @@ IF(UNIX AND NOT APPLE)
     # Change OS/ABI to be UNIX - System V to make it run with OCPN
     SET(lib_name lib${PACKAGE_NAME}.so)
     MESSAGE(STATUS "lib-name: ${lib_name}")
-    FIND_FILE(elfedit elfedit) 
+    FIND_FILE(elfedit elfedit)
     IF(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
       MESSAGE(STATUS "Will ensure OS/ABI is set to 0 to match OCPN")
       ADD_CUSTOM_COMMAND(

@@ -741,6 +741,8 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_checkBoxRotateGZWithBoat->Enable( false );
     m_radioBoxMaintainGZWith->Hide();
     m_radioBoxMaintainGZWith->Enable( false );
+    m_radioBoxGZLineType->Hide();
+    m_radioBoxGZLineType->Enable( false );
     m_staticTextGZFirstAngle->Hide();
     m_staticTextGZFirstAngle->Enable( false );
     m_textCtrlGZFirstAngle->Hide();

@@ -20,16 +20,14 @@ IF(NOT SKIP_VERSION_CONFIG)
     INCLUDE_DIRECTORIES(${BUILD_INCLUDE_PATH}/include)
 ENDIF(NOT SKIP_VERSION_CONFIG)
 
-SET(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}" )
+SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 INCLUDE_DIRECTORIES(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/src)
 
-# SET(PROFILING 1)
-IF(CMAKE_BUILD_TYPE STREQUAL Debug)
-  ADD_DEFINITIONS( "-DDEBUG_BUILD" )
-  MESSAGE (STATUS "DEBUG available")
-ENDIF(CMAKE_BUILD_TYPE STREQUAL Debug)
-#  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
+IF(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
+    ADD_DEFINITIONS( "-DDEBUG_BUILD" )
+    MESSAGE (STATUS "DEBUG available")
+ENDIF(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
 
 # require proper c++
 #ADD_DEFINITIONS( "-Wall -ansi -pedantic -Wno-variadic-macros" )
@@ -48,12 +46,12 @@ IF(NOT WIN32 AND NOT APPLE )
   ELSEIF(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
     ADD_DEFINITIONS(" -O2 -march=native -g")
     MESSAGE(STATUS "Optimisation: -O2 -march=native -g")
-  ELSE(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")  
+  ELSE(CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
     ADD_DEFINITIONS(" -O2")
     MESSAGE(STATUS "Optimisation: -O2")
   ENDIF(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    
-  
+
+
   ADD_DEFINITIONS( " -DPREFIX=\\\"${CMAKE_INSTALL_PREFIX}\\\"")
   # profiling with gprof
 #    ADD_DEFINITIONS( -pg )
@@ -86,10 +84,9 @@ ELSE(MSVC)
     SET( CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
   ELSE(NOT APPLE)
     SET( CMAKE_SHARED_LINKER_FLAGS "-Wl -undefined dynamic_lookup")
-  ENDIF(NOT APPLE) 
+  ENDIF(NOT APPLE)
 ENDIF(MSVC)
 
-SET(wxWidgets_USE_LIBS base core net xml html adv)
 SET(BUILD_SHARED_LIBS TRUE)
 
 # Allow multiprocess compile
@@ -111,6 +108,8 @@ IF(WIN32)
     SET(CMAKE_EXE_LINKER_FLAGS /DEBUG)
   ENDIF(MSVC)
 ENDIF(WIN32)
+
+SET(wxWidgets_USE_LIBS base core net xml html adv)
 
 OPTION (USE_GL "Enable OpenGL support" ON)
 
@@ -159,14 +158,14 @@ IF ((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
 
     IF(OPENGL_FOUND)
 
-        SET(wxWidgets_USE_LIBS gl ${wxWidgets_USE_LIBS})
+        SET(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
         INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
 
         MESSAGE (STATUS "Found OpenGL..." )
         MESSAGE (STATUS "    Lib: " ${OPENGL_LIBRARIES})
         MESSAGE (STATUS "    Include: " ${OPENGL_INCLUDE_DIR})
         ADD_DEFINITIONS(-DocpnUSE_GL)
-    
+
     # We need to remove GLU from the OPENGL_LIBRARIES list
         FOREACH (_currentLibFile ${OPENGL_LIBRARIES})
             SET(UCNAME ${_currentLibFile})
@@ -184,37 +183,12 @@ IF ((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
     ENDIF(OPENGL_FOUND)
 ENDIF()
 
-MESSAGE (STATUS "    Adding local GLU" )
-add_subdirectory(ocpnsrc/glu)
-SET( OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
-MESSAGE (STATUS "    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
-
-IF(APPLE)
-    OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
-ELSE(APPLE)
-    OPTION(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
-ENDIF(APPLE)
-
-IF(OD_JSON_SCHEMA_VALIDATOR)
-    MESSAGE(STATUS "Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
-    ADD_DEFINITIONS(-DOD_JSON_SCHEMA_VALIDATOR)
-    MESSAGE(STATUS "Adding JSON Schema validation")
-
-    SET(EXTSRC
-        ${EXTSRC}
-        extsrc/json-schema-validator/json-schema-draft7.json.cpp
-        extsrc/json-schema-validator/json-uri.cpp
-        extsrc/json-schema-validator/json-validator.cpp
-    )
-    SET(EXTINCLUDE
-        ${EXTINCLUDE}
-        extinclude/nlohmann/json.hpp
-        extinclude/json-schema-validator/json-schema.hpp
-    )
-    INCLUDE_DIRECTORIES(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
-ELSE(OD_JSON_SCHEMA_VALIDATOR)
-    MESSAGE(STATUS "Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
-ENDIF(OD_JSON_SCHEMA_VALIDATOR)
+IF(USE_LOCAL_GLU)
+    MESSAGE (STATUS "    Adding local GLU" )
+    add_subdirectory(ocpnsrc/glu)
+    SET( OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
+    MESSAGE (STATUS "    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
+ENDIF(USE_LOCAL_GLU)
 
 IF(NOT QT_ANDROID)
   # Find wxWidgets here, and the setting get inherited by all plugins.
@@ -228,8 +202,9 @@ IF(NOT QT_ANDROID)
   if(WXWIDGETS_FORCE_VERSION)
     set (wxWidgets_CONFIG_OPTIONS --version=${WXWIDGETS_FORCE_VERSION})
   endif()
-  
-  FIND_PACKAGE(wxWidgets REQUIRED COMPONENTS ${wxWidgets_FIND_COMPONENTS})
+
+  MESSAGE(STATUS "wxWidgets components: ${wxWidgets_USE_LIBS}")
+  FIND_PACKAGE(wxWidgets REQUIRED COMPONENTS ${wxWidgets_USE_LIBS})
 
   IF(MSVC)
     # Exclude wxexpat.lib, since we use our own version.
@@ -238,13 +213,13 @@ IF(NOT QT_ANDROID)
   ENDIF(MSVC)
 
   IF(WIN32 OR APPLE OR QT_ANDROID)
-    #FIND_PACKAGE(wxWidgets REQUIRED)
     IF(MSYS)
       # this is to convert msys to windows paths, and handle the missing /usr
       STRING( REGEX REPLACE "/usr/local" ";C:/MinGW/msys/1.0/local" wxWidgets_INCLUDE_DIRS ${wxWidgets_INCLUDE_DIRS} )
     ENDIF(MSYS)
-    INCLUDE(${wxWidgets_USE_FILE})
   ENDIF(WIN32 OR APPLE OR QT_ANDROID)
+
+  INCLUDE(${wxWidgets_USE_FILE})
 
   MESSAGE (STATUS "Found wxWidgets..." )
   MESSAGE (STATUS " wxWidgets Include: ${wxWidgets_INCLUDE_DIRS}")
@@ -284,8 +259,6 @@ IF(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
     set(wxWidgets_CONFIG_OPTIONS ${wxWidgets_CONFIG_OPTIONS} --toolkit=gtk3)
     MESSAGE(STATUS "Building against GTK3...")
   ENDIF(GTK2_FOUND)
-  FIND_PACKAGE(wxWidgets REQUIRED)
-  INCLUDE(${wxWidgets_USE_FILE})
   SET(EXTRA_LIBS ${EXTRA_LIBS} ${GTK_LIBRARIES})
 ENDIF(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
 

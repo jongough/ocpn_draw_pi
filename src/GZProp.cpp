@@ -77,8 +77,8 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
 #if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dODGZFirstAngle(2, &m_dODGZFirstAngleValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODGZSecondAngle(2, &m_dODGZSecondAngleValidator, wxNUM_VAL_DEFAULT);
-    wxFloatingPointValidator<double> dODGZFirstLength(2, &m_dODGZFirstLengthValidator, wxNUM_VAL_DEFAULT);
-    wxFloatingPointValidator<double> dODGZSecondLength(2, &m_dODGZSecondLengthValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODGZFirstLength(3, &m_dODGZFirstLengthValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODGZSecondLength(3, &m_dODGZSecondLengthValidator, wxNUM_VAL_DEFAULT);
     dODGZFirstAngle.SetRange(-180, 180);
     dODGZSecondAngle.SetRange(-180, 180);
     dODGZFirstLength.SetMin(0);
@@ -127,7 +127,10 @@ bool GZProp::UpdateProperties( ODPath *pInGZ )
     m_textCtrlGZSecondAngle->SetEditable(true);
     m_textCtrlGZFirstLength->SetEditable(true);
     m_textCtrlGZSecondLength->SetEditable(true);
-    
+
+    m_radioBoxGZLineType->Enable(true);
+    m_radioBoxGZLineType->SetSelection( m_pGZ->m_iLineType );
+
 #if wxCHECK_VERSION(3,0,0)
     if(!m_bLockGZAngle) {
         if(lpInGZ->m_dFirstLineDirection > 180)
@@ -138,35 +141,40 @@ bool GZProp::UpdateProperties( ODPath *pInGZ )
             m_dODGZSecondAngleValidator = lpInGZ->m_dSecondLineDirection - 360;
         else
             m_dODGZSecondAngleValidator = lpInGZ->m_dSecondLineDirection;
+        m_textCtrlGZFirstAngle->GetValidator()->TransferToWindow();
+        m_textCtrlGZSecondAngle->GetValidator()->TransferToWindow();
     }
-        
+
     if(!m_bLockGZLength) {
         m_dODGZFirstLengthValidator = lpInGZ->m_dFirstDistance;
         m_dODGZSecondLengthValidator = lpInGZ->m_dSecondDistance;
+        m_textCtrlGZFirstLength->GetValidator()->TransferToWindow();
+        m_textCtrlGZSecondLength->GetValidator()->TransferToWindow();
     }
 #else
     if(!m_bLockGZAngle) {
         if(lpInGZ->m_dFirstLineDirection > 180)
             s.Printf( _T("%.2f"), lpInGZ->m_dFirstLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), lpInGZ->m_dFirstLineDirection );
+            s.Printf( _T("%.3f"), lpInGZ->m_dFirstLineDirection );
         
         m_textCtrlGZFirstAngle->SetValue(s);
         
         if(lpInGZ->m_dSecondLineDirection > 180)
             s.Printf( _T("%.2f"), lpInGZ->m_dSecondLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), lpInGZ->m_dSecondLineDirection );
+            s.Printf( _T("%.3f"), lpInGZ->m_dSecondLineDirection );
         m_textCtrlGZSecondAngle->SetValue(s);
     }
 
     if(!m_bLockGZLength) {
-        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+        s.Printf( _T("%.3f"), toUsrDistance_Plugin(lpInGZ->m_dFirstDistance) );
         m_textCtrlGZFirstLength->SetValue(s);
-        s.Printf( _T("%5.2f"), toUsrDistance_Plugin(m_pGZ->m_dSecondDistance) );
+        s.Printf( _T("%.3f"), toUsrDistance_Plugin(lpInGZ->m_dSecondDistance) );
         m_textCtrlGZSecondLength->SetValue(s);
     }
 #endif
+
     m_bLockGZAngle = false;
     m_bLockGZLength = false;
     
@@ -186,29 +194,50 @@ bool GZProp::UpdateProperties( void )
     
     ODPathPropertiesDialogImpl::UpdateProperties();
     
-    if(!m_bLockGZAngle){
+#if wxCHECK_VERSION(3,0,0)
+    if(!m_bLockGZAngle) {
+        if(m_pGZ->m_dFirstLineDirection > 180)
+            m_dODGZFirstAngleValidator = m_pGZ->m_dFirstLineDirection - 360;
+        else
+            m_dODGZFirstAngleValidator = m_pGZ->m_dFirstLineDirection;
+        if(m_pGZ->m_dSecondLineDirection > 180)
+            m_dODGZSecondAngleValidator = m_pGZ->m_dSecondLineDirection - 360;
+        else
+            m_dODGZSecondAngleValidator = m_pGZ->m_dSecondLineDirection;
+        m_textCtrlGZFirstAngle->GetValidator()->TransferToWindow();
+        m_textCtrlGZSecondAngle->GetValidator()->TransferToWindow();
+    }
+
+    if(!m_bLockGZLength) {
+        m_dODGZFirstLengthValidator = m_pGZ->m_dFirstDistance;
+        m_dODGZSecondLengthValidator = m_pGZ->m_dSecondDistance;
+        m_textCtrlGZFirstLength->GetValidator()->TransferToWindow();
+        m_textCtrlGZSecondLength->GetValidator()->TransferToWindow();
+    }
+#else
+    if(!m_bLockGZAngle) {
         if(m_pGZ->m_dFirstLineDirection > 180)
             s.Printf( _T("%.2f"), m_pGZ->m_dFirstLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), m_pGZ->m_dFirstLineDirection );
-        
+            s.Printf( _T("%.3f"), m_pGZ->m_dFirstLineDirection );
+
         m_textCtrlGZFirstAngle->SetValue(s);
 
         if(m_pGZ->m_dSecondLineDirection > 180)
             s.Printf( _T("%.2f"), m_pGZ->m_dSecondLineDirection - 360 );
         else
-            s.Printf( _T("%.2f"), m_pGZ->m_dSecondLineDirection );
-        
+            s.Printf( _T("%.3f"), m_pGZ->m_dSecondLineDirection );
         m_textCtrlGZSecondAngle->SetValue(s);
     }
-    
+
     if(!m_bLockGZLength) {
-        s.Printf( _T("%.2f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
+        s.Printf( _T("%.3f"), toUsrDistance_Plugin(m_pGZ->m_dFirstDistance) );
         m_textCtrlGZFirstLength->SetValue(s);
-        s.Printf( _T("%.2f"), toUsrDistance_Plugin(m_pGZ->m_dSecondDistance) );
+        s.Printf( _T("%.3f"), toUsrDistance_Plugin(m_pGZ->m_dSecondDistance) );
         m_textCtrlGZSecondLength->SetValue(s);
     }
-    
+#endif
+
     return  true;
 }
 
@@ -237,7 +266,8 @@ bool GZProp::SaveChanges( void )
     
     m_pGZ->m_bRotateWithBoat = m_checkBoxRotateGZWithBoat->GetValue();
     m_pGZ->m_iMaintainWith = m_radioBoxMaintainGZWith->GetSelection();
-    
+    m_pGZ->m_iLineType = m_radioBoxGZLineType->GetSelection();
+
     double l_dGZAngle;
     m_textCtrlGZFirstAngle->GetValue().ToDouble( &l_dGZAngle );
         if(l_dGZAngle != m_pGZ->m_dFirstLineDirection) {

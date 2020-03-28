@@ -613,6 +613,8 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         child.append_child(pugi::node_pcdata).set_value( pGZ->m_bRotateWithBoat == true ? "1" : "0" );
         child = node.append_child("opencpn:maintain_with");
         s.Printf(_T("%1i"), pGZ->m_iMaintainWith);
+        child = node.append_child("opencpn:GZ_LineType");
+        s.Printf(_T("%1i"), pGZ->m_iLineType);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_CentreLat");
         s.Printf(_T("%0.9f"), pGZ->m_dCentreLat);
@@ -627,10 +629,10 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
         s.Printf(_T("%0.2f"), pGZ->m_dSecondLineDirection);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_FirstDistance");
-        s.Printf(_T("%0.2f"), pGZ->m_dFirstDistance);
+        s.Printf(_T("%0.3f"), pGZ->m_dFirstDistance);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
         child = node.append_child("opencpn:GZ_SecondDistance");
-        s.Printf(_T("%0.2f"), pGZ->m_dSecondDistance);
+        s.Printf(_T("%0.3f"), pGZ->m_dSecondDistance);
         child.append_child(pugi::node_pcdata).set_value( s.mbc_str() );
     }
     if(pPIL) {
@@ -1557,6 +1559,8 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iDistanceUnits );
         } else if( ChildName == _T ( "opencpn:DRTimeUnits" ) ) {
             wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentDR->m_iTimeUnits );
+        } else if( ChildName == _T ( "opencpn:GZ_LineType" ) ) {
+            wxString::FromUTF8( tschild.first_child().value() ).ToLong( (long *)&pTentGZ->m_iLineType );
         } else if( ChildName == _T ( "opencpn:GZ_CentreLat" ) ) {
             wxString::FromUTF8( tschild.first_child().value() ).ToDouble( &pTentGZ->m_dCentreLat );
         } else if( ChildName == _T ( "opencpn:GZ_CentreLon" ) ) {
