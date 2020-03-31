@@ -4,35 +4,33 @@
 ## License:     wxWidgets License
 ##---------------------------------------------------------------------------
 
-# define minimum cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1.1)
-IF (COMMAND cmake_policy)
-  if (POLICY CMP0043)
-    CMAKE_POLICY(SET CMP0043 NEW)
-  endif (POLICY CMP0043)
-  if (POLICY CMP0077)
-    CMAKE_POLICY(SET CMP0077 NEW)
-  endif (POLICY CMP0077)
-ENDIF (COMMAND cmake_policy)
-
-# Prefer libGL.so to libOpenGL.so, see CMP0072
-set(OpenGL_GL_PREFERENCE "LEGACY")
+cmake_minimum_required(VERSION 3.1.1)
+if(COMMAND cmake_policy)
+    if(POLICY CMP0043)
+        cmake_policy(SET CMP0043 NEW)
+    endif(POLICY CMP0043)
+    cmake_policy(SET CMP0048 NEW)
+    message(STATUS "CMP0048 set to New")
+    if(POLICY CMP0077)
+        cmake_policy(SET CMP0077 NEW)
+    endif(POLICY CMP0077)
+endif(COMMAND cmake_policy)
 
 PROJECT(ocpn_draw_pi)
 SET(PARENT "opencpn")
 
-SET(PACKAGE_NAME "ocpn_draw_pi")
-SET(PACKAGE_FILE_NAME "opencpn-plugin-draw")
-SET(VERBOSE_NAME "ocpn_draw")
-SET(TITLE_NAME "OCPNDRAW")
-SET(CPACK_PACKAGE_CONTACT "Jon Gough")
+SET(VERBOSE_NAME "OCPN_Draw")
+set(COMMON_NAME "ocpn_draw")
+set(TITLE_NAME "OCPNDRAW")
+set(PACKAGE_CONTACT "Jon Gough")
+set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "34")
-SET(VERSION_DATE "29/03/2020")
+SET(VERSION_PATCH "35")
+set(VERSION_TWEAK "0")
+SET(VERSION_DATE "31/03/2020")
 SET(OCPN_MIN_VERSION "ov50")
-SET(OD_COMMENT "  * Initial release for O5 using CI")
 SET(OCPN_API_VERSION_MAJOR "1")
 SET(OCPN_API_VERSION_MINOR "16")
 SET(OD_API_VERSION_MAJOR "1")
@@ -43,8 +41,65 @@ MESSAGE(STATUS "OD API Version: ${OD_API_VERSION_MAJOR}.${OD_API_VERSION_MINOR}"
 MESSAGE(STATUS "OCPN API Verson: ${OCPN_API_VERSION_MAJOR}.${OCPN_API_VERSION_MINOR}")
 MESSAGE(STATUS "OCPN Min Verson: ${OCPN_MIN_VERSION}")
 
+set(PARENT "opencpn")
+set(GIT_USER "jongough")
+set(GIT_REPOSITORY_NAME "ocpn_draw_pi")
+message(STATUS "CIRCLECI: ${CIRCLECLI}, Env CIRCLECI: $ENV{CIRCLECI}")
+message(STATUS "TRAVIS: ${TRAVIS}, Env TRAVIS: $ENV{TRAVIS}")
+# This if allows for setting up your own local webserver with git on it for testing purposes
+if($ENV{CIRCLECI})
+    set(GIT_REPOSITORY_HOST "github.com")
+    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
+    set(GIT_REPOSITORY_BRANCH "$ENV{CIRCLE_BRANCH}")
+elseif($ENV{TRAVIS})
+    set(GIT_REPOSITORY_HOST "github.com")
+    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
+    set(GIT_REPOSITORY_BRANCH "$ENV{TRAVIS_BRANCH}")
+else()
+    set(GIT_REPOSITORY_HOST "github.com")
+    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
+    set(GIT_REPOSITORY_BRANCH "master")
+    #  set(GIT_REPOSITORY_HOST "git.eclipse.com.au")
+    #  set(GIT_REPOSITORY_DIR "")
+    #  set(GIT_REPOSITORY_BRANCH "cmake_flatpak_test")
+endif()
+message(STATUS "Git Branch: ${GIT_REPOSITORY_BRANCH}")
+
+set(CLOUDSMITH_USER "jon-gough")
+set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
+set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/ocpn_draw.html")
+set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
+set(XML_DESCRIPTION "OCPN_DRAW (OD) is a plugin that extends the capability of OCPN to include non-standard object: Boundaries, Boundary Points, Text Points, Dead Reckoning paths, Electronic Bearing Lines (EBL) and Guard Zones. The plugin also has an API to allow other plugins to directly interact with it.")
+set(APPVEYOR_TEST_DEPLOY_TO_CLOUDSMITH "true")
+option(PLUGIN_USE_SVG "Use SVG graphics" ON)
+
+set(CMAKE_CXX_STANDARD 11)
+
+# Prefer libGL.so to libOpenGL.so, see CMP0072
+set(OpenGL_GL_PREFERENCE "LEGACY")
+
+##
+## ----- Modify section above to include all the details for your plugin ----- ##
+##
+
+##
+## ----- Modify section below if there are special requirements for the plugin ----- ##
+##
+
+set(PACKAGE_NAME ${PACKAGE}_pi)
+set(PACKAGE_FILE_NAME "${PACKAGE}_pi")
+string(TOUPPER "${PACKAGE}" TITLE_NAME)
+
+project(${PACKAGE_NAME} VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK})
+message(STATUS "PROJECT_VERSION: ${PROJECT_VERSION}")
+
+set(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
+
+message(STATUS "${VERBOSE_NAME} Version: ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK}")
+message(STATUS "OPCN_FLATPAK: ${OCPN_FLATPAK}")
+
 # Use local version of GLU library
-SET(USE_LOCAL_GLU TRUE)
+SET(USE_LOCAL_GLU FALSE)
 
 SET(BUNDLE_DATA FALSE)
 SET(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
@@ -52,64 +107,80 @@ SET_PROPERTY( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "
 
 MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
+# set(PKG_NVR ${PACKAGE_NAME}-${PROJECT_VERSION}-${OCPN_MIN_VERSION}-${OCPN_API_VERSION_MAJOR}.${OCPN_API_VERSION_MINOR})
+set(PKG_NVR ${PACKAGE_NAME}-${PROJECT_VERSION})
+set(PKG_URL "https://dl.cloudsmith.io/public/--pkg_repo--/raw/names/--name--/versions/--version--/--filename--")
+
+include("cmake/PluginSetup.cmake")
+
+set(PACKAGING_NAME "${PKG_NVR}_${PKG_TARGET}-${PKG_TARGET_VERSION}-$ENV{OCPN_TARGET}")
+message(STATUS "PACKAGING_NAME: ${PACKAGING_NAME}")
+
+set(PLUGIN_NAME ${PACKAGE}-plugin-${PKG_TARGET}-${PKG_TARGET_VERSION})
+
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
-if (CMAKE_VERSION VERSION_LESS "3.1")
-  include(CheckCXXCompilerFlag)
-  CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-  CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-  if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    message(STATUS "Setting C++11 standard via CXX flags")
-  elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-    message(STATUS "Setting C++0x standard via CXX FLAGS")
-  else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-  endif()
-else ()
-  set (CMAKE_CXX_STANDARD 11)
-  message(STATUS "Setting C++11 standard via cmake standard mecahnism")
-endif ()
+option(Plugin_CXX11 "Use c++11" OFF)
 
-OPTION(OCPN_USE_LIBCPP "Use C++11 and libc++ instead of libstdc++ on macOS" ON)
-
-if ( CMAKE_VERSION VERSION_GREATER 3.4 )
-  set(ENABLE_CLANG_TIDY OFF CACHE BOOL "Add clang-tidy automatically to builds")
-  if (ENABLE_CLANG_TIDY)
-    find_program (CLANG_TIDY_EXE NAMES "clang-tidy" PATHS /usr/local/opt/llvm/bin )
-    if (CLANG_TIDY_EXE)
-      message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-      #For more, see http://clang.llvm.org/extra/clang-tidy/
-      #set(CLANG_TIDY_CHECKS "-*,modernize-*")
-      set(CLANG_TIDY_CHECKS "-*,performance-*")
-      set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE};-checks=${CLANG_TIDY_CHECKS};-header-filter='${CMAKE_SOURCE_DIR}/*'"
-        CACHE STRING "" FORCE)
+if(Plugin_CXX11)
+    message(STATUS "Attempting to use c++11")
+    include(CheckCXXCompilerFlag)
+    check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
+    check_cxx_compiler_flag("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+    if(COMPILER_SUPPORTS_CXX11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+        set(Plugin_USE_CXX11 ON)
+    elseif(COMPILER_SUPPORTS_CXX0X)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+        set(Plugin_USE_CXX11 ON)
     else()
-      message(AUTHOR_WARNING "clang-tidy not found!")
-      set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE) # delete it
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
+        set(Plugin_USE_CXX11 OFF)
     endif()
-  endif()
+else()
+    set(Plugin_USE_CXX11 OFF)
 endif()
 
-# Add support for address etc sanitizers, part 1/2 (other half after ADD_EXECUTABLE)
-if ( CMAKE_VERSION VERSION_GREATER 3.4 )
-  set(ENABLE_SANITIZER "none" CACHE STRING "Add clang sanitizer to the build")
-  set_property(CACHE ENABLE_SANITIZER PROPERTY STRINGS none address memory thread undefined)
-  if (NOT "${ENABLE_SANITIZER}" MATCHES "none")
-    add_compile_options(-fsanitize=${ENABLE_SANITIZER})
-  endif()
+if(Plugin_USE_CXX11)
+    message(STATUS "Allowing use of c++11")
 endif()
 
-if ( CMAKE_VERSION VERSION_GREATER 3.9 )
-  set(ENABLE_CPPCHECK OFF CACHE BOOL "Add cppcheck automatically to builds")
-  if (ENABLE_CPPCHECK)
-      find_program (CPPCHECK_EXECUTABLE NAMES "cppcheck" )
-      set(CMAKE_CXX_CPPCHECK ${CPPCHECK_EXECUTABLE})
-  endif()
+###
+message(STATUS "CMAKE version: ${CMAKE_VERSION}")
+if(CMAKE_VERSION VERSION_GREATER 3.4)
+    set(ENABLE_CLANG_TIDY
+    OFF
+    CACHE BOOL "Add clang-tidy automatically to builds")
+    if(ENABLE_CLANG_TIDY)
+        find_program(
+            CLANG_TIDY_EXE
+            NAMES "clang-tidy"
+            PATHS /usr/local/opt/llvm/bin)
+            if(CLANG_TIDY_EXE)
+                message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+                # For more, see http://clang.llvm.org/extra/clang-tidy/ set(CLANG_TIDY_CHECKS "-*,modernize-*")
+                set(CLANG_TIDY_CHECKS "-*,performance-*")
+                set(CMAKE_CXX_CLANG_TIDY
+                "${CLANG_TIDY_EXE};-checks=${CLANG_TIDY_CHECKS};-header-filter='${CMAKE_SOURCE_DIR}/*'"
+                CACHE STRING "" FORCE)
+            else()
+                message(AUTHOR_WARNING "clang-tidy not found!")
+                set(CMAKE_CXX_CLANG_TIDY
+                ""
+                CACHE STRING "" FORCE) # delete it
+            endif()
+    endif()
 endif()
 
-#SET_DIRECTORY_PROPERTIES(dummy ADDITIONAL_MAKE_CLEAN_FILES ${PROJECT_SOURCE_DIR}/include/version.h)
+if(CMAKE_VERSION VERSION_GREATER 3.9)
+    set(ENABLE_CPPCHECK
+    OFF
+    CACHE BOOL "Add cppcheck automatically to builds")
+    if(ENABLE_CPPCHECK)
+        find_program(CPPCHECK_EXECUTABLE NAMES "cppcheck")
+        set(CMAKE_CXX_CPPCHECK ${CPPCHECK_EXECUTABLE})
+    endif()
+endif()
 
 INCLUDE("cmake/PluginConfigure.cmake")
 
@@ -382,10 +453,11 @@ IF(UNIX AND NOT APPLE)
   ENDIF(OD_JSON_SCHEMA_VALIDATOR)
 ENDIF(UNIX AND NOT APPLE)
 
+get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
+foreach(dir ${dirs})
+    message(STATUS "dir='${dir}'")
+endforeach()
+
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")
 INCLUDE("cmake/PluginPackage.cmake")
-get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
-foreach(dir ${dirs})
-  message(STATUS "dir='${dir}'")
-endforeach()
