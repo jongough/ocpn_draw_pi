@@ -1,85 +1,27 @@
 language: cpp
+
 matrix:
   include:
-    - env:
-        - OCPN_TARGET=xenial
-      dist: xenial
-      compiler: gcc
-      script:
-        - sh ./ci/travis-build-debian.sh
-
-    - env:
-        - OCPN_TARGET=trusty
-      dist: trusty
-      compiler: gcc
-      script:
-        - sh ./ci/travis-build-debian.sh
-
-    - env:
-        - OCPN_TARGET=osx
-      os: osx
-      compiler: clang
-      script:
-        - bash ./ci/travis-build-osx.sh
-        
-script:
-  - if [[ "${COVERITY_SCAN_BRANCH}" == 1 ]]; 
-    then 
-      echo "Don't build on coverty_scan branch."; 
-      exit 0; 
-    fi
-  - ls -l;
-  
-notifications:
-  email: false
-git:
-  depth: 10
-before_install:
-  - if [ "$CXX" = "g++" ]; 
-    then 
-      export CXX="g++-6" CC="gcc-6";
-    fi
-  - if [ "${OAUTH_ACCESS_TOKEN}" != 0 ]; 
-    then 
-      (echo OAUTH_ACCESS_TOKEN=${OAUTH_ACCESS_TOKEN} > ~/.dropbox_uploader); 
-    fi
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-6
-    - g++-6
+  - env:
+    - OCPN_TARGET=stretch-armhf
+    - OCPN_BRANCH=master
+    - DOCKER_IMAGE=raspbian/stretch
+    services:
+    - docker
+    script:
+    - bash ./ci/travis-build-raspbian-armhf.sh
+  - env:
+    - OCPN_TARGET=buster-armhf
+    - OCPN_BRANCH=master
+    - DOCKER_IMAGE=opencpn/raspbian-buster:plugin_build_tooling
+    services:
+    - docker
+    script:
+    - bash ./ci/travis-build-raspbian-armhf.sh
 deploy:
-  - provider: launchpad
-    slug: "~jonsgough/opencpn-plugin-draw/+git/ocpn_draw_pi"
-    oauth_token:
-      secure: "hDjzEVGLZoYaT4JEMb9Z8I8gTzE2UfW73fxfVmVc0oYSyUF8kjyngDwAPPcO1gjqI4zAraEryc112A9uPHPCGB2+7gOruAUf/W2FvQ9e6oL7lAhgZMN73nsBtzR0yyPg0YKrVMHkXZO5Lo5qvzEq2EQnv9cTaeICMoaUcdOC0flJe3DpjG6Bhl7n0sMrT08mA7xzg+DBVReAMepqm6/SPDBjF/G/alPsmzudxsrhPGeQPHGSZ0ZMVQJ5nFcPC8xKzQOITkNmc7tKuoF4ojIj1zOY3XJP9314qFDfVZ9GXs8vXL8/6/+oQ8uyigcMM3pGJGhr/JTtU4xaf0LxNpKjnUgp/oht2vUOt4AnDY09vJZr3ZHdd8aoDa/1BToONHmJnv+KcqiGSipWi6wmQx+vIMhd4whebAnVHcan+43RT053ifi2s5ngL/pOP1sYlO4jP26Y9lBGjC5ZPJKa5oKFfQj8ll/2/RpziZ+dpoexOQOUPe+DJGuEz9WAQZaUER63SJvtyLX1RCF3wh62wATPIMxZi9lmD19EOUvXKY/xXq8YrzdBjUPkFuc3955GoKq0evNkxROL+hPfB1bEP3m7cBa78/VYNS3ID/GTI33N/5i8fZbd/xWDlHaqUCQ/h9D18n6+RNdi0rtTlPR4N2+XHfkTmZOQ4+nQcmNtMiJjznc="
-    oauth_token_secret:
-      secure: "zfcZagTCDKN2PrwAW4jHDMFJ40EhDwscLYguivOj+MlrI9A/Cs1v6IDjHa3Rm/v3elZuZMkZ10rZT8LUIzKaJS8MsMMU1jFnscAsqW8422S2chJlVN908T/rd0QinHotJdk1E7NbSLgHQF5J0eQ31I50kq4xWNhZ0Qe9G9FVEKi+f8HG9M3idJn0OiTJeaMqlgi6hj6X6ajgv9kaKe5qDGAWn8hB7nhav8epNCgw6zqgygKg3cTm6WF/KMLqYc6BrHruU+e3y0An9fBMD8TI0mRgHWexwkvtBOkMjBZAbO6n3hJL+cXEiUI7d+jdY9HIrWX4OjWTBXKE3jvF3SaWkqZGLj8/rRWq1TPkC8GwnDBLfiukmW2x+a982L0pxzDN5vs1XlzGMys5GzIc0TGaHSKd/BAMRXAQavcmTp9Zm51XsXismdD+CHCNm7BV7f8RaT0gWRwO+JLgT1wCsRIWoYsIVo67K2NYxgh+K3K36/8n/RjZ0y0id/+zsPZhORKsmRThFqxO9kTO0Zyi0yn6aqGks2xOGAq98BYdKiRxRlQquKk+daXhvsDCGVlCnC+8ogjvVDXSkt9bXNDW6qEcpdp4Y7v2in+KOGR1DBGXx75rB13h39ZLaeYKmnBXMncsRVYHk3MkF8mYSnu2DX/t50um/TFYwLrOb485I5tKbe4="
-    skip_cleanup: true
-    on: # Set Deploy conditions
-      # Deploy only when tag is not specified
-      # tags: false
-      # or this branch
-      #branches:
-      #   only:
-      #     - master
-      tags: true
-      all_branches: true
-      condition: "$TRAVIS_OS_NAME = linux"
-
-  - provider: releases
-    api_key:
-      secure: "DBA400C8Pvswp0Dsb5aok/iZIw33M1GRzxXrER8fGwh7xw3TRl2/SIkoJNftC2fR4elce7Kom45duBRhrRsfeSjBKBvK/0IscUI+QIMH+OaxGIjxE+ahhpmXlUOdnKc9nkYS5RpPyOPHGU9nzd8A7aA86/KS2qoQmJ1Kcoewb9NJJAVjDvQYGaSzDXvlbqgvn05PFQ5xH6nFoda1Uz3759LovU6vpF0m7OLBCBSfJfOVyktyiqOpbjIAPLUhXDwBTQpGR3/2DFJ232uNNDfkMfCS6hyGvGnkmW+HQdolHnETcySr2R4p7B7CJdX7JJO+pM0v9e53xY2d/FdXa0JniBo0xDYnx5ND2uOMhK663C1Lwp/d307GuPW+hpjRdLnkLuQlTq7pYkwJlc7QSJY0HUSbRUOMtFpCXFMoyOo4iir8Sg0/BPljfQmcrmXiugmHDBrAk8HbhDgRs18Ptsw+YOXiCTbRTl8uJUOZHXh6d7XvgxrxovxG9+fi5VlchCI1TVHEO1cqJY7IsPhNmCC/Z+UecoF2DLDBB4IqPfPytTCVBBzSFXdGKcCdW103jcSx5awHTSkGvOm6aCQOyA/6cmiBSbOpnQ4rgpy6YcQg/gOpMvpPYqanDJCBAIZwc5Z1C1ybGanB5bhqyZmUyS317nvGBVes4PwXR4gHzAH+gKM="
-    file_glob: true
-    file: "$TRAVIS_BUILD_DIR/build/*.{deb,rpm,dmg,txz,pkg,pkg.tar.xz}"
-    skip_cleanup: true
-    on:
-      tags: true
-      all_branches: true
-
-
-#environment:
-#  OAUTH_ACCESS_TOKEN:
-#    secure: OIqJeLohefVWvPklh+LxxIZdzVCXU4T++cJqkbaQUiT1HDWvleojgGNARPMG3STP
+  provider: script
+  skip_cleanup: true
+  script: bash ./ci/cloudsmith-upload.sh
+  on:
+    tags: false
+    all_branches: true
