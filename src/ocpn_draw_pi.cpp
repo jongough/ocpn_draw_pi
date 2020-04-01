@@ -937,7 +937,7 @@ int ocpn_draw_pi::GetAPIVersionMinor()
 }
 wxString ocpn_draw_pi::GetCommonName()
 {
-    return wxS("OCPN Draw");
+    return _T(PLUGIN_COMMON_NAME);
 }
 wxString ocpn_draw_pi::GetShortDescription()
 {
