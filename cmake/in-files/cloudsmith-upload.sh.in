@@ -163,7 +163,7 @@ cloudsmith push raw --republish --no-wait-for-sync \
 
 if [ "${PKG_EXT}" != "gz" ]; then
     cloudsmith push raw --republish --no-wait-for-sync \
-        --name opencpn-package-@PACKAGE@-@PKG_TARGET@-@PKG_TARGET_VERSION@.${PKG_EXT} \
+        --name opencpn-package-@PACKAGE@-@PKG_TARGET@-@PKG_TARGET_VERSION@-${OCPN_TARGET}.${PKG_EXT} \
         --version ${VERSION} \
         --summary "@PACKAGE@ .${PKG_EXT} installation package" \
         $REPO $pkg
