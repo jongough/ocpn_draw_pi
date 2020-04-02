@@ -14,7 +14,7 @@
     ${XML_DESCRIPTION}
   </description>
 
-  <target>${PKG_TARGET}</target>
+  <target>${OCPN_TARGET}</target>
   <target-version>${PKG_TARGET_VERSION}</target-version>
   <tarball-url>
     ${PKG_URL}

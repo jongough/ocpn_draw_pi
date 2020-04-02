@@ -13,6 +13,11 @@ if(NOT SKIP_VERSION_CONFIG)
 endif(NOT SKIP_VERSION_CONFIG)
 
 # configure xml file for circleci
+if(NOT OCPN_TARGET)
+    set(OCPN_TARGET ${PKG_TARGET})
+    message(STATUS "Setting OCPN_TARGET")
+endif(NOT OCPN_TARGET)
+message(STATUS "OCPN_TARGET: ${OCPN_TARGET}")
 message(STATUS "*.in files generated in ${CMAKE_CURRENT_BINARY_DIR}")
 configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/plugin.xml.in ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGING_NAME}.xml)
 configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/pkg_version.sh.in ${CMAKE_CURRENT_BINARY_DIR}/pkg_version.sh)
