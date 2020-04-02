@@ -27,7 +27,7 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "42")
+SET(VERSION_PATCH "43")
 set(VERSION_TWEAK "0")
 SET(VERSION_DATE "02/04/2020")
 SET(OCPN_MIN_VERSION "ov50")
@@ -113,7 +113,11 @@ set(PKG_URL "https://dl.cloudsmith.io/public/--pkg_repo--/raw/names/--name--/ver
 
 include("cmake/PluginSetup.cmake")
 
-set(PACKAGING_NAME "${PKG_NVR}_${PKG_TARGET}-${PKG_TARGET_VERSION}-$ENV{OCPN_TARGET}")
+if(DEFINED ENV{OCPN_TARGET})
+    set(PACKAGING_NAME "${PKG_NVR}_${PKG_TARGET}-${PKG_TARGET_VERSION}-$ENV{OCPN_TARGET}")
+else(DEFINED ENV{OCPN_TARGET})
+    set(PACKAGING_NAME "${PKG_NVR}_${PKG_TARGET}-${PKG_TARGET_VERSION}")
+endif(DEFINED ENV{OCPN_TARGET})
 message(STATUS "PACKAGING_NAME: ${PACKAGING_NAME}")
 
 set(PLUGIN_NAME ${PACKAGE}-plugin-${PKG_TARGET}-${PKG_TARGET_VERSION})
@@ -182,7 +186,15 @@ if(CMAKE_VERSION VERSION_GREATER 3.9)
     endif()
 endif()
 
+##
+## ----- Modify section above if there are special requirements for the plugin ----- ##
+##
+
 INCLUDE("cmake/PluginConfigure.cmake")
+
+##
+## ----- Change below to match project requirements ----- ##
+##
 
 ADD_DEFINITIONS(-DUSE_S57)
 
@@ -457,6 +469,14 @@ get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTO
 foreach(dir ${dirs})
     message(STATUS "dir='${dir}'")
 endforeach()
+
+##
+## ----- Change above to match project requirements ----- ##
+##
+
+##
+## ----- do not change - needed to build app ----- ##
+##
 
 INCLUDE("cmake/PluginInstall.cmake")
 INCLUDE("cmake/PluginLocalization.cmake")
