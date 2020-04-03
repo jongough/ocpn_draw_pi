@@ -68,7 +68,7 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
     g_current_canvas = g_parent_window;
     g_current_canvas_index = 0;
     ODTimer1.SetOwner( this );
-    ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
+    //ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
 }
 
 
