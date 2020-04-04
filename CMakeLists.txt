@@ -27,7 +27,7 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "47")
+SET(VERSION_PATCH "48")
 set(VERSION_TWEAK "1")
 SET(VERSION_DATE "03/04/2020")
 SET(OCPN_MIN_VERSION "ov50")
@@ -86,8 +86,13 @@ set(OpenGL_GL_PREFERENCE "LEGACY")
 ## ----- Modify section below if there are special requirements for the plugin ----- ##
 ##
 
-set(PACKAGE_NAME ${PACKAGE}_pi)
-set(PACKAGE_FILE_NAME "${PACKAGE}_pi")
+if(NOT ${PACKAGE} MATCHES "(.*)_pi")
+    set(PACKAGE_NAME ${PACKAGE}_pi)
+    set(PACKAGE_FILE_NAME "${PACKAGE}_pi")
+else(NOT ${PACKAGE} MATCHES "(.*)_pi")
+    set(PACKAGE_NAME ${PACKAGE})
+    set(PACKAGE_FILE_NAME "${PACKAGE}")
+endif(NOT ${PACKAGE} MATCHES "(.*)_pi")
 string(TOUPPER "${PACKAGE}" TITLE_NAME)
 
 project(${PACKAGE_NAME} VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK})
