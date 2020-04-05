@@ -53,9 +53,7 @@
 
 // Event Handler implementation 
 
-BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler ) 
-    //EVT_TIMER( OD_TIMER_1, ODEventHandler::OnODTimer1 )
-    EVT_TIMER( -1, ODEventHandler::OnODTimer1 )
+BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler )
 END_EVENT_TABLE()
 
 ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
@@ -67,8 +65,6 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
     m_parent_window = GetOCPNCanvasWindow();
     g_current_canvas = g_parent_window;
     g_current_canvas_index = 0;
-    ODTimer1.SetOwner( this );
-    //ODTimer1.Start( TIMER_OD_1, wxTIMER_CONTINUOUS );
 }
 
 
@@ -150,18 +146,17 @@ void ODEventHandler::SetLatLon( double lat, double lon )
 ODEventHandler::~ODEventHandler()
 {
     //dtor
-    ODTimer1.Stop();
 }
 
-void ODEventHandler::OnODTimer1( wxTimerEvent& event )
+void ODEventHandler::OnODTimer( wxTimerEvent& event )
 {
-    g_ocpn_draw_pi->nBlinkerTick++; 
+    g_ocpn_draw_pi->nBlinkerTick++;
     if(( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) ||
         ( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() ) ||
         ( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() ) ||
         ( m_pSelectedPath && m_pSelectedPath->m_sTypeString == _T("Boundary") ) ) {
         ODERequestRefresh( g_current_timer_canvas_index, TRUE );
-    }
+        }
 }
 
 void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )

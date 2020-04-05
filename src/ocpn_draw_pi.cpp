@@ -672,14 +672,17 @@ int ocpn_draw_pi::Init(void)
     
     // Create an OCPN Draw event handler
     g_ODEventHandler = new ODEventHandler( g_ocpn_draw_pi );
-    
+    g_ODEventHandler->SetWindow( m_parent_window );
+
     g_pODRolloverWin = new ODRolloverWin( m_parent_window );
     g_pRolloverPathSeg = NULL;
     g_pRolloverPoint = NULL;
-    
-    m_RolloverPopupTimer.SetOwner( m_parent_window, ODROPOPUP_TIMER );
+
+    m_BlinkTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    m_BlinkTimer.Start( BLINK_TIME, wxTIMER_CONTINUOUS );
+
     m_rollover_popup_timer_msec = 20;
-    m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
+    m_RolloverPopupTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
     
     // Get item into font list in options/user interface
     AddPersistentFontKey( wxT("OD_PathLegInfoRollover") );
@@ -772,7 +775,9 @@ bool ocpn_draw_pi::DeInit(void)
 {
     RemoveCanvasContextMenuItem(m_iODToolContextId);
     
-    m_parent_window->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
+    m_BlinkTimer.Stop();
+    m_BlinkTimer.Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    m_RolloverPopupTimer.Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
     if( g_ODEventHandler ) delete g_ODEventHandler;
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();

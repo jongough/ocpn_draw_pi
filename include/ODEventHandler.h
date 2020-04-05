@@ -48,6 +48,7 @@ enum
     ODROPOPUP_TIMER,
     ROLLOVER_TIMER,
     OD_TIMER_1,
+    BLINK_TIMER,
     LAST_TIMER
 };
 
@@ -57,7 +58,8 @@ class ODEventHandler : public wxEvtHandler
         ODEventHandler(ocpn_draw_pi *parent);
         ~ODEventHandler();
         
-        void OnODTimer1(wxTimerEvent& event);
+//        void OnODTimer1(wxTimerEvent& event);
+        void OnODTimer(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
         void PopupMenuCloseHandler( wxCommandEvent & event );
         void OnRolloverPopupTimerEvent( wxTimerEvent &event );
