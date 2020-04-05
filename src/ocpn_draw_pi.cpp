@@ -375,6 +375,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 :opencpn_plugin_116(ppimgr)
 {
+    wxLogMessage("In Constructor");
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
@@ -435,7 +436,7 @@ ocpn_draw_pi::~ocpn_draw_pi()
 {
     delete m_pODicons;
     m_pODicons = NULL;
-    
+    wxLogMessage("Finished destructor");
 #ifdef __WXMSW__
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks(); 
@@ -745,6 +746,7 @@ int ocpn_draw_pi::Init(void)
         g_pODConfig->LoadLayers(*g_pLayerDir);
     }
     
+    wxLogMessage("Finished Init");
     return (
     WANTS_OVERLAY_CALLBACK  |
     WANTS_CURSOR_LATLON       |
@@ -767,7 +769,7 @@ int ocpn_draw_pi::Init(void)
 void ocpn_draw_pi::LateInit(void)
 {
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
-    
+    wxLogMessage("In LateInit");
     return;
 }
 
@@ -877,13 +879,14 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODConfig = NULL;
 
     shutdown(false);
+    wxLogMessage("Finished deinit");
     return true;
 }
 
 void ocpn_draw_pi::shutdown(bool menu)
 {
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("FALSE"));
-    
+    wxLogMessage("Finished shutdown");
 }
 
 void ocpn_draw_pi::GetOriginalColors()

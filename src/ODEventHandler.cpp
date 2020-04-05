@@ -65,6 +65,7 @@ ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
     m_parent_window = GetOCPNCanvasWindow();
     g_current_canvas = g_parent_window;
     g_current_canvas_index = 0;
+    wxLogMessage("Finished constructor");
 }
 
 
@@ -146,6 +147,7 @@ void ODEventHandler::SetLatLon( double lat, double lon )
 ODEventHandler::~ODEventHandler()
 {
     //dtor
+    wxLogMessage("Finished destructor");
 }
 
 void ODEventHandler::OnODTimer( wxTimerEvent& event )
