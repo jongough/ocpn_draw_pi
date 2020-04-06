@@ -40,8 +40,6 @@ class DR;
 class GZ;
 class PIL;
 
-#define TIMER_OD_1 999
-
 enum
 {
     HEAD_DOG_TIMER  = 1000,
@@ -58,7 +56,6 @@ class ODEventHandler : public wxEvtHandler
         ODEventHandler(ocpn_draw_pi *parent);
         ~ODEventHandler();
         
-//        void OnODTimer1(wxTimerEvent& event);
         void OnODTimer(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
         void PopupMenuCloseHandler( wxCommandEvent & event );
@@ -97,7 +94,6 @@ class ODEventHandler : public wxEvtHandler
         std::list<Boundary*> m_pBoundaryList;
         int             m_iFoundPIL;
 
-        DECLARE_EVENT_TABLE();
 };
 
 #endif // OCPNDRAWEVENTHANDLER_H

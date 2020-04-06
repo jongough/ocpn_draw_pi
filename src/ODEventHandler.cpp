@@ -51,11 +51,6 @@
 #include <wx/window.h>
 #include <wx/clipbrd.h>
 
-// Event Handler implementation 
-
-BEGIN_EVENT_TABLE ( ODEventHandler, wxEvtHandler )
-END_EVENT_TABLE()
-
 ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 {
     //ctor
