@@ -17,7 +17,8 @@ matrix:
     services:
     - docker
     script:
-    - travis_wait bash ./ci/travis-build-raspbian-armhf.sh
+    - chmod a+x ./ci/travis-build-raspbian-armhf.sh
+    - travis_wait ./ci/travis-build-raspbian-armhf.sh
 deploy:
   provider: script
   skip_cleanup: true
