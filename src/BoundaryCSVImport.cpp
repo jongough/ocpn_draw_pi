@@ -43,10 +43,14 @@ BoundaryCSVImport::BoundaryCSVImport()
     m_bInclusion = false;
 }
 
-BoundaryCSVImport::BoundaryCSVImport(wxStringTokenizer BoundaryCSV)
+BoundaryCSVImport::BoundaryCSVImport(wxStringTokenizer *BoundaryCSV)
 {
     //ctor
-    size_t l_count = BoundaryCSV.CountTokens();
+    size_t l_count = BoundaryCSV->CountTokens();
+    wxString l_type;
+    wxString vis;
+    wxString l_rgb;
+
     m_sName.Clear();
     m_bExclusion = g_bExclusionBoundary;
     m_bInclusion = g_bInclusionBoundary;
@@ -54,17 +58,18 @@ BoundaryCSVImport::BoundaryCSVImport(wxStringTokenizer BoundaryCSV)
     m_LineColour = g_colourActiveBoundaryLineColour;
     m_FillColour = g_colourActiveBoundaryFillColour;
     
-    if(l_count >= 2) {
-        m_sName = BoundaryCSV.GetNextToken();
-        m_sName = m_sName.SubString(1, m_sName.Length()-2);
-        wxString l_type = BoundaryCSV.GetNextToken();
-        if(l_type == _T("'Exclusion'")) {
+    if(l_count >= 3) {
+        BoundaryCSV->GetNextToken(); // get rid of comma
+        m_sName = BoundaryCSV->GetNextToken();
+        BoundaryCSV->GetNextToken(); // get rid of comma
+        l_type = BoundaryCSV->GetNextToken();
+        if(l_type == _T("Exclusion")) {
             m_bExclusion = true;
             m_bInclusion = false;
-        } else if(l_type == _T("'Inclusion'")) {
+        } else if(l_type == _T("Inclusion")) {
             m_bExclusion = false;
             m_bInclusion = true;
-        } else if(l_type == _T("'Neither'")) {
+        } else if(l_type == _T("Neither")) {
             m_bExclusion = false;
             m_bInclusion = false;
         } else {
@@ -76,24 +81,25 @@ BoundaryCSVImport::BoundaryCSVImport(wxStringTokenizer BoundaryCSV)
         m_bInclusion = g_bInclusionBoundary;
     }
     
-    if(l_count >= 3) {
-        wxString vis = BoundaryCSV.GetNextToken();
-        if(vis == _T("'F'") || vis == _T("'f'"))
+    if(l_count >= 7) {
+        BoundaryCSV->GetNextToken(); // get rid of comma
+        vis = BoundaryCSV->GetNextToken();
+        if(vis == _T("F") || vis == _T("f"))
             m_bVisible = false;
         else
             m_bVisible = true;
     }
     
-    if(l_count >= 4) {
-        wxString l_rgb = BoundaryCSV.GetNextToken();
-        l_rgb = l_rgb.SubString(1, l_rgb.Length() - 2);
+    if(l_count >= 9) {
+        BoundaryCSV->GetNextToken(); // get rid of comma
+        l_rgb = BoundaryCSV->GetNextToken();
         m_LineColour.Set(l_rgb);
     } else
         m_LineColour = g_colourActiveBoundaryLineColour;
     
-    if(l_count >= 5) {
-        wxString l_rgb = BoundaryCSV.GetNextToken();
-        l_rgb = l_rgb.SubString(1, l_rgb.Length() - 2);
+    if(l_count >= 11) {
+        BoundaryCSV->GetNextToken(); // get rid of comma
+        l_rgb = BoundaryCSV->GetNextToken();
         m_FillColour.Set(l_rgb);
     } else
         m_FillColour = g_colourActiveBoundaryFillColour;

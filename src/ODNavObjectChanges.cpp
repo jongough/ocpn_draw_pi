@@ -2049,21 +2049,24 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
 {
     wxTextFile l_TextFile(FileName);
     l_TextFile.Open();
-    wxString l_InputLine;
+    wxString l_InputLine = wxEmptyString;
     BoundaryCSVImport *l_BCI;
     BoundaryPointCSVImport *l_BPCI;
     TextPointCSVImport *l_TPCI;
     Boundary *l_boundary = NULL;
     bool    l_bBoundaryStart = false;
     int     l_NumObjs = 0;
-    
+    wxStringTokenizer *l_pTokenString = new wxStringTokenizer();
+
     for(l_InputLine = l_TextFile.GetFirstLine(); l_TextFile.Eof() == false; l_InputLine = l_TextFile.GetNextLine()) {
         // process line
-        wxStringTokenizer l_TokenString(l_InputLine, _T(","));
-        //if(l_TokenString.CountTokens() < 3) return;
-        wxString l_type = l_TokenString.GetNextToken();
+        int l_len = l_InputLine.Length();
+        l_pTokenString->SetString(l_InputLine, _T("'\""));
+        //if(l_pTokenString.CountTokens() < 3) return;
+        wxString l_type = l_pTokenString->GetNextToken();
+        l_type = l_pTokenString->GetNextToken();
 
-        if(l_type == _T("'B'")) {
+        if(l_type == _T("B")) {
             if(l_bBoundaryStart) {
                 wxString l_message = _("Error in import file.");
                 if(l_boundary) {
@@ -2077,7 +2080,7 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
                 return l_NumObjs;
             }
             l_bBoundaryStart = true;
-            l_BCI = new BoundaryCSVImport(l_TokenString);
+            l_BCI = new BoundaryCSVImport(l_pTokenString);
             l_boundary = new Boundary();
 
             l_boundary->m_PathNameString = l_BCI->m_sName;
@@ -2085,8 +2088,9 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_boundary->m_bInclusionBoundary = l_BCI->m_bInclusion;
             l_boundary->m_bPathIsActive = true;
             l_boundary->SetVisible(l_BCI->m_bVisible);
-            l_boundary->m_wxcActiveLineColour = l_BCI->m_LineColour;
-            l_boundary->m_wxcActiveFillColour = l_BCI->m_FillColour;
+            l_boundary->m_wxcActiveLineColour.SetRGB(l_BCI->m_LineColour.GetRGB());
+            l_boundary->m_wxcActiveFillColour.SetRGB(l_BCI->m_FillColour.GetRGB());
+            wxString l_rgb = l_BCI->m_LineColour.GetAsString();
             if( layer_id ){
                 l_boundary->SetVisible( b_layerviz );
                 l_boundary->m_bIsInLayer = true;
@@ -2095,8 +2099,8 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             }            
             l_NumObjs++;
             delete l_BCI;
-        } else if(l_type == _T("'BP'")){
-            l_BPCI = new BoundaryPointCSVImport(l_TokenString);
+        } else if(l_type == _T("BP")){
+            l_BPCI = new BoundaryPointCSVImport(l_pTokenString);
             BoundaryPoint *l_pBP = new BoundaryPoint(l_BPCI->m_dLat, l_BPCI->m_dLon, g_sODPointIconName, l_BPCI->m_sName, wxEmptyString, false);
             if(l_bBoundaryStart) {
                 l_boundary->AddPoint(l_pBP, false, true, true);
@@ -2127,8 +2131,10 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_NumObjs++;
             
             delete l_BPCI;
-        } else if(l_type == _T("'TP'")) {
-            l_TPCI = new TextPointCSVImport(l_TokenString);
+        } else if(l_type == _T("TP")) {
+            l_pTokenString->SetString(l_pTokenString->GetString(), ",");
+            l_pTokenString->GetNextToken();
+            l_TPCI = new TextPointCSVImport(l_pTokenString);
             TextPoint *l_pTP = new TextPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, g_sODPointIconName, l_TPCI->m_sName, wxEmptyString, true);
             l_pTP->m_iDisplayTextWhen = l_TPCI->m_iDisplayTextWhen;
             l_pTP->m_iTextPosition = l_TPCI->m_iTextPosition;
@@ -2142,7 +2148,7 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_NumObjs++;
 
             delete l_TPCI;
-        } else if(l_type == _T("'/B'")) {
+        } else if(l_type == _T("/B")) {
             // end boundaryg
             l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());
             l_boundary->m_bIsBeingCreated = false;
