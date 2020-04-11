@@ -27,7 +27,7 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "53")
+SET(VERSION_PATCH "54")
 set(VERSION_TWEAK "0")
 SET(VERSION_DATE "11/04/2020")
 SET(OCPN_MIN_VERSION "ov50")
@@ -75,9 +75,6 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
-# Prefer libGL.so to libOpenGL.so, see CMP0072
-set(OpenGL_GL_PREFERENCE "LEGACY")
-
 ##
 ## ----- Modify section above to include all the details for your plugin ----- ##
 ##
@@ -105,6 +102,10 @@ message(STATUS "OPCN_FLATPAK: ${OCPN_FLATPAK}")
 
 # Use local version of GLU library
 SET(USE_LOCAL_GLU TRUE)
+# Prefer libGL.so to libOpenGL.so, see CMP0072
+set(OpenGL_GL_PREFERENCE "LEGACY")
+option(USE_GL "Enable OpenGL support" ON)
+message(STATUS "USE_GL: ${USE_GL}")
 
 SET(BUNDLE_DATA FALSE)
 SET(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" )
