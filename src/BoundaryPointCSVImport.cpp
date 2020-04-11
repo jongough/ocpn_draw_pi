@@ -52,7 +52,7 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer *BoundaryPointC
 {
     //ctor
     BoundaryPointCSV->SetString(BoundaryPointCSV->GetString(), ",");
-    BoundaryPointCSV->GetNextToken();
+    wxString l_sToken = BoundaryPointCSV->GetNextToken();
     size_t l_count = BoundaryPointCSV->CountTokens();
     m_sName.Clear();
     m_dLat = 0;
@@ -117,7 +117,10 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer *BoundaryPointC
         m_iUnits = g_iODPointRangeRingsStepUnits;
         
     if(l_count >= 10) {
-        m_RingColour.Set(BoundaryPointCSV->GetNextToken());
+        BoundaryPointCSV->SetString(BoundaryPointCSV->GetString(), "'");
+        wxString l_rgb = BoundaryPointCSV->GetString();
+        l_rgb = l_rgb.SubString(1, l_rgb.Length()-2);
+        m_RingColour.Set(l_rgb);
     } else
         m_RingColour = g_colourODPointRangeRingsColour;
 }
