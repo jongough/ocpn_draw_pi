@@ -2135,14 +2135,14 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             
             delete l_BPCI;
         } else if(l_type == _T("TP")) {
-            l_pTokenString->SetString(l_pTokenString->GetString(), ",");
-            l_pTokenString->GetNextToken();
             l_TPCI = new TextPointCSVImport(l_pTokenString);
             TextPoint *l_pTP = new TextPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, g_sODPointIconName, l_TPCI->m_sName, wxEmptyString, true);
             l_pTP->m_iDisplayTextWhen = l_TPCI->m_iDisplayTextWhen;
             l_pTP->m_iTextPosition = l_TPCI->m_iTextPosition;
             l_pTP->SetPointText(wxString::Format(l_TPCI->m_TextPointText));
             g_pODSelect->AddSelectableODPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, l_pTP);
+            l_pTP -> CreateColourSchemes();
+            l_pTP->SetColourScheme(g_global_color_scheme);
             if( layer_id ) {
                 l_pTP->m_bIsInLayer = true;
                 l_pTP->m_LayerID = layer_id;

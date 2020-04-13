@@ -63,7 +63,7 @@ TextPointCSVImport::TextPointCSVImport(wxStringTokenizer *TextPointCSV)
         TextPointCSV->GetNextToken().ToDouble(&m_dLat);
         TextPointCSV->GetNextToken().ToDouble(&m_dLon);
     } 
-    if(l_count >=4) {
+    if(l_count >= 4) {
         wxString l_TextLocation = TextPointCSV->GetNextToken();
         if(l_TextLocation == _T("'t'") || l_TextLocation == _T("'T'")) m_iTextPosition = ID_TEXT_TOP;
         else if(l_TextLocation == _T("'ct'") || l_TextLocation == _T("'CT'")) m_iTextPosition = ID_TEXT_CENTRE_TOP;
@@ -74,7 +74,7 @@ TextPointCSVImport::TextPointCSVImport(wxStringTokenizer *TextPointCSV)
         else if(l_TextLocation == _T("'l'") || l_TextLocation == _T("'L'")) m_iTextPosition = ID_TEXT_LEFT;
         else m_iTextPosition = ID_TEXT_CENTRE_BOTTOM;
     }
-    if(l_count >=5) {
+    if(l_count >= 5) {
         wxString l_Show = TextPointCSV->GetNextToken();
         if(l_Show == _T("'a'") || l_Show == _T("'A'")) m_iDisplayTextWhen = ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ALWAYS;
         else if(l_Show == _T("'r'") || l_Show == _T("'R'")) m_iDisplayTextWhen = ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER;
