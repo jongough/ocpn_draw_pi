@@ -178,7 +178,7 @@ bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxStrin
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _("Confirm"),
+            int answer = OCPNMessageBox_PlugIn( parent, _("Overwrite existing file?"), _("Confirm"),
                     wxICON_QUESTION | wxYES_NO | wxCANCEL );
             if( answer != wxID_YES ) return false;
         }
