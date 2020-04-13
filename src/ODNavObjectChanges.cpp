@@ -2121,6 +2121,9 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_pBP->SetODPointRangeRingsStep(l_BPCI->m_dStep);
             l_pBP->SetODPointRangeRingsStepUnits(l_BPCI->m_iUnits);
             l_pBP->SetODPointRangeRingsColour(l_BPCI->m_RingColour);
+            l_pBP -> CreateColourSchemes();
+            l_pBP->SetColourScheme(g_global_color_scheme);
+
             if( layer_id ) {
                 l_pBP->m_bIsInLayer = true;
                 l_pBP->m_LayerID = layer_id;

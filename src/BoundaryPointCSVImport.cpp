@@ -32,6 +32,7 @@
 
 #include "BoundaryPointCSVImport.h"
 #include "ocpn_draw_pi.h"
+#include "globals.h"
 
 #include <wx/tokenzr.h>
 

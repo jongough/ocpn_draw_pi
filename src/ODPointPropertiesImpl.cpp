@@ -693,6 +693,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_textName->SetValue( m_pODPoint->GetName() );
 
         m_dODPointArrivalRadius = m_pODPoint->GetODPointArrivalRadius();
+        m_textCtrlODPointArrivalRadius->GetValidator()->TransferToWindow();
         
         m_textDescription->SetValue( m_pODPoint->m_ODPointDescription );
         m_textDisplayText->Clear();
@@ -737,6 +738,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_choicePointRangeRingsNumber->SetSelection( m_pODPoint->GetODPointRangeRingsNumber() );
         m_choiceDistanceUnitsString->SetSelection( m_pODPoint->GetODPointRangeRingsStepUnits() );
         m_dODPointRangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
+        m_textCtrlODPointRangeRingsSteps->GetValidator()->TransferToWindow();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
 
@@ -876,7 +878,6 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_notebookProperties->SetSelection(0);
     }
     
-    TransferDataToWindow();
     SetDialogSize();
     
     return true;
