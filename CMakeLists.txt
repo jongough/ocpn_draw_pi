@@ -27,9 +27,9 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "58")
+SET(VERSION_PATCH "59")
 set(VERSION_TWEAK "0")
-SET(VERSION_DATE "13/04/2020")
+SET(VERSION_DATE "15/04/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OCPN_API_VERSION_MAJOR "1")
 SET(OCPN_API_VERSION_MINOR "16")
@@ -66,9 +66,9 @@ endif()
 message(STATUS "Git Branch: ${GIT_REPOSITORY_BRANCH}")
 
 # Builds repository sufficies
-set(PROD "prod")  #Standard Repos
-set(BETA "beta")       #Standard Repos
-set(ALPHA "alpha") #Standard Repos
+set(PROD "prod")    #Standard Repos
+set(BETA "beta")    #Standard Repos
+set(ALPHA "alpha")  #Standard Repos
 
 set(CLOUDSMITH_USER "jon-gough")
 set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
@@ -76,9 +76,6 @@ set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/ocpn_draw.html")
 set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
 set(XML_DESCRIPTION "OCPN_DRAW (OD) is a plugin that extends the capability of OCPN to include non-standard object: Boundaries, Boundary Points, Text Points, Dead Reckoning paths, Electronic Bearing Lines (EBL) and Guard Zones. The plugin also has an API to allow other plugins to directly interact with it.")
 set(APPVEYOR_TEST_DEPLOY_TO_CLOUDSMITH "true")
-option(PLUGIN_USE_SVG "Use SVG graphics" ON)
-
-set(CMAKE_CXX_STANDARD 11)
 
 ##
 ## ----- Modify section above to include all the details for your plugin ----- ##
@@ -87,6 +84,10 @@ set(CMAKE_CXX_STANDARD 11)
 ##
 ## ----- Modify section below if there are special requirements for the plugin ----- ##
 ##
+
+option(PLUGIN_USE_SVG "Use SVG graphics" ON)
+
+set(CMAKE_CXX_STANDARD 11)
 
 if(NOT ${PACKAGE} MATCHES "(.*)_pi")
     set(PACKAGE_NAME ${PACKAGE}_pi)
