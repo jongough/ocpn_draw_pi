@@ -17,8 +17,10 @@ if(OCPN_FLATPAK_CONFIG)
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/flatpak
     COMMAND cat ${CMAKE_CURRENT_BINARY_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.${PACKAGE}.yaml
     COMMAND /usr/bin/flatpak-builder --force-clean ${CMAKE_CURRENT_BINARY_DIR}/app ${CMAKE_CURRENT_BINARY_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.${PACKAGE}.yaml)
-    add_custom_target("flatpak-pkg")
-  add_custom_command(TARGET flatpak-pkg COMMAND ${TAR} -czf ${PKG_NVR}_${PKG_TARGET_NVR}.tar.gz --transform 's|.*/files/|${PACKAGE}-flatpak-${PACKAGE_VERSION}/|' ${CMAKE_CURRENT_BINARY_DIR}/app/files)
+  add_custom_target("flatpak-pkg")
+  add_custom_command(TARGET flatpak-pkg
+    COMMAND ${TAR} -czf ${PKG_NVR}_${PKG_TARGET_NVR}.tar.gz --transform 's|.*/files/|${PACKAGE}-flatpak-${PACKAGE_VERSION}/|' ${CMAKE_CURRENT_BINARY_DIR}/app/files
+    COMMAND chmod -R a+wr ../build)
   return()
 endif(OCPN_FLATPAK_CONFIG)
 
@@ -114,7 +116,6 @@ if(UNIX AND NOT APPLE)
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PACKAGE_NAME} PlugIn for OpenCPN")
   set(CPACK_PACKAGE_DESCRIPTION "${PACKAGE_NAME} PlugIn for OpenCPN")
   set(CPACK_SET_DESTDIR ON)
-
 
   set(CPACK_PACKAGE_FILE_NAME "${PACKAGE_FILE_NAME}-${PACKAGE_VERSION}-${OCPN_MIN_VERSION}_${ARCH}-$ENV{OCPN_TARGET}")
 

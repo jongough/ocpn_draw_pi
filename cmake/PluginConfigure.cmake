@@ -136,6 +136,8 @@ set(wxWidgets_USE_LIBS
     adv
     aui)
 
+option(USE_GL "Enable OpenGL support" ON)
+
 # Search for opengles, short of running a program to test the speed of acceleration, I simply use gles on "native linux" arm systems
 if(ARCH MATCHES "arm*" AND (NOT QT_ANDROID) AND USE_GL MATCHES "ON")
   find_path(OPENGLESv1_INCLUDE_DIR GLES/gl.h)
@@ -170,11 +172,12 @@ endif(QT_ANDROID AND USE_GL MATCHES "ON")
 
 if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
 
-  if(USE_GL)
+  if(USE_GL MATCHES "ON")
+    message(STATUS "Finding package OpenGL")
     find_package(OpenGL)
-  else(USE_GL)
+  else(USE_GL MATCHES "ON")
     message(STATUS "OpenGL disabled by option...")
-  endif(USE_GL)
+  endif(USE_GL MATCHES "ON")
 
   if(OPENGL_FOUND)
 
