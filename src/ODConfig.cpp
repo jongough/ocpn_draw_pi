@@ -390,7 +390,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
 
         if( wxFileExists( fn.GetFullPath() ) ) {
             int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _("Confirm"),
-                    wxICON_QUESTION | wxYES_NO | wxCANCEL );
+                    wxICON_QUESTION | wxYES_NO | wxCANCEL | wxSTAY_ON_TOP );
             if( answer != wxID_YES ) return;
         }
 
