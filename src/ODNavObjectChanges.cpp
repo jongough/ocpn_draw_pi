@@ -912,8 +912,7 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
             
             if(pOp) {
                 pOp->m_bIsolatedMark = true;      // This is an isolated mark
-                ODPoint *pExisting = ODPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
-                if( !pExisting ) {
+                if(!(ODPointExists(pOp->m_GUID) && ODPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon ))) {
                     if( NULL != g_pODPointMan )
                         g_pODPointMan->AddODPoint( pOp );
                     g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
@@ -1199,7 +1198,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
 
     // Check to see if this point already exits
     pOP = tempODPointExists( GuidString );
-    if(!pOP) pOP = ODPointExists( GuidString );
+    if(!pOP)
+        pOP = ODPointExists( GuidString );
     if( !pOP ) {
         if( TypeString == wxT("Text Point") ) {
             pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
@@ -1213,7 +1213,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pOP->m_sTypeString = TypeString;
         }
             
-        m_ptODPointList->Append( pOP ); 
+        m_ptODPointList->Append( pOP );
     } else {
         if(pOP->m_sTypeString == wxT("Text Point")) {
             pTP = dynamic_cast<TextPoint *>(pOP);
@@ -1684,9 +1684,9 @@ ODPoint *ODNavObjectChanges::ODPointExists( const wxString& guid )
 ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
 {
     wxODPointListNode *node = m_ptODPointList->GetFirst();
+    ODPoint *pp = NULL;
     while( node ) {
-        ODPoint *pp = node->GetData();
-        
+        pp = node->GetData();
         //        if( pr->m_bIsInLayer ) return NULL;
         //TODO fix crash when pp->m_GUID is not valid. Why is this so? appears to be when a point is updated twice, but.....
         if( !pp->m_GUID.IsEmpty() && pp->m_GUID.length() > 0 && guid == pp->m_GUID ) {
