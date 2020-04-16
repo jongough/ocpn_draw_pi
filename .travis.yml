@@ -10,7 +10,7 @@ matrix:
     - docker
     script:
     - chmod a+x ./ci/travis-build-raspbian-armhf.sh
-    - travis_wait 40 sleep infinity & bash ./ci/travis-build-raspbian-armhf.sh
+    - travis_wait 50 sleep infinity & bash ./ci/travis-build-raspbian-armhf.sh
   - env:
     - OCPN_TARGET=buster-armhf
     - OCPN_BRANCH=master
@@ -19,7 +19,7 @@ matrix:
     - docker
     script:
     - chmod a+x ./ci/travis-build-raspbian-armhf.sh
-    - travis_wait 40 sleep infinity & bash ./ci/travis-build-raspbian-armhf.sh
+    - travis_wait 50 sleep infinity & bash ./ci/travis-build-raspbian-armhf.sh
 deploy:
   provider: script
   skip_cleanup: true
