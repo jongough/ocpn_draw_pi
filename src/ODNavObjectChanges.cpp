@@ -912,8 +912,7 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
             
             if(pOp) {
                 pOp->m_bIsolatedMark = true;      // This is an isolated mark
-                ODPoint *pExisting = ODPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon );
-                if( !pExisting ) {
+                if(!(ODPointExists(pOp->m_GUID) && ODPointExists( pOp->GetName(), pOp->m_lat, pOp->m_lon ))) {
                     if( NULL != g_pODPointMan )
                         g_pODPointMan->AddODPoint( pOp );
                     g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
@@ -1199,7 +1198,8 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
 
     // Check to see if this point already exits
     pOP = tempODPointExists( GuidString );
-    if(!pOP) pOP = ODPointExists( GuidString );
+    if(!pOP)
+        pOP = ODPointExists( GuidString );
     if( !pOP ) {
         if( TypeString == wxT("Text Point") ) {
             pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
@@ -1213,7 +1213,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pOP->m_sTypeString = TypeString;
         }
             
-        m_ptODPointList->Append( pOP ); 
+        m_ptODPointList->Append( pOP );
     } else {
         if(pOP->m_sTypeString == wxT("Text Point")) {
             pTP = dynamic_cast<TextPoint *>(pOP);
@@ -1684,9 +1684,9 @@ ODPoint *ODNavObjectChanges::ODPointExists( const wxString& guid )
 ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
 {
     wxODPointListNode *node = m_ptODPointList->GetFirst();
+    ODPoint *pp = NULL;
     while( node ) {
-        ODPoint *pp = node->GetData();
-        
+        pp = node->GetData();
         //        if( pr->m_bIsInLayer ) return NULL;
         //TODO fix crash when pp->m_GUID is not valid. Why is this so? appears to be when a point is updated twice, but.....
         if( !pp->m_GUID.IsEmpty() && pp->m_GUID.length() > 0 && guid == pp->m_GUID ) {
@@ -2049,21 +2049,24 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
 {
     wxTextFile l_TextFile(FileName);
     l_TextFile.Open();
-    wxString l_InputLine;
+    wxString l_InputLine = wxEmptyString;
     BoundaryCSVImport *l_BCI;
     BoundaryPointCSVImport *l_BPCI;
     TextPointCSVImport *l_TPCI;
     Boundary *l_boundary = NULL;
     bool    l_bBoundaryStart = false;
     int     l_NumObjs = 0;
-    
+    wxStringTokenizer *l_pTokenString = new wxStringTokenizer();
+
     for(l_InputLine = l_TextFile.GetFirstLine(); l_TextFile.Eof() == false; l_InputLine = l_TextFile.GetNextLine()) {
         // process line
-        wxStringTokenizer l_TokenString(l_InputLine, _T(","));
-        //if(l_TokenString.CountTokens() < 3) return;
-        wxString l_type = l_TokenString.GetNextToken();
+        int l_len = l_InputLine.Length();
+        l_pTokenString->SetString(l_InputLine, _T("'\""));
+        //if(l_pTokenString.CountTokens() < 3) return;
+        wxString l_type = l_pTokenString->GetNextToken();
+        l_type = l_pTokenString->GetNextToken();
 
-        if(l_type == _T("'B'")) {
+        if(l_type == _T("B")) {
             if(l_bBoundaryStart) {
                 wxString l_message = _("Error in import file.");
                 if(l_boundary) {
@@ -2077,7 +2080,7 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
                 return l_NumObjs;
             }
             l_bBoundaryStart = true;
-            l_BCI = new BoundaryCSVImport(l_TokenString);
+            l_BCI = new BoundaryCSVImport(l_pTokenString);
             l_boundary = new Boundary();
 
             l_boundary->m_PathNameString = l_BCI->m_sName;
@@ -2085,8 +2088,9 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_boundary->m_bInclusionBoundary = l_BCI->m_bInclusion;
             l_boundary->m_bPathIsActive = true;
             l_boundary->SetVisible(l_BCI->m_bVisible);
-            l_boundary->m_wxcActiveLineColour = l_BCI->m_LineColour;
-            l_boundary->m_wxcActiveFillColour = l_BCI->m_FillColour;
+            l_boundary->m_wxcActiveLineColour.SetRGB(l_BCI->m_LineColour.GetRGB());
+            l_boundary->m_wxcActiveFillColour.SetRGB(l_BCI->m_FillColour.GetRGB());
+            wxString l_rgb = l_BCI->m_LineColour.GetAsString();
             if( layer_id ){
                 l_boundary->SetVisible( b_layerviz );
                 l_boundary->m_bIsInLayer = true;
@@ -2095,8 +2099,8 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             }            
             l_NumObjs++;
             delete l_BCI;
-        } else if(l_type == _T("'BP'")){
-            l_BPCI = new BoundaryPointCSVImport(l_TokenString);
+        } else if(l_type == _T("BP")){
+            l_BPCI = new BoundaryPointCSVImport(l_pTokenString);
             BoundaryPoint *l_pBP = new BoundaryPoint(l_BPCI->m_dLat, l_BPCI->m_dLon, g_sODPointIconName, l_BPCI->m_sName, wxEmptyString, false);
             if(l_bBoundaryStart) {
                 l_boundary->AddPoint(l_pBP, false, true, true);
@@ -2117,6 +2121,9 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_pBP->SetODPointRangeRingsStep(l_BPCI->m_dStep);
             l_pBP->SetODPointRangeRingsStepUnits(l_BPCI->m_iUnits);
             l_pBP->SetODPointRangeRingsColour(l_BPCI->m_RingColour);
+            l_pBP -> CreateColourSchemes();
+            l_pBP->SetColourScheme(g_global_color_scheme);
+
             if( layer_id ) {
                 l_pBP->m_bIsInLayer = true;
                 l_pBP->m_LayerID = layer_id;
@@ -2127,13 +2134,15 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_NumObjs++;
             
             delete l_BPCI;
-        } else if(l_type == _T("'TP'")) {
-            l_TPCI = new TextPointCSVImport(l_TokenString);
+        } else if(l_type == _T("TP")) {
+            l_TPCI = new TextPointCSVImport(l_pTokenString);
             TextPoint *l_pTP = new TextPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, g_sODPointIconName, l_TPCI->m_sName, wxEmptyString, true);
             l_pTP->m_iDisplayTextWhen = l_TPCI->m_iDisplayTextWhen;
             l_pTP->m_iTextPosition = l_TPCI->m_iTextPosition;
             l_pTP->SetPointText(wxString::Format(l_TPCI->m_TextPointText));
             g_pODSelect->AddSelectableODPoint(l_TPCI->m_dLat, l_TPCI->m_dLon, l_pTP);
+            l_pTP -> CreateColourSchemes();
+            l_pTP->SetColourScheme(g_global_color_scheme);
             if( layer_id ) {
                 l_pTP->m_bIsInLayer = true;
                 l_pTP->m_LayerID = layer_id;
@@ -2142,7 +2151,7 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             l_NumObjs++;
 
             delete l_TPCI;
-        } else if(l_type == _T("'/B'")) {
+        } else if(l_type == _T("/B")) {
             // end boundaryg
             l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());
             l_boundary->m_bIsBeingCreated = false;

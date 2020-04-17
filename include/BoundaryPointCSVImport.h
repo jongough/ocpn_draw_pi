@@ -32,7 +32,7 @@ class BoundaryPointCSVImport
 {
     public:
         BoundaryPointCSVImport();
-        BoundaryPointCSVImport(wxStringTokenizer BoundaryPointCSV);
+        BoundaryPointCSVImport(wxStringTokenizer *BoundaryPointCSV);
         virtual ~BoundaryPointCSVImport();
 
         wxString    m_sName;

@@ -435,7 +435,6 @@ ocpn_draw_pi::~ocpn_draw_pi()
 {
     delete m_pODicons;
     m_pODicons = NULL;
-    
 #ifdef __WXMSW__
 #ifdef _DEBUG
     _CrtDumpMemoryLeaks(); 
@@ -672,14 +671,17 @@ int ocpn_draw_pi::Init(void)
     
     // Create an OCPN Draw event handler
     g_ODEventHandler = new ODEventHandler( g_ocpn_draw_pi );
-    
+    g_ODEventHandler->SetWindow( m_parent_window );
+
     g_pODRolloverWin = new ODRolloverWin( m_parent_window );
     g_pRolloverPathSeg = NULL;
     g_pRolloverPoint = NULL;
-    
-    m_RolloverPopupTimer.SetOwner( m_parent_window, ODROPOPUP_TIMER );
+
+    m_BlinkTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    m_BlinkTimer.Start( BLINK_TIME, wxTIMER_CONTINUOUS );
+
     m_rollover_popup_timer_msec = 20;
-    m_parent_window->Connect( m_RolloverPopupTimer.GetId(), wxEVT_TIMER, wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
+    m_RolloverPopupTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
     
     // Get item into font list in options/user interface
     AddPersistentFontKey( wxT("OD_PathLegInfoRollover") );
@@ -764,7 +766,6 @@ int ocpn_draw_pi::Init(void)
 void ocpn_draw_pi::LateInit(void)
 {
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
-    
     return;
 }
 
@@ -772,7 +773,9 @@ bool ocpn_draw_pi::DeInit(void)
 {
     RemoveCanvasContextMenuItem(m_iODToolContextId);
     
-    m_parent_window->Disconnect( m_RolloverPopupTimer.GetId(), wxTimerEventHandler( ODEventHandler::OnRolloverPopupTimerEvent ) );
+    m_BlinkTimer.Stop();
+    m_BlinkTimer.Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    m_RolloverPopupTimer.Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
     if( g_ODEventHandler ) delete g_ODEventHandler;
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
@@ -872,13 +875,13 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODConfig = NULL;
 
     shutdown(false);
+
     return true;
 }
 
 void ocpn_draw_pi::shutdown(bool menu)
 {
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("FALSE"));
-    
 }
 
 void ocpn_draw_pi::GetOriginalColors()
@@ -937,7 +940,7 @@ int ocpn_draw_pi::GetAPIVersionMinor()
 }
 wxString ocpn_draw_pi::GetCommonName()
 {
-    return wxS("OCPN Draw");
+    return _T(PLUGIN_COMMON_NAME);
 }
 wxString ocpn_draw_pi::GetShortDescription()
 {
@@ -962,7 +965,7 @@ void ocpn_draw_pi::OnContextMenuItemCallback(int id)
 
 void ocpn_draw_pi::SetDefaults(void)
 {
-    // If the config somehow says NOT to show the icon, override it so the user gets good feedback
+
 }
 wxBitmap *ocpn_draw_pi::GetPlugInBitmap()
 {
@@ -974,7 +977,6 @@ int ocpn_draw_pi::GetToolbarToolCount(void)
 }
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
-    //dlgShow = false;
     if( NULL == g_pOCPNDrawPropDialog )
         g_pOCPNDrawPropDialog = new ODPropertiesDialogImpl( parent );
     

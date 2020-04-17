@@ -178,8 +178,8 @@ bool ODConfig::ExportGPXPaths( wxWindow* parent, PathList *pPaths, const wxStrin
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _("Confirm"),
-                    wxICON_QUESTION | wxYES_NO | wxCANCEL );
+            int answer = OCPNMessageBox_PlugIn( parent, _("Overwrite existing file?"), _("Confirm"),
+                    wxICON_QUESTION | wxYES_NO | wxCANCEL | wxSTAY_ON_TOP );
             if( answer != wxID_YES ) return false;
         }
 
@@ -208,8 +208,8 @@ bool ODConfig::ExportGPXODPoints( wxWindow* parent, ODPointList *pODPoints, cons
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn(NULL,  _("Overwrite existing file?"), _("Confirm"),
-                    wxICON_QUESTION | wxYES_NO | wxCANCEL );
+            int answer = OCPNMessageBox_PlugIn( parent,  _("Overwrite existing file?"), _("Confirm"),
+                    wxICON_QUESTION | wxYES_NO | wxCANCEL | wxSTAY_ON_TOP );
             if( answer != wxID_YES ) return false;
         }
 
@@ -389,8 +389,8 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         fn.SetExt( _T ( "gpx" ) );
 
         if( wxFileExists( fn.GetFullPath() ) ) {
-            int answer = OCPNMessageBox_PlugIn( NULL, _("Overwrite existing file?"), _("Confirm"),
-                    wxICON_QUESTION | wxYES_NO | wxCANCEL );
+            int answer = OCPNMessageBox_PlugIn( parent, _("Overwrite existing file?"), _("Confirm"),
+                    wxICON_QUESTION | wxYES_NO | wxCANCEL | wxSTAY_ON_TOP );
             if( answer != wxID_YES ) return;
         }
 

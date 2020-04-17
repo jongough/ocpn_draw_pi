@@ -32,7 +32,7 @@ class TextPointCSVImport
 {
     public:
         TextPointCSVImport();
-        TextPointCSVImport(wxStringTokenizer TextPointCSV);
+        TextPointCSVImport(wxStringTokenizer *TextPointCSV);
         virtual ~TextPointCSVImport();
 
         wxString    m_sName;

@@ -307,6 +307,8 @@ enum {
 #define TYPE_PATHMGR_POINT_DLG      0x0080
 #define TYPE_PATHMGR_LAYER_DLG      0x0100
 
+#define BLINK_TIME 999
+
 class Boundary;
 class BoundaryProp;
 class Boundarylist;
@@ -536,6 +538,7 @@ private:
     
     void    ItemProcess(int id);
     
+    wxTimer         m_BlinkTimer;
     wxTimer         m_RolloverPopupTimer;
     
     PlugIn_ViewPort m_VP;

@@ -54,20 +54,11 @@ ODicons::~ODicons()
 void ODicons::initialize_images(void)
 {
     wxFileName fn;
-//#ifdef __WXOSX__
-// Not in this case - the icons are part of the plugin package, not it's configuration data, so they have nothing to do in the user's preferences directory
-//    wxStandardPathsBase& std_path = wxStandardPathsBase::Get();
-//    fn.SetPath(std_path.GetUserConfigDir());  // should be ~/Library/Preferences
-//    fn.AppendDir(_T("opencpn"));
-//    fn.AppendDir( wxT("plugins") );
-//    fn.AppendDir(wxT("ocpn_draw_pi"));
-//#else
-    fn.SetPath(*GetpSharedDataLocation());
-    fn.AppendDir( wxT("plugins") );
-    fn.AppendDir(wxT("ocpn_draw_pi"));
+
+    fn.SetPath(GetPluginDataDir( "ocpn_draw_pi"));
     fn.AppendDir(wxT("data"));
     g_SData_Locn = new wxString(fn.GetFullPath().c_str());
-//#endif
+
     wxString s = _("ocpn_draw_pi data location");
     wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
     
