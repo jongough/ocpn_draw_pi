@@ -28,14 +28,3 @@ docker exec -ti $DOCKER_CONTAINER_ID echo "------\nEND apt-get update\n"
 
 docker exec -ti $DOCKER_CONTAINER_ID apt-get -y install git cmake build-essential cmake gettext wx-common libgtk2.0-dev libwxgtk3.0-dev libbz2-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev lsb-release
 
-echo $TRAVIS_BRANCH
-echo $OCPN_TARGET
-echo $MAKEFLAGS
-docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec \
-    "export TRAVIS=$TRAVIS; export TRAVIS_BRANCH=$TRAVIS_BRANCH; export OCPN_TARGET=$OCPN_TARGET; export MAKEFLAGS=$MAKEFLAGS; rm -rf ci-source/build; mkdir ci-source/build; cd ci-source/build; cmake ..; make; make package; chmod -R a+rw ../build;"
- 
-echo "Stopping"
-docker ps -a
-docker stop $DOCKER_CONTAINER_ID
-docker rm -v $DOCKER_CONTAINER_ID
-
