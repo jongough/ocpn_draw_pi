@@ -113,7 +113,7 @@ jobs:
         docker:
         - image: circleci/buildpack-deps:focal-scm
         environment:
-        - OCPN_TARGET:  bionic
+        - OCPN_TARGET:  focal
         steps:
         - checkout
         - run: >
