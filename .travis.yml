@@ -10,10 +10,8 @@ matrix:
     services:
     - docker
     before_script:
-    - chmod a+x ./ci/travis-build-raspbian-armhf-part1.sh
     - travis_wait 120 sleep infinity & bash ./ci/travis-build-raspbian-armhf-part1.sh
     script:
-    - chmod a+x ./ci/travis-build-raspbian-armhf-part2.sh
     - travis_wait 120 sleep infinity & bash ./ci/travis-build-raspbian-armhf-part2.sh
   - env:
     - OCPN_TARGET=buster-armhf
@@ -23,10 +21,8 @@ matrix:
     services:
     - docker
     before_script:
-    - chmod a+x ./ci/travis-build-raspbian-armhf-part1.sh
     - travis_wait 120 sleep infinity & bash ./ci/travis-build-raspbian-armhf-part1.sh
     script:
-    - chmod a+x ./ci/travis-build-raspbian-armhf-part2.sh
     - travis_wait 120 sleep infinity & bash ./ci/travis-build-raspbian-armhf-part2.sh
 deploy:
   provider: script
