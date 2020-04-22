@@ -5,7 +5,7 @@ jobs:
         machine: true
         environment:
         - OCPN_TARGET=stretch-armhf
-        - DOCKER_IMAGE=raspbian/stretch
+        - DOCKER_IMAGE=jongough/raspbian-stretch:latest
         - BUILD_FLAGS=-j3
         steps:
         - checkout
@@ -92,23 +92,6 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - run: ci/cloudsmith-upload.sh
-    build-buster:
-        docker:
-        - image: circleci/buildpack-deps:buster-scm
-        environment:
-        - OCPN_TARGET:  buster
-        steps:
-        - checkout
-        - run: >
-            echo "deb-src http://ftp.us.debian.org/debian buster main"
-            | sudo tee -a /etc/apt/sources.list
-        - run: >
-            echo "deb-src http://ftp.us.debian.org/debian buster-updates main"
-            | sudo tee -a /etc/apt/sources.list
-        - run: cat /etc/apt/sources.list
-        - run: chmod a+x ci/*.sh
-        - run: ci/circleci-build-debian.sh
-        - run: ci/cloudsmith-upload.sh
     build-focal:
         docker:
         - image: circleci/buildpack-deps:focal-scm
@@ -126,24 +109,23 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - run: ci/cloudsmith-upload.sh
-    build-debian:
+    build-buster:
         docker:
-        - image: circleci/buildpack-deps:xenial-scm
+        - image: circleci/buildpack-deps:buster-scm
         environment:
-        - OCPN_TARGET:  xenial
-        - CLOUDSMITH_PKG_EXT: deb
+        - OCPN_TARGET:  buster
         steps:
         - checkout
         - run: >
-            echo "deb-src http://us.archive.ubuntu.com/ubuntu/ xenial main"
+            echo "deb-src http://ftp.us.debian.org/debian buster main"
             | sudo tee -a /etc/apt/sources.list
         - run: >
-            echo "deb-src http://us.archive.ubuntu.com/ubuntu/ xenial-updates main"
+            echo "deb-src http://ftp.us.debian.org/debian buster-updates main"
             | sudo tee -a /etc/apt/sources.list
         - run: cat /etc/apt/sources.list
         - run: chmod a+x ci/*.sh
-        - run: bash ci/circleci-build-debian.sh
-        - run: bash ci/cloudsmith-upload.sh
+        - run: ci/circleci-build-debian.sh
+        - run: ci/cloudsmith-upload.sh
     build-flatpak:
         machine:
             image: circleci/classic:201808-01
@@ -229,13 +211,13 @@ workflows:
                     ignore:
                     - devel
                     - tmp
-        - build-buster:
+        - build-focal:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
-        - build-focal:
+        - build-buster:
             filters:
                 branches:
                     ignore:

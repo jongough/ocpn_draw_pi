@@ -55,14 +55,23 @@ BoundaryPointCSVImport::BoundaryPointCSVImport(wxStringTokenizer *BoundaryPointC
     BoundaryPointCSV->SetString(BoundaryPointCSV->GetString(), ",");
     wxString l_sToken = BoundaryPointCSV->GetNextToken();
     size_t l_count = BoundaryPointCSV->CountTokens();
+    wxString l_sLatLon;
     m_sName.Clear();
     m_dLat = 0;
     m_dLon = 0;
     if(l_count >= 3) {
         m_sName = BoundaryPointCSV->GetNextToken();
         m_sName = m_sName.SubString(1, m_sName.Length()-2);
-        BoundaryPointCSV->GetNextToken().ToDouble(&m_dLat);
-        BoundaryPointCSV->GetNextToken().ToDouble(&m_dLon);
+        l_sLatLon = BoundaryPointCSV->GetNextToken();
+        if(l_sLatLon.Contains(_T("N")) || l_sLatLon.Contains(_T("S")))
+            m_dLat = fromDMM_Plugin(l_sLatLon);
+        else
+            l_sLatLon.ToDouble(&m_dLat);
+        l_sLatLon = BoundaryPointCSV->GetNextToken();
+        if(l_sLatLon.Contains(_T("E")) || l_sLatLon.Contains(_T("W")))
+            m_dLon = fromDMM_Plugin(l_sLatLon);
+        else
+            l_sLatLon.ToDouble(&m_dLon);
     } 
     if(l_count >= 4) {
         wxString l_type = BoundaryPointCSV->GetNextToken();

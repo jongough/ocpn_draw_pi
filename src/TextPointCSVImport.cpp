@@ -54,6 +54,7 @@ TextPointCSVImport::TextPointCSVImport(wxStringTokenizer *TextPointCSV)
     TextPointCSV->SetString(TextPointCSV->GetString(), ",");
     TextPointCSV->GetNextToken();
     size_t l_count = TextPointCSV->CountTokens();
+    wxString l_sLatLon;
     m_sName.Clear();
     m_dLat = 0;
     m_dLon = 0;
@@ -62,7 +63,17 @@ TextPointCSVImport::TextPointCSVImport(wxStringTokenizer *TextPointCSV)
         m_sName = m_sName.SubString(1, m_sName.Length()-2);
         TextPointCSV->GetNextToken().ToDouble(&m_dLat);
         TextPointCSV->GetNextToken().ToDouble(&m_dLon);
-    } 
+        l_sLatLon = TextPointCSV->GetNextToken();
+        if(l_sLatLon.Contains(_T("N")) || l_sLatLon.Contains(_T("S")))
+            m_dLat = fromDMM_Plugin(l_sLatLon);
+        else
+            l_sLatLon.ToDouble(&m_dLat);
+        l_sLatLon = TextPointCSV->GetNextToken();
+        if(l_sLatLon.Contains(_T("E")) || l_sLatLon.Contains(_T("W")))
+            m_dLon = fromDMM_Plugin(l_sLatLon);
+        else
+            l_sLatLon.ToDouble(&m_dLon);
+    }
     if(l_count >= 4) {
         wxString l_TextLocation = TextPointCSV->GetNextToken();
         if(l_TextLocation == _T("'t'") || l_TextLocation == _T("'T'")) m_iTextPosition = ID_TEXT_TOP;
