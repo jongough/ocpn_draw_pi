@@ -64,12 +64,12 @@ TextPointCSVImport::TextPointCSVImport(wxStringTokenizer *TextPointCSV)
         TextPointCSV->GetNextToken().ToDouble(&m_dLat);
         TextPointCSV->GetNextToken().ToDouble(&m_dLon);
         l_sLatLon = TextPointCSV->GetNextToken();
-        if(l_sLatLon.Contains(_T("N")) || l_sLatLon.Contains(_T("S")))
+        if(l_sLatLon.Find('N', true) || l_sLatLon.Find('n', true) || l_sLatLon.Find('S', true) || l_sLatLon.Find('s', true))
             m_dLat = fromDMM_Plugin(l_sLatLon);
         else
             l_sLatLon.ToDouble(&m_dLat);
         l_sLatLon = TextPointCSV->GetNextToken();
-        if(l_sLatLon.Contains(_T("E")) || l_sLatLon.Contains(_T("W")))
+        if(l_sLatLon.Find('E', true) || l_sLatLon.Find('e', true) || l_sLatLon.Find('W', true) || l_sLatLon.Find('w', true))
             m_dLon = fromDMM_Plugin(l_sLatLon);
         else
             l_sLatLon.ToDouble(&m_dLon);
