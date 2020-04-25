@@ -1015,6 +1015,7 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     long selected_index_index = m_listCtrlPath->GetNextItem( -1, wxLIST_NEXT_ALL,
                                                               wxLIST_STATE_SELECTED );
     bool enable1 =  m_listCtrlPath->GetSelectedItemCount() == 1;
+    bool enablemultiple = m_listCtrlPath->GetSelectedItemCount() > 1;
     
     m_lastPathItem = selected_index_index;
     
@@ -1022,7 +1023,11 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     m_buttonPathCenterView->Enable( enable1 ); 
     m_buttonPathProperties->Enable( enable1 );
     m_buttonPathDeleteAll->Enable( true );
-    
+    if( enable1 || enablemultiple )
+        m_buttonPathExportSelected->Enable( true );
+    else
+        m_buttonPathExportSelected->Enable( false );
+
     // activate button text
     ODPath *path = NULL;
     if( enable1 ) {
@@ -1277,6 +1282,10 @@ void PathAndPointManagerDialogImpl::UpdateODPointButtons()
     m_buttonODPointCenterView->Enable( enable1 );
     m_buttonODPointDeleteAll->Enable( TRUE );
     m_buttonODPointDelete->Enable( b_delete_enable && enablemultiple );
+    if(enable1 || enablemultiple)
+        m_buttonODPointExportSelected->Enable(true);
+    else
+        m_buttonODPointExportSelected->Enable(false);
     //m_buttonODPointExportSelected->Enable( enablemultiple );
    // m_buttonODPointExportSelected->Enable( enablemultiple );
 }
