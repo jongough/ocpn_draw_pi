@@ -27,7 +27,7 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "71")
+SET(VERSION_PATCH "72")
 set(VERSION_TWEAK "0")
 SET(VERSION_DATE "25/04/2020")
 SET(OCPN_MIN_VERSION "ov50")
@@ -55,13 +55,24 @@ elseif($ENV{TRAVIS})
     set(GIT_REPOSITORY_HOST "github.com")
     set(GIT_REPOSITORY_DIR "${GIT_USER}/")
     set(GIT_REPOSITORY_BRANCH "$ENV{TRAVIS_BRANCH}")
+elseif($ENV{APPVEYOR})
+    set(GIT_REPOSITORY_HOST "github.com")
+    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
+    set(GIT_REPOSITORY_BRANCH "$ENV{APPVEYOR_REPO_BRANCH}")
 else()
     set(GIT_REPOSITORY_HOST "github.com")
     set(GIT_REPOSITORY_DIR "${GIT_USER}/")
-    set(GIT_REPOSITORY_BRANCH "master")
-    #  set(GIT_REPOSITORY_HOST "git.eclipse.com.au")
-    #  set(GIT_REPOSITORY_DIR "")
-    #  set(GIT_REPOSITORY_BRANCH "cmake_flatpak_test")
+    # Get the current working branch
+    execute_process(
+        COMMAND git rev-parse --abbrev-ref HEAD
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_REPOSITORY_BRANCH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+      )
+    if(${GIT_REPOSITORY_BRANCH} EQUAL "")
+        message(STATUS "Setting default GIT repository branch - master")
+        set(GIT_REPOSITORY_BRANCH "master")
+    endif()
 endif()
 message(STATUS "Git Branch: ${GIT_REPOSITORY_BRANCH}")
 
