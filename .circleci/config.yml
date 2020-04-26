@@ -10,7 +10,9 @@ jobs:
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
-        - run: ci/circleci-build-raspbian-armhf.sh
+        - run:
+            command: ci/circleci-build-raspbian-armhf.sh
+            no_output_timeout: 30m
         - run: ci/cloudsmith-upload.sh
     build-armhf-buster:
         machine: true
@@ -21,7 +23,9 @@ jobs:
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
-        - run: ci/circleci-build-raspbian-armhf.sh
+        - run:
+            command: ci/circleci-build-raspbian-armhf.sh
+            no_output_timeout: 30m
         - run: ci/cloudsmith-upload.sh
     build-trusty:
         docker:
