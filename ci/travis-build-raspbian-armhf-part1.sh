@@ -28,3 +28,4 @@ docker exec -ti $DOCKER_CONTAINER_ID echo "------\nEND apt-get update\n"
 
 docker exec -ti $DOCKER_CONTAINER_ID apt-get -y install git cmake build-essential cmake gettext wx-common libgtk2.0-dev libwxgtk3.0-dev libbz2-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev lsb-release
 
+
