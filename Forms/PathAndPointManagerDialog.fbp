@@ -46,7 +46,7 @@
             <property name="name">PathAndPointManagerDialogDef</property>
             <property name="pos"></property>
             <property name="size">527,450</property>
-            <property name="style">wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP</property>
+            <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass">; ; forward_declare</property>
             <property name="title">Path &amp; Point Manager</property>
             <property name="tooltip"></property>
