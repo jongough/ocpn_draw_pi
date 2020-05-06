@@ -288,7 +288,7 @@ bool ODConfig::LoadLayers(wxString &path)
 {
     wxArrayString file_array;
     wxDir dir;
-    ODLayer *l;
+    ODLayer *l_lLayer;
     dir.Open( path );
     if( dir.IsOpened() ) {
         wxString filename;
@@ -311,28 +311,28 @@ bool ODConfig::LoadLayers(wxString &path)
                 }
                 
                 if( file_array.GetCount() ){
-                    l = new ODLayer();
-                    l->m_LayerID = ++g_LayerIdx;
-                    l->m_LayerFileName = file_array[0];
+                    l_lLayer = new ODLayer();
+                    l_lLayer->m_LayerID = ++g_LayerIdx;
+                    l_lLayer->m_LayerFileName = file_array[0];
                     if( file_array.GetCount() <= 1 )
-                        wxFileName::SplitPath( file_array[0], NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+                        wxFileName::SplitPath( file_array[0], NULL, NULL, &( l_lLayer->m_LayerName ), NULL, NULL );
                     else
-                        wxFileName::SplitPath( filename, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+                        wxFileName::SplitPath( filename, NULL, NULL, &( l_lLayer->m_LayerName ), NULL, NULL );
                     
                     bool bLayerViz = g_bShowLayers;
                     
-                    if( g_VisibleLayers.Contains( l->m_LayerName ) )
+                    if( g_VisibleLayers.Contains( l_lLayer->m_LayerName ) )
                         bLayerViz = true;
-                    if( g_InvisibleLayers.Contains( l->m_LayerName ) )
+                    if( g_InvisibleLayers.Contains( l_lLayer->m_LayerName ) )
                         bLayerViz = false;
                     
-                    l->m_bIsVisible = bLayerViz;
+                    l_lLayer->m_bIsVisible = bLayerViz;
                     
                     wxString laymsg;
-                    laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
+                    laymsg.Printf( wxT("New layer %d: %s"), l_lLayer->m_LayerID, l_lLayer->m_LayerName.c_str() );
                     wxLogMessage( laymsg );
                     
-                    g_pLayerList->Insert( l );
+                    g_pLayerList->Insert( l_lLayer );
                     
                     //  Load the entire file array as a single layer
                     
@@ -342,8 +342,8 @@ bool ODConfig::LoadLayers(wxString &path)
                         if( ::wxFileExists( file_path ) ) {
                             ODNavObjectChanges *pSet = new ODNavObjectChanges;
                             pSet->load_file(file_path.fn_str());
-                            long nItems = pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, bLayerViz);
-                            l->m_NoOfItems += nItems;
+                            long nItems = pSet->LoadAllGPXObjectsAsLayer(l_lLayer->m_LayerID, bLayerViz);
+                            l_lLayer->m_NoOfItems += nItems;
                             
                             wxString objmsg;
                             objmsg.Printf( wxT("Loaded GPX file %s with %ld items."), file_path.c_str(), nItems );
@@ -598,22 +598,19 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
 {
     int response = wxID_CANCEL;
     wxArrayString file_array;
-    ODLayer *l = NULL;
+    ODLayer *l_pLayer = NULL;
     
-    if(islayer && !isTemporary) {
-        m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|All files (*.*)|*.*");
+    if(m_sImport_Type == _T("csv")) {
+        m_sWildcardString = _T("CSV files (*.csv)|*.csv|GPX files (*.gpx)|*.gpx|All files (*.*)|*.*");
+    } else if(m_sImport_Type == _T("gpx")) {
+        m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
+    } else if(m_sImport_Type == _T("*")) {
+        m_sWildcardString = _T("All files (*.*)|*.*|GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv");
     } else {
-        if(m_sImport_Type == _T("csv")) {
-            m_sWildcardString = _T("CSV files (*.csv)|*.csv|GPX files (*.gpx)|*.gpx|All files (*.*)|*.*");
-        } else if(m_sImport_Type == _T("gpx")) {
-            m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
-        } else if(m_sImport_Type == _T("*")) {
-            m_sWildcardString = _T("All files (*.*)|*.*|GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv");
-        } else {
-            m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
-        }
+        m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
     }
-    wxFileDialog openDialog( NULL, _( "Import file" ), m_sImport_Path, _T(""), m_sWildcardString,
+
+    wxFileDialog openDialog( parent, _( "Import file" ), m_sImport_Path, _T(""), m_sWildcardString,
                                 wxFD_OPEN | wxFD_MULTIPLE );
     openDialog.Centre();
     response = openDialog.ShowModal();
@@ -642,32 +639,31 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
     }
     
     if( response == wxID_OK ) {
-        
+        wxString l_sImportFileName = wxEmptyString;
+
         if( islayer ) {
-            l = new ODLayer();
-            l->m_LayerID = ++g_LayerIdx;
-            l->m_LayerFileName = file_array[0];
-            if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL,
-                &( l->m_LayerName ), NULL, NULL );
+            l_pLayer = new ODLayer();
+            l_pLayer->m_LayerID = ++g_LayerIdx;
+            l_sImportFileName = file_array[0];
+            if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
             else {
-                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sGPX_Path, NULL, NULL,
-                    &( l->m_LayerName ), NULL, NULL );
+                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sGPX_Path, NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
                 else
-                    wxFileName::SplitPath( dirpath, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
+                    wxFileName::SplitPath( dirpath, NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
             }
             
             bool bLayerViz = g_bShowLayers;
-            if( g_VisibleLayers.Contains( l->m_LayerName ) )
+            if( g_VisibleLayers.Contains( l_pLayer->m_LayerName ) )
                 bLayerViz = true;
-            if( g_InvisibleLayers.Contains( l->m_LayerName ) )
+            if( g_InvisibleLayers.Contains( l_pLayer->m_LayerName ) )
                 bLayerViz = false;
-            l->m_bIsVisibleOnChart = bLayerViz;
+            l_pLayer->m_bIsVisibleOnChart = bLayerViz;
             
             wxString laymsg;
-            laymsg.Printf( _("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
+            laymsg.Printf( _("New layer %d: %s"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
             wxLogMessage( laymsg );
             
-            g_pLayerList->Insert( l );
+            g_pLayerList->Insert( l_pLayer );
         }
         for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
             wxString path = file_array[i];
@@ -675,17 +671,44 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
             
             if( wxFileExists( path ) ) {
                 
+                if(!isTemporary)
+                {
+                    // If this is a persistent layer also copy the file to config file dir /layers
+                    wxString destf, f, name, ext;
+                    f = l_sImportFileName;
+                    wxFileName::SplitPath(f, NULL , NULL, &name, &ext);
+                    destf = g_PrivateDataDir->ToStdString();
+                    g_ocpn_draw_pi->appendOSDirSlash(&destf);
+                    destf.Append(_T("Layers"));
+                    g_ocpn_draw_pi->appendOSDirSlash(&destf);
+                    if (!wxDirExists(destf))
+                    {
+                        if( !wxMkdir(destf, wxS_DIR_DEFAULT) )
+                            wxLogMessage( _T("Error creating layer directory") );
+                    }
+
+                    destf << name << _T(".") << ext;
+                    wxString msg;
+                    if( wxCopyFile(f, destf, true) ) {
+                        msg.Printf(_T("File: %s.%s also added to persistent layers"), name, ext);
+                        l_pLayer->m_LayerFileName = destf;
+                    }
+                    else
+                        msg.Printf(_T("Failed adding %s.%s to persistent layers"), name, ext);
+                    wxLogMessage(msg);
+                }
+
                 ODNavObjectChanges *pSet = new ODNavObjectChanges;
                 if(l_fn.GetExt() == _T("csv")) {
-                    if(l) {
-                        l->m_NoOfItems += pSet->Load_CSV_File(path.fn_str(), l->m_LayerID, l->m_bIsVisibleOnChart);
+                    if(l_pLayer) {
+                        l_pLayer->m_NoOfItems += pSet->Load_CSV_File(path.fn_str(), l_pLayer->m_LayerID, l_pLayer->m_bIsVisibleOnChart);
                     } else {
                         pSet->Load_CSV_File(path.fn_str(), 0, true);
                     }
                 }else if(l_fn.GetExt() == _T("gpx")) {
                     pSet->load_file(path.fn_str());
                     if(islayer){
-                        l->m_NoOfItems += pSet->LoadAllGPXObjectsAsLayer(l->m_LayerID, l->m_bIsVisibleOnChart);
+                        l_pLayer->m_NoOfItems += pSet->LoadAllGPXObjectsAsLayer(l_pLayer->m_LayerID, l_pLayer->m_bIsVisibleOnChart);
                     }
                     else
                         pSet->LoadAllGPXObjects( true );    // Import with full vizibility of names and objects

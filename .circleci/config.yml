@@ -10,7 +10,9 @@ jobs:
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
-        - run: ci/circleci-build-raspbian-armhf.sh
+        - run:
+            command: ci/circleci-build-raspbian-armhf.sh
+            no_output_timeout: 30m
         - run: ci/cloudsmith-upload.sh
     build-armhf-buster:
         machine: true
@@ -21,7 +23,9 @@ jobs:
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
-        - run: ci/circleci-build-raspbian-armhf.sh
+        - run:
+            command: ci/circleci-build-raspbian-armhf.sh
+            no_output_timeout: 30m
         - run: ci/cloudsmith-upload.sh
     build-trusty:
         docker:
@@ -181,69 +185,94 @@ workflows:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-armhf-buster:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-trusty:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-xenial:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-bionic:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-bionic-gtk3:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-focal:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-buster:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-flatpak:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-fedora:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-mingw:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
         - build-macos:
             filters:
                 branches:
                     ignore:
                     - devel
                     - tmp
+                tags:
+                    only: /.*/
+

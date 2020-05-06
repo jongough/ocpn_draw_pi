@@ -71,7 +71,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void DeSelectPaths( void );
         void DeSelectODPoints( void );
         void SetImportButtonText( void );
-        
+        void CreateLayer( bool );
         
         
         bool m_bCtrlDown;         // record control key state for some action buttons
@@ -116,6 +116,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void OnLayerRightClick( wxListEvent& event );
         void OnLayerSelected( wxListEvent& event );
         void OnLayerTemporaryClick( wxCommandEvent& event );
+        void OnLayerPersistentClick( wxCommandEvent& event );
         void OnLayerDeleteClick( wxCommandEvent& event );
         void OnLayerShowOnChartClick( wxCommandEvent& event );
         void OnLayerShowPointNamesClick( wxCommandEvent& event );

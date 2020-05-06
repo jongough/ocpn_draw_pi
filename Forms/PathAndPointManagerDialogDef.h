@@ -60,6 +60,7 @@ class PathAndPointManagerDialogDef : public wxDialog
 		wxListCtrl* m_listCtrlLayers;
 		wxBoxSizer* m_bSizerLayerButtons;
 		wxButton* m_buttonLayerTemporary;
+		wxButton* m_buttonLayerPersistent;
 		wxButton* m_buttonLayerDelete;
 		wxButton* m_buttonLayerShowOnChart;
 		wxButton* m_buttonLayerShowPointNames;
@@ -102,6 +103,7 @@ class PathAndPointManagerDialogDef : public wxDialog
 		virtual void OnLayerSelected( wxListEvent& event ) { event.Skip(); }
 		virtual void OnLayerRightClick( wxListEvent& event ) { event.Skip(); }
 		virtual void OnLayerTemporaryClick( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnLayerPersistentClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayerDeleteClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayerShowOnChartClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnLayerShowPointNamesClick( wxCommandEvent& event ) { event.Skip(); }
@@ -113,7 +115,7 @@ class PathAndPointManagerDialogDef : public wxDialog
 
 	public:
 
-		PathAndPointManagerDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 527,450 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
+		PathAndPointManagerDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 527,450 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~PathAndPointManagerDialogDef();
 
 };

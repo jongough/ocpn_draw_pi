@@ -50,7 +50,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelPath->SetSizer( bSizer2 );
 	m_panelPath->Layout();
 	bSizer2->Fit( m_panelPath );
-	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), true );
+	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), false );
 	m_panelODPoint = new wxPanel( m_notebookPathAndPointManager, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
@@ -95,8 +95,11 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 
 	m_bSizerLayerButtons = new wxBoxSizer( wxVERTICAL );
 
-	m_buttonLayerTemporary = new wxButton( m_panelLayer, wxID_ANY, _("&Temporary layer"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_buttonLayerTemporary = new wxButton( m_panelLayer, wxID_ANY, _("New &temporary Layer"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_bSizerLayerButtons->Add( m_buttonLayerTemporary, 0, wxALL|wxEXPAND, 5 );
+
+	m_buttonLayerPersistent = new wxButton( m_panelLayer, wxID_ANY, _("New persistent &Layer"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_bSizerLayerButtons->Add( m_buttonLayerPersistent, 0, wxALL, 5 );
 
 	m_buttonLayerDelete = new wxButton( m_panelLayer, wxID_ANY, _("&Delete"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_bSizerLayerButtons->Add( m_buttonLayerDelete, 0, wxALL|wxEXPAND, 5 );
@@ -117,7 +120,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelLayer->SetSizer( bSizer4 );
 	m_panelLayer->Layout();
 	bSizer4->Fit( m_panelLayer );
-	m_notebookPathAndPointManager->AddPage( m_panelLayer, _("Layers"), false );
+	m_notebookPathAndPointManager->AddPage( m_panelLayer, _("Layers"), true );
 
 	m_bSizerDialog->Add( m_notebookPathAndPointManager, 1, wxEXPAND | wxALL, 5 );
 
@@ -184,6 +187,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_listCtrlLayers->Connect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK, wxListEventHandler( PathAndPointManagerDialogDef::OnLayerRightClick ), NULL, this );
 	m_listCtrlLayers->Connect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( PathAndPointManagerDialogDef::OnLayerSelected ), NULL, this );
 	m_buttonLayerTemporary->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerTemporaryClick ), NULL, this );
+	m_buttonLayerPersistent->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerPersistentClick ), NULL, this );
 	m_buttonLayerDelete->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerDeleteClick ), NULL, this );
 	m_buttonLayerShowOnChart->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerShowOnChartClick ), NULL, this );
 	m_buttonLayerShowPointNames->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerShowPointNamesClick ), NULL, this );
@@ -231,6 +235,7 @@ PathAndPointManagerDialogDef::~PathAndPointManagerDialogDef()
 	m_listCtrlLayers->Disconnect( wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK, wxListEventHandler( PathAndPointManagerDialogDef::OnLayerRightClick ), NULL, this );
 	m_listCtrlLayers->Disconnect( wxEVT_COMMAND_LIST_ITEM_SELECTED, wxListEventHandler( PathAndPointManagerDialogDef::OnLayerSelected ), NULL, this );
 	m_buttonLayerTemporary->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerTemporaryClick ), NULL, this );
+	m_buttonLayerPersistent->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerPersistentClick ), NULL, this );
 	m_buttonLayerDelete->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerDeleteClick ), NULL, this );
 	m_buttonLayerShowOnChart->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerShowOnChartClick ), NULL, this );
 	m_buttonLayerShowPointNames->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PathAndPointManagerDialogDef::OnLayerShowPointNamesClick ), NULL, this );

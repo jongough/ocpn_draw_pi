@@ -1370,9 +1370,11 @@ void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( ODPoint* wp, wx
     g_pODPointPropDialog->UpdateProperties();
     
     DimeWindow(g_pODPointPropDialog);
+    long l_lStyle = g_pODPointPropDialog->GetExtraStyle();
+    g_pODPointPropDialog->SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
     if( !g_pODPointPropDialog->IsShown() )
         g_pODPointPropDialog->Show();
-    
+    g_pODPointPropDialog->SetExtraStyle(l_lStyle);
 }
 
 void PathAndPointManagerDialogImpl::OnODPointCenterViewClick( wxCommandEvent &event )
@@ -1616,23 +1618,33 @@ void PathAndPointManagerDialogImpl::OnLayerToggleVisibility( wxMouseEvent &event
 
 void PathAndPointManagerDialogImpl::OnLayerTemporaryClick( wxCommandEvent &event )
 {
+    CreateLayer(true);
+
+}
+
+void PathAndPointManagerDialogImpl::OnLayerPersistentClick( wxCommandEvent &event )
+{
+    CreateLayer(false);
+}
+
+void PathAndPointManagerDialogImpl::CreateLayer(bool isTemporary)
+{
     bool show_flag = g_bShowLayers;
     g_bShowLayers = true;
-    
-    #ifdef __WXOSX__
+
+#ifdef __WXOSX__
     HideWithEffect(wxSHOW_EFFECT_BLEND );
-    #endif
-    
-    //g_pODConfig->UI_ImportGPX( this, true, _T("") );
-    g_pODConfig->UI_Import( this, true, true );
-    
-    #ifdef __WXOSX__
+#endif
+
+    g_pODConfig->UI_Import( this, true, isTemporary );
+
+#ifdef __WXOSX__
     ShowWithEffect(wxSHOW_EFFECT_BLEND );
-    #endif
-    
-    
+#endif
+
+
     g_bShowLayers = show_flag;
-    
+
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
     UpdateLayerListCtrl();
@@ -1650,6 +1662,9 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick( wxCommandEvent &event )
     if( !layer ) return;
     
     wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
+    prompt.Append( _T("\n") );
+    prompt.Append( _("The file will also be deleted from OCPN Draw's layers directory.") );
+    prompt.Append( _T("\n (") +  layer->m_LayerFileName + _T(")" ) );
     int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), wxYES_NO );
     if ( answer == wxID_NO )
         return;
