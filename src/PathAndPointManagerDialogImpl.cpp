@@ -1662,9 +1662,11 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick( wxCommandEvent &event )
     if( !layer ) return;
     
     wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
-    prompt.Append( _T("\n") );
-    prompt.Append( _("The file will also be deleted from OCPN Draw's layers directory.") );
-    prompt.Append( _T("\n (") +  layer->m_LayerFileName + _T(")" ) );
+    if(layer->m_LayerFileName != wxEmptyString) {
+        prompt.Append( _T("\n") );
+        prompt.Append( _("The file will also be deleted from OCPN Draw's layers directory.") );
+        prompt.Append( _T("\n (") +  layer->m_LayerFileName + _T(")" ) );
+    }
     int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), wxYES_NO );
     if ( answer == wxID_NO )
         return;

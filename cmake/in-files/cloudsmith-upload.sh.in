@@ -113,7 +113,7 @@ if [ "$BUILD_TAG" = "" ] && [ "$tag" != "" ]; then
 fi
 if [ "$BUILD_BRANCH" = "" ]; then
     build_commit=$(git show -s --format=%d $BUILD_TAG)
-    is_master=$(echo $build_commit | awk '/ master/ {print}')
+    is_master=$(echo $build_commit | awk '/\/master/ {print}')
     if [ "$is_master" != "" ]; then
         BUILD_BRANCH="master"
     fi
