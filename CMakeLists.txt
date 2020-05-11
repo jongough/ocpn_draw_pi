@@ -58,7 +58,6 @@ set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
 set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/ocpn_draw.html")
 set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
 set(XML_DESCRIPTION "OCPN_DRAW (OD) is a plugin that extends the capability of OCPN to include non-standard object: Boundaries, Boundary Points, Text Points, Dead Reckoning paths, Electronic Bearing Lines (EBL) and Guard Zones. The plugin also has an API to allow other plugins to directly interact with it.")
-set(APPVEYOR_TEST_DEPLOY_TO_CLOUDSMITH "true")
 
 ##
 ## ----- Modify section above to include all the details for your plugin ----- ##
