@@ -27,9 +27,9 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "80")
+SET(VERSION_PATCH "81")
 set(VERSION_TWEAK "0")
-SET(VERSION_DATE "06/05/2020")
+SET(VERSION_DATE "13/05/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OCPN_API_VERSION_MAJOR "1")
 SET(OCPN_API_VERSION_MINOR "16")
@@ -42,39 +42,11 @@ MESSAGE(STATUS "OCPN API Verson: ${OCPN_API_VERSION_MAJOR}.${OCPN_API_VERSION_MI
 MESSAGE(STATUS "OCPN Min Verson: ${OCPN_MIN_VERSION}")
 
 set(PARENT "opencpn")
+
 set(GIT_USER "jongough")
 set(GIT_REPOSITORY_NAME "ocpn_draw_pi")
-message(STATUS "CIRCLECI: ${CIRCLECLI}, Env CIRCLECI: $ENV{CIRCLECI}")
-message(STATUS "TRAVIS: ${TRAVIS}, Env TRAVIS: $ENV{TRAVIS}")
-# This if allows for setting up your own local webserver with git on it for testing purposes
-if($ENV{CIRCLECI})
-    set(GIT_REPOSITORY_HOST "github.com")
-    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
-    set(GIT_REPOSITORY_BRANCH "$ENV{CIRCLE_BRANCH}")
-elseif($ENV{TRAVIS})
-    set(GIT_REPOSITORY_HOST "github.com")
-    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
-    set(GIT_REPOSITORY_BRANCH "$ENV{TRAVIS_BRANCH}")
-elseif($ENV{APPVEYOR})
-    set(GIT_REPOSITORY_HOST "github.com")
-    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
-    set(GIT_REPOSITORY_BRANCH "$ENV{APPVEYOR_REPO_BRANCH}")
-else()
-    set(GIT_REPOSITORY_HOST "github.com")
-    set(GIT_REPOSITORY_DIR "${GIT_USER}/")
-    # Get the current working branch
-    execute_process(
-        COMMAND git rev-parse --abbrev-ref HEAD
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        OUTPUT_VARIABLE GIT_REPOSITORY_BRANCH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-      )
-    if(${GIT_REPOSITORY_BRANCH} EQUAL "")
-        message(STATUS "Setting default GIT repository branch - master")
-        set(GIT_REPOSITORY_BRANCH "master")
-    endif()
-endif()
-message(STATUS "Git Branch: ${GIT_REPOSITORY_BRANCH}")
+# The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
+set(GIT_REPOSITORY_SERVER "github.com")
 
 # Builds repository sufficies
 set(PROD "prod")    #Standard Repos
