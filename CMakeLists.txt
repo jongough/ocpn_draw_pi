@@ -27,9 +27,9 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "81")
-set(VERSION_TWEAK "3")
-SET(VERSION_DATE "09/05/2020")
+SET(VERSION_PATCH "82")
+set(VERSION_TWEAK "0")
+SET(VERSION_DATE "13/05/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OCPN_API_VERSION_MAJOR "1")
 SET(OCPN_API_VERSION_MINOR "16")
@@ -43,7 +43,6 @@ MESSAGE(STATUS "OCPN Min Verson: ${OCPN_MIN_VERSION}")
 
 set(PARENT "opencpn")
 
-# The following lines are used to describe your git repository
 set(GIT_USER "jongough")
 set(GIT_REPOSITORY_NAME "ocpn_draw_pi")
 # The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
