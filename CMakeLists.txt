@@ -16,9 +16,6 @@ if(COMMAND cmake_policy)
     endif(POLICY CMP0077)
 endif(COMMAND cmake_policy)
 
-PROJECT(ocpn_draw_pi)
-SET(PARENT "opencpn")
-
 SET(VERBOSE_NAME "OCPN_Draw")
 set(COMMON_NAME "OCPN Draw")
 set(TITLE_NAME "OCPNDRAW")
@@ -28,8 +25,8 @@ set(PACKAGE "ocpn_draw")
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
 SET(VERSION_PATCH "82")
-set(VERSION_TWEAK "0")
-SET(VERSION_DATE "13/05/2020")
+set(VERSION_TWEAK "1")
+SET(VERSION_DATE "14/05/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OCPN_API_VERSION_MAJOR "1")
 SET(OCPN_API_VERSION_MINOR "16")
@@ -44,6 +41,7 @@ MESSAGE(STATUS "OCPN Min Verson: ${OCPN_MIN_VERSION}")
 set(PARENT "opencpn")
 
 set(GIT_USER "jongough")
+
 set(GIT_REPOSITORY_NAME "ocpn_draw_pi")
 # The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
 set(GIT_REPOSITORY_SERVER "github.com")
