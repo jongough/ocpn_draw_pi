@@ -51,6 +51,7 @@ if [ -n "$CIRCLECI" ]; then
   docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec \
     "export CIRCLECI=$CIRCLECI;
     export CIRCLE_BRANCH=$CIRCLE_BRANCH;
+    export CIRCLE_TAG=$CIRCLE_TAG;
     export OCPN_TARGET=$OCPN_TARGET;
     bash -xe $TOPDIR/ci/docker-build-flatpak.sh 28;
          echo -ne \"------\nEND OPENCPN-CI BUILD\n\";"
