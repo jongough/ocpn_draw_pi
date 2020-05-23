@@ -16,9 +16,7 @@ protected:
 	void OnRightClick( wxMouseEvent& event );
 	void OnPositionCtlUpdated( wxCommandEvent& event );
 	void OnRightClick( wxMouseEvent& event );
-	void OnArrivalRadiusChange( wxCommandEvent& event );
 	void OnShowRangeRingsSelect( wxCommandEvent& event );
-	void OnRangeRingsStepChange( wxCommandEvent& event );
 	void OnDescChangedBasic( wxCommandEvent& event );
 	void OnExtDescriptionClick( wxCommandEvent& event );
 	void OnPointPropertiesOKClick( wxCommandEvent& event );

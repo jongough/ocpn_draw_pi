@@ -167,7 +167,7 @@ private:
     bool            m_bIsVisible_save;
     int             m_iFontNamePosition;
     wxFontDialog    *m_pfdDialog;
-    double          m_dODPointRangeRingSteps;
+    double          m_dODPointRangeRingStepValidator;
     double          m_dODPointArrivalRadius;
     bool            m_bLatitudeLocked;
     bool            m_bLongitudeLocked;

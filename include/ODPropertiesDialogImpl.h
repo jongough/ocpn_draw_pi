@@ -84,7 +84,7 @@ private:
     void        SetTableCellBackgroundColours(void);
     void        SetIndexLineChoice( bool choice );
     
-    double      m_dODPointRangRingStepValidator;
+    double      m_dODPointRangeRingStepValidator;
     double      m_dSOGValidator;
     double      m_dODPointArrivalRadiusValidator;
     double      m_dDRPathLengthValidator;
