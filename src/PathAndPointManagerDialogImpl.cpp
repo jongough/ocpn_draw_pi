@@ -1654,62 +1654,74 @@ void PathAndPointManagerDialogImpl::CreateLayer(bool isTemporary)
 void PathAndPointManagerDialogImpl::OnLayerDeleteClick( wxCommandEvent &event )
 {
     long item = -1;
-    item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-    if( item == -1 ) return;
-    
-    ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
-    
-    if( !layer ) return;
-    
-    wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
-    if(layer->m_LayerFileName != wxEmptyString) {
-        prompt.Append( _T("\n") );
-        prompt.Append( _("The file will also be deleted from OCPN Draw's layers directory.") );
-        prompt.Append( _T("\n (") +  layer->m_LayerFileName + _T(")" ) );
-    }
-    int answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), wxYES_NO );
-    if ( answer == wxID_NO )
-        return;
-    
-    // if layer is permanent delete file
-    if(wxFileExists(layer->m_LayerFileName))
-        wxRemoveFile(layer->m_LayerFileName);
-    
-    // Process Paths in this layer
-    wxPathListNode *node1 = g_pPathList->GetFirst();
-    wxPathListNode *node2;
-    while( node1 ) {
-        ODPath *pPath = node1->GetData();
-        node2 = node1->GetNext();
-        if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
-            pPath->m_bIsInLayer = false;
-            pPath->m_LayerID = 0;
-            g_pPathMan->DeletePath( pPath );
+    int l_answer = wxID_YES;
+    ODLayerList::compatibility_iterator *l_LayerIterator = new ODLayerList::compatibility_iterator[m_listCtrlLayers->GetSelectedItemCount()];
+    int l_item_count = 0;
+
+    item = m_listCtrlLayers->GetNextItem( -1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    while(item != -1) {
+        ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+
+        if( layer ) {
+            if(g_bConfirmObjectDelete) {
+                wxString prompt = _("Are you sure you want to delete this layer and <ALL> of its contents?");
+                if(layer->m_LayerName != wxEmptyString) {
+                    prompt.Append( _T("\n") );
+                    prompt.Append( _("The file will also be deleted from OCPN Draw's layers directory.") );
+                    prompt.Append( _T("\n (") +  layer->m_LayerName + _T(")" ) );
+                }
+                l_answer = OCPNMessageBox_PlugIn( this, prompt, _("OpenCPN Alert"), wxYES_NO );
+            }
+
+            if(l_answer == wxID_YES) {
+                // if layer is permanent delete file
+                if(wxFileExists(layer->m_LayerFileName))
+                    wxRemoveFile(layer->m_LayerFileName);
+
+                // Process Paths in this layer
+                wxPathListNode *node1 = g_pPathList->GetFirst();
+                wxPathListNode *node2;
+                while( node1 ) {
+                    ODPath *pPath = node1->GetData();
+                    node2 = node1->GetNext();
+                    if( pPath->m_bIsInLayer && ( pPath->m_LayerID == layer->m_LayerID ) ) {
+                        pPath->m_bIsInLayer = false;
+                        pPath->m_LayerID = 0;
+                        g_pPathMan->DeletePath( pPath );
+                    }
+                    node1 = node2;
+                    node2 = NULL;
+                }
+
+                // Process ODPoints in this layer
+                wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
+                wxODPointListNode *node3;
+
+                while( node ) {
+                    node3 = node->GetNext();
+                    ODPoint *pp = node->GetData();
+                    if( pp && ( pp->m_LayerID == layer->m_LayerID ) ) {
+                        pp->m_bIsInLayer = false;
+                        pp->m_LayerID = 0;
+                        g_pODPointMan->DestroyODPoint( pp, false );         // no need to update the change set on layer ops
+                        delete pp;
+                    }
+
+                    node = node3;
+                    node3 = NULL;
+                }
+
+                l_LayerIterator[l_item_count++] = g_pLayerList->Find(layer);
+            }
+            l_answer = wxID_YES;
         }
-        node1 = node2;
-        node2 = NULL;
+        item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     }
-    
-    // Process ODPoints in this layer
-    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-    wxODPointListNode *node3;
-    
-    while( node ) {
-        node3 = node->GetNext();
-        ODPoint *pp = node->GetData();
-        if( pp && ( pp->m_LayerID == layer->m_LayerID ) ) {
-            pp->m_bIsInLayer = false;
-            pp->m_LayerID = 0;
-            g_pODPointMan->DestroyODPoint( pp, false );         // no need to update the change set on layer ops
-            delete pp;
-        }
-        
-        node = node3;
-        node3 = NULL;
+
+    while(l_item_count > 0) {
+        g_pLayerList->DeleteNode(l_LayerIterator[--l_item_count]);
     }
-    
-    g_pLayerList->DeleteObject( layer );
-    
+
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
     UpdateLayerListCtrl();

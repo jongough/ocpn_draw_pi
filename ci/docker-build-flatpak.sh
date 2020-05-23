@@ -19,8 +19,6 @@ fi
 flatpak install --user -y  flathub org.freedesktop.Sdk//18.08
 #rm -rf flatpak/.flatpak-builder && rm -rf build && mkdir build && cd build
 rm -rf build && mkdir build && cd build
-echo "CIRCLE_BRANCH: $CIRCLE_BRANCH"
-echo "CIRCLE_TAG: $CIRCLE_TAG"
 cmake -DOCPN_FLATPAK_CONFIG=ON ..
 make flatpak-build
 make flatpak-pkg
