@@ -299,7 +299,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_scrolledWindowBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_scrolledWindowBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_scrolledWindowBasicProperties );
-	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), false );
+	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), true );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_SizerDisplayText = new wxBoxSizer( wxVERTICAL );
 
@@ -393,7 +393,7 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_panelDisplayText->SetSizer( m_SizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_SizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -447,10 +447,8 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 	m_textLatitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
 	m_textLongitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
 	m_textLongitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textCtrlODPointArrivalRadius->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnArrivalRadiusChange ), NULL, this );
 	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_radioBoxBoundaryPointType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
-	m_textCtrlODPointRangeRingsSteps->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
 	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnMenuSelection ), this, m_menuItemDelete->GetId());
 	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnMenuSelection ), this, m_menuItemEdit->GetId());
@@ -471,10 +469,8 @@ ODPointPropertiesDialog::~ODPointPropertiesDialog()
 	m_textLatitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
 	m_textLongitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
 	m_textLongitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textCtrlODPointArrivalRadius->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnArrivalRadiusChange ), NULL, this );
 	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
 	m_radioBoxBoundaryPointType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
-	m_textCtrlODPointRangeRingsSteps->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnRangeRingsStepChange ), NULL, this );
 	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
 	m_buttonAddLink->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnAddLink ), NULL, this );
 	m_toggleBtnEditLink->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnEditLinkToggle ), NULL, this );

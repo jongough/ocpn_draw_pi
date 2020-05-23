@@ -22,19 +22,9 @@ void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
 	// TODO: Implement OnRightClick
 }
 
-void ODPointPropertiesImpl::OnArrivalRadiusChange( wxCommandEvent& event )
-{
-	// TODO: Implement OnArrivalRadiusChange
-}
-
 void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 {
 	// TODO: Implement OnShowRangeRingsSelect
-}
-
-void ODPointPropertiesImpl::OnRangeRingsStepChange( wxCommandEvent& event )
-{
-	// TODO: Implement OnRangeRingsStepChange
 }
 
 void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )

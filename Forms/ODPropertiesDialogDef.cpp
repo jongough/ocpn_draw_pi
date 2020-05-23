@@ -995,7 +995,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGZ->SetSizer( fgSizerGZSettings );
 	m_panelGZ->Layout();
 	fgSizerGZSettings->Fit( m_panelGZ );
-	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), true );
+	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), false );
 	m_panelPIL = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_fgSizerPILSettings = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerPILSettings->AddGrowableCol( 1 );
@@ -1292,7 +1292,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizerAboutLayout->Add( m_staticTextVersion, 0, wxALL, 5 );
 
 	wxFlexGridSizer* fgSizer6;
-	fgSizer6 = new wxFlexGridSizer( 0, 6, 0, 0 );
+	fgSizer6 = new wxFlexGridSizer( 0, 8, 0, 0 );
 	fgSizer6->SetFlexibleDirection( wxBOTH );
 	fgSizer6->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -1312,13 +1312,21 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_staticTextMinorVal->Wrap( -1 );
 	fgSizer6->Add( m_staticTextMinorVal, 0, wxALL, 5 );
 
-	m_staticTextPatcvh = new wxStaticText( m_panelAbout, wxID_ANY, _("Patch:"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextPatcvh->Wrap( -1 );
-	fgSizer6->Add( m_staticTextPatcvh, 0, wxALL, 5 );
+	m_staticTextPatch = new wxStaticText( m_panelAbout, wxID_ANY, _("Patch:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextPatch->Wrap( -1 );
+	fgSizer6->Add( m_staticTextPatch, 0, wxALL, 5 );
 
 	m_staticTextPatchVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPatchVal->Wrap( -1 );
 	fgSizer6->Add( m_staticTextPatchVal, 0, wxALL, 5 );
+
+	m_staticTextTweak = new wxStaticText( m_panelAbout, wxID_ANY, _("Tweak:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTweak->Wrap( -1 );
+	fgSizer6->Add( m_staticTextTweak, 0, wxALL, 5 );
+
+	m_staticTextTweakVal = new wxStaticText( m_panelAbout, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextTweakVal->Wrap( -1 );
+	fgSizer6->Add( m_staticTextTweakVal, 0, wxALL, 5 );
 
 
 	fgSizerAboutLayout->Add( fgSizer6, 1, wxEXPAND, 5 );
@@ -1452,7 +1460,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelAbout->SetSizer( bSizerAbout );
 	m_panelAbout->Layout();
 	bSizerAbout->Fit( m_panelAbout );
-	m_notebookProperties->AddPage( m_panelAbout, _("About"), false );
+	m_notebookProperties->AddPage( m_panelAbout, _("About"), true );
 	m_panelHelp = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizer22;
 	fgSizer22 = new wxFlexGridSizer( 0, 1, 0, 0 );

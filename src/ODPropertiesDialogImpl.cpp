@@ -59,6 +59,7 @@ ODPropertiesDialogDef( parent )
     m_staticTextMajorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MAJOR ));
     m_staticTextMinorVal->SetLabel(wxString::Format(wxT("%i"), PLUGIN_VERSION_MINOR ));
     m_staticTextPatchVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_PATCH)) );
+    m_staticTextTweakVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_TWEAK)) );
     m_staticTextDateVal->SetLabel( wxT(TOSTRING(PLUGIN_VERSION_DATE)) );
     m_staticTextAPIVersionMajorVal->SetLabel( wxT(TOSTRING(OD_API_VERSION_MAJOR)) );
     m_staticTextAPIVersionMinorVal->SetLabel( wxT(TOSTRING(OD_API_VERSION_MINOR)) );
@@ -95,7 +96,7 @@ ODPropertiesDialogDef( parent )
     m_pfdDialog = NULL;
     
 #if wxCHECK_VERSION(3,0,0)
-    wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangRingStepValidator, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangeRingStepValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadiusVal(3, &m_dODPointArrivalRadiusValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dDRPathLengthVal(3, &m_dDRPathLengthValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dDRPointIntervalVal(3, &m_dODPointIntervalValidator, wxNUM_VAL_DEFAULT);
@@ -502,8 +503,7 @@ void ODPropertiesDialogImpl::SaveChanges()
     
     
     g_iODPointRangeRingsNumber = m_choiceODPointRangeRingNumber->GetSelection();
-    g_fODPointRangeRingsStep = m_dODPointRangRingStepValidator;
-    g_fODPointRangeRingsStep = atof( m_textCtrlODPointRangeRingSteps->GetValue().mb_str() );
+    g_fODPointRangeRingsStep = m_dODPointRangeRingStepValidator;
     g_iODPointRangeRingsStepUnits = m_choiceODPointDistanceUnit->GetSelection();
     g_colourODPointRangeRingsColour = m_colourPickerODPointRangeRingColours->GetColour();
     g_dODPointArrivalCircleRadius = m_dODPointArrivalRadiusValidator;
@@ -578,7 +578,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_checkBoxTextPointShowName->SetValue( g_bTextPointShowName );
     m_checkBoxShowODPointRangeRings->SetValue( g_bODPointShowRangeRings );
     m_choiceODPointRangeRingNumber->SetSelection( g_iODPointRangeRingsNumber );
-    m_dODPointRangRingStepValidator = g_fODPointRangeRingsStep;
+    m_dODPointRangeRingStepValidator = g_fODPointRangeRingsStep;
     //m_textCtrlODPointRangeRingSteps->SetValue( wxString::Format( wxT("%.3f"), g_fODPointRangeRingsStep ) );
     m_choiceODPointDistanceUnit->SetSelection( g_iODPointRangeRingsStepUnits );
     m_colourPickerODPointRangeRingColours->SetColour( g_colourODPointRangeRingsColour );

@@ -533,7 +533,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
             if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL,
                     &( l->m_LayerName ), NULL, NULL );
             else {
-                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sGPX_Path, NULL, NULL,
+                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sImport_Path, NULL, NULL,
                         &( l->m_LayerName ), NULL, NULL );
                 else
                     wxFileName::SplitPath( dirpath, NULL, NULL, &( l->m_LayerName ), NULL, NULL );
@@ -641,61 +641,77 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
     if( response == wxID_OK ) {
         wxString l_sImportFileName = wxEmptyString;
 
-        if( islayer ) {
-            l_pLayer = new ODLayer();
-            l_pLayer->m_LayerID = ++g_LayerIdx;
-            l_sImportFileName = file_array[0];
-            if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
-            else {
-                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sGPX_Path, NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
-                else
-                    wxFileName::SplitPath( dirpath, NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
-            }
-            
-            bool bLayerViz = g_bShowLayers;
-            if( g_VisibleLayers.Contains( l_pLayer->m_LayerName ) )
-                bLayerViz = true;
-            if( g_InvisibleLayers.Contains( l_pLayer->m_LayerName ) )
-                bLayerViz = false;
-            l_pLayer->m_bIsVisibleOnChart = bLayerViz;
-            
-            wxString laymsg;
-            laymsg.Printf( _("New layer %d: %s"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
-            wxLogMessage( laymsg );
-            
-            g_pLayerList->Insert( l_pLayer );
-        }
         for( unsigned int i = 0; i < file_array.GetCount(); i++ ) {
             wxString path = file_array[i];
             wxFileName l_fn(file_array[i]);
             
             if( wxFileExists( path ) ) {
-                
-                if(!isTemporary)
-                {
-                    // If this is a persistent layer also copy the file to config file dir /layers
-                    wxString destf, f, name, ext;
-                    f = l_sImportFileName;
-                    wxFileName::SplitPath(f, NULL , NULL, &name, &ext);
-                    destf = g_PrivateDataDir->ToStdString();
-                    g_ocpn_draw_pi->appendOSDirSlash(&destf);
-                    destf.Append(_T("Layers"));
-                    g_ocpn_draw_pi->appendOSDirSlash(&destf);
-                    if (!wxDirExists(destf))
-                    {
-                        if( !wxMkdir(destf, wxS_DIR_DEFAULT) )
-                            wxLogMessage( _T("Error creating layer directory") );
+                if(islayer) {
+                    if(isTemporary) {
+                        if(i==0) {
+                            l_pLayer = new ODLayer();
+                            l_pLayer->m_LayerID = ++g_LayerIdx;
+                            if( file_array.GetCount() <= 1 ) wxFileName::SplitPath( file_array[0], NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
+                            else {
+                                if( dirpath.IsSameAs( _T("") ) ) wxFileName::SplitPath( m_sImport_Path, NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
+                                else
+                                    wxFileName::SplitPath( dirpath, NULL, NULL, &(l_pLayer->m_LayerName), NULL, NULL );
+                            }
+
+                            bool bLayerViz = g_bShowLayers;
+                            if( g_VisibleLayers.Contains( l_pLayer->m_LayerName ) )
+                                bLayerViz = true;
+                            if( g_InvisibleLayers.Contains( l_pLayer->m_LayerName ) )
+                                bLayerViz = false;
+                            l_pLayer->m_bIsVisibleOnChart = bLayerViz;
+
+                            wxString laymsg;
+                            laymsg.Printf( _("New layer %d: %s"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
+                            wxLogMessage( laymsg );
+
+                            g_pLayerList->Insert( l_pLayer );
+                        }
+                    } else {
+                        l_pLayer = new ODLayer();
+                        l_pLayer->m_LayerID = ++g_LayerIdx;
+                        l_pLayer->m_LayerName = l_fn.GetName();
+
+                        wxString destf, f, name, ext;
+                        f = path;
+                        wxFileName::SplitPath(f, NULL , NULL, &name, &ext);
+                        destf = g_PrivateDataDir->ToStdString();
+                        g_ocpn_draw_pi->appendOSDirSlash(&destf);
+                        destf.Append(_T("Layers"));
+                        g_ocpn_draw_pi->appendOSDirSlash(&destf);
+                        if (!wxDirExists(destf)) {
+                            if( !wxMkdir(destf, wxS_DIR_DEFAULT) )
+                                wxLogMessage( _T("Error creating layer directory") );
+                        }
+
+                        destf << name << _T(".") << ext;
+                        wxString msg;
+                        if( wxCopyFile(f, destf, true) ) {
+                            msg.Printf(_T("File: %s.%s also added to persistent layers"), name, ext);
+                            l_pLayer->m_LayerFileName = destf;
+                        }
+                        else
+                            msg.Printf(_T("Failed adding %s.%s to persistent layers"), name, ext);
+                        wxLogMessage(msg);
+
+                        bool bLayerViz = g_bShowLayers;
+                        if( g_VisibleLayers.Contains( l_pLayer->m_LayerName ) )
+                            bLayerViz = true;
+                        if( g_InvisibleLayers.Contains( l_pLayer->m_LayerName ) )
+                            bLayerViz = false;
+                        l_pLayer->m_bIsVisibleOnChart = bLayerViz;
+
+                        wxString laymsg;
+                        laymsg.Printf( _("New layer %d: %s"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
+                        wxLogMessage( laymsg );
+
+                        g_pLayerList->Insert( l_pLayer );
                     }
 
-                    destf << name << _T(".") << ext;
-                    wxString msg;
-                    if( wxCopyFile(f, destf, true) ) {
-                        msg.Printf(_T("File: %s.%s also added to persistent layers"), name, ext);
-                        l_pLayer->m_LayerFileName = destf;
-                    }
-                    else
-                        msg.Printf(_T("Failed adding %s.%s to persistent layers"), name, ext);
-                    wxLogMessage(msg);
                 }
 
                 ODNavObjectChanges *pSet = new ODNavObjectChanges;

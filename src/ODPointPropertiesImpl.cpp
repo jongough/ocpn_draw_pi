@@ -86,13 +86,13 @@ ODPointPropertiesDialog( parent )
     
 #if wxCHECK_VERSION(3,0,0)
     SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
-    wxFloatingPointValidator<double> dODPointRangeRingSteps(3, &m_dODPointRangeRingSteps, wxNUM_VAL_DEFAULT);
+    wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangeRingStepValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dODPointArrivalRadius(3, &m_dODPointArrivalRadius, wxNUM_VAL_DEFAULT);
     wxIntegerValidator<int> iTextPointTextMaxWidth( &m_iTextPointTextMaxWidth, wxNUM_VAL_THOUSANDS_SEPARATOR);
-    dODPointRangeRingSteps.SetMin(0);
+    dODPointRangeRingStepVal.SetMin(0);
     dODPointArrivalRadius.SetMin(0);
     iTextPointTextMaxWidth.SetMin(0);
-    m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingSteps );
+    m_textCtrlODPointRangeRingsSteps->SetValidator( dODPointRangeRingStepVal );
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
     m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
 #endif // wxCHECK_VERSION(3,0,0)
@@ -171,19 +171,9 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
     RequestRefresh( m_parent_window );
 }
 
-void ODPointPropertiesImpl::OnArrivalRadiusChange( wxCommandEvent& event )
-{
-    // TODO: Implement OnArrivalRadiusChange
-}
-
 void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 {
     // TODO: Implement OnShowRangeRingsSelect
-}
-
-void ODPointPropertiesImpl::OnRangeRingsStepChange( wxCommandEvent& event )
-{
-    // TODO: Implement OnRangeRingsStepChange
 }
 
 void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
@@ -213,6 +203,8 @@ void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
+    if( !Validate() || ! TransferDataFromWindow() ) return;
+
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
         m_pODPoint->m_bPointPropertiesBlink = false;
@@ -365,13 +357,13 @@ void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::SaveChanges()
 {
-    TransferDataFromWindow();
     if( m_pODPoint ) {
         if( m_pODPoint->m_bIsInLayer ) return;
 
         // Get User input Text Fields
         m_pODPoint->m_iODPointRangeRingsNumber = m_choicePointRangeRingsNumber->GetSelection();
-        m_pODPoint->m_fODPointRangeRingsStep = m_dODPointRangeRingSteps;
+        m_textCtrlODPointRangeRingsSteps->GetValidator()->TransferFromWindow();
+        m_pODPoint->m_fODPointRangeRingsStep = m_dODPointRangeRingStepValidator;
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->SetRangeRingBBox();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
@@ -379,6 +371,7 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->SetColourScheme(g_global_color_scheme);
 
         m_pODPoint->SetName( m_textName->GetValue() );
+        m_textCtrlODPointArrivalRadius->GetValidator()->TransferFromWindow();
         m_pODPoint->SetODPointArrivalRadius(m_dODPointArrivalRadius);
         m_pODPoint->SetShowODPointRangeRings( m_checkBoxShowODPointRangeRings->GetValue() );
         m_pODPoint->m_ODPointDescription = m_textDescription->GetValue();
@@ -737,7 +730,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_checkBoxShowODPointRangeRings->SetValue( m_pODPoint->GetShowODPointRangeRings() );
         m_choicePointRangeRingsNumber->SetSelection( m_pODPoint->GetODPointRangeRingsNumber() );
         m_choiceDistanceUnitsString->SetSelection( m_pODPoint->GetODPointRangeRingsStepUnits() );
-        m_dODPointRangeRingSteps = m_pODPoint->GetODPointRangeRingsStep();
+        m_dODPointRangeRingStepValidator = m_pODPoint->GetODPointRangeRingsStep();
         m_textCtrlODPointRangeRingsSteps->GetValidator()->TransferToWindow();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
         
@@ -880,6 +873,8 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
     
     SetDialogSize();
     
+    TransferDataToWindow();
+
     return true;
 }
 
