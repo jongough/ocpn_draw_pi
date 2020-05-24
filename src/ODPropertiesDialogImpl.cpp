@@ -48,7 +48,7 @@ ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 ODPropertiesDialogDef( parent )
 {
     wxString l_sTitle;
-    l_sTitle.Printf(wxT("%s v%d.%d.%d %s"), g_ocpn_draw_display_name->ToStdString(), PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH, _("Preferences"));
+    l_sTitle.Printf(wxT("%s v%d.%d.%d.%d %s"), g_ocpn_draw_display_name->ToStdString(), PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH, PLUGIN_VERSION_TWEAK, ("Preferences"));
     SetTitle(l_sTitle);
     
 #if wxCHECK_VERSION(3,0,0)
