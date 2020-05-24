@@ -2817,7 +2817,7 @@ void ocpn_draw_pi::FindSelectedObject()
             SelectItem *pFindSel = node->GetData();
             
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
-            if( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) {
+            if( ( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) || !pop->m_bIsVisible ) {
                 node = node->GetNext();
                 continue;
             }
