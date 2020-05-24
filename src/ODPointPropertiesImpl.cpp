@@ -149,8 +149,10 @@ void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
     wxMenu* popup = new wxMenu();
     popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
     popup->Append( ID_RCLK_MENU_COPY_LL, _("Copy lat/long") );
-    popup->Append( ID_RCLK_MENU_PASTE, _("Paste") );
-    popup->Append( ID_RCLK_MENU_PASTE_LL, _("Paste lat/long") );
+    if(!m_pODPoint->m_bIsInLayer) {
+        popup->Append( ID_RCLK_MENU_PASTE, _("Paste") );
+        popup->Append( ID_RCLK_MENU_PASTE_LL, _("Paste lat/long") );
+    }
     m_contextObject = event.GetEventObject();
     PopupMenu( popup );
     delete popup;
