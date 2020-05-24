@@ -2927,6 +2927,7 @@ void ocpn_draw_pi::FindSelectedObject()
                 ODPath *pp = (ODPath *) pFindSel->m_pData3;
                 if( pp->IsVisible() ) {
                     m_pSelectedPath = pp;
+                    pFindPathSeg = pFindSel;
                     break;
                 }
                 node = node->GetNext();
