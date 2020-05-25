@@ -49,7 +49,7 @@ else
 fi
 
 set +x
-if [ -z "$CLOUDSMITH_API_KEY" && $LOCAL_BUILD = false ]; then
+if [ -z "$CLOUDSMITH_API_KEY" && !$LOCAL_BUILD ]; then
     echo 'Cannot deploy to cloudsmith, missing $CLOUDSMITH_API_KEY'
     exit 0
 fi
@@ -171,11 +171,12 @@ fi
 cat $xml
 ls -l $BUILD_DIR
 cur_dir=$(pwd)
-gunzip $tarball
+gunzip -f $tarball
 cd $BUILD_DIR
+rm -f metadata.xml
 tarball_tar=$(ls *.tar)
 xml_here=$(ls *.xml)
-cp $xml_here metadata.xml
+cp -f $xml_here metadata.xml
 if [ "$TRAVIS" ] || [ "$CIRCLECI" ]; then
     mkdir build_tar
     cp $tarball_tar build_tar/.
