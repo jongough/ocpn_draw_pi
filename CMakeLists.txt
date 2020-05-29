@@ -24,9 +24,9 @@ set(PACKAGE "ocpn_draw")
 
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "6")
-SET(VERSION_PATCH "94")
+SET(VERSION_PATCH "95")
 set(VERSION_TWEAK "0")
-SET(VERSION_DATE "27/05/2020")
+SET(VERSION_DATE "29/05/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OCPN_API_VERSION_MAJOR "1")
 SET(OCPN_API_VERSION_MINOR "16")
@@ -67,23 +67,6 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
-if(NOT ${PACKAGE} MATCHES "(.*)_pi")
-    set(PACKAGE_NAME ${PACKAGE}_pi)
-    set(PACKAGE_FILE_NAME "${PACKAGE}_pi")
-else(NOT ${PACKAGE} MATCHES "(.*)_pi")
-    set(PACKAGE_NAME ${PACKAGE})
-    set(PACKAGE_FILE_NAME "${PACKAGE}")
-endif(NOT ${PACKAGE} MATCHES "(.*)_pi")
-string(TOUPPER "${PACKAGE}" TITLE_NAME)
-
-project(${PACKAGE_NAME} VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK})
-message(STATUS "PROJECT_VERSION: ${PROJECT_VERSION}")
-
-set(PACKAGE_VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK}")
-
-message(STATUS "${VERBOSE_NAME} Version: ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK}")
-message(STATUS "OPCN_FLATPAK: ${OCPN_FLATPAK}")
-
 # Use local version of GLU library
 SET(USE_LOCAL_GLU TRUE)
 # Prefer libGL.so to libOpenGL.so, see CMP0072
@@ -97,84 +80,12 @@ SET_PROPERTY( CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "
 
 MESSAGE (STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
-# set(PKG_NVR ${PACKAGE_NAME}-${PROJECT_VERSION}-${OCPN_MIN_VERSION}-${OCPN_API_VERSION_MAJOR}.${OCPN_API_VERSION_MINOR})
-set(PKG_NVR ${PACKAGE_NAME}-${PROJECT_VERSION})
-set(PKG_URL "https://dl.cloudsmith.io/public/--pkg_repo--/raw/names/--name--/versions/--version--/--filename--")
 
 include("cmake/PluginSetup.cmake")
-
-if(DEFINED ENV{OCPN_TARGET})
-    set(PACKAGING_NAME "${PKG_NVR}_${PKG_TARGET}-${ARCH}_${PKG_TARGET_VERSION}-$ENV{OCPN_TARGET}")
-else(DEFINED ENV{OCPN_TARGET})
-    set(PACKAGING_NAME "${PKG_NVR}_${PKG_TARGET}-${ARCH}_${PKG_TARGET_VERSION}")
-endif(DEFINED ENV{OCPN_TARGET})
-message(STATUS "PACKAGING_NAME: ${PACKAGING_NAME}")
-
-set(PLUGIN_NAME ${PACKAGE}-plugin-${PKG_TARGET}-${PKG_TARGET_VERSION})
 
 SET(CMAKE_VERBOSE_MAKEFILE ON)
 
 option(Plugin_CXX11 "Use c++11" OFF)
-
-if(Plugin_CXX11)
-    message(STATUS "Attempting to use c++11")
-    include(CheckCXXCompilerFlag)
-    check_cxx_compiler_flag("-std=c++11" COMPILER_SUPPORTS_CXX11)
-    check_cxx_compiler_flag("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-    if(COMPILER_SUPPORTS_CXX11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-        set(Plugin_USE_CXX11 ON)
-    elseif(COMPILER_SUPPORTS_CXX0X)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-        set(Plugin_USE_CXX11 ON)
-    else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
-        set(Plugin_USE_CXX11 OFF)
-    endif()
-else()
-    set(Plugin_USE_CXX11 OFF)
-endif()
-
-if(Plugin_USE_CXX11)
-    message(STATUS "Allowing use of c++11")
-endif()
-
-###
-message(STATUS "CMAKE version: ${CMAKE_VERSION}")
-if(CMAKE_VERSION VERSION_GREATER 3.4)
-    set(ENABLE_CLANG_TIDY
-    OFF
-    CACHE BOOL "Add clang-tidy automatically to builds")
-    if(ENABLE_CLANG_TIDY)
-        find_program(
-            CLANG_TIDY_EXE
-            NAMES "clang-tidy"
-            PATHS /usr/local/opt/llvm/bin)
-            if(CLANG_TIDY_EXE)
-                message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-                # For more, see http://clang.llvm.org/extra/clang-tidy/ set(CLANG_TIDY_CHECKS "-*,modernize-*")
-                set(CLANG_TIDY_CHECKS "-*,performance-*")
-                set(CMAKE_CXX_CLANG_TIDY
-                "${CLANG_TIDY_EXE};-checks=${CLANG_TIDY_CHECKS};-header-filter='${CMAKE_SOURCE_DIR}/*'"
-                CACHE STRING "" FORCE)
-            else()
-                message(AUTHOR_WARNING "clang-tidy not found!")
-                set(CMAKE_CXX_CLANG_TIDY
-                ""
-                CACHE STRING "" FORCE) # delete it
-            endif()
-    endif()
-endif()
-
-if(CMAKE_VERSION VERSION_GREATER 3.9)
-    set(ENABLE_CPPCHECK
-    OFF
-    CACHE BOOL "Add cppcheck automatically to builds")
-    if(ENABLE_CPPCHECK)
-        find_program(CPPCHECK_EXECUTABLE NAMES "cppcheck")
-        set(CMAKE_CXX_CPPCHECK ${CPPCHECK_EXECUTABLE})
-    endif()
-endif()
 
 ##
 ## ----- Modify section above if there are special requirements for the plugin ----- ##
