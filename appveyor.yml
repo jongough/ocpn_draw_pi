@@ -63,7 +63,8 @@ deploy:
   description: 'release created by AppVeyor CI'
   provider: GitHub
   #auth_token: '%GitHub_auth_token%'
-  auth_token: '%GIT-PTOKEN-testplugin_pi-INTO-APPVEYOR%'
+  auth_token: #'%GIT-PTOKEN-ocpn_draw_pi-INTO-APPVEYOR%'
+    secure: "LBNZqgBxrVxzPGVf2gH5hVgOmjFuPD/LiA1F6NFWx4jHgdx4HAw4i1JGglr/+ZZg"
   artifact: installer,portable
   draft: true
   prerelease: true
