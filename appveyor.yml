@@ -1,4 +1,4 @@
-clone_folder: c:\project\ocpn_draw_pi
+clone_folder: c:\project\testplugin_pi
 shallow_clone: false
 clone_depth: 10
 
@@ -38,7 +38,7 @@ install:
   - set
 
 before_build:
-  - cd c:\project\ocpn_draw_pi
+  - cd c:\project\testplugin_pi
   - cd buildwin
   - ps: Start-FileDownload https://downloads.sourceforge.net/project/opencpnplugins/opencpn_packaging_data/PVW32Con.exe
   - cd ..
