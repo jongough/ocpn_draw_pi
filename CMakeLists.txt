@@ -25,7 +25,7 @@ set(PACKAGE "ocpn_draw")
 SET(VERSION_MAJOR "1")
 SET(VERSION_MINOR "8")
 SET(VERSION_PATCH "0")
-set(VERSION_TWEAK "0")
+set(VERSION_TWEAK "1")
 SET(VERSION_DATE "04/06/2020")
 SET(OCPN_MIN_VERSION "ov50")
 SET(OCPN_API_VERSION_MAJOR "1")
@@ -51,7 +51,7 @@ set(ALPHA "alpha")  #Standard Repos
 set(CLOUDSMITH_USER "jon-gough")
 # set this if your cloudsmith repository name does not match your git repository name
 #set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
-set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/ocpn_draw.html")
+set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/draw.html")
 set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
 set(XML_DESCRIPTION "OCPN_DRAW (OD) is a plugin that extends the capability of OCPN to include non-standard object: Boundaries, Boundary Points, Text Points, Dead Reckoning paths, Electronic Bearing Lines (EBL) and Guard Zones. The plugin also has an API to allow other plugins to directly interact with it.")
 
