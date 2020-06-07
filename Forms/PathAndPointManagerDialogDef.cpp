@@ -50,7 +50,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelPath->SetSizer( bSizer2 );
 	m_panelPath->Layout();
 	bSizer2->Fit( m_panelPath );
-	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), false );
+	m_notebookPathAndPointManager->AddPage( m_panelPath, _("Paths"), true );
 	m_panelODPoint = new wxPanel( m_notebookPathAndPointManager, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxHORIZONTAL );
@@ -120,7 +120,7 @@ PathAndPointManagerDialogDef::PathAndPointManagerDialogDef( wxWindow* parent, wx
 	m_panelLayer->SetSizer( bSizer4 );
 	m_panelLayer->Layout();
 	bSizer4->Fit( m_panelLayer );
-	m_notebookPathAndPointManager->AddPage( m_panelLayer, _("Layers"), true );
+	m_notebookPathAndPointManager->AddPage( m_panelLayer, _("Layers"), false );
 
 	m_bSizerDialog->Add( m_notebookPathAndPointManager, 1, wxEXPAND | wxALL, 5 );
 
