@@ -1,4 +1,4 @@
-clone_folder: c:\project\testplugin_pi
+clone_folder: c:\project\ocpn_draw_pi
 shallow_clone: false
 clone_depth: 10
 
