@@ -2,6 +2,7 @@
 # Author:      Pavel Kalian (Based on the work of Sean D'Epagnier) Copyright:   2014 License:     GPLv3+
 # ---------------------------------------------------------------------------
 
+set(SAVE_CMLOC ${CMLOC})
 set(CMLOC "PluginPackage: ")
 
 # build a FLATPAK installer package
@@ -23,6 +24,8 @@ if(OCPN_FLATPAK_CONFIG)
         TARGET flatpak-pkg
         COMMAND ${TAR} -czf ${PKG_NVR}-${ARCH}_${PKG_TARGET_NVR}.tar.gz --transform 's|.*/files/|${PACKAGE}-flatpak-${PACKAGE_VERSION}/|' ${CMAKE_CURRENT_BINARY_DIR}/app/files
         COMMAND chmod -R a+wr ../build)
+
+    set(CMLOC ${SAVE_CMLOC})
     return()
 endif(OCPN_FLATPAK_CONFIG)
 
@@ -152,3 +155,5 @@ if(NOT STANDALONE MATCHES "BUNDLED")
     include(CPack)
 
 endif(NOT STANDALONE MATCHES "BUNDLED")
+
+set(CMLOC ${SAVE_CMLOC})

@@ -2,6 +2,7 @@
 # Author:      Jon Gough (Based on the work of Sean D'Epagnier and Pavel Kalian) Copyright:   2019 License:     GPLv3+
 # ---------------------------------------------------------------------------
 
+set(SAVE_CMLOC ${CMLOC})
 set(CMLOC "PluginConfigure: ")
 
 message(STATUS "${CMLOC}*** Staging to build ${PACKAGE_NAME} ***")
@@ -101,6 +102,33 @@ else($ENV{OCPN_TARGET} MATCHES "(.*)gtk3")
 endif($ENV{OCPN_TARGET} MATCHES "(.*)gtk3")
 message(STATUS "${CMLOC}PKG_TARGET_GTK: ${PKG_TARGET_GTK}")
 
+if(UNIX)
+    # Handle gtk3 build variant
+    string(STRIP "${PKG_TARGET}" PKG_TARGET)
+    string(TOLOWER "${PKG_TARGET}" PKG_TARGET)
+
+    # Generate architecturally uniques names for linux output packages
+    if(ARCH MATCHES "arm64")
+        set(PKG_TARGET_ARCH "-ARM64")
+    elseif(ARCH MATCHES "armhf")
+        set(PKG_TARGET_ARCH "-ARMHF")
+    elseif(ARCH MATCHES "i386")
+        set(PKG_TARGET_ARCH "-i386")
+    else()
+        set(PKG_TARGET_ARCH "-x86_64")
+    endif()
+else()
+    set(PKG_TARGET_ARCH "-${ARCH}")
+endif()
+
+set(PKG_TARGET_FULL "${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_ARCH}")
+message(STATUS "${CMLOC}PKG_TARGET_FULL: ${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_ARCH}")
+message(STATUS "${CMLOC}*.in files generated in ${CMAKE_CURRENT_BINARY_DIR}")
+configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/plugin.xml.in ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGING_NAME}.xml)
+configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/pkg_version.sh.in ${CMAKE_CURRENT_BINARY_DIR}/pkg_version.sh)
+configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/cloudsmith-upload.sh.in ${CMAKE_CURRENT_BINARY_DIR}/cloudsmith-upload.sh @ONLY)
+
+
 message(STATUS "${CMLOC}Checking OCPN_FLATPAK_CONFIG: ${OCPN_FLATPAK_CONFIG}")
 if(OCPN_FLATPAK_CONFIG)
     configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/org.opencpn.OpenCPN.Plugin.yaml.in ${CMAKE_CURRENT_BINARY_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.${PACKAGE}.yaml)
@@ -108,8 +136,10 @@ if(OCPN_FLATPAK_CONFIG)
     message(STATUS "${CMLOC}Done OCPN_FLATPAK CONFIG")
     message(STATUS "${CMLOC}Directory used: ${CMAKE_CURRENT_BINARY_DIR}/flatpak")
     message(STATUS "${CMLOC}Git Branch: ${GIT_REPOSITORY_BRANCH}")
+    set(CMLOC ${SAVE_CMLOC})
     return()
 endif(OCPN_FLATPAK_CONFIG)
+
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
@@ -361,36 +391,6 @@ endif(
     AND NOT APPLE
     AND NOT QT_ANDROID)
 
-if(UNIX)
-    # Handle gtk3 build variant
-    string(STRIP "${PKG_TARGET}" PKG_TARGET)
-    string(TOLOWER "${PKG_TARGET}" PKG_TARGET)
-    if(NOT DEFINED wxWidgets_LIBRARIES)
-        message(FATAL_ERROR "PluginSetup: required wxWidgets_LIBRARIES missing")
-    elseif("${wxWidgets_LIBRARIES}" MATCHES "gtk3u" AND PKG_TARGET STREQUAL "ubuntu")
-        message(STATUS "${CMLOC}PluginSetup: gtk3 found")
-        set(PKG_TARGET_GTK "-gtk3")
-    endif()
-
-    # Generate architecturally uniques names for linux output packages
-    if(ARCH MATCHES "arm64")
-        set(PKG_TARGET_ARCH "-ARM64")
-    elseif(ARCH MATCHES "armhf")
-        set(PKG_TARGET_ARCH "-ARMHF")
-    elseif(ARCH MATCHES "i386")
-        set(PKG_TARGET_ARCH "-i386")
-    else()
-        set(PKG_TARGET_ARCH "-x86_64")
-    endif()
-endif()
-
-set(PKG_TARGET_FULL "${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_ARCH}")
-message(STATUS "${CMLOC}PKG_TARGET_FULL: ${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_ARCH}")
-message(STATUS "${CMLOC}*.in files generated in ${CMAKE_CURRENT_BINARY_DIR}")
-configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/plugin.xml.in ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGING_NAME}.xml)
-configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/pkg_version.sh.in ${CMAKE_CURRENT_BINARY_DIR}/pkg_version.sh)
-configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/cloudsmith-upload.sh.in ${CMAKE_CURRENT_BINARY_DIR}/cloudsmith-upload.sh @ONLY)
-
 # On Android, PlugIns need a specific linkage set....
 if(QT_ANDROID)
     # These libraries are needed to create PlugIns on Android.
@@ -420,3 +420,5 @@ if(QT_ANDROID)
 endif(QT_ANDROID)
 
 find_package(Gettext REQUIRED)
+
+set(CMLOC ${SAVE_CMLOC})

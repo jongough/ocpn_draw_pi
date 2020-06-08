@@ -2,9 +2,11 @@
 # Author:      Pavel Kalian / Sean D'Epagnier Copyright: License:     GPLv3+
 # ---------------------------------------------------------------------------
 
+set(SAVE_CMLOC ${CMLOC})
 set(CMLOC "PluginLocalization: ")
 
 if(OCPN_FLATPAK_CONFIG)
+    set(CMLOC ${SAVE_CMLOC})
     return()
 endif(OCPN_FLATPAK_CONFIG)
 
@@ -113,3 +115,5 @@ if(GETTEXT_MSGFMT_EXECUTABLE)
 endif(GETTEXT_MSGFMT_EXECUTABLE)
 file(MAKE_DIRECTORY "Resources")
 message(STATUS "${CMLOC}Creating Resources directory")
+
+set(CMLOC ${SAVE_CMLOC})

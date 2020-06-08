@@ -1,5 +1,8 @@
-#
+# ---------------------------------------------------------------------------
+# Author:      Jon Gough based on the work of Pavel Kalian (Based on the work of Sean D'Epagnier) Copyright:   2020 License:     GPLv3+
+# ---------------------------------------------------------------------------
 
+set(SAVE_CMLOC ${CMLOC})
 set(CMLOC "PluginSetup: ")
 
 # Export variables used in plugin setup: GIT_HASH, GIT_COMMIT, PKG_TARGET, PKG_TARGET_VERSION and PKG_NVR
@@ -71,10 +74,10 @@ if(NOT WIN32)
     set(ARCH "i386")
     if(UNIX AND NOT APPLE)
 
-        message(STATUS "*** Will install to ${CMAKE_INSTALL_PREFIX}  ***")
+        message(STATUS "${CMLOC}*** Will install to ${CMAKE_INSTALL_PREFIX}  ***")
 
         if(EXISTS /etc/debian_version)
-            message(STATUS "*** Debian detected  ***")
+            message(STATUS "${CMLOC}*** Debian detected  ***")
             set(PACKAGE_FORMAT "DEB")
             set(PACKAGE_DEPS "libc6, libwxgtk3.0-0, wx3.0-i18n, libglu1-mesa (>= 7.0.0), libgl1-mesa-glx (>= 7.0.0), zlib1g, bzip2, libportaudio2")
             set(PACKAGE_RECS "xcalib,xdg-utils")
@@ -106,7 +109,7 @@ if(NOT WIN32)
 
         if(NOT DEFINED PACKAGE_FORMAT)
             if(EXISTS /etc/redhat-release)
-                message(STATUS "*** Redhat detected  ***")
+                message(STATUS "${CMLOC}*** Redhat detected  ***")
                 set(PACKAGE_FORMAT "RPM")
                 set(PACKAGE_DEPS "opencpn")
                 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
@@ -124,7 +127,7 @@ if(NOT WIN32)
                OR EXISTS /etc/sysconfig/SuSEfirewall2.d
                OR EXISTS /etc/suse-release
                OR EXISTS /etc/SuSE-release)
-                message(STATUS "*** OpenSUSE detected  ***")
+                message(STATUS "${CMLOC}*** OpenSUSE detected  ***")
                 set(PACKAGE_FORMAT "RPM")
                 set(PACKAGE_DEPS "opencpn")
                 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
@@ -227,3 +230,5 @@ if(CMAKE_VERSION VERSION_GREATER 3.9)
         set(CMAKE_CXX_CPPCHECK ${CPPCHECK_EXECUTABLE})
     endif()
 endif()
+
+set(CMLOC ${SAVE_CMLOC})
