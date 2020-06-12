@@ -22,13 +22,11 @@ set(TITLE_NAME "OCPNDRAW")
 set(PACKAGE_CONTACT "Jon Gough")
 set(PACKAGE "ocpn_draw")
 
-project(${PACKAGE})
-
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "0")
-set(VERSION_TWEAK "5")
-set(VERSION_DATE "08/06/2020")
+set(VERSION_TWEAK "7")
+set(VERSION_DATE "10/06/2020")
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -82,6 +80,12 @@ set(CMAKE_BUILD_TYPE
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 
 message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")
+
+##
+## ----- The statements below are used to setup standard variables that are required by the CMAKE process - do not remove ----- ##
+##
+
+project(${PACKAGE})
 
 include("cmake/PluginSetup.cmake")
 
