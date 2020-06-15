@@ -111,7 +111,7 @@ else()
 endif()
 message(STATUS "${CMLOC}PKG_TARGET_GTK: ${PKG_TARGET_GTK}")
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
     # Handle gtk3 build variant
     string(STRIP "${PKG_TARGET}" PKG_TARGET)
     string(TOLOWER "${PKG_TARGET}" PKG_TARGET)
