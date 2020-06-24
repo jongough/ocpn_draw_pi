@@ -2,6 +2,7 @@
 # Author:      Pavel Kalian (Based on the work of Sean D'Epagnier) Copyright:   2014 License:     GPLv3+
 # ---------------------------------------------------------------------------
 
+set(SAVE_CMLOC ${CMLOC})
 set(CMLOC "PluginInstall: ")
 
 if(OCPN_FLATPAK_CONFIG)
@@ -157,3 +158,5 @@ if(APPLE)
     message(STATUS "${CMLOC}Install Target: OpenCPN.app/Contents/PlugIns")
 
 endif(APPLE)
+
+set(CMLOC ${SAVE_CMLOC})
