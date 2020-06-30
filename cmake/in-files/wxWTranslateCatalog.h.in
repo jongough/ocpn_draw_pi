@@ -33,7 +33,11 @@
 #undef _
 #endif // _
 #if wxCHECK_VERSION(3,0,0)
-#define _(s) wxGetTranslation((s), wxS("opencpn-${PROJECT_NAME}"))
+#if ${OCPN_API_VERSION_MINOR} == 16
+#define _(s) wxGetTranslation((s), wxS("${PROJECT_NAME}_pi"))
+#else
+#define _(s) wxGetTranslation((s), wxS("opencpn-${PROJECT_NAME}_pi"))
+#endif
 #else // wxCHECK_VERSION(3,0,0)
     #define _(s) wxGetTranslation(wxT(s), wxT("opencpn-${PROJECT_NAME}"))
 #endif // wxCHECK_VERSION(3,0,0)

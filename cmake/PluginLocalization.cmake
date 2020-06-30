@@ -114,7 +114,5 @@ if(GETTEXT_MSGFMT_EXECUTABLE)
         DEPENDS ${_gmoFiles})
     add_dependencies(${PACKAGE_NAME} ${I18N_NAME}-i18n)
 endif(GETTEXT_MSGFMT_EXECUTABLE)
-file(MAKE_DIRECTORY "Resources")
-message(STATUS "${CMLOC}Creating Resources directory")
 
 set(CMLOC ${SAVE_CMLOC})
