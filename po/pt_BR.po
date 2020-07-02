@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-03 08:01+1000\n"
-"PO-Revision-Date: 2020-06-02 22:17\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-07-02 21:52\n"
+"Last-Translator: \n"
 "Language-Team: Portuguese, Brazilian\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: pt-BR\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
+"X-Crowdin-File-ID: 173\n"
 
 #: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:518
 msgid "Dead Reckoning"
@@ -1260,19 +1262,19 @@ msgstr "Transparência do fundo"
 
 #: src/ODPointPropertiesDialog.cpp:350 src/ODPropertiesDialogDef.cpp:432
 msgid "Character Based"
-msgstr "Baseado em Caracteres"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:350 src/ODPropertiesDialogDef.cpp:432
 msgid "Font Based"
-msgstr "Baseado em Fonte"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:352 src/ODPropertiesDialogDef.cpp:434
 msgid "Maximum Width Type"
-msgstr "Largura máxima"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:359 src/ODPropertiesDialogDef.cpp:441
 msgid "Maximum Text Width"
-msgstr "Largura máxima do texto"
+msgstr ""
 
 #: src/ODPointPropertiesDialog.cpp:369 src/ODPropertiesDialogDef.cpp:456
 msgid "Text Font"
@@ -1336,7 +1338,7 @@ msgstr "Links do botão esquerdo são abertos no navegador padrão."
 
 #: src/ODPointPropertiesImpl.cpp:561
 msgid "Display Text"
-msgstr "Apresentar texto"
+msgstr ""
 
 #: src/ODPointPropertiesImpl.cpp:835
 msgid "OCPN Draw Point, Layer: "
@@ -1360,11 +1362,11 @@ msgstr "Propriedades Ponto DR, camada: "
 
 #: src/ODPointPropertiesImpl.cpp:845
 msgid "PIL Point Properties, Layer: "
-msgstr "Propriedades Ponto PIL, Camada: "
+msgstr ""
 
 #: src/ODPointPropertiesImpl.cpp:847
 msgid "GZ Point Properties, Layer: "
-msgstr "Propriedades Ponto GZ, Camada: "
+msgstr ""
 
 #: src/ODPointPropertiesImpl.cpp:855
 msgid "OCPN Draw Point"
@@ -1388,7 +1390,7 @@ msgstr "Propriedades Ponto DR"
 
 #: src/ODPointPropertiesImpl.cpp:865
 msgid "PIL Point Properties"
-msgstr "Propriedades Ponto PIL"
+msgstr ""
 
 #: src/ODPointPropertiesImpl.cpp:867
 msgid "Guard Zone Point Properties"
@@ -1760,11 +1762,11 @@ msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:1334
 msgid "OCPN Draw API Version:"
-msgstr "Versão da API do OCPN Draw:"
+msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:1362
 msgid "OCPN API Version:"
-msgstr "Versão da API do OCPN:"
+msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:1390
 msgid "Date:"
@@ -2190,7 +2192,7 @@ msgstr "Desenho OCPN"
 
 #: src/ocpn_draw_pi.cpp:663
 msgid "Use OCPN Draw Tool"
-msgstr "Usar ferramenta de desenho OCPN"
+msgstr ""
 
 #: src/ocpn_draw_pi.cpp:947
 msgid "General drawing for OpenCPN"

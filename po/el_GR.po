@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-03 08:01+1000\n"
-"PO-Revision-Date: 2020-06-02 22:16\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-07-02 21:51\n"
+"Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: el\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
+"X-Crowdin-File-ID: 173\n"
 
 #: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:518
 msgid "Dead Reckoning"
@@ -927,15 +929,15 @@ msgstr "Εμφάνιση κάθετης\n"
 
 #: src/ODPathPropertiesDialogDef.cpp:227 src/ODPropertiesDialogDef.cpp:971
 msgid "Arc"
-msgstr ""
+msgstr "Τόξο"
 
 #: src/ODPathPropertiesDialogDef.cpp:227 src/ODPropertiesDialogDef.cpp:971
 msgid "Straight"
-msgstr ""
+msgstr "Ευθεία"
 
 #: src/ODPathPropertiesDialogDef.cpp:229 src/ODPropertiesDialogDef.cpp:973
 msgid "Line Type"
-msgstr ""
+msgstr "Τύπος γραμμής"
 
 #: src/ODPathPropertiesDialogDef.cpp:241
 msgid "First Angle (-P/+S)"
@@ -1420,7 +1422,7 @@ msgstr "Παράσυρση ποντικιού με αριστερό πλήκτρ
 
 #: src/ODPropertiesDialogDef.cpp:43
 msgid "Show Layers"
-msgstr ""
+msgstr "Ταξίδια"
 
 #: src/ODPropertiesDialogDef.cpp:49
 msgid "OCPN_Draw Nav Object Backups"
@@ -1757,7 +1759,7 @@ msgstr "Ενημέρωση κώδικα:"
 
 #: src/ODPropertiesDialogDef.cpp:1323
 msgid "Tweak:"
-msgstr ""
+msgstr "Tweak"
 
 #: src/ODPropertiesDialogDef.cpp:1334
 msgid "OCPN Draw API Version:"
@@ -1989,11 +1991,11 @@ msgstr "Σημεία OD"
 
 #: src/PathAndPointManagerDialogDef.cpp:98
 msgid "New &temporary Layer"
-msgstr ""
+msgstr "Νέο &προσωρινό ταξίδι"
 
 #: src/PathAndPointManagerDialogDef.cpp:101
 msgid "New persistent &Layer"
-msgstr ""
+msgstr "Νέα μόνιμο &ταξίδι"
 
 #: src/PathAndPointManagerDialogDef.cpp:107
 msgid "Show on &chart"
@@ -2170,7 +2172,7 @@ msgstr "Σίγουρα θέλετε να διαγράψετε αυτό το τα
 
 #: src/PathAndPointManagerDialogImpl.cpp:1670
 msgid "The file will also be deleted from OCPN Draw's layers directory."
-msgstr ""
+msgstr "Το αρχείο θα διαγραφεί κι από τον φάκελο ταξιδιών του OpenCPN."
 
 #: src/PathAndPointManagerDialogImpl.cpp:1943
 msgid "(Unnamed Layer)"
