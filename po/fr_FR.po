@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-06-03 08:01+1000\n"
-"PO-Revision-Date: 2020-06-02 22:16\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2020-07-02 21:51\n"
+"Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
@@ -12,8 +12,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-Project: opencpn\n"
+"X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
+"X-Crowdin-File-ID: 173\n"
 
 #: include/ODDRDialogDef.h:61 src/ODToolbarImpl.cpp:518
 msgid "Dead Reckoning"
@@ -926,15 +928,15 @@ msgstr "Montrer la perpendiculaire\n"
 
 #: src/ODPathPropertiesDialogDef.cpp:227 src/ODPropertiesDialogDef.cpp:971
 msgid "Arc"
-msgstr ""
+msgstr "Arc"
 
 #: src/ODPathPropertiesDialogDef.cpp:227 src/ODPropertiesDialogDef.cpp:971
 msgid "Straight"
-msgstr ""
+msgstr "Droit"
 
 #: src/ODPathPropertiesDialogDef.cpp:229 src/ODPropertiesDialogDef.cpp:973
 msgid "Line Type"
-msgstr ""
+msgstr "Type de ligne"
 
 #: src/ODPathPropertiesDialogDef.cpp:241
 msgid "First Angle (-P/+S)"
@@ -1419,7 +1421,7 @@ msgstr "Permettre au bouton gauche de la souris de déplacer"
 
 #: src/ODPropertiesDialogDef.cpp:43
 msgid "Show Layers"
-msgstr ""
+msgstr "Couches : Montrer"
 
 #: src/ODPropertiesDialogDef.cpp:49
 msgid "OCPN_Draw Nav Object Backups"
@@ -1754,7 +1756,7 @@ msgstr "Patch :"
 
 #: src/ODPropertiesDialogDef.cpp:1323
 msgid "Tweak:"
-msgstr ""
+msgstr "Ajuster:"
 
 #: src/ODPropertiesDialogDef.cpp:1334
 msgid "OCPN Draw API Version:"
@@ -1986,11 +1988,11 @@ msgstr "Points du traceur"
 
 #: src/PathAndPointManagerDialogDef.cpp:98
 msgid "New &temporary Layer"
-msgstr ""
+msgstr "Couche nouvelle et temporaire"
 
 #: src/PathAndPointManagerDialogDef.cpp:101
 msgid "New persistent &Layer"
-msgstr ""
+msgstr "Couche persistante"
 
 #: src/PathAndPointManagerDialogDef.cpp:107
 msgid "Show on &chart"
@@ -2167,7 +2169,7 @@ msgstr "Couche : Etes vous certain de vouloir la détruire et <TOUT> ses contenu
 
 #: src/PathAndPointManagerDialogImpl.cpp:1670
 msgid "The file will also be deleted from OCPN Draw's layers directory."
-msgstr ""
+msgstr "Le fichier sera également supprimé du dossier des couches d'OpenCPN."
 
 #: src/PathAndPointManagerDialogImpl.cpp:1943
 msgid "(Unnamed Layer)"
