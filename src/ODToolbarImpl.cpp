@@ -509,7 +509,10 @@ void ODToolbarImpl::UpdateIcons( void )
 void ODToolbarImpl::AddTools(void)
 {
     Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
-    
+    DEBUGST("Width: ");
+    DEBUGCONT(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth());
+    DEBUGCONT(", Height: ");
+    DEBUGEND(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight());
     m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
     m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary, wxNullBitmap, _("Create Boundary"), wxEmptyString );
     m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point, wxNullBitmap, _("Create Boundary Point"), wxEmptyString );
