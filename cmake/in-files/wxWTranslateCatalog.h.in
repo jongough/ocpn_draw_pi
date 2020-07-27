@@ -33,7 +33,7 @@
 #undef _
 #endif // _
 #if wxCHECK_VERSION(3,0,0)
-#define _(s) wxGetTranslation((s), wxS("opencpn-${PACKAGE_NAME}"))
+    #define _(s) wxGetTranslation((s), wxS("opencpn-${PACKAGE_NAME}"))
 #else // wxCHECK_VERSION(3,0,0)
 #define _(s) wxGetTranslation(wxT(s), wxT("opencpn-${PACKAGE_NAME}"))
 #endif // wxCHECK_VERSION(3,0,0)
