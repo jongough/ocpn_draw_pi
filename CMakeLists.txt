@@ -258,7 +258,8 @@ set(OCPNHDRS
 
 set(EXTSRC ${EXTSRC} extsrc/clipper.cpp extsrc/pugixml.cpp)
 
-set(EXTINCLUDE ${EXTINCLUDE} extinclude/clipper.hpp extinclude/pugiconfig.hpp extinclude/pugixml.hpp)
+#set(EXTINCLUDE ${EXTINCLUDE} extinclude/clipper.hpp extinclude/pugiconfig.hpp extinclude/pugixml.hpp)
+set(EXTINCLUDE ${EXTINCLUDE} extinclude)
 
 if(APPLE)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
@@ -272,8 +273,10 @@ if(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Adding JSON Schema validation")
 
     set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp)
-    set(EXTINCLUDE ${EXTINCLUDE} extinclude/nlohmann/json.hpp extinclude/json-schema-validator/json-schema.hpp)
-    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
+#    set(EXTINCLUDE ${EXTINCLUDE} extinclude/nlohmann/json.hpp extinclude/json-schema-validator/json-schema.hpp)
+    set(EXTINCLUDE ${EXTINCLUDE} "extinclude/nlohmannl;extinclude/json-schema-validator")
+#    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
+
 else(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
 endif(OD_JSON_SCHEMA_VALIDATOR)
@@ -297,7 +300,8 @@ endif(OCPN_MIN_VERSION)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extsrc/mygdal)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE})
+message(STATUS "${CMLOC}EXTINCLUDE: ${EXTINCLUDE}")
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)
@@ -349,7 +353,7 @@ get_property(
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     PROPERTY INCLUDE_DIRECTORIES)
 foreach(dir ${dirs})
-    message(STATUS "${CMLOC}dir='${dir}'")
+    message(STATUS "${CMLOC}include dir='${dir}'")
 endforeach()
 
 #

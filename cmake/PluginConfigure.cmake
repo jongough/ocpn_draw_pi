@@ -356,8 +356,6 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
         message(STATUS "${CMLOC}Using extsrc/glshim")
         add_subdirectory(extsrc/glshim)
     endif()
-    set(EXTINCLUDE ${EXTINCLUDE} extinclude/andriod/wx/datectrl.h)
-    message(STATUS "${CMLOC}EXTINCLUDE: ${EXTINCLUDE}")
 
 endif(QT_ANDROID AND USE_GL MATCHES "ON")
 
