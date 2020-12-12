@@ -307,6 +307,7 @@ if(ARCH MATCHES "arm*"
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
         add_subdirectory(src/glshim)
+        set(EXTINCLUDE ${EXTINCLUDE} extinclude/andriod/wx/datectrl.h)
 
         set(OPENGL_LIBRARIES "GL_static" "EGL" "X11" "drm")
     endif()

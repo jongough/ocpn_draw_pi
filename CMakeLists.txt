@@ -283,7 +283,6 @@ option(OD_USE_SVG "Use SVG graphics" ON)
 if(OD_USE_SVG)
     message(STATUS "${CMLOC}SVG support enabled...")
     if(NOT QT_ANDROID)
-
         add_definitions(-DODraw_USE_SVG)
     endif(NOT QT_ANDROID)
 endif(OD_USE_SVG)
