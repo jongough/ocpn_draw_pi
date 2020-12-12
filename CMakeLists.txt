@@ -50,7 +50,7 @@ set(ALPHA "alpha") # Standard Repos
 
 set(CLOUDSMITH_USER "opencpn")
 # set this if your cloudsmith repository name does not match your git repository name set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
-set(CLOUDSMITH_BASE_REPOSITORY "testplugin")
+set(CLOUDSMITH_BASE_REPOSITORY "ocpn_draw")
 
 set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/draw.html")
 set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
