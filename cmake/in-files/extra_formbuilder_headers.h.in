@@ -1,5 +1,5 @@
 /* Handle translation using ODraw translation catalog first */
-#include wxWTranslateCatalog.h
+#include "wxWTranslateCatalog.h"
 
 /* Handle building correctly on andrioid */
 #ifdef __OCPN__ANDROID__

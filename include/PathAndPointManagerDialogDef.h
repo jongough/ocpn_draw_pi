@@ -25,6 +25,8 @@
 #include <wx/notebook.h>
 #include <wx/dialog.h>
 
+#include "extra_formbuilder_headers.h"
+
 ///////////////////////////////////////////////////////////////////////////
 
 
