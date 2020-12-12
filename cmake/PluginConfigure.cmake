@@ -307,7 +307,6 @@ if(ARCH MATCHES "arm*"
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
         add_subdirectory(src/glshim)
-        set(EXTINCLUDE ${EXTINCLUDE} extinclude/andriod/wx/datectrl.h)
 
         set(OPENGL_LIBRARIES "GL_static" "EGL" "X11" "drm")
     endif()
@@ -357,6 +356,9 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
         message(STATUS "${CMLOC}Using extsrc/glshim")
         add_subdirectory(extsrc/glshim)
     endif()
+    set(EXTINCLUDE ${EXTINCLUDE} extinclude/andriod/wx/datectrl.h)
+    message(STATUS "${CMLOC}EXTINCLUDE: ${EXTINCLUDE}")
+
 endif(QT_ANDROID AND USE_GL MATCHES "ON")
 
 if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
