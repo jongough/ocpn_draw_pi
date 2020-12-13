@@ -319,7 +319,7 @@ IF(QT_ANDROID)
     ADD_DEFINITIONS(-DOCPN_USE_WRAPPER)
     ADD_DEFINITIONS(-DANDROID)
 
-    SET(CMAKE_CXX_FLAGS "-pthread -fPIC -O2 -g")
+    SET(CMAKE_CXX_FLAGS "-pthread -fPIC -O2 -g -H")
 
     ## Compiler flags
     add_definitions( " -s")
