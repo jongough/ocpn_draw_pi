@@ -50,7 +50,7 @@ parameters:
         default: false
     run_build_android_arm64:
         type: boolean
-        default: true
+        default: false
     run_build_android_armhf:
         type: boolean
         default: true
