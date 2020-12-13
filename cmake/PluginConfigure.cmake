@@ -345,7 +345,6 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
     message(STATUS "${CMLOC}Using GLESv1 for Android")
     add_definitions(-DocpnUSE_GLES)
     add_definitions(-DocpnUSE_GL)
-    add_definitions(-D--with-opengl)
 
     set(OPENGLES_FOUND "YES")
     set(OPENGL_FOUND "YES")
