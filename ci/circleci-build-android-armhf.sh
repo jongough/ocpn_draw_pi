@@ -44,6 +44,7 @@ cmake  \
   -DCMAKE_CXX_COMPILER=/opt/android/android-ndk-r20/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang++ \
   -DCMAKE_C_COMPILER=/opt/android/android-ndk-r20/toolchains/llvm/prebuilt/linux-x86_64/bin/armv7a-linux-androideabi21-clang \
   -DOCPN_Android_Common=OCPNAndroidCommon-master \
+  -DwxUSE_GRAPHICS_CONTEXT \
   -DPREFIX=/ \
   ..
 
