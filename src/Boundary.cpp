@@ -39,8 +39,6 @@
 #else
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
 #include "GL/gl_private.h"
-#include "wx/datectrl.h"
-#include "wx/graphics.h"
 #endif
 
 #endif
@@ -48,7 +46,6 @@
 #ifdef ocpnUSE_GL
 #include <wx/glcanvas.h>
 #endif
-
 
 #include <wx/graphics.h>
 
