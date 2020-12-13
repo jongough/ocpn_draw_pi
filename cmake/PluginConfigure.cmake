@@ -318,7 +318,6 @@ IF(QT_ANDROID)
     ADD_DEFINITIONS(-D__OCPN__ANDROID__)
     ADD_DEFINITIONS(-DOCPN_USE_WRAPPER)
     ADD_DEFINITIONS(-DANDROID)
-    ADD_DEFINITIONS(-DwxUSE_GRAPHICS_CONTEXT 1)
 
     SET(CMAKE_CXX_FLAGS "-pthread -fPIC -O2 -g")
 
@@ -345,6 +344,7 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
     message(STATUS "${CMLOC}Using GLESv1 for Android")
     add_definitions(-DocpnUSE_GLES)
     add_definitions(-DocpnUSE_GL)
+    add_definitions(-H)
 
     set(OPENGLES_FOUND "YES")
     set(OPENGL_FOUND "YES")
@@ -357,6 +357,7 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
         message(STATUS "${CMLOC}Using extsrc/glshim")
         add_subdirectory(extsrc/glshim)
     endif()
+    set(EXTINCLUDE ${EXTINCLUDE} android)
 
 endif(QT_ANDROID AND USE_GL MATCHES "ON")
 
