@@ -320,7 +320,7 @@ IF(QT_ANDROID)
     ADD_DEFINITIONS(-DANDROID)
     ADD_DEFINITIONS(-DwxUSE_GRAPHICS_CONTEXT)
 
-    SET(CMAKE_CXX_FLAGS "-pthread -fPIC -O2 -g -H")
+    SET(CMAKE_CXX_FLAGS "-pthread -fPIC -O2 -g")
 
     ## Compiler flags
     add_definitions( " -s")
