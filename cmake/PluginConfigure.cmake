@@ -456,7 +456,7 @@ else(NOT QT_ANDROID)
         INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtTest")
 
         INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
-        INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/include")
+        INCLUDE_DIRECTORIES( BEFORE "${OCPN_Android_Common}/wxWidgets/include")
 
         SET(wxWidgets_LIBRARIES
         ${CMAKE_CURRENT_SOURCE_DIR}/${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/lib/libQt5Core.so
