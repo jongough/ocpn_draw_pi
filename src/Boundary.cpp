@@ -36,11 +36,11 @@
 #ifndef __OCPN__ANDROID__
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "wx/datectrl.h"
-#include "wx/graphics.h"
 #else
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
 #include "GL/gl_private.h"
+#include "wx/datectrl.h"
+#include "wx/graphics.h"
 #endif
 
 #endif
