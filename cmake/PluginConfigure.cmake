@@ -357,7 +357,7 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
         message(STATUS "${CMLOC}Using extsrc/glshim")
         add_subdirectory(extsrc/glshim)
     endif()
-    set(EXTINCLUDE ${EXTINCLUDE} android)
+    set(EXTINCLUDE ${EXTINCLUDE} extinclude/android)
 
 endif(QT_ANDROID AND USE_GL MATCHES "ON")
 
