@@ -3,7 +3,7 @@
 
 /* Handle building correctly on andrioid */
 #ifdef __OCPN__ANDROID__
-#include "wx/datectrl.h"
+//#include "wx/datectrl.h"
 #else
-class wxDatePickerCtrl;
+//class wxDatePickerCtrl;
 #endif
