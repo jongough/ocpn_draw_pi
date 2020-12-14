@@ -1141,7 +1141,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 #ifndef __OCPN__ANDROID__
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #else
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_NV);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_NV);
 #endif
         gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
 
@@ -1201,7 +1201,7 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
         #ifndef __OCPN__ANDROID__
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         #else
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_NV);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_NV);
         #endif
         gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
         
