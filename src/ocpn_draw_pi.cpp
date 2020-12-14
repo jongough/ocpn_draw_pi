@@ -86,7 +86,12 @@
 #include <memory>
 
 #include <wx/jsonreader.h>
-#include "GL/gl.h"
+
+#ifndef __OCPN__ANDROID__
+#include <GL/gl.h>
+#else
+#include <GL/gl_private.h>
+#endif
 
 #ifndef DECL_EXP
 #ifdef __WXMSW__

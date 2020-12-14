@@ -42,10 +42,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #else
-#ifdef wxUSE_GRAPHICS_CONTEXT
-#undef wxUSE_GRAPHICS_CONTEXT
-#endif
-#define wxUSE_GRAPHICS_CONTEXT 1
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
 #include "GL/gl_private.h"
 #endif

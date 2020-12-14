@@ -47,7 +47,11 @@
 #include <wx/apptrait.h>
 #include <wx/fontenum.h>
 
-#include "GL/gl.h"
+#ifndef __OCPN__ANDROID__
+#include <GL/gl.h>
+#else
+#include "GL/gl_private.h"
+#endif
 
 //--------------------------------------------------------------------------------
 //      PointMan   Implementation
