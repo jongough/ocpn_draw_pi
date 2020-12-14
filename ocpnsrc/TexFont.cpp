@@ -32,9 +32,15 @@
 #include "linmath.h"
 #include "shaders.h"
 #else
- #include <GL/gl.h>
- #include <GL/glu.h>
+#ifndef __OCPN__ANDROID__
+#include <GL/gl.h>
+#include <GL/glu.h>
+#else
+#include "qopengl.h"                  // this gives us the qt runtime gles2.h
+#include <GL/gl_private.h>
 #endif
+#endif
+
 
 #if 0
 #define TXF_CACHE 8
