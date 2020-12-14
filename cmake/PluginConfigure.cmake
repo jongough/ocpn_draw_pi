@@ -357,6 +357,7 @@ if(QT_ANDROID AND USE_GL MATCHES "ON")
         add_subdirectory(extsrc/glshim)
     endif()
     set(EXTINCLUDE ${EXTINCLUDE} extinclude/android)
+    set(EXTINCLUDE ${EXTINCLUDE} extsrc/glshim/include)
 
 endif(QT_ANDROID AND USE_GL MATCHES "ON")
 
