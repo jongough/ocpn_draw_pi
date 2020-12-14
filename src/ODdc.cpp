@@ -1095,7 +1095,11 @@ void __CALL_CONVENTION ODDCvertexCallback(GLvoid* arg)
 {
     GLvertex* vertex;
     vertex = (GLvertex*) arg;
+#ifndef __OCPN__ANDROID__
     if(g_bTexture2D) glTexCoord2d( vertex->info.x / g_iTextureWidth, vertex->info.y / g_iTextureHeight );
+#else
+    if(g_bTexture2D) glTexCoord2f( vertex->info.x / g_iTextureWidth, vertex->info.y / g_iTextureHeight );
+#endif
     glVertex2d( vertex->info.x, vertex->info.y );
 }
 
