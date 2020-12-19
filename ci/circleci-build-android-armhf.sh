@@ -13,17 +13,19 @@ pwd
 # but required for local build.
 #cd project
 
-ls -la
-
 #sudo chown -R 1000 /oesenc_pi/build_android_64_ci
-
 sudo apt-get -q update
 sudo apt-get -y install git cmake gettext unzip
 
 # Get the OCPN Android build support package.
 #NOT REQUIRED FOR LOCAL BUILD
-wget https://github.com/bdbcat/OCPNAndroidCommon/archive/master.zip
-unzip -qq -o master.zip
+echo "CIRCLECI_LOCAL: $CIRCLECI_LOCAL"
+if [ -z "$CIRCLECI_LOCAL" ]; then
+   wget https://github.com/bdbcat/OCPNAndroidCommon/archive/master.zip
+   unzip -qq -o master.zip
+else
+   unzip -qq -o master.zip
+fi
 
 pwd
 ls -la
