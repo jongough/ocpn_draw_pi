@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
@@ -19,1376 +19,1606 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " &Properties..."
-#~ msgstr " &Параметры..."
+msgid " &Properties..."
+msgstr " &Параметры..."
 #
-#~ msgid " To: "
-#~ msgstr " Куда: "
+msgid " To: "
+msgstr " Куда: "
 #
-#~ msgid ""
-#~ " shorter than rhumbline.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " короче локсодромического.\n"
-#~ "\n"
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+" короче локсодромического.\n"
+"\n"
 #
-#~ msgid " to "
-#~ msgstr " до  "
+msgid " to "
+msgstr " до  "
 #
-#~ msgid "&Activate"
-#~ msgstr "&Активировать"
+msgid "&Activate"
+msgstr "&Активировать"
 #
-#~ msgid "&Apply"
-#~ msgstr "&Применить"
+msgid "&Add"
+msgstr ""
 #
-#~ msgid "&Cancel"
-#~ msgstr "&Отмена"
+msgid "&Apply"
+msgstr "&Применить"
 #
-#~ msgid "&Center View"
-#~ msgstr "&Показать на карте"
+msgid "&Cancel"
+msgstr "&Отмена"
 #
-#~ msgid "&Deactivate"
-#~ msgstr "&Деактивировать"
+msgid "&Center View"
+msgstr "&Показать на карте"
 #
-#~ msgid "&Delete"
-#~ msgstr "&Удалить"
+msgid "&Deactivate"
+msgstr "&Деактивировать"
 #
-#~ msgid "&New"
-#~ msgstr "&Создать"
+msgid "&Delete"
+msgstr "&Удалить"
 #
-#~ msgid "&OK"
-#~ msgstr "&OK"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Удалить выделенное"
 #
-#~ msgid "&Properties"
-#~ msgstr "&Параметры"
+msgid "&Edit"
+msgstr ""
 #
-#~ msgid "&Remove Selected"
-#~ msgstr "&Удалить выделенное"
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Удалить выделенное"
 #
-#~ msgid "(Unnamed )"
-#~ msgstr "(Безымянный )"
+#, fuzzy
+msgid "&List contents"
+msgstr "Раскрыть содержимое "
 #
-#~ msgid "(Unnamed Layer)"
-#~ msgstr "(безымянный слой)"
+msgid "&New"
+msgstr "&Создать"
 #
-#~ msgid "(Unnamed) "
-#~ msgstr "(Безымянный) "
+msgid "&OK"
+msgstr "&OK"
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(безымянный)"
+msgid "&Properties"
+msgstr "&Параметры"
 #
-#~ msgid "0"
-#~ msgstr "0"
+msgid "&Remove Selected"
+msgstr "&Удалить выделенное"
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+msgid "(Unnamed )"
+msgstr "(Безымянный )"
 #
-#~ msgid "0.5"
-#~ msgstr "0.5"
+msgid "(Unnamed Layer)"
+msgstr "(безымянный слой)"
 #
-#~ msgid "1"
-#~ msgstr "1"
+msgid "(Unnamed) "
+msgstr "(Безымянный) "
 #
-#~ msgid "1 Pixel"
-#~ msgstr "1 Пиксель"
+msgid "(unnamed)"
+msgstr "(безымянный)"
 #
-#~ msgid "1 pixel"
-#~ msgstr "1 пиксель"
+msgid "*.*"
+msgstr ""
 #
-#~ msgid "1.0"
-#~ msgstr "1.0"
+msgid "0"
+msgstr "0"
 #
-#~ msgid "10"
-#~ msgstr "10"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "10 Pixels"
-#~ msgstr "10 Пикселей"
+msgid "0.5"
+msgstr "0.5"
 #
-#~ msgid "10 pixels"
-#~ msgstr "10 пикселей"
+msgid "1"
+msgstr "1"
 #
-#~ msgid "2"
-#~ msgstr "2"
+msgid "1 Pixel"
+msgstr "1 Пиксель"
 #
-#~ msgid "2 Pixels"
-#~ msgstr "2 Пикселя"
+msgid "1 pixel"
+msgstr "1 пиксель"
 #
-#~ msgid "2 pixels"
-#~ msgstr "2 пикселя"
+msgid "1.0"
+msgstr "1.0"
 #
-#~ msgid "3"
-#~ msgstr "3"
+msgid "10"
+msgstr "10"
 #
-#~ msgid "3 Pixels"
-#~ msgstr "3 Пикселя"
+msgid "10 Pixels"
+msgstr "10 Пикселей"
 #
-#~ msgid "3 pixels"
-#~ msgstr "3 пикселя"
+msgid "10 pixels"
+msgstr "10 пикселей"
 #
-#~ msgid "4"
-#~ msgstr "4"
+msgid "2"
+msgstr "2"
 #
-#~ msgid "4 Pixels"
-#~ msgstr "4 Пикселя"
+msgid "2 Pixels"
+msgstr "2 Пикселя"
 #
-#~ msgid "4 pixels"
-#~ msgstr "4 пикселя"
+msgid "2 pixels"
+msgstr "2 пикселя"
 #
-#~ msgid "5"
-#~ msgstr "5"
+msgid "3"
+msgstr "3"
 #
-#~ msgid "5 Pixels"
-#~ msgstr "5 Пикселей"
+msgid "3 Pixels"
+msgstr "3 Пикселя"
 #
-#~ msgid "5 pixels"
-#~ msgstr "5 пикселей"
+msgid "3 pixels"
+msgstr "3 пикселя"
 #
-#~ msgid "6"
-#~ msgstr "6"
+msgid "4"
+msgstr "4"
 #
-#~ msgid "6 Pixels"
-#~ msgstr "6 Пикселей"
+msgid "4 Pixels"
+msgstr "4 Пикселя"
 #
-#~ msgid "6 pixels"
-#~ msgstr "6 пикселей"
+msgid "4 pixels"
+msgstr "4 пикселя"
 #
-#~ msgid "7"
-#~ msgstr "7"
+msgid "5"
+msgstr "5"
 #
-#~ msgid "7 Pixels"
-#~ msgstr "7 Пикселей"
+msgid "5 Pixels"
+msgstr "5 Пикселей"
 #
-#~ msgid "7 pixels"
-#~ msgstr "7 пикселей"
+msgid "5 pixels"
+msgstr "5 пикселей"
 #
-#~ msgid "8"
-#~ msgstr "8"
+msgid "6"
+msgstr "6"
 #
-#~ msgid "8 Pixels"
-#~ msgstr "8 Пикселей"
+msgid "6 Pixels"
+msgstr "6 Пикселей"
 #
-#~ msgid "8 pixels"
-#~ msgstr "8 пикселей"
+msgid "6 pixels"
+msgstr "6 пикселей"
 #
-#~ msgid "9"
-#~ msgstr "9"
+msgid "7"
+msgstr "7"
 #
-#~ msgid "9 Pixels"
-#~ msgstr "9 Пикселей"
+msgid "7 Pixels"
+msgstr "7 Пикселей"
 #
-#~ msgid "9 pixels"
-#~ msgstr "9 пикселей"
+msgid "7 pixels"
+msgstr "7 пикселей"
 #
-#~ msgid "About"
-#~ msgstr "О программе"
+msgid "8"
+msgstr "8"
 #
-#~ msgid "Activate"
-#~ msgstr "Активировать"
+msgid "8 Pixels"
+msgstr "8 Пикселей"
 #
-#~ msgid "Active"
-#~ msgstr "Активный"
+msgid "8 pixels"
+msgstr "8 пикселей"
 #
-#~ msgid "Active Centre Line Colour"
-#~ msgstr "Цвет Активной Центральной Линии"
+msgid "9"
+msgstr "9"
 #
-#~ msgid ""
-#~ "Active DR Line\n"
-#~ "Colour"
-#~ msgstr "Цвет Активной Линии АС"
+msgid "9 Pixels"
+msgstr "9 Пикселей"
 #
-#~ msgid "Active EBL Line Colour"
-#~ msgstr "Цвет Активной Линии ЭВН"
+msgid "9 pixels"
+msgstr "9 пикселей"
 #
-#~ msgid "Active Fill Colour"
-#~ msgstr "Активный Цвет Заливки"
+msgid "About"
+msgstr "О программе"
 #
-#~ msgid "Active Line Colour"
-#~ msgstr "Активный Цвет Линии"
+msgid "Activate"
+msgstr "Активировать"
 #
-#~ msgid "Active Offset Line 2 Colour"
-#~ msgstr "Цвет Активной Смещенной Линии-2"
+msgid "Active"
+msgstr "Активный"
 #
-#~ msgid "Active Offset Line Colour"
-#~ msgstr "Цвет Активной Смещенной Линии"
+msgid "Active Centre Line Colour"
+msgstr "Цвет Активной Центральной Линии"
 #
-#~ msgid "Add Index Line"
-#~ msgstr "Добавить индексную строку"
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr "Цвет Активной Линии АС"
 #
-#~ msgid "All"
-#~ msgstr "Все"
+msgid "Active EBL Line Colour"
+msgstr "Цвет Активной Линии ЭВН"
 #
-#~ msgid "Allow Left Mouse Button Drag"
-#~ msgstr "Разрешить перемещение объектов левой кн. мыши"
+msgid "Active Fill Colour"
+msgstr "Активный Цвет Заливки"
 #
-#~ msgid "Always"
-#~ msgstr "Всегда"
+msgid "Active Line Colour"
+msgstr "Активный Цвет Линии"
 #
-#~ msgid ""
-#~ "Always Show\n"
-#~ "EBL Info"
-#~ msgstr "Показывать информацию ЭВН"
+msgid "Active Offset Line 2 Colour"
+msgstr "Цвет Активной Смещенной Линии-2"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "Применение изменений от "
+msgid "Active Offset Line Colour"
+msgstr "Цвет Активной Смещенной Линии"
 #
-#~ msgid "Are you sure you want to delete <ALL> OD points?"
-#~ msgstr "Уверены, что хотите удалить ВСЕ точки?"
+msgid "Add Index Line"
+msgstr "Добавить индексную строку"
 #
-#~ msgid "Are you sure you want to delete <ALL> paths?"
-#~ msgstr "Уверены, что хотите удалить ВСЕ пути?"
+msgid "Add New"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete the selected object(s)"
-#~ msgstr "Уверены, что хотите удалить этот объект?"
+msgid "All"
+msgstr "Все"
 #
-#~ msgid "Are you sure you want to delete this Boundary Point?"
-#~ msgstr "Вы уверены, что хотите удалить эту Геозону?"
+msgid "Allow Left Mouse Button Drag"
+msgstr "Разрешить перемещение объектов левой кн. мыши"
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Вы действительно хотите удалить эту границу?"
+msgid "Always"
+msgstr "Всегда"
 #
-#~ msgid "Are you sure you want to delete this DR Point?"
-#~ msgstr "Вы уверены, что хотите удалить эту точку доктора?"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr "Показывать информацию ЭВН"
 #
-#~ msgid "Are you sure you want to delete this DR?"
-#~ msgstr "Вы уверены что хотите удалить этот DR?"
+msgid "Applying changes from "
+msgstr "Применение изменений от "
 #
-#~ msgid "Are you sure you want to delete this EBL Point?"
-#~ msgstr "Вы действительно хотите удалить эту точку EBL?"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this EBL?"
-#~ msgstr "Вы уверены что хотите удалить этот EBL?"
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Уверены, что хотите удалить ВСЕ точки?"
 #
-#~ msgid "Are you sure you want to delete this Guard Zone?"
-#~ msgstr "Вы действительно хотите удалить эту зону охраны?"
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Уверены, что хотите удалить ВСЕ пути?"
 #
-#~ msgid "Are you sure you want to delete this OD Point?"
-#~ msgstr "Вы уверены, что хотите удалить эту точку OD?"
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Уверены, что хотите удалить этот объект?"
 #
-#~ msgid "Are you sure you want to delete this PIL Point?"
-#~ msgstr "Вы действительно хотите удалить эту точку ЛПП?"
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Вы уверены, что хотите удалить эту Геозону?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line Group?"
-#~ msgstr ""
-#~ "Вы действительно хотите удалить группу линий Предварительной прокладки?"
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Вы действительно хотите удалить эту границу?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line?"
-#~ msgstr "Вы действительно хотите удалить эту параллельную индексную строку?"
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Вы уверены, что хотите удалить эту точку доктора?"
 #
-#~ msgid "Are you sure you want to delete this Text Point?"
-#~ msgstr "Вы действительно хотите удалить эту текстовую точку?"
+msgid "Are you sure you want to delete this DR?"
+msgstr "Вы уверены что хотите удалить этот DR?"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr "Уверены, что хотите удалить слой и ВСЁ его содержимое?"
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Вы действительно хотите удалить эту точку EBL?"
 #
-#~ msgid "Are you sure you want to remove this "
-#~ msgstr "Вы уверены, что хотите удалить этот "
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Вы уверены что хотите удалить этот EBL?"
 #
-#~ msgid "Are you sure you want to remove this Boundary Point?"
-#~ msgstr "Вы уверены, что хотите удалить эту Геозону?"
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Вы действительно хотите удалить эту зону охраны?"
 #
-#~ msgid "Are you sure you want to remove this DR Point?"
-#~ msgstr "Вы действительно хотите удалить эту точку DR?"
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Вы уверены, что хотите удалить эту точку OD?"
 #
-#~ msgid "Are you sure you want to remove this EBL Point?"
-#~ msgstr "Вы действительно хотите удалить эту точку EBL?"
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Вы действительно хотите удалить эту точку ЛПП?"
 #
-#~ msgid "Are you sure you want to remove this OD Point?"
-#~ msgstr "Вы уверены, что хотите удалить эту точку OD?"
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Вы действительно хотите удалить группу линий Предварительной прокладки?"
 #
-#~ msgid "Are you sure you want to remove this point?"
-#~ msgstr "Вы действительно хотите удалить этот пункт?"
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Вы действительно хотите удалить эту параллельную индексную строку?"
 #
-#~ msgid "Arrival Radius"
-#~ msgstr "Радиус Подхода"
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Вы действительно хотите удалить эту текстовую точку?"
 #
-#~ msgid "Background Colour"
-#~ msgstr "Цвет фона"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Уверены, что хотите удалить слой и ВСЁ его содержимое?"
 #
-#~ msgid "Background Density"
-#~ msgstr "Плотность фона"
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Вы уверены, что хотите удалить эту точку доктора?"
 #
-#~ msgid "Background Transparency"
-#~ msgstr "Прозрачность фона"
+msgid "Are you sure you want to remove this "
+msgstr "Вы уверены, что хотите удалить этот "
 #
-#~ msgid "Basic"
-#~ msgstr "Основной"
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Вы уверены, что хотите удалить эту Геозону?"
 #
-#~ msgid "Bearing"
-#~ msgstr "Пеленг"
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Вы действительно хотите удалить эту точку DR?"
 #
-#~ msgid "Bearing (M)"
-#~ msgstr "Пеленг (маг.)"
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Вы действительно хотите удалить эту точку EBL?"
 #
-#~ msgid "Bearing From-To"
-#~ msgstr "Пеленг От-До"
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Вы уверены, что хотите удалить эту точку OD?"
 #
-#~ msgid "Bearing From-To (M)"
-#~ msgstr "Пеленг От-До (Маг)"
+msgid "Are you sure you want to remove this point?"
+msgstr "Вы действительно хотите удалить этот пункт?"
 #
-#~ msgid "Bearing: "
-#~ msgstr "Азимут: "
+msgid "Arrival Radius"
+msgstr "Радиус Подхода"
 #
-#~ msgid "Boat"
-#~ msgstr "Судно"
+msgid "Background Colour"
+msgstr "Цвет фона"
 #
-#~ msgid "Bottom"
-#~ msgstr "Внизу"
+msgid "Background Density"
+msgstr "Плотность фона"
 #
-#~ msgid "Bottom Centre"
-#~ msgstr "Внизу по Центру"
+msgid "Background Transparency"
+msgstr "Прозрачность фона"
 #
-#~ msgid "Boundary"
-#~ msgstr "Геозона (Полигон)"
+msgid "Basic"
+msgstr "Основной"
 #
-#~ msgid "Boundary Point"
-#~ msgstr "Геозона (Круг)"
+msgid "Bearing"
+msgstr "Пеленг"
 #
-#~ msgid ""
-#~ "Boundary Point Inclusion\n"
-#~ "Size"
-#~ msgstr "Размер Точки Геозоны Входа"
+msgid "Bearing (M)"
+msgstr "Пеленг (маг.)"
 #
-#~ msgid "Boundary Point Properties"
-#~ msgstr "Параметры Геозоны Круг"
+msgid "Bearing From-To"
+msgstr "Пеленг От-До"
 #
-#~ msgid "Boundary Point Properties, Layer: "
-#~ msgstr "Параметры Геозоны Круг, слой: "
+msgid "Bearing From-To (M)"
+msgstr "Пеленг От-До (Маг)"
 #
-#~ msgid "Boundary Point Type"
-#~ msgstr "Тип Геозоны"
+msgid "Bearing: "
+msgstr "Азимут: "
 #
-#~ msgid "Boundary Properties"
-#~ msgstr "Параметры Геозоны"
+msgid "Boat"
+msgstr "Судно"
 #
-#~ msgid "Boundary Properties, Layer: "
-#~ msgstr "Параметры Геозоны, слой: "
+msgid "Bottom"
+msgstr "Внизу"
 #
-#~ msgid "Boundary Type"
-#~ msgstr "Тип Геозоны"
+msgid "Bottom Centre"
+msgstr "Внизу по Центру"
 #
-#~ msgid "Centre"
-#~ msgstr "Центр"
+msgid "Boundary"
+msgstr "Геозона (Полигон)"
 #
-#~ msgid "Centre Line Style"
-#~ msgstr "Стиль Центральной Линии"
+#, fuzzy
+msgid "Boundary '"
+msgstr "Геозона (Полигон)"
 #
-#~ msgid "Centre Line Width"
-#~ msgstr "Ширина Центральной Линии"
+msgid "Boundary Point"
+msgstr "Геозона (Круг)"
 #
-#~ msgid "Centre on moving boat"
-#~ msgstr "Центр на движущейся лодке"
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Скрыть значки"
 #
-#~ msgid "Change all Path Point Icons"
-#~ msgstr "Изменить все значки точек путей"
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr "Размер Точки Геозоны Входа"
 #
-#~ msgid "Combo!"
-#~ msgstr "Комбинация! (Фаталити?)!"
+msgid "Boundary Point Properties"
+msgstr "Параметры Геозоны Круг"
 #
-#~ msgid "Confirm"
-#~ msgstr "Подтверждение"
+msgid "Boundary Point Properties, Layer: "
+msgstr "Параметры Геозоны Круг, слой: "
 #
-#~ msgid "Confirm Object Delete"
-#~ msgstr "Подтверждение Удаления Объекта"
+msgid "Boundary Point Type"
+msgstr "Тип Геозоны"
 #
-#~ msgid "Control Line"
-#~ msgstr "Линия управления"
+msgid "Boundary Properties"
+msgstr "Параметры Геозоны"
 #
-#~ msgid "Copy"
-#~ msgstr "Копировать"
+msgid "Boundary Properties, Layer: "
+msgstr "Параметры Геозоны, слой: "
 #
-#~ msgid "Copy Boundary GUID"
-#~ msgstr "Копировать номер ID"
+msgid "Boundary Type"
+msgstr "Тип Геозоны"
 #
-#~ msgid "Copy DR GUID"
-#~ msgstr "Копировать ID номер АС"
+msgid "Centre"
+msgstr "Центр"
 #
-#~ msgid "Copy EBL GUID"
-#~ msgstr "Копировать ID номер ЭВН"
+msgid "Centre Line Style"
+msgstr "Стиль Центральной Линии"
 #
-#~ msgid "Copy Guard Zone GUID"
-#~ msgstr "Копировать ID номер Охранной Зоны"
+msgid "Centre Line Width"
+msgstr "Ширина Центральной Линии"
 #
-#~ msgid "Copy Point GUID"
-#~ msgstr "Копировать ID номер Точки"
+msgid "Centre on moving boat"
+msgstr "Центр на движущейся лодке"
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Скопировать координаты"
+msgid "Change all Path Point Icons"
+msgstr "Изменить все значки точек путей"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Курс относительно земли"
+msgid "Character Based"
+msgstr ""
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Курс относительно земли (M)"
+msgid "Combo!"
+msgstr "Комбинация! (Фаталити?)!"
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Курс относительно земли (T)"
+msgid "Confirm"
+msgstr "Подтверждение"
 #
-#~ msgid "Create Boundary"
-#~ msgstr "Создать Геозону (Полигон)"
+msgid "Confirm Object Delete"
+msgstr "Подтверждение Удаления Объекта"
 #
-#~ msgid "Create Boundary Point"
-#~ msgstr "Создать Геозону (Круг)"
+msgid "Control Line"
+msgstr "Линия управления"
 #
-#~ msgid "Create DR"
-#~ msgstr "Создать Аналитическое Счисление"
+msgid "Copy"
+msgstr "Копировать"
 #
-#~ msgid "Create EBL"
-#~ msgstr "Создать Электронный Визир Направления"
+msgid "Copy Boundary GUID"
+msgstr "Копировать номер ID"
 #
-#~ msgid "Create GZ"
-#~ msgstr "Создать Охранную Зону"
+msgid "Copy DR GUID"
+msgstr "Копировать ID номер АС"
 #
-#~ msgid "Create PIL"
-#~ msgstr "Создать Линию Предварительной Прокладки"
+msgid "Copy EBL GUID"
+msgstr "Копировать ID номер ЭВН"
 #
-#~ msgid "Create Text Point"
-#~ msgstr "Создать Точку с Текстом"
+msgid "Copy Guard Zone GUID"
+msgstr "Копировать ID номер Охранной Зоны"
 #
-#~ msgid "DR"
-#~ msgstr "Аналитическое Счисление"
+msgid "Copy Point GUID"
+msgstr "Копировать ID номер Точки"
 #
-#~ msgid "DR Path Length"
-#~ msgstr "Длинна Линии АС"
+msgid "Copy lat/long"
+msgstr "Скопировать координаты"
 #
-#~ msgid "DR Persistence"
-#~ msgstr "Сохранность АС"
+msgid "Course over Ground"
+msgstr "Курс относительно земли"
 #
-#~ msgid "DR Point"
-#~ msgstr "Точка АС"
+msgid "Course over Ground (M)"
+msgstr "Курс относительно земли (M)"
 #
-#~ msgid "DR Point Icon"
-#~ msgstr "Значок точки АС"
+msgid "Course over Ground (T)"
+msgstr "Курс относительно земли (T)"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "Интервал Точек АС"
+msgid "Create Boundary"
+msgstr "Создать Геозону (Полигон)"
 #
-#~ msgid "DR Point Properties"
-#~ msgstr "Параметры Точки АС"
+msgid "Create Boundary Point"
+msgstr "Создать Геозону (Круг)"
 #
-#~ msgid "DR Point Properties, Layer: "
-#~ msgstr "Параметры точки АС, слой: "
+msgid "Create DR"
+msgstr "Создать Аналитическое Счисление"
 #
-#~ msgid "DR Properties"
-#~ msgstr "Параметры АС"
+msgid "Create EBL"
+msgstr "Создать Электронный Визир Направления"
 #
-#~ msgid "DR Properties, Layer: "
-#~ msgstr "Параметры АС, слой: "
+msgid "Create GZ"
+msgstr "Создать Охранную Зону"
 #
-#~ msgid "Date:"
-#~ msgstr "Дата:"
+msgid "Create PIL"
+msgstr "Создать Линию Предварительной Прокладки"
 #
-#~ msgid "Days"
-#~ msgstr "Дни"
+msgid "Create Text Point"
+msgstr "Создать Точку с Текстом"
 #
-#~ msgid "Deactivate"
-#~ msgstr "Деактивировать"
+msgid "DR"
+msgstr "Аналитическое Счисление"
 #
-#~ msgid "Dead Reckoning"
-#~ msgstr "Аналитическое Счисление"
+msgid "DR Path Length"
+msgstr "Длинна Линии АС"
 #
-#~ msgid "Default Offset (+Stbd/-Port)"
-#~ msgstr "Смещение по умолчанию (+ Правый борт/- Левый борт)"
+msgid "DR Persistence"
+msgstr "Сохранность АС"
 #
-#~ msgid "Delete"
-#~ msgstr "Удалить"
+msgid "DR Point"
+msgstr "Точка АС"
 #
-#~ msgid "Delete Line"
-#~ msgstr "Удалить Линию"
+msgid "DR Point Icon"
+msgstr "Значок точки АС"
 #
-#~ msgid "Delete..."
-#~ msgstr "Удалить..."
+msgid "DR Point Interval"
+msgstr "Интервал Точек АС"
 #
-#~ msgid "Desc"
-#~ msgstr "Описание"
+msgid "DR Point Properties"
+msgstr "Параметры Точки АС"
 #
-#~ msgid "Description"
-#~ msgstr "Описание"
+msgid "DR Point Properties, Layer: "
+msgstr "Параметры точки АС, слой: "
 #
-#~ msgid "Display Toolbar"
-#~ msgstr "Отображение Панели Инструментов"
+msgid "DR Properties"
+msgstr "Параметры АС"
 #
-#~ msgid "Display text"
-#~ msgstr "Показать текст"
+msgid "DR Properties, Layer: "
+msgstr "Параметры АС, слой: "
 #
-#~ msgid "Distance"
-#~ msgstr "Расстояние"
+msgid "Data Directory"
+msgstr ""
 #
-#~ msgid "Distance Between Range Rings"
-#~ msgstr "Расстояние между кольцами"
+msgid "Data:"
+msgstr ""
 #
-#~ msgid "Distance From Boat"
-#~ msgstr "Расстояние от Судна"
+msgid "Date:"
+msgstr "Дата:"
 #
-#~ msgid "Distance Unit"
-#~ msgstr "Единицы расстояния"
+msgid "Days"
+msgstr "Дни"
 #
-#~ msgid "Distance Units"
-#~ msgstr "Единицы расстояния"
+msgid "Deactivate"
+msgstr "Деактивировать"
 #
-#~ msgid "Distance between Range Rings"
-#~ msgstr "Расстояние между кольцами"
+msgid "Dead Reckoning"
+msgstr "Аналитическое Счисление"
 #
-#~ msgid "Distance from Ownship"
-#~ msgstr "Расстояние от собственного судна"
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Смещение по умолчанию (+ Правый борт/- Левый борт)"
 #
-#~ msgid ""
-#~ "Do you also want to make the shared OD Points being part of this boundary "
-#~ "invisible?"
-#~ msgstr ""
-#~ "Хотите также переключить видимость общих точек,\n"
-#~ "входящих в данную Геозону?"
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Удалить"
 #
-#~ msgid "Dot"
-#~ msgstr "Точечный узор"
+msgid "Delete"
+msgstr "Удалить"
 #
-#~ msgid "Dot Dash"
-#~ msgstr "Точечный пунктир"
+msgid "Delete Line"
+msgstr "Удалить Линию"
 #
-#~ msgid "Draw Toolbar"
-#~ msgstr "Инструменты Штурманских Задач"
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
 #
-#~ msgid "EBL"
-#~ msgstr "Электронный Визир Направления"
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
-#~ msgid "EBL Angle (-P/+S)"
-#~ msgstr "EBL угол (-P/+S)"
+msgid "Delete..."
+msgstr "Удалить..."
 #
-#~ msgid ""
-#~ "EBL Fixed\n"
-#~ "End Position"
-#~ msgstr "Зафиксировать точку ЭВН"
+msgid "Desc"
+msgstr "Описание"
 #
-#~ msgid "EBL Fixed End Position"
-#~ msgstr "Зафиксировать точку ЭВН"
+msgid "Description"
+msgstr "Описание"
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "Сохранность ЭВН"
+#, fuzzy
+msgid "Display Text"
+msgstr "Показать текст"
 #
-#~ msgid "EBL Point"
-#~ msgstr "Точка ЭВН"
+msgid "Display Toolbar"
+msgstr "Отображение Панели Инструментов"
 #
-#~ msgid "EBL Point Properties"
-#~ msgstr "Параметры Точки ЭВН"
+msgid "Display text"
+msgstr "Показать текст"
 #
-#~ msgid "EBL Point Properties, Layer: "
-#~ msgstr "Параметры точки ЭВН, слой: "
+msgid "Distance"
+msgstr "Расстояние"
 #
-#~ msgid "EBL Properties"
-#~ msgstr "Параметры ЭВН"
+msgid "Distance Between Range Rings"
+msgstr "Расстояние между кольцами"
 #
-#~ msgid "EBL Properties, Layer: "
-#~ msgstr "Параметры ЭВН, слой: "
+msgid "Distance From Boat"
+msgstr "Расстояние от Судна"
 #
-#~ msgid ""
-#~ "Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 5"
-#~ msgstr ""
-#~ "Чувствительность сдвига ребра\n"
-#~ "(процентная ширина экрана) по умолчанию 5"
+msgid "Distance Unit"
+msgstr "Единицы расстояния"
 #
-#~ msgid "Electronic Bearing Line"
-#~ msgstr "Электронный Визир Направления"
+msgid "Distance Units"
+msgstr "Единицы расстояния"
 #
-#~ msgid "End"
-#~ msgstr "Конец"
+msgid "Distance between Range Rings"
+msgstr "Расстояние между кольцами"
 #
-#~ msgid "End Point Icon"
-#~ msgstr "Значок конечной точки"
+msgid "Distance from Ownship"
+msgstr "Расстояние от собственного судна"
 #
-#~ msgid "Example"
-#~ msgstr "Пример >"
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+"Хотите также переключить видимость общих точек,\n"
+"входящих в данную Геозону?"
 #
-#~ msgid "Exclusion"
-#~ msgstr "Вход в Зону"
+msgid "Dot"
+msgstr "Точечный узор"
 #
-#~ msgid "Export GPX file"
-#~ msgstr "Экспорт в файл"
+msgid "Dot Dash"
+msgstr "Точечный пунктир"
 #
-#~ msgid "Extended"
-#~ msgstr "Расширенный"
+msgid "Draw Toolbar"
+msgstr "Инструменты Штурманских Задач"
 #
-#~ msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-#~ msgstr ""
-#~ "Не удалось загрузить все значки модуля проверьте подробности в журнале "
-#~ "событий OpenCPN"
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Экспорт в файл"
 #
-#~ msgid "Fill Colour"
-#~ msgstr "Цвет заливки"
+msgid "EBL"
+msgstr "Электронный Визир Направления"
 #
-#~ msgid "Fill Density"
-#~ msgstr "Плотность Заливки"
+msgid "EBL Angle (-P/+S)"
+msgstr "EBL угол (-P/+S)"
 #
-#~ msgid "First"
-#~ msgstr "Первый"
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr "Зафиксировать точку ЭВН"
 #
-#~ msgid "First Angle (-P/+S)"
-#~ msgstr "Первый угол (-P/+S)"
+msgid "EBL Fixed End Position"
+msgstr "Зафиксировать точку ЭВН"
 #
-#~ msgid "First Point Icon"
-#~ msgstr "Первый значок точки"
+msgid "EBL Persistence"
+msgstr "Сохранность ЭВН"
 #
-#~ msgid "First distance"
-#~ msgstr "Первое расстояние"
+msgid "EBL Point"
+msgstr "Точка ЭВН"
 #
-#~ msgid "Fonts"
-#~ msgstr "Шрифты"
+msgid "EBL Point Properties"
+msgstr "Параметры Точки ЭВН"
 #
-#~ msgid "For this leg the Great Circle boundary is "
-#~ msgstr "Для этого отрезка, Ортодромическая Геозона "
+msgid "EBL Point Properties, Layer: "
+msgstr "Параметры точки ЭВН, слой: "
 #
-#~ msgid "From Point"
-#~ msgstr "От точки"
+msgid "EBL Properties"
+msgstr "Параметры ЭВН"
 #
-#~ msgid "From: "
-#~ msgstr "Откуда: "
+msgid "EBL Properties, Layer: "
+msgstr "Параметры ЭВН, слой: "
 #
-#~ msgid "GUID"
-#~ msgstr "GUID"
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+"Чувствительность сдвига ребра\n"
+"(процентная ширина экрана) по умолчанию 5"
 #
-#~ msgid "GZ"
-#~ msgstr "ОЗ"
+msgid "Edit"
+msgstr ""
 #
-#~ msgid "General"
-#~ msgstr "Общее"
+msgid "Electronic Bearing Line"
+msgstr "Электронный Визир Направления"
 #
-#~ msgid ""
-#~ "General Drawing for OpenCPN\n"
-#~ "\n"
-#~ "Thanks to the community for their helpful suggestions."
-#~ msgstr ""
-#~ "Модуль \"Основные Штурманские Задачи\" для OpenCPN\n"
-#~ "\n"
-#~ "Инструменты прокладки, Аналитическое счисление, охранные зоны и геозоны."
+msgid "End"
+msgstr "Конец"
 #
-#~ msgid "General drawing for OpenCPN"
-#~ msgstr "Модуль \"Основные Штурманские Задачи\" для OpenCPN"
+msgid "End Point Icon"
+msgstr "Значок конечной точки"
 #
-#~ msgid "Guard Zone"
-#~ msgstr "Охранная Зона"
+msgid "Error in import file."
+msgstr ""
 #
-#~ msgid "Guard Zone Persistence"
-#~ msgstr "Сохранение Зоны Охраны"
+msgid "Example"
+msgstr "Пример >"
 #
-#~ msgid "Guard Zone Point"
-#~ msgstr "Точка Охранной Зоны"
+msgid "Exclusion"
+msgstr "Вход в Зону"
 #
-#~ msgid "Guard Zone Point Properties"
-#~ msgstr "Свойства точки охранник зоны"
+msgid "Export GPX file"
+msgstr "Экспорт в файл"
 #
-#~ msgid "Guard Zone Properties"
-#~ msgstr "Параметры Охранной зоны"
+msgid "Extended"
+msgstr "Расширенный"
 #
-#~ msgid "Heading"
-#~ msgstr "Путевой угол"
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+"Не удалось загрузить все значки модуля проверьте подробности в журнале "
+"событий OpenCPN"
 #
-#~ msgid "Help"
-#~ msgstr "Справка"
+msgid "Fill Colour"
+msgstr "Цвет заливки"
 #
-#~ msgid "Hide Boundary Point Icons"
-#~ msgstr "Скрыть значки"
+msgid "Fill Density"
+msgstr "Плотность Заливки"
 #
-#~ msgid "Hide Layer(s)"
-#~ msgstr "Скрыть слои"
+msgid "First"
+msgstr "Первый"
 #
-#~ msgid "Hide Path(s)"
-#~ msgstr "Скрыть путь"
+msgid "First Angle (-P/+S)"
+msgstr "Первый угол (-P/+S)"
 #
-#~ msgid "Hide Point names"
-#~ msgstr "Скрыть Названия точек"
+msgid "First Point Icon"
+msgstr "Первый значок точки"
 #
-#~ msgid "Hide Point(s)"
-#~ msgstr "Скрыть точки"
+msgid "First distance"
+msgstr "Первое расстояние"
 #
-#~ msgid "Hide from chart"
-#~ msgstr "Скрыть с карты"
+#, fuzzy
+msgid "Font Based"
+msgstr "Шрифты"
 #
-#~ msgid "Hours"
-#~ msgstr "Часы"
+msgid "Fonts"
+msgstr "Шрифты"
 #
-#~ msgid "ID"
-#~ msgstr "ID"
+msgid "For this leg the Great Circle boundary is "
+msgstr "Для этого отрезка, Ортодромическая Геозона "
 #
-#~ msgid "ID Num"
-#~ msgstr "Номер ID"
+msgid "From Point"
+msgstr "От точки"
 #
-#~ msgid "ID: "
-#~ msgstr "ID: "
+msgid "From: "
+msgstr "Откуда: "
 #
-#~ msgid "Icon"
-#~ msgstr "Значок"
+msgid "GUID"
+msgstr "GUID"
 #
-#~ msgid "Import GPX file"
-#~ msgstr "Импортировать файл"
+msgid "GZ"
+msgstr "ОЗ"
 #
-#~ msgid "Inactive Centre Line Colour"
-#~ msgstr "Цвет не Активной Центральной Линии"
+#, fuzzy
+msgid "GZ Point Properties, Layer: "
+msgstr "Параметры точки АС, слой: "
 #
-#~ msgid ""
-#~ "Inactive DR Line\n"
-#~ "Colour"
-#~ msgstr "Цвет не Активной Линии АС"
+msgid "General"
+msgstr "Общее"
 #
-#~ msgid "Inactive EBL Line Colour"
-#~ msgstr "Цвет не Активной Линии ЭВН"
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"Модуль \"Основные Штурманские Задачи\" для OpenCPN\n"
+"\n"
+"Инструменты прокладки, Аналитическое счисление, охранные зоны и геозоны."
 #
-#~ msgid "Inactive Fill Colour"
-#~ msgstr "Цвет Заливки не Активной"
+msgid "General drawing for OpenCPN"
+msgstr "Модуль \"Основные Штурманские Задачи\" для OpenCPN"
 #
-#~ msgid "Inactive Line Colour"
-#~ msgstr "Цвет не Активной Линии"
+msgid "Guard Zone"
+msgstr "Охранная Зона"
 #
-#~ msgid "Inactive Offset Line 2 Colour"
-#~ msgstr "Цвет не Активной Смещенной Линии-2"
+msgid "Guard Zone Persistence"
+msgstr "Сохранение Зоны Охраны"
 #
-#~ msgid "Inactive Offset Line Colour"
-#~ msgstr "Цвет не Активной Смещенной Линии"
+msgid "Guard Zone Point"
+msgstr "Точка Охранной Зоны"
 #
-#~ msgid "Inclusion"
-#~ msgstr "Выход из Зоны"
+msgid "Guard Zone Point Properties"
+msgstr "Свойства точки охранник зоны"
 #
-#~ msgid ""
-#~ "Inclusion Boundary\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Граница включения\n"
-#~ "Size"
+msgid "Guard Zone Properties"
+msgstr "Параметры Охранной зоны"
 #
-#~ msgid "Inclusion Boundary Size"
-#~ msgstr "Размер Геозоны Входа"
+msgid "Heading"
+msgstr "Путевой угол"
 #
-#~ msgid "Index Line Properties"
-#~ msgstr "Параметры Линии Предварительной прокладки"
+msgid "Help"
+msgstr "Справка"
 #
-#~ msgid "Index Lines (+ Stbd/- Port)"
-#~ msgstr "Линия (+ Правый борт/- Левый борт)"
+msgid "Hide Boundary Point Icons"
+msgstr "Скрыть значки"
 #
-#~ msgid ""
-#~ "Initial Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 3"
-#~ msgstr ""
-#~ "Начальная чувствительность сдвига ребра\n"
-#~ "(процентная ширина экрана) по умолчанию 3"
+msgid "Hide Layer(s)"
+msgstr "Скрыть слои"
 #
-#~ msgid "Initial number of index lines"
-#~ msgstr "Количество Линий Предварительной Прокладки"
+msgid "Hide Path(s)"
+msgstr "Скрыть путь"
 #
-#~ msgid "Insert Boundary Point"
-#~ msgstr "Вставить Точкук в Геозону"
+msgid "Hide Point names"
+msgstr "Скрыть Названия точек"
 #
-#~ msgid "Insert EBL Point"
-#~ msgstr "Вставить точку EBL"
+msgid "Hide Point(s)"
+msgstr "Скрыть точки"
 #
-#~ msgid "Interval Type"
-#~ msgstr "Тип интервала"
+msgid "Hide from chart"
+msgstr "Скрыть с карты"
 #
-#~ msgid "Kilometres"
-#~ msgstr "Километры"
+msgid "Hours"
+msgstr "Часы"
 #
-#~ msgid "Latitude"
-#~ msgstr "Широта"
+msgid "I&mport"
+msgstr ""
 #
-#~ msgid "Layer"
-#~ msgstr "Слой"
+msgid "ID"
+msgstr "ID"
 #
-#~ msgid "Layer "
-#~ msgstr "Слой "
+msgid "ID Num"
+msgstr "Номер ID"
 #
-#~ msgid "Layer Boundary"
-#~ msgstr "Слой Геозоны"
+msgid "ID: "
+msgstr "ID: "
 #
-#~ msgid "Layer Boundary Point"
-#~ msgstr "Слой Точки Геозоны"
+msgid "Icon"
+msgstr "Значок"
 #
-#~ msgid "Layer DR Point"
-#~ msgstr "Слой Точки АС"
+msgid "Icon Directory"
+msgstr ""
 #
-#~ msgid "Layer EBL Point"
-#~ msgstr "Слой Точки ЭВН"
+msgid "Import"
+msgstr ""
 #
-#~ msgid "Layer Name"
-#~ msgstr "Название слоя"
+msgid "Import Error"
+msgstr ""
 #
-#~ msgid "Layer Text Point"
-#~ msgstr "Слой Точки Текста"
+msgid "Import GPX file"
+msgstr "Импортировать файл"
 #
-#~ msgid "Layers"
-#~ msgstr "Слои"
+#, fuzzy
+msgid "Import file"
+msgstr "Импортировать файл"
 #
-#~ msgid "Left"
-#~ msgstr "Слева"
+#, fuzzy
+msgid "Import incomplete."
+msgstr "Импортировать файл"
 #
-#~ msgid "Leg: from "
-#~ msgstr "Участок: от  "
+msgid "Inactive Centre Line Colour"
+msgstr "Цвет не Активной Центральной Линии"
 #
-#~ msgid "Length Type"
-#~ msgstr "Тип длинны"
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr "Цвет не Активной Линии АС"
 #
-#~ msgid "License"
-#~ msgstr "Лицензия"
+msgid "Inactive EBL Line Colour"
+msgstr "Цвет не Активной Линии ЭВН"
 #
-#~ msgid "Line Colour"
-#~ msgstr "Цвет линии"
+msgid "Inactive Fill Colour"
+msgstr "Цвет Заливки не Активной"
 #
-#~ msgid "Line Style"
-#~ msgstr "Стиль линии"
+msgid "Inactive Line Colour"
+msgstr "Цвет не Активной Линии"
 #
-#~ msgid "Line Width"
-#~ msgstr "Ширина линии"
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Цвет не Активной Смещенной Линии-2"
 #
-#~ msgid "List contents "
-#~ msgstr "Раскрыть содержимое "
+msgid "Inactive Offset Line Colour"
+msgstr "Цвет не Активной Смещенной Линии"
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "Загрузить нав. объекты из "
+msgid "Inclusion"
+msgstr "Выход из Зоны"
 #
-#~ msgid "Long Dash"
-#~ msgstr "Длинный пунктир"
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+"Граница включения\n"
+"Size"
 #
-#~ msgid "Longitude"
-#~ msgstr "Долгота"
+msgid "Inclusion Boundary Size"
+msgstr "Размер Геозоны Входа"
 #
-#~ msgid "Maintain with"
-#~ msgstr "Использовать"
+msgid "Index Line Properties"
+msgstr "Параметры Линии Предварительной прокладки"
 #
-#~ msgid "Major:"
-#~ msgstr "Основная:"
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Линия (+ Правый борт/- Левый борт)"
 #
-#~ msgid "Match VRM colour to EBL colour"
-#~ msgstr "Совместите цвет VRM с цветом EBL"
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+"Начальная чувствительность сдвига ребра\n"
+"(процентная ширина экрана) по умолчанию 3"
 #
-#~ msgid "Merge and Delete Boundaries"
-#~ msgstr "Объединение и удаление Геозон"
+msgid "Initial number of index lines"
+msgstr "Количество Линий Предварительной Прокладки"
 #
-#~ msgid "Merge and Keep Boundaries"
-#~ msgstr "Объединение и сохранение Геозон"
+msgid "Insert Boundary Point"
+msgstr "Вставить Точкук в Геозону"
 #
-#~ msgid "Minor:"
-#~ msgstr "Второстепенная:"
+msgid "Insert EBL Point"
+msgstr "Вставить точку EBL"
 #
-#~ msgid "Minutes"
-#~ msgstr "Минуты"
+msgid "Interval Type"
+msgstr "Тип интервала"
 #
-#~ msgid "Move Boundary"
-#~ msgstr "Переместить Геозону"
+msgid "Kilometres"
+msgstr "Километры"
 #
-#~ msgid "Move Boundary Point"
-#~ msgstr "Переместить Точку"
+msgid "Latitude"
+msgstr "Широта"
 #
-#~ msgid "Move Boundary Segment"
-#~ msgstr "Переместить Ребро Геозоны"
+msgid "Layer"
+msgstr "Слой"
 #
-#~ msgid "Move DR Point"
-#~ msgstr "Переместить точку АС"
+msgid "Layer "
+msgstr "Слой "
 #
-#~ msgid "Move EBL"
-#~ msgstr "Переместить ЭВН"
+msgid "Layer Boundary"
+msgstr "Слой Геозоны"
 #
-#~ msgid "Move EBL Point"
-#~ msgstr "Переместить точку ЭВН"
+msgid "Layer Boundary Point"
+msgstr "Слой Точки Геозоны"
 #
-#~ msgid "Move Guard Zone Point"
-#~ msgstr "Переместить точку Охранной Зоны"
+msgid "Layer DR Point"
+msgstr "Слой Точки АС"
 #
-#~ msgid "Move Line"
-#~ msgstr "Переместить Линию"
+msgid "Layer EBL Point"
+msgstr "Слой Точки ЭВН"
 #
-#~ msgid "Move OD Point"
-#~ msgstr "Переместить Точку"
+msgid "Layer Name"
+msgstr "Название слоя"
 #
-#~ msgid "Move PIL Point"
-#~ msgstr "Перемещение точки ЛПП"
+msgid "Layer Text Point"
+msgstr "Слой Точки Текста"
 #
-#~ msgid "Move Text Point"
-#~ msgstr "Переместить Точку"
+msgid "Layers"
+msgstr "Слои"
 #
-#~ msgid "Move start point to boat lat/lon"
-#~ msgstr "Переместить начальную точку в местоположение собственного судна"
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Слой Геозоны"
 #
-#~ msgid "Multiple Boundaries"
-#~ msgstr "Множественные Геозоны"
+msgid "Left"
+msgstr "Слева"
 #
-#~ msgid "Name"
-#~ msgstr "Название"
+msgid "Left Click links are deleted."
+msgstr ""
 #
-#~ msgid "Name:"
-#~ msgstr "Имя:"
+msgid "Left Click links are opened for editing."
+msgstr ""
 #
-#~ msgid "Name: "
-#~ msgstr "Имя: "
+msgid "Left Click links are opened in the default browser."
+msgstr ""
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Морские Мили"
+msgid "Left click opens in browser"
+msgstr ""
 #
-#~ msgid "Neither"
-#~ msgstr "Ни то, ни другое"
+msgid "Leg: from "
+msgstr "Участок: от  "
 #
-#~ msgid "Never"
-#~ msgstr "Никогда"
+msgid "Length Type"
+msgstr "Тип длинны"
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Новый слой %d: %s"
+msgid "License"
+msgstr "Лицензия"
 #
-#~ msgid "No"
-#~ msgstr "Нет"
+msgid "Line Colour"
+msgstr "Цвет линии"
 #
-#~ msgid "No alarm"
-#~ msgstr "Нет сигнала"
+msgid "Line Style"
+msgstr "Стиль линии"
 #
-#~ msgid "No. of items"
-#~ msgstr "Кол-во эл-тов"
+#, fuzzy
+msgid "Line Type"
+msgstr "Стиль линии"
 #
-#~ msgid "None"
-#~ msgstr "Нет"
+msgid "Line Width"
+msgstr "Ширина линии"
 #
-#~ msgid "Number of Point Range Rings"
-#~ msgstr "Количество радарных колец"
+msgid "Link"
+msgstr ""
 #
-#~ msgid "Number of Range Rings"
-#~ msgstr "Количество радарных колец"
+#, fuzzy
+msgid "Link Description"
+msgstr "Описание"
 #
-#~ msgid "OCPN Draw"
-#~ msgstr "Штурманские Задачи"
+msgid "Links"
+msgstr ""
 #
-#~ msgid "OCPN Draw Boundary"
-#~ msgstr "Геозоны"
+msgid "List contents "
+msgstr "Раскрыть содержимое "
 #
-#~ msgid "OCPN Draw Boundary Create"
-#~ msgstr "Создать Геозону (Полигон)"
+msgid "Loading navobjects from "
+msgstr "Загрузить нав. объекты из "
 #
-#~ msgid "OCPN Draw Boundary Delete"
-#~ msgstr "Удалить Геозону"
+msgid "Local file..."
+msgstr ""
 #
-#~ msgid "OCPN Draw DR Delete"
-#~ msgstr "Удалить АС"
+msgid "Long Dash"
+msgstr "Длинный пунктир"
 #
-#~ msgid "OCPN Draw Delete Boundary Point"
-#~ msgstr "Удалить Геозону"
+msgid "Longitude"
+msgstr "Долгота"
 #
-#~ msgid "OCPN Draw Delete DR Point"
-#~ msgstr "OCPN Draw Удалить точку DR"
+msgid "Maintain with"
+msgstr "Использовать"
 #
-#~ msgid "OCPN Draw Delete EBL Point"
-#~ msgstr "OCPN Draw Удалить точку EBL"
+msgid "Major:"
+msgstr "Основная:"
 #
-#~ msgid "OCPN Draw Delete OD Point"
-#~ msgstr "OCPN Draw Удалить точку OD"
+msgid "Match VRM colour to EBL colour"
+msgstr "Совместите цвет VRM с цветом EBL"
 #
-#~ msgid "OCPN Draw Delete PIL Point"
-#~ msgstr "Удалить точку ЛПП"
+msgid "Maximum Text Width"
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete Text Point"
-#~ msgstr "OCPN Draw Удалить текстовую точку"
+msgid "Maximum Width Type"
+msgstr ""
 #
-#~ msgid "OCPN Draw EBL Delete"
-#~ msgstr "Удалить ЭВН"
+msgid "Merge and Delete Boundaries"
+msgstr "Объединение и удаление Геозон"
 #
-#~ msgid "OCPN Draw GZ Delete"
-#~ msgstr "OCPN Draw GZ Удалить"
+msgid "Merge and Keep Boundaries"
+msgstr "Объединение и сохранение Геозон"
 #
-#~ msgid "OCPN Draw Manager"
-#~ msgstr "Диспетчер Объектов"
+msgid "Minor:"
+msgstr "Второстепенная:"
 #
-#~ msgid "OCPN Draw PIL Delete"
-#~ msgstr "Удалить ЛПП"
+msgid "Minutes"
+msgstr "Минуты"
 #
-#~ msgid "OCPN Draw Parallel Index Line Delete"
-#~ msgstr "Удалить Линию Предварительной прокладки"
+msgid "Move Boundary"
+msgstr "Переместить Геозону"
 #
-#~ msgid "OCPN Draw Point"
-#~ msgstr "Точка"
+msgid "Move Boundary Point"
+msgstr "Переместить Точку"
 #
-#~ msgid "OCPN Draw Point Create"
-#~ msgstr "Создать точку"
+msgid "Move Boundary Segment"
+msgstr "Переместить Ребро Геозоны"
 #
-#~ msgid "OCPN Draw Point, Layer: "
-#~ msgstr "Точка, слой: "
+msgid "Move DR Point"
+msgstr "Переместить точку АС"
 #
-#~ msgid "OCPN Draw Properties"
-#~ msgstr "Параметры"
+msgid "Move EBL"
+msgstr "Переместить ЭВН"
 #
-#~ msgid "OCPN Draw Remove "
-#~ msgstr "Убрать "
+msgid "Move EBL Point"
+msgstr "Переместить точку ЭВН"
 #
-#~ msgid "OCPN Draw Remove Boundary Point"
-#~ msgstr "OCPN ничья удалить точки границы"
+msgid "Move Guard Zone Point"
+msgstr "Переместить точку Охранной Зоны"
 #
-#~ msgid "OCPN Draw Remove DR Point"
-#~ msgstr "OCPN рисовать удалить др точки"
+msgid "Move Line"
+msgstr "Переместить Линию"
 #
-#~ msgid "OCPN Draw Remove EBL Point"
-#~ msgstr "OCPN Draw Удалить точку EBL"
+msgid "Move OD Point"
+msgstr "Переместить Точку"
 #
-#~ msgid "OCPN Draw Remove OD Point"
-#~ msgstr "OCPN рисовать удалить точки ОД"
+msgid "Move PIL Point"
+msgstr "Перемещение точки ЛПП"
 #
-#~ msgid "OD"
-#~ msgstr "Геозоны"
+msgid "Move Text Point"
+msgstr "Переместить Точку"
 #
-#~ msgid "OD Point"
-#~ msgstr "Точки"
+msgid "Move start point to boat lat/lon"
+msgstr "Переместить начальную точку в местоположение собственного судна"
 #
-#~ msgid "OD Point Name"
-#~ msgstr "Название Точки"
+msgid "Multiple Boundaries"
+msgstr "Множественные Геозоны"
 #
-#~ msgid "OD Point Properties"
-#~ msgstr "Параметры Точки"
+msgid "Name"
+msgstr "Название"
 #
-#~ msgid "OD Points"
-#~ msgstr "Точки"
+msgid "Name:"
+msgstr "Имя:"
 #
-#~ msgid "OD\\WD"
-#~ msgstr "Геозоны/Тревоги"
+msgid "Name: "
+msgstr "Имя: "
 #
-#~ msgid "Offset"
-#~ msgstr "Смещение"
+msgid "Nautical Miles"
+msgstr "Морские Мили"
 #
-#~ msgid "Offset (+ Stbd/- Port)"
-#~ msgstr "Смещение (+ Правый борт/- Левый борт)"
+msgid "Neither"
+msgstr "Ни то, ни другое"
 #
-#~ msgid "Offset Line 2 Style"
-#~ msgstr "Стиль Смещенной Линии-2"
+msgid "Never"
+msgstr "Никогда"
 #
-#~ msgid "Offset Line 2 Width"
-#~ msgstr "Ширина Смещенной Линии-2"
+msgid "New &temporary Layer"
+msgstr ""
 #
-#~ msgid "Offset Line Style"
-#~ msgstr "Стиль Смещенной Линии"
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Новый слой %d: %s"
 #
-#~ msgid "Offset Line Width"
-#~ msgstr "Ширина Смещенной Линии"
+msgid "New persistent &Layer"
+msgstr ""
 #
-#~ msgid "Offset: "
-#~ msgstr "Смещение: "
+msgid "No"
+msgstr "Нет"
 #
-#~ msgid "On Rollover Only"
-#~ msgstr "При Наведении"
+msgid "No alarm"
+msgstr "Нет сигнала"
 #
-#~ msgid "OpenCPN Alert"
-#~ msgstr "OpenCPN — Предупреждение"
+msgid "No. of items"
+msgstr "Кол-во эл-тов"
 #
-#~ msgid "Other:"
-#~ msgstr "Другое:"
+msgid "None"
+msgstr "Нет"
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Перезаписать существующий файл?"
+msgid "Number of Point Range Rings"
+msgstr "Количество радарных колец"
 #
-#~ msgid "PIL"
-#~ msgstr "ЛПП"
+msgid "Number of Range Rings"
+msgstr "Количество радарных колец"
 #
-#~ msgid "PIL Persistence"
-#~ msgstr "Сохранность ЛПП"
+#, fuzzy
+msgid "OCPN API Version:"
+msgstr "Версия:"
 #
-#~ msgid "PIL Point"
-#~ msgstr "Точка ЛПП"
+msgid "OCPN Draw"
+msgstr "Штурманские Задачи"
 #
-#~ msgid "Parallel Index Line"
-#~ msgstr "Предварительная Прокладка"
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "Точка"
 #
-#~ msgid "Parallel Index Line Angle (+Stbd/-Port)"
-#~ msgstr "Угол линии Предварительной прокладки (+ Правый борт/- Левый борт)"
+msgid "OCPN Draw Boundary"
+msgstr "Геозоны"
 #
-#~ msgid "Parallel Index Line Persistence"
-#~ msgstr "Сохранность Линии Предварительной прокладки"
+msgid "OCPN Draw Boundary Create"
+msgstr "Создать Геозону (Полигон)"
 #
-#~ msgid "Parallel Index Line Properties"
-#~ msgstr "Свойства Линии Предварительной прокладки"
+msgid "OCPN Draw Boundary Delete"
+msgstr "Удалить Геозону"
 #
-#~ msgid "Paste"
-#~ msgstr "Вставить"
+msgid "OCPN Draw DR Delete"
+msgstr "Удалить АС"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Вставить координаты"
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Удалить Геозону"
 #
-#~ msgid "Patch:"
-#~ msgstr "Исправления:"
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN Draw Удалить точку DR"
 #
-#~ msgid "Path"
-#~ msgstr "Полигон"
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN Draw Удалить точку EBL"
 #
-#~ msgid "Path & Point Manager"
-#~ msgstr "Диспетчер Путей и Точек"
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN Draw Удалить точку OD"
 #
-#~ msgid "Path Manager Dialog"
-#~ msgstr "Окно Диспетчера путей"
+msgid "OCPN Draw Delete PIL Point"
+msgstr "Удалить точку ЛПП"
 #
-#~ msgid "Path Name"
-#~ msgstr "Название Пути"
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN Draw Удалить текстовую точку"
 #
-#~ msgid "Path Persistence"
-#~ msgstr "Сохранность Полигона"
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Параметры"
 #
-#~ msgid "Path Properties"
-#~ msgstr "Параметры пути"
+msgid "OCPN Draw EBL Delete"
+msgstr "Удалить ЭВН"
 #
-#~ msgid "Path Properties, Layer: "
-#~ msgstr "Параметры Полигона, слой: "
+msgid "OCPN Draw GZ Delete"
+msgstr "OCPN Draw GZ Удалить"
 #
-#~ msgid "Paths"
-#~ msgstr "Пути"
+msgid "OCPN Draw Manager"
+msgstr "Диспетчер Объектов"
 #
-#~ msgid "Persistent"
-#~ msgstr "Всегда"
+msgid "OCPN Draw PIL Delete"
+msgstr "Удалить ЛПП"
 #
-#~ msgid "Persistent over Crash"
-#~ msgstr "После Сбоя"
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "Удалить Линию Предварительной прокладки"
 #
-#~ msgid "Pick a new start point"
-#~ msgstr "Выберите новую начальную точку"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "Точка"
 #
-#~ msgid ""
-#~ "Please report problems using FlySpray at:\n"
-#~ "https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "at the OpenCPN forum:\n"
-#~ "http://www.cruisersforum.com/forums/f134\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "Raise an issue in GIT at:\n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues\n"
-#~ msgstr ""
-#~ "Просьба сообщить проблемы с использованием в трекер FlySpray: \\ nhttps://"
-#~ "www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1 \n"
-#~ "\n"
-#~ "или\n"
-#~ "\n"
-#~ "на OpenCPN Форум: \\ nhttp://www.cruisersforum.com/forums/f134 \n"
-#~ "\n"
-#~ "или\n"
-#~ "\n"
-#~ "Поднимите вопрос в GIT: \\ nhttps://github.com/jongough/ocpn_draw_pi/"
-#~ "issues \n"
+msgid "OCPN Draw Point"
+msgstr "Точка"
 #
-#~ msgid "Point Inclusion Size"
-#~ msgstr "Размер Точки Входа"
+msgid "OCPN Draw Point Create"
+msgstr "Создать точку"
 #
-#~ msgid "Point Type"
-#~ msgstr "Тип точки"
+msgid "OCPN Draw Point, Layer: "
+msgstr "Точка, слой: "
 #
-#~ msgid "Points"
-#~ msgstr "Точки"
+msgid "OCPN Draw Properties"
+msgstr "Параметры"
 #
-#~ msgid "Properties"
-#~ msgstr "Параметры"
+msgid "OCPN Draw Remove "
+msgstr "Убрать "
 #
-#~ msgid "Properties..."
-#~ msgstr "Свойства..."
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN ничья удалить точки границы"
 #
-#~ msgid "Question"
-#~ msgstr "Вопрос"
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN рисовать удалить др точки"
 #
-#~ msgid "Range Ring Colours"
-#~ msgstr "Цвет Линии Кольца Дальности"
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN Draw Удалить точку EBL"
 #
-#~ msgid "Range Ring Line Style"
-#~ msgstr "Стиль Линии Кольца"
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN рисовать удалить точки ОД"
 #
-#~ msgid "Range Ring Line Width"
-#~ msgstr "Ширина Линии Кольца"
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Удалить Точку"
+msgid "OD"
+msgstr "Геозоны"
 #
-#~ msgid ""
-#~ "Removing this point will invalidate the Boundary, this is not allowed."
-#~ msgstr ""
-#~ "Удаление этой точки сделает Геозоны недействительной, это недопустимо."
+msgid "OD Point"
+msgstr "Точки"
 #
-#~ msgid "Right"
-#~ msgstr "Справа"
+msgid "OD Point Name"
+msgstr "Название Точки"
 #
-#~ msgid "Ring"
-#~ msgstr "Тревога"
+msgid "OD Point Properties"
+msgstr "Параметры Точки"
 #
-#~ msgid ""
-#~ "Rotate with\n"
-#~ "Boat"
-#~ msgstr "Вращать вместе с судном"
+msgid "OD Points"
+msgstr "Точки"
 #
-#~ msgid "Rotate with Boat"
-#~ msgstr "Вращать вместе с судном"
+msgid "OD\\WD"
+msgstr "Геозоны/Тревоги"
 #
-#~ msgid "Second"
-#~ msgstr "Секунда"
+msgid "Offset"
+msgstr "Смещение"
 #
-#~ msgid "Second Angle (-P/+S)"
-#~ msgstr "Второй угол (-P/+S)"
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Смещение (+ Правый борт/- Левый борт)"
 #
-#~ msgid "Second Point Icon"
-#~ msgstr "Второй значок точки"
+msgid "Offset Line 2 Style"
+msgstr "Стиль Смещенной Линии-2"
 #
-#~ msgid "Second distance"
-#~ msgstr "Второе расстояние"
+msgid "Offset Line 2 Width"
+msgstr "Ширина Смещенной Линии-2"
 #
-#~ msgid "Short Dash"
-#~ msgstr "Короткий пунктир"
+msgid "Offset Line Style"
+msgstr "Стиль Смещенной Линии"
 #
-#~ msgid "Show"
-#~ msgstr "Показать"
+msgid "Offset Line Width"
+msgstr "Ширина Смещенной Линии"
 #
-#~ msgid "Show Boundary Point Icons"
-#~ msgstr "Показать значки"
+msgid "Offset: "
+msgstr "Смещение: "
 #
-#~ msgid "Show DR Direction Arrow"
-#~ msgstr "Показать Стрелку Направления Линии АС"
+msgid "On Rollover Only"
+msgstr "При Наведении"
 #
-#~ msgid "Show Display Text"
-#~ msgstr "Показать текст"
+msgid "OpenCPN Alert"
+msgstr "OpenCPN — Предупреждение"
 #
-#~ msgid "Show EBL Direction Arrow"
-#~ msgstr "Показать Стрелку Направления Линии ЭВН"
+msgid "Other:"
+msgstr "Другое:"
 #
-#~ msgid "Show Layer(s)"
-#~ msgstr "Показать слои"
+msgid "Overwrite existing file?"
+msgstr "Перезаписать существующий файл?"
 #
-#~ msgid "Show Magnetic Bearings"
-#~ msgstr "Показывать Магнитный Пеленг"
+msgid "PIL"
+msgstr "ЛПП"
 #
-#~ msgid "Show Name"
-#~ msgstr "Показать название"
+msgid "PIL Persistence"
+msgstr "Сохранность ЛПП"
 #
-#~ msgid "Show Path Direction Arrow"
-#~ msgstr "Показать Стрелку Направления Пути"
+msgid "PIL Point"
+msgstr "Точка ЛПП"
 #
-#~ msgid "Show Paths(s)"
-#~ msgstr "Показать путь"
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr "Параметры Точки ЭВН"
 #
-#~ msgid ""
-#~ "Show Perpendicular\n"
-#~ "Index Line"
-#~ msgstr ""
-#~ "Показывать\n"
-#~ "Перпендикуляр на Линии"
+#, fuzzy
+msgid "PIL Point Properties, Layer: "
+msgstr "Параметры точки ЭВН, слой: "
 #
-#~ msgid "Show Perpendicular Index Line"
-#~ msgstr "Показать Перпендикуляр на Линии"
+msgid "Parallel Index Line"
+msgstr "Предварительная Прокладка"
 #
-#~ msgid "Show Point Range Rings"
-#~ msgstr "Показывать радарные кольца вокруг точки"
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Угол линии Предварительной прокладки (+ Правый борт/- Левый борт)"
 #
-#~ msgid "Show Point names"
-#~ msgstr "Показать Названия точек"
+msgid "Parallel Index Line Persistence"
+msgstr "Сохранность Линии Предварительной прокладки"
 #
-#~ msgid "Show Point(s)"
-#~ msgstr "Показывать точки"
+msgid "Parallel Index Line Properties"
+msgstr "Свойства Линии Предварительной прокладки"
 #
-#~ msgid "Show Range Rings"
-#~ msgstr "Показывать кольца дальности"
+msgid "Paste"
+msgstr "Вставить"
 #
-#~ msgid "Show VRM"
-#~ msgstr "Показать ПКД (VRM)"
+msgid "Paste lat/long"
+msgstr "Вставить координаты"
 #
-#~ msgid "Show name"
-#~ msgstr "Показать название"
+msgid "Patch:"
+msgstr "Исправления:"
 #
-#~ msgid "Show on chart"
-#~ msgstr "Показывать на карте"
+msgid "Path"
+msgstr "Полигон"
 #
-#~ msgid "Solid"
-#~ msgstr "Сплошной узор"
+msgid "Path & Point Manager"
+msgstr "Диспетчер Путей и Точек"
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Скорость относительно земли"
+msgid "Path Manager Dialog"
+msgstr "Окно Диспетчера путей"
 #
-#~ msgid "Start"
-#~ msgstr "Начало"
+msgid "Path Name"
+msgstr "Название Пути"
 #
-#~ msgid "Start Point Icon"
-#~ msgstr "Значок начальной точки"
+msgid "Path Persistence"
+msgstr "Сохранность Полигона"
 #
-#~ msgid "Text"
-#~ msgstr "Текст"
+msgid "Path Properties"
+msgstr "Параметры пути"
 #
-#~ msgid "Text Colour"
-#~ msgstr "Цвет текста"
+msgid "Path Properties, Layer: "
+msgstr "Параметры Полигона, слой: "
 #
-#~ msgid "Text Font"
-#~ msgstr "Шрифт текста"
+msgid "Paths"
+msgstr "Пути"
 #
-#~ msgid "Text Point"
-#~ msgstr "Точка Текста"
+msgid "Permanent Layers:"
+msgstr ""
 #
-#~ msgid "Text Point Icon"
-#~ msgstr "Значок точки Текста"
+msgid "Persistent"
+msgstr "Всегда"
 #
-#~ msgid "Text position relative to point"
-#~ msgstr "Положение текста относительно точки"
+msgid "Persistent over Crash"
+msgstr "После Сбоя"
 #
-#~ msgid "Text to Display with Point"
-#~ msgstr "Отображение Текста в Точке"
+msgid "Pick a new start point"
+msgstr "Выберите новую начальную точку"
 #
-#~ msgid ""
-#~ "The OD Point you want to delete is used in a path, do you really want to "
-#~ "delete it?"
-#~ msgstr ""
-#~ "Точка, которую вы хотите удалить используется в пути, вы действительно "
-#~ "хотите удалить?"
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+"Просьба сообщить проблемы с использованием в трекер FlySpray: \\ nhttps://www."
+"opencpn.org/flyspray/index.php?project=60&do=index&switch=1 \n"
+"\n"
+"или\n"
+"\n"
+"на OpenCPN Форум: \\ nhttp://www.cruisersforum.com/forums/f134 \n"
+"\n"
+"или\n"
+"\n"
+"Поднимите вопрос в GIT: \\ nhttps://github.com/jongough/ocpn_draw_pi/issues \n"
 #
-#~ msgid ""
-#~ "There are some OD points used in paths or anchor alarms.\n"
-#~ " Do you want to delete them as well?\n"
-#~ " This will change the paths and disable the anchor alarms.\n"
-#~ " Answering No keeps the OD points used in paths or alarms."
-#~ msgstr ""
-#~ "Некоторые Точки задействованы в тревогах якорной стоянки.\n"
-#~ "Их удаление приведёт к отключению тревоги якорной стоянки.\n"
-#~ "Ответьте «Да» для удаления всех точек, «Нет» для удаления только "
-#~ "неиспользуемых точек."
+msgid "Point Inclusion Size"
+msgstr "Размер Точки Входа"
 #
-#~ msgid ""
-#~ "This chart shows the interactions between Boundaries and WatchDog alam "
-#~ "boundaries"
-#~ msgstr "Таблица взаимодействия между Геозонами и Геозонами модуля Тревог"
+msgid "Point Type"
+msgstr "Тип точки"
 #
-#~ msgid "Time"
-#~ msgstr "Время"
+msgid "Points"
+msgstr "Точки"
 #
-#~ msgid "Time Units"
-#~ msgstr "Единицы времени"
+msgid "Properties"
+msgstr "Параметры"
 #
-#~ msgid "To Point"
-#~ msgstr "До точки"
+msgid "Properties..."
+msgstr "Свойства..."
 #
-#~ msgid "Top"
-#~ msgstr "Вверху"
+msgid "Question"
+msgstr "Вопрос"
 #
-#~ msgid "Top Centre"
-#~ msgstr "Вверху по Центру"
+msgid "Range Ring Colours"
+msgstr "Цвет Линии Кольца Дальности"
 #
-#~ msgid "Total Length"
-#~ msgstr "Общая длина"
+msgid "Range Ring Line Style"
+msgstr "Стиль Линии Кольца"
 #
-#~ msgid "Total Length: "
-#~ msgstr "Общая длина: "
+msgid "Range Ring Line Width"
+msgstr "Ширина Линии Кольца"
 #
-#~ msgid "Unlist contents "
-#~ msgstr "Закрыть содержимое "
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
 #
-#~ msgid "Update initial conditions"
-#~ msgstr "Обновить начальные условия"
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
 #
-#~ msgid "Use nearby OD Point?"
-#~ msgstr "Использовать ближайшую точку?"
+msgid "Remove Point from Path"
+msgstr "Удалить Точку"
 #
-#~ msgid "Use nearby Point?"
-#~ msgstr "Использовать ближайшую точку?"
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr "Удаление этой точки сделает Геозоны недействительной, это недопустимо."
 #
-#~ msgid "Version:"
-#~ msgstr "Версия:"
+msgid "Right"
+msgstr "Справа"
 #
-#~ msgid "WD"
-#~ msgstr "МодульТревог"
+msgid "Ring"
+msgstr "Тревога"
 #
-#~ msgid "Whilst Drawing"
-#~ msgstr "По требованию"
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr "Вращать вместе с судном"
 #
-#~ msgid "Would you like include the Great Circle boundary points for this leg?"
-#~ msgstr "Хотите добавить ортодромические точки Геозоны для этого отрезка?"
+msgid "Rotate with Boat"
+msgstr "Вращать вместе с судном"
 #
-#~ msgid "Yes"
-#~ msgstr "Да"
+msgid "Second"
+msgstr "Секунда"
 #
-#~ msgid "ocpn_draw_pi data location"
-#~ msgstr "местоположение данных модуля"
+msgid "Second Angle (-P/+S)"
+msgstr "Второй угол (-P/+S)"
+#
+msgid "Second Point Icon"
+msgstr "Второй значок точки"
+#
+msgid "Second distance"
+msgstr "Второе расстояние"
+#
+msgid "Short Dash"
+msgstr "Короткий пунктир"
+#
+msgid "Show"
+msgstr "Показать"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Показать Названия точек"
+#
+msgid "Show Boundary Point Icons"
+msgstr "Показать значки"
+#
+msgid "Show DR Direction Arrow"
+msgstr "Показать Стрелку Направления Линии АС"
+#
+msgid "Show Display Text"
+msgstr "Показать текст"
+#
+msgid "Show EBL Direction Arrow"
+msgstr "Показать Стрелку Направления Линии ЭВН"
+#
+msgid "Show Layer(s)"
+msgstr "Показать слои"
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Показать слои"
+#
+msgid "Show Magnetic Bearings"
+msgstr "Показывать Магнитный Пеленг"
+#
+msgid "Show Name"
+msgstr "Показать название"
+#
+msgid "Show Path Direction Arrow"
+msgstr "Показать Стрелку Направления Пути"
+#
+msgid "Show Paths(s)"
+msgstr "Показать путь"
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+"Показывать\n"
+"Перпендикуляр на Линии"
+#
+msgid "Show Perpendicular Index Line"
+msgstr "Показать Перпендикуляр на Линии"
+#
+msgid "Show Point Range Rings"
+msgstr "Показывать радарные кольца вокруг точки"
+#
+msgid "Show Point names"
+msgstr "Показать Названия точек"
+#
+msgid "Show Point(s)"
+msgstr "Показывать точки"
+#
+msgid "Show Range Rings"
+msgstr "Показывать кольца дальности"
+#
+msgid "Show VRM"
+msgstr "Показать ПКД (VRM)"
+#
+msgid "Show name"
+msgstr "Показать название"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Показывать на карте"
+#
+msgid "Show on chart"
+msgstr "Показывать на карте"
+#
+msgid "Solid"
+msgstr "Сплошной узор"
+#
+msgid "Speed over Ground"
+msgstr "Скорость относительно земли"
+#
+msgid "Start"
+msgstr "Начало"
+#
+msgid "Start Point Icon"
+msgstr "Значок начальной точки"
+#
+#, fuzzy
+msgid "Straight"
+msgstr "Справа"
+#
+msgid "Text"
+msgstr "Текст"
+#
+msgid "Text Colour"
+msgstr "Цвет текста"
+#
+msgid "Text Font"
+msgstr "Шрифт текста"
+#
+msgid "Text Point"
+msgstr "Точка Текста"
+#
+msgid "Text Point Icon"
+msgstr "Значок точки Текста"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Параметры Точки АС"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Параметры точки АС, слой: "
+#
+msgid "Text position relative to point"
+msgstr "Положение текста относительно точки"
+#
+msgid "Text to Display with Point"
+msgstr "Отображение Текста в Точке"
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"Точка, которую вы хотите удалить используется в пути, вы действительно хотите "
+"удалить?"
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"Некоторые Точки задействованы в тревогах якорной стоянки.\n"
+"Их удаление приведёт к отключению тревоги якорной стоянки.\n"
+"Ответьте «Да» для удаления всех точек, «Нет» для удаления только "
+"неиспользуемых точек."
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr "Таблица взаимодействия между Геозонами и Геозонами модуля Тревог"
+#
+msgid "Time"
+msgstr "Время"
+#
+msgid "Time Units"
+msgstr "Единицы времени"
+#
+msgid "To Point"
+msgstr "До точки"
+#
+msgid "Top"
+msgstr "Вверху"
+#
+msgid "Top Centre"
+msgstr "Вверху по Центру"
+#
+msgid "Total Length"
+msgstr "Общая длина"
+#
+msgid "Total Length: "
+msgstr "Общая длина: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr ""
+#
+msgid "Unlist contents "
+msgstr "Закрыть содержимое "
+#
+msgid "Update initial conditions"
+msgstr "Обновить начальные условия"
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "Точка"
+#
+msgid "Use nearby OD Point?"
+msgstr "Использовать ближайшую точку?"
+#
+msgid "Use nearby Point?"
+msgstr "Использовать ближайшую точку?"
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr "Версия:"
+#
+msgid "WD"
+msgstr "МодульТревог"
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr "По требованию"
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr "Хотите добавить ортодромические точки Геозоны для этого отрезка?"
+#
+msgid "Yes"
+msgstr "Да"
+#
+msgid "ocpn_draw_pi data location"
+msgstr "местоположение данных модуля"
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""

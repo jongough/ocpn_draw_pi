@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
@@ -17,1295 +17,1642 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " &Properties..."
-#~ msgstr " &Properti..."
+msgid " &Properties..."
+msgstr " &Properti..."
 #
-#~ msgid " To: "
-#~ msgstr " Ke: "
+msgid " To: "
+msgstr " Ke: "
 #
-#~ msgid ""
-#~ " shorter than rhumbline.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " lebih pendek dari garis rhumb.\n"
-#~ "\n"
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+" lebih pendek dari garis rhumb.\n"
+"\n"
 #
-#~ msgid " to "
-#~ msgstr " ke "
+msgid " to "
+msgstr " ke "
 #
-#~ msgid "&Activate"
-#~ msgstr "&Mengaktifkan"
+msgid "&Activate"
+msgstr "&Mengaktifkan"
 #
-#~ msgid "&Apply"
-#~ msgstr "&Menerapkan"
+msgid "&Add"
+msgstr ""
 #
-#~ msgid "&Cancel"
-#~ msgstr "&Membatalkan"
+msgid "&Apply"
+msgstr "&Menerapkan"
 #
-#~ msgid "&Center View"
-#~ msgstr "&Tampilan Pusat"
+msgid "&Cancel"
+msgstr "&Membatalkan"
 #
-#~ msgid "&Deactivate"
-#~ msgstr "&Menonaktifkan"
+msgid "&Center View"
+msgstr "&Tampilan Pusat"
 #
-#~ msgid "&Delete"
-#~ msgstr "&Menghapus"
+msgid "&Deactivate"
+msgstr "&Menonaktifkan"
 #
-#~ msgid "&New"
-#~ msgstr "&Baru"
+msgid "&Delete"
+msgstr "&Menghapus"
 #
-#~ msgid "&OK"
-#~ msgstr "&Baik"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Hapus yang dipilih"
 #
-#~ msgid "&Properties"
-#~ msgstr "&Properti"
+msgid "&Edit"
+msgstr ""
 #
-#~ msgid "&Remove Selected"
-#~ msgstr "&Hapus yang dipilih"
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Hapus yang dipilih"
 #
-#~ msgid "(Unnamed )"
-#~ msgstr "(Tidak ada nama )"
+#, fuzzy
+msgid "&List contents"
+msgstr "Daftar isi "
 #
-#~ msgid "(Unnamed) "
-#~ msgstr "(Tidak ada nama) "
+msgid "&New"
+msgstr "&Baru"
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(tidak disebutkan namanya)"
+msgid "&OK"
+msgstr "&Baik"
 #
-#~ msgid "0"
-#~ msgstr "0"
+msgid "&Properties"
+msgstr "&Properti"
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+msgid "&Remove Selected"
+msgstr "&Hapus yang dipilih"
 #
-#~ msgid "0.5"
-#~ msgstr "0.5"
+msgid "(Unnamed )"
+msgstr "(Tidak ada nama )"
 #
-#~ msgid "1"
-#~ msgstr "1"
+#, fuzzy
+msgid "(Unnamed Layer)"
+msgstr "(Tidak ada nama )"
 #
-#~ msgid "1 Pixel"
-#~ msgstr "1 Piksel"
+msgid "(Unnamed) "
+msgstr "(Tidak ada nama) "
 #
-#~ msgid "1 pixel"
-#~ msgstr "1 piksel"
+msgid "(unnamed)"
+msgstr "(tidak disebutkan namanya)"
 #
-#~ msgid "1.0"
-#~ msgstr "1.0"
+msgid "*.*"
+msgstr ""
 #
-#~ msgid "10"
-#~ msgstr "10"
+msgid "0"
+msgstr "0"
 #
-#~ msgid "10 Pixels"
-#~ msgstr "10 Piksel"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "10 pixels"
-#~ msgstr "10 piksel"
+msgid "0.5"
+msgstr "0.5"
 #
-#~ msgid "2"
-#~ msgstr "2"
+msgid "1"
+msgstr "1"
 #
-#~ msgid "2 Pixels"
-#~ msgstr "2 Piksel"
+msgid "1 Pixel"
+msgstr "1 Piksel"
 #
-#~ msgid "2 pixels"
-#~ msgstr "2 piksel"
+msgid "1 pixel"
+msgstr "1 piksel"
 #
-#~ msgid "3"
-#~ msgstr "3"
+msgid "1.0"
+msgstr "1.0"
 #
-#~ msgid "3 Pixels"
-#~ msgstr "3 Piksel"
+msgid "10"
+msgstr "10"
 #
-#~ msgid "3 pixels"
-#~ msgstr "3 piksel"
+msgid "10 Pixels"
+msgstr "10 Piksel"
 #
-#~ msgid "4"
-#~ msgstr "4"
+msgid "10 pixels"
+msgstr "10 piksel"
 #
-#~ msgid "4 Pixels"
-#~ msgstr "4 Piksel"
+msgid "2"
+msgstr "2"
 #
-#~ msgid "4 pixels"
-#~ msgstr "4 piksel"
+msgid "2 Pixels"
+msgstr "2 Piksel"
 #
-#~ msgid "5"
-#~ msgstr "5"
+msgid "2 pixels"
+msgstr "2 piksel"
 #
-#~ msgid "5 Pixels"
-#~ msgstr "5 Piksel"
+msgid "3"
+msgstr "3"
 #
-#~ msgid "5 pixels"
-#~ msgstr "5 piksel"
+msgid "3 Pixels"
+msgstr "3 Piksel"
 #
-#~ msgid "6"
-#~ msgstr "6"
+msgid "3 pixels"
+msgstr "3 piksel"
 #
-#~ msgid "6 Pixels"
-#~ msgstr "6 Piksel"
+msgid "4"
+msgstr "4"
 #
-#~ msgid "6 pixels"
-#~ msgstr "6 piksel"
+msgid "4 Pixels"
+msgstr "4 Piksel"
 #
-#~ msgid "7"
-#~ msgstr "7"
+msgid "4 pixels"
+msgstr "4 piksel"
 #
-#~ msgid "7 Pixels"
-#~ msgstr "7 Piksel"
+msgid "5"
+msgstr "5"
 #
-#~ msgid "7 pixels"
-#~ msgstr "7 piksel"
+msgid "5 Pixels"
+msgstr "5 Piksel"
 #
-#~ msgid "8"
-#~ msgstr "8"
+msgid "5 pixels"
+msgstr "5 piksel"
 #
-#~ msgid "8 Pixels"
-#~ msgstr "8 Piksel"
+msgid "6"
+msgstr "6"
 #
-#~ msgid "8 pixels"
-#~ msgstr "8 piksel"
+msgid "6 Pixels"
+msgstr "6 Piksel"
 #
-#~ msgid "9"
-#~ msgstr "9"
+msgid "6 pixels"
+msgstr "6 piksel"
 #
-#~ msgid "9 Pixels"
-#~ msgstr "9 Piksel"
+msgid "7"
+msgstr "7"
 #
-#~ msgid "9 pixels"
-#~ msgstr "9 piksel"
+msgid "7 Pixels"
+msgstr "7 Piksel"
 #
-#~ msgid "About"
-#~ msgstr "Tentang"
+msgid "7 pixels"
+msgstr "7 piksel"
 #
-#~ msgid "Activate"
-#~ msgstr "Mengaktifkan"
+msgid "8"
+msgstr "8"
 #
-#~ msgid "Active"
-#~ msgstr "Aktif"
+msgid "8 Pixels"
+msgstr "8 Piksel"
 #
-#~ msgid "Active Centre Line Colour"
-#~ msgstr "Warna jalur pusat aktif"
+msgid "8 pixels"
+msgstr "8 piksel"
 #
-#~ msgid "Active EBL Line Colour"
-#~ msgstr "Warna Garis EBL Aktif"
+msgid "9"
+msgstr "9"
 #
-#~ msgid "Active Fill Colour"
-#~ msgstr "Warna Isi Aktif"
+msgid "9 Pixels"
+msgstr "9 Piksel"
 #
-#~ msgid "Active Line Colour"
-#~ msgstr "Warna Jalur Aktif"
+msgid "9 pixels"
+msgstr "9 piksel"
 #
-#~ msgid "Active Offset Line Colour"
-#~ msgstr "Aktif mengimbangi jalur warna"
+msgid "About"
+msgstr "Tentang"
 #
-#~ msgid "Add Index Line"
-#~ msgstr "Tambahkan Indeks Garis"
+msgid "Activate"
+msgstr "Mengaktifkan"
 #
-#~ msgid "All"
-#~ msgstr "Semua"
+msgid "Active"
+msgstr "Aktif"
 #
-#~ msgid "Allow Left Mouse Button Drag"
-#~ msgstr "Memungkinkan Tombol Kiri Mouse Drag"
+msgid "Active Centre Line Colour"
+msgstr "Warna jalur pusat aktif"
 #
-#~ msgid "Always"
-#~ msgstr "Selalu"
+#, fuzzy
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr "Warna Jalur Aktif"
 #
-#~ msgid ""
-#~ "Always Show\n"
-#~ "EBL Info"
-#~ msgstr ""
-#~ "Selalu tampilkan\n"
-#~ "Info Ebl"
+msgid "Active EBL Line Colour"
+msgstr "Warna Garis EBL Aktif"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "Menerapkan perubahan dari "
+msgid "Active Fill Colour"
+msgstr "Warna Isi Aktif"
 #
-#~ msgid "Are you sure you want to delete <ALL> OD points?"
-#~ msgstr "Apakah anda yakin ingin menghapus <ALL> titik OD?"
+msgid "Active Line Colour"
+msgstr "Warna Jalur Aktif"
 #
-#~ msgid "Are you sure you want to delete <ALL> paths?"
-#~ msgstr "Apakah anda yakin ingin menghapus <ALL> jalan?"
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Aktif mengimbangi jalur warna"
 #
-#~ msgid "Are you sure you want to delete the selected object(s)"
-#~ msgstr "Apakah anda yakin anda ingin menghapus objek yang dipilih(s)"
+msgid "Active Offset Line Colour"
+msgstr "Aktif mengimbangi jalur warna"
 #
-#~ msgid "Are you sure you want to delete this Boundary Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Titik Boundary ini?"
+msgid "Add Index Line"
+msgstr "Tambahkan Indeks Garis"
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Apakah anda yakin ingin menghapus Batas ini?"
+msgid "Add New"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this DR Point?"
-#~ msgstr "Apakah anda yakin ingin menghapus Titik DR ini?"
+msgid "All"
+msgstr "Semua"
 #
-#~ msgid "Are you sure you want to delete this DR?"
-#~ msgstr "Apakah anda yakin ingin menghapus DR ini?"
+msgid "Allow Left Mouse Button Drag"
+msgstr "Memungkinkan Tombol Kiri Mouse Drag"
 #
-#~ msgid "Are you sure you want to delete this EBL Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Titik EBL ini?"
+msgid "Always"
+msgstr "Selalu"
 #
-#~ msgid "Are you sure you want to delete this EBL?"
-#~ msgstr "Apakah anda yakin anda ingin menghapus ini EBL?"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
+"Selalu tampilkan\n"
+"Info Ebl"
 #
-#~ msgid "Are you sure you want to delete this Guard Zone?"
-#~ msgstr "Apakah anda yakin ingin menghapus Wilayah Penjagaan ini?"
+msgid "Applying changes from "
+msgstr "Menerapkan perubahan dari "
 #
-#~ msgid "Are you sure you want to delete this OD Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Titik OD ini?"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this PIL Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Titik PIL ini?"
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Apakah anda yakin ingin menghapus <ALL> titik OD?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line Group?"
-#~ msgstr "Apakah anda yakin ingin menghapus kumpulan Indeks Garis Paralel ini?"
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Apakah anda yakin ingin menghapus <ALL> jalan?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line?"
-#~ msgstr "Apakah anda yakin ingin menghapus Indeks Baris Paralel ini?"
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Apakah anda yakin anda ingin menghapus objek yang dipilih(s)"
 #
-#~ msgid "Are you sure you want to delete this Text Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Titik Teks ini?"
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik Boundary ini?"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr "Apakah anda yakin anda ingin menghapus lapisan ini dan <ALL> isinya?"
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Apakah anda yakin ingin menghapus Batas ini?"
 #
-#~ msgid "Are you sure you want to remove this "
-#~ msgstr "Apakah anda yakin ingin untuk menghapus ini "
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Apakah anda yakin ingin menghapus Titik DR ini?"
 #
-#~ msgid "Are you sure you want to remove this Boundary Point?"
-#~ msgstr "Apakah anda yakin ingin menghapus Titik Boundary ini?"
+msgid "Are you sure you want to delete this DR?"
+msgstr "Apakah anda yakin ingin menghapus DR ini?"
 #
-#~ msgid "Are you sure you want to remove this DR Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Poin DR ini?"
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik EBL ini?"
 #
-#~ msgid "Are you sure you want to remove this EBL Point?"
-#~ msgstr "Apakah anda yakin ingin untuk menghapus Titik EBL ini?"
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Apakah anda yakin anda ingin menghapus ini EBL?"
 #
-#~ msgid "Are you sure you want to remove this OD Point?"
-#~ msgstr "Apakah anda yakin ingin menghapus Titik OD ini?"
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Apakah anda yakin ingin menghapus Wilayah Penjagaan ini?"
 #
-#~ msgid "Are you sure you want to remove this point?"
-#~ msgstr "Apakah anda yakin ingin menghapus titik ini?"
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik OD ini?"
 #
-#~ msgid "Arrival Radius"
-#~ msgstr "Radius Kedatangan"
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik PIL ini?"
 #
-#~ msgid "Background Colour"
-#~ msgstr "Warna Latar Belakang"
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Apakah anda yakin ingin menghapus kumpulan Indeks Garis Paralel ini?"
 #
-#~ msgid "Background Density"
-#~ msgstr "Latar Belakang Densitas"
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Apakah anda yakin ingin menghapus Indeks Baris Paralel ini?"
 #
-#~ msgid "Background Transparency"
-#~ msgstr "Transparan Latar Belakang"
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik Teks ini?"
 #
-#~ msgid "Basic"
-#~ msgstr "Dasar"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Apakah anda yakin anda ingin menghapus lapisan ini dan <ALL> isinya?"
 #
-#~ msgid "Bearing"
-#~ msgstr "Bantalan"
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Apakah anda yakin ingin menghapus Titik DR ini?"
 #
-#~ msgid "Bearing From-To"
-#~ msgstr "Bantalan dari-untuk"
+msgid "Are you sure you want to remove this "
+msgstr "Apakah anda yakin ingin untuk menghapus ini "
 #
-#~ msgid "Bearing: "
-#~ msgstr "Bantalan: "
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Apakah anda yakin ingin menghapus Titik Boundary ini?"
 #
-#~ msgid "Boat"
-#~ msgstr "Perahu"
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Poin DR ini?"
 #
-#~ msgid "Bottom"
-#~ msgstr "Bawah"
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Apakah anda yakin ingin untuk menghapus Titik EBL ini?"
 #
-#~ msgid "Bottom Centre"
-#~ msgstr "Bawah Pusat"
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Apakah anda yakin ingin menghapus Titik OD ini?"
 #
-#~ msgid "Boundary"
-#~ msgstr "Batas"
+msgid "Are you sure you want to remove this point?"
+msgstr "Apakah anda yakin ingin menghapus titik ini?"
 #
-#~ msgid "Boundary Point"
-#~ msgstr "Batas Titik"
+msgid "Arrival Radius"
+msgstr "Radius Kedatangan"
 #
-#~ msgid ""
-#~ "Boundary Point Inclusion\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Pencantuman Titik Batas \n"
-#~ "Ukuran"
+msgid "Background Colour"
+msgstr "Warna Latar Belakang"
 #
-#~ msgid "Boundary Point Properties"
-#~ msgstr "Titik Batas Properti"
+msgid "Background Density"
+msgstr "Latar Belakang Densitas"
 #
-#~ msgid "Boundary Point Properties, Layer: "
-#~ msgstr "Batas Tiikt Properti, Lapisan: "
+msgid "Background Transparency"
+msgstr "Transparan Latar Belakang"
 #
-#~ msgid "Boundary Point Type"
-#~ msgstr "Boundary Point Type"
+msgid "Basic"
+msgstr "Dasar"
 #
-#~ msgid "Boundary Properties"
-#~ msgstr "Batas Properti"
+msgid "Bearing"
+msgstr "Bantalan"
 #
-#~ msgid "Boundary Properties, Layer: "
-#~ msgstr "Boundary Properties, Lapisan: "
+#, fuzzy
+msgid "Bearing (M)"
+msgstr "Bantalan: "
 #
-#~ msgid "Boundary Type"
-#~ msgstr "Batas Jenis"
+msgid "Bearing From-To"
+msgstr "Bantalan dari-untuk"
 #
-#~ msgid "Centre"
-#~ msgstr "Pusat"
+#, fuzzy
+msgid "Bearing From-To (M)"
+msgstr "Bantalan dari-untuk"
 #
-#~ msgid "Centre Line Style"
-#~ msgstr "Gaya baris tengah"
+msgid "Bearing: "
+msgstr "Bantalan: "
 #
-#~ msgid "Centre Line Width"
-#~ msgstr "Jalur pusat lebar"
+msgid "Boat"
+msgstr "Perahu"
 #
-#~ msgid "Centre on moving boat"
-#~ msgstr "Pusat gerakan perahu"
+msgid "Bottom"
+msgstr "Bawah"
 #
-#~ msgid "Change all Path Point Icons"
-#~ msgstr "Mengubah semua Ikon Titik Jalan"
+msgid "Bottom Centre"
+msgstr "Bawah Pusat"
 #
-#~ msgid "Combo!"
-#~ msgstr "Combo!"
+msgid "Boundary"
+msgstr "Batas"
 #
-#~ msgid "Confirm"
-#~ msgstr "Konfirmasi"
+#, fuzzy
+msgid "Boundary '"
+msgstr "Batas"
 #
-#~ msgid "Confirm Object Delete"
-#~ msgstr "Konfirmasikan Menghapus Objek"
+msgid "Boundary Point"
+msgstr "Batas Titik"
 #
-#~ msgid "Control Line"
-#~ msgstr "Garis Kontrol"
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Menyembunyikan Titik Batas Ikon"
 #
-#~ msgid "Copy"
-#~ msgstr "Salin"
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+"Pencantuman Titik Batas \n"
+"Ukuran"
 #
-#~ msgid "Copy Boundary GUID"
-#~ msgstr "Salin Batas GUID"
+msgid "Boundary Point Properties"
+msgstr "Titik Batas Properti"
 #
-#~ msgid "Copy DR GUID"
-#~ msgstr "Salinan DR GUID"
+msgid "Boundary Point Properties, Layer: "
+msgstr "Batas Tiikt Properti, Lapisan: "
 #
-#~ msgid "Copy EBL GUID"
-#~ msgstr "Salinan EBL GUID"
+msgid "Boundary Point Type"
+msgstr "Boundary Point Type"
 #
-#~ msgid "Copy Guard Zone GUID"
-#~ msgstr "Menyalin Penjaga Zona GUID"
+msgid "Boundary Properties"
+msgstr "Batas Properti"
 #
-#~ msgid "Copy Point GUID"
-#~ msgstr "Salin Titik GUID"
+msgid "Boundary Properties, Layer: "
+msgstr "Boundary Properties, Lapisan: "
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Salin lintang/bujur"
+msgid "Boundary Type"
+msgstr "Batas Jenis"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Jalan di atas Tanah"
+msgid "Centre"
+msgstr "Pusat"
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Jarak diatas tanah (M)"
+msgid "Centre Line Style"
+msgstr "Gaya baris tengah"
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Jarak diatas tanah (T)"
+msgid "Centre Line Width"
+msgstr "Jalur pusat lebar"
 #
-#~ msgid "Create Boundary"
-#~ msgstr "Membuat Batas"
+msgid "Centre on moving boat"
+msgstr "Pusat gerakan perahu"
 #
-#~ msgid "Create Boundary Point"
-#~ msgstr "Membuat Titik Batas"
+msgid "Change all Path Point Icons"
+msgstr "Mengubah semua Ikon Titik Jalan"
 #
-#~ msgid "Create DR"
-#~ msgstr "Buat DR"
+msgid "Character Based"
+msgstr ""
 #
-#~ msgid "Create EBL"
-#~ msgstr "Buat EBL"
+msgid "Combo!"
+msgstr "Combo!"
 #
-#~ msgid "Create GZ"
-#~ msgstr "Buat GZ"
+msgid "Confirm"
+msgstr "Konfirmasi"
 #
-#~ msgid "Create PIL"
-#~ msgstr "Buat PIL"
+msgid "Confirm Object Delete"
+msgstr "Konfirmasikan Menghapus Objek"
 #
-#~ msgid "Create Text Point"
-#~ msgstr "Membuat Teks Titik"
+msgid "Control Line"
+msgstr "Garis Kontrol"
 #
-#~ msgid "DR"
-#~ msgstr "DR"
+msgid "Copy"
+msgstr "Salin"
 #
-#~ msgid "DR Path Length"
-#~ msgstr "Panjang jalan DR"
+msgid "Copy Boundary GUID"
+msgstr "Salin Batas GUID"
 #
-#~ msgid "DR Persistence"
-#~ msgstr "Kegigihan DR"
+msgid "Copy DR GUID"
+msgstr "Salinan DR GUID"
 #
-#~ msgid "DR Point"
-#~ msgstr "Titik DR"
+msgid "Copy EBL GUID"
+msgstr "Salinan EBL GUID"
 #
-#~ msgid "DR Point Icon"
-#~ msgstr "Ikon titik DR"
+msgid "Copy Guard Zone GUID"
+msgstr "Menyalin Penjaga Zona GUID"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "Titik selang waktu DR"
+msgid "Copy Point GUID"
+msgstr "Salin Titik GUID"
 #
-#~ msgid "DR Point Properties, Layer: "
-#~ msgstr "DR titik Properti, Lapisan: "
+msgid "Copy lat/long"
+msgstr "Salin lintang/bujur"
 #
-#~ msgid "DR Properties"
-#~ msgstr "Properti DR"
+msgid "Course over Ground"
+msgstr "Jalan di atas Tanah"
 #
-#~ msgid "DR Properties, Layer: "
-#~ msgstr "DR Properties, Lapisan: "
+msgid "Course over Ground (M)"
+msgstr "Jarak diatas tanah (M)"
 #
-#~ msgid "Date:"
-#~ msgstr "Tanggal:"
+msgid "Course over Ground (T)"
+msgstr "Jarak diatas tanah (T)"
 #
-#~ msgid "Days"
-#~ msgstr "Hari"
+msgid "Create Boundary"
+msgstr "Membuat Batas"
 #
-#~ msgid "Deactivate"
-#~ msgstr "Menonaktifkan"
+msgid "Create Boundary Point"
+msgstr "Membuat Titik Batas"
 #
-#~ msgid "Dead Reckoning"
-#~ msgstr "Perhitungan Yang Salah"
+msgid "Create DR"
+msgstr "Buat DR"
 #
-#~ msgid "Default Offset (+Stbd/-Port)"
-#~ msgstr "Mengimbangi bawaan (+Stbd/-Port)"
+msgid "Create EBL"
+msgstr "Buat EBL"
 #
-#~ msgid "Delete"
-#~ msgstr "Hapus"
+msgid "Create GZ"
+msgstr "Buat GZ"
 #
-#~ msgid "Delete Line"
-#~ msgstr "Hapus Baris"
+msgid "Create PIL"
+msgstr "Buat PIL"
 #
-#~ msgid "Delete..."
-#~ msgstr "Menhapus..."
+msgid "Create Text Point"
+msgstr "Membuat Teks Titik"
 #
-#~ msgid "Desc"
-#~ msgstr "Deskripsi"
+msgid "DR"
+msgstr "DR"
 #
-#~ msgid "Description"
-#~ msgstr "Keterangan"
+msgid "DR Path Length"
+msgstr "Panjang jalan DR"
 #
-#~ msgid "Display Toolbar"
-#~ msgstr "Tampilkan Toolbar"
+msgid "DR Persistence"
+msgstr "Kegigihan DR"
 #
-#~ msgid "Display text"
-#~ msgstr "Menampilkan teks"
+msgid "DR Point"
+msgstr "Titik DR"
 #
-#~ msgid "Distance"
-#~ msgstr "Jarak"
+msgid "DR Point Icon"
+msgstr "Ikon titik DR"
 #
-#~ msgid "Distance Between Range Rings"
-#~ msgstr "Jarak Antara Rentang Rentang"
+msgid "DR Point Interval"
+msgstr "Titik selang waktu DR"
 #
-#~ msgid "Distance From Boat"
-#~ msgstr "Jarak Dari Perahu"
+#, fuzzy
+msgid "DR Point Properties"
+msgstr "EBL Titik Properti"
 #
-#~ msgid "Distance Unit"
-#~ msgstr "Satuan jarak"
+msgid "DR Point Properties, Layer: "
+msgstr "DR titik Properti, Lapisan: "
 #
-#~ msgid "Distance Units"
-#~ msgstr "Unit Jarak Jauh"
+msgid "DR Properties"
+msgstr "Properti DR"
 #
-#~ msgid "Distance between Range Rings"
-#~ msgstr "Jarak Cincin antara Kisaran"
+msgid "DR Properties, Layer: "
+msgstr "DR Properties, Lapisan: "
 #
-#~ msgid "Distance from Ownship"
-#~ msgstr "Jarak dari kapal"
+msgid "Data Directory"
+msgstr ""
 #
-#~ msgid ""
-#~ "Do you also want to make the shared OD Points being part of this boundary "
-#~ "invisible?"
-#~ msgstr ""
-#~ "Apakah anda juga ingin membuat ruang OD Poin menjadi bagian dari batasan "
-#~ "yang terlihat ini?"
+msgid "Data:"
+msgstr ""
 #
-#~ msgid "Dot"
-#~ msgstr "Titik"
+msgid "Date:"
+msgstr "Tanggal:"
 #
-#~ msgid "Dot Dash"
-#~ msgstr "Titik Garis"
+msgid "Days"
+msgstr "Hari"
 #
-#~ msgid "Draw Toolbar"
-#~ msgstr "Gambar Toolbar"
+msgid "Deactivate"
+msgstr "Menonaktifkan"
 #
-#~ msgid "EBL"
-#~ msgstr "EBL"
+msgid "Dead Reckoning"
+msgstr "Perhitungan Yang Salah"
 #
-#~ msgid "EBL Angle (-P/+S)"
-#~ msgstr "Sudut EBL (-P/+S)"
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Mengimbangi bawaan (+Stbd/-Port)"
 #
-#~ msgid ""
-#~ "EBL Fixed\n"
-#~ "End Position"
-#~ msgstr ""
-#~ "EBL Tetap\n"
-#~ "Posisi Akhir"
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Hapus"
 #
-#~ msgid "EBL Fixed End Position"
-#~ msgstr "Posisi Akhir Tetap EBL"
+msgid "Delete"
+msgstr "Hapus"
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "Kegigihan EBL"
+msgid "Delete Line"
+msgstr "Hapus Baris"
 #
-#~ msgid "EBL Point"
-#~ msgstr "Titik EBL"
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
 #
-#~ msgid "EBL Point Properties"
-#~ msgstr "EBL Titik Properti"
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
-#~ msgid "EBL Point Properties, Layer: "
-#~ msgstr "EBL Titik Properti, Lapisan: "
+msgid "Delete..."
+msgstr "Menhapus..."
 #
-#~ msgid "EBL Properties"
-#~ msgstr "Properti EBL"
+msgid "Desc"
+msgstr "Deskripsi"
 #
-#~ msgid "EBL Properties, Layer: "
-#~ msgstr "Properti EBL, Lapisan: "
+msgid "Description"
+msgstr "Keterangan"
 #
-#~ msgid ""
-#~ "Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 5"
-#~ msgstr ""
-#~ "Sensitivitas Panning Edge\n"
-#~ "(lebar layar persentase) Default 5"
+#, fuzzy
+msgid "Display Text"
+msgstr "Menampilkan teks"
 #
-#~ msgid "Electronic Bearing Line"
-#~ msgstr "Bantalan Jalur Elektronik"
+msgid "Display Toolbar"
+msgstr "Tampilkan Toolbar"
 #
-#~ msgid "End"
-#~ msgstr "Selesai"
+msgid "Display text"
+msgstr "Menampilkan teks"
 #
-#~ msgid "End Point Icon"
-#~ msgstr "Ikon Titik Akhir"
+msgid "Distance"
+msgstr "Jarak"
 #
-#~ msgid "Example"
-#~ msgstr "Contoh"
+msgid "Distance Between Range Rings"
+msgstr "Jarak Antara Rentang Rentang"
 #
-#~ msgid "Exclusion"
-#~ msgstr "Pengecualian"
+msgid "Distance From Boat"
+msgstr "Jarak Dari Perahu"
 #
-#~ msgid "Export GPX file"
-#~ msgstr "Ekspor berkas GPX"
+msgid "Distance Unit"
+msgstr "Satuan jarak"
 #
-#~ msgid "Extended"
-#~ msgstr "Diperpanjang"
+msgid "Distance Units"
+msgstr "Unit Jarak Jauh"
 #
-#~ msgid "Fill Colour"
-#~ msgstr "Isi Warna"
+msgid "Distance between Range Rings"
+msgstr "Jarak Cincin antara Kisaran"
 #
-#~ msgid "Fill Density"
-#~ msgstr "Mengisi Kepadatan"
+msgid "Distance from Ownship"
+msgstr "Jarak dari kapal"
 #
-#~ msgid "First"
-#~ msgstr "Pertama"
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+"Apakah anda juga ingin membuat ruang OD Poin menjadi bagian dari batasan yang "
+"terlihat ini?"
 #
-#~ msgid "First Angle (-P/+S)"
-#~ msgstr "Sudut Pertama (-P/+S)"
+msgid "Dot"
+msgstr "Titik"
 #
-#~ msgid "First Point Icon"
-#~ msgstr "Ikon titik pertama"
+msgid "Dot Dash"
+msgstr "Titik Garis"
 #
-#~ msgid "First distance"
-#~ msgstr "Jarak pertama"
+msgid "Draw Toolbar"
+msgstr "Gambar Toolbar"
 #
-#~ msgid "Fonts"
-#~ msgstr "Font"
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Ekspor berkas GPX"
 #
-#~ msgid "For this leg the Great Circle boundary is "
-#~ msgstr "Batas untuk Lingkaran Besar adalah "
+msgid "EBL"
+msgstr "EBL"
 #
-#~ msgid "From Point"
-#~ msgstr "Dari titik"
+msgid "EBL Angle (-P/+S)"
+msgstr "Sudut EBL (-P/+S)"
 #
-#~ msgid "From: "
-#~ msgstr "Dari: "
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr ""
+"EBL Tetap\n"
+"Posisi Akhir"
 #
-#~ msgid "GUID"
-#~ msgstr "GUID"
+msgid "EBL Fixed End Position"
+msgstr "Posisi Akhir Tetap EBL"
 #
-#~ msgid "GZ"
-#~ msgstr "GZ"
+msgid "EBL Persistence"
+msgstr "Kegigihan EBL"
 #
-#~ msgid "General"
-#~ msgstr "Umum"
+msgid "EBL Point"
+msgstr "Titik EBL"
 #
-#~ msgid ""
-#~ "General Drawing for OpenCPN\n"
-#~ "\n"
-#~ "Thanks to the community for their helpful suggestions."
-#~ msgstr ""
-#~ "Menggambar umum untuk OpenCPN\n"
-#~ "\n"
-#~ "Terima kasih kepada pengguna atas saran mereka yang bermanfaat."
+msgid "EBL Point Properties"
+msgstr "EBL Titik Properti"
 #
-#~ msgid "General drawing for OpenCPN"
-#~ msgstr "Menggambar umum untuk OpenCPN"
+msgid "EBL Point Properties, Layer: "
+msgstr "EBL Titik Properti, Lapisan: "
 #
-#~ msgid "Guard Zone"
-#~ msgstr "Zona Penjaga"
+msgid "EBL Properties"
+msgstr "Properti EBL"
 #
-#~ msgid "Guard Zone Persistence"
-#~ msgstr "Kegigihan penjaga zona"
+msgid "EBL Properties, Layer: "
+msgstr "Properti EBL, Lapisan: "
 #
-#~ msgid "Guard Zone Point"
-#~ msgstr "Titik zona penjaga"
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+"Sensitivitas Panning Edge\n"
+"(lebar layar persentase) Default 5"
 #
-#~ msgid "Guard Zone Properties"
-#~ msgstr "Properti zona penjaga"
+msgid "Edit"
+msgstr ""
 #
-#~ msgid "Heading"
-#~ msgstr "Bagian Atas"
+msgid "Electronic Bearing Line"
+msgstr "Bantalan Jalur Elektronik"
 #
-#~ msgid "Help"
-#~ msgstr "Bantuan"
+msgid "End"
+msgstr "Selesai"
 #
-#~ msgid "Hide Boundary Point Icons"
-#~ msgstr "Menyembunyikan Titik Batas Ikon"
+msgid "End Point Icon"
+msgstr "Ikon Titik Akhir"
 #
-#~ msgid "Hide Point names"
-#~ msgstr "Sembunyikan nama titik"
+msgid "Error in import file."
+msgstr ""
 #
-#~ msgid "Hide from chart"
-#~ msgstr "Sembunyikan dari grafik"
+msgid "Example"
+msgstr "Contoh"
 #
-#~ msgid "Hours"
-#~ msgstr "Jam"
+msgid "Exclusion"
+msgstr "Pengecualian"
 #
-#~ msgid "ID"
-#~ msgstr "ID"
+msgid "Export GPX file"
+msgstr "Ekspor berkas GPX"
 #
-#~ msgid "ID Num"
-#~ msgstr "Nomor ID"
+msgid "Extended"
+msgstr "Diperpanjang"
 #
-#~ msgid "ID: "
-#~ msgstr "ID: "
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
 #
-#~ msgid "Icon"
-#~ msgstr "Ikon"
+msgid "Fill Colour"
+msgstr "Isi Warna"
 #
-#~ msgid "Import GPX file"
-#~ msgstr "Impor berkas GPX"
+msgid "Fill Density"
+msgstr "Mengisi Kepadatan"
 #
-#~ msgid "Inactive Centre Line Colour"
-#~ msgstr "Warna jalur pusat tidak aktif"
+msgid "First"
+msgstr "Pertama"
 #
-#~ msgid "Inactive EBL Line Colour"
-#~ msgstr "Warna Garis EBL tidak aktif"
+msgid "First Angle (-P/+S)"
+msgstr "Sudut Pertama (-P/+S)"
 #
-#~ msgid "Inactive Fill Colour"
-#~ msgstr "Warna Isi Tidak Aktif"
+msgid "First Point Icon"
+msgstr "Ikon titik pertama"
 #
-#~ msgid "Inactive Line Colour"
-#~ msgstr "Warna Jalur tidak Aktif"
+msgid "First distance"
+msgstr "Jarak pertama"
 #
-#~ msgid "Inactive Offset Line Colour"
-#~ msgstr "Tidak aktif mengimbangi jalur warna"
+#, fuzzy
+msgid "Font Based"
+msgstr "Font"
 #
-#~ msgid "Inclusion"
-#~ msgstr "Pencantuman"
+msgid "Fonts"
+msgstr "Font"
 #
-#~ msgid ""
-#~ "Inclusion Boundary\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Penyertaan Batas\n"
-#~ "ukuran"
+msgid "For this leg the Great Circle boundary is "
+msgstr "Batas untuk Lingkaran Besar adalah "
 #
-#~ msgid "Inclusion Boundary Size"
-#~ msgstr "Ukuran Batas Inklusi"
+msgid "From Point"
+msgstr "Dari titik"
 #
-#~ msgid "Index Lines (+ Stbd/- Port)"
-#~ msgstr "Indeks Lines (+ Stbd/- Port)"
+msgid "From: "
+msgstr "Dari: "
 #
-#~ msgid ""
-#~ "Initial Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 3"
-#~ msgstr ""
-#~ "Sensitivitas Panning Edge Awal\n"
-#~ "(lebar layar persentase) Default 3"
+msgid "GUID"
+msgstr "GUID"
 #
-#~ msgid "Insert Boundary Point"
-#~ msgstr "Menyisipkan Titik Batas"
+msgid "GZ"
+msgstr "GZ"
 #
-#~ msgid "Insert EBL Point"
-#~ msgstr "Masukkan titik EBL"
+#, fuzzy
+msgid "GZ Point Properties, Layer: "
+msgstr "DR titik Properti, Lapisan: "
 #
-#~ msgid "Interval Type"
-#~ msgstr "Tipe Selang waktu"
+msgid "General"
+msgstr "Umum"
 #
-#~ msgid "Kilometres"
-#~ msgstr "Kilometer"
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"Menggambar umum untuk OpenCPN\n"
+"\n"
+"Terima kasih kepada pengguna atas saran mereka yang bermanfaat."
 #
-#~ msgid "Latitude"
-#~ msgstr "Garis Lintang"
+msgid "General drawing for OpenCPN"
+msgstr "Menggambar umum untuk OpenCPN"
 #
-#~ msgid "Layer"
-#~ msgstr "Lapisan"
+msgid "Guard Zone"
+msgstr "Zona Penjaga"
 #
-#~ msgid "Layer "
-#~ msgstr "Lapisan "
+msgid "Guard Zone Persistence"
+msgstr "Kegigihan penjaga zona"
 #
-#~ msgid "Layer Boundary"
-#~ msgstr "Batas pemisah"
+msgid "Guard Zone Point"
+msgstr "Titik zona penjaga"
 #
-#~ msgid "Layer Boundary Point"
-#~ msgstr "Lapisan Batas Titik"
+#, fuzzy
+msgid "Guard Zone Point Properties"
+msgstr "Properti zona penjaga"
 #
-#~ msgid "Layer DR Point"
-#~ msgstr "Lapisan titik DR"
+msgid "Guard Zone Properties"
+msgstr "Properti zona penjaga"
 #
-#~ msgid "Layer EBL Point"
-#~ msgstr "Lapisan titik EBL"
+msgid "Heading"
+msgstr "Bagian Atas"
 #
-#~ msgid "Layer Name"
-#~ msgstr "Nama lapisan"
+msgid "Help"
+msgstr "Bantuan"
 #
-#~ msgid "Layer Text Point"
-#~ msgstr "Lapisan titik teks"
+msgid "Hide Boundary Point Icons"
+msgstr "Menyembunyikan Titik Batas Ikon"
 #
-#~ msgid "Layers"
-#~ msgstr "Lapisan"
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Lapisan"
 #
-#~ msgid "Left"
-#~ msgstr "Kiri"
+msgid "Hide Path(s)"
+msgstr ""
 #
-#~ msgid "Leg: from "
-#~ msgstr "Kaki: dari "
+msgid "Hide Point names"
+msgstr "Sembunyikan nama titik"
 #
-#~ msgid "Length Type"
-#~ msgstr "Tipe Panjang"
+#, fuzzy
+msgid "Hide Point(s)"
+msgstr "Sembunyikan nama titik"
 #
-#~ msgid "Line Colour"
-#~ msgstr "Warna Baris"
+msgid "Hide from chart"
+msgstr "Sembunyikan dari grafik"
 #
-#~ msgid "Line Style"
-#~ msgstr "Gaya Baris"
+msgid "Hours"
+msgstr "Jam"
 #
-#~ msgid "Line Width"
-#~ msgstr "Lebar garis"
+msgid "I&mport"
+msgstr ""
 #
-#~ msgid "List contents "
-#~ msgstr "Daftar isi "
+msgid "ID"
+msgstr "ID"
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "Memuat objek navigasi dari "
+msgid "ID Num"
+msgstr "Nomor ID"
 #
-#~ msgid "Long Dash"
-#~ msgstr "Garis Panjang"
+msgid "ID: "
+msgstr "ID: "
 #
-#~ msgid "Longitude"
-#~ msgstr "Garis Bujur"
+msgid "Icon"
+msgstr "Ikon"
 #
-#~ msgid "Maintain with"
-#~ msgstr "Pertahankan dengan"
+msgid "Icon Directory"
+msgstr ""
 #
-#~ msgid "Major:"
-#~ msgstr "Utama:"
+msgid "Import"
+msgstr ""
 #
-#~ msgid "Match VRM colour to EBL colour"
-#~ msgstr "Sesuai warna VRM ke warna EBL"
+msgid "Import Error"
+msgstr ""
 #
-#~ msgid "Merge and Delete Boundaries"
-#~ msgstr "Penggabungan dan menghapus batas"
+msgid "Import GPX file"
+msgstr "Impor berkas GPX"
 #
-#~ msgid "Merge and Keep Boundaries"
-#~ msgstr "Penggabungan dan batas-batas tetap"
+#, fuzzy
+msgid "Import file"
+msgstr "Impor berkas GPX"
 #
-#~ msgid "Minor:"
-#~ msgstr "Kecil:"
+#, fuzzy
+msgid "Import incomplete."
+msgstr "Impor berkas GPX"
 #
-#~ msgid "Minutes"
-#~ msgstr "Menit"
+msgid "Inactive Centre Line Colour"
+msgstr "Warna jalur pusat tidak aktif"
 #
-#~ msgid "Move Boundary"
-#~ msgstr "Memindahkan Batas"
+#, fuzzy
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr "Warna Jalur tidak Aktif"
 #
-#~ msgid "Move Boundary Point"
-#~ msgstr "Memindahkan Titik Batas"
+msgid "Inactive EBL Line Colour"
+msgstr "Warna Garis EBL tidak aktif"
 #
-#~ msgid "Move Boundary Segment"
-#~ msgstr "Batas Segmen Dipindahkan"
+msgid "Inactive Fill Colour"
+msgstr "Warna Isi Tidak Aktif"
 #
-#~ msgid "Move DR Point"
-#~ msgstr "Pindah Titik DR"
+msgid "Inactive Line Colour"
+msgstr "Warna Jalur tidak Aktif"
 #
-#~ msgid "Move EBL"
-#~ msgstr "Pindahkan EBL"
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Tidak aktif mengimbangi jalur warna"
 #
-#~ msgid "Move EBL Point"
-#~ msgstr "Pindah titik EBL"
+msgid "Inactive Offset Line Colour"
+msgstr "Tidak aktif mengimbangi jalur warna"
 #
-#~ msgid "Move Guard Zone Point"
-#~ msgstr "Pindah titik zona penjaga"
+msgid "Inclusion"
+msgstr "Pencantuman"
 #
-#~ msgid "Move Line"
-#~ msgstr "Pindahkan Baris"
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+"Penyertaan Batas\n"
+"ukuran"
 #
-#~ msgid "Move OD Point"
-#~ msgstr "Pindah Titik OD"
+msgid "Inclusion Boundary Size"
+msgstr "Ukuran Batas Inklusi"
 #
-#~ msgid "Move PIL Point"
-#~ msgstr "Pindah Titik PIL"
+#, fuzzy
+msgid "Index Line Properties"
+msgstr "Penunjuk garis sejajar properti"
 #
-#~ msgid "Move Text Point"
-#~ msgstr "Pindah titik teks"
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Indeks Lines (+ Stbd/- Port)"
 #
-#~ msgid "Move start point to boat lat/lon"
-#~ msgstr "Memindahkan titik awal untuk perahu lat/lon"
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+"Sensitivitas Panning Edge Awal\n"
+"(lebar layar persentase) Default 3"
 #
-#~ msgid "Multiple Boundaries"
-#~ msgstr "Beberapa batas"
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Jumlah Rentang Rentang"
 #
-#~ msgid "Name"
-#~ msgstr "Nama"
+msgid "Insert Boundary Point"
+msgstr "Menyisipkan Titik Batas"
 #
-#~ msgid "Name:"
-#~ msgstr "Nama:"
+msgid "Insert EBL Point"
+msgstr "Masukkan titik EBL"
 #
-#~ msgid "Name: "
-#~ msgstr "Nama: "
+msgid "Interval Type"
+msgstr "Tipe Selang waktu"
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Mil Laut"
+msgid "Kilometres"
+msgstr "Kilometer"
 #
-#~ msgid "Neither"
-#~ msgstr "Tidak"
+msgid "Latitude"
+msgstr "Garis Lintang"
 #
-#~ msgid "Never"
-#~ msgstr "Tidak pernah"
+msgid "Layer"
+msgstr "Lapisan"
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Lapisan baru %d: %s"
+msgid "Layer "
+msgstr "Lapisan "
 #
-#~ msgid "No alarm"
-#~ msgstr "Tidak ada Alarm"
+msgid "Layer Boundary"
+msgstr "Batas pemisah"
 #
-#~ msgid "No. of items"
-#~ msgstr "Tidak. hal"
+msgid "Layer Boundary Point"
+msgstr "Lapisan Batas Titik"
 #
-#~ msgid "None"
-#~ msgstr "Tidak ada"
+msgid "Layer DR Point"
+msgstr "Lapisan titik DR"
 #
-#~ msgid "Number of Point Range Rings"
-#~ msgstr "Jumlah Jangkauan Titik Cincin"
+msgid "Layer EBL Point"
+msgstr "Lapisan titik EBL"
 #
-#~ msgid "Number of Range Rings"
-#~ msgstr "Jumlah Rentang Rentang"
+msgid "Layer Name"
+msgstr "Nama lapisan"
 #
-#~ msgid "OCPN Draw"
-#~ msgstr "OCPN Menarik"
+msgid "Layer Text Point"
+msgstr "Lapisan titik teks"
 #
-#~ msgid "OCPN Draw Boundary"
-#~ msgstr "OCPN Menarik batas"
+msgid "Layers"
+msgstr "Lapisan"
 #
-#~ msgid "OCPN Draw Boundary Create"
-#~ msgstr "OCPN Buat batas tarik"
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Batas pemisah"
 #
-#~ msgid "OCPN Draw Boundary Delete"
-#~ msgstr "OCPN Menghapus Batas Menggambar"
+msgid "Left"
+msgstr "Kiri"
 #
-#~ msgid "OCPN Draw DR Delete"
-#~ msgstr "OCPN Menarik DR Hapus"
+msgid "Left Click links are deleted."
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete Boundary Point"
-#~ msgstr "OCPN Menarik Menghapus Titik Batas"
+msgid "Left Click links are opened for editing."
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete DR Point"
-#~ msgstr "OCPN Hapus tarikan titik DR"
+msgid "Left Click links are opened in the default browser."
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete EBL Point"
-#~ msgstr "OCPN Hapus tarikan titik EBL"
+msgid "Left click opens in browser"
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete OD Point"
-#~ msgstr "OCPN Hapus tarikan titik OD"
+msgid "Leg: from "
+msgstr "Kaki: dari "
 #
-#~ msgid "OCPN Draw Delete PIL Point"
-#~ msgstr "OCPN Hapus tarikan titik PIL"
+msgid "Length Type"
+msgstr "Tipe Panjang"
 #
-#~ msgid "OCPN Draw Delete Text Point"
-#~ msgstr "OCPN Hapus tarikan titik teks"
+msgid "License"
+msgstr ""
 #
-#~ msgid "OCPN Draw EBL Delete"
-#~ msgstr "OCPN Menarik EBL Hapus"
+msgid "Line Colour"
+msgstr "Warna Baris"
 #
-#~ msgid "OCPN Draw GZ Delete"
-#~ msgstr "OCPN Menarik GZ Hapus"
+msgid "Line Style"
+msgstr "Gaya Baris"
 #
-#~ msgid "OCPN Draw Manager"
-#~ msgstr "OCPN Menarik pengelola"
+#, fuzzy
+msgid "Line Type"
+msgstr "Gaya Baris"
 #
-#~ msgid "OCPN Draw PIL Delete"
-#~ msgstr "OCPN Menarik PIL Hapus"
+msgid "Line Width"
+msgstr "Lebar garis"
 #
-#~ msgid "OCPN Draw Parallel Index Line Delete"
-#~ msgstr "OCPN Menggambar Paralel Indeks Menghapus Baris"
+msgid "Link"
+msgstr ""
 #
-#~ msgid "OCPN Draw Point"
-#~ msgstr "OCPN poin undian"
+#, fuzzy
+msgid "Link Description"
+msgstr "Keterangan"
 #
-#~ msgid "OCPN Draw Point Create"
-#~ msgstr "OCPN buat titik tarik"
+msgid "Links"
+msgstr ""
 #
-#~ msgid "OCPN Draw Point, Layer: "
-#~ msgstr "OCPN poin undian, Lapisan: "
+msgid "List contents "
+msgstr "Daftar isi "
 #
-#~ msgid "OCPN Draw Remove "
-#~ msgstr "OCPN Hapus Tarikan "
+msgid "Loading navobjects from "
+msgstr "Memuat objek navigasi dari "
 #
-#~ msgid "OCPN Draw Remove Boundary Point"
-#~ msgstr "OCPN Menggambar Memindahkan Titik Batas"
+msgid "Local file..."
+msgstr ""
 #
-#~ msgid "OCPN Draw Remove DR Point"
-#~ msgstr "OCPN Menghapus tarikan titik DR"
+msgid "Long Dash"
+msgstr "Garis Panjang"
 #
-#~ msgid "OCPN Draw Remove EBL Point"
-#~ msgstr "OCPN Menghapus tarikan titik EBL"
+msgid "Longitude"
+msgstr "Garis Bujur"
 #
-#~ msgid "OCPN Draw Remove OD Point"
-#~ msgstr "OCPN Menghapus tarikan titik OD"
+msgid "Maintain with"
+msgstr "Pertahankan dengan"
 #
-#~ msgid "OD"
-#~ msgstr "OD"
+msgid "Major:"
+msgstr "Utama:"
 #
-#~ msgid "OD Point"
-#~ msgstr "Titik OD"
+msgid "Match VRM colour to EBL colour"
+msgstr "Sesuai warna VRM ke warna EBL"
 #
-#~ msgid "OD Point Name"
-#~ msgstr "OD Nama Titik"
+msgid "Maximum Text Width"
+msgstr ""
 #
-#~ msgid "OD Points"
-#~ msgstr "Titik OD"
+msgid "Maximum Width Type"
+msgstr ""
 #
-#~ msgid "OD\\WD"
-#~ msgstr "OD\\WD"
+msgid "Merge and Delete Boundaries"
+msgstr "Penggabungan dan menghapus batas"
 #
-#~ msgid "Offset"
-#~ msgstr "Mengimbangi"
+msgid "Merge and Keep Boundaries"
+msgstr "Penggabungan dan batas-batas tetap"
 #
-#~ msgid "Offset (+ Stbd/- Port)"
-#~ msgstr "Mengimbangi (+ Stbd/- Port)"
+msgid "Minor:"
+msgstr "Kecil:"
 #
-#~ msgid "Offset Line Style"
-#~ msgstr "Mengimbangi gaya jalur"
+msgid "Minutes"
+msgstr "Menit"
 #
-#~ msgid "Offset Line Width"
-#~ msgstr "Mengimbangi jalur lebar"
+msgid "Move Boundary"
+msgstr "Memindahkan Batas"
 #
-#~ msgid "Offset: "
-#~ msgstr "Mengimbangi: "
+msgid "Move Boundary Point"
+msgstr "Memindahkan Titik Batas"
 #
-#~ msgid "On Rollover Only"
-#~ msgstr "Hanya Pada Rollover"
+msgid "Move Boundary Segment"
+msgstr "Batas Segmen Dipindahkan"
 #
-#~ msgid "OpenCPN Alert"
-#~ msgstr "Peringatan OpenCPN"
+msgid "Move DR Point"
+msgstr "Pindah Titik DR"
 #
-#~ msgid "Other:"
-#~ msgstr "Lainnya:"
+msgid "Move EBL"
+msgstr "Pindahkan EBL"
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Timpa berkas yang ada?"
+msgid "Move EBL Point"
+msgstr "Pindah titik EBL"
 #
-#~ msgid "PIL"
-#~ msgstr "PIL"
+msgid "Move Guard Zone Point"
+msgstr "Pindah titik zona penjaga"
 #
-#~ msgid "PIL Persistence"
-#~ msgstr "Kegigihan PIL"
+msgid "Move Line"
+msgstr "Pindahkan Baris"
 #
-#~ msgid "PIL Point"
-#~ msgstr "Titik PIL"
+msgid "Move OD Point"
+msgstr "Pindah Titik OD"
 #
-#~ msgid "Parallel Index Line"
-#~ msgstr "Penunjuk garis sejajar"
+msgid "Move PIL Point"
+msgstr "Pindah Titik PIL"
 #
-#~ msgid "Parallel Index Line Angle (+Stbd/-Port)"
-#~ msgstr "Sudut garis sejajar dengan petunjuk (+Stbd/-Port)"
+msgid "Move Text Point"
+msgstr "Pindah titik teks"
 #
-#~ msgid "Parallel Index Line Persistence"
-#~ msgstr "Penunjuk garis persamaan sejajar"
+msgid "Move start point to boat lat/lon"
+msgstr "Memindahkan titik awal untuk perahu lat/lon"
 #
-#~ msgid "Parallel Index Line Properties"
-#~ msgstr "Penunjuk garis sejajar properti"
+msgid "Multiple Boundaries"
+msgstr "Beberapa batas"
 #
-#~ msgid "Paste"
-#~ msgstr "Tempel"
+msgid "Name"
+msgstr "Nama"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Tempelkan lat / long"
+msgid "Name:"
+msgstr "Nama:"
 #
-#~ msgid "Patch:"
-#~ msgstr "Koreksi:"
+msgid "Name: "
+msgstr "Nama: "
 #
-#~ msgid "Path"
-#~ msgstr "Jalan"
+msgid "Nautical Miles"
+msgstr "Mil Laut"
 #
-#~ msgid "Path & Point Manager"
-#~ msgstr "Jalan & Titik Pengelola"
+msgid "Neither"
+msgstr "Tidak"
 #
-#~ msgid "Path Name"
-#~ msgstr "Nama Jalan"
+msgid "Never"
+msgstr "Tidak pernah"
 #
-#~ msgid "Path Persistence"
-#~ msgstr "Jalan Ketekunan"
+msgid "New &temporary Layer"
+msgstr ""
 #
-#~ msgid "Path Properties"
-#~ msgstr "Properti Jalan"
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Lapisan baru %d: %s"
 #
-#~ msgid "Paths"
-#~ msgstr "Jalan"
+msgid "New persistent &Layer"
+msgstr ""
 #
-#~ msgid "Persistent"
-#~ msgstr "Teguh"
+#, fuzzy
+msgid "No"
+msgstr "Tidak ada"
 #
-#~ msgid "Persistent over Crash"
-#~ msgstr "Terus-menerus atas Kecelakaan"
+msgid "No alarm"
+msgstr "Tidak ada Alarm"
 #
-#~ msgid "Pick a new start point"
-#~ msgstr "Pilih titik awal baru"
+msgid "No. of items"
+msgstr "Tidak. hal"
 #
-#~ msgid ""
-#~ "Please report problems using FlySpray at:\n"
-#~ "https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "at the OpenCPN forum:\n"
-#~ "http://www.cruisersforum.com/forums/f134\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "Raise an issue in GIT at:\n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues\n"
-#~ msgstr ""
-#~ "Harap melaporkan masalah dengan menggunakan FlySpray at:\n"
-#~ "https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "at the OpenCPN forum:\n"
-#~ "http://www.cruisersforum.com/forums/f134\n"
-#~ "\n"
-#~ "atau\n"
-#~ "\n"
-#~ "Raise sebuah masalah di GIT at:\n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgid "None"
+msgstr "Tidak ada"
 #
-#~ msgid "Point Inclusion Size"
-#~ msgstr "Ukuran titik inklusi"
+msgid "Number of Point Range Rings"
+msgstr "Jumlah Jangkauan Titik Cincin"
 #
-#~ msgid "Point Type"
-#~ msgstr "Jenis Titik"
+msgid "Number of Range Rings"
+msgstr "Jumlah Rentang Rentang"
 #
-#~ msgid "Points"
-#~ msgstr "Nilai"
+#, fuzzy
+msgid "OCPN API Version:"
+msgstr "Versi:"
 #
-#~ msgid "Properties"
-#~ msgstr "Properti"
+msgid "OCPN Draw"
+msgstr "OCPN Menarik"
 #
-#~ msgid "Properties..."
-#~ msgstr "Properti..."
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "OCPN poin undian"
 #
-#~ msgid "Question"
-#~ msgstr "Pertanyaan"
+msgid "OCPN Draw Boundary"
+msgstr "OCPN Menarik batas"
 #
-#~ msgid "Range Ring Colours"
-#~ msgstr "Berbagai Warna Cincin"
+msgid "OCPN Draw Boundary Create"
+msgstr "OCPN Buat batas tarik"
 #
-#~ msgid "Range Ring Line Style"
-#~ msgstr "Gaya baris berbagai cincin"
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN Menghapus Batas Menggambar"
 #
-#~ msgid "Range Ring Line Width"
-#~ msgstr "Berbagai cincin jalur lebar"
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN Menarik DR Hapus"
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Menghapus titik dari jalan"
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN Menarik Menghapus Titik Batas"
 #
-#~ msgid ""
-#~ "Removing this point will invalidate the Boundary, this is not allowed."
-#~ msgstr ""
-#~ "Menghapus titik ini akan membuat Boundary menjadi tidak berfungsi, ini "
-#~ "tidak diizinkan."
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN Hapus tarikan titik DR"
 #
-#~ msgid "Right"
-#~ msgstr "Kanan"
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN Hapus tarikan titik EBL"
 #
-#~ msgid "Ring"
-#~ msgstr "Cincin"
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN Hapus tarikan titik OD"
 #
-#~ msgid ""
-#~ "Rotate with\n"
-#~ "Boat"
-#~ msgstr ""
-#~ "Memutar dengan\n"
-#~ "Perahu"
+msgid "OCPN Draw Delete PIL Point"
+msgstr "OCPN Hapus tarikan titik PIL"
 #
-#~ msgid "Rotate with Boat"
-#~ msgstr "Putar dengan Perahu"
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN Hapus tarikan titik teks"
 #
-#~ msgid "Second"
-#~ msgstr "Kedua"
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "OCPN Menarik DR Hapus"
 #
-#~ msgid "Second Angle (-P/+S)"
-#~ msgstr "Sudut Kedua (-P/+S)"
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN Menarik EBL Hapus"
 #
-#~ msgid "Second Point Icon"
-#~ msgstr "Ikon titik kedua"
+msgid "OCPN Draw GZ Delete"
+msgstr "OCPN Menarik GZ Hapus"
 #
-#~ msgid "Second distance"
-#~ msgstr "Jarak kedua"
+msgid "OCPN Draw Manager"
+msgstr "OCPN Menarik pengelola"
 #
-#~ msgid "Short Dash"
-#~ msgstr "Garis Pendek"
+msgid "OCPN Draw PIL Delete"
+msgstr "OCPN Menarik PIL Hapus"
 #
-#~ msgid "Show"
-#~ msgstr "Menunjukkan"
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "OCPN Menggambar Paralel Indeks Menghapus Baris"
 #
-#~ msgid "Show Boundary Point Icons"
-#~ msgstr "Menunjukkan Titik Batas Ikon"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "OCPN poin undian"
 #
-#~ msgid "Show DR Direction Arrow"
-#~ msgstr "Tampilkan Panah Arah DR"
+msgid "OCPN Draw Point"
+msgstr "OCPN poin undian"
 #
-#~ msgid "Show Display Text"
-#~ msgstr "Menampilkan Teks Tampilan"
+msgid "OCPN Draw Point Create"
+msgstr "OCPN buat titik tarik"
 #
-#~ msgid "Show EBL Direction Arrow"
-#~ msgstr "Tampilkan EBL Direction Arrow"
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN poin undian, Lapisan: "
 #
-#~ msgid "Show Magnetic Bearings"
-#~ msgstr "Menunjukkan Bantalan Magnetik"
+#, fuzzy
+msgid "OCPN Draw Properties"
+msgstr "OCPN poin undian"
 #
-#~ msgid "Show Name"
-#~ msgstr "Tampilkan Nama"
+msgid "OCPN Draw Remove "
+msgstr "OCPN Hapus Tarikan "
 #
-#~ msgid "Show Path Direction Arrow"
-#~ msgstr "Tampilkan Arah Jalan"
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN Menggambar Memindahkan Titik Batas"
 #
-#~ msgid ""
-#~ "Show Perpendicular\n"
-#~ "Index Line"
-#~ msgstr ""
-#~ "Tampilkan Tegak lurus\n"
-#~ "Baris indeks"
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN Menghapus tarikan titik DR"
 #
-#~ msgid "Show Perpendicular Index Line"
-#~ msgstr "Tampilkan Garis Indeks Tegak Tertentu"
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN Menghapus tarikan titik EBL"
 #
-#~ msgid "Show Point Range Rings"
-#~ msgstr "Menunjukkan Berbagai Titik Cincin"
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN Menghapus tarikan titik OD"
 #
-#~ msgid "Show Point names"
-#~ msgstr "Tampilkan nama titik"
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
 #
-#~ msgid "Show Range Rings"
-#~ msgstr "Tampilkan Rentang Rentang"
+msgid "OD"
+msgstr "OD"
 #
-#~ msgid "Show VRM"
-#~ msgstr "Tampilkan VRM"
+msgid "OD Point"
+msgstr "Titik OD"
 #
-#~ msgid "Show name"
-#~ msgstr "Tampilkan nama"
+msgid "OD Point Name"
+msgstr "OD Nama Titik"
 #
-#~ msgid "Show on chart"
-#~ msgstr "Tunjukkan pada grafik"
+#, fuzzy
+msgid "OD Point Properties"
+msgstr "EBL Titik Properti"
 #
-#~ msgid "Solid"
-#~ msgstr "Padat"
+msgid "OD Points"
+msgstr "Titik OD"
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Kecepatan di atas Tanah"
+msgid "OD\\WD"
+msgstr "OD\\WD"
 #
-#~ msgid "Start"
-#~ msgstr "Mulai"
+msgid "Offset"
+msgstr "Mengimbangi"
 #
-#~ msgid "Start Point Icon"
-#~ msgstr "Ikon Titik Awal"
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Mengimbangi (+ Stbd/- Port)"
 #
-#~ msgid "Text Colour"
-#~ msgstr "Warna Teks"
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Mengimbangi gaya jalur"
 #
-#~ msgid "Text Font"
-#~ msgstr "Font Teks"
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Mengimbangi jalur lebar"
 #
-#~ msgid "Text Point"
-#~ msgstr "Titik teks"
+msgid "Offset Line Style"
+msgstr "Mengimbangi gaya jalur"
 #
-#~ msgid "Text Point Icon"
-#~ msgstr "Ikon Pusat Teks"
+msgid "Offset Line Width"
+msgstr "Mengimbangi jalur lebar"
 #
-#~ msgid "Text position relative to point"
-#~ msgstr "Teks posisi relatif terhadap titik"
+msgid "Offset: "
+msgstr "Mengimbangi: "
 #
-#~ msgid "Text to Display with Point"
-#~ msgstr "Teks untuk Menampilkan dengan Titik"
+msgid "On Rollover Only"
+msgstr "Hanya Pada Rollover"
 #
-#~ msgid ""
-#~ "The OD Point you want to delete is used in a path, do you really want to "
-#~ "delete it?"
-#~ msgstr ""
-#~ "OD Titik yang ingin anda hapus digunakan dalam rute, apakah anda benar-"
-#~ "benar ingin menghapus itu?"
+msgid "OpenCPN Alert"
+msgstr "Peringatan OpenCPN"
 #
-#~ msgid ""
-#~ "There are some OD points used in paths or anchor alarms.\n"
-#~ " Do you want to delete them as well?\n"
-#~ " This will change the paths and disable the anchor alarms.\n"
-#~ " Answering No keeps the OD points used in paths or alarms."
-#~ msgstr ""
-#~ "Ada beberapa OD poin yang digunakan di jalan atau jangkar alarm.\n"
-#~ " Apakah anda ingin menghapus mereka juga?\n"
-#~ " Ini akan mengubah jalur dan menonaktifkan jangkar alarm.\n"
-#~ " Jangan menyimpan OD poin yang digunakan di jalan atau alarm."
+msgid "Other:"
+msgstr "Lainnya:"
 #
-#~ msgid ""
-#~ "This chart shows the interactions between Boundaries and WatchDog alam "
-#~ "boundaries"
-#~ msgstr ""
-#~ "Grafik ini menunjukkan interaksi antara batas-Batas dan Pengawas batas alam"
+msgid "Overwrite existing file?"
+msgstr "Timpa berkas yang ada?"
 #
-#~ msgid "Time"
-#~ msgstr "Waktu"
+msgid "PIL"
+msgstr "PIL"
 #
-#~ msgid "Time Units"
-#~ msgstr "Unit Waktu"
+msgid "PIL Persistence"
+msgstr "Kegigihan PIL"
 #
-#~ msgid "To Point"
-#~ msgstr "Ke titik"
+msgid "PIL Point"
+msgstr "Titik PIL"
 #
-#~ msgid "Top"
-#~ msgstr "Atas"
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr "EBL Titik Properti"
 #
-#~ msgid "Top Centre"
-#~ msgstr "Pusat Atas"
+#, fuzzy
+msgid "PIL Point Properties, Layer: "
+msgstr "EBL Titik Properti, Lapisan: "
 #
-#~ msgid "Total Length"
-#~ msgstr "Panjang Total"
+msgid "Parallel Index Line"
+msgstr "Penunjuk garis sejajar"
 #
-#~ msgid "Total Length: "
-#~ msgstr "Panjang Total: "
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Sudut garis sejajar dengan petunjuk (+Stbd/-Port)"
 #
-#~ msgid "Update initial conditions"
-#~ msgstr "Memperbarui kondisi awal"
+msgid "Parallel Index Line Persistence"
+msgstr "Penunjuk garis persamaan sejajar"
 #
-#~ msgid "Use nearby OD Point?"
-#~ msgstr "Gunakan titik OD terdekat?"
+msgid "Parallel Index Line Properties"
+msgstr "Penunjuk garis sejajar properti"
 #
-#~ msgid "Use nearby Point?"
-#~ msgstr "Gunakan titik terdekat?"
+msgid "Paste"
+msgstr "Tempel"
 #
-#~ msgid "Version:"
-#~ msgstr "Versi:"
+msgid "Paste lat/long"
+msgstr "Tempelkan lat / long"
 #
-#~ msgid "WD"
-#~ msgstr "WD"
+msgid "Patch:"
+msgstr "Koreksi:"
 #
-#~ msgid "Whilst Drawing"
-#~ msgstr "Saat Menggambar"
+msgid "Path"
+msgstr "Jalan"
 #
-#~ msgid "Would you like include the Great Circle boundary points for this leg?"
-#~ msgstr ""
-#~ "Apakah anda ingin memiliki Lingkaran Besar titik-titik batas untuk kaki "
-#~ "ini?"
+msgid "Path & Point Manager"
+msgstr "Jalan & Titik Pengelola"
 #
-#~ msgid "ocpn_draw_pi data location"
-#~ msgstr "ocpn_draw_pi lokasi data"
+#, fuzzy
+msgid "Path Manager Dialog"
+msgstr "Jalan & Titik Pengelola"
+#
+msgid "Path Name"
+msgstr "Nama Jalan"
+#
+msgid "Path Persistence"
+msgstr "Jalan Ketekunan"
+#
+msgid "Path Properties"
+msgstr "Properti Jalan"
+#
+#, fuzzy
+msgid "Path Properties, Layer: "
+msgstr "DR Properties, Lapisan: "
+#
+msgid "Paths"
+msgstr "Jalan"
+#
+msgid "Permanent Layers:"
+msgstr ""
+#
+msgid "Persistent"
+msgstr "Teguh"
+#
+msgid "Persistent over Crash"
+msgstr "Terus-menerus atas Kecelakaan"
+#
+msgid "Pick a new start point"
+msgstr "Pilih titik awal baru"
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+"Harap melaporkan masalah dengan menggunakan FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"atau\n"
+"\n"
+"Raise sebuah masalah di GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+#
+msgid "Point Inclusion Size"
+msgstr "Ukuran titik inklusi"
+#
+msgid "Point Type"
+msgstr "Jenis Titik"
+#
+msgid "Points"
+msgstr "Nilai"
+#
+msgid "Properties"
+msgstr "Properti"
+#
+msgid "Properties..."
+msgstr "Properti..."
+#
+msgid "Question"
+msgstr "Pertanyaan"
+#
+msgid "Range Ring Colours"
+msgstr "Berbagai Warna Cincin"
+#
+msgid "Range Ring Line Style"
+msgstr "Gaya baris berbagai cincin"
+#
+msgid "Range Ring Line Width"
+msgstr "Berbagai cincin jalur lebar"
+#
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr "Menghapus titik dari jalan"
+#
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr ""
+"Menghapus titik ini akan membuat Boundary menjadi tidak berfungsi, ini tidak "
+"diizinkan."
+#
+msgid "Right"
+msgstr "Kanan"
+#
+msgid "Ring"
+msgstr "Cincin"
+#
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+"Memutar dengan\n"
+"Perahu"
+#
+msgid "Rotate with Boat"
+msgstr "Putar dengan Perahu"
+#
+msgid "Second"
+msgstr "Kedua"
+#
+msgid "Second Angle (-P/+S)"
+msgstr "Sudut Kedua (-P/+S)"
+#
+msgid "Second Point Icon"
+msgstr "Ikon titik kedua"
+#
+msgid "Second distance"
+msgstr "Jarak kedua"
+#
+msgid "Short Dash"
+msgstr "Garis Pendek"
+#
+msgid "Show"
+msgstr "Menunjukkan"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Tampilkan nama titik"
+#
+msgid "Show Boundary Point Icons"
+msgstr "Menunjukkan Titik Batas Ikon"
+#
+msgid "Show DR Direction Arrow"
+msgstr "Tampilkan Panah Arah DR"
+#
+msgid "Show Display Text"
+msgstr "Menampilkan Teks Tampilan"
+#
+msgid "Show EBL Direction Arrow"
+msgstr "Tampilkan EBL Direction Arrow"
+#
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Tampilkan Nama"
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Lapisan"
+#
+msgid "Show Magnetic Bearings"
+msgstr "Menunjukkan Bantalan Magnetik"
+#
+msgid "Show Name"
+msgstr "Tampilkan Nama"
+#
+msgid "Show Path Direction Arrow"
+msgstr "Tampilkan Arah Jalan"
+#
+msgid "Show Paths(s)"
+msgstr ""
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+"Tampilkan Tegak lurus\n"
+"Baris indeks"
+#
+msgid "Show Perpendicular Index Line"
+msgstr "Tampilkan Garis Indeks Tegak Tertentu"
+#
+msgid "Show Point Range Rings"
+msgstr "Menunjukkan Berbagai Titik Cincin"
+#
+msgid "Show Point names"
+msgstr "Tampilkan nama titik"
+#
+#, fuzzy
+msgid "Show Point(s)"
+msgstr "Tampilkan nama titik"
+#
+msgid "Show Range Rings"
+msgstr "Tampilkan Rentang Rentang"
+#
+msgid "Show VRM"
+msgstr "Tampilkan VRM"
+#
+msgid "Show name"
+msgstr "Tampilkan nama"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Tunjukkan pada grafik"
+#
+msgid "Show on chart"
+msgstr "Tunjukkan pada grafik"
+#
+msgid "Solid"
+msgstr "Padat"
+#
+msgid "Speed over Ground"
+msgstr "Kecepatan di atas Tanah"
+#
+msgid "Start"
+msgstr "Mulai"
+#
+msgid "Start Point Icon"
+msgstr "Ikon Titik Awal"
+#
+#, fuzzy
+msgid "Straight"
+msgstr "Kanan"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Font Teks"
+#
+msgid "Text Colour"
+msgstr "Warna Teks"
+#
+msgid "Text Font"
+msgstr "Font Teks"
+#
+msgid "Text Point"
+msgstr "Titik teks"
+#
+msgid "Text Point Icon"
+msgstr "Ikon Pusat Teks"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "EBL Titik Properti"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "DR titik Properti, Lapisan: "
+#
+msgid "Text position relative to point"
+msgstr "Teks posisi relatif terhadap titik"
+#
+msgid "Text to Display with Point"
+msgstr "Teks untuk Menampilkan dengan Titik"
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"OD Titik yang ingin anda hapus digunakan dalam rute, apakah anda benar-benar "
+"ingin menghapus itu?"
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"Ada beberapa OD poin yang digunakan di jalan atau jangkar alarm.\n"
+" Apakah anda ingin menghapus mereka juga?\n"
+" Ini akan mengubah jalur dan menonaktifkan jangkar alarm.\n"
+" Jangan menyimpan OD poin yang digunakan di jalan atau alarm."
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+"Grafik ini menunjukkan interaksi antara batas-Batas dan Pengawas batas alam"
+#
+msgid "Time"
+msgstr "Waktu"
+#
+msgid "Time Units"
+msgstr "Unit Waktu"
+#
+msgid "To Point"
+msgstr "Ke titik"
+#
+msgid "Top"
+msgstr "Atas"
+#
+msgid "Top Centre"
+msgstr "Pusat Atas"
+#
+msgid "Total Length"
+msgstr "Panjang Total"
+#
+msgid "Total Length: "
+msgstr "Panjang Total: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr ""
+#
+#, fuzzy
+msgid "Unlist contents "
+msgstr "Daftar isi "
+#
+msgid "Update initial conditions"
+msgstr "Memperbarui kondisi awal"
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "OCPN poin undian"
+#
+msgid "Use nearby OD Point?"
+msgstr "Gunakan titik OD terdekat?"
+#
+msgid "Use nearby Point?"
+msgstr "Gunakan titik terdekat?"
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr "Versi:"
+#
+msgid "WD"
+msgstr "WD"
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr "Saat Menggambar"
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+"Apakah anda ingin memiliki Lingkaran Besar titik-titik batas untuk kaki ini?"
+#
+msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi data location"
+msgstr "ocpn_draw_pi lokasi data"
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""
