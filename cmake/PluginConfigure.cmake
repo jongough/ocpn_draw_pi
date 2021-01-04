@@ -81,7 +81,7 @@ else()
             message(STATUS "${CMLOC}Branch is not tracking a remote branch")
         endif()
     else()
-        message(STATUS "${CMLOC}This directory does not contain git")
+        message(STATUS "${CMLOC}This directory does not contain git or git is not available")
         set(GIT_REPOSITORY "")
         set(GIT_REPOSITORY_BRANCH "")
         set(GIT_REPOSITORY_TAG "")
@@ -138,7 +138,7 @@ endif(NOT SKIP_VERSION_CONFIG)
 message(STATUS "${CMLOC}OCPN_TARGET: $ENV{OCPN_TARGET}")
 if(NOT DEFINED $ENV{OCPN_TARGET})
     set($ENV{OCPN_TARGET} ${PKG_TARGET})
-    message(STATUS "${CMLOC}Setting OCPN_TARGET")
+    message(STATUS "${CMLOC}Setting OCPN_TARGET: ${PKG_TARGET}")
 endif()
 
 if("$ENV{BUILD_GTK3}" STREQUAL "true")
@@ -338,12 +338,12 @@ endif()
 #    ENDIF(_wx_selected_config MATCHES "androideabi-qt")
 #ENDIF(DEFINED _wx_selected_config)
 IF(DEFINED _wx_selected_config)
+    MESSAGE(STATUS "${CMLOC}_wx_select_config defined as $ENV{_wx_select_config}")
     IF(_wx_selected_config MATCHES "androideabi-qt")
         MESSAGE (STATUS "${CMLOC}Qt_Base: " ${Qt_Base})
         MESSAGE (STATUS "${CMLOC}wxQt_Base/Build: " ${wxQt_Base} "/" ${wxQt_Build})
         ADD_DEFINITIONS(-DocpnUSE_GLES)
         ADD_DEFINITIONS(-DocpnUSE_GL)
-        ADD_DEFINITIONS(-DARMHF)
 
         SET(OPENGLES_FOUND "YES")
         SET(OPENGL_FOUND "YES")
@@ -363,6 +363,7 @@ ENDIF(DEFINED _wx_selected_config)
 
 # Building for QT_ANDROID involves a cross-building environment, So the include directories, flags, etc must be stated explicitly without trying to locate them on the host build system.
 IF(QT_ANDROID)
+    MESSAGE(STATUS "${CMLOC}Processing QT_ANDROID")
     ADD_DEFINITIONS(-D__WXQT__)
     ADD_DEFINITIONS(-D__OCPN__ANDROID__)
     ADD_DEFINITIONS(-DOCPN_USE_WRAPPER)
@@ -370,36 +371,31 @@ IF(QT_ANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
 
-    SET(CMAKE_CXX_FLAGS "-pthread -fPIC -O2 -g")
+    SET(CMAKE_CXX_FLAGS "-pthread")
 
     ## Compiler flags
-    add_definitions( " -s")
     add_compile_options("-Wno-inconsistent-missing-override"
     "-Wno-potentially-evaluated-expression"
     "-Wno-overloaded-virtual"
     "-Wno-unused-command-line-argument"
     "-Wno-unknown-pragmas"
-    "-O3"
-    "-fPIC"
       )
 
     message(STATUS "${CMLOC}Adding libgorp.o shared library")
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s")  ## Strip binary
 
-    ADD_DEFINITIONS("-Wno-inconsistent-missing-override -Wno-potentially-evaluated-expression")
     SET(QT_LINUX "OFF")
     SET(QT "ON")
     SET(CMAKE_SKIP_BUILD_RPATH  TRUE)
     ADD_DEFINITIONS(-DQT_WIDGETS_LIB)
-    ADD_DEFINITIONS(-DARMHF)
-
-    SET(OPENGLES_FOUND "YES")
-    SET(OPENGL_FOUND "YES")
-
-    #MESSAGE (STATUS "Using GLESv2 for Android")
-    #ADD_DEFINITIONS(-DUSE_ANDROID_GLES2)
-    #ADD_DEFINITIONS(-DUSE_GLSL)
+    if("$ENV{OCPN_TARGET}" STREQUAL "android-arm64")
+        MESSAGE(STATUS "${CMLOC}Adding definition -DARM64")
+        ADD_DEFINITIONS(-DARM64)
+    else()
+        MESSAGE(STATUS "${CMLOC}Adding definition -DARMHF")
+        ADD_DEFINITIONS(-DARMHF)
+    endif()
 
 ENDIF(QT_ANDROID)
 
@@ -528,7 +524,7 @@ else(NOT QT_ANDROID)
         INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtTest")
 
         INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
-        INCLUDE_DIRECTORIES( BEFORE "${OCPN_Android_Common}/wxWidgets/include")
+        INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/include")
 
         SET(wxWidgets_LIBRARIES
         ${CMAKE_CURRENT_SOURCE_DIR}/${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/lib/libQt5Core.so

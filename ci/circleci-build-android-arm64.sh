@@ -23,7 +23,7 @@ sudo apt-get -y install git cmake gettext unzip
 #NOT REQUIRED FOR LOCAL BUILD
 echo "CIRCLECI_LOCAL: $CIRCLECI_LOCAL"
 if [ -z "$CIRCLECI_LOCAL" ]; then
-   wget https://github.com/bdbcat/OCPNAndroidCommon/archive/master.zip
+    wget https://github.com/bdbcat/OCPNAndroidCommon/archive/master.zip
 fi
 unzip -qq -o master.zip
 
