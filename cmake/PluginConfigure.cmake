@@ -29,12 +29,6 @@ elseif($ENV{APPVEYOR})
     set(GIT_REPOSITORY_BRANCH "$ENV{APPVEYOR_REPO_BRANCH}")
     set(GIT_REPOSITORY_TAG "$ENV{APPVEYOR_REPO_TAG_NAME}")
 else()
-    # check to make sure we have a git repository
-    execute_process(
-        COMMAND git status $>/dev/null
-        RESULT_VARIABLE GIT_REPOSITORY_EXISTS
-        OUTPUT_QUIET
-        ERROR_QUIET)
     if("${GIT_REPOSITORY_EXISTS}" STREQUAL "0")
         # Get the current working branch
         execute_process(
@@ -111,6 +105,11 @@ message(STATUS "${CMLOC}CLOUDSMITH_BASE_REPOSITORY: ${CLOUDSMITH_BASE_REPOSITORY
 
 # Process files in in-files sub directory into the build output directory, thereby allowing building from a read-only source tree.
 if(NOT SKIP_VERSION_CONFIG)
+    if(MINGW)
+        message(STATUS "${CMLOC}Temporarily allowing different search path for MINGW")
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE_SAVE ${CMAKE_FIND_ROOT_PATH_MODE_INCLUDE})
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE NEVER)
+    endif()
     set(BUILD_INCLUDE_PATH ${CMAKE_CURRENT_BINARY_DIR}${CMAKE_FILES_DIRECTORY})
     unset(PLUGIN_EXTRA_VERSION_VARS CACHE)
     find_file(PLUGIN_EXTRA_VERSION_VARS NAMES version.h.extra PATHS cmake/in-files NO_DEFAULT_PATH )
@@ -123,6 +122,7 @@ if(NOT SKIP_VERSION_CONFIG)
         set(EXTRA_VERSION_INFO "#include \"version_extra.h\"")
     endif()
     find_file(PLUGIN_EXTRA_FORMBUILDER_HEADERS NAMES extra_formbuilder_headers.h.in PATHS cmake/in-files NO_DEFAULT_PATH)
+    message(STATUS "${CMLOC}PLUGIN_EXTRA_FORMBUILDER_HEADERS: ${PLUGIN_EXTRA_FORMBUILDER_HEADERS}")
     if(${PLUGIN_EXTRA_FORMBUILDER_HEADERS} STREQUAL "PLUGIN_EXTRA_FORMBUILDER_HEADERS-NOTFOUND")
         message(STATUS "${CMLOC}PLUGIN_EXTRA_FORMBUILDER_HEADERS: Not found")
     else()
@@ -132,6 +132,9 @@ if(NOT SKIP_VERSION_CONFIG)
     configure_file(cmake/in-files/version.h.in ${BUILD_INCLUDE_PATH}/include/version.h)
     configure_file(cmake/in-files/wxWTranslateCatalog.h.in ${BUILD_INCLUDE_PATH}/include/wxWTranslateCatalog.h)
     include_directories(${BUILD_INCLUDE_PATH}/include)
+    if(MINGW)
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ${CMAKE_FIND_ROOT_PATH_MODE_INCLUDE_SAVE})
+    endif()
 endif(NOT SKIP_VERSION_CONFIG)
 
 # configure xml file for circleci
