@@ -374,7 +374,7 @@ IF(QT_ANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
 
-    SET(CMAKE_CXX_FLAGS "-pthread")
+    SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
 
     ## Compiler flags
     add_compile_options("-Wno-inconsistent-missing-override"
