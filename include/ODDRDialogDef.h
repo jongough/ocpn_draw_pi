@@ -1,12 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Jun 17 2015)
+// C++ code generated with wxFormBuilder (version Oct 26 2018)
 // http://www.wxformbuilder.org/
 //
-// PLEASE DO "NOT" EDIT THIS FILE!
+// PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ODDRDIALOGDEF_H__
-#define __ODDRDIALOGDEF_H__
+#pragma once
 
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
@@ -20,10 +19,13 @@
 #include <wx/textctrl.h>
 #include <wx/radiobox.h>
 #include <wx/sizer.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
 
-#include "wxWTranslateCatalog.h"
+#include "extra_formbuilder_headers.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -31,10 +33,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODDRDialogDef
 ///////////////////////////////////////////////////////////////////////////////
-class ODDRDialogDef : public wxDialog 
+class ODDRDialogDef : public wxDialog
 {
 	private:
-	
+
 	protected:
 		wxStaticText* m_staticTextSOG;
 		wxTextCtrl* m_textCtrlSOG;
@@ -50,17 +52,16 @@ class ODDRDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxTimeUnits;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
-		
+
 		// Virtual event handlers, overide them in your derived class
 		virtual void OnOK( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancel( wxCommandEvent& event ) { event.Skip(); }
-		
-	
+
+
 	public:
-		
-		ODDRDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Dead Reckoning"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+
+		ODDRDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Dead Reckoning"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~ODDRDialogDef();
-	
+
 };
 
-#endif //__ODDRDIALOGDEF_H__

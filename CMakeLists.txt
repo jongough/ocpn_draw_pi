@@ -24,9 +24,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "0")
-set(VERSION_TWEAK "18")
-set(VERSION_DATE "27/07/2020")
+set(VERSION_PATCH "1")
+set(VERSION_TWEAK "2")
+set(VERSION_DATE "05/01/2021")
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -48,8 +48,10 @@ set(PROD "prod") # Standard Repos
 set(BETA "beta") # Standard Repos
 set(ALPHA "alpha") # Standard Repos
 
-set(CLOUDSMITH_USER "jon-gough")
+set(CLOUDSMITH_USER "opencpn")
 # set this if your cloudsmith repository name does not match your git repository name set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
+set(CLOUDSMITH_BASE_REPOSITORY "ocpn_draw")
+
 set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/draw.html")
 set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
 set(XML_DESCRIPTION "OCPN_DRAW (OD) is a plugin that extends the capability of OCPN to include non-standard object: Boundaries, Boundary Points, Text Points, Dead Reckoning paths, Electronic Bearing Lines (EBL) and Guard Zones. The plugin also has an API to allow other plugins to directly interact with it.")
@@ -256,13 +258,14 @@ set(OCPNHDRS
 
 set(EXTSRC ${EXTSRC} extsrc/clipper.cpp extsrc/pugixml.cpp)
 
-set(EXTINCLUDE ${EXTINCLUDE} extinclude/clipper.hpp extinclude/pugiconfig.hpp extinclude/pugixml.hpp)
+#set(EXTINCLUDE ${EXTINCLUDE} extinclude/clipper.hpp extinclude/pugiconfig.hpp extinclude/pugixml.hpp)
+set(EXTINCLUDE ${EXTINCLUDE} extinclude)
 
-if(APPLE)
+if(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
-else(APPLE)
+else(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
-endif(APPLE)
+endif(APPLE OR QT_ANDROID)
 
 if(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
@@ -270,8 +273,8 @@ if(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Adding JSON Schema validation")
 
     set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp)
-    set(EXTINCLUDE ${EXTINCLUDE} extinclude/nlohmann/json.hpp extinclude/json-schema-validator/json-schema.hpp)
-    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude/json-schema-validator)
+    set(EXTINCLUDE ${EXTINCLUDE} "extinclude/nlohmannl;extinclude/json-schema-validator")
+
 else(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
 endif(OD_JSON_SCHEMA_VALIDATOR)
@@ -281,7 +284,6 @@ option(OD_USE_SVG "Use SVG graphics" ON)
 if(OD_USE_SVG)
     message(STATUS "${CMLOC}SVG support enabled...")
     if(NOT QT_ANDROID)
-
         add_definitions(-DODraw_USE_SVG)
     endif(NOT QT_ANDROID)
 endif(OD_USE_SVG)
@@ -296,7 +298,7 @@ endif(OCPN_MIN_VERSION)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extsrc/mygdal)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE})
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)
@@ -322,7 +324,8 @@ endif(TINYXML_FOUND)
 
 add_definitions(-DTIXML_USE_STL)
 
-if(UNIX AND NOT APPLE)
+message(STATUS "${CMLOC}Checking to see if JSON Schema needs checking")
+if(UNIX AND NOT APPLE AND NOT QT_ANDROID)
     if(OD_JSON_SCHEMA_VALIDATOR)
         # Change OS/ABI to be UNIX - System V to make it run with OCPN
         set(lib_name lib${PACKAGE_NAME}.so)
@@ -341,14 +344,14 @@ if(UNIX AND NOT APPLE)
             message(STATUS "${CMLOC}Cannot correct OS/ABI to match OCPN if it is generated incorrectly. Package binutils needed")
         endif(NOT (${elfedit} STREQUAL "elfedit-NOTFOUND"))
     endif(OD_JSON_SCHEMA_VALIDATOR)
-endif(UNIX AND NOT APPLE)
+endif(UNIX AND NOT APPLE AND NOT QT_ANDROID)
 
 get_property(
     dirs
     DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     PROPERTY INCLUDE_DIRECTORIES)
 foreach(dir ${dirs})
-    message(STATUS "${CMLOC}dir='${dir}'")
+    message(STATUS "${CMLOC}include dir='${dir}'")
 endforeach()
 
 #

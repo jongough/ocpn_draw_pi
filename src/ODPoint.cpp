@@ -35,7 +35,12 @@
 #include "ODUtils.h"
 #include "ODdc.h"
 
-#include "GL/gl.h"
+#ifndef __OCPN__ANDROID__
+#include <GL/gl.h>
+#else
+#include "qopengl.h"                  // this gives us the qt runtime gles2.h
+#include "GL/gl_private.h"
+#endif
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );

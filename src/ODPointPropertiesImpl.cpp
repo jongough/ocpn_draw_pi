@@ -445,7 +445,7 @@ void ODPointPropertiesImpl::SaveChanges()
 
         if( m_pODPoint->m_bIsInPath ) {
             bool b_name_is_numeric = true;
-            for( unsigned int i = 0; i < m_pODPoint->GetName().Len(); i++ ) {
+            for( size_t i = 0; i < m_pODPoint->GetName().Len(); i++ ) {
                 if( wxChar( '0' ) > m_pODPoint->GetName()[i] ) b_name_is_numeric = false;
                 if( wxChar( '9' ) < m_pODPoint->GetName()[i] ) b_name_is_numeric = false;
             }

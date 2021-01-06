@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -19,1413 +19,1625 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " &Properties..."
-#~ msgstr " &Właściwości..."
+msgid " &Properties..."
+msgstr " &Właściwości..."
 #
-#~ msgid " To: "
-#~ msgstr " Do: "
+msgid " To: "
+msgstr " Do: "
 #
-#~ msgid ""
-#~ " shorter than rhumbline.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " krótsza od loksodromy.\n"
-#~ "\n"
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+" krótsza od loksodromy.\n"
+"\n"
 #
-#~ msgid " to "
-#~ msgstr " do "
+msgid " to "
+msgstr " do "
 #
-#~ msgid "&Activate"
-#~ msgstr "&Aktywuj"
+msgid "&Activate"
+msgstr "&Aktywuj"
 #
-#~ msgid "&Add"
-#~ msgstr "&Dodaj"
+msgid "&Add"
+msgstr "&Dodaj"
 #
-#~ msgid "&Apply"
-#~ msgstr "&Zastosuj"
+msgid "&Apply"
+msgstr "&Zastosuj"
 #
-#~ msgid "&Cancel"
-#~ msgstr "&Anuluj"
+msgid "&Cancel"
+msgstr "&Anuluj"
 #
-#~ msgid "&Center View"
-#~ msgstr "&Wyśrodkuj widok"
+msgid "&Center View"
+msgstr "&Wyśrodkuj widok"
 #
-#~ msgid "&Deactivate"
-#~ msgstr "&Dezaktywuj"
+msgid "&Deactivate"
+msgstr "&Dezaktywuj"
 #
-#~ msgid "&Delete"
-#~ msgstr "&Usuń"
+msgid "&Delete"
+msgstr "&Usuń"
 #
-#~ msgid "&Edit"
-#~ msgstr "&Edytuj"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Usuń wybrane"
 #
-#~ msgid "&New"
-#~ msgstr "&Nowy"
+msgid "&Edit"
+msgstr "&Edytuj"
 #
-#~ msgid "&OK"
-#~ msgstr "&OK"
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Usuń wybrane"
 #
-#~ msgid "&Properties"
-#~ msgstr "&Właściwości"
+#, fuzzy
+msgid "&List contents"
+msgstr "Pokaż zawartość "
 #
-#~ msgid "&Remove Selected"
-#~ msgstr "&Usuń wybrane"
+msgid "&New"
+msgstr "&Nowy"
 #
-#~ msgid "(Unnamed )"
-#~ msgstr "(Bez nazwy)"
+msgid "&OK"
+msgstr "&OK"
 #
-#~ msgid "(Unnamed Layer)"
-#~ msgstr "(warstwa bez nazwy)"
+msgid "&Properties"
+msgstr "&Właściwości"
 #
-#~ msgid "(Unnamed) "
-#~ msgstr "(Bez nazwy) "
+msgid "&Remove Selected"
+msgstr "&Usuń wybrane"
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(bez nazwy)"
+msgid "(Unnamed )"
+msgstr "(Bez nazwy)"
 #
-#~ msgid "*.*"
-#~ msgstr "*.*"
+msgid "(Unnamed Layer)"
+msgstr "(warstwa bez nazwy)"
 #
-#~ msgid "0"
-#~ msgstr "0"
+msgid "(Unnamed) "
+msgstr "(Bez nazwy) "
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+msgid "(unnamed)"
+msgstr "(bez nazwy)"
 #
-#~ msgid "0.5"
-#~ msgstr "0.5"
+msgid "*.*"
+msgstr "*.*"
 #
-#~ msgid "1"
-#~ msgstr "1"
+msgid "0"
+msgstr "0"
 #
-#~ msgid "1 Pixel"
-#~ msgstr "1 piksel"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "1 pixel"
-#~ msgstr "1 piksel"
+msgid "0.5"
+msgstr "0.5"
 #
-#~ msgid "1.0"
-#~ msgstr "1.0"
+msgid "1"
+msgstr "1"
 #
-#~ msgid "10"
-#~ msgstr "10"
+msgid "1 Pixel"
+msgstr "1 piksel"
 #
-#~ msgid "10 Pixels"
-#~ msgstr "10 pikseli"
+msgid "1 pixel"
+msgstr "1 piksel"
 #
-#~ msgid "10 pixels"
-#~ msgstr "10 pikseli"
+msgid "1.0"
+msgstr "1.0"
 #
-#~ msgid "2"
-#~ msgstr "2"
+msgid "10"
+msgstr "10"
 #
-#~ msgid "2 Pixels"
-#~ msgstr "2 piksele"
+msgid "10 Pixels"
+msgstr "10 pikseli"
 #
-#~ msgid "2 pixels"
-#~ msgstr "2 piksele"
+msgid "10 pixels"
+msgstr "10 pikseli"
 #
-#~ msgid "3"
-#~ msgstr "3"
+msgid "2"
+msgstr "2"
 #
-#~ msgid "3 Pixels"
-#~ msgstr "3 piksele"
+msgid "2 Pixels"
+msgstr "2 piksele"
 #
-#~ msgid "3 pixels"
-#~ msgstr "3 piksele"
+msgid "2 pixels"
+msgstr "2 piksele"
 #
-#~ msgid "4"
-#~ msgstr "4"
+msgid "3"
+msgstr "3"
 #
-#~ msgid "4 Pixels"
-#~ msgstr "4 piksele"
+msgid "3 Pixels"
+msgstr "3 piksele"
 #
-#~ msgid "4 pixels"
-#~ msgstr "4 piksele"
+msgid "3 pixels"
+msgstr "3 piksele"
 #
-#~ msgid "5"
-#~ msgstr "5"
+msgid "4"
+msgstr "4"
 #
-#~ msgid "5 Pixels"
-#~ msgstr "5 pikseli"
+msgid "4 Pixels"
+msgstr "4 piksele"
 #
-#~ msgid "5 pixels"
-#~ msgstr "5 pikseli"
+msgid "4 pixels"
+msgstr "4 piksele"
 #
-#~ msgid "6"
-#~ msgstr "6"
+msgid "5"
+msgstr "5"
 #
-#~ msgid "6 Pixels"
-#~ msgstr "6 pikseli"
+msgid "5 Pixels"
+msgstr "5 pikseli"
 #
-#~ msgid "6 pixels"
-#~ msgstr "6 pikseli"
+msgid "5 pixels"
+msgstr "5 pikseli"
 #
-#~ msgid "7"
-#~ msgstr "7"
+msgid "6"
+msgstr "6"
 #
-#~ msgid "7 Pixels"
-#~ msgstr "7 pikseli"
+msgid "6 Pixels"
+msgstr "6 pikseli"
 #
-#~ msgid "7 pixels"
-#~ msgstr "7 pikseli"
+msgid "6 pixels"
+msgstr "6 pikseli"
 #
-#~ msgid "8"
-#~ msgstr "8"
+msgid "7"
+msgstr "7"
 #
-#~ msgid "8 Pixels"
-#~ msgstr "8 pikseli"
+msgid "7 Pixels"
+msgstr "7 pikseli"
 #
-#~ msgid "8 pixels"
-#~ msgstr "8 pikseli"
+msgid "7 pixels"
+msgstr "7 pikseli"
 #
-#~ msgid "9"
-#~ msgstr "9"
+msgid "8"
+msgstr "8"
 #
-#~ msgid "9 Pixels"
-#~ msgstr "9 pikseli"
+msgid "8 Pixels"
+msgstr "8 pikseli"
 #
-#~ msgid "9 pixels"
-#~ msgstr "9 pikseli"
+msgid "8 pixels"
+msgstr "8 pikseli"
 #
-#~ msgid "About"
-#~ msgstr "O programie"
+msgid "9"
+msgstr "9"
 #
-#~ msgid "Activate"
-#~ msgstr "Aktywuj"
+msgid "9 Pixels"
+msgstr "9 pikseli"
 #
-#~ msgid "Active"
-#~ msgstr "Aktywny"
+msgid "9 pixels"
+msgstr "9 pikseli"
 #
-#~ msgid "Active Centre Line Colour"
-#~ msgstr "Kolor aktywnej linii środkowej"
+msgid "About"
+msgstr "O programie"
 #
-#~ msgid ""
-#~ "Active DR Line\n"
-#~ "Colour"
-#~ msgstr ""
-#~ "Aktywna linia pozycji zliczonej (DR)\n"
-#~ "Kolor"
+msgid "Activate"
+msgstr "Aktywuj"
 #
-#~ msgid "Active EBL Line Colour"
-#~ msgstr "Kolor aktywnej Kreski Namiarowej- EBL"
+msgid "Active"
+msgstr "Aktywny"
 #
-#~ msgid "Active Fill Colour"
-#~ msgstr "Kolor aktywnego wypełnienia"
+msgid "Active Centre Line Colour"
+msgstr "Kolor aktywnej linii środkowej"
 #
-#~ msgid "Active Line Colour"
-#~ msgstr "Kolor aktywnej linii"
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr ""
+"Aktywna linia pozycji zliczonej (DR)\n"
+"Kolor"
 #
-#~ msgid "Active Offset Line Colour"
-#~ msgstr "Kolor aktywnej linii przesuniętej"
+msgid "Active EBL Line Colour"
+msgstr "Kolor aktywnej Kreski Namiarowej- EBL"
 #
-#~ msgid "Add Index Line"
-#~ msgstr "Dodaj Linię Równoległą-PIL"
+msgid "Active Fill Colour"
+msgstr "Kolor aktywnego wypełnienia"
 #
-#~ msgid "Add New"
-#~ msgstr "Dodaj nowy"
+msgid "Active Line Colour"
+msgstr "Kolor aktywnej linii"
 #
-#~ msgid "All"
-#~ msgstr "Wszystkie"
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Kolor aktywnej linii przesuniętej"
 #
-#~ msgid "Allow Left Mouse Button Drag"
-#~ msgstr "Pozwól na przeciąganie lewym przyciskiem myszy"
+msgid "Active Offset Line Colour"
+msgstr "Kolor aktywnej linii przesuniętej"
 #
-#~ msgid "Always"
-#~ msgstr "Zawsze"
+msgid "Add Index Line"
+msgstr "Dodaj Linię Równoległą-PIL"
 #
-#~ msgid ""
-#~ "Always Show\n"
-#~ "EBL Info"
-#~ msgstr ""
-#~ "Zawsze Pokazuj\n"
-#~ "EBL Info"
+msgid "Add New"
+msgstr "Dodaj nowy"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "Stosowanie zmian od "
+msgid "All"
+msgstr "Wszystkie"
 #
-#~ msgid "Are you sure you want to delete <ALL> OD points?"
-#~ msgstr "Naprawdę chcesz usunąć <WSZYSTKIE> punkty OD?"
+msgid "Allow Left Mouse Button Drag"
+msgstr "Pozwól na przeciąganie lewym przyciskiem myszy"
 #
-#~ msgid "Are you sure you want to delete <ALL> paths?"
-#~ msgstr "Czy na pewno chcesz usunąć <WSZYSTKIE> ścieżki?"
+msgid "Always"
+msgstr "Zawsze"
 #
-#~ msgid "Are you sure you want to delete the selected object(s)"
-#~ msgstr "Naprawdę chcesz usunąć wybrane obiekt(y)"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
+"Zawsze Pokazuj\n"
+"EBL Info"
 #
-#~ msgid "Are you sure you want to delete this Boundary Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten Punkt Granicy?"
+msgid "Applying changes from "
+msgstr "Stosowanie zmian od "
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Czy na pewno chcesz usunąć tę granicę?"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this DR Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt Pozycji Zliczonej- DR?"
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Naprawdę chcesz usunąć <WSZYSTKIE> punkty OD?"
 #
-#~ msgid "Are you sure you want to delete this DR?"
-#~ msgstr "Czy na pewno chcesz usunąć tę pozycję zliczoną (DR)?"
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Czy na pewno chcesz usunąć <WSZYSTKIE> ścieżki?"
 #
-#~ msgid "Are you sure you want to delete this EBL Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt Kreski Namiarowej- EBL?"
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Naprawdę chcesz usunąć wybrane obiekt(y)"
 #
-#~ msgid "Are you sure you want to delete this EBL?"
-#~ msgstr "Czy na pewno chcesz usunąć tą kreskę namiarową-EBL?"
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Czy na pewno chcesz usunąć ten Punkt Granicy?"
 #
-#~ msgid "Are you sure you want to delete this Guard Zone?"
-#~ msgstr "Czy na pewno chcesz usunąć ten Punkt Granicy?"
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Czy na pewno chcesz usunąć tę granicę?"
 #
-#~ msgid "Are you sure you want to delete this OD Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt OD?"
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt Pozycji Zliczonej- DR?"
 #
-#~ msgid "Are you sure you want to delete this PIL Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt Linii Równoległej- PIL?"
+msgid "Are you sure you want to delete this DR?"
+msgstr "Czy na pewno chcesz usunąć tę pozycję zliczoną (DR)?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line Group?"
-#~ msgstr "Czy na pewno chcesz usunąć tę grupę linii równoległych?"
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt Kreski Namiarowej- EBL?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line?"
-#~ msgstr "Czy na pewno chcesz usunąć tę linię równoległą?"
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Czy na pewno chcesz usunąć tą kreskę namiarową-EBL?"
 #
-#~ msgid "Are you sure you want to delete this Text Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt Tekstu?"
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Czy na pewno chcesz usunąć ten Punkt Granicy?"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr "Czy na pewno chcesz usunąć tę warstwę i <CAŁĄ> jej zawartość?"
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt OD?"
 #
-#~ msgid "Are you sure you want to delete this point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt?"
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt Linii Równoległej- PIL?"
 #
-#~ msgid "Are you sure you want to remove this "
-#~ msgstr "Czy na pewno chcesz usunąć ten "
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Czy na pewno chcesz usunąć tę grupę linii równoległych?"
 #
-#~ msgid "Are you sure you want to remove this Boundary Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten Punkt Granicy?"
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Czy na pewno chcesz usunąć tę linię równoległą?"
 #
-#~ msgid "Are you sure you want to remove this DR Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt Pozycji Zliczonej- DR?"
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt Tekstu?"
 #
-#~ msgid "Are you sure you want to remove this EBL Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt Kreski Namiarowej- EBL?"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Czy na pewno chcesz usunąć tę warstwę i <CAŁĄ> jej zawartość?"
 #
-#~ msgid "Are you sure you want to remove this OD Point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt OD?"
+msgid "Are you sure you want to delete this point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt?"
 #
-#~ msgid "Are you sure you want to remove this point?"
-#~ msgstr "Czy na pewno chcesz usunąć ten punkt?"
+msgid "Are you sure you want to remove this "
+msgstr "Czy na pewno chcesz usunąć ten "
 #
-#~ msgid "Arrival Radius"
-#~ msgstr "Promień przybycia"
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Czy na pewno chcesz usunąć ten Punkt Granicy?"
 #
-#~ msgid "Background Colour"
-#~ msgstr "Kolor tła"
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt Pozycji Zliczonej- DR?"
 #
-#~ msgid "Background Density"
-#~ msgstr "Gęstości tła"
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt Kreski Namiarowej- EBL?"
 #
-#~ msgid "Background Transparency"
-#~ msgstr "Przeźroczystość tła"
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt OD?"
 #
-#~ msgid "Basic"
-#~ msgstr "Podstawowy"
+msgid "Are you sure you want to remove this point?"
+msgstr "Czy na pewno chcesz usunąć ten punkt?"
 #
-#~ msgid "Bearing"
-#~ msgstr "Namiar"
+msgid "Arrival Radius"
+msgstr "Promień przybycia"
 #
-#~ msgid "Bearing (M)"
-#~ msgstr "Namiar magnetyczny"
+msgid "Background Colour"
+msgstr "Kolor tła"
 #
-#~ msgid "Bearing From-To"
-#~ msgstr "Namiar z-do"
+msgid "Background Density"
+msgstr "Gęstości tła"
 #
-#~ msgid "Bearing From-To (M)"
-#~ msgstr "Namiar magnetyczny z-do"
+msgid "Background Transparency"
+msgstr "Przeźroczystość tła"
 #
-#~ msgid "Bearing: "
-#~ msgstr "Namiar: "
+msgid "Basic"
+msgstr "Podstawowy"
 #
-#~ msgid "Boat"
-#~ msgstr "Łódź"
+msgid "Bearing"
+msgstr "Namiar"
 #
-#~ msgid "Bottom"
-#~ msgstr "Dolne"
+msgid "Bearing (M)"
+msgstr "Namiar magnetyczny"
 #
-#~ msgid "Bottom Centre"
-#~ msgstr "Dolne wyśrodkowane"
+msgid "Bearing From-To"
+msgstr "Namiar z-do"
 #
-#~ msgid "Boundary"
-#~ msgstr "Granica"
+msgid "Bearing From-To (M)"
+msgstr "Namiar magnetyczny z-do"
 #
-#~ msgid "Boundary '"
-#~ msgstr "Granica '"
+msgid "Bearing: "
+msgstr "Namiar: "
 #
-#~ msgid "Boundary Point"
-#~ msgstr "Punktu granicy"
+msgid "Boat"
+msgstr "Łódź"
 #
-#~ msgid ""
-#~ "Boundary Point Inclusion\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Punkt Granicy wewn\n"
-#~ "Rozmiar"
+msgid "Bottom"
+msgstr "Dolne"
 #
-#~ msgid "Boundary Point Properties"
-#~ msgstr "Właściwości punktu Granicy"
+msgid "Bottom Centre"
+msgstr "Dolne wyśrodkowane"
 #
-#~ msgid "Boundary Point Properties, Layer: "
-#~ msgstr "Właściwości punktu Granicy, warstwa: "
+msgid "Boundary"
+msgstr "Granica"
 #
-#~ msgid "Boundary Point Type"
-#~ msgstr "Typ punktu granicy"
+msgid "Boundary '"
+msgstr "Granica '"
 #
-#~ msgid "Boundary Properties"
-#~ msgstr "Właściwości granicy"
+msgid "Boundary Point"
+msgstr "Punktu granicy"
 #
-#~ msgid "Boundary Properties, Layer: "
-#~ msgstr "Właściwości Granicy, warstwa: "
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Ukryj ikony punktu granicy"
 #
-#~ msgid "Boundary Type"
-#~ msgstr "Typ Granicy"
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+"Punkt Granicy wewn\n"
+"Rozmiar"
 #
-#~ msgid "Centre"
-#~ msgstr "Środek"
+msgid "Boundary Point Properties"
+msgstr "Właściwości punktu Granicy"
 #
-#~ msgid "Centre Line Style"
-#~ msgstr "Styl linii środkowej"
+msgid "Boundary Point Properties, Layer: "
+msgstr "Właściwości punktu Granicy, warstwa: "
 #
-#~ msgid "Centre Line Width"
-#~ msgstr "Szerokość linii środkowej"
+msgid "Boundary Point Type"
+msgstr "Typ punktu granicy"
 #
-#~ msgid "Centre on moving boat"
-#~ msgstr "Centrum na poruszającej się łodzi"
+msgid "Boundary Properties"
+msgstr "Właściwości granicy"
 #
-#~ msgid "Change all Path Point Icons"
-#~ msgstr "Zmienić wszystkie ikony punktu ścieżki"
+msgid "Boundary Properties, Layer: "
+msgstr "Właściwości Granicy, warstwa: "
 #
-#~ msgid "Confirm"
-#~ msgstr "Potwierdź"
+msgid "Boundary Type"
+msgstr "Typ Granicy"
 #
-#~ msgid "Confirm Object Delete"
-#~ msgstr "Potwierdź usuwanie obiektu"
+msgid "Centre"
+msgstr "Środek"
 #
-#~ msgid "Control Line"
-#~ msgstr "Linia kontrolna"
+msgid "Centre Line Style"
+msgstr "Styl linii środkowej"
 #
-#~ msgid "Copy"
-#~ msgstr "Kopiuj"
+msgid "Centre Line Width"
+msgstr "Szerokość linii środkowej"
 #
-#~ msgid "Copy Boundary GUID"
-#~ msgstr "Skopiuj identyfikator Granicy-GUID"
+msgid "Centre on moving boat"
+msgstr "Centrum na poruszającej się łodzi"
 #
-#~ msgid "Copy DR GUID"
-#~ msgstr "Skopiuj identyfikator pozycji zliczonej (DR GUID)"
+msgid "Change all Path Point Icons"
+msgstr "Zmienić wszystkie ikony punktu ścieżki"
 #
-#~ msgid "Copy EBL GUID"
-#~ msgstr "Skopiuj identyfikator kreski namiarowej (EBL GUID)"
+msgid "Character Based"
+msgstr ""
 #
-#~ msgid "Copy Guard Zone GUID"
-#~ msgstr "Kopiuj identyfikator GUID Strefy Ochronnej-GZ"
+msgid "Combo!"
+msgstr ""
 #
-#~ msgid "Copy Point GUID"
-#~ msgstr "Skopiuj identyfikator GUID punktu"
+msgid "Confirm"
+msgstr "Potwierdź"
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Kopiuj φ / λ"
+msgid "Confirm Object Delete"
+msgstr "Potwierdź usuwanie obiektu"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Kąt drogi nad dnem (COG)"
+msgid "Control Line"
+msgstr "Linia kontrolna"
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Kurs magnetyczny"
+msgid "Copy"
+msgstr "Kopiuj"
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Kurs rzeczywisty"
+msgid "Copy Boundary GUID"
+msgstr "Skopiuj identyfikator Granicy-GUID"
 #
-#~ msgid "Create Boundary"
-#~ msgstr "Utwórz Granicę"
+msgid "Copy DR GUID"
+msgstr "Skopiuj identyfikator pozycji zliczonej (DR GUID)"
 #
-#~ msgid "Create Boundary Point"
-#~ msgstr "Utwórz Punkt Granicy"
+msgid "Copy EBL GUID"
+msgstr "Skopiuj identyfikator kreski namiarowej (EBL GUID)"
 #
-#~ msgid "Create DR"
-#~ msgstr "Utwórz Pozycję Zliczoną-DR"
+msgid "Copy Guard Zone GUID"
+msgstr "Kopiuj identyfikator GUID Strefy Ochronnej-GZ"
 #
-#~ msgid "Create EBL"
-#~ msgstr "Utwórz Kreskę Namiarową-EBL"
+msgid "Copy Point GUID"
+msgstr "Skopiuj identyfikator GUID punktu"
 #
-#~ msgid "Create GZ"
-#~ msgstr "Utwórz Strefę Ochronną-GZ"
+msgid "Copy lat/long"
+msgstr "Kopiuj φ / λ"
 #
-#~ msgid "Create PIL"
-#~ msgstr "Utwórz Linie Równoległe- PIL"
+msgid "Course over Ground"
+msgstr "Kąt drogi nad dnem (COG)"
 #
-#~ msgid "Create Text Point"
-#~ msgstr "Utworz punkt Tekstu"
+msgid "Course over Ground (M)"
+msgstr "Kurs magnetyczny"
 #
-#~ msgid "DR"
-#~ msgstr "DR"
+msgid "Course over Ground (T)"
+msgstr "Kurs rzeczywisty"
 #
-#~ msgid "DR Path Length"
-#~ msgstr "Długość ścieżki pozycji zliczonej (DR)"
+msgid "Create Boundary"
+msgstr "Utwórz Granicę"
 #
-#~ msgid "DR Persistence"
-#~ msgstr "Widok Pozycji Zliczonej- DR"
+msgid "Create Boundary Point"
+msgstr "Utwórz Punkt Granicy"
 #
-#~ msgid "DR Point"
-#~ msgstr "Punkt pozycji zliczonej-DR"
+msgid "Create DR"
+msgstr "Utwórz Pozycję Zliczoną-DR"
 #
-#~ msgid "DR Point Icon"
-#~ msgstr "Ikona punktu pozycji zliczonej (DR)"
+msgid "Create EBL"
+msgstr "Utwórz Kreskę Namiarową-EBL"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "Interwał Punktu Pozycji Zliczonej- DR"
+msgid "Create GZ"
+msgstr "Utwórz Strefę Ochronną-GZ"
 #
-#~ msgid "DR Point Properties"
-#~ msgstr "Właściwości punktu Pozycji Zliczonej-DR"
+msgid "Create PIL"
+msgstr "Utwórz Linie Równoległe- PIL"
 #
-#~ msgid "DR Point Properties, Layer: "
-#~ msgstr "Właściwości punktu Pozycji Zliczonej-DR, warstwa: "
+msgid "Create Text Point"
+msgstr "Utworz punkt Tekstu"
 #
-#~ msgid "DR Properties"
-#~ msgstr "Właściwości pozycji zliczonej (DR)"
+msgid "DR"
+msgstr "DR"
 #
-#~ msgid "DR Properties, Layer: "
-#~ msgstr "Właściwości Pozycji Zliczonej-DR, warstwa: "
+msgid "DR Path Length"
+msgstr "Długość ścieżki pozycji zliczonej (DR)"
 #
-#~ msgid "Data Directory"
-#~ msgstr "Katalog danych"
+msgid "DR Persistence"
+msgstr "Widok Pozycji Zliczonej- DR"
 #
-#~ msgid "Date:"
-#~ msgstr "Data:"
+msgid "DR Point"
+msgstr "Punkt pozycji zliczonej-DR"
 #
-#~ msgid "Days"
-#~ msgstr "Dni"
+msgid "DR Point Icon"
+msgstr "Ikona punktu pozycji zliczonej (DR)"
 #
-#~ msgid "Deactivate"
-#~ msgstr "Dezaktywuj"
+msgid "DR Point Interval"
+msgstr "Interwał Punktu Pozycji Zliczonej- DR"
 #
-#~ msgid "Dead Reckoning"
-#~ msgstr "Pozycja zliczona- Dead Reckoning- DR"
+msgid "DR Point Properties"
+msgstr "Właściwości punktu Pozycji Zliczonej-DR"
 #
-#~ msgid "Default Offset (+Stbd/-Port)"
-#~ msgstr "Domyślny odstęp (-Lewo/+Prawo)"
+msgid "DR Point Properties, Layer: "
+msgstr "Właściwości punktu Pozycji Zliczonej-DR, warstwa: "
 #
-#~ msgid "Delete"
-#~ msgstr "Skasuj"
+msgid "DR Properties"
+msgstr "Właściwości pozycji zliczonej (DR)"
 #
-#~ msgid "Delete Line"
-#~ msgstr "Skasuj linię"
+msgid "DR Properties, Layer: "
+msgstr "Właściwości Pozycji Zliczonej-DR, warstwa: "
 #
-#~ msgid "Delete..."
-#~ msgstr "Skasuj..."
+msgid "Data Directory"
+msgstr "Katalog danych"
 #
-#~ msgid "Desc"
-#~ msgstr "Opis"
+msgid "Data:"
+msgstr ""
 #
-#~ msgid "Description"
-#~ msgstr "Opis"
+msgid "Date:"
+msgstr "Data:"
 #
-#~ msgid "Display Toolbar"
-#~ msgstr "Pokaż pasek narzędzi"
+msgid "Days"
+msgstr "Dni"
 #
-#~ msgid "Display text"
-#~ msgstr "Wyświetl tekst"
+msgid "Deactivate"
+msgstr "Dezaktywuj"
 #
-#~ msgid "Distance"
-#~ msgstr "Odległość"
+msgid "Dead Reckoning"
+msgstr "Pozycja zliczona- Dead Reckoning- DR"
 #
-#~ msgid "Distance Between Range Rings"
-#~ msgstr "Odległość pomiędzy okręgami odległości"
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Domyślny odstęp (-Lewo/+Prawo)"
 #
-#~ msgid "Distance From Boat"
-#~ msgstr "Odległość od łodzi"
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Skasuj"
 #
-#~ msgid "Distance Unit"
-#~ msgstr "Jednostka odległości"
+msgid "Delete"
+msgstr "Skasuj"
 #
-#~ msgid "Distance Units"
-#~ msgstr "Jednostki odległości"
+msgid "Delete Line"
+msgstr "Skasuj linię"
 #
-#~ msgid "Distance between Range Rings"
-#~ msgstr "Odległość pomiędzy okręgami odległości"
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
 #
-#~ msgid "Distance from Ownship"
-#~ msgstr "Odległość od naszego statku"
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
-#~ msgid ""
-#~ "Do you also want to make the shared OD Points being part of this boundary "
-#~ "invisible?"
-#~ msgstr ""
-#~ "Czy chcesz również ukryć wspólne punkty OD będące częścią tej granicy?"
+msgid "Delete..."
+msgstr "Skasuj..."
 #
-#~ msgid "Dot"
-#~ msgstr "Kropka"
+msgid "Desc"
+msgstr "Opis"
 #
-#~ msgid "Dot Dash"
-#~ msgstr "Kropka kreska"
+msgid "Description"
+msgstr "Opis"
 #
-#~ msgid "Draw Toolbar"
-#~ msgstr "Pasek narzędzi Draw"
+#, fuzzy
+msgid "Display Text"
+msgstr "Wyświetl tekst"
 #
-#~ msgid "EBL"
-#~ msgstr "Kreska namiarowa (EBL)"
+msgid "Display Toolbar"
+msgstr "Pokaż pasek narzędzi"
 #
-#~ msgid "EBL Angle (-P/+S)"
-#~ msgstr "Kąt Kreski Namiarowej-EBL (-P / + S)"
+msgid "Display text"
+msgstr "Wyświetl tekst"
 #
-#~ msgid ""
-#~ "EBL Fixed\n"
-#~ "End Position"
-#~ msgstr ""
-#~ "Kreska Namiarowa-EBL\n"
-#~ "stała pozycja Końca"
+msgid "Distance"
+msgstr "Odległość"
 #
-#~ msgid "EBL Fixed End Position"
-#~ msgstr "Kreska Namiarowa-EBL, pozycja stała Końca"
+msgid "Distance Between Range Rings"
+msgstr "Odległość pomiędzy okręgami odległości"
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "Widok Kreski Nmariowej-EBL"
+msgid "Distance From Boat"
+msgstr "Odległość od łodzi"
 #
-#~ msgid "EBL Point"
-#~ msgstr "Punkt kreski namiarowej-EBL"
+msgid "Distance Unit"
+msgstr "Jednostka odległości"
 #
-#~ msgid "EBL Point Properties"
-#~ msgstr "Właściwości punktu Kreski Namiarowej-EBL"
+msgid "Distance Units"
+msgstr "Jednostki odległości"
 #
-#~ msgid "EBL Point Properties, Layer: "
-#~ msgstr "Właściwości punktu Kreski Namiarowej-EBL, warstwa: "
+msgid "Distance between Range Rings"
+msgstr "Odległość pomiędzy okręgami odległości"
 #
-#~ msgid "EBL Properties"
-#~ msgstr "Właściwości kreski namiarowej (EBL)"
+msgid "Distance from Ownship"
+msgstr "Odległość od naszego statku"
 #
-#~ msgid "EBL Properties, Layer: "
-#~ msgstr "Właściwości Kreski Namiarowej-EBL, warstwa: "
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr "Czy chcesz również ukryć wspólne punkty OD będące częścią tej granicy?"
 #
-#~ msgid ""
-#~ "Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 5"
-#~ msgstr ""
-#~ "Czułość zobrazowania krawędzi\n"
-#~ "(procent szerokości ekranu) domyślnie 5"
+msgid "Dot"
+msgstr "Kropka"
 #
-#~ msgid "Electronic Bearing Line"
-#~ msgstr "Elektroniczna kreska namiarowa (EBL)"
+msgid "Dot Dash"
+msgstr "Kropka kreska"
 #
-#~ msgid "End"
-#~ msgstr "Koniec"
+msgid "Draw Toolbar"
+msgstr "Pasek narzędzi Draw"
 #
-#~ msgid "End Point Icon"
-#~ msgstr "Ikona punktu koniec"
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Eksportuj plik GPX"
 #
-#~ msgid "Error in import file."
-#~ msgstr "Błąd w importowanym pliku."
+msgid "EBL"
+msgstr "Kreska namiarowa (EBL)"
 #
-#~ msgid "Example"
-#~ msgstr "Przykład"
+msgid "EBL Angle (-P/+S)"
+msgstr "Kąt Kreski Namiarowej-EBL (-P / + S)"
 #
-#~ msgid "Exclusion"
-#~ msgstr "Wyłączenia"
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr ""
+"Kreska Namiarowa-EBL\n"
+"stała pozycja Końca"
 #
-#~ msgid "Export GPX file"
-#~ msgstr "Eksportuj plik GPX"
+msgid "EBL Fixed End Position"
+msgstr "Kreska Namiarowa-EBL, pozycja stała Końca"
 #
-#~ msgid "Extended"
-#~ msgstr "Rozszerzony"
+msgid "EBL Persistence"
+msgstr "Widok Kreski Nmariowej-EBL"
 #
-#~ msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-#~ msgstr ""
-#~ "Nie można załadować wszystkich ikon OCPN Draw Plugin, sprawdź dziennik "
-#~ "OCPN po więcej szczegółów"
+msgid "EBL Point"
+msgstr "Punkt kreski namiarowej-EBL"
 #
-#~ msgid "Fill Colour"
-#~ msgstr "Kolor wypełnienia"
+msgid "EBL Point Properties"
+msgstr "Właściwości punktu Kreski Namiarowej-EBL"
 #
-#~ msgid "Fill Density"
-#~ msgstr "Gęstość wypełnienia"
+msgid "EBL Point Properties, Layer: "
+msgstr "Właściwości punktu Kreski Namiarowej-EBL, warstwa: "
 #
-#~ msgid "First"
-#~ msgstr "Pierwszy"
+msgid "EBL Properties"
+msgstr "Właściwości kreski namiarowej (EBL)"
 #
-#~ msgid "First Angle (-P/+S)"
-#~ msgstr "Pierwszy kąt (-P / + S)"
+msgid "EBL Properties, Layer: "
+msgstr "Właściwości Kreski Namiarowej-EBL, warstwa: "
 #
-#~ msgid "First Point Icon"
-#~ msgstr "Pierwszy Punkt- ikona"
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+"Czułość zobrazowania krawędzi\n"
+"(procent szerokości ekranu) domyślnie 5"
 #
-#~ msgid "First distance"
-#~ msgstr "Pierwsza Odległość"
+#, fuzzy
+msgid "Edit"
+msgstr "&Edytuj"
 #
-#~ msgid "Fonts"
-#~ msgstr "Czcionki"
+msgid "Electronic Bearing Line"
+msgstr "Elektroniczna kreska namiarowa (EBL)"
 #
-#~ msgid "For this leg the Great Circle boundary is "
-#~ msgstr "Na tym odcinku granica Ortodromy jest "
+msgid "End"
+msgstr "Koniec"
 #
-#~ msgid "From Point"
-#~ msgstr "Od punktu"
+msgid "End Point Icon"
+msgstr "Ikona punktu koniec"
 #
-#~ msgid "From: "
-#~ msgstr "Z: "
+msgid "Error in import file."
+msgstr "Błąd w importowanym pliku."
 #
-#~ msgid "GUID"
-#~ msgstr "GUID"
+msgid "Example"
+msgstr "Przykład"
 #
-#~ msgid "GZ"
-#~ msgstr "GZ"
+msgid "Exclusion"
+msgstr "Wyłączenia"
 #
-#~ msgid "General"
-#~ msgstr "Główne"
+msgid "Export GPX file"
+msgstr "Eksportuj plik GPX"
 #
-#~ msgid ""
-#~ "General Drawing for OpenCPN\n"
-#~ "\n"
-#~ "Thanks to the community for their helpful suggestions."
-#~ msgstr ""
-#~ "Ogólne rysunki dla OpenCPN\n"
-#~ "\n"
-#~ "Dzięki dla Wszystkich za pomocne sugestie."
+msgid "Extended"
+msgstr "Rozszerzony"
 #
-#~ msgid "General drawing for OpenCPN"
-#~ msgstr "Ogólne rysunki dla OpenCPN"
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+"Nie można załadować wszystkich ikon OCPN Draw Plugin, sprawdź dziennik OCPN "
+"po więcej szczegółów"
 #
-#~ msgid "Guard Zone"
-#~ msgstr "Strefa ochronna- Guard Zone- GZ"
+msgid "Fill Colour"
+msgstr "Kolor wypełnienia"
 #
-#~ msgid "Guard Zone Persistence"
-#~ msgstr "Widok Strefy Ochronnej-GZ"
+msgid "Fill Density"
+msgstr "Gęstość wypełnienia"
 #
-#~ msgid "Guard Zone Point"
-#~ msgstr "Punkt Strefy Ochronnej-GZ"
+msgid "First"
+msgstr "Pierwszy"
 #
-#~ msgid "Guard Zone Point Properties"
-#~ msgstr "Właściwości punktu Strefy Ochronnej- GZ"
+msgid "First Angle (-P/+S)"
+msgstr "Pierwszy kąt (-P / + S)"
 #
-#~ msgid "Guard Zone Properties"
-#~ msgstr "Właściwości Strefy Ochronnej- GZ"
+msgid "First Point Icon"
+msgstr "Pierwszy Punkt- ikona"
 #
-#~ msgid "Heading"
-#~ msgstr "Kurs"
+msgid "First distance"
+msgstr "Pierwsza Odległość"
 #
-#~ msgid "Help"
-#~ msgstr "Pomoc"
+#, fuzzy
+msgid "Font Based"
+msgstr "Czcionki"
 #
-#~ msgid "Hide Boundary Point Icons"
-#~ msgstr "Ukryj ikony punktu granicy"
+msgid "Fonts"
+msgstr "Czcionki"
 #
-#~ msgid "Hide Layer(s)"
-#~ msgstr "Ukryj warstwę(y)"
+msgid "For this leg the Great Circle boundary is "
+msgstr "Na tym odcinku granica Ortodromy jest "
 #
-#~ msgid "Hide Path(s)"
-#~ msgstr "Ukryj ścieżkę(i)"
+msgid "From Point"
+msgstr "Od punktu"
 #
-#~ msgid "Hide Point names"
-#~ msgstr "Ukryj nazwy punktów"
+msgid "From: "
+msgstr "Z: "
 #
-#~ msgid "Hide Point(s)"
-#~ msgstr "Ukryj punkt(y)"
+msgid "GUID"
+msgstr "GUID"
 #
-#~ msgid "Hide from chart"
-#~ msgstr "Ukryj na mapie"
+msgid "GZ"
+msgstr "GZ"
 #
-#~ msgid "Hours"
-#~ msgstr "Godzin"
+#, fuzzy
+msgid "GZ Point Properties, Layer: "
+msgstr "Właściwości punktu Pozycji Zliczonej-DR, warstwa: "
 #
-#~ msgid "ID"
-#~ msgstr "Identyfikator"
+msgid "General"
+msgstr "Główne"
 #
-#~ msgid "ID Num"
-#~ msgstr "Numer identyfikacyjny"
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"Ogólne rysunki dla OpenCPN\n"
+"\n"
+"Dzięki dla Wszystkich za pomocne sugestie."
 #
-#~ msgid "ID: "
-#~ msgstr "ID: "
+msgid "General drawing for OpenCPN"
+msgstr "Ogólne rysunki dla OpenCPN"
 #
-#~ msgid "Icon"
-#~ msgstr "Ikona"
+msgid "Guard Zone"
+msgstr "Strefa ochronna- Guard Zone- GZ"
 #
-#~ msgid "Icon Directory"
-#~ msgstr "Katalog ikon"
+msgid "Guard Zone Persistence"
+msgstr "Widok Strefy Ochronnej-GZ"
 #
-#~ msgid "Import GPX file"
-#~ msgstr "Importuj plik GPX"
+msgid "Guard Zone Point"
+msgstr "Punkt Strefy Ochronnej-GZ"
 #
-#~ msgid "Import file"
-#~ msgstr "Importuj plik"
+msgid "Guard Zone Point Properties"
+msgstr "Właściwości punktu Strefy Ochronnej- GZ"
 #
-#~ msgid "Inactive Centre Line Colour"
-#~ msgstr "Kolor nieaktywnej linii środkowej"
+msgid "Guard Zone Properties"
+msgstr "Właściwości Strefy Ochronnej- GZ"
 #
-#~ msgid ""
-#~ "Inactive DR Line\n"
-#~ "Colour"
-#~ msgstr ""
-#~ "Nieaktywna linia pozycji zliczonej (DR)\n"
-#~ "Kolor"
+msgid "Heading"
+msgstr "Kurs"
 #
-#~ msgid "Inactive EBL Line Colour"
-#~ msgstr "Kolor nieaktywnej kreski namiarowej (EBL)"
+msgid "Help"
+msgstr "Pomoc"
 #
-#~ msgid "Inactive Fill Colour"
-#~ msgstr "Kolor wypełnienia nieaktywny"
+msgid "Hide Boundary Point Icons"
+msgstr "Ukryj ikony punktu granicy"
 #
-#~ msgid "Inactive Line Colour"
-#~ msgstr "Kolor nieaktywnej linii"
+msgid "Hide Layer(s)"
+msgstr "Ukryj warstwę(y)"
 #
-#~ msgid "Inactive Offset Line Colour"
-#~ msgstr "Kolor nieaktywnej linii przesuniętej"
+msgid "Hide Path(s)"
+msgstr "Ukryj ścieżkę(i)"
 #
-#~ msgid "Inclusion"
-#~ msgstr "Włączenia"
+msgid "Hide Point names"
+msgstr "Ukryj nazwy punktów"
 #
-#~ msgid ""
-#~ "Inclusion Boundary\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Granica wewn\n"
-#~ "Rozmiar"
+msgid "Hide Point(s)"
+msgstr "Ukryj punkt(y)"
 #
-#~ msgid "Inclusion Boundary Size"
-#~ msgstr "Rozmiar Granicy wewnętrznej"
+msgid "Hide from chart"
+msgstr "Ukryj na mapie"
 #
-#~ msgid "Index Line Properties"
-#~ msgstr "Właściwości Linii równoległych (PIL)"
+msgid "Hours"
+msgstr "Godzin"
 #
-#~ msgid "Index Lines (+ Stbd/- Port)"
-#~ msgstr "Linie Równoległe (+ Stbd/Port)"
+#, fuzzy
+msgid "I&mport"
+msgstr "Importuj plik"
 #
-#~ msgid ""
-#~ "Initial Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 3"
-#~ msgstr ""
-#~ "Początkowa czułość zobrazowania krawędzi\n"
-#~ "(procent szerokości ekranu) domyślne 3"
+msgid "ID"
+msgstr "Identyfikator"
 #
-#~ msgid "Initial number of index lines"
-#~ msgstr "Początkowa liczba linii równoległych"
+msgid "ID Num"
+msgstr "Numer identyfikacyjny"
 #
-#~ msgid "Insert Boundary Point"
-#~ msgstr "Wstaw punkt Granicy"
+msgid "ID: "
+msgstr "ID: "
 #
-#~ msgid "Insert EBL Point"
-#~ msgstr "Wstaw punkt Kreski Namiarowej- EBL"
+msgid "Icon"
+msgstr "Ikona"
 #
-#~ msgid "Interval Type"
-#~ msgstr "Typ interwału"
+msgid "Icon Directory"
+msgstr "Katalog ikon"
 #
-#~ msgid "Kilometres"
-#~ msgstr "Kilometry"
+#, fuzzy
+msgid "Import"
+msgstr "Importuj plik"
 #
-#~ msgid "Latitude"
-#~ msgstr "Szerokość geogr"
+#, fuzzy
+msgid "Import Error"
+msgstr "Importuj plik"
 #
-#~ msgid "Layer"
-#~ msgstr "Warstwa"
+msgid "Import GPX file"
+msgstr "Importuj plik GPX"
 #
-#~ msgid "Layer "
-#~ msgstr "Warstwa "
+msgid "Import file"
+msgstr "Importuj plik"
 #
-#~ msgid "Layer Boundary"
-#~ msgstr "Granica warstwy"
+#, fuzzy
+msgid "Import incomplete."
+msgstr "Importuj plik"
 #
-#~ msgid "Layer Boundary Point"
-#~ msgstr "Warstwa punktu granicy"
+msgid "Inactive Centre Line Colour"
+msgstr "Kolor nieaktywnej linii środkowej"
 #
-#~ msgid "Layer DR Point"
-#~ msgstr "Warstwa punktu pozycji zliczonej- DR"
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+"Nieaktywna linia pozycji zliczonej (DR)\n"
+"Kolor"
 #
-#~ msgid "Layer EBL Point"
-#~ msgstr "Warstwa punktu kreski namiarowej- EBL"
+msgid "Inactive EBL Line Colour"
+msgstr "Kolor nieaktywnej kreski namiarowej (EBL)"
 #
-#~ msgid "Layer Name"
-#~ msgstr "Nazwa warstwy"
+msgid "Inactive Fill Colour"
+msgstr "Kolor wypełnienia nieaktywny"
 #
-#~ msgid "Layer Text Point"
-#~ msgstr "Warstwa punktu tekstu"
+msgid "Inactive Line Colour"
+msgstr "Kolor nieaktywnej linii"
 #
-#~ msgid "Layers"
-#~ msgstr "Warstwy"
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Kolor nieaktywnej linii przesuniętej"
 #
-#~ msgid "Layers Directory"
-#~ msgstr "Katalog warstw"
+msgid "Inactive Offset Line Colour"
+msgstr "Kolor nieaktywnej linii przesuniętej"
 #
-#~ msgid "Left"
-#~ msgstr "Na lewo"
+msgid "Inclusion"
+msgstr "Włączenia"
 #
-#~ msgid "Leg: from "
-#~ msgstr "Odcinek: od "
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+"Granica wewn\n"
+"Rozmiar"
 #
-#~ msgid "Length Type"
-#~ msgstr "Typ Długości"
+msgid "Inclusion Boundary Size"
+msgstr "Rozmiar Granicy wewnętrznej"
 #
-#~ msgid "License"
-#~ msgstr "Licencja"
+msgid "Index Line Properties"
+msgstr "Właściwości Linii równoległych (PIL)"
 #
-#~ msgid "Line Colour"
-#~ msgstr "Kolor linii"
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Linie Równoległe (+ Stbd/Port)"
 #
-#~ msgid "Line Style"
-#~ msgstr "Styl linii"
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+"Początkowa czułość zobrazowania krawędzi\n"
+"(procent szerokości ekranu) domyślne 3"
 #
-#~ msgid "Line Width"
-#~ msgstr "Szerokość linii"
+msgid "Initial number of index lines"
+msgstr "Początkowa liczba linii równoległych"
 #
-#~ msgid "Link"
-#~ msgstr "Odnośnik"
+msgid "Insert Boundary Point"
+msgstr "Wstaw punkt Granicy"
 #
-#~ msgid "Link Description"
-#~ msgstr "Opis odnośnika"
+msgid "Insert EBL Point"
+msgstr "Wstaw punkt Kreski Namiarowej- EBL"
 #
-#~ msgid "List contents "
-#~ msgstr "Pokaż zawartość "
+msgid "Interval Type"
+msgstr "Typ interwału"
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "Ładowanie navobjects z "
+msgid "Kilometres"
+msgstr "Kilometry"
 #
-#~ msgid "Local file..."
-#~ msgstr "Plik lokalny..."
+msgid "Latitude"
+msgstr "Szerokość geogr"
 #
-#~ msgid "Long Dash"
-#~ msgstr "Długa kreska"
+msgid "Layer"
+msgstr "Warstwa"
 #
-#~ msgid "Longitude"
-#~ msgstr "Długość geogr"
+msgid "Layer "
+msgstr "Warstwa "
 #
-#~ msgid "Maintain with"
-#~ msgstr "Utrzymaj z"
+msgid "Layer Boundary"
+msgstr "Granica warstwy"
 #
-#~ msgid "Major:"
-#~ msgstr "Główne:"
+msgid "Layer Boundary Point"
+msgstr "Warstwa punktu granicy"
 #
-#~ msgid "Match VRM colour to EBL colour"
-#~ msgstr "Dopasuj kolor Kręgu Odległości-VRM do koloru Kreski Namiarowej-EBL"
+msgid "Layer DR Point"
+msgstr "Warstwa punktu pozycji zliczonej- DR"
 #
-#~ msgid "Merge and Delete Boundaries"
-#~ msgstr "Scalaj i Skasuj Granice"
+msgid "Layer EBL Point"
+msgstr "Warstwa punktu kreski namiarowej- EBL"
 #
-#~ msgid "Merge and Keep Boundaries"
-#~ msgstr "Scalaj i zachowaj Granice"
+msgid "Layer Name"
+msgstr "Nazwa warstwy"
 #
-#~ msgid "Minutes"
-#~ msgstr "Minut"
+msgid "Layer Text Point"
+msgstr "Warstwa punktu tekstu"
 #
-#~ msgid "Move Boundary"
-#~ msgstr "Przesuń Granicę"
+msgid "Layers"
+msgstr "Warstwy"
 #
-#~ msgid "Move Boundary Point"
-#~ msgstr "Przesuń punkt Granicy"
+msgid "Layers Directory"
+msgstr "Katalog warstw"
 #
-#~ msgid "Move Boundary Segment"
-#~ msgstr "Przesuń Segment Granicy"
+msgid "Left"
+msgstr "Na lewo"
 #
-#~ msgid "Move DR Point"
-#~ msgstr "Przesuń punkt pozycji zliczonej-DR"
+msgid "Left Click links are deleted."
+msgstr ""
 #
-#~ msgid "Move EBL"
-#~ msgstr "Przesuń Kreskę Namiarową- EBL"
+msgid "Left Click links are opened for editing."
+msgstr ""
 #
-#~ msgid "Move EBL Point"
-#~ msgstr "Przesuń punkt kreski namiarowej (EBL)"
+msgid "Left Click links are opened in the default browser."
+msgstr ""
 #
-#~ msgid "Move Guard Zone Point"
-#~ msgstr "Przesuń Punkt Strefy Ochronnej- GZ"
+msgid "Left click opens in browser"
+msgstr ""
 #
-#~ msgid "Move Line"
-#~ msgstr "Przenieś linię"
+msgid "Leg: from "
+msgstr "Odcinek: od "
 #
-#~ msgid "Move OD Point"
-#~ msgstr "Przesuń punkt OD"
+msgid "Length Type"
+msgstr "Typ Długości"
 #
-#~ msgid "Move PIL Point"
-#~ msgstr "Przesuń punkt linii równoległej (PIL)"
+msgid "License"
+msgstr "Licencja"
 #
-#~ msgid "Move Text Point"
-#~ msgstr "Przesuń punkt tekstu"
+msgid "Line Colour"
+msgstr "Kolor linii"
 #
-#~ msgid "Move start point to boat lat/lon"
-#~ msgstr "Przenieś punkt Start do szerokości/długości geograficznej Łodzi"
+msgid "Line Style"
+msgstr "Styl linii"
 #
-#~ msgid "Multiple Boundaries"
-#~ msgstr "Wiele granic"
+#, fuzzy
+msgid "Line Type"
+msgstr "Styl linii"
 #
-#~ msgid "Name"
-#~ msgstr "Nazwa"
+msgid "Line Width"
+msgstr "Szerokość linii"
 #
-#~ msgid "Name:"
-#~ msgstr "Nazwa:"
+msgid "Link"
+msgstr "Odnośnik"
 #
-#~ msgid "Name: "
-#~ msgstr "Nazwa: "
+msgid "Link Description"
+msgstr "Opis odnośnika"
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Mile morskie"
+#, fuzzy
+msgid "Links"
+msgstr "Odnośnik"
 #
-#~ msgid "Neither"
-#~ msgstr "Żaden"
+msgid "List contents "
+msgstr "Pokaż zawartość "
 #
-#~ msgid "Never"
-#~ msgstr "Nigdy"
+msgid "Loading navobjects from "
+msgstr "Ładowanie navobjects z "
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Nowa warstwa %d: %s"
+msgid "Local file..."
+msgstr "Plik lokalny..."
 #
-#~ msgid "No"
-#~ msgstr "Nie"
+msgid "Long Dash"
+msgstr "Długa kreska"
 #
-#~ msgid "No alarm"
-#~ msgstr "Brak alarmu"
+msgid "Longitude"
+msgstr "Długość geogr"
 #
-#~ msgid "No. of items"
-#~ msgstr "Liczba elementów"
+msgid "Maintain with"
+msgstr "Utrzymaj z"
 #
-#~ msgid "None"
-#~ msgstr "Brak"
+msgid "Major:"
+msgstr "Główne:"
 #
-#~ msgid "Number of Point Range Rings"
-#~ msgstr "Liczba okręgów odległości wokół punktu"
+msgid "Match VRM colour to EBL colour"
+msgstr "Dopasuj kolor Kręgu Odległości-VRM do koloru Kreski Namiarowej-EBL"
 #
-#~ msgid "Number of Range Rings"
-#~ msgstr "Liczba okręgów odległości"
+msgid "Maximum Text Width"
+msgstr ""
 #
-#~ msgid "OCPN Draw"
-#~ msgstr "OCPN Draw"
+msgid "Maximum Width Type"
+msgstr ""
 #
-#~ msgid "OCPN Draw Boundary"
-#~ msgstr "OCPN Draw Granica"
+msgid "Merge and Delete Boundaries"
+msgstr "Scalaj i Skasuj Granice"
 #
-#~ msgid "OCPN Draw Boundary Create"
-#~ msgstr "OCPN Draw Tworzenie Granicy"
+msgid "Merge and Keep Boundaries"
+msgstr "Scalaj i zachowaj Granice"
 #
-#~ msgid "OCPN Draw Boundary Delete"
-#~ msgstr "OCPN Draw Usuwanie Granicy"
+msgid "Minor:"
+msgstr ""
 #
-#~ msgid "OCPN Draw DR Delete"
-#~ msgstr "OCPN Draw Usuwanie Pozycji Zliczonej DR"
+msgid "Minutes"
+msgstr "Minut"
 #
-#~ msgid "OCPN Draw Delete Boundary Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Granicy"
+msgid "Move Boundary"
+msgstr "Przesuń Granicę"
 #
-#~ msgid "OCPN Draw Delete DR Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Pozycji Zliczonej- DR"
+msgid "Move Boundary Point"
+msgstr "Przesuń punkt Granicy"
 #
-#~ msgid "OCPN Draw Delete EBL Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Kreski Namiarowej- EBL"
+msgid "Move Boundary Segment"
+msgstr "Przesuń Segment Granicy"
 #
-#~ msgid "OCPN Draw Delete OD Point"
-#~ msgstr "OCPN Draw Usuwanie punktu OD"
+msgid "Move DR Point"
+msgstr "Przesuń punkt pozycji zliczonej-DR"
 #
-#~ msgid "OCPN Draw Delete PIL Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Linii Równoległej-PIL"
+msgid "Move EBL"
+msgstr "Przesuń Kreskę Namiarową- EBL"
 #
-#~ msgid "OCPN Draw Delete Text Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Tekstu"
+msgid "Move EBL Point"
+msgstr "Przesuń punkt kreski namiarowej (EBL)"
 #
-#~ msgid "OCPN Draw EBL Delete"
-#~ msgstr "OCPN Draw -Usuwanie Kreski Namiarowej EBL"
+msgid "Move Guard Zone Point"
+msgstr "Przesuń Punkt Strefy Ochronnej- GZ"
 #
-#~ msgid "OCPN Draw GZ Delete"
-#~ msgstr "OCPN Draw Usuwanie GZ"
+msgid "Move Line"
+msgstr "Przenieś linię"
 #
-#~ msgid "OCPN Draw Manager"
-#~ msgstr "OCPN Draw Manager"
+msgid "Move OD Point"
+msgstr "Przesuń punkt OD"
 #
-#~ msgid "OCPN Draw PIL Delete"
-#~ msgstr "OCPN Draw Usuwanie Linii Równoległych PIL"
+msgid "Move PIL Point"
+msgstr "Przesuń punkt linii równoległej (PIL)"
 #
-#~ msgid "OCPN Draw Parallel Index Line Delete"
-#~ msgstr "OCPN Draw Usuwanie Linii Równoległej- PIL"
+msgid "Move Text Point"
+msgstr "Przesuń punkt tekstu"
 #
-#~ msgid "OCPN Draw Point"
-#~ msgstr "OCPN Draw Punkt"
+msgid "Move start point to boat lat/lon"
+msgstr "Przenieś punkt Start do szerokości/długości geograficznej Łodzi"
 #
-#~ msgid "OCPN Draw Point Create"
-#~ msgstr "OCPN Draw Tworzenie Punktu"
+msgid "Multiple Boundaries"
+msgstr "Wiele granic"
 #
-#~ msgid "OCPN Draw Point, Layer: "
-#~ msgstr "OCPN Draw Punkt, warstwa: "
+msgid "Name"
+msgstr "Nazwa"
 #
-#~ msgid "OCPN Draw Properties"
-#~ msgstr "Właściwości OCPN Draw"
+msgid "Name:"
+msgstr "Nazwa:"
 #
-#~ msgid "OCPN Draw Remove "
-#~ msgstr "OCPN Draw Usuwanie "
+msgid "Name: "
+msgstr "Nazwa: "
 #
-#~ msgid "OCPN Draw Remove Boundary Point"
-#~ msgstr "OCPN Draw Usuwanie Punktu Granicy"
+msgid "Nautical Miles"
+msgstr "Mile morskie"
 #
-#~ msgid "OCPN Draw Remove DR Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Pozycji Zliczonej- DR"
+msgid "Neither"
+msgstr "Żaden"
 #
-#~ msgid "OCPN Draw Remove EBL Point"
-#~ msgstr "OCPN Draw Usuwanie punktu Kreski Namiarowej- EBL"
+msgid "Never"
+msgstr "Nigdy"
 #
-#~ msgid "OCPN Draw Remove OD Point"
-#~ msgstr "OCPN Draw Usuwanie Punktu OD"
+msgid "New &temporary Layer"
+msgstr ""
 #
-#~ msgid "OD"
-#~ msgstr "OD"
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Nowa warstwa %d: %s"
 #
-#~ msgid "OD Point"
-#~ msgstr "Punkt OD"
+msgid "New persistent &Layer"
+msgstr ""
 #
-#~ msgid "OD Point Name"
-#~ msgstr "Nazwa punktu OD"
+msgid "No"
+msgstr "Nie"
 #
-#~ msgid "OD Point Properties"
-#~ msgstr "Właściwości punktu OD"
+msgid "No alarm"
+msgstr "Brak alarmu"
 #
-#~ msgid "OD Points"
-#~ msgstr "Punkty OD"
+msgid "No. of items"
+msgstr "Liczba elementów"
 #
-#~ msgid "OD\\WD"
-#~ msgstr "OD\\WD"
+msgid "None"
+msgstr "Brak"
 #
-#~ msgid "Offset"
-#~ msgstr "Przesunięcie"
+msgid "Number of Point Range Rings"
+msgstr "Liczba okręgów odległości wokół punktu"
 #
-#~ msgid "Offset (+ Stbd/- Port)"
-#~ msgstr "Przesunięcie (+ Stbd/Port)"
+msgid "Number of Range Rings"
+msgstr "Liczba okręgów odległości"
 #
-#~ msgid "Offset Line Style"
-#~ msgstr "Styl linii przesuniętej"
+#, fuzzy
+msgid "OCPN API Version:"
+msgstr "Wersja:"
 #
-#~ msgid "Offset Line Width"
-#~ msgstr "Szerokość linii przesuniętej"
+msgid "OCPN Draw"
+msgstr "OCPN Draw"
 #
-#~ msgid "Offset: "
-#~ msgstr "Odstęp: "
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "OCPN Draw Punkt"
 #
-#~ msgid "On Rollover Only"
-#~ msgstr "Przy najeździe tylko"
+msgid "OCPN Draw Boundary"
+msgstr "OCPN Draw Granica"
 #
-#~ msgid "OpenCPN Alert"
-#~ msgstr "OpenCPN Alert"
+msgid "OCPN Draw Boundary Create"
+msgstr "OCPN Draw Tworzenie Granicy"
 #
-#~ msgid "Other:"
-#~ msgstr "Inne:"
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN Draw Usuwanie Granicy"
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Nadpisać istniejący plik?"
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN Draw Usuwanie Pozycji Zliczonej DR"
 #
-#~ msgid "PIL"
-#~ msgstr "Linia równoległa (PIL)"
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN Draw Usuwanie punktu Granicy"
 #
-#~ msgid "PIL Persistence"
-#~ msgstr "Widok Linii Równoległych-PIL"
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN Draw Usuwanie punktu Pozycji Zliczonej- DR"
 #
-#~ msgid "PIL Point"
-#~ msgstr "Punkt Linii Równoległej-PIL"
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN Draw Usuwanie punktu Kreski Namiarowej- EBL"
 #
-#~ msgid "Parallel Index Line"
-#~ msgstr "Linia równoległa"
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN Draw Usuwanie punktu OD"
 #
-#~ msgid "Parallel Index Line Angle (+Stbd/-Port)"
-#~ msgstr "Kąt Linii Równoległych (-Lewa / +Prawa)"
+msgid "OCPN Draw Delete PIL Point"
+msgstr "OCPN Draw Usuwanie punktu Linii Równoległej-PIL"
 #
-#~ msgid "Parallel Index Line Persistence"
-#~ msgstr "Widok Linii Równoległych"
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN Draw Usuwanie punktu Tekstu"
 #
-#~ msgid "Parallel Index Line Properties"
-#~ msgstr "Właściwości Linii równoległych (Pil)"
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Właściwości OCPN Draw"
 #
-#~ msgid "Paste"
-#~ msgstr "Wklej"
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN Draw -Usuwanie Kreski Namiarowej EBL"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Wklej φ / λ"
+msgid "OCPN Draw GZ Delete"
+msgstr "OCPN Draw Usuwanie GZ"
 #
-#~ msgid "Patch:"
-#~ msgstr "Ścieżka:"
+msgid "OCPN Draw Manager"
+msgstr "OCPN Draw Manager"
 #
-#~ msgid "Path"
-#~ msgstr "Ścieżka"
+msgid "OCPN Draw PIL Delete"
+msgstr "OCPN Draw Usuwanie Linii Równoległych PIL"
 #
-#~ msgid "Path & Point Manager"
-#~ msgstr "Manager Ścieżki & Punktu"
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "OCPN Draw Usuwanie Linii Równoległej- PIL"
 #
-#~ msgid "Path Name"
-#~ msgstr "Nazwa ścieżki"
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "OCPN Draw Punkt"
 #
-#~ msgid "Path Persistence"
-#~ msgstr "Obecność Ścieżki"
+msgid "OCPN Draw Point"
+msgstr "OCPN Draw Punkt"
 #
-#~ msgid "Path Properties"
-#~ msgstr "Właściwości ścieżki"
+msgid "OCPN Draw Point Create"
+msgstr "OCPN Draw Tworzenie Punktu"
 #
-#~ msgid "Path Properties, Layer: "
-#~ msgstr "Właściwości ścieżki, warstwa: "
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN Draw Punkt, warstwa: "
 #
-#~ msgid "Paths"
-#~ msgstr "Ścieżki"
+msgid "OCPN Draw Properties"
+msgstr "Właściwości OCPN Draw"
 #
-#~ msgid "Persistent"
-#~ msgstr "Widoczny"
+msgid "OCPN Draw Remove "
+msgstr "OCPN Draw Usuwanie "
 #
-#~ msgid "Pick a new start point"
-#~ msgstr "Wybierz nowy punkt Start"
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN Draw Usuwanie Punktu Granicy"
 #
-#~ msgid ""
-#~ "Please report problems using FlySpray at:\n"
-#~ "https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "at the OpenCPN forum:\n"
-#~ "http://www.cruisersforum.com/forums/f134\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "Raise an issue in GIT at:\n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues\n"
-#~ msgstr ""
-#~ "Prosimy o zgłaszanie problemów za pomocą FlySpray o:\n"
-#~ "http://willkamp.com/opencpn/flyspray/index.php?"
-#~ "project=0&do=index&switch=1 \n"
-#~ "\n"
-#~ "lub\n"
-#~ "\n"
-#~ "at OpenCPN forum:\n"
-#~ "http://www.cruisersforum.com/forums/f134 \n"
-#~ "\n"
-#~ "lub\n"
-#~ "\n"
-#~ "Zgłoś problem na GIT: \n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues \n"
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN Draw Usuwanie punktu Pozycji Zliczonej- DR"
 #
-#~ msgid "Point Inclusion Size"
-#~ msgstr "Punkt wewn Rozmiar"
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN Draw Usuwanie punktu Kreski Namiarowej- EBL"
 #
-#~ msgid "Point Type"
-#~ msgstr "Typ punktu"
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN Draw Usuwanie Punktu OD"
 #
-#~ msgid "Points"
-#~ msgstr "Punkty"
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
 #
-#~ msgid "Properties"
-#~ msgstr "Właściwości"
+msgid "OD"
+msgstr "OD"
 #
-#~ msgid "Properties..."
-#~ msgstr "Właściwości..."
+msgid "OD Point"
+msgstr "Punkt OD"
 #
-#~ msgid "Question"
-#~ msgstr "Pytanie"
+msgid "OD Point Name"
+msgstr "Nazwa punktu OD"
 #
-#~ msgid "Range Ring Colours"
-#~ msgstr "Kolor Kręgu Odległości"
+msgid "OD Point Properties"
+msgstr "Właściwości punktu OD"
 #
-#~ msgid "Range Ring Line Style"
-#~ msgstr "Styl linii Kręgu Odlęgłości"
+msgid "OD Points"
+msgstr "Punkty OD"
 #
-#~ msgid "Range Ring Line Width"
-#~ msgstr "Szerokość linii Kręgu Odległości"
+msgid "OD\\WD"
+msgstr "OD\\WD"
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Usunąć punkt ze ścieżki"
+msgid "Offset"
+msgstr "Przesunięcie"
 #
-#~ msgid ""
-#~ "Removing this point will invalidate the Boundary, this is not allowed."
-#~ msgstr ""
-#~ "Usunięcie tego punktu spowoduje unieważnienie Granicy, to nie jest to "
-#~ "dozwolone."
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Przesunięcie (+ Stbd/Port)"
 #
-#~ msgid "Right"
-#~ msgstr "Na Prawo"
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Styl linii przesuniętej"
 #
-#~ msgid "Ring"
-#~ msgstr "Dzwonek"
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Szerokość linii przesuniętej"
 #
-#~ msgid ""
-#~ "Rotate with\n"
-#~ "Boat"
-#~ msgstr ""
-#~ "Obracaj z\n"
-#~ " łodzią"
+msgid "Offset Line Style"
+msgstr "Styl linii przesuniętej"
 #
-#~ msgid "Rotate with Boat"
-#~ msgstr "Obracaj z łodzią"
+msgid "Offset Line Width"
+msgstr "Szerokość linii przesuniętej"
 #
-#~ msgid "Second"
-#~ msgstr "Drugi"
+msgid "Offset: "
+msgstr "Odstęp: "
 #
-#~ msgid "Second Angle (-P/+S)"
-#~ msgstr "Drugi kąt (-P / + S)"
+msgid "On Rollover Only"
+msgstr "Przy najeździe tylko"
 #
-#~ msgid "Second Point Icon"
-#~ msgstr "Drugi punkt- ikona"
+msgid "OpenCPN Alert"
+msgstr "OpenCPN Alert"
 #
-#~ msgid "Second distance"
-#~ msgstr "Druga Odległość"
+msgid "Other:"
+msgstr "Inne:"
 #
-#~ msgid "Short Dash"
-#~ msgstr "Krótka kreska"
+msgid "Overwrite existing file?"
+msgstr "Nadpisać istniejący plik?"
 #
-#~ msgid "Show"
-#~ msgstr "Pokaż"
+msgid "PIL"
+msgstr "Linia równoległa (PIL)"
 #
-#~ msgid "Show Boundary Point Icons"
-#~ msgstr "Pokaż ikony punktu granicy"
+msgid "PIL Persistence"
+msgstr "Widok Linii Równoległych-PIL"
 #
-#~ msgid "Show DR Direction Arrow"
-#~ msgstr "Pokaż strzałkę kierunku pozycji zliczonej (DR)"
+msgid "PIL Point"
+msgstr "Punkt Linii Równoległej-PIL"
 #
-#~ msgid "Show Display Text"
-#~ msgstr "Pokaż tekst wyświetlany"
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr "Właściwości punktu Kreski Namiarowej-EBL"
 #
-#~ msgid "Show EBL Direction Arrow"
-#~ msgstr "Pokaż strzałkę kierunku kreski namiarowej (EBL)"
+#, fuzzy
+msgid "PIL Point Properties, Layer: "
+msgstr "Właściwości punktu Kreski Namiarowej-EBL, warstwa: "
 #
-#~ msgid "Show Layer(s)"
-#~ msgstr "Pokaż warstwę(y)"
+msgid "Parallel Index Line"
+msgstr "Linia równoległa"
 #
-#~ msgid "Show Magnetic Bearings"
-#~ msgstr "Pokaż namiary magnetyczne"
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Kąt Linii Równoległych (-Lewa / +Prawa)"
 #
-#~ msgid "Show Name"
-#~ msgstr "Pokaż nazwę"
+msgid "Parallel Index Line Persistence"
+msgstr "Widok Linii Równoległych"
 #
-#~ msgid "Show Path Direction Arrow"
-#~ msgstr "Pokaż strzałki kierunku ścieżki"
+msgid "Parallel Index Line Properties"
+msgstr "Właściwości Linii równoległych (Pil)"
 #
-#~ msgid "Show Paths(s)"
-#~ msgstr "Pokaż ścieżkę(i)"
+msgid "Paste"
+msgstr "Wklej"
 #
-#~ msgid ""
-#~ "Show Perpendicular\n"
-#~ "Index Line"
-#~ msgstr "Pokaż Linię Równoległą- PIL"
+msgid "Paste lat/long"
+msgstr "Wklej φ / λ"
 #
-#~ msgid "Show Perpendicular Index Line"
-#~ msgstr "Pokaż Linię Równoległą- PIL"
+msgid "Patch:"
+msgstr "Ścieżka:"
 #
-#~ msgid "Show Point Range Rings"
-#~ msgstr "Pokaż okręgi odległości wokół punktu"
+msgid "Path"
+msgstr "Ścieżka"
 #
-#~ msgid "Show Point names"
-#~ msgstr "Pokaż nazwy punktów"
+msgid "Path & Point Manager"
+msgstr "Manager Ścieżki & Punktu"
 #
-#~ msgid "Show Point(s)"
-#~ msgstr "Pokaż punkt(y)"
+#, fuzzy
+msgid "Path Manager Dialog"
+msgstr "Manager Ścieżki & Punktu"
 #
-#~ msgid "Show Range Rings"
-#~ msgstr "Pokaż okręgi odległości"
+msgid "Path Name"
+msgstr "Nazwa ścieżki"
 #
-#~ msgid "Show VRM"
-#~ msgstr "Pokaż Krąg Odległości-VRM"
+msgid "Path Persistence"
+msgstr "Obecność Ścieżki"
 #
-#~ msgid "Show name"
-#~ msgstr "Pokaż nazwę"
+msgid "Path Properties"
+msgstr "Właściwości ścieżki"
 #
-#~ msgid "Show on chart"
-#~ msgstr "Pokaż na mapie"
+msgid "Path Properties, Layer: "
+msgstr "Właściwości ścieżki, warstwa: "
 #
-#~ msgid "Solid"
-#~ msgstr "Ciągła"
+msgid "Paths"
+msgstr "Ścieżki"
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Prędkość nad dnem"
+msgid "Permanent Layers:"
+msgstr ""
 #
-#~ msgid "Start"
-#~ msgstr "Start"
+msgid "Persistent"
+msgstr "Widoczny"
 #
-#~ msgid "Start Point Icon"
-#~ msgstr "Ikona punktu start"
+#, fuzzy
+msgid "Persistent over Crash"
+msgstr "Widoczny"
 #
-#~ msgid "Text"
-#~ msgstr "Tekst"
+msgid "Pick a new start point"
+msgstr "Wybierz nowy punkt Start"
 #
-#~ msgid "Text Colour"
-#~ msgstr "Kolor tekstu"
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+"Prosimy o zgłaszanie problemów za pomocą FlySpray o:\n"
+"http://willkamp.com/opencpn/flyspray/index.php?project=0&do=index&switch=1 \n"
+"\n"
+"lub\n"
+"\n"
+"at OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134 \n"
+"\n"
+"lub\n"
+"\n"
+"Zgłoś problem na GIT: \n"
+"https://github.com/jongough/ocpn_draw_pi/issues \n"
 #
-#~ msgid "Text Font"
-#~ msgstr "Czcionka tekstu"
+msgid "Point Inclusion Size"
+msgstr "Punkt wewn Rozmiar"
 #
-#~ msgid "Text Point"
-#~ msgstr "Punkt Tekstu"
+msgid "Point Type"
+msgstr "Typ punktu"
 #
-#~ msgid "Text Point Icon"
-#~ msgstr "Ikona punktu tekstu"
+msgid "Points"
+msgstr "Punkty"
 #
-#~ msgid "Text position relative to point"
-#~ msgstr "Położenie tekstu względem punktu"
+msgid "Properties"
+msgstr "Właściwości"
 #
-#~ msgid "Text to Display with Point"
-#~ msgstr "Tekst do wyświetlania z Punktem"
+msgid "Properties..."
+msgstr "Właściwości..."
 #
-#~ msgid ""
-#~ "The OD Point you want to delete is used in a path, do you really want to "
-#~ "delete it?"
-#~ msgstr ""
-#~ "Punkt OD, który chcesz usunąć jest używany w ścieżce, czy naprawdę chcesz "
-#~ "go usunąć?"
+msgid "Question"
+msgstr "Pytanie"
 #
-#~ msgid ""
-#~ "There are some OD points used in paths or anchor alarms.\n"
-#~ " Do you want to delete them as well?\n"
-#~ " This will change the paths and disable the anchor alarms.\n"
-#~ " Answering No keeps the OD points used in paths or alarms."
-#~ msgstr ""
-#~ "Niektóre punkty OD użyte są w drogach lub alarmach kotwicznych. \n"
-#~ " Czy na pewno chcesz je również usunąć? \n"
-#~ " To zmieni przebieg dróg i usunie alarmy kotwiczne. \n"
-#~ " Jeśli odpowiesz \"nie\" punkty OD użyte w drogach lub alarmach zostaną "
-#~ "zachowane."
+msgid "Range Ring Colours"
+msgstr "Kolor Kręgu Odległości"
 #
-#~ msgid ""
-#~ "This chart shows the interactions between Boundaries and WatchDog alam "
-#~ "boundaries"
-#~ msgstr ""
-#~ "Ta mapa pokazuje zależność między Granicami i granicami alarmu WatchDog"
+msgid "Range Ring Line Style"
+msgstr "Styl linii Kręgu Odlęgłości"
 #
-#~ msgid "Time"
-#~ msgstr "Czas"
+msgid "Range Ring Line Width"
+msgstr "Szerokość linii Kręgu Odległości"
 #
-#~ msgid "Time Units"
-#~ msgstr "Jednostki czasu"
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
 #
-#~ msgid "To Point"
-#~ msgstr "Do Punktu"
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
 #
-#~ msgid "Top"
-#~ msgstr "Górne"
+msgid "Remove Point from Path"
+msgstr "Usunąć punkt ze ścieżki"
 #
-#~ msgid "Top Centre"
-#~ msgstr "Górne, wyśrodkowane"
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr ""
+"Usunięcie tego punktu spowoduje unieważnienie Granicy, to nie jest to "
+"dozwolone."
 #
-#~ msgid "Total Length"
-#~ msgstr "Długość całkowita"
+msgid "Right"
+msgstr "Na Prawo"
 #
-#~ msgid "Total Length: "
-#~ msgstr "Długość całkowita: "
+msgid "Ring"
+msgstr "Dzwonek"
 #
-#~ msgid "URL"
-#~ msgstr "adres URL"
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+"Obracaj z\n"
+" łodzią"
 #
-#~ msgid "Unlist contents "
-#~ msgstr "Ukryj zawartość "
+msgid "Rotate with Boat"
+msgstr "Obracaj z łodzią"
 #
-#~ msgid "Update initial conditions"
-#~ msgstr "Aktualizuj warunki początkowe"
+msgid "Second"
+msgstr "Drugi"
 #
-#~ msgid "Use nearby OD Point?"
-#~ msgstr "Użyć najbliższego punktu OD?"
+msgid "Second Angle (-P/+S)"
+msgstr "Drugi kąt (-P / + S)"
 #
-#~ msgid "Use nearby Point?"
-#~ msgstr "Użyć najbliższego Punktu?"
+msgid "Second Point Icon"
+msgstr "Drugi punkt- ikona"
 #
-#~ msgid "Version:"
-#~ msgstr "Wersja:"
+msgid "Second distance"
+msgstr "Druga Odległość"
 #
-#~ msgid "WD"
-#~ msgstr "WD"
+msgid "Short Dash"
+msgstr "Krótka kreska"
 #
-#~ msgid "Whilst Drawing"
-#~ msgstr "Podczas rysowania"
+msgid "Show"
+msgstr "Pokaż"
 #
-#~ msgid "Would you like include the Great Circle boundary points for this leg?"
-#~ msgstr "Zaplanować ten odcinek po ortodromie?"
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Pokaż nazwy punktów"
 #
-#~ msgid "Yes"
-#~ msgstr "Tak"
+msgid "Show Boundary Point Icons"
+msgstr "Pokaż ikony punktu granicy"
 #
-#~ msgid "ocpn_draw_pi data location"
-#~ msgstr "lokalizacja danych ocpn_draw_pi"
+msgid "Show DR Direction Arrow"
+msgstr "Pokaż strzałkę kierunku pozycji zliczonej (DR)"
 #
-#~ msgid "will be deleted."
-#~ msgstr "zostaną usunięte."
+msgid "Show Display Text"
+msgstr "Pokaż tekst wyświetlany"
+#
+msgid "Show EBL Direction Arrow"
+msgstr "Pokaż strzałkę kierunku kreski namiarowej (EBL)"
+#
+msgid "Show Layer(s)"
+msgstr "Pokaż warstwę(y)"
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Pokaż warstwę(y)"
+#
+msgid "Show Magnetic Bearings"
+msgstr "Pokaż namiary magnetyczne"
+#
+msgid "Show Name"
+msgstr "Pokaż nazwę"
+#
+msgid "Show Path Direction Arrow"
+msgstr "Pokaż strzałki kierunku ścieżki"
+#
+msgid "Show Paths(s)"
+msgstr "Pokaż ścieżkę(i)"
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr "Pokaż Linię Równoległą- PIL"
+#
+msgid "Show Perpendicular Index Line"
+msgstr "Pokaż Linię Równoległą- PIL"
+#
+msgid "Show Point Range Rings"
+msgstr "Pokaż okręgi odległości wokół punktu"
+#
+msgid "Show Point names"
+msgstr "Pokaż nazwy punktów"
+#
+msgid "Show Point(s)"
+msgstr "Pokaż punkt(y)"
+#
+msgid "Show Range Rings"
+msgstr "Pokaż okręgi odległości"
+#
+msgid "Show VRM"
+msgstr "Pokaż Krąg Odległości-VRM"
+#
+msgid "Show name"
+msgstr "Pokaż nazwę"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Pokaż na mapie"
+#
+msgid "Show on chart"
+msgstr "Pokaż na mapie"
+#
+msgid "Solid"
+msgstr "Ciągła"
+#
+msgid "Speed over Ground"
+msgstr "Prędkość nad dnem"
+#
+msgid "Start"
+msgstr "Start"
+#
+msgid "Start Point Icon"
+msgstr "Ikona punktu start"
+#
+#, fuzzy
+msgid "Straight"
+msgstr "Na Prawo"
+#
+msgid "Text"
+msgstr "Tekst"
+#
+msgid "Text Colour"
+msgstr "Kolor tekstu"
+#
+msgid "Text Font"
+msgstr "Czcionka tekstu"
+#
+msgid "Text Point"
+msgstr "Punkt Tekstu"
+#
+msgid "Text Point Icon"
+msgstr "Ikona punktu tekstu"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Właściwości punktu Pozycji Zliczonej-DR"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Właściwości punktu Pozycji Zliczonej-DR, warstwa: "
+#
+msgid "Text position relative to point"
+msgstr "Położenie tekstu względem punktu"
+#
+msgid "Text to Display with Point"
+msgstr "Tekst do wyświetlania z Punktem"
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"Punkt OD, który chcesz usunąć jest używany w ścieżce, czy naprawdę chcesz go "
+"usunąć?"
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"Niektóre punkty OD użyte są w drogach lub alarmach kotwicznych. \n"
+" Czy na pewno chcesz je również usunąć? \n"
+" To zmieni przebieg dróg i usunie alarmy kotwiczne. \n"
+" Jeśli odpowiesz \"nie\" punkty OD użyte w drogach lub alarmach zostaną "
+"zachowane."
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr "Ta mapa pokazuje zależność między Granicami i granicami alarmu WatchDog"
+#
+msgid "Time"
+msgstr "Czas"
+#
+msgid "Time Units"
+msgstr "Jednostki czasu"
+#
+msgid "To Point"
+msgstr "Do Punktu"
+#
+msgid "Top"
+msgstr "Górne"
+#
+msgid "Top Centre"
+msgstr "Górne, wyśrodkowane"
+#
+msgid "Total Length"
+msgstr "Długość całkowita"
+#
+msgid "Total Length: "
+msgstr "Długość całkowita: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr "adres URL"
+#
+msgid "Unlist contents "
+msgstr "Ukryj zawartość "
+#
+msgid "Update initial conditions"
+msgstr "Aktualizuj warunki początkowe"
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "OCPN Draw Punkt"
+#
+msgid "Use nearby OD Point?"
+msgstr "Użyć najbliższego punktu OD?"
+#
+msgid "Use nearby Point?"
+msgstr "Użyć najbliższego Punktu?"
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr "Wersja:"
+#
+msgid "WD"
+msgstr "WD"
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr "Podczas rysowania"
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr "Zaplanować ten odcinek po ortodromie?"
+#
+msgid "Yes"
+msgstr "Tak"
+#
+msgid "ocpn_draw_pi data location"
+msgstr "lokalizacja danych ocpn_draw_pi"
+#
+msgid "will be deleted."
+msgstr "zostaną usunięte."
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""

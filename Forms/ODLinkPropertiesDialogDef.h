@@ -26,6 +26,8 @@
 #include <wx/button.h>
 #include <wx/dialog.h>
 
+#include "extra_formbuilder_headers.h"
+
 ///////////////////////////////////////////////////////////////////////////
 
 

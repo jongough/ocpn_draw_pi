@@ -59,13 +59,13 @@ if(APPLE)
 
 endif(APPLE)
 
-if(UNIX AND NOT APPLE)
+if(UNIX AND NOT APPLE AND NOT QT_ANDROID)
     find_package(BZip2 REQUIRED)
     include_directories(${BZIP2_INCLUDE_DIR})
     find_package(ZLIB REQUIRED)
     include_directories(${ZLIB_INCLUDE_DIR})
     target_link_libraries(${PACKAGE_NAME} ${BZIP2_LIBRARIES} ${ZLIB_LIBRARY})
-endif(UNIX AND NOT APPLE)
+endif(UNIX AND NOT APPLE AND NOT QT_ANDROID)
 
 set(PARENT opencpn)
 
@@ -90,6 +90,11 @@ if(WIN32)
         install(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION "plugins")
         set(INSTALL_DIRECTORY "plugins\\\\${PACKAGE_NAME}")
     endif(CMAKE_CROSSCOMPILING)
+
+    if(EXISTS ${PROJECT_SOURCE_DIR}/UserIcons)
+        install(DIRECTORY UserIcons DESTINATION "${INSTALL_DIRECTORY}")
+        message(STATUS "${CMLOC}Install UserIcons: ${INSTALL_DIRECTORY}")
+    endif(EXISTS ${PROJECT_SOURCE_DIR}/UserIcons)
 
     if(EXISTS ${PROJECT_SOURCE_DIR}/data)
         install(DIRECTORY data DESTINATION "${INSTALL_DIRECTORY}")

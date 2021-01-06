@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian Bokmal\n"
@@ -17,333 +17,1691 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " To: "
-#~ msgstr " Til: "
+#, fuzzy
+msgid " &Properties..."
+msgstr "Egenskaper..."
 #
-#~ msgid " to "
-#~ msgstr " til "
+msgid " To: "
+msgstr " Til: "
 #
-#~ msgid "&Activate"
-#~ msgstr "&Aktiver"
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
 #
-#~ msgid "&Cancel"
-#~ msgstr "&Avbryt"
+msgid " to "
+msgstr " til "
 #
-#~ msgid "&Center View"
-#~ msgstr "&Sentrer visning"
+msgid "&Activate"
+msgstr "&Aktiver"
 #
-#~ msgid "&Deactivate"
-#~ msgstr "&Deaktiver"
+msgid "&Add"
+msgstr ""
 #
-#~ msgid "&Delete"
-#~ msgstr "&Slett"
+msgid "&Apply"
+msgstr ""
 #
-#~ msgid "&New"
-#~ msgstr "&Ny"
+msgid "&Cancel"
+msgstr "&Avbryt"
 #
-#~ msgid "&OK"
-#~ msgstr "&OK"
+msgid "&Center View"
+msgstr "&Sentrer visning"
 #
-#~ msgid "&Properties"
-#~ msgstr "&Egenskaper"
+msgid "&Deactivate"
+msgstr "&Deaktiver"
 #
-#~ msgid "(Unnamed )"
-#~ msgstr "(Uten navn)"
+msgid "&Delete"
+msgstr "&Slett"
 #
-#~ msgid "(Unnamed Layer)"
-#~ msgstr "(Lag uten navn)"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Slett"
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(uten navn)"
+msgid "&Edit"
+msgstr ""
 #
-#~ msgid "0"
-#~ msgstr "0"
+msgid "&Export Selected..."
+msgstr ""
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+msgid "&List contents"
+msgstr ""
 #
-#~ msgid "1 pixel"
-#~ msgstr "1 piksel"
+msgid "&New"
+msgstr "&Ny"
 #
-#~ msgid "10 pixels"
-#~ msgstr "10 piksler"
+msgid "&OK"
+msgstr "&OK"
 #
-#~ msgid "2 pixels"
-#~ msgstr "2 piksler"
+msgid "&Properties"
+msgstr "&Egenskaper"
 #
-#~ msgid "3 pixels"
-#~ msgstr "3 piksler"
+msgid "&Remove Selected"
+msgstr ""
 #
-#~ msgid "4 pixels"
-#~ msgstr "4 piksler"
+msgid "(Unnamed )"
+msgstr "(Uten navn)"
 #
-#~ msgid "5 pixels"
-#~ msgstr "5 piksler"
+msgid "(Unnamed Layer)"
+msgstr "(Lag uten navn)"
 #
-#~ msgid "6 pixels"
-#~ msgstr "6 piksler"
+#, fuzzy
+msgid "(Unnamed) "
+msgstr "(Uten navn)"
 #
-#~ msgid "7 pixels"
-#~ msgstr "7 piksler"
+msgid "(unnamed)"
+msgstr "(uten navn)"
 #
-#~ msgid "8 pixels"
-#~ msgstr "8 piksler"
+msgid "*.*"
+msgstr ""
 #
-#~ msgid "9 pixels"
-#~ msgstr "9 piksler"
+msgid "0"
+msgstr "0"
 #
-#~ msgid "Activate"
-#~ msgstr "Aktiver"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "Active"
-#~ msgstr "Aktiv"
+#, fuzzy
+msgid "0.5"
+msgstr "0.0"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "Legger til endringer fra "
+msgid "1"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete <ALL> paths?"
-#~ msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
+#, fuzzy
+msgid "1 Pixel"
+msgstr "1 piksel"
 #
-#~ msgid "Are you sure you want to delete the selected object(s)"
-#~ msgstr "Er du sikker på at du vil slette valgt(e) objekt(er)"
+msgid "1 pixel"
+msgstr "1 piksel"
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Er du sikker på at du vil slette denne grensen?"
+#, fuzzy
+msgid "1.0"
+msgstr "0.0"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr ""
-#~ "Er du sikker på at du vil slette dette laget og <ALT> innholdet i det?"
+#, fuzzy
+msgid "10"
+msgstr "0"
 #
-#~ msgid "Bearing"
-#~ msgstr "Retning"
+#, fuzzy
+msgid "10 Pixels"
+msgstr "10 piksler"
 #
-#~ msgid "Bearing (M)"
-#~ msgstr "Retning (M)"
+msgid "10 pixels"
+msgstr "10 piksler"
 #
-#~ msgid "Bearing: "
-#~ msgstr "Peiling: "
+msgid "2"
+msgstr ""
 #
-#~ msgid "Boat"
-#~ msgstr "Båt"
+#, fuzzy
+msgid "2 Pixels"
+msgstr "2 piksler"
 #
-#~ msgid "Confirm"
-#~ msgstr "Bekreft"
+msgid "2 pixels"
+msgstr "2 piksler"
 #
-#~ msgid "Copy"
-#~ msgstr "Kopier"
+msgid "3"
+msgstr ""
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Kopier B.grad/L.grad"
+#, fuzzy
+msgid "3 Pixels"
+msgstr "3 piksler"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Kurs over grunn"
+msgid "3 pixels"
+msgstr "3 piksler"
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Kurs over grunn (M)"
+msgid "4"
+msgstr ""
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Kurs over grunn (T)"
+#, fuzzy
+msgid "4 Pixels"
+msgstr "4 piksler"
 #
-#~ msgid "DR"
-#~ msgstr "DR"
+msgid "4 pixels"
+msgstr "4 piksler"
 #
-#~ msgid "DR Path Length"
-#~ msgstr "DR Sti-lengde"
+msgid "5"
+msgstr ""
 #
-#~ msgid "DR Point"
-#~ msgstr "DR punkt"
+#, fuzzy
+msgid "5 Pixels"
+msgstr "5 piksler"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "DR Punkt-intervall"
+msgid "5 pixels"
+msgstr "5 piksler"
 #
-#~ msgid "Days"
-#~ msgstr "Dager"
+msgid "6"
+msgstr ""
 #
-#~ msgid "Deactivate"
-#~ msgstr "Deaktiver"
+#, fuzzy
+msgid "6 Pixels"
+msgstr "6 piksler"
 #
-#~ msgid "Dead Reckoning"
-#~ msgstr "Dead Reckoning"
+msgid "6 pixels"
+msgstr "6 piksler"
 #
-#~ msgid "Delete"
-#~ msgstr "Slett"
+msgid "7"
+msgstr ""
 #
-#~ msgid "Desc"
-#~ msgstr "Synkende"
+#, fuzzy
+msgid "7 Pixels"
+msgstr "7 piksler"
 #
-#~ msgid "Description"
-#~ msgstr "Beskrivelse"
+msgid "7 pixels"
+msgstr "7 piksler"
 #
-#~ msgid "Distance"
-#~ msgstr "Distanse"
+msgid "8"
+msgstr ""
 #
-#~ msgid "Distance Units"
-#~ msgstr "Distanse enheter"
+#, fuzzy
+msgid "8 Pixels"
+msgstr "8 piksler"
 #
-#~ msgid "Distance from Ownship"
-#~ msgstr "Distanse fra eget skip"
+msgid "8 pixels"
+msgstr "8 piksler"
 #
-#~ msgid "Dot"
-#~ msgstr "Punkt"
+msgid "9"
+msgstr ""
 #
-#~ msgid "Draw Toolbar"
-#~ msgstr "Draw Verktøylinje"
+#, fuzzy
+msgid "9 Pixels"
+msgstr "9 piksler"
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "EBL bestandighet"
+msgid "9 pixels"
+msgstr "9 piksler"
 #
-#~ msgid "EBL Point"
-#~ msgstr "EBL punkt"
+msgid "About"
+msgstr ""
 #
-#~ msgid "End"
-#~ msgstr "Slutt"
+msgid "Activate"
+msgstr "Aktiver"
 #
-#~ msgid "Export GPX file"
-#~ msgstr "Eksporter GPX fil"
+msgid "Active"
+msgstr "Aktiv"
 #
-#~ msgid "From: "
-#~ msgstr "Fra: "
+msgid "Active Centre Line Colour"
+msgstr ""
 #
-#~ msgid "GUID"
-#~ msgstr "GUID"
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr ""
 #
-#~ msgid "Hide from chart"
-#~ msgstr "Skjul for kart"
+msgid "Active EBL Line Colour"
+msgstr ""
 #
-#~ msgid "Hours"
-#~ msgstr "Timer"
+msgid "Active Fill Colour"
+msgstr ""
 #
-#~ msgid "ID: "
-#~ msgstr "ID: "
+msgid "Active Line Colour"
+msgstr ""
 #
-#~ msgid "Icon"
-#~ msgstr "Ikon"
+msgid "Active Offset Line 2 Colour"
+msgstr ""
 #
-#~ msgid "Import GPX file"
-#~ msgstr "Importer GPX fil"
+msgid "Active Offset Line Colour"
+msgstr ""
 #
-#~ msgid "Interval Type"
-#~ msgstr "Intervalltype"
+msgid "Add Index Line"
+msgstr ""
 #
-#~ msgid "Kilometres"
-#~ msgstr "Kilometre"
+msgid "Add New"
+msgstr ""
 #
-#~ msgid "Latitude"
-#~ msgstr "Breddegrad"
+msgid "All"
+msgstr ""
 #
-#~ msgid "Layer"
-#~ msgstr "Lag"
+msgid "Allow Left Mouse Button Drag"
+msgstr ""
 #
-#~ msgid "Layer "
-#~ msgstr "Lag "
+msgid "Always"
+msgstr ""
 #
-#~ msgid "Layers"
-#~ msgstr "Lag"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
 #
-#~ msgid "Leg: from "
-#~ msgstr "Legg: fra "
+msgid "Applying changes from "
+msgstr "Legger til endringer fra "
 #
-#~ msgid "Length Type"
-#~ msgstr "Lengdetype"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "Laster navobjekter fra "
+#, fuzzy
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
 #
-#~ msgid "Longitude"
-#~ msgstr "Lengdegrad"
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Er du sikker på at du vil slette <ALLE> stiene?"
 #
-#~ msgid "Minutes"
-#~ msgstr "Minutter"
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Er du sikker på at du vil slette valgt(e) objekt(er)"
 #
-#~ msgid "Move Boundary Point"
-#~ msgstr "Flytt grensepunkt"
+#, fuzzy
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Name"
-#~ msgstr "Navn"
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Name: "
-#~ msgstr "Navn: "
+#, fuzzy
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Nautiske mil"
+#, fuzzy
+msgid "Are you sure you want to delete this DR?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Nytt lag %d: %s"
+#, fuzzy
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "OCPN Draw Properties"
-#~ msgstr "Egenskaper for OCPN Draw"
+#, fuzzy
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "OD Point"
-#~ msgstr "OD punkt"
+#, fuzzy
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "OD Point Properties"
-#~ msgstr "Egenskaper for OD punkt"
+#, fuzzy
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "OpenCPN Alert"
-#~ msgstr "OpenCPN Varsel"
+#, fuzzy
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Overskrive eksisterende fil?"
+#, fuzzy
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Paste"
-#~ msgstr "Lim inn"
+#, fuzzy
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Lim inn B.grad/L.grad"
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Path & Point Manager"
-#~ msgstr "Sti & punktbehandling"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Er du sikker på at du vil slette dette laget og <ALT> innholdet i det?"
 #
-#~ msgid "Path Name"
-#~ msgstr "Stinavn"
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Path Properties"
-#~ msgstr "Egenskaper for sti"
+#, fuzzy
+msgid "Are you sure you want to remove this "
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Paths"
-#~ msgstr "Stier"
+#, fuzzy
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Properties"
-#~ msgstr "Egenskaper"
+#, fuzzy
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Properties..."
-#~ msgstr "Egenskaper..."
+#, fuzzy
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Question"
-#~ msgstr "Spørsmål"
+#, fuzzy
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Fjern punkt fra sti"
+#, fuzzy
+msgid "Are you sure you want to remove this point?"
+msgstr "Er du sikker på at du vil slette denne grensen?"
 #
-#~ msgid "Show"
-#~ msgstr "Vis"
+msgid "Arrival Radius"
+msgstr ""
 #
-#~ msgid "Show on chart"
-#~ msgstr "Vis på kart"
+msgid "Background Colour"
+msgstr ""
 #
-#~ msgid "Solid"
-#~ msgstr "Fyllt"
+msgid "Background Density"
+msgstr ""
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Fart over grunn"
+msgid "Background Transparency"
+msgstr ""
 #
-#~ msgid "Start"
-#~ msgstr "Start"
+msgid "Basic"
+msgstr ""
 #
-#~ msgid "Text Point"
-#~ msgstr "Tekstpunkt"
+msgid "Bearing"
+msgstr "Retning"
 #
-#~ msgid "Time"
-#~ msgstr "Tid"
+msgid "Bearing (M)"
+msgstr "Retning (M)"
 #
-#~ msgid "Time Units"
-#~ msgstr "Tids enheter"
+#, fuzzy
+msgid "Bearing From-To"
+msgstr "Peiling: "
 #
-#~ msgid "To Point"
-#~ msgstr "Til punkt"
+#, fuzzy
+msgid "Bearing From-To (M)"
+msgstr "Retning (M)"
 #
-#~ msgid "Total Length"
-#~ msgstr "Total lengde"
+msgid "Bearing: "
+msgstr "Peiling: "
 #
-#~ msgid "Total Length: "
-#~ msgstr "Total lengde: "
+msgid "Boat"
+msgstr "Båt"
+#
+msgid "Bottom"
+msgstr ""
+#
+msgid "Bottom Centre"
+msgstr ""
+#
+msgid "Boundary"
+msgstr ""
+#
+#, fuzzy
+msgid "Boundary '"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Flytt grensepunkt"
+#
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+#
+#, fuzzy
+msgid "Boundary Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "Boundary Point Properties, Layer: "
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "Boundary Point Type"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Boundary Properties"
+msgstr "Egenskaper for sti"
+#
+msgid "Boundary Properties, Layer: "
+msgstr ""
+#
+msgid "Boundary Type"
+msgstr ""
+#
+#, fuzzy
+msgid "Centre"
+msgstr "&Sentrer visning"
+#
+msgid "Centre Line Style"
+msgstr ""
+#
+msgid "Centre Line Width"
+msgstr ""
+#
+msgid "Centre on moving boat"
+msgstr ""
+#
+msgid "Change all Path Point Icons"
+msgstr ""
+#
+msgid "Character Based"
+msgstr ""
+#
+msgid "Combo!"
+msgstr ""
+#
+msgid "Confirm"
+msgstr "Bekreft"
+#
+msgid "Confirm Object Delete"
+msgstr ""
+#
+msgid "Control Line"
+msgstr ""
+#
+msgid "Copy"
+msgstr "Kopier"
+#
+msgid "Copy Boundary GUID"
+msgstr ""
+#
+msgid "Copy DR GUID"
+msgstr ""
+#
+msgid "Copy EBL GUID"
+msgstr ""
+#
+msgid "Copy Guard Zone GUID"
+msgstr ""
+#
+#, fuzzy
+msgid "Copy Point GUID"
+msgstr "Til punkt"
+#
+msgid "Copy lat/long"
+msgstr "Kopier B.grad/L.grad"
+#
+msgid "Course over Ground"
+msgstr "Kurs over grunn"
+#
+msgid "Course over Ground (M)"
+msgstr "Kurs over grunn (M)"
+#
+msgid "Course over Ground (T)"
+msgstr "Kurs over grunn (T)"
+#
+msgid "Create Boundary"
+msgstr ""
+#
+#, fuzzy
+msgid "Create Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+msgid "Create DR"
+msgstr ""
+#
+msgid "Create EBL"
+msgstr ""
+#
+msgid "Create GZ"
+msgstr ""
+#
+msgid "Create PIL"
+msgstr ""
+#
+#, fuzzy
+msgid "Create Text Point"
+msgstr "Tekstpunkt"
+#
+msgid "DR"
+msgstr "DR"
+#
+msgid "DR Path Length"
+msgstr "DR Sti-lengde"
+#
+#, fuzzy
+msgid "DR Persistence"
+msgstr "EBL bestandighet"
+#
+msgid "DR Point"
+msgstr "DR punkt"
+#
+#, fuzzy
+msgid "DR Point Icon"
+msgstr "DR punkt"
+#
+msgid "DR Point Interval"
+msgstr "DR Punkt-intervall"
+#
+#, fuzzy
+msgid "DR Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "DR Point Properties, Layer: "
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "DR Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "DR Properties, Layer: "
+msgstr "Egenskaper"
+#
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
+msgid "Date:"
+msgstr ""
+#
+msgid "Days"
+msgstr "Dager"
+#
+msgid "Deactivate"
+msgstr "Deaktiver"
+#
+msgid "Dead Reckoning"
+msgstr "Dead Reckoning"
+#
+msgid "Default Offset (+Stbd/-Port)"
+msgstr ""
+#
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Slett"
+#
+msgid "Delete"
+msgstr "Slett"
+#
+#, fuzzy
+msgid "Delete Line"
+msgstr "Slett"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
+#
+#, fuzzy
+msgid "Delete..."
+msgstr "Slett"
+#
+msgid "Desc"
+msgstr "Synkende"
+#
+msgid "Description"
+msgstr "Beskrivelse"
+#
+msgid "Display Text"
+msgstr ""
+#
+#, fuzzy
+msgid "Display Toolbar"
+msgstr "Draw Verktøylinje"
+#
+msgid "Display text"
+msgstr ""
+#
+msgid "Distance"
+msgstr "Distanse"
+#
+msgid "Distance Between Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Distance From Boat"
+msgstr "Distanse fra eget skip"
+#
+#, fuzzy
+msgid "Distance Unit"
+msgstr "Distanse enheter"
+#
+msgid "Distance Units"
+msgstr "Distanse enheter"
+#
+msgid "Distance between Range Rings"
+msgstr ""
+#
+msgid "Distance from Ownship"
+msgstr "Distanse fra eget skip"
+#
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+#
+msgid "Dot"
+msgstr "Punkt"
+#
+msgid "Dot Dash"
+msgstr ""
+#
+msgid "Draw Toolbar"
+msgstr "Draw Verktøylinje"
+#
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Eksporter GPX fil"
+#
+msgid "EBL"
+msgstr ""
+#
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr ""
+#
+msgid "EBL Fixed End Position"
+msgstr ""
+#
+msgid "EBL Persistence"
+msgstr "EBL bestandighet"
+#
+msgid "EBL Point"
+msgstr "EBL punkt"
+#
+#, fuzzy
+msgid "EBL Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "EBL Point Properties, Layer: "
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "EBL Properties"
+msgstr "Egenskaper"
+#
+#, fuzzy
+msgid "EBL Properties, Layer: "
+msgstr "Egenskaper"
+#
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+#
+msgid "Edit"
+msgstr ""
+#
+msgid "Electronic Bearing Line"
+msgstr ""
+#
+msgid "End"
+msgstr "Slutt"
+#
+#, fuzzy
+msgid "End Point Icon"
+msgstr "EBL punkt"
+#
+msgid "Error in import file."
+msgstr ""
+#
+msgid "Example"
+msgstr ""
+#
+msgid "Exclusion"
+msgstr ""
+#
+msgid "Export GPX file"
+msgstr "Eksporter GPX fil"
+#
+msgid "Extended"
+msgstr ""
+#
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+#
+msgid "Fill Colour"
+msgstr ""
+#
+msgid "Fill Density"
+msgstr ""
+#
+msgid "First"
+msgstr ""
+#
+msgid "First Angle (-P/+S)"
+msgstr ""
+#
+msgid "First Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "First distance"
+msgstr "Distanse"
+#
+msgid "Font Based"
+msgstr ""
+#
+msgid "Fonts"
+msgstr ""
+#
+msgid "For this leg the Great Circle boundary is "
+msgstr ""
+#
+#, fuzzy
+msgid "From Point"
+msgstr "Til punkt"
+#
+msgid "From: "
+msgstr "Fra: "
+#
+msgid "GUID"
+msgstr "GUID"
+#
+msgid "GZ"
+msgstr ""
+#
+#, fuzzy
+msgid "GZ Point Properties, Layer: "
+msgstr "Egenskaper for OD punkt"
+#
+msgid "General"
+msgstr ""
+#
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+#
+msgid "General drawing for OpenCPN"
+msgstr ""
+#
+msgid "Guard Zone"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Persistence"
+msgstr "EBL bestandighet"
+#
+msgid "Guard Zone Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Egenskaper for OD punkt"
+#
+msgid "Heading"
+msgstr ""
+#
+msgid "Help"
+msgstr ""
+#
+#, fuzzy
+msgid "Hide Boundary Point Icons"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Lag"
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
+msgid "Hide Point names"
+msgstr ""
+#
+#, fuzzy
+msgid "Hide Point(s)"
+msgstr "Tekstpunkt"
+#
+msgid "Hide from chart"
+msgstr "Skjul for kart"
+#
+msgid "Hours"
+msgstr "Timer"
+#
+msgid "I&mport"
+msgstr ""
+#
+#, fuzzy
+msgid "ID"
+msgstr "GUID"
+#
+msgid "ID Num"
+msgstr ""
+#
+msgid "ID: "
+msgstr "ID: "
+#
+msgid "Icon"
+msgstr "Ikon"
+#
+msgid "Icon Directory"
+msgstr ""
+#
+msgid "Import"
+msgstr ""
+#
+msgid "Import Error"
+msgstr ""
+#
+msgid "Import GPX file"
+msgstr "Importer GPX fil"
+#
+#, fuzzy
+msgid "Import file"
+msgstr "Importer GPX fil"
+#
+#, fuzzy
+msgid "Import incomplete."
+msgstr "Importer GPX fil"
+#
+msgid "Inactive Centre Line Colour"
+msgstr ""
+#
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+#
+msgid "Inactive EBL Line Colour"
+msgstr ""
+#
+msgid "Inactive Fill Colour"
+msgstr ""
+#
+msgid "Inactive Line Colour"
+msgstr ""
+#
+msgid "Inactive Offset Line 2 Colour"
+msgstr ""
+#
+msgid "Inactive Offset Line Colour"
+msgstr ""
+#
+msgid "Inclusion"
+msgstr ""
+#
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+#
+msgid "Inclusion Boundary Size"
+msgstr ""
+#
+#, fuzzy
+msgid "Index Line Properties"
+msgstr "Egenskaper for OD punkt"
+#
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr ""
+#
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+#
+msgid "Initial number of index lines"
+msgstr ""
+#
+#, fuzzy
+msgid "Insert Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Insert EBL Point"
+msgstr "EBL punkt"
+#
+msgid "Interval Type"
+msgstr "Intervalltype"
+#
+msgid "Kilometres"
+msgstr "Kilometre"
+#
+msgid "Latitude"
+msgstr "Breddegrad"
+#
+msgid "Layer"
+msgstr "Lag"
+#
+msgid "Layer "
+msgstr "Lag "
+#
+#, fuzzy
+msgid "Layer Boundary"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Layer Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Layer DR Point"
+msgstr "DR punkt"
+#
+#, fuzzy
+msgid "Layer EBL Point"
+msgstr "EBL punkt"
+#
+#, fuzzy
+msgid "Layer Name"
+msgstr "Lag "
+#
+#, fuzzy
+msgid "Layer Text Point"
+msgstr "Tekstpunkt"
+#
+msgid "Layers"
+msgstr "Lag"
+#
+msgid "Layers Directory"
+msgstr ""
+#
+msgid "Left"
+msgstr ""
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
+#
+msgid "Leg: from "
+msgstr "Legg: fra "
+#
+msgid "Length Type"
+msgstr "Lengdetype"
+#
+msgid "License"
+msgstr ""
+#
+msgid "Line Colour"
+msgstr ""
+#
+msgid "Line Style"
+msgstr ""
+#
+#, fuzzy
+msgid "Line Type"
+msgstr "Lengdetype"
+#
+msgid "Line Width"
+msgstr ""
+#
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Beskrivelse"
+#
+msgid "Links"
+msgstr ""
+#
+msgid "List contents "
+msgstr ""
+#
+msgid "Loading navobjects from "
+msgstr "Laster navobjekter fra "
+#
+msgid "Local file..."
+msgstr ""
+#
+msgid "Long Dash"
+msgstr ""
+#
+msgid "Longitude"
+msgstr "Lengdegrad"
+#
+msgid "Maintain with"
+msgstr ""
+#
+msgid "Major:"
+msgstr ""
+#
+msgid "Match VRM colour to EBL colour"
+msgstr ""
+#
+msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
+msgstr ""
+#
+msgid "Merge and Delete Boundaries"
+msgstr ""
+#
+msgid "Merge and Keep Boundaries"
+msgstr ""
+#
+msgid "Minor:"
+msgstr ""
+#
+msgid "Minutes"
+msgstr "Minutter"
+#
+#, fuzzy
+msgid "Move Boundary"
+msgstr "Flytt grensepunkt"
+#
+msgid "Move Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Move Boundary Segment"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Move DR Point"
+msgstr "DR punkt"
+#
+msgid "Move EBL"
+msgstr ""
+#
+#, fuzzy
+msgid "Move EBL Point"
+msgstr "EBL punkt"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Flytt grensepunkt"
+#
+msgid "Move Line"
+msgstr ""
+#
+#, fuzzy
+msgid "Move OD Point"
+msgstr "OD punkt"
+#
+#, fuzzy
+msgid "Move PIL Point"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Move Text Point"
+msgstr "Tekstpunkt"
+#
+msgid "Move start point to boat lat/lon"
+msgstr ""
+#
+msgid "Multiple Boundaries"
+msgstr ""
+#
+msgid "Name"
+msgstr "Navn"
+#
+#, fuzzy
+msgid "Name:"
+msgstr "Navn: "
+#
+msgid "Name: "
+msgstr "Navn: "
+#
+msgid "Nautical Miles"
+msgstr "Nautiske mil"
+#
+msgid "Neither"
+msgstr ""
+#
+msgid "Never"
+msgstr ""
+#
+msgid "New &temporary Layer"
+msgstr ""
+#
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Nytt lag %d: %s"
+#
+msgid "New persistent &Layer"
+msgstr ""
+#
+msgid "No"
+msgstr ""
+#
+msgid "No alarm"
+msgstr ""
+#
+msgid "No. of items"
+msgstr ""
+#
+msgid "None"
+msgstr ""
+#
+msgid "Number of Point Range Rings"
+msgstr ""
+#
+msgid "Number of Range Rings"
+msgstr ""
+#
+msgid "OCPN API Version:"
+msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Boundary"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Boundary Create"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Boundary Delete"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw DR Delete"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+msgid "OCPN Draw Delete DR Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete EBL Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete OD Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete PIL Point"
+msgstr ""
+#
+msgid "OCPN Draw Delete Text Point"
+msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw EBL Delete"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw GZ Delete"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Manager"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw PIL Delete"
+msgstr "Egenskaper for OCPN Draw"
+#
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr ""
+#
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Point Create"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Point, Layer: "
+msgstr "Egenskaper for OCPN Draw"
+#
+msgid "OCPN Draw Properties"
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Remove "
+msgstr "Egenskaper for OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "Flytt grensepunkt"
+#
+msgid "OCPN Draw Remove DR Point"
+msgstr ""
+#
+msgid "OCPN Draw Remove EBL Point"
+msgstr ""
+#
+msgid "OCPN Draw Remove OD Point"
+msgstr ""
+#
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
+#
+msgid "OD"
+msgstr ""
+#
+msgid "OD Point"
+msgstr "OD punkt"
+#
+#, fuzzy
+msgid "OD Point Name"
+msgstr "OD punkt"
+#
+msgid "OD Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "OD Points"
+msgstr "OD punkt"
+#
+msgid "OD\\WD"
+msgstr ""
+#
+msgid "Offset"
+msgstr ""
+#
+msgid "Offset (+ Stbd/- Port)"
+msgstr ""
+#
+msgid "Offset Line 2 Style"
+msgstr ""
+#
+msgid "Offset Line 2 Width"
+msgstr ""
+#
+msgid "Offset Line Style"
+msgstr ""
+#
+msgid "Offset Line Width"
+msgstr ""
+#
+msgid "Offset: "
+msgstr ""
+#
+msgid "On Rollover Only"
+msgstr ""
+#
+msgid "OpenCPN Alert"
+msgstr "OpenCPN Varsel"
+#
+msgid "Other:"
+msgstr ""
+#
+msgid "Overwrite existing file?"
+msgstr "Overskrive eksisterende fil?"
+#
+msgid "PIL"
+msgstr ""
+#
+#, fuzzy
+msgid "PIL Persistence"
+msgstr "EBL bestandighet"
+#
+#, fuzzy
+msgid "PIL Point"
+msgstr "EBL punkt"
+#
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "PIL Point Properties, Layer: "
+msgstr "Egenskaper for OD punkt"
+#
+msgid "Parallel Index Line"
+msgstr ""
+#
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr ""
+#
+msgid "Parallel Index Line Persistence"
+msgstr ""
+#
+msgid "Parallel Index Line Properties"
+msgstr ""
+#
+msgid "Paste"
+msgstr "Lim inn"
+#
+msgid "Paste lat/long"
+msgstr "Lim inn B.grad/L.grad"
+#
+msgid "Patch:"
+msgstr ""
+#
+#, fuzzy
+msgid "Path"
+msgstr "Stier"
+#
+msgid "Path & Point Manager"
+msgstr "Sti & punktbehandling"
+#
+#, fuzzy
+msgid "Path Manager Dialog"
+msgstr "Sti & punktbehandling"
+#
+msgid "Path Name"
+msgstr "Stinavn"
+#
+#, fuzzy
+msgid "Path Persistence"
+msgstr "EBL bestandighet"
+#
+msgid "Path Properties"
+msgstr "Egenskaper for sti"
+#
+#, fuzzy
+msgid "Path Properties, Layer: "
+msgstr "Egenskaper for sti"
+#
+msgid "Paths"
+msgstr "Stier"
+#
+msgid "Permanent Layers:"
+msgstr ""
+#
+#, fuzzy
+msgid "Persistent"
+msgstr "EBL bestandighet"
+#
+msgid "Persistent over Crash"
+msgstr ""
+#
+msgid "Pick a new start point"
+msgstr ""
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+#
+msgid "Point Inclusion Size"
+msgstr ""
+#
+#, fuzzy
+msgid "Point Type"
+msgstr "Lengdetype"
+#
+#, fuzzy
+msgid "Points"
+msgstr "DR punkt"
+#
+msgid "Properties"
+msgstr "Egenskaper"
+#
+msgid "Properties..."
+msgstr "Egenskaper..."
+#
+msgid "Question"
+msgstr "Spørsmål"
+#
+msgid "Range Ring Colours"
+msgstr ""
+#
+msgid "Range Ring Line Style"
+msgstr ""
+#
+msgid "Range Ring Line Width"
+msgstr ""
+#
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr "Fjern punkt fra sti"
+#
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr ""
+#
+msgid "Right"
+msgstr ""
+#
+msgid "Ring"
+msgstr ""
+#
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+#
+msgid "Rotate with Boat"
+msgstr ""
+#
+msgid "Second"
+msgstr ""
+#
+msgid "Second Angle (-P/+S)"
+msgstr ""
+#
+msgid "Second Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Distanse"
+#
+msgid "Short Dash"
+msgstr ""
+#
+msgid "Show"
+msgstr "Vis"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Sti & punktbehandling"
+#
+#, fuzzy
+msgid "Show Boundary Point Icons"
+msgstr "Flytt grensepunkt"
+#
+msgid "Show DR Direction Arrow"
+msgstr ""
+#
+msgid "Show Display Text"
+msgstr ""
+#
+msgid "Show EBL Direction Arrow"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Lag"
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Lag"
+#
+msgid "Show Magnetic Bearings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Name"
+msgstr "Stinavn"
+#
+msgid "Show Path Direction Arrow"
+msgstr ""
+#
+msgid "Show Paths(s)"
+msgstr ""
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+#
+msgid "Show Perpendicular Index Line"
+msgstr ""
+#
+msgid "Show Point Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Point names"
+msgstr "Vis på kart"
+#
+#, fuzzy
+msgid "Show Point(s)"
+msgstr "Til punkt"
+#
+msgid "Show Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show VRM"
+msgstr "Vis"
+#
+#, fuzzy
+msgid "Show name"
+msgstr "Vis på kart"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Vis på kart"
+#
+msgid "Show on chart"
+msgstr "Vis på kart"
+#
+msgid "Solid"
+msgstr "Fyllt"
+#
+msgid "Speed over Ground"
+msgstr "Fart over grunn"
+#
+msgid "Start"
+msgstr "Start"
+#
+msgid "Start Point Icon"
+msgstr ""
+#
+msgid "Straight"
+msgstr ""
+#
+msgid "Text"
+msgstr ""
+#
+msgid "Text Colour"
+msgstr ""
+#
+#, fuzzy
+msgid "Text Font"
+msgstr "Tekstpunkt"
+#
+msgid "Text Point"
+msgstr "Tekstpunkt"
+#
+#, fuzzy
+msgid "Text Point Icon"
+msgstr "Tekstpunkt"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Egenskaper for OD punkt"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Egenskaper for OD punkt"
+#
+msgid "Text position relative to point"
+msgstr ""
+#
+msgid "Text to Display with Point"
+msgstr ""
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
+msgid "Time"
+msgstr "Tid"
+#
+msgid "Time Units"
+msgstr "Tids enheter"
+#
+msgid "To Point"
+msgstr "Til punkt"
+#
+msgid "Top"
+msgstr ""
+#
+msgid "Top Centre"
+msgstr ""
+#
+msgid "Total Length"
+msgstr "Total lengde"
+#
+msgid "Total Length: "
+msgstr "Total lengde: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr ""
+#
+msgid "Unlist contents "
+msgstr ""
+#
+msgid "Update initial conditions"
+msgstr ""
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "Draw Verktøylinje"
+#
+#, fuzzy
+msgid "Use nearby OD Point?"
+msgstr "Flytt grensepunkt"
+#
+#, fuzzy
+msgid "Use nearby Point?"
+msgstr "Flytt grensepunkt"
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr ""
+#
+msgid "WD"
+msgstr ""
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr ""
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+#
+msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi data location"
+msgstr ""
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""

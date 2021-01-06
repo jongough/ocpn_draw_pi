@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
@@ -17,440 +17,1685 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " &Properties..."
-#~ msgstr " &Proprietà..."
+msgid " &Properties..."
+msgstr " &Proprietà..."
 #
-#~ msgid " To: "
-#~ msgstr " A: "
+msgid " To: "
+msgstr " A: "
 #
-#~ msgid " to "
-#~ msgstr " a "
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
 #
-#~ msgid "&Cancel"
-#~ msgstr "&Annulla"
+msgid " to "
+msgstr " a "
 #
-#~ msgid "&OK"
-#~ msgstr "&OK"
+#, fuzzy
+msgid "&Activate"
+msgstr "Attivare"
 #
-#~ msgid "&Remove Selected"
-#~ msgstr "&Rimuovi Selezione"
+msgid "&Add"
+msgstr ""
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(senza nome)"
+msgid "&Apply"
+msgstr ""
 #
-#~ msgid "0"
-#~ msgstr "0"
+msgid "&Cancel"
+msgstr "&Annulla"
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+#, fuzzy
+msgid "&Center View"
+msgstr "Centro"
 #
-#~ msgid "1 Pixel"
-#~ msgstr "1 Pixel"
+#, fuzzy
+msgid "&Deactivate"
+msgstr "Disattivare"
 #
-#~ msgid "1 pixel"
-#~ msgstr "1 pixel"
+#, fuzzy
+msgid "&Delete"
+msgstr "Rimuovi"
 #
-#~ msgid "10 Pixels"
-#~ msgstr "10 Pixel"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Rimuovi Selezione"
 #
-#~ msgid "10 pixels"
-#~ msgstr "10 pixel"
+msgid "&Edit"
+msgstr ""
 #
-#~ msgid "2 Pixels"
-#~ msgstr "2 Pixel"
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Rimuovi Selezione"
 #
-#~ msgid "2 pixels"
-#~ msgstr "2 pixel"
+msgid "&List contents"
+msgstr ""
 #
-#~ msgid "3 Pixels"
-#~ msgstr "3 Pixel"
+msgid "&New"
+msgstr ""
 #
-#~ msgid "3 pixels"
-#~ msgstr "3 pixel"
+msgid "&OK"
+msgstr "&OK"
 #
-#~ msgid "4 Pixels"
-#~ msgstr "4 Pixel"
+#, fuzzy
+msgid "&Properties"
+msgstr " &Proprietà..."
 #
-#~ msgid "4 pixels"
-#~ msgstr "4 pixel"
+msgid "&Remove Selected"
+msgstr "&Rimuovi Selezione"
 #
-#~ msgid "5 Pixels"
-#~ msgstr "5 Pixel"
+#, fuzzy
+msgid "(Unnamed )"
+msgstr "(senza nome)"
 #
-#~ msgid "5 pixels"
-#~ msgstr "5 pixel"
+#, fuzzy
+msgid "(Unnamed Layer)"
+msgstr "(senza nome)"
 #
-#~ msgid "6 Pixels"
-#~ msgstr "6 Pixel"
+#, fuzzy
+msgid "(Unnamed) "
+msgstr "(senza nome)"
 #
-#~ msgid "6 pixels"
-#~ msgstr "6 pixel"
+msgid "(unnamed)"
+msgstr "(senza nome)"
 #
-#~ msgid "7 Pixels"
-#~ msgstr "7 Pixel"
+msgid "*.*"
+msgstr ""
 #
-#~ msgid "7 pixels"
-#~ msgstr "7 pixel"
+msgid "0"
+msgstr "0"
 #
-#~ msgid "8 Pixels"
-#~ msgstr "8 Pixel"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "8 pixels"
-#~ msgstr "8 pixel"
+#, fuzzy
+msgid "0.5"
+msgstr "0.0"
 #
-#~ msgid "9 Pixels"
-#~ msgstr "9 Pixel"
+msgid "1"
+msgstr ""
 #
-#~ msgid "9 pixels"
-#~ msgstr "9 pixel"
+msgid "1 Pixel"
+msgstr "1 Pixel"
 #
-#~ msgid "Activate"
-#~ msgstr "Attivare"
+msgid "1 pixel"
+msgstr "1 pixel"
 #
-#~ msgid "Always"
-#~ msgstr "Sempre"
+#, fuzzy
+msgid "1.0"
+msgstr "0.0"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "Applicando le modifiche da"
+#, fuzzy
+msgid "10"
+msgstr "0"
 #
-#~ msgid "Are you sure you want to delete this Boundary Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo punto di confine?"
+msgid "10 Pixels"
+msgstr "10 Pixel"
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Sei sicuro di voler rimuovere questo Confine?"
+msgid "10 pixels"
+msgstr "10 pixel"
 #
-#~ msgid "Are you sure you want to delete this DR Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo Punto DR?"
+msgid "2"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this DR?"
-#~ msgstr "Sei sicuro di voler rimuovere questa EBL?"
+msgid "2 Pixels"
+msgstr "2 Pixel"
 #
-#~ msgid "Are you sure you want to delete this EBL Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo Punto EBL?"
+msgid "2 pixels"
+msgstr "2 pixel"
 #
-#~ msgid "Are you sure you want to delete this EBL?"
-#~ msgstr "Sei sicuro di voler rimuovere questa EBL?"
+msgid "3"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this Guard Zone?"
-#~ msgstr "Sei sicuro di voler eliminare questa zona di guardia?"
+msgid "3 Pixels"
+msgstr "3 Pixel"
 #
-#~ msgid "Are you sure you want to delete this OD Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo punto OD?"
+msgid "3 pixels"
+msgstr "3 pixel"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line Group?"
-#~ msgstr "Sicuro di voler riumovere questo Gruppo di Linee Indici Parallele?"
+msgid "4"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line?"
-#~ msgstr "Sicuro di voler riumovere questo Gruppo di Linee Indici Parallele?"
+msgid "4 Pixels"
+msgstr "4 Pixel"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr ""
-#~ "Sei sicuro di voler eliminare questo layer e <TUTTO> dei suoi contenuti?"
+msgid "4 pixels"
+msgstr "4 pixel"
 #
-#~ msgid "Are you sure you want to remove this "
-#~ msgstr "Sei sicuro di voler eliminare questo "
+msgid "5"
+msgstr ""
 #
-#~ msgid "Are you sure you want to remove this Boundary Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo Punto di Confine?"
+msgid "5 Pixels"
+msgstr "5 Pixel"
 #
-#~ msgid "Are you sure you want to remove this DR Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo Punto DR?"
+msgid "5 pixels"
+msgstr "5 pixel"
 #
-#~ msgid "Are you sure you want to remove this EBL Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo Punto EBL?"
+msgid "6"
+msgstr ""
 #
-#~ msgid "Are you sure you want to remove this OD Point?"
-#~ msgstr "Sei sicuro di voler eliminare questo Punto OD?"
+msgid "6 Pixels"
+msgstr "6 Pixel"
 #
-#~ msgid "Bearing: "
-#~ msgstr "Direzione: "
+msgid "6 pixels"
+msgstr "6 pixel"
 #
-#~ msgid "Boat"
-#~ msgstr "Imbarcazione"
+msgid "7"
+msgstr ""
 #
-#~ msgid "Centre"
-#~ msgstr "Centro"
+msgid "7 Pixels"
+msgstr "7 Pixel"
 #
-#~ msgid "Confirm"
-#~ msgstr "Conferma"
+msgid "7 pixels"
+msgstr "7 pixel"
 #
-#~ msgid "Confirm Object Delete"
-#~ msgstr "Conferma eliminazione oggetto"
+msgid "8"
+msgstr ""
 #
-#~ msgid "Copy"
-#~ msgstr "Copia"
+msgid "8 Pixels"
+msgstr "8 Pixel"
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Copia Lat/Long"
+msgid "8 pixels"
+msgstr "8 pixel"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Rotta sul fondo"
+msgid "9"
+msgstr ""
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Rotta sul fondo"
+msgid "9 Pixels"
+msgstr "9 Pixel"
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Rotta sul fondo"
+msgid "9 pixels"
+msgstr "9 pixel"
 #
-#~ msgid "DR"
-#~ msgstr "Navigazione Stimata"
+msgid "About"
+msgstr ""
 #
-#~ msgid "DR Path Length"
-#~ msgstr "Lunghezza percorso Navigazione Stimata"
+msgid "Activate"
+msgstr "Attivare"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "Intervallo punti Navigazione Stimata"
+#, fuzzy
+msgid "Active"
+msgstr "Attivare"
 #
-#~ msgid "Days"
-#~ msgstr "Giorni"
+msgid "Active Centre Line Colour"
+msgstr ""
 #
-#~ msgid "Deactivate"
-#~ msgstr "Disattivare"
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr ""
 #
-#~ msgid "Dead Reckoning"
-#~ msgstr "Navigazione stimata"
+msgid "Active EBL Line Colour"
+msgstr ""
 #
-#~ msgid "Delete"
-#~ msgstr "Rimuovi"
+#, fuzzy
+msgid "Active Fill Colour"
+msgstr "Riempimento colore"
 #
-#~ msgid "Delete..."
-#~ msgstr "Elimina..."
+msgid "Active Line Colour"
+msgstr ""
 #
-#~ msgid "Description"
-#~ msgstr "Descrizione"
+msgid "Active Offset Line 2 Colour"
+msgstr ""
 #
-#~ msgid "Display text"
-#~ msgstr "Mostra testo"
+msgid "Active Offset Line Colour"
+msgstr ""
 #
-#~ msgid "Distance"
-#~ msgstr "Distanza"
+msgid "Add Index Line"
+msgstr ""
 #
-#~ msgid "Distance Units"
-#~ msgstr "Unità Distanza"
+msgid "Add New"
+msgstr ""
 #
-#~ msgid ""
-#~ "Do you also want to make the shared OD Points being part of this boundary "
-#~ "invisible?"
-#~ msgstr ""
-#~ "Vuoi anche rendere invisibili i punti OD condivisi da questo confine?"
+msgid "All"
+msgstr ""
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "Persistenza EBL"
+msgid "Allow Left Mouse Button Drag"
+msgstr ""
 #
-#~ msgid "End"
-#~ msgstr "Fine"
+msgid "Always"
+msgstr "Sempre"
 #
-#~ msgid "Example"
-#~ msgstr "Esempio"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
 #
-#~ msgid "Export GPX file"
-#~ msgstr "Esporta file GPX"
+msgid "Applying changes from "
+msgstr "Applicando le modifiche da"
 #
-#~ msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-#~ msgstr ""
-#~ "Impossibile caricare tutte le icone del plugin di disegno OCPN, "
-#~ "controllare il registro OCPN per i dettagli"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Fill Colour"
-#~ msgstr "Riempimento colore"
+#, fuzzy
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Sei sicuro di voler eliminare questo punto OD?"
 #
-#~ msgid "First distance"
-#~ msgstr "Prima distanza"
+#, fuzzy
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Sei sicuro di voler rimuovere questa EBL?"
 #
-#~ msgid "From: "
-#~ msgstr "Da: "
+#, fuzzy
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Sei sicuro di voler rimuovere questa EBL?"
 #
-#~ msgid "General"
-#~ msgstr "Generale"
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Sei sicuro di voler eliminare questo punto di confine?"
 #
-#~ msgid ""
-#~ "General Drawing for OpenCPN\n"
-#~ "\n"
-#~ "Thanks to the community for their helpful suggestions."
-#~ msgstr ""
-#~ "Disegno Generale per OpenCPN\n"
-#~ "\n"
-#~ "Grazie alla comunità per i loro utili suggerimenti."
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Sei sicuro di voler rimuovere questo Confine?"
 #
-#~ msgid "Guard Zone Persistence"
-#~ msgstr "Persistenza zona di guardia"
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto DR?"
 #
-#~ msgid "Hours"
-#~ msgstr "Ore"
+msgid "Are you sure you want to delete this DR?"
+msgstr "Sei sicuro di voler rimuovere questa EBL?"
 #
-#~ msgid "ID"
-#~ msgstr "ID"
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto EBL?"
 #
-#~ msgid "ID: "
-#~ msgstr "ID: "
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Sei sicuro di voler rimuovere questa EBL?"
 #
-#~ msgid "Icon"
-#~ msgstr "Icona"
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Sei sicuro di voler eliminare questa zona di guardia?"
 #
-#~ msgid "Import GPX file"
-#~ msgstr "Importa file GPX"
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Sei sicuro di voler eliminare questo punto OD?"
 #
-#~ msgid "Import file"
-#~ msgstr "Importa File"
+#, fuzzy
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto EBL?"
 #
-#~ msgid "Interval Type"
-#~ msgstr "Tipo di intervallo"
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Sicuro di voler riumovere questo Gruppo di Linee Indici Parallele?"
 #
-#~ msgid "Kilometres"
-#~ msgstr "Kilometri"
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Sicuro di voler riumovere questo Gruppo di Linee Indici Parallele?"
 #
-#~ msgid "Latitude"
-#~ msgstr "Latitudine"
+#, fuzzy
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto DR?"
 #
-#~ msgid "Layer"
-#~ msgstr "Livello"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr ""
+"Sei sicuro di voler eliminare questo layer e <TUTTO> dei suoi contenuti?"
 #
-#~ msgid "Layer "
-#~ msgstr "Livello "
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Sei sicuro di voler eliminare questo Punto DR?"
 #
-#~ msgid "Left"
-#~ msgstr "Sinistra"
+msgid "Are you sure you want to remove this "
+msgstr "Sei sicuro di voler eliminare questo "
 #
-#~ msgid "Leg: from "
-#~ msgstr "Tratto: da "
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto di Confine?"
 #
-#~ msgid "Length Type"
-#~ msgstr "Tipo di lunghezza"
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto DR?"
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "Caricamento navobject da "
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto EBL?"
 #
-#~ msgid "Longitude"
-#~ msgstr "Longitudine"
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Sei sicuro di voler eliminare questo Punto OD?"
 #
-#~ msgid "Minutes"
-#~ msgstr "Minuti"
+#, fuzzy
+msgid "Are you sure you want to remove this point?"
+msgstr "Sei sicuro di voler eliminare questo Punto DR?"
 #
-#~ msgid "Move EBL"
-#~ msgstr "Sposta EBL"
+msgid "Arrival Radius"
+msgstr ""
 #
-#~ msgid "Name"
-#~ msgstr "Nome"
+msgid "Background Colour"
+msgstr ""
 #
-#~ msgid "Name:"
-#~ msgstr "Nome:"
+msgid "Background Density"
+msgstr ""
 #
-#~ msgid "Name: "
-#~ msgstr "Nome: "
+msgid "Background Transparency"
+msgstr ""
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Miglia nautiche"
+msgid "Basic"
+msgstr ""
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Nuovo livello %d: %s"
+#, fuzzy
+msgid "Bearing"
+msgstr "Direzione: "
 #
-#~ msgid "OCPN Draw Boundary Delete"
-#~ msgstr "Rimuovi Confine OCPN Draw"
+#, fuzzy
+msgid "Bearing (M)"
+msgstr "Direzione: "
 #
-#~ msgid "OCPN Draw DR Delete"
-#~ msgstr "Rimuovi Navigazione Stimata OCPN Draw "
+#, fuzzy
+msgid "Bearing From-To"
+msgstr "Direzione: "
 #
-#~ msgid "OCPN Draw EBL Delete"
-#~ msgstr "Rimuovi EBL OCPN Draw "
+msgid "Bearing From-To (M)"
+msgstr ""
 #
-#~ msgid "OCPN Draw GZ Delete"
-#~ msgstr "Rimuovi zona di guardia OCPN Draw "
+msgid "Bearing: "
+msgstr "Direzione: "
 #
-#~ msgid "OCPN Draw PIL Delete"
-#~ msgstr "Rimuovi EBL OCPN Draw "
+msgid "Boat"
+msgstr "Imbarcazione"
 #
-#~ msgid "OCPN Draw Parallel Index Line Delete"
-#~ msgstr "Rimuovi Linee Indici Parallele OCPN Draw"
+msgid "Bottom"
+msgstr ""
 #
-#~ msgid "OCPN Draw Remove "
-#~ msgstr "Rimuovi OCPN Draw"
+#, fuzzy
+msgid "Bottom Centre"
+msgstr "Centro"
 #
-#~ msgid "OCPN Draw Remove Boundary Point"
-#~ msgstr "Rimuovi Punto OCPN Draw"
+msgid "Boundary"
+msgstr ""
 #
-#~ msgid "OCPN Draw Remove DR Point"
-#~ msgstr "Rimuovi Punto Navigazione Stimata OCPN Draw"
+msgid "Boundary '"
+msgstr ""
 #
-#~ msgid "OCPN Draw Remove EBL Point"
-#~ msgstr "Rimuovi Punto EBL OCPN Draw"
+#, fuzzy
+msgid "Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
 #
-#~ msgid "OCPN Draw Remove OD Point"
-#~ msgstr "Rimuovi Punto OCPN Draw"
+msgid "Boundary Point Icon"
+msgstr ""
 #
-#~ msgid "OD Point"
-#~ msgstr "Punto OCPN Draw "
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
 #
-#~ msgid "Offset: "
-#~ msgstr "Offset"
+msgid "Boundary Point Properties"
+msgstr ""
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Sovrascrivere file esistente?"
+msgid "Boundary Point Properties, Layer: "
+msgstr ""
 #
-#~ msgid "Paste"
-#~ msgstr "Incolla"
+#, fuzzy
+msgid "Boundary Point Type"
+msgstr "Tipo di punto"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Incolla lat/long"
+#, fuzzy
+msgid "Boundary Properties"
+msgstr " &Proprietà..."
 #
-#~ msgid "Point Type"
-#~ msgstr "Tipo di punto"
+msgid "Boundary Properties, Layer: "
+msgstr ""
 #
-#~ msgid "Points"
-#~ msgstr "Punti"
+#, fuzzy
+msgid "Boundary Type"
+msgstr "Tipo di punto"
 #
-#~ msgid "Properties..."
-#~ msgstr "Proprietà..."
+msgid "Centre"
+msgstr "Centro"
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Rimuovi punto dal percorso"
+msgid "Centre Line Style"
+msgstr ""
 #
-#~ msgid ""
-#~ "Removing this point will invalidate the Boundary, this is not allowed."
-#~ msgstr ""
-#~ "La rimozione di questo punto invaliderà il Confine, ciò non è consentito."
+msgid "Centre Line Width"
+msgstr ""
 #
-#~ msgid "Right"
-#~ msgstr "Destra"
+msgid "Centre on moving boat"
+msgstr ""
 #
-#~ msgid "Show VRM"
-#~ msgstr "Mostra VRM"
+msgid "Change all Path Point Icons"
+msgstr ""
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Velocità al suolo"
+msgid "Character Based"
+msgstr ""
 #
-#~ msgid "Start"
-#~ msgstr "Inizio"
+msgid "Combo!"
+msgstr ""
 #
-#~ msgid ""
-#~ "The OD Point you want to delete is used in a path, do you really want to "
-#~ "delete it?"
-#~ msgstr ""
-#~ "Il punto OD che vuoi eliminare è usato in un percorso, vuoi veramente "
-#~ "cancellarlo?"
+msgid "Confirm"
+msgstr "Conferma"
 #
-#~ msgid ""
-#~ "There are some OD points used in paths or anchor alarms.\n"
-#~ " Do you want to delete them as well?\n"
-#~ " This will change the paths and disable the anchor alarms.\n"
-#~ " Answering No keeps the OD points used in paths or alarms."
-#~ msgstr ""
-#~ "Ci sono alcuni punti OD usati nei percorsi o negli allarmi di ancoraggio.\n"
-#~ " Vuoi eliminarli anche?\n"
-#~ " Questo cambierà i percorsi e disabiliterà gli allarmi di ancoraggio.\n"
-#~ " Rispondere No mantiene i punti OD usati nei percorsi o negli allarmi."
+msgid "Confirm Object Delete"
+msgstr "Conferma eliminazione oggetto"
 #
-#~ msgid "Time"
-#~ msgstr "Ora"
+msgid "Control Line"
+msgstr ""
 #
-#~ msgid "Time Units"
-#~ msgstr "Unità di tempo"
+msgid "Copy"
+msgstr "Copia"
 #
-#~ msgid "Total Length: "
-#~ msgstr "Lunghezza totale: "
+msgid "Copy Boundary GUID"
+msgstr ""
 #
-#~ msgid "Version:"
-#~ msgstr "Versione:"
+msgid "Copy DR GUID"
+msgstr ""
 #
-#~ msgid "Would you like include the Great Circle boundary points for this leg?"
-#~ msgstr ""
-#~ "Vorresti includere i punti di confine del Grande Circolo per questa gamba?"
+msgid "Copy EBL GUID"
+msgstr ""
+#
+msgid "Copy Guard Zone GUID"
+msgstr ""
+#
+msgid "Copy Point GUID"
+msgstr ""
+#
+msgid "Copy lat/long"
+msgstr "Copia Lat/Long"
+#
+msgid "Course over Ground"
+msgstr "Rotta sul fondo"
+#
+msgid "Course over Ground (M)"
+msgstr "Rotta sul fondo"
+#
+msgid "Course over Ground (T)"
+msgstr "Rotta sul fondo"
+#
+#, fuzzy
+msgid "Create Boundary"
+msgstr "Rimuovi Confine OCPN Draw"
+#
+#, fuzzy
+msgid "Create Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+msgid "Create DR"
+msgstr ""
+#
+msgid "Create EBL"
+msgstr ""
+#
+msgid "Create GZ"
+msgstr ""
+#
+msgid "Create PIL"
+msgstr ""
+#
+msgid "Create Text Point"
+msgstr ""
+#
+msgid "DR"
+msgstr "Navigazione Stimata"
+#
+msgid "DR Path Length"
+msgstr "Lunghezza percorso Navigazione Stimata"
+#
+#, fuzzy
+msgid "DR Persistence"
+msgstr "Persistenza EBL"
+#
+#, fuzzy
+msgid "DR Point"
+msgstr "Punto OCPN Draw "
+#
+#, fuzzy
+msgid "DR Point Icon"
+msgstr "Intervallo punti Navigazione Stimata"
+#
+msgid "DR Point Interval"
+msgstr "Intervallo punti Navigazione Stimata"
+#
+#, fuzzy
+msgid "DR Point Properties"
+msgstr " &Proprietà..."
+#
+msgid "DR Point Properties, Layer: "
+msgstr ""
+#
+#, fuzzy
+msgid "DR Properties"
+msgstr " &Proprietà..."
+#
+msgid "DR Properties, Layer: "
+msgstr ""
+#
+msgid "Data Directory"
+msgstr ""
+#
+msgid "Data:"
+msgstr ""
+#
+msgid "Date:"
+msgstr ""
+#
+msgid "Days"
+msgstr "Giorni"
+#
+msgid "Deactivate"
+msgstr "Disattivare"
+#
+msgid "Dead Reckoning"
+msgstr "Navigazione stimata"
+#
+msgid "Default Offset (+Stbd/-Port)"
+msgstr ""
+#
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Rimuovi"
+#
+msgid "Delete"
+msgstr "Rimuovi"
+#
+#, fuzzy
+msgid "Delete Line"
+msgstr "Rimuovi"
+#
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+#
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
+#
+msgid "Delete..."
+msgstr "Elimina..."
+#
+msgid "Desc"
+msgstr ""
+#
+msgid "Description"
+msgstr "Descrizione"
+#
+#, fuzzy
+msgid "Display Text"
+msgstr "Mostra testo"
+#
+msgid "Display Toolbar"
+msgstr ""
+#
+msgid "Display text"
+msgstr "Mostra testo"
+#
+msgid "Distance"
+msgstr "Distanza"
+#
+msgid "Distance Between Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Distance From Boat"
+msgstr "Unità Distanza"
+#
+#, fuzzy
+msgid "Distance Unit"
+msgstr "Unità Distanza"
+#
+msgid "Distance Units"
+msgstr "Unità Distanza"
+#
+msgid "Distance between Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "Distance from Ownship"
+msgstr "Unità Distanza"
+#
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr "Vuoi anche rendere invisibili i punti OD condivisi da questo confine?"
+#
+msgid "Dot"
+msgstr ""
+#
+msgid "Dot Dash"
+msgstr ""
+#
+msgid "Draw Toolbar"
+msgstr ""
+#
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Esporta file GPX"
+#
+msgid "EBL"
+msgstr ""
+#
+msgid "EBL Angle (-P/+S)"
+msgstr ""
+#
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr ""
+#
+msgid "EBL Fixed End Position"
+msgstr ""
+#
+msgid "EBL Persistence"
+msgstr "Persistenza EBL"
+#
+#, fuzzy
+msgid "EBL Point"
+msgstr "Punto OCPN Draw "
+#
+#, fuzzy
+msgid "EBL Point Properties"
+msgstr " &Proprietà..."
+#
+msgid "EBL Point Properties, Layer: "
+msgstr ""
+#
+#, fuzzy
+msgid "EBL Properties"
+msgstr " &Proprietà..."
+#
+msgid "EBL Properties, Layer: "
+msgstr ""
+#
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+#
+msgid "Edit"
+msgstr ""
+#
+msgid "Electronic Bearing Line"
+msgstr ""
+#
+msgid "End"
+msgstr "Fine"
+#
+msgid "End Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "Error in import file."
+msgstr "Importa File"
+#
+msgid "Example"
+msgstr "Esempio"
+#
+msgid "Exclusion"
+msgstr ""
+#
+msgid "Export GPX file"
+msgstr "Esporta file GPX"
+#
+msgid "Extended"
+msgstr ""
+#
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+"Impossibile caricare tutte le icone del plugin di disegno OCPN, controllare "
+"il registro OCPN per i dettagli"
+#
+msgid "Fill Colour"
+msgstr "Riempimento colore"
+#
+msgid "Fill Density"
+msgstr ""
+#
+msgid "First"
+msgstr ""
+#
+msgid "First Angle (-P/+S)"
+msgstr ""
+#
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Prima distanza"
+#
+msgid "First distance"
+msgstr "Prima distanza"
+#
+msgid "Font Based"
+msgstr ""
+#
+msgid "Fonts"
+msgstr ""
+#
+#, fuzzy
+msgid "For this leg the Great Circle boundary is "
+msgstr ""
+"Vorresti includere i punti di confine del Grande Circolo per questa gamba?"
+#
+#, fuzzy
+msgid "From Point"
+msgstr "Punto OCPN Draw "
+#
+msgid "From: "
+msgstr "Da: "
+#
+msgid "GUID"
+msgstr ""
+#
+msgid "GZ"
+msgstr ""
+#
+msgid "GZ Point Properties, Layer: "
+msgstr ""
+#
+msgid "General"
+msgstr "Generale"
+#
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"Disegno Generale per OpenCPN\n"
+"\n"
+"Grazie alla comunità per i loro utili suggerimenti."
+#
+msgid "General drawing for OpenCPN"
+msgstr ""
+#
+#, fuzzy
+msgid "Guard Zone"
+msgstr "Persistenza zona di guardia"
+#
+msgid "Guard Zone Persistence"
+msgstr "Persistenza zona di guardia"
+#
+#, fuzzy
+msgid "Guard Zone Point"
+msgstr "Persistenza zona di guardia"
+#
+#, fuzzy
+msgid "Guard Zone Point Properties"
+msgstr "Persistenza zona di guardia"
+#
+#, fuzzy
+msgid "Guard Zone Properties"
+msgstr "Persistenza zona di guardia"
+#
+msgid "Heading"
+msgstr ""
+#
+msgid "Help"
+msgstr ""
+#
+msgid "Hide Boundary Point Icons"
+msgstr ""
+#
+msgid "Hide Layer(s)"
+msgstr ""
+#
+msgid "Hide Path(s)"
+msgstr ""
+#
+msgid "Hide Point names"
+msgstr ""
+#
+#, fuzzy
+msgid "Hide Point(s)"
+msgstr "Punti"
+#
+msgid "Hide from chart"
+msgstr ""
+#
+msgid "Hours"
+msgstr "Ore"
+#
+#, fuzzy
+msgid "I&mport"
+msgstr "Importa File"
+#
+msgid "ID"
+msgstr "ID"
+#
+msgid "ID Num"
+msgstr ""
+#
+msgid "ID: "
+msgstr "ID: "
+#
+msgid "Icon"
+msgstr "Icona"
+#
+msgid "Icon Directory"
+msgstr ""
+#
+#, fuzzy
+msgid "Import"
+msgstr "Importa File"
+#
+#, fuzzy
+msgid "Import Error"
+msgstr "Importa File"
+#
+msgid "Import GPX file"
+msgstr "Importa file GPX"
+#
+msgid "Import file"
+msgstr "Importa File"
+#
+#, fuzzy
+msgid "Import incomplete."
+msgstr "Importa File"
+#
+msgid "Inactive Centre Line Colour"
+msgstr ""
+#
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+#
+msgid "Inactive EBL Line Colour"
+msgstr ""
+#
+#, fuzzy
+msgid "Inactive Fill Colour"
+msgstr "Riempimento colore"
+#
+msgid "Inactive Line Colour"
+msgstr ""
+#
+msgid "Inactive Offset Line 2 Colour"
+msgstr ""
+#
+msgid "Inactive Offset Line Colour"
+msgstr ""
+#
+msgid "Inclusion"
+msgstr ""
+#
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+#
+msgid "Inclusion Boundary Size"
+msgstr ""
+#
+#, fuzzy
+msgid "Index Line Properties"
+msgstr " &Proprietà..."
+#
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr ""
+#
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+#
+msgid "Initial number of index lines"
+msgstr ""
+#
+#, fuzzy
+msgid "Insert Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+msgid "Insert EBL Point"
+msgstr ""
+#
+msgid "Interval Type"
+msgstr "Tipo di intervallo"
+#
+msgid "Kilometres"
+msgstr "Kilometri"
+#
+msgid "Latitude"
+msgstr "Latitudine"
+#
+msgid "Layer"
+msgstr "Livello"
+#
+msgid "Layer "
+msgstr "Livello "
+#
+#, fuzzy
+msgid "Layer Boundary"
+msgstr "Livello "
+#
+#, fuzzy
+msgid "Layer Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+#, fuzzy
+msgid "Layer DR Point"
+msgstr "Punto OCPN Draw "
+#
+msgid "Layer EBL Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Layer Name"
+msgstr "Livello "
+#
+msgid "Layer Text Point"
+msgstr ""
+#
+#, fuzzy
+msgid "Layers"
+msgstr "Livello"
+#
+msgid "Layers Directory"
+msgstr ""
+#
+msgid "Left"
+msgstr "Sinistra"
+#
+msgid "Left Click links are deleted."
+msgstr ""
+#
+msgid "Left Click links are opened for editing."
+msgstr ""
+#
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+#
+msgid "Left click opens in browser"
+msgstr ""
+#
+msgid "Leg: from "
+msgstr "Tratto: da "
+#
+msgid "Length Type"
+msgstr "Tipo di lunghezza"
+#
+msgid "License"
+msgstr ""
+#
+#, fuzzy
+msgid "Line Colour"
+msgstr "Riempimento colore"
+#
+msgid "Line Style"
+msgstr ""
+#
+#, fuzzy
+msgid "Line Type"
+msgstr "Tipo di punto"
+#
+msgid "Line Width"
+msgstr ""
+#
+msgid "Link"
+msgstr ""
+#
+#, fuzzy
+msgid "Link Description"
+msgstr "Descrizione"
+#
+msgid "Links"
+msgstr ""
+#
+msgid "List contents "
+msgstr ""
+#
+msgid "Loading navobjects from "
+msgstr "Caricamento navobject da "
+#
+msgid "Local file..."
+msgstr ""
+#
+msgid "Long Dash"
+msgstr ""
+#
+msgid "Longitude"
+msgstr "Longitudine"
+#
+msgid "Maintain with"
+msgstr ""
+#
+msgid "Major:"
+msgstr ""
+#
+msgid "Match VRM colour to EBL colour"
+msgstr ""
+#
+msgid "Maximum Text Width"
+msgstr ""
+#
+msgid "Maximum Width Type"
+msgstr ""
+#
+msgid "Merge and Delete Boundaries"
+msgstr ""
+#
+msgid "Merge and Keep Boundaries"
+msgstr ""
+#
+msgid "Minor:"
+msgstr ""
+#
+msgid "Minutes"
+msgstr "Minuti"
+#
+msgid "Move Boundary"
+msgstr ""
+#
+#, fuzzy
+msgid "Move Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+msgid "Move Boundary Segment"
+msgstr ""
+#
+#, fuzzy
+msgid "Move DR Point"
+msgstr "Punto OCPN Draw "
+#
+msgid "Move EBL"
+msgstr "Sposta EBL"
+#
+#, fuzzy
+msgid "Move EBL Point"
+msgstr "Sposta EBL"
+#
+#, fuzzy
+msgid "Move Guard Zone Point"
+msgstr "Persistenza zona di guardia"
+#
+#, fuzzy
+msgid "Move Line"
+msgstr "Sposta EBL"
+#
+#, fuzzy
+msgid "Move OD Point"
+msgstr "Punto OCPN Draw "
+#
+msgid "Move PIL Point"
+msgstr ""
+#
+msgid "Move Text Point"
+msgstr ""
+#
+msgid "Move start point to boat lat/lon"
+msgstr ""
+#
+msgid "Multiple Boundaries"
+msgstr ""
+#
+msgid "Name"
+msgstr "Nome"
+#
+msgid "Name:"
+msgstr "Nome:"
+#
+msgid "Name: "
+msgstr "Nome: "
+#
+msgid "Nautical Miles"
+msgstr "Miglia nautiche"
+#
+msgid "Neither"
+msgstr ""
+#
+msgid "Never"
+msgstr ""
+#
+msgid "New &temporary Layer"
+msgstr ""
+#
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Nuovo livello %d: %s"
+#
+msgid "New persistent &Layer"
+msgstr ""
+#
+msgid "No"
+msgstr ""
+#
+msgid "No alarm"
+msgstr ""
+#
+msgid "No. of items"
+msgstr ""
+#
+msgid "None"
+msgstr ""
+#
+msgid "Number of Point Range Rings"
+msgstr ""
+#
+msgid "Number of Range Rings"
+msgstr ""
+#
+#, fuzzy
+msgid "OCPN API Version:"
+msgstr "Versione:"
+#
+#, fuzzy
+msgid "OCPN Draw"
+msgstr "Rimuovi OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "Rimuovi EBL OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Boundary"
+msgstr "Rimuovi Confine OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Boundary Create"
+msgstr "Rimuovi Confine OCPN Draw"
+#
+msgid "OCPN Draw Boundary Delete"
+msgstr "Rimuovi Confine OCPN Draw"
+#
+msgid "OCPN Draw DR Delete"
+msgstr "Rimuovi Navigazione Stimata OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Delete DR Point"
+msgstr "Rimuovi Punto Navigazione Stimata OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Delete EBL Point"
+msgstr "Rimuovi Punto EBL OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Delete OD Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Delete PIL Point"
+msgstr "Rimuovi Punto EBL OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Delete Text Point"
+msgstr "Rimuovi Punto Navigazione Stimata OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Rimuovi Navigazione Stimata OCPN Draw "
+#
+msgid "OCPN Draw EBL Delete"
+msgstr "Rimuovi EBL OCPN Draw "
+#
+msgid "OCPN Draw GZ Delete"
+msgstr "Rimuovi zona di guardia OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Manager"
+msgstr "Rimuovi OCPN Draw"
+#
+msgid "OCPN Draw PIL Delete"
+msgstr "Rimuovi EBL OCPN Draw "
+#
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "Rimuovi Linee Indici Parallele OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "Rimuovi EBL OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Point"
+msgstr "Rimuovi Punto Navigazione Stimata OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Point Create"
+msgstr "Rimuovi EBL OCPN Draw "
+#
+#, fuzzy
+msgid "OCPN Draw Point, Layer: "
+msgstr "Rimuovi OCPN Draw"
+#
+#, fuzzy
+msgid "OCPN Draw Properties"
+msgstr "Rimuovi EBL OCPN Draw "
+#
+msgid "OCPN Draw Remove "
+msgstr "Rimuovi OCPN Draw"
+#
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+msgid "OCPN Draw Remove DR Point"
+msgstr "Rimuovi Punto Navigazione Stimata OCPN Draw"
+#
+msgid "OCPN Draw Remove EBL Point"
+msgstr "Rimuovi Punto EBL OCPN Draw"
+#
+msgid "OCPN Draw Remove OD Point"
+msgstr "Rimuovi Punto OCPN Draw"
+#
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
+#
+msgid "OD"
+msgstr ""
+#
+msgid "OD Point"
+msgstr "Punto OCPN Draw "
+#
+#, fuzzy
+msgid "OD Point Name"
+msgstr "Punto OCPN Draw "
+#
+#, fuzzy
+msgid "OD Point Properties"
+msgstr " &Proprietà..."
+#
+#, fuzzy
+msgid "OD Points"
+msgstr "Punto OCPN Draw "
+#
+msgid "OD\\WD"
+msgstr ""
+#
+#, fuzzy
+msgid "Offset"
+msgstr "Offset"
+#
+msgid "Offset (+ Stbd/- Port)"
+msgstr ""
+#
+msgid "Offset Line 2 Style"
+msgstr ""
+#
+msgid "Offset Line 2 Width"
+msgstr ""
+#
+msgid "Offset Line Style"
+msgstr ""
+#
+msgid "Offset Line Width"
+msgstr ""
+#
+msgid "Offset: "
+msgstr "Offset"
+#
+msgid "On Rollover Only"
+msgstr ""
+#
+msgid "OpenCPN Alert"
+msgstr ""
+#
+msgid "Other:"
+msgstr ""
+#
+msgid "Overwrite existing file?"
+msgstr "Sovrascrivere file esistente?"
+#
+msgid "PIL"
+msgstr ""
+#
+#, fuzzy
+msgid "PIL Persistence"
+msgstr "Persistenza EBL"
+#
+#, fuzzy
+msgid "PIL Point"
+msgstr "Punto OCPN Draw "
+#
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr " &Proprietà..."
+#
+msgid "PIL Point Properties, Layer: "
+msgstr ""
+#
+#, fuzzy
+msgid "Parallel Index Line"
+msgstr "Rimuovi Linee Indici Parallele OCPN Draw"
+#
+#, fuzzy
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Rimuovi Linee Indici Parallele OCPN Draw"
+#
+#, fuzzy
+msgid "Parallel Index Line Persistence"
+msgstr "Rimuovi Linee Indici Parallele OCPN Draw"
+#
+#, fuzzy
+msgid "Parallel Index Line Properties"
+msgstr "Rimuovi Linee Indici Parallele OCPN Draw"
+#
+msgid "Paste"
+msgstr "Incolla"
+#
+msgid "Paste lat/long"
+msgstr "Incolla lat/long"
+#
+msgid "Patch:"
+msgstr ""
+#
+msgid "Path"
+msgstr ""
+#
+msgid "Path & Point Manager"
+msgstr ""
+#
+msgid "Path Manager Dialog"
+msgstr ""
+#
+#, fuzzy
+msgid "Path Name"
+msgstr "Nome"
+#
+#, fuzzy
+msgid "Path Persistence"
+msgstr "Persistenza EBL"
+#
+#, fuzzy
+msgid "Path Properties"
+msgstr " &Proprietà..."
+#
+msgid "Path Properties, Layer: "
+msgstr ""
+#
+msgid "Paths"
+msgstr ""
+#
+msgid "Permanent Layers:"
+msgstr ""
+#
+#, fuzzy
+msgid "Persistent"
+msgstr "Persistenza EBL"
+#
+msgid "Persistent over Crash"
+msgstr ""
+#
+msgid "Pick a new start point"
+msgstr ""
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+#
+msgid "Point Inclusion Size"
+msgstr ""
+#
+msgid "Point Type"
+msgstr "Tipo di punto"
+#
+msgid "Points"
+msgstr "Punti"
+#
+#, fuzzy
+msgid "Properties"
+msgstr "Proprietà..."
+#
+msgid "Properties..."
+msgstr "Proprietà..."
+#
+#, fuzzy
+msgid "Question"
+msgstr "Descrizione"
+#
+msgid "Range Ring Colours"
+msgstr ""
+#
+msgid "Range Ring Line Style"
+msgstr ""
+#
+msgid "Range Ring Line Width"
+msgstr ""
+#
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr "Rimuovi punto dal percorso"
+#
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr ""
+"La rimozione di questo punto invaliderà il Confine, ciò non è consentito."
+#
+msgid "Right"
+msgstr "Destra"
+#
+msgid "Ring"
+msgstr ""
+#
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+#
+msgid "Rotate with Boat"
+msgstr ""
+#
+msgid "Second"
+msgstr ""
+#
+msgid "Second Angle (-P/+S)"
+msgstr ""
+#
+msgid "Second Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Prima distanza"
+#
+msgid "Short Dash"
+msgstr ""
+#
+#, fuzzy
+msgid "Show"
+msgstr "Mostra VRM"
+#
+msgid "Show &Point names"
+msgstr ""
+#
+msgid "Show Boundary Point Icons"
+msgstr ""
+#
+msgid "Show DR Direction Arrow"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Display Text"
+msgstr "Mostra testo"
+#
+msgid "Show EBL Direction Arrow"
+msgstr ""
+#
+msgid "Show Layer(s)"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Livello"
+#
+msgid "Show Magnetic Bearings"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Name"
+msgstr "Nome"
+#
+msgid "Show Path Direction Arrow"
+msgstr ""
+#
+msgid "Show Paths(s)"
+msgstr ""
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+#
+msgid "Show Perpendicular Index Line"
+msgstr ""
+#
+msgid "Show Point Range Rings"
+msgstr ""
+#
+msgid "Show Point names"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Point(s)"
+msgstr "Punti"
+#
+msgid "Show Range Rings"
+msgstr ""
+#
+msgid "Show VRM"
+msgstr "Mostra VRM"
+#
+msgid "Show name"
+msgstr ""
+#
+msgid "Show on &chart"
+msgstr ""
+#
+msgid "Show on chart"
+msgstr ""
+#
+msgid "Solid"
+msgstr ""
+#
+msgid "Speed over Ground"
+msgstr "Velocità al suolo"
+#
+msgid "Start"
+msgstr "Inizio"
+#
+msgid "Start Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "Straight"
+msgstr "Destra"
+#
+msgid "Text"
+msgstr ""
+#
+#, fuzzy
+msgid "Text Colour"
+msgstr "Riempimento colore"
+#
+msgid "Text Font"
+msgstr ""
+#
+#, fuzzy
+msgid "Text Point"
+msgstr "Punto OCPN Draw "
+#
+msgid "Text Point Icon"
+msgstr ""
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr " &Proprietà..."
+#
+msgid "Text Point Properties, Layer: "
+msgstr ""
+#
+msgid "Text position relative to point"
+msgstr ""
+#
+msgid "Text to Display with Point"
+msgstr ""
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"Il punto OD che vuoi eliminare è usato in un percorso, vuoi veramente "
+"cancellarlo?"
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"Ci sono alcuni punti OD usati nei percorsi o negli allarmi di ancoraggio.\n"
+" Vuoi eliminarli anche?\n"
+" Questo cambierà i percorsi e disabiliterà gli allarmi di ancoraggio.\n"
+" Rispondere No mantiene i punti OD usati nei percorsi o negli allarmi."
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
+msgid "Time"
+msgstr "Ora"
+#
+msgid "Time Units"
+msgstr "Unità di tempo"
+#
+#, fuzzy
+msgid "To Point"
+msgstr "Punto OCPN Draw "
+#
+msgid "Top"
+msgstr ""
+#
+#, fuzzy
+msgid "Top Centre"
+msgstr "Centro"
+#
+#, fuzzy
+msgid "Total Length"
+msgstr "Lunghezza totale: "
+#
+msgid "Total Length: "
+msgstr "Lunghezza totale: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr ""
+#
+msgid "Unlist contents "
+msgstr ""
+#
+msgid "Update initial conditions"
+msgstr ""
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "Rimuovi OCPN Draw"
+#
+msgid "Use nearby OD Point?"
+msgstr ""
+#
+msgid "Use nearby Point?"
+msgstr ""
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr "Versione:"
+#
+msgid "WD"
+msgstr ""
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr ""
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+"Vorresti includere i punti di confine del Grande Circolo per questa gamba?"
+#
+msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi data location"
+msgstr ""
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""

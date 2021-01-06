@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Filipino\n"
@@ -17,1060 +17,1656 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " &Properties..."
-#~ msgstr " &Katangian..."
+msgid " &Properties..."
+msgstr " &Katangian..."
 #
-#~ msgid " To: "
-#~ msgstr " Sa: "
+msgid " To: "
+msgstr " Sa: "
 #
-#~ msgid ""
-#~ " shorter than rhumbline.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " mas mababa kasya sa linyang rumb.\n"
-#~ "\n"
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+" mas mababa kasya sa linyang rumb.\n"
+"\n"
 #
-#~ msgid " to "
-#~ msgstr " patungo "
+msgid " to "
+msgstr " patungo "
 #
-#~ msgid "&Activate"
-#~ msgstr "&Paganahin"
+msgid "&Activate"
+msgstr "&Paganahin"
 #
-#~ msgid "&Cancel"
-#~ msgstr "&Kansel"
+msgid "&Add"
+msgstr ""
 #
-#~ msgid "&Center View"
-#~ msgstr "&Sentro ng Tanaw"
+msgid "&Apply"
+msgstr ""
 #
-#~ msgid "&Deactivate"
-#~ msgstr "&Huwag paganahin"
+msgid "&Cancel"
+msgstr "&Kansel"
 #
-#~ msgid "&Delete"
-#~ msgstr "&Tanggalin"
+msgid "&Center View"
+msgstr "&Sentro ng Tanaw"
 #
-#~ msgid "&New"
-#~ msgstr "&Bago"
+msgid "&Deactivate"
+msgstr "&Huwag paganahin"
 #
-#~ msgid "&OK"
-#~ msgstr "&OK"
+msgid "&Delete"
+msgstr "&Tanggalin"
 #
-#~ msgid "&Properties"
-#~ msgstr "&Mga Katangian"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Tanggalin ang Napili"
 #
-#~ msgid "&Remove Selected"
-#~ msgstr "&Tanggalin ang Napili"
+msgid "&Edit"
+msgstr ""
 #
-#~ msgid "(Unnamed )"
-#~ msgstr "(Hindi pinangalanan)"
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Tanggalin ang Napili"
 #
-#~ msgid "(Unnamed Layer)"
-#~ msgstr "(Hindi pinangalanang Leyer)"
+#, fuzzy
+msgid "&List contents"
+msgstr "Mga nilalaman ng Listahan "
 #
-#~ msgid "(Unnamed) "
-#~ msgstr "(Hindi pinangalanan) "
+msgid "&New"
+msgstr "&Bago"
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(hindi pinangalanan)"
+msgid "&OK"
+msgstr "&OK"
 #
-#~ msgid "0"
-#~ msgstr "sero"
+msgid "&Properties"
+msgstr "&Mga Katangian"
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+msgid "&Remove Selected"
+msgstr "&Tanggalin ang Napili"
 #
-#~ msgid "0.5"
-#~ msgstr "0.5"
+msgid "(Unnamed )"
+msgstr "(Hindi pinangalanan)"
 #
-#~ msgid "1"
-#~ msgstr "Isa"
+msgid "(Unnamed Layer)"
+msgstr "(Hindi pinangalanang Leyer)"
 #
-#~ msgid "1 Pixel"
-#~ msgstr "Isang Piksel"
+msgid "(Unnamed) "
+msgstr "(Hindi pinangalanan) "
 #
-#~ msgid "10"
-#~ msgstr "Sampu"
+msgid "(unnamed)"
+msgstr "(hindi pinangalanan)"
 #
-#~ msgid "10 Pixels"
-#~ msgstr "Sampung mga Piksel"
+msgid "*.*"
+msgstr ""
 #
-#~ msgid "2"
-#~ msgstr "Dalawa"
+msgid "0"
+msgstr "sero"
 #
-#~ msgid "2 Pixels"
-#~ msgstr "Dalawang mga Piksel"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "3"
-#~ msgstr "Tatlo"
+msgid "0.5"
+msgstr "0.5"
 #
-#~ msgid "3 Pixels"
-#~ msgstr "Tatlong mga Piksel"
+msgid "1"
+msgstr "Isa"
 #
-#~ msgid "4"
-#~ msgstr "Apat"
+msgid "1 Pixel"
+msgstr "Isang Piksel"
 #
-#~ msgid "4 Pixels"
-#~ msgstr "Apat na mga Piksel"
+#, fuzzy
+msgid "1 pixel"
+msgstr "Isang Piksel"
 #
-#~ msgid "5"
-#~ msgstr "Lima"
+#, fuzzy
+msgid "1.0"
+msgstr "Sampu"
 #
-#~ msgid "5 Pixels"
-#~ msgstr "Limang Piksel"
+msgid "10"
+msgstr "Sampu"
 #
-#~ msgid "6"
-#~ msgstr "Anim"
+msgid "10 Pixels"
+msgstr "Sampung mga Piksel"
 #
-#~ msgid "6 Pixels"
-#~ msgstr "Anim na mga Piksel"
+#, fuzzy
+msgid "10 pixels"
+msgstr "Sampung mga Piksel"
 #
-#~ msgid "7"
-#~ msgstr "Pito"
+msgid "2"
+msgstr "Dalawa"
 #
-#~ msgid "7 Pixels"
-#~ msgstr "Pitong mga Piksel"
+msgid "2 Pixels"
+msgstr "Dalawang mga Piksel"
 #
-#~ msgid "8"
-#~ msgstr "Walo"
+#, fuzzy
+msgid "2 pixels"
+msgstr "Dalawang mga Piksel"
 #
-#~ msgid "8 Pixels"
-#~ msgstr "Walong mga Piksel"
+msgid "3"
+msgstr "Tatlo"
 #
-#~ msgid "9"
-#~ msgstr "Siyam"
+msgid "3 Pixels"
+msgstr "Tatlong mga Piksel"
 #
-#~ msgid "9 Pixels"
-#~ msgstr "Siyam na mga Piksel"
+#, fuzzy
+msgid "3 pixels"
+msgstr "Tatlong mga Piksel"
 #
-#~ msgid "Activate"
-#~ msgstr "Paganahin"
+msgid "4"
+msgstr "Apat"
 #
-#~ msgid "Active EBL Line Colour"
-#~ msgstr "Kulay ng Linya sa Aktibong EBL"
+msgid "4 Pixels"
+msgstr "Apat na mga Piksel"
 #
-#~ msgid "Active Fill Colour"
-#~ msgstr "Actibomg Kulay ng Punan"
+#, fuzzy
+msgid "4 pixels"
+msgstr "Apat na mga Piksel"
 #
-#~ msgid "Active Line Colour"
-#~ msgstr "Aktibong kulay ng Linya"
+msgid "5"
+msgstr "Lima"
 #
-#~ msgid "Add Index Line"
-#~ msgstr "Magadagdag ng Linya ng Panuntunan"
+msgid "5 Pixels"
+msgstr "Limang Piksel"
 #
-#~ msgid "Allow Left Mouse Button Drag"
-#~ msgstr "Payagan i-drag ang Kaliwang Pindutan ng Mouse"
+#, fuzzy
+msgid "5 pixels"
+msgstr "Limang Piksel"
 #
-#~ msgid "Always"
-#~ msgstr "Palagi"
+msgid "6"
+msgstr "Anim"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "Paglalagay sa mga pagbabago mula "
+msgid "6 Pixels"
+msgstr "Anim na mga Piksel"
 #
-#~ msgid "Are you sure you want to delete <ALL> OD points?"
-#~ msgstr "Sigurado ka bang gusto mong burahin <ALL> mga daanan?"
+#, fuzzy
+msgid "6 pixels"
+msgstr "Anim na mga Piksel"
 #
-#~ msgid "Are you sure you want to delete <ALL> paths?"
-#~ msgstr "Sigurado ka bang gusto mong burahin <ALL> mga daanan?"
+msgid "7"
+msgstr "Pito"
 #
-#~ msgid "Are you sure you want to delete the selected object(s)"
-#~ msgstr "Sigurado ka bang gusto mong burahin ang napiling bagay/mga bagay"
+msgid "7 Pixels"
+msgstr "Pitong mga Piksel"
 #
-#~ msgid "Are you sure you want to delete this Boundary Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng Hangganan?"
+#, fuzzy
+msgid "7 pixels"
+msgstr "Pitong mga Piksel"
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Sigurdo ka bang gusto mong burahin ang hangganang ito?"
+msgid "8"
+msgstr "Walo"
 #
-#~ msgid "Are you sure you want to delete this DR Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng DR?"
+msgid "8 Pixels"
+msgstr "Walong mga Piksel"
 #
-#~ msgid "Are you sure you want to delete this DR?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong DR?"
+#, fuzzy
+msgid "8 pixels"
+msgstr "Walong mga Piksel"
 #
-#~ msgid "Are you sure you want to delete this EBL Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng EBL?"
+msgid "9"
+msgstr "Siyam"
 #
-#~ msgid "Are you sure you want to delete this EBL?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong EBL?"
+msgid "9 Pixels"
+msgstr "Siyam na mga Piksel"
 #
-#~ msgid "Are you sure you want to delete this Guard Zone?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Bantay ng Sona?"
+#, fuzzy
+msgid "9 pixels"
+msgstr "Siyam na mga Piksel"
 #
-#~ msgid "Are you sure you want to delete this OD Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng OD?"
+msgid "About"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this PIL Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng PIL?"
+msgid "Activate"
+msgstr "Paganahin"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line Group?"
-#~ msgstr ""
-#~ "Sigurado ka bang gusto mong burahin itong Grupo ng Hilerang Panuntunang "
-#~ "Linya?"
+#, fuzzy
+msgid "Active"
+msgstr "Paganahin"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line?"
-#~ msgstr ""
-#~ "Sigurado ka bang gusto mong burahin itong Hilerang Panuntunang Linya?"
+#, fuzzy
+msgid "Active Centre Line Colour"
+msgstr "Aktibong kulay ng Linya"
 #
-#~ msgid "Are you sure you want to delete this Text Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng Teksto?"
+#, fuzzy
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr "Aktibong kulay ng Linya"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr ""
-#~ "Sigurado ka bang gusto mong burahin ang leyer ng ito at <ALL> mga "
-#~ "nilalaman nito?"
+msgid "Active EBL Line Colour"
+msgstr "Kulay ng Linya sa Aktibong EBL"
 #
-#~ msgid "Are you sure you want to remove this "
-#~ msgstr "Sigurado ka bang gusto mong tanggalin ito "
+msgid "Active Fill Colour"
+msgstr "Actibomg Kulay ng Punan"
 #
-#~ msgid "Are you sure you want to remove this Boundary Point?"
-#~ msgstr "Sigurado ka bang gusto mong tanggalin itong Punto ng Hangganan?"
+msgid "Active Line Colour"
+msgstr "Aktibong kulay ng Linya"
 #
-#~ msgid "Are you sure you want to remove this DR Point?"
-#~ msgstr "Sigurado ka bang gusto mong tanggalin itong Puto ng DR?"
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Aktibong kulay ng Linya"
 #
-#~ msgid "Are you sure you want to remove this EBL Point?"
-#~ msgstr "Sigurado ka bang gusto mong tanggalin itong Punto ng EBL?"
+#, fuzzy
+msgid "Active Offset Line Colour"
+msgstr "Aktibong kulay ng Linya"
 #
-#~ msgid "Are you sure you want to remove this OD Point?"
-#~ msgstr "Sigurado ka bang gusto mong burahin itong Punto ng OD?"
+msgid "Add Index Line"
+msgstr "Magadagdag ng Linya ng Panuntunan"
 #
-#~ msgid "Are you sure you want to remove this point?"
-#~ msgstr "Sigurado ka bang gusto mong tanggalin ang puntong ito?"
+msgid "Add New"
+msgstr ""
 #
-#~ msgid "Arrival Radius"
-#~ msgstr "Radyos ng Pagdating"
+msgid "All"
+msgstr ""
 #
-#~ msgid "Background Colour"
-#~ msgstr "Kulay ng Likuran"
+msgid "Allow Left Mouse Button Drag"
+msgstr "Payagan i-drag ang Kaliwang Pindutan ng Mouse"
 #
-#~ msgid "Background Density"
-#~ msgstr "Densidad ng Likuran"
+msgid "Always"
+msgstr "Palagi"
 #
-#~ msgid "Background Transparency"
-#~ msgstr "Aninaw ng Likuran"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
 #
-#~ msgid "Basic"
-#~ msgstr "Pangunahin"
+msgid "Applying changes from "
+msgstr "Paglalagay sa mga pagbabago mula "
 #
-#~ msgid "Bearing"
-#~ msgstr "Direksyon"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Bearing (M)"
-#~ msgstr "Direksyon (M)"
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Sigurado ka bang gusto mong burahin <ALL> mga daanan?"
 #
-#~ msgid "Bearing From-To"
-#~ msgstr "Direksyon Mula-Patungo"
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Sigurado ka bang gusto mong burahin <ALL> mga daanan?"
 #
-#~ msgid "Bearing From-To (M)"
-#~ msgstr "Direksyon Mula-Patungo (M)"
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Sigurado ka bang gusto mong burahin ang napiling bagay/mga bagay"
 #
-#~ msgid "Bearing: "
-#~ msgstr "Direksyon: "
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng Hangganan?"
 #
-#~ msgid "Boat"
-#~ msgstr "Barko"
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Sigurdo ka bang gusto mong burahin ang hangganang ito?"
 #
-#~ msgid "Bottom"
-#~ msgstr "Ilalim"
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng DR?"
 #
-#~ msgid "Bottom Centre"
-#~ msgstr "Sentro ng Ilalim"
+msgid "Are you sure you want to delete this DR?"
+msgstr "Sigurado ka bang gusto mong burahin itong DR?"
 #
-#~ msgid "Boundary"
-#~ msgstr "Hangganan"
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng EBL?"
 #
-#~ msgid "Boundary Point"
-#~ msgstr "Punto ng Hangganan"
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Sigurado ka bang gusto mong burahin itong EBL?"
 #
-#~ msgid ""
-#~ "Boundary Point Inclusion\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Pagkakasama\n"
-#~ "Sukat ng Hangganan"
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Sigurado ka bang gusto mong burahin itong Bantay ng Sona?"
 #
-#~ msgid "Boundary Point Properties"
-#~ msgstr "Mga katangian sa Punto ng Hangganan"
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng OD?"
 #
-#~ msgid "Boundary Point Properties, Layer: "
-#~ msgstr "Mga Katangian ng Punto ng Hangganan, Leyer: "
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng PIL?"
 #
-#~ msgid "Boundary Point Type"
-#~ msgstr "Uri ng Puntong Hangganan"
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr ""
+"Sigurado ka bang gusto mong burahin itong Grupo ng Hilerang Panuntunang Linya?"
 #
-#~ msgid "Boundary Properties"
-#~ msgstr "Mga katangian ng Hangganan"
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Sigurado ka bang gusto mong burahin itong Hilerang Panuntunang Linya?"
 #
-#~ msgid "Boundary Properties, Layer: "
-#~ msgstr "Mga Katangian ng Hangganan, Leyer: "
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng Teksto?"
 #
-#~ msgid "Centre"
-#~ msgstr "Sentro"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr ""
+"Sigurado ka bang gusto mong burahin ang leyer ng ito at <ALL> mga nilalaman "
+"nito?"
 #
-#~ msgid "Centre on moving boat"
-#~ msgstr "Sentro ng gumagalaw na barko"
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng DR?"
 #
-#~ msgid "Change all Path Point Icons"
-#~ msgstr "Palitan ang lahat ng mga Aykon sa Puntong Daanan"
+msgid "Are you sure you want to remove this "
+msgstr "Sigurado ka bang gusto mong tanggalin ito "
 #
-#~ msgid "Combo!"
-#~ msgstr "Combo!"
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Sigurado ka bang gusto mong tanggalin itong Punto ng Hangganan?"
 #
-#~ msgid "Confirm"
-#~ msgstr "Tiyakin"
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Sigurado ka bang gusto mong tanggalin itong Puto ng DR?"
 #
-#~ msgid "Confirm Object Delete"
-#~ msgstr "Ikumpirma ang Pagtanggal ng bagay"
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Sigurado ka bang gusto mong tanggalin itong Punto ng EBL?"
 #
-#~ msgid "Control Line"
-#~ msgstr "Linya ng Kontrol"
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Sigurado ka bang gusto mong burahin itong Punto ng OD?"
 #
-#~ msgid "Copy"
-#~ msgstr "Kopya"
+msgid "Are you sure you want to remove this point?"
+msgstr "Sigurado ka bang gusto mong tanggalin ang puntong ito?"
 #
-#~ msgid "Copy Boundary GUID"
-#~ msgstr "Ikopya ang GUID ng hangganan"
+msgid "Arrival Radius"
+msgstr "Radyos ng Pagdating"
 #
-#~ msgid "Copy DR GUID"
-#~ msgstr "Ikopya ang GUID ng DR"
+msgid "Background Colour"
+msgstr "Kulay ng Likuran"
 #
-#~ msgid "Copy EBL GUID"
-#~ msgstr "Ikopya ang EBL GUID"
+msgid "Background Density"
+msgstr "Densidad ng Likuran"
 #
-#~ msgid "Copy Guard Zone GUID"
-#~ msgstr "Ikopya ang GUID ng Batay ng Sona"
+msgid "Background Transparency"
+msgstr "Aninaw ng Likuran"
 #
-#~ msgid "Copy Point GUID"
-#~ msgstr "Ikopya ang Puntong GUID"
+msgid "Basic"
+msgstr "Pangunahin"
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Ikopya lat/taas"
+msgid "Bearing"
+msgstr "Direksyon"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Daanan sa ibabaw sa Lupa"
+msgid "Bearing (M)"
+msgstr "Direksyon (M)"
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Daanan sa ibabaw sa Lupa (M)"
+msgid "Bearing From-To"
+msgstr "Direksyon Mula-Patungo"
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Daanan sa ibabaw sa Lupa (T)"
+msgid "Bearing From-To (M)"
+msgstr "Direksyon Mula-Patungo (M)"
 #
-#~ msgid "Create Boundary"
-#~ msgstr "Gumawa ng Hangganan"
+msgid "Bearing: "
+msgstr "Direksyon: "
 #
-#~ msgid "Create Boundary Point"
-#~ msgstr "Gumawa ng Punto ng Hangganan"
+msgid "Boat"
+msgstr "Barko"
 #
-#~ msgid "Create DR"
-#~ msgstr "Gumawa ng DR"
+msgid "Bottom"
+msgstr "Ilalim"
 #
-#~ msgid "Create EBL"
-#~ msgstr "Gumawa ng EBL"
+msgid "Bottom Centre"
+msgstr "Sentro ng Ilalim"
 #
-#~ msgid "Create GZ"
-#~ msgstr "Gumawa ng GZ"
+msgid "Boundary"
+msgstr "Hangganan"
 #
-#~ msgid "Create PIL"
-#~ msgstr "Gumawa ng PIL"
+#, fuzzy
+msgid "Boundary '"
+msgstr "Hangganan"
 #
-#~ msgid "Create Text Point"
-#~ msgstr "Gumawa ng Punto ng Teksto"
+msgid "Boundary Point"
+msgstr "Punto ng Hangganan"
 #
-#~ msgid "DR"
-#~ msgstr "DR"
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Itago ang mga aykon ng Punto ng Hangganan"
 #
-#~ msgid "DR Path Length"
-#~ msgstr "Haba ng daanan ng DR"
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+"Pagkakasama\n"
+"Sukat ng Hangganan"
 #
-#~ msgid "DR Point"
-#~ msgstr "Punto ng DR"
+msgid "Boundary Point Properties"
+msgstr "Mga katangian sa Punto ng Hangganan"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "Agwat ng Punto ng DR"
+msgid "Boundary Point Properties, Layer: "
+msgstr "Mga Katangian ng Punto ng Hangganan, Leyer: "
 #
-#~ msgid "DR Point Properties"
-#~ msgstr "Mga Katangian ng Punto ng DR"
+msgid "Boundary Point Type"
+msgstr "Uri ng Puntong Hangganan"
 #
-#~ msgid "DR Point Properties, Layer: "
-#~ msgstr "Mga Katangian ng Punto ng DR, Leyer: "
+msgid "Boundary Properties"
+msgstr "Mga katangian ng Hangganan"
 #
-#~ msgid "DR Properties"
-#~ msgstr "Mga Katangian ng DR"
+msgid "Boundary Properties, Layer: "
+msgstr "Mga Katangian ng Hangganan, Leyer: "
 #
-#~ msgid "DR Properties, Layer: "
-#~ msgstr "Mga Katangian ng DR, Leyer: "
+#, fuzzy
+msgid "Boundary Type"
+msgstr "Uri ng Puntong Hangganan"
 #
-#~ msgid "Days"
-#~ msgstr "Mga Araw"
+msgid "Centre"
+msgstr "Sentro"
 #
-#~ msgid "Deactivate"
-#~ msgstr "Huwag paganahin"
+#, fuzzy
+msgid "Centre Line Style"
+msgstr "Estilo ng linya ng Bilog ng Saklaw"
 #
-#~ msgid "Delete"
-#~ msgstr "Tanggalin"
+#, fuzzy
+msgid "Centre Line Width"
+msgstr "Lapad ng Linya ng Bilog ng Saklaw"
 #
-#~ msgid "Delete Line"
-#~ msgstr "Tanggalin ang Linya"
+msgid "Centre on moving boat"
+msgstr "Sentro ng gumagalaw na barko"
 #
-#~ msgid "Delete..."
-#~ msgstr "Tanggalin..."
+msgid "Change all Path Point Icons"
+msgstr "Palitan ang lahat ng mga Aykon sa Puntong Daanan"
 #
-#~ msgid "Description"
-#~ msgstr "Palalarawan"
+msgid "Character Based"
+msgstr ""
 #
-#~ msgid "Display Toolbar"
-#~ msgstr "Ipakita ang bara ng Kagamitan"
+msgid "Combo!"
+msgstr "Combo!"
 #
-#~ msgid "Display text"
-#~ msgstr "Teksto ng Pagpakita"
+msgid "Confirm"
+msgstr "Tiyakin"
 #
-#~ msgid "Distance"
-#~ msgstr "Layo"
+msgid "Confirm Object Delete"
+msgstr "Ikumpirma ang Pagtanggal ng bagay"
 #
-#~ msgid "Distance Between Range Rings"
-#~ msgstr "Layo ng Pagitan sa mga Bilog ng Saklaw"
+msgid "Control Line"
+msgstr "Linya ng Kontrol"
 #
-#~ msgid "Distance From Boat"
-#~ msgstr "Layo Mula sa Barko"
+msgid "Copy"
+msgstr "Kopya"
 #
-#~ msgid "Distance Unit"
-#~ msgstr "Yunit ng Layo"
+msgid "Copy Boundary GUID"
+msgstr "Ikopya ang GUID ng hangganan"
 #
-#~ msgid "Distance Units"
-#~ msgstr "Yunit ng Layo"
+msgid "Copy DR GUID"
+msgstr "Ikopya ang GUID ng DR"
 #
-#~ msgid "Distance between Range Rings"
-#~ msgstr "Layo sa Pagitan ng mga Bilog ng Saklaw"
+msgid "Copy EBL GUID"
+msgstr "Ikopya ang EBL GUID"
 #
-#~ msgid "Distance from Ownship"
-#~ msgstr "Pagitan mula sa Pagmamay-ari"
+msgid "Copy Guard Zone GUID"
+msgstr "Ikopya ang GUID ng Batay ng Sona"
 #
-#~ msgid ""
-#~ "Do you also want to make the shared OD Points being part of this boundary "
-#~ "invisible?"
-#~ msgstr ""
-#~ "Gusto mo bang gumawa ng mga Punto ng pinagsaluhang OD na bahagi nitong "
-#~ "hindi nakikitang hangganan?"
+msgid "Copy Point GUID"
+msgstr "Ikopya ang Puntong GUID"
 #
-#~ msgid "Draw Toolbar"
-#~ msgstr "Bara ng Kasangkapan sa Pagguhit"
+msgid "Copy lat/long"
+msgstr "Ikopya lat/taas"
 #
-#~ msgid "EBL Fixed End Position"
-#~ msgstr "Posisyon ng Nakapirming Wakas sa EBL"
+msgid "Course over Ground"
+msgstr "Daanan sa ibabaw sa Lupa"
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "Pagtitiyaga ng EBL"
+msgid "Course over Ground (M)"
+msgstr "Daanan sa ibabaw sa Lupa (M)"
 #
-#~ msgid "EBL Point"
-#~ msgstr "Punto ng EBL"
+msgid "Course over Ground (T)"
+msgstr "Daanan sa ibabaw sa Lupa (T)"
 #
-#~ msgid "EBL Point Properties"
-#~ msgstr "Mga Katangian ng Punto ng EBL"
+msgid "Create Boundary"
+msgstr "Gumawa ng Hangganan"
 #
-#~ msgid "EBL Point Properties, Layer: "
-#~ msgstr "Mga Katangian ng Punto ng EBL. Leyer: "
+msgid "Create Boundary Point"
+msgstr "Gumawa ng Punto ng Hangganan"
 #
-#~ msgid "EBL Properties"
-#~ msgstr "Mga Katangian ng EBL"
+msgid "Create DR"
+msgstr "Gumawa ng DR"
 #
-#~ msgid "EBL Properties, Layer: "
-#~ msgstr "Mga Katangian ng EBL, Leyer: "
+msgid "Create EBL"
+msgstr "Gumawa ng EBL"
 #
-#~ msgid ""
-#~ "Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 5"
-#~ msgstr ""
-#~ "Pagkamapagmadamdam ng Pagkuha ng Gilid\n"
-#~ "(porsyento ng lapad ng eskren) Nakalaan 5"
+msgid "Create GZ"
+msgstr "Gumawa ng GZ"
 #
-#~ msgid "Electronic Bearing Line"
-#~ msgstr "De Koryenteng Linya ng Bering"
+msgid "Create PIL"
+msgstr "Gumawa ng PIL"
 #
-#~ msgid "End"
-#~ msgstr "Kataposan"
+msgid "Create Text Point"
+msgstr "Gumawa ng Punto ng Teksto"
 #
-#~ msgid "End Point Icon"
-#~ msgstr "Aykon ng Puntong Wakas"
+msgid "DR"
+msgstr "DR"
 #
-#~ msgid "Example"
-#~ msgstr "Halimbawa"
+msgid "DR Path Length"
+msgstr "Haba ng daanan ng DR"
 #
-#~ msgid "Export GPX file"
-#~ msgstr "Iluwas ang talangkas ng GPX"
+#, fuzzy
+msgid "DR Persistence"
+msgstr "Pagtitiyaga ng EBL"
 #
-#~ msgid "Extended"
-#~ msgstr "Pinalawak"
+msgid "DR Point"
+msgstr "Punto ng DR"
 #
-#~ msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-#~ msgstr ""
-#~ "Pumaly sa pagkarga ng lahat ng mga aykon ng Guhit Plag-in sa OCPN, suriin "
-#~ "ang lista ng OCPN para sa mga detalye"
+#, fuzzy
+msgid "DR Point Icon"
+msgstr "Aykon ng Puntong Wakas"
 #
-#~ msgid "First"
-#~ msgstr "Una"
+msgid "DR Point Interval"
+msgstr "Agwat ng Punto ng DR"
 #
-#~ msgid "Fonts"
-#~ msgstr "Mga Font"
+msgid "DR Point Properties"
+msgstr "Mga Katangian ng Punto ng DR"
 #
-#~ msgid "For this leg the Great Circle boundary is "
-#~ msgstr "Para sa biting ito ang hangganan ng Dakilang Bilog ay "
+msgid "DR Point Properties, Layer: "
+msgstr "Mga Katangian ng Punto ng DR, Leyer: "
 #
-#~ msgid "From Point"
-#~ msgstr "Mula Punto"
+msgid "DR Properties"
+msgstr "Mga Katangian ng DR"
 #
-#~ msgid "From: "
-#~ msgstr "Mula sa: "
+msgid "DR Properties, Layer: "
+msgstr "Mga Katangian ng DR, Leyer: "
 #
-#~ msgid "GZ"
-#~ msgstr "GZ"
+msgid "Data Directory"
+msgstr ""
 #
-#~ msgid "General"
-#~ msgstr "Pangkalahatan"
+msgid "Data:"
+msgstr ""
 #
-#~ msgid ""
-#~ "General Drawing for OpenCPN\n"
-#~ "\n"
-#~ "Thanks to the community for their helpful suggestions."
-#~ msgstr ""
-#~ "Pangkalahatang pagguhit para sa OpenCPN\n"
-#~ "\n"
-#~ "Salamat sa komunidad para sa kanilang kapaki-pakinabang na mga mungkahi."
+msgid "Date:"
+msgstr ""
 #
-#~ msgid "General drawing for OpenCPN"
-#~ msgstr "Pangkalahatang pagguhit para sa OpenCPN"
+msgid "Days"
+msgstr "Mga Araw"
 #
-#~ msgid "Guard Zone Persistence"
-#~ msgstr "Pagtitiyaga ng Bantay sa Sona"
+msgid "Deactivate"
+msgstr "Huwag paganahin"
 #
-#~ msgid "Guard Zone Point"
-#~ msgstr "Punto ng Bantay ng Sona"
+msgid "Dead Reckoning"
+msgstr ""
 #
-#~ msgid "Guard Zone Point Properties"
-#~ msgstr "Mga Katangian ng Punto ng Bantay sa Sona"
+#, fuzzy
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Mga Linyang Panuntunan (+Stbd/- Port)"
 #
-#~ msgid "Guard Zone Properties"
-#~ msgstr "Mga Katangian ng Bantay ng Sona"
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Tanggalin"
 #
-#~ msgid "Hide Boundary Point Icons"
-#~ msgstr "Itago ang mga aykon ng Punto ng Hangganan"
+msgid "Delete"
+msgstr "Tanggalin"
 #
-#~ msgid "Hide Layer(s)"
-#~ msgstr "Itago ang Leyer/mga Leyer"
+msgid "Delete Line"
+msgstr "Tanggalin ang Linya"
 #
-#~ msgid "Hide Path(s)"
-#~ msgstr "Itago ang daanan/mga daanan"
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
 #
-#~ msgid "Hide Point names"
-#~ msgstr "Itago ang mga Pangalan ng Punto"
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
-#~ msgid "Hide Point(s)"
-#~ msgstr "Itago ang Punto/mga Punto"
+msgid "Delete..."
+msgstr "Tanggalin..."
 #
-#~ msgid "Hide from chart"
-#~ msgstr "Itago mula sa tsart"
+msgid "Desc"
+msgstr ""
 #
-#~ msgid "Hours"
-#~ msgstr "Mga Oras"
+msgid "Description"
+msgstr "Palalarawan"
 #
-#~ msgid "ID"
-#~ msgstr "Pagkakilanlan"
+#, fuzzy
+msgid "Display Text"
+msgstr "Teksto ng Pagpakita"
 #
-#~ msgid "ID Num"
-#~ msgstr "Numero ng Pagkakilanlan"
+msgid "Display Toolbar"
+msgstr "Ipakita ang bara ng Kagamitan"
 #
-#~ msgid "ID: "
-#~ msgstr "Pagkakilanlan: "
+msgid "Display text"
+msgstr "Teksto ng Pagpakita"
 #
-#~ msgid "Icon"
-#~ msgstr "Aykon"
+msgid "Distance"
+msgstr "Layo"
 #
-#~ msgid "Import GPX file"
-#~ msgstr "Iangkat ang talangkas ng GPX"
+msgid "Distance Between Range Rings"
+msgstr "Layo ng Pagitan sa mga Bilog ng Saklaw"
 #
-#~ msgid "Inactive EBL Line Colour"
-#~ msgstr "Kulay ng Di-aktibong EBL"
+msgid "Distance From Boat"
+msgstr "Layo Mula sa Barko"
 #
-#~ msgid "Inactive Fill Colour"
-#~ msgstr "D-aktibong Kulay ng Punan"
+msgid "Distance Unit"
+msgstr "Yunit ng Layo"
 #
-#~ msgid "Inactive Line Colour"
-#~ msgstr "D-aktibong Kulay ng Linya"
+msgid "Distance Units"
+msgstr "Yunit ng Layo"
 #
-#~ msgid "Inclusion Boundary Size"
-#~ msgstr "Sukat ng Hangganang Pakakasama"
+msgid "Distance between Range Rings"
+msgstr "Layo sa Pagitan ng mga Bilog ng Saklaw"
 #
-#~ msgid "Index Line Properties"
-#~ msgstr "Mga katangian ng Taluntunang Linya"
+msgid "Distance from Ownship"
+msgstr "Pagitan mula sa Pagmamay-ari"
 #
-#~ msgid "Index Lines (+ Stbd/- Port)"
-#~ msgstr "Mga Linyang Panuntunan (+Stbd/- Port)"
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+"Gusto mo bang gumawa ng mga Punto ng pinagsaluhang OD na bahagi nitong hindi "
+"nakikitang hangganan?"
 #
-#~ msgid ""
-#~ "Initial Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 3"
-#~ msgstr ""
-#~ "Pagkamapagmadamdam ng Pasimulang Gilid\n"
-#~ "(porsyento ng lapad ng eskren) Nakalaan 5"
+msgid "Dot"
+msgstr ""
 #
-#~ msgid "Insert Boundary Point"
-#~ msgstr "Ipasok ang Punto ng Hangganan"
+msgid "Dot Dash"
+msgstr ""
 #
-#~ msgid "Insert EBL Point"
-#~ msgstr "Ipasok ang Punto ng EBL"
+msgid "Draw Toolbar"
+msgstr "Bara ng Kasangkapan sa Pagguhit"
 #
-#~ msgid "Interval Type"
-#~ msgstr "Uri ng Agwat"
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "Iluwas ang talangkas ng GPX"
 #
-#~ msgid "Kilometres"
-#~ msgstr "Kilometro"
+msgid "EBL"
+msgstr ""
 #
-#~ msgid "Latitude"
-#~ msgstr "Latitud"
+msgid "EBL Angle (-P/+S)"
+msgstr ""
 #
-#~ msgid "Layer"
-#~ msgstr "Leyer"
+#, fuzzy
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr "Posisyon ng Nakapirming Wakas sa EBL"
 #
-#~ msgid "Layer "
-#~ msgstr "Leyer "
+msgid "EBL Fixed End Position"
+msgstr "Posisyon ng Nakapirming Wakas sa EBL"
 #
-#~ msgid "Layer Boundary"
-#~ msgstr "Hangganan ng Leyer"
+msgid "EBL Persistence"
+msgstr "Pagtitiyaga ng EBL"
 #
-#~ msgid "Layer Boundary Point"
-#~ msgstr "Leyer ng Punto ng Hangganan"
+msgid "EBL Point"
+msgstr "Punto ng EBL"
 #
-#~ msgid "Layer DR Point"
-#~ msgstr "Leyer ng Punto ng DR"
+msgid "EBL Point Properties"
+msgstr "Mga Katangian ng Punto ng EBL"
 #
-#~ msgid "Layer EBL Point"
-#~ msgstr "Leyer ng Punto ng EBL"
+msgid "EBL Point Properties, Layer: "
+msgstr "Mga Katangian ng Punto ng EBL. Leyer: "
 #
-#~ msgid "Layer Name"
-#~ msgstr "Pangalan ng Leyer"
+msgid "EBL Properties"
+msgstr "Mga Katangian ng EBL"
 #
-#~ msgid "Layer Text Point"
-#~ msgstr "Leyer ng Punto ng teksto"
+msgid "EBL Properties, Layer: "
+msgstr "Mga Katangian ng EBL, Leyer: "
 #
-#~ msgid "Layers"
-#~ msgstr "Mga Leyer"
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+"Pagkamapagmadamdam ng Pagkuha ng Gilid\n"
+"(porsyento ng lapad ng eskren) Nakalaan 5"
 #
-#~ msgid "Left"
-#~ msgstr "Kaliwa"
+msgid "Edit"
+msgstr ""
 #
-#~ msgid "Leg: from "
-#~ msgstr "Binti: galing "
+msgid "Electronic Bearing Line"
+msgstr "De Koryenteng Linya ng Bering"
 #
-#~ msgid "Length Type"
-#~ msgstr "Uri ng Haba"
+msgid "End"
+msgstr "Kataposan"
 #
-#~ msgid "List contents "
-#~ msgstr "Mga nilalaman ng Listahan "
+msgid "End Point Icon"
+msgstr "Aykon ng Puntong Wakas"
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "Nagkakarga ng mga bagay sa nabigasyon mula sa "
+msgid "Error in import file."
+msgstr ""
 #
-#~ msgid "Longitude"
-#~ msgstr "Longhitud"
+msgid "Example"
+msgstr "Halimbawa"
 #
-#~ msgid "Match VRM colour to EBL colour"
-#~ msgstr "Iparehass ang kulay ng VRM sa Kulay ng EBL"
+msgid "Exclusion"
+msgstr ""
 #
-#~ msgid "Merge and Delete Boundaries"
-#~ msgstr "Pag-isahin at Tanggalin ang Hangganan"
+msgid "Export GPX file"
+msgstr "Iluwas ang talangkas ng GPX"
 #
-#~ msgid "Merge and Keep Boundaries"
-#~ msgstr "Isama at pantilihin ang mga Hangganan"
+msgid "Extended"
+msgstr "Pinalawak"
 #
-#~ msgid "Minutes"
-#~ msgstr "Mga Minuto"
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+"Pumaly sa pagkarga ng lahat ng mga aykon ng Guhit Plag-in sa OCPN, suriin ang "
+"lista ng OCPN para sa mga detalye"
 #
-#~ msgid "Move Boundary"
-#~ msgstr "Ilipat ang Hangganan"
+#, fuzzy
+msgid "Fill Colour"
+msgstr "Actibomg Kulay ng Punan"
 #
-#~ msgid "Move Boundary Point"
-#~ msgstr "Punto ng Paglipat ng Hangganan"
+msgid "Fill Density"
+msgstr ""
 #
-#~ msgid "Move Boundary Segment"
-#~ msgstr "Ilipag ang segment ng hangganan"
+msgid "First"
+msgstr "Una"
 #
-#~ msgid "Move DR Point"
-#~ msgstr "Ilipat ang Punto ng DR"
+msgid "First Angle (-P/+S)"
+msgstr ""
 #
-#~ msgid "Move EBL"
-#~ msgstr "Ilipat ang EBL"
+#, fuzzy
+msgid "First Point Icon"
+msgstr "Aykon ng Puntong Simula"
 #
-#~ msgid "Move EBL Point"
-#~ msgstr "Ilipat ang Punto ng EBL"
+#, fuzzy
+msgid "First distance"
+msgstr "Layo"
 #
-#~ msgid "Move Guard Zone Point"
-#~ msgstr "Ilipat ang Punto ng Bantay ng Sona"
+#, fuzzy
+msgid "Font Based"
+msgstr "Mga Font"
 #
-#~ msgid "Move Line"
-#~ msgstr "Ilipat ang Linya"
+msgid "Fonts"
+msgstr "Mga Font"
 #
-#~ msgid "Move OD Point"
-#~ msgstr "Ilipat ang Punto ng OD"
+msgid "For this leg the Great Circle boundary is "
+msgstr "Para sa biting ito ang hangganan ng Dakilang Bilog ay "
 #
-#~ msgid "Move PIL Point"
-#~ msgstr "Ilipat ang Punto ng PIL"
+msgid "From Point"
+msgstr "Mula Punto"
 #
-#~ msgid "Move Text Point"
-#~ msgstr "Punto ng Paglipat ng Teksto"
+msgid "From: "
+msgstr "Mula sa: "
 #
-#~ msgid "Move start point to boat lat/lon"
-#~ msgstr "Ilipat ang punto ng simula sa barko lat/Ion"
+msgid "GUID"
+msgstr ""
 #
-#~ msgid "Multiple Boundaries"
-#~ msgstr "Maramihang mga Hangganan"
+msgid "GZ"
+msgstr "GZ"
 #
-#~ msgid "Name"
-#~ msgstr "Pangalan"
+#, fuzzy
+msgid "GZ Point Properties, Layer: "
+msgstr "Mga Katangian ng Punto ng DR, Leyer: "
 #
-#~ msgid "Name: "
-#~ msgstr "Pangalan: "
+msgid "General"
+msgstr "Pangkalahatan"
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Pandagat na Milya"
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"Pangkalahatang pagguhit para sa OpenCPN\n"
+"\n"
+"Salamat sa komunidad para sa kanilang kapaki-pakinabang na mga mungkahi."
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Bagong leyer %d:%s"
+msgid "General drawing for OpenCPN"
+msgstr "Pangkalahatang pagguhit para sa OpenCPN"
 #
-#~ msgid "No"
-#~ msgstr "Wala"
+#, fuzzy
+msgid "Guard Zone"
+msgstr "Punto ng Bantay ng Sona"
 #
-#~ msgid "No alarm"
-#~ msgstr "Walang Alarma"
+msgid "Guard Zone Persistence"
+msgstr "Pagtitiyaga ng Bantay sa Sona"
 #
-#~ msgid "No. of items"
-#~ msgstr "Bilang ng mga Aytem"
+msgid "Guard Zone Point"
+msgstr "Punto ng Bantay ng Sona"
 #
-#~ msgid "None"
-#~ msgstr "Wala"
+msgid "Guard Zone Point Properties"
+msgstr "Mga Katangian ng Punto ng Bantay sa Sona"
 #
-#~ msgid "Number of Point Range Rings"
-#~ msgstr "Bilang ng mga Bilog ng Punting Saklaw"
+msgid "Guard Zone Properties"
+msgstr "Mga Katangian ng Bantay ng Sona"
 #
-#~ msgid "Number of Range Rings"
-#~ msgstr "Mga Bilog ng Numero ng Saklaw"
+msgid "Heading"
+msgstr ""
 #
-#~ msgid "OCPN Draw"
-#~ msgstr "Guhit sa OCPN"
+msgid "Help"
+msgstr ""
 #
-#~ msgid "OCPN Draw Boundary"
-#~ msgstr "Hangganang Guhit sa OCPN"
+msgid "Hide Boundary Point Icons"
+msgstr "Itago ang mga aykon ng Punto ng Hangganan"
 #
-#~ msgid "OCPN Draw Boundary Create"
-#~ msgstr "Gumawa ng Hangganang Guhit sa OCPN"
+msgid "Hide Layer(s)"
+msgstr "Itago ang Leyer/mga Leyer"
 #
-#~ msgid "OCPN Draw Boundary Delete"
-#~ msgstr "Hangganang Guhit ng OCPN ay nabura"
+msgid "Hide Path(s)"
+msgstr "Itago ang daanan/mga daanan"
 #
-#~ msgid "OCPN Draw DR Delete"
-#~ msgstr "Ang Guhit DR ng OCPN ay nabura"
+msgid "Hide Point names"
+msgstr "Itago ang mga Pangalan ng Punto"
 #
-#~ msgid "OCPN Draw Delete Boundary Point"
-#~ msgstr "Burahin ang Punto ng Hangganan sa Guhit OCPN"
+msgid "Hide Point(s)"
+msgstr "Itago ang Punto/mga Punto"
 #
-#~ msgid "OCPN Draw Delete DR Point"
-#~ msgstr "Burahin ang Punto ng DR sa Guhit OCPN"
+msgid "Hide from chart"
+msgstr "Itago mula sa tsart"
 #
-#~ msgid "OCPN Draw Delete EBL Point"
-#~ msgstr "Burahin ang Punto ng EBL sa Guhit OCPN"
+msgid "Hours"
+msgstr "Mga Oras"
 #
-#~ msgid "OCPN Draw Delete OD Point"
-#~ msgstr "Tanggalin ang Punto ng OD sa Guhit OCPN"
+msgid "I&mport"
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete PIL Point"
-#~ msgstr "Tanggalin ang Punto ng PIL sa Guhit OCPN"
+msgid "ID"
+msgstr "Pagkakilanlan"
 #
-#~ msgid "OCPN Draw Delete Text Point"
-#~ msgstr "Tanggalin ang Punto ng Teksto sa Draw OCPN"
+msgid "ID Num"
+msgstr "Numero ng Pagkakilanlan"
 #
-#~ msgid "OCPN Draw EBL Delete"
-#~ msgstr "Ang Guhit EBL ng OCPN ay nabura"
+msgid "ID: "
+msgstr "Pagkakilanlan: "
 #
-#~ msgid "OCPN Draw GZ Delete"
-#~ msgstr "Ang Guhit GZ ng OCPN ay nabura"
+msgid "Icon"
+msgstr "Aykon"
 #
-#~ msgid "OCPN Draw Manager"
-#~ msgstr "Tagapamahala ng Guhoit sa OCPN"
+msgid "Icon Directory"
+msgstr ""
 #
-#~ msgid "OCPN Draw PIL Delete"
-#~ msgstr "Ang Guhit PIL ng OCPN ay nabura"
+msgid "Import"
+msgstr ""
 #
-#~ msgid "OCPN Draw Parallel Index Line Delete"
-#~ msgstr "Ang Guhit Hilerang Panuntunang Linya ay nabura"
+msgid "Import Error"
+msgstr ""
 #
-#~ msgid "OCPN Draw Point"
-#~ msgstr "Punto ng Guhit sa OCPN"
+msgid "Import GPX file"
+msgstr "Iangkat ang talangkas ng GPX"
 #
-#~ msgid "OCPN Draw Point Create"
-#~ msgstr "Gumawa ng Punto ng Guhit sa OCPN"
+#, fuzzy
+msgid "Import file"
+msgstr "Iangkat ang talangkas ng GPX"
 #
-#~ msgid "OCPN Draw Point, Layer: "
-#~ msgstr "Punto ng Guhit sa OCPN, Leyer: "
+#, fuzzy
+msgid "Import incomplete."
+msgstr "Iangkat ang talangkas ng GPX"
 #
-#~ msgid "OCPN Draw Properties"
-#~ msgstr "Katangian ng Guhit ng OCPN"
+#, fuzzy
+msgid "Inactive Centre Line Colour"
+msgstr "D-aktibong Kulay ng Linya"
 #
-#~ msgid "OCPN Draw Remove "
-#~ msgstr "Guhit ng OCPN ay nabura "
+#, fuzzy
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr "D-aktibong Kulay ng Linya"
 #
-#~ msgid "OCPN Draw Remove Boundary Point"
-#~ msgstr "Tanggalin ang Punto ng Hangganan sa Guhit OCPN"
+msgid "Inactive EBL Line Colour"
+msgstr "Kulay ng Di-aktibong EBL"
 #
-#~ msgid "OCPN Draw Remove DR Point"
-#~ msgstr "Tanggalin ang Punto ng DR sa Guhit OCPN"
+msgid "Inactive Fill Colour"
+msgstr "D-aktibong Kulay ng Punan"
 #
-#~ msgid "OCPN Draw Remove EBL Point"
-#~ msgstr "Tanggalin ang Punto ng EBL sa Guhit OCPN"
+msgid "Inactive Line Colour"
+msgstr "D-aktibong Kulay ng Linya"
 #
-#~ msgid "OCPN Draw Remove OD Point"
-#~ msgstr "Tanggalin ang Punto ng DR sa Guhit OCPN"
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "D-aktibong Kulay ng Linya"
 #
-#~ msgid "OD Point"
-#~ msgstr "Punto ng DR"
+#, fuzzy
+msgid "Inactive Offset Line Colour"
+msgstr "D-aktibong Kulay ng Linya"
 #
-#~ msgid "OD Point Name"
-#~ msgstr "Pangalan ng Punto ng OD"
+#, fuzzy
+msgid "Inclusion"
+msgstr "Punto ng Sukat ng Pagakakasama"
 #
-#~ msgid "OD Point Properties"
-#~ msgstr "Katangian ng Punto ng OD"
+#, fuzzy
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr "Sukat ng Hangganang Pakakasama"
 #
-#~ msgid "OD Points"
-#~ msgstr "Mga Punto ng OD"
+msgid "Inclusion Boundary Size"
+msgstr "Sukat ng Hangganang Pakakasama"
 #
-#~ msgid "OD\\WD"
-#~ msgstr "OD\\WD"
+msgid "Index Line Properties"
+msgstr "Mga katangian ng Taluntunang Linya"
 #
-#~ msgid "On Rollover Only"
-#~ msgstr "Sa mga Gumugulong lamang"
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Mga Linyang Panuntunan (+Stbd/- Port)"
 #
-#~ msgid "OpenCPN Alert"
-#~ msgstr "Alerto sa OpenCPN"
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+"Pagkamapagmadamdam ng Pasimulang Gilid\n"
+"(porsyento ng lapad ng eskren) Nakalaan 5"
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Sapawan ang umiiral na talangkas?"
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Mga Bilog ng Numero ng Saklaw"
 #
-#~ msgid "PIL"
-#~ msgstr "PIL"
+msgid "Insert Boundary Point"
+msgstr "Ipasok ang Punto ng Hangganan"
 #
-#~ msgid "PIL Persistence"
-#~ msgstr "Pagtitiyaga ng EBL"
+msgid "Insert EBL Point"
+msgstr "Ipasok ang Punto ng EBL"
 #
-#~ msgid "PIL Point"
-#~ msgstr "Punto ng PIL"
+msgid "Interval Type"
+msgstr "Uri ng Agwat"
 #
-#~ msgid "Parallel Index Line"
-#~ msgstr "Kahilerang Linya ng Hangganan"
+msgid "Kilometres"
+msgstr "Kilometro"
 #
-#~ msgid "Parallel Index Line Properties"
-#~ msgstr "Mga Katangian ng Hilerang Panuntunang Linya"
+msgid "Latitude"
+msgstr "Latitud"
 #
-#~ msgid "Paste"
-#~ msgstr "Idikit"
+msgid "Layer"
+msgstr "Leyer"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Idikit lat/taas"
+msgid "Layer "
+msgstr "Leyer "
 #
-#~ msgid "Path"
-#~ msgstr "Daanan"
+msgid "Layer Boundary"
+msgstr "Hangganan ng Leyer"
 #
-#~ msgid "Path & Point Manager"
-#~ msgstr "Daan & Tagapamahala ng Punto"
+msgid "Layer Boundary Point"
+msgstr "Leyer ng Punto ng Hangganan"
 #
-#~ msgid "Path Manager Dialog"
-#~ msgstr "Dayalog ng Tagapamahala ng Daan"
+msgid "Layer DR Point"
+msgstr "Leyer ng Punto ng DR"
 #
-#~ msgid "Path Name"
-#~ msgstr "Pangalan ng Daanan"
+msgid "Layer EBL Point"
+msgstr "Leyer ng Punto ng EBL"
 #
-#~ msgid "Path Properties"
-#~ msgstr "Katangian ng Landas"
+msgid "Layer Name"
+msgstr "Pangalan ng Leyer"
 #
-#~ msgid "Path Properties, Layer: "
-#~ msgstr "Mga Katangian ng Daanan, Leyer: "
+msgid "Layer Text Point"
+msgstr "Leyer ng Punto ng teksto"
 #
-#~ msgid "Paths"
-#~ msgstr "Mga Daanan"
+msgid "Layers"
+msgstr "Mga Leyer"
 #
-#~ msgid "Pick a new start point"
-#~ msgstr "Pumili ng bagong punto ng simula"
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Hangganan ng Leyer"
 #
-#~ msgid "Point Inclusion Size"
-#~ msgstr "Punto ng Sukat ng Pagakakasama"
+msgid "Left"
+msgstr "Kaliwa"
 #
-#~ msgid "Point Type"
-#~ msgstr "Uri ng Punto"
+msgid "Left Click links are deleted."
+msgstr ""
 #
-#~ msgid "Properties"
-#~ msgstr "Mga Katangian"
+msgid "Left Click links are opened for editing."
+msgstr ""
 #
-#~ msgid "Properties..."
-#~ msgstr "Mga Katangian..."
+msgid "Left Click links are opened in the default browser."
+msgstr ""
 #
-#~ msgid "Question"
-#~ msgstr "Tanong"
+msgid "Left click opens in browser"
+msgstr ""
 #
-#~ msgid "Range Ring Colours"
-#~ msgstr "Mga Kulay ng Bilog ng Saklaw"
+msgid "Leg: from "
+msgstr "Binti: galing "
 #
-#~ msgid "Range Ring Line Style"
-#~ msgstr "Estilo ng linya ng Bilog ng Saklaw"
+msgid "Length Type"
+msgstr "Uri ng Haba"
 #
-#~ msgid "Range Ring Line Width"
-#~ msgstr "Lapad ng Linya ng Bilog ng Saklaw"
+msgid "License"
+msgstr ""
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Alisin ang Punto mula sa Daan"
+#, fuzzy
+msgid "Line Colour"
+msgstr "Aktibong kulay ng Linya"
 #
-#~ msgid ""
-#~ "Removing this point will invalidate the Boundary, this is not allowed."
-#~ msgstr ""
-#~ "Ang pagtanggal nitong punto ay makakawalang bisa ng Hangganan, Ito ay "
-#~ "hindi puwedi."
+#, fuzzy
+msgid "Line Style"
+msgstr "Estilo ng linya ng Bilog ng Saklaw"
 #
-#~ msgid "Right"
-#~ msgstr "Kanan"
+#, fuzzy
+msgid "Line Type"
+msgstr "Uri ng Punto"
 #
-#~ msgid "Ring"
-#~ msgstr "Taginting"
+#, fuzzy
+msgid "Line Width"
+msgstr "Lapad ng Linya ng Bilog ng Saklaw"
 #
-#~ msgid "Second"
-#~ msgstr "Pangalawa"
+msgid "Link"
+msgstr ""
 #
-#~ msgid "Show"
-#~ msgstr "Ipakita"
+#, fuzzy
+msgid "Link Description"
+msgstr "Palalarawan"
 #
-#~ msgid "Show Boundary Point Icons"
-#~ msgstr "Ipakita ang mga Aykon ng Punto ng Hanganan"
+msgid "Links"
+msgstr ""
 #
-#~ msgid "Show Display Text"
-#~ msgstr "Ipakita ng Teksta ng Pagpakita"
+msgid "List contents "
+msgstr "Mga nilalaman ng Listahan "
 #
-#~ msgid "Show EBL Direction Arrow"
-#~ msgstr "Ipakita ang Arow ng Direksyon ng EBL"
+msgid "Loading navobjects from "
+msgstr "Nagkakarga ng mga bagay sa nabigasyon mula sa "
 #
-#~ msgid "Show Layer(s)"
-#~ msgstr "Ipakita ang Leyer/mga Leyers"
+msgid "Local file..."
+msgstr ""
 #
-#~ msgid "Show Magnetic Bearings"
-#~ msgstr "Ipakita ang Magnetik na mga Bering"
+msgid "Long Dash"
+msgstr ""
 #
-#~ msgid "Show Name"
-#~ msgstr "Ipakit ang Pangalan"
+msgid "Longitude"
+msgstr "Longhitud"
 #
-#~ msgid "Show Paths(s)"
-#~ msgstr "Ipakita ang Daanan/mga Daanan"
+msgid "Maintain with"
+msgstr ""
 #
-#~ msgid "Show Point Range Rings"
-#~ msgstr "Ipakit anag mga bilog ng Puntong Saklaw"
+msgid "Major:"
+msgstr ""
 #
-#~ msgid "Show Point names"
-#~ msgstr "Ipakita ang mga pangalan ng Punto"
+msgid "Match VRM colour to EBL colour"
+msgstr "Iparehass ang kulay ng VRM sa Kulay ng EBL"
 #
-#~ msgid "Show Point(s)"
-#~ msgstr "Ipakita ang Punto/mga Punto"
+msgid "Maximum Text Width"
+msgstr ""
 #
-#~ msgid "Show Range Rings"
-#~ msgstr "Ipakita ang mga bilog ng Saklaw"
+msgid "Maximum Width Type"
+msgstr ""
 #
-#~ msgid "Show name"
-#~ msgstr "Ipakita ang pangalan"
+msgid "Merge and Delete Boundaries"
+msgstr "Pag-isahin at Tanggalin ang Hangganan"
 #
-#~ msgid "Show on chart"
-#~ msgstr "Ipakita sa tsart"
+msgid "Merge and Keep Boundaries"
+msgstr "Isama at pantilihin ang mga Hangganan"
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Bilis sa ibabaw ng Lupa"
+msgid "Minor:"
+msgstr ""
 #
-#~ msgid "Start"
-#~ msgstr "Simula"
+msgid "Minutes"
+msgstr "Mga Minuto"
 #
-#~ msgid "Start Point Icon"
-#~ msgstr "Aykon ng Puntong Simula"
+msgid "Move Boundary"
+msgstr "Ilipat ang Hangganan"
 #
-#~ msgid "Text"
-#~ msgstr "Teksto"
+msgid "Move Boundary Point"
+msgstr "Punto ng Paglipat ng Hangganan"
 #
-#~ msgid "Text Colour"
-#~ msgstr "Kulay ng Teksto"
+msgid "Move Boundary Segment"
+msgstr "Ilipag ang segment ng hangganan"
 #
-#~ msgid "Text Font"
-#~ msgstr "Mukha ng Teksto"
+msgid "Move DR Point"
+msgstr "Ilipat ang Punto ng DR"
 #
-#~ msgid "Text Point"
-#~ msgstr "Punto ng teksto"
+msgid "Move EBL"
+msgstr "Ilipat ang EBL"
 #
-#~ msgid "Text Point Icon"
-#~ msgstr "Aykon ng Puntong Teksto"
+msgid "Move EBL Point"
+msgstr "Ilipat ang Punto ng EBL"
 #
-#~ msgid "Text position relative to point"
-#~ msgstr "Puwesto ng Teksto kaugnay sa Punto"
+msgid "Move Guard Zone Point"
+msgstr "Ilipat ang Punto ng Bantay ng Sona"
 #
-#~ msgid "Text to Display with Point"
-#~ msgstr "Teksto para makita ang Punto"
+msgid "Move Line"
+msgstr "Ilipat ang Linya"
 #
-#~ msgid ""
-#~ "The OD Point you want to delete is used in a path, do you really want to "
-#~ "delete it?"
-#~ msgstr ""
-#~ "Ang Puntong OD na gusto mong burahin ay ginagamit sa daanan, gusto mo ba "
-#~ "talagang burahin ito?"
+msgid "Move OD Point"
+msgstr "Ilipat ang Punto ng OD"
 #
-#~ msgid ""
-#~ "There are some OD points used in paths or anchor alarms.\n"
-#~ " Do you want to delete them as well?\n"
-#~ " This will change the paths and disable the anchor alarms.\n"
-#~ " Answering No keeps the OD points used in paths or alarms."
-#~ msgstr ""
-#~ "May mga iilang punto ng OD an ginamit sa mga daanan o mga alarma sa "
-#~ "angkla.\n"
-#~ " Gusto mo ba rin burahin ang mga ito?\n"
-#~ " Ito ay magbabago sa daanan at hindi pagaganahin ang mga alarma sa "
-#~ "angkla.\n"
-#~ " Ang pagsagot ng hindi ay magpapanatili ng mga punto na gimanit sa mga "
-#~ "daanan o mga alarma."
+msgid "Move PIL Point"
+msgstr "Ilipat ang Punto ng PIL"
 #
-#~ msgid "Time"
-#~ msgstr "Oras"
+msgid "Move Text Point"
+msgstr "Punto ng Paglipat ng Teksto"
 #
-#~ msgid "Time Units"
-#~ msgstr "Mga Yunit ng Oras"
+msgid "Move start point to boat lat/lon"
+msgstr "Ilipat ang punto ng simula sa barko lat/Ion"
 #
-#~ msgid "To Point"
-#~ msgstr "Patungong Punto"
+msgid "Multiple Boundaries"
+msgstr "Maramihang mga Hangganan"
 #
-#~ msgid "Top"
-#~ msgstr "Tuktok"
+msgid "Name"
+msgstr "Pangalan"
 #
-#~ msgid "Top Centre"
-#~ msgstr "Sentro ng Tuktok"
+#, fuzzy
+msgid "Name:"
+msgstr "Pangalan: "
 #
-#~ msgid "Total Length: "
-#~ msgstr "Kabuohang Haba: "
+msgid "Name: "
+msgstr "Pangalan: "
 #
-#~ msgid "Unlist contents "
-#~ msgstr "Mga hindi nalistang nilalaman "
+msgid "Nautical Miles"
+msgstr "Pandagat na Milya"
 #
-#~ msgid "Update initial conditions"
-#~ msgstr "Magpabago ng mga paunang kondisyon"
+msgid "Neither"
+msgstr ""
 #
-#~ msgid "Use nearby OD Point?"
-#~ msgstr "Paggamit ng kalapit na Punto ng OD?"
+msgid "Never"
+msgstr ""
 #
-#~ msgid "Use nearby Point?"
-#~ msgstr "Paggamit ng kalapit na Punto?"
+msgid "New &temporary Layer"
+msgstr ""
 #
-#~ msgid "Whilst Drawing"
-#~ msgstr "Habang Nagguguhit"
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Bagong leyer %d:%s"
 #
-#~ msgid "Would you like include the Great Circle boundary points for this leg?"
-#~ msgstr ""
-#~ "Gusto mo bang isama ang mga punto ng hangganan ng Dakilang Bilog para sa "
-#~ "binting ito?"
+msgid "New persistent &Layer"
+msgstr ""
 #
-#~ msgid "Yes"
-#~ msgstr "Oo"
+msgid "No"
+msgstr "Wala"
 #
-#~ msgid "ocpn_draw_pi data location"
-#~ msgstr "ocpn_guhit_pi lokasyon ng datos"
+msgid "No alarm"
+msgstr "Walang Alarma"
+#
+msgid "No. of items"
+msgstr "Bilang ng mga Aytem"
+#
+msgid "None"
+msgstr "Wala"
+#
+msgid "Number of Point Range Rings"
+msgstr "Bilang ng mga Bilog ng Punting Saklaw"
+#
+msgid "Number of Range Rings"
+msgstr "Mga Bilog ng Numero ng Saklaw"
+#
+msgid "OCPN API Version:"
+msgstr ""
+#
+msgid "OCPN Draw"
+msgstr "Guhit sa OCPN"
+#
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "Punto ng Guhit sa OCPN"
+#
+msgid "OCPN Draw Boundary"
+msgstr "Hangganang Guhit sa OCPN"
+#
+msgid "OCPN Draw Boundary Create"
+msgstr "Gumawa ng Hangganang Guhit sa OCPN"
+#
+msgid "OCPN Draw Boundary Delete"
+msgstr "Hangganang Guhit ng OCPN ay nabura"
+#
+msgid "OCPN Draw DR Delete"
+msgstr "Ang Guhit DR ng OCPN ay nabura"
+#
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Burahin ang Punto ng Hangganan sa Guhit OCPN"
+#
+msgid "OCPN Draw Delete DR Point"
+msgstr "Burahin ang Punto ng DR sa Guhit OCPN"
+#
+msgid "OCPN Draw Delete EBL Point"
+msgstr "Burahin ang Punto ng EBL sa Guhit OCPN"
+#
+msgid "OCPN Draw Delete OD Point"
+msgstr "Tanggalin ang Punto ng OD sa Guhit OCPN"
+#
+msgid "OCPN Draw Delete PIL Point"
+msgstr "Tanggalin ang Punto ng PIL sa Guhit OCPN"
+#
+msgid "OCPN Draw Delete Text Point"
+msgstr "Tanggalin ang Punto ng Teksto sa Draw OCPN"
+#
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "Katangian ng Guhit ng OCPN"
+#
+msgid "OCPN Draw EBL Delete"
+msgstr "Ang Guhit EBL ng OCPN ay nabura"
+#
+msgid "OCPN Draw GZ Delete"
+msgstr "Ang Guhit GZ ng OCPN ay nabura"
+#
+msgid "OCPN Draw Manager"
+msgstr "Tagapamahala ng Guhoit sa OCPN"
+#
+msgid "OCPN Draw PIL Delete"
+msgstr "Ang Guhit PIL ng OCPN ay nabura"
+#
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "Ang Guhit Hilerang Panuntunang Linya ay nabura"
+#
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "Punto ng Guhit sa OCPN"
+#
+msgid "OCPN Draw Point"
+msgstr "Punto ng Guhit sa OCPN"
+#
+msgid "OCPN Draw Point Create"
+msgstr "Gumawa ng Punto ng Guhit sa OCPN"
+#
+msgid "OCPN Draw Point, Layer: "
+msgstr "Punto ng Guhit sa OCPN, Leyer: "
+#
+msgid "OCPN Draw Properties"
+msgstr "Katangian ng Guhit ng OCPN"
+#
+msgid "OCPN Draw Remove "
+msgstr "Guhit ng OCPN ay nabura "
+#
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "Tanggalin ang Punto ng Hangganan sa Guhit OCPN"
+#
+msgid "OCPN Draw Remove DR Point"
+msgstr "Tanggalin ang Punto ng DR sa Guhit OCPN"
+#
+msgid "OCPN Draw Remove EBL Point"
+msgstr "Tanggalin ang Punto ng EBL sa Guhit OCPN"
+#
+msgid "OCPN Draw Remove OD Point"
+msgstr "Tanggalin ang Punto ng DR sa Guhit OCPN"
+#
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
+#
+msgid "OD"
+msgstr ""
+#
+msgid "OD Point"
+msgstr "Punto ng DR"
+#
+msgid "OD Point Name"
+msgstr "Pangalan ng Punto ng OD"
+#
+msgid "OD Point Properties"
+msgstr "Katangian ng Punto ng OD"
+#
+msgid "OD Points"
+msgstr "Mga Punto ng OD"
+#
+msgid "OD\\WD"
+msgstr "OD\\WD"
+#
+msgid "Offset"
+msgstr ""
+#
+#, fuzzy
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Mga Linyang Panuntunan (+Stbd/- Port)"
+#
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Estilo ng linya ng Bilog ng Saklaw"
+#
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Lapad ng Linya ng Bilog ng Saklaw"
+#
+#, fuzzy
+msgid "Offset Line Style"
+msgstr "Estilo ng linya ng Bilog ng Saklaw"
+#
+#, fuzzy
+msgid "Offset Line Width"
+msgstr "Lapad ng Linya ng Bilog ng Saklaw"
+#
+msgid "Offset: "
+msgstr ""
+#
+msgid "On Rollover Only"
+msgstr "Sa mga Gumugulong lamang"
+#
+msgid "OpenCPN Alert"
+msgstr "Alerto sa OpenCPN"
+#
+msgid "Other:"
+msgstr ""
+#
+msgid "Overwrite existing file?"
+msgstr "Sapawan ang umiiral na talangkas?"
+#
+msgid "PIL"
+msgstr "PIL"
+#
+msgid "PIL Persistence"
+msgstr "Pagtitiyaga ng EBL"
+#
+msgid "PIL Point"
+msgstr "Punto ng PIL"
+#
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr "Mga Katangian ng Punto ng EBL"
+#
+#, fuzzy
+msgid "PIL Point Properties, Layer: "
+msgstr "Mga Katangian ng Punto ng EBL. Leyer: "
+#
+msgid "Parallel Index Line"
+msgstr "Kahilerang Linya ng Hangganan"
+#
+#, fuzzy
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Mga Linyang Panuntunan (+Stbd/- Port)"
+#
+#, fuzzy
+msgid "Parallel Index Line Persistence"
+msgstr "Mga Katangian ng Hilerang Panuntunang Linya"
+#
+msgid "Parallel Index Line Properties"
+msgstr "Mga Katangian ng Hilerang Panuntunang Linya"
+#
+msgid "Paste"
+msgstr "Idikit"
+#
+msgid "Paste lat/long"
+msgstr "Idikit lat/taas"
+#
+msgid "Patch:"
+msgstr ""
+#
+msgid "Path"
+msgstr "Daanan"
+#
+msgid "Path & Point Manager"
+msgstr "Daan & Tagapamahala ng Punto"
+#
+msgid "Path Manager Dialog"
+msgstr "Dayalog ng Tagapamahala ng Daan"
+#
+msgid "Path Name"
+msgstr "Pangalan ng Daanan"
+#
+#, fuzzy
+msgid "Path Persistence"
+msgstr "Pagtitiyaga ng EBL"
+#
+msgid "Path Properties"
+msgstr "Katangian ng Landas"
+#
+msgid "Path Properties, Layer: "
+msgstr "Mga Katangian ng Daanan, Leyer: "
+#
+msgid "Paths"
+msgstr "Mga Daanan"
+#
+msgid "Permanent Layers:"
+msgstr ""
+#
+#, fuzzy
+msgid "Persistent"
+msgstr "Pagtitiyaga ng EBL"
+#
+msgid "Persistent over Crash"
+msgstr ""
+#
+msgid "Pick a new start point"
+msgstr "Pumili ng bagong punto ng simula"
+#
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+#
+msgid "Point Inclusion Size"
+msgstr "Punto ng Sukat ng Pagakakasama"
+#
+msgid "Point Type"
+msgstr "Uri ng Punto"
+#
+#, fuzzy
+msgid "Points"
+msgstr "Mga Punto ng OD"
+#
+msgid "Properties"
+msgstr "Mga Katangian"
+#
+msgid "Properties..."
+msgstr "Mga Katangian..."
+#
+msgid "Question"
+msgstr "Tanong"
+#
+msgid "Range Ring Colours"
+msgstr "Mga Kulay ng Bilog ng Saklaw"
+#
+msgid "Range Ring Line Style"
+msgstr "Estilo ng linya ng Bilog ng Saklaw"
+#
+msgid "Range Ring Line Width"
+msgstr "Lapad ng Linya ng Bilog ng Saklaw"
+#
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr "Alisin ang Punto mula sa Daan"
+#
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr ""
+"Ang pagtanggal nitong punto ay makakawalang bisa ng Hangganan, Ito ay hindi "
+"puwedi."
+#
+msgid "Right"
+msgstr "Kanan"
+#
+msgid "Ring"
+msgstr "Taginting"
+#
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+#
+msgid "Rotate with Boat"
+msgstr ""
+#
+msgid "Second"
+msgstr "Pangalawa"
+#
+msgid "Second Angle (-P/+S)"
+msgstr ""
+#
+#, fuzzy
+msgid "Second Point Icon"
+msgstr "Aykon ng Puntong Wakas"
+#
+#, fuzzy
+msgid "Second distance"
+msgstr "Layo"
+#
+msgid "Short Dash"
+msgstr ""
+#
+msgid "Show"
+msgstr "Ipakita"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Ipakita ang mga pangalan ng Punto"
+#
+msgid "Show Boundary Point Icons"
+msgstr "Ipakita ang mga Aykon ng Punto ng Hanganan"
+#
+#, fuzzy
+msgid "Show DR Direction Arrow"
+msgstr "Ipakita ang Arow ng Direksyon ng EBL"
+#
+msgid "Show Display Text"
+msgstr "Ipakita ng Teksta ng Pagpakita"
+#
+msgid "Show EBL Direction Arrow"
+msgstr "Ipakita ang Arow ng Direksyon ng EBL"
+#
+msgid "Show Layer(s)"
+msgstr "Ipakita ang Leyer/mga Leyers"
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Ipakita ang Leyer/mga Leyers"
+#
+msgid "Show Magnetic Bearings"
+msgstr "Ipakita ang Magnetik na mga Bering"
+#
+msgid "Show Name"
+msgstr "Ipakit ang Pangalan"
+#
+#, fuzzy
+msgid "Show Path Direction Arrow"
+msgstr "Ipakita ang Arow ng Direksyon ng EBL"
+#
+msgid "Show Paths(s)"
+msgstr "Ipakita ang Daanan/mga Daanan"
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+#
+#, fuzzy
+msgid "Show Perpendicular Index Line"
+msgstr "Kahilerang Linya ng Hangganan"
+#
+msgid "Show Point Range Rings"
+msgstr "Ipakit anag mga bilog ng Puntong Saklaw"
+#
+msgid "Show Point names"
+msgstr "Ipakita ang mga pangalan ng Punto"
+#
+msgid "Show Point(s)"
+msgstr "Ipakita ang Punto/mga Punto"
+#
+msgid "Show Range Rings"
+msgstr "Ipakita ang mga bilog ng Saklaw"
+#
+#, fuzzy
+msgid "Show VRM"
+msgstr "Ipakita"
+#
+msgid "Show name"
+msgstr "Ipakita ang pangalan"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Ipakita sa tsart"
+#
+msgid "Show on chart"
+msgstr "Ipakita sa tsart"
+#
+msgid "Solid"
+msgstr ""
+#
+msgid "Speed over Ground"
+msgstr "Bilis sa ibabaw ng Lupa"
+#
+msgid "Start"
+msgstr "Simula"
+#
+msgid "Start Point Icon"
+msgstr "Aykon ng Puntong Simula"
+#
+#, fuzzy
+msgid "Straight"
+msgstr "Kanan"
+#
+msgid "Text"
+msgstr "Teksto"
+#
+msgid "Text Colour"
+msgstr "Kulay ng Teksto"
+#
+msgid "Text Font"
+msgstr "Mukha ng Teksto"
+#
+msgid "Text Point"
+msgstr "Punto ng teksto"
+#
+msgid "Text Point Icon"
+msgstr "Aykon ng Puntong Teksto"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "Mga Katangian ng Punto ng DR"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "Mga Katangian ng Punto ng DR, Leyer: "
+#
+msgid "Text position relative to point"
+msgstr "Puwesto ng Teksto kaugnay sa Punto"
+#
+msgid "Text to Display with Point"
+msgstr "Teksto para makita ang Punto"
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"Ang Puntong OD na gusto mong burahin ay ginagamit sa daanan, gusto mo ba "
+"talagang burahin ito?"
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"May mga iilang punto ng OD an ginamit sa mga daanan o mga alarma sa angkla.\n"
+" Gusto mo ba rin burahin ang mga ito?\n"
+" Ito ay magbabago sa daanan at hindi pagaganahin ang mga alarma sa angkla.\n"
+" Ang pagsagot ng hindi ay magpapanatili ng mga punto na gimanit sa mga daanan "
+"o mga alarma."
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+#
+msgid "Time"
+msgstr "Oras"
+#
+msgid "Time Units"
+msgstr "Mga Yunit ng Oras"
+#
+msgid "To Point"
+msgstr "Patungong Punto"
+#
+msgid "Top"
+msgstr "Tuktok"
+#
+msgid "Top Centre"
+msgstr "Sentro ng Tuktok"
+#
+#, fuzzy
+msgid "Total Length"
+msgstr "Kabuohang Haba: "
+#
+msgid "Total Length: "
+msgstr "Kabuohang Haba: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr ""
+#
+msgid "Unlist contents "
+msgstr "Mga hindi nalistang nilalaman "
+#
+msgid "Update initial conditions"
+msgstr "Magpabago ng mga paunang kondisyon"
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "Punto ng Guhit sa OCPN"
+#
+msgid "Use nearby OD Point?"
+msgstr "Paggamit ng kalapit na Punto ng OD?"
+#
+msgid "Use nearby Point?"
+msgstr "Paggamit ng kalapit na Punto?"
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr ""
+#
+msgid "WD"
+msgstr ""
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr "Habang Nagguguhit"
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr ""
+"Gusto mo bang isama ang mga punto ng hangganan ng Dakilang Bilog para sa "
+"binting ito?"
+#
+msgid "Yes"
+msgstr "Oo"
+#
+msgid "ocpn_draw_pi data location"
+msgstr "ocpn_guhit_pi lokasyon ng datos"
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""

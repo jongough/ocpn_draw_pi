@@ -47,7 +47,6 @@
 #include <wx/glcanvas.h>
 #endif
 
-
 #include <wx/graphics.h>
 
 #include <wx/listimpl.cpp>

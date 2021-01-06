@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-04 13:17+1000\n"
+"POT-Creation-Date: 2021-01-02 12:53+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
@@ -17,1339 +17,1632 @@ msgstr ""
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
 #
-#~ msgid " &Properties..."
-#~ msgstr " &Özellikler..."
+msgid " &Properties..."
+msgstr " &Özellikler..."
 #
-#~ msgid " To: "
-#~ msgstr " Oraya: "
+msgid " To: "
+msgstr " Oraya: "
 #
-#~ msgid ""
-#~ " shorter than rhumbline.\n"
-#~ "\n"
-#~ msgstr ""
-#~ " rhumbline'dan daha kısa.\n"
-#~ "\n"
+msgid ""
+" shorter than rhumbline.\n"
+"\n"
+msgstr ""
+" rhumbline'dan daha kısa.\n"
+"\n"
 #
-#~ msgid " to "
-#~ msgstr " oraya "
+msgid " to "
+msgstr " oraya "
 #
-#~ msgid "&Activate"
-#~ msgstr "&Etkinleştir"
+msgid "&Activate"
+msgstr "&Etkinleştir"
 #
-#~ msgid "&Apply"
-#~ msgstr "&Uygula"
+msgid "&Add"
+msgstr ""
 #
-#~ msgid "&Cancel"
-#~ msgstr "&İptal"
+msgid "&Apply"
+msgstr "&Uygula"
 #
-#~ msgid "&Center View"
-#~ msgstr "&Merkez görünüm"
+msgid "&Cancel"
+msgstr "&İptal"
 #
-#~ msgid "&Deactivate"
-#~ msgstr "&Etkisizleştir"
+msgid "&Center View"
+msgstr "&Merkez görünüm"
 #
-#~ msgid "&Delete"
-#~ msgstr "&Sil"
+msgid "&Deactivate"
+msgstr "&Etkisizleştir"
 #
-#~ msgid "&New"
-#~ msgstr "&Yeni"
+msgid "&Delete"
+msgstr "&Sil"
 #
-#~ msgid "&OK"
-#~ msgstr "&TAMAM"
+#, fuzzy
+msgid "&Delete Selected"
+msgstr "&Seçileni kaldır"
 #
-#~ msgid "&Properties"
-#~ msgstr "&Özellikler"
+msgid "&Edit"
+msgstr ""
 #
-#~ msgid "&Remove Selected"
-#~ msgstr "&Seçileni kaldır"
+#, fuzzy
+msgid "&Export Selected..."
+msgstr "&Seçileni kaldır"
 #
-#~ msgid "(Unnamed )"
-#~ msgstr "(İsimsiz)"
+#, fuzzy
+msgid "&List contents"
+msgstr "İçeriği listele "
 #
-#~ msgid "(Unnamed Layer)"
-#~ msgstr "(Adsız etiket)"
+msgid "&New"
+msgstr "&Yeni"
 #
-#~ msgid "(Unnamed) "
-#~ msgstr "(İsimsiz) "
+msgid "&OK"
+msgstr "&TAMAM"
 #
-#~ msgid "(unnamed)"
-#~ msgstr "(isimsiz)"
+msgid "&Properties"
+msgstr "&Özellikler"
 #
-#~ msgid "0"
-#~ msgstr "0"
+msgid "&Remove Selected"
+msgstr "&Seçileni kaldır"
 #
-#~ msgid "0.0"
-#~ msgstr "0.0"
+msgid "(Unnamed )"
+msgstr "(İsimsiz)"
 #
-#~ msgid "0.5"
-#~ msgstr "0.5"
+msgid "(Unnamed Layer)"
+msgstr "(Adsız etiket)"
 #
-#~ msgid "1"
-#~ msgstr "1"
+msgid "(Unnamed) "
+msgstr "(İsimsiz) "
 #
-#~ msgid "1 Pixel"
-#~ msgstr "1 piksel"
+msgid "(unnamed)"
+msgstr "(isimsiz)"
 #
-#~ msgid "1 pixel"
-#~ msgstr "1 piksel"
+msgid "*.*"
+msgstr ""
 #
-#~ msgid "1.0"
-#~ msgstr "1.0"
+msgid "0"
+msgstr "0"
 #
-#~ msgid "10"
-#~ msgstr "10"
+msgid "0.0"
+msgstr "0.0"
 #
-#~ msgid "10 Pixels"
-#~ msgstr "10 piksel"
+msgid "0.5"
+msgstr "0.5"
 #
-#~ msgid "10 pixels"
-#~ msgstr "10 piksel"
+msgid "1"
+msgstr "1"
 #
-#~ msgid "2"
-#~ msgstr "2"
+msgid "1 Pixel"
+msgstr "1 piksel"
 #
-#~ msgid "2 Pixels"
-#~ msgstr "2 piksel"
+msgid "1 pixel"
+msgstr "1 piksel"
 #
-#~ msgid "2 pixels"
-#~ msgstr "2 piksel"
+msgid "1.0"
+msgstr "1.0"
 #
-#~ msgid "3"
-#~ msgstr "3"
+msgid "10"
+msgstr "10"
 #
-#~ msgid "3 Pixels"
-#~ msgstr "3 piksel"
+msgid "10 Pixels"
+msgstr "10 piksel"
 #
-#~ msgid "3 pixels"
-#~ msgstr "3 piksel"
+msgid "10 pixels"
+msgstr "10 piksel"
 #
-#~ msgid "4"
-#~ msgstr "4"
+msgid "2"
+msgstr "2"
 #
-#~ msgid "4 Pixels"
-#~ msgstr "4 piksel"
+msgid "2 Pixels"
+msgstr "2 piksel"
 #
-#~ msgid "4 pixels"
-#~ msgstr "4 piksel"
+msgid "2 pixels"
+msgstr "2 piksel"
 #
-#~ msgid "5"
-#~ msgstr "5"
+msgid "3"
+msgstr "3"
 #
-#~ msgid "5 Pixels"
-#~ msgstr "5 piksel"
+msgid "3 Pixels"
+msgstr "3 piksel"
 #
-#~ msgid "5 pixels"
-#~ msgstr "5 piksel"
+msgid "3 pixels"
+msgstr "3 piksel"
 #
-#~ msgid "6"
-#~ msgstr "6"
+msgid "4"
+msgstr "4"
 #
-#~ msgid "6 Pixels"
-#~ msgstr "6 piksel"
+msgid "4 Pixels"
+msgstr "4 piksel"
 #
-#~ msgid "6 pixels"
-#~ msgstr "6 piksel"
+msgid "4 pixels"
+msgstr "4 piksel"
 #
-#~ msgid "7"
-#~ msgstr "7"
+msgid "5"
+msgstr "5"
 #
-#~ msgid "7 Pixels"
-#~ msgstr "7 piksel"
+msgid "5 Pixels"
+msgstr "5 piksel"
 #
-#~ msgid "7 pixels"
-#~ msgstr "7 piksel"
+msgid "5 pixels"
+msgstr "5 piksel"
 #
-#~ msgid "8"
-#~ msgstr "8"
+msgid "6"
+msgstr "6"
 #
-#~ msgid "8 Pixels"
-#~ msgstr "8 piksel"
+msgid "6 Pixels"
+msgstr "6 piksel"
 #
-#~ msgid "8 pixels"
-#~ msgstr "8 piksel"
+msgid "6 pixels"
+msgstr "6 piksel"
 #
-#~ msgid "9"
-#~ msgstr "9"
+msgid "7"
+msgstr "7"
 #
-#~ msgid "9 Pixels"
-#~ msgstr "9 piksel"
+msgid "7 Pixels"
+msgstr "7 piksel"
 #
-#~ msgid "9 pixels"
-#~ msgstr "9 piksel"
+msgid "7 pixels"
+msgstr "7 piksel"
 #
-#~ msgid "About"
-#~ msgstr "Hakkında"
+msgid "8"
+msgstr "8"
 #
-#~ msgid "Activate"
-#~ msgstr "Etkinleştir"
+msgid "8 Pixels"
+msgstr "8 piksel"
 #
-#~ msgid "Active"
-#~ msgstr "Etkin"
+msgid "8 pixels"
+msgstr "8 piksel"
 #
-#~ msgid "Active Centre Line Colour"
-#~ msgstr "Aktif merkez hattı rengi"
+msgid "9"
+msgstr "9"
 #
-#~ msgid ""
-#~ "Active DR Line\n"
-#~ "Colour"
-#~ msgstr ""
-#~ "Aktif DR hattı\n"
-#~ "Rengi"
+msgid "9 Pixels"
+msgstr "9 piksel"
 #
-#~ msgid "Active EBL Line Colour"
-#~ msgstr "Aktif EBL hattının rengi"
+msgid "9 pixels"
+msgstr "9 piksel"
 #
-#~ msgid "Active Fill Colour"
-#~ msgstr "Aktif dolgu rengi"
+msgid "About"
+msgstr "Hakkında"
 #
-#~ msgid "Active Line Colour"
-#~ msgstr "Aktif hattın rengi"
+msgid "Activate"
+msgstr "Etkinleştir"
 #
-#~ msgid "Active Offset Line Colour"
-#~ msgstr "Aktif ofset hattı rengi"
+msgid "Active"
+msgstr "Etkin"
 #
-#~ msgid "Add Index Line"
-#~ msgstr "İşaret hattı ekle"
+msgid "Active Centre Line Colour"
+msgstr "Aktif merkez hattı rengi"
 #
-#~ msgid "All"
-#~ msgstr "Hepsi"
+msgid ""
+"Active DR Line\n"
+"Colour"
+msgstr ""
+"Aktif DR hattı\n"
+"Rengi"
 #
-#~ msgid "Allow Left Mouse Button Drag"
-#~ msgstr "Sol fare tuşuyla sürüklemeye izin ver"
+msgid "Active EBL Line Colour"
+msgstr "Aktif EBL hattının rengi"
 #
-#~ msgid "Always"
-#~ msgstr "Daima"
+msgid "Active Fill Colour"
+msgstr "Aktif dolgu rengi"
 #
-#~ msgid ""
-#~ "Always Show\n"
-#~ "EBL Info"
-#~ msgstr ""
-#~ "Her zaman göster\n"
-#~ "EBL bilgisi"
+msgid "Active Line Colour"
+msgstr "Aktif hattın rengi"
 #
-#~ msgid "Applying changes from "
-#~ msgstr "-itibaren değişiklikler uygulanıyor "
+#, fuzzy
+msgid "Active Offset Line 2 Colour"
+msgstr "Aktif ofset hattı rengi"
 #
-#~ msgid "Are you sure you want to delete <ALL> OD points?"
-#~ msgstr "Od noktalarının <ALL> silmek istediğinizden emin misiniz?"
+msgid "Active Offset Line Colour"
+msgstr "Aktif ofset hattı rengi"
 #
-#~ msgid "Are you sure you want to delete <ALL> paths?"
-#~ msgstr "Yolların <ALL> silmek istediğinizden emin misiniz?"
+msgid "Add Index Line"
+msgstr "İşaret hattı ekle"
 #
-#~ msgid "Are you sure you want to delete the selected object(s)"
-#~ msgstr "Seçili nesneleri silmek istediğinizden emin misiniz?"
+msgid "Add New"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this Boundary Point?"
-#~ msgstr "Bu sınır noktasını silmek istediğinizden emin misiniz?"
+msgid "All"
+msgstr "Hepsi"
 #
-#~ msgid "Are you sure you want to delete this Boundary?"
-#~ msgstr "Bu sınırı silmek istediğinizden emin misiniz?"
+msgid "Allow Left Mouse Button Drag"
+msgstr "Sol fare tuşuyla sürüklemeye izin ver"
 #
-#~ msgid "Are you sure you want to delete this DR Point?"
-#~ msgstr "Bu DR Noktasını silmek istediğinizden emin misiniz?"
+msgid "Always"
+msgstr "Daima"
 #
-#~ msgid "Are you sure you want to delete this DR?"
-#~ msgstr "Bu DR yi silmek istediğinden emin misin?"
+msgid ""
+"Always Show\n"
+"EBL Info"
+msgstr ""
+"Her zaman göster\n"
+"EBL bilgisi"
 #
-#~ msgid "Are you sure you want to delete this EBL Point?"
-#~ msgstr "Bu EBL noktasını silmek istediğinden emin misin?"
+msgid "Applying changes from "
+msgstr "-itibaren değişiklikler uygulanıyor "
 #
-#~ msgid "Are you sure you want to delete this EBL?"
-#~ msgstr "Bu EBL yi silmek istediğinden emin misin?"
+msgid "Arc"
+msgstr ""
 #
-#~ msgid "Are you sure you want to delete this Guard Zone?"
-#~ msgstr "Bu koruma bölgesini silmek istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Od noktalarının <ALL> silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to delete this OD Point?"
-#~ msgstr "Bu OD Noktasını silmek istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Yolların <ALL> silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to delete this PIL Point?"
-#~ msgstr "Bu PIL noktasını silmek istediğinden emin misin?"
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Seçili nesneleri silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line Group?"
-#~ msgstr "Paralel Dizin Hattı Grubunu silmek istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Bu sınır noktasını silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to delete this Parallel Index Line?"
-#~ msgstr "Paralel dizin hattını silmek ister misin?"
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Bu sınırı silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to delete this Text Point?"
-#~ msgstr "Bu metin noktasını silmek istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Bu DR Noktasını silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-#~ msgstr ""
-#~ "Bu içeriklerin <ALL> ve bu etiketi silmek istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this DR?"
+msgstr "Bu DR yi silmek istediğinden emin misin?"
 #
-#~ msgid "Are you sure you want to remove this "
-#~ msgstr "Bunu kaldırmak istediğinizden emin misiniz "
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Bu EBL noktasını silmek istediğinden emin misin?"
 #
-#~ msgid "Are you sure you want to remove this Boundary Point?"
-#~ msgstr "Bu Sınır Noktasını kaldırmak istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Bu EBL yi silmek istediğinden emin misin?"
 #
-#~ msgid "Are you sure you want to remove this DR Point?"
-#~ msgstr "Bu DR Noktasını kaldırmak istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Bu koruma bölgesini silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to remove this EBL Point?"
-#~ msgstr "Bu EBL noktasını kaldırmak istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Bu OD Noktasını silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Are you sure you want to remove this OD Point?"
-#~ msgstr "Bu OD Noktasını kaldırmak istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Bu PIL noktasını silmek istediğinden emin misin?"
 #
-#~ msgid "Are you sure you want to remove this point?"
-#~ msgstr "Bu noktayı kaldırmak istediğinizden emin misiniz?"
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Paralel Dizin Hattı Grubunu silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Arrival Radius"
-#~ msgstr "Varış Yarıçapı"
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Paralel dizin hattını silmek ister misin?"
 #
-#~ msgid "Background Colour"
-#~ msgstr "Arka Plan Rengi"
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Bu metin noktasını silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Background Density"
-#~ msgstr "Arka plan yoğunluğu"
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Bu içeriklerin <ALL> ve bu etiketi silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Background Transparency"
-#~ msgstr "Arka Plan Şeffaflığı"
+#, fuzzy
+msgid "Are you sure you want to delete this point?"
+msgstr "Bu DR Noktasını silmek istediğinizden emin misiniz?"
 #
-#~ msgid "Basic"
-#~ msgstr "Temel"
+msgid "Are you sure you want to remove this "
+msgstr "Bunu kaldırmak istediğinizden emin misiniz "
 #
-#~ msgid "Bearing"
-#~ msgstr "Yön"
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Bu Sınır Noktasını kaldırmak istediğinizden emin misiniz?"
 #
-#~ msgid "Bearing (M)"
-#~ msgstr "Yön (M)"
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Bu DR Noktasını kaldırmak istediğinizden emin misiniz?"
 #
-#~ msgid "Bearing From-To"
-#~ msgstr "-dan taşı-e doğru"
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Bu EBL noktasını kaldırmak istediğinizden emin misiniz?"
 #
-#~ msgid "Bearing From-To (M)"
-#~ msgstr "-dan taşı-e doğru (M)"
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Bu OD Noktasını kaldırmak istediğinizden emin misiniz?"
 #
-#~ msgid "Bearing: "
-#~ msgstr "Yön tayini: "
+msgid "Are you sure you want to remove this point?"
+msgstr "Bu noktayı kaldırmak istediğinizden emin misiniz?"
 #
-#~ msgid "Boat"
-#~ msgstr "Tekne"
+msgid "Arrival Radius"
+msgstr "Varış Yarıçapı"
 #
-#~ msgid "Bottom"
-#~ msgstr "Alt"
+msgid "Background Colour"
+msgstr "Arka Plan Rengi"
 #
-#~ msgid "Bottom Centre"
-#~ msgstr "Alt Merkezi"
+msgid "Background Density"
+msgstr "Arka plan yoğunluğu"
 #
-#~ msgid "Boundary"
-#~ msgstr "Sınır"
+msgid "Background Transparency"
+msgstr "Arka Plan Şeffaflığı"
 #
-#~ msgid "Boundary Point"
-#~ msgstr "Sınır noktası"
+msgid "Basic"
+msgstr "Temel"
 #
-#~ msgid ""
-#~ "Boundary Point Inclusion\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Sınır noktası kapsama\n"
-#~ "Boyut"
+msgid "Bearing"
+msgstr "Yön"
 #
-#~ msgid "Boundary Point Properties"
-#~ msgstr "Sınır noktası özellikleri"
+msgid "Bearing (M)"
+msgstr "Yön (M)"
 #
-#~ msgid "Boundary Point Properties, Layer: "
-#~ msgstr "Sınır noktası özellikleri, etiket: "
+msgid "Bearing From-To"
+msgstr "-dan taşı-e doğru"
 #
-#~ msgid "Boundary Point Type"
-#~ msgstr "Sınır noktası tipi"
+msgid "Bearing From-To (M)"
+msgstr "-dan taşı-e doğru (M)"
 #
-#~ msgid "Boundary Properties"
-#~ msgstr "Sınır özellikleri"
+msgid "Bearing: "
+msgstr "Yön tayini: "
 #
-#~ msgid "Boundary Properties, Layer: "
-#~ msgstr "Sınır özellikleri, Etiket: "
+msgid "Boat"
+msgstr "Tekne"
 #
-#~ msgid "Boundary Type"
-#~ msgstr "Sınır tipi"
+msgid "Bottom"
+msgstr "Alt"
 #
-#~ msgid "Centre"
-#~ msgstr "Merkez"
+msgid "Bottom Centre"
+msgstr "Alt Merkezi"
 #
-#~ msgid "Centre Line Style"
-#~ msgstr "Merkez hattı stili"
+msgid "Boundary"
+msgstr "Sınır"
 #
-#~ msgid "Centre Line Width"
-#~ msgstr "Merkez hattı genişliği"
+#, fuzzy
+msgid "Boundary '"
+msgstr "Sınır"
 #
-#~ msgid "Centre on moving boat"
-#~ msgstr "Tekne hareket merkezi"
+msgid "Boundary Point"
+msgstr "Sınır noktası"
 #
-#~ msgid "Change all Path Point Icons"
-#~ msgstr "Tüm yol nokta ikonlarını değiştir"
+#, fuzzy
+msgid "Boundary Point Icon"
+msgstr "Sınır noktası ikonlarını gizle"
 #
-#~ msgid "Combo!"
-#~ msgstr "Açılır menü!"
+msgid ""
+"Boundary Point Inclusion\n"
+"Size"
+msgstr ""
+"Sınır noktası kapsama\n"
+"Boyut"
 #
-#~ msgid "Confirm"
-#~ msgstr "Onayla"
+msgid "Boundary Point Properties"
+msgstr "Sınır noktası özellikleri"
 #
-#~ msgid "Confirm Object Delete"
-#~ msgstr "Nesne silmeyi onayla"
+msgid "Boundary Point Properties, Layer: "
+msgstr "Sınır noktası özellikleri, etiket: "
 #
-#~ msgid "Control Line"
-#~ msgstr "Kontrol hattı"
+msgid "Boundary Point Type"
+msgstr "Sınır noktası tipi"
 #
-#~ msgid "Copy"
-#~ msgstr "Kopyala"
+msgid "Boundary Properties"
+msgstr "Sınır özellikleri"
 #
-#~ msgid "Copy Boundary GUID"
-#~ msgstr "Sınır GUID kopyala"
+msgid "Boundary Properties, Layer: "
+msgstr "Sınır özellikleri, Etiket: "
 #
-#~ msgid "Copy DR GUID"
-#~ msgstr "DR GUID kopyala"
+msgid "Boundary Type"
+msgstr "Sınır tipi"
 #
-#~ msgid "Copy EBL GUID"
-#~ msgstr "EBL GUID kopyala"
+msgid "Centre"
+msgstr "Merkez"
 #
-#~ msgid "Copy Guard Zone GUID"
-#~ msgstr "Koruma bölgesi GUID kopyala"
+msgid "Centre Line Style"
+msgstr "Merkez hattı stili"
 #
-#~ msgid "Copy Point GUID"
-#~ msgstr "GUID noktasını kopyala"
+msgid "Centre Line Width"
+msgstr "Merkez hattı genişliği"
 #
-#~ msgid "Copy lat/long"
-#~ msgstr "Enlem/Boylam'ı kopyala"
+msgid "Centre on moving boat"
+msgstr "Tekne hareket merkezi"
 #
-#~ msgid "Course over Ground"
-#~ msgstr "Yer üstündeli rota"
+msgid "Change all Path Point Icons"
+msgstr "Tüm yol nokta ikonlarını değiştir"
 #
-#~ msgid "Course over Ground (M)"
-#~ msgstr "Yer üstündeki rota (M)"
+msgid "Character Based"
+msgstr ""
 #
-#~ msgid "Course over Ground (T)"
-#~ msgstr "Yer üzerindeki rota (T)"
+msgid "Combo!"
+msgstr "Açılır menü!"
 #
-#~ msgid "Create Boundary"
-#~ msgstr "Sınır oluştur"
+msgid "Confirm"
+msgstr "Onayla"
 #
-#~ msgid "Create Boundary Point"
-#~ msgstr "Sınır noktası oluştur"
+msgid "Confirm Object Delete"
+msgstr "Nesne silmeyi onayla"
 #
-#~ msgid "Create DR"
-#~ msgstr "DR oluştur"
+msgid "Control Line"
+msgstr "Kontrol hattı"
 #
-#~ msgid "Create EBL"
-#~ msgstr "EBL oluştur"
+msgid "Copy"
+msgstr "Kopyala"
 #
-#~ msgid "Create GZ"
-#~ msgstr "GZ oluştur"
+msgid "Copy Boundary GUID"
+msgstr "Sınır GUID kopyala"
 #
-#~ msgid "Create PIL"
-#~ msgstr "PIL oluştur"
+msgid "Copy DR GUID"
+msgstr "DR GUID kopyala"
 #
-#~ msgid "Create Text Point"
-#~ msgstr "Metin noktası oluştur"
+msgid "Copy EBL GUID"
+msgstr "EBL GUID kopyala"
 #
-#~ msgid "DR"
-#~ msgstr "DR"
+msgid "Copy Guard Zone GUID"
+msgstr "Koruma bölgesi GUID kopyala"
 #
-#~ msgid "DR Path Length"
-#~ msgstr "DR yol uzunluğu"
+msgid "Copy Point GUID"
+msgstr "GUID noktasını kopyala"
 #
-#~ msgid "DR Persistence"
-#~ msgstr "DR sürekliliği"
+msgid "Copy lat/long"
+msgstr "Enlem/Boylam'ı kopyala"
 #
-#~ msgid "DR Point"
-#~ msgstr "DR noktası"
+msgid "Course over Ground"
+msgstr "Yer üstündeli rota"
 #
-#~ msgid "DR Point Icon"
-#~ msgstr "DR noktası ikonu"
+msgid "Course over Ground (M)"
+msgstr "Yer üstündeki rota (M)"
 #
-#~ msgid "DR Point Interval"
-#~ msgstr "DR nokta aralığı"
+msgid "Course over Ground (T)"
+msgstr "Yer üzerindeki rota (T)"
 #
-#~ msgid "DR Point Properties"
-#~ msgstr "DR noktası özellikleri"
+msgid "Create Boundary"
+msgstr "Sınır oluştur"
 #
-#~ msgid "DR Point Properties, Layer: "
-#~ msgstr "DR noktası özellikleri, Etiket: "
+msgid "Create Boundary Point"
+msgstr "Sınır noktası oluştur"
 #
-#~ msgid "DR Properties"
-#~ msgstr "DR özellikleri"
+msgid "Create DR"
+msgstr "DR oluştur"
 #
-#~ msgid "DR Properties, Layer: "
-#~ msgstr "DR özellikleri, Katman: "
+msgid "Create EBL"
+msgstr "EBL oluştur"
 #
-#~ msgid "Date:"
-#~ msgstr "Tarih:"
+msgid "Create GZ"
+msgstr "GZ oluştur"
 #
-#~ msgid "Days"
-#~ msgstr "Günler"
+msgid "Create PIL"
+msgstr "PIL oluştur"
 #
-#~ msgid "Deactivate"
-#~ msgstr "Devre dışı bırak"
+msgid "Create Text Point"
+msgstr "Metin noktası oluştur"
 #
-#~ msgid "Dead Reckoning"
-#~ msgstr "Parakete Hesabı"
+msgid "DR"
+msgstr "DR"
 #
-#~ msgid "Default Offset (+Stbd/-Port)"
-#~ msgstr "Varsayılan ofset (+Stbd/-Port)"
+msgid "DR Path Length"
+msgstr "DR yol uzunluğu"
 #
-#~ msgid "Delete"
-#~ msgstr "Sil"
+msgid "DR Persistence"
+msgstr "DR sürekliliği"
 #
-#~ msgid "Delete Line"
-#~ msgstr "Hattı sil"
+msgid "DR Point"
+msgstr "DR noktası"
 #
-#~ msgid "Delete..."
-#~ msgstr "Sil..."
+msgid "DR Point Icon"
+msgstr "DR noktası ikonu"
 #
-#~ msgid "Desc"
-#~ msgstr "Açıklama"
+msgid "DR Point Interval"
+msgstr "DR nokta aralığı"
 #
-#~ msgid "Description"
-#~ msgstr "Açıklama"
+msgid "DR Point Properties"
+msgstr "DR noktası özellikleri"
 #
-#~ msgid "Display Toolbar"
-#~ msgstr "Araç çubuğunu görüntüle"
+msgid "DR Point Properties, Layer: "
+msgstr "DR noktası özellikleri, Etiket: "
 #
-#~ msgid "Display text"
-#~ msgstr "Ekran yazısı"
+msgid "DR Properties"
+msgstr "DR özellikleri"
 #
-#~ msgid "Distance"
-#~ msgstr "Mesafe"
+msgid "DR Properties, Layer: "
+msgstr "DR özellikleri, Katman: "
 #
-#~ msgid "Distance Between Range Rings"
-#~ msgstr "Menzil çemberleri arası uzaklık"
+msgid "Data Directory"
+msgstr ""
 #
-#~ msgid "Distance From Boat"
-#~ msgstr "Tekneden uzaklık"
+msgid "Data:"
+msgstr ""
 #
-#~ msgid "Distance Unit"
-#~ msgstr "Uzaklık birimi"
+msgid "Date:"
+msgstr "Tarih:"
 #
-#~ msgid "Distance Units"
-#~ msgstr "Uzaklık Birimleri"
+msgid "Days"
+msgstr "Günler"
 #
-#~ msgid "Distance between Range Rings"
-#~ msgstr "Menzil çemberleri arasındaki uzaklık"
+msgid "Deactivate"
+msgstr "Devre dışı bırak"
 #
-#~ msgid "Distance from Ownship"
-#~ msgstr "Kendi geminden uzaklık"
+msgid "Dead Reckoning"
+msgstr "Parakete Hesabı"
 #
-#~ msgid ""
-#~ "Do you also want to make the shared OD Points being part of this boundary "
-#~ "invisible?"
-#~ msgstr ""
-#~ "Paylaşılmış OD noktalarını bu sınırın görünmez bir parçası yapmak istiyor "
-#~ "musunuz?"
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Varsayılan ofset (+Stbd/-Port)"
 #
-#~ msgid "Dot"
-#~ msgstr "Nokta"
+#, fuzzy
+msgid "Dele&te All"
+msgstr "Sil"
 #
-#~ msgid "Dot Dash"
-#~ msgstr "Noktalı çizgi"
+msgid "Delete"
+msgstr "Sil"
 #
-#~ msgid "Draw Toolbar"
-#~ msgstr "Çizim araç çubuğu"
+msgid "Delete Line"
+msgstr "Hattı sil"
 #
-#~ msgid "EBL"
-#~ msgstr "EBL"
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
 #
-#~ msgid "EBL Angle (-P/+S)"
-#~ msgstr "Ebl açı (-P/+S)"
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
 #
-#~ msgid ""
-#~ "EBL Fixed\n"
-#~ "End Position"
-#~ msgstr ""
-#~ "EBL düzeltme\n"
-#~ "Bitiş pozisyonu"
+msgid "Delete..."
+msgstr "Sil..."
 #
-#~ msgid "EBL Fixed End Position"
-#~ msgstr "EBL sabit bitiş pozisyonu"
+msgid "Desc"
+msgstr "Açıklama"
 #
-#~ msgid "EBL Persistence"
-#~ msgstr "EBL sürekliliği"
+msgid "Description"
+msgstr "Açıklama"
 #
-#~ msgid "EBL Point"
-#~ msgstr "EBL noktası"
+#, fuzzy
+msgid "Display Text"
+msgstr "Ekran yazısı"
 #
-#~ msgid "EBL Point Properties"
-#~ msgstr "EBL noktası özellikleri"
+msgid "Display Toolbar"
+msgstr "Araç çubuğunu görüntüle"
 #
-#~ msgid "EBL Point Properties, Layer: "
-#~ msgstr "EBL noktası özellikleri, Etiket: "
+msgid "Display text"
+msgstr "Ekran yazısı"
 #
-#~ msgid "EBL Properties"
-#~ msgstr "EBL özellikleri"
+msgid "Distance"
+msgstr "Mesafe"
 #
-#~ msgid "EBL Properties, Layer: "
-#~ msgstr "EBL özellikleri, Etiket: "
+msgid "Distance Between Range Rings"
+msgstr "Menzil çemberleri arası uzaklık"
 #
-#~ msgid ""
-#~ "Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 5"
-#~ msgstr ""
-#~ "Kenar Döşeme Duyarlılığı\n"
-#~ "(yüzde ekran genişliği) Varsayılan 5"
+msgid "Distance From Boat"
+msgstr "Tekneden uzaklık"
 #
-#~ msgid "Electronic Bearing Line"
-#~ msgstr "Elektronik yön hattı"
+msgid "Distance Unit"
+msgstr "Uzaklık birimi"
 #
-#~ msgid "End"
-#~ msgstr "Son"
+msgid "Distance Units"
+msgstr "Uzaklık Birimleri"
 #
-#~ msgid "End Point Icon"
-#~ msgstr "Bitiş noktası ikonu"
+msgid "Distance between Range Rings"
+msgstr "Menzil çemberleri arasındaki uzaklık"
 #
-#~ msgid "Example"
-#~ msgstr "Örnek"
+msgid "Distance from Ownship"
+msgstr "Kendi geminden uzaklık"
 #
-#~ msgid "Exclusion"
-#~ msgstr "Çıkarılanlar"
+msgid ""
+"Do you also want to make the shared OD Points being part of this boundary "
+"invisible?"
+msgstr ""
+"Paylaşılmış OD noktalarını bu sınırın görünmez bir parçası yapmak istiyor "
+"musunuz?"
 #
-#~ msgid "Export GPX file"
-#~ msgstr "GPX dosyasını dışa aktar"
+msgid "Dot"
+msgstr "Nokta"
 #
-#~ msgid "Extended"
-#~ msgstr "Genişletilmiş"
+msgid "Dot Dash"
+msgstr "Noktalı çizgi"
 #
-#~ msgid "Fill Colour"
-#~ msgstr "Dolgu rengi"
+msgid "Draw Toolbar"
+msgstr "Çizim araç çubuğu"
 #
-#~ msgid "Fill Density"
-#~ msgstr "Dolgu yoğunluğu"
+#, fuzzy
+msgid "E&xport All Visible"
+msgstr "GPX dosyasını dışa aktar"
 #
-#~ msgid "First"
-#~ msgstr "Birinci"
+msgid "EBL"
+msgstr "EBL"
 #
-#~ msgid "First Angle (-P/+S)"
-#~ msgstr "İlk açı (-P/+S)"
+msgid "EBL Angle (-P/+S)"
+msgstr "Ebl açı (-P/+S)"
 #
-#~ msgid "First Point Icon"
-#~ msgstr "Birinci nokta ikonu"
+msgid ""
+"EBL Fixed\n"
+"End Position"
+msgstr ""
+"EBL düzeltme\n"
+"Bitiş pozisyonu"
 #
-#~ msgid "First distance"
-#~ msgstr "İlk mesafe"
+msgid "EBL Fixed End Position"
+msgstr "EBL sabit bitiş pozisyonu"
 #
-#~ msgid "Fonts"
-#~ msgstr "Yazı tipleri"
+msgid "EBL Persistence"
+msgstr "EBL sürekliliği"
 #
-#~ msgid "For this leg the Great Circle boundary is "
-#~ msgstr "Bu bacak için Büyük Çember sınırı "
+msgid "EBL Point"
+msgstr "EBL noktası"
 #
-#~ msgid "From Point"
-#~ msgstr "Noktadan"
+msgid "EBL Point Properties"
+msgstr "EBL noktası özellikleri"
 #
-#~ msgid "From: "
-#~ msgstr "İtibaren: "
+msgid "EBL Point Properties, Layer: "
+msgstr "EBL noktası özellikleri, Etiket: "
 #
-#~ msgid "GUID"
-#~ msgstr "GUID"
+msgid "EBL Properties"
+msgstr "EBL özellikleri"
 #
-#~ msgid "GZ"
-#~ msgstr "GZ"
+msgid "EBL Properties, Layer: "
+msgstr "EBL özellikleri, Etiket: "
 #
-#~ msgid "General"
-#~ msgstr "Genel"
+msgid ""
+"Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr ""
+"Kenar Döşeme Duyarlılığı\n"
+"(yüzde ekran genişliği) Varsayılan 5"
 #
-#~ msgid ""
-#~ "General Drawing for OpenCPN\n"
-#~ "\n"
-#~ "Thanks to the community for their helpful suggestions."
-#~ msgstr ""
-#~ "OpenCPN için Genel çizim\n"
-#~ "\n"
-#~ "Yararlı önerileri için topluluğa teşekkür ederim."
+msgid "Edit"
+msgstr ""
 #
-#~ msgid "General drawing for OpenCPN"
-#~ msgstr "OpenCPN için Genel çizim"
+msgid "Electronic Bearing Line"
+msgstr "Elektronik yön hattı"
 #
-#~ msgid "Guard Zone"
-#~ msgstr "Koruma bölgesi"
+msgid "End"
+msgstr "Son"
 #
-#~ msgid "Guard Zone Persistence"
-#~ msgstr "Koruma bölge sürekliliği"
+msgid "End Point Icon"
+msgstr "Bitiş noktası ikonu"
 #
-#~ msgid "Guard Zone Point"
-#~ msgstr "Koruma bölgesi noktası"
+msgid "Error in import file."
+msgstr ""
 #
-#~ msgid "Guard Zone Point Properties"
-#~ msgstr "Koruma bölge noktası özellikleri"
+msgid "Example"
+msgstr "Örnek"
 #
-#~ msgid "Guard Zone Properties"
-#~ msgstr "Koruma bölgesi özellikleri"
+msgid "Exclusion"
+msgstr "Çıkarılanlar"
 #
-#~ msgid "Heading"
-#~ msgstr "Pruva"
+msgid "Export GPX file"
+msgstr "GPX dosyasını dışa aktar"
 #
-#~ msgid "Help"
-#~ msgstr "Yardım"
+msgid "Extended"
+msgstr "Genişletilmiş"
 #
-#~ msgid "Hide Boundary Point Icons"
-#~ msgstr "Sınır noktası ikonlarını gizle"
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
 #
-#~ msgid "Hide Point names"
-#~ msgstr "Nokta isimlerini gizle"
+msgid "Fill Colour"
+msgstr "Dolgu rengi"
 #
-#~ msgid "Hide from chart"
-#~ msgstr "Haritada gizle"
+msgid "Fill Density"
+msgstr "Dolgu yoğunluğu"
 #
-#~ msgid "Hours"
-#~ msgstr "Saatler"
+msgid "First"
+msgstr "Birinci"
 #
-#~ msgid "ID"
-#~ msgstr "Kimlik"
+msgid "First Angle (-P/+S)"
+msgstr "İlk açı (-P/+S)"
 #
-#~ msgid "ID Num"
-#~ msgstr "Kimlik numarası"
+msgid "First Point Icon"
+msgstr "Birinci nokta ikonu"
 #
-#~ msgid "ID: "
-#~ msgstr "ID: "
+msgid "First distance"
+msgstr "İlk mesafe"
 #
-#~ msgid "Icon"
-#~ msgstr "Simge"
+#, fuzzy
+msgid "Font Based"
+msgstr "Yazı tipleri"
 #
-#~ msgid "Import GPX file"
-#~ msgstr "GPX dosyasını içe aktar"
+msgid "Fonts"
+msgstr "Yazı tipleri"
 #
-#~ msgid "Inactive Centre Line Colour"
-#~ msgstr "Pasif merkez hattı rengi"
+msgid "For this leg the Great Circle boundary is "
+msgstr "Bu bacak için Büyük Çember sınırı "
 #
-#~ msgid ""
-#~ "Inactive DR Line\n"
-#~ "Colour"
-#~ msgstr ""
-#~ "Pasif DR hattı\n"
-#~ "Rengi"
+msgid "From Point"
+msgstr "Noktadan"
 #
-#~ msgid "Inactive EBL Line Colour"
-#~ msgstr "Pasif EBL hattının rengi"
+msgid "From: "
+msgstr "İtibaren: "
 #
-#~ msgid "Inactive Fill Colour"
-#~ msgstr "Pasif dolgu rengi"
+msgid "GUID"
+msgstr "GUID"
 #
-#~ msgid "Inactive Line Colour"
-#~ msgstr "Pasif hattın rengi"
+msgid "GZ"
+msgstr "GZ"
 #
-#~ msgid "Inactive Offset Line Colour"
-#~ msgstr "Pasif ofset hattı rengi"
+#, fuzzy
+msgid "GZ Point Properties, Layer: "
+msgstr "DR noktası özellikleri, Etiket: "
 #
-#~ msgid "Inclusion"
-#~ msgstr "Eklenen"
+msgid "General"
+msgstr "Genel"
 #
-#~ msgid ""
-#~ "Inclusion Boundary\n"
-#~ "Size"
-#~ msgstr ""
-#~ "Kapsanan Sınır\n"
-#~ "boyutu"
+msgid ""
+"General Drawing for OpenCPN\n"
+"\n"
+"Thanks to the community for their helpful suggestions."
+msgstr ""
+"OpenCPN için Genel çizim\n"
+"\n"
+"Yararlı önerileri için topluluğa teşekkür ederim."
 #
-#~ msgid "Inclusion Boundary Size"
-#~ msgstr "Kapsanan sınır boyutu"
+msgid "General drawing for OpenCPN"
+msgstr "OpenCPN için Genel çizim"
 #
-#~ msgid "Index Line Properties"
-#~ msgstr "Dizin satır özellikleri"
+msgid "Guard Zone"
+msgstr "Koruma bölgesi"
 #
-#~ msgid "Index Lines (+ Stbd/- Port)"
-#~ msgstr "Dizin çizgileri (+ Stbd/- Port)"
+msgid "Guard Zone Persistence"
+msgstr "Koruma bölge sürekliliği"
 #
-#~ msgid ""
-#~ "Initial Edge Panning Sensitivity\n"
-#~ "(percentage screen width) Default 3"
-#~ msgstr ""
-#~ "Başlangıç ​​Kenar Kaydırma Hassaslığı\n"
-#~ "(yüzde ekran genişliği) Varsayılan 3"
+msgid "Guard Zone Point"
+msgstr "Koruma bölgesi noktası"
 #
-#~ msgid "Insert Boundary Point"
-#~ msgstr "Sınır noktası ekle"
+msgid "Guard Zone Point Properties"
+msgstr "Koruma bölge noktası özellikleri"
 #
-#~ msgid "Insert EBL Point"
-#~ msgstr "EBL noktası ekle"
+msgid "Guard Zone Properties"
+msgstr "Koruma bölgesi özellikleri"
 #
-#~ msgid "Interval Type"
-#~ msgstr "Mesafe Türü"
+msgid "Heading"
+msgstr "Pruva"
 #
-#~ msgid "Kilometres"
-#~ msgstr "Kilometre"
+msgid "Help"
+msgstr "Yardım"
 #
-#~ msgid "Latitude"
-#~ msgstr "Enlem"
+msgid "Hide Boundary Point Icons"
+msgstr "Sınır noktası ikonlarını gizle"
 #
-#~ msgid "Layer"
-#~ msgstr "Katman"
+#, fuzzy
+msgid "Hide Layer(s)"
+msgstr "Katmanlar"
 #
-#~ msgid "Layer "
-#~ msgstr "Katman "
+msgid "Hide Path(s)"
+msgstr ""
 #
-#~ msgid "Layer Boundary"
-#~ msgstr "Sınır katmanı"
+msgid "Hide Point names"
+msgstr "Nokta isimlerini gizle"
 #
-#~ msgid "Layer Boundary Point"
-#~ msgstr "Sınır noktası katmanı"
+#, fuzzy
+msgid "Hide Point(s)"
+msgstr "Nokta isimlerini gizle"
 #
-#~ msgid "Layer DR Point"
-#~ msgstr "DR noktası katmanı"
+msgid "Hide from chart"
+msgstr "Haritada gizle"
 #
-#~ msgid "Layer EBL Point"
-#~ msgstr "EBL noktası katmanı"
+msgid "Hours"
+msgstr "Saatler"
 #
-#~ msgid "Layer Name"
-#~ msgstr "Katman ismi"
+msgid "I&mport"
+msgstr ""
 #
-#~ msgid "Layer Text Point"
-#~ msgstr "Metin noktası katmanı"
+msgid "ID"
+msgstr "Kimlik"
 #
-#~ msgid "Layers"
-#~ msgstr "Katmanlar"
+msgid "ID Num"
+msgstr "Kimlik numarası"
 #
-#~ msgid "Left"
-#~ msgstr "Ayrıldı"
+msgid "ID: "
+msgstr "ID: "
 #
-#~ msgid "Leg: from "
-#~ msgstr "Bacak: itibaren "
+msgid "Icon"
+msgstr "Simge"
 #
-#~ msgid "Length Type"
-#~ msgstr "Uzunluk Türü"
+msgid "Icon Directory"
+msgstr ""
 #
-#~ msgid "Line Colour"
-#~ msgstr "Hat rengi"
+msgid "Import"
+msgstr ""
 #
-#~ msgid "Line Style"
-#~ msgstr "Hat stili"
+msgid "Import Error"
+msgstr ""
 #
-#~ msgid "Line Width"
-#~ msgstr "Hat genişliği"
+msgid "Import GPX file"
+msgstr "GPX dosyasını içe aktar"
 #
-#~ msgid "List contents "
-#~ msgstr "İçeriği listele "
+#, fuzzy
+msgid "Import file"
+msgstr "GPX dosyasını içe aktar"
 #
-#~ msgid "Loading navobjects from "
-#~ msgstr "-den navigasyon nesnesi yükleniyor "
+#, fuzzy
+msgid "Import incomplete."
+msgstr "GPX dosyasını içe aktar"
 #
-#~ msgid "Long Dash"
-#~ msgstr "Uzun Çizgi"
+msgid "Inactive Centre Line Colour"
+msgstr "Pasif merkez hattı rengi"
 #
-#~ msgid "Longitude"
-#~ msgstr "Boylam"
+msgid ""
+"Inactive DR Line\n"
+"Colour"
+msgstr ""
+"Pasif DR hattı\n"
+"Rengi"
 #
-#~ msgid "Maintain with"
-#~ msgstr "ile birlikte bakımını yap"
+msgid "Inactive EBL Line Colour"
+msgstr "Pasif EBL hattının rengi"
 #
-#~ msgid "Major:"
-#~ msgstr "Önemli:"
+msgid "Inactive Fill Colour"
+msgstr "Pasif dolgu rengi"
 #
-#~ msgid "Match VRM colour to EBL colour"
-#~ msgstr "VRM rengini EBL rengine denkle"
+msgid "Inactive Line Colour"
+msgstr "Pasif hattın rengi"
 #
-#~ msgid "Merge and Delete Boundaries"
-#~ msgstr "Sınırları birleştir ve sil"
+#, fuzzy
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Pasif ofset hattı rengi"
 #
-#~ msgid "Merge and Keep Boundaries"
-#~ msgstr "Sınırları birleştir ve sakla"
+msgid "Inactive Offset Line Colour"
+msgstr "Pasif ofset hattı rengi"
 #
-#~ msgid "Minor:"
-#~ msgstr "Küçük:"
+msgid "Inclusion"
+msgstr "Eklenen"
 #
-#~ msgid "Minutes"
-#~ msgstr "Dakika"
+msgid ""
+"Inclusion Boundary\n"
+"Size"
+msgstr ""
+"Kapsanan Sınır\n"
+"boyutu"
 #
-#~ msgid "Move Boundary"
-#~ msgstr "Sınırı Taşı"
+msgid "Inclusion Boundary Size"
+msgstr "Kapsanan sınır boyutu"
 #
-#~ msgid "Move Boundary Point"
-#~ msgstr "Sınır noktasını taşı"
+msgid "Index Line Properties"
+msgstr "Dizin satır özellikleri"
 #
-#~ msgid "Move Boundary Segment"
-#~ msgstr "Sınır bölümünü taşı"
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Dizin çizgileri (+ Stbd/- Port)"
 #
-#~ msgid "Move DR Point"
-#~ msgstr "DR noktasını taşı"
+msgid ""
+"Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr ""
+"Başlangıç ​​Kenar Kaydırma Hassaslığı\n"
+"(yüzde ekran genişliği) Varsayılan 3"
 #
-#~ msgid "Move EBL"
-#~ msgstr "EBL'yi taşı"
+#, fuzzy
+msgid "Initial number of index lines"
+msgstr "Menzil çemberi numarası"
 #
-#~ msgid "Move EBL Point"
-#~ msgstr "EBL noktasını taşı"
+msgid "Insert Boundary Point"
+msgstr "Sınır noktası ekle"
 #
-#~ msgid "Move Guard Zone Point"
-#~ msgstr "Koruma bölgesi noktasını taşı"
+msgid "Insert EBL Point"
+msgstr "EBL noktası ekle"
 #
-#~ msgid "Move Line"
-#~ msgstr "Hattı taşı"
+msgid "Interval Type"
+msgstr "Mesafe Türü"
 #
-#~ msgid "Move OD Point"
-#~ msgstr "OD noktasını taşı"
+msgid "Kilometres"
+msgstr "Kilometre"
 #
-#~ msgid "Move PIL Point"
-#~ msgstr "PIL noktasını taşı"
+msgid "Latitude"
+msgstr "Enlem"
 #
-#~ msgid "Move Text Point"
-#~ msgstr "Metin noktasını taşı"
+msgid "Layer"
+msgstr "Katman"
 #
-#~ msgid "Move start point to boat lat/lon"
-#~ msgstr "Başlangıç noktasını teknenin enlem/boylam'ına taşı"
+msgid "Layer "
+msgstr "Katman "
 #
-#~ msgid "Multiple Boundaries"
-#~ msgstr "Çoklu sınırlar"
+msgid "Layer Boundary"
+msgstr "Sınır katmanı"
 #
-#~ msgid "Name"
-#~ msgstr "Adı"
+msgid "Layer Boundary Point"
+msgstr "Sınır noktası katmanı"
 #
-#~ msgid "Name:"
-#~ msgstr "Adı:"
+msgid "Layer DR Point"
+msgstr "DR noktası katmanı"
 #
-#~ msgid "Name: "
-#~ msgstr "Ad: "
+msgid "Layer EBL Point"
+msgstr "EBL noktası katmanı"
 #
-#~ msgid "Nautical Miles"
-#~ msgstr "Deniz Mili"
+msgid "Layer Name"
+msgstr "Katman ismi"
 #
-#~ msgid "Neither"
-#~ msgstr "Hiçbiri"
+msgid "Layer Text Point"
+msgstr "Metin noktası katmanı"
 #
-#~ msgid "Never"
-#~ msgstr "Asla"
+msgid "Layers"
+msgstr "Katmanlar"
 #
-#~ msgid "New layer %d: %s"
-#~ msgstr "Yeni katman %d: %s"
+#, fuzzy
+msgid "Layers Directory"
+msgstr "Sınır katmanı"
 #
-#~ msgid "No alarm"
-#~ msgstr "Alarm yok"
+msgid "Left"
+msgstr "Ayrıldı"
 #
-#~ msgid "No. of items"
-#~ msgstr "Öğe yok"
+msgid "Left Click links are deleted."
+msgstr ""
 #
-#~ msgid "None"
-#~ msgstr "Yok"
+msgid "Left Click links are opened for editing."
+msgstr ""
 #
-#~ msgid "Number of Point Range Rings"
-#~ msgstr "Nokta menzil çemberinin numarası"
+msgid "Left Click links are opened in the default browser."
+msgstr ""
 #
-#~ msgid "Number of Range Rings"
-#~ msgstr "Menzil çemberi numarası"
+msgid "Left click opens in browser"
+msgstr ""
 #
-#~ msgid "OCPN Draw"
-#~ msgstr "OCPN çizim"
+msgid "Leg: from "
+msgstr "Bacak: itibaren "
 #
-#~ msgid "OCPN Draw Boundary"
-#~ msgstr "OCPN sınır çizim"
+msgid "Length Type"
+msgstr "Uzunluk Türü"
 #
-#~ msgid "OCPN Draw Boundary Create"
-#~ msgstr "OCPN sınır çizimini oluştur"
+msgid "License"
+msgstr ""
 #
-#~ msgid "OCPN Draw Boundary Delete"
-#~ msgstr "OCPN çizimi sınırı sil"
+msgid "Line Colour"
+msgstr "Hat rengi"
 #
-#~ msgid "OCPN Draw DR Delete"
-#~ msgstr "OCPN çizimi DR sil"
+msgid "Line Style"
+msgstr "Hat stili"
 #
-#~ msgid "OCPN Draw Delete Boundary Point"
-#~ msgstr "OCPN çizimi sınır noktasını sil"
+#, fuzzy
+msgid "Line Type"
+msgstr "Hat stili"
 #
-#~ msgid "OCPN Draw Delete DR Point"
-#~ msgstr "OCPN çizimi DR noktasını sil"
+msgid "Line Width"
+msgstr "Hat genişliği"
 #
-#~ msgid "OCPN Draw Delete EBL Point"
-#~ msgstr "OCPN çizimi EBL noktasını sil"
+msgid "Link"
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete OD Point"
-#~ msgstr "OCPN çizimi OD noktasını sil"
+#, fuzzy
+msgid "Link Description"
+msgstr "Açıklama"
 #
-#~ msgid "OCPN Draw Delete PIL Point"
-#~ msgstr "OCPN çizimi PIL noktasını sil"
+msgid "Links"
+msgstr ""
 #
-#~ msgid "OCPN Draw Delete Text Point"
-#~ msgstr "OCPN çizimi metin noktasını sil"
+msgid "List contents "
+msgstr "İçeriği listele "
 #
-#~ msgid "OCPN Draw EBL Delete"
-#~ msgstr "OCPN çizimi EBL sil"
+msgid "Loading navobjects from "
+msgstr "-den navigasyon nesnesi yükleniyor "
 #
-#~ msgid "OCPN Draw GZ Delete"
-#~ msgstr "OCPN GZ çizimini sil"
+msgid "Local file..."
+msgstr ""
 #
-#~ msgid "OCPN Draw Manager"
-#~ msgstr "OCPN çizim yöneticisi"
+msgid "Long Dash"
+msgstr "Uzun Çizgi"
 #
-#~ msgid "OCPN Draw PIL Delete"
-#~ msgstr "OCPN çizimi PIL sil"
+msgid "Longitude"
+msgstr "Boylam"
 #
-#~ msgid "OCPN Draw Parallel Index Line Delete"
-#~ msgstr "OCPN paralel dizin hattı çizimini sil"
+msgid "Maintain with"
+msgstr "ile birlikte bakımını yap"
 #
-#~ msgid "OCPN Draw Point"
-#~ msgstr "OCPN'nin çizim noktası"
+msgid "Major:"
+msgstr "Önemli:"
 #
-#~ msgid "OCPN Draw Point Create"
-#~ msgstr "OCPN çizim noktası oluştur"
+msgid "Match VRM colour to EBL colour"
+msgstr "VRM rengini EBL rengine denkle"
 #
-#~ msgid "OCPN Draw Point, Layer: "
-#~ msgstr "OCPN çizim noktası, etiket: "
+msgid "Maximum Text Width"
+msgstr ""
 #
-#~ msgid "OCPN Draw Properties"
-#~ msgstr "OCPN çizim özelikleri"
+msgid "Maximum Width Type"
+msgstr ""
 #
-#~ msgid "OCPN Draw Remove "
-#~ msgstr "OCPN çizimini kaldır "
+msgid "Merge and Delete Boundaries"
+msgstr "Sınırları birleştir ve sil"
 #
-#~ msgid "OCPN Draw Remove Boundary Point"
-#~ msgstr "OCPN sınır noktası çizimini kaldır"
+msgid "Merge and Keep Boundaries"
+msgstr "Sınırları birleştir ve sakla"
 #
-#~ msgid "OCPN Draw Remove DR Point"
-#~ msgstr "OCPN çizimi DR noktasını kaldır"
+msgid "Minor:"
+msgstr "Küçük:"
 #
-#~ msgid "OCPN Draw Remove EBL Point"
-#~ msgstr "OCPN EBL çizim noktasını kaldır"
+msgid "Minutes"
+msgstr "Dakika"
 #
-#~ msgid "OCPN Draw Remove OD Point"
-#~ msgstr "OCPN çizimi OD noktası kaldır"
+msgid "Move Boundary"
+msgstr "Sınırı Taşı"
 #
-#~ msgid "OD"
-#~ msgstr "Od"
+msgid "Move Boundary Point"
+msgstr "Sınır noktasını taşı"
 #
-#~ msgid "OD Point"
-#~ msgstr "OD noktası"
+msgid "Move Boundary Segment"
+msgstr "Sınır bölümünü taşı"
 #
-#~ msgid "OD Point Name"
-#~ msgstr "OD noktası adı"
+msgid "Move DR Point"
+msgstr "DR noktasını taşı"
 #
-#~ msgid "OD Point Properties"
-#~ msgstr "OD Noktası Özellikleri"
+msgid "Move EBL"
+msgstr "EBL'yi taşı"
 #
-#~ msgid "OD Points"
-#~ msgstr "OD noktası"
+msgid "Move EBL Point"
+msgstr "EBL noktasını taşı"
 #
-#~ msgid "OD\\WD"
-#~ msgstr "OD\\WD"
+msgid "Move Guard Zone Point"
+msgstr "Koruma bölgesi noktasını taşı"
 #
-#~ msgid "Offset"
-#~ msgstr "Dengeleme"
+msgid "Move Line"
+msgstr "Hattı taşı"
 #
-#~ msgid "Offset (+ Stbd/- Port)"
-#~ msgstr "Ofset (+ Stbd/- port)"
+msgid "Move OD Point"
+msgstr "OD noktasını taşı"
 #
-#~ msgid "Offset Line Style"
-#~ msgstr "Ofset hattı stili"
+msgid "Move PIL Point"
+msgstr "PIL noktasını taşı"
 #
-#~ msgid "Offset Line Width"
-#~ msgstr "Ofset hattı genişliği"
+msgid "Move Text Point"
+msgstr "Metin noktasını taşı"
 #
-#~ msgid "Offset: "
-#~ msgstr "Kaydırma: "
+msgid "Move start point to boat lat/lon"
+msgstr "Başlangıç noktasını teknenin enlem/boylam'ına taşı"
 #
-#~ msgid "On Rollover Only"
-#~ msgstr "Yalnızca yuvarlanma üzerinde"
+msgid "Multiple Boundaries"
+msgstr "Çoklu sınırlar"
 #
-#~ msgid "OpenCPN Alert"
-#~ msgstr "OpenCPN Alarmı"
+msgid "Name"
+msgstr "Adı"
 #
-#~ msgid "Other:"
-#~ msgstr "Diğer:"
+msgid "Name:"
+msgstr "Adı:"
 #
-#~ msgid "Overwrite existing file?"
-#~ msgstr "Varolan dosyanın üzerine yazılsın mı?"
+msgid "Name: "
+msgstr "Ad: "
 #
-#~ msgid "PIL"
-#~ msgstr "PIL"
+msgid "Nautical Miles"
+msgstr "Deniz Mili"
 #
-#~ msgid "PIL Persistence"
-#~ msgstr "PIL sürerkliliği"
+msgid "Neither"
+msgstr "Hiçbiri"
 #
-#~ msgid "PIL Point"
-#~ msgstr "PIL noktası"
+msgid "Never"
+msgstr "Asla"
 #
-#~ msgid "Parallel Index Line"
-#~ msgstr "Paralel dizin hattı"
+msgid "New &temporary Layer"
+msgstr ""
 #
-#~ msgid "Parallel Index Line Angle (+Stbd/-Port)"
-#~ msgstr "Paralel dizin çizgi açısı (+Stbd/-Port)"
+#, c-format
+msgid "New layer %d: %s"
+msgstr "Yeni katman %d: %s"
 #
-#~ msgid "Parallel Index Line Persistence"
-#~ msgstr "Paralel dizin hattı sürekliliği"
+msgid "New persistent &Layer"
+msgstr ""
 #
-#~ msgid "Parallel Index Line Properties"
-#~ msgstr "Paralel dizin hattı özellikleri"
+#, fuzzy
+msgid "No"
+msgstr "Yok"
 #
-#~ msgid "Paste"
-#~ msgstr "Yapıştır"
+msgid "No alarm"
+msgstr "Alarm yok"
 #
-#~ msgid "Paste lat/long"
-#~ msgstr "Enlem/Boylam'ı yapıştır"
+msgid "No. of items"
+msgstr "Öğe yok"
 #
-#~ msgid "Patch:"
-#~ msgstr "Yama:"
+msgid "None"
+msgstr "Yok"
 #
-#~ msgid "Path"
-#~ msgstr "Yol"
+msgid "Number of Point Range Rings"
+msgstr "Nokta menzil çemberinin numarası"
 #
-#~ msgid "Path & Point Manager"
-#~ msgstr "Yol & nokta yöneticisi"
+msgid "Number of Range Rings"
+msgstr "Menzil çemberi numarası"
 #
-#~ msgid "Path Name"
-#~ msgstr "Yol adı"
+#, fuzzy
+msgid "OCPN API Version:"
+msgstr "Sürüm:"
 #
-#~ msgid "Path Persistence"
-#~ msgstr "Yol sürekliliği"
+msgid "OCPN Draw"
+msgstr "OCPN çizim"
 #
-#~ msgid "Path Properties"
-#~ msgstr "İz Özellikleri"
+#, fuzzy
+msgid "OCPN Draw API Version:"
+msgstr "OCPN'nin çizim noktası"
 #
-#~ msgid "Path Properties, Layer: "
-#~ msgstr "Yol özellikleri, etiket: "
+msgid "OCPN Draw Boundary"
+msgstr "OCPN sınır çizim"
 #
-#~ msgid "Paths"
-#~ msgstr "Yollar"
+msgid "OCPN Draw Boundary Create"
+msgstr "OCPN sınır çizimini oluştur"
 #
-#~ msgid "Persistent"
-#~ msgstr "Kalıcı"
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN çizimi sınırı sil"
 #
-#~ msgid "Persistent over Crash"
-#~ msgstr "Kaza üzerine kalıcılık"
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN çizimi DR sil"
 #
-#~ msgid "Pick a new start point"
-#~ msgstr "Yeni bir başlangıç noktası seçin"
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN çizimi sınır noktasını sil"
 #
-#~ msgid ""
-#~ "Please report problems using FlySpray at:\n"
-#~ "https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "at the OpenCPN forum:\n"
-#~ "http://www.cruisersforum.com/forums/f134\n"
-#~ "\n"
-#~ "or\n"
-#~ "\n"
-#~ "Raise an issue in GIT at:\n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues\n"
-#~ msgstr ""
-#~ "Lütfen FlySpray kullanarak şurada sorunları bildirin:\n"
-#~ "https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-#~ "\n"
-#~ "veya\n"
-#~ "\n"
-#~ "OpenCPN forumunda:\n"
-#~ "http://www.cruisersforum.com/forums/f134\n"
-#~ "\n"
-#~ "veya\n"
-#~ "\n"
-#~ "Gıt içersinde bir sorunu bildirin:\n"
-#~ "https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN çizimi DR noktasını sil"
 #
-#~ msgid "Point Inclusion Size"
-#~ msgstr "Nokta kapsama boyutu"
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN çizimi EBL noktasını sil"
 #
-#~ msgid "Point Type"
-#~ msgstr "Nokta tipi"
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN çizimi OD noktasını sil"
 #
-#~ msgid "Points"
-#~ msgstr "Noktalar"
+msgid "OCPN Draw Delete PIL Point"
+msgstr "OCPN çizimi PIL noktasını sil"
 #
-#~ msgid "Properties"
-#~ msgstr "Özellikler"
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN çizimi metin noktasını sil"
 #
-#~ msgid "Properties..."
-#~ msgstr "Özellikler..."
+#, fuzzy
+msgid "OCPN Draw Directories:"
+msgstr "OCPN çizim özelikleri"
 #
-#~ msgid "Question"
-#~ msgstr "Soru"
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN çizimi EBL sil"
 #
-#~ msgid "Range Ring Colours"
-#~ msgstr "Menzil çemberi renkleri"
+msgid "OCPN Draw GZ Delete"
+msgstr "OCPN GZ çizimini sil"
 #
-#~ msgid "Range Ring Line Style"
-#~ msgstr "Menzil çemberi hat stili"
+msgid "OCPN Draw Manager"
+msgstr "OCPN çizim yöneticisi"
 #
-#~ msgid "Range Ring Line Width"
-#~ msgstr "Menzil halkası hat genişliği"
+msgid "OCPN Draw PIL Delete"
+msgstr "OCPN çizimi PIL sil"
 #
-#~ msgid "Remove Point from Path"
-#~ msgstr "Noktayı yoldan kaldır"
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "OCPN paralel dizin hattı çizimini sil"
 #
-#~ msgid ""
-#~ "Removing this point will invalidate the Boundary, this is not allowed."
-#~ msgstr ""
-#~ "Bu noktanın kaldırılması Sınırı geçersiz kılacak, buna izin verilmiyor."
+#, fuzzy
+msgid "OCPN Draw Path"
+msgstr "OCPN'nin çizim noktası"
 #
-#~ msgid "Right"
-#~ msgstr "Sağ"
+msgid "OCPN Draw Point"
+msgstr "OCPN'nin çizim noktası"
 #
-#~ msgid "Ring"
-#~ msgstr "Halka"
+msgid "OCPN Draw Point Create"
+msgstr "OCPN çizim noktası oluştur"
 #
-#~ msgid ""
-#~ "Rotate with\n"
-#~ "Boat"
-#~ msgstr ""
-#~ "İle döndür\n"
-#~ "Tekne"
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN çizim noktası, etiket: "
 #
-#~ msgid "Rotate with Boat"
-#~ msgstr "Tekne ile döndür"
+msgid "OCPN Draw Properties"
+msgstr "OCPN çizim özelikleri"
 #
-#~ msgid "Second"
-#~ msgstr "Saniye"
+msgid "OCPN Draw Remove "
+msgstr "OCPN çizimini kaldır "
 #
-#~ msgid "Second Angle (-P/+S)"
-#~ msgstr "İkinci açı (-P/+S)"
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN sınır noktası çizimini kaldır"
 #
-#~ msgid "Second Point Icon"
-#~ msgstr "İkinci nokta ikonu"
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN çizimi DR noktasını kaldır"
 #
-#~ msgid "Second distance"
-#~ msgstr "İkinci mesafe"
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN EBL çizim noktasını kaldır"
 #
-#~ msgid "Short Dash"
-#~ msgstr "Kısa Çizgi"
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN çizimi OD noktası kaldır"
 #
-#~ msgid "Show"
-#~ msgstr "Göster"
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
 #
-#~ msgid "Show Boundary Point Icons"
-#~ msgstr "Sınır noktası ikonlarını göster"
+msgid "OD"
+msgstr "Od"
 #
-#~ msgid "Show DR Direction Arrow"
-#~ msgstr "DR yön oklarını göster"
+msgid "OD Point"
+msgstr "OD noktası"
 #
-#~ msgid "Show Display Text"
-#~ msgstr "Ekran metnini göster"
+msgid "OD Point Name"
+msgstr "OD noktası adı"
 #
-#~ msgid "Show EBL Direction Arrow"
-#~ msgstr "EBL yön oklarını göster"
+msgid "OD Point Properties"
+msgstr "OD Noktası Özellikleri"
 #
-#~ msgid "Show Magnetic Bearings"
-#~ msgstr "Manyetik yönleri göster"
+msgid "OD Points"
+msgstr "OD noktası"
 #
-#~ msgid "Show Name"
-#~ msgstr "Adı göster"
+msgid "OD\\WD"
+msgstr "OD\\WD"
 #
-#~ msgid "Show Path Direction Arrow"
-#~ msgstr "Yol yön oklarını göster"
+msgid "Offset"
+msgstr "Dengeleme"
 #
-#~ msgid ""
-#~ "Show Perpendicular\n"
-#~ "Index Line"
-#~ msgstr ""
-#~ "Dikey göster\n"
-#~ "dizin çizgisi"
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Ofset (+ Stbd/- port)"
 #
-#~ msgid "Show Perpendicular Index Line"
-#~ msgstr "Dikey dizin çizgisini göster"
+#, fuzzy
+msgid "Offset Line 2 Style"
+msgstr "Ofset hattı stili"
 #
-#~ msgid "Show Point Range Rings"
-#~ msgstr "Menzil halkalarını işaret et"
+#, fuzzy
+msgid "Offset Line 2 Width"
+msgstr "Ofset hattı genişliği"
 #
-#~ msgid "Show Point names"
-#~ msgstr "Nokta adını göster"
+msgid "Offset Line Style"
+msgstr "Ofset hattı stili"
 #
-#~ msgid "Show Range Rings"
-#~ msgstr "Menzil halkalarını göster"
+msgid "Offset Line Width"
+msgstr "Ofset hattı genişliği"
 #
-#~ msgid "Show VRM"
-#~ msgstr "VRM göster"
+msgid "Offset: "
+msgstr "Kaydırma: "
 #
-#~ msgid "Show name"
-#~ msgstr "Adı göster"
+msgid "On Rollover Only"
+msgstr "Yalnızca yuvarlanma üzerinde"
 #
-#~ msgid "Show on chart"
-#~ msgstr "Grafiklerde göster"
+msgid "OpenCPN Alert"
+msgstr "OpenCPN Alarmı"
 #
-#~ msgid "Solid"
-#~ msgstr "Katı"
+msgid "Other:"
+msgstr "Diğer:"
 #
-#~ msgid "Speed over Ground"
-#~ msgstr "Yer üstündeki hız"
+msgid "Overwrite existing file?"
+msgstr "Varolan dosyanın üzerine yazılsın mı?"
 #
-#~ msgid "Start"
-#~ msgstr "Başla"
+msgid "PIL"
+msgstr "PIL"
 #
-#~ msgid "Start Point Icon"
-#~ msgstr "Başlangıç noktası ikonu"
+msgid "PIL Persistence"
+msgstr "PIL sürerkliliği"
 #
-#~ msgid "Text Colour"
-#~ msgstr "Metin Rengi"
+msgid "PIL Point"
+msgstr "PIL noktası"
 #
-#~ msgid "Text Font"
-#~ msgstr "Metin Yazı Tipi"
+#, fuzzy
+msgid "PIL Point Properties"
+msgstr "EBL noktası özellikleri"
 #
-#~ msgid "Text Point"
-#~ msgstr "Metin noktası"
+#, fuzzy
+msgid "PIL Point Properties, Layer: "
+msgstr "EBL noktası özellikleri, Etiket: "
 #
-#~ msgid "Text Point Icon"
-#~ msgstr "Metin noktası ikonu"
+msgid "Parallel Index Line"
+msgstr "Paralel dizin hattı"
 #
-#~ msgid "Text position relative to point"
-#~ msgstr "Noktaya göre metnin konumlandırılması"
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Paralel dizin çizgi açısı (+Stbd/-Port)"
 #
-#~ msgid "Text to Display with Point"
-#~ msgstr "Nokta ile birlikte görüntülenecek metin"
+msgid "Parallel Index Line Persistence"
+msgstr "Paralel dizin hattı sürekliliği"
 #
-#~ msgid ""
-#~ "The OD Point you want to delete is used in a path, do you really want to "
-#~ "delete it?"
-#~ msgstr ""
-#~ "Silmek istediğiniz OD Noktası bir yolda kullanılıyor, bunu gerçekten "
-#~ "silmek istiyor musunuz?"
+msgid "Parallel Index Line Properties"
+msgstr "Paralel dizin hattı özellikleri"
 #
-#~ msgid ""
-#~ "There are some OD points used in paths or anchor alarms.\n"
-#~ " Do you want to delete them as well?\n"
-#~ " This will change the paths and disable the anchor alarms.\n"
-#~ " Answering No keeps the OD points used in paths or alarms."
-#~ msgstr ""
-#~ "Yollarda veya anchor alarmlarında kullanılan bazı OD noktaları var.\n"
-#~ " Onları da silmek istiyor musunuz?\n"
-#~ " Bu, yolları değiştirecek ve anchor alarmlarını devre dışı bırakacak.\n"
-#~ " Hayır derseniz, yollarda veya alarmlarda kullanılan OD puanlarını "
-#~ "korunacak."
+msgid "Paste"
+msgstr "Yapıştır"
 #
-#~ msgid ""
-#~ "This chart shows the interactions between Boundaries and WatchDog alam "
-#~ "boundaries"
-#~ msgstr ""
-#~ "Bu tablo, sınırlar ile WatchDog uyarı sınırları arasındaki etkileşimleri "
-#~ "gösterir"
+msgid "Paste lat/long"
+msgstr "Enlem/Boylam'ı yapıştır"
 #
-#~ msgid "Time"
-#~ msgstr "Zaman"
+msgid "Patch:"
+msgstr "Yama:"
 #
-#~ msgid "Time Units"
-#~ msgstr "Zaman Birimi"
+msgid "Path"
+msgstr "Yol"
 #
-#~ msgid "To Point"
-#~ msgstr "Noktaya"
+msgid "Path & Point Manager"
+msgstr "Yol & nokta yöneticisi"
 #
-#~ msgid "Top"
-#~ msgstr "Üst"
+#, fuzzy
+msgid "Path Manager Dialog"
+msgstr "Yol & nokta yöneticisi"
 #
-#~ msgid "Top Centre"
-#~ msgstr "Üst orta"
+msgid "Path Name"
+msgstr "Yol adı"
 #
-#~ msgid "Total Length"
-#~ msgstr "Toplam uzunluk"
+msgid "Path Persistence"
+msgstr "Yol sürekliliği"
 #
-#~ msgid "Total Length: "
-#~ msgstr "Toplam Uzunluk: "
+msgid "Path Properties"
+msgstr "İz Özellikleri"
 #
-#~ msgid "Unlist contents "
-#~ msgstr "Listelenmemiş içerik "
+msgid "Path Properties, Layer: "
+msgstr "Yol özellikleri, etiket: "
 #
-#~ msgid "Update initial conditions"
-#~ msgstr "Başlangıç koşullarını güncelle"
+msgid "Paths"
+msgstr "Yollar"
 #
-#~ msgid "Use nearby OD Point?"
-#~ msgstr "Yakındaki OD noktası kullanılsın mı?"
+msgid "Permanent Layers:"
+msgstr ""
 #
-#~ msgid "Use nearby Point?"
-#~ msgstr "Yakındaki nokta kullanılsın mı?"
+msgid "Persistent"
+msgstr "Kalıcı"
 #
-#~ msgid "Version:"
-#~ msgstr "Sürüm:"
+msgid "Persistent over Crash"
+msgstr "Kaza üzerine kalıcılık"
 #
-#~ msgid "WD"
-#~ msgstr "WD"
+msgid "Pick a new start point"
+msgstr "Yeni bir başlangıç noktası seçin"
 #
-#~ msgid "Whilst Drawing"
-#~ msgstr "Çiziyorken"
+msgid ""
+"Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"or\n"
+"\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"or\n"
+"\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr ""
+"Lütfen FlySpray kullanarak şurada sorunları bildirin:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
+"\n"
+"veya\n"
+"\n"
+"OpenCPN forumunda:\n"
+"http://www.cruisersforum.com/forums/f134\n"
+"\n"
+"veya\n"
+"\n"
+"Gıt içersinde bir sorunu bildirin:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
 #
-#~ msgid "Would you like include the Great Circle boundary points for this leg?"
-#~ msgstr "Bu bacak için Büyük Daire sınır noktalarını eklemek ister misiniz?"
+msgid "Point Inclusion Size"
+msgstr "Nokta kapsama boyutu"
 #
-#~ msgid "ocpn_draw_pi data location"
-#~ msgstr "ocpn_çizim_pi veri konumu"
+msgid "Point Type"
+msgstr "Nokta tipi"
+#
+msgid "Points"
+msgstr "Noktalar"
+#
+msgid "Properties"
+msgstr "Özellikler"
+#
+msgid "Properties..."
+msgstr "Özellikler..."
+#
+msgid "Question"
+msgstr "Soru"
+#
+msgid "Range Ring Colours"
+msgstr "Menzil çemberi renkleri"
+#
+msgid "Range Ring Line Style"
+msgstr "Menzil çemberi hat stili"
+#
+msgid "Range Ring Line Width"
+msgstr "Menzil halkası hat genişliği"
+#
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+#
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
+#
+msgid "Remove Point from Path"
+msgstr "Noktayı yoldan kaldır"
+#
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr "Bu noktanın kaldırılması Sınırı geçersiz kılacak, buna izin verilmiyor."
+#
+msgid "Right"
+msgstr "Sağ"
+#
+msgid "Ring"
+msgstr "Halka"
+#
+msgid ""
+"Rotate with\n"
+"Boat"
+msgstr ""
+"İle döndür\n"
+"Tekne"
+#
+msgid "Rotate with Boat"
+msgstr "Tekne ile döndür"
+#
+msgid "Second"
+msgstr "Saniye"
+#
+msgid "Second Angle (-P/+S)"
+msgstr "İkinci açı (-P/+S)"
+#
+msgid "Second Point Icon"
+msgstr "İkinci nokta ikonu"
+#
+msgid "Second distance"
+msgstr "İkinci mesafe"
+#
+msgid "Short Dash"
+msgstr "Kısa Çizgi"
+#
+msgid "Show"
+msgstr "Göster"
+#
+#, fuzzy
+msgid "Show &Point names"
+msgstr "Nokta adını göster"
+#
+msgid "Show Boundary Point Icons"
+msgstr "Sınır noktası ikonlarını göster"
+#
+msgid "Show DR Direction Arrow"
+msgstr "DR yön oklarını göster"
+#
+msgid "Show Display Text"
+msgstr "Ekran metnini göster"
+#
+msgid "Show EBL Direction Arrow"
+msgstr "EBL yön oklarını göster"
+#
+#, fuzzy
+msgid "Show Layer(s)"
+msgstr "Adı göster"
+#
+#, fuzzy
+msgid "Show Layers"
+msgstr "Katmanlar"
+#
+msgid "Show Magnetic Bearings"
+msgstr "Manyetik yönleri göster"
+#
+msgid "Show Name"
+msgstr "Adı göster"
+#
+msgid "Show Path Direction Arrow"
+msgstr "Yol yön oklarını göster"
+#
+msgid "Show Paths(s)"
+msgstr ""
+#
+msgid ""
+"Show Perpendicular\n"
+"Index Line"
+msgstr ""
+"Dikey göster\n"
+"dizin çizgisi"
+#
+msgid "Show Perpendicular Index Line"
+msgstr "Dikey dizin çizgisini göster"
+#
+msgid "Show Point Range Rings"
+msgstr "Menzil halkalarını işaret et"
+#
+msgid "Show Point names"
+msgstr "Nokta adını göster"
+#
+#, fuzzy
+msgid "Show Point(s)"
+msgstr "Nokta adını göster"
+#
+msgid "Show Range Rings"
+msgstr "Menzil halkalarını göster"
+#
+msgid "Show VRM"
+msgstr "VRM göster"
+#
+msgid "Show name"
+msgstr "Adı göster"
+#
+#, fuzzy
+msgid "Show on &chart"
+msgstr "Grafiklerde göster"
+#
+msgid "Show on chart"
+msgstr "Grafiklerde göster"
+#
+msgid "Solid"
+msgstr "Katı"
+#
+msgid "Speed over Ground"
+msgstr "Yer üstündeki hız"
+#
+msgid "Start"
+msgstr "Başla"
+#
+msgid "Start Point Icon"
+msgstr "Başlangıç noktası ikonu"
+#
+#, fuzzy
+msgid "Straight"
+msgstr "Sağ"
+#
+#, fuzzy
+msgid "Text"
+msgstr "Metin Yazı Tipi"
+#
+msgid "Text Colour"
+msgstr "Metin Rengi"
+#
+msgid "Text Font"
+msgstr "Metin Yazı Tipi"
+#
+msgid "Text Point"
+msgstr "Metin noktası"
+#
+msgid "Text Point Icon"
+msgstr "Metin noktası ikonu"
+#
+#, fuzzy
+msgid "Text Point Properties"
+msgstr "DR noktası özellikleri"
+#
+#, fuzzy
+msgid "Text Point Properties, Layer: "
+msgstr "DR noktası özellikleri, Etiket: "
+#
+msgid "Text position relative to point"
+msgstr "Noktaya göre metnin konumlandırılması"
+#
+msgid "Text to Display with Point"
+msgstr "Nokta ile birlikte görüntülenecek metin"
+#
+msgid ""
+"The OD Point you want to delete is used in a path, do you really want to "
+"delete it?"
+msgstr ""
+"Silmek istediğiniz OD Noktası bir yolda kullanılıyor, bunu gerçekten silmek "
+"istiyor musunuz?"
+#
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+#
+msgid ""
+"There are some OD points used in paths or anchor alarms.\n"
+" Do you want to delete them as well?\n"
+" This will change the paths and disable the anchor alarms.\n"
+" Answering No keeps the OD points used in paths or alarms."
+msgstr ""
+"Yollarda veya anchor alarmlarında kullanılan bazı OD noktaları var.\n"
+" Onları da silmek istiyor musunuz?\n"
+" Bu, yolları değiştirecek ve anchor alarmlarını devre dışı bırakacak.\n"
+" Hayır derseniz, yollarda veya alarmlarda kullanılan OD puanlarını korunacak."
+#
+msgid ""
+"This chart shows the interactions between Boundaries and WatchDog alam "
+"boundaries"
+msgstr ""
+"Bu tablo, sınırlar ile WatchDog uyarı sınırları arasındaki etkileşimleri "
+"gösterir"
+#
+msgid "Time"
+msgstr "Zaman"
+#
+msgid "Time Units"
+msgstr "Zaman Birimi"
+#
+msgid "To Point"
+msgstr "Noktaya"
+#
+msgid "Top"
+msgstr "Üst"
+#
+msgid "Top Centre"
+msgstr "Üst orta"
+#
+msgid "Total Length"
+msgstr "Toplam uzunluk"
+#
+msgid "Total Length: "
+msgstr "Toplam Uzunluk: "
+#
+msgid "Tweak:"
+msgstr ""
+#
+msgid "URL"
+msgstr ""
+#
+msgid "Unlist contents "
+msgstr "Listelenmemiş içerik "
+#
+msgid "Update initial conditions"
+msgstr "Başlangıç koşullarını güncelle"
+#
+#, fuzzy
+msgid "Use OCPN Draw Tool"
+msgstr "OCPN'nin çizim noktası"
+#
+msgid "Use nearby OD Point?"
+msgstr "Yakındaki OD noktası kullanılsın mı?"
+#
+msgid "Use nearby Point?"
+msgstr "Yakındaki nokta kullanılsın mı?"
+#
+msgid "User Icons:"
+msgstr ""
+#
+msgid "Version:"
+msgstr "Sürüm:"
+#
+msgid "WD"
+msgstr "WD"
+#
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+#
+msgid "Whilst Drawing"
+msgstr "Çiziyorken"
+#
+msgid "Would you like include the Great Circle boundary points for this leg?"
+msgstr "Bu bacak için Büyük Daire sınır noktalarını eklemek ister misiniz?"
+#
+msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi data location"
+msgstr "ocpn_çizim_pi veri konumu"
+#
+msgid "will be deleted."
+msgstr ""
+#
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+#
+msgid "wxFB Website"
+msgstr ""
