@@ -93,6 +93,11 @@ else()
     set(PKG_TARGET_VERSION 1)
 endif()
 
+if(${BUILD_GTK3})
+    message(STATUS "${CMLOC}set CMAKE defined BUILD_GTK3: ${BUILD_GTK3}")
+    set(ENV{BUILD_GTK3} ${BUILD_GTK3})
+endif()
+
 if(NOT WIN32 AND NOT QT_ANDROID)
     # default
     set(ARCH "i386")
