@@ -182,7 +182,7 @@ cat $xml
 ls -l $BUILD_DIR
 cur_dir=$(pwd)
 gunzip -f $tarball
-cd $BUILD_DIR
+cd "$BUILD_DIR"
 rm -f metadata.xml
 tarball_tar=$(ls *.tar)
 xml_here=$(ls *.xml)
@@ -206,7 +206,7 @@ else
 fi
 tar -tf $tarball_tar
 gzip -f $tarball_tar
-cd $cur_dir
+cd "$cur_dir"
 pwd
 ls -la
 
