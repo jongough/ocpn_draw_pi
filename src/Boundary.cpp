@@ -361,7 +361,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         
     }
     ODPath::DrawGL( piVP );
-    
+#else
+    wxLogMessage( _("Boundary not drawn as OpenGL not available in this build") );
 #endif
 }
 

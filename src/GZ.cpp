@@ -299,7 +299,9 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 
     dc.DrawLines( numpoints, points );
     delete [] points;
-    
+
+#else
+    wxLogMessage( _("Guard Zone not drawn as OpenGL not available in this build") );
 #endif
     
 }
