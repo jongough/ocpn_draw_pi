@@ -69,9 +69,11 @@ if [ "$CIRCLECI" ] || [ "$TRAVIS" ]; then
             fi
         fi
        #pyenv global 3.7.1
-        python3 -m pip install --upgrade pip
-        python3 -m pip install -q cloudsmith-cli
-        pyenv rehash
+        if [ "$TRAVIS" ]; then
+            python3 -m pip install --upgrade pip
+            python3 -m pip install -q cloudsmith-cli
+            pyenv rehash
+        fi
     elif dnf --version 2>&1 >/dev/null; then
         sudo dnf -y install python3-pip python3-setuptools
         sudo python3 -m pip install -q cloudsmith-cli
