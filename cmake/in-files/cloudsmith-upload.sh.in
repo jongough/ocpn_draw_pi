@@ -60,7 +60,7 @@ if [ -z "$CLOUDSMITH_API_KEY" ] && [ "$LOCAL_BUILD" = "false" ]; then
 fi
 set -x
 
-if [ "$CIRCLECI" ] || [ "$TRAVIS" ]; then
+if [ "$CIRCLECI1" ] || [ "$TRAVIS1" ]; then
     if pyenv versions 2>&1 >/dev/null; then
         pyenv versions
         if ! pyenv global 3.7.1 2>&1 >/dev/null; then
