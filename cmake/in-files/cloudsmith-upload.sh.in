@@ -65,6 +65,7 @@ if [ "$CIRCLECI" ] || [ "$TRAVIS" ]; then
         pyenv versions
         if ! pyenv global 3.7.1 2>&1 >/dev/null; then
             cur_dir=$(pwd)
+            pyenv install --list
             cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
             cd "$cur_dir"
             pyenv install --list
