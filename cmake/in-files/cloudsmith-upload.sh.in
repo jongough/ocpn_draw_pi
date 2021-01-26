@@ -62,14 +62,14 @@ set -x
 
 if [ "$CIRCLECI" ] || [ "$TRAVIS" ]; then
     if pyenv versions 2>&1 >/dev/null; then
-        #pyenv versions
-        #if ! pyenv global 3.7.1 2>&1 >/dev/null; then
-        #    if ! pyenv global 3.7.0 2>&1>/dev/null; then
-        #        pyenv global 3.5.2
-        #    fi
-        #fi
-        #python3 -m pip install --upgrade pip
-        #python3 -m pip install cloudsmith-cli
+        pyenv versions
+        if ! pyenv global 3.7.1 2>&1 >/dev/null; then
+            if ! pyenv global 3.7.0 2>&1>/dev/null; then
+                pyenv global 3.5.2
+            fi
+        fi
+        python3 -m pip install --upgrade pip
+        python3 -m pip install cloudsmith-cli
         pyenv rehash
     elif dnf --version 2>&1 >/dev/null; then
         sudo dnf -y install python3-pip python3-setuptools
@@ -210,20 +210,20 @@ pwd
 ls -la
 
 if [ $LOCAL_BUILD = false ]; then
-    python3 cloudsmith push raw --republish --no-wait-for-sync \
+    cloudsmith push raw --republish --no-wait-for-sync \
         --name @PACKAGE_NAME@-@PACKAGE_VERSION@-@PKG_TARGET@-@ARCH@-@PKG_TARGET_VERSION@-${OCPN_TARGET}-metadata \
         --version ${VERSION} \
         --summary "@PACKAGE@ opencpn plugin metadata for automatic installation" \
         $REPO $xml
 
-    python3 cloudsmith push raw --republish --no-wait-for-sync \
+    cloudsmith push raw --republish --no-wait-for-sync \
         --name $tarball_name \
         --version ${VERSION} \
         --summary "@PACKAGE@ opencpn plugin tarball for automatic installation" \
         $REPO $tarball
 
     if [ "${PKG_EXT}" != "gz" ] && [ "$pkg" != "" ]; then
-        python3 cloudsmith push raw --republish --no-wait-for-sync \
+        cloudsmith push raw --republish --no-wait-for-sync \
             --name opencpn-package-@PACKAGE@-@PACKAGE_VERSION@-@PKG_TARGET@-@ARCH@-@PKG_TARGET_VERSION@-${OCPN_TARGET}.${PKG_EXT} \
             --version ${VERSION} \
             --summary "@PACKAGE@ .${PKG_EXT} installation package" \

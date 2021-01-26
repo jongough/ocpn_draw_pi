@@ -54,8 +54,6 @@ parameters:
     run_build_android_armhf:
         type: boolean
         default: false
-orbs:
-    cloudsmith: cloudsmith/cloudsmith@1.0.4
 
 jobs:
     build-armhf-stretch:
@@ -74,8 +72,6 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-armhf-buster:
         machine: true
@@ -192,11 +188,6 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
-            - run:
-                command: |
-                    pyenv versions
             - run: ci/cloudsmith-upload.sh
     build-focal:
         docker:
