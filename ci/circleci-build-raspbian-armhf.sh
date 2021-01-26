@@ -23,6 +23,9 @@ docker run --privileged -d -ti -e "container=docker"  -v $(pwd):/ci-source:rw $D
 #DOCKER_CONTAINER_ID=$(docker ps | grep $BUILD_ENV | awk '{print $1}')
 DOCKER_CONTAINER_ID=$(docker ps | awk '/balenalib/ {print $1}')
 
+docker exec -ti $DOCKER_CONTAINER_ID curl http://mirrordirector.raspbian.org/raspbian.public.key  | apt-key add -
+docker exec -ti $DOCKER_CONTAINER_ID curl http://archive.raspbian.org/raspbian.public.key  | apt-key add -
+
 docker exec -ti $DOCKER_CONTAINER_ID apt-get update
 docker exec -ti $DOCKER_CONTAINER_ID apt-get -y install git cmake build-essential cmake gettext wx-common libgtk2.0-dev libwxgtk3.0-dev libbz2-dev libcurl4-openssl-dev libexpat1-dev libcairo2-dev libarchive-dev liblzma-dev libexif-dev lsb-release
 
