@@ -60,6 +60,7 @@ orbs:
 jobs:
     build-armhf-stretch:
         machine: true
+        executor: cloudsmith/
         environment:
         - OCPN_TARGET=stretch-armhf
         - DOCKER_IMAGE=jongough/raspbian-stretch:latest
@@ -74,6 +75,7 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - pyenv global 3.5.2
             - cloudsmith/ensure-api-key
             - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
