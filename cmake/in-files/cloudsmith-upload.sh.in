@@ -60,24 +60,24 @@ if [ -z "$CLOUDSMITH_API_KEY" ] && [ "$LOCAL_BUILD" = "false" ]; then
 fi
 set -x
 
-if [ "$CIRCLECI1" ] || [ "$TRAVIS1" ]; then
+if [ "$CIRCLECI" ] || [ "$TRAVIS" ]; then
     if pyenv versions 2>&1 >/dev/null; then
         pyenv versions
-        if ! pyenv global 3.7.1 2>&1 >/dev/null; then
-            cur_dir=$(pwd)
-            pyenv install --list
-            cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
-            cd "$cur_dir"
-            pyenv install --list
-            pyenv install -v 3.7.1
-            #if ! pyenv global 3.7.0 2>&1>/dev/null; then
-            #    pyenv global 3.5.2
-            #fi
-        fi
-        pyenv global 3.7.1
-        python3 -m pip install --upgrade pip
-        python3 -m pip install cloudsmith-cli
-        pyenv rehash
+        #if ! pyenv global 3.7.1 2>&1 >/dev/null; then
+        #    cur_dir=$(pwd)
+        #    pyenv install --list
+        #    cd /opt/circleci/.pyenv/plugins/python-build/../.. && git pull && cd -
+        #    cd "$cur_dir"
+        #    pyenv install --list
+        #    pyenv install -v 3.7.1
+        #    #if ! pyenv global 3.7.0 2>&1>/dev/null; then
+        #    #    pyenv global 3.5.2
+        #    #fi
+        #fi
+        pyenv global 3.5.2
+        #python3 -m pip install --upgrade pip
+        #python3 -m pip install cloudsmith-cli
+        #pyenv rehash
     elif dnf --version 2>&1 >/dev/null; then
         sudo dnf -y install python3-pip python3-setuptools
         sudo python3 -m pip install -q cloudsmith-cli
