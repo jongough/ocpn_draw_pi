@@ -194,6 +194,9 @@ jobs:
             steps:
             - cloudsmith/ensure-api-key
             - cloudsmith/install-cli
+            - run:
+                command: |
+                    pyenv versions
             - run: ci/cloudsmith-upload.sh
     build-focal:
         docker:
