@@ -32,6 +32,8 @@
  * it is not robust and it is possible to crash OpenCPN if the values are not valid.
  * 
  */
+#ifndef ODJSONSCHEMAS_H
+#define ODJSONSCHEMAS_H
 
 static json jSchema = R"(
 {
@@ -61,6 +63,25 @@ static json jSchema = R"(
             },
             "required": ["Msg", "Type", "Source", "MsgId"],
             "addtionalProperties": false
+        },
+        "latlon": {
+            "description": "Used to describe Lat & Lon",
+            "type": "object",
+            "properties": {
+                "Lat": {
+                    "description": "Latitude of Boundary Point",
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                },
+                "Lon": {
+                    "description": "Longitude of Boundary Point",
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                }
+            },
+            "required": ["Lat", "Lon"]
         },
         "ODPoint": {
             "description": "Generic OD Point",
@@ -210,6 +231,9 @@ static json jSchema = R"(
             "description": "Used to delete an object",
             "type": "object",
             "properties": {
+            "items": {
+                "$ref": "#/definitions/LatLon"
+                },
                 "GUID": {
                     "description": "GUID of object",
                     "type": "string"
@@ -255,7 +279,7 @@ static json jSchema = R"(
                 },
                 "BoundaryType": {
                     "description": "Boundary Type",
-                    "enum": ["Exclusion","Inclusion","Neither"]
+                    "enum": ["Exclusion","Inclusion","Neither","Any"]
                 },
                 "Active": {
                     "description": "Is Boundary Active",
@@ -338,3 +362,4 @@ static json jSchema = R"(
 }
 )"_json;
     
+#endif // ODJSONSCHEMAS_H
