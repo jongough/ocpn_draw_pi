@@ -11,7 +11,7 @@ parameters:
         default: false
     run_build_armhf_buster:
         type: boolean
-        default: false
+        default: true
     run_build_armhf_bionic_64:
         type: boolean
         default: false
