@@ -351,6 +351,11 @@ jobs:
         - OCPN_TARGET:  android-arm64
         steps:
         - checkout
+        - run:
+            command: |
+                export PIP=$(which pip pip3 | head -1)
+                $PIP --version
+                pip3 version
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-arm64.sh
         - when:
@@ -362,6 +367,7 @@ jobs:
                 command: |
                     export PIP=$(which pip pip3 | head -1)
                     $PIP --version
+                    pip3 version
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
         docker:
