@@ -67,6 +67,7 @@ jobs:
         - DOCKER_IMAGE=balenalib/raspberry-pi-debian:stretch
         - BUILD_FLAGS=-j3
         - BUILD_ENV=raspbian
+        - DEPLOY_USE_ORB=false
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -127,6 +128,8 @@ jobs:
         - image: circleci/buildpack-deps:trusty-scm
         environment:
         - OCPN_TARGET:  trusty
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -149,6 +152,8 @@ jobs:
         - image: circleci/buildpack-deps:xenial-scm
         environment:
         - OCPN_TARGET:  xenial
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -171,6 +176,8 @@ jobs:
         - image: circleci/buildpack-deps:bionic-scm
         environment:
         - OCPN_TARGET:  bionic
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -194,6 +201,8 @@ jobs:
         environment:
         - BUILD_GTK3: true
         - OCPN_TARGET:  bionic-gtk3
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -216,6 +225,8 @@ jobs:
         - image: circleci/buildpack-deps:focal-scm
         environment:
         - OCPN_TARGET:  focal
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -239,6 +250,8 @@ jobs:
         environment:
         - BUILD_GTK3: true
         - OCPN_TARGET: focal-gtk3
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -261,6 +274,8 @@ jobs:
         - image: circleci/buildpack-deps:buster-scm
         environment:
         - OCPN_TARGET:  buster
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: >
@@ -284,6 +299,8 @@ jobs:
         environment:
         - OCPN_TARGET:  flatpak
         - CLOUDSMITH_PKG_EXT: gz
+        - DEPLOY_USE_ORB: true
+
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -299,6 +316,8 @@ jobs:
         - image: fedora:33
         environment:
         - OCPN_TARGET:  fedora
+        - DEPLOY_USE_ORB: true
+
         steps:
         - run: su -c "dnf install -q -y git openssh-clients openssh-server"
         - checkout
@@ -316,6 +335,8 @@ jobs:
         environment:
         - OCPN_TARGET:  mingw
         - CLOUDSMITH_PKG_EXT: exe
+        - DEPLOY_USE_ORB: true
+
         steps:
         - run: su -c "dnf install -q -y git openssh-clients openssh-server"
         - checkout
@@ -333,6 +354,7 @@ jobs:
         environment:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
+        - DEPLOY_USE_ORB: true
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -371,8 +393,6 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
 workflows:
     build_1:
