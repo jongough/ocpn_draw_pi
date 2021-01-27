@@ -8,52 +8,52 @@ parameters:
 
     run_build_armhf_stretch:
         type: boolean
-        default: false
+        default: true
     run_build_armhf_buster:
         type: boolean
-        default: false
+        default: true
     run_build_armhf_bionic_64:
         type: boolean
-        default: false
+        default: true
     run_build_trusty:
         type: boolean
-        default: false
+        default: true
     run_build_xenial:
         type: boolean
-        default: false
+        default: true
     run_build_bionic:
         type: boolean
-        default: false
+        default: true
     run_build_bionic_gtk3:
         type: boolean
-        default: false
+        default: true
     run_build_focal:
         type: boolean
-        default: false
+        default: true
     run_build_focal_gtk3:
         type: boolean
-        default: false
+        default: true
     run_build_buster:
         type: boolean
-        default: false
+        default: true
     run_build_flatpack:
         type: boolean
-        default: false
+        default: true
     run_build_fedora:
         type: boolean
-        default: false
+        default: true
     run_build_mingw:
         type: boolean
-        default: false
+        default: true
     run_build_macos:
         type: boolean
-        default: false
+        default: true
     run_build_android_arm64:
         type: boolean
         default: true
     run_build_android_armhf:
         type: boolean
-        default: false
+        default: true
 
 orbs:
     cloudsmith: cloudsmith/cloudsmith@1.0.4
@@ -63,11 +63,9 @@ jobs:
         machine: true
         environment:
         - OCPN_TARGET=stretch-armhf
-        #- DOCKER_IMAGE=jongough/raspbian-stretch:latest
         - DOCKER_IMAGE=balenalib/raspberry-pi-debian:stretch
         - BUILD_FLAGS=-j3
         - BUILD_ENV=raspbian
-        - DEPLOY_USE_ORB=false
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -77,14 +75,11 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-armhf-buster:
         machine: true
         environment:
         - OCPN_TARGET=buster-armhf
-        #- DOCKER_IMAGE=jongough/raspbian-buster:plugin_build_tooling_current
         - DOCKER_IMAGE=balenalib/raspberry-pi-debian:buster
         - BUILD_FLAGS=-j3
         - BUILD_ENV=raspbian
@@ -97,11 +92,6 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
-            - run:
-                command: |
-                    $PIP --version
             - run: ci/cloudsmith-upload.sh
     build-armhf-bionic-64:
         machine: true
@@ -120,8 +110,6 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-trusty:
         docker:
@@ -129,7 +117,6 @@ jobs:
         environment:
         - OCPN_TARGET:  trusty
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -153,7 +140,6 @@ jobs:
         environment:
         - OCPN_TARGET:  xenial
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -177,7 +163,6 @@ jobs:
         environment:
         - OCPN_TARGET:  bionic
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -202,7 +187,6 @@ jobs:
         - BUILD_GTK3: true
         - OCPN_TARGET:  bionic-gtk3
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -226,7 +210,6 @@ jobs:
         environment:
         - OCPN_TARGET:  focal
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -251,7 +234,6 @@ jobs:
         - BUILD_GTK3: true
         - OCPN_TARGET: focal-gtk3
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -275,7 +257,6 @@ jobs:
         environment:
         - OCPN_TARGET:  buster
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: >
@@ -300,7 +281,6 @@ jobs:
         - OCPN_TARGET:  flatpak
         - CLOUDSMITH_PKG_EXT: gz
         - DEPLOY_USE_ORB: true
-
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -317,7 +297,6 @@ jobs:
         environment:
         - OCPN_TARGET:  fedora
         - DEPLOY_USE_ORB: true
-
         steps:
         - run: su -c "dnf install -q -y git openssh-clients openssh-server"
         - checkout
@@ -336,7 +315,6 @@ jobs:
         - OCPN_TARGET:  mingw
         - CLOUDSMITH_PKG_EXT: exe
         - DEPLOY_USE_ORB: true
-
         steps:
         - run: su -c "dnf install -q -y git openssh-clients openssh-server"
         - checkout
