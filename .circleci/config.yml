@@ -360,6 +360,7 @@ jobs:
             - cloudsmith/install-cli
             - run:
                 command: |
+                    export PIP=$(which pip pip3 | head -1)
                     $PIP --version
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
