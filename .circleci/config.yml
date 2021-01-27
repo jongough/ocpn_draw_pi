@@ -345,29 +345,18 @@ jobs:
             - run: ci/cloudsmith-upload.sh
     build-android-arm64:
         docker:
-        - image: circleci/android:api-28-ndk@sha256:01744d97c0dd870acf6d724aca246306eec0c3b5f128fd27a1d7bb637dc521c1
-#        - image: circleci/android:api-28-ndk
+        #- image: circleci/android:api-28-ndk@sha256:01744d97c0dd870acf6d724aca246306eec0c3b5f128fd27a1d7bb637dc521c1
+        #- image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
+        - image: circleci/android:api-28-ndk
         environment:
         - OCPN_TARGET:  android-arm64
         steps:
         - checkout
-        - run:
-            command: |
-                export PIP=$(which pip pip3 | head -1)
-                $PIP --version
-                pip3 version
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-arm64.sh
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
-            - cloudsmith/ensure-api-key
-            - cloudsmith/install-cli
-            - run:
-                command: |
-                    export PIP=$(which pip pip3 | head -1)
-                    $PIP --version
-                    pip3 version
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
         docker:
