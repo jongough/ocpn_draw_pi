@@ -26,7 +26,7 @@ parameters:
         default: false
     run_build_bionic_gtk3:
         type: boolean
-        default: false
+        default: true
     run_build_focal:
         type: boolean
         default: false
@@ -55,6 +55,9 @@ parameters:
         type: boolean
         default: false
 
+orbs:
+    cloudsmith: cloudsmith/cloudsmith@1.0.4
+
 jobs:
     build-armhf-stretch:
         machine: true
@@ -73,6 +76,8 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - cloudsmith/ensure-api-key
+            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-armhf-buster:
         machine: true
@@ -190,6 +195,8 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - cloudsmith/ensure-api-key
+            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-focal:
         docker:

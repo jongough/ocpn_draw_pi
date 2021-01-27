@@ -42,8 +42,7 @@ docker exec -ti $DOCKER_CONTAINER_ID /bin/bash -xec \
     -e "TRAVIS=$TRAVIS" \
     -e "TRAVIS_REPO_SLUG=$TRAVIS_REPO_SLUG" \
     -e "TRAVIS_BRANCH=$TRAVIS_BRANCH" \
-    -e "TRAVIS_TAG=$TRAVIS_TAG" \
-    -v $(pwd):/ci-source:rw;
+    -e "TRAVIS_TAG=$TRAVIS_TAG"
 
 # Run build script
 cat > build.sh << "EOF"
