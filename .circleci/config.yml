@@ -8,52 +8,52 @@ parameters:
 
     run_build_armhf_stretch:
         type: boolean
-        default: true
+        default: false
     run_build_armhf_buster:
         type: boolean
-        default: true
+        default: false
     run_build_armhf_bionic_64:
         type: boolean
-        default: true
+        default: false
     run_build_trusty:
         type: boolean
-        default: true
+        default: false
     run_build_xenial:
         type: boolean
-        default: true
+        default: false
     run_build_bionic:
         type: boolean
-        default: true
+        default: false
     run_build_bionic_gtk3:
         type: boolean
-        default: true
+        default: false
     run_build_focal:
         type: boolean
-        default: true
+        default: false
     run_build_focal_gtk3:
         type: boolean
-        default: true
+        default: false
     run_build_buster:
         type: boolean
-        default: true
+        default: false
     run_build_flatpack:
         type: boolean
-        default: true
+        default: false
     run_build_fedora:
         type: boolean
-        default: true
+        default: false
     run_build_mingw:
         type: boolean
-        default: true
+        default: false
     run_build_macos:
         type: boolean
-        default: true
+        default: false
     run_build_android_arm64:
         type: boolean
         default: true
     run_build_android_armhf:
         type: boolean
-        default: true
+        default: false
 
 orbs:
     cloudsmith: cloudsmith/cloudsmith@1.0.4
@@ -98,6 +98,9 @@ jobs:
             steps:
             - cloudsmith/ensure-api-key
             - cloudsmith/install-cli
+            - run:
+                command: |
+                    $PIP --version
             - run: ci/cloudsmith-upload.sh
     build-armhf-bionic-64:
         machine: true
@@ -288,6 +291,8 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - cloudsmith/ensure-api-key
+            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-fedora:
         docker:
@@ -319,6 +324,8 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - cloudsmith/ensure-api-key
+            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-macos:
         macos:
@@ -351,6 +358,9 @@ jobs:
             steps:
             - cloudsmith/ensure-api-key
             - cloudsmith/install-cli
+            - run:
+                command: |
+                    $PIP --version
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
         docker:
