@@ -8,52 +8,52 @@ parameters:
 
     run_build_armhf_stretch:
         type: boolean
-        default: true
+        default: false
     run_build_armhf_buster:
         type: boolean
-        default: true
+        default: false
     run_build_armhf_bionic_64:
         type: boolean
         default: true
     run_build_trusty:
         type: boolean
-        default: true
+        default: false
     run_build_xenial:
         type: boolean
-        default: true
+        default: false
     run_build_bionic:
         type: boolean
-        default: true
+        default: false
     run_build_bionic_gtk3:
         type: boolean
-        default: true
+        default: false
     run_build_focal:
         type: boolean
-        default: true
+        default: false
     run_build_focal_gtk3:
         type: boolean
-        default: true
+        default: false
     run_build_buster:
         type: boolean
-        default: true
+        default: false
     run_build_flatpack:
         type: boolean
-        default: true
+        default: false
     run_build_fedora:
         type: boolean
-        default: true
+        default: false
     run_build_mingw:
         type: boolean
-        default: true
+        default: false
     run_build_macos:
         type: boolean
-        default: true
+        default: false
     run_build_android_arm64:
         type: boolean
-        default: true
+        default: false
     run_build_android_armhf:
         type: boolean
-        default: true
+        default: false
 
 orbs:
     cloudsmith: cloudsmith/cloudsmith@1.0.4
@@ -390,17 +390,17 @@ workflows:
                 tags:
                     only: /.*/
 # Currently circleci does not build armf64 correctly due to no suitable docker image
-#        build_3:
-#        when: <<pipeline.parameters.run_build_bionic-64>>
-#        jobs:
-#        - build-armhf-bionic-64:
-#            filters:
-#                branches:
-#                    ignore:
-#                    - devel
-#                    - tmp
-#                tags:
-#                    only: /.*/
+        build_3:
+        when: <<pipeline.parameters.run_build_bionic-64>>
+        jobs:
+        - build-armhf-bionic-64:
+            filters:
+                branches:
+                    ignore:
+                    - devel
+                    - tmp
+                tags:
+                    only: /.*/
     build_4:
         when: <<pipeline.parameters.run_build_trusty>>
         jobs:
