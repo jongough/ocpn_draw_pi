@@ -125,7 +125,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
         if(!gODJSONMsgValidator) {
             gODJSONMsgValidator = new json_validator;
             try {
-                DEBUGSL(jSchema);
+                DEBUGST("Input message: ");
+                DEBUGEND(jSchema);
                 gODJSONMsgValidator->set_root_schema(jSchema);
             } catch (const std::exception &e) {
                 DEBUGST("Validation of schema failed, here is why: ");
@@ -196,7 +197,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             bFail = true;
         }
 #endif
-
+        DEBUGSL(root[wxS("Msg")].AsString());
         if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
             jMsg[wxT("Msg")] = root[wxT("Msg")];
@@ -208,6 +209,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             jMsg[wxS("Date")] = PLUGIN_VERSION_DATE;
             writer.Write( jMsg, MsgString );
             SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
+            return;
             
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("GetAPIAddresses")) {
             if(root[wxS("Type")].AsString() == wxS("Request")) {
@@ -244,17 +246,17 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeletePointIcon );
                 jMsg[wxT("OD_DeletePointIcon")] = wxString::From8BitData(ptr);
                 writer.Write( jMsg, MsgString );
-                
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 return;
             }
             
-        } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPathByGUID")) {
+        } else if(!bFail && root[wxS("Msg")].AsString() == "FindPathByGUID") {
+#ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
                 bFail = true;
             }
-            
+#endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
                 l_sType = root[wxS("Type")].AsString();
