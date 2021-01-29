@@ -390,17 +390,17 @@ workflows:
                 tags:
                     only: /.*/
 # Currently circleci does not build armf64 correctly due to no suitable docker image
-        build_3:
-        when: <<pipeline.parameters.run_build_bionic-64>>
-        jobs:
-        - build-armhf-bionic-64:
-            filters:
-                branches:
-                    ignore:
-                    - devel
-                    - tmp
-                tags:
-                    only: /.*/
+    build_3:
+    when: <<pipeline.parameters.run_build_bionic-64>>
+    jobs:
+    - build-armhf-bionic-64:
+        filters:
+            branches:
+                ignore:
+                - devel
+                - tmp
+            tags:
+                only: /.*/
     build_4:
         when: <<pipeline.parameters.run_build_trusty>>
         jobs:
