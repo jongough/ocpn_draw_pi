@@ -100,6 +100,44 @@ static json jSchema = R"(
             },
             "required": ["Lat", "Lon"]
         },
+        "StartLatLon": {
+            "description": "Used to describe Lat & Lon",
+            "type": "object",
+            "properties": {
+                "StartLat": {
+                    "description": "Latitude of Boundary Point",
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                },
+                "StartLon": {
+                    "description": "Longitude of Boundary Point",
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                }
+            },
+            "required": ["StartLat", "StartLon"]
+        },
+        "EndLatLon": {
+            "description": "Used to describe Lat & Lon",
+            "type": "object",
+            "properties": {
+                "EndLat": {
+                    "description": "Latitude of Boundary Point",
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90
+                },
+                "EndLon": {
+                    "description": "Longitude of Boundary Point",
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180
+                }
+            },
+            "required": ["EndLat", "EndLon"]
+        },
         "ODPoint": {
             "description": "Generic OD Point",
             "type": "object",
@@ -412,22 +450,57 @@ static json jSchema = R"(
                     "BoundaryType"
                 ]
             }
+        },
+        {
+        "if": { "properties": {"Msg": {"const": "FindClosestBoundaryLineCrossing"}}
+            },
+            "then": {
+                "$ref": "#/definitions/StartLatLon",
+                "$ref": "#/definitions/EtartLatLon",
+                "BoundaryType": {
+                    "description": "Boundary Type",
+                    "enum": ["Exclusion","Inclusion","Neither","Any"]
+                },
+                "BoundaryState": {
+                "description": "Boundary State",
+                "enum": ["Active","Inactive","Any"]
+                },
+                "required": [
+                    "BoundaryType",
+                    "BoundaryState"
+                    ]
+            }
+        },
+        {
+        "if": { "properties": {"Msg": {"const": "FindFirstBoundaryLineCrossing"}}
+            },
+            "then": {
+                "$ref": "#/definitions/StartLatLon",
+                "$ref": "#/definitions/EtartLatLon",
+                "BoundaryType": {
+                    "description": "Boundary Type",
+                    "enum": ["Exclusion","Inclusion","Neither","Any"]
+                },
+                "BoundaryState": {
+                "description": "Boundary State",
+                "enum": ["Active","Inactive","Any"]
+                },
+                "required": [
+                    "BoundaryType",
+                    "BoundaryState"
+                    ]
+            }
+        },
+        {
+        "if": { "properties": {"Msg": {"const": "FindPointInGuardZone"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject",
+                "$ref": "#/definitions/LatLon"
+            }
         }
-
     ]
 }
 )"_json;
-    
-/*
- *                 {
- *                    "BoundaryType": {
- *                        "description": "Boundary Type",
- *                        "enum": ["Exclusion","Inclusion","Neither","Any"]
- *                    },
- *                    "required": [
- *                        "BoundaryType"
- *                    ]
- *                }
- *
- */
+
 #endif // ODJSONSCHEMAS_H

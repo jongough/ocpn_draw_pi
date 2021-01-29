@@ -295,6 +295,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
+#ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
@@ -309,7 +310,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No Boundary Type found in message") );
                 bFail = true;
             }
-            
+#endif
             if(!bFail) {
                 l_dLat = root[wxS("lat")].AsDouble();
                 l_dLon = root[wxS("lon")].AsDouble();
@@ -383,6 +384,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindClosestBoundaryLineCrossing")) {
+#ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("StartLat"))) {
                 wxLogMessage( wxS("No Start Latitude found in message") );
                 bFail = true;
@@ -402,7 +404,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No End Longitude found in message") );
                 bFail = true;
             }
-            
+#endif
             if(!bFail) {
                 root[wxS("StartLat")].AsString().ToDouble( & l_dStartLat );
                 root[wxS("StartLon")].AsString().ToDouble( & l_dStartLon );
@@ -460,6 +462,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindFirstBoundaryLineCrossing")) {
+#ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("StartLat"))) {
                 wxLogMessage( wxS("No Start Latitude found in message") );
                 bFail = true;
@@ -479,7 +482,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No End Longitude found in message") );
                 bFail = true;
             }
-            
+#endif
             if(!bFail) {
                 root[wxS("StartLat")].AsString().ToDouble( & l_dStartLat );
                 root[wxS("StartLon")].AsString().ToDouble( & l_dStartLon );
@@ -537,6 +540,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInBoundary")) {
+#ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
                 bFail = true;
@@ -551,7 +555,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
-            
+#endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
                 l_dLat = root[wxS("lat")].AsDouble();
@@ -628,6 +632,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
             
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInGuardZone")) {
+#ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
                 bFail = true;
@@ -642,7 +647,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
-            
+#endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
                 root[wxS("lat")].AsString().ToDouble( & l_dLat );
