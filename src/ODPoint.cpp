@@ -714,6 +714,9 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     CurrentRect_in_DC.height = hilitebox.height;
 
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
+
+#else
+    wxLogMessage( _("ODPoint not drawn as OpenGL not available in this build") );
 #endif
 }
 

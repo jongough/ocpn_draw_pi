@@ -605,6 +605,9 @@ void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewP
     glEnd();
 
     glPopMatrix();
+
+#else
+    wxLogMessage( _("Path Segment Arrow not drawn as OpenGL not available in this build") );
 #endif
 }
 

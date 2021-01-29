@@ -210,5 +210,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
         }
     }
     ODPoint::DrawGL( pivp );
+#else
+    wxLogMessage( _("BoundaryPoint not drawn as OpenGL not available in this build") );
 #endif
 }
