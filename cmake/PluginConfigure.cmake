@@ -374,7 +374,8 @@ IF(QT_ANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
 
-    SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    SET(CMAKE_CXX_FLAGS "-pthread")
 
     ## Compiler flags
     add_compile_options("-Wno-inconsistent-missing-override"
@@ -587,6 +588,7 @@ if(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
         set(GTK_LIBRARIES ${GTK2_LIBRARIES})
         message(STATUS "${CMLOC}Building against GTK2...")
     else(GTK2_FOUND)
+        message(STATUS "${CMLOC}find_package(GTK3)")
         find_package(GTK3)
         include_directories(${GTK3_INCLUDE_DIRS})
         set(GTK_LIBRARIES ${GTK3_LIBRARIES})

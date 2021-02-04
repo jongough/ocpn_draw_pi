@@ -135,6 +135,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
+#if wxUSE_GRAPHICS_CONTEXT
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -158,6 +159,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->StrokePath(path);
             wxGC->FillPath( path );
             delete wxGC;
+#endif
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
             // surround boundary with hatching if there is more than 10 pixels different between points
             int l_imaxpointdiffX = 0;
@@ -197,6 +199,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             l_iPolygonPointCount[0] = m_pODPointList->GetCount();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
             
+#if wxUSE_GRAPHICS_CONTEXT
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -223,6 +226,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->StrokePath(path);
             wxGC->FillPath( path );
             delete wxGC;
+#endif
             ExpandedBoundaries.clear();
             polys.clear();
             poly.clear();

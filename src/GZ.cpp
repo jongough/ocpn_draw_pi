@@ -164,6 +164,7 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         RenderSegment( dc, l_l2p1.x, l_l2p1.y, l_l1p1.x, l_l1p1.y, piVP, false );
 
         // fill GZ
+#if wxUSE_GRAPHICS_CONTEXT
         wxGraphicsContext *wxGC = NULL;
         wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
         if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -187,7 +188,7 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         wxGC->StrokePath(path);
         wxGC->FillPath( path );
         delete wxGC;
-
+#endif
     }
     
 }
