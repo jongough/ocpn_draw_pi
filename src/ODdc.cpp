@@ -717,17 +717,20 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
         wxDouble l_InnerRadius = sqrt(pow((y1-yc), 2.0) + pow((x1-xc), 2.0));
         
 #if wxUSE_GRAPHICS_CONTEXT
-        wxGraphicsContext *wxGC = NULL;
+        wxGraphicsContext *GC = NULL;
         wxMemoryDC *pmdc = wxDynamicCast(GetDC(), wxMemoryDC);
-        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        if( pmdc ) GC = wxGraphicsContext::Create( *pmdc );
         else {
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
-            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+            if( pcdc ) GC = wxGraphicsContext::Create( *pcdc );
         }
-        if(wxGC) {
-            wxGC->SetPen(dc->GetPen());
-            wxGC->SetBrush(dc->GetBrush());
-            wxGraphicsPath gpath = wxGC->CreatePath();
+#else
+        ODDC *GC = GetDC();
+#endif
+        if(GC) {
+            GC->SetPen(dc->GetPen());
+            GC->SetBrush(dc->GetBrush());
+            wxGraphicsPath gpath = GC->CreatePath();
             
             gpath.MoveToPoint( x1, y1 );
             gpath.AddLineToPoint( x2, y2 );
@@ -736,9 +739,8 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
             gpath.AddLineToPoint( x4, y4 );
             gpath.AddArc( xc, yc, l_InnerRadius, l_dSecondAngle, l_dFirstAngle, false);
 
-            wxGC->FillPath(gpath);
+            GC->FillPath(gpath);
         }
-#endif
     }
 #ifdef ocpnUSE_GL
     else {
@@ -786,7 +788,7 @@ void ODDC::StrokeLines( int n, wxPoint *points) {
 
 void ODDC::StrokeArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2 )
 {
-    #if wxUSE_GRAPHICS_CONTEXT
+#if wxUSE_GRAPHICS_CONTEXT
     if( pgc ) {
         pgc->SetPen( dc->GetPen() );
         pgc->SetBrush(dc->GetBrush());
@@ -802,7 +804,7 @@ void ODDC::StrokeArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2
         dc->CalcBoundingBox( x1, y1 );
         dc->CalcBoundingBox( x2, y2 );
     } else
-        #endif
+#endif
         DrawArc( xc, yc, x1, y1, x2, y2, true );
 }
 
@@ -933,22 +935,24 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
 {
     if( dc ) {
 #if wxUSE_GRAPHICS_CONTEXT
-        wxGraphicsContext *wxGC = NULL;
+        wxGraphicsContext *GC = NULL;
         wxMemoryDC *pmdc = wxDynamicCast(GetDC(), wxMemoryDC);
-        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        if( pmdc ) GC = wxGraphicsContext::Create( *pmdc );
         else {
             wxClientDC *pcdc = wxDynamicCast(GetDC(), wxClientDC);
-            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+            if( pcdc ) GC = wxGraphicsContext::Create( *pcdc );
         }
-        if(wxGC) {
-            wxGC->SetPen(dc->GetPen());
-            wxGC->SetBrush(dc->GetBrush());
-            wxGraphicsPath p = wxGC->CreatePath();
+#else
+        ODDC *GC = GetDC();
+#endif
+        if(GC) {
+            GC->SetPen(dc->GetPen());
+            GC->SetBrush(dc->GetBrush());
+            wxGraphicsPath p = GC->CreatePath();
             p.AddCircle( x, y, innerRadius );
             p.AddCircle( x, y, outerRadius );
-            wxGC->FillPath(p);
+            GC->FillPath(p);
         }
-#endif
     }
 #ifdef ocpnUSE_GL
     else {

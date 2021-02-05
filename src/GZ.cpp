@@ -165,29 +165,32 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 
         // fill GZ
 #if wxUSE_GRAPHICS_CONTEXT
-        wxGraphicsContext *wxGC = NULL;
+        wxGraphicsContext *GC = NULL;
         wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
-        if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+        if( pmdc ) GC = wxGraphicsContext::Create( *pmdc );
         else {
             wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
-            if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+            if( pcdc ) GC = wxGraphicsContext::Create( *pcdc );
         }
-        assert(wxGC);
-
-        wxGC->SetPen(*wxTRANSPARENT_PEN);
+        assert(GC);
+#else
+        ODDC *GC = dc;
+#endif
+        GC->SetPen(*wxTRANSPARENT_PEN);
         wxColour tCol;
         tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-        wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
-        wxGraphicsPath path = wxGC->CreatePath();
+        GC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
+        wxGraphicsPath path = GC->CreatePath();
         path.MoveToPoint(l_l1p1.x, l_l1p1.y);
         path.AddLineToPoint(l_l1p2.x, l_l1p2.y);
         path.AddLineToPoint(l_l2p2.x, l_l2p2.y);
         path.AddLineToPoint(l_l2p1.x, l_l2p1.y);
         path.AddLineToPoint(l_l1p1.x, l_l1p1.y);
         path.CloseSubpath();
-        wxGC->StrokePath(path);
-        wxGC->FillPath( path );
-        delete wxGC;
+        GC->StrokePath(path);
+        GC->FillPath( path );
+#if wxUSE_GRAPHICS_CONTEXT
+        delete GC;
 #endif
     }
     

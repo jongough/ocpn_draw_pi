@@ -136,29 +136,32 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
 #if wxUSE_GRAPHICS_CONTEXT
-            wxGraphicsContext *wxGC = NULL;
+            wxGraphicsContext *GC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
-            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+            if( pmdc ) GC = wxGraphicsContext::Create( *pmdc );
             else {
                 wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
-                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+                if( pcdc ) GC = wxGraphicsContext::Create( *pcdc );
             }
-            assert(wxGC);
-
-            wxGC->SetPen(*wxTRANSPARENT_PEN);
+            assert(GC);
+#else
+            ODDC *GC = dc;
+#endif
+            GC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
-            wxGraphicsPath path = wxGC->CreatePath();
+            GC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
+            wxGraphicsPath path = GC->CreatePath();
             path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
             for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
             {
                 path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
             }
             path.CloseSubpath();
-            wxGC->StrokePath(path);
-            wxGC->FillPath( path );
-            delete wxGC;
+            GC->StrokePath(path);
+            GC->FillPath( path );
+#if wxUSE_GRAPHICS_CONTEXT
+            delete GC;
 #endif
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
             // surround boundary with hatching if there is more than 10 pixels different between points
@@ -200,20 +203,23 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
             
 #if wxUSE_GRAPHICS_CONTEXT
-            wxGraphicsContext *wxGC = NULL;
+            wxGraphicsContext *GC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
-            if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
+            if( pmdc ) GC = wxGraphicsContext::Create( *pmdc );
             else {
                 wxClientDC *pcdc = wxDynamicCast(dc.GetDC(), wxClientDC);
-                if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
+                if( pcdc ) GC = wxGraphicsContext::Create( *pcdc );
             }
-            assert(wxGC);
-            
-            wxGC->SetPen(*wxTRANSPARENT_PEN);
+            assert(GC);
+#else
+            ODDC *GC = dc;
+#endif
+
+            GC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
-            wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
-            wxGraphicsPath path = wxGC->CreatePath();
+            GC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
+            wxGraphicsPath path = GC->CreatePath();
             path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
             for( int i = 0; i < l_iPolygonPointCount[0]; i++ ) {
                 path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
@@ -223,9 +229,10 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
                 path.AddLineToPoint(l_InclusionBoundary[i].x, l_InclusionBoundary[i].y);
             }
             path.CloseSubpath();
-            wxGC->StrokePath(path);
-            wxGC->FillPath( path );
-            delete wxGC;
+            GC->StrokePath(path);
+            GC->FillPath( path );
+#if wxUSE_GRAPHICS_CONTEXT
+            delete GC;
 #endif
             ExpandedBoundaries.clear();
             polys.clear();
