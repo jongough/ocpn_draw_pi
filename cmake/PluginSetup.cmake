@@ -5,6 +5,9 @@
 set(SAVE_CMLOC ${CMLOC})
 set(CMLOC "PluginSetup: ")
 
+# Set default to use Graphics Context - needed for Android build
+set(USE_GRAPHICS_CONTEXT 1)
+
 # Make sure cmake sub directory files can be found by cmake
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -186,9 +189,15 @@ else(NOT WIN32 AND NOT QT_ANDROID)
     set(ARCH "x86_64")
     if(_wx_selected_config MATCHES "androideabi-qt-arm64")
         set(ARCH "arm64")
+        # android cannot used graphics context is wxWidgets as it does not exist
+        set(wxUSE_GRAPHICS_CONTEXT 0)
+        set(USE_GRAPHICS_CONTEXT 0)
     endif(_wx_selected_config MATCHES "androideabi-qt-arm64")
     if(_wx_selected_config MATCHES "androideabi-qt-armhf")
         set(ARCH "armhf")
+        # android cannot used graphics context is wxWidgets as it does not exist
+        set(wxUSE_GRAPHICS_CONTEXT 0)
+        set(USE_GRAPHICS_CONTEXT 0)
     endif(_wx_selected_config MATCHES "androideabi-qt-armhf")
 endif(NOT WIN32 AND NOT QT_ANDROID)
 
