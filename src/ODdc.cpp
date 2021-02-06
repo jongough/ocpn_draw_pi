@@ -80,6 +80,12 @@ int         g_iTextureWidth;
 ODDC::ODDC( wxGLCanvas &canvas ) :
         glcanvas( &canvas ), dc( NULL ), m_pen( wxNullPen ), m_brush( wxNullBrush )
 {
+#ifdef wxUSE_GRAPHICS_CONTEXT
+    #define VALUE_TO_STRING(x) #x
+    #define VALUE(x) VALUE_TO_STRING(x)
+    #define VAR_NAME_VALUE(var) #var "="  VALUE(var)
+    #pragma message(VAR_NAME_VALUE(wxUSE_GRAPHICS_CONTEXT))
+#endif
 #if wxUSE_GRAPHICS_CONTEXT == 1
     pgc = NULL;
 #endif

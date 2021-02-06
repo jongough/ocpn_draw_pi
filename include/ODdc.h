@@ -125,7 +125,7 @@ protected:
 #endif
      
 
-#if  wxUSE_GRAPHICS_CONTEXT
+#if  wxUSE_GRAPHICS_CONTEXT == 1
      wxGraphicsContext *pgc;
 #endif
 };
