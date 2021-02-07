@@ -135,6 +135,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
+#if wxUSE_GRAPHICS_CONTEXT == 1
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -143,7 +144,6 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
                 if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
             }
             assert(wxGC);
-
             wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
@@ -158,6 +158,9 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->StrokePath(path);
             wxGC->FillPath( path );
             delete wxGC;
+#else
+            dc.DrawPolygonTessellated(m_pODPointList->GetCount(), m_bpts);
+#endif
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
             // surround boundary with hatching if there is more than 10 pixels different between points
             int l_imaxpointdiffX = 0;
@@ -197,6 +200,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             l_iPolygonPointCount[0] = m_pODPointList->GetCount();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
             
+#if wxUSE_GRAPHICS_CONTEXT == 1
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -205,7 +209,6 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
                 if( pcdc ) wxGC = wxGraphicsContext::Create( *pcdc );
             }
             assert(wxGC);
-            
             wxGC->SetPen(*wxTRANSPARENT_PEN);
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
@@ -223,6 +226,10 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->StrokePath(path);
             wxGC->FillPath( path );
             delete wxGC;
+#else
+            dc.DrawPolygonsTessellated( 2, l_iPolygonPointCount, l_InclusionBoundary, 0, 0);
+#endif
+
             ExpandedBoundaries.clear();
             polys.clear();
             poly.clear();

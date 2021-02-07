@@ -322,7 +322,7 @@ if(ARCH MATCHES "arm*"
         set(OPENGL_FOUND "YES")
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
-        add_subdirectory(src/glshim)
+        add_subdirectory(extsrc/glshim)
 
         set(OPENGL_LIBRARIES "GL_static" "EGL" "X11" "drm")
     endif()
@@ -356,9 +356,8 @@ IF(DEFINED _wx_selected_config)
         MESSAGE (STATUS "${CMLOC}Using GLESv2 for Android")
         ADD_DEFINITIONS(-DUSE_ANDROID_GLES2)
         ADD_DEFINITIONS(-DUSE_GLSL)
-        INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES )
+        include_directories( ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES )
         set(EXTINCLUDE ${EXTINCLUDE} ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES)
-        set(EXTINCLUDE ${EXTINCLUDE} extinclude/android)
         set(EXTINCLUDE ${EXTINCLUDE} extsrc/glshim/include)
 
     ENDIF(_wx_selected_config MATCHES "androideabi-qt")
@@ -374,7 +373,8 @@ IF(QT_ANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
 
-    SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
+    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    SET(CMAKE_CXX_FLAGS "-pthread")
 
     ## Compiler flags
     add_compile_options("-Wno-inconsistent-missing-override"
@@ -520,15 +520,15 @@ if(NOT QT_ANDROID)
     message(STATUS "${CMLOC} Revised wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
 else(NOT QT_ANDROID)
     IF(_wx_selected_config MATCHES "androideabi-qt-arm64")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtCore")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtWidgets")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtGui")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtOpenGL")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtTest")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtCore")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtWidgets")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtGui")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtOpenGL")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtTest")
 
-        INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
-        INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/include")
+        include_directories(BEFORE "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
+        include_directories( "${OCPN_Android_Common}/wxWidgets/include")
 
         SET(wxWidgets_LIBRARIES
         ${CMAKE_CURRENT_SOURCE_DIR}/${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/lib/libQt5Core.so
@@ -545,15 +545,15 @@ else(NOT QT_ANDROID)
           )
 
     ELSE(_wx_selected_config MATCHES "androideabi-qt-arm64")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtCore")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtWidgets")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtGui")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtOpenGL")
-        INCLUDE_DIRECTORIES("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtTest")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtCore")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtWidgets")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtGui")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtOpenGL")
+        include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtTest")
 
-        INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/libarmhf/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
-        INCLUDE_DIRECTORIES( "${OCPN_Android_Common}/wxWidgets/include")
+        include_directories(BEFORE "${OCPN_Android_Common}/wxWidgets/libarmhf/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
+        include_directories( "${OCPN_Android_Common}/wxWidgets/include")
 
         ADD_DEFINITIONS( -DOCPN_ARMHF )
 
@@ -587,6 +587,7 @@ if(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
         set(GTK_LIBRARIES ${GTK2_LIBRARIES})
         message(STATUS "${CMLOC}Building against GTK2...")
     else(GTK2_FOUND)
+        message(STATUS "${CMLOC}find_package(GTK3)")
         find_package(GTK3)
         include_directories(${GTK3_INCLUDE_DIRS})
         set(GTK_LIBRARIES ${GTK3_LIBRARIES})
