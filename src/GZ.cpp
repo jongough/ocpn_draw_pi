@@ -195,6 +195,7 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 
 void GZ::DrawGL( PlugIn_ViewPort &piVP )
 {
+#if 0
 #ifdef ocpnUSE_GL
     if(m_dSecondDistance == 0) return;
     if ( !m_bVisible ) return;
@@ -304,7 +305,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 #else
     wxLogMessage( _("Guard Zone not drawn as OpenGL not available in this build") );
 #endif
-    
+#endif    
 }
 
 void GZ::SetActiveColours( void )

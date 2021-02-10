@@ -482,6 +482,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
 
 void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
+#if 0    
 #ifdef ocpnUSE_GL
     if( !m_bIsVisible )
     return;
@@ -583,6 +584,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
 
     if( ( !bDrawHL ) && ( NULL != m_pbmIcon ) ) {
+
         int glw, glh;
         unsigned int IconTexture = g_pODPointMan->GetIconTexture( pbm, glw, glh );
         
@@ -717,6 +719,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 
 #else
     wxLogMessage( _("ODPoint not drawn as OpenGL not available in this build") );
+#endif
 #endif
 }
 

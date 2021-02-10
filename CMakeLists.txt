@@ -175,7 +175,8 @@ set(SRCS
     src/PILPropertiesDialogImpl.cpp
     src/PointMan.cpp
     src/TextPoint.cpp
-    src/TextPointCSVImport.cpp)
+    src/TextPointCSVImport.cpp
+    src/pi_shaders.cpp)
 
 set(HDRS
     include/ocpn_draw_pi.h
@@ -234,7 +235,8 @@ set(HDRS
     include/PILPropertiesDialogImpl.h
     include/PILProp.h
     include/TextPoint.h
-    include/TextPointCSVImport.h)
+    include/TextPointCSVImport.h
+    include/pi_shaders.h)
 
 set(OCPNSRC
     ocpnsrc/bbox.cpp

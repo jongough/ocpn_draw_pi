@@ -700,8 +700,12 @@ int ocpn_draw_pi::Init(void)
     m_pCurrentCursor = NULL;
     
     //build_cursors(); // build cursors to use on chart
+#ifndef __OCPN__ANDROID__
     m_pTextCursorCross = new wxCursor( wxCURSOR_CHAR );
-
+#else
+    m_pTextCursorCross = new wxCursor( wxCURSOR_ARROW );
+#endif    
+    
     wxImage ICursorPencil = GetIcon_PlugIn(_T("pencil")).ConvertToImage();
     if ( ICursorPencil.Ok() )
     {
@@ -2084,6 +2088,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     g_ODEventHandler->SetCanvasIndex(m_mouse_canvas_index);
     
+    // Touch interface devices do not provide cursor tracking...
+    // We only get button click events here.
+    // Compute the cursor lat/lon on each such event received,
+    
+    if(IsTouchInterface_PlugIn()){
+        wxPoint cp(event.GetX(), event.GetY());
+        GetCanvasLLPix( &g_VP, cp, &m_cursor_lat, &m_cursor_lon);
+     }
+
     if(GetCanvasCount() == 1 || m_drawing_canvas_index == -1 || m_mouse_canvas_index == m_drawing_canvas_index) {
         g_cursor_x = event.GetX();
         g_cursor_y = event.GetY();
@@ -3063,6 +3076,8 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
     m_view_scale = pivp->view_scale_ppm;
     
     g_pDC = new ODDC();
+    g_pDC->SetVP(pivp);
+
     LLBBox llbb;
     llbb.Set( pivp->lat_min, pivp->lon_min, pivp->lat_max, pivp->lon_max );
 
@@ -4196,6 +4211,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color,
                                   unsigned char transparency )
 {
+#if 0    
     wxDC *pdc = dc.GetDC();
     if( pdc ) {
         //    Get wxImage of area of interest
@@ -4280,6 +4296,7 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
         wxLogMessage( _("Alpha blending not drawn as OpenGL not available in this build") );
 #endif
     }
+#endif    
 }
 
 double ocpn_draw_pi::GetTrueOrMag(double a)

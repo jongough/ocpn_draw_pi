@@ -318,6 +318,7 @@ void TextPoint::Draw( ODDC& dc, wxPoint *odp)
 
 void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
+#if 0    
     if( !m_bIsVisible )
         return;
     
@@ -466,6 +467,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
         }
     }
     ODPoint::DrawGL( pivp );
+#endif    
 }
 
 void TextPoint::CalculateTextExtents( void )

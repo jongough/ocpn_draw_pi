@@ -249,6 +249,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     if ( !m_bVisible ) return;
     
     ODDC dc;
+#if 0
     
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
@@ -367,6 +368,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         } 
         
     }
+#endif    
     ODPath::DrawGL( piVP );
 #else
     wxLogMessage( _("Boundary not drawn as OpenGL not available in this build") );

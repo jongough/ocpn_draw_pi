@@ -334,7 +334,8 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     if( m_nPoints < 1 || !m_bVisible ) return;
 
     ODDC dc;
-    
+    dc.SetVP(&piVP);
+
     /* determine color and width */
     wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
@@ -571,6 +572,7 @@ void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int
 
 void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP)
 {
+#if 0
 #ifdef ocpnUSE_GL
     //    Draw a direction arrow        
     float icon_scale_factor = 100 * VP.view_scale_ppm;
@@ -608,6 +610,7 @@ void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewP
 
 #else
     wxLogMessage( _("Path Segment Arrow not drawn as OpenGL not available in this build") );
+#endif
 #endif
 }
 

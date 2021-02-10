@@ -257,7 +257,7 @@ void ODicons::initialize_images(void)
         int ret = OCPNMessageBox_PlugIn( NULL, _("Failed to load all OCPN Draw Plugin icons, check OCPN log for details"), _("OpenCPN Alert"), wxOK );
     } else {
         CreateSchemeIcons();
-        ScaleIcons();
+        //ScaleIcons();
     }
 }
 
@@ -293,6 +293,7 @@ wxBitmap ODicons::ScaleIcon( wxBitmap bitmap, double sf )
 }
 bool ODicons::ScaleIcons()
 {
+ return false;
     if(!SetScaleFactor()) return false;
     
 
@@ -485,6 +486,8 @@ void ODicons::CreateSchemeIcons()
 
 wxBitmap ODicons::BuildDimmedToolBitmap(wxBitmap bmp_normal, unsigned char dim_ratio)
 {
+    return bmp_normal;
+
     wxImage img_dup = bmp_normal.ConvertToImage();
     
     if( !img_dup.IsOk() )

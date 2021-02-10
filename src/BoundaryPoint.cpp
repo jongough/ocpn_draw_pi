@@ -135,6 +135,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
 
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 {
+#if 0    
 #ifdef ocpnUSE_GL
     ODDC dc;
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
@@ -212,5 +213,6 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     ODPoint::DrawGL( pivp );
 #else
     wxLogMessage( _("BoundaryPoint not drawn as OpenGL not available in this build") );
+#endif
 #endif
 }
