@@ -2091,7 +2091,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     // Touch interface devices do not provide cursor tracking...
     // We only get button click events here.
     // Compute the cursor lat/lon on each such event received,
-    
+
     if(IsTouchInterface_PlugIn()){
         wxPoint cp(event.GetX(), event.GetY());
         GetCanvasLLPix( &g_VP, cp, &m_cursor_lat, &m_cursor_lon);

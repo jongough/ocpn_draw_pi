@@ -55,6 +55,7 @@
 #ifdef USE_ANDROID_GLES2
 #include "pi_shaders.h"
 #include <gl2.h>
+#include "linmath.h"
 #endif
 
 #ifdef ocpnUSE_GL
@@ -1793,4 +1794,88 @@ void ODDC::SetTextureSize( int width, int height )
 {
     g_iTextureWidth = width;
     g_iTextureHeight = height;
+}
+
+void ODDC::DrawTexture( wxRect texRect, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
+{
+        float w = texRect.width * scaleFactor;
+        float h = texRect.height * scaleFactor;
+
+#ifndef USE_ANDROID_GLES2
+        glColor3f(1, 1, 1);
+        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0); glVertex2f(position.x, position.y);
+        glTexCoord2f(1, 0); glVertex2f(position.x+w, position.y);
+        glTexCoord2f(1, 1); glVertex2f(position.x+w, position.y+h);
+        glTexCoord2f(0, 1); glVertex2f(position.x, position.y+h);
+        glEnd();
+#else    
+
+        float tx1 = texRect.x, ty1 = texRect.y;
+        float tx2 = tx1 + w, ty2 = ty1 + h;
+
+        // Normalize values against texture size
+        tx1 /= texRect.width , tx2 /= texRect.width ;
+        ty1 /= texRect.height , ty2 /= texRect.height ;
+
+        float uv[8];
+        float coords[8];
+
+            // Note swizzle of points to allow TRIANGLE_STRIP drawing
+        uv[0] = tx1; uv[1] = ty1; uv[2] = tx2; uv[3] = ty1;
+        uv[6] = tx2; uv[7] = ty2; uv[4] = tx1; uv[5] = ty2;
+
+            // pixels
+        coords[0] = 0; coords[1] = 0; coords[2] = w; coords[3] = 0;
+        coords[6] = w; coords[7] = h; coords[4] = 0; coords[5] = h;
+
+        glUseProgram( pi_texture_2D_shader_program );
+
+            // Get pointers to the attributes in the program.
+        GLint mPosAttrib = glGetAttribLocation( pi_texture_2D_shader_program, "aPos" );
+        GLint mUvAttrib  = glGetAttribLocation( pi_texture_2D_shader_program, "aUV" );
+
+            // Select the active texture unit.
+        glActiveTexture( GL_TEXTURE0 );
+
+            // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( pi_texture_2D_shader_program, "uTex" );
+        glUniform1i( texUni, 0 );
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+            // Set the attribute mPosAttrib with the vertices in the screen coordinates...
+        glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, coords );
+            // ... and enable it.
+        glEnableVertexAttribArray( mPosAttrib );
+
+            // Set the attribute mUvAttrib with the vertices in the GL coordinates...
+        glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 0, uv );
+            // ... and enable it.
+        glEnableVertexAttribArray( mUvAttrib );
+
+            // Rotate
+        mat4x4 I, Q;
+        mat4x4_identity(I);
+
+        mat4x4_translate_in_place(I, position.x, position.y, 0);
+        mat4x4_rotate_Z(Q, I, -rotation);
+        mat4x4_translate_in_place(Q, -rPivot.x, -rPivot.y, rotation);
+
+        GLint matloc = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
+
+            // Perform the actual drawing.
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+            // Restore the per-object transform to Identity Matrix
+        mat4x4 IM;
+        mat4x4_identity(IM);
+        GLint matlocf = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
+        glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
+#endif
 }

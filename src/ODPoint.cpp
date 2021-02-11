@@ -42,6 +42,9 @@
 #include "GL/gl_private.h"
 #endif
 
+#include "linmath.h"
+#include "pi_shaders.h"
+
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );
 
@@ -482,7 +485,6 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
 
 void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
-#if 0    
 #ifdef ocpnUSE_GL
     if( !m_bIsVisible )
     return;
@@ -563,7 +565,9 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     }
 
     ODDC dc;
+    dc.SetVP(&pivp);
 
+#if 0    
     //  Highlite any selected point
     if( m_bPtIsSelected || m_bIsBeingEdited ) {
         wxColour hi_colour;
@@ -578,7 +582,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                        hi_colour, transparency );
     }
-    
+#endif    
     bool bDrawHL = false;
 
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
@@ -587,32 +591,29 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 
         int glw, glh;
         unsigned int IconTexture = g_pODPointMan->GetIconTexture( pbm, glw, glh );
-        
+      
         glBindTexture(GL_TEXTURE_2D, IconTexture);
         
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-        
-        glColor3f(1, 1, 1);
         
         float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
         float w = r1.width * l_ChartScaleFactorExp;
         float h = r1.height * l_ChartScaleFactorExp;
         float x = l_odp.x - w/2; 
         float y = l_odp.y - h/2;
-        float u = (float)r1.width/glw, v = (float)r1.height/glh;
-        glBegin(GL_QUADS);
-        glTexCoord2f(0, 0); glVertex2f(x, y);
-        glTexCoord2f(u, 0); glVertex2f(x+w, y);
-        glTexCoord2f(u, v); glVertex2f(x+w, y+h);
-        glTexCoord2f(0, v); glVertex2f(x, y+h);
-        glEnd();
+
+        wxRect texrect = wxRect(0, 0, r1.width, r1.height);      // the texture rectangle
+
+        dc.DrawTexture( texrect, l_ChartScaleFactorExp, wxPoint(x,y), 0, wxPoint(0,0));
+
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
-    }
 
+
+    }
+#if 0
     if( m_bShowName && m_pMarkFont ) {
         int w = m_NameExtents.x, h = m_NameExtents.y;
         if(!m_iTextTexture && w && h) {
@@ -706,7 +707,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }
-    
+#endif    
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
     
     //    This will be useful for fast icon redraws
@@ -719,7 +720,6 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 
 #else
     wxLogMessage( _("ODPoint not drawn as OpenGL not available in this build") );
-#endif
 #endif
 }
 

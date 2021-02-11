@@ -135,9 +135,11 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
 
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 {
-#if 0    
 #ifdef ocpnUSE_GL
     ODDC dc;
+    dc.SetVP(&pivp);
+
+#if 0    
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
         GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
@@ -210,9 +212,9 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             glDeleteTextures(1, &textureID);
         }
     }
+#endif    
     ODPoint::DrawGL( pivp );
 #else
     wxLogMessage( _("BoundaryPoint not drawn as OpenGL not available in this build") );
-#endif
 #endif
 }

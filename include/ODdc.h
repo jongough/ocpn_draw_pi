@@ -95,6 +95,8 @@ public:
      void GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent = NULL,
                         wxCoord *externalLeading = NULL, wxFont *font = NULL) const;
 
+     void DrawTexture( wxRect texRect, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
+
      void ResetBoundingBox();
      void CalcBoundingBox(wxCoord x, wxCoord y);
 
