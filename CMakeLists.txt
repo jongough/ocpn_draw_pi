@@ -264,7 +264,7 @@ set(EXTINCLUDE ${EXTINCLUDE} extinclude)
 if(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else(APPLE OR QT_ANDROID)
-    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
+    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF) # Temp change to remove JSON Vaidator 12/02/2021
 endif(APPLE OR QT_ANDROID)
 
 if(OD_JSON_SCHEMA_VALIDATOR)
