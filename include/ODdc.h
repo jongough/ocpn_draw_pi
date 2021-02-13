@@ -92,10 +92,12 @@ public:
      void DrawBitmap(const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemask);
 
      void DrawText(const wxString &text, wxCoord x, wxCoord y);
+     void DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFactor );
+
      void GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent = NULL,
                         wxCoord *externalLeading = NULL, wxFont *font = NULL) const;
 
-     void DrawTexture( wxRect texRect, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
+     void DrawTexture( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
 
      void ResetBoundingBox();
      void CalcBoundingBox(wxCoord x, wxCoord y);

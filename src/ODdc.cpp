@@ -71,6 +71,7 @@
 #include "ODdc.h"
 #include "ODUtils.h"
 #include "wx28compat.h"
+#include "cutil.h"
 
 #define __CALL_CONVENTION
 
@@ -208,8 +209,23 @@ void ODDC::SetPen( const wxPen &pen )
         if( pen == wxNullPen ) dc->SetPen( *wxTRANSPARENT_PEN );
         else
             dc->SetPen( pen );
-    } else
+    } else {
         m_pen = pen;
+        
+#ifndef USE_ANDROID_GLES2 
+        switch( m_pen.GetStyle() ) {
+            case wxPENSTYLE_DOT: 
+            case wxPENSTYLE_LONG_DASH: 
+            case wxPENSTYLE_SHORT_DASH:
+            case wxPENSTYLE_DOT_DASH:
+                break;
+        
+            default:
+                glDisable( GL_LINE_STIPPLE );
+                break;
+        }
+#endif
+    }
 }
 
 void ODDC::SetBrush( const wxBrush &brush )
@@ -264,8 +280,8 @@ void ODDC::GetSize( wxCoord *width, wxCoord *height ) const
 
 void ODDC::SetGLStipple() const
 {
-#if 0    
 #ifdef ocpnUSE_GL
+#ifndef USE_ANDROID_GLES2 
     
     switch( m_pen.GetStyle() ) {
         case wxPENSTYLE_DOT: {
@@ -1173,10 +1189,87 @@ void ODDC::DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxC
 #endif
 }
 
+#if 0
 void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
 {
     DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
 }
+#endif
+
+void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
+{
+#ifdef USE_ANDROID_GLES2
+
+    //      Enable anti-aliased lines, at best quality
+    glEnable( GL_BLEND );
+    
+    float coords[8];
+    coords[0] = x - radius;  coords[1] = y + radius;
+    coords[2] = x + radius;  coords[3] = y + radius;
+    coords[4] = x - radius;  coords[5] = y - radius;
+    coords[6] = x + radius;  coords[7] = y - radius;
+    
+    glUseProgram( pi_circle_filled_shader_program );
+        
+    // Get pointers to the attributes in the program.
+    GLint mPosAttrib = glGetAttribLocation( pi_circle_filled_shader_program, "aPos" );
+    
+        // Disable VBO's (vertex buffer objects) for attributes.
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+        
+    glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, coords );
+    glEnableVertexAttribArray( mPosAttrib );
+
+    //  Circle radius
+    GLint radiusloc = glGetUniformLocation(pi_circle_filled_shader_program,"circle_radius");
+    glUniform1f(radiusloc, radius);
+
+    //  Circle center point
+    GLint centerloc = glGetUniformLocation(pi_circle_filled_shader_program,"circle_center");
+    float ctrv[2];
+    ctrv[0] = x;
+    ctrv[1] = GetCanvasByIndex(0)->GetSize().y - y; 
+    glUniform2fv(centerloc, 1, ctrv);
+    
+    //  Circle color
+    float colorv[4];
+    colorv[0] = m_brush.GetColour().Red() / float(256);
+    colorv[1] = m_brush.GetColour().Green() / float(256);
+    colorv[2] = m_brush.GetColour().Blue() / float(256);
+    colorv[3] = (m_brush.GetStyle() == wxBRUSHSTYLE_TRANSPARENT) ? 0.0 : 1.0; 
+    
+    GLint colloc = glGetUniformLocation(pi_circle_filled_shader_program,"circle_color");
+    glUniform4fv(colloc, 1, colorv);
+    
+    //  Border color
+    float bcolorv[4];
+    bcolorv[0] = m_pen.GetColour().Red() / float(256);
+    bcolorv[1] = m_pen.GetColour().Green() / float(256);
+    bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+    bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+    
+    GLint bcolloc = glGetUniformLocation(pi_circle_filled_shader_program,"border_color");
+    glUniform4fv(bcolloc, 1, bcolorv);
+    
+    //  Border Width
+    GLint borderWidthloc = glGetUniformLocation(pi_circle_filled_shader_program,"border_width");
+    glUniform1f(borderWidthloc, m_pen.GetWidth());
+    
+//    GLint matloc = glGetUniformLocation(pi_circle_filled_shader_program,"MVMatrix");
+//    glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)(GetCanvasByIndex(0)->GetpVP()->vp_transform) ); 
+        
+        // Perform the actual drawing.
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    //      Enable anti-aliased lines, at best quality
+    glDisable( GL_BLEND );
+    
+#else        
+    DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
+#endif    
+}
+
 
 void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius )
 {
@@ -1620,9 +1713,15 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
 #endif
 }
 
+
 void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
 {
-#if 0    
+    DrawTextEx( text, x, y, 1.0 );
+}
+
+
+void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFactor )
+{
     if( dc )
         dc->DrawText( text, x, y );
 #ifdef ocpnUSE_GL
@@ -1630,34 +1729,40 @@ void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
        wxCoord w = 0;
         wxCoord h = 0;
 
-#ifndef __WXMAC__
-        
-        m_texfont.Build( m_font );      // make sure the font is ready
-        m_texfont.GetTextExtent(text, &w, &h);
-        
-        if( w && h ) {
+        if(0/*m_buseTex*/){
+
+            m_texfont.Build( m_font );      // make sure the font is ready
+            m_texfont.GetTextExtent(text, &w, &h);
+            m_texfont.SetColor(m_textforegroundcolour);
             
-            glEnable( GL_BLEND );
-            glEnable( GL_TEXTURE_2D );
-            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+            if( w && h ) {
+                
+                glEnable( GL_BLEND );
+                glEnable( GL_TEXTURE_2D );
+                glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
-            glPushMatrix();
-            glTranslatef(x, y, 0);
-            
-            glColor3ub( m_textforegroundcolour.Red(), m_textforegroundcolour.Green(),
-                        m_textforegroundcolour.Blue() );
-            
+#ifndef USE_ANDROID_GLES2                
+                glPushMatrix();
+                glTranslatef(x, y, 0);
+                
+                glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+                glColor3ub( m_textforegroundcolour.Red(), m_textforegroundcolour.Green(),
+                            m_textforegroundcolour.Blue() );
+                
 
-            m_texfont.RenderString(text);
-            glPopMatrix();
+                m_texfont.RenderString(text);
+                glPopMatrix();
+#else
+                m_texfont.RenderString(text, x, y);
+#endif                
+                glDisable( GL_TEXTURE_2D );
+                glDisable( GL_BLEND );
 
-            glDisable( GL_TEXTURE_2D );
-            glDisable( GL_BLEND );
-
+            }
         }
-#else            
+        else{           
             wxScreenDC sdc;
+            sdc.SetFont(m_font);
             sdc.GetTextExtent(text, &w, &h, NULL, NULL, &m_font);
             
             /* create bitmap of appropriate size and select it */
@@ -1690,21 +1795,161 @@ void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
                 y += dy;
             }
 
-            unsigned char *data = new unsigned char[w * h];
+            unsigned char *data = new unsigned char[w * h * 4];
             unsigned char *im = image.GetData();
+            
+            
             if(im){
-                for( int i = 0; i < w * h; i++ )
-                    data[i] = im[3 * i];
+                unsigned int r = m_textforegroundcolour.Red();
+                unsigned int g = m_textforegroundcolour.Green();
+                unsigned int b = m_textforegroundcolour.Blue();
+                for( int i = 0; i < h; i++ ){
+                    for(int j=0 ; j < w ; j++){
+                        unsigned int index = ((i*w) + j) * 4;
+                        data[index] = r;
+                        data[index+1] = g;
+                        data[index+2] = b;
+                        data[index+3] = im[((i*w) + j) * 3];
+                    }
+                }
             }
-
-            glColor4ub( m_textforegroundcolour.Red(), m_textforegroundcolour.Green(),
-                    m_textforegroundcolour.Blue(), 255 );
-            GLDrawBlendData( x, y, w, h, GL_ALPHA, data );
-            delete[] data;
+#if 0
+            glColor4ub( 255, 255, 255, 255 );
+            glEnable( GL_BLEND );
+            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+            glRasterPos2i( x, y );
+            glPixelZoom( 1, -1 );
+            glDrawPixels( w, h, GL_RGBA, GL_UNSIGNED_BYTE, data );
+            glPixelZoom( 1, 1 );
+            glDisable( GL_BLEND );
+#else
+            unsigned int texobj;    
+            
+            glGenTextures(1, &texobj);
+            glBindTexture(GL_TEXTURE_2D, texobj);
+            
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            
+            int TextureWidth = NextPow2(w);
+            int TextureHeight = NextPow2(h);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TextureWidth, TextureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            
+            glEnable(GL_TEXTURE_2D);
+            glEnable(GL_BLEND);
+            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+            
+            float u = (float)w/TextureWidth, v = (float)h/TextureHeight;
+            
+#ifndef USE_ANDROID_GLES2            
+            glColor3ub(0,0,0);
+            
+            glBegin(GL_QUADS);
+            glTexCoord2f(0, 0); glVertex2f(x, y);
+            glTexCoord2f(u, 0); glVertex2f(x+w, y);
+            glTexCoord2f(u, v); glVertex2f(x+w, y+h);
+            glTexCoord2f(0, v); glVertex2f(x, y+h);
+            glEnd();
+#else
+            float uv[8];
+            float coords[8];
+            
+            //normal uv
+            uv[0] = 0; uv[1] = 0; uv[2] = u; uv[3] = 0;
+            uv[4] = u; uv[5] = v; uv[6] = 0; uv[7] = v;
+            
+            // pixels
+            coords[0] = 0; coords[1] = 0; coords[2] = w*scaleFactor; coords[3] = 0;
+            coords[4] = w*scaleFactor; coords[5] = h*scaleFactor; coords[6] = 0; coords[7] = h*scaleFactor;
+            
+            glUseProgram( pi_texture_2D_shader_program );
+            
+            // Get pointers to the attributes in the program.
+            GLint mPosAttrib = glGetAttribLocation( pi_texture_2D_shader_program, "aPos" );
+            GLint mUvAttrib  = glGetAttribLocation( pi_texture_2D_shader_program, "aUV" );
+            
+            // Set up the texture sampler to texture unit 0
+            GLint texUni = glGetUniformLocation( pi_texture_2D_shader_program, "uTex" );
+            glUniform1i( texUni, 0 );
+            
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+            // Set the attribute mPosAttrib with the vertices in the screen coordinates...
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, coords );
+            // ... and enable it.
+            glEnableVertexAttribArray( mPosAttrib );
+            
+            // Set the attribute mUvAttrib with the vertices in the GL coordinates...
+            glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 0, uv );
+            // ... and enable it.
+            glEnableVertexAttribArray( mUvAttrib );
+            
+            // Rotate 
+            float angle = 0;
+            mat4x4 I, Q;
+            mat4x4_identity(I);
+            mat4x4_rotate_Z(Q, I, angle);
+            
+            // Translate
+            Q[3][0] = x;
+            Q[3][1] = y;
+            
+            GLint matloc = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
+            glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q); 
+            
+            // Select the active texture unit.
+            glActiveTexture( GL_TEXTURE0 );
+            
+            
+            // For some reason, glDrawElements is busted on Android
+            // So we do this a hard ugly way, drawing two triangles...
+            #if 0
+            GLushort indices1[] = {0,1,3,2}; 
+            glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, indices1);
+            #else
+            
+            float co1[8];
+            co1[0] = coords[0];
+            co1[1] = coords[1];
+            co1[2] = coords[2];
+            co1[3] = coords[3];
+            co1[4] = coords[6];
+            co1[5] = coords[7];
+            co1[6] = coords[4];
+            co1[7] = coords[5];
+            
+            float tco1[8];
+            tco1[0] = uv[0];
+            tco1[1] = uv[1];
+            tco1[2] = uv[2];
+            tco1[3] = uv[3];
+            tco1[4] = uv[6];
+            tco1[5] = uv[7];
+            tco1[6] = uv[4];
+            tco1[7] = uv[5];
+            
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, co1 );
+            glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 0, tco1 );
+            
+            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            
+            #endif
+            
+            
+            
 #endif            
+            glDisable(GL_BLEND);
+            glDisable(GL_TEXTURE_2D);
+            
+            glDeleteTextures(1, &texobj);
+#endif            
+            delete[] data;
+        }            
     }
 #endif    
-#endif
 }
 
 void ODDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent,
@@ -1796,20 +2041,21 @@ void ODDC::SetTextureSize( int width, int height )
     g_iTextureHeight = height;
 }
 
-void ODDC::DrawTexture( wxRect texRect, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
+void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
 {
-        float w = texRect.width * scaleFactor;
-        float h = texRect.height * scaleFactor;
+        float w = width; //* scaleFactor;
+        float h = height;// * scaleFactor;
 
 #ifndef USE_ANDROID_GLES2
         glColor3f(1, 1, 1);
         glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+        float u = (float)width/texRect.width, v = (float)height/texRect.height;
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0); glVertex2f(position.x, position.y);
-        glTexCoord2f(1, 0); glVertex2f(position.x+w, position.y);
-        glTexCoord2f(1, 1); glVertex2f(position.x+w, position.y+h);
-        glTexCoord2f(0, 1); glVertex2f(position.x, position.y+h);
+        glTexCoord2f(u, 0); glVertex2f(position.x+w, position.y);
+        glTexCoord2f(u, v); glVertex2f(position.x+w, position.y+h);
+        glTexCoord2f(0, v); glVertex2f(position.x, position.y+h);
         glEnd();
 #else    
 
