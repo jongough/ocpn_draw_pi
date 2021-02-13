@@ -567,7 +567,6 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     ODDC dc;
     dc.SetVP(&pivp);
 
-#if 0    
     //  Highlite any selected point
     if( m_bPtIsSelected || m_bIsBeingEdited ) {
         wxColour hi_colour;
@@ -582,7 +581,6 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                        hi_colour, transparency );
     }
-#endif    
     bool bDrawHL = false;
 
     if( (m_bPointPropertiesBlink || m_bPathManagerBlink) && ( g_ocpn_draw_pi->nBlinkerTick & 1 ) ) bDrawHL = true;
@@ -603,79 +601,23 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         float h = r1.height * l_ChartScaleFactorExp;
         float x = l_odp.x - w/2; 
         float y = l_odp.y - h/2;
+        wxRect texrect = wxRect(0, 0, w,h /*r1.width, r1.height*/);      // the texture rectangle
 
-        wxRect texrect = wxRect(0, 0, r1.width, r1.height);      // the texture rectangle
-
-        dc.DrawTexture( texrect, l_ChartScaleFactorExp, wxPoint(x,y), 0, wxPoint(0,0));
+        dc.DrawTexture( texrect, w, h, l_ChartScaleFactorExp, wxPoint(x,y), 0, wxPoint(0,0));
 
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
-
-
     }
-#if 0
+
     if( m_bShowName && m_pMarkFont ) {
-        int w = m_NameExtents.x, h = m_NameExtents.y;
-        if(!m_iTextTexture && w && h) {
-            wxBitmap tbm(w, h); /* render text on dc */
-            wxMemoryDC dc;
-            dc.SelectObject( tbm );               
-            dc.SetBackground( wxBrush( *wxBLACK ) );
-            dc.Clear();
-            dc.SetFont( *m_pMarkFont );
-            dc.SetTextForeground( *wxWHITE );
-            dc.DrawText( m_ODPointName, 0, 0);
-            dc.SelectObject( wxNullBitmap );
-            
-            /* make alpha texture for text */
-            wxImage image = tbm.ConvertToImage();
-            unsigned char *d = image.GetData();
-            unsigned char *e = new unsigned char[w * h];
-            if(d && e){
-                for( int p = 0; p < w*h; p++)
-                    e[p] = d[3*p + 0];
-            }
-            
-            /* create texture for rendered text */
-            glGenTextures(1, &m_iTextTexture);
-            glBindTexture(GL_TEXTURE_2D, m_iTextTexture);
-            
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-
-            m_iTextTextureWidth = NextPow2(w);
-            m_iTextTextureHeight = NextPow2(h);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, m_iTextTextureWidth, m_iTextTextureHeight,
-                         0, GL_ALPHA, GL_UNSIGNED_BYTE, NULL);
-            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h,
-                            GL_ALPHA, GL_UNSIGNED_BYTE, e);
-            delete [] e;
-        }
-
-        if(m_iTextTexture) {
-            /* draw texture with text */
-            glBindTexture(GL_TEXTURE_2D, m_iTextTexture);
-            
-            glEnable(GL_TEXTURE_2D);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-            glColor3ub(m_FontColor.Red(), m_FontColor.Green(), m_FontColor.Blue());
-            
-            int x = l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
-            float u = (float)w/m_iTextTextureWidth, v = (float)h/m_iTextTextureHeight;
-            glBegin(GL_QUADS);
-            glTexCoord2f(0, 0); glVertex2f(x, y);
-            glTexCoord2f(u, 0); glVertex2f(x+w, y);
-            glTexCoord2f(u, v); glVertex2f(x+w, y+h);
-            glTexCoord2f(0, v); glVertex2f(x, y+h);
-            glEnd();
-            glDisable(GL_BLEND);
-            glDisable(GL_TEXTURE_2D);
-        }
+        dc.SetFont( *m_pMarkFont );
+        dc.SetTextForeground(m_FontColor);
+        int x = l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
+        dc.DrawTextEx( m_ODPointName, x, y, l_fIconScaleFactor );
     }
     
     // Draw ODPoint range rings if activated
+    m_iODPointRangeRingsNumber = 1;
     if( m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         double factor = 1.00;
         if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
@@ -697,17 +639,13 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
         dc.SetBrush( wxBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_TRANSPARENT ) );
-        dc.SetGLStipple();
         
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( l_odp.x, l_odp.y, i * pix_radius );
         
-        glDisable( GL_LINE_STIPPLE );
-        
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }
-#endif    
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
     
     //    This will be useful for fast icon redraws
