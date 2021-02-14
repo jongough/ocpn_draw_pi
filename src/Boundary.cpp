@@ -249,7 +249,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     if ( !m_bVisible ) return;
     
     ODDC dc;
-#if 0
+    dc.SetVP(&piVP);
     
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
@@ -338,27 +338,31 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glGenTextures(1, &textureID);
             glBindTexture( GL_TEXTURE_2D, textureID );
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
             dc.SetTextureSize( 16, 16 );
             glEnable( GL_TEXTURE_2D );
             glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+//            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
+#if 1
+
             if( m_bExclusionBoundary ) {
-                if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
-                else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
+                if(m_bIsBeingCreated)
+                    dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
+                else
+                    dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
                 delete [] l_AllPoints;
             }
-
+#endif
             glDisable( GL_BLEND );
             glDisable( GL_TEXTURE_2D );
             glDeleteTextures(1, &textureID);
@@ -368,7 +372,6 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         } 
         
     }
-#endif    
     ODPath::DrawGL( piVP );
 #else
     wxLogMessage( _("Boundary not drawn as OpenGL not available in this build") );

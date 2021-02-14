@@ -29,8 +29,8 @@
 #include "wx/wx.h"
 #endif //precompiled headers
 
-#include <gl2.h>
-
+//#include <gl2.h>
+#include <gl.h>
     extern GLint pi_color_tri_shader_program;
     extern GLint pi_colorv_tri_shader_program;
     extern GLint pi_texture_2D_shader_program;

@@ -101,13 +101,17 @@ ODDC::ODDC( wxGLCanvas &canvas ) :
     g_bTexture2D = false;
 #endif 
 
+    workBuf = NULL;
+    workBufSize = 0;
+
 #ifdef USE_ANDROID_GLES2
-//    s_odc_tess_vertex_idx = 0;
-//    s_odc_tess_vertex_idx_this = 0;
-//    s_odc_tess_buf_len = 0;
+    s_odc_tess_work_buf = NULL;
+    s_odc_tess_vertex_idx = 0;
+    s_odc_tess_vertex_idx_this = 0;
+    s_odc_tess_buf_len = 0;
     
-//    s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
-//    s_odc_tess_buf_len = 100;
+    s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
+    s_odc_tess_buf_len = 100;
     
     pi_loadShaders();
 #endif
@@ -138,8 +142,19 @@ ODDC::ODDC() :
     pgc = NULL;
 #endif
     g_bTexture2D = false;
+
+    workBuf = NULL;
+    workBufSize = 0;
     
 #ifdef USE_ANDROID_GLES2
+    s_odc_tess_work_buf = NULL;
+    s_odc_tess_vertex_idx = 0;
+    s_odc_tess_vertex_idx_this = 0;
+    s_odc_tess_buf_len = 0;
+    
+    s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
+    s_odc_tess_buf_len = 100;
+ 
     pi_loadShaders();
 #endif
 
@@ -634,8 +649,9 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
         }
         
 #else
-        if( b_draw_thick )
-            piDrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        if( b_draw_thick ){
+            //piDrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        }
         else {
             wxDash *dashes;
             int n_dashes = m_pen.GetDashes( &dashes );
@@ -1403,9 +1419,484 @@ void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
 #endif
 }
 
+void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale, float angle )
+{
+    if( dc )
+        dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
+    else {
+        
+#ifdef __WXQT__        
+        SetGLAttrs( false );            // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH 
+#else
+        SetGLAttrs( true );
+#endif        
+
+#ifdef USE_ANDROID_GLES2
+       
+        ConfigurePen();
+        glEnable( GL_BLEND );
+        
+        if(n > 4){
+            if(ConfigureBrush())        // Check for transparent brush
+                DrawPolygonTessellated( n, points, xoffset, yoffset);
+            
+            // Draw the ouline
+            //  Grow the work buffer as necessary
+            if( workBufSize < (size_t)n*2 ){
+                workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+                workBufSize = n*4;
+            }
+            
+            for( int i = 0; i < n; i++ ){
+                workBuf[i*2] = (points[i].x * scale); // + xoffset;
+                workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
+            }
+
+            glUseProgram( pi_color_tri_shader_program );
+            
+            // Get pointers to the attributes in the program.
+            GLint mPosAttrib = glGetAttribLocation( pi_color_tri_shader_program, "position" );
+            
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, workBuf );
+            glEnableVertexAttribArray( mPosAttrib );
+            
+            //  Border color
+            float bcolorv[4];
+            bcolorv[0] = m_pen.GetColour().Red() / float(256);
+            bcolorv[1] = m_pen.GetColour().Green() / float(256);
+            bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+            bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+            
+            GLint bcolloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
+            glUniform4fv(bcolloc, 1, bcolorv);
+
+#if 0            
+            // Rotate 
+            mat4x4 I, Q;
+            mat4x4_identity(I);
+            mat4x4_rotate_Z(Q, I, angle);
+            
+            // Translate
+            Q[3][0] = xoffset;
+            Q[3][1] = yoffset;
+            
+            mat4x4 X;
+            mat4x4_mul(X, (float (*)[4])gFrame->GetPrimaryCanvas()->GetpVP()->vp_transform, Q);
+
+            GLint matloc = glGetUniformLocation(pi_color_tri_shader_program,"MVMatrix");
+            glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)X ); 
+#endif            
+            
+            // Perform the actual drawing.
+            glDrawArrays(GL_LINE_LOOP, 0, n);
+
+        }
+        else{           // n = 3 or 4, most common case for pre-tesselated shapes
+        
+        
+            //  Grow the work buffer as necessary
+            if( workBufSize < (size_t)n*2 ){
+                workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+                workBufSize = n*4;
+            }
+            
+            for( int i = 0; i < n; i++ ){
+                workBuf[i*2] = (points[i].x * scale); // + xoffset;
+                workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
+            }
+
+            glUseProgram( pi_color_tri_shader_program );
+            
+            // Get pointers to the attributes in the program.
+            GLint mPosAttrib = glGetAttribLocation( pi_color_tri_shader_program, "position" );
+            
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, workBuf );
+            glEnableVertexAttribArray( mPosAttrib );
+            
+        
+            //  Border color
+            float bcolorv[4];
+            bcolorv[0] = m_pen.GetColour().Red() / float(256);
+            bcolorv[1] = m_pen.GetColour().Green() / float(256);
+            bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+            bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+            
+            GLint bcolloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
+            glUniform4fv(bcolloc, 1, bcolorv);
+ 
+#if 0            
+            // Rotate 
+            mat4x4 I, Q;
+            mat4x4_identity(I);
+            mat4x4_rotate_Z(Q, I, angle);
+            
+            // Translate
+            Q[3][0] = xoffset;
+            Q[3][1] = yoffset;
+            
+            mat4x4 X;
+            mat4x4_mul(X, (float (*)[4])gFrame->GetPrimaryCanvas()->GetpVP()->vp_transform, Q);
+            GLint matloc = glGetUniformLocation(pi_color_tri_shader_program,"MVMatrix");
+            glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)X ); 
+#endif            
+            // Perform the actual drawing.
+            glDrawArrays(GL_LINE_LOOP, 0, n);
+
+            //  Fill color
+            bcolorv[0] = m_brush.GetColour().Red() / float(256);
+            bcolorv[1] = m_brush.GetColour().Green() / float(256);
+            bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+            bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+            
+            glUniform4fv(bcolloc, 1, bcolorv);
+            
+            // For the simple common case of a convex rectangle...
+            //  swizzle the array points to enable GL_TRIANGLE_STRIP
+            if(n == 4){
+                float x1 = workBuf[4];
+                float y1 = workBuf[5];
+                workBuf[4] = workBuf[6];
+                workBuf[5] = workBuf[7];
+                workBuf[6] = x1;
+                workBuf[7] = y1;
+                
+                glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            }
+            else if(n == 3){
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+            }
+        }    
+        
+        
+#else        
+       
+                       
+        glPushMatrix();
+        glTranslatef(xoffset, yoffset, 0);
+
+        float deg = 180/PI * ( angle  );
+        glRotatef(deg, 0, 0, 1);
+
+
+        if( ConfigureBrush() ) {
+//             if( g_GLOptions.m_GLPolygonSmoothing )
+//                 glEnable( GL_POLYGON_SMOOTH );
+            glBegin( GL_POLYGON );
+            for( int i = 0; i < n; i++ )
+                glVertex2f( (points[i].x * scale), (points[i].y * scale) );
+            glEnd();
+            glDisable( GL_POLYGON_SMOOTH );
+        }
+
+        if( ConfigurePen() ) {
+//             if( g_GLOptions.m_GLLineSmoothing )
+//                 glEnable( GL_LINE_SMOOTH );
+            glBegin( GL_LINE_LOOP );
+            for( int i = 0; i < n; i++ )
+                glVertex2f( (points[i].x * scale), (points[i].y * scale) );
+            glEnd();
+            glDisable( GL_LINE_SMOOTH );
+        }
+        
+        glPopMatrix();
+#endif
+
+        SetGLAttrs( false ); 
+        
+    }
+#endif    
+}
+
+#ifdef ocpnUSE_GL
+
+// GL callbacks
+
+typedef union {
+    GLdouble data[6];
+    struct sGLvertex {
+        GLdouble x;
+        GLdouble y;
+        GLdouble z;
+        GLdouble r;
+        GLdouble g;
+        GLdouble b;
+    } info;
+} GLvertex;
+
+#ifndef USE_ANDROID_GLES2
+void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4],
+        GLdouble **dataOut )
+{
+    GLvertex *vertex;
+
+    vertex = new GLvertex();
+    gTesselatorVertices.Add(vertex );
+
+    vertex->info.x = coords[0];
+    vertex->info.y = coords[1];
+    vertex->info.z = coords[2];
+
+    for( int i = 3; i < 6; i++ ) {
+        vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
+    }
+
+    *dataOut = &(vertex->data[0]);
+}
+
+void APIENTRY ODDCvertexCallback( GLvoid* arg )
+{
+    GLvertex* vertex;
+    vertex = (GLvertex*) arg;
+    glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
+}
+
+void APIENTRY ODDCerrorCallback( GLenum errorCode )
+{
+   const GLubyte *estring;
+   estring = gluErrorString(errorCode);
+   //wxLogMessage( _T("OpenGL Tessellation Error: %s"), (char *)estring );
+}
+
+void APIENTRY ODDCbeginCallback( GLenum type )
+{
+    glBegin( type );
+}
+
+void APIENTRY ODDCendCallback()
+{
+    glEnd();
+}
+#endif
+
+
+// GLSL callbacks
+
+
+#ifdef USE_ANDROID_GLES2
+
+static std::list<double*> odc_combine_work_data;
+static void odc_combineCallbackD(GLdouble coords[3],
+                             GLdouble *vertex_data[4],
+                             GLfloat weight[4], GLdouble **dataOut, void *data )
+{
+//     double *vertex = new double[3];
+//     odc_combine_work_data.push_back(vertex);
+//     memcpy(vertex, coords, 3*(sizeof *coords)); 
+//     *dataOut = vertex;
+}
+
+void odc_vertexCallbackD_GLSL(GLvoid *vertex, void *data)
+{
+    ODDC* pDC = (ODDC*)data;
+    
+    // Grow the work buffer if necessary
+    if(pDC->s_odc_tess_vertex_idx > pDC->s_odc_tess_buf_len - 8)
+    {
+        int new_buf_len = pDC->s_odc_tess_buf_len + 100;
+        GLfloat * tmp = pDC->s_odc_tess_work_buf;
+        
+        pDC->s_odc_tess_work_buf = (GLfloat *)realloc(pDC->s_odc_tess_work_buf, new_buf_len * sizeof(GLfloat));
+        if (NULL == pDC->s_odc_tess_work_buf)
+        {
+            free(tmp);
+            tmp = NULL;
+        }
+        else
+            pDC->s_odc_tess_buf_len = new_buf_len;
+    }
+    
+    GLdouble *pointer = (GLdouble *) vertex;
+    
+    pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx++] = (float)pointer[0];
+    pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx++] = (float)pointer[1];
+
+    pDC->s_odc_nvertex++;
+}
+
+void odc_beginCallbackD_GLSL( GLenum mode, void *data)
+{
+    ODDC* pDC = (ODDC*)data;
+    pDC->s_odc_tess_vertex_idx_this =  pDC->s_odc_tess_vertex_idx;
+    pDC->s_odc_tess_mode = mode;
+    pDC->s_odc_nvertex = 0;
+}
+
+void odc_endCallbackD_GLSL(void *data)
+{
+    //qDebug() << "End" << s_odc_nvertex << s_odc_tess_buf_len << s_odc_tess_vertex_idx << s_odc_tess_vertex_idx_this;
+    //End 5 100 10 0
+#if 1    
+    ODDC* pDC = (ODDC*)data;
+
+    glUseProgram(pi_color_tri_shader_program);
+    
+    // Disable VBO's (vertex buffer objects) for attributes.
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+    
+    float *bufPt = &(pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx_this]);
+    GLint pos = glGetAttribLocation(pi_color_tri_shader_program, "position");
+    glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+    glEnableVertexAttribArray(pos);
+    
+    ///GLint matloc = glGetUniformLocation(pi_color_tri_shader_program,"MVMatrix");
+    ///glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)s_tessVP.vp_transform); 
+    
+    float colorv[4];
+    wxColour c = pDC->GetBrush().GetColour();
+    
+    colorv[0] = c.Red() / float(256);
+    colorv[1] = c.Green() / float(256);
+    colorv[2] = c.Blue() / float(256);
+    colorv[3] = c.Alpha() / float(256);
+    
+    GLint colloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
+    glUniform4fv(colloc, 1, colorv);
+    
+    glDrawArrays(pDC->s_odc_tess_mode, 0, pDC->s_odc_nvertex);
+#endif    
+}
+#endif
+
+
+#endif          //#ifdef ocpnUSE_GL
+
+void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
+{
+    if( dc )
+        dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
+    else {
+#if !defined(ocpnUSE_GLES) || defined(USE_ANDROID_GLES2) // tessalator in glues is broken
+        if( n < 5 )
+# endif
+        {
+            DrawPolygon( n, points, xoffset, yoffset );
+            return;
+        }
+
+        
+
+#ifdef USE_ANDROID_GLES2
+        m_tobj = gluNewTess();
+        s_odc_tess_vertex_idx = 0;
+        
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX_DATA, (_GLUfuncptr) &odc_vertexCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN_DATA, (_GLUfuncptr) &odc_beginCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_END_DATA, (_GLUfuncptr) &odc_endCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE_DATA, (_GLUfuncptr) &odc_combineCallbackD );
+        //s_tessVP = vp;
+        
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty( m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO );
+        
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon( m_tobj, this );
+            gluTessBeginContour( m_tobj );
+
+//            ViewPort *pvp = gFrame->GetPrimaryCanvas()->GetpVP();
+            
+            for( int i = 0; i < n; i++ ) {
+                double *p = new double[6];
+                
+
+//                 if(fabs(pvp->rotation) > 0.01){
+//                     float cx = pvp->pix_width/2.;
+//                     float cy = pvp->pix_height/2.;
+//                     float c = cosf(pvp->rotation );
+//                     float s = sinf(pvp->rotation );
+//                     float xn = points[i].x - cx;
+//                     float yn = points[i].y - cy;
+//                     p[0] =  xn*c - yn*s + cx;
+//                     p[1] =  xn*s + yn*c + cy;
+//                     p[2] = 0;
+//                 }
+//                 else
+                    p[0] = points[i].x, p[1] = points[i].y, p[2] = 0;
+                
+                gluTessVertex(m_tobj, p, p);
+                
+            }
+            gluTessEndContour( m_tobj );
+            gluTessEndPolygon( m_tobj );
+        }
+        
+        gluDeleteTess(m_tobj);
+        
+        
+//         for(std::list<double*>::iterator i = odc_combine_work_data.begin(); i!=odc_combine_work_data.end(); i++)
+//             delete [] *i;
+//         odc_combine_work_data.clear();
+        
+    }  
+#else    
+        static GLUtesselator *tobj = NULL;
+        if( ! tobj ) tobj = gluNewTess();
+
+        gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
+        gluTessCallback( tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
+        gluTessCallback( tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
+        gluTessCallback( tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
+        gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
+
+        gluTessNormal( tobj, 0, 0, 1);
+        gluTessProperty( tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO );
+
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon( tobj, NULL );
+            gluTessBeginContour( tobj );
+
+            for( int i = 0; i < n; i++ ) {
+                GLvertex* vertex = new GLvertex();
+                gTesselatorVertices.Add( vertex );
+                vertex->info.x = (GLdouble) points[i].x;
+                vertex->info.y = (GLdouble) points[i].y;
+                vertex->info.z = (GLdouble) 0.0;
+                vertex->info.r = (GLdouble) 0.0;
+                vertex->info.g = (GLdouble) 0.0;
+                vertex->info.b = (GLdouble) 0.0;
+                gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+            }
+            gluTessEndContour( tobj );
+            gluTessEndPolygon( tobj );
+        }
+
+        for( unsigned int i=0; i<gTesselatorVertices.Count(); i++ )
+            delete (GLvertex*)gTesselatorVertices[i];
+        gTesselatorVertices.Clear();
+        
+        gluDeleteTess(tobj);
+        
+    }
+#endif    
+#endif    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+
 void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale )
 {
-#if 0
     if( dc )
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
@@ -1429,8 +1920,9 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
         SetGLAttrs( false );
     }
 #endif    
-#endif
+
 }
+#endif
 
 #if 0
 #ifdef ocpnUSE_GL
@@ -1497,9 +1989,9 @@ void __CALL_CONVENTION ODDCendCallback()
 #endif          //#ifdef ocpnUSE_GL
 #endif
 
+#if 0    
 void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
 {
-#if 0    
     if( dc )
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
@@ -1552,12 +2044,12 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         
     }
 #endif    
-#endif
 }
+#endif
 
 void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCoord xoffset, wxCoord yoffset )
 {
-#if 0    
+#if 0
     if( dc ) {
         int prev = 0;
         for( int i = 0; i < n; i++ ) {

@@ -211,6 +211,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
 
     ODDC dc;
+    dc.SetVP(&piVP);
     
     m_bSetTransparent = true;
     ODPath::DrawGL( piVP );

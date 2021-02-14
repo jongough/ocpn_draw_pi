@@ -32,6 +32,18 @@
 #define __ODDC_H__
 
 #include "TexFont.h"
+#include <vector>
+
+#ifdef ocpnUSE_GL
+#include <wx/glcanvas.h>
+#endif
+
+#ifdef USE_ANDROID_GLES2
+    #include "linmath.h"
+#endif    
+
+class ViewPort;
+class GLUtesselator;
 
 //----------------------------------------------------------------------------
 // ODDC
@@ -84,7 +96,7 @@ public:
      void StrokeCircle(wxCoord x, wxCoord y, wxCoord radius);
 
      void DrawEllipse(wxCoord x, wxCoord y, wxCoord width, wxCoord height);
-     void DrawPolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale =1.0);
+     void DrawPolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale =1.0, float angle =0);
      void DrawPolygonTessellated(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
      void DrawPolygonsTessellated(int n, int npoint[], wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
      void StrokePolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale = 1.0);
@@ -107,6 +119,22 @@ public:
      wxDC *GetDC() const { return dc; }
      
      void SetTextureSize( int width, int height );
+
+#ifdef ocpnUSE_GL     
+     GLfloat     *s_odc_tess_work_buf;
+#endif
+     
+#ifdef USE_ANDROID_GLES2
+     int          s_odc_tess_vertex_idx;
+     int          s_odc_tess_vertex_idx_this;
+     int          s_odc_tess_buf_len;
+     GLenum       s_odc_tess_mode;
+     int          s_odc_nvertex;
+     vec4         s_odc_tess_color;
+     ViewPort    *s_odc_tessVP;
+     GLUtesselator *m_tobj;
+     
+#endif
 
 protected:
      bool ConfigurePen();
@@ -133,6 +161,11 @@ protected:
 #if  wxUSE_GRAPHICS_CONTEXT == 1
      wxGraphicsContext *pgc;
 #endif
+     
+     float *workBuf;
+     size_t workBufSize;
+     unsigned int workBufIndex;
+
 };
 
 #endif

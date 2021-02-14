@@ -441,6 +441,8 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 void EBL::DrawGL( PlugIn_ViewPort &piVP )
 {
     ODDC dc;
+    dc.SetVP(&piVP);
+    
     RenderPerpLine( dc, piVP );
 
     ODPath::DrawGL( piVP );

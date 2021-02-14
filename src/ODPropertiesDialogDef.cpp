@@ -15,6 +15,21 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 
 	m_SizerProperties = new wxBoxSizer( wxVERTICAL );
 
+        wxBoxSizer* bSizerOKCancelApply;
+        bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );
+
+        m_buttonOK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+        bSizerOKCancelApply->Add( m_buttonOK, 0, wxALL, 5 );
+
+        m_buttonCancel = new wxButton( this, wxID_ANY, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+        bSizerOKCancelApply->Add( m_buttonCancel, 0, wxALL, 5 );
+
+        m_buttonApply = new wxButton( this, wxID_ANY, _("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
+        bSizerOKCancelApply->Add( m_buttonApply, 0, wxALL, 5 );
+
+
+        m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND );
+
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelGeneral = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerGeneral;
@@ -1531,20 +1546,6 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 
 	m_SizerProperties->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
 
-	wxBoxSizer* bSizerOKCancelApply;
-	bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );
-
-	m_buttonOK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonOK, 0, wxALL, 5 );
-
-	m_buttonCancel = new wxButton( this, wxID_ANY, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonCancel, 0, wxALL, 5 );
-
-	m_buttonApply = new wxButton( this, wxID_ANY, _("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonApply, 0, wxALL, 5 );
-
-
-	m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND, 5 );
 
 
 	this->SetSizer( m_SizerProperties );

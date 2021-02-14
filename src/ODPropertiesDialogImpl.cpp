@@ -302,9 +302,9 @@ void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 {
     SaveChanges(); // write changes to globals and update config
     Show( false );
-#ifdef __WXOSX__    
+//#ifdef __WXOSX__    
     EndModal(wxID_OK);
-#endif
+//#endif
     SetClientSize(m_defaultClientSize);
 
     ResetGlobalLocale();
@@ -314,9 +314,9 @@ void ODPropertiesDialogImpl::OnDrawPropertiesOKClick( wxCommandEvent& event )
 void ODPropertiesDialogImpl::OnDrawPropertiesCancelClick( wxCommandEvent& event )
 {
     Show( false );
-#ifdef __WXOSX__    
+//#ifdef __WXOSX__    
 	EndModal(wxID_CANCEL);
-#endif
+//#endif
     SetClientSize(m_defaultClientSize);
 
     ResetGlobalLocale();
@@ -551,7 +551,8 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
     
     wxSize sz = m_SizerProperties->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
-    wxSize dsize = ::wxGetDisplaySize();
+    //wxSize dsize = ::wxGetDisplaySize();
+    wxSize dsize = GetOCPNCanvasWindow()->GetSize();
     sz.y = wxMin(sz.y, dsize.y-80);
 //    sz = wxSize(600, 400);
     SetClientSize(sz);
@@ -564,7 +565,7 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
     SetSize(fsize);
     this->Layout();
     m_notebookProperties->Layout();
-    this->GetSizer()->Fit(this);
+    //this->GetSizer()->Fit(this);
     
 }
 

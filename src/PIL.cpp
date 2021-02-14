@@ -188,6 +188,8 @@ void PIL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 void PIL::DrawGL( PlugIn_ViewPort &piVP )
 {
     ODDC dc;
+    dc.SetVP(&piVP);
+    
     RenderPIL( dc, piVP );
     ODPath::DrawGL( piVP );
 }
