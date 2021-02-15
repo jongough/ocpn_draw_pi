@@ -351,7 +351,6 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
-#if 1
 
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated)
@@ -362,7 +361,6 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
                 delete [] l_AllPoints;
             }
-#endif
             glDisable( GL_BLEND );
             glDisable( GL_TEXTURE_2D );
             glDeleteTextures(1, &textureID);

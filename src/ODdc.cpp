@@ -54,7 +54,8 @@
 
 #ifdef USE_ANDROID_GLES2
 #include "pi_shaders.h"
-#include <gl2.h>
+#include "/usr/include/GLES2/gl2.h"
+//#include <gl2.h>
 #include "linmath.h"
 #endif
 
@@ -169,7 +170,7 @@ ODDC::~ODDC()
 
 void ODDC::SetVP(PlugIn_ViewPort *vp)
 {
-#ifdef __OCPN__ANDROID__
+#ifdef USE_ANDROID_GLES2
     configureShaders(vp->pix_width, vp->pix_height);
 #endif    
 }
@@ -531,6 +532,7 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
 
 void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
 {
+    return;
    
     if( dc )
         dc->DrawLine( x1, y1, x2, y2 );
@@ -1525,10 +1527,10 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
         
             //  Border color
             float bcolorv[4];
-            bcolorv[0] = m_pen.GetColour().Red() / float(256);
-            bcolorv[1] = m_pen.GetColour().Green() / float(256);
-            bcolorv[2] = m_pen.GetColour().Blue() / float(256);
-            bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+            bcolorv[0] = 1;//m_pen.GetColour().Red() / float(256);
+            bcolorv[1] = 0;//m_pen.GetColour().Green() / float(256);
+            bcolorv[2] = 0;//m_pen.GetColour().Blue() / float(256);
+            bcolorv[3] = 1;//m_pen.GetColour().Alpha() / float(256);
             
             GLint bcolloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
             glUniform4fv(bcolloc, 1, bcolorv);
@@ -2214,6 +2216,7 @@ void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
 
 void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFactor )
 {
+    return;
     if( dc )
         dc->DrawText( text, x, y );
 #ifdef ocpnUSE_GL
@@ -2358,8 +2361,8 @@ void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFa
             glUseProgram( pi_texture_2D_shader_program );
             
             // Get pointers to the attributes in the program.
-            GLint mPosAttrib = glGetAttribLocation( pi_texture_2D_shader_program, "aPos" );
-            GLint mUvAttrib  = glGetAttribLocation( pi_texture_2D_shader_program, "aUV" );
+            GLint mPosAttrib = glGetUniformLocation( pi_texture_2D_shader_program, "aPos" );
+            GLint mUvAttrib  = glGetUniformLocation( pi_texture_2D_shader_program, "aUV" );
             
             // Set up the texture sampler to texture unit 0
             GLint texUni = glGetUniformLocation( pi_texture_2D_shader_program, "uTex" );
@@ -2566,8 +2569,9 @@ void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor
         uv[6] = tx2; uv[7] = ty2; uv[4] = tx1; uv[5] = ty2;
 
             // pixels
-        coords[0] = 0; coords[1] = 0; coords[2] = w; coords[3] = 0;
-        coords[6] = w; coords[7] = h; coords[4] = 0; coords[5] = h;
+        coords[0] = position.x;
+        coords[1] = position.y; coords[2] = position.x+w; coords[3] = position.y;
+        coords[6] = position.x+w; coords[7] = position.y+h; coords[4] = position.x; coords[5] = position.y+h;
 
         glUseProgram( pi_texture_2D_shader_program );
 
@@ -2596,6 +2600,7 @@ void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor
             // ... and enable it.
         glEnableVertexAttribArray( mUvAttrib );
 
+#if 0        
             // Rotate
         mat4x4 I, Q;
         mat4x4_identity(I);
@@ -2606,14 +2611,15 @@ void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor
 
         GLint matloc = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
         glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
-
+#endif
             // Perform the actual drawing.
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
             // Restore the per-object transform to Identity Matrix
         mat4x4 IM;
         mat4x4_identity(IM);
-        GLint matlocf = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
-        glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
+ //       GLint matlocf = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
+ //       glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
+        glUseProgram( 0 );
 #endif
 }
