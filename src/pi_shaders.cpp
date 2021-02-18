@@ -173,24 +173,31 @@ static const GLchar* circle_filled_fragment_shader_source =
     "}\n";
     
 
-    //  2D texture shader for FBOs
-    static const GLchar* FBO_texture_2D_vertex_shader_source =
-    "attribute vec2 aPos;\n"
+   // Texture shader for Polygon Pattern
+static const GLchar* pattern_vertex_shader_source =
+    "attribute vec2 position;\n"
     "attribute vec2 aUV;\n"
     "uniform mat4 MVMatrix;\n"
-    "varying vec2 varCoord;\n"
+    "uniform mat4 TransformMatrix;\n"
     "void main() {\n"
-    "   gl_Position = MVMatrix * vec4(aPos, 0.0, 1.0);\n"
-    "   varCoord = aUV;\n"
+    "   gl_Position = MVMatrix * TransformMatrix * vec4(position, 0.0, 1.0);\n"
     "}\n";
-    
-    static const GLchar* FBO_texture_2D_fragment_shader_source =
-    "#version 130\n"
-    "precision lowp float;\n"
+
+
+static const GLchar* pattern_fragment_shader_source =
+    "#version " STRINGIFY(GLES_VERSION) "\n"
     "uniform sampler2D uTex;\n"
-    "varying vec2 varCoord;\n"
+    "uniform float texPOTWidth;\n"
+    "uniform float texPOTHeight;\n"
+    "uniform vec4 color;\n"
+    "uniform float xOff;\n"
+    "uniform float yOff;\n"
     "void main() {\n"
-    "   gl_FragColor = texture2D(uTex, varCoord);\n"
+    "   float x = (gl_FragCoord.x - xOff) / texPOTWidth;\n"
+    "   float y = (gl_FragCoord.y + yOff) / texPOTHeight;\n"
+    "   float texFragAlpha = texture2D(uTex, vec2(x, y))[3];\n"
+    "   gl_FragColor = color;\n"
+    "   gl_FragColor[3] = color[3] * texFragAlpha;\n"
     "}\n";
     
 
@@ -214,6 +221,10 @@ static const GLchar* circle_filled_fragment_shader_source =
     GLint pi_circle_filled_vertex_shader;
     GLint pi_circle_filled_fragment_shader;
 
+    GLint pi_pattern_vertex_shader;
+    GLint pi_pattern_fragment_shader;
+    GLint pi_pattern_shader_program;
+    
 //     GLint FBO_texture_2D_fragment_shader;
 //     GLint FBO_texture_2D_shader_program;
 //     GLint FBO_texture_2D_vertex_shader;
@@ -442,50 +453,48 @@ bool pi_loadShaders()
             ret_val = false;
         }
     }
-    
-#if 0
-    // FBO 2D texture shader
-    
-    if(!FBO_texture_2D_vertex_shader){
+
+        // Polygon Pattern shader
+    if(!pi_pattern_vertex_shader){
         /* Vertex shader */
-        FBO_texture_2D_vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(FBO_texture_2D_vertex_shader, 1, &FBO_texture_2D_vertex_shader_source, NULL);
-        glCompileShader(FBO_texture_2D_vertex_shader);
-        glGetShaderiv(FBO_texture_2D_vertex_shader, GL_COMPILE_STATUS, &success);
+        pi_pattern_vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(pi_pattern_vertex_shader, 1, &pattern_vertex_shader_source, NULL);
+        glCompileShader(pi_pattern_vertex_shader);
+        glGetShaderiv(pi_pattern_vertex_shader, GL_COMPILE_STATUS, &success);
         if (!success) {
-            glGetShaderInfoLog(FBO_texture_2D_vertex_shader, INFOLOG_LEN, NULL, infoLog);
-            printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
+            glGetShaderInfoLog(pi_pattern_vertex_shader, INFOLOG_LEN, NULL, infoLog);
+//            printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
             ret_val = false;
         }
     }
-    
-    if(!FBO_texture_2D_fragment_shader){
+
+    if(!pi_pattern_fragment_shader){
         /* Fragment shader */
-        FBO_texture_2D_fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(FBO_texture_2D_fragment_shader, 1, &FBO_texture_2D_fragment_shader_source, NULL);
-        glCompileShader(FBO_texture_2D_fragment_shader);
-        glGetShaderiv(FBO_texture_2D_fragment_shader, GL_COMPILE_STATUS, &success);
+        pi_pattern_fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(pi_pattern_fragment_shader, 1, &pattern_fragment_shader_source, NULL);
+        glCompileShader(pi_pattern_fragment_shader);
+        glGetShaderiv(pi_pattern_fragment_shader, GL_COMPILE_STATUS, &success);
         if (!success) {
-            glGetShaderInfoLog(FBO_texture_2D_fragment_shader, INFOLOG_LEN, NULL, infoLog);
-            printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
+            glGetShaderInfoLog(pi_pattern_fragment_shader, INFOLOG_LEN, NULL, infoLog);
+  //          printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
             ret_val = false;
         }
     }
-    
-    if(!FBO_texture_2D_shader_program){
+
+    if(!pi_pattern_shader_program){
         /* Link shaders */
-        FBO_texture_2D_shader_program = glCreateProgram();
-        glAttachShader(FBO_texture_2D_shader_program, FBO_texture_2D_vertex_shader);
-        glAttachShader(FBO_texture_2D_shader_program, FBO_texture_2D_fragment_shader);
-        glLinkProgram(FBO_texture_2D_shader_program);
-        glGetProgramiv(FBO_texture_2D_shader_program, GL_LINK_STATUS, &success);
+        pi_pattern_shader_program = glCreateProgram();
+        glAttachShader(pi_pattern_shader_program, pi_pattern_vertex_shader);
+        glAttachShader(pi_pattern_shader_program, pi_pattern_fragment_shader);
+        glLinkProgram(pi_pattern_shader_program);
+        glGetProgramiv(pi_pattern_shader_program, GL_LINK_STATUS, &success);
         if (!success) {
-            glGetProgramInfoLog(FBO_texture_2D_shader_program, INFOLOG_LEN, NULL, infoLog);
-            printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
+            glGetProgramInfoLog(pi_pattern_shader_program, INFOLOG_LEN, NULL, infoLog);
+//            printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
             ret_val = false;
         }
     }
-#endif
+
 
     ////qDebug() << "pi_loadShaders: " << ret_val;
     return ret_val;
@@ -532,6 +541,12 @@ void configureShaders(float width, float height)
     matloc = glGetUniformLocation(pi_colorv_tri_shader_program,"MVMatrix");
     glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)vp_transform); 
     transloc = glGetUniformLocation(pi_colorv_tri_shader_program,"TransformMatrix");
+    glUniformMatrix4fv( transloc, 1, GL_FALSE, (const GLfloat*)I); 
+    
+    glUseProgram(pi_pattern_shader_program);
+    matloc = glGetUniformLocation(pi_pattern_shader_program,"MVMatrix");
+    glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)vp_transform); 
+    transloc = glGetUniformLocation(pi_pattern_shader_program,"TransformMatrix");
     glUniformMatrix4fv( transloc, 1, GL_FALSE, (const GLfloat*)I); 
     
 }

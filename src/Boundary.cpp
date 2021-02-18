@@ -338,27 +338,30 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glGenTextures(1, &textureID);
             glBindTexture( GL_TEXTURE_2D, textureID );
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-//            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
             dc.SetTextureSize( 16, 16 );
             glEnable( GL_TEXTURE_2D );
             glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+#ifndef ANDROID
+            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+#endif            
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
 
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated)
-                    dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
+                    dc.DrawPolygonPattern( m_pODPointList->GetCount(), m_bpts, textureID, wxSize(16,16) );
                 else
-                    dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
+                    dc.DrawPolygonPattern( m_pODPointList->GetCount() - 1, m_bpts, textureID, wxSize(16,16) );
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
-                dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
+                dc.DrawPolygonsPattern( 2, l_iAllPointsSizes, l_AllPoints, textureID, wxSize(16,16));
+
                 delete [] l_AllPoints;
             }
             glDisable( GL_BLEND );

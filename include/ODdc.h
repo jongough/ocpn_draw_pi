@@ -97,10 +97,15 @@ public:
 
      void DrawEllipse(wxCoord x, wxCoord y, wxCoord width, wxCoord height);
      void DrawPolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale =1.0, float angle =0);
-     void DrawPolygonTessellated(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
-     void DrawPolygonsTessellated(int n, int npoint[], wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
      void StrokePolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale = 1.0);
+     
+     void DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset=0, wxCoord yoffset=0, float scale=1.0, float angle=0.0 );
+     void DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset=0, wxCoord yoffset=0, float scale=1.0, float angle=0.0 );
 
+     // TODO move to Protected
+     void DrawPolygonsTessellated(int n, int npoint[], wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
+     void DrawPolygonTessellated(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
+     
      void DrawBitmap(const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemask);
 
      void DrawText(const wxString &text, wxCoord x, wxCoord y);
@@ -132,11 +137,15 @@ public:
      int          s_odc_nvertex;
      vec4         s_odc_tess_color;
      ViewPort    *s_odc_tessVP;
+     GLint        s_odc_activeProgram;
+     
      GLUtesselator *m_tobj;
      
 #endif
 
 protected:
+     void DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset=0, wxCoord yoffset=0 );
+
      bool ConfigurePen();
      bool ConfigureBrush();
 
