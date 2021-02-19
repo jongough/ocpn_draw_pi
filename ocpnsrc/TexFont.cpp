@@ -28,8 +28,8 @@
 #include "TexFont.h"
 
 #ifdef USE_ANDROID_GLES2
-//#include <gl2.h>
-#include "/usr/include/GLES2/gl2.h"
+#include <gl2.h>
+//#include "/usr/include/GLES2/gl2.h"
 #include "linmath.h"
 #include "shaders.h"
 #else
