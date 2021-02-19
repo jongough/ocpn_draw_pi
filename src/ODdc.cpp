@@ -82,6 +82,7 @@ wxArrayPtrVoid gTesselatorVertices;
 bool        g_bTexture2D;
 int         g_iTextureHeight;
 int         g_iTextureWidth;
+GLint       g_textureId;
 
 //----------------------------------------------------------------------------
 /* pass the dc to the constructor, or NULL to use opengl */
@@ -117,7 +118,7 @@ ODDC::ODDC( wxGLCanvas &canvas ) :
     
     pi_loadShaders();
 #endif
-
+    g_textureId = -1;
 }
 
 ODDC::ODDC( wxDC &pdc ) :
@@ -134,7 +135,7 @@ ODDC::ODDC( wxDC &pdc ) :
 #endif
     m_textforegroundcolour = wxColour( 0, 0, 0 );
     g_bTexture2D = false;
-    
+    g_textureId = -1;
 }
 
 ODDC::ODDC() :
@@ -145,6 +146,8 @@ ODDC::ODDC() :
 #endif
     g_bTexture2D = false;
 
+    g_textureId = -1;
+    
     workBuf = NULL;
     workBufSize = 0;
     
@@ -230,16 +233,18 @@ void ODDC::SetPen( const wxPen &pen )
         m_pen = pen;
         
 #ifndef USE_ANDROID_GLES2 
-        switch( m_pen.GetStyle() ) {
-            case wxPENSTYLE_DOT: 
-            case wxPENSTYLE_LONG_DASH: 
-            case wxPENSTYLE_SHORT_DASH:
-            case wxPENSTYLE_DOT_DASH:
-                break;
+        if( m_pen.IsOk() ){
+            switch( m_pen.GetStyle() ) {
+                case wxPENSTYLE_DOT: 
+                case wxPENSTYLE_LONG_DASH: 
+                case wxPENSTYLE_SHORT_DASH:
+                case wxPENSTYLE_DOT_DASH:
+                    break;
         
-            default:
-                glDisable( GL_LINE_STIPPLE );
-                break;
+                default:
+                    glDisable( GL_LINE_STIPPLE );
+                    break;
+            }
         }
 #endif
     }
@@ -1323,7 +1328,6 @@ void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
 
 void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius )
 {
-#if 0    
     if( dc ) {
 #if wxUSE_GRAPHICS_CONTEXT == 1
         wxGraphicsContext *wxGC = NULL;
@@ -1367,9 +1371,12 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
     }
 #ifdef ocpnUSE_GL
     else {
-        //      Enable anti-aliased lines, at best quality
+
+        if(g_textureId >= 0){
+            DrawDiskPattern( x, y, innerRadius, outerRadius, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight) );
+            return;
+        }
         
-        //float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
         float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((innerRadius * 2) * (innerRadius * 2)) * 2) ), 1) *M_PI);
         float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((outerRadius * 2) * (outerRadius * 2)) * 2) ), 1) *M_PI);
         wxPoint *disk = new wxPoint[ (int) innerSteps +(int) outerSteps + 2 ];
@@ -1392,7 +1399,6 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
         delete [] disk;
     }
 #endif    
-#endif
 }
 
 void ODDC::DrawDiskPattern( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius, GLint textureID, wxSize textureSize )
@@ -1449,10 +1455,10 @@ void ODDC::StrokeCircle( wxCoord x, wxCoord y, wxCoord radius )
 
 void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
 {
-#if 0    
     if( dc )
         dc->DrawEllipse( x, y, width, height );
 #ifdef ocpnUSE_GL
+#ifndef USE_ANDROID_GLES2    
     else {
         float r1 = width / 2, r2 = height / 2;
         float cx = x + r1, cy = y + r2;
@@ -1483,7 +1489,7 @@ void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
         glDisable( GL_BLEND );
     }
 #endif    
-#endif
+#endif    
 }
 
 void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale, float angle )
@@ -1492,6 +1498,11 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
     else {
+        
+        if(g_textureId >= 0){
+            DrawPolygonPattern(n, points, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight), xoffset, yoffset );
+            return;
+        }
         
 #ifdef __WXQT__        
         SetGLAttrs( false );            // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH 
@@ -2048,8 +2059,8 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         if( n < 5 )
 # endif
         {
-            DrawPolygon( n, points, xoffset, yoffset );
-            return;
+//             DrawPolygon( n, points, xoffset, yoffset );
+//             return;
         }
 
         
@@ -2567,6 +2578,16 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
     #endif    
 #endif    
 }
+
+void ODDC::DrawPolygons(int n, int npoint[], wxPoint points[], wxCoord xoffset, wxCoord yoffset)
+{
+    if(g_textureId >= 0)
+        DrawPolygonsPattern( n, npoint, points, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight), xoffset, yoffset);
+}
+        
+
+
+
 
 void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle)
 {
@@ -3126,6 +3147,13 @@ void ODDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int form
 
 void ODDC::SetTextureSize( int width, int height )
 {
+    g_iTextureWidth = width;
+    g_iTextureHeight = height;
+}
+
+void ODDC::SetTextureParms( GLint textureId, int width, int height )
+{
+    g_textureId = textureId;
     g_iTextureWidth = width;
     g_iTextureHeight = height;
 }

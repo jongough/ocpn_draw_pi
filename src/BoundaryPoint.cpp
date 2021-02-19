@@ -189,7 +189,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
-            dc.SetTextureSize( 16, 16 );
+            dc.SetTextureParms( textureID, 16, 16 );
             glEnable( GL_TEXTURE_2D );
             glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -200,10 +200,10 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             dc.SetPen(*wxTRANSPARENT_PEN);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_SOLID ) );
             if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
-                dc.DrawDiskPattern( r.x, r.y , 0, pix_radius, textureID, wxSize(16,16));
+                dc.DrawDisk( r.x, r.y , 0, pix_radius);
             }
             else {
-                dc.DrawDiskPattern( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize, textureID, wxSize(16,16));
+                dc.DrawDisk( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize);
             }
             dc.SetPen( savePen );
         

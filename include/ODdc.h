@@ -99,6 +99,7 @@ public:
      void DrawEllipse(wxCoord x, wxCoord y, wxCoord width, wxCoord height);
      void DrawPolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale =1.0, float angle =0);
      void StrokePolygon(int n, wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0, float scale = 1.0);
+     void DrawPolygons(int n, int npoint[], wxPoint points[], wxCoord xoffset = 0, wxCoord yoffset = 0);
      
      void DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset=0, wxCoord yoffset=0, float scale=1.0, float angle=0.0 );
      void DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset=0, wxCoord yoffset=0, float scale=1.0, float angle=0.0 );
@@ -125,6 +126,7 @@ public:
      wxDC *GetDC() const { return dc; }
      
      void SetTextureSize( int width, int height );
+     void SetTextureParms( GLint textureId, int width, int height );
 
 #ifdef ocpnUSE_GL     
      GLfloat     *s_odc_tess_work_buf;
