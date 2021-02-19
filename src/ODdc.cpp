@@ -647,6 +647,9 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 
                 glDrawArrays(GL_LINES, 0, 2);
             }
+            
+            glUseProgram( 0 );
+
         }
         
 #else
@@ -818,7 +821,6 @@ void ODDC::DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset, wxCoord yo
 
 void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, bool b_hiqual )
 {
-#if 0    
     if( dc )
         dc->DrawLines( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
@@ -858,18 +860,50 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
             if( b_hiqual ) {
                 glEnable( GL_LINE_SMOOTH );
             }
+#ifndef ANDROID        
             glBegin( GL_LINE_STRIP );
             for( int i = 0; i < n; i++ ) {
                 glVertex2i( points[i].x + xoffset, points[i].y + yoffset );
             }
             glEnd();
+#else
+                //  Grow the work buffer as necessary
+            if( workBufSize < (size_t)n*2 ){
+                workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+                workBufSize = n*4;
+            }
+
+            for( int i = 0; i < n; i++ ){
+                workBuf[i*2] = points[i].x + xoffset;
+                workBuf[(i*2) + 1] = points[i].y + yoffset;
+            }        
+        
+            glUseProgram(pi_color_tri_shader_program);
+                
+            GLint pos = glGetAttribLocation(pi_color_tri_shader_program, "position");
+            glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf);
+            glEnableVertexAttribArray(pos);
+                
+            float colorv[4];
+            colorv[0] = m_pen.GetColour().Red() / float(256);
+            colorv[1] = m_pen.GetColour().Green() / float(256);
+            colorv[2] = m_pen.GetColour().Blue() / float(256);
+            colorv[3] = m_pen.GetColour().Alpha() / float(256);1.0;
+                
+            GLint colloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
+            glUniform4fv(colloc, 1, colorv);
+                
+            glDrawArrays(GL_LINE_STRIP, 0, n);
+            glUseProgram( 0 );
+
+#endif
+            
         }
 
         glDisable( GL_LINE_STIPPLE );
         SetGLAttrs( false );
     }
 #endif    
-#endif
 }
 
 void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
@@ -970,7 +1004,6 @@ void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, 
 }
 void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4 )
 {
-#if 0    
     if( dc ) {
         double y1yc, x1xc, y4yc, x4xc;
         y1yc = y1-yc;
@@ -1020,11 +1053,10 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
         wxPoint *points;
         int numpoints = ArcSectorPoints( *&points, xc, yc, x1, y1, x2, y2, x3, y3, x4, y4, true);
         DrawLines( numpoints, points );
-        DrawPolygonTessellated( numpoints, points, 0, 0 );
+        DrawPolygon( numpoints, points, 0, 0 );
         delete [] points;
     }
 #endif    
-#endif
 }
 
 void ODDC::StrokeLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2 )
@@ -1281,7 +1313,8 @@ void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
 
     //      Enable anti-aliased lines, at best quality
     glDisable( GL_BLEND );
-    
+    glUseProgram( 0 );
+
 #else        
     DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
 #endif    
@@ -1361,6 +1394,39 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
 #endif    
 #endif
 }
+
+void ODDC::DrawDiskPattern( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius, GLint textureID, wxSize textureSize )
+{
+    if( dc ) {
+        DrawDisk(x, y, innerRadius, outerRadius);
+    }
+#ifdef ocpnUSE_GL
+    else {
+        //float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
+        float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((innerRadius * 2) * (innerRadius * 2)) * 2) ), 1) *M_PI);
+        float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((outerRadius * 2) * (outerRadius * 2)) * 2) ), 1) *M_PI);
+        wxPoint *disk = new wxPoint[ (int) innerSteps +(int) outerSteps + 2 ];
+        float a = 0.;
+        for( int i = 0; i < (int) innerSteps; i++ ) {
+            disk[i].x = x + innerRadius * sinf( a );
+            disk[i].y = y + innerRadius * cosf( a );
+            a += 2 * M_PI /innerSteps;
+        }
+        //a = 0;
+        for( int i = 0; i < (int) outerSteps; i++) {
+            disk[i + (int) innerSteps].x = x + outerRadius * sinf( a );
+            disk[i + (int) innerSteps].y = y + outerRadius * cosf( a );
+            a -= 2 * M_PI / outerSteps;
+        }
+        int npoints[2];
+        npoints[0] = (int) innerSteps;
+        npoints[1] = (int) outerSteps;
+        DrawPolygonsPattern( 2, npoints, disk, textureID, textureSize, 0, 0);
+        delete [] disk;
+    }
+#endif    
+}
+
 
 void ODDC::StrokeCircle( wxCoord x, wxCoord y, wxCoord radius )
 {
@@ -1575,6 +1641,9 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
             else if(n == 3){
                 glDrawArrays(GL_TRIANGLES, 0, 3);
             }
+            
+            glUseProgram( 0 );
+
         }    
         
         
@@ -1591,12 +1660,16 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
         if( ConfigureBrush() ) {
 //             if( g_GLOptions.m_GLPolygonSmoothing )
 //                 glEnable( GL_POLYGON_SMOOTH );
-            glBegin( GL_POLYGON );
+/*            glBegin( GL_POLYGON );
             for( int i = 0; i < n; i++ )
                 glVertex2f( (points[i].x * scale), (points[i].y * scale) );
             glEnd();
             glDisable( GL_POLYGON_SMOOTH );
+  */          
+            DrawPolygonTessellated( n, points, xoffset, yoffset);
         }
+        
+
 
         if( ConfigurePen() ) {
 //             if( g_GLOptions.m_GLLineSmoothing )
@@ -1784,6 +1857,8 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             else if(n == 3){
                 glDrawArrays(GL_TRIANGLES, 0, 3);
             }
+            glUseProgram( 0 );
+
         }    
         
         
@@ -2028,8 +2103,8 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         }
         
         gluDeleteTess(m_tobj);
-        
-        
+        glUseProgram( 0 );
+
 //         for(std::list<double*>::iterator i = odc_combine_work_data.begin(); i!=odc_combine_work_data.end(); i++)
 //             delete [] *i;
 //         odc_combine_work_data.clear();
@@ -2037,7 +2112,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
     }  
 #else           //USE_ANDROID_GLES2
 
-        static GLUtesselator *tobj = NULL;
+        GLUtesselator *tobj = NULL;
         if( ! tobj ) tobj = gluNewTess();
 
         gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
@@ -2463,8 +2538,6 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
             gluTessBeginPolygon(tobj, NULL);
             int prev = 0;
             for( int j = 0; j < n; j++ ) {
-                if(j==1){
-                    
                 gluTessBeginContour(tobj);
                 for( int i = 0; i < npoints[j]; i++ ) {
                     GLvertex* vertex = new GLvertex();
@@ -2479,7 +2552,6 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
                     gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
                 }
                 gluTessEndContour( tobj );
-                }
                 prev += npoints[j];
             }
             gluTessEndPolygon(tobj);
@@ -2951,6 +3023,8 @@ void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFa
             
             glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             
+            glUseProgram( 0 );
+
             #endif
             
             
@@ -3013,7 +3087,7 @@ bool ODDC::ConfigurePen()
         width = m_pen.GetWidth();
     }
 #ifdef ocpnUSE_GL
-#ifndef USE_ANDROID_GLES2    
+#ifndef ANDROID    
     if(c != wxNullColour)
         glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
 #endif

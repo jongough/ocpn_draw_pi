@@ -220,7 +220,7 @@ if(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInf
 endif(CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo")
 
 if(NOT WIN32 AND NOT APPLE)
-    add_definitions("-DUSE_ANDROID_GLES2")
+    #add_definitions("-DUSE_ANDROID_GLES2")
     add_definitions("-Wall -Wno-unused -fexceptions -rdynamic -fvisibility=hidden")
     add_definitions(" -fno-strict-aliasing")
     message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")

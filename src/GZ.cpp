@@ -195,7 +195,6 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 
 void GZ::DrawGL( PlugIn_ViewPort &piVP )
 {
-#if 0
 #ifdef ocpnUSE_GL
     if(m_dSecondDistance == 0) return;
     if ( !m_bVisible ) return;
@@ -259,7 +258,9 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#ifndef ANDROID
     glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+#endif    
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
@@ -306,7 +307,6 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 #else
     wxLogMessage( _("Guard Zone not drawn as OpenGL not available in this build") );
 #endif
-#endif    
 }
 
 void GZ::SetActiveColours( void )

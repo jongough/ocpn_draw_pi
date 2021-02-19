@@ -130,7 +130,7 @@ static const GLchar* fade_texture_2D_vertex_shader_source =
     "}\n";
     
 static const GLchar* fade_texture_2D_fragment_shader_source =
-    "#version 130\n"
+    "#version " STRINGIFY(GLES_VERSION) "\n"
     "precision highp float;\n"
     "uniform sampler2D uTex;\n"
     "uniform sampler2D uTex2;\n"
@@ -148,7 +148,7 @@ static const GLchar* fade_texture_2D_fragment_shader_source =
     //  Circle shader
  
 static const GLchar* circle_filled_vertex_shader_source =
-    "#version 130\n"
+    "#version " STRINGIFY(GLES_VERSION) "\n"
     "precision highp float;\n"
     "attribute vec2 aPos;\n"
     "uniform mat4 MVMatrix;\n"
@@ -158,7 +158,7 @@ static const GLchar* circle_filled_vertex_shader_source =
     "}\n";
 
 static const GLchar* circle_filled_fragment_shader_source =
-    "#version 130\n"
+    "#version " STRINGIFY(GLES_VERSION) "\n"
     "precision highp float;\n"
     "uniform float border_width;\n"
     "uniform float circle_radius;\n"
@@ -366,50 +366,6 @@ bool pi_loadShaders()
       }
     }
 
-#if 0
-    
-    // Fade texture shader
-    if(!fade_texture_2D_vertex_shader){
-        /* Vertex shader */
-        fade_texture_2D_vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(fade_texture_2D_vertex_shader, 1, &fade_texture_2D_vertex_shader_source, NULL);
-        glCompileShader(fade_texture_2D_vertex_shader);
-        glGetShaderiv(fade_texture_2D_vertex_shader, GL_COMPILE_STATUS, &success);
-        if (!success) {
-            glGetShaderInfoLog(fade_texture_2D_vertex_shader, INFOLOG_LEN, NULL, infoLog);
-            printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
-            ret_val = false;
-        }
-    }
-    
-    if(!fade_texture_2D_fragment_shader){
-        /* Fragment shader */
-        fade_texture_2D_fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fade_texture_2D_fragment_shader, 1, &fade_texture_2D_fragment_shader_source, NULL);
-        glCompileShader(fade_texture_2D_fragment_shader);
-        glGetShaderiv(fade_texture_2D_fragment_shader, GL_COMPILE_STATUS, &success);
-        if (!success) {
-            glGetShaderInfoLog(fade_texture_2D_fragment_shader, INFOLOG_LEN, NULL, infoLog);
-            printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
-            ret_val = false;
-        }
-    }
-    
-    if(!fade_texture_2D_shader_program){
-        /* Link shaders */
-        fade_texture_2D_shader_program = glCreateProgram();
-        glAttachShader(fade_texture_2D_shader_program, fade_texture_2D_vertex_shader);
-        glAttachShader(fade_texture_2D_shader_program, fade_texture_2D_fragment_shader);
-        glLinkProgram(fade_texture_2D_shader_program);
-        glGetProgramiv(fade_texture_2D_shader_program, GL_LINK_STATUS, &success);
-        if (!success) {
-            glGetProgramInfoLog(fade_texture_2D_shader_program, INFOLOG_LEN, NULL, infoLog);
-            printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
-            ret_val = false;
-        }
-    }
-    
-#endif
     // Circle shader
     if(!pi_circle_filled_vertex_shader){
         /* Vertex shader */

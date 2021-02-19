@@ -617,7 +617,6 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     }
     
     // Draw ODPoint range rings if activated
-    m_iODPointRangeRingsNumber = 1;
     if( m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         double factor = 1.00;
         if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles

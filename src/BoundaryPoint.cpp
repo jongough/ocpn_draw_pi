@@ -139,7 +139,6 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     ODDC dc;
     dc.SetVP(&pivp);
 
-#if 0    
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
         GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
@@ -194,16 +193,17 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             glEnable( GL_TEXTURE_2D );
             glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#ifndef ANDROID
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-
+#endif
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_SOLID ) );
             if(m_bExclusionBoundaryPoint && ! m_bInclusionBoundaryPoint) {
-                dc.DrawDisk( r.x, r.y , 0, pix_radius);
+                dc.DrawDiskPattern( r.x, r.y , 0, pix_radius, textureID, wxSize(16,16));
             }
             else {
-                dc.DrawDisk( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize);
+                dc.DrawDiskPattern( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize, textureID, wxSize(16,16));
             }
             dc.SetPen( savePen );
         
@@ -212,7 +212,6 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             glDeleteTextures(1, &textureID);
         }
     }
-#endif    
     ODPoint::DrawGL( pivp );
 #else
     wxLogMessage( _("BoundaryPoint not drawn as OpenGL not available in this build") );
