@@ -29,8 +29,8 @@
 #include "wx/wx.h"
 #endif //precompiled headers
 
-//#include <gl2.h>
-#include "/usr/include/GLES2/gl2.h"
+#include <gl2.h>
+//#include "/usr/include/GLES2/gl2.h"
 
     extern GLint color_tri_shader_program;
     extern GLint texture_2D_shader_program;
