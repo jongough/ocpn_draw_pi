@@ -60,6 +60,8 @@ public:
 
      ~ODDC();
 
+     void Init();
+
      void SetVP(PlugIn_ViewPort *vp);
      void SetBackground( const wxBrush &brush );
      void SetPen( const wxPen &pen);
