@@ -318,7 +318,6 @@ void TextPoint::Draw( ODDC& dc, wxPoint *odp)
 
 void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
 {
-#if 0    
     if( !m_bIsVisible )
         return;
     
@@ -420,6 +419,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                             for( int p = 0; p < teX*teY; p++)
                                 e[p] = d[3*p + 0];
                         }
+
                         /* create texture for rendered text */
                         glGenTextures(1, &m_iDisplayTextTexture);
                         glBindTexture(GL_TEXTURE_2D, m_iDisplayTextTexture);
@@ -438,48 +438,37 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                     
                     if(m_iDisplayTextTexture) {
                         // Draw backing box
-                        ODDC ocpndc;
-                        g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
-                                
+//                        ODDC ocpndc;
+//                        g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
+                       
                         /* draw texture with text */
                         glBindTexture(GL_TEXTURE_2D, m_iDisplayTextTexture);
-                        
+
+                        ODDC dc;
+                        dc.SetVP(&pivp);
+
+                        wxRect texrect = wxRect(0, 0, m_iDisplayTextTextureWidth,m_iDisplayTextTextureHeight);      // the texture rectangle
+
                         glEnable(GL_TEXTURE_2D);
                         glEnable(GL_BLEND);
                         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-                        
-                        glColor3ub(m_colourSchemeTextColour.Red(), m_colourSchemeTextColour.Green(), m_colourSchemeTextColour.Blue());
-                        
-                        int x = r.x, y = r.y;
-                        float u = (float)teX/m_iDisplayTextTextureWidth, v = (float)teY/m_iDisplayTextTextureHeight;
-                        glBegin(GL_QUADS);
-                        glTexCoord2f(0, 0); glVertex2f(x, y);
-                        glTexCoord2f(u, 0); glVertex2f(x+teX, y);
-                        glTexCoord2f(u, v); glVertex2f(x+teX, y+teY);
-                        glTexCoord2f(0, v); glVertex2f(x, y+teY);
-                        glEnd();
+
+                        dc.SetPen( wxPen( m_colourSchemeTextColour ) );
+                        dc.DrawTextureAlpha( texrect, teX, teY, 1.0, wxPoint(r.x,r.y), 0, wxPoint(0,0));
+
                         glDisable(GL_BLEND);
                         glDisable(GL_TEXTURE_2D);
                     }
-
                 }
             }
         }
     }
     ODPoint::DrawGL( pivp );
-#endif    
 }
 
 void TextPoint::CalculateTextExtents( void )
 {
-    if( m_DisplayTextFont.IsOk() ) {
-        wxScreenDC dc;
-        
-        dc.SetFont( m_DisplayTextFont );
-        m_TextExtents = dc.GetMultiLineTextExtent( m_TextPointText );
-    } else
-        m_TextExtents = wxSize( 0, 0 );
-    
+    CalculateTextExtents(m_TextPointText);
 }
 
 void TextPoint::CalculateTextExtents( wxString TextPointText )
@@ -488,7 +477,29 @@ void TextPoint::CalculateTextExtents( wxString TextPointText )
         wxScreenDC dc;
         
         dc.SetFont( m_DisplayTextFont );
+#ifdef __OCPN__ANDROID__ 
+        // Multiline text extent calculation is broken on Android.
+        // So, use a conservatively approximate estimator.
+        int charWidth = dc.GetCharWidth();
+        int charHeight = dc.GetCharHeight();
+        int maxChars = 0;
+        int nLines = 1;
+        int nChars = 0;
+        for(int i=0 ; i < TextPointText.Length() ; i++){
+            nChars++;
+            if(TextPointText[i] == '\n'){
+                maxChars = wxMax(maxChars, nChars);
+                nChars = 0;
+                nLines++;
+            }
+        }
+        maxChars = wxMax(maxChars, nChars);
+            
+        m_TextExtents.x = charWidth * maxChars;
+        m_TextExtents.y = nLines * charHeight * 18/10;
+#else        
         m_TextExtents = dc.GetMultiLineTextExtent( TextPointText );
+#endif        
     } else
         m_TextExtents = wxSize( 0, 0 );
     

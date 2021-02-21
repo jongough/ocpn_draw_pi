@@ -119,6 +119,7 @@ public:
                         wxCoord *externalLeading = NULL, wxFont *font = NULL) const;
 
      void DrawTexture( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
+     void DrawTextureAlpha( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
 
      void ResetBoundingBox();
      void CalcBoundingBox(wxCoord x, wxCoord y);

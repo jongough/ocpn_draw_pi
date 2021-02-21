@@ -114,6 +114,33 @@ static const GLchar* texture_2D_fragment_shader_source =
     "   gl_FragColor = texture2D(uTex, varCoord);\n"
     "}\n";
 
+        // 2D Alpha texture shader
+static const GLchar* texture_2D_alpha_vertex_shader_source =
+    "#version " STRINGIFY(GLES_VERSION) "\n"
+    "attribute vec2 aPos;\n"
+    "attribute vec2 aUV;\n"
+    "uniform mat4 MVMatrix;\n"
+    "uniform mat4 TransformMatrix;\n"
+    "varying vec2 varCoord;\n"
+    "void main() {\n"
+    "   gl_Position = MVMatrix * TransformMatrix * vec4(aPos, 0.0, 1.0);\n"
+    "   varCoord = aUV;\n"
+    "}\n";
+
+static const GLchar* texture_2D_alpha_fragment_shader_source =
+    "#version " STRINGIFY(GLES_VERSION) "\n"
+    "uniform vec4 color;\n"
+    "uniform sampler2D uTex;\n"
+    "varying vec2 varCoord;\n"
+    "void main() {\n"
+    "   float texFragAlpha = texture2D(uTex, varCoord)[3];\n"
+    "   gl_FragColor = color;\n"
+    "   gl_FragColor[3] = color[3] * texFragAlpha;\n"
+
+    "}\n";
+
+
+    
     // Fade Texture shader
 static const GLchar* fade_texture_2D_vertex_shader_source =
     "precision highp float;\n"
@@ -212,6 +239,10 @@ static const GLchar* pattern_fragment_shader_source =
     GLint pi_texture_2D_fragment_shader;
     GLint pi_texture_2D_shader_program;
     GLint pi_texture_2D_vertex_shader;
+
+    GLint pi_texture_2D_alpha_fragment_shader;
+    GLint pi_texture_2D_alpha_shader_program;
+    GLint pi_texture_2D_alpha_vertex_shader;
 
 //     GLint fade_texture_2D_fragment_shader;
 //     GLint fade_texture_2D_shader_program;
@@ -366,6 +397,48 @@ bool pi_loadShaders()
       }
     }
 
+    // 2D Alpha texture shader
+        
+    if(!pi_texture_2D_alpha_vertex_shader){
+       /* Vertex shader */
+       pi_texture_2D_alpha_vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+       glShaderSource(pi_texture_2D_alpha_vertex_shader, 1, &texture_2D_alpha_vertex_shader_source, NULL);
+       glCompileShader(pi_texture_2D_alpha_vertex_shader);
+       glGetShaderiv(pi_texture_2D_alpha_vertex_shader, GL_COMPILE_STATUS, &success);
+      if (!success) {
+          glGetShaderInfoLog(pi_texture_2D_alpha_vertex_shader, INFOLOG_LEN, NULL, infoLog);
+        //printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
+        ret_val = false;
+      }
+    }
+    
+    if(!pi_texture_2D_alpha_fragment_shader){
+        /* Fragment shader */
+        pi_texture_2D_alpha_fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(pi_texture_2D_alpha_fragment_shader, 1, &texture_2D_alpha_fragment_shader_source, NULL);
+        glCompileShader(pi_texture_2D_alpha_fragment_shader);
+        glGetShaderiv(pi_texture_2D_alpha_fragment_shader, GL_COMPILE_STATUS, &success);
+      if (!success) {
+          glGetShaderInfoLog(pi_texture_2D_alpha_fragment_shader, INFOLOG_LEN, NULL, infoLog);
+        //printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
+        ret_val = false;
+      }
+    }
+
+    if(!pi_texture_2D_alpha_shader_program){
+      /* Link shaders */
+      pi_texture_2D_alpha_shader_program = glCreateProgram();
+      glAttachShader(pi_texture_2D_alpha_shader_program, pi_texture_2D_alpha_vertex_shader);
+      glAttachShader(pi_texture_2D_alpha_shader_program, pi_texture_2D_alpha_fragment_shader);
+      glLinkProgram(pi_texture_2D_alpha_shader_program);
+      glGetProgramiv(pi_texture_2D_alpha_shader_program, GL_LINK_STATUS, &success);
+      if (!success) {
+          glGetProgramInfoLog(pi_texture_2D_alpha_shader_program, INFOLOG_LEN, NULL, infoLog);
+        //printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
+        ret_val = false;
+      }
+    }
+
     // Circle shader
     if(!pi_circle_filled_vertex_shader){
         /* Vertex shader */
@@ -492,6 +565,12 @@ void configureShaders(float width, float height)
     glUniformMatrix4fv( transloc, 1, GL_FALSE, (const GLfloat*)I); 
     
     //qDebug() << pi_texture_2D_shader_program << transloc;
+
+    glUseProgram(pi_texture_2D_alpha_shader_program);
+    matloc = glGetUniformLocation(pi_texture_2D_alpha_shader_program,"MVMatrix");
+    glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)vp_transform); 
+    transloc = glGetUniformLocation(pi_texture_2D_alpha_shader_program,"TransformMatrix");
+    glUniformMatrix4fv( transloc, 1, GL_FALSE, (const GLfloat*)I); 
 
     glUseProgram(pi_colorv_tri_shader_program);
     matloc = glGetUniformLocation(pi_colorv_tri_shader_program,"MVMatrix");

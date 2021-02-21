@@ -2643,7 +2643,6 @@ void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
 
 void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFactor )
 {
-    return;
     if( dc )
         dc->DrawText( text, x, y );
 #ifdef ocpnUSE_GL
@@ -2974,11 +2973,12 @@ void ODDC::SetTextureParms( GLint textureId, int width, int height )
 
 void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
 {
-        float w = width; //* scaleFactor;
-        float h = height;// * scaleFactor;
+        float w = width; 
+        float h = height;
 
 #ifndef USE_ANDROID_GLES2
-        glColor3f(1, 1, 1);
+        glColor3f(1,1,1);
+
         glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
         float u = (float)width/texRect.width, v = (float)height/texRect.height;
 
@@ -3048,14 +3048,107 @@ void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor
         GLint matloc = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
         glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
 #endif
-            // Perform the actual drawing.
+
+        // Perform the actual drawing.
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-            // Restore the per-object transform to Identity Matrix
-        mat4x4 IM;
-        mat4x4_identity(IM);
- //       GLint matlocf = glGetUniformLocation(pi_texture_2D_shader_program,"TransformMatrix");
- //       glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
+        glUseProgram( 0 );
+#endif
+}
+
+void ODDC::DrawTextureAlpha( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
+{
+        float w = width; 
+        float h = height;
+
+#ifndef USE_ANDROID_GLES2
+        ConfigurePen();
+
+        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+        float u = (float)width/texRect.width, v = (float)height/texRect.height;
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0); glVertex2f(position.x, position.y);
+        glTexCoord2f(u, 0); glVertex2f(position.x+w, position.y);
+        glTexCoord2f(u, v); glVertex2f(position.x+w, position.y+h);
+        glTexCoord2f(0, v); glVertex2f(position.x, position.y+h);
+        glEnd();
+#else    
+
+        float tx1 = texRect.x, ty1 = texRect.y;
+        float tx2 = tx1 + w, ty2 = ty1 + h;
+
+        // Normalize values against texture size
+        tx1 /= texRect.width , tx2 /= texRect.width ;
+        ty1 /= texRect.height , ty2 /= texRect.height ;
+
+        float uv[8];
+        float coords[8];
+
+            // Note swizzle of points to allow TRIANGLE_STRIP drawing
+        uv[0] = tx1; uv[1] = ty1; uv[2] = tx2; uv[3] = ty1;
+        uv[6] = tx2; uv[7] = ty2; uv[4] = tx1; uv[5] = ty2;
+
+            // pixels
+        coords[0] = position.x;
+        coords[1] = position.y; coords[2] = position.x+w; coords[3] = position.y;
+        coords[6] = position.x+w; coords[7] = position.y+h; coords[4] = position.x; coords[5] = position.y+h;
+
+
+        GLint program = pi_texture_2D_alpha_shader_program;
+        glUseProgram( program );
+
+            // Get pointers to the attributes in the program.
+        GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+        GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+
+            // Select the active texture unit.
+        glActiveTexture( GL_TEXTURE0 );
+
+            // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTex" );
+        glUniform1i( texUni, 0 );
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+            // Set the attribute mPosAttrib with the vertices in the screen coordinates...
+        glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, coords );
+            // ... and enable it.
+        glEnableVertexAttribArray( mPosAttrib );
+
+            // Set the attribute mUvAttrib with the vertices in the GL coordinates...
+        glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 0, uv );
+            // ... and enable it.
+        glEnableVertexAttribArray( mUvAttrib );
+
+        //  Pattern color
+        float bcolorv[4];
+        GLint bcolloc = glGetUniformLocation(program,"color");
+        bcolorv[0] = m_pen.GetColour().Red() / float(256);
+        bcolorv[1] = m_pen.GetColour().Green() / float(256);
+        bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+        bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+            
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+#if 0        
+            // Rotate
+        mat4x4 I, Q;
+        mat4x4_identity(I);
+
+        mat4x4_translate_in_place(I, position.x, position.y, 0);
+        mat4x4_rotate_Z(Q, I, -rotation);
+        mat4x4_translate_in_place(Q, -rPivot.x, -rPivot.y, rotation);
+
+        GLint matloc = glGetUniformLocation(program,"TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
+#endif
+
+        // Perform the actual drawing.
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
         glUseProgram( 0 );
 #endif
 }

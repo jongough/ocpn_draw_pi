@@ -36,6 +36,7 @@
     extern GLint pi_texture_2D_shader_program;
     extern GLint pi_circle_filled_shader_program;
     extern GLint pi_pattern_shader_program;
+    extern GLint pi_texture_2D_alpha_shader_program;
 
 bool pi_loadShaders();
 void configureShaders(float width, float height);
