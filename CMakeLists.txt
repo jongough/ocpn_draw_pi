@@ -258,7 +258,6 @@ set(OCPNHDRS
 
 set(EXTSRC ${EXTSRC} extsrc/clipper.cpp extsrc/pugixml.cpp)
 
-#set(EXTINCLUDE ${EXTINCLUDE} extinclude/clipper.hpp extinclude/pugiconfig.hpp extinclude/pugixml.hpp)
 set(EXTINCLUDE ${EXTINCLUDE} extinclude)
 
 if(APPLE OR QT_ANDROID)
