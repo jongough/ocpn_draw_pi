@@ -367,7 +367,7 @@ IF(QT_ANDROID)
     "-Wno-unknown-pragmas"
       )
 
-    message(STATUS "${CMLOC}Adding libgorp.o shared library")
+    message(STATUS "${CMLOC}Adding libgorp.so shared library")
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s")  ## Strip binary
 
