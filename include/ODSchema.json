@@ -47,21 +47,42 @@ R"(
     },
     "LatLon": {
         "description": "Used to describe Lat & Lon",
-        "properties": {
-            "Lat": {
-                "description": "Latitude of Boundary Point",
-                "type": "number",
-                "minimum": -90,
-                "maximum": 90
+        "oneOf": [
+            {
+                "properties": {
+                    "Lat": {
+                        "description": "Latitude of Boundary Point",
+                        "type": "number",
+                        "minimum": -90,
+                        "maximum": 90
+                    },
+                    "Lon": {
+                        "description": "Longitude of Boundary Point",
+                        "type": "number",
+                        "minimum": -180,
+                        "maximum": 180
+                    }
+                },
+                "required": ["Lat", "Lon"]
             },
-            "Lon": {
-                "description": "Longitude of Boundary Point",
-                "type": "number",
-                "minimum": -180,
-                "maximum": 180
+            {
+                "properties": {
+                    "lat": {
+                        "description": "Latitude of Boundary Point",
+                        "type": "number",
+                        "minimum": -90,
+                        "maximum": 90
+                    },
+                    "lon": {
+                        "description": "Longitude of Boundary Point",
+                        "type": "number",
+                        "minimum": -180,
+                        "maximum": 180
+                    }
+                },
+                "required": ["lat", "lon"]
             }
-        },
-        "required": ["Lat", "Lon"]
+        ]
     },
     "StartLatLon": {
         "description": "Used to describe Lat & Lon",
@@ -287,9 +308,9 @@ R"(
         "description": "Used to create or modify a boundary",
         "type": "object",
         "allOf": [
-            { 
+            {
                 "anyOf": [
-                    { 
+                    {
                         "properties": {
                             "BoundaryName": {
                                 "description": "Boundary Name",
@@ -314,9 +335,9 @@ R"(
                     }
                 ]
             },
-            { 
+            {
                 "allOf": [
-                    { 
+                    {
                         "properties" : {
                             "BoundaryPoints": {
                                 "description": "Array of boundary points needed to define a boundary",
@@ -341,7 +362,7 @@ R"(
         "description": "Used to find a Lat/Lon in a given Boundary",
         "type": "object",
         "allOf": [
-            {"$ref": "#/definitions/LatLon"},  
+            {"$ref": "#/definitions/LatLon"},
             {"$ref": "#/definitions/ODObject"}
         ]
     }
