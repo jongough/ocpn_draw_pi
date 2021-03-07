@@ -1,3 +1,4 @@
+R"(
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "OD Schemas",
@@ -104,74 +105,76 @@
         "description": "Generic OD Point",
         "allOf": [
             {"ref": "#/definitions/LatLon"},
-            {"anyOf": [
-                {"Name": {
-                    "description": "Boundary Point Name",
-                    "type": "string"}
-                },
-                {"ref": "#/definitions/LatLon"},
-                {"IconName": {
-                    "description": "Boundary Point Icon Name",
-                    "type": "string"
-                    }
-                },
-                {"Visible": {
-                    "description": "Visibility of Boundary Point",
-                    "type": "boolean",
-                    "default": false
-                    }
-                },
-                {"RingsVisible": {
-                    "description": "Visibility of Boundary Point Range Rings",
-                    "type": "boolean",
-                    "default": false
-                    }
-                },
-                {"RingsNumber": {
-                    "description": "Number of Boundary Point Rings",
-                    "type": "number",
-                    "minimum": 0,
-                    "maximum": 10
-                    }
-                },
-                {"RingsSteps": {
-                    "description": "Steps between Boundary Point Rings",
-                    "type": "number",
-                    "minimum": 0.0
-                    }
-                },
-                {"RingUnits": {
-                    "description": "Boundary Point Range Ring Step Units",
-                    "enum": [0,1,2,3,4,5,6,7,8,9,10]
-                    }
-                },
-                {"RingsColour": {
-                    "description": "Boundary Point Range Rings Colour",
-                    "type": "string"
-                    }
-                },
-                {"HyperLinks": {
-                    "description": "Array of hyperlinks to local or internet documents",
-                    "type": "array",
-                    "Items": {
-                        "allOf" : [
-                            {
-                                "LinkDescription": {
-                                "description": "Text description of hyper link",
-                                "type": "string"
-                                }
-                            },
-                            {
-                                "LinkURL": {
-                                "description": "Actual Hyperlink",
-                                "type": "string"
-                                }
+            {
+                "anyOf": [
+                    {"Name": {
+                        "description": "Boundary Point Name",
+                        "type": "string"}
+                    },
+                    {"ref": "#/definitions/LatLon"},
+                    {"IconName": {
+                        "description": "Boundary Point Icon Name",
+                        "type": "string"
+                        }
+                    },
+                    {"Visible": {
+                        "description": "Visibility of Boundary Point",
+                        "type": "boolean",
+                        "default": false
+                        }
+                    },
+                    {"RingsVisible": {
+                        "description": "Visibility of Boundary Point Range Rings",
+                        "type": "boolean",
+                        "default": false
+                        }
+                    },
+                    {"RingsNumber": {
+                        "description": "Number of Boundary Point Rings",
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 10
+                        }
+                    },
+                    {"RingsSteps": {
+                        "description": "Steps between Boundary Point Rings",
+                        "type": "number",
+                        "minimum": 0.0
+                        }
+                    },
+                    {"RingUnits": {
+                        "description": "Boundary Point Range Ring Step Units",
+                        "enum": [0,1,2,3,4,5,6,7,8,9,10]
+                        }
+                    },
+                    {"RingsColour": {
+                        "description": "Boundary Point Range Rings Colour",
+                        "type": "string"
+                        }
+                    },
+                    {
+                        "HyperLinks": {
+                            "description": "Array of hyperlinks to local or internet documents",
+                            "type": "array",
+                            "Items": {
+                                "allOf" : [
+                                    {
+                                        "LinkDescription": {
+                                        "description": "Text description of hyper link",
+                                        "type": "string"
+                                        }
+                                    },
+                                    {
+                                        "LinkURL": {
+                                        "description": "Actual Hyperlink",
+                                        "type": "string"
+                                        }
+                                    }
+                                ]
                             }
-                        ]
                         }
                     }
-                }
-            ]
+                ]
             }
         ]
     },
@@ -284,58 +287,63 @@
         "description": "Used to create or modify a boundary",
         "type": "object",
         "allOf": [
-            { "anyOf": [
-                "properties": {
-                    "BoundaryName": {
-                        "description": "Boundary Name",
-                        "type": "string"
-                    },
-                    "Active": {
-                        "description": "Is Boundary Active",
-                        "type": "boolean",
-                        "boolean": true
-                    },
-                    "Visible": {
-                        "description": "Visibility of Boundary",
-                        "type": "boolean",
-                        "default": true
-                    },
-                    "Temporary": {
-                        "description": "Boundary life, false - exists over restart, true - non persistent",
-                        "type": "boolean",
-                        "default": false
+            { 
+                "anyOf": [
+                    { 
+                        "properties": {
+                            "BoundaryName": {
+                                "description": "Boundary Name",
+                                "type": "string"
+                            },
+                            "Active": {
+                                "description": "Is Boundary Active",
+                                "type": "boolean",
+                                "boolean": true
+                            },
+                            "Visible": {
+                                "description": "Visibility of Boundary",
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "Temporary": {
+                                "description": "Boundary life, false - exists over restart, true - non persistent",
+                                "type": "boolean",
+                                "default": false
+                            }
+                        }
                     }
                 ]
             },
-            { "allOf": [
-                    "properties" : {
-                        "BoundaryPoints": {
-                            "description": "Array of boundary points needed to define a boundary",
-                            "type": "array",
-                            "items": {
-                                {"$ref": "#/definitions/BoundaryPoint"}
+            { 
+                "allOf": [
+                    { 
+                        "properties" : {
+                            "BoundaryPoints": {
+                                "description": "Array of boundary points needed to define a boundary",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/definitions/BoundaryPoint"
+                                },
+                                "minItems": 3,
+                                "additionalItems": false
                             },
-                            "minItems": 3,
-                            "additionalItems": false
+                            "BoundaryType": {
+                                "description": "Boundary Type",
+                                "enum": ["Exclusion","Inclusion","Neither","Any"]
+                            }
                         }
-                        "BoundaryType": {
-                            "description": "Boundary Type",
-                            "enum": ["Exclusion","Inclusion","Neither","Any"]
-                        },
                     }
                 ]
             }
-        }
+        ]
     },
     "FindPointInBoundary": {
         "description": "Used to find a Lat/Lon in a given Boundary",
         "type": "object",
-        "properties": {
-            "items": {
-                "$ref": "#/definitions/LatLon",
-                "$ref": "#/definitions/ODObject"
-            }
-        }
+        "allOf": [
+            {"$ref": "#/definitions/LatLon"},  
+            {"$ref": "#/definitions/ODObject"}
+        ]
     }
 
     },
@@ -475,9 +483,12 @@
             "if": { "properties": {"Msg": {"const": "FindPointInGuardZone"}}
             },
             "then": {
-                "$ref": "#/definitions/ODObject",
-                "$ref": "#/definitions/LatLon"
+                "allOf": [
+                    {"$ref": "#/definitions/ODObject"},
+                    {"$ref": "#/definitions/LatLon"}
+                ]
             }
         }
     ]
 }
+)"_json

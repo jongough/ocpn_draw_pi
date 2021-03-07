@@ -25,8 +25,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "5")
-set(VERSION_TWEAK "3")
-set(VERSION_DATE "09/02/2021")
+set(VERSION_TWEAK "6")
+set(VERSION_DATE "08/03/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -256,14 +256,21 @@ set(OCPNHDRS
     ocpninclude/wx/jsonval.h
     ocpninclude/wx/jsonwriter.h)
 
-set(EXTSRC ${EXTSRC} extsrc/clipper.cpp extsrc/pugixml.cpp)
+set(EXTSRC
+    extsrc/clipper.cpp
+    extsrc/pugixml.cpp)
 
-set(EXTINCLUDE ${EXTINCLUDE} extinclude)
+set(EXTINCLUDE
+    extinclude/clipper.hpp
+    extinclude/pugixml.hpp
+    extinclude/pugiconfig.hpp )
+
+set (EXTINCLUDE_DIR extinclude)
 
 if(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else(APPLE OR QT_ANDROID)
-    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF) # Temp change to remove JSON Vaidator 12/02/2021
+    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
 endif(APPLE OR QT_ANDROID)
 
 if(OD_JSON_SCHEMA_VALIDATOR)
@@ -271,8 +278,9 @@ if(OD_JSON_SCHEMA_VALIDATOR)
     add_definitions(-DOD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Adding JSON Schema validation")
 
-    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp)
-    set(EXTINCLUDE ${EXTINCLUDE} "extinclude/nlohmannl;extinclude/json-schema-validator")
+    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp extsrc/json-schema-validator/json-patch.cpp)
+    set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} "extinclude/json-schema-validator")
+
 
 else(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
@@ -297,7 +305,7 @@ endif(OCPN_MIN_VERSION)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extsrc/mygdal)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE})
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)

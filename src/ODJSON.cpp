@@ -39,7 +39,8 @@
 #if defined(snprintf) && defined(_MSC_VER)
     #undef snprintf
 #endif
-#include "json-schema.hpp"
+#include "nlohmann/json-schema.hpp"
+#include "json-patch.hpp"
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 #endif
@@ -296,12 +297,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
 #ifndef OD_JSON_SCHEMA_VALIDATOR
-            if(!root.HasMember( wxS("lat"))) {
+            if(!root.HasMember( wxS("Lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("lon"))) {
+            if(!root.HasMember( wxS("Lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
@@ -312,8 +313,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
 #endif
             if(!bFail) {
-                l_dLat = root[wxS("lat")].AsDouble();
-                l_dLon = root[wxS("lon")].AsDouble();
+                l_dLat = root[wxS("Lat")].AsDouble();
+                l_dLon = root[wxS("Lon")].AsDouble();
                 
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
@@ -345,8 +346,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     jMsg[wxT("Type")] = wxT("Response");
                     jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                     jMsg[wxS("GUID")] = l_sGUID;
-                    jMsg[wxS("lat")] = l_dLat;
-                    jMsg[wxS("lon")] = l_dLon;
+                    jMsg[wxS("Lat")] = l_dLat;
+                    jMsg[wxS("Lon")] = l_dLon;
                     if(l_bFoundBoundary ) {
                         Boundary *l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
                         jMsg[wxS("Name")] = l_boundary->m_PathNameString;
@@ -546,20 +547,20 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("lat"))) {
+            if(!root.HasMember( wxS("Lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("lon"))) {
+            if(!root.HasMember( wxS("Lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
 #endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
-                l_dLat = root[wxS("lat")].AsDouble();
-                l_dLon = root[wxS("lon")].AsDouble();
+                l_dLat = root[wxS("Lat")].AsDouble();
+                l_dLon = root[wxS("Lon")].AsDouble();
                 
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
@@ -568,8 +569,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     Boundary *l_boundary = NULL;
                     BoundaryPoint *l_boundarypoint = NULL;
                     if(l_sMsg == wxS("FindPointInBoundary")) {
-                        l_dLat = root[wxS("lat")].AsDouble();
-                        l_dLon = root[wxS("lon")].AsDouble();
+                        l_dLat = root[wxS("Lat")].AsDouble();
+                        l_dLon = root[wxS("Lon")].AsDouble();
                         
                         l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
                         if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
@@ -584,8 +585,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                             jMsg[wxT("Type")] = wxT("Response");
                             jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                             jMsg[wxS("Found")] = false;
-                            jMsg[wxS("lat")] = l_dLat;
-                            jMsg[wxS("lon")] = l_dLon;
+                            jMsg[wxS("Lat")] = l_dLat;
+                            jMsg[wxS("Lon")] = l_dLon;
                             jMsg[wxS("GUID")] = root[wxS("GUID")];
                             writer.Write( jMsg, MsgString );
                             SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
@@ -599,8 +600,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         jMsg[wxT("Type")] = wxT("Response");
                         jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                         jMsg[wxS("Found")] = l_bFound;
-                        jMsg[wxS("lat")] = l_dLat;
-                        jMsg[wxS("lon")] = l_dLon;
+                        jMsg[wxS("Lat")] = l_dLat;
+                        jMsg[wxS("Lon")] = l_dLon;
                         jMsg[wxS("GUID")] = root[wxS("GUID")];
                         if(l_boundary) {
                             jMsg[wxS("BoundaryObjectType")] = wxT("Boundary");
@@ -638,20 +639,20 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("lat"))) {
+            if(!root.HasMember( wxS("Lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("lon"))) {
+            if(!root.HasMember( wxS("Lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
 #endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
-                root[wxS("lat")].AsString().ToDouble( & l_dLat );
-                root[wxS("lon")].AsString().ToDouble( & l_dLon );
+                root[wxS("Lat")].AsString().ToDouble( & l_dLat );
+                root[wxS("Lon")].AsString().ToDouble( & l_dLon );
                 
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
@@ -673,8 +674,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         jMsg[wxT("Type")] = wxT("Response");
                         jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                         jMsg[wxS("Found")] = false;
-                        jMsg[wxS("lat")] = l_dLat;
-                        jMsg[wxS("lon")] = l_dLon;
+                        jMsg[wxS("Lat")] = l_dLat;
+                        jMsg[wxS("Lon")] = l_dLon;
                         jMsg[wxS("GUID")] = root[wxS("GUID")];
                         writer.Write( jMsg, MsgString );
                         SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
@@ -704,8 +705,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     jMsg[wxT("Type")] = wxT("Response");
                     jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                     jMsg[wxS("Found")] = l_bFound;
-                    jMsg[wxS("lat")] = l_dLat;
-                    jMsg[wxS("lon")] = l_dLon;
+                    jMsg[wxS("Lat")] = l_dLat;
+                    jMsg[wxS("Lon")] = l_dLon;
                     if(l_path) {
                         jMsg[wxS("Active")] = l_path->m_bPathIsActive;
                         jMsg[wxS("Name")] = l_path->m_PathNameString;
@@ -743,8 +744,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     
                     popSecond = OCPNpoint_next_node->GetData();
                     
-                    current_point[wxT("lat")] = popSecond->m_lat;
-                    current_point[wxT("lon")] = popSecond->m_lon;
+                    current_point[wxT("Lat")] = popSecond->m_lat;
+                    current_point[wxT("Lon")] = popSecond->m_lon;
                     boundary_points.Append(current_point);
                     
                     OCPNpoint_next_node = OCPNpoint_next_node->GetNext();

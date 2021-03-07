@@ -6,15 +6,16 @@
  * SPDX-License-Identifier: MIT
  *
  */
-#include <json-schema.hpp>
+#include <nlohmann/json-schema.hpp>
+
+#include "json-patch.hpp"
 
 #include <memory>
 #include <set>
-#ifdef __MSVC__
 #include <sstream>
-#endif
 
 using nlohmann::json;
+using nlohmann::json_patch;
 using nlohmann::json_uri;
 using nlohmann::json_schema::root_schema;
 using namespace nlohmann::json_schema;
@@ -32,16 +33,25 @@ using namespace nlohmann::json_schema;
 namespace
 {
 
+static const json EmptyDefault = nullptr;
+
 class schema
 {
 protected:
 	root_schema *root_;
 
 public:
+	virtual ~schema() = default;
+
 	schema(root_schema *root)
 	    : root_(root) {}
 
-	virtual void validate(const json &instance, basic_error_handler &e) const = 0;
+	virtual void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const = 0;
+
+	virtual const json &defaultValue(const json::json_pointer &, const json &, error_handler &) const
+	{
+		return EmptyDefault;
+	}
 
 	static std::shared_ptr<schema> make(json &schema,
 	                                    root_schema *root,
@@ -49,17 +59,268 @@ public:
 	                                    std::vector<nlohmann::json_uri> uris);
 };
 
+class schema_ref : public schema
+{
+	const std::string id_;
+	std::weak_ptr<schema> target_;
+
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const final
+	{
+		auto target = target_.lock();
+
+		if (target)
+			target->validate(ptr, instance, patch, e);
+		else
+			e.error(ptr, instance, "unresolved or freed schema-reference " + id_);
+	}
+
+	const json &defaultValue(const json::json_pointer &ptr, const json &instance, error_handler &e) const override
+	{
+		auto target = target_.lock();
+
+		if (target)
+			return target->defaultValue(ptr, instance, e);
+		else
+			e.error(ptr, instance, "unresolved or freed schema-reference " + id_);
+
+		return EmptyDefault;
+	}
+
+public:
+	schema_ref(const std::string &id, root_schema *root)
+	    : schema(root), id_(id) {}
+
+	const std::string &id() const { return id_; }
+	void set_target(const std::shared_ptr<schema> &target) { target_ = target; }
+};
+
+} // namespace
+
+namespace nlohmann
+{
+namespace json_schema
+{
+
+class root_schema : public schema
+{
+	schema_loader loader_;
+	format_checker format_check_;
+	content_checker content_check_;
+
+	std::shared_ptr<schema> root_;
+
+	struct schema_file {
+		std::map<std::string, std::shared_ptr<schema>> schemas;
+		std::map<std::string, std::shared_ptr<schema_ref>> unresolved; // contains all unresolved references from any other file seen during parsing
+		json unknown_keywords;
+	};
+
+	// location as key
+	std::map<std::string, schema_file> files_;
+
+	schema_file &get_or_create_file(const std::string &loc)
+	{
+		auto file = files_.lower_bound(loc);
+		if (file != files_.end() && !(files_.key_comp()(loc, file->first)))
+			return file->second;
+		else
+			return files_.insert(file, {loc, {}})->second;
+	}
+
+public:
+	root_schema(schema_loader &&loader,
+	            format_checker &&format,
+	            content_checker &&content)
+
+	    : schema(this),
+	      loader_(std::move(loader)),
+	      format_check_(std::move(format)),
+	      content_check_(std::move(content))
+	{
+	}
+
+	format_checker &format_check() { return format_check_; }
+	content_checker &content_check() { return content_check_; }
+
+	void insert(const json_uri &uri, const std::shared_ptr<schema> &s)
+	{
+		auto &file = get_or_create_file(uri.location());
+		auto sch = file.schemas.lower_bound(uri.fragment());
+		if (sch != file.schemas.end() && !(file.schemas.key_comp()(uri.fragment(), sch->first))) {
+			throw std::invalid_argument("schema with " + uri.to_string() + " already inserted");
+			return;
+		}
+
+		file.schemas.insert({uri.fragment(), s});
+
+		// was someone referencing this newly inserted schema?
+		auto unresolved = file.unresolved.find(uri.fragment());
+		if (unresolved != file.unresolved.end()) {
+			unresolved->second->set_target(s);
+			file.unresolved.erase(unresolved);
+		}
+	}
+
+	void insert_unknown_keyword(const json_uri &uri, const std::string &key, json &value)
+	{
+		auto &file = get_or_create_file(uri.location());
+		auto new_uri = uri.append(key);
+		auto fragment = new_uri.pointer();
+
+		// is there a reference looking for this unknown-keyword, which is thus no longer a unknown keyword but a schema
+		auto unresolved = file.unresolved.find(fragment);
+		if (unresolved != file.unresolved.end())
+			schema::make(value, this, {}, {{new_uri}});
+		else // no, nothing ref'd it, keep for later
+			// could use fragment here, but better not to: if key is an integer the pointer will be interpreted as
+			// an array. This cannot be the case here, so we force using key as a string when storing the
+			// unknown_keyword-schema.
+			file.unknown_keywords[uri.pointer()][key] = value;
+
+		// recursively add possible subschemas of unknown keywords
+		if (value.type() == json::value_t::object)
+			for (auto &subsch : value.items())
+				insert_unknown_keyword(new_uri, subsch.key(), subsch.value());
+	}
+
+	std::shared_ptr<schema> get_or_create_ref(const json_uri &uri)
+	{
+		auto &file = get_or_create_file(uri.location());
+
+		// existing schema
+		auto sch = file.schemas.find(uri.fragment());
+		if (sch != file.schemas.end())
+			return sch->second;
+
+		// referencing an unknown keyword, turn it into schema
+		//
+		// an unknown keyword can only be referenced by a json-pointer,
+		// not by a plain name fragment
+		if (uri.pointer() != "") {
+			try {
+				auto &subschema = file.unknown_keywords.at(uri.pointer()); // null is returned if not existing
+				auto s = schema::make(subschema, this, {}, {{uri}});       //  A JSON Schema MUST be an object or a boolean.
+				if (s) {                                                   // nullptr if invalid schema, e.g. null
+					file.unknown_keywords.erase(uri.fragment());
+					return s;
+				}
+			} catch (nlohmann::detail::out_of_range &) { // at() did not find it
+			}
+		}
+
+		// get or create a schema_ref
+		auto r = file.unresolved.lower_bound(uri.fragment());
+		if (r != file.unresolved.end() && !(file.unresolved.key_comp()(uri.fragment(), r->first))) {
+			return r->second; // unresolved, already seen previously - use existing reference
+		} else {
+			return file.unresolved.insert(r,
+			                              {uri.fragment(), std::make_shared<schema_ref>(uri.to_string(), this)})
+			    ->second; // unresolved, create reference
+		}
+	}
+
+	void set_root_schema(json sch)
+	{
+		files_.clear();
+		root_ = schema::make(sch, this, {}, {{"#"}});
+
+		// load all files which have not yet been loaded
+		do {
+			bool new_schema_loaded = false;
+
+			// files_ is modified during parsing, iterators are invalidated
+			std::vector<std::string> locations;
+			for (auto &file : files_)
+				locations.push_back(file.first);
+
+			for (auto &loc : locations) {
+				if (files_[loc].schemas.size() == 0) { // nothing has been loaded for this file
+					if (loader_) {
+						json loaded_schema;
+
+						loader_(loc, loaded_schema);
+
+						schema::make(loaded_schema, this, {}, {{loc}});
+						new_schema_loaded = true;
+					} else {
+						throw std::invalid_argument("external schema reference '" + loc + "' needs loading, but no loader callback given");
+					}
+				}
+			}
+
+			if (!new_schema_loaded) // if no new schema loaded, no need to try again
+				break;
+		} while (1);
+
+		for (const auto &file : files_)
+			if (file.second.unresolved.size() != 0)
+				throw std::invalid_argument("after all files have been parsed, '" +
+				                            (file.first == "" ? "<root>" : file.first) +
+				                            "' has still undefined references.");
+	}
+
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const final
+	{
+		if (root_)
+			root_->validate(ptr, instance, patch, e);
+		else
+			e.error(ptr, "", "no root schema has yet been set for validating an instance");
+	}
+
+	const json &defaultValue(const json::json_pointer &ptr, const json &instance, error_handler &e) const override
+	{
+		if (root_)
+			return root_->defaultValue(ptr, instance, e);
+		else
+			e.error(ptr, "", "no root schema has yet been set for validating an instance");
+
+		return EmptyDefault;
+	}
+};
+
+} // namespace json_schema
+} // namespace nlohmann
+
+namespace
+{
+
+class first_error_handler : public error_handler
+{
+public:
+	bool error_{false};
+	json::json_pointer ptr_;
+	json instance_;
+	std::string message_;
+
+	void error(const json::json_pointer &ptr, const json &instance, const std::string &message) override
+	{
+		if (*this)
+			return;
+		error_ = true;
+		ptr_ = ptr;
+		instance_ = instance;
+		message_ = message;
+	}
+
+	operator bool() const { return error_; }
+};
+
 class logical_not : public schema
 {
 	std::shared_ptr<schema> subschema_;
 
-	void validate(const json &instance, basic_error_handler &e) const final
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const final
 	{
-		basic_error_handler err;
-		subschema_->validate(instance, err);
+		first_error_handler esub;
+		subschema_->validate(ptr, instance, patch, esub);
 
-		if (!err)
-			e.error("", instance, "instance is valid, whereas it should NOT be as required by schema");
+		if (!esub)
+			e.error(ptr, instance, "the subschema has succeeded, but it is required to not validate");
+	}
+
+	const json &defaultValue(const json::json_pointer &ptr, const json &instance, error_handler &e) const override
+	{
+		return subschema_->defaultValue(ptr, instance, e);
 	}
 
 public:
@@ -83,34 +344,29 @@ class logical_combination : public schema
 {
 	std::vector<std::shared_ptr<schema>> subschemata_;
 
-	void validate(const json &instance, basic_error_handler &e) const final
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const final
 	{
 		size_t count = 0;
 
 		for (auto &s : subschemata_) {
-			basic_error_handler err;
-			s->validate(instance, err);
-
-			if (err) {
-				//sub_schema_err << "  one schema failed because: " << e.what() << "\n";
-				if (combine_logic == allOf) {
-					e.error("", instance, "at least one schema has failed, but ALLOF them are required to validate.");
-					return;
-				}
-			} else
+			first_error_handler esub;
+			s->validate(ptr, instance, patch, esub);
+			if (!esub)
 				count++;
 
-			if (combine_logic == oneOf && count > 1) {
-				e.error("", instance, "more than one schema has succeeded, but only ONEOF them is required to validate.");
-				return;
-			}
-			if (combine_logic == anyOf && count == 1)
+			if (is_validate_complete(instance, ptr, e, esub, count))
 				return;
 		}
 
-		if ((combine_logic == anyOf || combine_logic == oneOf) && count == 0)
-			e.error("", instance, "no validation has succeeded but ANYOF/ONEOF them is required to validate.");
+		// could accumulate esub details for anyOf and oneOf, but not clear how to select which subschema failure to report
+		// or how to report multiple such failures
+		if (count == 0)
+			e.error(ptr, instance, "no subschema has succeeded, but one of them is required to validate");
 	}
+
+	// specialized for each of the logical_combination_types
+	static const std::string key;
+	static bool is_validate_complete(const json &, const json::json_pointer &, error_handler &, const first_error_handler &, size_t);
 
 public:
 	logical_combination(json &sch,
@@ -119,26 +375,46 @@ public:
 	    : schema(root)
 	{
 		size_t c = 0;
-		std::string key;
-		switch (combine_logic) {
-		case allOf:
-			key = "allOf";
-			break;
-		case oneOf:
-			key = "oneOf";
-			break;
-		case anyOf:
-			key = "anyOf";
-			break;
-		}
-
 		for (auto &subschema : sch)
 			subschemata_.push_back(schema::make(subschema, root, {key, std::to_string(c++)}, uris));
+
+		// value of allOf, anyOf, and oneOf "MUST be a non-empty array"
+		// TODO error/throw? when subschemata_.empty()
 	}
 };
 
+template <>
+const std::string logical_combination<allOf>::key = "allOf";
+template <>
+const std::string logical_combination<anyOf>::key = "anyOf";
+template <>
+const std::string logical_combination<oneOf>::key = "oneOf";
+
+template <>
+bool logical_combination<allOf>::is_validate_complete(const json &, const json::json_pointer &, error_handler &e, const first_error_handler &esub, size_t)
+{
+	if (esub)
+		e.error(esub.ptr_, esub.instance_, "at least one subschema has failed, but all of them are required to validate - " + esub.message_);
+	return esub;
+}
+
+template <>
+bool logical_combination<anyOf>::is_validate_complete(const json &, const json::json_pointer &, error_handler &, const first_error_handler &, size_t count)
+{
+	return count == 1;
+}
+
+template <>
+bool logical_combination<oneOf>::is_validate_complete(const json &instance, const json::json_pointer &ptr, error_handler &e, const first_error_handler &, size_t count)
+{
+	if (count > 1)
+		e.error(ptr, instance, "more than one subschema has succeeded, but exactly one of them is required to validate");
+	return count > 1;
+}
+
 class type_schema : public schema
 {
+	json defaultValue_ = EmptyDefault;
 	std::vector<std::shared_ptr<schema>> type_;
 	std::pair<bool, json> enum_, const_;
 	std::vector<std::shared_ptr<schema>> logic_;
@@ -151,45 +427,50 @@ class type_schema : public schema
 
 	std::shared_ptr<schema> if_, then_, else_;
 
-	void validate(const json &instance, basic_error_handler &e) const override final
+	const json &defaultValue(const json::json_pointer &, const json &, error_handler &) const override
+	{
+		return defaultValue_;
+	}
+
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const override final
 	{
 		// depending on the type of instance run the type specific validator - if present
 		auto type = type_[(uint8_t) instance.type()];
 
 		if (type)
-			type->validate(instance, e);
+			type->validate(ptr, instance, patch, e);
 		else
-			e.error("", instance, "unexpected instance type");
+			e.error(ptr, instance, "unexpected instance type");
 
 		if (enum_.first) {
 			bool seen_in_enum = false;
-			for (auto &e : enum_.second)
-				if (instance == e) {
+			for (auto &v : enum_.second)
+				if (instance == v) {
 					seen_in_enum = true;
 					break;
 				}
 
 			if (!seen_in_enum)
-				e.error("", instance, "instance not found in required enum");
+				e.error(ptr, instance, "instance not found in required enum");
 		}
 
 		if (const_.first &&
 		    const_.second != instance)
-			e.error("", instance, "instance not const");
+			e.error(ptr, instance, "instance not const");
 
 		for (auto l : logic_)
-			l->validate(instance, e);
+			l->validate(ptr, instance, patch, e);
 
 		if (if_) {
-			basic_error_handler err;
+			first_error_handler err;
 
-			if_->validate(instance, err);
+			if_->validate(ptr, instance, patch, err);
 			if (!err) {
 				if (then_)
-					then_->validate(instance, e);
+					then_->validate(ptr, instance, patch, e);
 			} else {
 				if (else_)
-					else_->validate(instance, e);
+					else_->validate(ptr, instance, patch, e);
 			}
 		}
 	}
@@ -208,7 +489,6 @@ public:
 		    {"string", json::value_t::string},
 		    {"boolean", json::value_t::boolean},
 		    {"integer", json::value_t::number_integer},
-		    {"integer", json::value_t::number_unsigned},
 		    {"number", json::value_t::number_float},
 		};
 
@@ -242,15 +522,27 @@ public:
 			sch.erase(attr);
 		}
 
+		const auto defaultAttr = sch.find("default");
+		if (defaultAttr != sch.end()) {
+			defaultValue_ = defaultAttr.value();
+		}
+
 		for (auto &key : known_keywords)
 			sch.erase(key);
 
-		// with nlohmann::json floats can be seen as unsigned or integer - reuse the number-validator for
-		// integer values as well, if they have not been specified
+		// with nlohmann::json float instance (but number in schema-definition) can be seen as unsigned or integer -
+		// reuse the number-validator for integer values as well, if they have not been specified explicitly
 		if (type_[(uint8_t) json::value_t::number_float] && !type_[(uint8_t) json::value_t::number_integer])
-			type_[(uint8_t) json::value_t::number_integer] =
-			    type_[(uint8_t) json::value_t::number_unsigned] =
-			        type_[(uint8_t) json::value_t::number_float];
+			type_[(uint8_t) json::value_t::number_integer] = type_[(uint8_t) json::value_t::number_float];
+
+		// #54: JSON-schema does not differentiate between unsigned and signed integer - nlohmann::json does
+		// we stick with JSON-schema: use the integer-validator if instance-value is unsigned
+		type_[(uint8_t) json::value_t::number_unsigned] = type_[(uint8_t) json::value_t::number_integer];
+
+		// special for binary types
+		if (type_[(uint8_t) json::value_t::string]) {
+			type_[(uint8_t) json::value_t::binary] = type_[(uint8_t) json::value_t::string];
+		}
 
 		attr = sch.find("enum");
 		if (attr != sch.end()) {
@@ -322,46 +614,69 @@ class string : public schema
 #endif
 
 	std::pair<bool, std::string> format_;
-	std::function<void(const std::string &, const std::string &)> format_check_ = nullptr;
+	std::tuple<bool, std::string, std::string> content_{false, "", ""};
 
 	std::size_t utf8_length(const std::string &s) const
 	{
 		size_t len = 0;
-		for (const unsigned char &c : s)
+		for (auto c : s)
 			if ((c & 0xc0) != 0x80)
 				len++;
 		return len;
 	}
 
-	void validate(const json &instance, basic_error_handler &e) const override
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &, error_handler &e) const override
 	{
 		if (minLength_.first) {
 			if (utf8_length(instance) < minLength_.second) {
 				std::ostringstream s;
-				s << "'" << instance << "' is too short as per minLength (" << minLength_.second << ")";
-				e.error("", instance, s.str());
+				s << "instance is too short as per minLength:" << minLength_.second;
+				e.error(ptr, instance, s.str());
 			}
 		}
 
 		if (maxLength_.first) {
 			if (utf8_length(instance) > maxLength_.second) {
 				std::ostringstream s;
-				s << "'" << instance << "' is too long as per maxLength (" << maxLength_.second << ")";
-				e.error("", instance, s.str());
+				s << "instance is too long as per maxLength: " << maxLength_.second;
+				e.error(ptr, instance, s.str());
 			}
+		}
+
+		if (std::get<0>(content_)) {
+			if (root_->content_check() == nullptr)
+				e.error(ptr, instance, std::string("a content checker was not provided but a contentEncoding or contentMediaType for this string have been present: '") + std::get<1>(content_) + "' '" + std::get<2>(content_) + "'");
+			else {
+				try {
+					root_->content_check()(std::get<1>(content_), std::get<2>(content_), instance);
+				} catch (const std::exception &ex) {
+					e.error(ptr, instance, std::string("content-checking failed: ") + ex.what());
+				}
+			}
+		} else if (instance.type() == json::value_t::binary) {
+			e.error(ptr, instance, "expected string, but get binary data");
+		}
+
+		if (instance.type() != json::value_t::string) {
+			return; // next checks only for strings
 		}
 
 #ifndef NO_STD_REGEX
 		if (pattern_.first &&
 		    !REGEX_NAMESPACE::regex_search(instance.get<std::string>(), pattern_.second))
-			e.error("", instance, instance.get<std::string>() + " does not match regex pattern: " + patternString_);
+			e.error(ptr, instance, "instance does not match regex pattern: " + patternString_);
 #endif
 
 		if (format_.first) {
-			if (format_check_ == nullptr)
-				e.error("", instance, std::string("A format checker was not provided but a format-attribute for this string is present. ") + " cannot be validated for " + format_.second);
-			else
-				format_check_(format_.second, instance);
+			if (root_->format_check() == nullptr)
+				e.error(ptr, instance, std::string("a format checker was not provided but a format keyword for this string is present: ") + format_.second);
+			else {
+				try {
+					root_->format_check()(format_.second, instance);
+				} catch (const std::exception &ex) {
+					e.error(ptr, instance, std::string("format-checking failed: ") + ex.what());
+				}
+			}
 		}
 	}
 
@@ -381,6 +696,37 @@ public:
 			sch.erase(attr);
 		}
 
+		attr = sch.find("contentEncoding");
+		if (attr != sch.end()) {
+			std::get<0>(content_) = true;
+			std::get<1>(content_) = attr.value().get<std::string>();
+
+			// special case for nlohmann::json-binary-types
+			//
+			// https://github.com/pboettch/json-schema-validator/pull/114
+			//
+			// We cannot use explicitly in a schema: {"type": "binary"} or
+			// "type": ["binary", "number"] we have to be implicit. For a
+			// schema where "contentEncoding" is set to "binary", an instance
+			// of type json::value_t::binary is accepted. If a
+			// contentEncoding-callback has to be provided and is called
+			// accordingly. For encoding=binary, no other type validations are done
+
+			sch.erase(attr);
+		}
+
+		attr = sch.find("contentMediaType");
+		if (attr != sch.end()) {
+			std::get<0>(content_) = true;
+			std::get<2>(content_) = attr.value().get<std::string>();
+
+			sch.erase(attr);
+		}
+
+		if (std::get<0>(content_) == true && root_->content_check() == nullptr) {
+			throw std::invalid_argument{"schema contains contentEncoding/contentMediaType but content checker was not set"};
+		}
+
 #ifndef NO_STD_REGEX
 		attr = sch.find("pattern");
 		if (attr != sch.end()) {
@@ -393,6 +739,9 @@ public:
 
 		attr = sch.find("format");
 		if (attr != sch.end()) {
+			if (root_->format_check() == nullptr)
+				throw std::invalid_argument{"a format checker was not provided but a format keyword for this string is present: " + format_.second};
+
 			format_ = {true, attr.value()};
 			sch.erase(attr);
 		}
@@ -410,31 +759,31 @@ class numeric : public schema
 
 	std::pair<bool, json::number_float_t> multipleOf_{false, 0};
 
-	// multipleOf - if the rest of the division is 0 -> OK
-	bool violates_multiple_of(json::number_float_t x) const
+	// multipleOf - if the remainder of the division is 0 -> OK
+	bool violates_multiple_of(T x) const
 	{
-		json::number_integer_t n = static_cast<json::number_integer_t>(x / multipleOf_.second);
-		double res = (x - n * multipleOf_.second);
-		return fabs(res) > std::numeric_limits<json::number_float_t>::epsilon();
+		double res = std::remainder(x, multipleOf_.second);
+		double eps = std::nextafter(x, 0) - x;
+		return std::fabs(res) > std::fabs(eps);
 	}
 
-	void validate(const json &instance, basic_error_handler &e) const override
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &, error_handler &e) const override
 	{
 		T value = instance; // conversion of json to value_type
 
 		if (multipleOf_.first && value != 0) // zero is multiple of everything
 			if (violates_multiple_of(value))
-				e.error("", instance, "is not a multiple of " + std::to_string(multipleOf_.second));
+				e.error(ptr, instance, "instance is not a multiple of " + std::to_string(multipleOf_.second));
 
 		if (maximum_.first)
 			if ((exclusiveMaximum_ && value >= maximum_.second) ||
 			    value > maximum_.second)
-				e.error("", instance, "exceeds maximum of " + std::to_string(maximum_.second));
+				e.error(ptr, instance, "instance exceeds maximum of " + std::to_string(maximum_.second));
 
 		if (minimum_.first)
 			if ((exclusiveMinimum_ && value <= minimum_.second) ||
 			    value < minimum_.second)
-				e.error("", instance, "is below minimum of " + std::to_string(minimum_.second));
+				e.error(ptr, instance, "instance is below minimum of " + std::to_string(minimum_.second));
 	}
 
 public:
@@ -477,10 +826,10 @@ public:
 
 class null : public schema
 {
-	void validate(const json &instance, basic_error_handler &e) const override
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &, error_handler &e) const override
 	{
 		if (!instance.is_null())
-			e.error("", instance, "expected to be null");
+			e.error(ptr, instance, "expected to be null");
 	}
 
 public:
@@ -490,7 +839,7 @@ public:
 
 class boolean_type : public schema
 {
-	void validate(const json &, basic_error_handler &) const override {}
+	void validate(const json::json_pointer &, const json &, json_patch &, error_handler &) const override {}
 
 public:
 	boolean_type(json &, root_schema *root)
@@ -500,18 +849,18 @@ public:
 class boolean : public schema
 {
 	bool true_;
-	void validate(const json &instance, basic_error_handler &e) const override
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &, error_handler &e) const override
 	{
 		if (!true_) { // false schema
 			// empty array
 			//switch (instance.type()) {
 			//case json::value_t::array:
 			//	if (instance.size() != 0) // valid false-schema
-			//		e.error("", instance, "false-schema required empty array");
+			//		e.error(ptr, instance, "false-schema required empty array");
 			//	return;
 			//}
 
-			e.error("", instance, "instance invalid as par false-schema");
+			e.error(ptr, instance, "instance invalid as per false-schema");
 		}
 	}
 
@@ -524,11 +873,11 @@ class required : public schema
 {
 	const std::vector<std::string> required_;
 
-	void validate(const json &instance, basic_error_handler &e) const override final
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &, error_handler &e) const override final
 	{
 		for (auto &r : required_)
 			if (instance.find(r) == instance.end())
-				e.error("", instance, "required property '" + r + "' not found in object as a dependency");
+				e.error(ptr, instance, "required property '" + r + "' not found in object as a dependency");
 	}
 
 public:
@@ -552,46 +901,64 @@ class object : public schema
 
 	std::shared_ptr<schema> propertyNames_;
 
-	void validate(const json &instance, basic_error_handler &e) const override
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const override
 	{
 		if (maxProperties_.first && instance.size() > maxProperties_.second)
-			e.error("", instance, "too many properties.");
+			e.error(ptr, instance, "too many properties");
 
 		if (minProperties_.first && instance.size() < minProperties_.second)
-			e.error("", instance, "too few properties.");
+			e.error(ptr, instance, "too few properties");
 
 		for (auto &r : required_)
 			if (instance.find(r) == instance.end())
-				e.error("", instance, "required property '" + r + "' not found in object '");
+				e.error(ptr, instance, "required property '" + r + "' not found in object");
 
 		// for each property in instance
 		for (auto &p : instance.items()) {
 			if (propertyNames_)
-				propertyNames_->validate(p.key(), e);
+				propertyNames_->validate(ptr, p.key(), patch, e);
 
 			bool a_prop_or_pattern_matched = false;
 			auto schema_p = properties_.find(p.key());
 			// check if it is in "properties"
 			if (schema_p != properties_.end()) {
 				a_prop_or_pattern_matched = true;
-				schema_p->second->validate(p.value(), e);
+				schema_p->second->validate(ptr / p.key(), p.value(), patch, e);
 			}
 
+#ifndef NO_STD_REGEX
 			// check all matching patternProperties
 			for (auto &schema_pp : patternProperties_)
 				if (REGEX_NAMESPACE::regex_search(p.key(), schema_pp.first)) {
 					a_prop_or_pattern_matched = true;
-					schema_pp.second->validate(p.value(), e);
+					schema_pp.second->validate(ptr / p.key(), p.value(), patch, e);
 				}
+#endif
+
 			// check additionalProperties as a last resort
-			if (!a_prop_or_pattern_matched && additionalProperties_)
-				additionalProperties_->validate(p.value(), e);
+			if (!a_prop_or_pattern_matched && additionalProperties_) {
+				first_error_handler additional_prop_err;
+				additionalProperties_->validate(ptr / p.key(), p.value(), patch, additional_prop_err);
+				if (additional_prop_err)
+					e.error(ptr, instance, "validation failed for additional property '" + p.key() + "': " + additional_prop_err.message_);
+			}
+		}
+
+		// reverse search
+		for (auto const &prop : properties_) {
+			const auto finding = instance.find(prop.first);
+			if (instance.end() == finding) { // if the prop is not in the instance
+				const auto &defaultValue = prop.second->defaultValue(ptr, instance, e);
+				if (!defaultValue.is_null()) { // if default value is available
+					patch.add((ptr / prop.first), defaultValue);
+				}
+			}
 		}
 
 		for (auto &dep : dependencies_) {
 			auto prop = instance.find(dep.first);
-			if (prop != instance.end())            // if dependency-property is present in instance
-				dep.second->validate(instance, e); // validate
+			if (prop != instance.end())                                    // if dependency-property is present in instance
+				dep.second->validate(ptr / dep.first, instance, patch, e); // validate
 		}
 	}
 
@@ -686,25 +1053,28 @@ class array : public schema
 
 	std::shared_ptr<schema> contains_;
 
-	void validate(const json &instance, basic_error_handler &e) const override
+	void validate(const json::json_pointer &ptr, const json &instance, json_patch &patch, error_handler &e) const override
 	{
 		if (maxItems_.first && instance.size() > maxItems_.second)
-			e.error("", instance, "has too many items.");
+			e.error(ptr, instance, "array has too many items");
 
 		if (minItems_.first && instance.size() < minItems_.second)
-			e.error("", instance, "has too few items.");
+			e.error(ptr, instance, "array has too few items");
 
 		if (uniqueItems_) {
 			for (auto it = instance.cbegin(); it != instance.cend(); ++it) {
 				auto v = std::find(it + 1, instance.end(), *it);
 				if (v != instance.end())
-					e.error("", instance, "items have to be unique for this array.");
+					e.error(ptr, instance, "items have to be unique for this array");
 			}
 		}
 
+		size_t index = 0;
 		if (items_schema_)
-			for (auto &i : instance)
-				items_schema_->validate(i, e);
+			for (auto &i : instance) {
+				items_schema_->validate(ptr / index, i, patch, e);
+				index++;
+			}
 		else {
 			auto item = items_.cbegin();
 			for (auto &i : instance) {
@@ -719,22 +1089,22 @@ class array : public schema
 				if (!item_validator)
 					break;
 
-				item_validator->validate(i, e);
+				item_validator->validate(ptr / index, i, patch, e);
 			}
 		}
 
 		if (contains_) {
 			bool contained = false;
 			for (auto &item : instance) {
-				basic_error_handler local_e;
-				contains_->validate(item, local_e);
+				first_error_handler local_e;
+				contains_->validate(ptr, item, patch, local_e);
 				if (!local_e) {
 					contained = true;
 					break;
 				}
 			}
 			if (!contained)
-				e.error("", instance, "array does not contain required element as per 'contains'");
+				e.error(ptr, instance, "array does not contain required element as per 'contains'");
 		}
 	}
 
@@ -789,27 +1159,6 @@ public:
 	}
 };
 
-class schema_ref : public schema
-{
-	const std::string id_;
-	std::shared_ptr<schema> target_;
-
-	void validate(const json &instance, basic_error_handler &e) const final
-	{
-		if (target_)
-			target_->validate(instance, e);
-		else
-			e.error("", instance, "unresolved schema-reference " + id_);
-	}
-
-public:
-	schema_ref(const std::string &id, root_schema *root)
-	    : schema(root), id_(id) {}
-
-	const std::string &id() const { return id_; }
-	void set_target(std::shared_ptr<schema> target) { target_ = target; }
-};
-
 std::shared_ptr<schema> type_schema::make(json &schema,
                                           json::value_t type,
                                           root_schema *root,
@@ -819,8 +1168,8 @@ std::shared_ptr<schema> type_schema::make(json &schema,
 	switch (type) {
 	case json::value_t::null:
 		return std::make_shared<null>(schema, root);
+
 	case json::value_t::number_unsigned:
-		return std::make_shared<numeric<json::number_unsigned_t>>(schema, root, kw);
 	case json::value_t::number_integer:
 		return std::make_shared<numeric<json::number_integer_t>>(schema, root, kw);
 	case json::value_t::number_float:
@@ -836,161 +1185,13 @@ std::shared_ptr<schema> type_schema::make(json &schema,
 
 	case json::value_t::discarded: // not a real type - silence please
 		break;
+
+	case json::value_t::binary:
+		break;
 	}
 	return nullptr;
 }
 } // namespace
-
-namespace nlohmann
-{
-namespace json_schema
-{
-
-class root_schema : public schema
-{
-	std::function<void(const json_uri &, json &)> loader_;
-	std::function<void(const std::string &, const std::string &)> format_;
-
-	std::shared_ptr<schema> root_;
-
-	struct schema_file {
-		std::map<nlohmann::json::json_pointer, std::shared_ptr<schema>> schemas;
-		std::map<nlohmann::json::json_pointer, std::shared_ptr<schema_ref>> unresolved; // contains all unresolved references from any other file seen during parsing
-		json unknown_keywords;
-	};
-
-	// location as key
-	std::map<std::string, schema_file> files_;
-
-	schema_file &get_or_create_file(const std::string &loc)
-	{
-		auto file = files_.lower_bound(loc);
-		if (file != files_.end() && !(files_.key_comp()(loc, file->first)))
-			return file->second;
-		else
-			return files_.insert(file, {loc, {}})->second;
-	}
-
-public:
-	root_schema(std::function<void(const json_uri &, json &)> loader,
-	            std::function<void(const std::string &, const std::string &)> format)
-	    : schema(this), loader_(loader), format_(format) {}
-
-	void insert(const json_uri &uri, const std::shared_ptr<schema> &s)
-	{
-		// std::cout << "adding schema '" << uri << "' '" << uri.location() << "'\n";
-
-		auto &file = get_or_create_file(uri.location());
-		auto schema = file.schemas.lower_bound(uri.pointer());
-		if (schema != file.schemas.end() && !(file.schemas.key_comp()(uri.pointer(), schema->first))) {
-			throw std::invalid_argument("schema with " + uri.to_string() + " already inserted\n");
-			return;
-		}
-
-		file.schemas.insert({uri.pointer(), s});
-
-		// was someone referencing this newly inserted schema?
-		auto unresolved = file.unresolved.find(uri.pointer());
-		// std::cout << "resolving schemas looking for '" << uri.pointer() << "' in " << uri.location() << "\n";
-		if (unresolved != file.unresolved.end()) {
-			// std::cout << " --> resolved!!\n";
-			unresolved->second->set_target(s);
-			file.unresolved.erase(unresolved);
-		}
-	}
-
-	void insert_unknown_keyword(const json_uri &uri, const std::string &key, json &value)
-	{
-		auto &file = get_or_create_file(uri.location());
-		auto new_uri = uri.append(key);
-		auto pointer = new_uri.pointer();
-
-		// std::cout << "inserting unknown " << new_uri << " '" << pointer << "'\n";
-
-		// is there a reference looking for this unknown-keyword, which is thus no longer a unknown keyword but a schema
-		auto unresolved = file.unresolved.find(pointer);
-		if (unresolved != file.unresolved.end())
-			schema::make(value, this, {}, {{new_uri}});
-		else // no, nothing ref'd it
-			file.unknown_keywords[pointer] = value;
-	}
-
-	std::shared_ptr<schema> get_or_create_ref(const json_uri &uri)
-	{
-		auto &file = get_or_create_file(uri.location());
-
-		// existing schema
-		auto schema = file.schemas.find(uri.pointer());
-		if (schema != file.schemas.end())
-			return schema->second;
-
-		// referencing an unknown keyword, turn it into schema
-		try {
-			auto &subschema = file.unknown_keywords.at(uri.pointer());
-			auto s = schema::make(subschema, this, {}, {{uri}});
-			file.unknown_keywords.erase(uri.pointer());
-			return s;
-		} catch (...) {
-		}
-
-		// get or create a schema_ref
-		// std::cout << "using or creating a reference to " << uri << "\n";
-		auto r = file.unresolved.lower_bound(uri.pointer());
-		if (r != file.unresolved.end() && !(file.unresolved.key_comp()(uri.pointer(), r->first))) {
-			// std::cout << " --> using existing ref\n";
-			return r->second;
-		} else {
-			// std::cout << " --> creating a new ref\n";
-			return file.unresolved.insert(r,
-			                              {uri.pointer(), std::make_shared<schema_ref>(uri.to_string(), this)})
-			    ->second;
-		}
-	}
-
-	void set_root_schema(json schema)
-	{
-		root_ = schema::make(schema, this, {}, {{"#"}});
-
-		// load all files which have not yet been loaded
-		do {
-			bool new_schema_loaded = false;
-
-			// files_ is modified during parsing, iterators are invalidated
-			std::vector<std::string> locations;
-			for (auto &file : files_)
-				locations.push_back(file.first);
-
-			for (auto &loc : locations) {
-				if (files_[loc].schemas.size() == 0) { // nothing has been loaded for this file
-					if (loader_) {
-						json sch;
-
-						loader_(loc, sch);
-
-						schema::make(sch, this, {}, {{loc}});
-						new_schema_loaded = true;
-					} else {
-						throw std::invalid_argument("external schema reference '" + loc + "' needs loading, but no loader callback given\n");
-					}
-				}
-			}
-
-			if (!new_schema_loaded) // if no new schema loaded, no need to try again
-				break;
-		} while (1);
-	}
-
-	void validate(const json &instance, basic_error_handler &e) const final
-	{
-		if (root_)
-			root_->validate(instance, e);
-		else
-			e.error("", "", "no root schema has yet been set for validating an instance.");
-	}
-};
-
-} // namespace json_schema
-} // namespace nlohmann
 
 namespace
 {
@@ -1000,10 +1201,17 @@ std::shared_ptr<schema> schema::make(json &schema,
                                      const std::vector<std::string> &keys,
                                      std::vector<nlohmann::json_uri> uris)
 {
+	// remove URIs which contain plain name identifiers, as sub-schemas cannot be referenced
+	for (auto uri = uris.begin(); uri != uris.end();)
+		if (uri->identifier() != "")
+			uri = uris.erase(uri);
+		else
+			uri++;
+
 	// append to all URIs the keys for this sub-schema
 	for (auto &key : keys)
 		for (auto &uri : uris)
-			uri = uri.append(json_uri::escape(key));
+			uri = uri.append(key);
 
 	std::shared_ptr<::schema> sch;
 
@@ -1045,24 +1253,24 @@ std::shared_ptr<schema> schema::make(json &schema,
 		schema.erase("title");
 		schema.erase("description");
 	} else {
-		return nullptr; // TODO error/throw? when schema is invalid
+		throw std::invalid_argument("invalid JSON-type for a schema for " + uris[0].to_string() + ", expected: boolean or object");
 	}
 
-	for (auto &uri : uris) { // for all URI reference this schema
+	for (auto &uri : uris) { // for all URIs this schema is referenced by
 		root->insert(uri, sch);
 
 		if (schema.type() == json::value_t::object)
 			for (auto &u : schema.items())
-				root->insert_unknown_keyword(uri, u.key(), u.value());
+				root->insert_unknown_keyword(uri, u.key(), u.value()); // insert unknown keywords for later reference
 	}
 	return sch;
 }
 
-class throwing_error_handler : public basic_error_handler
+class throwing_error_handler : public error_handler
 {
-	void error(const std::string &path, const json &instance, const std::string &message)
+	void error(const json::json_pointer &ptr, const json &instance, const std::string &message) override
 	{
-		throw std::invalid_argument(std::string("At ") + path + " of " + instance.dump() + " - " + message + "\n");
+		throw std::invalid_argument(std::string("At ") + ptr.to_string() + " of " + instance.dump() + " - " + message + "\n");
 	}
 };
 
@@ -1073,30 +1281,66 @@ namespace nlohmann
 namespace json_schema
 {
 
-json_validator::json_validator(std::function<void(const json_uri &, json &)> loader,
-                               std::function<void(const std::string &, const std::string &)> format)
-    : root_(std::unique_ptr<root_schema>(new root_schema(loader, format)))
+json_validator::json_validator(schema_loader loader,
+                               format_checker format,
+                               content_checker content)
+    : root_(std::unique_ptr<root_schema>(new root_schema(std::move(loader),
+                                                         std::move(format),
+                                                         std::move(content))))
 {
 }
 
-json_validator::~json_validator()
+json_validator::json_validator(const json &schema,
+                               schema_loader loader,
+                               format_checker format,
+                               content_checker content)
+    : json_validator(std::move(loader),
+                     std::move(format),
+                     std::move(content))
 {
+	set_root_schema(schema);
 }
+
+json_validator::json_validator(json &&schema,
+                               schema_loader loader,
+                               format_checker format,
+                               content_checker content)
+
+    : json_validator(std::move(loader),
+                     std::move(format),
+                     std::move(content))
+{
+	set_root_schema(std::move(schema));
+}
+
+// move constructor, destructor and move assignment operator can be defaulted here
+// where root_schema is a complete type
+json_validator::json_validator(json_validator &&) = default;
+json_validator::~json_validator() = default;
+json_validator &json_validator::operator=(json_validator &&) = default;
 
 void json_validator::set_root_schema(const json &schema)
 {
 	root_->set_root_schema(schema);
 }
 
-void json_validator::validate(const json &instance)
+void json_validator::set_root_schema(json &&schema)
 {
-	throwing_error_handler err;
-	validate(instance, err);
+	root_->set_root_schema(std::move(schema));
 }
 
-void json_validator::validate(const json &instance, basic_error_handler &err)
+json json_validator::validate(const json &instance) const
 {
-	root_->validate(instance, err);
+	throwing_error_handler err;
+	return validate(instance, err);
+}
+
+json json_validator::validate(const json &instance, error_handler &err) const
+{
+	json::json_pointer ptr;
+	json_patch patch;
+	root_->validate(ptr, instance, patch, err);
+	return patch;
 }
 
 } // namespace json_schema
