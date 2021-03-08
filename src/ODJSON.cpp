@@ -297,12 +297,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInAnyBoundary")) {
 #ifndef OD_JSON_SCHEMA_VALIDATOR
-            if(!root.HasMember( wxS("Lat"))) {
+            if(!root.HasMember( wxS("Lat")) && !root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("Lon"))) {
+            if(!root.HasMember( wxS("Lon")) && !root.HasMember( wxS("lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
@@ -313,9 +313,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
 #endif
             if(!bFail) {
-                l_dLat = root[wxS("Lat")].AsDouble();
-                l_dLon = root[wxS("Lon")].AsDouble();
-                
+                if(root.HasMember( wxS("Lat")) )
+                    l_dLat = root[wxS("Lat")].AsDouble();
+                else
+                    l_dLat = root[wxS("lat")].AsDouble();
+                if(root.HasMember( wxS("Lon")) )
+                    l_dLon = root[wxS("Lon")].AsDouble();
+                else
+                    l_dLon = root[wxS("lon")].AsDouble();
+
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
                 
@@ -547,20 +553,26 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("Lat"))) {
+            if(!root.HasMember( wxS("Lat")) && !root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("Lon"))) {
+            if(!root.HasMember( wxS("Lon")) && !root.HasMember( wxS("lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
 #endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
-                l_dLat = root[wxS("Lat")].AsDouble();
-                l_dLon = root[wxS("Lon")].AsDouble();
+                if(root.HasMember( wxS("Lat")) )
+                    l_dLat = root[wxS("Lat")].AsDouble();
+                else
+                    l_dLat = root[wxS("lat")].AsDouble();
+                if(root.HasMember( wxS("Lon")) )
+                    l_dLon = root[wxS("Lon")].AsDouble();
+                else
+                    l_dLon = root[wxS("lon")].AsDouble();
                 
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
@@ -639,21 +651,27 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("Lat"))) {
+            if(!root.HasMember( wxS("Lat")) && !root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
             
-            if(!root.HasMember( wxS("Lon"))) {
+            if(!root.HasMember( wxS("Lon")) && !root.HasMember( wxS("lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
 #endif
             if(!bFail) {
                 wxString l_sGUID = root[wxS("GUID")].AsString();
-                root[wxS("Lat")].AsString().ToDouble( & l_dLat );
-                root[wxS("Lon")].AsString().ToDouble( & l_dLon );
-                
+                if(root.HasMember( wxS("Lat")) )
+                    root[wxS("Lat")].AsString().ToDouble( & l_dLat );
+                else
+                    root[wxS("lat")].AsString().ToDouble( & l_dLat );
+                if(root.HasMember( wxS("Lon")) )
+                    root[wxS("Lon")].AsString().ToDouble( & l_dLon );
+                else
+                    root[wxS("lon")].AsString().ToDouble( & l_dLon );
+
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
                 
@@ -807,7 +825,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 } else {
                     for(int i = 0; i< jv_Boundary[wxS("BoundaryPoints")].Size(); i++) {
                         jv_BoundaryPoint = jv_Boundary[wxS("BoundaryPoints")].Item(i);
-                        if(!jv_BoundaryPoint.HasMember(wxS("Lat")) || !jv_BoundaryPoint.HasMember(wxS("Lon")) || !jv_BoundaryPoint.HasMember(wxS("BoundaryPointType")))
+                        if(!(jv_BoundaryPoint.HasMember(wxS("Lat")) || jv_BoundaryPoint.HasMember(wxS("lat"))) || !(jv_BoundaryPoint.HasMember(wxS("Lon")) || jv_BoundaryPoint.HasMember(wxS("lon"))) || !jv_BoundaryPoint.HasMember(wxS("BoundaryPointType")))
                             bFail = true;
                     }
                     if(bFail)
@@ -836,7 +854,16 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 
                 for(int i = 0; i< jv_Boundary[wxS("BoundaryPoints")].Size(); i++) {
                     jv_BoundaryPoint = jv_Boundary[wxS("BoundaryPoints")].Item(i);
-                    BoundaryPoint *pl_boundarypoint = new BoundaryPoint(jv_BoundaryPoint[wxS("Lat")].AsDouble(),jv_BoundaryPoint[wxS("Lon")].AsDouble(), g_sODPointIconName, jv_BoundaryPoint[wxS("Name")].AsString(),wxEmptyString, false);
+                    if(jv_BoundaryPoint.HasMember( wxS("Lat")) )
+                        l_dLat = jv_BoundaryPoint[wxS("Lat")].AsDouble();
+                    else
+                        l_dLat = jv_BoundaryPoint[wxS("lat")].AsDouble();
+                    if(jv_BoundaryPoint.HasMember( wxS("Lon")) )
+                        l_dLon = jv_BoundaryPoint[wxS("Lon")].AsDouble();
+                    else
+                        l_dLon = jv_BoundaryPoint[wxS("lon")].AsDouble();
+
+                    BoundaryPoint *pl_boundarypoint = new BoundaryPoint(l_dLat, l_dLon, g_sODPointIconName, jv_BoundaryPoint[wxS("Name")].AsString(),wxEmptyString, false);
                     pl_boundary->AddPoint(pl_boundarypoint, false, true, true);
                     if(jv_BoundaryPoint[wxS("BoundaryPointType")].AsString() == _T("Exclusion")) {
                         pl_boundarypoint->m_bExclusionBoundaryPoint = true;
@@ -905,7 +932,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             } else {
                 jv_BoundaryPoint = root[wxS("BoundaryPoint")];
             }
-            if(!jv_BoundaryPoint.HasMember(wxS("Lat")) || !jv_BoundaryPoint.HasMember(wxS("Lon")) || !jv_BoundaryPoint.HasMember(wxS("BoundaryPointType"))) {
+            if(!(jv_BoundaryPoint.HasMember(wxS("Lat")) || jv_BoundaryPoint.HasMember(wxS("lat"))) || !(jv_BoundaryPoint.HasMember(wxS("Lon")) ||jv_BoundaryPoint.HasMember(wxS("lon"))) || !jv_BoundaryPoint.HasMember(wxS("BoundaryPointType"))) {
                 wxLogMessage( wxS("Boundary Point missing required information") );
                 bFail = true;
             }
@@ -917,10 +944,20 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     if(jv_BoundaryPoint[wxS("BoundayPointName")].AsString().length() > 0)
                         l_name = jv_BoundaryPoint[wxS("BoundayPointName")].AsString();
                 }
+
+                if(jv_BoundaryPoint.HasMember( wxS("Lat")) )
+                    l_dLat = jv_BoundaryPoint[wxS("Lat")].AsDouble();
+                else
+                    l_dLat = jv_BoundaryPoint[wxS("lat")].AsDouble();
+                if(jv_BoundaryPoint.HasMember( wxS("Lon")) )
+                    l_dLon = jv_BoundaryPoint[wxS("Lon")].AsDouble();
+                else
+                    l_dLon = jv_BoundaryPoint[wxS("lon")].AsDouble();
+
                 if(jv_BoundaryPoint[wxS("IconName")].AsString().IsEmpty()) {
-                    pl_boundarypoint = new BoundaryPoint(jv_BoundaryPoint[wxS("Lat")].AsDouble(), jv_BoundaryPoint[wxS("Lon")].AsDouble(), wxEmptyString, l_name);
+                    pl_boundarypoint = new BoundaryPoint(l_dLat, l_dLon, wxEmptyString, l_name);
                 } else {
-                    pl_boundarypoint = new BoundaryPoint(jv_BoundaryPoint[wxS("Lat")].AsDouble(), jv_BoundaryPoint[wxS("Lon")].AsDouble(), jv_BoundaryPoint[wxS("IconName")].AsString(), l_name);
+                    pl_boundarypoint = new BoundaryPoint(l_dLat, l_dLon, jv_BoundaryPoint[wxS("IconName")].AsString(), l_name);
                 }
                 
                 if(jv_BoundaryPoint.HasMember(wxS("BoundaryPointType"))) {
@@ -997,10 +1034,19 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             
             if(!bFail) {
                 TextPoint *pl_textpoint; 
+                if(jv_TextPoint.HasMember( wxS("Lat")) )
+                    l_dLat = jv_TextPoint[wxS("Lat")].AsDouble();
+                else
+                    l_dLat = jv_TextPoint[wxS("lat")].AsDouble();
+                if(jv_TextPoint.HasMember( wxS("Lon")) )
+                    l_dLon = jv_TextPoint[wxS("Lon")].AsDouble();
+                else
+                    l_dLon = jv_TextPoint[wxS("lon")].AsDouble();
+
                 if(jv_TextPoint[wxS("IconName")].AsString().IsEmpty()) {
-                    pl_textpoint = new TextPoint(jv_TextPoint[wxS("Lat")].AsDouble(), jv_TextPoint[wxS("Lon")].AsDouble(), wxEmptyString, jv_TextPoint[wxS("TextPointName")].AsString());
+                    pl_textpoint = new TextPoint(l_dLat, l_dLon, wxEmptyString, jv_TextPoint[wxS("TextPointName")].AsString());
                 } else {
-                    pl_textpoint = new TextPoint(jv_TextPoint[wxS("Lat")].AsDouble(), jv_TextPoint[wxS("Lon")].AsDouble(), jv_TextPoint[wxS("IconName")].AsString(), jv_TextPoint[wxS("TextPointName")].AsString());
+                    pl_textpoint = new TextPoint(l_dLat, l_dLat, jv_TextPoint[wxS("IconName")].AsString(), jv_TextPoint[wxS("TextPointName")].AsString());
                 }
                 
                 if(jv_TextPoint.HasMember("visible")) pl_textpoint->SetVisible(jv_TextPoint[wxS("visible")].AsBool()); 

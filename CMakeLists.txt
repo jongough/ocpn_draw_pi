@@ -267,7 +267,7 @@ set(EXTINCLUDE
 
 set (EXTINCLUDE_DIR extinclude)
 
-if(APPLE OR QT_ANDROID)
+if(APPLE OR QT_ANDROID OR WIN32)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)

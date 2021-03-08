@@ -34,9 +34,18 @@
  */
 #ifndef ODJSONSCHEMAS_H
 #define ODJSONSCHEMAS_H
-
+#if 0
+const std::string cSchema_defs =
+#include "ODSchema_defs.json"
+;
+const std::string cSchema_scheme =
+#include "ODSchema_scheme.json"
+;
+static json jSchema = cSchema_defs + cSchema_scheme + "_json";
+#else
 static json jSchema =
 #include "ODSchema.json"
 ;
+#endif
 
 #endif // ODJSONSCHEMAS_H
