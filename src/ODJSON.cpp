@@ -81,6 +81,15 @@ ODJSON::ODJSON()
     // ctor
 #ifdef OD_JSON_SCHEMA_VALIDATOR     
     gODJSONMsgValidator = NULL;
+
+    /* Join both fragments of the schema together. Needed for MSVC limitation on litteral text */
+    jSchema = jSchema_defs.flatten();
+    json tmp = jSchema_scheme.flatten();
+    for(json::iterator it = tmp.begin(); it != tmp.end(); ++it)
+    {
+        jSchema[it.key()] = it.value();
+    }
+
 #endif    
 }
 
@@ -121,6 +130,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
     bool        bFail = false;
     
     DEBUGSL(message_body);
+
     if(message_id == wxS("OCPN_DRAW_PI")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR        
         if(!gODJSONMsgValidator) {

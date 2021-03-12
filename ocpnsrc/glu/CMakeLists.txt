@@ -19,6 +19,7 @@ IF(NOT WIN32 AND NOT APPLE )
 ENDIF(NOT WIN32 AND NOT APPLE)
 
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/glu/include)
+INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpnsrc/glu/libutil)
 INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/ocpninclude)
 
 IF(WIN32)
@@ -57,3 +58,10 @@ SET(GLU_SOURCES
 
 add_library(GLU_static STATIC ${GLU_SOURCES})
 set_target_properties(GLU_static PROPERTIES OUTPUT_NAME GLU)
+get_property(
+    dirs
+    DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    PROPERTY INCLUDE_DIRECTORIES)
+    foreach(dir ${dirs})
+        message(STATUS "${CMLOC}include dir='${dir}'")
+    endforeach()

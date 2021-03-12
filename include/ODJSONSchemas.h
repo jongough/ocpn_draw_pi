@@ -34,15 +34,17 @@
  */
 #ifndef ODJSONSCHEMAS_H
 #define ODJSONSCHEMAS_H
-#if 0
-const std::string cSchema_defs =
+#if 1
+// split schema to enable MSVC to include large literal text
+static json jSchema_defs =
 #include "ODSchema_defs.json"
 ;
-const std::string cSchema_scheme =
+static json jSchema_scheme =
 #include "ODSchema_scheme.json"
 ;
-static json jSchema = cSchema_defs + cSchema_scheme + "_json";
+static json jSchema;
 #else
+// original large litteral text, but MSVC has issues with this
 static json jSchema =
 #include "ODSchema.json"
 ;

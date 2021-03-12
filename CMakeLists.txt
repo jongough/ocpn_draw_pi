@@ -265,9 +265,9 @@ set(EXTINCLUDE
     extinclude/pugixml.hpp
     extinclude/pugiconfig.hpp )
 
-set (EXTINCLUDE_DIR extinclude)
+set (EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude)
 
-if(APPLE OR QT_ANDROID OR WIN32)
+if(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
