@@ -1,5 +1,9 @@
 cmake_minimum_required(VERSION 2.6)
 
+if (TARGET ocpn::gdal)
+    return ()
+endif ()
+
 project(glesgl)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -20,3 +24,7 @@ add_definitions(-g -std=c99 -funwind-tables -O2)
 
 include_directories(include)
 add_subdirectory(src)
+
+add_library(glshim STATIC ${SRC})
+add_library(ocpn::glshim ALIAS GLSHIM)
+

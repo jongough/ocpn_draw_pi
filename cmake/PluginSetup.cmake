@@ -23,6 +23,8 @@ else(NOT ${PACKAGE} MATCHES "(.*)_pi")
 endif(NOT ${PACKAGE} MATCHES "(.*)_pi")
 string(TOUPPER "${PACKAGE}" TITLE_NAME)
 
+add_library(${PACKAGE_NAME} SHARED)
+
 project(${PACKAGE} VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK})
 message(STATUS "${CMLOC}PROJECT_VERSION: ${PROJECT_VERSION}")
 
@@ -164,7 +166,7 @@ if(NOT WIN32 AND NOT QT_ANDROID)
                 set(PACKAGE_DEPS "opencpn")
                 if(CMAKE_SIZEOF_VOID_P MATCHES "8")
                     set(ARCH "x86_64")
-                    set(LIB_INSTALL_DIR "lib64")
+                    set(LIB_INSTALL_DIR "lib")
                 else(CMAKE_SIZEOF_VOID_P MATCHES "8")
                     set(ARCH "i386")
                     set(LIB_INSTALL_DIR "lib")
@@ -186,9 +188,13 @@ else(NOT WIN32 AND NOT QT_ANDROID)
     set(ARCH "x86_64")
     if(_wx_selected_config MATCHES "androideabi-qt-arm64")
         set(ARCH "arm64")
+        # android cannot used graphics context is wxWidgets as it does not exist
+        set(wxUSE_GRAPHICS_CONTEXT 0)
     endif(_wx_selected_config MATCHES "androideabi-qt-arm64")
     if(_wx_selected_config MATCHES "androideabi-qt-armhf")
         set(ARCH "armhf")
+        # android cannot used graphics context is wxWidgets as it does not exist
+        set(wxUSE_GRAPHICS_CONTEXT 0)
     endif(_wx_selected_config MATCHES "androideabi-qt-armhf")
 endif(NOT WIN32 AND NOT QT_ANDROID)
 

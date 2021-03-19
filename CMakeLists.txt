@@ -24,9 +24,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "5")
-set(VERSION_TWEAK "6")
-set(VERSION_DATE "08/03/2021") # DD/MM/YYYY format
+set(VERSION_PATCH "6")
+set(VERSION_TWEAK "8")
+set(VERSION_DATE "19/03/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -230,9 +230,7 @@ set(OCPNSRC
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
     ocpnsrc/TexFont.cpp
-    ocpnsrc/wxJSON/jsonreader.cpp
-    ocpnsrc/wxJSON/jsonval.cpp
-    ocpnsrc/wxJSON/jsonwriter.cpp)
+)
 set(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
     ocpninclude/AISTargetQueryDialog.h
@@ -251,19 +249,34 @@ set(OCPNHDRS
     ocpninclude/GL/glext.h
     ocpninclude/GL/gl_private.h
     ocpninclude/GL/glu.h
-    ocpninclude/wx/json_defs.h
-    ocpninclude/wx/jsonreader.h
-    ocpninclude/wx/jsonval.h
-    ocpninclude/wx/jsonwriter.h)
-
+)
 set(EXTSRC
     extsrc/clipper.cpp
-    extsrc/pugixml.cpp)
+    extsrc/pugixml.cpp
+)
 
 set(EXTINCLUDE
     extinclude/clipper.hpp
     extinclude/pugixml.hpp
-    extinclude/pugiconfig.hpp )
+    extinclude/pugiconfig.hpp
+)
+
+set(LIBSSRC
+    libs/wxJSON/src/jsonreader.cpp
+    libs/wxJSON/src/jsonval.cpp
+    libs/wxJSON/src/jsonwriter.cpp
+)
+
+set(LIBHDRS
+    libs/GL/gl.h
+    libs/GL/gl_private.h
+    libs/GL/glext.h
+    libs/GL/glu.h
+    libs/wx/include/wx/json_defs.h
+    libs/wx/include/wx/jsonreader.h
+    libs/wx/include/wx/jsonval.h
+    libs/wx/include/wx/jsonwriter.h
+)
 
 set (EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude)
 
@@ -302,32 +315,46 @@ if(OCPN_MIN_VERSION)
     endif(NOT QT_ANDROID)
 endif(OCPN_MIN_VERSION)
 
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extsrc/mygdal)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wx/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
+
+target_sources(${PACKAGE_NAME} PRIVATE ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
+
+message(STATUS "${CMLOC}add_library")
+
+add_subdirectory(libs/gdal)
+add_subdirectory(libs/tinyxml)
+
+message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
+
+target_link_libraries(${PACKAGE_NAME} PRIVATE ocpn::gdal)
+target_link_libraries(${PACKAGE_NAME} PRIVATE ocpn::tinyxml)
+
 
 if(UNIX)
     include("cmake/FindTinyXML.cmake")
     find_package(TinyXML QUIET)
 endif(UNIX)
 
-if(TINYXML_FOUND)
-    message(STATUS "${CMLOC}Building with system tinyxml")
-    include_directories(${TINYXML_INCLUDE_DIR})
-    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC})
-    target_link_libraries(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
-else(TINYXML_FOUND)
-    message(STATUS "${CMLOC}Building with embedded tinyxml")
-    include_directories(extsrc/tinyxml/)
-    set(SRC_LTINYXML extsrc/tinyxml/tinyxml.cpp extsrc/tinyxml/tinyxmlparser.cpp extsrc/tinyxml/tinyxmlerror.cpp)
-    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
-endif(TINYXML_FOUND)
+#if(TINYXML_FOUND)
+#    message(STATUS "${CMLOC}Building with system tinyxml")
+#    include_directories(${TINYXML_INCLUDE_DIR})
+#    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC})
+#    target_link_libraries(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
+#else(TINYXML_FOUND)
+#    message(STATUS "${CMLOC}Building with embedded tinyxml")
+#    include_directories(extsrc/tinyxml/)
+#    set(SRC_LTINYXML extsrc/tinyxml/tinyxml.cpp extsrc/tinyxml/tinyxmlparser.cpp extsrc/tinyxml/tinyxmlerror.cpp)
+#    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
+#endif(TINYXML_FOUND)
 
 add_definitions(-DTIXML_USE_STL)
 
