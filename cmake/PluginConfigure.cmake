@@ -339,9 +339,9 @@ IF(DEFINED _wx_selected_config)
         ADD_DEFINITIONS(-DUSE_ANDROID_GLES2)
         ADD_DEFINITIONS(-DUSE_GLSL)
         include_directories( ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES )
-        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES)
-        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude/android)
-        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extsrc/glshim/include)
+        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES)
+        #set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude/android)
+        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} libs/glshim/include)
 
     ENDIF(_wx_selected_config MATCHES "androideabi-qt")
 ENDIF(DEFINED _wx_selected_config)
@@ -355,6 +355,8 @@ IF(QT_ANDROID)
     ADD_DEFINITIONS(-DANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
+
+    add_subdirectory(libs/glshim)
 
     #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
