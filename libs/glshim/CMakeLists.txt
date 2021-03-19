@@ -25,6 +25,6 @@ add_definitions(-g -std=c99 -funwind-tables -O2)
 include_directories(include)
 add_subdirectory(src)
 
-add_library(glshim STATIC ${SRC})
+add_library(GLSHIM STATIC ${SRC})
 add_library(ocpn::glshim ALIAS GLSHIM)
 
