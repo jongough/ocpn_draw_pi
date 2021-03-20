@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
 
-if (TARGET ocpn::glshim)
-    return ()
-endif ()
-
 project(glesgl)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -25,16 +21,6 @@ add_definitions(-g -std=c99 -funwind-tables -O2)
 include_directories(include)
 add_subdirectory(src)
 
-add_library(GLSHIM STATIC)
-add_library(ocpn::glshim ALIAS GLSHIM)
 
-set_property(TARGET GLSHIM PROPERTY COMPILE_FLAGS "${OBJ_VISIBILITY}")
-target_include_directories(GLSHIM BEFORE
-PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/EGL
-PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/GL
-PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/GLES
-PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/KHR
-)
 
 

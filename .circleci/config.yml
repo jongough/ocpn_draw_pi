@@ -4,44 +4,44 @@ version: 2.1
 parameters:
     run_workflow_deploy:
         type: boolean
-        default: false
+        default: true
 
     run_build_armhf_stretch:
         type: boolean
-        default: false
+        default: true
     run_build_armhf_buster:
         type: boolean
-        default: false
+        default: true
     run_build_armhf_bionic_64:
         type: boolean
-        default: false
+        default: true
     run_build_trusty:
         type: boolean
-        default: false
+        default: true
     run_build_xenial:
         type: boolean
-        default: false
+        default: true
     run_build_bionic:
         type: boolean
-        default: false
+        default: true
     run_build_bionic_gtk3:
         type: boolean
-        default: false
+        default: true
     run_build_focal:
         type: boolean
-        default: false
+        default: true
     run_build_focal_gtk3:
         type: boolean
         default: true
     run_build_buster:
         type: boolean
-        default: false
+        default: true
     run_build_flatpack:
         type: boolean
-        default: false
+        default: true
     run_build_fedora:
         type: boolean
-        default: false
+        default: true
     run_build_mingw:
         type: boolean
         default: true
@@ -356,8 +356,8 @@ jobs:
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
         docker:
-#        - image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
-        - image: circleci/android:api-28-ndk
+        - image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
+        #- image: circleci/android:api-28-ndk
         environment:
         - OCPN_TARGET:  android-armhf
         steps:
