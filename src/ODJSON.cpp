@@ -41,6 +41,7 @@
 #endif
 #include "nlohmann/json-schema.hpp"
 #include "json-patch.hpp"
+#include "jsonval.h"
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 #endif
