@@ -105,8 +105,6 @@ option(Plugin_CXX11 "Use c++11" OFF)
 # ----- Modify section above if there are special requirements for the plugin ----- ##
 #
 
-#include("cmake/PluginConfigure.cmake")
-
 #
 # ----- Change below to match project requirements ----- ##
 #
@@ -325,13 +323,6 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
-message(STATUS "${CMLOC}SRCS: ${SRCS}")
-message(STATUS "${CMLOC}HDRS: ${HDRS}")
-message(STATUS "${CMLOC}OCPNSRC: ${OCPNSRC}")
-message(STATUS "${CMLOC}EXTSRC: ${EXTSRC}")
-message(STATUS "${CMLOC}LIBSRC: ${LIBSRC}")
-
-#target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 
 add_subdirectory(libs/gdal)
@@ -340,23 +331,6 @@ add_subdirectory(libs/tinyxml)
 target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
 target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
 
-
-if(UNIX)
-    include("cmake/FindTinyXML.cmake")
-    find_package(TinyXML QUIET)
-endif(UNIX)
-
-#if(TINYXML_FOUND)
-#    message(STATUS "${CMLOC}Building with system tinyxml")
-#    include_directories(${TINYXML_INCLUDE_DIR})
-#    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC})
-#    target_link_libraries(${PACKAGE_NAME} PRIVATE ${TINYXML_LIBRARIES})
-#else(TINYXML_FOUND)
-#    message(STATUS "${CMLOC}Building with embedded tinyxml")
-#    include_directories(extsrc/tinyxml/)
-#    set(SRC_LTINYXML extsrc/tinyxml/tinyxml.cpp extsrc/tinyxml/tinyxmlparser.cpp extsrc/tinyxml/tinyxmlerror.cpp)
-#    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
-#endif(TINYXML_FOUND)
 
 add_definitions(-DTIXML_USE_STL)
 
