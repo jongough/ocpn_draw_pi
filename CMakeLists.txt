@@ -11,6 +11,9 @@ if(COMMAND cmake_policy)
     endif(POLICY CMP0043)
     cmake_policy(SET CMP0048 NEW)
     message(STATUS "${CMLOC}CMP0048 set to New")
+    if(POLICY CMP0076)
+        cmake_policy(SET CMP0076 NEW)
+    endif(POLICY CMP0076)
     if(POLICY CMP0077)
         cmake_policy(SET CMP0077 NEW)
     endif(POLICY CMP0077)
@@ -264,10 +267,7 @@ set(EXTINCLUDE
     extinclude/pugiconfig.hpp
 )
 
-set(LIBSSRC
-    libs/wxJSON/src/jsonreader.cpp
-    libs/wxJSON/src/jsonval.cpp
-    libs/wxJSON/src/jsonwriter.cpp
+set(LIBSRC
 )
 
 set(LIBHDRS
@@ -275,10 +275,6 @@ set(LIBHDRS
     libs/GL/gl_private.h
     libs/GL/glext.h
     libs/GL/glu.h
-    libs/wx/include/wx/json_defs.h
-    libs/wx/include/wx/jsonreader.h
-    libs/wx/include/wx/jsonval.h
-    libs/wx/include/wx/jsonwriter.h
 )
 
 set (EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude)
@@ -296,8 +292,8 @@ if(OD_JSON_SCHEMA_VALIDATOR)
 
     set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp extsrc/json-schema-validator/json-patch.cpp)
     set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} "extinclude/json-schema-validator")
-
-
+    set(LIBSRC ${LIBSRC} libs/wxJSON/src/jsonreader.cpp libs/wxJSON/src/jsonval.cpp libs/wxJSON/src/jsonwriter.cpp)
+    set(LIBHDRS ${LIBHDRS} libs/wx/include/wx/json_defs.h libs/wx/include/wx/jsonreader.h libs/wx/include/wx/jsonval.h libs/wx/include/wx/jsonwriter.h)
 else(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
 endif(OD_JSON_SCHEMA_VALIDATOR)
@@ -329,17 +325,13 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
-target_sources(${PACKAGE_NAME} PRIVATE ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
-
-message(STATUS "${CMLOC}add_library")
+target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
 
 add_subdirectory(libs/gdal)
 add_subdirectory(libs/tinyxml)
 
-message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
-
-target_link_libraries(${PACKAGE_NAME} PRIVATE ocpn::gdal)
-target_link_libraries(${PACKAGE_NAME} PRIVATE ocpn::tinyxml)
+target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
+target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
 
 
 if(UNIX)
