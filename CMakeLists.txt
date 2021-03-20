@@ -105,7 +105,7 @@ option(Plugin_CXX11 "Use c++11" OFF)
 # ----- Modify section above if there are special requirements for the plugin ----- ##
 #
 
-include("cmake/PluginConfigure.cmake")
+#include("cmake/PluginConfigure.cmake")
 
 #
 # ----- Change below to match project requirements ----- ##
@@ -325,7 +325,14 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
-target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC})
+message(STATUS "${CMLOC}SRCS: ${SRCS}")
+message(STATUS "${CMLOC}HDRS: ${HDRS}")
+message(STATUS "${CMLOC}OCPNSRC: ${OCPNSRC}")
+message(STATUS "${CMLOC}EXTSRC: ${EXTSRC}")
+message(STATUS "${CMLOC}LIBSRC: ${LIBSRC}")
+
+#target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
+add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 
 add_subdirectory(libs/gdal)
 add_subdirectory(libs/tinyxml)
@@ -390,7 +397,7 @@ endforeach()
 #
 # ----- do not change - needed to build app ----- ##
 #
-
+include("cmake/PluginConfigure.cmake")
 include("cmake/PluginInstall.cmake")
 include("cmake/PluginLocalization.cmake")
 include("cmake/PluginPackage.cmake")
