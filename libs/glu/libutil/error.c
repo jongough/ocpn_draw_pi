@@ -30,7 +30,7 @@
 
 #include "gluos.h"
 #include "gluint.h"
-#include <GL/glu.h>
+#include "GL/glu.h"
 
 
 struct token_string
