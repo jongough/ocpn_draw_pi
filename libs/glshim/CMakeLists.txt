@@ -25,7 +25,7 @@ add_definitions(-g -std=c99 -funwind-tables -O2)
 include_directories(include)
 add_subdirectory(src)
 
-add_library(GLSHIM STATIC ${SRC})
+add_library(GLSHIM STATIC)
 add_library(ocpn::glshim ALIAS GLSHIM)
 
 set_property(TARGET GLSHIM PROPERTY COMPILE_FLAGS "${OBJ_VISIBILITY}")
