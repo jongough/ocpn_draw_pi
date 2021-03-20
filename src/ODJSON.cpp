@@ -32,8 +32,8 @@
 #ifndef  WX_PRECOMP
 #include "wx/wx.h"
 #endif //precompiled headers
-#include <wx/jsonreader.h>
-#include "wx/jsonwriter.h"
+#include "jsonreader.h"
+#include "jsonwriter.h"
 
 #ifdef OD_JSON_SCHEMA_VALIDATOR
 #if defined(snprintf) && defined(_MSC_VER)
