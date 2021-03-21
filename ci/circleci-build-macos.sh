@@ -42,7 +42,7 @@ else
     brew install --cask packages
 fi
 
-rm -rf build && mkdir build && cd build
+rm -rf build-mac && mkdir build-mac && cd build-mac
 cmake \
   -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx312B_opencpn50_macos109/bin/wx-config \
   -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx312B_opencpn50_macos109" \
@@ -53,5 +53,6 @@ cmake \
 make -sj2
 make package
 
-make create-pkg
+# removed as fails to build
+# make create-pkg
 
