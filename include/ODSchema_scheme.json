@@ -1,0 +1,147 @@
+R"(,
+    {
+    "type": "object",
+    "allOf": [
+        {"$ref": "#/definitions/schemahead"},
+        {
+            "if": { "properties": {"Msg": {"const": "Version"}}},
+            "then": {}
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "CreateBoundary"}}
+            },
+            "then": {
+                "$ref": "#/definitions/boundary"
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "CreateBoundaryPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/BoundaryPoint"
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "CreateTextPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/textpoint"
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "DeleteTextPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject"
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "DeleteBoundaryPoint"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject"
+            }
+        },
+            {
+                "if": { "properties": {"Msg": {"const": "DeleteBoundary"}}
+                },
+                "then": {
+                    "$ref": "#/definitions/ODObject"
+                }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "FindPathByGUID"}}
+            },
+            "then": {
+                "$ref": "#/definitions/ODObject"
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "FindPointInBoundary"}}
+            },
+            "then": {
+                "$ref": "#/definitions/FindPointInBoundary"
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "FindPointInAnyBoundary"}}
+            },
+            "then": {
+                "allOf": [
+                    {"$ref": "#/definitions/LatLon"},
+                    {"properties": {
+                        "BoundaryType": {
+                            "description": "Boundary Type",
+                            "enum": ["Exclusion","Inclusion","Neither","Any"]
+                        }
+                        },
+                        "required": [
+                            "BoundaryType"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "FindClosestBoundaryLineCrossing"}}
+            },
+            "then": {
+                "allOf": [
+                    {"$ref": "#/definitions/StartLatLon"},
+                    {"$ref": "#/definitions/EndLatLon"},
+                    {"properties": {
+                            "BoundaryType": {
+                                "description": "Boundary Type",
+                                "enum": ["Exclusion","Inclusion","Neither","Any"]
+                            },
+                            "BoundaryState": {
+                                "description": "Boundary State",
+                                "enum": ["Active","Inactive","Any"]
+                            }
+                        },
+                        "required": [
+                            "BoundaryType",
+                            "BoundaryState"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "FindFirstBoundaryLineCrossing"}}
+            },
+            "then": {
+                "allOf": [
+                    {"$ref": "#/definitions/StartLatLon"},
+                    {"$ref": "#/definitions/EndLatLon"},
+                    {"properties": {
+                            "BoundaryType": {
+                                "description": "Boundary Type",
+                                "enum": ["Exclusion","Inclusion","Neither","Any"]
+                            },
+                            "BoundaryState": {
+                                "description": "Boundary State",
+                                "enum": ["Active","Inactive","Any"]
+                            }
+                        },
+                        "required": [
+                            "BoundaryType",
+                            "BoundaryState"
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "if": { "properties": {"Msg": {"const": "FindPointInGuardZone"}}
+            },
+            "then": {
+                "allOf": [
+                    {"$ref": "#/definitions/ODObject"},
+                    {"$ref": "#/definitions/LatLon"}
+                ]
+            }
+        }
+    ]
+}
+)"

@@ -194,7 +194,7 @@ configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/cloudsmith-upload.sh.in ${CMAK
 configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/PluginCPackOptions.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/PluginCPackOptions.cmake @ONLY)
 
 if(OCPN_FLATPAK_CONFIG)
-message(STATUS "${CMLOC}Checking OCPN_FLATPAK_CONFIG: ${OCPN_FLATPAK_CONFIG}")
+    message(STATUS "${CMLOC}Checking OCPN_FLATPAK_CONFIG: ${OCPN_FLATPAK_CONFIG}")
     configure_file(${CMAKE_SOURCE_DIR}/cmake/in-files/org.opencpn.OpenCPN.Plugin.yaml.in ${CMAKE_CURRENT_BINARY_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.${PACKAGE}.yaml)
 
     message(STATUS "${CMLOC}Done OCPN_FLATPAK CONFIG")
@@ -338,10 +338,10 @@ IF(DEFINED _wx_selected_config)
         MESSAGE (STATUS "${CMLOC}Using GLESv2 for Android")
         ADD_DEFINITIONS(-DUSE_ANDROID_GLES2)
         ADD_DEFINITIONS(-DUSE_GLSL)
-        include_directories( ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES )
-        set(EXTINCLUDE ${EXTINCLUDE} ${CMAKE_SOURCE_DIR}/extsrc/glshim/include/GLES)
-        set(EXTINCLUDE ${EXTINCLUDE} extinclude/android)
-        set(EXTINCLUDE ${EXTINCLUDE} extsrc/glshim/include)
+        include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
+        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES)
+        #set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude/android)
+        set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} libs/glshim/include)
 
     ENDIF(_wx_selected_config MATCHES "androideabi-qt")
 ENDIF(DEFINED _wx_selected_config)
@@ -356,8 +356,10 @@ IF(QT_ANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
 
-    set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-    SET(CMAKE_CXX_FLAGS "-pthread")
+    add_subdirectory(libs/glshim)
+
+    #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+    SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
 
     ## Compiler flags
     add_compile_options("-Wno-inconsistent-missing-override"
@@ -396,8 +398,10 @@ if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
 
     if(USE_LOCAL_GLU)
         message(STATUS "${CMLOC}    Adding local GLU")
-        add_subdirectory(ocpnsrc/glu)
-        set(OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
+        add_subdirectory(libs/glu)
+        message(STATUS "${CMLOC}PACKAGE_NAME: ${PACKAGE_NAME}")
+        target_link_libraries(${PACKAGE_NAME} "GLU_static")
+        #set(OPENGL_LIBRARIES "GLU_static" ${OPENGL_LIBRARIES})
         add_definitions(-DocpnUSE_GL)
         message(STATUS "${CMLOC}    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
     elseif(OPENGL_FOUND)
@@ -480,7 +484,7 @@ else(NOT QT_ANDROID)
         include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtOpenGL")
         include_directories("${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtTest")
 
-        include_directories(BEFORE "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
+        include_directories( "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
         include_directories( "${OCPN_Android_Common}/wxWidgets/include")
 
         SET(wxWidgets_LIBRARIES
@@ -505,7 +509,7 @@ else(NOT QT_ANDROID)
         include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtOpenGL")
         include_directories("${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtTest")
 
-        include_directories(BEFORE "${OCPN_Android_Common}/wxWidgets/libarmhf/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
+        include_directories( "${OCPN_Android_Common}/wxWidgets/libarmhf/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
         include_directories( "${OCPN_Android_Common}/wxWidgets/include")
 
         ADD_DEFINITIONS( -DOCPN_ARMHF )
@@ -528,16 +532,14 @@ else(NOT QT_ANDROID)
 endif(NOT QT_ANDROID)
 
 if(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
-    if(NOT $ENV{BUILD_GTK3} STREQUAL "TRUE")
-        find_package(GTK2)
-    endif()
+    find_package(GTK2)
 
-    if(GTK2_FOUND)
+    if(GTK2_FOUND AND NOT "$ENV{BUILD_GTK3}" STREQUAL "TRUE")
         set(wxWidgets_CONFIG_OPTIONS ${wxWidgets_CONFIG_OPTIONS} --toolkit=gtk2)
         include_directories(${GTK2_INCLUDE_DIRS})
         set(GTK_LIBRARIES ${GTK2_LIBRARIES})
         message(STATUS "${CMLOC}Building against GTK2...")
-    else(GTK2_FOUND)
+    else(GTK2_FOUND AND NOT "$ENV{BUILD_GTK3}" STREQUAL "TRUE")
         find_package(GTK3)
         if(GTK3_FOUND)
             include_directories(${GTK3_INCLUDE_DIRS})
@@ -548,7 +550,7 @@ if(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
         else(GTK3_FOUND)
             message(STATUS "${CMLOC} Unix: Neither FATAL_ERROR GTK2 nor GTK3")
         endif(GTK3_FOUND)
-    endif(GTK2_FOUND)
+    endif(GTK2_FOUND AND NOT "$ENV{BUILD_GTK3}" STREQUAL "TRUE")
     set(EXTRA_LIBS ${EXTRA_LIBS} ${GTK_LIBRARIES})
 endif(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
 

@@ -13,7 +13,10 @@ pwd
 # but required for local build.
 #cd project
 
+ls -la
+
 #sudo chown -R 1000 /oesenc_pi/build_android_64_ci
+
 sudo apt-get -q update
 sudo apt-get -y install git cmake gettext unzip
 

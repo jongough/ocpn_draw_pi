@@ -11,9 +11,15 @@ if(COMMAND cmake_policy)
     endif(POLICY CMP0043)
     cmake_policy(SET CMP0048 NEW)
     message(STATUS "${CMLOC}CMP0048 set to New")
+    if(POLICY CMP0076)
+        cmake_policy(SET CMP0076 NEW)
+    endif(POLICY CMP0076)
     if(POLICY CMP0077)
         cmake_policy(SET CMP0077 NEW)
     endif(POLICY CMP0077)
+    if(POLICY CMP0079)
+        cmake_policy(SET CMP0079 NEW)
+    endif(POLICY CMP0079)
 endif(COMMAND cmake_policy)
 
 set(VERBOSE_NAME "OCPN_Draw")
@@ -24,9 +30,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "5")
-set(VERSION_TWEAK "3")
-set(VERSION_DATE "09/02/2021")
+set(VERSION_PATCH "6")
+set(VERSION_TWEAK "9")
+set(VERSION_DATE "21/03/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -98,8 +104,6 @@ option(Plugin_CXX11 "Use c++11" OFF)
 #
 # ----- Modify section above if there are special requirements for the plugin ----- ##
 #
-
-include("cmake/PluginConfigure.cmake")
 
 #
 # ----- Change below to match project requirements ----- ##
@@ -230,9 +234,7 @@ set(OCPNSRC
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
     ocpnsrc/TexFont.cpp
-    ocpnsrc/wxJSON/jsonreader.cpp
-    ocpnsrc/wxJSON/jsonval.cpp
-    ocpnsrc/wxJSON/jsonwriter.cpp)
+)
 set(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
     ocpninclude/AISTargetQueryDialog.h
@@ -251,20 +253,34 @@ set(OCPNHDRS
     ocpninclude/GL/glext.h
     ocpninclude/GL/gl_private.h
     ocpninclude/GL/glu.h
-    ocpninclude/wx/json_defs.h
-    ocpninclude/wx/jsonreader.h
-    ocpninclude/wx/jsonval.h
-    ocpninclude/wx/jsonwriter.h)
+)
+set(EXTSRC
+    extsrc/clipper.cpp
+    extsrc/pugixml.cpp
+)
 
-set(EXTSRC ${EXTSRC} extsrc/clipper.cpp extsrc/pugixml.cpp)
+set(EXTINCLUDE
+    extinclude/clipper.hpp
+    extinclude/pugixml.hpp
+    extinclude/pugiconfig.hpp
+)
 
-#set(EXTINCLUDE ${EXTINCLUDE} extinclude/clipper.hpp extinclude/pugiconfig.hpp extinclude/pugixml.hpp)
-set(EXTINCLUDE ${EXTINCLUDE} extinclude)
+set(LIBSRC
+)
+
+set(LIBHDRS
+    libs/GL/gl.h
+    libs/GL/gl_private.h
+    libs/GL/glext.h
+    libs/GL/glu.h
+)
+
+set (EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude)
 
 if(APPLE OR QT_ANDROID)
     option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else(APPLE OR QT_ANDROID)
-    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF) # Temp change to remove JSON Vaidator 12/02/2021
+    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
 endif(APPLE OR QT_ANDROID)
 
 if(OD_JSON_SCHEMA_VALIDATOR)
@@ -272,9 +288,10 @@ if(OD_JSON_SCHEMA_VALIDATOR)
     add_definitions(-DOD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Adding JSON Schema validation")
 
-    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp)
-    set(EXTINCLUDE ${EXTINCLUDE} "extinclude/nlohmannl;extinclude/json-schema-validator")
-
+    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp extsrc/json-schema-validator/json-patch.cpp)
+    set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} "extinclude/json-schema-validator")
+    set(LIBSRC ${LIBSRC} libs/wxJSON/src/jsonreader.cpp libs/wxJSON/src/jsonval.cpp libs/wxJSON/src/jsonwriter.cpp)
+    set(LIBHDRS ${LIBHDRS} libs/wx/include/wx/json_defs.h libs/wx/include/wx/jsonreader.h libs/wx/include/wx/jsonval.h libs/wx/include/wx/jsonwriter.h)
 else(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
 endif(OD_JSON_SCHEMA_VALIDATOR)
@@ -295,32 +312,25 @@ if(OCPN_MIN_VERSION)
     endif(NOT QT_ANDROID)
 endif(OCPN_MIN_VERSION)
 
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extsrc/mygdal)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE})
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wx/include/wx)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/GL)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
-if(UNIX)
-    include("cmake/FindTinyXML.cmake")
-    find_package(TinyXML QUIET)
-endif(UNIX)
+add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 
-if(TINYXML_FOUND)
-    message(STATUS "${CMLOC}Building with system tinyxml")
-    include_directories(${TINYXML_INCLUDE_DIR})
-    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC})
-    target_link_libraries(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
-else(TINYXML_FOUND)
-    message(STATUS "${CMLOC}Building with embedded tinyxml")
-    include_directories(extsrc/tinyxml/)
-    set(SRC_LTINYXML extsrc/tinyxml/tinyxml.cpp extsrc/tinyxml/tinyxmlparser.cpp extsrc/tinyxml/tinyxmlerror.cpp)
-    add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${SRC_LTINYXML})
-endif(TINYXML_FOUND)
+add_subdirectory(libs/gdal)
+add_subdirectory(libs/tinyxml)
+
+target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
+target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+
 
 add_definitions(-DTIXML_USE_STL)
 
@@ -361,7 +371,7 @@ endforeach()
 #
 # ----- do not change - needed to build app ----- ##
 #
-
+include("cmake/PluginConfigure.cmake")
 include("cmake/PluginInstall.cmake")
 include("cmake/PluginLocalization.cmake")
 include("cmake/PluginPackage.cmake")
