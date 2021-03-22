@@ -105,6 +105,16 @@ option(Plugin_CXX11 "Use c++11" OFF)
 # ----- Modify section above if there are special requirements for the plugin ----- ##
 #
 
+##
+## ----- do not change next section - needed to configure build process ----- ##
+##
+
+include("PluginConfigure")
+
+##
+## ----- do not change section above - needed to configure build process ----- ##
+##
+
 #
 # ----- Change below to match project requirements ----- ##
 #
@@ -323,13 +333,18 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
-add_library(${PACKAGE_NAME} SHARED ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
+target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 
-add_subdirectory(libs/gdal)
-add_subdirectory(libs/tinyxml)
+if(NOT OCPN_FLATPAK_CONFIG)
+    # Build environment not available when flatpak is being configured so following statements will not work
+    message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
-target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
-target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+    add_subdirectory(libs/gdal)
+    add_subdirectory(libs/tinyxml)
+
+    target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
+    target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+endif(NOT OCPN_FLATPAK_CONFIG)
 
 
 add_definitions(-DTIXML_USE_STL)
@@ -371,7 +386,7 @@ endforeach()
 #
 # ----- do not change - needed to build app ----- ##
 #
-include("cmake/PluginConfigure.cmake")
+
 include("cmake/PluginInstall.cmake")
 include("cmake/PluginLocalization.cmake")
 include("cmake/PluginPackage.cmake")

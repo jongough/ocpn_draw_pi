@@ -53,5 +53,6 @@ cmake \
 make -sj2
 make package
 
-make create-pkg
+# removed as fails to build
+# make create-pkg
 

@@ -23,6 +23,9 @@ else(NOT ${PACKAGE} MATCHES "(.*)_pi")
 endif(NOT ${PACKAGE} MATCHES "(.*)_pi")
 string(TOUPPER "${PACKAGE}" TITLE_NAME)
 
+# add library for use later
+add_library(${PACKAGE_NAME})
+
 project(${PACKAGE} VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK})
 message(STATUS "${CMLOC}PROJECT_VERSION: ${PROJECT_VERSION}")
 

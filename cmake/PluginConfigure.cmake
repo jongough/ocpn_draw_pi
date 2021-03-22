@@ -340,7 +340,6 @@ IF(DEFINED _wx_selected_config)
         ADD_DEFINITIONS(-DUSE_GLSL)
         include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
         set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES)
-        #set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude/android)
         set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} libs/glshim/include)
 
     ENDIF(_wx_selected_config MATCHES "androideabi-qt")
