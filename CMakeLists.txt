@@ -335,11 +335,16 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 
-add_subdirectory(libs/gdal)
-add_subdirectory(libs/tinyxml)
+if(NOT OCPN_FLATPAK_CONFIG)
+    # Build environment not available when flatpak is being configured so following statements will not work
+    message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
-target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
-target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+    add_subdirectory(libs/gdal)
+    add_subdirectory(libs/tinyxml)
+
+    target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
+    target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+endif(NOT OCPN_FLATPAK_CONFIG)
 
 
 add_definitions(-DTIXML_USE_STL)
