@@ -448,7 +448,9 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     m_listCtrlLayers->InsertColumn( colLAYVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 44 );
     m_listCtrlLayers->InsertColumn( colLAYNAME, _("Layer Name"), wxLIST_FORMAT_LEFT, 250 );
     m_listCtrlLayers->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, 100 );
-    
+
+    m_bSizerPathButtons->CalcMin();
+    RecalculateSize();
     Fit();
     
     SetMinSize( GetBestSize() );
@@ -2165,5 +2167,34 @@ void PathAndPointManagerDialogImpl::UpdateODPointsListCtrlViz( )
         m_listCtrlODPoints->SetItemImage(item, image);
     }
     
+}
+
+void PathAndPointManagerDialogImpl::RecalculateSize()
+{
+
+    //  All of this dialog layout is expandable, so we need to set a specific size target
+    //  for the onscreen display.
+    //  The size will then be adjusted so that it fits within the parent's client area, with some padding
+
+    //  Get a text height metric for reference
+    int char_width, char_height;
+    GetTextExtent(_T("W"), &char_width, &char_height);
+
+    wxSize sz;
+    sz.x = 60 * char_width;
+    sz.y = 30 * char_height;
+
+    wxSize dsize = GetParent()->GetClientSize();
+    sz.y = wxMin(sz.y, dsize.y - (0 * char_height));
+    sz.x = wxMin(sz.x, dsize.x - (0 * char_height));
+    SetClientSize(sz);
+
+    wxSize fsize = GetSize();
+    fsize.y = wxMin(fsize.y, dsize.y - (0 * char_height));
+    fsize.x = wxMin(fsize.x, dsize.x - (0 * char_height));
+    SetSize(fsize);
+
+    CentreOnParent();
+
 }
 

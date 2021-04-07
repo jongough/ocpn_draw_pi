@@ -116,7 +116,7 @@ public:
      void DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFactor );
 
      void GetTextExtent(const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent = NULL,
-                        wxCoord *externalLeading = NULL, wxFont *font = NULL) const;
+                        wxCoord *externalLeading = NULL, wxFont *font = NULL);
 
      void DrawTexture( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
      void DrawTextureAlpha( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot);
@@ -157,6 +157,8 @@ protected:
 
      void GLDrawBlendData(wxCoord x, wxCoord y, wxCoord w, wxCoord h,
                           int format, const unsigned char *data);
+     void drawrrhelperGLES2( wxCoord x0, wxCoord y0, wxCoord r, int quadrant, int steps );
+
      void DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, bool b_hiqual );
 	 void DrawGLThickLines(int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, wxPen pen, bool b_hiqual);
 	 void DrawEndCap(float x1, float y1, float t1, float angle);

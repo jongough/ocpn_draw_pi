@@ -140,6 +140,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void SelectedLayerToggleVisibility( bool visible );
         void UpdatePointListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
         void UpdateODPointsListCtrlViz( void );
+        void RecalculateSize();
         
         static void ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent );
         void ShowPathPropertiesDialog ( ODPath *path );

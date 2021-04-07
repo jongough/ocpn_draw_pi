@@ -45,7 +45,7 @@
             <property name="minimum_size"></property>
             <property name="name">PathAndPointManagerDialogDef</property>
             <property name="pos"></property>
-            <property name="size">527,450</property>
+            <property name="size">-1,-1</property>
             <property name="style">wxDEFAULT_DIALOG_STYLE</property>
             <property name="subclass">; ; forward_declare</property>
             <property name="title">Path &amp; Point Manager</property>
@@ -115,7 +115,7 @@
                         <property name="tooltip"></property>
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
-                        <property name="window_style"></property>
+                        <property name="window_style">wxVSCROLL</property>
                         <event name="OnNotebookPageChanged">OnTabSwitch</event>
                         <object class="notebookpage" expanded="1">
                             <property name="bitmap"></property>

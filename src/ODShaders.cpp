@@ -260,7 +260,7 @@ static const GLchar* pattern_fragment_shader_source =
 //     GLint FBO_texture_2D_shader_program;
 //     GLint FBO_texture_2D_vertex_shader;
     
-bool pi_loadShaders()
+bool OD_loadShaders()
 {
    
     bool ret_val = true;

@@ -163,6 +163,7 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
+    src/ODShaders.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -176,7 +177,7 @@ set(SRCS
     src/PointMan.cpp
     src/TextPoint.cpp
     src/TextPointCSVImport.cpp
-    src/pi_shaders.cpp)
+    src/ODShaders.cpp)
 
 set(HDRS
     include/ocpn_draw_pi.h
@@ -223,6 +224,7 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
+    include/ODShaders.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
@@ -236,7 +238,7 @@ set(HDRS
     include/PILProp.h
     include/TextPoint.h
     include/TextPointCSVImport.h
-    include/pi_shaders.h)
+    )
 
 set(OCPNSRC
     ocpnsrc/bbox.cpp

@@ -29,7 +29,6 @@
 
 #ifdef USE_ANDROID_GLES2
 #include <gl2.h>
-//#include "/usr/include/GLES2/gl2.h"
 #include "linmath.h"
 #include "shaders.h"
 #else
@@ -273,7 +272,7 @@ void TexFont::RenderGlyph( int c )
     glEnd();
     glTranslatef( tgic.advance, 0.0, 0.0 );
 #else
-#if 0           //TODO
+
     float uv[8];
     float coords[8];
     
@@ -376,7 +375,7 @@ void TexFont::RenderGlyph( int c )
     
     
     m_dx += tgic.advance;
-#endif    
+    
 #endif    
 }
 

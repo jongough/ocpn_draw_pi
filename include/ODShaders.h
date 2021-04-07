@@ -21,8 +21,8 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
-#ifndef __PISHADERS_H__
-#define __PISHADERS_H__
+#ifndef __ODSHADERS_H__
+#define __ODSHADERS_H__
 
 #include "wx/wxprec.h"
 #ifndef  WX_PRECOMP
@@ -41,7 +41,7 @@
     extern GLint pi_pattern_shader_program;
     extern GLint pi_texture_2D_alpha_shader_program;
 
-bool pi_loadShaders();
+bool OD_loadShaders();
 void configureShaders(float width, float height);
 
 #endif
