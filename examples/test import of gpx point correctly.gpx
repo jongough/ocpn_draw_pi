@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<OCPNDraw version="0.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opencpn="http://www.opencpn.org">
+  <opencpn:ODPoint lat="-26.909390000" lon="153.055211667">
+    <opencpn:type>Boundary Point</opencpn:type>
+    <time>2020-04-13T09:51:54Z</time>
+    <opencpn:boundary_type>Inclusion</opencpn:boundary_type>
+    <sym>Triangle</sym>
+    <opencpn:guid>658e8326-d525-4bd7-8c71-bbf6122cee1b</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.500</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="true" number="1" step="1" units="0" colour="#0BFF00" width="2" line_style="100" />
+  </opencpn:ODPoint>
+</OCPNDraw>
