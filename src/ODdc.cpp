@@ -1670,6 +1670,7 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
             }
 
             glUseProgram( pi_color_tri_shader_program );
+            checkGlError("glUseProgram");
             
             // Get pointers to the attributes in the program.
             GLint mPosAttrib = glGetAttribLocation( pi_color_tri_shader_program, "position" );
@@ -1875,7 +1876,7 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
             }
 
-            GLint program = pi_pattern_shader_program;
+            GLint program = pi_color_tri_shader_program;
             glUseProgram( program );
             
             // Get pointers to the attributes in the program.
@@ -2320,7 +2321,7 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
 #ifdef USE_ANDROID_GLES2
         wxLogMessage( _("ODDC:DPTP: Use android") );
         // Pre-configure the GLES program
-        GLint program = pi_pattern_shader_program;
+        GLint program = pi_color_tri_shader_program;
         s_odc_activeProgram = program;
         glUseProgram( program );
             
@@ -2392,7 +2393,7 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
         
 #if 0
         //      Render the tesselated results
-        GLint program = pi_pattern_shader_program;
+        GLint program = pi_color_tri_shader_program;
         glUseProgram( program );
             
             
@@ -2676,7 +2677,7 @@ void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textu
 
 #else
         // Pre-configure the GLES program
-        GLint program = pi_pattern_shader_program;
+        GLint program = pi_color_tri_shader_program;
         s_odc_activeProgram = program;
         
         glUseProgram( program );
@@ -2751,7 +2752,7 @@ void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textu
 
 #if 0        
         //      Render the tesselated results
-        GLint program = pi_pattern_shader_program;
+        GLint program = pi_color_tri_shader_program;
         glUseProgram( program );
             
             
@@ -3281,7 +3282,7 @@ void ODDC::DrawTextureAlpha( wxRect texRect, int width, int height, float scaleF
         coords[6] = position.x+w; coords[7] = position.y+h; coords[4] = position.x; coords[5] = position.y+h;
 
 
-        GLint program = pi_texture_2D_alpha_shader_program;
+        GLint program = pi_texture_2D_shader_program;
         glUseProgram( program );
 
             // Get pointers to the attributes in the program.
@@ -3338,3 +3339,12 @@ void ODDC::DrawTextureAlpha( wxRect texRect, int width, int height, float scaleF
         glUseProgram( 0 );
 #endif
 }
+
+#ifdef USE_ANDROID_GLES2
+static void checkGlError(const char* op) {
+    for (GLint error = glGetError(); error; error
+        = glGetError()) {
+        wxLogMessage( _("after %s() glError (0x%x)\n"), op, error);
+        }
+}
+#endif
