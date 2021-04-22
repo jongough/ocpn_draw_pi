@@ -330,9 +330,11 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 
 void ODPath::DrawGL( PlugIn_ViewPort &piVP )
 {
+    wxLogMessage( _("In ODPath::DrawGL") );
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
-
+    wxLogMessage( _("ODP::DrawGL: >1 points and visible") );
+    wxLogMessage( wxT("ODP::DrawGL: Num points: %i"), m_nPoints );
     ODDC dc;
     dc.SetVP(&piVP);
 

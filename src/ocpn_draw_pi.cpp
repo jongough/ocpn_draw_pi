@@ -88,6 +88,7 @@
 #include <wx/jsonreader.h>
 
 #ifndef __OCPN__ANDROID__
+//#include "qtstylesheet.h"
 #include <GL/gl.h>
 #else
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
@@ -435,6 +436,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     m_pODicons = new ODicons();
     
     m_bRecreateConfig = false;
+
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()

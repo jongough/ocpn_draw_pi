@@ -208,11 +208,19 @@ else
 fi
 tar -tf $tarball_tar
 gzip -f $tarball_tar
+pwd
 cd "$cur_dir"
 pwd
 ls -la
+ls -la ~/.
 
-if [ $LOCAL_BUILD = false ]; then
+if [ ! -n LOCAL_DEPLOY ]; then
+    if [ -d "/home/circleci/circleci-output" ]; then
+        sudo cp build/*.gz ~/circleci-output
+    else
+        echo "Directory ~/circleci-output not found"
+    fi
+elif [ $LOCAL_BUILD = false ]; then
     cloudsmith push raw --republish --no-wait-for-sync \
         --name @PACKAGE_NAME@-@PACKAGE_VERSION@-@PKG_TARGET@-@ARCH@-@PKG_TARGET_VERSION@-${OCPN_TARGET}-metadata \
         --version ${VERSION} \

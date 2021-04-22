@@ -31,8 +31,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "6")
-set(VERSION_TWEAK "14")
-set(VERSION_DATE "05/04/2021") # DD/MM/YYYY format
+set(VERSION_TWEAK "15")
+set(VERSION_DATE "22/04/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -163,7 +163,6 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
-    src/ODShaders.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -177,7 +176,7 @@ set(SRCS
     src/PointMan.cpp
     src/TextPoint.cpp
     src/TextPointCSVImport.cpp
-    src/ODShaders.cpp)
+)
 
 set(HDRS
     include/ocpn_draw_pi.h
@@ -224,7 +223,6 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
-    include/ODShaders.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
@@ -238,7 +236,7 @@ set(HDRS
     include/PILProp.h
     include/TextPoint.h
     include/TextPointCSVImport.h
-    )
+)
 
 set(OCPNSRC
     ocpnsrc/bbox.cpp
@@ -280,6 +278,9 @@ set(EXTINCLUDE
 )
 
 set(LIBSRC
+    libs/wxJSON/src/jsonreader.cpp
+    libs/wxJSON/src/jsonval.cpp
+    libs/wxJSON/src/jsonwriter.cpp
 )
 
 set(LIBHDRS
@@ -287,6 +288,10 @@ set(LIBHDRS
     libs/GL/gl_private.h
     libs/GL/glext.h
     libs/GL/glu.h
+    libs/wxJSON/include/json_defs.h
+    libs/wxJSON/include/jsonreader.h
+    libs/wxJSON/include/jsonval.h
+    libs/wxJSON/include/jsonwriter.h
 )
 
 set (EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude)
@@ -307,9 +312,6 @@ if(OD_JSON_SCHEMA_VALIDATOR)
 else(OD_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
 endif(OD_JSON_SCHEMA_VALIDATOR)
-set(LIBSRC ${LIBSRC} libs/wxJSON/src/jsonreader.cpp libs/wxJSON/src/jsonval.cpp libs/wxJSON/src/jsonwriter.cpp)
-set(LIBHDRS ${LIBHDRS} libs/wx/include/wx/json_defs.h libs/wx/include/wx/jsonreader.h libs/wx/include/wx/jsonval.h libs/wx/include/wx/jsonwriter.h)
-
 option(OD_USE_SVG "Use SVG graphics" ON)
 
 if(OD_USE_SVG)
@@ -332,13 +334,19 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/glu/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wx/include/wx)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude/wxcurl/include)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
+
+    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
+    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
+    add_subdirectory(libs/plugingl)
+    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 endif(QT_ANDROID)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})

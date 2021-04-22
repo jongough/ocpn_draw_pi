@@ -317,8 +317,8 @@ if(ARCH MATCHES "arm*"
         set(OPENGL_FOUND "YES")
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
-        add_subdirectory(libs/glshim)
-        target_link_libraries(${PACKAGE_NAME} gl_static::gl_static)
+        #add_subdirectory(libs/glshim)
+        #target_link_libraries(${PACKAGE_NAME} gl_static::gl_static)
 
         set(OPENGL_LIBRARIES "GL_static" "EGL" "X11" "drm")
     endif()
@@ -341,10 +341,10 @@ IF(DEFINED _wx_selected_config)
         MESSAGE (STATUS "${CMLOC}Using GLESv2 for Android")
         ADD_DEFINITIONS(-DUSE_ANDROID_GLES2)
         ADD_DEFINITIONS(-DUSE_GLSL)
-        include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
+        #include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
         set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES)
         set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} libs/glshim/include)
-        target_link_libraries(${PACKAGE_NAME} gl_static::gl_static)
+        #target_link_libraries(${PACKAGE_NAME} gl_static::gl_static)
 
     ENDIF(_wx_selected_config MATCHES "androideabi-qt")
 ENDIF(DEFINED _wx_selected_config)
@@ -359,8 +359,8 @@ IF(QT_ANDROID)
 
     set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
 
-    add_subdirectory(libs/glshim)
-    target_link_libraries(${PACKAGE_NAME} gl_static::gl_static)
+    #add_subdirectory(libs/glshim)
+    #target_link_libraries(${PACKAGE_NAME} gl_static::gl_static)
 
     #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     SET(CMAKE_CXX_FLAGS "-pthread -fPIC")

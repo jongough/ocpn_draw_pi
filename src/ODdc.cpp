@@ -53,7 +53,8 @@
 #endif
 
 #ifdef USE_ANDROID_GLES2
-#include "ODShaders.h"
+//#include "ODShaders.h"
+#include "pi_shaders.h"
 //#include "/usr/include/GLES2/gl2.h"
 #include <gl2.h>
 #include "linmath.h"
@@ -97,32 +98,6 @@ ODDC::ODDC( wxGLCanvas &canvas ) :
 #endif
     Init();
     
-#if 0    
-#if wxUSE_GRAPHICS_CONTEXT == 1
-    pgc = NULL;
-#endif
-#ifdef ocpnUSE_GL
-    m_textforegroundcolour = wxColour( 0, 0, 0 );
-    g_bTexture2D = false;
-#endif 
-
-    workBuf = NULL;
-    workBufSize = 0;
-
-#ifdef USE_ANDROID_GLES2
-    s_odc_tess_work_buf = NULL;
-    s_odc_tess_vertex_idx = 0;
-    s_odc_tess_vertex_idx_this = 0;
-    s_odc_tess_buf_len = 0;
-    s_odc_activeProgram = 0;
-    
-    s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
-    s_odc_tess_buf_len = 100;
-    
-    pi_loadShaders();
-#endif
-    g_textureId = -1;
-#endif    
 }
 
 ODDC::ODDC( wxDC &pdc ) :
@@ -144,7 +119,6 @@ ODDC::ODDC() :
         glcanvas( NULL ), dc( NULL ), m_pen( wxNullPen ), m_brush( wxNullBrush )
 {
     Init();
-
 }
 
 ODDC::~ODDC()
@@ -160,13 +134,14 @@ ODDC::~ODDC()
 
 void ODDC::Init()
 {
+    m_buseTex = GetLocaleCanonicalName().IsSameAs(_T("en_US"));
+
 #if wxUSE_GRAPHICS_CONTEXT == 1
     pgc = NULL;
 #endif
 
 #ifdef ocpnUSE_GL
     g_bTexture2D = false;
-    g_textureId = -1;
     m_textforegroundcolour = wxColour( 0, 0, 0 );
 #endif
 
@@ -182,7 +157,7 @@ void ODDC::Init()
     s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
     s_odc_tess_buf_len = 100;
  
-    OD_loadShaders();
+    pi_loadShaders();
 #endif
     g_textureId = -1;
 
@@ -193,6 +168,7 @@ void ODDC::SetVP(PlugIn_ViewPort *vp)
 #ifdef USE_ANDROID_GLES2
     configureShaders(vp->pix_width, vp->pix_height);
 #endif    
+    m_vpSize = wxSize(vp->pix_width, vp->pix_height);
 }
 
 void ODDC::Clear()
@@ -572,16 +548,21 @@ void ODDC::DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, b
 
 void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
 {
-    if( dc )
+    wxLogMessage( _("In DrawLine") );
+    if( dc ) {
         dc->DrawLine( x1, y1, x2, y2 );
+        wxLogMessage( _("DrawLin: dc->DrawLine") );
+    }
 #ifdef ocpnUSE_GL
     else if( ConfigurePen() ) {
+        wxLogMessage( _("DrawLine: ConfigurePen") );
         bool b_draw_thick = false;
 
         float pen_width = wxMax(g_GLMinSymbolLineWidth, m_pen.GetWidth());
 
         //      Enable anti-aliased lines, at best quality
         if( b_hiqual ) {
+            wxLogMessage( _("DrawLine: SetGLStipple") );
             SetGLStipple();
 
 #ifndef __WXQT__
@@ -590,16 +571,22 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
 #endif            
 
             if( pen_width > 1.0 ) {
+                wxLogMessage( _("DrawLine: pen_width > 1.0") );
+
                 GLint parms[2];
                 glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
                 if(glGetError())
                     glGetIntegerv( GL_ALIASED_LINE_WIDTH_RANGE, &parms[0] );
-                if( pen_width > parms[1] )
+                if( pen_width > parms[1] ) {
+                    wxLogMessage( _("DrawLine: b_draw_thick = true") );
                     b_draw_thick = true;
+                }
                 else
                     glLineWidth( pen_width );
-            } else
+            } else {
+                wxLogMessage( _("DrawLine: pen_width != 1.0") );
                 glLineWidth( pen_width );
+            }
         } else {            
             if( pen_width > 1 ) {
                 GLint parms[2];
@@ -611,11 +598,16 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 glLineWidth( pen_width );
         }
 
+        wxLogMessage( _("DrawLine: Before ifdef USE_ANDROID_GLES2") );
 #ifdef USE_ANDROID_GLES2
-        if( b_draw_thick )
+        wxLogMessage( _("DrawLine: USE_ANDROID_GLES2") );
+        if( b_draw_thick ) {
+            wxLogMessage( _("DrawLine: b_draw_thick") );
             DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        }
         else {
-            
+            wxLogMessage( _("DrawLine: !b_draw_thick") );
+
             glUseProgram(pi_color_tri_shader_program);
             
             float fBuf[4];
@@ -623,21 +615,23 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
             glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), fBuf);
             glEnableVertexAttribArray(pos);
             
-//             GLint matloc = glGetUniformLocation(pi_color_tri_shader_program,"MVMatrix");
-//             glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)cc1->GetpVP()->vp_transform); 
+            // GLint matloc = glGetUniformLocation(pi_color_tri_shader_program,"MVMatrix");
+            // glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)cc1->GetpVP()->vp_transform);
             
             float colorv[4];
             colorv[0] = m_pen.GetColour().Red() / float(256);
             colorv[1] = m_pen.GetColour().Green() / float(256);
             colorv[2] = m_pen.GetColour().Blue() / float(256);
             colorv[3] = 1.0;
-            
+            wxLogMessage( _("ODDC::DrawLine: Red: %.3f, Green: %.3f, Blue: %.3f, Alpa: %.3f"), colorv[0], colorv[1],colorv[2], colorv[3]);
+
             GLint colloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
             glUniform4fv(colloc, 1, colorv);
             
             wxDash *dashes;
             int n_dashes = m_pen.GetDashes( &dashes );
             if( n_dashes ) {
+                wxLogMessage( _("DrawLine: In n_dashs: %i"), n_dashes );
                 float angle = atan2f( (float) ( y2 - y1 ), (float) ( x2 - x1 ) );
                 float cosa = cosf( angle );
                 float sina = sinf( angle );
@@ -679,6 +673,7 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 }
             } else                    // not dashed
             {
+                wxLogMessage( _("DrawLine: not in n_dashs") );
                 fBuf[0] = x1;
                 fBuf[1] = y1;
                 fBuf[2] = x2;
@@ -686,19 +681,23 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 
                 glDrawArrays(GL_LINES, 0, 2);
             }
-            
+            wxLogMessage( _("DrawLine: glUseProgram(0)") );
+
             glUseProgram( 0 );
 
         }
         
 #else
-        if( b_draw_thick ){
-            //piDrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        wxLogMessage( _("DrawLine: Not in USE_ANDROID_GLES2") );
+        if( b_draw_thick ) {
+            wxLogMessage( _("DrawLine: b_draw_thick") );
+            DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
         }
         else {
             wxDash *dashes;
             int n_dashes = m_pen.GetDashes( &dashes );
             if( n_dashes ) {
+                wxLogMessage( _("DrawLine: n_dashes: %i"), n_dashes );
                 float angle = atan2f( (float) ( y2 - y1 ), (float) ( x2 - x1 ) );
                 float cosa = cosf( angle );
                 float sina = sinf( angle );
@@ -738,6 +737,7 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 glEnd();
             } else                    // not dashed
             {
+                wxLogMessage( _("DrawLine: not n_dash") );
                 glBegin( GL_LINES );
                 glVertex2i( x1, y1 );
                 glVertex2i( x2, y2 );
@@ -752,7 +752,9 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
             glDisable( GL_BLEND );
         }
     }
+
 #endif    
+wxLogMessage( _("DrawLine: End") );
 }
 
 
@@ -764,7 +766,7 @@ void ODDC::DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset, wxCoord yo
     if(n < 2)
         return;
 
-#ifndef USE_ANDROID_GLES2
+#ifdef USE_ANDROID_GLES2
     wxPoint p0 = points[0];
     for( int i = 1; i < n; i++ ) {
         DrawGLThickLine( p0.x + xoffset, p0.y + yoffset, points[i].x + xoffset,
@@ -888,7 +890,11 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
             if( m_pen.GetWidth() > 1 ) {
                 GLint parms[2];
                 glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
-                if( m_pen.GetWidth() > parms[1] ) b_draw_thick = true;
+                if(glGetError())
+                    glGetIntegerv( GL_ALIASED_LINE_WIDTH_RANGE, &parms[0] );
+
+                if( m_pen.GetWidth() > parms[1] )
+                    b_draw_thick = true;
                 else
                     glLineWidth( wxMax(g_GLMinSymbolLineWidth, m_pen.GetWidth()) );
             } else
@@ -909,51 +915,56 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
         } else {
             if( b_hiqual ) {
                 glEnable( GL_LINE_SMOOTH );
+                glDisable( GL_LINE_STIPPLE );
+                glDisable( GL_POLYGON_SMOOTH );
+                glDisable( GL_BLEND );
             }
+        }
 #ifndef USE_ANDROID_GLES2
-            glBegin( GL_LINE_STRIP );
-            for( int i = 0; i < n; i++ ) {
-                glVertex2i( points[i].x + xoffset, points[i].y + yoffset );
-            }
-            glEnd();
+        glBegin( GL_LINE_STRIP );
+        for( int i = 0; i < n; i++ ) {
+            glVertex2i( points[i].x + xoffset, points[i].y + yoffset );
+        }
+        glEnd();
 #else
-                //  Grow the work buffer as necessary
-            if( workBufSize < (size_t)n*2 ){
-                workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
-                workBufSize = n*4;
-            }
-
-            for( int i = 0; i < n; i++ ){
-                workBuf[i*2] = points[i].x + xoffset;
-                workBuf[(i*2) + 1] = points[i].y + yoffset;
-            }        
-        
-            glUseProgram(pi_color_tri_shader_program);
-                
-            GLint pos = glGetAttribLocation(pi_color_tri_shader_program, "position");
-            glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf);
-            glEnableVertexAttribArray(pos);
-                
-            float colorv[4];
-            colorv[0] = m_pen.GetColour().Red() / float(256);
-            colorv[1] = m_pen.GetColour().Green() / float(256);
-            colorv[2] = m_pen.GetColour().Blue() / float(256);
-            colorv[3] = m_pen.GetColour().Alpha() / float(256);1.0;
-                
-            GLint colloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
-            glUniform4fv(colloc, 1, colorv);
-                
-            glDrawArrays(GL_LINE_STRIP, 0, n);
-            //glUseProgram( 0 );
-
-#endif
-            
+        //  Grow the work buffer as necessary
+        if( workBufSize < (size_t)n*2 ){
+            workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+            workBufSize = n*4;
         }
 
-        glDisable( GL_LINE_STIPPLE );
+        for( int i = 0; i < n; i++ ){
+            workBuf[i*2] = points[i].x + xoffset;
+            workBuf[(i*2) + 1] = points[i].y + yoffset;
+        }
+
+        glUseProgram(pi_color_tri_shader_program);
+
+        GLint pos = glGetAttribLocation(pi_color_tri_shader_program, "position");
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf);
+        glEnableVertexAttribArray(pos);
+
+        float colorv[4];
+        colorv[0] = m_pen.GetColour().Red() / float(256);
+        colorv[1] = m_pen.GetColour().Green() / float(256);
+        colorv[2] = m_pen.GetColour().Blue() / float(256);
+        colorv[3] = m_pen.GetColour().Alpha() / float(256);1.0;
+
+        GLint colloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
+        glUniform4fv(colloc, 1, colorv);
+
+        glDrawArrays(GL_LINE_STRIP, 0, n);
+
+#endif
+        if( b_hiqual ) {
+            glDisable( GL_LINE_STIPPLE );
+            glDisable( GL_POLYGON_SMOOTH );
+            glDisable( GL_BLEND );
+        }
+
         SetGLAttrs( false );
     }
-#endif    
+#endif
 }
 
 void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
@@ -1355,7 +1366,6 @@ void ODDC::drawrrhelperGLES2( wxCoord x0, wxCoord y0, wxCoord r, int quadrant, i
         GLint matlocf = glGetUniformLocation(pi_color_tri_shader_program,"TransformMatrix");
         glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
 
-
 #else
 
         if( ConfigureBrush() ) {
@@ -1440,10 +1450,7 @@ void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
     GLint borderWidthloc = glGetUniformLocation(pi_circle_filled_shader_program,"border_width");
     glUniform1f(borderWidthloc, m_pen.GetWidth());
     
-//    GLint matloc = glGetUniformLocation(pi_circle_filled_shader_program,"MVMatrix");
-//    glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)(GetCanvasByIndex(0)->GetpVP()->vp_transform) ); 
-        
-        // Perform the actual drawing.
+    // Perform the actual drawing.
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
     //      Enable anti-aliased lines, at best quality
@@ -1454,7 +1461,6 @@ void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
     DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
 #endif    
 }
-
 
 void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius )
 {
@@ -1563,7 +1569,6 @@ void ODDC::DrawDiskPattern( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord o
 #endif    
 }
 
-
 void ODDC::StrokeCircle( wxCoord x, wxCoord y, wxCoord radius )
 {
 #if wxUSE_GRAPHICS_CONTEXT == 1
@@ -1623,31 +1628,34 @@ void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
 
 void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale, float angle )
 {
+    wxLogMessage( _("In ODDC::DP") );
     if( dc )
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
     else {
-        
+#ifdef __WXQT__
+        SetGLAttrs( false );            // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH
+#else
+        SetGLAttrs( true );
+#endif
+
         if(g_textureId >= 0){
+            wxLogMessage( _("ODDC::DP: TextureId") );
             DrawPolygonPattern(n, points, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight), xoffset, yoffset );
             return;
         }
-        
-#ifdef __WXQT__        
-        SetGLAttrs( false );            // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH 
-#else
-        SetGLAttrs( true );
-#endif        
-
-        ConfigurePen();
 
 #ifdef USE_ANDROID_GLES2
-       
+        wxLogMessage( _("ODDC::DP: Android") );
+        ConfigurePen();
+
         glEnable( GL_BLEND );
-        
+        wxLogMessage( _("ODDC::DP: Num points: %i"), n );
         if(n > 4){
-            if(ConfigureBrush())        // Check for transparent brush
+            if(ConfigureBrush()) {       // Check for transparent brush
+                wxLogMessage( _("ODDC::DP: About to draw tesselated") );
                 DrawPolygonTessellated( n, points, xoffset, yoffset);
+            }
             
             // Draw the ouline
             //  Grow the work buffer as necessary
@@ -1741,7 +1749,7 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
             GLint bcolloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
             glUniform4fv(bcolloc, 1, bcolorv);
  
-#if 0            
+#if 0
             // Rotate 
             mat4x4 I, Q;
             mat4x4_identity(I);
@@ -1799,7 +1807,10 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
 
 
         if( ConfigureBrush() ) {
-            DrawPolygonTessellated( n, points, xoffset, yoffset);
+            glBegin( GL_POLYGON );
+            for( int i = 0; i < n; i++ )
+                glVertex2f( (points[i].x * scale) + xoffset, (points[i].y * scale) + yoffset );
+            glEnd();
         }
         
 
@@ -1825,6 +1836,7 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
 
 void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle )
 {
+    wxLogMessage( _("In ODDC:DPP") );
     if( dc )
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
@@ -1838,15 +1850,20 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
 
 #ifdef USE_ANDROID_GLES2
        
+        wxLogMessage( _("ODDC:DPP: ConfigurePen, n: %i"), n );
         ConfigurePen();
         glEnable( GL_BLEND );
         
         if(n > 4){
-            if(ConfigureBrush())        // Check for transparent brush
+            if(ConfigureBrush()) {       // Check for transparent brush
+                wxLogMessage( _("In ODDC:DPP: ConfigureBrush") );
                 DrawPolygonTessellatedPattern( n, points, textureID, textureSize, xoffset, yoffset);
+//                DrawPolygonTessellated( n, points, xoffset, yoffset);
+            }
  
         }
         else{           // n = 3 or 4, most common case for pre-tesselated shapes
+            wxLogMessage( _("In ODDC:DPP: n < 4") );
             //  Grow the work buffer as necessary
             if( workBufSize < (size_t)n*2 ){
                 workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
@@ -1921,6 +1938,7 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             // For the simple common case of a convex rectangle...
             //  swizzle the array points to enable GL_TRIANGLE_STRIP
             if(n == 4){
+                wxLogMessage( _("In ODDC:DPP: n == 4") );
                 float x1 = workBuf[4];
                 float y1 = workBuf[5];
                 workBuf[4] = workBuf[6];
@@ -1931,6 +1949,7 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
             }
             else if(n == 3){
+                wxLogMessage( _("In ODDC:DPP: n == 3") );
                 glDrawArrays(GL_TRIANGLES, 0, 3);
             }
             glUseProgram( 0 );
@@ -2078,6 +2097,7 @@ void odc_beginCallbackD_GLSL( GLenum mode, void *data)
 
 void odc_endCallbackD_GLSL(void *data)
 {
+#if 0
     ODDC* pDC = (ODDC*)data;
     float *bufPt = &(pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx_this]);
     GLint pos = glGetAttribLocation(pDC->s_odc_activeProgram, "position");
@@ -2085,6 +2105,36 @@ void odc_endCallbackD_GLSL(void *data)
     glEnableVertexAttribArray(pos);
     
     glDrawArrays(pDC->s_odc_tess_mode, 0, pDC->s_odc_nvertex);
+#else
+    ODDC* pDC = (ODDC*)data;
+
+    glUseProgram(pi_color_tri_shader_program);
+
+    // Disable VBO's (vertex buffer objects) for attributes.
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+    float *bufPt = &(pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx_this]);
+    GLint pos = glGetAttribLocation(pi_color_tri_shader_program, "position");
+    glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+    glEnableVertexAttribArray(pos);
+
+    ///GLint matloc = glGetUniformLocation(pi_color_tri_shader_program,"MVMatrix");
+    ///glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)s_tessVP.vp_transform);
+
+    float colorv[4];
+    wxColour c = pDC->GetBrush().GetColour();
+
+    colorv[0] = c.Red() / float(256);
+    colorv[1] = c.Green() / float(256);
+    colorv[2] = c.Blue() / float(256);
+    colorv[3] = c.Alpha() / float(256);
+
+    GLint colloc = glGetUniformLocation(pi_color_tri_shader_program,"color");
+    glUniform4fv(colloc, 1, colorv);
+
+    glDrawArrays(pDC->s_odc_tess_mode, 0, pDC->s_odc_nvertex);
+#endif
 }
 #endif
 
@@ -2258,6 +2308,7 @@ void __CALL_CONVENTION ODDCPatternendCallback()
 
 void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset )
 {
+    wxLogMessage( _("In ODDC:DPTP") );
     if( dc )
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
@@ -2267,7 +2318,7 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
             return;
         
 #ifdef USE_ANDROID_GLES2
-        
+        wxLogMessage( _("ODDC:DPTP: Use android") );
         // Pre-configure the GLES program
         GLint program = pi_pattern_shader_program;
         s_odc_activeProgram = program;
@@ -2309,6 +2360,7 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
         bcolorv[2] = m_brush.GetColour().Blue() / float(256);
         bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
         glUniform4fv(bcolloc, 1, bcolorv);
+        wxLogMessage( _("ODDC::DPTP: Red: %.3f, Green: %.3f, Blue: %.3f, Alpha: %.3f"), bcolorv[0], bcolorv[1],bcolorv[2], bcolorv[3]);
 
         // Tesselate
         m_tobj = gluNewTess();
@@ -2338,7 +2390,7 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
             gluTessEndPolygon( m_tobj );
         }
         
-#if 0        
+#if 0
         //      Render the tesselated results
         GLint program = pi_pattern_shader_program;
         glUseProgram( program );
@@ -2556,7 +2608,7 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
             prev += npoints[i];
         }
     }
-    #ifdef ocpnUSE_GL
+#ifdef ocpnUSE_GL
     else {
 #ifndef ANDROID        
         GLUtesselator *tobj = gluNewTess();
@@ -2606,7 +2658,7 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
         
 #endif          //ANDROID    
     }
-    #endif    
+#endif
 #endif    
 }
 
@@ -2616,10 +2668,6 @@ void ODDC::DrawPolygons(int n, int npoint[], wxPoint points[], wxCoord xoffset, 
         DrawPolygonsPattern( n, npoint, points, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight), xoffset, yoffset);
 }
         
-
-
-
-
 void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle)
 {
 #ifndef ANDROID
@@ -2750,11 +2798,6 @@ void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textu
         gluDeleteTess(m_tobj);
     
         glUseProgram( 0 );
-    
-    
-    
-    
-    
 #endif
     
 }
@@ -2814,8 +2857,8 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
             unsigned char *a = image.GetAlpha();
 
             unsigned char mr, mg, mb;
-            if( !a && !image.GetOrFindMaskColour( &mr, &mg, &mb ) ) printf(
-                    "trying to use mask to draw a bitmap without alpha or mask\n" );
+            if( !a && !image.GetOrFindMaskColour( &mr, &mg, &mb ) )
+                printf("trying to use mask to draw a bitmap without alpha or mask\n" );
 
 #ifdef __WXOSX__
             if(image.HasMask())
@@ -2872,7 +2915,7 @@ void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFa
        wxCoord w = 0;
         wxCoord h = 0;
 
-        if(0/*m_buseTex*/){
+        if(m_buseTex){
 
             m_texfont.Build( m_font );      // make sure the font is ready
             m_texfont.GetTextExtent(text, &w, &h);
@@ -3019,6 +3062,7 @@ void ODDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoor
         wxFont f = m_font;
         if( font ) f = *font;
 
+        if(m_buseTex){
 #ifdef ocpnUSE_GL
         m_texfont.Build( f );      // make sure the font is ready
         m_texfont.GetTextExtent(string, w, h);
@@ -3026,12 +3070,17 @@ void ODDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoor
         wxMemoryDC temp_dc;
         temp_dc.GetMultiLineTextExtent( string, w, h, descent, &f );
 #endif
-        
+        }
+        else{
+            wxMemoryDC temp_dc;
+            temp_dc.GetMultiLineTextExtent( string, w, h, descent, &f );
+        }
+
      }
      
      //  Sometimes GetTextExtent returns really wrong, uninitialized results.
      //  Dunno why....
-     if( w && (*w > 500) ) *w = 500;
+     if( w && (*w > 2000) ) *w = 2000;
      if( h && (*h > 500) ) *h = 500;
 }
 

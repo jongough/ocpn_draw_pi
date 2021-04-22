@@ -123,7 +123,11 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
+    wxLogMessage( _("In Draw") );
+
     if ( m_bVisible && m_pODPointList->GetCount() > 2) {
+        wxLogMessage( _("Draw: visible & GetCount > 2") );
+
         int l_iBoundaryPointCount = 0;
         m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
         wxPoint r;
@@ -136,6 +140,8 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
 #if wxUSE_GRAPHICS_CONTEXT == 1
+            wxLogMessage( _("Draw: wxUSE_GRAPHICS_CONTEXT = 1") );
+
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -159,6 +165,8 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->FillPath( path );
             delete wxGC;
 #else
+            wxLogMessage( _("Draw: wxUSE_GRAPHICS_CONTEXT != 1") );
+
             dc.DrawPolygonTessellated(m_pODPointList->GetCount(), m_bpts);
 #endif
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
@@ -239,20 +247,24 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         wxDELETEA( m_bpts );
     }
 
-    
+    wxLogMessage( _("Draw: call ODPath::Draw") );
+
     ODPath::Draw( dc, piVP );
 }
 
 void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
+    wxLogMessage( _("In DrawGL") );
 #ifdef ocpnUSE_GL
     if ( !m_bVisible ) return;
-    
+    wxLogMessage( _("DrawGL: visible") );
     ODDC dc;
     dc.SetVP(&piVP);
     
     if(m_pODPointList->GetCount() > 2 ) {
+        wxLogMessage( _("DrawGL: GetCount > 2") );
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
+            wxLogMessage( _("DrawGL: g_bExclusionBoundary") );
             wxPoint *l_AllPoints = NULL;
             int     l_iAllPointsSizes[2];
             int l_iBoundaryPointCount = 0;
@@ -357,8 +369,10 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated)
                     dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts );
-                else
+                else {
+                    wxLogMessage( _("In Boundary: DrawPolygon") );
                     dc.DrawPolygon( m_pODPointList->GetCount() - 1, m_bpts );
+                }
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 dc.DrawPolygons( 2, l_iAllPointsSizes, l_AllPoints);
                 delete [] l_AllPoints;
@@ -372,6 +386,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         } 
         
     }
+    wxLogMessage( _("DrawGL: Calling ODPath::DrawGL") );
     ODPath::DrawGL( piVP );
 #else
     wxLogMessage( _("Boundary not drawn as OpenGL not available in this build") );
