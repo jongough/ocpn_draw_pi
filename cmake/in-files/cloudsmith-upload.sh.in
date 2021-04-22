@@ -214,7 +214,7 @@ pwd
 ls -la
 ls -la ~/.
 
-if [ -z "$LOCAL_DEPLOY" ]; then
+if [ "$LOCAL_DEPLOY" = "true" ]; then
     if [ -d "/home/circleci/circleci-output" ]; then
         sudo cp build/*.gz ~/circleci-output
     else
