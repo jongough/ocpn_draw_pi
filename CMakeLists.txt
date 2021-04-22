@@ -342,6 +342,7 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
+    include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
 
     include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
     #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
