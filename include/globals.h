@@ -111,7 +111,7 @@ extern ODRolloverWin           *g_pODRolloverWin;
 extern SelectItem              *g_pRolloverPathSeg;
 extern SelectItem              *g_pRolloverPoint;
 extern PI_ColorScheme          g_global_color_scheme;
-
+extern bool                    g_bOpenGL;
 
 extern wxColour    g_colourActiveBoundaryLineColour;
 extern wxColour    g_colourInActiveBoundaryLineColour;

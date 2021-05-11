@@ -245,7 +245,7 @@ set(OCPNSRC
     ocpnsrc/georef.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
-    ocpnsrc/TexFont.cpp
+#    ocpnsrc/TexFont.cpp
 )
 set(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
@@ -257,7 +257,7 @@ set(OCPNHDRS
     ocpninclude/Hyperlink.h
     ocpninclude/ocpn_plugin.h
     ocpninclude/SelectItem.h
-    ocpninclude/TexFont.h
+#    ocpninclude/TexFont.h
     ocpninclude/timers.h
     ocpninclude/vector2D.h
     ocpninclude/wx28compat.h
@@ -344,11 +344,15 @@ if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
     include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
 
-    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
-    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
-    add_subdirectory(libs/plugingl)
-    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
+#    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
+#    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
+#    add_subdirectory(libs/plugingl)
+#    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 endif(QT_ANDROID)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
+#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
+add_subdirectory(libs/plugingl)
+target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 

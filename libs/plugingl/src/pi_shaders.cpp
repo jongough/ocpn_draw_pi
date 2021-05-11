@@ -21,11 +21,11 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
 
+#ifdef USE_ANDROID_GLES2    
 #include "pi_shaders.h"
 
 #include "linmath.h"
 
-#ifdef USE_ANDROID_GLES2    
 #include "qdebug.h"
 
 #include <gl2.h>
@@ -33,43 +33,39 @@
 // Simple colored triangle shader
 
 static const GLchar* color_tri_vertex_shader_source =
-    "attribute vec2 position;\n"
+    "attribute vec2 aPos;\n"
     "uniform mat4 MVMatrix;\n"
     "uniform mat4 TransformMatrix;\n"
-    "uniform vec4 color;\n"
-    "varying vec4 fragColor;\n"
     "void main() {\n"
-    "   fragColor = color;\n"
-    "   gl_Position = MVMatrix * TransformMatrix * vec4(position, 0.0, 1.0);\n"
+    "   gl_Position = MVMatrix * TransformMatrix * vec4(aPos, 0.0, 1.0);\n"
     "}\n";
 
     static const GLchar* color_tri_fragment_shader_source =
     "precision lowp float;\n"
-    "varying vec4 fragColor;\n"
+    "uniform vec4 uColour;\n"
     "void main() {\n"
-    "   gl_FragColor = fragColor;\n"
+    "   gl_FragColor = uColour;\n"
     "}\n";
 
 //  Array colored triangle shader
     static const GLchar* colorv_tri_vertex_shader_source =
-    "attribute vec2 position;\n"
-    "attribute vec4 colorv;\n"
+    "attribute vec2 aPos;\n"
     "uniform mat4 MVMatrix;\n"
     "uniform mat4 TransformMatrix;\n"
-    "varying vec4 fragColor;\n"
     "void main() {\n"
-    "   fragColor = colorv;\n"
-    "   gl_Position = MVMatrix * TransformMatrix * vec4(position, 0.0, 1.0);\n"
+    "   gl_Position = MVMatrix * TransformMatrix * vec4(aPos, 0.0, 1.0);\n"
     "}\n";
     
     static const GLchar* colorv_tri_fragment_shader_source =
     "precision lowp float;\n"
-    "varying vec4 fragColor;\n"
+    "uniform vec4 uColour;\n"
     "void main() {\n"
-    "   gl_FragColor = fragColor;\n"
+    "   gl_FragColor = uColour;\n"
     "}\n";
     
     // Simple 2D texture shader
+    //    "   gl_Position = MVMatrix * TransformMatrix * vec4(aPos, 0.0, 1.0);\n"
+
 static const GLchar* texture_2D_vertex_shader_source =
     "attribute vec2 aPos;\n"
     "attribute vec2 aUV;\n"
@@ -81,12 +77,16 @@ static const GLchar* texture_2D_vertex_shader_source =
     "   varCoord = aUV;\n"
     "}\n";
 
+    //    "   gl_FragColor = texture2D(uTexture, varCoord) * varColour;\n"
+    //"   gl_FragColor = texture2D(uTexture, varCoord);\n"
+
 static const GLchar* texture_2D_fragment_shader_source =
     "precision lowp float;\n"
-    "uniform sampler2D uTex;\n"
+    "uniform usampler2D uTexture;\n"
+    "uniform vec4 uColour;\n"
     "varying vec2 varCoord;\n"
     "void main() {\n"
-    "   gl_FragColor = texture2D(uTex, varCoord);\n"
+    "   gl_FragColor = texture2D(uTexture, varCoord) * uColour;\n"
     "}\n";
 
     // Fade Texture shader
@@ -106,14 +106,14 @@ static const GLchar* fade_texture_2D_vertex_shader_source =
     
 static const GLchar* fade_texture_2D_fragment_shader_source =
     "precision highp float;\n"
-    "uniform sampler2D uTex;\n"
-    "uniform sampler2D uTex2;\n"
+    "uniform sampler2D uTexture;\n"
+    "uniform sampler2D uTexture2;\n"
     "uniform lowp float texAlpha;\n"
     "varying vec2 varCoord;\n"
     "varying vec2 varCoord2;\n"
     "void main() {\n"
-    "   mediump vec4 texColor = texture2D(uTex, varCoord);\n"
-    "   mediump vec4 texTwoColor = texture2D(uTex2, varCoord2);\n"
+    "   mediump vec4 texColor = texture2D(uTexture, varCoord);\n"
+    "   mediump vec4 texTwoColor = texture2D(uTexture2, varCoord2);\n"
     "   gl_FragColor = ((texTwoColor * (1.0 - texAlpha)) + (texColor * texAlpha));\n"
     "}\n";
     
@@ -158,10 +158,10 @@ static const GLchar* circle_filled_fragment_shader_source =
     
     static const GLchar* FBO_texture_2D_fragment_shader_source =
     "precision lowp float;\n"
-    "uniform sampler2D uTex;\n"
+    "uniform sampler2D uTexture;\n"
     "varying vec2 varCoord;\n"
     "void main() {\n"
-    "   gl_FragColor = texture2D(uTex, varCoord);\n"
+    "   gl_FragColor = texture2D(uTexture, varCoord);\n"
     "}\n";
     
 

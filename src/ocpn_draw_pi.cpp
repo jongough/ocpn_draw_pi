@@ -151,7 +151,7 @@ ODRolloverWin           *g_pODRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
 SelectItem              *g_pRolloverPoint;
 PI_ColorScheme          g_global_color_scheme;
-
+bool                    g_bOpenGL;
 
 wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
@@ -523,6 +523,8 @@ int ocpn_draw_pi::Init(void)
     eventsEnabled = true;
 
     g_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
+
+    g_bOpenGL = false;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     //m_parent_window = GetOCPNCanvasWindow();
@@ -3022,6 +3024,7 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
 
 bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 {
+    g_bOpenGL = false;
     m_VP = *pivp;
     g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
@@ -3035,6 +3038,7 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
+    g_bOpenGL = false;
     return RenderOverlays(dc, pivp);
 }
 
@@ -3059,6 +3063,7 @@ bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index)
 {
+    g_bOpenGL = false;
     m_current_canvas_index = canvas_index;
     bool bRet = RenderOverlays(dc, vp);
     return bRet;
@@ -3066,6 +3071,7 @@ bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int c
 
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
+    g_bOpenGL = true;
     return RenderGLOverlays(pcontext, pivp);
 }
 
@@ -3096,6 +3102,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index) 
 {
+    g_bOpenGL = true;
     m_current_canvas_index = canvas_index;
     bool bRet = RenderGLOverlays(pcontext, vp);
     return bRet;
@@ -4213,7 +4220,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color,
                                   unsigned char transparency )
 {
-#if 0    
+#if 1
     wxDC *pdc = dc.GetDC();
     if( pdc ) {
         //    Get wxImage of area of interest
@@ -4285,6 +4292,7 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
             dc.DrawRoundedRectangle( x, y, size_x, size_y, radius );
         }
         else {
+#ifndef USE_ANDROID_GLES2
             glColor4ub( color.Red(), color.Green(), color.Blue(), transparency );
             glBegin( GL_QUADS );
             glVertex2i( x, y );
@@ -4292,6 +4300,7 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
             glVertex2i( x + size_x, y + size_y );
             glVertex2i( x, y + size_y );
             glEnd();
+#endif
         }
         glDisable( GL_BLEND );
 #else

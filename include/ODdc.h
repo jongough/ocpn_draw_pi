@@ -146,9 +146,9 @@ public:
     ViewPort    *s_odc_tessVP;
     GLint        s_odc_activeProgram;
 
+#endif
     GLUtesselator *m_tobj;
 
-#endif
 
 protected:
     void DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset=0, wxCoord yoffset=0 );

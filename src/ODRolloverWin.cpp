@@ -34,6 +34,11 @@
 #include "ODdc.h"
 #include "timers.h"
 
+extern bool         g_bOpenGL;
+#ifdef ocpnUSE_GL
+extern GLenum       g_texture_rectangle_format;
+#endif
+
 BEGIN_EVENT_TABLE(ODRolloverWin, wxWindow)
     EVT_PAINT(ODRolloverWin::OnPaint)
     EVT_TIMER(ROLLOVER_TIMER, ODRolloverWin::OnTimer)
@@ -52,6 +57,8 @@ ODRolloverWin::ODRolloverWin( wxWindow *parent, int timeout ) :
     m_mmouse_propogate = 0;
     isActive = false;
     m_plabelFont = NULL;
+    m_texture = 0;
+
     Hide();
 }
 
@@ -59,6 +66,7 @@ ODRolloverWin::~ODRolloverWin()
 {
     m_timer_timeout.Stop();
     delete m_pbm;
+    glDeleteTextures(1, &m_texture);
 }
 void ODRolloverWin::OnTimer( wxTimerEvent& event )
 {
@@ -80,7 +88,19 @@ void ODRolloverWin::SetBitmap( int rollover )
     wxDC* cdc = new wxScreenDC();
 //    wxPoint canvasPos = GetParent()->GetScreenPosition();
     wxPoint canvasPos = m_parent->GetScreenPosition();
-    
+
+
+#ifdef ocpnUSE_GL
+    bool usegl = g_bOpenGL;
+
+#ifdef __WXOSX__
+    usegl = false;
+#endif
+
+#else
+    bool usegl = false;
+#endif
+
     wxMemoryDC mdc;
     delete m_pbm;
     m_pbm = new wxBitmap( m_size.x, m_size.y, -1 );
@@ -118,6 +138,43 @@ void ODRolloverWin::SetBitmap( int rollover )
     }
 
     SetSize( m_position.x, m_position.y, m_size.x, m_size.y );   // Assumes a nominal 32 x 32 cursor
+
+#ifdef ocpnUSE_GL
+    if(usegl) {
+        if(!m_texture) {
+            glGenTextures( 1, &m_texture );
+            wxString msg;
+
+            glBindTexture( g_texture_rectangle_format, m_texture );
+            glTexParameterf( g_texture_rectangle_format, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            glTexParameteri( g_texture_rectangle_format, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            glTexParameteri( g_texture_rectangle_format, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+            glTexParameteri( g_texture_rectangle_format, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+
+        } else {
+            glBindTexture( g_texture_rectangle_format, m_texture );
+        }
+
+        // make texture data
+        wxImage image = m_pbm->ConvertToImage();
+
+        unsigned char *d = image.GetData();
+        unsigned char *e = new unsigned char[4*m_size.x*m_size.y];
+        for(int y = 0; y<m_size.y; y++) {
+            for(int x = 0; x<m_size.x; x++) {
+                int i = y * m_size.x + x;
+                memcpy(e+4*i, d+3*i, 3);
+                e[4*i+3] = 255 - d[3*i+2];
+            }
+            glTexImage2D( g_texture_rectangle_format, 0, GL_RGBA,
+                          m_size.x, m_size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, e );
+        }
+        delete [] e;
+        glDisable(g_texture_rectangle_format);
+        glDisable(GL_BLEND);
+
+    }
+#endif
 
     // Retrigger the auto timeout
     if( m_timeout_sec > 0 ) m_timer_timeout.Start( m_timeout_sec * 1000, wxTIMER_ONE_SHOT );

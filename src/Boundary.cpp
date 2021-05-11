@@ -123,10 +123,7 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
-    wxLogMessage( _("In Draw") );
-
     if ( m_bVisible && m_pODPointList->GetCount() > 2) {
-        wxLogMessage( _("Draw: visible & GetCount > 2") );
 
         int l_iBoundaryPointCount = 0;
         m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
@@ -140,7 +137,6 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
 #if wxUSE_GRAPHICS_CONTEXT == 1
-            wxLogMessage( _("Draw: wxUSE_GRAPHICS_CONTEXT = 1") );
 
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
@@ -165,7 +161,6 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->FillPath( path );
             delete wxGC;
 #else
-            wxLogMessage( _("Draw: wxUSE_GRAPHICS_CONTEXT != 1") );
 
             dc.DrawPolygonTessellated(m_pODPointList->GetCount(), m_bpts);
 #endif
@@ -247,24 +242,18 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         wxDELETEA( m_bpts );
     }
 
-    wxLogMessage( _("Draw: call ODPath::Draw") );
 
     ODPath::Draw( dc, piVP );
 }
 
 void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
-    wxLogMessage( _("In DrawGL") );
 #ifdef ocpnUSE_GL
     if ( !m_bVisible ) return;
-    wxLogMessage( _("DrawGL: visible") );
     ODDC dc;
     dc.SetVP(&piVP);
-    
     if(m_pODPointList->GetCount() > 2 ) {
-        wxLogMessage( _("DrawGL: GetCount > 2") );
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
-            wxLogMessage( _("DrawGL: g_bExclusionBoundary") );
             wxPoint *l_AllPoints = NULL;
             int     l_iAllPointsSizes[2];
             int l_iBoundaryPointCount = 0;
@@ -348,29 +337,34 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 
             GLuint textureID;
             glGenTextures(1, &textureID);
+            glActiveTexture(GL_TEXTURE0);
             glBindTexture( GL_TEXTURE_2D, textureID );
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
             dc.SetTextureParms( textureID, 16, 16 );
-            glEnable( GL_TEXTURE_2D );
+
             glEnable( GL_BLEND );
+            glEnable( GL_ALPHA );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 #ifndef ANDROID
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-#endif            
+            glEnable( GL_TEXTURE_2D );
+#endif
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
 
             if( m_bExclusionBoundary ) {
-                if(m_bIsBeingCreated)
+                if(m_bIsBeingCreated) {
                     dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts );
+                }
                 else {
-                    wxLogMessage( _("In Boundary: DrawPolygon") );
                     dc.DrawPolygon( m_pODPointList->GetCount() - 1, m_bpts );
                 }
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
@@ -378,7 +372,9 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 delete [] l_AllPoints;
             }
             glDisable( GL_BLEND );
+#ifndef ANDROID
             glDisable( GL_TEXTURE_2D );
+#endif
             glDeleteTextures(1, &textureID);
 
             wxDELETEA( m_bpts );
@@ -386,7 +382,6 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
         } 
         
     }
-    wxLogMessage( _("DrawGL: Calling ODPath::DrawGL") );
     ODPath::DrawGL( piVP );
 #else
     wxLogMessage( _("Boundary not drawn as OpenGL not available in this build") );

@@ -14,7 +14,7 @@ set(CMLOC "CMakeLists_PLUGINGL: ")
 message(STATUS "${CMLOC}Building PluginGL")
 SET(SRC_PLUGINGL
           src/pi_shaders.cpp
-          src/pi_TexFont.cpp
+#          src/pi_TexFont.cpp
           )
 
 if(UNIX)
