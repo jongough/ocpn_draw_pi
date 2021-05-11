@@ -245,7 +245,7 @@ set(OCPNSRC
     ocpnsrc/georef.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
-#    ocpnsrc/TexFont.cpp
+    ocpnsrc/TexFont.cpp
 )
 set(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
@@ -257,7 +257,7 @@ set(OCPNHDRS
     ocpninclude/Hyperlink.h
     ocpninclude/ocpn_plugin.h
     ocpninclude/SelectItem.h
-#    ocpninclude/TexFont.h
+    ocpninclude/TexFont.h
     ocpninclude/timers.h
     ocpninclude/vector2D.h
     ocpninclude/wx28compat.h
