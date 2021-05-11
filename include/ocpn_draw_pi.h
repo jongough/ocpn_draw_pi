@@ -130,10 +130,17 @@ typedef enum ColorScheme : int
     N_COLOR_SCHEMES
 }_ColorScheme;
 
+#ifndef __OCPN__ANDROID__
+#include <GL/gl.h>
+#include <GL/glu.h>
+#else
+#include "qopengl.h"                  // this gives us the qt runtime gles2.h
+#include "GL/gl_private.h"
+#endif
+
 #include "wxWTranslateCatalog.h"
 #include "ocpn_plugin.h"
 #include "globals.h"
-#include "ocpn_plugin.h"
 #include "ODUndo.h"
 #include "ODPoint.h"
 #include "ODConfig.h"
@@ -152,6 +159,7 @@ typedef enum ColorScheme : int
 #include <wx/fileconf.h>
 #include <wx/dynarray.h>
 #include <list>
+
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition

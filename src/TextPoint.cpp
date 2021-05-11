@@ -39,13 +39,6 @@
 #include <wx/stattext.h>
 #include <wx/dc.h>
 
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include "GL/gl_private.h"
-#endif
-
 // Fix for VS2010 not having the round function
 #if defined (_WIN32)
 #if defined (_MSC_VER)
