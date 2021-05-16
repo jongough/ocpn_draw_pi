@@ -71,6 +71,7 @@ if [ "$CIRCLECI" ] || [ "$TRAVIS" ]; then
                     fi
                 fi
             fi
+            pip install -U pip
             python3 -m pip install cloudsmith-cli
             pyenv rehash
         elif dnf --version 2>&1 >/dev/null; then
