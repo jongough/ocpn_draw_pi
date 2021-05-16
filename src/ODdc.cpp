@@ -1887,7 +1887,6 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
 
 void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle )
 {
-    wxLogMessage("DrawPolygonPattern");
     if( dc )
         dc->DrawPolygon( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
@@ -1926,7 +1925,6 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             //GLint program = pi_texture_2D_shader_program;
             //GLint program = pi_colorv_tri_shader_program;
             glUseProgram( program );
-            //checkGlError("glUseProgram: ", "ODDC", __LINE__);
             
             // Get pointers to the attributes in the program.
             // Position of vertex(s)
@@ -2013,8 +2011,6 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 workBuf[7] = y1;
 
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-                //glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_BYTE, workBuf);
-
                 checkGlError("glDrawArrays(GL_TRIANGLE_STRIP)", "ODDC", __LINE__);
             }
             else if(n == 3){
@@ -2030,7 +2026,7 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             if(ConfigureBrush())        // Check for transparent brush
                 DrawPolygonTessellatedPattern( n, points, textureID, textureSize, xoffset, yoffset);
         }
-        #endif
+#endif
 
         SetGLAttrs( false ); 
         
@@ -2805,7 +2801,6 @@ void ODDC::DrawPolygons(int n, int npoint[], wxPoint points[], wxCoord xoffset, 
         
 void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle)
 {
-    wxLogMessage("DrawPolygonsPattern");
 #ifndef ANDROID
 
     DrawPolygonsTessellated( n, npoint, points);
