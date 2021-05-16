@@ -30,6 +30,8 @@
 
 #include <gl2.h>
 
+#include "wx/log.h"
+
 // Simple colored triangle shader
 
 static const GLchar* color_tri_vertex_shader_source =
@@ -71,22 +73,23 @@ static const GLchar* texture_2D_vertex_shader_source =
     "attribute vec2 aUV;\n"
     "uniform mat4 MVMatrix;\n"
     "uniform mat4 TransformMatrix;\n"
-    "varying vec2 varCoord;\n"
+    "varying vec2 varTextureCoord;\n"
     "void main() {\n"
-    "   gl_Position = MVMatrix * TransformMatrix * vec4(aPos, 0.0, 1.0);\n"
-    "   varCoord = aUV;\n"
+    "   gl_Position =  MVMatrix * vec4(aPos, 0.0, 1.0);\n"
+    "   varTextureCoord = aUV;\n"
     "}\n";
 
     //    "   gl_FragColor = texture2D(uTexture, varCoord) * varColour;\n"
     //"   gl_FragColor = texture2D(uTexture, varCoord);\n"
+    //    "   gl_FragColor = texture2D(uTexture, varCoord) * uColour;\n"
 
 static const GLchar* texture_2D_fragment_shader_source =
     "precision lowp float;\n"
-    "uniform usampler2D uTexture;\n"
+    "uniform sampler2D uTexture;\n"
     "uniform vec4 uColour;\n"
-    "varying vec2 varCoord;\n"
+    "varying vec2 varTextureCoord;\n"
     "void main() {\n"
-    "   gl_FragColor = texture2D(uTexture, varCoord) * uColour;\n"
+    "   gl_FragColor = texture2D(uTexture, varTextureCoord) * uColour;\n"
     "}\n";
 
     // Fade Texture shader
@@ -211,6 +214,7 @@ bool pi_loadShaders()
       if (!success) {
           glGetShaderInfoLog(pi_color_tri_vertex_shader, INFOLOG_LEN, NULL, infoLog);
         printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
+        wxLogMessage(infoLog);
         ret_val = false;
       }
     }
@@ -224,6 +228,7 @@ bool pi_loadShaders()
       if (!success) {
           glGetShaderInfoLog(pi_color_tri_fragment_shader, INFOLOG_LEN, NULL, infoLog);
         printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
+        wxLogMessage(infoLog);
         ret_val = false;
      }
     }
@@ -236,8 +241,9 @@ bool pi_loadShaders()
       glLinkProgram(pi_color_tri_shader_program);
       glGetProgramiv(pi_color_tri_shader_program, GL_LINK_STATUS, &success);
       if (!success) {
-          glGetProgramInfoLog(pi_color_tri_shader_program, INFOLOG_LEN, NULL, infoLog);
+        glGetProgramInfoLog(pi_color_tri_shader_program, INFOLOG_LEN, NULL, infoLog);
         printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
+        wxLogMessage(infoLog);
         ret_val = false;
       }
     }
@@ -253,6 +259,7 @@ bool pi_loadShaders()
         if (!success) {
             glGetShaderInfoLog(pi_colorv_tri_vertex_shader, INFOLOG_LEN, NULL, infoLog);
             printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
+            wxLogMessage(infoLog);
             ret_val = false;
         }
     }
@@ -266,6 +273,7 @@ bool pi_loadShaders()
         if (!success) {
             glGetShaderInfoLog(pi_colorv_tri_fragment_shader, INFOLOG_LEN, NULL, infoLog);
             printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
+            wxLogMessage(infoLog);
             ret_val = false;
         }
     }
@@ -280,6 +288,7 @@ bool pi_loadShaders()
         if (!success) {
             glGetProgramInfoLog(pi_colorv_tri_shader_program, INFOLOG_LEN, NULL, infoLog);
             printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
+            wxLogMessage(infoLog);
             ret_val = false;
         }
     }
@@ -295,6 +304,7 @@ bool pi_loadShaders()
       if (!success) {
           glGetShaderInfoLog(pi_texture_2D_vertex_shader, INFOLOG_LEN, NULL, infoLog);
         printf("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n%s\n", infoLog);
+        wxLogMessage(infoLog);
         ret_val = false;
       }
     }
@@ -308,6 +318,7 @@ bool pi_loadShaders()
       if (!success) {
           glGetShaderInfoLog(pi_texture_2D_fragment_shader, INFOLOG_LEN, NULL, infoLog);
         printf("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n%s\n", infoLog);
+        wxLogMessage(infoLog);
         ret_val = false;
       }
     }
@@ -322,6 +333,7 @@ bool pi_loadShaders()
       if (!success) {
           glGetProgramInfoLog(pi_texture_2D_shader_program, INFOLOG_LEN, NULL, infoLog);
         printf("ERROR::SHADER::PROGRAM::LINKING_FAILED\n%s\n", infoLog);
+        wxLogMessage(infoLog);
         ret_val = false;
       }
     }
