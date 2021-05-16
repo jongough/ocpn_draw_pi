@@ -40,7 +40,7 @@
 
 #ifdef USE_ANDROID_GLES2
     #include "linmath.h"
-    static void checkGlError(const char* op);
+    static void checkGlError(const char* op, const char* filename, int linenumber);
 #endif    
 
 class ViewPort;
@@ -129,7 +129,6 @@ public:
 
     wxDC *GetDC() const { return dc; }
 
-    void SetTextureSize( int width, int height );
     void SetTextureParms( GLint textureId, int width, int height );
 
 #ifdef ocpnUSE_GL     

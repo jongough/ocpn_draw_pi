@@ -172,7 +172,8 @@ void ODRolloverWin::SetBitmap( int rollover )
         delete [] e;
         glDisable(g_texture_rectangle_format);
         glDisable(GL_BLEND);
-
+        glDeleteTextures(1, &m_texture);
+        m_texture = 0;
     }
 #endif
 

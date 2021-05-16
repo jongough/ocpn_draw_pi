@@ -329,7 +329,9 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 
             GLuint textureID;
             glGenTextures(1, &textureID);
+#ifdef ANDROID
             glActiveTexture(GL_TEXTURE0);
+#endif
             glBindTexture( GL_TEXTURE_2D, textureID );
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
@@ -341,8 +343,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
             dc.SetTextureParms( textureID, 16, 16 );
 
-            glEnable( GL_BLEND );
             glEnable( GL_ALPHA );
+            glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 #ifndef ANDROID
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
