@@ -17,7 +17,7 @@ parameters:
         default: true
     run_build_trusty:
         type: boolean
-        default: true
+        default: false
     run_build_xenial:
         type: boolean
         default: true
@@ -158,6 +158,13 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - run: sudo apt install software-properties-common
+            - run: sudo add-apt-repository ppa:deadsnakes/ppa -y
+            - run: sudo apt update
+            - run: sudo apt install -y python3.7
+            - run: sudo rm /usr/bin/python3
+            - run: sudo ln -s /usr/bin/python3.7 /usr/bin/python3
+            - run: sudo python3 -m pip install --upgrade pip
             - cloudsmith/ensure-api-key
             - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
@@ -381,8 +388,8 @@ jobs:
     build-android-armhf:
         docker:
         #- image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
-        - image: circleci/android:api-28-ndk
-        #- image: api-28-ndk-jon
+        #- image: circleci/android:api-28-ndk
+        - image: api-28-ndk-jon
         environment:
         - OCPN_TARGET:  android-armhf
         steps:
