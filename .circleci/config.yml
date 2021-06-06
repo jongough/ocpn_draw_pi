@@ -388,8 +388,8 @@ jobs:
     build-android-armhf:
         docker:
         #- image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
-        #- image: circleci/android:api-28-ndk
-        - image: api-28-ndk-jon
+        - image: circleci/android:api-28-ndk
+        #- image: api-28-ndk-jon
         environment:
         - OCPN_TARGET:  android-armhf
         steps:
@@ -400,10 +400,10 @@ jobs:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
             - run: ci/cloudsmith-upload.sh
-            # the next process relies on circleci local being run with "--volume --volume <full path to directory for build> /circleci-output:/home/circleci/circleci-output"
-            # it will copy the generated gz file to the local drive so that it can be tested without neededing cloudsmith for the deployment. It is adised to use the "-e DONT_DEPLOY=true"
-            # setting on the circleci command line as this will supress the deploy to cloudsmith whilst generating all the required deployment files
-            #- run: sudo cp build/*.gz ~/circleci-output
+            # local copy of generated output requires that circleci be run with the following command:
+            # circleci local execute --job build-xenial -e CIRCLECI_LOCAL=true -e CLOUDSMITH_API_KEY="123" --volume </location/of/output directory on build machine>:/home/circleci/circleci-output -e LOCAL_DEPLOY=true
+            # If running local but local copy of output is not required then remove 'LOCLA_DEPLOY' environment variable
+            # For LOCAL_DEPLOY the CLOUDSMITH_API_KEY can be any number, for Cloudsmith deploy it must be a real API Key
 workflows:
     build_1:
         when: <<pipeline.parameters.run_build_armhf_stretch>>
