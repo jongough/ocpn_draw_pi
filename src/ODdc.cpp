@@ -1915,14 +1915,28 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 workBuf = (float *)realloc(workBuf, (n*2) * sizeof(float));
                 workBufSize = (size_t)n*2 ;
             }
-            
+            int min_x;
+            int min_y;
+            int max_x;
+            int max_y
             for( int i = 0; i < n; i++ ){
+                if(i == 0) {
+                    min_x = max_x = points[i].x;
+                    min_y = max_y = points[i].y;
+                } else {
+                    if(min_x > points[i].x) min_x = points[i].x;
+                    if(max_x < points[i].x) max_x = points[i].x;
+                    if(min_y > points[i].y) min_y = points[i].y;
+                    if(max_y < points[i].y) max_y = points[i].y;
+                }
+
                 workBuf[i*2] = (points[i].x * scale); // + xoffset;
                 workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
+
             }
 
-            GLint program = pi_color_tri_shader_program;
-            //GLint program = pi_texture_2D_shader_program;
+            //GLint program = pi_color_tri_shader_program;
+            GLint program = pi_texture_2D_shader_program;
             //GLint program = pi_colorv_tri_shader_program;
             glUseProgram( program );
             
@@ -2014,6 +2028,11 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 checkGlError("glDrawArrays(GL_TRIANGLE_STRIP)", "ODDC", __LINE__);
             }
             else if(n == 3){
+                GLFloat UVCoords[] = { (points[0].x - min_x)/width, (points[0].y - min_y)/height,
+                                        (points[1].x - min_x)/width, (points[1].y - min_y)/height,
+                                        (points[2].x - min_x)/width, (points[2].y - min_y)/height
+                };
+                glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), uvCoords );
                 glDrawArrays(GL_TRIANGLES, 0, 3);
                 checkGlError("glDrawArrays(GL_TRIANGLES)", "ODDC", __LINE__);
             }

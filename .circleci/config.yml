@@ -63,12 +63,14 @@ orbs:
 
 jobs:
     build-armhf-stretch:
-        machine: true
+        machine:
+            image: ubuntu-2004:202104-01
         environment:
         - OCPN_TARGET=stretch-armhf
         - DOCKER_IMAGE=balenalib/raspberry-pi-debian:stretch
         - BUILD_FLAGS=-j3
         - BUILD_ENV=raspbian
+        - DEPLOY_USE_ORB: true
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -78,14 +80,18 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - cloudsmith/ensure-api-key
+            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-armhf-buster:
-        machine: true
+        machine:
+            image: ubuntu-2004:202104-01
         environment:
         - OCPN_TARGET=buster-armhf
         - DOCKER_IMAGE=balenalib/raspberry-pi-debian:buster
         - BUILD_FLAGS=-j3
         - BUILD_ENV=raspbian
+        - DEPLOY_USE_ORB: true
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -95,6 +101,8 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - cloudsmith/ensure-api-key
+            - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
     build-armhf-bionic-64:
         machine:
@@ -135,6 +143,14 @@ jobs:
         - when:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
+            - run: sudo apt install software-properties-common
+            - run: sudo add-apt-repository ppa:deadsnakes/ppa -y
+            - run: sudo apt update
+            - run: sudo apt install -y python3.7
+            - run: ls -la /usr/bin/python*
+            - run: sudo rm /usr/bin/python3
+            - run: sudo ln -s /usr/bin/python3.7 /usr/bin/python3
+            - run: ls -la /usr/bin/python*
             - cloudsmith/ensure-api-key
             - cloudsmith/install-cli
             - run: ci/cloudsmith-upload.sh
@@ -177,8 +193,6 @@ jobs:
         steps:
         - checkout
         - run: >
-            echo "deb http://au.archive.ubuntu.com/ubuntu/ bionic main restricted" | cat - /etc/apt/sources.list | sudo tee /etc/apt/sources.list
-        - run: >
             echo "deb-src http://us.archive.ubuntu.com/ubuntu/ bionic main"
             | sudo tee -a /etc/apt/sources.list
         - run: >
@@ -203,8 +217,6 @@ jobs:
         steps:
         - checkout
         - run: >
-            echo "deb http://au.archive.ubuntu.com/ubuntu/ bionic main restricted" | cat - /etc/apt/sources.list | sudo tee /etc/apt/sources.list
-        - run: >
             echo "deb-src http://us.archive.ubuntu.com/ubuntu/ bionic main"
             | sudo tee -a /etc/apt/sources.list
         - run: >
@@ -228,7 +240,6 @@ jobs:
         steps:
         - checkout
         - run: >
-            echo "deb http://mirror.internode.on.net/pub/ubuntu/ubuntu/ focal-updates main" |sudo tee -a /etc/apt/sources.list
             echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal main" | sudo tee -a /etc/apt/sources.list
         - run: >
             echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal-updates main" | sudo tee -a /etc/apt/sources.list
@@ -243,7 +254,7 @@ jobs:
             - run: ci/cloudsmith-upload.sh
     build-focal-gtk3:
         docker:
-        - image: circleci/buildpack-deps:focal-scm@sha256:474c197da9bc34d829350198710282dfc03fcda9ff356bb666513f3351b5bf8b
+        - image: circleci/buildpack-deps:focal-scm
         environment:
         - BUILD_GTK3: true
         - OCPN_TARGET: focal-gtk3
@@ -251,14 +262,11 @@ jobs:
         steps:
         - checkout
         - run: >
-            echo "deb http://mirror.internode.on.net/pub/ubuntu/ubuntu/ focal-updates main" |sudo tee -a /etc/apt/sources.list
+            echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal main"
+            | sudo tee -a /etc/apt/sources.list
         - run: >
-            echo "deb http://mirror.internode.on.net/pub/ubuntu/ubuntu/ focal main" |sudo tee -a /etc/apt/sources.list
-#            echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal main"
-#            | sudo tee -a /etc/apt/sources.list
-#        - run: >
-#            echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal-updates main"
-#            | sudo tee -a /etc/apt/sources.list
+            echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal-updates main"
+            | sudo tee -a /etc/apt/sources.list
         - run: cat /etc/apt/sources.list
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
@@ -373,7 +381,6 @@ jobs:
             - run: ci/cloudsmith-upload.sh
     build-android-arm64:
         docker:
-        #- image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
         - image: circleci/android:api-28-ndk
         environment:
         - OCPN_TARGET:  android-arm64
@@ -387,9 +394,7 @@ jobs:
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
         docker:
-        #- image: circleci/android:api-28-ndk@sha256:5eda43632ee1accf6e3cf2c3980ce68e579552a8c90d8e1f6753c3862541f04e
         - image: circleci/android:api-28-ndk
-        #- image: api-28-ndk-jon
         environment:
         - OCPN_TARGET:  android-armhf
         steps:
@@ -400,10 +405,10 @@ jobs:
             condition: <<pipeline.parameters.run_workflow_deploy>>
             steps:
             - run: ci/cloudsmith-upload.sh
-            # local copy of generated output requires that circleci be run with the following command:
-            # circleci local execute --job build-xenial -e CIRCLECI_LOCAL=true -e CLOUDSMITH_API_KEY="123" --volume </location/of/output directory on build machine>:/home/circleci/circleci-output -e LOCAL_DEPLOY=true
-            # If running local but local copy of output is not required then remove 'LOCLA_DEPLOY' environment variable
-            # For LOCAL_DEPLOY the CLOUDSMITH_API_KEY can be any number, for Cloudsmith deploy it must be a real API Key
+            # the next process relies on circleci local being run with "--volume --volume <full path to directory for build> /circleci-output:/home/circleci/circleci-output"
+            # it will copy the generated gz file to the local drive so that it can be tested without neededing cloudsmith for the deployment. It is adised to use the "-e DONT_DEPLOY=true"
+            # setting on the circleci command line as this will supress the deploy to cloudsmith whilst generating all the required deployment files
+            #- run: sudo cp build/*.gz ~/circleci-output
 workflows:
     build_1:
         when: <<pipeline.parameters.run_build_armhf_stretch>>
@@ -439,17 +444,18 @@ workflows:
 #                    - tmp
 #                tags:
 #                    only: /.*/
-    build_4:
-        when: <<pipeline.parameters.run_build_trusty>>
-        jobs:
-        - build-trusty:
-            filters:
-                branches:
-                    ignore:
-                    - devel
-                    - tmp
-                tags:
-                    only: /.*/
+# Trusty is depricated so will not be built
+#    build_4:
+#        when: <<pipeline.parameters.run_build_trusty>>
+#        jobs:
+#        - build-trusty:
+#            filters:
+#                branches:
+#                    ignore:
+#                    - devel
+#                    - tmp
+#                tags:
+#                    only: /.*/
     build_5:
         when: <<pipeline.parameters.run_build_xenial>>
         jobs:
