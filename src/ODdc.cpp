@@ -1918,7 +1918,7 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             int min_x;
             int min_y;
             int max_x;
-            int max_y
+            int max_y;
             for( int i = 0; i < n; i++ ){
                 if(i == 0) {
                     min_x = max_x = points[i].x;
