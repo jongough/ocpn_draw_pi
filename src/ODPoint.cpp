@@ -36,8 +36,6 @@
 #include "ODdc.h"
 
 #ifdef USE_ANDROID_GLES2
-//#include "ODShaders.h"
-//#include "pi_shaders.h"
 //#include "/usr/include/GLES2/gl2.h"
 #include <gl2.h>
 #include "linmath.h"

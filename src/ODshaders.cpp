@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #ifdef USE_ANDROID_GLES2    
-#include "pi_shaders.h"
+#include "ODshaders.h"
 
 #include "linmath.h"
 
@@ -65,9 +65,6 @@ static const GLchar* color_tri_vertex_shader_source =
     "   gl_FragColor = uColour;\n"
     "}\n";
     
-    // Simple 2D texture shader
-    //    "   gl_Position = MVMatrix * TransformMatrix * vec4(aPos, 0.0, 1.0);\n"
-
 static const GLchar* texture_2D_vertex_shader_source =
     "attribute vec2 aPos;\n"
     "attribute vec2 aUV;\n"
@@ -78,10 +75,6 @@ static const GLchar* texture_2D_vertex_shader_source =
     "   gl_Position =  MVMatrix * vec4(aPos, 0.0, 1.0);\n"
     "   varTextureCoord = aUV;\n"
     "}\n";
-
-    //    "   gl_FragColor = texture2D(uTexture, varCoord) * varColour;\n"
-    //"   gl_FragColor = texture2D(uTexture, varCoord);\n"
-    //    "   gl_FragColor = texture2D(uTexture, varCoord) * uColour;\n"
 
 static const GLchar* texture_2D_fragment_shader_source =
     "precision lowp float;\n"

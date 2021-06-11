@@ -31,8 +31,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "6")
-set(VERSION_TWEAK "17")
-set(VERSION_DATE "06/06/2021") # DD/MM/YYYY format
+set(VERSION_TWEAK "18")
+set(VERSION_DATE "11/06/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -163,6 +163,7 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
+    src/ODshaders.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -223,6 +224,7 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
+    include/ODshaders.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
@@ -344,15 +346,9 @@ if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
     include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
 
-#    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
 #    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
-#    add_subdirectory(libs/plugingl)
-#    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 endif(QT_ANDROID)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/plugingl/include)
 #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
-add_subdirectory(libs/plugingl)
-target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
 

@@ -394,10 +394,13 @@ jobs:
             - run: ci/cloudsmith-upload.sh
     build-android-armhf:
         docker:
-        - image: circleci/android:api-28-ndk
+#        - image: circleci/android:api-28-ndk
+        - image: api-28-ndk-jon
         environment:
         - OCPN_TARGET:  android-armhf
         steps:
+        - run: echo $APT_PROXY
+        - run: echo "Acquire::http::Proxy \"http://192.168.1.1:3142\";" | sudo tee -a /etc/apt/apt.conf.d/00aptcache
         - checkout
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-armhf.sh

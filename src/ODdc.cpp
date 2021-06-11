@@ -38,7 +38,7 @@
 
 #ifdef USE_ANDROID_GLES2
 //#include "ODShaders.h"
-#include "pi_shaders.h"
+#include "ODshaders.h"
 //#include "/usr/include/GLES2/gl2.h"
 #include <gl2.h>
 #include "linmath.h"
@@ -68,6 +68,14 @@ bool        g_bTexture2D;
 int         g_iTextureHeight;
 int         g_iTextureWidth;
 GLint       g_textureId;
+
+#ifdef USE_ANDROID_GLES2
+int         g_min_x;
+int         g_min_y;
+int         g_max_x;
+int         g_max_y;
+#endif
+
 
 //----------------------------------------------------------------------------
 /* pass the dc to the constructor, or NULL to use opengl */
@@ -113,6 +121,7 @@ ODDC::~ODDC()
     
 #ifdef USE_ANDROID_GLES2
     free(s_odc_tess_work_buf);
+    free(s_odc_tess_tex_buf);
 #endif    
 }
 
@@ -134,11 +143,13 @@ void ODDC::Init()
 
 #ifdef USE_ANDROID_GLES2
     s_odc_tess_work_buf = NULL;
+    s_odc_tess_tex_buf = NULL;
     s_odc_tess_vertex_idx = 0;
     s_odc_tess_vertex_idx_this = 0;
     s_odc_tess_buf_len = 0;
     
     s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
+    s_odc_tess_tex_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
     s_odc_tess_buf_len = 100;
  
     pi_loadShaders();
@@ -1902,7 +1913,7 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
         ConfigurePen();
         glEnable( GL_BLEND );
         
-        if(n > 4) {
+        if(n > 3) {
            if(ConfigureBrush()) {       // Check for transparent brush
                 DrawPolygonTessellatedPattern( n, points, textureID, textureSize, xoffset, yoffset);
             }
@@ -1915,19 +1926,10 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 workBuf = (float *)realloc(workBuf, (n*2) * sizeof(float));
                 workBufSize = (size_t)n*2 ;
             }
-            int min_x;
-            int min_y;
-            int max_x;
-            int max_y;
             for( int i = 0; i < n; i++ ){
                 if(i == 0) {
-                    min_x = max_x = points[i].x;
-                    min_y = max_y = points[i].y;
-                } else {
-                    if(min_x > points[i].x) min_x = points[i].x;
-                    if(max_x < points[i].x) max_x = points[i].x;
-                    if(min_y > points[i].y) min_y = points[i].y;
-                    if(max_y < points[i].y) max_y = points[i].y;
+                    g_min_x = g_max_x = points[i].x;
+                    g_min_y = g_max_y = points[i].y;
                 }
 
                 workBuf[i*2] = (points[i].x * scale); // + xoffset;
@@ -2023,16 +2025,24 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
                 workBuf[5] = workBuf[7];
                 workBuf[6] = x1;
                 workBuf[7] = y1;
+                GLfloat UVCoords[] = {
+                    GLfloat((workBuf[0] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[1] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[2] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[3] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[4] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[5] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[6] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[7] - g_min_y)/g_iTextureHeight/2)
+                };
+                glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), UVCoords );
 
                 glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
                 checkGlError("glDrawArrays(GL_TRIANGLE_STRIP)", "ODDC", __LINE__);
             }
             else if(n == 3){
-                GLFloat UVCoords[] = { (points[0].x - min_x)/width, (points[0].y - min_y)/height,
-                                        (points[1].x - min_x)/width, (points[1].y - min_y)/height,
-                                        (points[2].x - min_x)/width, (points[2].y - min_y)/height
+                GLfloat UVCoords[] = {
+                    GLfloat((workBuf[0] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[1] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[2] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[3] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[4] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[5] - g_min_y)/g_iTextureHeight/2)
                 };
-                glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), uvCoords );
+                glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), UVCoords );
                 glDrawArrays(GL_TRIANGLES, 0, 3);
                 checkGlError("glDrawArrays(GL_TRIANGLES)", "ODDC", __LINE__);
             }
@@ -2136,6 +2146,20 @@ static void odc_combineCallbackD(GLdouble coords[3],
 //     odc_combine_work_data.push_back(vertex);
 //     memcpy(vertex, coords, 3*(sizeof *coords));
 //     *dataOut = vertex;
+    GLvertex *vertex;
+
+    vertex = new GLvertex();
+    gTesselatorVertices.Add(vertex );
+
+    vertex->info.x = coords[0];
+    vertex->info.y = coords[1];
+    vertex->info.z = coords[2];
+
+    for( int i = 3; i < 6; i++ ) {
+        vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
+    }
+
+    *dataOut = &(vertex->data[0]);
 }
 
 void odc_vertexCallbackD_GLSL(GLvoid *vertex, void *data)
@@ -2147,12 +2171,16 @@ void odc_vertexCallbackD_GLSL(GLvoid *vertex, void *data)
     {
         int new_buf_len = pDC->s_odc_tess_buf_len + 100;
         GLfloat * tmp = pDC->s_odc_tess_work_buf;
-        
+        GLfloat * tmp1 = pDC->s_odc_tess_tex_buf;
+
         pDC->s_odc_tess_work_buf = (GLfloat *)realloc(pDC->s_odc_tess_work_buf, new_buf_len * sizeof(GLfloat));
+        pDC->s_odc_tess_tex_buf = (GLfloat *)realloc(pDC->s_odc_tess_tex_buf, new_buf_len * sizeof(GLfloat));
         if (NULL == pDC->s_odc_tess_work_buf)
         {
             free(tmp);
+            free(tmp1);
             tmp = NULL;
+            tmp1 = NULL;
         }
         else
             pDC->s_odc_tess_buf_len = new_buf_len;
@@ -2160,10 +2188,14 @@ void odc_vertexCallbackD_GLSL(GLvoid *vertex, void *data)
     
     GLdouble *pointer = (GLdouble *) vertex;
     
+    int i_vertexid = pDC->s_odc_tess_vertex_idx;
     pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx++] = (float)pointer[0];
     pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx++] = (float)pointer[1];
+    pDC->s_odc_tess_tex_buf[i_vertexid++] = (float)((pointer[0] - g_min_x) / g_iTextureWidth) / 2;
+    pDC->s_odc_tess_tex_buf[i_vertexid] = (float)((pointer[1] - g_min_y) / g_iTextureHeight) / 2;
 
     pDC->s_odc_nvertex++;
+
 }
 
 void odc_beginCallbackD_GLSL( GLenum mode, void *data)
@@ -2201,6 +2233,12 @@ void odc_endCallbackD_GLSL(void *data)
 
 //    GLint matloc = glGetUniformLocation(program, "MVMatrix");
 //    glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)s_tessVP.vp_transform);
+
+    GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+    checkGlError("mUvAttrib", "ODDC", __LINE__);
+    float *bufTex = &(pDC->s_odc_tess_tex_buf[pDC->s_odc_tess_vertex_idx_this]);
+    glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), bufTex );
+    checkGlError("glVertexAttribPointer( mUvAttrib)", "ODDC", __LINE__);
 
     float colorv[4];
     wxColour c = pDC->GetBrush().GetColour();
@@ -2453,8 +2491,8 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
 
 //
 #else
-        GLint program = pi_colorv_tri_shader_program;
-        //GLint program = pi_texture_2D_shader_program;
+        //GLint program = pi_colorv_tri_shader_program;
+        GLint program = pi_texture_2D_shader_program;
         s_odc_activeProgram = program;
         glUseProgram( program );
             
@@ -2826,8 +2864,8 @@ void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textu
 
 #else
         // Pre-configure the GLES program
-        GLint program = pi_colorv_tri_shader_program;
-        //GLint program = pi_texture_2D_shader_program;
+        //GLint program = pi_colorv_tri_shader_program;
+        GLint program = pi_texture_2D_shader_program;
         s_odc_activeProgram = program;
         
         glUseProgram( program );

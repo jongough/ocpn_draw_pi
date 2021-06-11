@@ -133,6 +133,7 @@ public:
 
 #ifdef ocpnUSE_GL     
     GLfloat     *s_odc_tess_work_buf;
+    GLfloat     *s_odc_tess_tex_buf;
 #endif
 
 #ifdef USE_ANDROID_GLES2
