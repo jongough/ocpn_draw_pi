@@ -40,7 +40,6 @@
 
 #ifdef USE_ANDROID_GLES2
     #include "linmath.h"
-    static void checkGlError(const char* op, const char* filename, int linenumber);
 #endif    
 
 class ViewPort;

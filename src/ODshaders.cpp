@@ -82,7 +82,7 @@ static const GLchar* texture_2D_fragment_shader_source =
     "uniform vec4 uColour;\n"
     "varying vec2 varTextureCoord;\n"
     "void main() {\n"
-    "   gl_FragColor = texture2D(uTexture, varTextureCoord) * uColour;\n"
+    "   gl_FragColor = (texture2D(uTexture, varTextureCoord) + vec4(uColour.rgb,0.0)) * vec4(1.0,1.0,1.0,uColour.a);\n"
     "}\n";
 
     // Fade Texture shader
@@ -92,6 +92,7 @@ static const GLchar* fade_texture_2D_vertex_shader_source =
     "attribute vec2 aUV;\n"
     "attribute vec2 aUV2;\n"
     "uniform mat4 MVMatrix;\n"
+    "uniform mat4 TransformMatrix;\n"
     "varying vec2 varCoord;\n"
     "varying vec2 varCoord2;\n"
     "void main() {\n"
@@ -146,6 +147,7 @@ static const GLchar* circle_filled_fragment_shader_source =
     "attribute vec2 aPos;\n"
     "attribute vec2 aUV;\n"
     "uniform mat4 MVMatrix;\n"
+    "uniform mat4 TransformMatrix;\n"
     "varying vec2 varCoord;\n"
     "void main() {\n"
     "   gl_Position = MVMatrix * vec4(aPos, 0.0, 1.0);\n"
@@ -161,29 +163,29 @@ static const GLchar* circle_filled_fragment_shader_source =
     "}\n";
     
 
-    GLint pi_color_tri_fragment_shader;
-    GLint pi_color_tri_shader_program;
-    GLint pi_color_tri_vertex_shader;
+    GLint pi_color_tri_fragment_shader = 0;
+    GLint pi_color_tri_shader_program = 0;
+    GLint pi_color_tri_vertex_shader = 0;
 
-    GLint pi_colorv_tri_fragment_shader;
-    GLint pi_colorv_tri_shader_program;
-    GLint pi_colorv_tri_vertex_shader;
+    GLint pi_colorv_tri_fragment_shader = 0;
+    GLint pi_colorv_tri_shader_program = 0;
+    GLint pi_colorv_tri_vertex_shader = 0;
     
-    GLint pi_texture_2D_fragment_shader;
-    GLint pi_texture_2D_shader_program;
-    GLint pi_texture_2D_vertex_shader;
+    GLint pi_texture_2D_fragment_shader = 0;
+    GLint pi_texture_2D_shader_program = 0;
+    GLint pi_texture_2D_vertex_shader = 0;
 
-//     GLint fade_texture_2D_fragment_shader;
-//     GLint fade_texture_2D_shader_program;
-//     GLint fade_texture_2D_vertex_shader;
+    //     GLint fade_texture_2D_fragment_shader = 0;
+    //     GLint fade_texture_2D_shader_program = 0;
+    //     GLint fade_texture_2D_vertex_shader = 0;
 
-    GLint pi_circle_filled_shader_program;
-    GLint pi_circle_filled_vertex_shader;
-    GLint pi_circle_filled_fragment_shader;
+    GLint pi_circle_filled_shader_program = 0;
+    GLint pi_circle_filled_vertex_shader = 0;
+    GLint pi_circle_filled_fragment_shader = 0;
 
-//     GLint FBO_texture_2D_fragment_shader;
-//     GLint FBO_texture_2D_shader_program;
-//     GLint FBO_texture_2D_vertex_shader;
+    //     GLint FBO_texture_2D_fragment_shader = 0;
+    //     GLint FBO_texture_2D_shader_program = 0;
+    //     GLint FBO_texture_2D_vertex_shader = 0;
     
 bool pi_loadShaders()
 {

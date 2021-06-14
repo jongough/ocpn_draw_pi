@@ -4,6 +4,11 @@ if (TARGET ocpn::nmea0183)
     return ()
 endif ()
 
+set(SAVE_CMLOC_NMEA0183 ${CMLOC})
+set(CMLOC "CMakeLists_NMEA0183: ")
+
+message(STATUS "${CMLOC}Building nmea0183")
+
 if (NOT CMAKE_MODULE_PATH)
   set (CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake)
 endif ()
@@ -59,6 +64,7 @@ SET(SRC
 
 )
 if (NOT wxWidgets_INCLUDE_DIRS)
+    message(STATUS "${CMLOC}Including SimpleWxConfig")
     include(SimpleWxConfig)
     SimpleWxConfig()
 endif ()
@@ -71,3 +77,5 @@ add_library(ocpn::nmea0183 ALIAS NMEA0183)
 set_property(TARGET NMEA0183 PROPERTY COMPILE_FLAGS "${OBJ_VISIBILITY}")
 target_include_directories(NMEA0183 PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories(NMEA0183 PRIVATE ${wxWidgets_INCLUDE_DIRS})
+
+set(CMLOC ${SAVE_CMLOC_NMEA0183})

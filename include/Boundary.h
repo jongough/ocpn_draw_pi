@@ -26,6 +26,10 @@
 
 #include "ODPath.h"
 
+#ifdef USE_ANDROID_GLES2
+#include "linmath.h"
+#endif
+
 class Boundary : public ODPath
 {
     public:

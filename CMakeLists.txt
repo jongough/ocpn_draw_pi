@@ -263,10 +263,6 @@ set(OCPNHDRS
     ocpninclude/timers.h
     ocpninclude/vector2D.h
     ocpninclude/wx28compat.h
-    ocpninclude/GL/gl.h
-    ocpninclude/GL/glext.h
-    ocpninclude/GL/gl_private.h
-    ocpninclude/GL/glu.h
 )
 set(EXTSRC
     extsrc/clipper.cpp
@@ -344,7 +340,7 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
-    include_directories( ${CMAKE_SOURCE_DIR}/libs/glshim/include/GLES )
+    include_directories( ${CMAKE_SOURCE_DIR}/extinclude/GLES2)
 
 #    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
 endif(QT_ANDROID)
