@@ -331,8 +331,10 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             checkGlError("Before glGenTextures", __FILE__, __LINE__);
             glGenTextures(1, &textureID);
             checkGlError("glGenTextures", __FILE__, __LINE__);
+#ifndef ANDROID
             glActiveTexture(GL_TEXTURE0);
             checkGlError("glActiveTexture", __FILE__, __LINE__);
+#endif
             glBindTexture( GL_TEXTURE_2D, textureID );
             checkGlError("glBindTexture", __FILE__, __LINE__);
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
