@@ -25,7 +25,7 @@
 #include "BoundaryPoint.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
-//#include "cutil.h"
+#include "ODUtils.h"
 #include "clipper.hpp"
 
 #ifdef __WXMSW__
@@ -328,27 +328,41 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             };        
 
             GLuint textureID;
+            checkGlError("Before glGenTextures", __FILE__, __LINE__);
             glGenTextures(1, &textureID);
-#ifdef ANDROID
+            checkGlError("glGenTextures", __FILE__, __LINE__);
             glActiveTexture(GL_TEXTURE0);
-#endif
+            checkGlError("glActiveTexture", __FILE__, __LINE__);
             glBindTexture( GL_TEXTURE_2D, textureID );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+            checkGlError("glBindTexture", __FILE__, __LINE__);
 
             glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
             glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
             glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
             glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
 
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             dc.SetTextureParms( textureID, 16, 16 );
 
-            glEnable( GL_ALPHA );
             glEnable( GL_BLEND );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            checkGlError("glBindTexture", __FILE__, __LINE__);
+
 #ifndef ANDROID
+            glEnable( GL_ALPHA );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glEnable( GL_TEXTURE_2D );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
 #endif
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
@@ -365,11 +379,16 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 dc.DrawPolygons( 2, l_iAllPointsSizes, l_AllPoints);
                 delete [] l_AllPoints;
             }
+
             glDisable( GL_BLEND );
+            checkGlError("glDisable", __FILE__, __LINE__);
+
 #ifndef ANDROID
             glDisable( GL_TEXTURE_2D );
+            checkGlError("glDisable", __FILE__, __LINE__);
 #endif
             glDeleteTextures(1, &textureID);
+            checkGlError("glDeleteTextures", __FILE__, __LINE__);
 
             wxDELETEA( m_bpts );
             
@@ -465,3 +484,5 @@ void Boundary::RemovePointFromPath(ODPoint* point, ODPath* path)
     
     ODPath::RemovePointFromPath(point, path);
 }
+
+
