@@ -37,9 +37,7 @@
 #endif
 
 #ifdef USE_ANDROID_GLES2
-//#include "ODShaders.h"
-#include "ODshaders.h"
-//#include "/usr/include/GLES2/gl2.h"
+#include "ODShaders.h"
 #include <gl2.h>
 #include "linmath.h"
 #endif
@@ -1953,7 +1951,6 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             //GLint program = pi_color_tri_shader_program;
             checkGlError("Before glUseProgram", "ODDC", __LINE__);
             GLint program = pi_texture_2D_shader_program;
-            wxLogMessage("Program ID: %i", program);
             //GLint program = pi_colorv_tri_shader_program;
             glUseProgram( program );
             checkGlError("glUseProgram", "ODDC", __LINE__);
@@ -1998,8 +1995,6 @@ void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize te
             checkGlError("bcolloc", "ODDC", __LINE__);
             glUniform4fv(bcolloc, 1, bcolorv);
             checkGlError("glUniform4fv(bcolloc", "ODDC", __LINE__);
-            wxLogMessage("Colour: Red: %d, Green: %d, Blue: %d, Alpha: %d", m_brush.GetColour().Red(), m_brush.GetColour().Green(), m_brush.GetColour().Blue(), m_brush.GetColour().Alpha());
-            wxLogMessage("bcolorv: Red: %f, Green: %f, Blue: %f, Alpha: %f", bcolorv[0], bcolorv[1], bcolorv[2], bcolorv[3]);
 
             // Only a triangle can be convex all the time
             if(n == 3){
@@ -2775,6 +2770,8 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
 #ifdef ocpnUSE_GL
     else {
 #ifndef ANDROID        
+        m_tobj = gluNewTess();
+
         gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCPatternvertexCallback );
         gluTessCallback( m_tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCPatternbeginCallback );
         gluTessCallback( m_tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCPatternendCallback );

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -16,11 +16,11 @@
 #include <wx/colour.h>
 #include <wx/settings.h>
 #include <wx/string.h>
+#include <wx/sizer.h>
+#include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/button.h>
-#include <wx/sizer.h>
 #include <wx/panel.h>
 #include <wx/notebook.h>
 #include <wx/dialog.h>
@@ -38,6 +38,8 @@ class PathAndPointManagerDialogDef : public wxDialog
 	private:
 
 	protected:
+		void Create();
+
 		wxBoxSizer* m_bSizerDialog;
 		wxNotebook* m_notebookPathAndPointManager;
 		wxPanel* m_panelPath;
@@ -71,7 +73,7 @@ class PathAndPointManagerDialogDef : public wxDialog
 		wxButton* m_buttonExportAllVisible;
 		wxButton* m_buttonOK;
 
-		// Virtual event handlers, overide them in your derived class
+		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnTabSwitch( wxNotebookEvent& event ) { event.Skip(); }
 		virtual void OnPathToggleVisibility( wxMouseEvent& event ) { event.Skip(); }

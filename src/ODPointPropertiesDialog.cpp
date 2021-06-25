@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 21 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -10,24 +10,12 @@
 ///////////////////////////////////////////////////////////////////////////
 
 ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{}
+void ODPointPropertiesDialog::Create()
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_SizerDialogBox = new wxBoxSizer( wxVERTICAL );
-
-        m_SizerButtons = new wxBoxSizer( wxHORIZONTAL );
-
-        m_OK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-        m_SizerButtons->Add( m_OK, 0, wxALL|wxFIXED_MINSIZE, 5 );
-
-        m_Cancel = new wxButton( this, wxID_ANY, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-
-        m_Cancel->SetDefault();
-        m_SizerButtons->Add( m_Cancel, 0, wxALL, 5 );
-
-
-        m_SizerDialogBox->Add( m_SizerButtons, 0, wxEXPAND|wxFIXED_MINSIZE, 5 );
-
 
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_scrolledWindowBasicProperties = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
@@ -437,6 +425,18 @@ ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID i
 
 	m_SizerDialogBox->Add( m_notebookProperties, 1, wxEXPAND | wxALL, 5 );
 
+	m_SizerButtons = new wxBoxSizer( wxHORIZONTAL );
+
+	m_OK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_SizerButtons->Add( m_OK, 0, wxALL|wxFIXED_MINSIZE, 5 );
+
+	m_Cancel = new wxButton( this, wxID_ANY, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
+
+	m_Cancel->SetDefault();
+	m_SizerButtons->Add( m_Cancel, 0, wxALL, 5 );
+
+
+	m_SizerDialogBox->Add( m_SizerButtons, 0, wxEXPAND|wxFIXED_MINSIZE, 5 );
 
 
 	this->SetSizer( m_SizerDialogBox );

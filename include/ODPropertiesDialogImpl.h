@@ -79,6 +79,7 @@ public:
     void UpdateProperties( void );
     void SetDialogSize( void );
     wxFontDialog  *m_pfdDialog;
+
     
 private:
     void        SetTableCellBackgroundColours(void);
@@ -96,6 +97,10 @@ private:
     int         m_iTextPointTextMaxWidthType;
     wxColour    m_cRed;
     wxColour    m_cGreen;
+    int         m_CharWidth;
+    int         m_CharHeight;
+    wxFont      *m_dialogLabelFont;
+
 };
 
 #endif // __ODPropertiesDialogImpl__

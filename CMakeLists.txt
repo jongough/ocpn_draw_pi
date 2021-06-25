@@ -31,8 +31,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "6")
-set(VERSION_TWEAK "18")
-set(VERSION_DATE "11/06/2021") # DD/MM/YYYY format
+set(VERSION_TWEAK "20")
+set(VERSION_DATE "25/06/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -163,7 +163,7 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
-    src/ODshaders.cpp
+    src/ODShaders.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -224,7 +224,7 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
-    include/ODshaders.h
+    include/ODShaders.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h

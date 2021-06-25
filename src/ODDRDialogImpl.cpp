@@ -47,6 +47,11 @@
 ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
 {
     SetGlobalLocale();
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    Create();
+
 #if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);
     wxFloatingPointValidator<double> dLengthVal(3, &m_dLengthValidator, wxNUM_VAL_DEFAULT);

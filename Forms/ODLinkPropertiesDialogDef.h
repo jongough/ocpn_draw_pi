@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 21 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -20,10 +20,10 @@
 #include <wx/filepicker.h>
 #include <wx/sizer.h>
 #include <wx/statbox.h>
+#include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/button.h>
 #include <wx/dialog.h>
 
 #include "extra_formbuilder_headers.h"
@@ -39,6 +39,8 @@ class ODLinkPropertiesDialogDef : public wxDialog
 	private:
 
 	protected:
+		void Create();
+
 		wxStaticText* m_staticTextLinkDescription;
 		wxTextCtrl* m_textCtrlLinkDescription;
 		wxStaticText* m_staticTextURL;
@@ -47,7 +49,7 @@ class ODLinkPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 
-		// Virtual event handlers, overide them in your derived class
+		// Virtual event handlers, override them in your derived class
 		virtual void OnFileChanged( wxFileDirPickerEvent& event ) { event.Skip(); }
 		virtual void OnOKClick( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnCancelClick( wxCommandEvent& event ) { event.Skip(); }

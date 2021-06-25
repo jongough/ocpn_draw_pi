@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 21 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -10,10 +10,18 @@
 ///////////////////////////////////////////////////////////////////////////
 
 ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+{}
+void ODPropertiesDialogDef::Create()
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_SizerProperties = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer10;
+	bSizer10 = new wxBoxSizer( wxVERTICAL );
+
+	wxBoxSizer* bSizer121;
+	bSizer121 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelGeneral = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
@@ -91,7 +99,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
 	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -100,7 +108,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 
 	wxFlexGridSizer* fgSizerBoundarySettingsColours;
 	fgSizerBoundarySettingsColours = new wxFlexGridSizer( 0, 4, 0, 0 );
-	fgSizerBoundarySettingsColours->SetFlexibleDirection( wxBOTH );
+	fgSizerBoundarySettingsColours->SetFlexibleDirection( wxVERTICAL );
 	fgSizerBoundarySettingsColours->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_staticTextActiveBoundayLineColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Active Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -190,7 +198,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelBoundary->SetSizer( fgSizerBoundarySettings );
 	m_panelBoundary->Layout();
 	fgSizerBoundarySettings->Fit( m_panelBoundary );
-	m_notebookProperties->AddPage( m_panelBoundary, _("Boundary"), false );
+	m_notebookProperties->AddPage( m_panelBoundary, _("Boundary"), true );
 	m_panelBoundaryPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizerOCPNPoint;
 	bSizerOCPNPoint = new wxBoxSizer( wxVERTICAL );
@@ -1460,7 +1468,7 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	m_panelAbout->SetSizer( bSizerAbout );
 	m_panelAbout->Layout();
 	bSizerAbout->Fit( m_panelAbout );
-	m_notebookProperties->AddPage( m_panelAbout, _("About"), true );
+	m_notebookProperties->AddPage( m_panelAbout, _("About"), false );
 	m_panelHelp = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxFlexGridSizer* fgSizer22;
 	fgSizer22 = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -1483,21 +1491,21 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	// Columns
 	m_gridODWDInteractions->EnableDragColMove( false );
 	m_gridODWDInteractions->EnableDragColSize( false );
-	m_gridODWDInteractions->SetColLabelSize( 0 );
 	m_gridODWDInteractions->SetColLabelValue( 0, _("WD") );
 	m_gridODWDInteractions->SetColLabelValue( 1, _("All") );
 	m_gridODWDInteractions->SetColLabelValue( 2, _("Exclusion") );
 	m_gridODWDInteractions->SetColLabelValue( 3, _("Inclusion") );
 	m_gridODWDInteractions->SetColLabelValue( 4, _("Neither") );
+	m_gridODWDInteractions->SetColLabelSize( 0 );
 	m_gridODWDInteractions->SetColLabelAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
 
 	// Rows
 	m_gridODWDInteractions->EnableDragRowSize( true );
-	m_gridODWDInteractions->SetRowLabelSize( 0 );
 	m_gridODWDInteractions->SetRowLabelValue( 0, _("OD") );
 	m_gridODWDInteractions->SetRowLabelValue( 1, _("Exclusion") );
 	m_gridODWDInteractions->SetRowLabelValue( 2, _("Inclusion") );
 	m_gridODWDInteractions->SetRowLabelValue( 3, _("Neither") );
+	m_gridODWDInteractions->SetRowLabelSize( 0 );
 	m_gridODWDInteractions->SetRowLabelAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
 
 	// Label Appearance
@@ -1529,19 +1537,34 @@ ODPropertiesDialogDef::ODPropertiesDialogDef( wxWindow* parent, wxWindowID id, c
 	fgSizer48->Fit( m_panelLicense );
 	m_notebookProperties->AddPage( m_panelLicense, _("License"), false );
 
-	m_SizerProperties->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
+	bSizer121->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
+
+
+	bSizer10->Add( bSizer121, 1, wxEXPAND, 5 );
+
+
+	m_SizerProperties->Add( bSizer10, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizerOKCancelApply;
 	bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );
 
+	wxBoxSizer* bSizer111;
+	bSizer111 = new wxBoxSizer( wxHORIZONTAL );
+
+
+	bSizer111->Add( 0, 0, 1, wxEXPAND, 5 );
+
 	m_buttonOK = new wxButton( this, wxID_ANY, _("&OK"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonOK, 0, wxALL, 5 );
+	bSizer111->Add( m_buttonOK, 0, wxALL, 5 );
 
 	m_buttonCancel = new wxButton( this, wxID_ANY, _("&Cancel"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonCancel, 0, wxALL, 5 );
+	bSizer111->Add( m_buttonCancel, 0, wxALL, 5 );
 
 	m_buttonApply = new wxButton( this, wxID_ANY, _("&Apply"), wxDefaultPosition, wxDefaultSize, 0 );
-	bSizerOKCancelApply->Add( m_buttonApply, 0, wxALL, 5 );
+	bSizer111->Add( m_buttonApply, 0, wxALL, 5 );
+
+
+	bSizerOKCancelApply->Add( bSizer111, 1, wxALIGN_RIGHT|wxEXPAND, 5 );
 
 
 	m_SizerProperties->Add( bSizerOKCancelApply, 0, wxEXPAND, 5 );

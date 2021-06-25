@@ -35,6 +35,11 @@ ODLinkPropertiesDialogImpl::ODLinkPropertiesDialogImpl( wxWindow* parent )
 :
 ODLinkPropertiesDialogDef( parent )
 {
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    Create();
+
     Layout();
     Fit();
     

@@ -22,7 +22,7 @@
  **************************************************************************/
 
 #ifdef USE_ANDROID_GLES2    
-#include "ODshaders.h"
+#include "ODShaders.h"
 
 #include "linmath.h"
 

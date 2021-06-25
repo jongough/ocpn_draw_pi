@@ -426,35 +426,42 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     m_parent_window = parent;
     m_iPage = -1;
     m_bCtrlDown = false;
+
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    Create();
+
+    GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, m_dialogLabelFont);
+
+    wxDialog::EnableLayoutAdaptation(true);
+    wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
     
-    long style = wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER;
-    #ifdef __WXOSX__
+#ifdef __WXOSX__
+    long style = GetWindowStyle();
     style |= wxSTAY_ON_TOP;
-    #endif
-    
-    
-    wxFont *qFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
-    SetFont( *qFont );
-    
+    SetWindowStyleFlag(style);
+    Refresh();
+#endif
+
+    Create();
+
     m_lastODPointItem = -1;
     m_lastPathItem = -1;
     
-    m_listCtrlPath->InsertColumn( colPATHVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 40 );
-    m_listCtrlPath->InsertColumn( colPATHNAME, _("Path Name"), wxLIST_FORMAT_LEFT, 120 );
-    m_listCtrlPath->InsertColumn( colPATHDESC, _("Desc"), wxLIST_FORMAT_LEFT, 230 );
+    m_listCtrlPath->InsertColumn( colPATHVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
+    m_listCtrlPath->InsertColumn( colPATHNAME, _("Path Name"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
+    m_listCtrlPath->InsertColumn( colPATHDESC, _("Desc"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
     m_listCtrlODPoints->InsertColumn( colOCPNPOINTICON, _("Icon"), wxLIST_FORMAT_LEFT, 44 );
-    m_listCtrlODPoints->InsertColumn( colOCPNPOINTNAME, _("OD Point Name"), wxLIST_FORMAT_LEFT, 180 );
-    m_listCtrlODPoints->InsertColumn( colOCPNPOINTDIST, _("Distance from Ownship"), wxLIST_FORMAT_LEFT, 180 );
-    m_listCtrlLayers->InsertColumn( colLAYVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, 44 );
-    m_listCtrlLayers->InsertColumn( colLAYNAME, _("Layer Name"), wxLIST_FORMAT_LEFT, 250 );
-    m_listCtrlLayers->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, 100 );
+    m_listCtrlODPoints->InsertColumn( colOCPNPOINTNAME, _("OD Point Name"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
+    m_listCtrlODPoints->InsertColumn( colOCPNPOINTDIST, _("Distance from Ownship"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
+    m_listCtrlLayers->InsertColumn( colLAYVISIBLE, _("Show"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
+    m_listCtrlLayers->InsertColumn( colLAYNAME, _("Layer Name"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
+    m_listCtrlLayers->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
 
-    m_bSizerPathButtons->CalcMin();
-    RecalculateSize();
-    Fit();
-    
-    SetMinSize( GetBestSize() );
-    
+    int l_lastpage = m_notebookPathAndPointManager->ChangeSelection(m_panelPath->GetId());
+    m_panelPath->SetFocus();
+
     if(g_iDefaultPathAnPointManagerDialogPostionX == -1 || g_iDefaultPathAnPointManagerDialogPostionY == -1) Center();
     else SetPosition(wxPoint(g_iDefaultPathAnPointManagerDialogPostionX, g_iDefaultPathAnPointManagerDialogPostionY));
     
@@ -470,15 +477,22 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     m_listCtrlLayers->SetImageList( imglist, wxIMAGE_LIST_SMALL );
     
     SetColorScheme();
-    
     SetImportButtonText();
+//    m_buttonImport->SetFont(*m_dialogLabelFont);
+//    m_buttonExportAllVisible->SetFont(*m_dialogLabelFont);
+//    m_buttonOK->SetFont(*m_dialogLabelFont);
     UpdatePathListCtrl();
     UpdateODPointsListCtrl();
     UpdateLayerListCtrl();
-    
+
+    RecalculateSize();
+
+    this-Layout();
+
+    SetSizerAndFit(m_bSizerDialog);
+
     // This should work under Linux :-(
     //m_notebookPathAndPointManager->Connect(wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, wxNotebookEventHandler(PathAndPointManagerDialogImpl::OnTabSwitch), NULL, this);
-    
 }
 
 PathAndPointManagerDialogImpl::~PathAndPointManagerDialogImpl()
@@ -496,6 +510,8 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void)
     if( !m_notebookPathAndPointManager ) return;
     int current_page = m_notebookPathAndPointManager->GetSelection();
     
+    m_buttonImport->SetFont(*m_dialogLabelFont);
+
     switch (current_page)
     {
         case 0: {
@@ -526,15 +542,10 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void)
         }
         case 2: {
             // Layer
-            m_buttonImport->Disable();
-            //            if( m_listCtrlLayers ) {
-//                UpdateLayerListCtrl();
-//                wxString l_sLabel = _("I&mport");
-//                l_sLabel.Append(_T(" "));
-//                l_sLabel.Append(_("gpx"));
-//                l_sLabel.Append(_T("..."));
-//                m_buttonImport->SetLabel(l_sLabel);
-//            }
+            if( m_listCtrlLayers ) {
+                m_buttonImport->Disable();
+                UpdateLayerListCtrl();
+            }
             break;
         }            
         case wxNOT_FOUND:
@@ -543,6 +554,7 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void)
         default:
             break;
     }
+
 }
 
 void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
@@ -640,6 +652,15 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
     PIL *l_pPIL = NULL;
     
     if(inpath->m_sTypeString == wxT( "Boundary") ) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pBoundaryPropDialog) {
+                delete g_pBoundaryPropDialog;
+                g_pBoundaryPropDialog = NULL;
+            }
+        }
+
         if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
             g_pBoundaryPropDialog = new BoundaryProp( m_parent_window );
         g_pODPathPropDialog = g_pBoundaryPropDialog;
@@ -648,6 +669,15 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pBoundaryPropDialog->SetPath( l_pBoundary );
         g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
     } else if(inpath->m_sTypeString == wxT("EBL")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pEBLPropDialog) {
+                delete g_pEBLPropDialog;
+                g_pEBLPropDialog = NULL;
+            }
+        }
+
         if( NULL == g_pEBLPropDialog )          // There is one global instance of the ELBProp Dialog
             g_pEBLPropDialog = new EBLProp( m_parent_window );
         g_pODPathPropDialog = g_pEBLPropDialog;
@@ -656,6 +686,15 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pEBLPropDialog->SetPath( l_pEBL );
         g_pEBLPropDialog->UpdateProperties( l_pEBL );
     } else if(inpath->m_sTypeString == wxT("DR")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pDRPropDialog) {
+                delete g_pDRPropDialog;
+                g_pDRPropDialog = NULL;
+            }
+        }
+
         if( NULL == g_pDRPropDialog )          // There is one global instance of the DRProp Dialog
             g_pDRPropDialog = new DRProp( m_parent_window );
         g_pODPathPropDialog = g_pDRPropDialog;
@@ -664,6 +703,15 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pDRPropDialog->SetPath( l_pDR );
         g_pDRPropDialog->UpdateProperties( l_pDR );
     } else if(inpath->m_sTypeString == wxT("Guard Zone")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pGZPropDialog) {
+                delete g_pGZPropDialog;
+                g_pGZPropDialog = NULL;
+            }
+        }
+
         if( NULL == g_pGZPropDialog )          // There is one global instance of the DRProp Dialog
             g_pGZPropDialog = new GZProp( m_parent_window );
         g_pODPathPropDialog = g_pGZPropDialog;
@@ -672,6 +720,15 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pGZPropDialog->SetPath( l_pGZ );
         g_pGZPropDialog->UpdateProperties( l_pGZ );
     } else if(inpath->m_sTypeString == wxT("PIL")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pPILPropDialog) {
+                delete g_pPILPropDialog;
+                g_pPILPropDialog = NULL;
+            }
+        }
+
         if( NULL == g_pPILPropDialog )          // There is one global instance of the ELBProp Dialog
             g_pPILPropDialog = new PILProp( m_parent_window );
         g_pODPathPropDialog = g_pPILPropDialog;
@@ -680,6 +737,15 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         g_pPILPropDialog->SetPath( l_pPIL );
         g_pPILPropDialog->UpdateProperties( l_pPIL );
     } else {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pODPathPropDialog) {
+                delete g_pODPathPropDialog;
+                g_pODPathPropDialog = NULL;
+            }
+        }
+
         if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
             g_pODPathPropDialog = new ODPathPropertiesDialogImpl( m_parent_window );
         l_pPath = inpath;
@@ -1006,9 +1072,12 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
         m_listCtrlPath->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
     
-    this->GetSizer()->Fit( this );
-    this->Layout();
-    
+    //this->GetSizer()->Fit( this );
+    //this->Layout();
+    m_bSizerPathButtons->Layout();
+    SetSizerAndFit(m_bSizerDialog);
+
+
 }
 
 void PathAndPointManagerDialogImpl::UpdatePathButtons()
@@ -1021,6 +1090,13 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     
     m_lastPathItem = selected_index_index;
     
+    m_buttonPathProperties->SetFont(*m_dialogLabelFont);
+    m_buttonPathActivate->SetFont(*m_dialogLabelFont);
+    m_buttonPathCenterView->SetFont(*m_dialogLabelFont);
+    m_buttonPathDelete->SetFont(*m_dialogLabelFont);
+    m_buttonPathExportSelected->SetFont(*m_dialogLabelFont);
+    m_buttonPathDeleteAll->SetFont(*m_dialogLabelFont);
+
     m_buttonPathDelete->Enable( m_listCtrlPath->GetSelectedItemCount() > 0 );
     m_buttonPathCenterView->Enable( enable1 ); 
     m_buttonPathProperties->Enable( enable1 );
@@ -1044,7 +1120,8 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     }
     else
         m_buttonPathActivate->Enable( false );
-    
+
+
 }
 
 void PathAndPointManagerDialogImpl::MakeAllPathsInvisible()
@@ -1279,7 +1356,13 @@ void PathAndPointManagerDialogImpl::UpdateODPointButtons()
         }
     }
     
-    
+    m_buttonODPointNew->SetFont(*m_dialogLabelFont);
+    m_buttonODPointProperties->SetFont(*m_dialogLabelFont);
+    m_buttonODPointCenterView->SetFont(*m_dialogLabelFont);
+    m_buttonODPointDelete->SetFont(*m_dialogLabelFont);
+    m_buttonODPointExportSelected->SetFont(*m_dialogLabelFont);
+    m_buttonODPointDeleteAll->SetFont(*m_dialogLabelFont);
+
     m_buttonODPointProperties->Enable( enable1 );
     m_buttonODPointCenterView->Enable( enable1 );
     m_buttonODPointDeleteAll->Enable( TRUE );
@@ -1288,8 +1371,6 @@ void PathAndPointManagerDialogImpl::UpdateODPointButtons()
         m_buttonODPointExportSelected->Enable(true);
     else
         m_buttonODPointExportSelected->Enable(false);
-    //m_buttonODPointExportSelected->Enable( enablemultiple );
-   // m_buttonODPointExportSelected->Enable( enablemultiple );
 }
 
 void PathAndPointManagerDialogImpl::OnODPointToggleVisibility( wxMouseEvent &event )
@@ -1569,6 +1650,13 @@ void PathAndPointManagerDialogImpl::UpdateLayerButtons()
     item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     bool enable = ( item != -1 );
     
+    m_buttonLayerTemporary->SetFont(*m_dialogLabelFont);
+    m_buttonLayerPersistent->SetFont(*m_dialogLabelFont);
+    m_buttonLayerDelete->SetFont(*m_dialogLabelFont);
+    m_buttonLayerShowOnChart->SetFont(*m_dialogLabelFont);
+    m_buttonLayerListContents->SetFont(*m_dialogLabelFont);
+    m_buttonLayerShowPointNames->SetFont(*m_dialogLabelFont);
+
     //btnLayProperties->Enable(false);
     m_buttonLayerDelete->Enable( enable );
     m_buttonLayerShowOnChart->Enable( enable );
@@ -1595,6 +1683,8 @@ void PathAndPointManagerDialogImpl::UpdateLayerButtons()
         m_buttonLayerShowPointNames->SetLabel( _("Show Point names") );
         m_buttonLayerListContents->SetLabel( _("List contents ") );
     }
+    SetSizerAndFit(m_bSizerDialog);
+
 }
 
 void PathAndPointManagerDialogImpl::OnLayerToggleVisibility( wxMouseEvent &event )
@@ -1969,7 +2059,14 @@ void PathAndPointManagerDialogImpl::UpdateLayerListCtrl()
         int a_width = m_listCtrlLayers->GetColumnWidth(i);
         m_listCtrlLayers->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
-    
+
+    //this->GetSizer()->Fit( this );
+    //this->Layout();
+    m_bSizerLayerButtons->Layout();
+
+    SetSizerAndFit(m_bSizerDialog);
+
+
 }
 
 void PathAndPointManagerDialogImpl::OnImportClick( wxCommandEvent &event )
@@ -2146,9 +2243,8 @@ void PathAndPointManagerDialogImpl::UpdateODPointsListCtrl( ODPoint *op_select, 
         m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
     
-    this->GetSizer()->Fit( this );
-    this->Layout();
-    
+    SetSizerAndFit(m_bSizerDialog);
+
 }
 
 void PathAndPointManagerDialogImpl::UpdateODPointsListCtrlViz( )
@@ -2177,8 +2273,10 @@ void PathAndPointManagerDialogImpl::RecalculateSize()
     //  The size will then be adjusted so that it fits within the parent's client area, with some padding
 
     //  Get a text height metric for reference
+
     int char_width, char_height;
-    GetTextExtent(_T("W"), &char_width, &char_height);
+    //GetTextExtent(_T("W"), &char_width, &char_height);
+    GetTextExtent(_T("W"), &char_width, &char_height, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
 
     wxSize sz;
     sz.x = 60 * char_width;

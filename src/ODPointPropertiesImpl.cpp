@@ -62,6 +62,8 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 :
 ODPointPropertiesDialog( parent )
 {
+    Create();
+
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
 #endif // wxCHECK_VERSION(3,0,0)

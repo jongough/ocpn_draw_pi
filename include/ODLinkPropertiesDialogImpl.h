@@ -59,6 +59,8 @@ class ODLinkPropertiesDialogImpl : public ODLinkPropertiesDialogDef
     
     private:
         ODPoint     *m_pODPoint;
+        wxFont      *m_dialogLabelFont;
+
 
 };
 

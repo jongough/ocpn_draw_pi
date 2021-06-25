@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 21 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -49,6 +49,8 @@ class ODPointPropertiesDialog : public wxDialog
 	private:
 
 	protected:
+		void Create();
+
 		wxBoxSizer* m_SizerDialogBox;
 		wxNotebook* m_notebookProperties;
 		wxScrolledWindow* m_scrolledWindowBasicProperties;
@@ -140,7 +142,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxButton* m_OK;
 		wxButton* m_Cancel;
 
-		// Virtual event handlers, overide them in your derived class
+		// Virtual event handlers, override them in your derived class
 		virtual void OnPointPropertiesClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnRightClick( wxMouseEvent& event ) { event.Skip(); }
 		virtual void OnPositionCtlUpdated( wxCommandEvent& event ) { event.Skip(); }

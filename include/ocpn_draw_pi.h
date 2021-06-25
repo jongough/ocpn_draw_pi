@@ -130,12 +130,22 @@ typedef enum ColorScheme : int
     N_COLOR_SCHEMES
 }_ColorScheme;
 
+#ifdef __WXMSW__
+#include "GL/gl.h"            // local copy for Windows
+#include <GL/glu.h>
+#else
+
+#ifdef USE_ANDROID_GLES2
+#include <gl2.h>
+#endif
+
 #ifndef __OCPN__ANDROID__
 #include <GL/gl.h>
 #include <GL/glu.h>
 #else
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
 #include "GL/gl_private.h"
+#endif
 #endif
 
 #include "wxWTranslateCatalog.h"
@@ -586,7 +596,7 @@ private:
     
     int         m_mouse_canvas_index;
     int         m_current_canvas_index;
-    
+
     std::list<Boundary*> m_pBoundaryList;
     
     

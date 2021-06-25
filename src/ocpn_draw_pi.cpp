@@ -145,6 +145,7 @@ SelectItem              *g_pRolloverPoint;
 PI_ColorScheme          g_global_color_scheme;
 bool                    g_bOpenGL;
 GLenum                  g_texture_rectangle_format;
+wxFont                  *g_dialogFont;
 
 wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
@@ -668,6 +669,8 @@ int ocpn_draw_pi::Init(void)
     SetCanvasContextMenuItemViz(m_iODToolContextId, true);
     
     
+    g_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+
     // Now initialize UI Style.
     //g_ODStyleManager = new ocpnStyle::StyleManager();
     //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
@@ -984,6 +987,15 @@ int ocpn_draw_pi::GetToolbarToolCount(void)
 }
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
+    wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    if( g_dialogFont != l_dialogFont) {
+        g_dialogFont = l_dialogFont;
+        if(NULL != g_pOCPNDrawPropDialog) {
+            delete g_pOCPNDrawPropDialog;
+            g_pOCPNDrawPropDialog = NULL;
+        }
+
+    }
     if( NULL == g_pOCPNDrawPropDialog )
         g_pOCPNDrawPropDialog = new ODPropertiesDialogImpl( parent );
     
@@ -1104,6 +1116,7 @@ void ocpn_draw_pi::ItemProcess(int id)
             DimeWindow( g_pPathAndPointManagerDialog );
             g_pPathAndPointManagerDialog->UpdatePathListCtrl();
             g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+            g_pPathAndPointManagerDialog->UpdateLayerListCtrl();
             g_pPathAndPointManagerDialog->Show();
             
             //    Required if RMDialog is not STAY_ON_TOP
@@ -2140,6 +2153,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pSelectedPath = NULL;
             bret = true;
         } else if(m_pSelectedPath && m_seltype == SELTYPE_PIL) {
+            wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+            if( g_dialogFont != l_dialogFont) {
+                g_dialogFont = l_dialogFont;
+                if(NULL != g_PILIndexLinePropDialog) {
+                    delete g_PILIndexLinePropDialog;
+                    g_PILIndexLinePropDialog = NULL;
+                }
+            }
+
             if( NULL == g_PILIndexLinePropDialog)
                 g_PILIndexLinePropDialog = new PILPropertiesDialogImpl( m_parent_window );
             DimeWindow( g_PILIndexLinePropDialog );
@@ -2147,6 +2169,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_PILIndexLinePropDialog->Show();
             bret = true;
         } else if( m_pFoundODPoint ) {
+            wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+            if( g_dialogFont != l_dialogFont) {
+                g_dialogFont = l_dialogFont;
+                if(NULL != g_pODPointPropDialog) {
+                    delete g_pODPointPropDialog;
+                    g_pODPointPropDialog = NULL;
+                }
+            }
+
             if( NULL == g_pODPointPropDialog )
                 g_pODPointPropDialog = new ODPointPropertiesImpl( m_parent_window );
             

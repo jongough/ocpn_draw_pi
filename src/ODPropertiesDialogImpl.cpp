@@ -47,6 +47,13 @@ ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
 :
 ODPropertiesDialogDef( parent )
 {
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, m_dialogLabelFont);
+
+    Create();
+
     wxString l_sTitle;
     l_sTitle.Printf(wxT("%s v%d.%d.%d.%d %s"), g_ocpn_draw_display_name->ToStdString(), PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH, PLUGIN_VERSION_TWEAK, ("Preferences"));
     SetTitle(l_sTitle);
@@ -548,7 +555,26 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
 #else
     m_notebookProperties->SetSelection(0);
 #endif
-    
+    GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
+
+    wxSize sz;
+    sz.x = 60 * m_CharWidth;
+    sz.y = 30 * m_CharHeight;
+
+    wxSize dsize = GetParent()->GetClientSize();
+    sz.y = wxMin(sz.y, dsize.y - (0 * m_CharWidth));
+    sz.x = wxMin(sz.x, dsize.x - (0 * m_CharHeight));
+    SetClientSize(sz);
+
+    wxSize fsize = GetSize();
+    fsize.y = wxMin(fsize.y, dsize.y - (0 * m_CharWidth));
+    fsize.x = wxMin(fsize.x, dsize.x - (0 * m_CharHeight));
+    SetSize(fsize);
+
+    CentreOnParent();
+
+    SetSizerAndFit(m_SizerProperties);
+#if 0
     wxSize sz = m_SizerProperties->CalcMin();
     sz.IncBy( 20 );   // Account for some decorations?
     //wxSize dsize = ::wxGetDisplaySize();
@@ -566,7 +592,7 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
     this->Layout();
     m_notebookProperties->Layout();
     //this->GetSizer()->Fit(this);
-    
+#endif
 }
 
 void ODPropertiesDialogImpl::UpdateProperties( void )
@@ -965,3 +991,4 @@ void ODPropertiesDialogImpl::OnClickConfigFileEntries( wxCommandEvent& event )
         m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (No)"));
     }
 }
+

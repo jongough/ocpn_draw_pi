@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 21 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -21,10 +21,10 @@
 #include <wx/sizer.h>
 #include <wx/clrpicker.h>
 #include <wx/choice.h>
+#include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/button.h>
 #include <wx/dialog.h>
 
 #include "extra_formbuilder_headers.h"
@@ -40,6 +40,8 @@ class PILPropertiesDialogDef : public wxDialog
 	private:
 
 	protected:
+		void Create();
+
 		wxStaticText* m_staticTexrID;
 		wxTextCtrl* m_textCtrlIDNum;
 		wxStaticText* m_staticTextName;
@@ -58,7 +60,7 @@ class PILPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 
-		// Virtual event handlers, overide them in your derived class
+		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }

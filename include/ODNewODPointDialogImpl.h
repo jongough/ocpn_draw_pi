@@ -50,6 +50,7 @@ enum
 class ODNewODPointDialogImpl : public ODNewODPointDialogDef 
 {
 	private:
+        wxFont *m_dialogLabelFont;
 
 	protected:
         // Handlers for ODNewODPointDialogDef events.
