@@ -88,7 +88,8 @@ set(CPACK_SOURCE_IGNORE_FILES "^${CMAKE_CURRENT_SOURCE_DIR}/.git/*" "^${CMAKE_CU
 if(UNIX AND NOT APPLE)
 
     # need apt-get install rpm, for rpmbuild
-    set(PACKAGE_DEPS "opencpn, bzip2, gzip")
+    set(PACKAGE_DEPS "${PACKAGE_DEPS},opencpn, bzip2, gzip")
+    message(STATUS "${CMLOC}PACKAGE_DEPS: ${PACKAGE_DEPS}")
     set(CPACK_GENERATOR "DEB;TGZ")
 
     set(CPACK_DEBIAN_PACKAGE_NAME ${PACKAGING_NAME})
