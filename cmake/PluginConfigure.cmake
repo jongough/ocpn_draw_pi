@@ -160,6 +160,8 @@ if(UNIX AND NOT APPLE)
     # Generate architecturally uniques names for linux output packages
     if(ARCH MATCHES "aarch64")
         set(PKG_TARGET_ARCH "-aarch64")
+    elseif(ARCH MATCHES "arm64")
+        set(PKG_TARGET_ARCH "-arm64")
     elseif(ARCH MATCHES "armhf")
         set(PKG_TARGET_ARCH "-armhf")
     elseif(ARCH MATCHES "i386")
@@ -372,7 +374,6 @@ IF(QT_ANDROID)
     "-Wno-overloaded-virtual"
     "-Wno-unused-command-line-argument"
     "-Wno-unknown-pragmas"
-    "-Wno-inconsistent-missing-override"
       )
 
     message(STATUS "${CMLOC}Adding libgorp.o shared library")

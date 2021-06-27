@@ -36,7 +36,7 @@
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
-            <property name="create_children">1</property>
+            <property name="create_children">0</property>
             <property name="enabled">1</property>
             <property name="event_handler">impl_virtual</property>
             <property name="extra_style"></property>
