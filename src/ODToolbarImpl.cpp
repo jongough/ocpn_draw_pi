@@ -43,6 +43,8 @@
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent, id, title, pos, size, style )
 {
+    Create();
+
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
     
     AddTools();

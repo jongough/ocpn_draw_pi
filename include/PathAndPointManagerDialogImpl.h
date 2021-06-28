@@ -73,13 +73,17 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void SetImportButtonText( void );
         void CreateLayer( bool );
         
-        
         bool m_bCtrlDown;         // record control key state for some action buttons
         
         int m_lastODPointItem;
         int m_lastPathItem;
         
         int m_iPage;
+        int m_CharWidth;
+        int m_CharHeight;
+
+        wxFont *m_dialogLabelFont;
+
         wxWindow *m_parent_window;
         
     protected:
@@ -125,7 +129,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void OnExportAllVisibleClick( wxCommandEvent& event );
         void OnOKClick( wxCommandEvent& event );
         void OnClose( wxCloseEvent& event );
-        
+
     public:
         PathAndPointManagerDialogImpl(wxWindow* parent);
         virtual ~PathAndPointManagerDialogImpl();
@@ -140,11 +144,12 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void SelectedLayerToggleVisibility( bool visible );
         void UpdatePointListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
         void UpdateODPointsListCtrlViz( void );
-        
+        void RecalculateSize();
+
         static void ODPointShowPropertiesDialog( ODPoint* wp, wxWindow* parent );
         void ShowPathPropertiesDialog ( ODPath *path );
         static wxString GetLayerName( int id );
-        
+
 };
 
 #endif // __PathAndPointManagerDialogImpl__

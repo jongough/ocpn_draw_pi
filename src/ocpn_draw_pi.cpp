@@ -87,13 +87,6 @@
 
 #include <wx/jsonreader.h>
 
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include <GL/gl_private.h>
-#endif
-
 #ifndef DECL_EXP
 #ifdef __WXMSW__
 #define DECL_EXP     __declspec(dllexport)
@@ -150,7 +143,9 @@ ODRolloverWin           *g_pODRolloverWin;
 SelectItem              *g_pRolloverPathSeg;
 SelectItem              *g_pRolloverPoint;
 PI_ColorScheme          g_global_color_scheme;
-
+bool                    g_bOpenGL;
+GLenum                  g_texture_rectangle_format;
+wxFont                  *g_dialogFont;
 
 wxColour    g_colourActiveBoundaryLineColour;
 wxColour    g_colourInActiveBoundaryLineColour;
@@ -435,6 +430,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     m_pODicons = new ODicons();
     
     m_bRecreateConfig = false;
+
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
@@ -521,6 +517,8 @@ int ocpn_draw_pi::Init(void)
     eventsEnabled = true;
 
     g_global_color_scheme = PI_GLOBAL_COLOR_SCHEME_DAY;
+
+    g_bOpenGL = false;
     
     // Get a pointer to the opencpn display canvas, to use as a parent for windows created
     //m_parent_window = GetOCPNCanvasWindow();
@@ -671,6 +669,8 @@ int ocpn_draw_pi::Init(void)
     SetCanvasContextMenuItemViz(m_iODToolContextId, true);
     
     
+    g_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+
     // Now initialize UI Style.
     //g_ODStyleManager = new ocpnStyle::StyleManager();
     //g_ODStyleManager = (ocpnStyle::StyleManager *)GetStyleManager_PlugIn();
@@ -700,8 +700,12 @@ int ocpn_draw_pi::Init(void)
     m_pCurrentCursor = NULL;
     
     //build_cursors(); // build cursors to use on chart
+#ifndef __OCPN__ANDROID__
     m_pTextCursorCross = new wxCursor( wxCURSOR_CHAR );
-
+#else
+    m_pTextCursorCross = new wxCursor( wxCURSOR_ARROW );
+#endif    
+    
     wxImage ICursorPencil = GetIcon_PlugIn(_T("pencil")).ConvertToImage();
     if ( ICursorPencil.Ok() )
     {
@@ -983,6 +987,15 @@ int ocpn_draw_pi::GetToolbarToolCount(void)
 }
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
+    wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    if( g_dialogFont != l_dialogFont) {
+        g_dialogFont = l_dialogFont;
+        if(NULL != g_pOCPNDrawPropDialog) {
+            delete g_pOCPNDrawPropDialog;
+            g_pOCPNDrawPropDialog = NULL;
+        }
+
+    }
     if( NULL == g_pOCPNDrawPropDialog )
         g_pOCPNDrawPropDialog = new ODPropertiesDialogImpl( parent );
     
@@ -1103,6 +1116,7 @@ void ocpn_draw_pi::ItemProcess(int id)
             DimeWindow( g_pPathAndPointManagerDialog );
             g_pPathAndPointManagerDialog->UpdatePathListCtrl();
             g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
+            g_pPathAndPointManagerDialog->UpdateLayerListCtrl();
             g_pPathAndPointManagerDialog->Show();
             
             //    Required if RMDialog is not STAY_ON_TOP
@@ -2084,6 +2098,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     
     g_ODEventHandler->SetCanvasIndex(m_mouse_canvas_index);
     
+    // Touch interface devices do not provide cursor tracking...
+    // We only get button click events here.
+    // Compute the cursor lat/lon on each such event received,
+
+    if(IsTouchInterface_PlugIn()){
+        wxPoint cp(event.GetX(), event.GetY());
+        GetCanvasLLPix( &g_VP, cp, &m_cursor_lat, &m_cursor_lon);
+     }
+
     if(GetCanvasCount() == 1 || m_drawing_canvas_index == -1 || m_mouse_canvas_index == m_drawing_canvas_index) {
         g_cursor_x = event.GetX();
         g_cursor_y = event.GetY();
@@ -2130,6 +2153,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             m_pSelectedPath = NULL;
             bret = true;
         } else if(m_pSelectedPath && m_seltype == SELTYPE_PIL) {
+            wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+            if( g_dialogFont != l_dialogFont) {
+                g_dialogFont = l_dialogFont;
+                if(NULL != g_PILIndexLinePropDialog) {
+                    delete g_PILIndexLinePropDialog;
+                    g_PILIndexLinePropDialog = NULL;
+                }
+            }
+
             if( NULL == g_PILIndexLinePropDialog)
                 g_PILIndexLinePropDialog = new PILPropertiesDialogImpl( m_parent_window );
             DimeWindow( g_PILIndexLinePropDialog );
@@ -2137,6 +2169,15 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             g_PILIndexLinePropDialog->Show();
             bret = true;
         } else if( m_pFoundODPoint ) {
+            wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+            if( g_dialogFont != l_dialogFont) {
+                g_dialogFont = l_dialogFont;
+                if(NULL != g_pODPointPropDialog) {
+                    delete g_pODPointPropDialog;
+                    g_pODPointPropDialog = NULL;
+                }
+            }
+
             if( NULL == g_pODPointPropDialog )
                 g_pODPointPropDialog = new ODPointPropertiesImpl( m_parent_window );
             
@@ -3007,6 +3048,7 @@ void ocpn_draw_pi::latlong_to_chartpix(double lat, double lon, double &pixx, dou
 
 bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 {
+    g_bOpenGL = false;
     m_VP = *pivp;
     g_VP = *pivp;
     m_chart_scale = pivp->chart_scale;
@@ -3020,6 +3062,7 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlay(wxDC &dc, PlugIn_ViewPort *pivp)
 {
+    g_bOpenGL = false;
     return RenderOverlays(dc, pivp);
 }
 
@@ -3044,6 +3087,7 @@ bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
 
 bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index)
 {
+    g_bOpenGL = false;
     m_current_canvas_index = canvas_index;
     bool bRet = RenderOverlays(dc, vp);
     return bRet;
@@ -3051,6 +3095,7 @@ bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int c
 
 bool ocpn_draw_pi::RenderGLOverlay(wxGLContext *pcontext, PlugIn_ViewPort *pivp)
 {
+    g_bOpenGL = true;
     return RenderGLOverlays(pcontext, pivp);
 }
 
@@ -3063,6 +3108,8 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
     m_view_scale = pivp->view_scale_ppm;
     
     g_pDC = new ODDC();
+    g_pDC->SetVP(pivp);
+
     LLBBox llbb;
     llbb.Set( pivp->lat_min, pivp->lon_min, pivp->lat_max, pivp->lon_max );
 
@@ -3079,6 +3126,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index) 
 {
+    g_bOpenGL = true;
     m_current_canvas_index = canvas_index;
     bool bRet = RenderGLOverlays(pcontext, vp);
     return bRet;
@@ -4196,6 +4244,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color,
                                   unsigned char transparency )
 {
+#if 1
     wxDC *pdc = dc.GetDC();
     if( pdc ) {
         //    Get wxImage of area of interest
@@ -4267,6 +4316,7 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
             dc.DrawRoundedRectangle( x, y, size_x, size_y, radius );
         }
         else {
+#ifndef USE_ANDROID_GLES2
             glColor4ub( color.Red(), color.Green(), color.Blue(), transparency );
             glBegin( GL_QUADS );
             glVertex2i( x, y );
@@ -4274,12 +4324,14 @@ void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y
             glVertex2i( x + size_x, y + size_y );
             glVertex2i( x, y + size_y );
             glEnd();
+#endif
         }
         glDisable( GL_BLEND );
 #else
         wxLogMessage( _("Alpha blending not drawn as OpenGL not available in this build") );
 #endif
     }
+#endif    
 }
 
 double ocpn_draw_pi::GetTrueOrMag(double a)

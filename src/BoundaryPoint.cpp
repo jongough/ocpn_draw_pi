@@ -33,14 +33,6 @@
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
 
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include <GL/gl_private.h>
-#endif
-
 #include <wx/graphics.h>
 
 //extern PlugIn_ViewPort  g_VP;
@@ -137,6 +129,8 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 {
 #ifdef ocpnUSE_GL
     ODDC dc;
+    dc.SetVP(&pivp);
+
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
         GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
@@ -187,12 +181,13 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
             glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
-            dc.SetTextureSize( 16, 16 );
+            dc.SetTextureParms( textureID, 16, 16 );
             glEnable( GL_TEXTURE_2D );
             glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#ifndef ANDROID
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-
+#endif
             wxPen savePen = dc.GetPen();
             dc.SetPen(*wxTRANSPARENT_PEN);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_SOLID ) );

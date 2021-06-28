@@ -25,21 +25,13 @@
 #include "BoundaryPoint.h"
 #include "ODdc.h"
 #include "ocpn_draw_pi.h"
-//#include "cutil.h"
+#include "ODUtils.h"
 #include "clipper.hpp"
 
 #ifdef __WXMSW__
 #include "GL/gl.h"            // local copy for Windows
 #include <GL/glu.h>
 #else
-
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include "GL/gl_private.h"
-#endif
 
 #endif
 
@@ -124,6 +116,7 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
     if ( m_bVisible && m_pODPointList->GetCount() > 2) {
+
         int l_iBoundaryPointCount = 0;
         m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
         wxPoint r;
@@ -136,6 +129,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
 #if wxUSE_GRAPHICS_CONTEXT == 1
+
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
             if( pmdc ) wxGC = wxGraphicsContext::Create( *pmdc );
@@ -159,6 +153,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             wxGC->FillPath( path );
             delete wxGC;
 #else
+
             dc.DrawPolygonTessellated(m_pODPointList->GetCount(), m_bpts);
 #endif
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
@@ -239,7 +234,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         wxDELETEA( m_bpts );
     }
 
-    
+
     ODPath::Draw( dc, piVP );
 }
 
@@ -247,9 +242,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if ( !m_bVisible ) return;
-    
     ODDC dc;
-    
+    dc.SetVP(&piVP);
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
             wxPoint *l_AllPoints = NULL;
@@ -334,33 +328,71 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             };        
 
             GLuint textureID;
+            checkGlError("Before glGenTextures", __FILE__, __LINE__);
             glGenTextures(1, &textureID);
+            checkGlError("glGenTextures", __FILE__, __LINE__);
+#ifndef ANDROID
+#if !defined(__WXMSW__) && !defined(__MSVC__)
+            glActiveTexture(GL_TEXTURE0);
+            checkGlError("glActiveTexture", __FILE__, __LINE__);
+#endif
+#endif
             glBindTexture( GL_TEXTURE_2D, textureID );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
-            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
+
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
+            glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            checkGlError("glTexParameterf", __FILE__, __LINE__);
+
             glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
-            dc.SetTextureSize( 16, 16 );
-            glEnable( GL_TEXTURE_2D );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
+            dc.SetTextureParms( textureID, 16, 16 );
+
             glEnable( GL_BLEND );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            checkGlError("glBindTexture", __FILE__, __LINE__);
+
+#ifndef ANDROID
+            glEnable( GL_ALPHA );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
+            glEnable( GL_TEXTURE_2D );
+            checkGlError("glBindTexture", __FILE__, __LINE__);
+#endif
             wxColour tCol;
             tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
             dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
+
             if( m_bExclusionBoundary ) {
-                if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), m_bpts, 0, 0);
-                else dc.DrawPolygonTessellated( m_pODPointList->GetCount() - 1, m_bpts, 0, 0);
+                if(m_bIsBeingCreated) {
+                    dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts );
+                }
+                else {
+                    dc.DrawPolygon( m_pODPointList->GetCount() - 1, m_bpts );
+                }
             } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
-                dc.DrawPolygonsTessellated( 2, l_iAllPointsSizes, l_AllPoints, 0, 0);
+                dc.DrawPolygons( 2, l_iAllPointsSizes, l_AllPoints);
                 delete [] l_AllPoints;
             }
 
             glDisable( GL_BLEND );
+            checkGlError("glDisable", __FILE__, __LINE__);
+
+#ifndef ANDROID
             glDisable( GL_TEXTURE_2D );
+            checkGlError("glDisable", __FILE__, __LINE__);
+#endif
             glDeleteTextures(1, &textureID);
+            checkGlError("glDeleteTextures", __FILE__, __LINE__);
 
             wxDELETEA( m_bpts );
             
@@ -456,3 +488,5 @@ void Boundary::RemovePointFromPath(ODPoint* point, ODPath* path)
     
     ODPath::RemovePointFromPath(point, path);
 }
+
+

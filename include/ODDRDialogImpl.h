@@ -60,6 +60,8 @@ private:
         double  m_dIntervalValidator;
         int     m_iValidator;
         int     m_iCOGValidator;
+        wxFont *m_dialogLabelFont;
+
         
         DR      *m_pDR;
         

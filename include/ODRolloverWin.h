@@ -58,16 +58,17 @@ public:
     wxWindow *GetParent( void ) { return m_parent; }
 
 private:
-    wxWindow    *m_parent;
-    wxString    m_string;
-    wxSize      m_size;
-    wxPoint     m_position;
-    wxTimer     m_timer_timeout;
-    int         m_timeout_sec;
-    int         m_mmouse_propogate;
-    bool        isActive;
-    wxFont      *m_plabelFont;
-    wxBitmap    *m_pbm;
+    wxWindow        *m_parent;
+    wxString        m_string;
+    wxSize          m_size;
+    wxPoint         m_position;
+    wxTimer         m_timer_timeout;
+    int             m_timeout_sec;
+    int             m_mmouse_propogate;
+    unsigned int    m_texture;
+    bool            isActive;
+    wxFont          *m_plabelFont;
+    wxBitmap        *m_pbm;
     
 DECLARE_EVENT_TABLE()
 };

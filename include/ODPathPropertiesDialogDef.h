@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Oct 26 2018)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -25,10 +25,10 @@
 #include <wx/radiobox.h>
 #include <wx/listctrl.h>
 #include <wx/scrolwin.h>
+#include <wx/button.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/button.h>
 #include <wx/dialog.h>
 
 #include "extra_formbuilder_headers.h"
@@ -43,6 +43,8 @@ class ODPathPropertiesDialogDef : public wxDialog
 	private:
 
 	protected:
+		void Create();
+
 		wxBoxSizer* m_bSizerDialogBox;
 		wxScrolledWindow* m_scrolledWindowProperties;
 		wxFlexGridSizer* m_fgSizerProperties;
@@ -112,7 +114,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 
-		// Virtual event handlers, overide them in your derived class
+		// Virtual event handlers, override them in your derived class
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }

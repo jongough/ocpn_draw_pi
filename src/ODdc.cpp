@@ -36,20 +36,10 @@
 #include <windows.h>
 #endif
 
-#ifdef __WXMSW__
-#include <GL/gl.h>            // local copy for Windows
-#include <GL/glext.h>
-#include <GL/glu.h>
-#else
-
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include <GL/gl_private.h>
-#endif
-
+#ifdef USE_ANDROID_GLES2
+#include "ODShaders.h"
+#include <gl2.h>
+#include "linmath.h"
 #endif
 
 #ifdef ocpnUSE_GL
@@ -65,6 +55,7 @@
 #include "ODdc.h"
 #include "ODUtils.h"
 #include "wx28compat.h"
+#include "cutil.h"
 
 #define __CALL_CONVENTION
 
@@ -74,6 +65,15 @@ wxArrayPtrVoid gTesselatorVertices;
 bool        g_bTexture2D;
 int         g_iTextureHeight;
 int         g_iTextureWidth;
+GLint       g_textureId;
+
+#ifdef USE_ANDROID_GLES2
+int         g_min_x;
+int         g_min_y;
+int         g_max_x;
+int         g_max_y;
+#endif
+
 
 //----------------------------------------------------------------------------
 /* pass the dc to the constructor, or NULL to use opengl */
@@ -86,18 +86,14 @@ ODDC::ODDC( wxGLCanvas &canvas ) :
     #define VAR_NAME_VALUE(var) #var "="  VALUE(var)
     #pragma message(VAR_NAME_VALUE(wxUSE_GRAPHICS_CONTEXT))
 #endif
-#if wxUSE_GRAPHICS_CONTEXT == 1
-    pgc = NULL;
-#endif
-#ifdef ocpnUSE_GL
-    m_textforegroundcolour = wxColour( 0, 0, 0 );
-    g_bTexture2D = false;
-#endif    
+    Init();
+    
 }
 
 ODDC::ODDC( wxDC &pdc ) :
         glcanvas( NULL ), dc( &pdc ), m_pen( wxNullPen ), m_brush( wxNullBrush )
 {
+    Init();
 #if wxUSE_GRAPHICS_CONTEXT == 1
     pgc = NULL;
     wxMemoryDC *pmdc = wxDynamicCast(dc, wxMemoryDC);
@@ -107,18 +103,12 @@ ODDC::ODDC( wxDC &pdc ) :
         if( pcdc ) pgc = wxGraphicsContext::Create( *pcdc );
     }
 #endif
-    m_textforegroundcolour = wxColour( 0, 0, 0 );
-    g_bTexture2D = false;
-    
 }
 
 ODDC::ODDC() :
         glcanvas( NULL ), dc( NULL ), m_pen( wxNullPen ), m_brush( wxNullBrush )
 {
-#if wxUSE_GRAPHICS_CONTEXT == 1
-    pgc = NULL;
-#endif
-    g_bTexture2D = false;
+    Init();
 }
 
 ODDC::~ODDC()
@@ -126,6 +116,53 @@ ODDC::~ODDC()
 #if wxUSE_GRAPHICS_CONTEXT == 1
     if( pgc ) delete pgc;
 #endif
+    
+#ifdef USE_ANDROID_GLES2
+    free(s_odc_tess_work_buf);
+    free(s_odc_tess_tex_buf);
+#endif    
+}
+
+void ODDC::Init()
+{
+    m_buseTex = GetLocaleCanonicalName().IsSameAs(_T("en_US"));
+
+#if wxUSE_GRAPHICS_CONTEXT == 1
+    pgc = NULL;
+#endif
+
+#ifdef ocpnUSE_GL
+    g_bTexture2D = false;
+    m_textforegroundcolour = wxColour( 0, 0, 0 );
+#endif
+
+    workBuf = NULL;
+    workBufSize = 0;
+
+#ifdef USE_ANDROID_GLES2
+    s_odc_tess_work_buf = NULL;
+    s_odc_tess_tex_buf = NULL;
+    s_odc_tess_vertex_idx = 0;
+    s_odc_tess_vertex_idx_this = 0;
+    s_odc_tess_buf_len = 0;
+    
+    s_odc_tess_work_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
+    s_odc_tess_tex_buf = (GLfloat *)malloc( 100 * sizeof(GLfloat));
+    s_odc_tess_buf_len = 100;
+ 
+    pi_loadShaders();
+#endif
+    g_textureId = -1;
+    m_tobj = NULL;
+
+}
+
+void ODDC::SetVP(PlugIn_ViewPort *vp)
+{
+#ifdef USE_ANDROID_GLES2
+    configureShaders(vp->pix_width, vp->pix_height);
+#endif
+    m_vpSize = wxSize(vp->pix_width, vp->pix_height);
 }
 
 void ODDC::Clear()
@@ -178,8 +215,25 @@ void ODDC::SetPen( const wxPen &pen )
         if( pen == wxNullPen ) dc->SetPen( *wxTRANSPARENT_PEN );
         else
             dc->SetPen( pen );
-    } else
+    } else {
         m_pen = pen;
+        
+#ifndef USE_ANDROID_GLES2 
+        if( m_pen.IsOk() ){
+            switch( m_pen.GetStyle() ) {
+                case wxPENSTYLE_DOT: 
+                case wxPENSTYLE_LONG_DASH: 
+                case wxPENSTYLE_SHORT_DASH:
+                case wxPENSTYLE_DOT_DASH:
+                    break;
+        
+                default:
+                    glDisable( GL_LINE_STIPPLE );
+                    break;
+            }
+        }
+#endif
+    }
 }
 
 void ODDC::SetBrush( const wxBrush &brush )
@@ -235,6 +289,7 @@ void ODDC::GetSize( wxCoord *width, wxCoord *height ) const
 void ODDC::SetGLStipple() const
 {
 #ifdef ocpnUSE_GL
+#ifndef USE_ANDROID_GLES2 
     
     switch( m_pen.GetStyle() ) {
         case wxPENSTYLE_DOT: {
@@ -260,12 +315,14 @@ void ODDC::SetGLStipple() const
         default: break;
     }
 #endif    
+#endif
 }
 
 #ifdef ocpnUSE_GL
 /* draw a half circle using triangles */
 void ODDC::DrawEndCap(float x1, float y1, float t1, float angle)
 {
+#ifndef USE_ANDROID_GLES2    
     const int steps = 16;
     float xa, ya;
     bool first = true;
@@ -283,6 +340,7 @@ void ODDC::DrawEndCap(float x1, float y1, float t1, float angle)
         }
         xa = xb, ya = yb;
     }
+#endif    
 }
 #endif
 
@@ -296,6 +354,7 @@ void ODDC::DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, b
     float t2sina1 = t1 / 2 * sinf( angle );
     float t2cosa1 = t1 / 2 * cosf( angle );
 
+#ifndef USE_ANDROID_GLES2
     glBegin( GL_TRIANGLES );
 
     //    n.b.  The dwxDash interpretation for GL only allows for 2 elements in the dash table.
@@ -360,13 +419,139 @@ void ODDC::DrawGLThickLine( float x1, float y1, float x2, float y2, wxPen pen, b
     }
 
     glEnd();
-#endif    
+#else
+    //    n.b.  The dwxDash interpretation for GL only allows for 2 elements in the dash table.
+    //    The first is assumed drawn, second is assumed space
+    wxDash *dashes;
+    int n_dashes = pen.GetDashes( &dashes );
+    if( n_dashes ) {
+        float lpix = sqrtf( powf( (float) (x1 - x2), 2) + powf( (float) (y1 - y2), 2) );
+        float lrun = 0.;
+        float xa = x1;
+        float ya = y1;
+        float ldraw = t1 * dashes[0];
+        float lspace = t1 * dashes[1];
+
+        GLint program = pi_colorv_tri_shader_program;
+        glUseProgram( program );
+
+        float vert[12];
+
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+        GLint pos = glGetAttribLocation( program, "aPos");
+        glEnableVertexAttribArray(pos);
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), vert);
+
+        // Build Transform matrix
+        mat4x4 I;
+        mat4x4_identity(I);
+
+        GLint matloc = glGetUniformLocation( program, "TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)I);
+
+        wxColor c = pen.GetColour();
+        float colorv[4];
+        colorv[0] = c.Red() / float(256);
+        colorv[1] = c.Green() / float(256);
+        colorv[2] = c.Blue() / float(256);
+        colorv[3] = c.Alpha() / float(256);
+
+        GLint colloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(colloc, 1, colorv);
+
+        while( lrun < lpix ) {
+            //    Dash
+            float xb = xa + ldraw * cosf( angle );
+            float yb = ya + ldraw * sinf( angle );
+
+            if( ( lrun + ldraw ) >= lpix )         // last segment is partial draw
+            {
+                xb = x2;
+                yb = y2;
+            }
+
+            vert[0] = xa + t2sina1; vert[1] = ya - t2cosa1; vert[2] = xb + t2sina1; vert[3] = yb - t2cosa1; vert[4] = xb - t2sina1; vert[5] = yb + t2cosa1;
+            vert[6] = xb - t2sina1; vert[7] = yb + t2cosa1; vert[8] = xa - t2sina1; vert[9] = ya + t2cosa1; vert[10] = xa + t2sina1; vert[11] = ya - t2cosa1;
+
+            glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+            xa = xb;
+            ya = yb;
+            lrun += ldraw;
+
+            //    Space
+            xb = xa + lspace * cos( angle );
+            yb = ya + lspace * sin( angle );
+
+            xa = xb;
+            ya = yb;
+            lrun += lspace;
+        }
+
+        glUseProgram(0);
+    } else {
+        float vert[12];
+        vert[0] = x1 + t2sina1; vert[1] = y1 - t2cosa1;
+        vert[2] = x2 + t2sina1; vert[3] = y2 - t2cosa1;
+        vert[4] = x2 - t2sina1; vert[5] = y2 + t2cosa1;
+        vert[6] = x2 - t2sina1; vert[7] = y2 + t2cosa1;
+        vert[8] = x1 - t2sina1; vert[9] = y1 + t2cosa1;
+        vert[10] = x1 + t2sina1; vert[11] = y1 - t2cosa1;
+
+        GLint program = pi_colorv_tri_shader_program;
+        glUseProgram(program);
+
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+        GLint pos = glGetAttribLocation( program, "aPos");
+        glEnableVertexAttribArray(pos);
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), vert);
+
+        // Build Transform matrix
+        mat4x4 I;
+        mat4x4_identity(I);
+
+        GLint matloc = glGetUniformLocation( program, "TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)I);
+
+        wxColor c = pen.GetColour();
+        float colorv[4];
+        colorv[0] = c.Red() / float(256);
+        colorv[1] = c.Green() / float(256);
+        colorv[2] = c.Blue() / float(256);
+        colorv[3] = c.Alpha() / float(256);
+
+        GLint colloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(colloc, 1, colorv);
+
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        /* wx draws a nice rounded end in dc mode, so replicate
+         *           this for opengl mode, should this be done for the dashed mode case? */
+        //         if(pen.GetCap() == wxCAP_ROUND) {
+        //             DrawEndCap( x1, y1, t1, angle);
+        //             DrawEndCap( x2, y2, t1, angle + M_PI);
+        //         }
+        //
+        glUseProgram(0);
+    }
+
+#endif
+
+#endif
 }
 
 void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
 {
-    if( dc )
+    if( dc ) {
         dc->DrawLine( x1, y1, x2, y2 );
+    }
 #ifdef ocpnUSE_GL
     else if( ConfigurePen() ) {
         bool b_draw_thick = false;
@@ -381,15 +566,21 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
             glEnable( GL_BLEND );
             glEnable( GL_LINE_SMOOTH );
 #endif            
-            
+
             if( pen_width > 1.0 ) {
+
                 GLint parms[2];
                 glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
-                if( pen_width > parms[1] ) b_draw_thick = true;
+                if(glGetError())
+                    glGetIntegerv( GL_ALIASED_LINE_WIDTH_RANGE, &parms[0] );
+                if( pen_width > parms[1] ) {
+                    b_draw_thick = true;
+                }
                 else
                     glLineWidth( pen_width );
-            } else
+            } else {
                 glLineWidth( pen_width );
+            }
         } else {            
             if( pen_width > 1 ) {
                 GLint parms[2];
@@ -400,8 +591,95 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
             } else
                 glLineWidth( pen_width );
         }
+
+#ifdef USE_ANDROID_GLES2
+        if( b_draw_thick ) {
+            DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        }
+        else {
+
+            checkGlError("Before glUseProgram", "ODDC", __LINE__);
+            GLint program = pi_colorv_tri_shader_program;
+            glUseProgram(program);
+            checkGlError("After glUseProgram", "ODDC", __LINE__);
+
+            float fBuf[4];
+            GLint pos = glGetAttribLocation(program, "aPos");
+            glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), fBuf);
+            glEnableVertexAttribArray(pos);
+            
+            // GLint matloc = glGetUniformLocation(program,"MVMatrix");
+            // glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)cc1->GetpVP()->vp_transform);
+            
+            float colorv[4];
+            colorv[0] = m_pen.GetColour().Red() / float(256);
+            colorv[1] = m_pen.GetColour().Green() / float(256);
+            colorv[2] = m_pen.GetColour().Blue() / float(256);
+            colorv[3] = 1.0;
+
+            GLint colloc = glGetUniformLocation(program, "uColour");
+            glUniform4fv(colloc, 1, colorv);
+            
+            wxDash *dashes;
+            int n_dashes = m_pen.GetDashes( &dashes );
+            if( n_dashes ) {
+                float angle = atan2f( (float) ( y2 - y1 ), (float) ( x2 - x1 ) );
+                float cosa = cosf( angle );
+                float sina = sinf( angle );
+                float t1 = m_pen.GetWidth();
+                
+                float lpix = sqrtf( powf(x1 - x2, 2) + powf(y1 - y2, 2) );
+                float lrun = 0.;
+                float xa = x1;
+                float ya = y1;
+                float ldraw = t1 * dashes[0];
+                float lspace = t1 * dashes[1];
+                
+                ldraw = wxMax(ldraw, 4.0);
+                lspace = wxMax(lspace, 4.0);
+                lpix = wxMin(lpix, 2000.0);
+                
+                while( lrun < lpix ) {
+                    //    Dash
+                    float xb = xa + ldraw * cosa;
+                    float yb = ya + ldraw * sina;
+                    
+                    if( ( lrun + ldraw ) >= lpix )         // last segment is partial draw
+                    {
+                        xb = x2;
+                        yb = y2;
+                    }
+
+                    fBuf[0] = xa;
+                    fBuf[1] = ya;
+                    fBuf[2] = xb;
+                    fBuf[3] = yb;
+
+                    glDrawArrays(GL_LINES, 0, 2);
+                    
+                    xa = xa + ( lspace + ldraw ) * cosa;
+                    ya = ya + ( lspace + ldraw ) * sina;
+                    lrun += lspace + ldraw;
+                    
+                }
+            } else                    // not dashed
+            {
+                fBuf[0] = x1;
+                fBuf[1] = y1;
+                fBuf[2] = x2;
+                fBuf[3] = y2;
+
+                glDrawArrays(GL_LINES, 0, 2);
+            }
+
+            glUseProgram( 0 );
+
+        }
         
-        if( b_draw_thick ) DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+#else
+        if( b_draw_thick ) {
+            DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        }
         else {
             wxDash *dashes;
             int n_dashes = m_pen.GetDashes( &dashes );
@@ -417,7 +695,11 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 float ya = y1;
                 float ldraw = t1 * dashes[0];
                 float lspace = t1 * dashes[1];
-                    
+
+                ldraw = wxMax(ldraw, 4.0);
+                lspace = wxMax(lspace, 4.0);
+                lpix = wxMin(lpix, 2000.0);
+                
                 glBegin( GL_LINES );
                 while( lrun < lpix ) {
                     //    Dash
@@ -447,7 +729,7 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
                 glEnd();
             }
         }
-
+#endif
         glDisable( GL_LINE_STIPPLE );
 
         if( b_hiqual ) {
@@ -458,6 +740,8 @@ void ODDC::DrawLine( wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqu
 #endif    
 }
 
+
+
 // Draws thick lines from triangles
 void ODDC::DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset, wxCoord yoffset, wxPen pen, bool b_hiqual )
 {
@@ -465,6 +749,15 @@ void ODDC::DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset, wxCoord yo
     if(n < 2)
         return;
 
+#ifdef USE_ANDROID_GLES2
+    wxPoint p0 = points[0];
+    for( int i = 1; i < n; i++ ) {
+        DrawGLThickLine( p0.x + xoffset, p0.y + yoffset, points[i].x + xoffset,
+                           points[i].y + yoffset, pen, b_hiqual );
+        p0 = points[i];
+    }
+    return;
+#else
     /* for dashed case, for now just draw thick lines */
     wxDash *dashes;
     if( pen.GetDashes( &dashes ) )
@@ -555,6 +848,7 @@ void ODDC::DrawGLThickLines( int n, wxPoint points[],wxCoord xoffset, wxCoord yo
     delete [] cpoints;
 
  #endif    
+#endif    
  }
 
 void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, bool b_hiqual )
@@ -563,8 +857,11 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
         dc->DrawLines( n, points, xoffset, yoffset );
 #ifdef ocpnUSE_GL
     else if( ConfigurePen() ) {
-
+#ifdef __WXQT__
+        SetGLAttrs( false ); // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH
+#else
         SetGLAttrs( b_hiqual );
+#endif
         bool b_draw_thick = false;
 
         glDisable( GL_LINE_STIPPLE );
@@ -576,7 +873,11 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
             if( m_pen.GetWidth() > 1 ) {
                 GLint parms[2];
                 glGetIntegerv( GL_SMOOTH_LINE_WIDTH_RANGE, &parms[0] );
-                if( m_pen.GetWidth() > parms[1] ) b_draw_thick = true;
+                if(glGetError())
+                    glGetIntegerv( GL_ALIASED_LINE_WIDTH_RANGE, &parms[0] );
+
+                if( m_pen.GetWidth() > parms[1] )
+                    b_draw_thick = true;
                 else
                     glLineWidth( wxMax(g_GLMinSymbolLineWidth, m_pen.GetWidth()) );
             } else
@@ -597,25 +898,65 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
         } else {
             if( b_hiqual ) {
                 glEnable( GL_LINE_SMOOTH );
+                glDisable( GL_LINE_STIPPLE );
+                glDisable( GL_POLYGON_SMOOTH );
+                glDisable( GL_BLEND );
             }
-            glBegin( GL_LINE_STRIP );
-            for( int i = 0; i < n; i++ ) {
-                glVertex2i( points[i].x + xoffset, points[i].y + yoffset );
-            }
-            glEnd();
+        }
+#ifndef USE_ANDROID_GLES2
+        glBegin( GL_LINE_STRIP );
+        for( int i = 0; i < n; i++ ) {
+            glVertex2i( points[i].x + xoffset, points[i].y + yoffset );
+        }
+        glEnd();
+#else
+        //  Grow the work buffer as necessary
+        if( workBufSize < (size_t)n*2 ){
+            workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+            workBufSize = n*4;
         }
 
-        glDisable( GL_LINE_STIPPLE );
+        for( int i = 0; i < n; i++ ){
+            workBuf[i*2] = points[i].x + xoffset;
+            workBuf[(i*2) + 1] = points[i].y + yoffset;
+        }
+
+        GLint program = pi_colorv_tri_shader_program;
+        glUseProgram(program);
+
+        GLint pos = glGetAttribLocation(program, "aPos");
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf);
+        glEnableVertexAttribArray(pos);
+
+        float colorv[4];
+        colorv[0] = m_pen.GetColour().Red() / float(256);
+        colorv[1] = m_pen.GetColour().Green() / float(256);
+        colorv[2] = m_pen.GetColour().Blue() / float(256);
+        colorv[3] = m_pen.GetColour().Alpha() / float(256);1.0;
+
+        GLint colloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(colloc, 1, colorv);
+
+        glDrawArrays(GL_LINE_STRIP, 0, n);
+
+#endif
+        if( b_hiqual ) {
+            glDisable( GL_LINE_STIPPLE );
+            glDisable( GL_POLYGON_SMOOTH );
+            glDisable( GL_BLEND );
+        }
+
         SetGLAttrs( false );
     }
-#endif    
+#endif
 }
 
 void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, bool b_hiqual )
 {
+#ifndef USE_ANDROID_GLES2    
     if( dc )
         dc->DrawArc( x1, y1, x2, y2, xc, yc );
-    #ifdef ocpnUSE_GL
+#ifdef ocpnUSE_GL
     else if( ConfigurePen() ) {
         bool b_draw_thick = false;
         
@@ -649,7 +990,9 @@ void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, 
                 glLineWidth( pen_width );
         }
         
-        if( b_draw_thick ) DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        if( b_draw_thick ) {
+            DrawGLThickLine( x1, y1, x2, y2, m_pen, b_hiqual );
+        }
         else {
             wxDash *dashes;
             int n_dashes = m_pen.GetDashes( &dashes );
@@ -704,6 +1047,7 @@ void ODDC::DrawArc( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, 
         }
     }
     #endif    
+#endif    
 }
 void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4 )
 {
@@ -756,7 +1100,7 @@ void ODDC::DrawSector( wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x
         wxPoint *points;
         int numpoints = ArcSectorPoints( *&points, xc, yc, x1, y1, x2, y2, x3, y3, x4, y4, true);
         DrawLines( numpoints, points );
-        DrawPolygonTessellated( numpoints, points, 0, 0 );
+        DrawPolygon( numpoints, points, 0, 0 );
         delete [] points;
     }
 #endif    
@@ -860,6 +1204,7 @@ void ODDC::DrawRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h )
         dc->DrawRectangle( x, y, w, h );
 #ifdef ocpnUSE_GL
     else {
+#ifndef USE_ANDROID_GLES2
         if( ConfigureBrush() ) {
             glBegin( GL_QUADS );
             glVertex2i( x, y );
@@ -877,13 +1222,17 @@ void ODDC::DrawRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h )
             glVertex2i( x, y + h );
             glEnd();
         }
-    }
+#else
+        DrawRoundedRectangle( x, y, w, h, 0);
 #endif    
+    }
+#endif
 }
 
 /* draw the arc along corners */
 static void drawrrhelper( wxCoord x0, wxCoord y0, wxCoord r, int quadrant, int steps )
 {
+#ifndef USE_ANDROID_GLES2    
 #ifdef ocpnUSE_GL
     float step = 1.0/steps, rs = 2.0*r*step, rss = rs*step, x, y, dx, dy, ddx, ddy;
     switch(quadrant) {
@@ -901,9 +1250,34 @@ static void drawrrhelper( wxCoord x0, wxCoord y0, wxCoord r, int quadrant, int s
     }
     glVertex2i( x0 + floor(x), y0 + floor(y) );
 #endif
+#endif
 }
 
-void ODDC::DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxCoord r )
+void ODDC::drawrrhelperGLES2( wxCoord x0, wxCoord y0, wxCoord r, int quadrant, int steps )
+{
+#ifdef ocpnUSE_GL
+    float step = 1.0/steps, rs = 2.0*r*step, rss = rs*step, x, y, dx, dy, ddx, ddy;
+    switch(quadrant) {
+        case 0: x =  r, y =  0, dx =   0, dy = -rs, ddx = -rss, ddy =  rss; break;
+        case 1: x =  0, y = -r, dx = -rs, dy =   0, ddx =  rss, ddy =  rss; break;
+        case 2: x = -r, y =  0, dx =   0, dy =  rs, ddx =  rss, ddy = -rss; break;
+        case 3: x =  0, y =  r, dx =  rs, dy =   0, ddx = -rss, ddy = -rss; break;
+        default: return; // avoid unitialized compiler warnings
+    }
+
+    for(int i=0; i<steps; i++) {
+        workBuf[workBufIndex++] = x0 + floor(x);
+        workBuf[workBufIndex++] = y0 + floor(y);
+
+        x += dx+ddx/2,  y += dy+ddy/2;
+        dx += ddx,      dy += ddy;
+    }
+
+    workBuf[workBufIndex++] = x0 + floor(x);
+    workBuf[workBufIndex++] = y0 + floor(y);
+#endif
+}
+ void ODDC::DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxCoord r )
 {
     if( dc )
         dc->DrawRoundedRectangle( x, y, w, h, r );
@@ -914,6 +1288,75 @@ void ODDC::DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxC
 
         wxCoord x1 = x + r, x2 = x + w - r;
         wxCoord y1 = y + r, y2 = y + h - r;
+#ifdef USE_ANDROID_GLES2
+        //  Grow the work buffer as necessary
+        size_t bufReq = steps * 8 * 2 * sizeof(float);      // large, to be sure
+
+        if( workBufSize < bufReq ){
+            workBuf = (float *)realloc(workBuf, bufReq);
+            workBufSize = bufReq;
+        }
+        workBufIndex = 0;
+
+        drawrrhelperGLES2( x2, y1, r, 0, steps );
+        drawrrhelperGLES2( x1, y1, r, 1, steps );
+        drawrrhelperGLES2( x1, y2, r, 2, steps );
+        drawrrhelperGLES2( x2, y2, r, 3, steps );
+
+        GLint program = pi_colorv_tri_shader_program;
+        checkGlError("Before glUseProgram", "ODDC", __LINE__);
+        glUseProgram( program );
+        checkGlError("After glUseProgram", "ODDC", __LINE__);
+
+        // Get pointers to the attributes in the program.
+        GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+        glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf );
+        glEnableVertexAttribArray( mPosAttrib );
+
+
+        //  Border color
+        float bcolorv[4];
+        bcolorv[0] = m_brush.GetColour().Red() / float(256);
+        bcolorv[1] = m_brush.GetColour().Green() / float(256);
+        bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+        bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+
+        GLint bcolloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+
+        float angle = 0.;
+        float xoffset = 0;
+        float yoffset = 0;
+
+        // Rotate
+        mat4x4 I, Q;
+        mat4x4_identity(I);
+        mat4x4_rotate_Z(Q, I, angle);
+
+        // Translate
+        Q[3][0] = xoffset;
+        Q[3][1] = yoffset;
+
+        GLint matloc = glGetUniformLocation(program, "TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
+
+        // Perform the actual drawing.
+        glDrawArrays(GL_TRIANGLE_FAN, 0, workBufIndex/2);
+
+        // Restore the per-object transform to Identity Matrix
+        mat4x4 IM;
+        mat4x4_identity(IM);
+        GLint matlocf = glGetUniformLocation(program, "TransformMatrix");
+        glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
+
+#else
+
         if( ConfigureBrush() ) {
             glBegin( GL_TRIANGLE_FAN );
             drawrrhelper( x2, y1, r, 0, steps );
@@ -931,13 +1374,84 @@ void ODDC::DrawRoundedRectangle( wxCoord x, wxCoord y, wxCoord w, wxCoord h, wxC
             drawrrhelper( x2, y2, r, 3, steps );
             glEnd();
         }
+#endif
     }
-#endif    
+#endif
 }
 
 void ODDC::DrawCircle( wxCoord x, wxCoord y, wxCoord radius )
 {
+#ifdef USE_ANDROID_GLES2
+
+    //      Enable anti-aliased lines, at best quality
+    glEnable( GL_BLEND );
+    
+    float coords[8];
+    coords[0] = x - radius;  coords[1] = y + radius;
+    coords[2] = x + radius;  coords[3] = y + radius;
+    coords[4] = x - radius;  coords[5] = y - radius;
+    coords[6] = x + radius;  coords[7] = y - radius;
+    
+    GLint program = pi_circle_filled_shader_program;
+    checkGlError("Before glUseProgram", "ODDC", __LINE__);
+    glUseProgram( program );
+    checkGlError("After glUseProgram", "ODDC", __LINE__);
+
+    // Get pointers to the attributes in the program.
+    GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+    
+        // Disable VBO's (vertex buffer objects) for attributes.
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+        
+    glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), coords );
+    glEnableVertexAttribArray( mPosAttrib );
+
+    //  Circle radius
+    GLint radiusloc = glGetUniformLocation(program, "circle_radius");
+    glUniform1f(radiusloc, radius);
+
+    //  Circle center point
+    GLint centerloc = glGetUniformLocation(program, "circle_center");
+    float ctrv[2];
+    ctrv[0] = x;
+    ctrv[1] = GetCanvasByIndex(0)->GetSize().y - y; 
+    glUniform2fv(centerloc, 1, ctrv);
+    
+    //  Circle color
+    float colorv[4];
+    colorv[0] = m_brush.GetColour().Red() / float(256);
+    colorv[1] = m_brush.GetColour().Green() / float(256);
+    colorv[2] = m_brush.GetColour().Blue() / float(256);
+    colorv[3] = (m_brush.GetStyle() == wxBRUSHSTYLE_TRANSPARENT) ? 0.0 : 1.0; 
+    
+    GLint colloc = glGetUniformLocation(program, "circle_color");
+    glUniform4fv(colloc, 1, colorv);
+    
+    //  Border color
+    float bcolorv[4];
+    bcolorv[0] = m_pen.GetColour().Red() / float(256);
+    bcolorv[1] = m_pen.GetColour().Green() / float(256);
+    bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+    bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+    
+    GLint bcolloc = glGetUniformLocation(program, "border_color");
+    glUniform4fv(bcolloc, 1, bcolorv);
+    
+    //  Border Width
+    GLint borderWidthloc = glGetUniformLocation(program, "border_width");
+    glUniform1f(borderWidthloc, m_pen.GetWidth());
+    
+    // Perform the actual drawing.
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    //      Enable anti-aliased lines, at best quality
+    glDisable( GL_BLEND );
+    glUseProgram( 0 );
+
+#else        
     DrawEllipse( x - radius, y - radius, 2 * radius, 2 * radius );
+#endif    
 }
 
 void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius )
@@ -985,9 +1499,12 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
     }
 #ifdef ocpnUSE_GL
     else {
-        //      Enable anti-aliased lines, at best quality
+
+        if(g_textureId >= 0){
+            DrawDiskPattern( x, y, innerRadius, outerRadius, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight) );
+            return;
+        }
         
-        //float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
         float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((innerRadius * 2) * (innerRadius * 2)) * 2) ), 1) *M_PI);
         float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((outerRadius * 2) * (outerRadius * 2)) * 2) ), 1) *M_PI);
         wxPoint *disk = new wxPoint[ (int) innerSteps +(int) outerSteps + 2 ];
@@ -1007,6 +1524,38 @@ void ODDC::DrawDisk( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRad
         npoints[0] = (int) innerSteps;
         npoints[1] = (int) outerSteps;
         DrawPolygonsTessellated( 2, npoints, disk, 0, 0 );
+        delete [] disk;
+    }
+#endif    
+}
+
+void ODDC::DrawDiskPattern( wxCoord x, wxCoord y, wxCoord innerRadius, wxCoord outerRadius, GLint textureID, wxSize textureSize )
+{
+    if( dc ) {
+        DrawDisk(x, y, innerRadius, outerRadius);
+    }
+#ifdef ocpnUSE_GL
+    else {
+        //float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
+        float innerSteps = floorf(wxMax(sqrtf(sqrtf( ((innerRadius * 2) * (innerRadius * 2)) * 2) ), 1) *M_PI);
+        float outerSteps = floorf(wxMax(sqrtf(sqrtf( ((outerRadius * 2) * (outerRadius * 2)) * 2) ), 1) *M_PI);
+        wxPoint *disk = new wxPoint[ (int) innerSteps +(int) outerSteps + 2 ];
+        float a = 0.;
+        for( int i = 0; i < (int) innerSteps; i++ ) {
+            disk[i].x = x + innerRadius * sinf( a );
+            disk[i].y = y + innerRadius * cosf( a );
+            a += 2 * M_PI /innerSteps;
+        }
+        //a = 0;
+        for( int i = 0; i < (int) outerSteps; i++) {
+            disk[i + (int) innerSteps].x = x + outerRadius * sinf( a );
+            disk[i + (int) innerSteps].y = y + outerRadius * cosf( a );
+            a -= 2 * M_PI / outerSteps;
+        }
+        int npoints[2];
+        npoints[0] = (int) innerSteps;
+        npoints[1] = (int) outerSteps;
+        DrawPolygonsPattern( 2, npoints, disk, textureID, textureSize, 0, 0);
         delete [] disk;
     }
 #endif    
@@ -1045,7 +1594,7 @@ void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
 
         /* formula for variable step count to produce smooth ellipse */
         float steps = floorf(wxMax(sqrtf(sqrtf((float)(width*width + height*height))), 1) * M_PI);
-
+#ifndef USE_ANDROID_GLES2
         if( ConfigureBrush() ) {
             glBegin( GL_TRIANGLE_FAN );
             glVertex2f( cx, cy );
@@ -1062,11 +1611,1049 @@ void ODDC::DrawEllipse( wxCoord x, wxCoord y, wxCoord width, wxCoord height )
             glVertex2f( cx + r1 * sinf( a ), cy + r2 * cosf( a ) ); // added to ensure line is closed and no holes are shown when not using solid line
             glEnd();
         }
-
+#else
+#endif
         glDisable( GL_BLEND );
     }
 #endif    
 }
+
+void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale, float angle )
+{
+    if( dc )
+        dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
+    else {
+#ifdef __WXQT__
+        SetGLAttrs( false );            // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH
+#else
+        SetGLAttrs( true );
+#endif
+
+        if(g_textureId >= 0){
+            DrawPolygonPattern(n, points, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight), xoffset, yoffset );
+            return;
+        }
+
+#ifdef USE_ANDROID_GLES2
+
+        ConfigurePen();
+
+        glEnable( GL_BLEND );
+        if(n > 4){
+            if(ConfigureBrush()) {       // Check for transparent brush
+                DrawPolygonTessellated( n, points, xoffset, yoffset);
+            }
+            
+            // Draw the ouline
+            //  Grow the work buffer as necessary
+            if( workBufSize < (size_t)n*2 ){
+                workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+                workBufSize = n*4;
+            }
+            
+            for( int i = 0; i < n; i++ ){
+                workBuf[i*2] = (points[i].x * scale); // + xoffset;
+                workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
+            }
+
+            GLint program = pi_texture_2D_shader_program;
+            checkGlError("Before glUseProgram", "ODDC", __LINE__);
+            glUseProgram( program );
+            checkGlError("Afore glUseProgram", "ODDC", __LINE__);
+            checkGlError("glUseProgram", "ODDC", __LINE__);
+            
+            // Get pointers to the attributes in the program.
+            GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+            checkGlError("aPos", "ODDC", __LINE__);
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf );
+            glEnableVertexAttribArray( mPosAttrib );
+            
+            //  Border color
+            float bcolorv[4];
+            bcolorv[0] = m_pen.GetColour().Red() / float(256);
+            bcolorv[1] = m_pen.GetColour().Green() / float(256);
+            bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+            bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+            
+            GLint bcolloc = glGetUniformLocation(program, "uColour");
+            checkGlError("uColour", "ODDC", __LINE__);
+            glUniform4fv(bcolloc, 1, bcolorv);
+            if(bcolloc == -1)
+                wxLogMessage(_("ODDC::DrawPolygon: bcolloc -1"));
+
+#if 0            
+            // Rotate 
+            mat4x4 I, Q;
+            mat4x4_identity(I);
+            mat4x4_rotate_Z(Q, I, angle);
+            
+            // Translate
+            Q[3][0] = xoffset;
+            Q[3][1] = yoffset;
+            
+            mat4x4 X;
+            mat4x4_mul(X, (float (*)[4])gFrame->GetPrimaryCanvas()->GetpVP()->vp_transform, Q);
+
+            GLint matloc = glGetUniformLocation(program,"MVMatrix");
+            glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)X ); 
+#endif            
+            
+            // Perform the actual drawing.
+            glDrawArrays(GL_LINE_LOOP, 0, n);
+
+            glUseProgram( 0 );
+
+        }
+        else{           // n = 3 or 4, most common case for pre-tesselated shapes
+#if 0
+        
+            //  Grow the work buffer as necessary
+            if( workBufSize < (size_t)n*2 ){
+                workBuf = (float *)realloc(workBuf, (n*4) * sizeof(float));
+                workBufSize = n*4;
+            }
+            
+            for( int i = 0; i < n; i++ ){
+                workBuf[i*2] = (points[i].x * scale); // + xoffset;
+                workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
+            }
+
+            GLint program = pi_texture_2D_shader_program;
+            glUseProgram( program );
+            
+            // Get pointers to the attributes in the program.
+            GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+            
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf );
+            glEnableVertexAttribArray( mPosAttrib );
+            
+        
+            //  Border color
+            float bcolorv[4];
+            bcolorv[0] = m_pen.GetColour().Red() / float(256);
+            bcolorv[1] = m_pen.GetColour().Green() / float(256);
+            bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+            bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+            
+            GLint bcolloc = glGetUniformLocation(program, "uColour");
+            glUniform4fv(bcolloc, 1, bcolorv);
+ 
+#if 0
+            // Rotate 
+            mat4x4 I, Q;
+            mat4x4_identity(I);
+            mat4x4_rotate_Z(Q, I, angle);
+            
+            // Translate
+            Q[3][0] = xoffset;
+            Q[3][1] = yoffset;
+            
+            mat4x4 X;
+            mat4x4_mul(X, (float (*)[4])gFrame->GetPrimaryCanvas()->GetpVP()->vp_transform, Q);
+            GLint matloc = glGetUniformLocation(program, "MVMatrix");
+            glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)X ); 
+#endif            
+            // Perform the actual drawing.
+            glDrawArrays(GL_LINE_LOOP, 0, n);
+
+            //  Fill color
+            bcolorv[0] = m_brush.GetColour().Red() / float(256);
+            bcolorv[1] = m_brush.GetColour().Green() / float(256);
+            bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+            bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+            
+            glUniform4fv(bcolloc, 1, bcolorv);
+            
+            // For the simple common case of a convex rectangle...
+            //  swizzle the array points to enable GL_TRIANGLE_STRIP
+            if(n == 4){
+                float x1 = workBuf[4];
+                float y1 = workBuf[5];
+                workBuf[4] = workBuf[6];
+                workBuf[5] = workBuf[7];
+                workBuf[6] = x1;
+                workBuf[7] = y1;
+                
+                glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            }
+            else if(n == 3){
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+            }
+            
+            glUseProgram( 0 );
+#endif
+            GLint program = pi_color_tri_shader_program;
+            glUseProgram( program );
+
+            // Get pointers to the attributes in the program.
+            GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+            checkGlError("mPosAttrib", "ODDC", __LINE__);
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf );
+            glEnableVertexAttribArray( mPosAttrib );
+
+            //  Border color
+            float bcolorv[4];
+            bcolorv[0] = m_pen.GetColour().Red() / float(256);
+            bcolorv[1] = m_pen.GetColour().Green() / float(256);
+            bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+            bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+
+            GLint bcolloc = glGetUniformLocation(program, "uColour");
+            checkGlError("uColour", "ODDC", __LINE__);
+            glUniform4fv(bcolloc, 1, bcolorv);
+
+            // Rotate
+            mat4x4 I, Q;
+            mat4x4_identity(I);
+            mat4x4_rotate_Z(Q, I, angle);
+
+            // Translate
+            Q[3][0] = xoffset;
+            Q[3][1] = yoffset;
+
+            GLint matloc = glGetUniformLocation(program, "TransformMatrix");
+            checkGlError("TransformMatrix", "ODDC", __LINE__);
+            glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
+
+            // Perform the actual drawing.
+            glDrawArrays(GL_LINE_LOOP, 0, n);
+
+            //  Fill color
+            bcolorv[0] = m_brush.GetColour().Red() / float(256);
+            bcolorv[1] = m_brush.GetColour().Green() / float(256);
+            bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+            bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+
+            glEnableVertexAttribArray(bcolloc);
+            glVertexAttribPointer( bcolloc, 4, GL_FLOAT, GL_FALSE, 2*sizeof(float), bcolorv );
+            glUniform4fv(bcolloc, 1, bcolorv);
+
+            // For the simple common case of a convex rectangle...
+            //  swizzle the array points to enable GL_TRIANGLE_STRIP
+            if(n == 4){
+                float x1 = workBuf[4];
+                float y1 = workBuf[5];
+                workBuf[4] = workBuf[6];
+                workBuf[5] = workBuf[7];
+                workBuf[6] = x1;
+                workBuf[7] = y1;
+
+                glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            }
+            else if(n == 3){
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+            }
+
+            // Restore the per-object transform to Identity Matrix
+            mat4x4 IM;
+            mat4x4_identity(IM);
+            GLint matlocf = glGetUniformLocation(program, "TransformMatrix");
+            glUniformMatrix4fv( matlocf, 1, GL_FALSE, (const GLfloat*)IM);
+
+        }
+        
+        
+#else
+       
+/*
+        glPushMatrix();
+        glTranslatef(xoffset, yoffset, 0);
+
+        float deg = 180/PI * ( angle  );
+        glRotatef(deg, 0, 0, 1);
+
+
+        if( ConfigureBrush() ) {
+            glBegin( GL_POLYGON );
+            for( int i = 0; i < n; i++ )
+                glVertex2f( (points[i].x * scale) + xoffset, (points[i].y * scale) + yoffset );
+            glEnd();
+        }
+        
+
+
+        if( ConfigurePen() ) {
+//            if( g_GLOptions.m_GLLineSmoothing )
+            glEnable( GL_LINE_SMOOTH );
+            glBegin( GL_LINE_LOOP );
+            for( int i = 0; i < n; i++ )
+                glVertex2f( (points[i].x * scale), (points[i].y * scale) );
+            glEnd();
+            glDisable( GL_LINE_SMOOTH );
+        }
+        
+        glPopMatrix();
+*/
+#endif
+
+        SetGLAttrs( false ); 
+        
+    }
+#endif    
+}
+
+void ODDC::DrawPolygonPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle )
+{
+    if( dc )
+        dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
+    else {
+        
+#ifdef __WXQT__        
+        SetGLAttrs( false );            // Some QT platforms (Android) have trouble with GL_BLEND / GL_LINE_SMOOTH
+#else
+        SetGLAttrs( true );
+#endif        
+
+       
+        ConfigurePen();
+        glEnable(GL_BLEND);
+
+        if(n > 3) {
+           if(ConfigureBrush()) {       // Check for transparent brush
+                DrawPolygonTessellatedPattern( n, points, textureID, textureSize, xoffset, yoffset);
+            }
+
+        }
+#ifdef USE_ANDROID_GLES2
+        else{           // n = 3 or 4, most common case for pre-tesselated shapes
+            //  Grow the work buffer as necessary
+            if( workBufSize < (size_t)n*2 ){
+                workBuf = (float *)realloc(workBuf, (n*2) * sizeof(float));
+                workBufSize = (size_t)n*2 ;
+            }
+            for( int i = 0; i < n; i++ ){
+                if(i == 0) {
+                    g_min_x = g_max_x = points[i].x;
+                    g_min_y = g_max_y = points[i].y;
+                }
+
+                workBuf[i*2] = (points[i].x * scale); // + xoffset;
+                workBuf[i*2 + 1] = (points[i].y * scale); // + yoffset;
+
+            }
+
+            //GLint program = pi_color_tri_shader_program;
+            checkGlError("Before glUseProgram", "ODDC", __LINE__);
+            GLint program = pi_texture_2D_shader_program;
+            //GLint program = pi_colorv_tri_shader_program;
+            glUseProgram( program );
+            checkGlError("glUseProgram", "ODDC", __LINE__);
+
+            // Get pointers to the attributes in the program.
+            // Position of vertex(s)
+            GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+            checkGlError("mPosAttrib", "ODDC", __LINE__);
+            // Texture coordinates
+            GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+            checkGlError("mUvAttrib", "ODDC", __LINE__);
+
+            // Rotate
+            GLint uRotateMatrix  = glGetUniformLocation( program, "MVMatrix" );
+            checkGlError("MVMatrix", "ODDC", __LINE__);
+
+            //Transform
+            GLint uTranslateMatrix  = glGetUniformLocation( program, "TransformMatrix" );
+            checkGlError("TransformMatrix", "ODDC", __LINE__);
+
+            // Set up the texture sampler to texture unit 0
+            GLint texUni = glGetUniformLocation( program, "uTexture" );
+            checkGlError("texUni", "ODDC", __LINE__);
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+            glEnableVertexAttribArray( mPosAttrib );
+            checkGlError("glEnableVertexAttribArray:mPosAttrib", "ODDC", __LINE__);
+            glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), workBuf );
+            checkGlError("glVertexAttribPointer:mPosAttrib", "ODDC", __LINE__);
+
+            //  Pattern color
+            float bcolorv[4];
+            bcolorv[0] = m_brush.GetColour().Red() / float(256);
+            bcolorv[1] = m_brush.GetColour().Green() / float(256);
+            bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+            bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+
+            GLint bcolloc = glGetUniformLocation(program, "uColour");
+            checkGlError("bcolloc", "ODDC", __LINE__);
+            glUniform4fv(bcolloc, 1, bcolorv);
+            checkGlError("glUniform4fv(bcolloc", "ODDC", __LINE__);
+
+            // Only a triangle can be convex all the time
+            if(n == 3){
+                GLfloat UVCoords[] = {
+                    GLfloat((workBuf[0] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[1] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[2] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[3] - g_min_y)/g_iTextureHeight/2),
+                    GLfloat((workBuf[4] - g_min_x)/g_iTextureWidth/2), GLfloat((workBuf[5] - g_min_y)/g_iTextureHeight/2)
+                };
+                glEnableVertexAttribArray( mUvAttrib );
+                checkGlError("glEnableVertexAttribArray( mUvAttrib )", "ODDC", __LINE__);
+                glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), UVCoords );
+                checkGlError("glVertexAttribPointer", "ODDC", __LINE__);
+                glDrawArrays(GL_TRIANGLES, 0, 3);
+                checkGlError("glDrawArrays(GL_TRIANGLES)", "ODDC", __LINE__);
+            }
+            glUseProgram( 0 );
+            checkGlError("glUseProgram(0)", "ODDC", __LINE__);
+
+        }    
+#else           // USE_ANDROID_GLES2
+
+        {
+            if(ConfigureBrush())        // Check for transparent brush
+                DrawPolygonTessellatedPattern( n, points, textureID, textureSize, xoffset, yoffset);
+        }
+#endif
+
+        SetGLAttrs( false ); 
+        
+    }
+#endif    
+}
+
+#ifdef ocpnUSE_GL
+
+// GL callbacks
+
+typedef union {
+    GLdouble data[6];
+    struct sGLvertex {
+        GLdouble x;
+        GLdouble y;
+        GLdouble z;
+        GLdouble r;
+        GLdouble g;
+        GLdouble b;
+        GLdouble a;
+    } info;
+} GLvertex;
+
+#ifndef USE_ANDROID_GLES2
+
+#ifdef __WXMAC__
+#ifndef APIENTRY
+#define APIENTRY
+#endif
+#endif
+
+void APIENTRY ODDCcombineCallback( GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4],
+        GLdouble **dataOut )
+{
+    GLvertex *vertex;
+
+    vertex = new GLvertex();
+    gTesselatorVertices.Add(vertex );
+
+    vertex->info.x = coords[0];
+    vertex->info.y = coords[1];
+    vertex->info.z = coords[2];
+
+    for( int i = 3; i < 6; i++ ) {
+        vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
+    }
+
+    *dataOut = &(vertex->data[0]);
+}
+
+void APIENTRY ODDCvertexCallback( GLvoid* arg )
+{
+    GLvertex* vertex;
+    vertex = (GLvertex*) arg;
+    glVertex2f( (float)vertex->info.x, (float)vertex->info.y );
+}
+
+void APIENTRY ODDCerrorCallback( GLenum errorCode )
+{
+   const GLubyte *estring;
+   estring = gluErrorString(errorCode);
+}
+
+void APIENTRY ODDCbeginCallback( GLenum type )
+{
+    glBegin( type );
+}
+
+void APIENTRY ODDCendCallback()
+{
+    glEnd();
+}
+#endif
+
+
+// GLSL callbacks
+
+
+#ifdef USE_ANDROID_GLES2
+
+static std::list<double*> odc_combine_work_data;
+static void odc_combineCallbackD(GLdouble coords[3],
+                             GLdouble *vertex_data[4],
+                             GLfloat weight[4], GLdouble **dataOut, void *data )
+{
+//     double *vertex = new double[3];
+//     odc_combine_work_data.push_back(vertex);
+//     memcpy(vertex, coords, 3*(sizeof *coords));
+//     *dataOut = vertex;
+    GLvertex *vertex;
+
+    vertex = new GLvertex();
+    gTesselatorVertices.Add(vertex );
+
+    vertex->info.x = coords[0];
+    vertex->info.y = coords[1];
+    vertex->info.z = coords[2];
+
+    for( int i = 3; i < 6; i++ ) {
+        vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
+    }
+
+    *dataOut = &(vertex->data[0]);
+}
+
+void odc_vertexCallbackD_GLSL(GLvoid *vertex, void *data)
+{
+    ODDC* pDC = (ODDC*)data;
+    
+    // Grow the work buffer if necessary
+    if(pDC->s_odc_tess_vertex_idx > pDC->s_odc_tess_buf_len - 8)
+    {
+        int new_buf_len = pDC->s_odc_tess_buf_len + 100;
+        GLfloat * tmp = pDC->s_odc_tess_work_buf;
+        GLfloat * tmp1 = pDC->s_odc_tess_tex_buf;
+
+        pDC->s_odc_tess_work_buf = (GLfloat *)realloc(pDC->s_odc_tess_work_buf, new_buf_len * sizeof(GLfloat));
+        pDC->s_odc_tess_tex_buf = (GLfloat *)realloc(pDC->s_odc_tess_tex_buf, new_buf_len * sizeof(GLfloat));
+        if (NULL == pDC->s_odc_tess_work_buf)
+        {
+            free(tmp);
+            free(tmp1);
+            tmp = NULL;
+            tmp1 = NULL;
+        }
+        else
+            pDC->s_odc_tess_buf_len = new_buf_len;
+    }
+    
+    GLdouble *pointer = (GLdouble *) vertex;
+    
+    int i_vertexid = pDC->s_odc_tess_vertex_idx;
+    pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx++] = (float)pointer[0];
+    pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx++] = (float)pointer[1];
+    pDC->s_odc_tess_tex_buf[i_vertexid++] = (float)((pointer[0] - g_min_x) / g_iTextureWidth) / 2;
+    pDC->s_odc_tess_tex_buf[i_vertexid] = (float)((pointer[1] - g_min_y) / g_iTextureHeight) / 2;
+
+    pDC->s_odc_nvertex++;
+
+}
+
+void odc_beginCallbackD_GLSL( GLenum mode, void *data)
+{
+    ODDC* pDC = (ODDC*)data;
+    pDC->s_odc_tess_vertex_idx_this =  pDC->s_odc_tess_vertex_idx;
+    pDC->s_odc_tess_mode = mode;
+    pDC->s_odc_nvertex = 0;
+}
+
+void odc_endCallbackD_GLSL(void *data)
+{
+#if 0
+    ODDC* pDC = (ODDC*)data;
+    float *bufPt = &(pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx_this]);
+    GLint pos = glGetAttribLocation(pDC->s_odc_activeProgram, "aPos");
+    glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+    glEnableVertexAttribArray(pos);
+    
+    glDrawArrays(pDC->s_odc_tess_mode, 0, pDC->s_odc_nvertex);
+#else
+    ODDC* pDC = (ODDC*)data;
+
+    GLint program = pDC->s_odc_activeProgram;
+    glUseProgram(program);
+    checkGlError("glUseProgram", "ODDC", __LINE__);
+
+    // Disable VBO's (vertex buffer objects) for attributes.
+    glBindBuffer( GL_ARRAY_BUFFER, 0 );
+    glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+    float *bufPt = &(pDC->s_odc_tess_work_buf[pDC->s_odc_tess_vertex_idx_this]);
+    GLint pos = glGetAttribLocation(program, "aPos");
+    checkGlError("aPos", "ODDC", __LINE__);
+    glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+    glEnableVertexAttribArray(pos);
+
+//    GLint matloc = glGetUniformLocation(program, "MVMatrix");
+//    glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)s_tessVP.vp_transform);
+
+    GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+    checkGlError("mUvAttrib", "ODDC", __LINE__);
+    float *bufTex = &(pDC->s_odc_tess_tex_buf[pDC->s_odc_tess_vertex_idx_this]);
+    glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), bufTex );
+    checkGlError("glVertexAttribPointer( mUvAttrib)", "ODDC", __LINE__);
+/*
+    float colorv[4];
+    wxColour c = pDC->GetBrush().GetColour();
+
+    colorv[0] = c.Red() / float(256);
+    colorv[1] = c.Green() / float(256);
+    colorv[2] = c.Blue() / float(256);
+    colorv[3] = c.Alpha() / float(256);
+
+    GLint colloc = glGetUniformLocation(program, "uColour");
+    glUniform4fv(colloc, 1, colorv);
+*/
+    glDrawArrays(pDC->s_odc_tess_mode, 0, pDC->s_odc_nvertex);
+#endif
+}
+#endif
+
+
+#endif          //#ifdef ocpnUSE_GL
+
+void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
+{
+    if( dc )
+        dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
+    else {
+#if !defined(ocpnUSE_GLES) || defined(USE_ANDROID_GLES2) // tessalator in glues is broken
+        if( n < 5 )
+# endif
+        {
+//             DrawPolygon( n, points, xoffset, yoffset );
+//             return;
+        }
+
+        
+
+#ifdef USE_ANDROID_GLES2
+
+        m_tobj = gluNewTess();
+        s_odc_tess_vertex_idx = 0;
+        
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX_DATA, (_GLUfuncptr) &odc_vertexCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN_DATA, (_GLUfuncptr) &odc_beginCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_END_DATA, (_GLUfuncptr) &odc_endCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE_DATA, (_GLUfuncptr) &odc_combineCallbackD );
+        //s_tessVP = vp;
+        
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty( m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO );
+        
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon( m_tobj, this );
+            gluTessBeginContour( m_tobj );
+
+/*            for( int i = 0; i < n; i++ ) {
+                double *p = new double[6];
+                p[0] = points[i].x, p[1] = points[i].y, p[2] = 0;
+                gluTessVertex(m_tobj, p, p);
+            }
+*/
+            for( int i = 0; i < n; i++ ) {
+                GLvertex* vertex = new GLvertex();
+                gTesselatorVertices.Add( vertex );
+                vertex->info.x = (GLdouble) points[i].x;
+                vertex->info.y = (GLdouble) points[i].y;
+                vertex->info.z = (GLdouble) 0.0;
+                vertex->info.r = (GLdouble) 0.0;
+                vertex->info.g = (GLdouble) 0.0;
+                vertex->info.b = (GLdouble) 0.0;
+                gluTessVertex( m_tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+            }
+
+            gluTessEndContour( m_tobj );
+            gluTessEndPolygon( m_tobj );
+        
+            GLint program = pi_colorv_tri_shader_program;
+            //GLint program = pi_texture_2D_shader_program;
+            glUseProgram(program);
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+            glBindBuffer( GL_ARRAY_BUFFER, 0 );
+            glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+    
+            float *bufPt = &(s_odc_tess_work_buf[s_odc_tess_vertex_idx_this]);
+            GLint pos = glGetAttribLocation(program, "aPos");
+            glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+            glEnableVertexAttribArray(pos);
+    
+            float colorv[4];
+            wxColour c = GetBrush().GetColour();
+            colorv[0] = c.Red() / float(256);
+            colorv[1] = c.Green() / float(256);
+            colorv[2] = c.Blue() / float(256);
+            colorv[3] = c.Alpha() / float(256);
+            GLint colloc = glGetUniformLocation(program, "uColour");
+            glUniform4fv(colloc, 1, colorv);
+
+            glDrawArrays(s_odc_tess_mode, 0, s_odc_nvertex);
+        }
+        
+        gluDeleteTess(m_tobj);
+        m_tobj = NULL;
+        glUseProgram( 0 );
+
+         for(std::list<double*>::iterator i = odc_combine_work_data.begin(); i!=odc_combine_work_data.end(); i++)
+             delete [] *i;
+         odc_combine_work_data.clear();
+        
+    }  
+#else           //USE_ANDROID_GLES2
+
+        m_tobj = gluNewTess();
+
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
+        gluTessCallback( m_tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
+        gluTessCallback( m_tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
+
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty( m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO );
+
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon( m_tobj, NULL );
+            gluTessBeginContour( m_tobj );
+
+            for( int i = 0; i < n; i++ ) {
+                GLvertex* vertex = new GLvertex();
+                gTesselatorVertices.Add( vertex );
+                vertex->info.x = (GLdouble) points[i].x;
+                vertex->info.y = (GLdouble) points[i].y;
+                vertex->info.z = (GLdouble) 0.0;
+                vertex->info.r = (GLdouble) 0.0;
+                vertex->info.g = (GLdouble) 0.0;
+                vertex->info.b = (GLdouble) 0.0;
+                gluTessVertex( m_tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+            }
+            gluTessEndContour( m_tobj );
+            gluTessEndPolygon( m_tobj );
+        }
+
+        for( unsigned int i=0; i<gTesselatorVertices.Count(); i++ )
+            delete (GLvertex*)gTesselatorVertices[i];
+        gTesselatorVertices.Clear();
+        
+        gluDeleteTess(m_tobj);
+        m_tobj = NULL;
+        
+    }
+#endif    
+#endif    
+}
+
+#ifdef ocpnUSE_GL
+#ifndef ANDROID
+
+void __CALL_CONVENTION ODDCPatterncombineCallback(GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4], GLdouble **dataOut)
+{
+    GLvertex *vertex;
+
+    vertex = new GLvertex();
+    gTesselatorVertices.Add(vertex );
+
+    vertex->info.x = coords[0];
+    vertex->info.y = coords[1];
+    vertex->info.z = coords[2];
+
+    for( int i = 3; i < 7; i++ ) {
+        vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
+    }
+
+    *dataOut = &(vertex->data[0]);
+}
+
+void __CALL_CONVENTION ODDCPatternvertexCallback(GLvoid* arg)
+{
+    GLvertex* vertex;
+    vertex = (GLvertex*) arg;
+    glTexCoord2d( vertex->info.x / g_iTextureWidth, vertex->info.y / g_iTextureHeight );
+    glVertex2d( vertex->info.x, vertex->info.y );
+}
+
+void __CALL_CONVENTION ODDCPatternerrorCallback(GLenum errorCode)
+{
+   const GLubyte *estring;
+   estring = gluErrorString(errorCode);
+}
+
+void __CALL_CONVENTION ODDCPatternbeginCallback(GLenum type)
+{
+    glBegin( type );
+}
+
+void __CALL_CONVENTION ODDCPatternendCallback()
+{
+    glEnd();
+}
+#endif
+#endif          //#ifdef ocpnUSE_GL
+
+
+void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset )
+{
+    if( dc )
+        dc->DrawPolygon( n, points, xoffset, yoffset );
+#ifdef ocpnUSE_GL
+    else {
+
+        if(n < 3)
+            return;
+        
+#ifdef USE_ANDROID_GLES2
+        // Pre-configure the GLES program
+//
+#if 0
+        //GLint program = pi_color_tri_shader_program;
+        GLint program = pi_texture_2D_shader_program;
+        glUseProgram( program );
+
+        // Get pointers to the attributes in the program.
+        // Position of vertex(s)
+        //GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+        // Texture coordinates
+        GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+
+        // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        glUniform1i( texUni, 0 );
+
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+//        glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), workBuf );
+//        glEnableVertexAttribArray( mPosAttrib );
+
+        GLfloat uvCoords[] = {0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+        glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), 0 );
+        glEnableVertexAttribArray( mUvAttrib );
+
+        //  Pattern color
+        float bcolorv[4];
+        bcolorv[0] = m_brush.GetColour().Red() / float(256);
+        bcolorv[1] = m_brush.GetColour().Green() / float(256);
+        bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+        bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+        GLint bcolloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+
+//
+#else
+        //GLint program = pi_colorv_tri_shader_program;
+        GLint program = pi_texture_2D_shader_program;
+        s_odc_activeProgram = program;
+        glUseProgram( program );
+        checkGlError("glUseProgram", "ODDC", __LINE__);
+
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        checkGlError("glBindBuffer", "ODDC", __LINE__);
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+        checkGlError("glBindBuffer", "ODDC", __LINE__);
+
+ 
+        GLfloat *bufPt = &(s_odc_tess_work_buf[s_odc_tess_vertex_idx_this]);
+        GLint mPosAttrib = glGetAttribLocation(program, "aPos");
+        checkGlError("mPosAttrib", "ODDC", __LINE__);
+
+        GLint mUvAttrib = glGetAttribLocation(program, "aUV");
+        checkGlError("mUvAttrib", "ODDC", __LINE__);
+        //GLint projection = glGetAttribLocation(program, "MVMatrix");
+        //GLint modelView = glGetAttribLocation(program, "TransformMatrix");
+        glVertexAttribPointer(mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+        checkGlError("glVertexAttribPointer", "ODDC", __LINE__);
+        glEnableVertexAttribArray(mPosAttrib);
+        checkGlError("glEnableVertexAttribArray", "ODDC", __LINE__);
+
+        // Bind our texture to the texturing target.
+        glBindTexture( GL_TEXTURE_2D, textureID );
+        checkGlError("glBindTexture", "ODDC", __LINE__);
+
+        // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        checkGlError("texUni", "ODDC", __LINE__);
+        glUniform1i( texUni, 0 );
+        checkGlError("texUni", "ODDC", __LINE__);
+
+//        GLint texPOTWidth  = glGetUniformLocation( program, "texPOTWidth" );
+//        GLint texPOTHeight  = glGetUniformLocation( program, "texPOTHeight" );
+//        glUniform1f(texPOTWidth, textureSize.x);
+//        glUniform1f(texPOTHeight, textureSize.y);
+            
+//        GLint xo  = glGetUniformLocation( program, "xOff" );
+//        GLint yo  = glGetUniformLocation( program, "yOff" );
+
+//        glUniform1f(xo, fmod(points[0].x, textureSize.x));
+//        glUniform1f(yo, fmod(points[0].y, textureSize.y));
+
+        //  Pattern color
+        float bcolorv[4];
+        bcolorv[0] = m_brush.GetColour().Red() / float(256);
+        bcolorv[1] = m_brush.GetColour().Green() / float(256);
+        bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+        bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+        GLint bcolloc = glGetUniformLocation(program, "uColour");
+        checkGlError("bcoloc", "ODDC", __LINE__);
+        glUniform4fv(bcolloc, 1, bcolorv);
+#endif
+        // Tesselate
+        m_tobj = gluNewTess();
+        s_odc_tess_vertex_idx = 0;
+        
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX_DATA, (_GLUfuncptr) &odc_vertexCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN_DATA, (_GLUfuncptr) &odc_beginCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_END_DATA, (_GLUfuncptr) &odc_endCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE_DATA, (_GLUfuncptr) &odc_combineCallbackD );
+        //s_tessVP = vp;
+
+        
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty( m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_NONZERO );
+
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon( m_tobj, this );
+            gluTessBeginContour( m_tobj );
+
+            for( int i = 0; i < n; i++ ) {
+                GLvertex* vertex = new GLvertex();
+                gTesselatorVertices.Add( vertex );
+                vertex->info.x = (GLdouble) points[i].x;
+                vertex->info.y = (GLdouble) points[i].y;
+                vertex->info.z = (GLdouble) 0.0;
+                vertex->info.r = (GLdouble) 0.0;
+                vertex->info.g = (GLdouble) 0.0;
+                vertex->info.b = (GLdouble) 0.0;
+                gluTessVertex( m_tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+            }
+            gluTessEndContour( m_tobj );
+            gluTessEndPolygon( m_tobj );
+        }
+        
+#if 0
+        //      Render the tesselated results
+        GLint program = pi_colorv_tri_shader_program;
+        glUseProgram( program );
+            
+            
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+ 
+        float *bufPt = &(s_odc_tess_work_buf[s_odc_tess_vertex_idx_this]);
+        GLint pos = glGetAttribLocation(program, "position");
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+        glEnableVertexAttribArray(pos);
+ 
+        // Bind our texture to the texturing target.
+        glBindTexture( GL_TEXTURE_2D, textureID );
+
+        // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        glUniform1i( texUni, 0 );
+
+        GLint texPOTWidth  = glGetUniformLocation( program, "texPOTWidth" );
+        GLint texPOTHeight  = glGetUniformLocation( program, "texPOTHeight" );
+        glUniform1f(texPOTWidth, textureSize.x);
+        glUniform1f(texPOTHeight, textureSize.y);
+            
+        GLint xo  = glGetUniformLocation( program, "xOff" );
+        GLint yo  = glGetUniformLocation( program, "yOff" );
+
+        glUniform1f(xo, fmod(points[0].x, textureSize.x));
+        glUniform1f(yo, fmod(points[0].y, textureSize.y));
+
+        //  Pattern color
+        float bcolorv[4];
+        GLint bcolloc = glGetUniformLocation(program,"color");
+        bcolorv[0] = m_brush.GetColour().Red() / float(256);
+        bcolorv[1] = m_brush.GetColour().Green() / float(256);
+        bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+        bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+        glDrawArrays(s_odc_tess_mode, 0, s_odc_nvertex);
+#endif
+        glDrawArrays(s_odc_tess_mode, 0, s_odc_nvertex);
+
+        gluDeleteTess(m_tobj);
+        m_tobj = NULL;
+        
+         for(std::list<double*>::iterator i = odc_combine_work_data.begin(); i!=odc_combine_work_data.end(); i++)
+             delete [] *i;
+         odc_combine_work_data.clear();
+        
+        glUseProgram( 0 );
+
+    }  
+#else
+#ifndef ANDROID
+        m_tobj = gluNewTess();
+
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCPatternvertexCallback );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCPatternbeginCallback );
+        gluTessCallback( m_tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCPatternendCallback );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCPatterncombineCallback );
+        gluTessCallback( m_tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCPatternerrorCallback );
+
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty(m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        gluTessProperty(m_tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+
+        ConfigurePen();
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon( m_tobj, NULL );
+            gluTessBeginContour( m_tobj );
+
+            for( int i = 0; i < n; i++ ) {
+                GLvertex* vertex = new GLvertex();
+                gTesselatorVertices.Add( vertex );
+                vertex->info.x = (GLdouble) points[i].x;
+                vertex->info.y = (GLdouble) points[i].y;
+                vertex->info.z = (GLdouble) 0.0;
+                vertex->info.r = (GLdouble) 0.0;
+                vertex->info.g = (GLdouble) 0.0;
+                vertex->info.b = (GLdouble) 0.0;
+                gluTessVertex( m_tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+            }
+            gluTessEndContour( m_tobj );
+            gluTessEndPolygon( m_tobj );
+        }
+
+        for( unsigned int i=0; i<gTesselatorVertices.Count(); i++ )
+            delete (GLvertex*)gTesselatorVertices[i];
+        gTesselatorVertices.Clear();
+        
+        gluDeleteTess(m_tobj);
+        m_tobj = NULL;
+        
+    }
+#endif    
+#endif    
+#endif    
+}
+
+#if 0
 
 void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale )
 {
@@ -1093,71 +2680,26 @@ void ODDC::DrawPolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffse
         SetGLAttrs( false );
     }
 #endif    
+
 }
-
-#ifdef ocpnUSE_GL
-
-typedef union {
-    GLdouble data[7];
-    struct sGLvertex {
-        GLdouble x;
-        GLdouble y;
-        GLdouble z;
-        GLdouble r;
-        GLdouble g;
-        GLdouble b;
-        GLdouble a;
-    } info;
-} GLvertex;
-
-void __CALL_CONVENTION ODDCcombineCallback(GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4], GLdouble **dataOut)
-{
-    GLvertex *vertex;
-
-    vertex = new GLvertex();
-    gTesselatorVertices.Add(vertex );
-
-    vertex->info.x = coords[0];
-    vertex->info.y = coords[1];
-    vertex->info.z = coords[2];
-
-    for( int i = 3; i < 7; i++ ) {
-        vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
-    }
-
-    *dataOut = &(vertex->data[0]);
-}
-
-void __CALL_CONVENTION ODDCvertexCallback(GLvoid* arg)
-{
-    GLvertex* vertex;
-    vertex = (GLvertex*) arg;
-#ifndef __OCPN__ANDROID__
-    if(g_bTexture2D) glTexCoord2d( vertex->info.x / g_iTextureWidth, vertex->info.y / g_iTextureHeight );
-#else
-    if(g_bTexture2D) glTexCoord2f( vertex->info.x / g_iTextureWidth, vertex->info.y / g_iTextureHeight );
 #endif
-    glVertex2d( vertex->info.x, vertex->info.y );
-}
 
-void __CALL_CONVENTION ODDCerrorCallback(GLenum errorCode)
-{
-   const GLubyte *estring;
-   estring = gluErrorString(errorCode);
-   wxLogMessage( wxT("OpenGL Tessellation Error: %s"), (char *)estring );
-}
 
-void __CALL_CONVENTION ODDCbeginCallback(GLenum type)
-{
-    glBegin( type );
-}
+// typedef union {
+//     GLdouble data[7];
+//     struct sGLvertex {
+//         GLdouble x;
+//         GLdouble y;
+//         GLdouble z;
+//         GLdouble r;
+//         GLdouble g;
+//         GLdouble b;
+//         GLdouble a;
+//     } info;
+//} GLvertex;
 
-void __CALL_CONVENTION ODDCendCallback()
-{
-    glEnd();
-}
-#endif          //#ifdef ocpnUSE_GL
 
+#if 0    
 void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset )
 {
     if( dc )
@@ -1167,28 +2709,28 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 
         GLUtesselator *tobj = gluNewTess();
 
-        gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
-        gluTessCallback( tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
-        gluTessCallback( tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
-        gluTessCallback( tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
-        gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
+        gluTessCallback( m_tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
+        gluTessCallback( m_tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
 
-        gluTessNormal( tobj, 0, 0, 1);
-        gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty(m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
 #ifndef __OCPN__ANDROID__
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 #else
         //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_NV);
 #endif
-        gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+        gluTessProperty(m_tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
 
         if(glIsEnabled(GL_TEXTURE_2D)) g_bTexture2D = true;
         else g_bTexture2D = false;
 
         ConfigurePen();
         if( ConfigureBrush() ) {
-            gluTessBeginPolygon(tobj, NULL);
-            gluTessBeginContour(tobj);
+            gluTessBeginPolygon(m_tobj, NULL);
+            gluTessBeginContour(m_tobj);
             for( int i = 0; i < n; i++ ) {
                 GLvertex* vertex = new GLvertex();
                 gTesselatorVertices.Add( vertex );
@@ -1199,13 +2741,13 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
                 vertex->info.g = (GLdouble) 0.0;
                 vertex->info.b = (GLdouble) 0.0;
                 vertex->info.a = (GLdouble) 0.0;
-                gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+                gluTessVertex( m_tobj, (GLdouble*)vertex, (GLdouble*)vertex );
             }
-            gluTessEndContour( tobj );
-			gluTessEndPolygon(tobj);
+            gluTessEndContour( m_tobj );
+			gluTessEndPolygon(m_tobj);
 		}
         
-		gluDeleteTess(tobj);
+		gluDeleteTess(m_tobj);
 		for (unsigned int i = 0; i<gTesselatorVertices.Count(); i++)
             delete (GLvertex*)gTesselatorVertices.Item(i);
         gTesselatorVertices.Clear();
@@ -1213,9 +2755,11 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
     }
 #endif    
 }
+#endif
 
 void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCoord xoffset, wxCoord yoffset )
 {
+#if 1
     if( dc ) {
         int prev = 0;
         for( int i = 0; i < n; i++ ) {
@@ -1223,34 +2767,31 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
             prev += npoints[i];
         }
     }
-    #ifdef ocpnUSE_GL
+#ifdef ocpnUSE_GL
     else {
-        GLUtesselator *tobj = gluNewTess();
-        
-        gluTessCallback( tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCvertexCallback );
-        gluTessCallback( tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCbeginCallback );
-        gluTessCallback( tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCendCallback );
-        gluTessCallback( tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCcombineCallback );
-        gluTessCallback( tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCerrorCallback );
-        
-        gluTessNormal( tobj, 0, 0, 1);
-        gluTessProperty(tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
-        #ifndef __OCPN__ANDROID__
+#ifndef ANDROID        
+        m_tobj = gluNewTess();
+
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCPatternvertexCallback );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN, (_GLUfuncptr) &ODDCPatternbeginCallback );
+        gluTessCallback( m_tobj, GLU_TESS_END, (_GLUfuncptr) &ODDCPatternendCallback );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE, (_GLUfuncptr) &ODDCPatterncombineCallback );
+        gluTessCallback( m_tobj, GLU_TESS_ERROR, (_GLUfuncptr) &ODDCPatternerrorCallback );
+
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty(m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        #else
-        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL_NV);
-        #endif
-        gluTessProperty(tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+        gluTessProperty(m_tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
         
         if(glIsEnabled(GL_TEXTURE_2D)) g_bTexture2D = true;
         else g_bTexture2D = false;
         
         ConfigurePen();
         if( ConfigureBrush() ) {
-            gluTessBeginPolygon(tobj, NULL);
+            gluTessBeginPolygon(m_tobj, NULL);
             int prev = 0;
             for( int j = 0; j < n; j++ ) {
-                gluTessBeginContour(tobj);
+                gluTessBeginContour(m_tobj);
                 for( int i = 0; i < npoints[j]; i++ ) {
                     GLvertex* vertex = new GLvertex();
                     gTesselatorVertices.Add( vertex );
@@ -1261,21 +2802,165 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
                     vertex->info.g = (GLdouble) 0.0;
                     vertex->info.b = (GLdouble) 0.0;
                     vertex->info.a = (GLdouble) 0.0;
-                    gluTessVertex( tobj, (GLdouble*)vertex, (GLdouble*)vertex );
+                    gluTessVertex( m_tobj, (GLdouble*)vertex, (GLdouble*)vertex );
                 }
-                gluTessEndContour( tobj );
+                gluTessEndContour( m_tobj );
                 prev += npoints[j];
             }
-            gluTessEndPolygon(tobj);
+            gluTessEndPolygon(m_tobj);
         }
         
-        gluDeleteTess(tobj);
+        gluDeleteTess(m_tobj);
         for (unsigned int i = 0; i<gTesselatorVertices.Count(); i++)
             delete (GLvertex*)gTesselatorVertices.Item(i);
         gTesselatorVertices.Clear();
         
+#endif          //ANDROID    
     }
-    #endif    
+#endif
+#endif    
+}
+
+void ODDC::DrawPolygons(int n, int npoint[], wxPoint points[], wxCoord xoffset, wxCoord yoffset)
+{
+    if(g_textureId >= 0)
+        DrawPolygonsPattern( n, npoint, points, g_textureId, wxSize(g_iTextureWidth, g_iTextureHeight), xoffset, yoffset);
+}
+        
+void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle)
+{
+#ifndef ANDROID
+
+    DrawPolygonsTessellated( n, npoint, points);
+
+#else
+        // Pre-configure the GLES program
+        //GLint program = pi_colorv_tri_shader_program;
+        GLint program = pi_texture_2D_shader_program;
+        s_odc_activeProgram = program;
+        
+        glUseProgram( program );
+            
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+ 
+        float *bufPt = &(s_odc_tess_work_buf[s_odc_tess_vertex_idx_this]);
+        GLint pos = glGetAttribLocation(program, "aPos");
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+        glEnableVertexAttribArray(pos);
+ 
+        // Bind our texture to the texturing target.
+        glBindTexture( GL_TEXTURE_2D, textureID );
+
+        // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        glUniform1i( texUni, 0 );
+
+//        GLint texPOTWidth  = glGetUniformLocation( program, "texPOTWidth" );
+//        GLint texPOTHeight  = glGetUniformLocation( program, "texPOTHeight" );
+//        glUniform1f(texPOTWidth, textureSize.x);
+//        glUniform1f(texPOTHeight, textureSize.y);
+            
+//        GLint xo  = glGetUniformLocation( program, "xOff" );
+//        GLint yo  = glGetUniformLocation( program, "yOff" );
+
+//        glUniform1f(xo, fmod(points[0].x, textureSize.x));
+//        glUniform1f(yo, fmod(points[0].y, textureSize.y));
+
+        //  Pattern color
+        float bcolorv[4];
+        bcolorv[0] = m_brush.GetColour().Red() / float(256);
+        bcolorv[1] = m_brush.GetColour().Green() / float(256);
+        bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+        bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+        GLint bcolloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+        // Tesselate
+        m_tobj = gluNewTess();
+        s_odc_tess_vertex_idx = 0;
+        
+        gluTessCallback( m_tobj, GLU_TESS_VERTEX_DATA, (_GLUfuncptr) &odc_vertexCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_BEGIN_DATA, (_GLUfuncptr) &odc_beginCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_END_DATA, (_GLUfuncptr) &odc_endCallbackD_GLSL  );
+        gluTessCallback( m_tobj, GLU_TESS_COMBINE_DATA, (_GLUfuncptr) &odc_combineCallbackD );
+
+        gluTessNormal( m_tobj, 0, 0, 1);
+        gluTessProperty(m_tobj, GLU_TESS_WINDING_RULE, GLU_TESS_WINDING_ODD);
+        //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+        gluTessProperty(m_tobj, GLU_TESS_BOUNDARY_ONLY, GL_FALSE);
+ 
+        
+        if( ConfigureBrush() ) {
+            gluTessBeginPolygon(m_tobj, this);
+            int prev = 0;
+            for( int j = 0; j < n; j++ ) {
+                gluTessBeginContour(m_tobj);
+                for( int i = 0; i < npoint[j]; i++ ) {
+                    double *p = new double[6];
+                    p[0] = points[i+ prev].x, p[1] = points[i+ prev].y, p[2] = 0;
+                    gluTessVertex(m_tobj, p, p);
+                }
+                gluTessEndContour( m_tobj );
+                prev += npoint[j];
+            }
+            gluTessEndPolygon(m_tobj);
+        }
+
+#if 0        
+        //      Render the tesselated results
+        GLint program = pi_colorv_tri_shader_program;
+        glUseProgram( program );
+            
+            
+        // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+            
+ 
+        float *bufPt = &(s_odc_tess_work_buf[s_odc_tess_vertex_idx_this]);
+        GLint pos = glGetAttribLocation(program, "position");
+        glVertexAttribPointer(pos, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), bufPt);
+        glEnableVertexAttribArray(pos);
+ 
+        // Bind our texture to the texturing target.
+        glBindTexture( GL_TEXTURE_2D, textureID );
+
+        // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        glUniform1i( texUni, 0 );
+
+        GLint texPOTWidth  = glGetUniformLocation( program, "texPOTWidth" );
+        GLint texPOTHeight  = glGetUniformLocation( program, "texPOTHeight" );
+        glUniform1f(texPOTWidth, textureSize.x);
+        glUniform1f(texPOTHeight, textureSize.y);
+            
+        GLint xo  = glGetUniformLocation( program, "xOff" );
+        GLint yo  = glGetUniformLocation( program, "yOff" );
+
+        glUniform1f(xo, fmod(points[0].x, textureSize.x));
+        glUniform1f(yo, fmod(points[0].y, textureSize.y));
+
+        //  Pattern color
+        float bcolorv[4];
+        GLint bcolloc = glGetUniformLocation(program,"color");
+        bcolorv[0] = m_brush.GetColour().Red() / float(256);
+        bcolorv[1] = m_brush.GetColour().Green() / float(256);
+        bcolorv[2] = m_brush.GetColour().Blue() / float(256);
+        bcolorv[3] = m_brush.GetColour().Alpha() / float(256);
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+        glDrawArrays(s_odc_tess_mode, 0, s_odc_nvertex);
+#endif
+        
+        gluDeleteTess(m_tobj);
+        m_tobj = NULL;
+    
+        glUseProgram( 0 );
+#endif
+    
 }
 
 void ODDC::StrokePolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset, float scale )
@@ -1301,10 +2986,6 @@ void ODDC::StrokePolygon( int n, wxPoint points[], wxCoord xoffset, wxCoord yoff
 
 void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemask )
 {
-#ifdef ocpnUSE_GLES  // Do not attempt to do anything with glDrawPixels if using opengles
-        return;
-#endif
-
     wxBitmap bmp;
     if( x < 0 || y < 0 ) {
         int dx = ( x < 0 ? -x : 0 );
@@ -1324,6 +3005,11 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
         dc->DrawBitmap( bmp, x, y, usemask );
 #ifdef ocpnUSE_GL
     else {
+#ifdef ocpnUSE_GLES  // Do not attempt to do anything with glDrawPixels if using opengles
+        return; // this should not be hit anymore ever anyway
+#endif
+
+#ifndef USE_ANDROID_GLES2
         wxImage image = bmp.ConvertToImage();
         int w = image.GetWidth(), h = image.GetHeight();
 
@@ -1332,8 +3018,13 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
             unsigned char *a = image.GetAlpha();
 
             unsigned char mr, mg, mb;
-            if( !a && !image.GetOrFindMaskColour( &mr, &mg, &mb ) ) printf(
-                    "trying to use mask to draw a bitmap without alpha or mask\n" );
+            if( !a && !image.GetOrFindMaskColour( &mr, &mg, &mb ) )
+                printf("trying to use mask to draw a bitmap without alpha or mask\n" );
+
+#ifdef __WXOSX__
+            if(image.HasMask())
+                a=0;
+#endif
 
             unsigned char *e = new unsigned char[4 * w * h];
             if(e && d){
@@ -1364,11 +3055,19 @@ void ODDC::DrawBitmap( const wxBitmap &bitmap, wxCoord x, wxCoord y, bool usemas
                 glDrawPixels( w, h, GL_RGB, GL_UNSIGNED_BYTE, image.GetData() );
             glPixelZoom( 1, 1 );
         }
+#endif  // GLES2
     }
-#endif    
+#endif
 }
 
+
 void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
+{
+    DrawTextEx( text, x, y, 1.0 );
+}
+
+
+void ODDC::DrawTextEx( const wxString &text, wxCoord x, wxCoord y, float scaleFactor )
 {
     if( dc )
         dc->DrawText( text, x, y );
@@ -1377,34 +3076,40 @@ void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
        wxCoord w = 0;
         wxCoord h = 0;
 
-#ifndef __WXMAC__
-        
-        m_texfont.Build( m_font );      // make sure the font is ready
-        m_texfont.GetTextExtent(text, &w, &h);
-        
-        if( w && h ) {
+        if(m_buseTex){
+
+            m_texfont.Build( m_font );      // make sure the font is ready
+            m_texfont.GetTextExtent(text, &w, &h);
+            m_texfont.SetColor(m_textforegroundcolour);
             
-            glEnable( GL_BLEND );
-            glEnable( GL_TEXTURE_2D );
-            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
-            glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+            if( w && h ) {
+                
+                glEnable( GL_BLEND );
+                glEnable( GL_TEXTURE_2D );
+                glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
 
-            glPushMatrix();
-            glTranslatef(x, y, 0);
-            
-            glColor3ub( m_textforegroundcolour.Red(), m_textforegroundcolour.Green(),
-                        m_textforegroundcolour.Blue() );
-            
+#ifndef USE_ANDROID_GLES2                
+                glPushMatrix();
+                glTranslatef(x, y, 0);
+                
+                glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+                glColor3ub( m_textforegroundcolour.Red(), m_textforegroundcolour.Green(),
+                            m_textforegroundcolour.Blue() );
+                
 
-            m_texfont.RenderString(text);
-            glPopMatrix();
+                m_texfont.RenderString(text);
+                glPopMatrix();
+#else
+                m_texfont.RenderString(text, x, y);
+#endif                
+                glDisable( GL_TEXTURE_2D );
+                glDisable( GL_BLEND );
 
-            glDisable( GL_TEXTURE_2D );
-            glDisable( GL_BLEND );
-
+            }
         }
-#else            
+        else{           
             wxScreenDC sdc;
+            sdc.SetFont(m_font);
             sdc.GetTextExtent(text, &w, &h, NULL, NULL, &m_font);
             
             /* create bitmap of appropriate size and select it */
@@ -1437,24 +3142,77 @@ void ODDC::DrawText( const wxString &text, wxCoord x, wxCoord y )
                 y += dy;
             }
 
-            unsigned char *data = new unsigned char[w * h];
+            unsigned char *data = new unsigned char[w * h * 4];
             unsigned char *im = image.GetData();
+            
+            
             if(im){
-                for( int i = 0; i < w * h; i++ )
-                    data[i] = im[3 * i];
+                unsigned int r = m_textforegroundcolour.Red();
+                unsigned int g = m_textforegroundcolour.Green();
+                unsigned int b = m_textforegroundcolour.Blue();
+                for( int i = 0; i < h; i++ ){
+                    for(int j=0 ; j < w ; j++){
+                        unsigned int index = ((i*w) + j) * 4;
+                        data[index] = r;
+                        data[index+1] = g;
+                        data[index+2] = b;
+                        data[index+3] = im[((i*w) + j) * 3];
+                    }
+                }
             }
-
-            glColor4ub( m_textforegroundcolour.Red(), m_textforegroundcolour.Green(),
-                    m_textforegroundcolour.Blue(), 255 );
-            GLDrawBlendData( x, y, w, h, GL_ALPHA, data );
-            delete[] data;
+#if 0
+            glColor4ub( 255, 255, 255, 255 );
+            glEnable( GL_BLEND );
+            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+            glRasterPos2i( x, y );
+            glPixelZoom( 1, -1 );
+            glDrawPixels( w, h, GL_RGBA, GL_UNSIGNED_BYTE, data );
+            glPixelZoom( 1, 1 );
+            glDisable( GL_BLEND );
+#else
+            unsigned int texobj;    
+            
+            glGenTextures(1, &texobj);
+            glBindTexture(GL_TEXTURE_2D, texobj);
+            
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+            glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+            
+            int TextureWidth = NextPow2(w);
+            int TextureHeight = NextPow2(h);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, TextureWidth, TextureHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+            glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            
+            glEnable(GL_TEXTURE_2D);
+            glEnable(GL_BLEND);
+            glBlendFunc( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
+            
+            float u = (float)w/TextureWidth, v = (float)h/TextureHeight;
+            
+#ifndef USE_ANDROID_GLES2            
+            glColor3ub(0,0,0);
+            
+            glBegin(GL_QUADS);
+            glTexCoord2f(0, 0); glVertex2f(x, y);
+            glTexCoord2f(u, 0); glVertex2f(x+w, y);
+            glTexCoord2f(u, v); glVertex2f(x+w, y+h);
+            glTexCoord2f(0, v); glVertex2f(x, y+h);
+            glEnd();
+#else
 #endif            
+            glDisable(GL_BLEND);
+            glDisable(GL_TEXTURE_2D);
+            
+            glDeleteTextures(1, &texobj);
+#endif            
+            delete[] data;
+        }            
     }
 #endif    
 }
 
 void ODDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoord *descent,
-        wxCoord *externalLeading, wxFont *font ) const
+        wxCoord *externalLeading, wxFont *font )
 {
     //  Give at least reasonable results on failure.
     if(w) *w = 100;
@@ -1465,14 +3223,25 @@ void ODDC::GetTextExtent( const wxString &string, wxCoord *w, wxCoord *h, wxCoor
         wxFont f = m_font;
         if( font ) f = *font;
 
+        if(m_buseTex){
+#ifdef ocpnUSE_GL
+        m_texfont.Build( f );      // make sure the font is ready
+        m_texfont.GetTextExtent(string, w, h);
+#else
         wxMemoryDC temp_dc;
         temp_dc.GetMultiLineTextExtent( string, w, h, descent, &f );
-        
+#endif
+        }
+        else{
+            wxMemoryDC temp_dc;
+            temp_dc.GetMultiLineTextExtent( string, w, h, descent, &f );
+        }
+
      }
      
      //  Sometimes GetTextExtent returns really wrong, uninitialized results.
      //  Dunno why....
-     if( w && (*w > 500) ) *w = 500;
+     if( w && (*w > 2000) ) *w = 2000;
      if( h && (*h > 500) ) *h = 500;
 }
 
@@ -1499,9 +3268,11 @@ bool ODDC::ConfigurePen()
         width = m_pen.GetWidth();
     }
 #ifdef ocpnUSE_GL
+#ifndef USE_ANDROID_GLES2
     if(c != wxNullColour)
         glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
     glLineWidth(wxMax(g_GLMinSymbolLineWidth, width) );
+#endif
 #endif    
     return true;
 }
@@ -1511,8 +3282,10 @@ bool ODDC::ConfigureBrush()
     if( m_brush == wxNullBrush || m_brush.GetStyle() == wxBRUSHSTYLE_TRANSPARENT )
         return false;
 #ifdef ocpnUSE_GL
+#ifndef USE_ANDROID_GLES2    
     wxColour c = m_brush.GetColour();
     glColor4ub( c.Red(), c.Green(), c.Blue(), c.Alpha() );
+#endif    
 #endif    
     return true;
 }
@@ -1521,6 +3294,7 @@ void ODDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int form
         const unsigned char *data )
 {
 #ifdef ocpnUSE_GL
+#ifndef USE_ANDROID_GLES2
     glEnable( GL_BLEND );
     glRasterPos2i( x, y );
     glPixelZoom( 1, -1 );
@@ -1528,10 +3302,195 @@ void ODDC::GLDrawBlendData( wxCoord x, wxCoord y, wxCoord w, wxCoord h, int form
     glPixelZoom( 1, 1 );
     glDisable( GL_BLEND );
 #endif
+#endif
 }
 
-void ODDC::SetTextureSize( int width, int height )
+void ODDC::SetTextureParms( GLint textureId, int width, int height )
 {
+    g_textureId = textureId;
     g_iTextureWidth = width;
     g_iTextureHeight = height;
 }
+
+void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
+{
+        float w = width; 
+        float h = height;
+
+#ifndef USE_ANDROID_GLES2
+        glColor3f(1,1,1);
+
+        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+        float u = (float)width/texRect.width, v = (float)height/texRect.height;
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0); glVertex2f(position.x, position.y);
+        glTexCoord2f(u, 0); glVertex2f(position.x+w, position.y);
+        glTexCoord2f(u, v); glVertex2f(position.x+w, position.y+h);
+        glTexCoord2f(0, v); glVertex2f(position.x, position.y+h);
+        glEnd();
+#else    
+
+        float tx1 = texRect.x, ty1 = texRect.y;
+        float tx2 = tx1 + w, ty2 = ty1 + h;
+
+        // Normalize values against texture size
+        tx1 /= texRect.width , tx2 /= texRect.width ;
+        ty1 /= texRect.height , ty2 /= texRect.height ;
+
+        float uv[8];
+        float coords[8];
+
+            // Note swizzle of points to allow TRIANGLE_STRIP drawing
+        uv[0] = tx1; uv[1] = ty1; uv[2] = tx2; uv[3] = ty1;
+        uv[6] = tx2; uv[7] = ty2; uv[4] = tx1; uv[5] = ty2;
+
+            // pixels
+        coords[0] = position.x;
+        coords[1] = position.y; coords[2] = position.x+w; coords[3] = position.y;
+        coords[6] = position.x+w; coords[7] = position.y+h; coords[4] = position.x; coords[5] = position.y+h;
+
+        GLint program = pi_texture_2D_shader_program;
+        glUseProgram( program );
+
+            // Get pointers to the attributes in the program.
+        GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+        GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+
+            // Select the active texture unit.
+        glActiveTexture( GL_TEXTURE0 );
+
+            // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        glUniform1i( texUni, 0 );
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+            // Set the attribute mPosAttrib with the vertices in the screen coordinates...
+        glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), coords );
+            // ... and enable it.
+        glEnableVertexAttribArray( mPosAttrib );
+
+            // Set the attribute mUvAttrib with the vertices in the GL coordinates...
+        glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), uv );
+            // ... and enable it.
+        glEnableVertexAttribArray( mUvAttrib );
+
+#if 0        
+            // Rotate
+        mat4x4 I, Q;
+        mat4x4_identity(I);
+
+        mat4x4_translate_in_place(I, position.x, position.y, 0);
+        mat4x4_rotate_Z(Q, I, -rotation);
+        mat4x4_translate_in_place(Q, -rPivot.x, -rPivot.y, rotation);
+
+        GLint matloc = glGetUniformLocation(progam,"TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
+#endif
+
+        // Perform the actual drawing.
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+        glUseProgram( 0 );
+#endif
+}
+
+void ODDC::DrawTextureAlpha( wxRect texRect, int width, int height, float scaleFactor, wxPoint position, float rotation, wxPoint rPivot)
+{
+        float w = width; 
+        float h = height;
+
+#ifndef USE_ANDROID_GLES2
+        ConfigurePen();
+
+        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+        float u = (float)width/texRect.width, v = (float)height/texRect.height;
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0); glVertex2f(position.x, position.y);
+        glTexCoord2f(u, 0); glVertex2f(position.x+w, position.y);
+        glTexCoord2f(u, v); glVertex2f(position.x+w, position.y+h);
+        glTexCoord2f(0, v); glVertex2f(position.x, position.y+h);
+        glEnd();
+#else    
+
+        float tx1 = texRect.x, ty1 = texRect.y;
+        float tx2 = tx1 + w, ty2 = ty1 + h;
+
+        // Normalize values against texture size
+        tx1 /= texRect.width , tx2 /= texRect.width ;
+        ty1 /= texRect.height , ty2 /= texRect.height ;
+
+        float uv[8];
+        float coords[8];
+
+            // Note swizzle of points to allow TRIANGLE_STRIP drawing
+        uv[0] = tx1; uv[1] = ty1; uv[2] = tx2; uv[3] = ty1;
+        uv[6] = tx2; uv[7] = ty2; uv[4] = tx1; uv[5] = ty2;
+
+            // pixels
+        coords[0] = position.x;
+        coords[1] = position.y; coords[2] = position.x+w; coords[3] = position.y;
+        coords[6] = position.x+w; coords[7] = position.y+h; coords[4] = position.x; coords[5] = position.y+h;
+
+
+        GLint program = pi_texture_2D_shader_program;
+        glUseProgram( program );
+
+            // Get pointers to the attributes in the program.
+        GLint mPosAttrib = glGetAttribLocation( program, "aPos" );
+        GLint mUvAttrib  = glGetAttribLocation( program, "aUV" );
+
+            // Select the active texture unit.
+        glActiveTexture( GL_TEXTURE0 );
+
+            // Set up the texture sampler to texture unit 0
+        GLint texUni = glGetUniformLocation( program, "uTexture" );
+        glUniform1i( texUni, 0 );
+
+            // Disable VBO's (vertex buffer objects) for attributes.
+        glBindBuffer( GL_ARRAY_BUFFER, 0 );
+        glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
+
+            // Set the attribute mPosAttrib with the vertices in the screen coordinates...
+        glVertexAttribPointer( mPosAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), coords );
+            // ... and enable it.
+        glEnableVertexAttribArray( mPosAttrib );
+
+            // Set the attribute mUvAttrib with the vertices in the GL coordinates...
+        glVertexAttribPointer( mUvAttrib, 2, GL_FLOAT, GL_FALSE, 2*sizeof(float), uv );
+            // ... and enable it.
+        glEnableVertexAttribArray( mUvAttrib );
+
+        //  Pattern color
+        float bcolorv[4];
+        bcolorv[0] = m_pen.GetColour().Red() / float(256);
+        bcolorv[1] = m_pen.GetColour().Green() / float(256);
+        bcolorv[2] = m_pen.GetColour().Blue() / float(256);
+        bcolorv[3] = m_pen.GetColour().Alpha() / float(256);
+        GLint bcolloc = glGetUniformLocation(program, "uColour");
+        glUniform4fv(bcolloc, 1, bcolorv);
+
+#if 0        
+            // Rotate
+        mat4x4 I, Q;
+        mat4x4_identity(I);
+
+        mat4x4_translate_in_place(I, position.x, position.y, 0);
+        mat4x4_rotate_Z(Q, I, -rotation);
+        mat4x4_translate_in_place(Q, -rPivot.x, -rPivot.y, rotation);
+
+        GLint matloc = glGetUniformLocation(program,"TransformMatrix");
+        glUniformMatrix4fv( matloc, 1, GL_FALSE, (const GLfloat*)Q);
+#endif
+
+        // Perform the actual drawing.
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+        glUseProgram( 0 );
+#endif
+}
+

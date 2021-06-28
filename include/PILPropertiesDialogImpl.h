@@ -56,6 +56,8 @@ class PILPropertiesDialogImpl : public PILPropertiesDialogDef
 
     private:
         double  m_dPILOffsetValidator;
+        wxFont *m_dialogLabelFont;
+
 
 };
 #endif // __PILPropertiesDialogImpl__

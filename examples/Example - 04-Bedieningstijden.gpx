@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<OCPNDraw version="0.1" creator="OpenCPN" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opencpn="http://www.opencpn.org">
+
+  <opencpn:ODPoint lat="53.3372249321249" lon="6.29714837644511">
+    <opencpn:type>Text Point</opencpn:type>
+    <time>2020-05-03 Time: 16:48</time>
+    <name>Reitdiepbrug</name>
+    <opencpn:text>Naam: ReitdiepbrugPlaats: ZoutkampTelefoon-nummer: 0519-349043Bedieninginstructies:Sluis te Lammerburen staat (in het algemeen) open. Alle bruggen en sluizen vanaf de Dorkwerdersluis tot Lauwersoog worden op afstand bediend vanuit de centrale post Lauwersoog. Telefoonnummer: 0519-349043 1e en 2e Kerstdag en Nieuwjaarsdag gesloten.</opencpn:text>
+    <opencpn:text_position>0</opencpn:text_position>
+    <opencpn:text_colour>#000000</opencpn:text_colour>
+    <opencpn:background_colour>#FFFF00</opencpn:background_colour>
+    <opencpn:background_transparency>255</opencpn:background_transparency>
+    <opencpn:natural_scale>15000</opencpn:natural_scale>
+    <opencpn:display_text_when>1</opencpn:display_text_when>
+    <opencpn:font_info size="12" family="74" style="90" weight="92" underline="false" strikethrough="false" face="Segoe UI" encoding="33" />
+    <sym>ZZ-empty</sym>
+    <opencpn:guid>operatingtimes-0026133-428f-8c20-c0e103b90000</opencpn:guid>
+    <opencpn:viz>1</opencpn:viz>
+    <opencpn:viz_name>0</opencpn:viz_name>
+    <opencpn:arrival_radius>0.000</opencpn:arrival_radius>
+    <opencpn:ODPoint_range_rings visible="false" number="0" step="1" units="0" colour="#FF0000" width="2" line_style="100" />
+  </opencpn:ODPoint>
+
+</OCPNDraw>

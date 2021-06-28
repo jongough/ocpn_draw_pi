@@ -32,21 +32,6 @@
 //#include "cutil.h"
 #include "clipper.hpp"
 
-#ifdef __WXMSW__
-#include "GL/gl.h"            // local copy for Windows
-#include <GL/glu.h>
-#else
-
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include "GL/gl_private.h"
-#endif
-
-#endif
-
 #ifdef ocpnUSE_GL
 #include <wx/glcanvas.h>
 #endif
@@ -210,6 +195,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
 
     ODDC dc;
+    dc.SetVP(&piVP);
     
     m_bSetTransparent = true;
     ODPath::DrawGL( piVP );
@@ -253,11 +239,13 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     glTexImage2D( GL_TEXTURE_2D, 0, GL_ALPHA, 16, 16, 0, GL_ALPHA, GL_UNSIGNED_BYTE, slope_cross_hatch );
-    dc.SetTextureSize( 16, 16 );
+    dc.SetTextureParms( textureID, 16, 16 );
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+#ifndef ANDROID
     glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+#endif    
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
@@ -304,7 +292,6 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 #else
     wxLogMessage( _("Guard Zone not drawn as OpenGL not available in this build") );
 #endif
-    
 }
 
 void GZ::SetActiveColours( void )

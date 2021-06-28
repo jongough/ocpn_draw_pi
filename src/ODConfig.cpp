@@ -499,6 +499,15 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
 
     if( !islayer || dirpath.IsSameAs( _T("") ) ) {
         wxString l_ext_list = "";
+        
+#ifdef __OCPN__ANDROID__
+        wxString selectedFile;
+        response = PlatformFileSelectorDialog( NULL, &selectedFile, _( "Import GPX file" ), m_sImport_Path,
+                                wxT ( "" ), wxT ( "GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*" ));
+        if(response == wxID_OK){
+            file_array.Add(selectedFile);
+        }
+#else
         wxFileDialog openDialog( NULL, _( "Import GPX file" ), m_sImport_Path, wxT ( "" ),
                 wxT ( "GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*" ),
                 wxFD_OPEN | wxFD_MULTIPLE );
@@ -513,6 +522,7 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
                 m_sGPX_Path = fn.GetPath();
             }
         }
+#endif        
 
     } else {
         if( isdirectory ) {
@@ -610,6 +620,15 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
         m_sWildcardString = _T("GPX files (*.gpx)|*.gpx|CSV files (*.csv)|*.csv|All files (*.*)|*.*");
     }
 
+#ifdef __OCPN__ANDROID__
+        wxString selectedFile;
+        response = PlatformFileSelectorDialog( NULL, &selectedFile, _( "Import GPX file" ), m_sImport_Path,
+                                wxT ( "" ), m_sWildcardString);
+        if(response == wxID_OK){
+            file_array.Add(selectedFile);
+        }
+#else
+
     wxFileDialog openDialog( parent, _( "Import file" ), m_sImport_Path, _T(""), m_sWildcardString,
                                 wxFD_OPEN | wxFD_MULTIPLE );
     openDialog.Centre();
@@ -637,7 +656,7 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
             }
         }
     }
-    
+#endif    
     if( response == wxID_OK ) {
         wxString l_sImportFileName = wxEmptyString;
 

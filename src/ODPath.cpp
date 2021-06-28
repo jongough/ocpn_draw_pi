@@ -45,14 +45,6 @@
 //#include "dychart.h"
 #include <wx/gdicmn.h>
 
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
-#else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include <GL/gl_private.h>
-#endif
-
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( PathList );
@@ -332,9 +324,9 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
-
     ODDC dc;
-    
+    dc.SetVP(&piVP);
+
     /* determine color and width */
     wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
@@ -365,17 +357,15 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     glDisable( GL_LINE_STIPPLE );
 
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
-    
     for(size_t i = 1; i < m_pODPointList->GetCount(); i++) {
         if(m_bDrawArrow)
             RenderSegmentArrowsGL( m_bpts[i - 1].x, m_bpts[i - 1].y, m_bpts[i].x, m_bpts[i].y, piVP );
     }
-    
     /*  ODPoints  */
     for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-    ODPoint *pOp = node->GetData();
-    if ( m_bVisible || pOp->m_bKeepXPath )
-        pOp->DrawGL( piVP );
+        ODPoint *pOp = node->GetData();
+        if ( m_bVisible || pOp->m_bKeepXPath )
+            pOp->DrawGL( piVP );
     }   
     
     wxDELETEA( m_bpts );
@@ -571,6 +561,7 @@ void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int
 
 void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP)
 {
+#if 0
 #ifdef ocpnUSE_GL
     //    Draw a direction arrow        
     float icon_scale_factor = 100 * VP.view_scale_ppm;
@@ -608,6 +599,7 @@ void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewP
 
 #else
     wxLogMessage( _("Path Segment Arrow not drawn as OpenGL not available in this build") );
+#endif
 #endif
 }
 

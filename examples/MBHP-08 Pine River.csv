@@ -1,0 +1,7 @@
+'c', 'type(B)','name', 'boundary_type', 'visible(t/f)', 'line rgb-colour', 'rgb-fill-colour',,,,,
+'B','MBHP-08 Pine River','Exclusion','t','rgb(0,128, 255)','rgb(0,204, 255)',,
+'c', 'type(BP)', 'name', lat, lon, 'boundary_type', 'visible', 'rings-visible(t/f)', 'rings-number', 'rings-step', 'rings-units(N/K)', 'rings-colour'
+'BP','0',27° 16.335' S,153° 03.404' E,,,,,,,,
+'BP','1',27° 16.986' S,153° 03.805' E,,,,,,,,
+'BP','2',27° 26.986' S,153° 03.805' E,,,,,,,,
+'/B',,,,,,,,,,,

@@ -177,6 +177,8 @@ private:
     wxSize          m_sSingleLineSize;
     int             m_iTextPointTextMaxWidth;
     bool            m_bShowingDisplayText;
+    wxFont          *m_dialogLabelFont;
+
 };
 
 #endif // __ODPointPropertiesImpl__

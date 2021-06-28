@@ -30,9 +30,14 @@
 #endif
 
 #include "ODNewODPointDialogImpl.h"
+#include "ocpn_plugin.h"
 
 ODNewODPointDialogImpl::ODNewODPointDialogImpl( wxWindow* parent ) : ODNewODPointDialogDef( parent )
 {
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    Create();
 }
  
 void ODNewODPointDialogImpl::OnOK( wxCommandEvent& event )
