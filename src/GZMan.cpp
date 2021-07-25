@@ -190,7 +190,6 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, in
 {
     bool bInPoly = false;
     bool bGZFound = false;
-    int i;
     double *polyX = NULL;
     double *polyY = NULL;
     GZ *pGZ = NULL;
@@ -244,12 +243,12 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, in
         polyY = new double[pGZ->m_pODPointList->GetCount()];
         wxODPointListNode *OCPNpoint_node = ( pGZ->m_pODPointList )->GetFirst();
         wxODPointListNode *OCPNpoint_last_node = ( pGZ->m_pODPointList )->GetLast();
-        i = 0;
+        int i = 0;
         while( OCPNpoint_node ) {
             ODPoint *pop = OCPNpoint_node->GetData();
             polyX[i] = pop->m_lon;
             polyY[i] = pop->m_lat;
-            i++;
+            ++i;
             OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
             if(OCPNpoint_node == OCPNpoint_last_node) break;
         }

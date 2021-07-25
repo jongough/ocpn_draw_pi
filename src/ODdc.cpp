@@ -932,7 +932,7 @@ void ODDC::DrawLines( int n, wxPoint points[], wxCoord xoffset, wxCoord yoffset,
         colorv[0] = m_pen.GetColour().Red() / float(256);
         colorv[1] = m_pen.GetColour().Green() / float(256);
         colorv[2] = m_pen.GetColour().Blue() / float(256);
-        colorv[3] = m_pen.GetColour().Alpha() / float(256);1.0;
+        colorv[3] = m_pen.GetColour().Alpha() / float(256);
 
         GLint colloc = glGetUniformLocation(program, "uColour");
         glUniform4fv(colloc, 1, colorv);
@@ -2310,7 +2310,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
         m_tobj = NULL;
         glUseProgram( 0 );
 
-         for(std::list<double*>::iterator i = odc_combine_work_data.begin(); i!=odc_combine_work_data.end(); i++)
+         for(std::list<double*>::iterator i = odc_combine_work_data.begin(); i!=odc_combine_work_data.end(); ++i)
              delete [] *i;
          odc_combine_work_data.clear();
         
@@ -2373,7 +2373,7 @@ void __CALL_CONVENTION ODDCPatterncombineCallback(GLdouble coords[3], GLdouble *
     vertex->info.y = coords[1];
     vertex->info.z = coords[2];
 
-    for( int i = 3; i < 7; i++ ) {
+    for( int i = 3; i < 6; i++ ) {
         vertex->data[i] = weight[0] * vertex_data[0][i] + weight[1] * vertex_data[1][i];
     }
 
