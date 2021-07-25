@@ -59,10 +59,15 @@
 #endif
 
 ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
-:
-ODPointPropertiesDialog( parent )
 {
-    Create();
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    Create( parent );
+#ifdef __OCPN__ANDROID__
+    wxSizerItem *l_sizerItem = m_SizerPointRangeGrid->GetItem(m_colourPickerRangeRingsColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+#endif
 
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
@@ -119,6 +124,7 @@ ODPointPropertiesDialog( parent )
     else SetPosition(wxPoint(g_iDefaultPointPropertyDialogPostionX, g_iDefaultPointPropertyDialogPostionY));
     
     m_bShowingDisplayText = true;
+
 }
 
 ODPointPropertiesImpl::~ODPointPropertiesImpl()
@@ -135,6 +141,8 @@ ODPointPropertiesImpl::~ODPointPropertiesImpl()
 
 void ODPointPropertiesImpl::SetDialogSize( void )
 {
+    RecalculateSize();
+
     m_scrolledWindowLinks->SetMinClientSize(m_bSizerLinks->ComputeFittingClientSize(this));
     m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
     m_SizerDialogBox->Fit(m_scrolledWindowBasicProperties);
@@ -1059,6 +1067,37 @@ void ODPointPropertiesImpl::OnMenuSelection(wxCommandEvent& event)
         OnEditLink(event);
     if(event.GetId() == m_menuItemAddNew->GetId())
         OnAddLink(event);
+}
+
+void ODPointPropertiesImpl::RecalculateSize()
+{
+
+    //  All of this dialog layout is expandable, so we need to set a specific size target
+    //  for the onscreen display.
+    //  The size will then be adjusted so that it fits within the parent's client area, with some padding
+
+    //  Get a text height metric for reference
+
+    int char_width, char_height;
+    //GetTextExtent(_T("W"), &char_width, &char_height);
+    GetTextExtent(_T("W"), &char_width, &char_height, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
+
+    wxSize sz;
+    sz.x = 60 * char_width;
+    sz.y = 30 * char_height;
+
+    wxSize dsize = GetParent()->GetClientSize();
+    sz.y = wxMin(sz.y, dsize.y - (0 * char_height));
+    sz.x = wxMin(sz.x, dsize.x - (0 * char_height));
+    SetClientSize(sz);
+
+    wxSize fsize = GetSize();
+    fsize.y = wxMin(fsize.y, dsize.y - (0 * char_height));
+    fsize.x = wxMin(fsize.x, dsize.x - (0 * char_height));
+    SetSize(fsize);
+
+    CentreOnParent();
+
 }
 
 

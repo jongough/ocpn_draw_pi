@@ -41,6 +41,11 @@ GZProp::GZProp()
 GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
+    m_bLockGZAngle = false;
+    m_bLockGZLength = false;
+    m_bLockUpdate = false;
+
+    m_fgSizerBoundary->ShowItems( true );
     m_staticTextFillColour->Show();
     m_staticTextFillColour->Enable( true );
     m_colourPickerFillColour->Show();
@@ -71,6 +76,14 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
     m_fgSizerPathPoints->ShowItems( true );
+
+#ifdef __OCPN__ANDROID__
+    wxSizerItem *l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+#endif
+
     m_listCtrlODPoints->Show();
     
 
@@ -88,18 +101,15 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_textCtrlGZSecondAngle->SetValidator( dODGZSecondAngle );
     m_textCtrlGZFirstLength->SetValidator( dODGZFirstLength );
     m_textCtrlGZSecondLength->SetValidator( dODGZSecondLength );
-    #endif
+#endif
     
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
-    
-    if(g_iDefaultGZPropertyDialogPostionX == -1 || g_iDefaultGZPropertyDialogPostionY == -1) Center();
+
+    if(g_iDefaultGZPropertyDialogPostionX == -1 || g_iDefaultGZPropertyDialogPostionY == -1) CenterOnParent();
     else SetPosition(wxPoint(g_iDefaultGZPropertyDialogPostionX, g_iDefaultGZPropertyDialogPostionY));
  
-    m_bLockGZAngle = false;
-    m_bLockGZLength = false;
-    m_bLockUpdate = false;
 }
 
 
@@ -183,7 +193,7 @@ bool GZProp::UpdateProperties( ODPath *pInGZ )
     m_bLockUpdate = false;
     ResetGlobalLocale();
     
-    return ODPathPropertiesDialogImpl::UpdateProperties( pInGZ );
+    return ODPathPropertiesDialogImpl::UpdateProperties( lpInGZ );
 }
 
 bool GZProp::UpdateProperties( void )

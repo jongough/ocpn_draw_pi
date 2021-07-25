@@ -44,13 +44,13 @@
 #include <wx/valnum.h>
 #endif
 
-ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent ) : ODDRDialogDef( parent )
+ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent )
 {
     SetGlobalLocale();
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
-    Create();
+    Create( parent );
 
 #if wxCHECK_VERSION(3,0,0)
     wxFloatingPointValidator<double> dSOGVal(3, &m_dSOGValidator, wxNUM_VAL_DEFAULT);

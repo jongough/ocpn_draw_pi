@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -36,8 +36,6 @@ class ODNewODPointDialogDef : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxRadioBox* m_radioBoxODPointType;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
@@ -49,7 +47,10 @@ class ODNewODPointDialogDef : public wxDialog
 
 	public:
 
+		ODNewODPointDialogDef();
 		ODNewODPointDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Point Type"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxCAPTION|wxSTAY_ON_TOP );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Point Type"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxCAPTION|wxSTAY_ON_TOP );
+
 		~ODNewODPointDialogDef();
 
 };

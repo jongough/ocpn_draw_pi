@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -43,8 +43,6 @@ class ODPathPropertiesDialogDef : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxBoxSizer* m_bSizerDialogBox;
 		wxScrolledWindow* m_scrolledWindowProperties;
 		wxFlexGridSizer* m_fgSizerProperties;
@@ -70,7 +68,7 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxColourPickerCtrl* m_colourPickerFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
-		wxStaticText* m_staticTextIncluseionBoundarySize;
+		wxStaticText* m_staticTextInclusionBoundarySize;
 		wxSlider* m_sliderInclusionBoundarySize;
 		wxBoxSizer* m_bSizerBoundaryType;
 		wxRadioBox* m_radioBoxBoundaryType;
@@ -139,7 +137,10 @@ class ODPathPropertiesDialogDef : public wxDialog
 
 	public:
 
+		ODPathPropertiesDialogDef();
 		ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+
 		~ODPathPropertiesDialogDef();
 
 };

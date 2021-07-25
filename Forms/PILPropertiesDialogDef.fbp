@@ -36,7 +36,6 @@
             <property name="center">wxBOTH</property>
             <property name="context_help"></property>
             <property name="context_menu">1</property>
-            <property name="create_children">0</property>
             <property name="enabled">1</property>
             <property name="event_handler">impl_virtual</property>
             <property name="extra_style"></property>
@@ -53,6 +52,7 @@
             <property name="subclass"></property>
             <property name="title">Index Line Properties</property>
             <property name="tooltip"></property>
+            <property name="two_step_creation">1</property>
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
@@ -106,7 +106,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -168,7 +167,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -233,7 +231,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -295,7 +292,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -360,7 +356,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -422,7 +417,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -487,7 +481,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -549,7 +542,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -615,7 +607,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -707,7 +698,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -750,7 +740,7 @@
                         </object>
                         <object class="sizeritem" expanded="0">
                             <property name="border">5</property>
-                            <property name="flag">wxALL</property>
+                            <property name="flag">wxALL|wxEXPAND</property>
                             <property name="proportion">0</property>
                             <object class="wxColourPickerCtrl" expanded="0">
                                 <property name="BottomDockable">1</property>
@@ -770,7 +760,6 @@
                                 <property name="colour"></property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -834,7 +823,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -897,7 +885,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -962,7 +949,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -1025,7 +1011,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="default_pane">0</property>
                                 <property name="dock">Dock</property>
                                 <property name="dock_fixed">0</property>
@@ -1103,7 +1088,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="current"></property>
                                 <property name="default">0</property>
                                 <property name="default_pane">0</property>
@@ -1178,7 +1162,6 @@
                                 <property name="close_button">1</property>
                                 <property name="context_help"></property>
                                 <property name="context_menu">1</property>
-                                <property name="create_children">1</property>
                                 <property name="current"></property>
                                 <property name="default">0</property>
                                 <property name="default_pane">0</property>

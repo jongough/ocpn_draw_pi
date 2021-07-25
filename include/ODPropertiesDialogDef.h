@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -48,8 +48,6 @@ class ODPropertiesDialogDef : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxBoxSizer* m_SizerProperties;
 		wxNotebook* m_notebookProperties;
 		wxPanel* m_panelGeneral;
@@ -68,6 +66,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextConfigFileEntriesMsg;
 		wxButton* m_buttonConfigFileEntries;
 		wxPanel* m_panelBoundary;
+		wxFlexGridSizer* m_fgSizerBoundarySettingsColours;
 		wxStaticText* m_staticTextActiveBoundayLineColour;
 		wxColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
 		wxStaticText* m_staticTextActiveBoundaryFillColour;
@@ -102,6 +101,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerBoundaryPointSize;
 		wxStaticText* m_staticTextBoundaryPointSize;
 		wxSlider* m_sliderInclusionBoundaryPointSize;
+		wxFlexGridSizer* m_fgSizerRingsDetail;
 		wxStaticText* m_staticTextRangeRingNumber;
 		wxChoice* m_choiceODPointRangeRingNumber;
 		wxStaticText* m_staticTextRangeRingSteps;
@@ -115,6 +115,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextRangeRingStyle;
 		wxChoice* m_choiceRangeRingStyle;
 		wxPanel* m_panelTextPoint;
+		wxFlexGridSizer* m_fgSizerPositionAndColour;
 		wxCheckBox* m_checkBoxTextPointShowName;
 		wxFlexGridSizer* m_fgSizerTextPointIconName;
 		wxStaticText* m_staticTextTextPointIconName;
@@ -128,14 +129,15 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextBackgroundTransparency;
 		wxSlider* m_sliderBackgroundTransparency;
 		wxRadioBox* m_radioBoxWidthType;
+		wxRadioBox* m_radioBoxShowDisplayText;
 		wxStaticText* m_staticTextMaxWidth;
 		wxTextCtrl* m_textCtrlTextMaxWidth;
 		wxFlexGridSizer* m_fgSizerTextPointFont;
 		wxStaticText* m_staticTextTextFont;
 		wxStaticText* m_staticTextFontFaceExample;
 		wxButton* m_buttonTextFont;
-		wxRadioBox* m_radioBoxShowDisplayText;
 		wxPanel* m_panelPath;
+		wxFlexGridSizer* m_fgSizerPathSettings;
 		wxStaticText* m_staticTextActivePathLineColour;
 		wxColourPickerCtrl* m_colourPickerActivePathLineColour;
 		wxStaticText* m_staticTextInactivePathLineColour;
@@ -153,7 +155,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerEBLEndPointIcon;
 		wxBitmapComboBox* m_bcomboBoxEBLEndIconName;
 		wxStaticText* m_staticTextActiveEBLLineColour;
-		wxColourPickerCtrl* m_colourPickerEBLLineColour;
+		wxColourPickerCtrl* m_colourPickerActiveEBLLineColour;
 		wxStaticText* m_staticTextInactiveEBLLineColour;
 		wxColourPickerCtrl* m_colourPickerInActiveEBLLineColour;
 		wxStaticText* m_staticTextEBLLineWidth;
@@ -169,6 +171,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLAllwaysShowInfo;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxPanel* m_panelDR;
+		wxFlexGridSizer* m_fgSizerDRDefaultSizes;
 		wxStaticText* m_staticTextActiveDRLineColour;
 		wxColourPickerCtrl* m_colourPickerDRLineColour;
 		wxStaticText* m_staticTextInactiveDRLineColour;
@@ -192,7 +195,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxDRShowArrow;
 		wxRadioBox* m_radioBoxDRPersistence;
 		wxPanel* m_panelDRPoint;
-		wxFlexGridSizer* m_fgSizerDREndPointIcon;
+		wxFlexGridSizer* m_fgSizerDRPointSettings;
 		wxStaticText* m_staticTextDRPointIcon;
 		wxBitmapComboBox* m_bcomboBoxDRPointIconName;
 		wxCheckBox* m_checkBoxShowDRPointRangeRings;
@@ -215,6 +218,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxBitmapComboBox* m_bcomboBoxGZFirstIconName;
 		wxStaticText* m_staticTextGZSecondPointIcon;
 		wxBitmapComboBox* m_bcomboBoxGZSecondIconName;
+		wxFlexGridSizer* m_fgSizerGZSettingsColours;
 		wxStaticText* m_staticTextActiveGZLineColour;
 		wxColourPickerCtrl* m_colourPickerActiveGZLineColour;
 		wxStaticText* m_staticTextActiveGZFillColour;
@@ -235,16 +239,16 @@ class ODPropertiesDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxGZPersistence;
 		wxPanel* m_panelPIL;
 		wxFlexGridSizer* m_fgSizerPILSettings;
+		wxFlexGridSizer* fgSizerPILDefaults;
 		wxStaticText* m_staticTextPILStartPointIcon;
-		wxFlexGridSizer* m_fgSizerPILStartIconName;
 		wxBitmapComboBox* m_bcomboBoxPILStartIconName;
 		wxStaticText* m_staticTextPILEndPointIcon;
-		wxFlexGridSizer* m_fgSizerPILEndPointIcon;
 		wxBitmapComboBox* m_bcomboBoxPILEndIconName;
 		wxStaticText* m_staticTextNumIndexLines;
 		wxChoice* m_choiceNumIndexLines;
 		wxStaticText* m_staticTextPILDefaultOffset;
 		wxTextCtrl* m_textCtrlPILDefaultOffset;
+		wxFlexGridSizer* m_fgSizerPILLineDetails;
 		wxStaticText* m_staticTextPILActiveCentreLineColour;
 		wxColourPickerCtrl* m_colourPickerPILActiveCentreLineColour;
 		wxStaticText* m_staticTextInactiveCentreLineColour;
@@ -328,7 +332,10 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choiceToolbar;
 		wxGrid* m_gridODWDInteractions;
 
+		ODPropertiesDialogDef();
 		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,607 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 591,607 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
+
 		~ODPropertiesDialogDef();
 
 };

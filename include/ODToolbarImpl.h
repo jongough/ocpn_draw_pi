@@ -49,6 +49,8 @@ private:
     
     wxSize m_toolbarSize;
     PI_ColorScheme m_ColourScheme;
+    wxFont *m_dialogLabelFont;
+
     
 };
 

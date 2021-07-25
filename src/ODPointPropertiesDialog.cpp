@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -9,16 +9,32 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+ODPointPropertiesDialog::ODPointPropertiesDialog()
 {
 }
-void ODPointPropertiesDialog::Create()
+
+ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
+	this->Create( parent, id, title, pos, size, style );
+}
+
+bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+{
+	if ( !wxDialog::Create( parent, id, title, pos, size, style ) )
+	{
+		return false;
+	}
+
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_SizerDialogBox = new wxBoxSizer( wxVERTICAL );
 
-	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_scrolledWindow4 = new wxScrolledWindow( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxVSCROLL );
+	m_scrolledWindow4->SetScrollRate( 5, 5 );
+	wxBoxSizer* bSizer26;
+	bSizer26 = new wxBoxSizer( wxVERTICAL );
+
+	m_notebookProperties = new wxNotebook( m_scrolledWindow4, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_scrolledWindowBasicProperties = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_scrolledWindowBasicProperties->SetScrollRate( 0, 2 );
 	m_SizerBasicProperties = new wxBoxSizer( wxVERTICAL );
@@ -424,7 +440,13 @@ void ODPointPropertiesDialog::Create()
 	bSizer3->Fit( m_panelExtended );
 	m_notebookProperties->AddPage( m_panelExtended, _("Extended"), false );
 
-	m_SizerDialogBox->Add( m_notebookProperties, 1, wxEXPAND | wxALL, 5 );
+	bSizer26->Add( m_notebookProperties, 1, wxEXPAND | wxALL, 5 );
+
+
+	m_scrolledWindow4->SetSizer( bSizer26 );
+	m_scrolledWindow4->Layout();
+	bSizer26->Fit( m_scrolledWindow4 );
+	m_SizerDialogBox->Add( m_scrolledWindow4, 1, wxEXPAND | wxALL, 5 );
 
 	m_SizerButtons = new wxBoxSizer( wxHORIZONTAL );
 
@@ -462,6 +484,8 @@ void ODPointPropertiesDialog::Create()
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );
 	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
 	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
+
+	return true;
 }
 
 ODPointPropertiesDialog::~ODPointPropertiesDialog()

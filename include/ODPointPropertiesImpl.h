@@ -149,6 +149,8 @@ public:
     bool UpdateProperties( bool positionOnly = false );
     void SetDialogSize( void );
     void ValidateMark( void );
+    void RecalculateSize();
+
     
 private:
     void OnHyperLinkClick( wxHyperlinkEvent &event );

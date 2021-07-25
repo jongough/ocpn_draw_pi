@@ -44,15 +44,64 @@
 #endif
 
 ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
-:
-ODPropertiesDialogDef( parent )
 {
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
     GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, m_dialogLabelFont);
 
-    Create();
+    Create( parent );
+#ifdef __OCPN__ANDROID__
+    wxSizerItem *l_sizerItem = m_fgSizerBoundarySettingsColours->GetItem(m_colourPickerActiveBoundaryLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundarySettingsColours->GetItem(m_colourPickerActiveBoundaryFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundarySettingsColours->GetItem(m_colourPickerInActiveBoundaryLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundarySettingsColours->GetItem(m_colourPickerInActiveBoundaryFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerRingsDetail->GetItem(m_colourPickerODPointRangeRingColours);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPositionAndColour->GetItem(m_colourPickerTextColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPositionAndColour->GetItem(m_colourPickerBackgroundColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPathSettings->GetItem(m_colourPickerActivePathLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPathSettings->GetItem(m_colourPickerInActivePathLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerEBLSettings->GetItem(m_colourPickerActiveEBLLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerEBLSettings->GetItem(m_colourPickerInActiveEBLLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerDRDefaultSizes->GetItem(m_colourPickerDRLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerDRDefaultSizes->GetItem(m_colourPickerInActiveDRLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerDRPointSettings->GetItem(m_colourPickerDRPointRangeRingColours);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerGZSettingsColours->GetItem(m_colourPickerActiveGZLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerGZSettingsColours->GetItem(m_colourPickerActiveGZFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerGZSettingsColours->GetItem(m_colourPickerInActiveGZLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerGZSettingsColours->GetItem(m_colourPickerInActiveGZFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPILLineDetails->GetItem(m_colourPickerPILActiveCentreLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPILLineDetails->GetItem(m_colourPickerPILInActiveCentreLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPILLineDetails->GetItem(m_colourPickerPILActiveOffsetLine1Colour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPILLineDetails->GetItem(m_colourPickerPILInActiveOffsetLine1Colour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPILLineDetails->GetItem(m_colourPickerPILActiveOffsetLine2Colour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerPILLineDetails->GetItem(m_colourPickerPILInactiveOffsetLine2Colour);
+    l_sizerItem->SetFlag(wxEXPAND);
+
+#endif
 
     wxString l_sTitle;
     l_sTitle.Printf(wxT("%s v%d.%d.%d.%d %s"), g_ocpn_draw_display_name->ToStdString(), PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH, PLUGIN_VERSION_TWEAK, ("Preferences"));
@@ -188,7 +237,7 @@ ODPropertiesDialogDef( parent )
     //  Accomodate scaling of icon
     //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
     m_bODIComboBoxDRPointIconName->SetMinSize( wxSize(-1, min_size) );
-    m_fgSizerDREndPointIcon->Replace(m_bcomboBoxDRPointIconName, m_bODIComboBoxDRPointIconName);
+    m_fgSizerDRPointSettings->Replace(m_bcomboBoxDRPointIconName, m_bODIComboBoxDRPointIconName);
     
     // GZ First point Icon
     m_bODIComboBoxGZFirstIconName = new ODIconCombo( m_panelGZ, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
@@ -215,7 +264,7 @@ ODPropertiesDialogDef( parent )
     //  Accomodate scaling of icon
     //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
     m_bODIComboBoxPILStartIconName->SetMinSize( wxSize(-1, min_size) );
-    m_fgSizerPILStartIconName->Replace(m_bcomboBoxPILStartIconName, m_bODIComboBoxPILStartIconName);
+    fgSizerPILDefaults->Replace(m_bcomboBoxPILStartIconName, m_bODIComboBoxPILStartIconName);
 
     // PIL End point Icon
     m_bODIComboBoxPILEndIconName = new ODIconCombo( m_panelPIL, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
@@ -224,7 +273,7 @@ ODPropertiesDialogDef( parent )
     //  Accomodate scaling of icon
     //min_size = wxMax( min_size, (32 *g_ChartScaleFactorExp) + 4 );
     m_bODIComboBoxPILEndIconName->SetMinSize( wxSize(-1, min_size) );
-    m_fgSizerPILEndPointIcon->Replace(m_bcomboBoxPILEndIconName, m_bODIComboBoxPILEndIconName);
+    fgSizerPILDefaults->Replace(m_bcomboBoxPILEndIconName, m_bODIComboBoxPILEndIconName);
 
     delete m_bcomboBoxODPointIconName;
     delete m_bcomboBoxTextPointIconName;    
@@ -438,7 +487,7 @@ void ODPropertiesDialogImpl::SaveChanges()
 //    g_PathLineWidth = ::WidthValues[ m_choicePathLineWidth->GetSelection() ];
 //    g_PathLineStyle = ::StyleValues[ m_choicePathLineStyle->GetSelection()];
     
-    g_colourEBLLineColour = m_colourPickerEBLLineColour->GetColour();
+    g_colourEBLLineColour = m_colourPickerActiveEBLLineColour->GetColour();
     g_EBLLineWidth = ::WidthValues[ m_choiceEBLLineWidth->GetSelection() ];
     g_EBLLineStyle = (wxPenStyle)::StyleValues[ m_choiceEBLLineStyle->GetSelection() ];
     g_bEBLRotateWithBoat = m_checkBoxRotateWithBoat->GetValue();
@@ -861,7 +910,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     else m_radioBoxBoundaryType->SetSelection( ID_BOUNDARY_EXCLUSION );
     m_checkBoxBoundaryODPointsVisible->SetValue( g_bBoundaryODPointsVisible );
     
-    m_colourPickerEBLLineColour->SetColour( g_colourEBLLineColour );
+    m_colourPickerActiveEBLLineColour->SetColour( g_colourEBLLineColour );
     m_checkBoxRotateWithBoat->SetValue( g_bEBLRotateWithBoat);
     m_radioBoxMaintainWith->SetSelection( g_iEBLMaintainWith );
     m_checkBoxEBLFixedEndPosition->SetValue( g_bEBLFixedEndPosition );

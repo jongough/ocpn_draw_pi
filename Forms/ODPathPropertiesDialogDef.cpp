@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -9,12 +9,22 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+ODPathPropertiesDialogDef::ODPathPropertiesDialogDef()
 {
 }
-void ODPathPropertiesDialogDef::Create()
+
+ODPathPropertiesDialogDef::ODPathPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
+	this->Create( parent, id, title, pos, size, style );
+}
+
+bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+{
+	if ( !wxDialog::Create( parent, id, title, pos, size, style ) )
+	{
+		return false;
+	}
+
 
 	m_bSizerDialogBox = new wxBoxSizer( wxVERTICAL );
 
@@ -60,7 +70,13 @@ void ODPathPropertiesDialogDef::Create()
 	m_fgSizerProperties->Add( m_bSizerNameDescription, 0, wxEXPAND, 5 );
 
 	m_fgSizerBoundary = new wxFlexGridSizer( 0, 6, 0, 0 );
-	m_fgSizerBoundary->SetFlexibleDirection( wxBOTH );
+	m_fgSizerBoundary->AddGrowableCol( 0 );
+	m_fgSizerBoundary->AddGrowableCol( 1 );
+	m_fgSizerBoundary->AddGrowableCol( 2 );
+	m_fgSizerBoundary->AddGrowableCol( 3 );
+	m_fgSizerBoundary->AddGrowableCol( 4 );
+	m_fgSizerBoundary->AddGrowableCol( 5 );
+	m_fgSizerBoundary->SetFlexibleDirection( wxVERTICAL );
 	m_fgSizerBoundary->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_checkBoxActive = new wxCheckBox( m_scrolledWindowProperties, wxID_ANY, _("Active"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
@@ -89,7 +105,7 @@ void ODPathPropertiesDialogDef::Create()
 	m_fgSizerBoundary->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_colourPickerLineColour = new wxColourPickerCtrl( m_scrolledWindowProperties, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	m_fgSizerBoundary->Add( m_colourPickerLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_fgSizerBoundary->Add( m_colourPickerLineColour, 0, wxALL, 5 );
 
 	m_staticTextLineStyle = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineStyle->Wrap( -1 );
@@ -125,9 +141,9 @@ void ODPathPropertiesDialogDef::Create()
 	m_sliderFillTransparency = new wxSlider( m_scrolledWindowProperties, wxID_ANY, 150, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_fgSizerBoundary->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 
-	m_staticTextIncluseionBoundarySize = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Inclusion Boundary\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextIncluseionBoundarySize->Wrap( -1 );
-	m_fgSizerBoundary->Add( m_staticTextIncluseionBoundarySize, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextInclusionBoundarySize = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Inclusion Boundary\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInclusionBoundarySize->Wrap( -1 );
+	m_fgSizerBoundary->Add( m_staticTextInclusionBoundarySize, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_sliderInclusionBoundarySize = new wxSlider( m_scrolledWindowProperties, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_fgSizerBoundary->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
@@ -326,7 +342,7 @@ void ODPathPropertiesDialogDef::Create()
 	m_scrolledWindowProperties->SetSizer( m_fgSizerProperties );
 	m_scrolledWindowProperties->Layout();
 	m_fgSizerProperties->Fit( m_scrolledWindowProperties );
-	m_bSizerDialogBox->Add( m_scrolledWindowProperties, 1, wxEXPAND | wxALL, 5 );
+	m_bSizerDialogBox->Add( m_scrolledWindowProperties, 1, wxALL, 5 );
 
 	m_SizerOKCancel = new wxBoxSizer( wxHORIZONTAL );
 
@@ -380,6 +396,8 @@ void ODPathPropertiesDialogDef::Create()
 	m_listCtrlPILList->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPathPropertiesDialogDef::OnRightClickPIL ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnOK ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnCancel ), NULL, this );
+
+	return true;
 }
 
 ODPathPropertiesDialogDef::~ODPathPropertiesDialogDef()

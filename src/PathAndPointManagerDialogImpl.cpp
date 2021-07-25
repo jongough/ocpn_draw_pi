@@ -421,7 +421,7 @@ int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
     
 }
 
-PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) : PathAndPointManagerDialogDef( parent )
+PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent)
 {
     m_parent_window = parent;
     m_iPage = -1;
@@ -430,7 +430,7 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
-    Create();
+    Create( parent );
 
     GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, m_dialogLabelFont);
 
@@ -443,8 +443,6 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) :
     SetWindowStyleFlag(style);
     Refresh();
 #endif
-
-    Create();
 
     m_lastODPointItem = -1;
     m_lastPathItem = -1;

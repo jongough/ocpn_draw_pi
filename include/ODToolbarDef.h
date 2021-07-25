@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -32,8 +32,6 @@ class ODToolbarDialog : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }
@@ -46,7 +44,10 @@ class ODToolbarDialog : public wxDialog
 	public:
 		wxToolBar* m_toolBarODToolbar;
 
+		ODToolbarDialog();
 		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
+
 		~ODToolbarDialog();
 
 };

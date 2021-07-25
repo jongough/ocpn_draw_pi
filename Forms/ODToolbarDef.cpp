@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -9,11 +9,22 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-ODToolbarDialog::ODToolbarDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+ODToolbarDialog::ODToolbarDialog()
 {
 }
-void ODToolbarDialog::Create()
+
+ODToolbarDialog::ODToolbarDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
+	this->Create( parent, id, title, pos, size, style );
+}
+
+bool ODToolbarDialog::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+{
+	if ( !wxDialog::Create( parent, id, title, pos, size, style ) )
+	{
+		return false;
+	}
+
 	this->SetSizeHints( wxSize( -1,-1 ), wxDefaultSize );
 
 	wxBoxSizer* bSizerToolbar;
@@ -38,6 +49,8 @@ void ODToolbarDialog::Create()
 	this->Connect( wxEVT_SIZE, wxSizeEventHandler( ODToolbarDialog::OnSize ) );
 	m_toolBarODToolbar->Connect( wxEVT_KEY_DOWN, wxKeyEventHandler( ODToolbarDialog::OnKeyDown ), NULL, this );
 	m_toolBarODToolbar->Connect( wxEVT_LEFT_DOWN, wxMouseEventHandler( ODToolbarDialog::OnLeftDown ), NULL, this );
+
+	return true;
 }
 
 ODToolbarDialog::~ODToolbarDialog()

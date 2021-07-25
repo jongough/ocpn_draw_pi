@@ -36,7 +36,6 @@
             <property name="center"></property>
             <property name="context_help"></property>
             <property name="context_menu">0</property>
-            <property name="create_children">0</property>
             <property name="enabled">1</property>
             <property name="event_handler">impl_virtual</property>
             <property name="extra_style"></property>
@@ -53,6 +52,7 @@
             <property name="subclass"></property>
             <property name="title">Draw Toolbar</property>
             <property name="tooltip"></property>
+            <property name="two_step_creation">1</property>
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
@@ -88,7 +88,6 @@
                         <property name="close_button">1</property>
                         <property name="context_help"></property>
                         <property name="context_menu">1</property>
-                        <property name="create_children">1</property>
                         <property name="default_pane">0</property>
                         <property name="dock">Dock</property>
                         <property name="dock_fixed">0</property>

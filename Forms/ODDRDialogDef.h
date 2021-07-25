@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -38,8 +38,6 @@ class ODDRDialogDef : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxStaticText* m_staticTextSOG;
 		wxTextCtrl* m_textCtrlSOG;
 		wxStaticText* m_staticTextCOG;
@@ -62,7 +60,10 @@ class ODDRDialogDef : public wxDialog
 
 	public:
 
+		ODDRDialogDef();
 		ODDRDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Dead Reckoning"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Dead Reckoning"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
+
 		~ODDRDialogDef();
 
 };

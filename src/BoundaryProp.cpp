@@ -32,8 +32,6 @@ BoundaryProp::BoundaryProp()
     //ctor
 }
 
-//BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
-//: PathProp( parent, id, caption, pos, size, style )
 BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style ) 
 : ODPathPropertiesDialogImpl( parent, id, caption, pos, size, style )
 {
@@ -51,8 +49,8 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_staticTextFillTransparency->Enable( true );
     m_sliderFillTransparency->Show();
     m_sliderFillTransparency->Enable( true );
-    m_staticTextIncluseionBoundarySize->Show();
-    m_staticTextIncluseionBoundarySize->Enable( true );
+    m_staticTextInclusionBoundarySize->Show();
+    m_staticTextInclusionBoundarySize->Enable( true );
     m_sliderInclusionBoundarySize->Show();
     m_sliderInclusionBoundarySize->Enable( true );
     
@@ -67,7 +65,7 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     this->GetSizer()->Fit( this );
     this->Layout();
     m_uiFillTransparency = g_uiFillTransparency;
-    if(g_iDefaultBoundaryPropertyDialogPostionX == -1 || g_iDefaultBoundaryPropertyDialogPostionY == -1) Center();
+    if(g_iDefaultBoundaryPropertyDialogPostionX == -1 || g_iDefaultBoundaryPropertyDialogPostionY == -1) CenterOnParent();
     SetPosition(wxPoint(g_iDefaultBoundaryPropertyDialogPostionX, g_iDefaultBoundaryPropertyDialogPostionY));
 }
 
