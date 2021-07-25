@@ -743,7 +743,7 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
     m_staticTextFillTransparency->Enable( false );
     m_sliderFillTransparency->Hide();
     m_sliderFillTransparency->Enable( false );
-    m_staticTextIncluseionBoundarySize->Hide();
+    m_staticTextInclusionBoundarySize->Hide();
     m_sliderInclusionBoundarySize->Hide();
     m_sliderInclusionBoundarySize->Enable( false );
     m_bSizerBoundaryType->ShowItems( false );

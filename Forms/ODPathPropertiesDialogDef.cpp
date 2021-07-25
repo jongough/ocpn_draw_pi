@@ -25,7 +25,6 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 		return false;
 	}
 
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_bSizerDialogBox = new wxBoxSizer( wxVERTICAL );
 
@@ -142,9 +141,9 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 	m_sliderFillTransparency = new wxSlider( m_scrolledWindowProperties, wxID_ANY, 150, 0, 255, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_fgSizerBoundary->Add( m_sliderFillTransparency, 0, wxALL|wxEXPAND, 5 );
 
-	m_staticTextIncluseionBoundarySize = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Inclusion Boundary\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextIncluseionBoundarySize->Wrap( -1 );
-	m_fgSizerBoundary->Add( m_staticTextIncluseionBoundarySize, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_staticTextInclusionBoundarySize = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Inclusion Boundary\nSize"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextInclusionBoundarySize->Wrap( -1 );
+	m_fgSizerBoundary->Add( m_staticTextInclusionBoundarySize, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_sliderInclusionBoundarySize = new wxSlider( m_scrolledWindowProperties, wxID_ANY, 15, 0, 50, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	m_fgSizerBoundary->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
