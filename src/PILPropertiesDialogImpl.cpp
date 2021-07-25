@@ -46,13 +46,11 @@
 #endif
 
 PILPropertiesDialogImpl::PILPropertiesDialogImpl( wxWindow* parent )
-:
-PILPropertiesDialogDef( parent )
 {
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
-    Create();
+    Create( parent );
 
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);

@@ -80,7 +80,10 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     wxFloatingPointValidator<double> dODEBLLength(2, &m_dODEBLLengthValidator, wxNUM_VAL_DEFAULT);
     dODEBLAngle.SetRange(-180, 180);
     dODEBLLength.SetMin(0);
-    
+    //    m_scrolledWindowProperties->SetMinClientSize(m_bSizerDialogBox->ComputeFittingClientSize(this));
+    //    this->GetSizer()->Fit( this );
+    //    this->Layout();
+
     m_textCtrlEBLAngle->SetValidator( dODEBLAngle );
     m_textCtrlTotalLength->SetValidator( dODEBLLength );
 #endif
@@ -88,9 +91,9 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit( this );
     this->Layout();
-    if(g_iDefaultEBLPropertyDialogPostionX == -1 || g_iDefaultEBLPropertyDialogPostionY == -1) Center();
+
+    if(g_iDefaultEBLPropertyDialogPostionX == -1 || g_iDefaultEBLPropertyDialogPostionY == -1) CenterOnParent();
     else SetPosition(wxPoint(g_iDefaultEBLPropertyDialogPostionX, g_iDefaultEBLPropertyDialogPostionY));
-    
 }
 
 

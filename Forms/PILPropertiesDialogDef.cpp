@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -9,11 +9,22 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+PILPropertiesDialogDef::PILPropertiesDialogDef()
 {
 }
-void PILPropertiesDialogDef::Create()
+
+PILPropertiesDialogDef::PILPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
+	this->Create( parent, id, title, pos, size, style );
+}
+
+bool PILPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+{
+	if ( !wxDialog::Create( parent, id, title, pos, size, style ) )
+	{
+		return false;
+	}
+
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxFlexGridSizer* fgSizer1;
@@ -76,7 +87,7 @@ void PILPropertiesDialogDef::Create()
 	fgSizer3->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_colourPickerLineColour = new wxColourPickerCtrl( this, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	fgSizer3->Add( m_colourPickerLineColour, 0, wxALL, 5 );
+	fgSizer3->Add( m_colourPickerLineColour, 0, wxALL|wxEXPAND, 5 );
 
 	m_staticTextLineStyle = new wxStaticText( this, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextLineStyle->Wrap( -1 );
@@ -126,6 +137,8 @@ void PILPropertiesDialogDef::Create()
 	m_choiceLineWidth->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( PILPropertiesDialogDef::OnChoiceLineWidth ), NULL, this );
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PILPropertiesDialogDef::OnOK ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( PILPropertiesDialogDef::OnCancel ), NULL, this );
+
+	return true;
 }
 
 PILPropertiesDialogDef::~PILPropertiesDialogDef()

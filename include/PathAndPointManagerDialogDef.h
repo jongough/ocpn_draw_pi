@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 21 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -38,8 +38,6 @@ class PathAndPointManagerDialogDef : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxBoxSizer* m_bSizerDialog;
 		wxNotebook* m_notebookPathAndPointManager;
 		wxPanel* m_panelPath;
@@ -119,7 +117,10 @@ class PathAndPointManagerDialogDef : public wxDialog
 
 	public:
 
+		PathAndPointManagerDialogDef();
 		PathAndPointManagerDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
+
 		~PathAndPointManagerDialogDef();
 
 };

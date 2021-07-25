@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -9,11 +9,22 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-ODNewODPointDialogDef::ODNewODPointDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+ODNewODPointDialogDef::ODNewODPointDialogDef()
 {
 }
-void ODNewODPointDialogDef::Create()
+
+ODNewODPointDialogDef::ODNewODPointDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
+	this->Create( parent, id, title, pos, size, style );
+}
+
+bool ODNewODPointDialogDef::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+{
+	if ( !wxDialog::Create( parent, id, title, pos, size, style ) )
+	{
+		return false;
+	}
+
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	wxFlexGridSizer* fgSizer4;
@@ -49,6 +60,8 @@ void ODNewODPointDialogDef::Create()
 	// Connect Events
 	m_buttonOK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODNewODPointDialogDef::OnOK ), NULL, this );
 	m_buttonCancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODNewODPointDialogDef::OnCancel ), NULL, this );
+
+	return true;
 }
 
 ODNewODPointDialogDef::~ODNewODPointDialogDef()

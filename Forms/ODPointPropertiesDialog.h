@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -49,9 +49,8 @@ class ODPointPropertiesDialog : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxBoxSizer* m_SizerDialogBox;
+		wxScrolledWindow* m_scrolledWindow4;
 		wxNotebook* m_notebookProperties;
 		wxScrolledWindow* m_scrolledWindowBasicProperties;
 		wxBoxSizer* m_SizerBasicProperties;
@@ -160,7 +159,10 @@ class ODPointPropertiesDialog : public wxDialog
 
 	public:
 
-		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		ODPointPropertiesDialog();
+		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxDEFAULT_DIALOG_STYLE );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxDEFAULT_DIALOG_STYLE );
+
 		~ODPointPropertiesDialog();
 
 		void m_scrolledWindowLinksOnContextMenu( wxMouseEvent &event )

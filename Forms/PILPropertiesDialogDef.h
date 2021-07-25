@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jun 25 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -40,8 +40,6 @@ class PILPropertiesDialogDef : public wxDialog
 	private:
 
 	protected:
-		void Create();
-
 		wxStaticText* m_staticTexrID;
 		wxTextCtrl* m_textCtrlIDNum;
 		wxStaticText* m_staticTextName;
@@ -71,7 +69,10 @@ class PILPropertiesDialogDef : public wxDialog
 
 	public:
 
+		PILPropertiesDialogDef();
 		PILPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Index Line Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,301 ), long style = wxDEFAULT_DIALOG_STYLE );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Index Line Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 512,301 ), long style = wxDEFAULT_DIALOG_STYLE );
+
 		~PILPropertiesDialogDef();
 
 };

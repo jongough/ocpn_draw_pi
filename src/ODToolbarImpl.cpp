@@ -41,9 +41,12 @@
 #include "ODicons.h"
 #include "ocpn_draw_pi.h"
 
-ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  ) : ODToolbarDialog( parent, id, title, pos, size, style )
+ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  )
 {
-    Create();
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
+
+    Create( parent );
 
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
     

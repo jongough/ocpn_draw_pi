@@ -59,12 +59,18 @@ enum {
     ID_POINTS_LIST_LAST
 };
 
-ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialogDef( g_ocpn_draw_pi->m_parent_window )
+ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl()
 {
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
-    Create();
+    Create(  g_ocpn_draw_pi->m_parent_window );
+#ifdef __OCPN__ANDROID__
+    wxSizerItem *l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+#endif
 
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
@@ -73,32 +79,44 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl() : ODPathPropertiesDialo
     SetViewableItems();
 }
 
-ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent ) : ODPathPropertiesDialogDef( parent )
+ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent )
 {
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
-    Create();
+    Create( parent );
+#ifdef __OCPN__ANDROID__
+    wxSizerItem *l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+#endif
 
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
 #endif // wxCHECK_VERSION(3,0,0)
 
     m_pPath = NULL;
-    
+
     SetPointsListHeadings();    
     SetViewableItems();
 
 }
 
 ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos,
-                    const wxSize& size, long style ) : ODPathPropertiesDialogDef( parent )
+                    const wxSize& size, long style )
 {
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
 
-    Create();
+    Create( parent );
 
+#ifdef __OCPN__ANDROID__
+    wxSizerItem *l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerLineColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+    l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerFillColour);
+    l_sizerItem->SetFlag(wxEXPAND);
+#endif
 #if wxCHECK_VERSION(3,0,0)
     wxDialog::SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
 #endif // wxCHECK_VERSION(3,0,0)
@@ -113,7 +131,7 @@ ODPathPropertiesDialogImpl::ODPathPropertiesDialogImpl( wxWindow* parent, wxWind
     
     SetPointsListHeadings();
     SetViewableItems();
-    
+
     Centre();
 }
 
@@ -784,6 +802,22 @@ void ODPathPropertiesDialogImpl::SetViewableItems()
 
 void ODPathPropertiesDialogImpl::SetDialogSize()
 {
+    GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
+
+    wxSize sz;
+    sz.x = 60 * m_CharWidth;
+    sz.y = 30 * m_CharHeight;
+
+    wxSize dsize = GetParent()->GetClientSize();
+    sz.y = wxMin(sz.y, dsize.y - (0 * m_CharWidth));
+    sz.x = wxMin(sz.x, dsize.x - (0 * m_CharHeight));
+    SetClientSize(sz);
+
+    wxSize fsize = GetSize();
+    fsize.y = wxMin(fsize.y, dsize.y - (0 * m_CharWidth));
+    fsize.x = wxMin(fsize.x, dsize.x - (0 * m_CharHeight));
+    SetSize(fsize);
+
     for(int i =0; i < m_listCtrlODPoints->GetColumnCount(); ++i) {
         m_listCtrlODPoints->SetColumnWidth(i, wxLIST_AUTOSIZE);
         int a_width = m_listCtrlODPoints->GetColumnWidth(i);
@@ -791,13 +825,13 @@ void ODPathPropertiesDialogImpl::SetDialogSize()
         int h_width = m_listCtrlODPoints->GetColumnWidth(i);
         m_listCtrlODPoints->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
-    m_listCtrlODPoints->Fit();
-    m_fgSizerPath->Layout();
+//    m_listCtrlODPoints->Fit();
+//    m_fgSizerPath->Layout();
 
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));
     this->GetSizer()->Fit(this);
     this->Layout();
-    
+
 }
 
 void ODPathPropertiesDialogImpl::OnPathPropMenuSelected( wxCommandEvent& event )
