@@ -45,6 +45,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_bLockGZLength = false;
     m_bLockUpdate = false;
 
+    m_fgSizerBoundary->ShowItems( true );
     m_staticTextFillColour->Show();
     m_staticTextFillColour->Enable( true );
     m_colourPickerFillColour->Show();
