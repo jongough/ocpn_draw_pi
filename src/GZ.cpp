@@ -198,7 +198,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     dc.SetVP(&piVP);
     
     m_bSetTransparent = true;
-    ODPath::DrawGL( piVP );
+    //ODPath::DrawGL( piVP );
     m_bSetTransparent = false;
     
     wxPenStyle style = wxPENSTYLE_SOLID;
