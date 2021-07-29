@@ -50,7 +50,7 @@ public:
     ODColourPickerCtrl();
     ODColourPickerCtrl(wxWindow *parent,
                    wxWindowID id,
-                   const wxColour& initial = *wxBLACK,
+                   const wxBitmap &bitmap = wxNullBitmap,
                    const wxPoint& pos = wxDefaultPosition,
                    const wxSize& size = wxDefaultSize,
                    long style = 0,
@@ -59,7 +59,7 @@ public:
 
     bool Create(wxWindow *parent,
                 wxWindowID id,
-                const wxColour& initial = *wxBLACK,
+                const wxBitmap &bitmap = wxNullBitmap,
                 const wxPoint& pos = wxDefaultPosition,
                 const wxSize& size = wxDefaultSize,
                 long style = 0,

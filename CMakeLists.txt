@@ -177,6 +177,7 @@ set(SRCS
     src/PointMan.cpp
     src/TextPoint.cpp
     src/TextPointCSVImport.cpp
+    src/ODPlatform.cpp
 )
 
 set(HDRS
@@ -238,6 +239,7 @@ set(HDRS
     include/PILProp.h
     include/TextPoint.h
     include/TextPointCSVImport.h
+    include/ODPlatform.h
 )
 
 set(OCPNSRC

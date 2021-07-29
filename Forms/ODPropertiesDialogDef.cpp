@@ -1,9 +1,11 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul 27 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
+
+#include "ODPlatform.h"
 
 #include "ODPropertiesDialogDef.h"
 
@@ -36,7 +38,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	bSizer121 = new wxBoxSizer( wxHORIZONTAL );
 
 	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
-	m_panelGeneral = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelGeneral = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelGeneral->SetScrollRate( 5, 5 );
 	wxBoxSizer* bSizerGeneral;
 	bSizerGeneral = new wxBoxSizer( wxVERTICAL );
 
@@ -112,7 +115,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
 	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
-	m_panelBoundary = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelBoundary = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelBoundary->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizerBoundarySettings;
 	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizerBoundarySettings->SetFlexibleDirection( wxVERTICAL );
@@ -126,28 +130,28 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextActiveBoundayLineColour->Wrap( -1 );
 	m_fgSizerBoundarySettingsColours->Add( m_staticTextActiveBoundayLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerActiveBoundaryLineColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerActiveBoundaryLineColour = new ODColourPickerCtrl( m_panelBoundary, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerBoundarySettingsColours->Add( m_colourPickerActiveBoundaryLineColour, 0, wxALL, 5 );
 
 	m_staticTextActiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActiveBoundaryFillColour->Wrap( -1 );
 	m_fgSizerBoundarySettingsColours->Add( m_staticTextActiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerActiveBoundaryFillColour = new ODColourPickerCtrl( m_panelBoundary, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerBoundarySettingsColours->Add( m_colourPickerActiveBoundaryFillColour, 0, wxALL, 5 );
 
 	m_staticTextInactiveBoundaryLineColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveBoundaryLineColour->Wrap( -1 );
 	m_fgSizerBoundarySettingsColours->Add( m_staticTextInactiveBoundaryLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerInActiveBoundaryLineColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActiveBoundaryLineColour = new ODColourPickerCtrl( m_panelBoundary, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerBoundarySettingsColours->Add( m_colourPickerInActiveBoundaryLineColour, 0, wxALL, 5 );
 
 	m_staticTextInactiveBoundaryFillColour = new wxStaticText( m_panelBoundary, wxID_ANY, _("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveBoundaryFillColour->Wrap( -1 );
 	m_fgSizerBoundarySettingsColours->Add( m_staticTextInactiveBoundaryFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerInActiveBoundaryFillColour = new wxColourPickerCtrl( m_panelBoundary, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActiveBoundaryFillColour = new ODColourPickerCtrl( m_panelBoundary, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerBoundarySettingsColours->Add( m_colourPickerInActiveBoundaryFillColour, 0, wxALL, 5 );
 
 	m_staticTextBoundaryLineWidth = new wxStaticText( m_panelBoundary, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -210,7 +214,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelBoundary->Layout();
 	fgSizerBoundarySettings->Fit( m_panelBoundary );
 	m_notebookProperties->AddPage( m_panelBoundary, _("Boundary"), false );
-	m_panelBoundaryPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelBoundaryPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelBoundaryPoint->SetScrollRate( 5, 5 );
 	wxBoxSizer* bSizerOCPNPoint;
 	bSizerOCPNPoint = new wxBoxSizer( wxVERTICAL );
 
@@ -341,7 +346,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextRangeRingColours->Wrap( -1 );
 	m_fgSizerRingsDetail->Add( m_staticTextRangeRingColours, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerODPointRangeRingColours = new wxColourPickerCtrl( m_panelBoundaryPoint, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerODPointRangeRingColours = new ODColourPickerCtrl( m_panelBoundaryPoint, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerRingsDetail->Add( m_colourPickerODPointRangeRingColours, 0, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
 
 	m_staticTextRangeRingWidth = new wxStaticText( m_panelBoundaryPoint, wxID_ANY, _("Range Ring Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -371,8 +376,9 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelBoundaryPoint->SetSizer( bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
-	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
-	m_panelTextPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), true );
+	m_panelTextPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelTextPoint->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizerTextPoint;
 	fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizerTextPoint->AddGrowableCol( 0 );
@@ -417,14 +423,14 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextColour->Wrap( -1 );
 	m_fgSizerPositionAndColour->Add( m_staticTextColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerTextColour = new wxColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerTextColour = new ODColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPositionAndColour->Add( m_colourPickerTextColour, 0, wxALL, 5 );
 
 	m_staticTextBackgroundColour = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Background Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextBackgroundColour->Wrap( -1 );
 	m_fgSizerPositionAndColour->Add( m_staticTextBackgroundColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerBackgroundColour = new wxColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxColour( 255, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerBackgroundColour = new ODColourPickerCtrl( m_panelTextPoint, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPositionAndColour->Add( m_colourPickerBackgroundColour, 0, wxALL, 5 );
 
 	m_staticTextBackgroundTransparency = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Background Density"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -480,7 +486,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelTextPoint->Layout();
 	fgSizerTextPoint->Fit( m_panelTextPoint );
 	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
-	m_panelPath = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panelPath = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panelPath->SetScrollRate( 5, 5 );
 	m_panelPath->Enable( false );
 	m_panelPath->Hide();
 
@@ -492,14 +499,14 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextActivePathLineColour->Wrap( -1 );
 	m_fgSizerPathSettings->Add( m_staticTextActivePathLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerActivePathLineColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerActivePathLineColour = new ODColourPickerCtrl( m_panelPath, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPathSettings->Add( m_colourPickerActivePathLineColour, 0, wxALL, 5 );
 
 	m_staticTextInactivePathLineColour = new wxStaticText( m_panelPath, wxID_ANY, _("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactivePathLineColour->Wrap( -1 );
 	m_fgSizerPathSettings->Add( m_staticTextInactivePathLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerInActivePathLineColour = new wxColourPickerCtrl( m_panelPath, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActivePathLineColour = new ODColourPickerCtrl( m_panelPath, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPathSettings->Add( m_colourPickerInActivePathLineColour, 0, wxALL, 5 );
 
 	m_staticTextPathLineWidth = new wxStaticText( m_panelPath, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -527,7 +534,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelPath->Layout();
 	m_fgSizerPathSettings->Fit( m_panelPath );
 	m_notebookProperties->AddPage( m_panelPath, _("Path"), false );
-	m_panelEBL = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelEBL = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelEBL->SetScrollRate( 5, 5 );
 	m_fgSizerEBLSettings = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerEBLSettings->AddGrowableCol( 0 );
 	m_fgSizerEBLSettings->AddGrowableCol( 1 );
@@ -568,14 +576,14 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextActiveEBLLineColour->Wrap( -1 );
 	m_fgSizerEBLSettings->Add( m_staticTextActiveEBLLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerActiveEBLLineColour = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerActiveEBLLineColour = new ODColourPickerCtrl( m_panelEBL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerEBLSettings->Add( m_colourPickerActiveEBLLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
 	m_staticTextInactiveEBLLineColour = new wxStaticText( m_panelEBL, wxID_ANY, _("Inactive EBL Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveEBLLineColour->Wrap( -1 );
 	m_fgSizerEBLSettings->Add( m_staticTextInactiveEBLLineColour, 0, wxALL, 5 );
 
-	m_colourPickerInActiveEBLLineColour = new wxColourPickerCtrl( m_panelEBL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActiveEBLLineColour = new ODColourPickerCtrl( m_panelEBL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerEBLSettings->Add( m_colourPickerInActiveEBLLineColour, 0, wxALL, 5 );
 
 	m_staticTextEBLLineWidth = new wxStaticText( m_panelEBL, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -633,7 +641,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelEBL->Layout();
 	m_fgSizerEBLSettings->Fit( m_panelEBL );
 	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), false );
-	m_panelDR = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDR = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDR->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizerDRSettings;
 	fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizerDRSettings->SetFlexibleDirection( wxBOTH );
@@ -649,14 +658,14 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextActiveDRLineColour->Wrap( -1 );
 	m_fgSizerDRDefaultSizes->Add( m_staticTextActiveDRLineColour, 0, wxALL, 5 );
 
-	m_colourPickerDRLineColour = new wxColourPickerCtrl( m_panelDR, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerDRLineColour = new ODColourPickerCtrl( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerDRDefaultSizes->Add( m_colourPickerDRLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextInactiveDRLineColour = new wxStaticText( m_panelDR, wxID_ANY, _("Inactive DR Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveDRLineColour->Wrap( -1 );
 	m_fgSizerDRDefaultSizes->Add( m_staticTextInactiveDRLineColour, 0, wxALL, 5 );
 
-	m_colourPickerInActiveDRLineColour = new wxColourPickerCtrl( m_panelDR, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActiveDRLineColour = new ODColourPickerCtrl( m_panelDR, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerDRDefaultSizes->Add( m_colourPickerInActiveDRLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextDRLineWidth = new wxStaticText( m_panelDR, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -759,7 +768,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelDR->Layout();
 	fgSizerDRSettings->Fit( m_panelDR );
 	m_notebookProperties->AddPage( m_panelDR, _("DR"), false );
-	m_panelDRPoint = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDRPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDRPoint->SetScrollRate( 5, 5 );
 	wxBoxSizer* bSizer12;
 	bSizer12 = new wxBoxSizer( wxVERTICAL );
 
@@ -813,7 +823,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextDRPointRangeRingColours->Wrap( -1 );
 	m_fgSizerDRPointSettings->Add( m_staticTextDRPointRangeRingColours, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerDRPointRangeRingColours = new wxColourPickerCtrl( m_panelDRPoint, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerDRPointRangeRingColours = new ODColourPickerCtrl( m_panelDRPoint, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerDRPointSettings->Add( m_colourPickerDRPointRangeRingColours, 0, wxALL|wxALIGN_RIGHT, 5 );
 
 	m_staticTextDRPointRangeRingWidth = new wxStaticText( m_panelDRPoint, wxID_ANY, _("Range Ring Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -844,7 +854,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelDRPoint->Layout();
 	bSizer12->Fit( m_panelDRPoint );
 	m_notebookProperties->AddPage( m_panelDRPoint, _("DR Point"), false );
-	m_panelGZ = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelGZ = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelGZ->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizerGZSettings;
 	fgSizerGZSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizerGZSettings->AddGrowableCol( 0 );
@@ -894,28 +905,28 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextActiveGZLineColour->Wrap( -1 );
 	m_fgSizerGZSettingsColours->Add( m_staticTextActiveGZLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerActiveGZLineColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerActiveGZLineColour = new ODColourPickerCtrl( m_panelGZ, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerGZSettingsColours->Add( m_colourPickerActiveGZLineColour, 0, wxALL, 5 );
 
 	m_staticTextActiveGZFillColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Active Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextActiveGZFillColour->Wrap( -1 );
 	m_fgSizerGZSettingsColours->Add( m_staticTextActiveGZFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 
-	m_colourPickerActiveGZFillColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerActiveGZFillColour = new ODColourPickerCtrl( m_panelGZ, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerGZSettingsColours->Add( m_colourPickerActiveGZFillColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextInactiveGZLineColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Inactive Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveGZLineColour->Wrap( -1 );
 	m_fgSizerGZSettingsColours->Add( m_staticTextInactiveGZLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerInActiveGZLineColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActiveGZLineColour = new ODColourPickerCtrl( m_panelGZ, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerGZSettingsColours->Add( m_colourPickerInActiveGZLineColour, 0, wxALL, 5 );
 
 	m_staticTextInactiveGZFillColour = new wxStaticText( m_panelGZ, wxID_ANY, _("Inactive Fill Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveGZFillColour->Wrap( -1 );
 	m_fgSizerGZSettingsColours->Add( m_staticTextInactiveGZFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_RIGHT|wxALL, 5 );
 
-	m_colourPickerInActiveGZFillColour = new wxColourPickerCtrl( m_panelGZ, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerInActiveGZFillColour = new ODColourPickerCtrl( m_panelGZ, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerGZSettingsColours->Add( m_colourPickerInActiveGZFillColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextGZLineWidth = new wxStaticText( m_panelGZ, wxID_ANY, _("Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -990,7 +1001,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelGZ->Layout();
 	fgSizerGZSettings->Fit( m_panelGZ );
 	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), false );
-	m_panelPIL = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelPIL = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelPIL->SetScrollRate( 5, 5 );
 	m_fgSizerPILSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
 	m_fgSizerPILSettings->AddGrowableCol( 0 );
 	m_fgSizerPILSettings->SetFlexibleDirection( wxBOTH );
@@ -1048,42 +1060,42 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_staticTextPILActiveCentreLineColour->Wrap( -1 );
 	m_fgSizerPILLineDetails->Add( m_staticTextPILActiveCentreLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerPILActiveCentreLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 0, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerPILActiveCentreLineColour = new ODColourPickerCtrl( m_panelPIL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPILLineDetails->Add( m_colourPickerPILActiveCentreLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextInactiveCentreLineColour = new wxStaticText( m_panelPIL, wxID_ANY, _("Inactive Centre Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextInactiveCentreLineColour->Wrap( -1 );
 	m_fgSizerPILLineDetails->Add( m_staticTextInactiveCentreLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerPILInActiveCentreLineColour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerPILInActiveCentreLineColour = new ODColourPickerCtrl( m_panelPIL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPILLineDetails->Add( m_colourPickerPILInActiveCentreLineColour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextPILActiveOffsetLine1Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Active Offset Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILActiveOffsetLine1Colour->Wrap( -1 );
 	m_fgSizerPILLineDetails->Add( m_staticTextPILActiveOffsetLine1Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerPILActiveOffsetLine1Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerPILActiveOffsetLine1Colour = new ODColourPickerCtrl( m_panelPIL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPILLineDetails->Add( m_colourPickerPILActiveOffsetLine1Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextPILInactiveOffsetLine1Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Inactive Offset Line Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILInactiveOffsetLine1Colour->Wrap( -1 );
 	m_fgSizerPILLineDetails->Add( m_staticTextPILInactiveOffsetLine1Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerPILInActiveOffsetLine1Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerPILInActiveOffsetLine1Colour = new ODColourPickerCtrl( m_panelPIL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPILLineDetails->Add( m_colourPickerPILInActiveOffsetLine1Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextPILActiveOffsetLine2Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Active Offset Line 2 Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILActiveOffsetLine2Colour->Wrap( -1 );
 	m_fgSizerPILLineDetails->Add( m_staticTextPILActiveOffsetLine2Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerPILActiveOffsetLine2Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 0, 255, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerPILActiveOffsetLine2Colour = new ODColourPickerCtrl( m_panelPIL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPILLineDetails->Add( m_colourPickerPILActiveOffsetLine2Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextPILInactiveOffsetLine2Colour = new wxStaticText( m_panelPIL, wxID_ANY, _("Inactive Offset Line 2 Colour"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPILInactiveOffsetLine2Colour->Wrap( -1 );
 	m_fgSizerPILLineDetails->Add( m_staticTextPILInactiveOffsetLine2Colour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerPILInactiveOffsetLine2Colour = new wxColourPickerCtrl( m_panelPIL, wxID_ANY, wxColour( 214, 214, 214 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerPILInactiveOffsetLine2Colour = new ODColourPickerCtrl( m_panelPIL, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|wxCLRP_DEFAULT_STYLE );
 	m_fgSizerPILLineDetails->Add( m_colourPickerPILInactiveOffsetLine2Colour, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 	m_staticTextPILCentreLineWidth = new wxStaticText( m_panelPIL, wxID_ANY, _("Centre Line Width"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -1167,8 +1179,9 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelPIL->SetSizer( m_fgSizerPILSettings );
 	m_panelPIL->Layout();
 	m_fgSizerPILSettings->Fit( m_panelPIL );
-	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), true );
-	m_panelAbout = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), false );
+	m_panelAbout = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelAbout->SetScrollRate( 5, 5 );
 	wxBoxSizer* bSizerAbout;
 	bSizerAbout = new wxBoxSizer( wxVERTICAL );
 
@@ -1359,7 +1372,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelAbout->Layout();
 	bSizerAbout->Fit( m_panelAbout );
 	m_notebookProperties->AddPage( m_panelAbout, _("About"), false );
-	m_panelHelp = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelHelp = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelHelp->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizer22;
 	fgSizer22 = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizer22->SetFlexibleDirection( wxBOTH );
@@ -1410,7 +1424,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelHelp->Layout();
 	fgSizer22->Fit( m_panelHelp );
 	m_notebookProperties->AddPage( m_panelHelp, _("Help"), false );
-	m_panelLicense = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelLicense = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelLicense->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizer48;
 	fgSizer48 = new wxFlexGridSizer( 0, 1, 0, 0 );
 	fgSizer48->AddGrowableCol( 0 );
@@ -1427,13 +1442,13 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer48->Fit( m_panelLicense );
 	m_notebookProperties->AddPage( m_panelLicense, _("License"), false );
 
-	bSizer121->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
+	bSizer121->Add( m_notebookProperties, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer10->Add( bSizer121, 1, wxEXPAND, 5 );
 
 
-	m_SizerProperties->Add( bSizer10, 0, wxEXPAND, 5 );
+	m_SizerProperties->Add( bSizer10, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizerOKCancelApply;
 	bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );
