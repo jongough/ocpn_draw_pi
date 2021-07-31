@@ -33,9 +33,11 @@
 #include "ODPlatform.h"
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
+
 #ifdef __OCPN__ANDROID__
-#include "androidUTIL.h"
+unsigned int androidColorPicker( unsigned int initialColor);
 #endif
+
 
 // ============================================================================
 // ODColourPickerCtrl implementation
@@ -53,22 +55,23 @@ END_EVENT_TABLE()
 
 ODColourPickerCtrl::ODColourPickerCtrl(wxWindow *parent,
                    wxWindowID id,
-                   const wxColour& initial,
+                   const wxBitmap &bitmap,
                    const wxPoint& pos,
                    const wxSize& size,
                    long style,
                    const wxValidator& validator,
                    const wxString& name)
 {
-    Create(parent, id, initial, pos, size, style, validator, name);
+    Create(parent, id, bitmap, pos, size, style, validator, name);
 }
 
 bool ODColourPickerCtrl::Create( wxWindow *parent, wxWindowID id,
-                        const wxColour &col, const wxPoint &pos,
+                        const wxBitmap &bitmap, const wxPoint &pos,
                         const wxSize &size, long style,
                         const wxValidator& validator, const wxString &name)
 {
-    m_bitmap = wxBitmap( 60, 13 );
+    int refDim = parent->GetCharHeight();
+    m_bitmap = wxBitmap( refDim * 4, refDim * 1 );
 
     // create this button
     if (!wxBitmapButton::Create( parent, id, m_bitmap, pos,
@@ -83,7 +86,7 @@ bool ODColourPickerCtrl::Create( wxWindow *parent, wxWindowID id,
             wxCommandEventHandler(ODColourPickerCtrl::OnButtonClick),
             NULL, this);
 
-    m_colour = col;
+    m_colour = *wxBLACK;
     UpdateColour();
     InitColourData();
 
@@ -145,8 +148,7 @@ void ODColourPickerCtrl::UpdateColour()
     wxMemoryDC dc(m_bitmap);
     dc.SetPen( *wxTRANSPARENT_PEN );
     dc.SetBrush( wxBrush(m_colour) );
-    dc.DrawRectangle( 0,0,m_bitmap.GetWidth(),m_bitmap.GetHeight() );
-
+    dc.DrawRectangle( 0, 0, m_bitmap.GetWidth(), m_bitmap.GetHeight() );
 
     dc.SelectObject( wxNullBitmap );
     SetBitmapLabel( m_bitmap );
@@ -155,7 +157,6 @@ void ODColourPickerCtrl::UpdateColour()
 void ODColourPickerCtrl::SetColour( wxColour& c)
 {
     m_colour = c;
-    m_bitmap = wxBitmap(GetSize().x - 20, GetSize().y - 20);
     UpdateColour();
 }
 

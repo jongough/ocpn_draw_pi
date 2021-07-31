@@ -38,6 +38,7 @@
 #include "PointMan.h"
 #include "version.h"
 #include <wx/fontdlg.h>
+#include "ODPlatform.h"
 
 #if wxCHECK_VERSION(3,0,0) 
 #include <wx/valnum.h>
@@ -597,6 +598,78 @@ void ODPropertiesDialogImpl::SaveChanges()
     }
 }
 
+
+#ifdef __OCPN__ANDROID__
+
+QString qtStyleSheet = "QScrollBar:horizontal {\
+border: 0px solid grey;\
+background-color: rgb(240, 240, 240);\
+height: 30px;\
+margin: 0px 1px 0 1px;\
+}\
+QScrollBar::handle:horizontal {\
+background-color: rgb(200, 200, 200);\
+min-width: 20px;\
+border-radius: 10px;\
+}\
+QScrollBar::add-line:horizontal {\
+border: 0px solid grey;\
+background: #32CC99;\
+width: 0px;\
+subcontrol-position: right;\
+subcontrol-origin: margin;\
+}\
+QScrollBar::sub-line:horizontal {\
+border: 0px solid grey;\
+background: #32CC99;\
+width: 0px;\
+subcontrol-position: left;\
+subcontrol-origin: margin;\
+}\
+QScrollBar:vertical {\
+border: 0px solid grey;\
+background-color: rgb(240, 240, 240);\
+width: 30px;\
+margin: 1px 0px 1px 0px;\
+}\
+QScrollBar::handle:vertical {\
+background-color: rgb(200, 200, 200);\
+min-height: 50px;\
+border-radius: 10px;\
+}\
+QScrollBar::add-line:vertical {\
+border: 0px solid grey;\
+background: #32CC99;\
+height: 0px;\
+subcontrol-position: top;\
+subcontrol-origin: margin;\
+}\
+QScrollBar::sub-line:vertical {\
+border: 0px solid grey;\
+background: #32CC99;\
+height: 0px;\
+subcontrol-position: bottom;\
+subcontrol-origin: margin;\
+}\
+QCheckBox {\
+spacing: 25px;\
+}\
+QCheckBox::indicator {\
+width: 30px;\
+height: 30px;\
+}\
+";
+
+#endif
+
+
+void ODPropertiesDialogImpl::applyStyle()
+{
+#ifdef __OCPN__ANDROID__
+    m_notebookProperties->GetHandle()->setStyleSheet( qtStyleSheet);
+#endif
+}
+
 void ODPropertiesDialogImpl::SetDialogSize( void )
 {
 #if wxCHECK_VERSION(3,0,0) 
@@ -607,42 +680,30 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
     GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
 
     wxSize sz;
-    sz.x = 60 * m_CharWidth;
-    sz.y = 30 * m_CharHeight;
+    sz.x = 160 * m_CharWidth;
+    sz.y = 130 * m_CharHeight;
 
-    wxSize dsize = GetParent()->GetClientSize();
-    sz.y = wxMin(sz.y, dsize.y - (0 * m_CharWidth));
-    sz.x = wxMin(sz.x, dsize.x - (0 * m_CharHeight));
+    wxSize csize = ::wxGetDisplaySize();
+    
+    wxSize dsize = GetGrandParent()->GetClientSize();           // The options->plugin list
+    
+    wxDialog *ocpnOptions = GetActiveOptionsDialog();
+    if(ocpnOptions){
+        dsize = ocpnOptions->GetSize();
+    }
+
+    sz.y = wxMin(csize.y, dsize.y );
+    sz.x = wxMin(csize.x, dsize.x * 12 / 10 );
     SetClientSize(sz);
-
-    wxSize fsize = GetSize();
-    fsize.y = wxMin(fsize.y, dsize.y - (0 * m_CharWidth));
-    fsize.x = wxMin(fsize.x, dsize.x - (0 * m_CharHeight));
-    SetSize(fsize);
+    SetMinClientSize(sz);
 
     CentreOnParent();
 
-    SetSizerAndFit(m_SizerProperties);
-#if 0
-    wxSize sz = m_SizerProperties->CalcMin();
-    sz.IncBy( 20 );   // Account for some decorations?
-    //wxSize dsize = ::wxGetDisplaySize();
-    wxSize dsize = GetOCPNCanvasWindow()->GetSize();
-    sz.y = wxMin(sz.y, dsize.y-80);
-//    sz = wxSize(600, 400);
-    SetClientSize(sz);
-    m_defaultClientSize = sz;
-    //m_panelBasicProperties->SetScrollRate(5, 5);
+    //SetSizerAndFit(m_SizerProperties);
 
-    wxSize fsize = GetSize();
-    fsize.y = wxMin(fsize.y, dsize.y-80);
-    fsize.x = wxMin(fsize.x, dsize.x-80);
-    SetSize(fsize);
-    this->Layout();
-    m_notebookProperties->Layout();
-    //this->GetSizer()->Fit(this);
-#endif
+    applyStyle();
 }
+
 
 void ODPropertiesDialogImpl::UpdateProperties( void )
 {

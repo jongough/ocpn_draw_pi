@@ -61,6 +61,7 @@ protected:
     void OnPILIndexLineChoice( wxCommandEvent& event );
     
     void SaveChanges();
+    void applyStyle( void );
     
     wxSize              m_defaultClientSize;
     ODIconCombo         *m_bODIComboBoxODPointIconName;
