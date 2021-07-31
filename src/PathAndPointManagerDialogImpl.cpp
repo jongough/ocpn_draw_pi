@@ -457,8 +457,6 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent)
     m_listCtrlLayers->InsertColumn( colLAYNAME, _("Layer Name"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
     m_listCtrlLayers->InsertColumn( colLAYITEMS, _("No. of items"), wxLIST_FORMAT_LEFT, wxLIST_AUTOSIZE );
 
-    // This line is non-sense, provokes wxAssert.  Parameter to "ChangeSelection" should be a page number.
-    //int l_lastpage = m_notebookPathAndPointManager->ChangeSelection(m_panelPath->GetId());
     m_panelPath->SetFocus();
 
     if(g_iDefaultPathAnPointManagerDialogPostionX == -1 || g_iDefaultPathAnPointManagerDialogPostionY == -1) Center();
