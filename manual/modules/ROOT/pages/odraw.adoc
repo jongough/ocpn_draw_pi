@@ -7,13 +7,10 @@ Developer: Jon Gough
 === Links
 
 * Source: https://github.com/jongough/ocpn_draw_pi
-* Releases: https://github.com/jongough/ocpn_draw_pi/releases[Github
-Releases]
-* Download: https://opencpn.org/OpenCPN/plugins/draw.html[Website
-Download]
+* Releases: https://github.com/jongough/ocpn_draw_pi/releases[Github Releases]
+* Download: https://opencpn.org/OpenCPN/plugins/draw.html[Website Download]
 * Forum:
-http://www.cruisersforum.com/forums/f134/ocpn-draw-1-4-available-187632.html[Ocpn_Draw
-Thread]
+http://www.cruisersforum.com/forums/f134/ocpn-draw-1-4-available-187632.html[Ocpn_Draw Thread]
 
 === Summary
 
@@ -93,7 +90,7 @@ selected the type of boundary to look for rather than use the default
 
 ===== ODraw and WatchDog interactions
 
-See link:../plugin_messaging.html[plugin_messaging] between ODraw ,
+See the Development manual - Plugin Messaging - for messaging between ODraw ,
 Watchdog and Weather_routing. A simple way to visualise the interactions
 between ODraw Boundaries and WatchDog boundaries alarms is laid out in
 this chart.
@@ -118,7 +115,7 @@ Calculation). But they are more versatile.
 
 ==== Weather routing integration
 
-image::od-wx-rte-boundary-guard-zone-grib-clim.jpg[]
+image::od-wx-rte-boundary-guard-zone-grib-clim.jpeg[]
 
 Red hatched Boundary created with Ocpn_Draw and used in Weather Routing
 Configuration > Options > Basic Tab > Check “Detect Boundary”
