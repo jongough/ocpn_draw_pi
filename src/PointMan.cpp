@@ -79,6 +79,7 @@ PointMan::~PointMan()
     //    then clear and delete objects from the temp list
 
     ODPointList temp_list;
+    bool bListEntry = false;
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
@@ -86,10 +87,13 @@ PointMan::~PointMan()
 
         temp_list.Append( pr );
         node = node->GetNext();
+        bListEntry = true;
     }
 
-    temp_list.DeleteContents( true );
-    temp_list.Clear();
+    if(bListEntry) {
+        temp_list.DeleteContents( true );
+        temp_list.Clear();
+    }
 
     m_pODPointList->Clear();
     delete m_pODPointList;
