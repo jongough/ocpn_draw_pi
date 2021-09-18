@@ -8,7 +8,7 @@ content:
     - url: ../
       start_path: manual
       branches: HEAD
-      edit_url: https://github.com/opencpn-manuals/odraw_pi/edit/master/{path}
+      edit_url: https://github.com/opencpn-manuals/ocpn_draw_pi/edit/master/{path}
 
 ui:   
   bundle:
