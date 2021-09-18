@@ -183,8 +183,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             setlocale(LC_NUMERIC, "");
 #endif
 #endif
-            
         }
+
+        if(g_pODRolloverWin) {
+            g_pODRolloverWin->Destroy();
+            g_pODRolloverWin = NULL;
+        }
+
         while( node ) {
             SelectItem *pFindSel = node->GetData();
             ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
@@ -192,11 +197,6 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             if( pp && pp->IsVisible() ) {
                 g_pRolloverPathSeg = new SelectItem;
                 *g_pRolloverPathSeg = *pFindSel;
-                
-                if(g_pODRolloverWin) {
-                    g_pODRolloverWin->Destroy();
-                    g_pODRolloverWin = NULL;
-                }
                 
                 if( NULL == g_pODRolloverWin ) {
                     g_pODRolloverWin = new ODRolloverWin( GetCanvasByIndex(g_current_canvas_index) );
@@ -347,11 +347,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     *g_pRolloverPoint = *pFindSel;
                     showRollover = true;
                     
-                    if(g_pODRolloverWin) {
+/*                    if(g_pODRolloverWin) {
                         g_pODRolloverWin->Destroy();
                         g_pODRolloverWin = NULL;
                     }
-                    
+*/
                     if( NULL == g_pODRolloverWin ) {
                         g_pODRolloverWin = new ODRolloverWin( GetCanvasByIndex(g_current_canvas_index) );
                         g_pODRolloverWin->IsActive( false );
