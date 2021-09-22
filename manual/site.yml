@@ -1,11 +1,11 @@
 site:
   title: Ocpn Draw
   url:  https://nowhere.net
-  start_page: odraw:ROOT:index.adoc
+  start_page: ocpn_draw:ROOT:index.adoc
 
 content:
   sources:
-    - url: ../
+    - url: ..
       start_path: manual
       branches: HEAD
       edit_url: https://github.com/opencpn-manuals/ocpn_draw_pi/edit/master/{path}
