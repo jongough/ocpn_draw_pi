@@ -255,6 +255,7 @@ ODPoint::~ODPoint( void )
 
     if( m_HyperlinkList ) {
         m_HyperlinkList->DeleteContents( true );
+        m_HyperlinkList->Clear();
         delete m_HyperlinkList;
     }
 }

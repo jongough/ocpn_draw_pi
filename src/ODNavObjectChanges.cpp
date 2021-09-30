@@ -1647,33 +1647,31 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
 
 ODPoint *ODNavObjectChanges::ODPointExists( const wxString& name, double lat, double lon )
 {
-    ODPoint *pret = NULL;
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
+        ODPoint *podp = node->GetData();
 
 //        if( pr->m_bIsInLayer ) return NULL;
 
-        if( fabs( lat - pr->m_lat ) < 1.e-6 && fabs( lon - pr->m_lon ) < 1.e-6 && name == pr->GetName() ) {
-            pret = pr;
-            break;
+        if( fabs( lat - podp->m_lat ) < 1.e-6 && fabs( lon - podp->m_lon ) < 1.e-6 && name == podp->GetName() ) {
+            return podp;
         }
         node = node->GetNext();
     }
 
-    return pret;
+    return NULL;
 }
 
 ODPoint *ODNavObjectChanges::ODPointExists( const wxString& guid )
 {
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
+        ODPoint *podp = node->GetData();
 
 //        if( pr->m_bIsInLayer ) return NULL;
 
-        if( guid == pr->m_GUID ) {
-            return pr;
+        if( guid == podp->m_GUID ) {
+            return podp;
         }
         node = node->GetNext();
     }

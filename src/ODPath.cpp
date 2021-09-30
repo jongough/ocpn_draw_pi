@@ -734,10 +734,10 @@ void ODPath::DeSelectPath()
 {
     wxODPointListNode *node = m_pODPointList->GetFirst();
 
-    ODPoint *rp;
+    ODPoint *odp;
     while( node ) {
-        rp = node->GetData();
-        rp->m_bPtIsSelected = false;
+        odp = node->GetData();
+        odp->m_bPtIsSelected = false;
 
         node = node->GetNext();
     }
@@ -883,10 +883,10 @@ void ODPath::RebuildGUIDList( void )
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
 
-    ODPoint *rp;
+    ODPoint *odp;
     while( node ) {
-        rp = node->GetData();
-        ODPointGUIDList.Add( rp->m_GUID );
+        odp = node->GetData();
+        ODPointGUIDList.Add( odp->m_GUID );
 
         node = node->GetNext();
     }
