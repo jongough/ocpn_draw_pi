@@ -1,3 +1,5 @@
+# For information on this file see: https://editorconfig.org
+
 root = true
 
 [*]
@@ -8,7 +10,7 @@ insert_final_newline = true
 charset = utf-8
 
 [*.{cmake,cpp,h,sh,in,yml,xsd}]
-carset = latin1
+charset = latin1
 indent_style = space
 indent_size = 4
 trim_trailing_whitespace = true

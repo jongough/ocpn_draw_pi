@@ -1,5 +1,5 @@
 /***************************************************************************
- * 
+ *
  * Project:  OpenCPN
  * Purpose:  ODicons
  * Author:   Jon Gough
@@ -38,14 +38,16 @@ class ODicons
 public:
     ODicons();
     ~ODicons();
-    
+
     void    initialize_images(void);
     bool    ScaleIcons(void);
     wxSize  GetIconSize(void);
     bool    SetScaleFactor(void);
     void    SetColourScheme( PI_ColorScheme cs );
     void    ChangeScheme(void);
-    
+
+    wxBitmap    *m_p_bm_ocpn_draw_pi_properties;
+
     wxBitmap    *m_p_bm_ocpn_draw_pi;
     wxBitmap    *m_p_bm_ocpn_draw_grey_pi;
 
@@ -70,6 +72,8 @@ public:
     wxBitmap    *m_p_bm_ocpn_draw_pil;
     wxBitmap    *m_p_bm_ocpn_draw_pil_grey;
 
+    wxString    m_s_ocpn_draw_pi_properties;
+    wxString    m_s_ocpn_draw_grey_pi_properties;
     wxString    m_s_ocpn_draw_pi;
     wxString    m_s_ocpn_draw_grey_pi;
     wxString    m_s_ocpn_draw_boundary;
@@ -93,12 +97,13 @@ private:
     wxBitmap    ScaleIcon( wxBitmap bitmap, double sf );
     void        CreateSchemeIcons(void);
     wxBitmap    BuildDimmedToolBitmap(wxBitmap bmp_nosrmal, unsigned char dim_ratio);
-    
+
 #if defined ODraw_USE_SVG || defined ODraw_USE_MUI
     wxBitmap    LoadSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1 );
     wxBitmap    ScaleIcon( wxBitmap bitmap, const wxString filename, double sf );
-    
+
 #endif
+    wxBitmap    m_bm_ocpn_draw_pi_properties;
     wxBitmap    m_bm_ocpn_draw_pi;
     wxBitmap    m_bm_ocpn_draw_grey_pi;
     wxBitmap    m_bm_ocpn_draw_boundary;

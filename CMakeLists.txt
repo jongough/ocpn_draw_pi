@@ -30,9 +30,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "7")
-set(VERSION_TWEAK "4")
-set(VERSION_DATE "30/09/2021") # DD/MM/YYYY format
+set(VERSION_PATCH "8")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "20/11/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -342,7 +342,7 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/lz4)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpnsrc/bitmaps)
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
-    include_directories( ${CMAKE_SOURCE_DIR}/extinclude/GLES2)
+    include_directories( ${PROJECT_SOURCE_DIR}/extinclude/GLES2)
 
 #    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
 endif(QT_ANDROID)
