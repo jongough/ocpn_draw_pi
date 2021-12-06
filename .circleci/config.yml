@@ -170,7 +170,7 @@ jobs:
             install-python: true
     build-bionic:
         docker:
-        - image: circleci/buildpack-deps:bionic-scm
+        - image: cimg/base:stable-18.04
         environment:
         - OCPN_TARGET:  bionic
         - DEPLOY_USE_ORB: true
@@ -188,7 +188,7 @@ jobs:
         - deploy-code
     build-bionic-gtk3:
         docker:
-        - image: circleci/buildpack-deps:bionic-scm
+        - image: cimg/base:stable-18.04
         environment:
         - BUILD_GTK3: true
         - OCPN_TARGET:  bionic-gtk3
@@ -207,7 +207,7 @@ jobs:
         - deploy-code
     build-focal-gtk3:
         docker:
-        - image: circleci/buildpack-deps:focal-scm
+        - image: cimg/base:stable-20.04
         environment:
         - BUILD_GTK3: true
         - OCPN_TARGET: focal-gtk3
