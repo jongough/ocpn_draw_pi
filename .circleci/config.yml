@@ -342,6 +342,7 @@ jobs:
     build-android-armhf:
         docker:
         - image: cimg/android:2021.08.1-ndk
+        resource_class: large
         environment:
         - OCPN_TARGET:  android-armhf
         - DEPLOY_USE_ORB: true
