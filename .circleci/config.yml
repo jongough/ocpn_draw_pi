@@ -330,6 +330,7 @@ jobs:
     build-android-arm64:
         docker:
         - image: cimg/android:2021.10.2-ndk
+        resource_class: large
         environment:
         - OCPN_TARGET:  android-arm64
         - DEPLOY_USE_ORB: true
