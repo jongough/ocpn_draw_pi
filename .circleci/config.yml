@@ -341,7 +341,7 @@ jobs:
             install-python: true
     build-android-armhf:
         docker:
-        - image: cimg/android:2021.08.1-ndk
+        - image: cimg/android:2021.10.2-ndk
         resource_class: large
         environment:
         - OCPN_TARGET:  android-armhf
