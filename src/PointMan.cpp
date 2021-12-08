@@ -83,9 +83,9 @@ PointMan::~PointMan()
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
+        ODPoint *podp = node->GetData();
 
-        temp_list.Append( pr );
+        temp_list.Append( podp );
         node = node->GetNext();
         bListEntry = true;
     }
@@ -112,30 +112,30 @@ PointMan::~PointMan()
     delete m_pFontEnumerator;
 }
 
-bool PointMan::AddODPoint(ODPoint *prp)
+bool PointMan::AddODPoint(ODPoint *podp)
 {
-    if(!prp)
+    if(!podp)
         return false;
     
-    wxODPointListNode *prpnode = m_pODPointList->Append(prp);
-    prp->SetManagerListNode( prpnode );
+    wxODPointListNode *podpnode = m_pODPointList->Append(podp);
+    podp->SetManagerListNode( podpnode );
     
     return true;
 }
 
-bool PointMan::RemoveODPoint(ODPoint *prp)
+bool PointMan::RemoveODPoint(ODPoint *podp)
 {
-    if(!prp)
+    if(!podp)
         return false;
     
-    wxODPointListNode *prpnode = (wxODPointListNode *)prp->GetManagerListNode();
-    
-    if(prpnode) 
-        delete prpnode;
+    wxODPointListNode *podpnode = (wxODPointListNode *)podp->GetManagerListNode();
+
+    if(podpnode)
+        delete podpnode;
     else
-        m_pODPointList->DeleteObject(prp);
+        m_pODPointList->DeleteObject(podp);
     
-    prp->SetManagerListNode( NULL );
+    podp->SetManagerListNode( NULL );
     
     return true;
 }
@@ -396,9 +396,9 @@ void PointMan::SetColorScheme( PI_ColorScheme cs )
     m_ColourScheme = cs;
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
-        pr->SetColourScheme(cs);
-        pr->ReLoadIcon();
+        ODPoint *podp = node->GetData();
+        podp->SetColourScheme(cs);
+        podp->ReLoadIcon();
         node = node->GetNext();
     }
 }
@@ -658,13 +658,13 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
 
 ODPoint *PointMan::FindODPointByGUID(const wxString &guid)
 {
-    wxODPointListNode *prpnode = m_pODPointList->GetFirst();
-    while( prpnode ) {
-        ODPoint *prp = prpnode->GetData();
+    wxODPointListNode *podpnode = m_pODPointList->GetFirst();
+    while( podpnode ) {
+        ODPoint *podp = podpnode->GetData();
 
-        if( prp->m_GUID == guid ) return ( prp );
+        if( podp->m_GUID == guid ) return ( podp );
 
-        prpnode = prpnode->GetNext(); //ODPoint
+        podpnode = podpnode->GetNext(); //ODPoint
     }
 
     return NULL;
@@ -676,13 +676,13 @@ ODPoint *PointMan::GetNearbyODPoint( double lat, double lon, double radius_meter
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
+        ODPoint *podp = node->GetData();
 
-        double a = lat - pr->m_lat;
-        double b = lon - pr->m_lon;
+        double a = lat - podp->m_lat;
+        double b = lon - podp->m_lon;
         double l = sqrt( ( a * a ) + ( b * b ) );
 
-        if( !pr->m_bSingleUse && ( l * 60. * 1852. ) < radius_meters ) return pr;
+        if( !podp->m_bSingleUse && ( l * 60. * 1852. ) < radius_meters ) return podp;
 
         node = node->GetNext();
     }
@@ -697,13 +697,13 @@ ODPoint *PointMan::GetOtherNearbyODPoint( double lat, double lon, double radius_
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
+        ODPoint *podp = node->GetData();
 
-        double a = lat - pr->m_lat;
-        double b = lon - pr->m_lon;
+        double a = lat - podp->m_lat;
+        double b = lon - podp->m_lon;
         double l = sqrt( ( a * a ) + ( b * b ) );
 
-        if( ( l * 60. * 1852. ) < radius_meters ) if( pr->m_GUID != guid ) return pr;
+        if( ( l * 60. * 1852. ) < radius_meters ) if( podp->m_GUID != guid ) return podp;
 
         node = node->GetNext();
     }
@@ -718,9 +718,9 @@ void PointMan::ClearODPointFonts( void )
 
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *pr = node->GetData();
+        ODPoint *podp = node->GetData();
 
-        pr->m_pMarkFont = NULL;
+        podp->m_pMarkFont = NULL;
         node = node->GetNext();
     }
 }
@@ -729,8 +729,8 @@ bool PointMan::SharedODPointsExist()
 {
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *prp = node->GetData();
-        if (prp->m_bKeepXPath && prp->m_bIsInPath )
+        ODPoint *podp = node->GetData();
+        if (podp->m_bKeepXPath && podp->m_bIsInPath )
             return true;
         node = node->GetNext();
     }
@@ -742,13 +742,13 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
     //    Iterate on the ODPoint list, deleting all
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while( node ) {
-        ODPoint *prp = node->GetData();
+        ODPoint *podp = node->GetData();
         // if argument is false, then only delete non-path ODPoints
-        if( !prp->m_bIsInLayer && ( prp->GetIconName() != _T("mob") )
-            && ( ( b_delete_used && prp->m_bKeepXPath )
-                        ||  !prp->m_bIsInPath   ) ) {
-            DestroyODPoint(prp);
-			delete prp;
+        if( !podp->m_bIsInLayer && ( podp->GetIconName() != _T("mob") )
+            && ( ( b_delete_used && podp->m_bKeepXPath )
+                        ||  !podp->m_bIsInPath   ) ) {
+            DestroyODPoint(podp);
+			delete podp;
             node = m_pODPointList->GetFirst();
         } else
             node = node->GetNext();
@@ -757,20 +757,20 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
 
 }
 
-void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
+void PointMan::DestroyODPoint( ODPoint *podp, bool b_update_changeset )
 {
     if( ! b_update_changeset )
         g_pODConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
         
-    if( pRp ) {
+    if( podp ) {
         // Get a list of all boundaries containing this point
         // and remove the point from them all
-        wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( pRp );
+        wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( podp );
         if( ppath_array ) {
             for( unsigned int ib = 0; ib < ppath_array->GetCount(); ib++ ) {
                 ODPath *pb = (ODPath *) ppath_array->Item( ib );
 
-                pb->RemovePoint( pRp );
+                pb->RemovePoint( podp );
 
             }
 
@@ -790,13 +790,13 @@ void PointMan::DestroyODPoint( ODPoint *pRp, bool b_update_changeset )
         }
 
         // Now it is safe to delete the point
-        g_pODConfig->DeleteODPoint( pRp );
+        g_pODConfig->DeleteODPoint( podp );
         g_pODConfig->m_bSkipChangeSetUpdate = false;
         
-        g_pODSelect->DeleteSelectableODPoint( pRp );
+        g_pODSelect->DeleteSelectableODPoint( podp );
 
 
-        RemoveODPoint( pRp);
+        RemoveODPoint( podp);
 
     }
 }

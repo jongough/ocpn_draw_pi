@@ -135,32 +135,32 @@ bool PathMan::DeletePath( ODPath *pPath )
         wxODPointListNode *pnode = pPath->m_pODPointList->GetFirst();
         while( pnode ) {
             wxODPointListNode *next = pnode->GetNext();
-            ODPoint *prp = pnode->GetData();
+            ODPoint *podp = pnode->GetData();
 
             // check all other paths to see if this point appears in any other path
-            ODPath *pcontainer_path = FindPathContainingODPoint( prp );
+            ODPath *pcontainer_path = FindPathContainingODPoint( podp );
 
-            if( pcontainer_path == NULL && prp->m_bIsInPath ) {
-                prp->m_bIsInPath = false;          // Take this point out of this (and only) path
-                if( !prp->m_bKeepXPath ) {
+            if( pcontainer_path == NULL && podp->m_bIsInPath ) {
+                podp->m_bIsInPath = false;          // Take this point out of this (and only) path
+                if( !podp->m_bKeepXPath ) {
 //    This does not need to be done with navobj.xml storage, since the ODPoints are stored with the path
-//                              g_pODConfig->DeleteODPoint(prp);
+//                              g_pODConfig->DeleteODPoint(podp);
 
-                    g_pODSelect->DeleteSelectablePoint( prp, SELTYPE_ODPOINT );
+                    g_pODSelect->DeleteSelectablePoint( podp, SELTYPE_ODPOINT );
 
                     // Remove all instances of this point from the list.
                     wxODPointListNode *pdnode = pnode;
                     while( pdnode ) {
                         pPath->m_pODPointList->DeleteNode( pdnode );
-                        pdnode = pPath->m_pODPointList->Find( prp );
+                        pdnode = pPath->m_pODPointList->Find( podp );
                     }
 
-                    if(prp->m_ODPointName == wxT("Boat") && pPath->m_sTypeString == wxT("EBL") ) g_ocpn_draw_pi->m_pEBLBoatPoint = NULL;
-                    delete prp;
+                    if(podp->m_ODPointName == wxT("Boat") && pPath->m_sTypeString == wxT("EBL") ) g_ocpn_draw_pi->m_pEBLBoatPoint = NULL;
+                    delete podp;
                 } else {
-                    prp->m_bDynamicName = false;
-                    prp->m_bIsolatedMark = true;        // This has become an isolated mark
-                    prp->m_bKeepXPath = false;         // and is no longer part of a Boundary
+                    podp->m_bDynamicName = false;
+                    podp->m_bIsolatedMark = true;        // This has become an isolated mark
+                    podp->m_bKeepXPath = false;         // and is no longer part of a Boundary
                 }
 
             }
@@ -180,10 +180,10 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
         // or is isolated
         wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
-            ODPoint *prp = pnode->GetData();
+            ODPoint *podp = pnode->GetData();
 
             // check all other paths to see if this point appears in any other path
-            wxArrayPtrVoid *pRA = GetPathArrayContaining( prp );
+            wxArrayPtrVoid *pRA = GetPathArrayContaining( podp );
             
              if( pRA ) {
                  for( unsigned int ir = 0; ir < pRA->GetCount(); ir++ ) {
@@ -204,8 +204,8 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
         //      Now walk the path again, looking for isolated type shared ODPoints
         pnode = ( pPath->m_pODPointList )->GetFirst();
         while( pnode ) {
-            ODPoint *prp = pnode->GetData();
-            if( prp->m_bKeepXPath == true )
+            ODPoint *podp = pnode->GetData();
+            if( podp->m_bKeepXPath == true )
                 return true;
             
            if( pnode ) pnode = pnode->GetNext();
@@ -215,7 +215,7 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
     return false;
 }
   
-wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
+wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pODP )
 {
     wxArrayPtrVoid *pArray = new wxArrayPtrVoid;
 
@@ -225,8 +225,8 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pWP )
 
         wxODPointListNode *OCPNpoint_node = ( ppath->m_pODPointList )->GetFirst();
         while( OCPNpoint_node ) {
-            ODPoint *prp = OCPNpoint_node->GetData();
-            if( prp == pWP )                // success
+            ODPoint *podp = OCPNpoint_node->GetData();
+            if( podp == pODP )                // success
             pArray->Add( (void *) ppath );
 
             OCPNpoint_node = OCPNpoint_node->GetNext();           // next ODPoint
@@ -263,7 +263,7 @@ void PathMan::DeleteAllPaths( void )
 
 }
 
-ODPath *PathMan::FindPathContainingODPoint( ODPoint *pWP )
+ODPath *PathMan::FindPathContainingODPoint( ODPoint *pODP )
 {
     wxPathListNode *node = g_pPathList->GetFirst();
     while( node ) {
@@ -271,8 +271,8 @@ ODPath *PathMan::FindPathContainingODPoint( ODPoint *pWP )
 
         wxODPointListNode *pnode = ( ppath->m_pODPointList )->GetFirst();
         while( pnode ) {
-            ODPoint *prp = pnode->GetData();
-            if( prp == pWP )  return ppath;
+            ODPoint *podp = pnode->GetData();
+            if( podp == pODP )  return ppath;
             pnode = pnode->GetNext();
         }
 

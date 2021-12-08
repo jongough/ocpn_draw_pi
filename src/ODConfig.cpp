@@ -114,40 +114,40 @@ bool ODConfig::DeleteConfigPath( ODPath *pb )
     return true;
 }
 
-bool ODConfig::AddNewODPoint( ODPoint *pWP, int crm )
+bool ODConfig::AddNewODPoint( ODPoint *pODP, int crm )
 {
-    if( pWP->m_bIsInLayer )
+    if( pODP->m_bIsInLayer )
         return true;
 
-    if(!pWP->m_bIsolatedMark)
+    if(!pODP->m_bIsolatedMark)
         return true;
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pODNavObjectChangesSet->AddODPoint( pWP, "add" );
+        m_pODNavObjectChangesSet->AddODPoint( pODP, "add" );
     }
 
     return true;
 }
 
-bool ODConfig::UpdateODPoint( ODPoint *pWP )
+bool ODConfig::UpdateODPoint( ODPoint *pODP )
 {
-    if( pWP->m_bIsInLayer )
+    if( pODP->m_bIsInLayer )
         return true;
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pODNavObjectChangesSet->AddODPoint( pWP, "update" );
+        m_pODNavObjectChangesSet->AddODPoint( pODP, "update" );
     }
 
     return true;
 }
 
-bool ODConfig::DeleteODPoint( ODPoint *pWP )
+bool ODConfig::DeleteODPoint( ODPoint *pODP )
 {
-    if( pWP->m_bIsInLayer )
+    if( pODP->m_bIsInLayer )
         return true;
 
     if( !m_bSkipChangeSetUpdate ) {
-        m_pODNavObjectChangesSet->AddODPoint( pWP, "delete" );
+        m_pODNavObjectChangesSet->AddODPoint( pODP, "delete" );
     }
 
     return true;
@@ -434,7 +434,7 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
         }
 
         wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-        ODPoint *pr;
+        ODPoint *podp;
         time_t l_tStart = time(0);
         time_t l_tCurrent;
         while( node ) {
@@ -446,18 +446,18 @@ void ODConfig::ExportGPX( wxWindow* parent, bool bviz_only, bool blayer )
                 ic++;
             }
 
-            pr = node->GetData();
+            podp = node->GetData();
 
             bool b_add = true;
 
-            if( bviz_only && !pr->m_bIsVisible )
+            if( bviz_only && !podp->m_bIsVisible )
                 b_add = false;
 
-            if( pr->m_bIsInLayer && !blayer )
+            if( podp->m_bIsInLayer && !blayer )
                 b_add = false;
             if( b_add) {
-                if( pr->m_bKeepXPath || tp_hash.find( pr ) == tp_hash.end() )
-                        pgpx->AddGPXODPoint( pr);
+                if( podp->m_bKeepXPath || tp_hash.find( podp ) == tp_hash.end() )
+                        pgpx->AddGPXODPoint( podp);
             }
 
             node = node->GetNext();
@@ -819,7 +819,7 @@ void ODConfig::CreateRotatingNavObjBackup()
             break;
 }
 
-bool ODConfig::ODPointIsInPathList( ODPoint *pr )
+bool ODConfig::ODPointIsInPathList( ODPoint *podp )
 {
     bool IsInList = false;
 
@@ -829,12 +829,12 @@ bool ODConfig::ODPointIsInPathList( ODPoint *pr )
         ODPointList *pODPointList = pPath->m_pODPointList;
 
         wxODPointListNode *node2 = pODPointList->GetFirst();
-        ODPoint *prp;
+        ODPoint *ppodp;
 
         while( node2 ) {
-            prp = node2->GetData();
+            ppodp = node2->GetData();
 
-            if( pr->IsSame( prp ) ) {
+            if( podp->IsSame( ppodp ) ) {
                 IsInList = true;
                 break;
             }

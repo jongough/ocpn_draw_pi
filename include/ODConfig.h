@@ -45,9 +45,9 @@ class ODConfig
         virtual bool UpdatePath(ODPath *pr);
         virtual bool DeleteConfigPath(ODPath *pr);
         
-        virtual bool AddNewODPoint(ODPoint *pWP, int ConfigRouteNum = -1);
-        virtual bool UpdateODPoint(ODPoint *pWP);
-        virtual bool DeleteODPoint(ODPoint *pWP);
+        virtual bool AddNewODPoint(ODPoint *pODP, int ConfigRouteNum = -1);
+        virtual bool UpdateODPoint(ODPoint *pODP);
+        virtual bool DeleteODPoint(ODPoint *pODP);
 
         virtual void UpdateNavObj(void);
         virtual void LoadNavObjects();
