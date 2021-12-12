@@ -36,6 +36,10 @@
 // ODMarkIcon
 ODMarkIcon::ODMarkIcon()
 {
+    m_blistImageOK = false;
+    icon_texture = 0;
+    preScaled = false;
+    listIndex = 0;
     picon_bitmap = 0;
     picon_bitmap_RGB = 0;
     picon_bitmap_Day = 0;
@@ -59,7 +63,7 @@ void ODMarkIcon::Delete()
     delete picon_bitmap_Day;
     delete picon_bitmap_Dusk;
     delete picon_bitmap_Night;
-    
+
 #ifdef ocpnUSE_GL
     if (icon_texture_RGB != 0) {
         glDeleteTextures(1, &icon_texture_RGB);
@@ -73,11 +77,11 @@ void ODMarkIcon::Delete()
         glDeleteTextures(1, &icon_texture_Dusk);
         icon_texture_Dusk = 0;
     }
-    
+
     if (icon_texture_Night != 0) {
         glDeleteTextures(1, &icon_texture_Night);
         icon_texture_Night = 0;
     }
 #endif
 }
-    
+
