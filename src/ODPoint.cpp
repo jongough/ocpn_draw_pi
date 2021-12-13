@@ -72,11 +72,12 @@ ODPoint::ODPoint()
     m_NameLocationOffsetY = 8;
     m_pMarkFont = NULL;
     m_bTemporary = false;
+    m_bPreScaled = false;
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     m_fIconScaleFactor = 1.0;
     m_sTypeString = wxEmptyString;
-    
+
     m_HyperlinkList = new HyperlinkList;
 
     m_GUID = GetUUID();
@@ -88,9 +89,9 @@ ODPoint::ODPoint()
 
     m_bIsInLayer = false;
     m_LayerID = 0;
-    
+
     m_ODPointArrivalRadius = g_dODPointArrivalCircleRadius;
-    
+
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
     m_iODPointRangeRingsNumber = g_iODPointRangeRingsNumber;
     m_fODPointRangeRingsStep = g_fODPointRangeRingsStep;
@@ -98,7 +99,7 @@ ODPoint::ODPoint()
     m_wxcODPointRangeRingsColour = g_colourODPointRangeRingsColour;
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
-    
+
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
 
@@ -142,13 +143,13 @@ ODPoint::ODPoint( ODPoint* orig )
 
     m_bIsInLayer = orig->m_bIsInLayer;
     m_GUID = GetUUID();
-    
+
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     m_fIconScaleFactor = 1.0;
-    
+
     m_ODPointArrivalRadius = orig->GetODPointArrivalRadius();
-    
+
     m_bShowODPointRangeRings = orig->m_bShowODPointRangeRings;
     m_iODPointRangeRingsNumber = orig->m_iODPointRangeRingsNumber;
     m_fODPointRangeRingsStep = orig->m_fODPointRangeRingsStep;
@@ -204,7 +205,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_SelectNode = NULL;
     m_ManagerNode = NULL;
     m_fIconScaleFactor = 1.0;
-    
+
     m_HyperlinkList = new HyperlinkList;
 
     if( !pGUID.IsEmpty() )
@@ -230,7 +231,7 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
         m_bIsListed = false;
     } else
         m_LayerID = 0;
-    
+
     SetODPointArrivalRadius( g_dODPointArrivalCircleRadius );
 
     m_bShowODPointRangeRings = g_bODPointShowRangeRings;
@@ -241,10 +242,10 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     SetRangeRingBBox();
-    
+
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
-    
+
 }
 
 ODPoint::~ODPoint( void )
@@ -305,7 +306,7 @@ void ODPoint::ReLoadIcon( void )
 {
     bool icon_exists = g_pODPointMan->DoesIconExist(m_IconName);
     if( !icon_exists ){
-        
+
         //  Try all lower case as a favor in the case where imported ODPoints use mixed case names
         wxString tentative_icon = m_IconName.Lower();
         if(g_pODPointMan->DoesIconExist(tentative_icon)){
@@ -322,15 +323,17 @@ void ODPoint::ReLoadIcon( void )
            //}
         }
     }
-        
+
     m_pbmIcon = g_pODPointMan->GetIconBitmap( m_IconName );
+    m_bPreScaled = g_pODPointMan->GetIconPrescaled(m_IconName);
+
 
 #ifdef ocpnUSE_GL
     m_wpBBox_chart_scale = -1;
 
     m_iTextTexture = 0;
 #endif
-    
+
     m_fIconScaleFactor = -1;
 }
 
@@ -359,20 +362,21 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
     if( ( m_bIsActive ) && ( m_IconName != _T("mob") ) ) pbm = g_pODPointMan->GetIconBitmap( _T ( "activepoint" ) );
     else
         pbm = m_pbmIcon;
-    
+
     float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
-    if(m_fIconScaleFactor != l_ChartScaleFactorExp) {
-        m_fIconScaleFactor = l_ChartScaleFactorExp;
-        if(m_fIconScaleFactor != 0) {
-            wxImage scaled_image = pbm->ConvertToImage();
-            int new_width = pbm->GetWidth() * m_fIconScaleFactor;
-            int new_height = pbm->GetHeight() * m_fIconScaleFactor;
-            m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
-        }
+    if ((l_ChartScaleFactorExp > 1.0) && !m_bPreScaled) {
+        if(m_fIconScaleFactor != l_ChartScaleFactorExp) {
+            m_fIconScaleFactor = l_ChartScaleFactorExp;
+            if(m_fIconScaleFactor != 0) {
+                wxImage scaled_image = pbm->ConvertToImage();
+                int new_width = pbm->GetWidth() * m_fIconScaleFactor;
+                int new_height = pbm->GetHeight() * m_fIconScaleFactor;
+                m_ScaledBMP = wxBitmap(scaled_image.Scale(new_width, new_height, wxIMAGE_QUALITY_HIGH));
+            }
     }
     if( m_fIconScaleFactor != 0 && m_ScaledBMP.IsOk() )
         pbm = &m_ScaledBMP;
-    
+    }
     int sx2 = pbm->GetWidth() / 2;
     int sy2 = pbm->GetHeight() / 2;
 
@@ -413,8 +417,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
         GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         transparency = 150;
     }
-    
-        
+
     //  Highlite any selected point
     if( m_bPtIsSelected || m_bIsBeingEdited ) {
         g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius, hi_colour, transparency );
@@ -468,7 +471,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }
-    
+
     //  Save the current draw rectangle in the current DC
     //    This will be useful for fast icon redraws
     CurrentRect_in_DC.x = l_odp.x + hilitebox.x;
@@ -512,7 +515,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 
 //    Calculate the mark drawing extents
     wxRect r1( l_odp.x - sx2, l_odp.y - sy2, sx2 * 2, sy2 * 2 );          // the bitmap extents
-    
+
     float  l_fIconScaleFactor = GetOCPNChartScaleFactor_Plugin();
     wxRect r3 = r1;
     if( m_bShowName ) {
@@ -532,6 +535,14 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     hilitebox = r3;
     hilitebox.x -= l_odp.x;
     hilitebox.y -= l_odp.y;
+
+    if (!m_bPreScaled) {
+        hilitebox.x *= g_ChartScaleFactorExp;
+        hilitebox.y *= g_ChartScaleFactorExp;
+        hilitebox.width *= g_ChartScaleFactorExp;
+        hilitebox.height *= g_ChartScaleFactorExp;
+    }
+
     float radius;
     if( IsTouchInterface_PlugIn() ){
         hilitebox.Inflate( 20 );
@@ -541,7 +552,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         hilitebox.Inflate( 4 );
         radius = 4.0f;
     }
-    
+
     /* update bounding box */
     if(!m_wpBBox.GetValid() || pivp.chart_scale != m_wpBBox_chart_scale || pivp.rotation != m_wpBBox_rotation) {
         double lat1, lon1, lat2, lon2;
@@ -574,7 +585,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         else{
             GetGlobalColor( wxS( "YELO1" ), &hi_colour );
         }
-        
+
         g_ocpn_draw_pi->AlphaBlending( dc, l_odp.x + hilitebox.x, l_odp.y + hilitebox.y, hilitebox.width, hilitebox.height, radius,
                        hi_colour, transparency );
     }
@@ -586,22 +597,68 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 
         int glw, glh;
         unsigned int IconTexture = g_pODPointMan->GetIconTexture( pbm, glw, glh );
-      
+
         glBindTexture(GL_TEXTURE_2D, IconTexture);
-        
+
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
-        float l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
-        float w = r1.width * l_ChartScaleFactorExp;
-        float h = r1.height * l_ChartScaleFactorExp;
-        float x = l_odp.x - w/2; 
-        float y = l_odp.y - h/2;
-        wxRect texrect = wxRect(0, 0, w,h /*r1.width, r1.height*/);      // the texture rectangle
 
-        dc.DrawTexture( texrect, w, h, l_ChartScaleFactorExp, wxPoint(x,y), 0, wxPoint(0,0));
+        float l_ChartScaleFactorExp = 1.0;
+        if(!m_bPreScaled)
+            l_ChartScaleFactorExp = GetOCPNChartScaleFactor_Plugin();
 
+        int w = r1.width;
+        int h = r1.height;
+        float ws = r1.width * l_ChartScaleFactorExp;
+        float hs = r1.height * l_ChartScaleFactorExp;
+        float xs = l_odp.x - ws/2;
+        float ys = l_odp.y - hs/2;
+        float u = (float)w / glw, v = (float)h / glh;
+
+//#ifdef USE_ANDROID_GLES2
+#if 0
+        float coords[8];
+        float uv[8];
+        // normal uv
+        uv[0] = 0;
+        uv[1] = 0;
+        uv[2] = u;
+        uv[3] = 0;
+        uv[4] = u;
+        uv[5] = v;
+        uv[6] = 0;
+        uv[7] = v;
+
+        // pixels
+        coords[0] = xs;
+        coords[1] = ys;
+        coords[2] = xs + ws;
+        coords[3] = ys;
+        coords[4] = xs + ws;
+        coords[5] = ys + hs;
+        coords[6] = xs, coords[7] = ys + hs;
+
+        glChartCanvas::RenderSingleTexture(coords, uv, &vp, 0, 0, 0);
+
+#else
+
+        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
+
+        glColor3f(1, 1, 1);
+
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0);
+        glVertex2f(xs, ys);
+        glTexCoord2f(u, 0);
+        glVertex2f(xs + ws, ys);
+        glTexCoord2f(u, v);
+        glVertex2f(xs + ws, ys + hs);
+        glTexCoord2f(0, v);
+        glVertex2f(xs, ys + hs);
+        glEnd();
+
+#endif
         glDisable(GL_BLEND);
         glDisable(GL_TEXTURE_2D);
     }
@@ -612,38 +669,38 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         int x = l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
         dc.DrawTextEx( m_ODPointName, x, y, l_fIconScaleFactor );
     }
-    
+
     // Draw ODPoint range rings if activated
     if( m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         double factor = 1.00;
         if( m_iODPointRangeRingsStepUnits == 1 )          // nautical miles
             factor = 1 / 1.852;
-        
+
         factor *= m_fODPointRangeRingsStep;
-        
+
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
-        
+
         double lpp = sqrt( pow( (double) (l_odp.x - r1.x), 2) +
         pow( (double) (l_odp.y - r1.y), 2 ) );
         int pix_radius = (int) lpp;
-        
+
         wxPen ppPen1( m_wxcODPointRangeRingsSchemeColour, m_iRangeRingWidth, m_iRangeRingStyle );
         wxBrush saveBrush = dc.GetBrush();
         wxPen savePen = dc.GetPen();
         dc.SetPen( ppPen1 );
         dc.SetBrush( wxBrush( m_wxcODPointRangeRingsSchemeColour, wxBRUSHSTYLE_TRANSPARENT ) );
-        
+
         for( int i = 1; i <= m_iODPointRangeRingsNumber; i++ )
             dc.StrokeCircle( l_odp.x, l_odp.y, i * pix_radius );
-        
+
         dc.SetPen( savePen );
         dc.SetBrush( saveBrush );
     }
     if( m_bPointPropertiesBlink || m_bPathManagerBlink ) g_blink_rect = CurrentRect_in_DC;               // also save for global blinker
-    
+
     //    This will be useful for fast icon redraws
     CurrentRect_in_DC.x = l_odp.x + hilitebox.x;
     CurrentRect_in_DC.y = l_odp.y + hilitebox.y;
@@ -705,28 +762,28 @@ double ODPoint::GetODPointArrivalRadius() {
     return m_ODPointArrivalRadius;
 }
 
-int   ODPoint::GetODPointRangeRingsNumber() { 
+int   ODPoint::GetODPointRangeRingsNumber() {
     if ( m_iODPointRangeRingsNumber == -1 )
         return g_iODPointRangeRingsNumber;
     else
-        return m_iODPointRangeRingsNumber; 
+        return m_iODPointRangeRingsNumber;
 }
 
-float ODPoint::GetODPointRangeRingsStep() { 
+float ODPoint::GetODPointRangeRingsStep() {
     if ( m_fODPointRangeRingsStep == -1 )
         return g_fODPointRangeRingsStep;
     else
-        return m_fODPointRangeRingsStep; 
+        return m_fODPointRangeRingsStep;
 }
 
-int ODPoint::GetODPointRangeRingsStepUnits() { 
+int ODPoint::GetODPointRangeRingsStepUnits() {
     if ( m_iODPointRangeRingsStepUnits == -1 )
         return g_iODPointRangeRingsStepUnits;
     else
-        return m_iODPointRangeRingsStepUnits ; 
+        return m_iODPointRangeRingsStepUnits ;
 }
 
-wxColour ODPoint::GetODPointRangeRingsColour(void) { 
+wxColour ODPoint::GetODPointRangeRingsColour(void) {
     if ( m_wxcODPointRangeRingsColour.GetAsString(wxC2S_HTML_SYNTAX) == _T("#FFFFFF") )
         return g_colourODPointRangeRingsColour;
     else
@@ -779,15 +836,15 @@ void ODPoint::SetRangeRingBBox(void)
     }
 }
 
-void ODPoint::SetODPointRangeRingsNumber(int i_ODPointRangeRingsNumber) 
-{ 
-    m_iODPointRangeRingsNumber = i_ODPointRangeRingsNumber; 
+void ODPoint::SetODPointRangeRingsNumber(int i_ODPointRangeRingsNumber)
+{
+    m_iODPointRangeRingsNumber = i_ODPointRangeRingsNumber;
     SetRangeRingBBox();
 }
 
-void ODPoint::SetODPointRangeRingsStep(float f_ODPointRangeRingsStep) 
-{ 
-    m_fODPointRangeRingsStep = f_ODPointRangeRingsStep; 
+void ODPoint::SetODPointRangeRingsStep(float f_ODPointRangeRingsStep)
+{
+    m_fODPointRangeRingsStep = f_ODPointRangeRingsStep;
     SetRangeRingBBox();
 }
 
@@ -797,6 +854,6 @@ void ODPoint::AddURL(wxString URL, wxString URLDescription)
     l_Link->Link = URL;
     l_Link->DescrText = URLDescription;
     l_Link->LType = wxEmptyString;
-    
+
     m_HyperlinkList->Insert(l_Link);
 }

@@ -43,12 +43,18 @@ public:
     wxBitmap *picon_bitmap_Night;
     wxString icon_name;
     wxString icon_description;
+    bool preScaled;
 
     unsigned int icon_texture_RGB;
     unsigned int icon_texture_Day;
     unsigned int icon_texture_Dusk;
     unsigned int icon_texture_Night;
     unsigned int tex_w, tex_h;
+    unsigned int icon_texture;
+    wxImage iconImage;
+    bool m_blistImageOK;
+    int listIndex;
+
 };
 
 #endif

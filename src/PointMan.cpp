@@ -68,7 +68,7 @@ PointMan::PointMan()
     m_wxasFontFacenames = wxFontEnumerator::GetFacenames();
 
     m_nGUID = 0;
-    
+
 }
 
 PointMan::~PointMan()
@@ -108,7 +108,7 @@ PointMan::~PointMan()
 
     if( pmarkicon_image_list ) pmarkicon_image_list->RemoveAll();
     delete pmarkicon_image_list;
-    
+
     delete m_pFontEnumerator;
 }
 
@@ -116,10 +116,10 @@ bool PointMan::AddODPoint(ODPoint *podp)
 {
     if(!podp)
         return false;
-    
+
     wxODPointListNode *podpnode = m_pODPointList->Append(podp);
     podp->SetManagerListNode( podpnode );
-    
+
     return true;
 }
 
@@ -127,35 +127,35 @@ bool PointMan::RemoveODPoint(ODPoint *podp)
 {
     if(!podp)
         return false;
-    
+
     wxODPointListNode *podpnode = (wxODPointListNode *)podp->GetManagerListNode();
 
     if(podpnode)
         delete podpnode;
     else
         m_pODPointList->DeleteObject(podp);
-    
+
     podp->SetManagerListNode( NULL );
-    
+
     return true;
 }
 
 void PointMan::ProcessUserIcons( )
 {
-    
+
     if( wxDir::Exists( *g_pUserIconsDir ) ) {
         wxArrayString FileList;
-        
+
         wxDir dir( *g_pUserIconsDir );
         int n_files = dir.GetAllFiles( *g_pUserIconsDir, &FileList );
-        
+
         for( int ifile = 0; ifile < n_files; ifile++ ) {
             wxString name = FileList.Item( ifile );
-            
+
             wxFileName fn( name );
             wxString iconname = fn.GetName();
             wxBitmap icon1;
-            
+
             if( fn.GetExt().Lower() == _T("xpm") ) {
                 if( icon1.LoadFile( name, wxBITMAP_TYPE_XPM ) ) {
                     ProcessIcon( icon1, iconname, iconname );
@@ -165,6 +165,14 @@ void PointMan::ProcessUserIcons( )
                 if( icon1.LoadFile( name, wxBITMAP_TYPE_PNG ) ) {
                     ProcessIcon( icon1, iconname, iconname );
                 }
+            }
+            if (fn.GetExt().Lower() == _T("svg")) {
+                // double bm_size = 16.0 * g_Platform->GetDisplayDPmm() *
+                // g_ChartScaleFactorExp;
+                double bm_size = 62 * g_ChartScaleFactorExp;
+                wxBitmap iconSVG = LoadSVGIcon(name, bm_size, bm_size);
+                ODMarkIcon *pmi = ProcessIcon(iconSVG, iconname, iconname);
+                if (pmi) pmi->preScaled = true;
             }
         }
     }
@@ -221,10 +229,10 @@ void PointMan::ProcessIcons( )
     // Done after default icons are initialized,
     // so that user may substitute an icon by using the same name in the Usericons file.
     ProcessUserIcons( );
-    
+
 }
 
-void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description)
+ODMarkIcon *PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description)
 {
     ODMarkIcon *pmi;
 
@@ -242,6 +250,7 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
 
     if( newIcon ) {
         pmi = new ODMarkIcon;
+        //pmi->icon_name = key;
         m_pIconArray->Add( (void *) pmi );
     }
 
@@ -252,12 +261,21 @@ void PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString
     pmi->picon_bitmap_RGB = new wxBitmap( pimage );
     pmi->picon_bitmap_Dusk = CreateDimBitmap( pmi-> picon_bitmap, 0.5 );
     pmi->picon_bitmap_Night = CreateDimBitmap( pmi->picon_bitmap, 0.25 );
+#ifdef ODraw_USE_SVG
+    pmi->icon_texture = 0; /* invalidate */
+    pmi->preScaled = true;
+    pmi->iconImage = pmi->picon_bitmap->ConvertToImage();
+    pmi->m_blistImageOK = false;
+#else
+    pmi->preScaled = false;
+#endif
+    return pmi;
 }
 
 void PointMan::RemoveIcon(wxString key)
 {
     ODMarkIcon *pmi;
-    
+
     for(size_t i = 0; i < m_pIconArray->GetCount(); i++) {
         pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if(pmi->icon_name.IsSameAs( key )) {
@@ -324,8 +342,8 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
 
         pmarkicon_image_list->Add( icon_larger );
     }
-    
-    m_markicon_image_list_base_count = pmarkicon_image_list->GetImageCount(); 
+
+    m_markicon_image_list_base_count = pmarkicon_image_list->GetImageCount();
 
     // Create and add "x-ed out" icons,
     // Being careful to preserve (some) transparency
@@ -339,7 +357,7 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
         wxColour unused_color(r,g,b);
 
         wxBitmap bmp0( img );
-    
+
         wxBitmap bmp(w, h, -1 );
         wxMemoryDC mdc( bmp );
         mdc.SetBackground( wxBrush( unused_color) );
@@ -354,13 +372,13 @@ wxImageList *PointMan::Getpmarkicon_image_list( void )
         mdc.DrawLine( 2, 2, xm-2, ym-2 );
         mdc.DrawLine( xm-2, 2, 2, ym-2 );
         mdc.SelectObject( wxNullBitmap );
-        
+
         wxMask *pmask = new wxMask(bmp, unused_color);
         bmp.SetMask( pmask );
 
         pmarkicon_image_list->Add( bmp );
     }
-        
+
     return pmarkicon_image_list;
 }
 
@@ -441,7 +459,7 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
         if( i == m_pIconArray->GetCount() )              // "circle" not found
             pmi = (ODMarkIcon *) m_pIconArray->Item( 0 );       // use item 0
     }
-    
+
     if( pmi ) {
         switch (m_ColourScheme) {
             case PI_GLOBAL_COLOR_SCHEME_RGB:
@@ -465,9 +483,37 @@ wxBitmap *PointMan::GetIconBitmap( const wxString& icon_key )
     return pret;
 }
 
+bool PointMan::GetIconPrescaled(const wxString &icon_key) {
+    ODMarkIcon *pmi = NULL;
+    unsigned int i;
+
+    for (i = 0; i < m_pIconArray->GetCount(); i++) {
+        pmi = (ODMarkIcon *)m_pIconArray->Item(i);
+        if (pmi->icon_name.IsSameAs(icon_key)) break;
+    }
+
+    if (i == m_pIconArray->GetCount())  // key not found
+    {
+        // find and return bitmap for "circle"
+        for (i = 0; i < m_pIconArray->GetCount(); i++) {
+            pmi = (ODMarkIcon *)m_pIconArray->Item(i);
+            //            if( pmi->icon_name.IsSameAs( _T("circle") ) )
+            //                break;
+        }
+    }
+
+    if (i == m_pIconArray->GetCount())          // "circle" not found
+        pmi = (ODMarkIcon *)m_pIconArray->Item(0);  // use item 0
+
+    if (pmi)
+        return pmi->preScaled;
+    else
+        return false;
+}
+
 unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
 {
-#ifdef ocpnUSE_GL 
+#ifdef ocpnUSE_GL
     int index = GetIconIndex( pbm );
     ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
     assert(pmi != 0);
@@ -491,26 +537,26 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
             break;
     }
     if(*IconTexture == 0) {
-        /* make rgba texture */       
+        /* make rgba texture */
         glGenTextures(1, IconTexture);
         glBindTexture(GL_TEXTURE_2D, *IconTexture);
-                
+
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST );
         glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
 
         wxImage image = pbm->ConvertToImage();
         int w = image.GetWidth(), h = image.GetHeight();
-        
+
         pmi->tex_w = NextPow2(w);
         pmi->tex_h = NextPow2(h);
-        
+
         unsigned char *d = image.GetData();
         unsigned char *a = image.GetAlpha();
-            
+
         unsigned char mr, mg, mb;
         if(!a)
             image.GetOrFindMaskColour( &mr, &mg, &mb );
-    
+
         unsigned char *e = new unsigned char[4 * w * h];
         if(d && e){
             for( int y = 0; y < h; y++ )
@@ -520,15 +566,15 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
                     r = d[off * 3 + 0];
                     g = d[off * 3 + 1];
                     b = d[off * 3 + 2];
-                    
+
                     e[off * 4 + 0] = r;
                     e[off * 4 + 1] = g;
                     e[off * 4 + 2] = b;
-                    
+
                     e[off * 4 + 3] =  a ? a[off] : ( ( r == mr ) && ( g == mg ) && ( b == mb ) ? 0 : 255 );
                 }
         }
-    
+
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, pmi->tex_w, pmi->tex_h,
                      0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
         glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, w, h,
@@ -588,7 +634,7 @@ wxString *PointMan::GetIconDescription( int index )
 wxString *PointMan::GetIconName( wxString wxIconDescription )
 {
     wxString *pret = NULL;
-    
+
     for( int i = 0; i < (int)m_pIconArray->Count(); i++ ) {
         ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( wxIconDescription.IsSameAs( pmi->icon_description) ) {
@@ -602,7 +648,7 @@ wxString *PointMan::GetIconName( wxString wxIconDescription )
 wxString *PointMan::GetIconName( int index )
 {
     wxString *pret = NULL;
-    
+
     if( index >= 0 ) {
         ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
         pret = &pmi->icon_name;
@@ -643,7 +689,7 @@ int PointMan::GetIconIndex( const wxBitmap *pbm )
 int PointMan::GetXIconIndex( const wxBitmap *pbm )
 {
     unsigned int i;
-    
+
     for( i = 0; i < m_pIconArray->GetCount(); i++ ) {
         ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
         if( pmi->picon_bitmap == pbm ) break;
@@ -761,7 +807,7 @@ void PointMan::DestroyODPoint( ODPoint *podp, bool b_update_changeset )
 {
     if( ! b_update_changeset )
         g_pODConfig->m_bSkipChangeSetUpdate = true;             // turn OFF change-set updating if requested
-        
+
     if( podp ) {
         // Get a list of all boundaries containing this point
         // and remove the point from them all
@@ -792,7 +838,7 @@ void PointMan::DestroyODPoint( ODPoint *podp, bool b_update_changeset )
         // Now it is safe to delete the point
         g_pODConfig->DeleteODPoint( podp );
         g_pODConfig->m_bSkipChangeSetUpdate = false;
-        
+
         g_pODSelect->DeleteSelectableODPoint( podp );
 
 
@@ -849,7 +895,7 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
       t = (-b + sqrt( bb4ac)) / (2. * a);
       if (t < 0. || t > 1.) {
           t = (-b - sqrt( bb4ac)) / (2. * a);
-          if (t < 0. || t > 1.) 
+          if (t < 0. || t > 1.)
               return false;
       }
    }
@@ -868,7 +914,7 @@ BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double St
                 continue;
             }
             // if there's no ring there's nothing to do
-            if (!od->GetShowODPointRangeRings() || 
+            if (!od->GetShowODPointRangeRings() ||
                     od->GetODPointRangeRingsNumber() == 0 ||
                     od->GetODPointRangeRingsStep() == 0.f)
             {
@@ -918,5 +964,30 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
     if ( op != 0)
         return op->m_GUID;
     return _T("");
-    
+
+}
+
+wxImage PointMan::LoadSVGIcon(wxString filename, int width, int height) {
+    #ifdef ocpnUSE_SVG
+
+    #ifndef USE_ANDROID_GLES2
+    wxSVGDocument svgDoc;
+    if (svgDoc.Load(filename))
+        return svgDoc.Render(width, height, NULL, true, true);
+    else {
+        wxLogMessage(filename);
+        return wxImage(32, 32);
+    }
+    #else
+    wxBitmap bmp = loadAndroidSVG(filename, width, height);
+    if (bmp.IsOk())
+        return bmp.ConvertToImage();
+    else
+        return wxImage(32, 32);
+
+    #endif
+
+    #else
+    return wxImage(32, 32);
+    #endif  // ocpnUSE_SVG
 }

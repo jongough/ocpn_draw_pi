@@ -54,7 +54,7 @@ public:
 
       wxDateTime GetCreateTime(void);
       void SetCreateTime( wxDateTime dt );
-      
+
       void SetPosition(double lat, double lon);
       double GetLatitude()  { return m_lat; };
       double GetLongitude() { return m_lon; };
@@ -71,17 +71,17 @@ public:
       void SetNameShown(bool viz = true) { m_bShowName = viz; }
       wxString GetName(void){ return m_ODPointName; }
       wxString GetDescription(void) { return m_ODPointDescription; }
-      
+
       wxString GetIconName(void){ return m_IconName; }
       wxBitmap *GetIconBitmap(){ return m_pbmIcon; }
       void SetIconName( wxString name ){ m_IconName = name; }
-      
+
       void *GetSelectNode(void) { return m_SelectNode; }
       void SetSelectNode(void* node) { m_SelectNode = node; }
 
       void *GetManagerListNode(void) { return m_ManagerNode; }
       void SetManagerListNode(void* node) { m_ManagerNode = node; }
-      
+
       void SetName(const wxString & name);
       void CalculateNameExtents(void);
 
@@ -111,7 +111,7 @@ public:
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
       void SetRangeRingBBox(void);
-      
+
       void AddURL(wxString URL, wxString URLDescription);
 
       double             m_lat;
@@ -146,7 +146,7 @@ public:
 
       bool              m_bPointPropertiesBlink;
       bool              m_bPathManagerBlink;
-      
+
       bool              m_bDynamicName;
       bool              m_bShowName;
       wxRect            CurrentRect_in_DC;
@@ -186,9 +186,9 @@ public:
       wxString          m_ODPointName;
       wxDateTime        m_CreateTimeX;
       wxBitmap          *m_pbmIcon;
-      
+
       LLBBox            m_RangeRingsBBox;
-      
+
 protected:
     PI_ColorScheme  m_ColourScheme;
     wxColour    m_wxcODPointRangeRingsSchemeColour;
@@ -203,12 +203,14 @@ private:
       //wxBitmap          *m_pbmIcon;
       //wxString          m_IconName;
       //wxString          m_sTypeString;
-      
+
       void              *m_SelectNode;
       void              *m_ManagerNode;
       float             m_fIconScaleFactor;
       wxBitmap          m_ScaledBMP;
-      
+      bool              m_bPreScaled;
+
+
 };
 
 WX_DECLARE_LIST(ODPoint, ODPointList);// establish class as list member

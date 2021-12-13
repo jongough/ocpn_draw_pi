@@ -29,6 +29,7 @@
 #include <wx/imaglist.h>
 //#include "nmea0183.h"
 #include "ODPoint.h"
+#include "ODMarkIcon.h"
 #include "ocpn_draw_pi.h"
 
 //----------------------------------------------------------------------------
@@ -61,7 +62,7 @@ class PointMan
     public:
         PointMan();
         virtual ~PointMan();
-        
+
       wxBitmap *GetIconBitmap(const wxString& icon_key);
       unsigned int GetIconTexture( const wxBitmap *pmb, int &glw, int &glh );
       int GetIconIndex(const wxBitmap *pbm);
@@ -78,13 +79,15 @@ class PointMan
       //void ProcessIcons( ocpnStyle::Style* style );
       void ProcessIcons( );
       void RemoveIcon(wxString key);
-      
+
       bool DoesIconExist(const wxString & icon_key) const;
       wxBitmap *GetIconBitmap(int index);
       wxString *GetIconDescription(int index);
       wxString *GetIconName( int index );
       wxString *GetIconName( wxString wxIconDescription );
       wxString *GetIconKey(int index);
+      bool     GetIconPrescaled(const wxString &icon_key);
+
 
       wxImageList *Getpmarkicon_image_list(void);
 
@@ -92,8 +95,8 @@ class PointMan
       bool RemoveODPoint(ODPoint *prp);
       ODPointList *GetODPointList(void) { return m_pODPointList; }
 
-      void ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
-      
+      ODMarkIcon *ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
+
       wxArrayString     m_wxasFontFacenames;
       wxFontEnumerator  *m_pFontEnumerator;
 
@@ -101,25 +104,26 @@ class PointMan
 
       BoundaryPoint *FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state );
 
-      wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon, 
+      wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon,
             int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );
 
 protected:
 private:
-      //void ProcessUserIcons( ocpnStyle::Style* style );
-      void ProcessUserIcons( void );
-      wxBitmap *CreateDimBitmap(wxBitmap *pBitmap, double factor);
-      double deg2rad(double degree) { return degree*(PI/180.0); };
-      bool DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance );
+    //void ProcessUserIcons( ocpnStyle::Style* style );
+    void        ProcessUserIcons( void );
+    wxBitmap    *CreateDimBitmap(wxBitmap *pBitmap, double factor);
+    double      deg2rad(double degree) { return degree*(PI/180.0); };
+    bool        DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance );
+    wxImage     LoadSVGIcon(wxString filename, int width, int height);
 
-      ODPointList    *m_pODPointList;
-      wxImageList       *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
-      int               m_markicon_image_list_base_count;
-      wxArrayPtrVoid    *m_pIconArray;
+    ODPointList *m_pODPointList;
+    wxImageList *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
+    int         m_markicon_image_list_base_count;
+    wxArrayPtrVoid  *m_pIconArray;
 
-      int         m_nGUID;
-      
-      wxArrayString     m_asFacenames;
+    int         m_nGUID;
+
+    wxArrayString   m_asFacenames;
 };
 
 #endif // POINTMAN_H
