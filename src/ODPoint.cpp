@@ -347,7 +347,7 @@ void ODPoint::Draw( ODDC& dc, wxPoint *odp)
     //  return the home point in this dc to allow "connect the dots"
     if( NULL != odp) *odp= l_odp;
 
-    if( !m_bIsVisible /*&& !m_bIsInTrack*/)     // pjotrc 2010.02.13, 2011.02.24
+    if( !m_bIsVisible )
         return;
 
     //    Optimization, especially apparent on tracks in normal cases

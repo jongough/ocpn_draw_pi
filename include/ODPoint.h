@@ -108,6 +108,7 @@ public:
       void  SetMarkDescription( wxString sMarkDescription );
       virtual void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB);
       virtual void CreateColourSchemes( void );
+      virtual void DrawGL( PlugIn_ViewPort &pivp );
 
       bool SendToGPS(const wxString& com_name, wxGauge *pProgress);
       void SetRangeRingBBox(void);
@@ -163,7 +164,6 @@ public:
       HyperlinkList     *m_HyperlinkList;
       bool              m_bTemporary;
 
-      virtual void DrawGL( PlugIn_ViewPort &pivp );
       unsigned int m_iTextTexture;
       int m_iTextTextureWidth, m_iTextTextureHeight;
 
