@@ -22,6 +22,8 @@ workflows:
             <<: *std-filters
         - build-armhf-buster:
             <<: *std-filters
+        - build-armhf-bullseye:
+            <<: *std-filters
 ## Currently circleci does not build armf64 correctly due to no suitable docker image
 ##        - build-armhf-bionic-64:
 ##            <<: *std-filters
@@ -121,6 +123,23 @@ jobs:
         - DOCKER_IMAGE=balenalib/raspberry-pi-debian:buster
         - BUILD_FLAGS=-j3
         - BUILD_ENV=raspbian
+        - DEPLOY_USE_ORB: true
+        steps:
+        - checkout
+        - run: chmod a+x ./ci/*.sh
+        - run:
+            command: ci/circleci-build-raspbian-armhf.sh
+            no_output_timeout: 30m
+        - deploy-code
+    build-armhf-bullseye:
+        machine:
+            image: ubuntu-2004:202104-01
+        environment:
+        - OCPN_TARGET=bullseye-armhf
+        - DOCKER_IMAGE=balenalib/raspberry-pi-debian:bullseye
+        - BUILD_FLAGS=-j3
+        - BUILD_ENV=raspbian
+        - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
