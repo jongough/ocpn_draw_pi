@@ -2392,23 +2392,32 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 m_bODPointEditing = FALSE;
                 m_pCurrentCursor = NULL;
                 m_pSelectedPath->m_bIsBeingEdited = FALSE;
+                bool l_bUpdateSelect = false;
                 if( m_pFoundODPoint ) {
                     //g_pODSelect->UpdateSelectablePathSegments( m_pFoundODPoint );
                     m_pFoundODPoint->m_bIsBeingEdited = false;
                     m_pFoundODPoint->m_bPtIsSelected = false;
-                    if(m_pSelectedEBL)
+                    if(m_pSelectedEBL) {
                         m_pSelectedEBL->MoveEndPoint();
-                    if(m_pSelectedPIL)
+                        l_bUpdateSelect = true;
+                    }
+                    if(m_pSelectedPIL) {
                         m_pSelectedPIL->MoveEndPoint();
+                        l_bUpdateSelect = true;
+                    }
                 }
                 if(m_pSelectedPath->m_sTypeString == wxT("Guard Zone")) {
                     m_pSelectedGZ->UpdateGZSelectablePath();
+                    l_bUpdateSelect = true;
                 } else if (m_pSelectedPIL) {
                     m_pSelectedPIL->UpdatePIL();
+                    l_bUpdateSelect = true;
                 } else {
                     if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                        m_pSelectedPath->m_bPathPropertiesBlink = false;
                     }
+                }
+                if(l_bUpdateSelect) {
                     g_pODSelect->DeleteAllSelectablePathSegments( m_pSelectedPath );
                     g_pODSelect->DeleteAllSelectableODPoints( m_pSelectedPath );
                     g_pODSelect->AddAllSelectablePathSegments( m_pSelectedPath );
