@@ -204,11 +204,8 @@ if(OCPN_FLATPAK_CONFIG)
     #set(SDK_VER $ENV{SDK_VER})
     #  Hack for temporary "beta" status of 20.08 runtime
     #  See new substitution variable in cmake/in-files/org.opencpn.OpenCPN.Plugin.yaml.in
-    if("${SDK_VER}"  STREQUAL "20.08")
-        set(RUNTIME_VERSION "beta")
-    else("${SDK_VER}"  STREQUAL "20.08")
-        set(RUNTIME_VERSION "stable")
-    endif("${SDK_VER}"  STREQUAL "20.08")
+    message(STATUS "${CMLOC}FLATPAK_BRANCH: ${FLATPAK_BRANCH}")
+    set(RUNTIME_VERSION ${FLATPAK_BRANCH})
 
     message(STATUS "${CMLOC}Checking OCPN_FLATPAK_CONFIG: ${OCPN_FLATPAK_CONFIG}, SDK_VER: ${SDK_VER}")
     configure_file(${PROJECT_SOURCE_DIR}/cmake/in-files/org.opencpn.OpenCPN.Plugin.yaml.in ${CMAKE_CURRENT_BINARY_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.${PACKAGE}.yaml)

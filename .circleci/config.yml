@@ -366,6 +366,7 @@ jobs:
         - FLATPAK_BRANCH: stable
         - CLOUDSMITH_PKG_EXT: gz
         - SDK_VER: 20.08
+        - WXWIDGETS_FORCE_VERSION: 3.0
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -393,7 +394,7 @@ jobs:
             image: ubuntu-2004:202010-01
         environment:
         - OCPN_TARGET:  flatpak
-        - FLATPAK_BRANCH: beta
+        - FLATPAK_BRANCH: stable
         - CLOUDSMITH_PKG_EXT: gz
         - SDK_VER: 20.08
         - DEPLOY_USE_ORB: true
