@@ -55,6 +55,8 @@ workflows:
             <<: *std-filters
         - build-flatpak-x86-2008:
             <<: *std-filters
+        - build-flatpak-x86-2008-beta:
+            <<: *std-filters
         - build-flatpak-x86-1808:
             <<: *std-filters
         - build-macos:
@@ -395,6 +397,23 @@ jobs:
         environment:
         - OCPN_TARGET:  flatpak
         - FLATPAK_BRANCH: stable
+        - CLOUDSMITH_PKG_EXT: gz
+        - SDK_VER: 20.08
+        - DEPLOY_USE_ORB: true
+        steps:
+        - checkout
+        - run: chmod a+x ci/*.sh
+        - run:
+            command: bash ci/circleci-build-flatpak.sh
+            no_output_timeout: 30m
+        - deploy-code
+    build-flatpak-x86-2008-beta:
+        machine:
+            image: ubuntu-2004:202010-01
+        environment:
+        - OCPN_TARGET:  flatpak
+        - FLATPAK_BRANCH: beta
+        - WX_VER: wx315
         - CLOUDSMITH_PKG_EXT: gz
         - SDK_VER: 20.08
         - DEPLOY_USE_ORB: true
