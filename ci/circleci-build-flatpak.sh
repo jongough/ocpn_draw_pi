@@ -48,10 +48,16 @@ else
 fi
 
 rm -rf build && mkdir build && cd build
-if [ "$FLATPAK_BRANCH" = '' ]; then
-    cmake -DOCPN_FLATPAK_CONFIG=ON -DSDK_VER=$SDK_VER -DFLATPAK_BRANCH='beta' ..
+if [ -n "$WX_VER" ]; then
+    SET_WX_VER="-DWX_VER=$WX_VER"
 else
-    cmake -DOCPN_FLATPAK_CONFIG=ON -DSDK_VER=$SDK_VER -DFLATPAK_BRANCH=$FLATPAK_BRANCH ..
+    SET_WX_VER=""
+fi
+
+if [ "$FLATPAK_BRANCH" = '' ]; then
+    cmake -DOCPN_TARGET=$OCPN_TARGET -DOCPN_FLATPAK_CONFIG=ON -DSDK_VER=$SDK_VER -DFLATPAK_BRANCH='beta' $SET_WX_VER ..
+else
+    cmake -DOCPN_TARGET=$OCPN_TARGET -DOCPN_FLATPAK_CONFIG=ON -DSDK_VER=$SDK_VER -DFLATPAK_BRANCH=$FLATPAK_BRANCH $SET_WX_VER ..
 fi
 
 make flatpak-build
