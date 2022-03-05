@@ -791,6 +791,11 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
 
+    if( g_pODPathPropDialog ) {
+        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
+        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
+        g_pODPathPropDialog->Destroy();
+    }
     g_pODPathPropDialog = NULL;
 
     if( g_pODPointPropDialog ) {
@@ -808,9 +813,9 @@ bool ocpn_draw_pi::DeInit(void)
     g_pBoundaryPropDialog = NULL;
 
     if ( g_pEBLPropDialog ) {
-        g_pEBLPropDialog->Destroy();
         g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
         g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
+        g_pEBLPropDialog->Destroy();
     }
     g_pEBLPropDialog = NULL;
 
@@ -873,15 +878,15 @@ bool ocpn_draw_pi::DeInit(void)
         SaveConfig();
     }
 
-    delete g_pGZMan;
+    if(g_pGZMan) delete g_pGZMan;
     g_pGZMan = NULL;
-    delete g_pBoundaryMan;
+    if(g_PBoundaryMan) delete g_pBoundaryMan;
     g_pBoundaryMan = NULL;
-    delete g_pPathMan;
+    if(g_pPathMan) delete g_pPathMan;
     g_pPathMan = NULL;
-    delete g_pODPointMan;
+    if(g_pODPointMan) delete g_pODPointMan;
     g_pODPointMan = NULL;
-    delete g_pODConfig;
+    if(g_pODConfig) delete g_pODConfig;
     g_pODConfig = NULL;
 
     shutdown(false);
