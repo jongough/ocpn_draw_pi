@@ -880,7 +880,7 @@ bool ocpn_draw_pi::DeInit(void)
 
     if(g_pGZMan) delete g_pGZMan;
     g_pGZMan = NULL;
-    if(g_PBoundaryMan) delete g_pBoundaryMan;
+    if(g_pBoundaryMan) delete g_pBoundaryMan;
     g_pBoundaryMan = NULL;
     if(g_pPathMan) delete g_pPathMan;
     g_pPathMan = NULL;
