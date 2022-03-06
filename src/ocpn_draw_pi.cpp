@@ -797,8 +797,8 @@ bool ocpn_draw_pi::DeInit(void)
     }
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin )
-        //g_pODRolloverWin->Destroy();
-        delete g_pODRolloverWin;
+        g_pODRolloverWin->Destroy();
+        //delete g_pODRolloverWin;
 
     g_pODRolloverWin = NULL;
 
@@ -813,70 +813,70 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODPointPropDialog ) {
         g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
         g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-        //g_pODPointPropDialog->Destroy();
-        delete g_pODPointPropDialog;
+        g_pODPointPropDialog->Destroy();
+        //delete g_pODPointPropDialog;
     }
     g_pODPointPropDialog = NULL;
 
     if ( g_pBoundaryPropDialog ) {
         g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
         g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-        //g_pBoundaryPropDialog->Destroy();
-        delete g_pBoundaryPropDialog;
+        g_pBoundaryPropDialog->Destroy();
+        //delete g_pBoundaryPropDialog;
     }
     g_pBoundaryPropDialog = NULL;
 
     if ( g_pEBLPropDialog ) {
         g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
         g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
-        //g_pEBLPropDialog->Destroy();
-        delete g_pEBLPropDialog;
+        g_pEBLPropDialog->Destroy();
+        //delete g_pEBLPropDialog;
     }
     g_pEBLPropDialog = NULL;
 
     if ( g_pDRPropDialog ) {
         g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
         g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-        //g_pDRPropDialog->Destroy();
-        delete g_pDRPropDialog;
+        g_pDRPropDialog->Destroy();
+        //delete g_pDRPropDialog;
     }
     g_pDRPropDialog = NULL;
 
     if ( g_pGZPropDialog ) {
         g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
         g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-        //g_pGZPropDialog->Destroy();
-        delete g_pGZPropDialog;
+        g_pGZPropDialog->Destroy();
+        //delete g_pGZPropDialog;
     }
     g_pGZPropDialog = NULL;
 
     if ( g_pPILPropDialog )  {
         g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
         g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-        //g_pPILPropDialog->Destroy();
-        delete g_pPILPropDialog;
+        g_pPILPropDialog->Destroy();
+        //delete g_pPILPropDialog;
     }
     g_pPILPropDialog = NULL;
 
     if ( g_PILIndexLinePropDialog )  {
         g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
         g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-        //g_PILIndexLinePropDialog->Destroy();
-        delete g_PILIndexLinePropDialog;
+        g_PILIndexLinePropDialog->Destroy();
+        //delete g_PILIndexLinePropDialog;
     }
     g_PILIndexLinePropDialog = NULL;
 
     if ( g_pPathAndPointManagerDialog )  {
         g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
         g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-        //g_pPathAndPointManagerDialog->Destroy();
-        delete g_pPathAndPointManagerDialog;
+        g_pPathAndPointManagerDialog->Destroy();
+        //delete g_pPathAndPointManagerDialog;
     }
     g_pPathAndPointManagerDialog = NULL;
 
     if( g_pODToolbar )
-        //g_pODToolbar->Destroy();
-        delete g_pODToolbar;
+        g_pODToolbar->Destroy();
+        //delete g_pODToolbar;
 
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
