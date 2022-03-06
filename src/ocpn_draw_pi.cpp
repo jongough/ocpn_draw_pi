@@ -900,14 +900,25 @@ bool ocpn_draw_pi::DeInit(void)
         SaveConfig();
     }
 
+    g_pODConfig->m_bSkipChangeSetUpdate = true;
+
     if(g_pGZMan) delete g_pGZMan;
     g_pGZMan = NULL;
     if(g_pBoundaryMan) delete g_pBoundaryMan;
     g_pBoundaryMan = NULL;
-    if(g_pPathMan) delete g_pPathMan;
+    if(g_pPathMan) {
+        g_pPathMan->DeleteAllPaths();
+        delete g_pPathMan;
+    }
     g_pPathMan = NULL;
-    if(g_pODPointMan) delete g_pODPointMan;
+    if(g_pODPointMan) {
+        g_pODPointMan->DeleteAllODPoints(false);
+        delete g_pODPointMan;
+    }
     g_pODPointMan = NULL;
+
+    g_pODConfig->m_bSkipChangeSetUpdate = false;
+
     if(g_pODConfig) delete g_pODConfig;
     g_pODConfig = NULL;
 
