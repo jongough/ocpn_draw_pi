@@ -783,10 +783,18 @@ bool ocpn_draw_pi::DeInit(void)
 {
     RemoveCanvasContextMenuItem(m_iODToolContextId);
 
-    m_BlinkTimer.Stop();
+    if(m_BlinkTimer.IsRunning())
+        m_BlinkTimer.Stop();
     m_BlinkTimer.Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    if(m_RolloverPopupTimer.IsRunning())
+        m_RolloverPopupTimer.Stop();
     m_RolloverPopupTimer.Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
-    if( g_ODEventHandler ) delete g_ODEventHandler;
+
+    if( g_ODEventHandler ) {
+        if(g_ODEventHandler->GetEvtHandlerEnabled())
+            g_ODEventHandler->SetEvtHandlerEnabled(false);
+        delete g_ODEventHandler;
+    }
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
     g_pODRolloverWin = NULL;
@@ -888,6 +896,23 @@ bool ocpn_draw_pi::DeInit(void)
     g_pODPointMan = NULL;
     if(g_pODConfig) delete g_pODConfig;
     g_pODConfig = NULL;
+
+    if(g_pODJSON) delete g_pODJSON;
+    g_pODJSON = NULL;
+    if(g_pODAPI) delete g_pODAPI;
+    g_pODAPI = NULL;
+    if(g_pBoundaryList) delete g_pBoundaryList;
+    g_pBoundaryList = NULL;
+    if(g_pEBLList) delete g_pEBLList;
+    g_pEBLList = NULL;
+    if(g_pGZList) delete g_pGZList;
+    g_pGZList = NULL;
+    if(g_pPILList) delete g_pPILList;
+    g_pPILList = NULL;
+    if(g_pPathList) delete g_pPathList;
+    g_pPathList = NULL;
+    if(g_pLayerList) delete g_pLayerList;
+    g_pLayerList = NULL;
 
     shutdown(false);
 
