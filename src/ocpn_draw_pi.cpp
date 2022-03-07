@@ -901,6 +901,8 @@ bool ocpn_draw_pi::DeInit(void)
     }
 
     g_pODConfig->m_bSkipChangeSetUpdate = true;
+    g_pPathMan->DeleteAllPaths();
+    g_pODPointMan->DeleteAllODPoints(false);
 
     if(g_pGZMan) delete g_pGZMan;
     g_pGZMan = NULL;

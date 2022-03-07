@@ -274,6 +274,7 @@ if(APPLE)
     add_definitions(" -g -fno-strict-aliasing")
     add_definitions(" -Wno-deprecated -Wno-deprecated-declarations -Wno-unknown-pragmas")
     add_definitions(" -D_WCHAR_H_CPLUSPLUS_98_CONFORMANCE_")
+    add_definitions(" -DAPPLE")
 endif(APPLE)
 
 # Add some definitions to satisfy MS
