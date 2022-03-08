@@ -797,16 +797,22 @@ bool ocpn_draw_pi::DeInit(void)
     }
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin )
-        //g_pODRolloverWin->Close();
+#ifdef APPLE
         delete g_pODRolloverWin;
+#else
+        g_pODRolloverWin->Close();
+#endif
 
     g_pODRolloverWin = NULL;
 
     if( g_pODPathPropDialog ) {
         g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
         g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-        //g_pODPathPropDialog->Close();
+#ifdef APPLE
         delete g_pODPointPropDialog;
+#else
+        g_pODPathPropDialog->Close();
+#endif
     }
     g_pODPathPropDialog = NULL;
 
