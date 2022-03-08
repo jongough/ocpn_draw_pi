@@ -905,8 +905,11 @@ bool ocpn_draw_pi::DeInit(void)
     g_pPathAndPointManagerDialog = NULL;
 
     if( g_pODToolbar )
-        //g_pODToolbar->Close();
+#ifdef APPLE
         delete g_pODToolbar;
+#else
+        g_pODToolbar->Close();
+#endif
 
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
