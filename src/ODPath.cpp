@@ -1,7 +1,7 @@
 /***************************************************************************
  *
  * Project:  OpenCPN
- * Purpose:  Path 
+ * Purpose:  Path
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -59,6 +59,7 @@ ODPath::ODPath( void )
     m_bIsBeingCreated = true;
     m_bDrawArrow = false;
     m_nPoints = 0;
+    m_bpts = NULL;
     m_nm_sequence = 1;
     m_path_length = 0.0;
     m_bVisible = true;
@@ -77,7 +78,7 @@ ODPath::ODPath( void )
     m_pFirstAddedPoint = NULL;
     m_GUID = GetUUID();
     m_bTemporary = false;
-    
+
     m_bNeedsUpdateBBox = true;
     RBBox.Set(0.0, 0.0, 0.0, 0.0);
     m_bcrosses_idl = false;
@@ -91,10 +92,10 @@ ODPath::ODPath( void )
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
     SetActiveColours();
-    
+
     m_lastMousePointIndex = 0;
     m_NextLegGreatCircle = false;
-    
+
     m_HyperlinkList = new HyperlinkList;
 }
 
@@ -128,7 +129,7 @@ void ODPath::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_def
     pNewPoint->m_bIsInPath = true;
 
     m_pODPointList->Append( pNewPoint );
-    
+
 
     m_nPoints++;
 
@@ -137,7 +138,7 @@ void ODPath::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_def
 
     if ( m_pFirstAddedPoint == NULL )
         m_pFirstAddedPoint = pNewPoint;
-    
+
     if (!b_isLoading)
         UpdateSegmentDistances();
     m_pLastAddedPoint = pNewPoint;
@@ -202,7 +203,7 @@ void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
         if( m_bPathIsActive ) dc.SetPen( *g_pPathMan->GetActivePathPen() );
         else
             dc.SetPen( *g_pPathMan->GetPathPen() );
-    
+
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }
 
@@ -215,7 +216,7 @@ void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2,
             dc.SetPen( *g_pPathMan->GetPathPen() );
     }
     dc.SetBrush( *wxTRANSPARENT_BRUSH );
-        
+
     RenderArcSegment(dc, rpc, rp1, rp2, rp3, rp4, VP, false);
 }
 
@@ -231,7 +232,7 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     if( m_width != STYLE_UNDEFINED ) width = m_width;
 
     SetActiveColours();
-    
+
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
 
@@ -245,9 +246,9 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *pOp1 = node->GetData();
     node = node->GetNext();
-    
+
     m_bpts[ j++ ] = ppt1;
-        
+
     if ( !m_bVisible && pOp1->m_bKeepXPath )
             pOp1->Draw( dc );
 
@@ -293,30 +294,30 @@ void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
                     if( ppt1.x < ppt2.x ) adder = (int) pix_full_circle;
                     else
                         adder = -(int) pix_full_circle;
-                    
+
                     float rxd = ppt2.x - ( ppt1.x + adder );
                     float ryd = ppt1.y - ppt2.y;
                     dtest = rxd*rxd + ryd*ryd;
-                    
+
                     if( dp < dtest ) adder = 0;
 
                     RenderSegment( dc, ppt1.x + adder, ppt1.y, ppt2.x, ppt2.y, VP, m_bDrawArrow, m_hiliteWidth );
                 }
         }
-        
+
         ppt1 = ppt2;
         pOp1 = pOp2;
 
         node = node->GetNext();
     }
-    
+
     for(wxODPointListNode *node  = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();
         wxPoint r;
         GetCanvasPixLL( &VP, &r, pOp->m_lat, pOp->m_lon );
         if ( m_bVisible || pOp->m_bKeepXPath )
             pOp->Draw( dc, &r );
-    }        
+    }
     wxDELETEA( m_bpts );
 }
 
@@ -330,30 +331,31 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     /* determine color and width */
     wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
-    
+
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     if( m_width != STYLE_UNDEFINED ) width = m_width;
-    
+
     SetActiveColours();
 
     int j = 0;
     wxPoint r;
 
-    m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
-    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-        ODPoint *pOp = node->GetData();
-        GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
-        m_bpts[ j++ ] = r;
+    if(m_bpts == NULL) {
+        m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
+            ODPoint *pOp = node->GetData();
+            GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
+            m_bpts[ j++ ] = r;
+        }
     }
-    
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_TRANSPARENT ) );
     dc.SetGLStipple();
-    
+
     for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ){
         dc.DrawLine(m_bpts[i-1].x, m_bpts[i - 1].y, m_bpts[i].x, m_bpts[i].y);
     }
-    
+
     glDisable( GL_LINE_STIPPLE );
 
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
@@ -366,8 +368,8 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
         ODPoint *pOp = node->GetData();
         if ( m_bVisible || pOp->m_bKeepXPath )
             pOp->DrawGL( piVP );
-    }   
-    
+    }
+
     wxDELETEA( m_bpts );
 #endif
 }
@@ -464,7 +466,7 @@ void ODPath::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_Vie
     }
 }
 
-void ODPath::RenderArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow ) 
+void ODPath::RenderArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     RenderArcSegment( dc, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, VP, bdraw_arrow );
 }
@@ -476,7 +478,7 @@ void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int
     int sx, sy;
     sx = VP.pix_width;
     sy = VP.pix_height;
-    
+
     //    Try to exit early if the segment is nowhere near the screen
     wxRect r( 0, 0, sx, sy );
     wxRect w( centre_x, centre_y, 1, 1 );
@@ -492,49 +494,49 @@ void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int
     if( !r.Intersects( w ) ) {
         return;
     }
-    
+
     //    If hilite is desired, use a Native Graphics context to render alpha colours
     //    That is, if wxGraphicsContext is available.....
-    
+
     if( hilite_width ) {
         wxPen psave = dc.GetPen();
-        
+
         wxColour y;
         GetGlobalColor( wxS( "YELO1" ), &y );
         wxColour hilt( y.Red(), y.Green(), y.Blue(), 128 );
-        
+
         wxPen HiPen( hilt, hilite_width, wxPENSTYLE_SOLID );
-        
+
         dc.SetPen( HiPen );
         dc.StrokeSector( centre_x, centre_y, xa, ya, xb, yb, xc, yc, xd, yd );
-        
+
         dc.SetPen( psave );
         dc.StrokeSector( centre_x, centre_y, xa, ya, xb, yb, xc, yc, xd, yd );
     } else {
         dc.StrokeSector( centre_x, centre_y, xa, ya, xb, yb, xc, yc, xd, yd );
     }
-    
+
     if( bdraw_arrow ) {
         //    Draw a direction arrow
-        
+
         double theta = atan2( (double) ( yb - ya ), (double) ( xb - xa ) );
         theta -= PI / 2.;
-        
+
         wxPoint icon[10];
         double icon_scale_factor = 100 * VP.view_scale_ppm;
         icon_scale_factor = fmin ( icon_scale_factor, 1.5 );              // Sets the max size
         icon_scale_factor = fmax ( icon_scale_factor, .10 );
-        
+
         //    Get the absolute line length
         //    and constrain the arrow to be no more than xx% of the line length
         double nom_arrow_size = 20.;
         double max_arrow_to_leg = .20;
         double lpp = sqrt( pow( (double) ( xa - xb ), 2 ) + pow( (double) ( ya - yb ), 2 ) );
-        
+
         double icon_size = icon_scale_factor * nom_arrow_size;
         if( icon_size > ( lpp * max_arrow_to_leg ) ) icon_scale_factor = ( lpp * max_arrow_to_leg )
             / nom_arrow_size;
-        
+
         int xc, yc; // move the pointer back from the icon
         xc = xb - ( ( xb - xa ) / 20 );
         yc = yb - ( ( yb - ya ) / 20 );
@@ -542,13 +544,13 @@ void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int
             int j = i * 2;
             double pxa = (double) ( s_arrow_icon[j] );
             double pya = (double) ( s_arrow_icon[j + 1] );
-            
+
             pya *= icon_scale_factor;
             pxa *= icon_scale_factor;
-            
+
             double px = ( pxa * sin( theta ) ) + ( pya * cos( theta ) );
             double py = ( pya * sin( theta ) ) - ( pxa * cos( theta ) );
-            
+
             icon[i].x = (int) ( px ) + xc;
             icon[i].y = (int) ( py ) + yc;
         }
@@ -563,17 +565,17 @@ void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewP
 {
 #if 0
 #ifdef ocpnUSE_GL
-    //    Draw a direction arrow        
+    //    Draw a direction arrow
     float icon_scale_factor = 100 * VP.view_scale_ppm;
     icon_scale_factor = fmin ( icon_scale_factor, 1.5 );              // Sets the max size
     icon_scale_factor = fmax ( icon_scale_factor, .10 );
-    
+
     //    Get the absolute line length
     //    and constrain the arrow to be no more than xx% of the line length
     float nom_arrow_size = 20.;
     float max_arrow_to_leg = (float).20;
     float lpp = sqrtf( powf( (float) (xa - xb), 2) + powf( (float) (ya - yb), 2) );
-    
+
     float icon_size = icon_scale_factor * nom_arrow_size;
     if( icon_size > ( lpp * max_arrow_to_leg ) )
         icon_scale_factor = ( lpp * max_arrow_to_leg )
@@ -621,7 +623,7 @@ wxString ODPath::GetNewMarkSequenced( void )
     long num;
     num = 0;
     ODPoint *pop = NULL;
-    
+
     wxODPointListNode *node = m_pODPointList->GetFirst();
     while ( node ) {
         pop = node->GetData();
@@ -845,7 +847,7 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
 {
     dc_boundary.ResetBoundingBox();
     dc_boundary.DestroyClippingRegion();
-    
+
     wxRect update_rect;
 
     // Draw the path in skeleton form on the dc
@@ -868,7 +870,7 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
 
             wxRect r =  pOp2->CurrentRect_in_DC ;
             r.Inflate(m_hiliteWidth, m_hiliteWidth);        // allow for large hilite circles at segment ends
-                
+
             update_rect.Union( r );
             node = node->GetNext();
         }
@@ -1035,7 +1037,7 @@ ODPoint *ODPath::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool b
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
-    
+
     int nOP = m_pODPointList->IndexOf( pOP );
     if ( nOP == 0 ) {
         m_pODPointList->Insert( m_pODPointList->GetCount() - 1, newpoint );
@@ -1063,24 +1065,24 @@ ODPoint *ODPath::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bR
     if( nOP >= m_nPoints - 1 )
         return NULL;
     nOP++;
-    
+
     ODPoint *newpoint = new ODPoint( lat, lon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("OD Point") );
-    
+
     m_pODPointList->Insert( nOP, newpoint );
-    
+
     ODPointGUIDList.Insert( pOP->m_GUID, nOP );
-    
+
     m_nPoints++;
-    
+
     if( bRenamePoints ) RenameODPoints();
-    
+
     FinalizeForRendering();
     UpdateSegmentDistances();
-    
+
     return ( newpoint );
 }
 
@@ -1090,18 +1092,18 @@ void ODPath::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
     if( nOP >= m_nPoints - 1 )
         return;
     nOP++;
-    
+
     m_pODPointList->Insert( nOP, pnOP );
-    
+
     ODPointGUIDList.Insert( pnOP->m_GUID, nOP );
-    
+
     m_nPoints++;
-    
+
     if( bRenamePoints ) RenameODPoints();
-    
+
     FinalizeForRendering();
     UpdateSegmentDistances();
-    
+
     return;
 }
 
@@ -1118,8 +1120,8 @@ void ODPath::RemovePointFromPath( ODPoint* point, ODPath* path )
         g_pODConfig->DeleteConfigPath( path );
         g_pPathMan->DeletePath( path );
         path = NULL;
-    } 
-    
+    }
+
     //  Add this point back into the selectables
     g_pODSelect->AddSelectableODPoint( point->m_lat, point->m_lon, point );
 
@@ -1132,7 +1134,7 @@ void ODPath::RemovePointFromPath( ODPoint* point, ODPath* path )
 void ODPath::SetActiveColours( void )
 {
     wxString colour;
-    
+
     if( m_bVisible && m_bPathIsActive ) {
         if((m_bPathManagerBlink || m_bPathPropertiesBlink) && (g_ocpn_draw_pi->nBlinkerTick & 1))
             m_col= m_wxcSchemeInActiveLineColour;
@@ -1205,12 +1207,12 @@ void ODPath::SetPointVisibility()
     for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
         ODPoint *pOp = node->GetData();
         pOp->SetVisible( m_bODPointsVisible );
-    }   
-    
+    }
+
 }
 
 void ODPath::SetColours( ODPath *pPath )
 {
-    m_wxcActiveLineColour = pPath->m_wxcActiveLineColour; 
+    m_wxcActiveLineColour = pPath->m_wxcActiveLineColour;
     m_wxcInActiveLineColour = pPath->m_wxcInActiveLineColour;
 }

@@ -64,7 +64,7 @@ Boundary::Boundary() : ODPath()
     CreateColourSchemes();
     SetColourScheme();
     SetActiveColours();
-    
+
 }
 
 Boundary::~Boundary()
@@ -125,7 +125,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
             m_bpts[ l_iBoundaryPointCount++ ] = r;
         }
-        
+
         if( m_bExclusionBoundary && !m_bInclusionBoundary ) {
             // fill boundary with hatching
 #if wxUSE_GRAPHICS_CONTEXT == 1
@@ -168,7 +168,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             }
             if(l_imaxpointdiffX < 10 && l_imaxpointdiffY < 10 ) return;
 
-            // Use ClipperLib to manage Polygon 
+            // Use ClipperLib to manage Polygon
             // If needed simplify polygons to make shading stay outside
             Paths poly(1);
             for( size_t i = 0; i < m_pODPointList->GetCount(); i++ ) {
@@ -180,7 +180,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             Paths ExpandedBoundaries;
             co.AddPaths( polys, jtSquare, etClosedPolygon );
             co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
-            
+
             wxPoint *l_InclusionBoundary = new wxPoint[ ExpandedBoundaries[0].size() + 1 ];
             for( size_t i = 0; i < ExpandedBoundaries[0].size(); i++ )
             {
@@ -194,7 +194,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             int l_iPolygonPointCount[2];
             l_iPolygonPointCount[0] = m_pODPointList->GetCount();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
-            
+
 #if wxUSE_GRAPHICS_CONTEXT == 1
             wxGraphicsContext *wxGC = NULL;
             wxMemoryDC *pmdc = wxDynamicCast(dc.GetDC(), wxMemoryDC);
@@ -231,9 +231,7 @@ void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
             co.Clear();
             delete [] l_InclusionBoundary;
         }
-        wxDELETEA( m_bpts );
     }
-
 
     ODPath::Draw( dc, piVP );
 }
@@ -256,7 +254,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
                 m_bpts[ l_iBoundaryPointCount++ ] = r;
             }
-            
+
             if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
                 // surround boundary with hatching if there is more than 10 pixels different between points
                 int l_imaxpointdiffX = 0;
@@ -269,7 +267,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 }
 
                 if(l_imaxpointdiffX < 10 && l_imaxpointdiffY < 10 ) return;
-                // Use ClipperLib to manage Polygon 
+                // Use ClipperLib to manage Polygon
                 // If needed simplify polygons to make shading stay outside
                 Paths poly(1);
                 for( int i = 0; i < l_iBoundaryPointCount; i++ ) {
@@ -281,7 +279,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 Paths ExpandedBoundaries;
                 co.AddPaths( simplePolys, jtSquare, etClosedPolygon );
                 co.Execute( ExpandedBoundaries, m_iInclusionBoundarySize );
-                
+
                 int l_iInclusionBoundarySize = ExpandedBoundaries[0].size();
                 wxPoint *l_InclusionBoundary = new wxPoint[ l_iInclusionBoundarySize + 1 ];
                 for( int i = 0; i < l_iInclusionBoundarySize; i++ )
@@ -306,7 +304,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 delete [] l_InclusionBoundary;
                 ExpandedBoundaries.clear();
             }
-            
+
             // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
             GLubyte slope_cross_hatch[] = {
                 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -316,7 +314,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
                 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
                 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
+                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
                 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
                 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
@@ -325,7 +323,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
                 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
                 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
                 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
-            };        
+            };
 
             GLuint textureID;
             checkGlError("Before glGenTextures", __FILE__, __LINE__);
@@ -393,11 +391,8 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 #endif
             glDeleteTextures(1, &textureID);
             checkGlError("glDeleteTextures", __FILE__, __LINE__);
+        }
 
-            wxDELETEA( m_bpts );
-            
-        } 
-        
     }
     ODPath::DrawGL( piVP );
 #else
@@ -409,21 +404,21 @@ void Boundary::DeletePoint( ODPoint *op, bool bRenamePoints )
 {
     //    n.b. must delete Selectables  and update config before deleting the point
     if( op->m_bIsInLayer ) return;
-    
+
     if((ODPoint *)m_pODPointList->GetFirst()->GetData() == op) {
         m_pODPointList->DeleteObject( op );
         m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
     }
-    
+
     ODPath::DeletePoint( op, bRenamePoints );
 }
 
 void Boundary::SetActiveColours( void )
 {
     wxString fillcolour;
-    
+
     ODPath::SetActiveColours();
-    
+
     if( m_bVisible && m_bPathIsActive ) m_fillcol = m_wxcSchemeActiveFillColour;
     else m_fillcol = m_wxcSchemeInActiveFillColour;
 }
@@ -449,24 +444,24 @@ ODPoint *Boundary::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool 
     if( nOP >= m_nPoints - 1 )
         return NULL;
     nOP++;
-    
+
     BoundaryPoint *newpoint = new BoundaryPoint( lat, lon, g_sODPointIconName, GetNewMarkSequenced(), wxT("") );
     newpoint->m_bIsInPath = true;
     newpoint->m_bDynamicName = true;
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
-    
+
     m_pODPointList->Insert( nOP, newpoint );
-    
+
     ODPointGUIDList.Insert( pOP->m_GUID, nOP );
-    
+
     m_nPoints++;
-    
+
     if( bRenamePoints ) RenameODPoints();
-    
+
     FinalizeForRendering();
     UpdateSegmentDistances();
-    
+
     return ( newpoint );
 }
 
@@ -485,7 +480,7 @@ void Boundary::RemovePointFromPath(ODPoint* point, ODPath* path)
         m_pODPointList->DeleteObject( point );
         m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
     }
-    
+
     ODPath::RemovePointFromPath(point, path);
 }
 

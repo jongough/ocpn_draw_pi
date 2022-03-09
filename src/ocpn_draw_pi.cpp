@@ -783,74 +783,134 @@ bool ocpn_draw_pi::DeInit(void)
 {
     RemoveCanvasContextMenuItem(m_iODToolContextId);
 
-    m_BlinkTimer.Stop();
+    if(m_BlinkTimer.IsRunning())
+        m_BlinkTimer.Stop();
     m_BlinkTimer.Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    if(m_RolloverPopupTimer.IsRunning())
+        m_RolloverPopupTimer.Stop();
     m_RolloverPopupTimer.Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
-    if( g_ODEventHandler ) delete g_ODEventHandler;
+
+    if( g_ODEventHandler ) {
+        if(g_ODEventHandler->GetEvtHandlerEnabled())
+            g_ODEventHandler->SetEvtHandlerEnabled(false);
+        delete g_ODEventHandler;
+    }
     g_ODEventHandler = NULL;
-    if( g_pODRolloverWin ) g_pODRolloverWin->Destroy();
+    if( g_pODRolloverWin )
+#ifdef APPLE
+        delete g_pODRolloverWin;
+#else
+        g_pODRolloverWin->Close();
+#endif
+
     g_pODRolloverWin = NULL;
 
+    if( g_pODPathPropDialog ) {
+        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
+        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
+#ifdef APPLE
+        delete g_pODPointPropDialog;
+#else
+        g_pODPathPropDialog->Close();
+#endif
+    }
     g_pODPathPropDialog = NULL;
 
     if( g_pODPointPropDialog ) {
         g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
         g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-        g_pODPointPropDialog->Destroy();
+#ifdef APPLE
+        delete g_pODPointPropDialog;
+#else
+        g_pODPointPropDialog->Close();
+#endif
     }
     g_pODPointPropDialog = NULL;
 
     if ( g_pBoundaryPropDialog ) {
         g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
         g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-        g_pBoundaryPropDialog->Destroy();
+#ifdef APPLE
+        delete g_pBoundaryPropDialog;
+#else
+        g_pBoundaryPropDialog->Close();
+#endif
     }
     g_pBoundaryPropDialog = NULL;
 
     if ( g_pEBLPropDialog ) {
-        g_pEBLPropDialog->Destroy();
         g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
         g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
+#ifdef APPLE
+        delete g_pEBLPropDialog;
+#else
+        g_pEBLPropDialog->Close();
+#endif
     }
     g_pEBLPropDialog = NULL;
 
     if ( g_pDRPropDialog ) {
         g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
         g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-        g_pDRPropDialog->Destroy();
+#ifdef APPLE
+        delete g_pDRPropDialog;
+#else
+        g_pDRPropDialog->Close();
+#endif
     }
     g_pDRPropDialog = NULL;
 
     if ( g_pGZPropDialog ) {
         g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
         g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-        g_pGZPropDialog->Destroy();
+#ifdef APPLE
+        delete g_pGZPropDialog;
+#else
+        g_pGZPropDialog->Close();
+#endif
     }
     g_pGZPropDialog = NULL;
 
     if ( g_pPILPropDialog )  {
         g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
         g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-        g_pPILPropDialog->Destroy();
+#ifdef APPLE
+        delete g_pPILPropDialog;
+#else
+        g_pPILPropDialog->Close();
+#endif
     }
     g_pPILPropDialog = NULL;
 
     if ( g_PILIndexLinePropDialog )  {
         g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
         g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-        g_PILIndexLinePropDialog->Destroy();
+#ifdef APPLE
+        delete g_PILIndexLinePropDialog;
+#else
+        g_PILIndexLinePropDialog->Close();
+#endif
     }
     g_PILIndexLinePropDialog = NULL;
 
     if ( g_pPathAndPointManagerDialog )  {
         g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
         g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-        g_pPathAndPointManagerDialog->Destroy();
+#ifdef APPLE
+        delete g_pPathAndPointManagerDialog;
+#else
+        g_pPathAndPointManagerDialog->Close();
+#endif
     }
     g_pPathAndPointManagerDialog = NULL;
 
-    if( g_pODToolbar ) g_pODToolbar->Destroy();
-    delete g_pODToolbar;
+    if( g_pODToolbar )
+#ifdef APPLE
+        delete g_pODToolbar;
+#else
+        g_pODToolbar->Close();
+#endif
+
     g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
     g_pODJSON = NULL;
@@ -873,16 +933,46 @@ bool ocpn_draw_pi::DeInit(void)
         SaveConfig();
     }
 
-    delete g_pGZMan;
+    g_pODConfig->m_bSkipChangeSetUpdate = true;
+    g_pPathMan->DeleteAllPaths();
+    g_pODPointMan->DeleteAllODPoints(false);
+
+    if(g_pGZMan) delete g_pGZMan;
     g_pGZMan = NULL;
-    delete g_pBoundaryMan;
+    if(g_pBoundaryMan) delete g_pBoundaryMan;
     g_pBoundaryMan = NULL;
-    delete g_pPathMan;
+    if(g_pPathMan) {
+        g_pPathMan->DeleteAllPaths();
+        delete g_pPathMan;
+    }
     g_pPathMan = NULL;
-    delete g_pODPointMan;
+    if(g_pODPointMan) {
+        g_pODPointMan->DeleteAllODPoints(false);
+        delete g_pODPointMan;
+    }
     g_pODPointMan = NULL;
-    delete g_pODConfig;
+
+    g_pODConfig->m_bSkipChangeSetUpdate = false;
+
+    if(g_pODConfig) delete g_pODConfig;
     g_pODConfig = NULL;
+
+    if(g_pODJSON) delete g_pODJSON;
+    g_pODJSON = NULL;
+    if(g_pODAPI) delete g_pODAPI;
+    g_pODAPI = NULL;
+    if(g_pBoundaryList) delete g_pBoundaryList;
+    g_pBoundaryList = NULL;
+    if(g_pEBLList) delete g_pEBLList;
+    g_pEBLList = NULL;
+    if(g_pGZList) delete g_pGZList;
+    g_pGZList = NULL;
+    if(g_pPILList) delete g_pPILList;
+    g_pPILList = NULL;
+    if(g_pPathList) delete g_pPathList;
+    g_pPathList = NULL;
+    if(g_pLayerList) delete g_pLayerList;
+    g_pLayerList = NULL;
 
     shutdown(false);
 
