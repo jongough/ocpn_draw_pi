@@ -644,9 +644,8 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 #else
 #ifndef ANDROID
         glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-#endif
-
         glColor3f(1, 1, 1);
+#endif
 
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);

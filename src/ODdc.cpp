@@ -3318,7 +3318,9 @@ void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor
         float h = height;
 
 #ifndef USE_ANDROID_GLES2
+#ifndef ANDROID
         glColor3f(1,1,1);
+#endif
 
         glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
         float u = (float)width/texRect.width, v = (float)height/texRect.height;
