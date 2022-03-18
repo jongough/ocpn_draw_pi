@@ -22,13 +22,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  **************************************************************************/
- 
+
 #ifndef ODUTILS_H
 #define ODUTILS_H
- 
+
  const wxChar   *ParseGPXDateTime( wxDateTime &dt, const wxChar *datetime );
  wxString       GetUUID(void);
- int            GetRandomNumber(int range_min, int range_max); 
+ int            GetRandomNumber(int range_min, int range_max);
  void           MenuPrepend( wxMenu *menu, int id, wxString label);
  void           MenuAppend( wxMenu *menu, int id, wxString label);
  double         sign( double x );

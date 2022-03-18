@@ -2360,7 +2360,7 @@ void ODDC::DrawPolygonTessellated( int n, wxPoint points[], wxCoord xoffset, wxC
 }
 
 #ifdef ocpnUSE_GL
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
 
 void __CALL_CONVENTION ODDCPatterncombineCallback(GLdouble coords[3], GLdouble *vertex_data[4], GLfloat weight[4], GLdouble **dataOut)
 {
@@ -2606,7 +2606,7 @@ void ODDC::DrawPolygonTessellatedPattern( int n, wxPoint points[], int textureID
 
     }
 #else
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
         m_tobj = gluNewTess();
 
         gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCPatternvertexCallback );
@@ -2769,7 +2769,7 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
     }
 #ifdef ocpnUSE_GL
     else {
-#ifndef ANDROID
+        #ifndef __OCPN__ANDROID__
         m_tobj = gluNewTess();
 
         gluTessCallback( m_tobj, GLU_TESS_VERTEX, (_GLUfuncptr) &ODDCPatternvertexCallback );
@@ -2815,7 +2815,7 @@ void ODDC::DrawPolygonsTessellated( int n, int npoints[], wxPoint points[], wxCo
             delete (GLvertex*)gTesselatorVertices.Item(i);
         gTesselatorVertices.Clear();
 
-#endif          //ANDROID
+#endif          //__OCPN__ANDROID__
     }
 #endif
 #endif
@@ -2829,7 +2829,7 @@ void ODDC::DrawPolygons(int n, int npoint[], wxPoint points[], wxCoord xoffset, 
 
 void ODDC::DrawPolygonsPattern( int n, int npoint[], wxPoint points[], int textureID, wxSize textureSize, wxCoord xoffset, wxCoord yoffset, float scale, float angle)
 {
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
 
     DrawPolygonsTessellated( n, npoint, points);
 
@@ -3318,7 +3318,7 @@ void ODDC::DrawTexture( wxRect texRect, int width, int height, float scaleFactor
         float h = height;
 
 #ifndef USE_ANDROID_GLES2
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
         glColor3f(1,1,1);
 #endif
 
@@ -3496,3 +3496,106 @@ void ODDC::DrawTextureAlpha( wxRect texRect, int width, int height, float scaleF
 #endif
 }
 
+void ODDC::RenderSingleTexture(float *coords, float *uvCoords, PlugIn_ViewPort *vp, float dx, float dy, float angle_rad) {
+#ifdef USE_ANDROID_GLES2
+    // build_texture_shaders();
+    glUseProgram(pi_texture_2D_shader_program);
+
+    // Get pointers to the attributes in the program.
+    GLint mPosAttrib = glGetAttribLocation(pi_texture_2D_shader_program, "aPos");
+    GLint mUvAttrib = glGetAttribLocation(pi_texture_2D_shader_program, "aUV");
+
+    // Set up the texture sampler to texture unit 0
+    GLint texUni = glGetUniformLocation(pi_texture_2D_shader_program, "uTex");
+    glUniform1i(texUni, 0);
+
+    // Disable VBO's (vertex buffer objects) for attributes.
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+    // Set the attribute mPosAttrib with the vertices in the screen
+    // coordinates...
+    glVertexAttribPointer(mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, coords);
+    // ... and enable it.
+    glEnableVertexAttribArray(mPosAttrib);
+
+    // Set the attribute mUvAttrib with the vertices in the GL coordinates...
+    glVertexAttribPointer(mUvAttrib, 2, GL_FLOAT, GL_FALSE, 0, uvCoords);
+    // ... and enable it.
+    glEnableVertexAttribArray(mUvAttrib);
+
+    // Rotate
+    mat4x4 I, Q;
+    mat4x4_identity(I);
+    mat4x4_rotate_Z(Q, I, angle_rad);
+
+    // Translate
+    Q[3][0] = dx;
+    Q[3][1] = dy;
+
+    // mat4x4 X;
+    // mat4x4_mul(X, (float (*)[4])vp->vp_transform, Q);
+
+    GLint matloc =
+    glGetUniformLocation(pi_texture_2D_shader_program, "TransformMatrix");
+    glUniformMatrix4fv(matloc, 1, GL_FALSE, (const GLfloat *)Q);
+
+    // Select the active texture unit.
+    glActiveTexture(GL_TEXTURE0);
+
+    // Bind our texture to the texturing target.
+    // glBindTexture( GL_TEXTURE_2D, tex );
+
+    // Perform the actual drawing.
+
+    // For some reason, glDrawElements is busted on Android
+    // So we do this a hard ugly way, drawing two triangles...
+    #if 0
+    GLushort indices1[] = {0,1,3,2};
+    glDrawElements(GL_TRIANGLE_STRIP, 4, GL_UNSIGNED_SHORT, indices1);
+    #else
+
+    float co1[8];
+    co1[0] = coords[0];
+    co1[1] = coords[1];
+    co1[2] = coords[2];
+    co1[3] = coords[3];
+    co1[4] = coords[6];
+    co1[5] = coords[7];
+    co1[6] = coords[4];
+    co1[7] = coords[5];
+
+    float tco1[8];
+    tco1[0] = uvCoords[0];
+    tco1[1] = uvCoords[1];
+    tco1[2] = uvCoords[2];
+    tco1[3] = uvCoords[3];
+    tco1[4] = uvCoords[6];
+    tco1[5] = uvCoords[7];
+    tco1[6] = uvCoords[4];
+    tco1[7] = uvCoords[5];
+
+    glVertexAttribPointer(mPosAttrib, 2, GL_FLOAT, GL_FALSE, 0, co1);
+    glVertexAttribPointer(mUvAttrib, 2, GL_FLOAT, GL_FALSE, 0, tco1);
+
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+    #endif
+
+    #else
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+
+    glPushMatrix();
+    glTranslatef(dx, dy, 0);
+    glRotatef(180 / PI * angle_rad, 0, 0, 1);
+
+    glTexCoordPointer(2, GL_FLOAT, 2 * sizeof(GLfloat), uvCoords);
+    glVertexPointer(2, GL_FLOAT, 2 * sizeof(GLfloat), coords);
+    glDrawArrays(GL_QUADS, 0, 4);
+    glPopMatrix();
+
+#endif
+
+    return;
+}

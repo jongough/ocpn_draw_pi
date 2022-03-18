@@ -476,6 +476,7 @@ jobs:
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
+        - use-apt-proxy
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-arm64.sh
         - deploy-code:
@@ -489,7 +490,7 @@ jobs:
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
-#        - use-apt-proxy
+        - use-apt-proxy
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-armhf.sh
         - deploy-code:

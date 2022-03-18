@@ -649,6 +649,7 @@ int ocpn_draw_pi::Init(void)
     wxpToolbarPos.x = g_iToolbarPosX;
     wxpToolbarPos.y = g_iToolbarPosY;
     g_pODToolbar->SetPosition( wxpToolbarPos );
+    g_pODToolbar->SetToolbarFont();
     g_pODToolbar->Fit();
     g_pODToolbar->SetInitialSize();
     //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());

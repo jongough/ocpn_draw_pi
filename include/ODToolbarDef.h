@@ -32,6 +32,7 @@ class ODToolbarDialog : public wxDialog
 	private:
 
 	protected:
+		wxBoxSizer* m_bSizerToolbar;
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnActivate( wxActivateEvent& event ) { event.Skip(); }

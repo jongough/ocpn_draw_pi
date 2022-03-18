@@ -302,7 +302,7 @@ wxBitmap ODicons::ScaleIcon( wxBitmap bitmap, double sf )
 }
 bool ODicons::ScaleIcons()
 {
- return false;
+// return false;
     if(!SetScaleFactor()) return false;
 
 

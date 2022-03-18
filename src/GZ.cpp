@@ -68,7 +68,7 @@ GZ::GZ() : ODPath()
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
     SetActiveColours();
-    
+
 }
 
 GZ::~GZ()
@@ -114,27 +114,27 @@ void GZ::SetColourScheme(PI_ColorScheme cs)
             m_wxcSchemeInActiveFillColour = m_wxcInActiveFillColourDay;
             break;
     }
-    
+
 }
 
 void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
 {
     if(m_dSecondDistance == 0) return;
     if(!m_bVisible) return;
-    
+
     m_bSetTransparent = true;
     ODPath::Draw( dc, piVP );
     m_bSetTransparent = false;
     SetActiveColours();
-    
+
     wxPoint l_l1p1;
     wxPoint l_l1p2;
     wxPoint l_l2p1;
     wxPoint l_l2p2;
     wxPoint l_pCentre;
-    
+
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
-    
+
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, m_width, m_style ) );
@@ -175,7 +175,7 @@ void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
         delete wxGC;
 #endif
     }
-    
+
 }
 
 void GZ::DrawGL( PlugIn_ViewPort &piVP )
@@ -183,7 +183,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 #ifdef ocpnUSE_GL
     if(m_dSecondDistance == 0) return;
     if ( !m_bVisible ) return;
-    
+
     wxPoint l_l1p1;
     wxPoint l_l1p2;
     wxPoint l_l2p1;
@@ -191,25 +191,25 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     wxPoint l_pCentre;
     wxPoint *points;
     int numpoints;
-    
+
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
 
     ODDC dc;
     dc.SetVP(&piVP);
-    
+
     m_bSetTransparent = true;
     //ODPath::DrawGL( piVP );
     m_bSetTransparent = false;
-    
+
     wxPenStyle style = wxPENSTYLE_SOLID;
     int width = g_path_line_width;
-    
+
     if( m_style != STYLE_UNDEFINED ) style = m_style;
     if( m_width != STYLE_UNDEFINED ) width = m_width;
-    
+
     SetActiveColours();
-    
-    
+
+
     // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
     GLubyte slope_cross_hatch[] = {
         0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -219,7 +219,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
         0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
         0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
         0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-        0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
+        0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
         0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
         0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
         0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
@@ -228,8 +228,8 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
         0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
         0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
         0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
-    };        
-    
+    };
+
     GLuint textureID;
     glGenTextures(1, &textureID);
     glBindTexture( GL_TEXTURE_2D, textureID );
@@ -243,13 +243,13 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
     glEnable( GL_TEXTURE_2D );
     glEnable( GL_BLEND );
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
     glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
-#endif    
+#endif
     wxColour tCol;
     tCol.Set(m_fillcol.Red(), m_fillcol.Green(), m_fillcol.Blue(), m_uiFillTransparency);
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_SOLID ) );
-    
+
     if(m_iLineType == ID_LINE_TYPE_ARC)
         RenderArcSegment( dc, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p2, &l_l2p1, piVP, false );
     else {
@@ -276,12 +276,12 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
         else dc.DrawPolygonTessellated( numpoints - 1, points, 0, 0);
     }
 
-    
+
     glDisable( GL_LINE_STIPPLE );
     glDisable( GL_BLEND );
     glDisable( GL_TEXTURE_2D );
     glDeleteTextures(1, &textureID);
-    
+
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
     if(m_iLineType == ID_LINE_TYPE_ARC)
         numpoints = ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
@@ -297,14 +297,14 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 void GZ::SetActiveColours( void )
 {
     ODPath::SetActiveColours();
-    
-    if(m_bSetTransparent) 
+
+    if(m_bSetTransparent)
 #if wxCHECK_VERSION(3,0,0)
         m_col = wxTransparentColour;
 #else // wxCHECK_VERSION(3,0,0)
         m_col.Set(m_col.Red(), m_col.Green(), m_col.Blue(), wxALPHA_TRANSPARENT);
 #endif // wxCHECK_VERSION(3,0,0)
-    
+
     if( m_bVisible && m_bPathIsActive )
         m_fillcol = m_wxcSchemeActiveFillColour;
     else
@@ -335,14 +335,14 @@ void GZ::UpdateGZ( bool bUpdateSelectablePath )
     m_dCentreLon = g_pfFix.Lon;
     m_dBoatHeading = g_pfFix.Hdt;
     m_dBoatCOG = g_pfFix.Cog;
-    
+
     if(m_bRotateWithBoat) {
         MaintainWith();
     } else {
         PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, m_dFirstLineDirection, m_dFirstDistance, &pFirstPoint->m_lat, &pFirstPoint->m_lon);
         PositionBearingDistanceMercator_Plugin(m_dCentreLat, m_dCentreLon, m_dSecondLineDirection, m_dSecondDistance, &pLastPoint->m_lat, &pLastPoint->m_lon);
-    } 
-    
+    }
+
     if(bUpdateSelectablePath) UpdateGZSelectablePath();
     FinalizeForRendering();
 
@@ -350,11 +350,11 @@ void GZ::UpdateGZ( bool bUpdateSelectablePath )
 
     if(g_pGZPropDialog && g_pGZPropDialog->IsShown())
         l_bRequestRefresh = g_pGZPropDialog->UpdateProperties();
-    
+
     m_bSaveUpdates = false;
     if(l_bRequestRefresh)
         RequestRefresh( g_ocpn_draw_pi->m_parent_window );
-    
+
     return;
 }
 
@@ -385,26 +385,26 @@ void GZ::UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath )
             }
         }
     }
-    
+
     UpdateGZ( bUpdateSelectablePath );
-    
+
     bool prev_bskip = g_pODConfig->m_bSkipChangeSetUpdate;
     g_pODConfig->m_bSkipChangeSetUpdate = false;
-    g_pODConfig->UpdatePath( this ); 
+    g_pODConfig->UpdatePath( this );
     g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
-    
+
     for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
         ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
         if( g_pPathMan->IsPathValid(pp) ) {
             pp->FinalizeForRendering();
             pp->m_bIsBeingEdited = false;
-            
+
             g_pODConfig->UpdatePath( pp );
-            
+
             pp->SetHiLite( 0 );
         }
     }
-    
+
     //    Update the PathProperties Dialog, if currently shown
     if( ( NULL != g_pGZPropDialog ) && ( g_pGZPropDialog->IsShown() ) ) {
         for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
@@ -453,7 +453,7 @@ void GZ::UpdateGZSelectablePath( void )
                 break;
         }
     }
-    
+
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dPrevLat, &l_dPrevLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_pODPointList->GetFirst()->GetData(), NULL, this );
@@ -491,7 +491,7 @@ void GZ::UpdateGZSelectablePath( void )
     g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_pODPointList->GetFirst()->GetData(), this );
 
     g_pODSelect->AddAllSelectableODPoints( this );
-    
+
 }
 
 void GZ::MaintainWith( void )
@@ -500,7 +500,7 @@ void GZ::MaintainWith( void )
     ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
     m_dCentreLat = g_pfFix.Lat;
     m_dCentreLon = g_pfFix.Lon;
-    
+
     switch(m_iMaintainWith) {
         case ID_MAINTAIN_WITH_HEADING:
             if(!wxIsNaN(g_pfFix.Hdt)) {
@@ -574,14 +574,14 @@ LLBBox GZ::GetBBox( void )
 {
     if(!m_bNeedsUpdateBBox)
         return RBBox;
-    
+
     double bbox_xmin = 180.;                        // set defaults
     double bbox_ymin = 90.;
     double bbox_xmax = -180;
     double bbox_ymax = -90.;
-    
+
     m_bcrosses_idl = CalculateCrossesIDL();
-    
+
     double l_dLat;
     double l_dLon;
     double firstDirection = m_dFirstLineDirection;
@@ -602,12 +602,12 @@ LLBBox GZ::GetBBox( void )
                 break;
         }
     }
-    
+
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
-    
+
     if( !m_bcrosses_idl ) {
         PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
         if( l_dLon > bbox_xmax ) bbox_xmax = l_dLon;

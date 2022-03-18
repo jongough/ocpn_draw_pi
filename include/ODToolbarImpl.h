@@ -13,7 +13,7 @@ enum {
     ID_DISPLAY_NEVER = 0,
     ID_DISPLAY_WHILST_DRAWING,
     ID_DISPLAY_ALWAYS,
-    
+
     ID_DISPLAY_DEF_LAST
 };
 
@@ -32,7 +32,9 @@ public:
     void SetToolbarToolEnableOnly( int iTool );
     void SetToolbarToolEnableAll( void );
     void SetColourScheme( PI_ColorScheme cs );
-    
+    void SetToolbarFont( void );
+    void Show( void );
+
     wxToolBarToolBase *m_toolBoundary;
     wxToolBarToolBase *m_toolODPoint;
     wxToolBarToolBase *m_toolTextPoint;
@@ -41,17 +43,17 @@ public:
     wxToolBarToolBase *m_toolGZ;
     wxToolBarToolBase *m_toolPIL;
     int    m_Mode;
-    
+
 private:
     void AddTools( void );
     void SetToolbarToolToggle( int iTool );
     void SetToolbarToolBitmap( int iTool );
-    
+
     wxSize m_toolbarSize;
     PI_ColorScheme m_ColourScheme;
     wxFont *m_dialogLabelFont;
 
-    
+
 };
 
 #endif // __ODToolbarImpl__

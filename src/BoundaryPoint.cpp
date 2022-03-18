@@ -1,5 +1,5 @@
 /***************************************************************************
- * 
+ *
  * Project:  OpenCPN
  *
  ***************************************************************************
@@ -68,7 +68,7 @@ BoundaryPoint::BoundaryPoint(BoundaryPoint* orig) : ODPoint( orig )
     m_bExclusionBoundaryPoint = orig->m_bExclusionBoundaryPoint;
     m_bInclusionBoundaryPoint = orig->m_bInclusionBoundaryPoint;
     m_iInclusionBoundaryPointSize = orig->m_iInclusionBoundaryPointSize;
-    
+
 }
 
 BoundaryPoint::BoundaryPoint() : ODPoint()
@@ -87,22 +87,22 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
         GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
-        
+
         double factor = 1.00;
         if( m_iODPointRangeRingsStepUnits == 1 )          // convert to nautical miles
             factor = 1 / 1.852;
-        
+
         factor *= m_fODPointRangeRingsStep;
-        
+
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
-        
+
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
         pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp * m_iODPointRangeRingsNumber;
-        
+
         // fill boundary with hatching
         if ( pix_radius > 10 ) {
             wxColour tCol;
@@ -134,22 +134,22 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
         GetCanvasPixLL( &g_VP, &r,  m_lat, m_lon);
-        
+
         double factor = 1.00;
         if( m_iODPointRangeRingsStepUnits == 1 )          // convert to nautical miles
             factor = 1 / 1.852;
-        
+
         factor *= m_fODPointRangeRingsStep;
-        
+
         double tlat, tlon;
         wxPoint r1;
         ll_gc_ll( m_lat, m_lon, 0, factor, &tlat, &tlon );
         GetCanvasPixLL( &g_VP, &r1,  tlat, tlon);
-        
+
         double lpp = sqrt( pow( (double) (r.x - r1.x), 2) +
         pow( (double) (r.y - r1.y), 2 ) );
         int pix_radius = (int) lpp * m_iODPointRangeRingsNumber;
-        
+
         // fill boundary with hatching
         if ( pix_radius > 10 ) {
             // Each byte represents a single pixel for Alpha. This provides a cross hatch in a 16x16 pixel square
@@ -161,7 +161,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
                 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00,
                 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
                 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
-                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 
+                0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
                 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
                 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
                 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
@@ -170,8 +170,8 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
                 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00,
                 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0xFF, 0x00,
                 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF
-            };        
-            
+            };
+
             GLuint textureID;
             glGenTextures(1, &textureID);
             glBindTexture( GL_TEXTURE_2D, textureID );
@@ -185,7 +185,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
             glEnable( GL_TEXTURE_2D );
             glEnable( GL_BLEND );
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
 #endif
             wxPen savePen = dc.GetPen();
@@ -198,7 +198,7 @@ void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
                 dc.DrawDisk( r.x, r.y , pix_radius, pix_radius + m_iInclusionBoundaryPointSize);
             }
             dc.SetPen( savePen );
-        
+
             glDisable( GL_BLEND );
             glDisable( GL_TEXTURE_2D );
             glDeleteTextures(1, &textureID);

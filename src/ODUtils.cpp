@@ -29,7 +29,7 @@
 #include "wx/wx.h"
 #endif //precompiled headers
 #include <wx/textwrapper.h>
- 
+
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
@@ -145,7 +145,7 @@ wxString GetUUID(void)
         int node_hi;
         int node_low;
     } uuid;
-    
+
     uuid.time_low = GetRandomNumber(0, 2147483647);//FIXME: the max should be set to something like MAXINT32, but it doesn't compile un gcc...
     uuid.time_mid = GetRandomNumber(0, 65535);
     uuid.time_hi_and_version = GetRandomNumber(0, 65535);
@@ -153,15 +153,15 @@ wxString GetUUID(void)
     uuid.clock_seq_low = GetRandomNumber(0, 255);
     uuid.node_hi = GetRandomNumber(0, 65535);
     uuid.node_low = GetRandomNumber(0, 2147483647);
-    
+
     /* Set the two most significant bits (bits 6 and 7) of the
      * clock_seq_hi_and_rsv to zero and one, respectively. */
     uuid.clock_seq_hi_and_rsv = (uuid.clock_seq_hi_and_rsv & 0x3F) | 0x80;
-    
+
     /* Set the four most significant bits (bits 12 through 15) of the
      * time_hi_and_version field to 4 */
     uuid.time_hi_and_version = (uuid.time_hi_and_version & 0x0fff) | 0x4000;
-    
+
     str.Printf(_T("%08x-%04x-%04x-%02x%02x-%04x%08x"),
                uuid.time_low,
                uuid.time_mid,
@@ -170,7 +170,7 @@ wxString GetUUID(void)
                uuid.clock_seq_low,
                uuid.node_hi,
                uuid.node_low);
-    
+
     return str;
 }
 
@@ -196,7 +196,7 @@ void MenuPrepend( wxMenu *menu, int id, wxString label)
     wxFont sFont = GetOCPNGUIScaledFont_PlugIn(_T("Menu"));
     item->SetFont(sFont);
 #endif
-    
+
     menu->Prepend(item);
 }
 
@@ -256,9 +256,9 @@ double getLMT( double ut, double lon )
 void SetGlobalLocale( void )
 {
 #ifndef __WXMSW__
-    if(g_iLocaleDepth == 0) { 
+    if(g_iLocaleDepth == 0) {
         g_ODlocale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
-#if wxCHECK_VERSION(3,0,0)        
+#if wxCHECK_VERSION(3,0,0)
         wxSetlocale(LC_NUMERIC, "");
 #else
         setlocale(LC_NUMERIC, "");
@@ -272,32 +272,32 @@ void ResetGlobalLocale( void )
 {
 #ifndef __WXMSW__
     g_iLocaleDepth--;
-    if(g_iLocaleDepth < 0) 
+    if(g_iLocaleDepth < 0)
         g_iLocaleDepth = 0;
     if(g_iLocaleDepth == 0 && g_ODlocale) {
-#if wxCHECK_VERSION(3,0,0)        
+#if wxCHECK_VERSION(3,0,0)
         wxSetlocale(LC_NUMERIC, g_ODlocale->ToAscii());
 #else
         setlocale(LC_NUMERIC, g_ODlocale->ToAscii());
 #endif
         delete g_ODlocale;
         g_ODlocale = NULL;
-    } 
+    }
 #endif
 }
 
-// Returns 1 if the lines intersect, otherwise 0. In addition, if the lines 
+// Returns 1 if the lines intersect, otherwise 0. In addition, if the lines
 // intersect the intersection point may be stored in the floats i_x and i_y.
 bool GetLineIntersection(double p0_x, double p0_y, double p1_x, double p1_y, double p2_x, double p2_y, double p3_x, double p3_y, double* i_x, double* i_y)
 {
     float s1_x, s1_y, s2_x, s2_y;
     s1_x = p1_x - p0_x;     s1_y = p1_y - p0_y;
     s2_x = p3_x - p2_x;     s2_y = p3_y - p2_y;
-    
+
     float s, t;
     s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
     t = ( s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
-    
+
     if (s >= 0 && s <= 1 && t >= 0 && t <= 1)
     {
         // Collision detected
@@ -307,7 +307,7 @@ bool GetLineIntersection(double p0_x, double p0_y, double p1_x, double p1_y, dou
             *i_y = p0_y + (t * s1_y);
         return true;
     }
-    
+
     return false; // No collision
 }
 
@@ -325,23 +325,23 @@ bool GetLineIntersection(double p0_x, double p0_y, double p1_x, double p1_y, dou
 //  Note that division by zero is avoided because the division is protected
 //  by the "if" clause which surrounds it.
 
-bool pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y) 
+bool pointInPolygon(int polyCorners, double *polyX, double *polyY, double x, double y)
 {
-    
+
     int   i, j=polyCorners-1 ;
     bool  oddNodes=false      ;
-    
+
     for (i=0; i<polyCorners; i++) {
         if (((polyY[i]< y && polyY[j]>=y)
             ||   (polyY[j]< y && polyY[i]>=y))
             &&  (polyX[i]<=x || polyX[j]<=x)) {
             oddNodes^=(polyX[i]+(y-polyY[i])/(polyY[j]-polyY[i])*(polyX[j]-polyX[i])<x); }
-            j=i; 
-        
+            j=i;
+
     }
-    
-    return oddNodes; 
-    
+
+    return oddNodes;
+
 }
 
 int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4, bool bHighQuality )
@@ -353,10 +353,10 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
     x4xc = x4-xc;
     wxDouble  l_dFirstAngle;
     l_dFirstAngle = atan2(y1yc, x1xc);
-    
+
     wxDouble  l_dSecondAngle;
     l_dSecondAngle = atan2(y4yc, x4xc);
-    
+
     wxDouble  l_OuterRadius = sqrt(pow((y2-yc), 2.0) + pow((x2-xc), 2.0));
     wxDouble l_InnerRadius = sqrt(pow((y1-yc), 2.0) + pow((x1-xc), 2.0));
     float innerSteps;
@@ -368,7 +368,7 @@ int ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoo
         innerSteps = 24;
         outerSteps = 24;
     }
-    
+
     points = new wxPoint[ (int) innerSteps +(int) outerSteps + 5 ];
     double dxc1 = xc-x1;
     double dxc4 = xc-x4;
@@ -510,3 +510,4 @@ void checkGlError(const char* op, const char* filename, int linenumber) {
 #endif
 #endif
 }
+
