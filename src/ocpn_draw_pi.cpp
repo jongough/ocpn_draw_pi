@@ -360,11 +360,13 @@ int      g_current_timer_canvas_index;
 
 extern "C" DECL_EXP opencpn_plugin* create_pi(void *ppimgr)
 {
+    DEBUGSL("create_pi");
     return (opencpn_plugin *)new ocpn_draw_pi(ppimgr);
 }
 
 extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 {
+    DEBUGSL("destroy_pi");
     delete p;
 }
 
@@ -376,6 +378,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 :opencpn_plugin_116(ppimgr)
 {
+    DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
@@ -430,11 +433,13 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     m_pODicons = new ODicons();
 
     m_bRecreateConfig = false;
+    DEBUGSL("ocpn_draw_pi return");
 
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
+    DEBUGSL("~ocpn_draw_pi");
     delete m_pODicons;
     m_pODicons = NULL;
 #ifdef __WXMSW__
@@ -446,6 +451,7 @@ ocpn_draw_pi::~ocpn_draw_pi()
 
 int ocpn_draw_pi::Init(void)
 {
+    DEBUGSL("Init");
     m_bBoundaryEditing = false;
     m_bPathEditing = false;
     m_bODPointEditing = false;
@@ -512,6 +518,7 @@ int ocpn_draw_pi::Init(void)
 
     // Adds local language support for the plugin to OCPN
     AddLocaleCatalog( PLUGIN_CATALOG_NAME );
+    DEBUGSL("AddLocaleCatalog");
 
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;
@@ -524,6 +531,7 @@ int ocpn_draw_pi::Init(void)
     //m_parent_window = GetOCPNCanvasWindow();
     m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
+    DEBUGSL("PluginGetFocusCanvas");
 
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
@@ -754,7 +762,7 @@ int ocpn_draw_pi::Init(void)
 
         g_pODConfig->LoadLayers(*g_pLayerDir);
     }
-
+    DEBUGSL("Init return");
     return (
     WANTS_OVERLAY_CALLBACK  |
     WANTS_CURSOR_LATLON       |
@@ -776,12 +784,14 @@ int ocpn_draw_pi::Init(void)
 
 void ocpn_draw_pi::LateInit(void)
 {
+    DEBUGSL("LateInit");
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
     return;
 }
 
 bool ocpn_draw_pi::DeInit(void)
 {
+    DEBUGSL("DeInit");
     RemoveCanvasContextMenuItem(m_iODToolContextId);
 
     if(m_BlinkTimer.IsRunning())
@@ -1663,6 +1673,7 @@ void ocpn_draw_pi::SaveConfig()
 
 void ocpn_draw_pi::LoadConfig()
 {
+    DEBUGSL("LoadConfig");
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)
@@ -1671,7 +1682,6 @@ void ocpn_draw_pi::LoadConfig()
     setlocale(LC_NUMERIC, "C");
 #endif
 #endif
-
     wxFileConfig *pConf = (wxFileConfig *)m_pODConfig;
 
     if(pConf)

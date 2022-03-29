@@ -43,6 +43,7 @@
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  )
 {
+    DEBUGSL("ODToolbarImpl::ODToolbarImpl");
     //m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     //SetFont( *m_dialogLabelFont );
     SetToolbarFont();
@@ -59,6 +60,7 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& t
 
 ODToolbarImpl::~ODToolbarImpl()
 {
+    DEBUGSL("ODToolbarImpl::~ODToolbarImpl");
     Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
 }
 
@@ -173,7 +175,8 @@ void ODToolbarImpl::Show(void)
 
 void ODToolbarImpl::OnClose( wxCloseEvent& event )
 {
-    g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+    DEBUGSL("ODToolbarImpl::OnClose");
+//    //g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
 }
 
 void ODToolbarImpl::OnKeyDown(wxKeyEvent& event)

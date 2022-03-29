@@ -22,11 +22,12 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  ***************************************************************************
  */
 #ifndef _OCPNDRAWPI_H_
 #define _OCPNDRAWPI_H_
+#pragma once
 
 #ifdef __WXMSW__
 #ifdef _DEBUG
@@ -49,7 +50,7 @@ s += s1; \
 s += "\n"; \
 std::wstring stemp = std::wstring(s.begin(), s.end()); \
 LPCWSTR sw = stemp.c_str(); \
-OutputDebugString(sw); } while (0) 
+OutputDebugString(sw); } while (0)
 
 #  define DEBUGST(x) do { \
 std::string s(""); \
@@ -80,7 +81,7 @@ s += s1; } while (0); \
 s += "\n" ; \
 std::wstring stemp = std::wstring(s.begin(), s.end()); \
 LPCWSTR sw = stemp.c_str(); \
-OutputDebugString(sw); } while (0) 
+OutputDebugString(sw); } while (0)
 #else
 #  define DEBUGSL(x) do {} while (0)
 #  define DEBUGST(x) do {} while (0)
@@ -89,27 +90,36 @@ OutputDebugString(sw); } while (0)
 #endif
 #else
 #ifdef DEBUG_BUILD
+#ifdef __OCPN__ANDROID__
+#include <QDebug>
+#define OUTPUT_METHOD qDebug()
+#define OUTPUT_ENDL " "
+#define OUTPUT_QT_DEBUG QDebug deb = qDebug()
+#else
+#define OUTPUT_METHOD std::cout
+#define OUTPUT_ENDL std::endl
+#define OUTPUT_QT_DEBUG " "
+#endif
 #  define DEBUGSL(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
-std::cout << stime << " :: "; \
-std::cout << x << std::endl ;} while (0)
+OUTPUT_METHOD << stime << " :: " << x << OUTPUT_ENDL ; } while (0)
 
 #  define DEBUGST(x) do { \
 time_t now = time(0); \
 tm* localtm = localtime(&now); \
 char *stime = asctime(localtm); \
 stime[strlen(stime) - 1 ] = 0; \
-std::cout << stime << " :: " ; \
-std::cout << x; } while (0)
+OUTPUT_METHOD << stime << " :: " ; \
+OUTPUT_METHOD << x; } while (0)
 
 #  define DEBUGCONT(x) do { \
-std::cout << x ; } while (0)
+OUTPUT_METHOD << x ; } while (0)
 
 #  define DEBUGEND(x) do { \
-std::cout << x  << std::endl ; } while (0)
+OUTPUT_METHOD << x  << OUTPUT_ENDL ; } while (0)
 #else
 #  define DEBUGSL(x) do {} while (0)
 #  define DEBUGST(x) do {} while (0)
@@ -228,15 +238,15 @@ enum
     ID_PATH_MGR_ODPOINT_RIGHT_CLICK_SHOW,
     ID_PATH_MGR_LAYER_RIGHT_CLICK_HIDE,
     ID_PATH_MGR_LAYER_RIGHT_CLICK_SHOW,
-    
+
     ID_UNDO,
     ID_REDO,
 
     ID_ODPOINT_MENU_ADDITIONAL_INFO,
 
-    ID_DEF_MENU_GROUPBASE,  
+    ID_DEF_MENU_GROUPBASE,
 
-    
+
     ID_DEF_MENU_LAST
 };
 
@@ -250,7 +260,7 @@ enum
     ID_MODE_DR,
     ID_MODE_GZ,
     ID_MODE_PIL,
-    
+
     ID_MODE_LAST
 };
 
@@ -263,7 +273,7 @@ enum {
     ID_TEXT_CENTRE,
     ID_TEXT_RIGHT,
     ID_TEXT_LEFT,
-    
+
     ID_TEXT_POSTION_LAST
 };
 
@@ -280,7 +290,7 @@ enum {
     ID_BOUNDARY_INCLUSION,
     ID_BOUNDARY_NEITHER,
     ID_BOUNDARY_ANY,
-    
+
     ID_BOUNDARY_TYPE_LAST
 };
 
@@ -289,7 +299,7 @@ enum {
     ID_PATH_STATE_ANY = 0,
     ID_PATH_STATE_ACTIVE,
     ID_PATH_STATE_INACTIVE,
-    
+
     ID_PATH_STATE_LAST
 };
 
@@ -298,7 +308,7 @@ enum {
     ID_POINT_STATE_ANY = 0,
     ID_POINT_STATE_ACTIVE,
     ID_POINT_STATE_INACTIVE,
-    
+
     ID_POINT_STATE_LAST
 };
 
@@ -306,7 +316,7 @@ enum {
     ID_PERSISTENT = 0,
     ID_PERSISTENT_CRASH,
     ID_NOT_PERSISTENT,
-    
+
     ID_PERSISTENT_LAST
 };
 
@@ -378,7 +388,7 @@ public:
     bool            m_bGZEditing;
     int             m_iEditMode;
 
-    
+
 
     //    The required PlugIn Methods
     int Init(void);
@@ -419,7 +429,7 @@ public:
     void loadLayouts(wxWindow * parent);
 //    void startLogbook();
     void shutdown(bool menu);
-    
+
     bool MouseEventHook( wxMouseEvent &event );
     bool KeyboardEventHook( wxKeyEvent &event );
     void SetCursorLatLon(double lat, double lon);
@@ -438,24 +448,24 @@ public:
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
     void SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix );
-    
+
     void RenderPathLegs( ODDC &dc );
-    
+
     // OD Methods
     void    ProcessTimerEvent(wxTimerEvent& ev);
     void    PopupMenuHandler(wxCommandEvent& ev);
-    
+
     void    SaveConfig( void );
-    
+
     void    AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
 
     void    SetToolbarTool( void );
-    
+
     void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
     wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
 
     void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
-    
+
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
     wxCursor    *pCursorUp;
@@ -469,9 +479,9 @@ public:
     wxCursor    *m_pCursorCross;
     wxCursor    *m_pCursorPencil;
     wxCursor    *m_pTextCursorCross;
-    
+
     wxCursor    *m_pCurrentCursor;
-    
+
     int         nPath_State;
     int         nBoundary_State;
     int         nPoint_State;
@@ -508,29 +518,29 @@ public:
     double      m_lat, m_lon;
     double      m_pixx, m_pixy;
     wxPoint     m_cursorPoint;
-    
+
     Undo        *undo;
-    
+
     wxGLContext     *m_pcontext;
     wxMemoryDC      *pmdc;
 //    wxGLCanvas      *m_glcc;
-    
+
     int         nBlinkerTick;
     int         m_Mode;
     int         m_config_button_id;
     int         m_draw_button_id;
-    
-    void    appendOSDirSlash(wxString* pString);  
-    
+
+    void    appendOSDirSlash(wxString* pString);
+
     double  m_chart_scale;
     double  m_view_scale;
-    
+
     ODicons     *m_pODicons;
-    
+
     bool        m_bRecreateConfig;
-    
+
     int         m_drawing_canvas_index;
-    
+
 private:
     void    OnTimer(wxTimerEvent& ev);
 
@@ -553,14 +563,14 @@ private:
     void    MenuPrepend( wxMenu *menu, int id, wxString label);
     void    MenuAppend( wxMenu *menu, int id, wxString label);
     void    FindSelectedObject( void );
-    
+
     void    ItemProcess(int id);
-    
+
     wxTimer         m_BlinkTimer;
     wxTimer         m_RolloverPopupTimer;
-    
+
     PlugIn_ViewPort m_VP;
-    
+
     int     m_show_id;
     int     m_hide_id;
     int     m_iODToolContextId;
@@ -568,7 +578,7 @@ private:
     bool    show;
 
     bool    m_bLOGShowIcon;
-    
+
     Boundary    *m_pSelectedBoundary;
     EBL         *m_pSelectedEBL;
     DR          *m_pSelectedDR;
@@ -577,29 +587,29 @@ private:
 
     bool        m_bDrawingBoundary;
     bool        m_bDrawingGZ;
-    
+
     int         popx, popy;
     wxString m_sNavObjSetChangesFile;
-    
+
     wxString    m_Data;
 
     int         m_numModes;
 
     int         m_rollover_popup_timer_msec;
-    
+
     int         m_seltype;
-    
+
     double      m_PathMove_cursor_start_lat;
     double      m_PathMove_cursor_start_lon;
-    
+
     wxDateTime  m_LastFixTime;
-    
+
     int         m_mouse_canvas_index;
     int         m_current_canvas_index;
 
     std::list<Boundary*> m_pBoundaryList;
-    
-    
+
+
 };
 
 #endif
