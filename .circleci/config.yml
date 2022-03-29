@@ -342,7 +342,6 @@ jobs:
             echo "deb-src http://us.archive.ubuntu.com/ubuntu/ focal-updates main" | sudo tee -a /etc/apt/sources.list
         - run: cat /etc/apt/sources.list
         - run: chmod a+x ci/*.sh
-        - use-apt-proxy
         - run: ci/circleci-build-debian.sh
         - deploy-code
     build-buster:
@@ -477,7 +476,6 @@ jobs:
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
-        - use-apt-proxy
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-arm64.sh
         - deploy-code:
@@ -491,7 +489,6 @@ jobs:
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
-        - use-apt-proxy
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-android-armhf.sh
         - deploy-code:
