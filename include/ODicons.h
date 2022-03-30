@@ -45,6 +45,7 @@ public:
     bool    SetScaleFactor(void);
     void    SetColourScheme( PI_ColorScheme cs );
     void    ChangeScheme(void);
+    wxBitmap    ScaleIcon( wxBitmap bitmap, double sf );
 
     wxBitmap    *m_p_bm_ocpn_draw_pi_properties;
 
@@ -92,9 +93,10 @@ public:
     wxString    m_s_ocpn_draw_pil_grey;
 
     bool        m_bUpdateIcons;
+    double      m_dScaleFactor;
+
 
 private:
-    wxBitmap    ScaleIcon( wxBitmap bitmap, double sf );
     void        CreateSchemeIcons(void);
     wxBitmap    BuildDimmedToolBitmap(wxBitmap bmp_nosrmal, unsigned char dim_ratio);
 
@@ -172,7 +174,6 @@ private:
     wxBitmap    m_bm_night_ocpn_draw_pil;
     wxBitmap    m_bm_night_ocpn_draw_pil_grey;
 
-    double          m_dScaleFactor;
     PI_ColorScheme  m_ColourScheme;
     bool            m_failedBitmapLoad;
 };
