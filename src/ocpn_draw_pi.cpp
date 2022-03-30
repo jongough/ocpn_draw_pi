@@ -714,8 +714,19 @@ int ocpn_draw_pi::Init(void)
 #else
     m_pTextCursorCross = new wxCursor( wxCURSOR_ARROW );
 #endif
+
+    bool l_bUsePencilCrossCursor = true;
+
+#ifdef __WXMSW__
+    // Hack similar to OCPN to handle wxmsw not supporting cursors bigger than 32x32
+    int l_xSize, l_ySize;
+    wxDisplaySize(&l_xSize, &l_ySize);
+    if(l_xSize > 3000)
+        l_bUsePencilCrossCursor = false;
+#endif
+    //wxRect l_clientrect = this->GetGlientArea();
     wxImage ICursorPencil = m_pODicons->ScaleIcon(GetIcon_PlugIn(_T("pencil")), m_pODicons->m_dScaleFactor).ConvertToImage();
-    if ( ICursorPencil.Ok() )
+    if ( ICursorPencil.Ok() && l_bUsePencilCrossCursor )
     {
         ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
         ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 16);
@@ -725,7 +736,7 @@ int ocpn_draw_pi::Init(void)
         m_pCursorPencil = new wxCursor ( wxCURSOR_ARROW );
 
     wxImage ICursorCross = m_pODicons->ScaleIcon(GetIcon_PlugIn(_T("cross")), m_pODicons->m_dScaleFactor).ConvertToImage();
-    if ( ICursorCross.Ok() )
+    if ( ICursorCross.Ok() && l_bUsePencilCrossCursor)
     {
         ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 13 );
         ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 12);
