@@ -821,7 +821,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pODRolloverWin;
 #else
-        g_pODRolloverWin->Close();
+        g_pODRolloverWin->Destroy();
 #endif
 
     g_pODRolloverWin = NULL;
@@ -832,7 +832,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pODPointPropDialog;
 #else
-        g_pODPathPropDialog->Close();
+        g_pODPathPropDialog->Destroy();
 #endif
     }
     g_pODPathPropDialog = NULL;
@@ -843,7 +843,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pODPointPropDialog;
 #else
-        g_pODPointPropDialog->Close();
+        g_pODPointPropDialog->Destroy();
 #endif
     }
     g_pODPointPropDialog = NULL;
@@ -854,7 +854,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pBoundaryPropDialog;
 #else
-        g_pBoundaryPropDialog->Close();
+        g_pBoundaryPropDialog->Destroy();
 #endif
     }
     g_pBoundaryPropDialog = NULL;
@@ -865,7 +865,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pEBLPropDialog;
 #else
-        g_pEBLPropDialog->Close();
+        g_pEBLPropDialog->Destroy();
 #endif
     }
     g_pEBLPropDialog = NULL;
@@ -876,7 +876,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pDRPropDialog;
 #else
-        g_pDRPropDialog->Close();
+        g_pDRPropDialog->Destroy();
 #endif
     }
     g_pDRPropDialog = NULL;
@@ -887,7 +887,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pGZPropDialog;
 #else
-        g_pGZPropDialog->Close();
+        g_pGZPropDialog->Destroy();
 #endif
     }
     g_pGZPropDialog = NULL;
@@ -898,7 +898,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pPILPropDialog;
 #else
-        g_pPILPropDialog->Close();
+        g_pPILPropDialog->Destroy();
 #endif
     }
     g_pPILPropDialog = NULL;
@@ -909,7 +909,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_PILIndexLinePropDialog;
 #else
-        g_PILIndexLinePropDialog->Close();
+        g_PILIndexLinePropDialog->Destroy();
 #endif
     }
     g_PILIndexLinePropDialog = NULL;
@@ -920,7 +920,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pPathAndPointManagerDialog;
 #else
-        g_pPathAndPointManagerDialog->Close();
+        g_pPathAndPointManagerDialog->Destroy();
 #endif
     }
     g_pPathAndPointManagerDialog = NULL;
@@ -929,7 +929,7 @@ bool ocpn_draw_pi::DeInit(void)
 #ifdef APPLE
         delete g_pODToolbar;
 #else
-        g_pODToolbar->Close();
+        g_pODToolbar->Destroy();
 #endif
 
     g_pODToolbar = NULL;
