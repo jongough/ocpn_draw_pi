@@ -30,9 +30,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "14")
-set(VERSION_TWEAK "5")
-set(VERSION_DATE "08/04/2021") # DD/MM/YYYY format
+set(VERSION_PATCH "15")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "10/04/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -316,10 +316,7 @@ option(OD_USE_SVG "Use SVG graphics" ON)
 
 if(OD_USE_SVG)
     message(STATUS "${CMLOC}SVG support enabled...")
-    if(NOT QT_ANDROID)
-        add_definitions(-DODraw_USE_SVG)
-        message(STATUS "${CMLOC}SVG support enabled - not QT_ANDROID...")
-    endif(NOT QT_ANDROID)
+    add_definitions(-DODraw_USE_SVG)
 endif(OD_USE_SVG)
 
 if(OCPN_MIN_VERSION)

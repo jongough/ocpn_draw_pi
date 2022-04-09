@@ -373,7 +373,7 @@ IF(QT_ANDROID)
     ADD_DEFINITIONS(-DOCPN_USE_WRAPPER)
     ADD_DEFINITIONS(-DANDROID)
 
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-soname,libgorp.so ")
 
     #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
@@ -386,8 +386,6 @@ IF(QT_ANDROID)
     "-Wno-unknown-pragmas"
       )
 
-    message(STATUS "${CMLOC}Adding libgorp.o shared library")
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s")  ## Strip binary
 
     SET(QT_LINUX "OFF")
@@ -501,8 +499,8 @@ else(NOT QT_ANDROID)
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtOpenGL")
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include/QtTest")
 
-        set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/wxWidgets/include")
+        set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/wxWidgets/libarm64/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
 
         SET(wxWidgets_LIBRARIES
         ${CMAKE_CURRENT_SOURCE_DIR}/${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/lib/libQt5Core.so
@@ -526,8 +524,8 @@ else(NOT QT_ANDROID)
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtOpenGL")
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/qt5/build_arm32_19_O3/qtbase/include/QtTest")
 
-        set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/wxWidgets/libarmhf/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/wxWidgets/include")
+        set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/wxWidgets/libarmhf/wx/include/arm-linux-androideabi-qt-unicode-static-3.1")
 
         ADD_DEFINITIONS( -DOCPN_ARMHF )
 

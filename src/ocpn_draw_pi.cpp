@@ -410,7 +410,10 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 #else
     wxString *UserIconPath = new wxString(*g_PrivateDataDir);
     wxChar sep = wxFileName::GetPathSeparator();
-    if ( UserIconPath->IsNull() ) return;
+    if ( UserIconPath->IsNull() ) {
+        DEBUGSL("UserIconPath not found");
+        return;
+    }
 
     if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
     UserIconPath->Append( _T("UserIcons") );
@@ -433,7 +436,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     m_pODicons = new ODicons();
 
     m_bRecreateConfig = false;
-    DEBUGSL("ocpn_draw_pi return");
+    DEBUGSL("ocpn_draw_pi: return");
 
 }
 
@@ -818,7 +821,7 @@ bool ocpn_draw_pi::DeInit(void)
     }
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin )
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pODRolloverWin;
 #else
         g_pODRolloverWin->Destroy();
@@ -829,7 +832,7 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODPathPropDialog ) {
         g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
         g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pODPointPropDialog;
 #else
         g_pODPathPropDialog->Destroy();
@@ -840,7 +843,7 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODPointPropDialog ) {
         g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
         g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pODPointPropDialog;
 #else
         g_pODPointPropDialog->Destroy();
@@ -851,7 +854,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pBoundaryPropDialog ) {
         g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
         g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pBoundaryPropDialog;
 #else
         g_pBoundaryPropDialog->Destroy();
@@ -862,7 +865,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pEBLPropDialog ) {
         g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
         g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pEBLPropDialog;
 #else
         g_pEBLPropDialog->Destroy();
@@ -873,7 +876,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pDRPropDialog ) {
         g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
         g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pDRPropDialog;
 #else
         g_pDRPropDialog->Destroy();
@@ -884,7 +887,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pGZPropDialog ) {
         g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
         g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pGZPropDialog;
 #else
         g_pGZPropDialog->Destroy();
@@ -895,7 +898,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pPILPropDialog )  {
         g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
         g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pPILPropDialog;
 #else
         g_pPILPropDialog->Destroy();
@@ -906,7 +909,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_PILIndexLinePropDialog )  {
         g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
         g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_PILIndexLinePropDialog;
 #else
         g_PILIndexLinePropDialog->Destroy();
@@ -917,7 +920,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pPathAndPointManagerDialog )  {
         g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
         g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pPathAndPointManagerDialog;
 #else
         g_pPathAndPointManagerDialog->Destroy();
@@ -926,7 +929,7 @@ bool ocpn_draw_pi::DeInit(void)
     g_pPathAndPointManagerDialog = NULL;
 
     if( g_pODToolbar )
-#ifdef APPLE
+#if defined(APPLE) || defined(__OCPN__ANDROID__)
         delete g_pODToolbar;
 #else
         g_pODToolbar->Destroy();
