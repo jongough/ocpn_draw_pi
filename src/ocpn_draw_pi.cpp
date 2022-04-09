@@ -410,10 +410,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 #else
     wxString *UserIconPath = new wxString(*g_PrivateDataDir);
     wxChar sep = wxFileName::GetPathSeparator();
-    if ( UserIconPath->IsNull() ) {
-        DEBUGSL("UserIconPath not found");
-        return;
-    }
+    if ( UserIconPath->IsNull() ) return;
 
     if( UserIconPath->Last() != sep ) UserIconPath->Append( sep );
     UserIconPath->Append( _T("UserIcons") );
