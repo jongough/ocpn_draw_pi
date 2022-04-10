@@ -55,11 +55,14 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& t
 
     m_Mode = ID_NONE;
 
-    Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    //Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    //Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
 }
 
 ODToolbarImpl::~ODToolbarImpl()
 {
+    //Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    //Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
     DEBUGSL("ODToolbarImpl::~ODToolbarImpl");
 }
 
@@ -170,14 +173,6 @@ void ODToolbarImpl::Show(void)
     this->Layout();
     m_bSizerToolbar->Fit( this );
     ODToolbarDialog::Show();
-}
-
-void ODToolbarImpl::OnClose( wxCloseEvent& event )
-{
-    DEBUGSL("ODToolbarImpl::OnClose");
-    Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
-
-//    //g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
 }
 
 void ODToolbarImpl::OnKeyDown(wxKeyEvent& event)

@@ -92,13 +92,12 @@ OutputDebugString(sw); } while (0)
 #ifdef DEBUG_BUILD
 #ifdef __OCPN__ANDROID__
 #include <QDebug>
+//QDebug deb = qDebug();
 #define OUTPUT_METHOD qDebug()
 #define OUTPUT_ENDL " "
-#define OUTPUT_QT_DEBUG QDebug deb = qDebug()
 #else
 #define OUTPUT_METHOD std::cout
 #define OUTPUT_ENDL std::endl
-#define OUTPUT_QT_DEBUG " "
 #endif
 #  define DEBUGSL(x) do { \
 time_t now = time(0); \
@@ -566,8 +565,8 @@ private:
 
     void    ItemProcess(int id);
 
-    wxTimer         m_BlinkTimer;
-    wxTimer         m_RolloverPopupTimer;
+    wxTimer *m_BlinkTimer;
+    wxTimer *m_RolloverPopupTimer;
 
     PlugIn_ViewPort m_VP;
 

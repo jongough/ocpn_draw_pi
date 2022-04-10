@@ -660,6 +660,7 @@ int ocpn_draw_pi::Init(void)
     g_pODToolbar->SetToolbarFont();
     g_pODToolbar->Fit();
     g_pODToolbar->SetInitialSize();
+    g_pODToolbar->Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
     //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
     if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
     if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
@@ -692,11 +693,21 @@ int ocpn_draw_pi::Init(void)
     g_pRolloverPathSeg = NULL;
     g_pRolloverPoint = NULL;
 
-    m_BlinkTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
-    m_BlinkTimer.Start( BLINK_TIME, wxTIMER_CONTINUOUS );
+    m_BlinkTimer = new wxTimer;
+    m_BlinkTimer->Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    m_BlinkTimer->Start( BLINK_TIME, wxTIMER_CONTINUOUS );
+    DEBUGST("wxTimer m_BlinkTimer Getid: ");
+    DEBUGCONT(m_BlinkTimer->GetId());
+    DEBUGCONT(", GetOwner: ");
+    DEBUGEND(m_BlinkTimer->GetOwner());
 
+    m_RolloverPopupTimer = new wxTimer;
     m_rollover_popup_timer_msec = 20;
-    m_RolloverPopupTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
+    m_RolloverPopupTimer->Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
+    DEBUGST("wxTimer m_RolloverPopupTimer Getid: ");
+    DEBUGCONT(m_RolloverPopupTimer->GetId());
+    DEBUGCONT(", GetOwner: ");
+    DEBUGEND(m_RolloverPopupTimer->GetOwner());
 
     // Get item into font list in options/user interface
     AddPersistentFontKey( wxT("OD_PathLegInfoRollover") );
@@ -804,12 +815,23 @@ bool ocpn_draw_pi::DeInit(void)
     DEBUGSL("DeInit");
     RemoveCanvasContextMenuItem(m_iODToolContextId);
 
-    if(m_BlinkTimer.IsRunning())
-        m_BlinkTimer.Stop();
-    m_BlinkTimer.Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
-    if(m_RolloverPopupTimer.IsRunning())
-        m_RolloverPopupTimer.Stop();
-    m_RolloverPopupTimer.Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
+    if(m_BlinkTimer->IsRunning())
+        m_BlinkTimer->Stop();
+    if(!m_BlinkTimer->Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler)) {
+        DEBUGSL("BlinkTimer->Unbind not found or not removed");
+        wxLogMessage(_("BlinkTimer->Unbind not found or not removed"));
+    }
+    delete m_BlinkTimer;
+    m_BlinkTimer = NULL;
+
+    if(m_RolloverPopupTimer->IsRunning())
+        m_RolloverPopupTimer->Stop();
+    if(!m_RolloverPopupTimer->Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler)) {
+        DEBUGSL("RolloverPopupTimer->Unbind not found or not removed");
+        wxLogMessage(_("RolloverPopupTimer->Unbind not found or not removed"));
+    }
+    delete m_RolloverPopupTimer;
+    m_RolloverPopupTimer = NULL;
 
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
@@ -818,7 +840,7 @@ bool ocpn_draw_pi::DeInit(void)
     }
     g_ODEventHandler = NULL;
     if( g_pODRolloverWin )
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pODRolloverWin;
 #else
         g_pODRolloverWin->Destroy();
@@ -829,7 +851,7 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODPathPropDialog ) {
         g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
         g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pODPointPropDialog;
 #else
         g_pODPathPropDialog->Destroy();
@@ -840,7 +862,7 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODPointPropDialog ) {
         g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
         g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pODPointPropDialog;
 #else
         g_pODPointPropDialog->Destroy();
@@ -851,7 +873,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pBoundaryPropDialog ) {
         g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
         g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pBoundaryPropDialog;
 #else
         g_pBoundaryPropDialog->Destroy();
@@ -862,7 +884,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pEBLPropDialog ) {
         g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
         g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pEBLPropDialog;
 #else
         g_pEBLPropDialog->Destroy();
@@ -873,7 +895,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pDRPropDialog ) {
         g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
         g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pDRPropDialog;
 #else
         g_pDRPropDialog->Destroy();
@@ -884,7 +906,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pGZPropDialog ) {
         g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
         g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pGZPropDialog;
 #else
         g_pGZPropDialog->Destroy();
@@ -895,7 +917,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pPILPropDialog )  {
         g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
         g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pPILPropDialog;
 #else
         g_pPILPropDialog->Destroy();
@@ -906,7 +928,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_PILIndexLinePropDialog )  {
         g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
         g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_PILIndexLinePropDialog;
 #else
         g_PILIndexLinePropDialog->Destroy();
@@ -917,7 +939,7 @@ bool ocpn_draw_pi::DeInit(void)
     if ( g_pPathAndPointManagerDialog )  {
         g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
         g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+#if defined(APPLE)
         delete g_pPathAndPointManagerDialog;
 #else
         g_pPathAndPointManagerDialog->Destroy();
@@ -925,14 +947,17 @@ bool ocpn_draw_pi::DeInit(void)
     }
     g_pPathAndPointManagerDialog = NULL;
 
-    if( g_pODToolbar )
-#if defined(APPLE) || defined(__OCPN__ANDROID__)
+    if( g_pODToolbar ) {
+        g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
+
+#if defined(APPLE)
         delete g_pODToolbar;
 #else
         g_pODToolbar->Destroy();
 #endif
-
+    }
     g_pODToolbar = NULL;
+
     if( g_pODJSON ) delete g_pODJSON;
     g_pODJSON = NULL;
     if( g_pODAPI ) delete g_pODAPI;
@@ -2230,9 +2255,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
 
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() )
-        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
+        m_RolloverPopupTimer->Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
     else
-        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        m_RolloverPopupTimer->Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
 
 
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 || nEBL_State > 0 || nGZ_State > 0 || nPIL_State > 0
@@ -2944,7 +2969,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
 
     if( b_start_rollover )
-        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        m_RolloverPopupTimer->Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
 
     SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
 
