@@ -2551,6 +2551,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 } else {
                     if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                        m_pSelectedPath->m_bPathPropertiesBlink = false;
+                       l_bUpdateSelect = true;
                     }
                 }
                 if(l_bUpdateSelect) {
