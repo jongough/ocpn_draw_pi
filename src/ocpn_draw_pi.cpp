@@ -831,6 +831,9 @@ bool ocpn_draw_pi::DeInit(void)
     delete m_RolloverPopupTimer;
     m_RolloverPopupTimer = NULL;
 
+    if( g_pODLinkPropertiesDialog )
+        DeleteWindow(g_pODLinkPropertiesDialog);
+
     if( g_pODRolloverWin )
         DeleteWindow(g_pODRolloverWin);
 
