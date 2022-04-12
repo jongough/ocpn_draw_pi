@@ -444,7 +444,7 @@ ocpn_draw_pi::~ocpn_draw_pi()
     m_pODicons = NULL;
 #ifdef __WXMSW__
 #ifdef _DEBUG
-    _CrtDumpMemoryLeaks();
+    //_CrtDumpMemoryLeaks();
 #endif
 #endif
 }
