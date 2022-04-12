@@ -440,8 +440,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 ocpn_draw_pi::~ocpn_draw_pi()
 {
     DEBUGSL("~ocpn_draw_pi");
-    delete m_pODicons;
-    m_pODicons = NULL;
 #ifdef __WXMSW__
 #ifdef _DEBUG
     //_CrtDumpMemoryLeaks();
@@ -895,6 +893,9 @@ bool ocpn_draw_pi::DeInit(void)
         DeleteWindow(g_pODToolbar);
         g_pODToolbar = NULL;
     }
+
+    delete m_pODicons;
+    m_pODicons = NULL;
 
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
