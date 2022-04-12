@@ -833,130 +833,75 @@ bool ocpn_draw_pi::DeInit(void)
     delete m_RolloverPopupTimer;
     m_RolloverPopupTimer = NULL;
 
+    if( g_pODRolloverWin )
+        DeleteWindow(g_pODRolloverWin);
+
+    if( g_pODPathPropDialog ) {
+        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
+        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
+        DeleteWindow(g_pODPathPropDialog);
+    }
+
+    if( g_pODPointPropDialog ) {
+        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
+        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
+        DeleteWindow(g_pODPointPropDialog);
+    }
+
+    if ( g_pBoundaryPropDialog ) {
+        g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
+        g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
+        DeleteWindow(g_pBoundaryPropDialog);
+    }
+
+    if ( g_pEBLPropDialog ) {
+        g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
+        g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
+        DeleteWindow(g_pEBLPropDialog);
+    }
+
+    if ( g_pDRPropDialog ) {
+        g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
+        g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
+        DeleteWindow(g_pDRPropDialog);
+    }
+
+    if ( g_pGZPropDialog ) {
+        g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
+        g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
+        DeleteWindow(g_pGZPropDialog);
+    }
+
+    if ( g_pPILPropDialog )  {
+        g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
+        g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
+        DeleteWindow(g_pPILPropDialog);
+    }
+
+    if ( g_PILIndexLinePropDialog )  {
+        g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
+        g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
+        DeleteWindow(g_PILIndexLinePropDialog);
+    }
+
+    if ( g_pPathAndPointManagerDialog )  {
+        g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
+        g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
+        DeleteWindow(g_pPathAndPointManagerDialog);
+    }
+
+    if( g_pODToolbar ) {
+        g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
+        DeleteWindow(g_pODToolbar);
+        g_pODToolbar = NULL;
+    }
+
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
             g_ODEventHandler->SetEvtHandlerEnabled(false);
         delete g_ODEventHandler;
     }
     g_ODEventHandler = NULL;
-    if( g_pODRolloverWin )
-#if defined(APPLE)
-        delete g_pODRolloverWin;
-#else
-        g_pODRolloverWin->Destroy();
-#endif
-
-    g_pODRolloverWin = NULL;
-
-    if( g_pODPathPropDialog ) {
-        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
-        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pODPointPropDialog;
-#else
-        g_pODPathPropDialog->Destroy();
-#endif
-    }
-    g_pODPathPropDialog = NULL;
-
-    if( g_pODPointPropDialog ) {
-        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
-        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pODPointPropDialog;
-#else
-        g_pODPointPropDialog->Destroy();
-#endif
-    }
-    g_pODPointPropDialog = NULL;
-
-    if ( g_pBoundaryPropDialog ) {
-        g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
-        g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pBoundaryPropDialog;
-#else
-        g_pBoundaryPropDialog->Destroy();
-#endif
-    }
-    g_pBoundaryPropDialog = NULL;
-
-    if ( g_pEBLPropDialog ) {
-        g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
-        g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pEBLPropDialog;
-#else
-        g_pEBLPropDialog->Destroy();
-#endif
-    }
-    g_pEBLPropDialog = NULL;
-
-    if ( g_pDRPropDialog ) {
-        g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
-        g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pDRPropDialog;
-#else
-        g_pDRPropDialog->Destroy();
-#endif
-    }
-    g_pDRPropDialog = NULL;
-
-    if ( g_pGZPropDialog ) {
-        g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
-        g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pGZPropDialog;
-#else
-        g_pGZPropDialog->Destroy();
-#endif
-    }
-    g_pGZPropDialog = NULL;
-
-    if ( g_pPILPropDialog )  {
-        g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
-        g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pPILPropDialog;
-#else
-        g_pPILPropDialog->Destroy();
-#endif
-    }
-    g_pPILPropDialog = NULL;
-
-    if ( g_PILIndexLinePropDialog )  {
-        g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
-        g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_PILIndexLinePropDialog;
-#else
-        g_PILIndexLinePropDialog->Destroy();
-#endif
-    }
-    g_PILIndexLinePropDialog = NULL;
-
-    if ( g_pPathAndPointManagerDialog )  {
-        g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
-        g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-#if defined(APPLE)
-        delete g_pPathAndPointManagerDialog;
-#else
-        g_pPathAndPointManagerDialog->Destroy();
-#endif
-    }
-    g_pPathAndPointManagerDialog = NULL;
-
-    if( g_pODToolbar ) {
-        g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
-
-#if defined(APPLE)
-        delete g_pODToolbar;
-#else
-        g_pODToolbar->Destroy();
-#endif
-    }
-    g_pODToolbar = NULL;
 
     if( g_pODJSON ) delete g_pODJSON;
     g_pODJSON = NULL;
@@ -1023,6 +968,20 @@ bool ocpn_draw_pi::DeInit(void)
     shutdown(false);
 
     return true;
+}
+
+void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
+{
+    DEBUGSL("DeleteWindow");
+    if (pWindow) {
+        pWindow->Close();
+#if defined(APPLE)
+        delete pWindow;
+#else
+        pWindow->Destroy();
+#endif
+        return;
+    }
 }
 
 void ocpn_draw_pi::shutdown(bool menu)

@@ -565,6 +565,8 @@ private:
 
     void    ItemProcess(int id);
 
+    void    DeleteWindow(wxWindow *pWindow);
+
     wxTimer *m_BlinkTimer;
     wxTimer *m_RolloverPopupTimer;
 

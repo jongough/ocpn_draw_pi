@@ -55,7 +55,7 @@ class ODEventHandler : public wxEvtHandler
     public:
         ODEventHandler(ocpn_draw_pi *parent);
         ~ODEventHandler();
-        
+
         void OnODTimer(wxTimerEvent& event);
         void PopupMenuHandler( wxCommandEvent & event );
         void PopupMenuCloseHandler( wxCommandEvent & event );
@@ -73,11 +73,11 @@ class ODEventHandler : public wxEvtHandler
         void DeletePath( void );
         void DeletePaths( void );
         void DeletePIL( void );
-        
+
     protected:
     private:
         void ODERequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
-        
+
         ocpn_draw_pi    *m_parent;
         wxWindow        *m_parent_window;
         ODPath          *m_pSelectedPath;
@@ -85,7 +85,6 @@ class ODEventHandler : public wxEvtHandler
         TextPoint       *m_pFoundTextPoint;
         double          m_cursor_lat;
         double          m_cursor_lon;
-        wxTimer         ODTimer1;
         Boundary        *m_pBoundary;
         EBL             *m_pEBL;
         DR              *m_pDR;
