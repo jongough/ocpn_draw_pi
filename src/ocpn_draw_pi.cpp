@@ -980,7 +980,7 @@ void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
     DEBUGSL("DeleteWindow");
     if (pWindow) {
         pWindow->Close(true);
-#if defined(APPLE)
+#if defined(APPLE) || defined(__MSVC__)
         delete pWindow;
 #else
         pWindow->Destroy();
