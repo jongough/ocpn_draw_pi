@@ -442,7 +442,8 @@ ocpn_draw_pi::~ocpn_draw_pi()
     DEBUGSL("~ocpn_draw_pi");
 #ifdef __WXMSW__
 #ifdef _DEBUG
-    _CrtDumpMemoryLeaks();
+// Only turn on if memory leaks suspected. Slows down shutdown when debugging
+//    _CrtDumpMemoryLeaks();
 #endif
 #endif
 }
