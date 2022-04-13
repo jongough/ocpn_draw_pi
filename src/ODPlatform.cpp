@@ -65,6 +65,11 @@ ODColourPickerCtrl::ODColourPickerCtrl(wxWindow *parent,
     Create(parent, id, bitmap, pos, size, style, validator, name);
 }
 
+ODColourPickerCtrl::~ODColourPickerCtrl()
+{
+    Unbind( wxEVT_BUTTON, &ODColourPickerCtrl::OnButtonClick, this);
+}
+
 bool ODColourPickerCtrl::Create( wxWindow *parent, wxWindowID id,
                         const wxBitmap &bitmap, const wxPoint &pos,
                         const wxSize &size, long style,
@@ -82,9 +87,7 @@ bool ODColourPickerCtrl::Create( wxWindow *parent, wxWindowID id,
     }
 
     // and handle user clicks on it
-    Connect(GetId(), wxEVT_BUTTON,
-            wxCommandEventHandler(ODColourPickerCtrl::OnButtonClick),
-            NULL, this);
+    Bind( wxEVT_BUTTON, &ODColourPickerCtrl::OnButtonClick, this);
 
     m_colour = *wxBLACK;
     UpdateColour();

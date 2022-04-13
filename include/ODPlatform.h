@@ -56,6 +56,7 @@ public:
                    long style = 0,
                    const wxValidator& validator = wxDefaultValidator,
                    const wxString& name = _T(""));
+    ~ODColourPickerCtrl();
 
     bool Create(wxWindow *parent,
                 wxWindowID id,

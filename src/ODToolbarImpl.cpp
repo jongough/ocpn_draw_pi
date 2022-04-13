@@ -520,7 +520,7 @@ void ODToolbarImpl::UpdateIcons( void )
 
 void ODToolbarImpl::AddTools(void)
 {
-    Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
     DEBUGST("Width: ");
     DEBUGCONT(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth());
     DEBUGCONT(", Height: ");
@@ -540,7 +540,7 @@ void ODToolbarImpl::AddTools(void)
     this->Layout();
     //SetToolbarToolToggle(ID_NONE);
 
-    Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
 }
 
 void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
