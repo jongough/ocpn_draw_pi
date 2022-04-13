@@ -983,7 +983,7 @@ void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
         delete pWindow;
 #else
         pWindow->Destroy();
-        delete pWindow;
+        //delete pWindow;
 #endif
         if(g_pODPathPropDialog == pWindow)
             g_pODPathPropDialog = NULL;
