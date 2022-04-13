@@ -837,12 +837,6 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODRolloverWin )
         DeleteWindow(g_pODRolloverWin);
 
-    if( g_pODPathPropDialog ) {
-        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
-        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-        DeleteWindow(g_pODPathPropDialog);
-    }
-
     if( g_pODPointPropDialog ) {
         g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
         g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
@@ -883,6 +877,12 @@ bool ocpn_draw_pi::DeInit(void)
         g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
         g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
         DeleteWindow(g_PILIndexLinePropDialog);
+    }
+
+    if( g_pODPathPropDialog ) {
+        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
+        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
+        DeleteWindow(g_pODPathPropDialog);
     }
 
     if ( g_pPathAndPointManagerDialog )  {
@@ -983,7 +983,11 @@ void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
         delete pWindow;
 #else
         pWindow->Destroy();
+        delete pWindow;
 #endif
+        if(g_pODPathPropDialog == pWindow)
+            g_pODPathPropDialog = NULL;
+
         return;
     }
 }
@@ -1090,7 +1094,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     if( g_dialogFont != l_dialogFont) {
         g_dialogFont = l_dialogFont;
         if(NULL != g_pOCPNDrawPropDialog) {
-            delete g_pOCPNDrawPropDialog;
+            DeleteWindow(g_pOCPNDrawPropDialog);
             g_pOCPNDrawPropDialog = NULL;
         }
 
@@ -1104,7 +1108,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     DimeWindow(g_pOCPNDrawPropDialog);
     g_pOCPNDrawPropDialog->ShowModal();
 
-    delete g_pOCPNDrawPropDialog;
+    DeleteWindow(g_pOCPNDrawPropDialog);
     g_pOCPNDrawPropDialog = NULL;
 }
 
@@ -2256,7 +2260,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( g_dialogFont != l_dialogFont) {
                 g_dialogFont = l_dialogFont;
                 if(NULL != g_PILIndexLinePropDialog) {
-                    delete g_PILIndexLinePropDialog;
+                    DeleteWindow(g_PILIndexLinePropDialog);
                     g_PILIndexLinePropDialog = NULL;
                 }
             }
@@ -2272,7 +2276,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( g_dialogFont != l_dialogFont) {
                 g_dialogFont = l_dialogFont;
                 if(NULL != g_pODPointPropDialog) {
-                    delete g_pODPointPropDialog;
+                    DeleteWindow(g_pODPointPropDialog);
                     g_pODPointPropDialog = NULL;
                 }
             }

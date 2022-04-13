@@ -465,6 +465,8 @@ public:
 
     void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
 
+    void    DeleteWindow(wxWindow *pWindow);
+
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;
     wxCursor    *pCursorUp;
@@ -564,8 +566,6 @@ private:
     void    FindSelectedObject( void );
 
     void    ItemProcess(int id);
-
-    void    DeleteWindow(wxWindow *pWindow);
 
     wxTimer *m_BlinkTimer;
     wxTimer *m_RolloverPopupTimer;
