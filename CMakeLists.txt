@@ -31,7 +31,7 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "15")
-set(VERSION_TWEAK "1")
+set(VERSION_TWEAK "2")
 set(VERSION_DATE "12/04/2021") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
@@ -83,7 +83,7 @@ message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
 
 set(BUNDLE_DATA FALSE)
 set(CMAKE_BUILD_TYPE
-    "Debug"
+    "Release"
     CACHE STRING "Choose the type of build")
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 
