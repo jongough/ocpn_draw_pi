@@ -120,6 +120,7 @@ PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
 GZMan                   *g_pGZMan;
 wxString                g_default_ODPoint_icon;
+ODPathPropertiesDialogImpl   *g_pODDefaultPathPropDialog;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
@@ -880,10 +881,10 @@ bool ocpn_draw_pi::DeInit(void)
         DeleteWindow(g_PILIndexLinePropDialog);
     }
 
-    if( g_pODPathPropDialog ) {
+    if( g_pODDefaultPathPropDialog ) {
         g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
         g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-        DeleteWindow(g_pODPathPropDialog);
+        DeleteWindow(g_pODDefaultPathPropDialog);
     }
 
     if ( g_pPathAndPointManagerDialog )  {

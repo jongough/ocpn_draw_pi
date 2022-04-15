@@ -744,7 +744,8 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
         }
 
         if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
-            g_pODPathPropDialog = new ODPathPropertiesDialogImpl( m_parent_window );
+            g_pODDefaultPathPropDialog = new ODPathPropertiesDialogImpl( m_parent_window );
+        g_pODPathPropDialog = g_pODDefaultPathPropDialog;
         l_pPath = inpath;
         g_pODPathPropDialog->SetPath( l_pPath );
         g_pODPathPropDialog->UpdateProperties( l_pPath );
