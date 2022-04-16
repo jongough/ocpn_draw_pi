@@ -466,6 +466,7 @@ public:
     void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
 
     void    DeleteWindow(wxWindow *pWindow);
+    void    DeleteWindow(wxWindow* *pWindow);
 
     wxCursor    *pCursorLeft;
     wxCursor    *pCursorRight;

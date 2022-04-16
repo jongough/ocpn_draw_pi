@@ -834,69 +834,68 @@ bool ocpn_draw_pi::DeInit(void)
     m_RolloverPopupTimer = NULL;
 
     if( g_pODLinkPropertiesDialog )
-        DeleteWindow(g_pODLinkPropertiesDialog);
+        DeleteWindow((wxWindow**)&g_pODLinkPropertiesDialog);
 
     if( g_pODRolloverWin )
-        DeleteWindow(g_pODRolloverWin);
+        DeleteWindow((wxWindow**)&g_pODRolloverWin);
 
     if( g_pODPointPropDialog ) {
         g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
         g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-        DeleteWindow(g_pODPointPropDialog);
+        DeleteWindow((wxWindow**)&g_pODPointPropDialog);
     }
 
     if ( g_pBoundaryPropDialog ) {
         g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
         g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-        DeleteWindow(g_pBoundaryPropDialog);
+        DeleteWindow((wxWindow**)&g_pBoundaryPropDialog);
     }
 
     if ( g_pEBLPropDialog ) {
         g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
         g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
-        DeleteWindow(g_pEBLPropDialog);
+        DeleteWindow((wxWindow**)&g_pEBLPropDialog);
     }
 
     if ( g_pDRPropDialog ) {
         g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
         g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-        DeleteWindow(g_pDRPropDialog);
+        DeleteWindow((wxWindow**)&g_pDRPropDialog);
     }
 
     if ( g_pGZPropDialog ) {
         g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
         g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-        DeleteWindow(g_pGZPropDialog);
+        DeleteWindow((wxWindow**)&g_pGZPropDialog);
     }
 
     if ( g_pPILPropDialog )  {
         g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
         g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-        DeleteWindow(g_pPILPropDialog);
+        DeleteWindow((wxWindow**)&g_pPILPropDialog);
     }
 
     if ( g_PILIndexLinePropDialog )  {
         g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
         g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-        DeleteWindow(g_PILIndexLinePropDialog);
+        DeleteWindow((wxWindow**)&g_PILIndexLinePropDialog);
     }
 
     if( g_pODDefaultPathPropDialog ) {
         g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
         g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-        DeleteWindow(g_pODDefaultPathPropDialog);
+        DeleteWindow((wxWindow**)&g_pODDefaultPathPropDialog);
     }
 
     if ( g_pPathAndPointManagerDialog )  {
         g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
         g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-        DeleteWindow(g_pPathAndPointManagerDialog);
+        DeleteWindow((wxWindow**)&g_pPathAndPointManagerDialog);
     }
 
     if( g_pODToolbar ) {
         g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
-        DeleteWindow(g_pODToolbar);
-        g_pODToolbar = NULL;
+        DeleteWindow((wxWindow**)&g_pODToolbar);
     }
 
     delete m_pODicons;
@@ -990,6 +989,25 @@ void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
         if(g_pODPathPropDialog == pWindow)
             g_pODPathPropDialog = NULL;
 
+        return;
+    }
+}
+
+void ocpn_draw_pi::DeleteWindow ( wxWindow **pWindow )
+{
+    DEBUGSL("DeleteWindow");
+    wxWindow *l_pWindow = *pWindow;
+    if (l_pWindow) {
+//        l_pWindow->Close(true);
+        #if defined(APPLE) || defined(__MSVC__) || defined(__OCPN__ANDROID__)
+        delete l_pWindow;
+        #else
+        l_pWindow->Destroy();
+        //delete pWindow;
+        #endif
+        if(g_pODPathPropDialog == l_pWindow)
+            g_pODPathPropDialog = NULL;
+        *pWindow = NULL;
         return;
     }
 }
