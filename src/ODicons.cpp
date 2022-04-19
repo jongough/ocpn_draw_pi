@@ -48,9 +48,9 @@ ODicons::ODicons()
 
 ODicons::~ODicons()
 {
-    delete g_SData_Locn;
-    g_SData_Locn = NULL;
+
 }
+
 void ODicons::initialize_images(void)
 {
     wxFileName fn;
@@ -302,7 +302,7 @@ wxBitmap ODicons::ScaleIcon( wxBitmap bitmap, double sf )
 }
 bool ODicons::ScaleIcons()
 {
- return false;
+// return false;
     if(!SetScaleFactor()) return false;
 
 

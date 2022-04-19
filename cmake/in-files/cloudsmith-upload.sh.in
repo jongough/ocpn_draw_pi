@@ -230,7 +230,7 @@ ls -la ~/.
 
 # Find if file exists in directory
 function have_any() {
-    [ $# -gt 0 ]
+    [ $# -gt 1 ]
 }
 
 if [ ! -z ${LOCAL_DEPLOY+x} ]; then

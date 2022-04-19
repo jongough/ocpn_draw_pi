@@ -329,7 +329,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             checkGlError("Before glGenTextures", __FILE__, __LINE__);
             glGenTextures(1, &textureID);
             checkGlError("glGenTextures", __FILE__, __LINE__);
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
 #if !defined(__WXMSW__) && !defined(__MSVC__)
             glActiveTexture(GL_TEXTURE0);
             checkGlError("glActiveTexture", __FILE__, __LINE__);
@@ -358,7 +358,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             checkGlError("glBindTexture", __FILE__, __LINE__);
 
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
             glEnable( GL_ALPHA );
             checkGlError("glBindTexture", __FILE__, __LINE__);
             glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
@@ -385,7 +385,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
             glDisable( GL_BLEND );
             checkGlError("glDisable", __FILE__, __LINE__);
 
-#ifndef ANDROID
+#ifndef __OCPN__ANDROID__
             glDisable( GL_TEXTURE_2D );
             checkGlError("glDisable", __FILE__, __LINE__);
 #endif

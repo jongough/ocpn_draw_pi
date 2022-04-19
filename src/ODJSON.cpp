@@ -73,14 +73,14 @@ using nlohmann::json_schema::json_validator;
 #include <wx/base64.h>
 #include <wx/mstream.h>
 
-#ifdef OD_JSON_SCHEMA_VALIDATOR 
+#ifdef OD_JSON_SCHEMA_VALIDATOR
 json_validator *gODJSONMsgValidator;
 #endif
 
 ODJSON::ODJSON()
 {
     // ctor
-#ifdef OD_JSON_SCHEMA_VALIDATOR     
+#ifdef OD_JSON_SCHEMA_VALIDATOR
     gODJSONMsgValidator = NULL;
 
     /* Join both fragments of the schema together. Needed for MSVC limitation on litteral text */
@@ -91,18 +91,18 @@ ODJSON::ODJSON()
         jSchema[it.key()] = it.value();
     }
 
-#endif    
+#endif
 }
 
 ODJSON::~ODJSON()
 {
     // dtor
-#ifdef OD_JSON_SCHEMA_VALIDATOR 
+#ifdef OD_JSON_SCHEMA_VALIDATOR
     if(gODJSONMsgValidator) {
         delete gODJSONMsgValidator;
         gODJSONMsgValidator = NULL;
     }
-#endif    
+#endif
 }
 
 void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
@@ -112,7 +112,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
     wxJSONValue     jMsg;
     wxJSONWriter    writer;
     wxString        MsgString;
-    
+
     wxString    sLogMessage;
     wxString    l_sType;
     wxString    l_sMsg;
@@ -129,11 +129,11 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
     int         l_BoundaryType;
     int         l_BoundaryState;
     bool        bFail = false;
-    
-    DEBUGSL(message_body);
+
+    //DEBUGSL(message_body);
 
     if(message_id == wxS("OCPN_DRAW_PI")) {
-#ifdef OD_JSON_SCHEMA_VALIDATOR        
+#ifdef OD_JSON_SCHEMA_VALIDATOR
         if(!gODJSONMsgValidator) {
             gODJSONMsgValidator = new json_validator;
             try {
@@ -183,33 +183,33 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             }
             return;
         }
-        
-#ifndef OD_JSON_SCHEMA_VALIDATOR        
+
+#ifndef OD_JSON_SCHEMA_VALIDATOR
         if(!root.HasMember( wxS("Source"))) {
             // Originator
             wxLogMessage( wxS("No Source found in message") );
             bFail = true;
         }
-        
+
         if(!root.HasMember( wxS("Msg"))) {
             // Message identifier
             wxLogMessage( wxS("No Msg found in message") );
             bFail = true;
         }
-        
+
         if(!root.HasMember( wxS("Type"))) {
             // Message type, orig or resp
             wxLogMessage( wxS("No Type found in message") );
             bFail = true;
         }
-        
+
         if(!root.HasMember( wxS("MsgId"))) {
             // Unique (?) Msg number
             wxLogMessage( wxS("No MsgId found in message") );
             bFail = true;
         }
 #endif
-        DEBUGSL(root[wxS("Msg")].AsString());
+        //DEBUGSL(root[wxS("Msg")].AsString());
         if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
             jMsg[wxT("Msg")] = root[wxT("Msg")];
@@ -222,7 +222,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             writer.Write( jMsg, MsgString );
             SendPluginMessage( root[wxS("Source")].AsString(), MsgString );
             return;
-            
+
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("GetAPIAddresses")) {
             if(root[wxS("Type")].AsString() == wxS("Request")) {
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
@@ -261,7 +261,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 return;
             }
-            
+
         } else if(!bFail && root[wxS("Msg")].AsString() == "FindPathByGUID") {
 #ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("GUID"))) {
@@ -273,7 +273,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxString l_sGUID = root[wxS("GUID")].AsString();
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
-                
+
                 if(l_sType == wxS("Request")) {
                     ODPath *l_path = NULL;
                     l_path = g_pPathMan->FindPathByGUID( l_sGUID );
@@ -312,12 +312,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("Lon")) && !root.HasMember( wxS("lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("BoundaryType"))) {
                 wxLogMessage( wxS("No Boundary Type found in message") );
                 bFail = true;
@@ -335,23 +335,23 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
 
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
-                
+
                 if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NEITHER;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
                 else l_BoundaryType = ID_BOUNDARY_ANY;
-                
+
                 l_BoundaryState = ID_BOUNDARY_ANY;
                 if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
                 else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
                 else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
-                
+
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;
                     bool    l_bFoundBoundaryPoint = false;
                     wxString l_sGUID = g_pBoundaryMan->FindPointInBoundary( l_dLat, l_dLon, l_BoundaryType, l_BoundaryState );
-                    if(l_sGUID.length() > 0) 
+                    if(l_sGUID.length() > 0)
                         l_bFoundBoundary = true;
                     else {
                         l_sGUID = g_pBoundaryMan->FindPointInBoundaryPoint( l_dLat, l_dLon, l_BoundaryType );
@@ -407,17 +407,17 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No Start Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("StartLon"))) {
                 wxLogMessage( wxS("No Start Longitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("EndLat"))) {
                 wxLogMessage( wxS("No End Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("EndLon"))) {
                 wxLogMessage( wxS("No End Longitude found in message") );
                 bFail = true;
@@ -428,28 +428,28 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 root[wxS("StartLon")].AsString().ToDouble( & l_dStartLon );
                 root[wxS("EndLat")].AsString().ToDouble( & l_dEndLat );
                 root[wxS("EndLon")].AsString().ToDouble( & l_dEndLon );
-                
+
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
-                
+
                 if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NEITHER;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
                 else l_BoundaryType = ID_BOUNDARY_ANY;
-                
+
                 l_BoundaryState = ID_BOUNDARY_ANY;
                 if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
                 else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
                 else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
-                
-                
+
+
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;
                     wxString l_sGUID = g_pBoundaryMan->FindLineCrossingBoundary( l_dStartLon, l_dStartLat, l_dEndLon, l_dEndLat, &l_dCrossingLon, &l_dCrossingLat, &l_dCrossingDist, l_BoundaryType, l_BoundaryState );
-                    if(l_sGUID.length() > 0) 
+                    if(l_sGUID.length() > 0)
                         l_bFoundBoundary = true;
-                    
+
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                     jMsg[wxT("Msg")] = root[wxT("Msg")];
                     jMsg[wxT("Type")] = wxT("Response");
@@ -485,17 +485,17 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No Start Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("StartLon"))) {
                 wxLogMessage( wxS("No Start Longitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("EndLat"))) {
                 wxLogMessage( wxS("No End Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("EndLon"))) {
                 wxLogMessage( wxS("No End Longitude found in message") );
                 bFail = true;
@@ -506,28 +506,28 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 root[wxS("StartLon")].AsString().ToDouble( & l_dStartLon );
                 root[wxS("EndLat")].AsString().ToDouble( & l_dEndLat );
                 root[wxS("EndLon")].AsString().ToDouble( & l_dEndLon );
-                
+
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
-                
+
                 if(root[wxT("BoundaryType")].AsString() == wxT("Exclusion")) l_BoundaryType = ID_BOUNDARY_EXCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Inclusion")) l_BoundaryType = ID_BOUNDARY_INCLUSION;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NEITHER;
                 else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
                 else l_BoundaryType = ID_BOUNDARY_ANY;
-                
+
                 l_BoundaryState = ID_BOUNDARY_ANY;
                 if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
                 else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
                 else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
-                
-                
+
+
                 if(l_sType == wxS("Request")) {
                     bool    l_bFoundBoundary = false;
                     wxString l_sGUID = g_pBoundaryMan->FindLineCrossingBoundary( l_dStartLon, l_dStartLat, l_dEndLon, l_dEndLat, &l_dCrossingLon, &l_dCrossingLat, &l_dCrossingDist, l_BoundaryType, l_BoundaryState );
-                    if(l_sGUID.length() > 0) 
+                    if(l_sGUID.length() > 0)
                         l_bFoundBoundary = true;
-                    
+
                     jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                     jMsg[wxT("Msg")] = root[wxT("Msg")];
                     jMsg[wxT("Type")] = wxT("Response");
@@ -563,12 +563,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No GUID found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("Lat")) && !root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("Lon")) && !root.HasMember( wxS("lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
@@ -584,17 +584,17 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     l_dLon = root[wxS("Lon")].AsDouble();
                 else
                     l_dLon = root[wxS("lon")].AsDouble();
-                
+
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
-                
+
                 if(l_sType == wxS("Request")) {
                     Boundary *l_boundary = NULL;
                     BoundaryPoint *l_boundarypoint = NULL;
                     if(l_sMsg == wxS("FindPointInBoundary")) {
                         l_dLat = root[wxS("Lat")].AsDouble();
                         l_dLon = root[wxS("Lon")].AsDouble();
-                        
+
                         l_boundary = (Boundary *)g_pBoundaryMan->FindPathByGUID( l_sGUID );
                         if(!l_boundary) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
                         if(!l_boundary && !l_boundarypoint) {
@@ -654,19 +654,19 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     }
                 }
             }
-            
+
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("FindPointInGuardZone")) {
 #ifndef OD_JSON_SCHEMA_VALIDATOR
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("Lat")) && !root.HasMember( wxS("lat"))) {
                 wxLogMessage( wxS("No Latitude found in message") );
                 bFail = true;
             }
-            
+
             if(!root.HasMember( wxS("Lon")) && !root.HasMember( wxS("lon"))) {
                 wxLogMessage( wxS("No Longitude found in message") );
                 bFail = true;
@@ -685,11 +685,11 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
 
                 l_sType = root[wxS("Type")].AsString();
                 l_sMsg = root[wxT("Msg")].AsString();
-                
+
                 if(l_sType == wxS("Request")) {
                     ODPath *l_path = NULL;
                     BoundaryPoint *l_boundarypoint = NULL;
-                    
+
                     l_path = g_pPathMan->FindPathByGUID( l_sGUID );
                     if(!l_path) l_boundarypoint = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID( l_sGUID );
                     if(!l_path && !l_boundarypoint) {
@@ -716,12 +716,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     else if(root[wxT("BoundaryType")].AsString() == wxT("Neither")) l_BoundaryType = ID_BOUNDARY_NEITHER;
                     else if(root[wxT("BoundaryType")].AsString() == wxT("Any")) l_BoundaryType = ID_BOUNDARY_ANY;
                     else l_BoundaryType = ID_BOUNDARY_ANY;
-                    
+
                     l_BoundaryState = ID_BOUNDARY_ANY;
                     if(root[wxT("BoundaryState")].AsString() == wxT("Active")) l_BoundaryState = ID_PATH_STATE_ACTIVE;
                     else if(root[wxT("BoundaryState")].AsString() == wxT("Inactive")) l_BoundaryState = ID_PATH_STATE_INACTIVE;
                     else if(root[wxT("BoundaryState")].AsString() == wxT("Any")) l_BoundaryState = ID_PATH_STATE_ANY;
-                    
+
                     if(l_path) {
                         if(l_path->m_sTypeString == wxT("Guard Zone"))
                             l_bFound = g_pGZMan->FindPointInGZ( (GZ *)l_path, l_dLat, l_dLon, l_BoundaryType, l_BoundaryState  );
@@ -744,7 +744,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         jMsg[wxS("Name")] = l_boundarypoint->m_ODPointName;
                         jMsg[wxS("Description")] = l_boundarypoint->m_ODPointDescription;
                     }
-                    
+
                     jMsg[wxS("GUID")] = root[wxS("GUID")];
                     writer.Write( jMsg, MsgString );
                     SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
@@ -752,65 +752,65 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 }
             }
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("BoundaryInformation")) {
-            
+
             wxJSONValue boundaries;
-            
+
             wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
-            
+
             Boundary *pboundary = NULL;
             ODPoint *popSecond;
-            
+
             while( boundary_node ) {  //all boundaries
                 wxJSONValue current_boundary;
                 wxJSONValue boundary_points;
-                
+
                 pboundary = boundary_node->GetData();
                 wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
                 wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
-                
+
                 while( OCPNpoint_next_node ) {  //specific boundary
                     wxJSONValue current_point;
-                    
+
                     popSecond = OCPNpoint_next_node->GetData();
-                    
+
                     current_point[wxT("Lat")] = popSecond->m_lat;
                     current_point[wxT("Lon")] = popSecond->m_lon;
                     boundary_points.Append(current_point);
-                    
+
                     OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
                 }
-                
+
                 current_boundary[wxT("BoundaryPoints")] = boundary_points;
                 current_boundary[wxS("GUID")] = pboundary->m_GUID;
                 current_boundary[wxS("Name")] = pboundary->m_PathNameString;
                 current_boundary[wxS("Description")] = pboundary->m_PathDescription;
-                
+
                 if(pboundary->IsActive())
                     current_boundary[wxT("BoundaryState")] = wxT("Active");
                 else
                     current_boundary[wxT("BoundaryState")] = wxT("Inactive");
-                
+
                 if(pboundary->m_bExclusionBoundary)
                     current_boundary[wxT("BoundaryType")] = wxT("Exclusion");
                 else if(pboundary->m_bInclusionBoundary)
                     current_boundary[wxT("BoundaryType")] = wxT("Inclusion");
                 else
                     current_boundary[wxT("BoundaryType")] = wxT("Neither");
-                
+
                 boundaries.Append(current_boundary);
-                
+
                 boundary_node = boundary_node->GetNext();    // next boundary
             }
-            
+
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
             jMsg[wxT("Msg")] = root[wxT("Msg")];
             jMsg[wxT("Type")] = wxT("Response");
             jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
             jMsg[wxT("Boundaries")] = boundaries;
-            
+
             writer.Write( jMsg, MsgString );
             SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-            
+
             return;
         } else if(!bFail && root[wxS("Msg")].AsString() == wxS("CreateBoundary")) {
             wxJSONValue jv_Boundary;
@@ -843,7 +843,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         wxLogMessage( wxS("Boundary Points missing required information"));
                 }
             }
-            
+
             if(!bFail && jv_Boundary.IsValid() && jv_BoundaryPoint.IsValid()) {
                 Boundary *pl_boundary = new Boundary();
                 pl_boundary->m_PathNameString = jv_Boundary[wxS("BoundaryName")].AsString();
@@ -862,7 +862,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 if(jv_Boundary.HasMember(wxS("temporary"))) pl_boundary->m_bTemporary = jv_Boundary[wxS("visible")].AsBool();
                 if(jv_Boundary.HasMember(wxS("lineColour"))) pl_boundary->m_wxcActiveLineColour = jv_Boundary[wxS("lineColour")].AsString();
                 if(jv_Boundary.HasMember(wxS("fillColour"))) pl_boundary->m_wxcActiveFillColour = jv_Boundary[wxS("fillColour")].AsString();
-                
+
                 for(int i = 0; i< jv_Boundary[wxS("BoundaryPoints")].Size(); i++) {
                     jv_BoundaryPoint = jv_Boundary[wxS("BoundaryPoints")].Item(i);
                     if(jv_BoundaryPoint.HasMember( wxS("Lat")) )
@@ -886,7 +886,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         pl_boundarypoint->m_bExclusionBoundaryPoint = false;
                         pl_boundarypoint->m_bInclusionBoundaryPoint = false;
                     }
-                    if(jv_BoundaryPoint.HasMember("visible")) pl_boundarypoint->SetVisible(jv_BoundaryPoint[wxS("visible")].AsBool()); 
+                    if(jv_BoundaryPoint.HasMember("visible")) pl_boundarypoint->SetVisible(jv_BoundaryPoint[wxS("visible")].AsBool());
                     if(jv_BoundaryPoint.HasMember("ringsvisible")) pl_boundarypoint->SetShowODPointRangeRings(jv_BoundaryPoint[wxS("ringsvisible")].AsBool());
                     if(jv_BoundaryPoint.HasMember("ringsnumber")) pl_boundarypoint->SetODPointRangeRingsNumber(jv_BoundaryPoint[wxS("ringsnumber")].AsInt());
                     if(jv_BoundaryPoint.HasMember("ringssteps")) pl_boundarypoint->SetODPointRangeRingsStep(jv_BoundaryPoint[wxS("ringssteps")].AsDouble());
@@ -902,29 +902,29 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                     pl_boundarypoint->CreateColourSchemes();
                     pl_boundarypoint->SetColourScheme();
                 }
-                
+
                 pl_boundary->AddPoint(pl_boundary->m_pODPointList->GetFirst()->GetData());
                 pl_boundary->m_bIsBeingCreated = false;
                 pl_boundary->CreateColourSchemes();
                 pl_boundary->SetColourScheme();
                 pl_boundary->SetActiveColours();
-                
+
                 ODNavObjectChanges *l_ODNavObjectChanges = new ODNavObjectChanges();
                 l_ODNavObjectChanges->InsertPathA(pl_boundary);
-                
+
                 delete l_ODNavObjectChanges;
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Created")] = true;
-                
+
                 jMsg[wxS("GUID")] = pl_boundary->m_GUID;
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 pl_boundary = NULL;
                 return;
             } else {
@@ -947,9 +947,9 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("Boundary Point missing required information") );
                 bFail = true;
             }
-            
+
             if(!bFail) {
-                BoundaryPoint *pl_boundarypoint; 
+                BoundaryPoint *pl_boundarypoint;
                 wxString l_name = wxEmptyString;
                 if(jv_BoundaryPoint.HasMember("BoudaryPointName")) {
                     if(jv_BoundaryPoint[wxS("BoundayPointName")].AsString().length() > 0)
@@ -970,7 +970,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 } else {
                     pl_boundarypoint = new BoundaryPoint(l_dLat, l_dLon, jv_BoundaryPoint[wxS("IconName")].AsString(), l_name);
                 }
-                
+
                 if(jv_BoundaryPoint.HasMember(wxS("BoundaryPointType"))) {
                     if(jv_BoundaryPoint[wxS("BoundaryPointType")].AsString() == _T("Exclusion")) {
                         pl_boundarypoint->m_bExclusionBoundaryPoint = true;
@@ -986,7 +986,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         pl_boundarypoint->m_bInclusionBoundaryPoint = g_bInclusionBoundaryPoint;
                     }
                 }
-                if(jv_BoundaryPoint.HasMember("visible")) pl_boundarypoint->SetVisible(jv_BoundaryPoint[wxS("visible")].AsBool()); 
+                if(jv_BoundaryPoint.HasMember("visible")) pl_boundarypoint->SetVisible(jv_BoundaryPoint[wxS("visible")].AsBool());
                 if(jv_BoundaryPoint.HasMember("ringsvisible")) pl_boundarypoint->SetShowODPointRangeRings(jv_BoundaryPoint[wxS("ringsvisible")].AsBool());
                 if(jv_BoundaryPoint.HasMember("ringsnumber")) pl_boundarypoint->SetODPointRangeRingsNumber(jv_BoundaryPoint[wxS("ringsnumber")].AsInt());
                 if(jv_BoundaryPoint.HasMember("ringssteps")) pl_boundarypoint->SetODPointRangeRingsStep(jv_BoundaryPoint[wxS("ringssteps")].AsDouble());
@@ -1004,25 +1004,25 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 pl_boundarypoint->m_bIsInPath = false;
                 pl_boundarypoint->CreateColourSchemes();
                 pl_boundarypoint->SetColourScheme();
-                
+
                 g_pODConfig->AddNewODPoint( pl_boundarypoint, -1 );    // use auto next num
                 g_pODSelect->AddSelectableODPoint( jv_BoundaryPoint[wxS("Lat")].AsDouble(), jv_BoundaryPoint[wxS("Lon")].AsDouble(), pl_boundarypoint );
                 if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
                     g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Created")] = true;
-                
+
                 jMsg[wxS("GUID")] = pl_boundarypoint->m_GUID;
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 pl_boundarypoint = NULL;
-                
+
                 return;
             } else {
                 jMsg[wxS("Created")] = false;
@@ -1042,9 +1042,9 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             } else {
                 jv_TextPoint = root[wxS("TextPoint")];
             }
-            
+
             if(!bFail) {
-                TextPoint *pl_textpoint; 
+                TextPoint *pl_textpoint;
                 if(jv_TextPoint.HasMember( wxS("Lat")) )
                     l_dLat = jv_TextPoint[wxS("Lat")].AsDouble();
                 else
@@ -1059,15 +1059,15 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 } else {
                     pl_textpoint = new TextPoint(l_dLat, l_dLat, jv_TextPoint[wxS("IconName")].AsString(), jv_TextPoint[wxS("TextPointName")].AsString());
                 }
-                
-                if(jv_TextPoint.HasMember("visible")) pl_textpoint->SetVisible(jv_TextPoint[wxS("visible")].AsBool()); 
-                if(jv_TextPoint.HasMember("temporary")) pl_textpoint->m_bTemporary = jv_TextPoint[wxS("temporary")].AsBool(); 
-                if(jv_TextPoint.HasMember("GUID")) pl_textpoint->m_GUID = jv_TextPoint[wxS("GUID")].AsString(); 
+
+                if(jv_TextPoint.HasMember("visible")) pl_textpoint->SetVisible(jv_TextPoint[wxS("visible")].AsBool());
+                if(jv_TextPoint.HasMember("temporary")) pl_textpoint->m_bTemporary = jv_TextPoint[wxS("temporary")].AsBool();
+                if(jv_TextPoint.HasMember("GUID")) pl_textpoint->m_GUID = jv_TextPoint[wxS("GUID")].AsString();
                 else jv_TextPoint[wxS("GUID")] = wxEmptyString;
-                if(jv_TextPoint.HasMember("TextToDisplay")) pl_textpoint->m_TextPointText = (jv_TextPoint[wxS("TextToDisplay")].AsString()); 
-                if(jv_TextPoint.HasMember("TextPosition")) pl_textpoint->m_iTextPosition = (jv_TextPoint[wxS("TextPosition")].AsInt()); 
-                if(jv_TextPoint.HasMember("TextColour")) pl_textpoint->m_colourTextColour = (jv_TextPoint[wxS("TextColour")].AsString()); 
-                if(jv_TextPoint.HasMember("BackgroundColour")) pl_textpoint->m_colourTextBackgroundColour = (jv_TextPoint[wxS("BackgroundColour")].AsString()); 
+                if(jv_TextPoint.HasMember("TextToDisplay")) pl_textpoint->m_TextPointText = (jv_TextPoint[wxS("TextToDisplay")].AsString());
+                if(jv_TextPoint.HasMember("TextPosition")) pl_textpoint->m_iTextPosition = (jv_TextPoint[wxS("TextPosition")].AsInt());
+                if(jv_TextPoint.HasMember("TextColour")) pl_textpoint->m_colourTextColour = (jv_TextPoint[wxS("TextColour")].AsString());
+                if(jv_TextPoint.HasMember("BackgroundColour")) pl_textpoint->m_colourTextBackgroundColour = (jv_TextPoint[wxS("BackgroundColour")].AsString());
                 if(jv_TextPoint.HasMember("BackgroundTransparency")) pl_textpoint->m_iBackgroundTransparency = (jv_TextPoint[wxS("BackgroundTransparency")].AsInt());
                 if(jv_TextPoint.HasMember("defaultRangeRings")) {
                     if(!jv_TextPoint[wxT("defaultRangeRings")].AsBool()) {
@@ -1095,25 +1095,25 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 pl_textpoint->m_bIsInPath = false;
                 pl_textpoint->CreateColourSchemes();
                 pl_textpoint->SetColourScheme();
-                
+
                 g_pODConfig->AddNewODPoint( pl_textpoint, -1 );    // use auto next num
                 g_pODSelect->AddSelectableODPoint( jv_TextPoint[wxS("Lat")].AsDouble(), jv_TextPoint[wxS("Lon")].AsDouble(), pl_textpoint );
                 if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
                     g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Created")] = true;
-                
+
                 jMsg[wxS("GUID")] = pl_textpoint->m_GUID;
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 pl_textpoint = NULL;
-                
+
                 return;
             } else {
                 jMsg[wxS("Created")] = false;
@@ -1127,30 +1127,30 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID for the Text Point found in message") );
                 bFail = true;
-            } 
-            
+            }
+
             if(!bFail) {
                 Boundary *plB = (Boundary *)g_pBoundaryMan->FindPathByGUID(root[wxS("GUID")].AsString());
                 if(plB) {
                     g_pBoundaryMan->DeletePath(plB);
-                } 
-                
+                }
+
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Deleted")] = true;
-                
+
                 jMsg[wxS("GUID")] = root[wxS("GUID")].AsString();
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 plB = NULL;
-                
+
                 return;
-                
+
             } else {
                 jMsg[wxS("Deleted")] = false;
             }
@@ -1163,7 +1163,7 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("No GUID for the Text Point found in message") );
                 bFail = true;
             }
-            
+
             if(!bFail) {
                 BoundaryPoint *plBP = (BoundaryPoint *)g_pODPointMan->FindODPointByGUID(root[wxS("GUID")].AsString());
                 if(plBP) {
@@ -1182,40 +1182,40 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                         }
                     } else {
                         g_pODPointMan->DestroyODPoint(plBP, false);
-                        
+
                         g_pODSelect->DeleteSelectablePoint( plBP, SELTYPE_ODPOINT );
-                        
+
                         if( NULL != g_pODPointMan )
                             g_pODPointMan->RemoveODPoint( plBP );
                         if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
                             g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
-                        
+
                         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
                             g_pODPointPropDialog->ValidateMark();
                         }
-                        
+
                         plBP->m_bPtIsSelected = false;
-                        
+
                         delete (BoundaryPoint *)plBP;
-                        
+
                     }
                 }
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Deleted")] = true;
-                
+
                 jMsg[wxS("GUID")] = root[wxT("GUID")].AsString();
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 plBP = NULL;
-                
+
                 return;
-                
+
             } else {
                 jMsg[wxS("Deleted")] = false;
             }
@@ -1227,44 +1227,44 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             if(!root.HasMember( wxS("GUID"))) {
                 wxLogMessage( wxS("No GUID for the Text Point found in message") );
                 bFail = true;
-            } 
-            
+            }
+
             if(!bFail) {
                 TextPoint *pl_textpoint = (TextPoint *)g_pODPointMan->FindODPointByGUID(root[wxS("GUID")].AsString());
-                
+
                 if(pl_textpoint) {
                     g_pODPointMan->DestroyODPoint(pl_textpoint);
-                    
+
                     g_pODSelect->DeleteSelectablePoint( pl_textpoint, SELTYPE_ODPOINT );
                     g_pODConfig->DeleteODPoint( pl_textpoint );
                     if( NULL != g_pODPointMan )
                         g_pODPointMan->RemoveODPoint( pl_textpoint );
                     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
                         g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
-                    
+
                     if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
                         g_pODPointPropDialog->ValidateMark();
                     }
-                    
+
                     pl_textpoint->m_bPtIsSelected = false;
-                    
+
                     delete (TextPoint *)pl_textpoint;
                 }
-                
+
                 RequestRefresh(g_ocpn_draw_pi->m_parent_window);
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Deleted")] = true;
-                
+
                 jMsg[wxS("GUID")] = root[wxS("GUID")].AsString();
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 pl_textpoint = NULL;
-                
+
                 return;
             } else {
                 jMsg[wxS("Deleted")] = false;
@@ -1285,23 +1285,23 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("Add Point Icon missing required information") );
                 bFail = true;
             }
-            
+
             if(!bFail) {
                 wxMemoryBuffer l_MB = wxBase64Decode(jv_AddPointIcon[wxT("PointIcon")].AsString());
                 wxMemoryInputStream l_MIS(l_MB, l_MB.GetDataLen());
                 wxBitmap *l_PointIcon = new wxBitmap(wxImage(l_MIS));
-                
+
                 g_pODPointMan->ProcessIcon(*l_PointIcon, jv_AddPointIcon[wxT("PointIconName")].AsString(), jv_AddPointIcon[wxT("PointIconDescription")].AsString());
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Added")] = true;
-                
+
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 return;
             } else {
                 jMsg[wxS("Added")] = false;
@@ -1322,32 +1322,32 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 wxLogMessage( wxS("Delete Point Icon missing required information") );
                 bFail = true;
             }
-            
+
             if(!bFail) {
-                
+
                 g_pODPointMan->RemoveIcon(jv_DeletePointIcon[wxT("PointIconName")].AsString());
-                
+
                 jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
                 jMsg[wxT("Msg")] = root[wxT("Msg")];
                 jMsg[wxT("Type")] = wxT("Response");
                 jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
                 jMsg[wxS("Deleted")] = true;
-                
+
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-                
+
                 return;
             } else {
                 jMsg[wxS("Deleted")] = false;
             }
         }
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
-        
+
         // construct the JSON root object
         wxJSONValue  root;
         // construct a JSON parser
         wxJSONReader reader;
-        
+
         // now read the JSON text and store it in the 'root' structure
         // check for errors before retreiving values...
         int numErrors = reader.Parse( message_body, &root );
@@ -1355,12 +1355,12 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             //              const wxArrayString& errors = reader.GetErrors();
             return;
         }
-        
+
         // get the DECL value from the JSON message
         wxString decl = root[_T("Decl")].AsString();
         double decl_val;
         decl.ToDouble(&decl_val);
-        
+
         g_dVar = decl_val;
     }
 
@@ -1369,10 +1369,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
         jMsg[wxT("Msg")] = root[wxT("Msg")];
         jMsg[wxT("Type")] = wxT("Response");
         jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
-        
+
         writer.Write( jMsg, MsgString );
         SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
-        
+
     }
     return;
 }

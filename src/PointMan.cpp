@@ -793,7 +793,7 @@ void PointMan::DeleteAllODPoints( bool b_delete_used )
         if( !podp->m_bIsInLayer && ( podp->GetIconName() != _T("mob") )
             && ( ( b_delete_used && podp->m_bKeepXPath )
                         ||  !podp->m_bIsInPath   ) ) {
-            DestroyODPoint(podp);
+            DestroyODPoint(podp, b_delete_used);
 			delete podp;
             node = m_pODPointList->GetFirst();
         } else

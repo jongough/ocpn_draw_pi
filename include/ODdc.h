@@ -40,7 +40,7 @@
 
 #ifdef USE_ANDROID_GLES2
     #include "linmath.h"
-#endif    
+#endif
 
 class ViewPort;
 class GLUtesselator;
@@ -130,7 +130,9 @@ public:
 
     void SetTextureParms( GLint textureId, int width, int height );
 
-#ifdef ocpnUSE_GL     
+    void RenderSingleTexture(float *coords, float *uvCoords, PlugIn_ViewPort *vp, float dx, float dy, float angle_rad);
+
+#ifdef ocpnUSE_GL
     GLfloat     *s_odc_tess_work_buf;
     GLfloat     *s_odc_tess_tex_buf;
 #endif
@@ -170,7 +172,7 @@ protected:
     wxColour m_textforegroundcolour;
     wxFont m_font;
 
-#ifdef ocpnUSE_GL     
+#ifdef ocpnUSE_GL
     TexFont m_texfont;
 #endif
 

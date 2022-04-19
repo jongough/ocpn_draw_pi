@@ -25,21 +25,18 @@ bool ODToolbarDialog::Create( wxWindow* parent, wxWindowID id, const wxString& t
 		return false;
 	}
 
-	this->SetSizeHints( wxSize( -1,-1 ), wxDefaultSize );
 
-	wxBoxSizer* bSizerToolbar;
-	bSizerToolbar = new wxBoxSizer( wxVERTICAL );
+	m_bSizerToolbar = new wxBoxSizer( wxVERTICAL );
 
-	bSizerToolbar->SetMinSize( wxSize( 20,20 ) );
 	m_toolBarODToolbar = new wxToolBar( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTB_HORIZONTAL|wxBORDER_NONE );
 	m_toolBarODToolbar->Realize();
 
-	bSizerToolbar->Add( m_toolBarODToolbar, 1, wxEXPAND, 5 );
+	m_bSizerToolbar->Add( m_toolBarODToolbar, 1, wxEXPAND, 5 );
 
 
-	this->SetSizer( bSizerToolbar );
+	this->SetSizer( m_bSizerToolbar );
 	this->Layout();
-	bSizerToolbar->Fit( this );
+	m_bSizerToolbar->Fit( this );
 
 	// Connect Events
 	this->Connect( wxEVT_ACTIVATE, wxActivateEventHandler( ODToolbarDialog::OnActivate ) );

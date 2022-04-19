@@ -616,7 +616,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         float ys = l_odp.y - hs/2;
         float u = (float)w / glw, v = (float)h / glh;
 
-//#ifdef USE_ANDROID_GLES2
+#ifdef USE_ANDROID_GLES2
 #if 0
         float coords[8];
         float uv[8];
@@ -639,14 +639,11 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         coords[5] = ys + hs;
         coords[6] = xs, coords[7] = ys + hs;
 
-        glChartCanvas::RenderSingleTexture(coords, uv, &vp, 0, 0, 0);
-
+        dc.RenderSingleTexture(coords, uv, &pivp, 0, 0, 0);
+#endif
 #else
-
-        glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-
+        glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
         glColor3f(1, 1, 1);
-
         glBegin(GL_QUADS);
         glTexCoord2f(0, 0);
         glVertex2f(xs, ys);
@@ -857,3 +854,4 @@ void ODPoint::AddURL(wxString URL, wxString URLDescription)
 
     m_HyperlinkList->Insert(l_Link);
 }
+

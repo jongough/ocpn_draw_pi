@@ -36,6 +36,7 @@
             <property name="center"></property>
             <property name="context_help"></property>
             <property name="context_menu">0</property>
+            <property name="create_children">1</property>
             <property name="enabled">1</property>
             <property name="event_handler">impl_virtual</property>
             <property name="extra_style"></property>
@@ -61,11 +62,11 @@
             <event name="OnKeyDown">OnKeyDown</event>
             <event name="OnLeftDown">OnLeftDown</event>
             <event name="OnSize">OnSize</event>
-            <object class="wxBoxSizer" expanded="1">
-                <property name="minimum_size">20,20</property>
-                <property name="name">bSizerToolbar</property>
+            <object class="wxBoxSizer" expanded="0">
+                <property name="minimum_size">-1,-1</property>
+                <property name="name">m_bSizerToolbar</property>
                 <property name="orient">wxVERTICAL</property>
-                <property name="permission">none</property>
+                <property name="permission">protected</property>
                 <object class="sizeritem" expanded="0">
                     <property name="border">5</property>
                     <property name="flag">wxEXPAND</property>

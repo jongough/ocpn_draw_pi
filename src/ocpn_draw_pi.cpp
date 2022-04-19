@@ -120,6 +120,7 @@ PathMan                 *g_pPathMan;
 BoundaryMan             *g_pBoundaryMan;
 GZMan                   *g_pGZMan;
 wxString                g_default_ODPoint_icon;
+ODPathPropertiesDialogImpl   *g_pODDefaultPathPropDialog;
 ODPathPropertiesDialogImpl   *g_pODPathPropDialog;
 BoundaryProp            *g_pBoundaryPropDialog;
 EBLProp                 *g_pEBLPropDialog;
@@ -360,11 +361,13 @@ int      g_current_timer_canvas_index;
 
 extern "C" DECL_EXP opencpn_plugin* create_pi(void *ppimgr)
 {
+    DEBUGSL("create_pi");
     return (opencpn_plugin *)new ocpn_draw_pi(ppimgr);
 }
 
 extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 {
+    DEBUGSL("destroy_pi");
     delete p;
 }
 
@@ -376,6 +379,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 :opencpn_plugin_116(ppimgr)
 {
+    DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
@@ -430,22 +434,24 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     m_pODicons = new ODicons();
 
     m_bRecreateConfig = false;
+    DEBUGSL("ocpn_draw_pi: return");
 
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    delete m_pODicons;
-    m_pODicons = NULL;
+    DEBUGSL("~ocpn_draw_pi");
 #ifdef __WXMSW__
 #ifdef _DEBUG
-    _CrtDumpMemoryLeaks();
+// Only turn on if memory leaks suspected. Slows down shutdown when debugging
+//    _CrtDumpMemoryLeaks();
 #endif
 #endif
 }
 
 int ocpn_draw_pi::Init(void)
 {
+    DEBUGSL("Init");
     m_bBoundaryEditing = false;
     m_bPathEditing = false;
     m_bODPointEditing = false;
@@ -512,6 +518,7 @@ int ocpn_draw_pi::Init(void)
 
     // Adds local language support for the plugin to OCPN
     AddLocaleCatalog( PLUGIN_CATALOG_NAME );
+    DEBUGSL("AddLocaleCatalog");
 
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;
@@ -524,6 +531,7 @@ int ocpn_draw_pi::Init(void)
     //m_parent_window = GetOCPNCanvasWindow();
     m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
+    DEBUGSL("PluginGetFocusCanvas");
 
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
@@ -649,8 +657,10 @@ int ocpn_draw_pi::Init(void)
     wxpToolbarPos.x = g_iToolbarPosX;
     wxpToolbarPos.y = g_iToolbarPosY;
     g_pODToolbar->SetPosition( wxpToolbarPos );
+    g_pODToolbar->SetToolbarFont();
     g_pODToolbar->Fit();
     g_pODToolbar->SetInitialSize();
+    g_pODToolbar->Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
     //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
     if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
     if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
@@ -683,11 +693,21 @@ int ocpn_draw_pi::Init(void)
     g_pRolloverPathSeg = NULL;
     g_pRolloverPoint = NULL;
 
-    m_BlinkTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
-    m_BlinkTimer.Start( BLINK_TIME, wxTIMER_CONTINUOUS );
+    m_BlinkTimer = new wxTimer;
+    m_BlinkTimer->Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
+    m_BlinkTimer->Start( BLINK_TIME, wxTIMER_CONTINUOUS );
+    DEBUGST("wxTimer m_BlinkTimer Getid: ");
+    DEBUGCONT(m_BlinkTimer->GetId());
+    DEBUGCONT(", GetOwner: ");
+    DEBUGEND(m_BlinkTimer->GetOwner());
 
+    m_RolloverPopupTimer = new wxTimer;
     m_rollover_popup_timer_msec = 20;
-    m_RolloverPopupTimer.Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
+    m_RolloverPopupTimer->Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
+    DEBUGST("wxTimer m_RolloverPopupTimer Getid: ");
+    DEBUGCONT(m_RolloverPopupTimer->GetId());
+    DEBUGCONT(", GetOwner: ");
+    DEBUGEND(m_RolloverPopupTimer->GetOwner());
 
     // Get item into font list in options/user interface
     AddPersistentFontKey( wxT("OD_PathLegInfoRollover") );
@@ -706,8 +726,18 @@ int ocpn_draw_pi::Init(void)
     m_pTextCursorCross = new wxCursor( wxCURSOR_ARROW );
 #endif
 
-    wxImage ICursorPencil = GetIcon_PlugIn(_T("pencil")).ConvertToImage();
-    if ( ICursorPencil.Ok() )
+    bool l_bUsePencilCrossCursor = true;
+
+#ifdef __WXMSW__
+    // Hack similar to OCPN to handle wxmsw not supporting cursors bigger than 32x32
+    int l_xSize, l_ySize;
+    wxDisplaySize(&l_xSize, &l_ySize);
+    if(l_xSize > 3000)
+        l_bUsePencilCrossCursor = false;
+#endif
+    //wxRect l_clientrect = this->GetGlientArea();
+    wxImage ICursorPencil = m_pODicons->ScaleIcon(GetIcon_PlugIn(_T("pencil")), m_pODicons->m_dScaleFactor).ConvertToImage();
+    if ( ICursorPencil.Ok() && l_bUsePencilCrossCursor )
     {
         ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 0 );
         ICursorPencil.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 16);
@@ -716,8 +746,8 @@ int ocpn_draw_pi::Init(void)
     else
         m_pCursorPencil = new wxCursor ( wxCURSOR_ARROW );
 
-    wxImage ICursorCross = GetIcon_PlugIn(_T("cross")).ConvertToImage();
-    if ( ICursorCross.Ok() )
+    wxImage ICursorCross = m_pODicons->ScaleIcon(GetIcon_PlugIn(_T("cross")), m_pODicons->m_dScaleFactor).ConvertToImage();
+    if ( ICursorCross.Ok() && l_bUsePencilCrossCursor)
     {
         ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_X, 13 );
         ICursorCross.SetOption ( wxIMAGE_OPTION_CUR_HOTSPOT_Y, 12);
@@ -753,7 +783,7 @@ int ocpn_draw_pi::Init(void)
 
         g_pODConfig->LoadLayers(*g_pLayerDir);
     }
-
+    DEBUGSL("Init return");
     return (
     WANTS_OVERLAY_CALLBACK  |
     WANTS_CURSOR_LATLON       |
@@ -775,20 +805,101 @@ int ocpn_draw_pi::Init(void)
 
 void ocpn_draw_pi::LateInit(void)
 {
+    DEBUGSL("LateInit");
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
     return;
 }
 
 bool ocpn_draw_pi::DeInit(void)
 {
+    DEBUGSL("DeInit");
     RemoveCanvasContextMenuItem(m_iODToolContextId);
 
-    if(m_BlinkTimer.IsRunning())
-        m_BlinkTimer.Stop();
-    m_BlinkTimer.Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
-    if(m_RolloverPopupTimer.IsRunning())
-        m_RolloverPopupTimer.Stop();
-    m_RolloverPopupTimer.Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
+    if(m_BlinkTimer->IsRunning())
+        m_BlinkTimer->Stop();
+    if(!m_BlinkTimer->Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler)) {
+        DEBUGSL("BlinkTimer->Unbind not found or not removed");
+        wxLogMessage(_("BlinkTimer->Unbind not found or not removed"));
+    }
+    delete m_BlinkTimer;
+    m_BlinkTimer = NULL;
+
+    if(m_RolloverPopupTimer->IsRunning())
+        m_RolloverPopupTimer->Stop();
+    if(!m_RolloverPopupTimer->Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler)) {
+        DEBUGSL("RolloverPopupTimer->Unbind not found or not removed");
+        wxLogMessage(_("RolloverPopupTimer->Unbind not found or not removed"));
+    }
+    delete m_RolloverPopupTimer;
+    m_RolloverPopupTimer = NULL;
+
+    if( g_pODLinkPropertiesDialog )
+        DeleteWindow((wxWindow**)&g_pODLinkPropertiesDialog);
+
+    if( g_pODRolloverWin )
+        DeleteWindow((wxWindow**)&g_pODRolloverWin);
+
+    if( g_pODPointPropDialog ) {
+        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
+        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pODPointPropDialog);
+    }
+
+    if ( g_pBoundaryPropDialog ) {
+        g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
+        g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pBoundaryPropDialog);
+    }
+
+    if ( g_pEBLPropDialog ) {
+        g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
+        g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pEBLPropDialog);
+    }
+
+    if ( g_pDRPropDialog ) {
+        g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
+        g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pDRPropDialog);
+    }
+
+    if ( g_pGZPropDialog ) {
+        g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
+        g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pGZPropDialog);
+    }
+
+    if ( g_pPILPropDialog )  {
+        g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
+        g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pPILPropDialog);
+    }
+
+    if ( g_PILIndexLinePropDialog )  {
+        g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
+        g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_PILIndexLinePropDialog);
+    }
+
+    if( g_pODDefaultPathPropDialog ) {
+        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
+        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pODDefaultPathPropDialog);
+    }
+
+    if ( g_pPathAndPointManagerDialog )  {
+        g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
+        g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
+        DeleteWindow((wxWindow**)&g_pPathAndPointManagerDialog);
+    }
+
+    if( g_pODToolbar ) {
+        g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
+        DeleteWindow((wxWindow**)&g_pODToolbar);
+    }
+
+    delete m_pODicons;
+    m_pODicons = NULL;
 
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
@@ -796,122 +907,7 @@ bool ocpn_draw_pi::DeInit(void)
         delete g_ODEventHandler;
     }
     g_ODEventHandler = NULL;
-    if( g_pODRolloverWin )
-#ifdef APPLE
-        delete g_pODRolloverWin;
-#else
-        g_pODRolloverWin->Close();
-#endif
 
-    g_pODRolloverWin = NULL;
-
-    if( g_pODPathPropDialog ) {
-        g_iDefaultPathPropertyDialogPostionX = g_pODPathPropDialog->GetPosition().x;
-        g_iDefaultPathPropertyDialogPostionY = g_pODPathPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pODPointPropDialog;
-#else
-        g_pODPathPropDialog->Close();
-#endif
-    }
-    g_pODPathPropDialog = NULL;
-
-    if( g_pODPointPropDialog ) {
-        g_iDefaultPointPropertyDialogPostionX = g_pODPointPropDialog->GetPosition().x;
-        g_iDefaultPointPropertyDialogPostionY = g_pODPointPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pODPointPropDialog;
-#else
-        g_pODPointPropDialog->Close();
-#endif
-    }
-    g_pODPointPropDialog = NULL;
-
-    if ( g_pBoundaryPropDialog ) {
-        g_iDefaultBoundaryPropertyDialogPostionX = g_pBoundaryPropDialog->GetPosition().x;
-        g_iDefaultBoundaryPropertyDialogPostionY = g_pBoundaryPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pBoundaryPropDialog;
-#else
-        g_pBoundaryPropDialog->Close();
-#endif
-    }
-    g_pBoundaryPropDialog = NULL;
-
-    if ( g_pEBLPropDialog ) {
-        g_iDefaultEBLPropertyDialogPostionX = g_pEBLPropDialog->GetPosition().x;
-        g_iDefaultEBLPropertyDialogPostionY = g_pEBLPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pEBLPropDialog;
-#else
-        g_pEBLPropDialog->Close();
-#endif
-    }
-    g_pEBLPropDialog = NULL;
-
-    if ( g_pDRPropDialog ) {
-        g_iDefaultDRPropertyDialogPostionX = g_pDRPropDialog->GetPosition().x;
-        g_iDefaultDRPropertyDialogPostionY = g_pDRPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pDRPropDialog;
-#else
-        g_pDRPropDialog->Close();
-#endif
-    }
-    g_pDRPropDialog = NULL;
-
-    if ( g_pGZPropDialog ) {
-        g_iDefaultGZPropertyDialogPostionX = g_pGZPropDialog->GetPosition().x;
-        g_iDefaultGZPropertyDialogPostionY = g_pGZPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pGZPropDialog;
-#else
-        g_pGZPropDialog->Close();
-#endif
-    }
-    g_pGZPropDialog = NULL;
-
-    if ( g_pPILPropDialog )  {
-        g_iDefaultPILPropertyDialogPostionX = g_pPILPropDialog->GetPosition().x;
-        g_iDefaultPILPropertyDialogPostionY = g_pPILPropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pPILPropDialog;
-#else
-        g_pPILPropDialog->Close();
-#endif
-    }
-    g_pPILPropDialog = NULL;
-
-    if ( g_PILIndexLinePropDialog )  {
-        g_iDefaultPILLinePropertyDialogPostionX = g_PILIndexLinePropDialog->GetPosition().x;
-        g_iDefaultPILLinePropertyDialogPostionY = g_PILIndexLinePropDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_PILIndexLinePropDialog;
-#else
-        g_PILIndexLinePropDialog->Close();
-#endif
-    }
-    g_PILIndexLinePropDialog = NULL;
-
-    if ( g_pPathAndPointManagerDialog )  {
-        g_iDefaultPathAnPointManagerDialogPostionX = g_pPathAndPointManagerDialog->GetPosition().x;
-        g_iDefaultPathAnPointManagerDialogPostionY = g_pPathAndPointManagerDialog->GetPosition().y;
-#ifdef APPLE
-        delete g_pPathAndPointManagerDialog;
-#else
-        g_pPathAndPointManagerDialog->Close();
-#endif
-    }
-    g_pPathAndPointManagerDialog = NULL;
-
-    if( g_pODToolbar )
-#ifdef APPLE
-        delete g_pODToolbar;
-#else
-        g_pODToolbar->Close();
-#endif
-
-    g_pODToolbar = NULL;
     if( g_pODJSON ) delete g_pODJSON;
     g_pODJSON = NULL;
     if( g_pODAPI ) delete g_pODAPI;
@@ -977,6 +973,43 @@ bool ocpn_draw_pi::DeInit(void)
     shutdown(false);
 
     return true;
+}
+
+void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
+{
+    DEBUGSL("DeleteWindow");
+    if (pWindow) {
+        pWindow->Close(true);
+#if defined(APPLE) || defined(__MSVC__) || defined(__OCPN__ANDROID__)
+        delete pWindow;
+#else
+        pWindow->Destroy();
+        //delete pWindow;
+#endif
+        if(g_pODPathPropDialog == pWindow)
+            g_pODPathPropDialog = NULL;
+
+        return;
+    }
+}
+
+void ocpn_draw_pi::DeleteWindow ( wxWindow **pWindow )
+{
+    DEBUGSL("DeleteWindow");
+    wxWindow *l_pWindow = *pWindow;
+    if (l_pWindow) {
+//        l_pWindow->Close(true);
+        #if defined(APPLE) || defined(__MSVC__) || defined(__OCPN__ANDROID__)
+        delete l_pWindow;
+        #else
+        l_pWindow->Destroy();
+        //delete pWindow;
+        #endif
+        if(g_pODPathPropDialog == l_pWindow)
+            g_pODPathPropDialog = NULL;
+        *pWindow = NULL;
+        return;
+    }
 }
 
 void ocpn_draw_pi::shutdown(bool menu)
@@ -1081,7 +1114,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     if( g_dialogFont != l_dialogFont) {
         g_dialogFont = l_dialogFont;
         if(NULL != g_pOCPNDrawPropDialog) {
-            delete g_pOCPNDrawPropDialog;
+            DeleteWindow(g_pOCPNDrawPropDialog);
             g_pOCPNDrawPropDialog = NULL;
         }
 
@@ -1095,7 +1128,7 @@ void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
     DimeWindow(g_pOCPNDrawPropDialog);
     g_pOCPNDrawPropDialog->ShowModal();
 
-    delete g_pOCPNDrawPropDialog;
+    DeleteWindow(g_pOCPNDrawPropDialog);
     g_pOCPNDrawPropDialog = NULL;
 }
 
@@ -1662,6 +1695,7 @@ void ocpn_draw_pi::SaveConfig()
 
 void ocpn_draw_pi::LoadConfig()
 {
+    DEBUGSL("LoadConfig");
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)
@@ -1670,7 +1704,6 @@ void ocpn_draw_pi::LoadConfig()
     setlocale(LC_NUMERIC, "C");
 #endif
 #endif
-
     wxFileConfig *pConf = (wxFileConfig *)m_pODConfig;
 
     if(pConf)
@@ -2209,9 +2242,9 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
 
     if( g_pODRolloverWin && g_pODRolloverWin->IsActive() )
-        m_RolloverPopupTimer.Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
+        m_RolloverPopupTimer->Start( 10, wxTIMER_ONE_SHOT );               // faster response while the rollover is turned on
     else
-        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        m_RolloverPopupTimer->Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
 
 
     if( nBoundary_State == 1 || nPoint_State >= 1 || nPath_State == 1 || nTextPoint_State == 1 || nEBL_State > 0 || nGZ_State > 0 || nPIL_State > 0
@@ -2247,7 +2280,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( g_dialogFont != l_dialogFont) {
                 g_dialogFont = l_dialogFont;
                 if(NULL != g_PILIndexLinePropDialog) {
-                    delete g_PILIndexLinePropDialog;
+                    DeleteWindow(g_PILIndexLinePropDialog);
                     g_PILIndexLinePropDialog = NULL;
                 }
             }
@@ -2263,7 +2296,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             if( g_dialogFont != l_dialogFont) {
                 g_dialogFont = l_dialogFont;
                 if(NULL != g_pODPointPropDialog) {
-                    delete g_pODPointPropDialog;
+                    DeleteWindow(g_pODPointPropDialog);
                     g_pODPointPropDialog = NULL;
                 }
             }
@@ -2505,6 +2538,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
                 } else {
                     if(m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                        m_pSelectedPath->m_bPathPropertiesBlink = false;
+                       l_bUpdateSelect = true;
                     }
                 }
                 if(l_bUpdateSelect) {
@@ -2923,7 +2957,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     }
 
     if( b_start_rollover )
-        m_RolloverPopupTimer.Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
+        m_RolloverPopupTimer->Start( m_rollover_popup_timer_msec, wxTIMER_ONE_SHOT );
 
     SetMUICursor_PlugIn( m_pCurrentCursor, m_mouse_canvas_index );
 

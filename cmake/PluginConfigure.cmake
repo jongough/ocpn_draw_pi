@@ -373,7 +373,7 @@ IF(QT_ANDROID)
     ADD_DEFINITIONS(-DOCPN_USE_WRAPPER)
     ADD_DEFINITIONS(-DANDROID)
 
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,-soname,libgorp.so ")
 
     #set(CMAKE_POSITION_INDEPENDENT_CODE ON)
     SET(CMAKE_CXX_FLAGS "-pthread -fPIC")
@@ -386,8 +386,6 @@ IF(QT_ANDROID)
     "-Wno-unknown-pragmas"
       )
 
-    message(STATUS "${CMLOC}Adding libgorp.o shared library")
-    set(CMAKE_SHARED_LINKER_FLAGS "-Wl,-soname,libgorp.so ")
     SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s")  ## Strip binary
 
     SET(QT_LINUX "OFF")

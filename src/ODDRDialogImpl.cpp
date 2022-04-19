@@ -1,5 +1,5 @@
 /**************************************************************************
- * 
+ *
  * Project:  OpenCPN
  * Purpose:  Dead Reckoning Support
  * Author:   Jon Gough
@@ -40,7 +40,7 @@
 #include "PathMan.h"
 #include "PathAndPointManagerDialogImpl.h"
 
-#if wxCHECK_VERSION(3,0,0) 
+#if wxCHECK_VERSION(3,0,0)
 #include <wx/valnum.h>
 #endif
 
@@ -82,7 +82,7 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent )
     m_radioBoxIntervalType->SetSelection( g_iDRIntervalType );
     m_radioBoxDistanceUnits->SetSelection( g_iDRDistanceUnits );
     m_radioBoxTimeUnits->SetSelection( g_iDRTimeUnits );
-    
+
     if(g_pfFix.Sog != g_pfFix.Sog )
         s.Printf( _T("%.3f"), g_dDRSOG );
     else
@@ -93,18 +93,18 @@ ODDRDialogImpl::ODDRDialogImpl( wxWindow* parent )
     else
         s.Printf( _T("%.3f"), g_pfFix.Cog );
     m_textCtrlCOG->SetValue( s );
-#endif    
+#endif
     m_pDR = NULL;
-    
+
     this->Layout();
-    
+
     ResetGlobalLocale();
 }
 
 void ODDRDialogImpl::SetupDialog()
 {
     SetGlobalLocale();
-    
+
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
     else s = _("Course over Ground (T)");
@@ -137,14 +137,14 @@ void ODDRDialogImpl::SetupDialog()
     m_textCtrlDRPointInterval->SetValue( s );
 #endif
     this->Layout();
-    
+
     ResetGlobalLocale();
 }
 
 void ODDRDialogImpl::UpdateDialog( DR * dr)
 {
     SetGlobalLocale();
-    
+
     m_pDR = dr;
     wxString s;
     if(g_bShowMag && !wxIsNaN(g_dVar)) s = _("Course over Ground (M)");
@@ -154,7 +154,7 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     m_iCOGValidator = dr->m_iCoG;
     m_dLengthValidator = dr->m_dDRPathLength;
     m_dIntervalValidator = dr->m_dDRPointInterval;
-#else    
+#else
     m_staticTextCOG->SetLabel( s );
     s.Printf( _T("%.3f"), dr->m_dSoG );
     m_textCtrlSOG->SetValue( s );
@@ -166,36 +166,36 @@ void ODDRDialogImpl::UpdateDialog( DR * dr)
     m_textCtrlDRPointInterval->SetValue( s );
 #endif
     this->Layout();
-    
+
     ResetGlobalLocale();
-    
+
 }
 
 void ODDRDialogImpl::OnOK( wxCommandEvent& event )
 {
     if( m_pDR != NULL ) {
         if( g_pPathMan->GetpActivePath() == m_pDR ) g_pPathMan->DeactivatePath( m_pDR );
-        
+
         if( !g_pPathMan->DeletePath( m_pDR ) )
             return;
         if( g_pODPathPropDialog && ( g_pODPathPropDialog->IsShown()) && (m_pDR == g_pODPathPropDialog->GetPath()) ) {
             g_pODPathPropDialog->Hide();
         }
-        
+
         if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
             g_pPathAndPointManagerDialog->UpdatePathListCtrl();
-        
+
         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             g_pODPointPropDialog->ValidateMark();
         }
-        
+
     }
-    
+
     DR *l_pDR = new(DR);
     g_pDRList->Append( l_pDR );
     g_pPathList->Append( l_pDR );
     l_pDR->m_PathNameString << _("DR") << _T(" ") << g_pDRList->GetCount();
-    
+
     ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, wxEmptyString, wxS("Start"), wxT("") );
     beginPoint->SetNameShown( false );
     beginPoint->SetTypeString( wxT("DR Point"));
@@ -215,12 +215,12 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     l_pDR->m_dMagCOG = g_dVar;
     m_textCtrlLength->GetValue().ToDouble( &l_pDR->m_dDRPathLength );
     m_textCtrlDRPointInterval->GetValue().ToDouble( &l_pDR->m_dDRPointInterval );
-    
+
     l_pDR->m_iLengthType = m_radioBoxLengthType->GetSelection();
     l_pDR->m_iIntervalType = m_radioBoxIntervalType->GetSelection();
     l_pDR->m_iDistanceUnits = m_radioBoxDistanceUnits->GetSelection();
     l_pDR->m_iTimeUnits = m_radioBoxTimeUnits->GetSelection();
-    
+
     switch ( m_radioBoxLengthType->GetSelection() ) {
         case ID_LT_TIME: {
             switch ( m_radioBoxTimeUnits->GetSelection() ) {
@@ -244,7 +244,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
             break;
         }
     }
-    
+
     switch ( m_radioBoxIntervalType->GetSelection() ) {
         case ID_IT_TIME: {
             switch ( m_radioBoxTimeUnits->GetSelection() ) {
@@ -268,14 +268,14 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
             break;
         }
     }
-    
+
     double l_dStartLat = g_pfFix.Lat;
     double l_dStartLon = g_pfFix.Lon;
     double l_dEndLat;
     double l_dEndLon;
 
     PositionBearingDistanceMercator_Plugin( l_dStartLat, l_dStartLon, l_pDR->m_iCoG, l_pDR->m_dTotalLengthNM, &l_dEndLat, &l_dEndLon );
-    
+
     int l_iNumODPoints = floor( l_pDR->m_dTotalLengthNM / l_pDR->m_dDRPointIntervalNM );
     double l_cumLength = l_pDR->m_dDRPointIntervalNM;
     double l_dSaveLat = l_dStartLat;
@@ -301,7 +301,7 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
         l_dSaveLon = l_dLon;
         l_cumLength += l_pDR->m_dDRPointIntervalNM;
     }
-    
+
     if( l_dEndLat != l_dSaveLat || l_dEndLon != l_dSaveLon ) {
         ODPoint *l_NewPoint = new ODPoint( l_dEndLat, l_dEndLon, g_sDRPointIconName, wxT(""), wxT("") );
         l_NewPoint->SetNameShown( false );
@@ -327,10 +327,10 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     g_ocpn_draw_pi->ODRequestRefresh( g_ocpn_draw_pi->m_drawing_canvas_index, FALSE );
     g_ocpn_draw_pi->m_drawing_canvas_index = -1;
     Show( false );
-#ifdef __WXOSX__    
-    EndModal(wxID_CANCEL);
-#endif
-    
+//#ifdef __WXOSX__
+    EndModal(wxID_OK);
+//#endif
+
     ResetGlobalLocale();
     m_pDR = NULL;
 }
@@ -338,10 +338,10 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
 void ODDRDialogImpl::OnCancel( wxCommandEvent& event )
 {
     Show( false );
-#ifdef __WXOSX__    
+#ifdef __WXOSX__
     EndModal(wxID_CANCEL);
 #endif
-    
+
     ResetGlobalLocale();
     m_pDR = NULL;
     event.Skip();

@@ -43,23 +43,27 @@
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  )
 {
-    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
-    SetFont( *m_dialogLabelFont );
-
+    DEBUGSL("ODToolbarImpl::ODToolbarImpl");
+    //m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    //SetFont( *m_dialogLabelFont );
+    SetToolbarFont();
     Create( parent );
 
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
-    
+
     AddTools();
-    
+
     m_Mode = ID_NONE;
-    
-    Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+
+    //Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    //Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
 }
 
 ODToolbarImpl::~ODToolbarImpl()
 {
-    Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    //Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    //Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
+    DEBUGSL("ODToolbarImpl::~ODToolbarImpl");
 }
 
 void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
@@ -69,7 +73,7 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
         m_toolBarODToolbar->ToggleTool(event.GetId(), false);
         return; // if creating a boundary must finish before clicking another button
     }
-    
+
     switch( event.GetId() )
     {
         case ID_MODE_BOUNDARY:
@@ -163,9 +167,12 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
     SetToolbarTool( m_Mode );
 }
 
-void ODToolbarImpl::OnClose( wxCloseEvent& event )
+void ODToolbarImpl::Show(void)
 {
-    g_ocpn_draw_pi->OnToolbarToolDownCallback( g_ocpn_draw_pi->m_draw_button_id);
+    SetToolbarFont();
+    this->Layout();
+    m_bSizerToolbar->Fit( this );
+    ODToolbarDialog::Show();
 }
 
 void ODToolbarImpl::OnKeyDown(wxKeyEvent& event)
@@ -182,7 +189,7 @@ void ODToolbarImpl::SetToolbarTool( int iTool )
     UpdateIcons();
     SetToolbarToolToggle( iTool );
     SetToolbarToolBitmap( iTool );
-}    
+}
 
 void ODToolbarImpl::SetToolbarToolToggle( int iTool )
 {
@@ -490,7 +497,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
         default:
             m_Mode = ID_NONE;
             break;
-        
+
     }
     m_toolBarODToolbar->Realize();
 }
@@ -513,7 +520,7 @@ void ODToolbarImpl::UpdateIcons( void )
 
 void ODToolbarImpl::AddTools(void)
 {
-    Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+    Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
     DEBUGST("Width: ");
     DEBUGCONT(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth());
     DEBUGCONT(", Height: ");
@@ -529,11 +536,11 @@ void ODToolbarImpl::AddTools(void)
 
     m_toolBarODToolbar->Realize();
     m_toolBarODToolbar->SetInitialSize();
-    this->Layout();
     this->GetSizer()->Fit(this);
+    this->Layout();
     //SetToolbarToolToggle(ID_NONE);
-    
-    Connect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
+
+    Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
 }
 
 void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
@@ -558,5 +565,11 @@ void ODToolbarImpl::SetColourScheme( PI_ColorScheme cs )
         this->m_toolBarODToolbar->ClearBackground();
         this->m_toolBarODToolbar->Refresh(true);
     }
+}
+
+void ODToolbarImpl::SetToolbarFont( void )
+{
+    m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+    SetFont( *m_dialogLabelFont );
 }
 
