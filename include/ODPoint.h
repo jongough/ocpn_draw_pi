@@ -67,6 +67,7 @@ public:
     bool IsNameShown() { return m_bShowName; }
     void SetActive(bool viz = true){ m_bIsActive = viz; }
     void SetVisible(bool viz = true){ m_bIsVisible = viz; }
+    void SetVisibleAtScale(bool viz = true){ m_bEnableVisibleAtScale = viz; }
     void SetListed(bool viz = true){ m_bIsListed = viz; }
     void SetNameShown(bool viz = true) { m_bShowName = viz; }
     wxString GetName(void){ return m_ODPointName; }
@@ -174,20 +175,25 @@ public:
 
     double m_ODPointArrivalRadius;
 
-    bool              m_bShowODPointRangeRings;
-    int               m_iODPointRangeRingsNumber;
-    float             m_fODPointRangeRingsStep;
-    int               m_iODPointRangeRingsStepUnits;
-    int               m_iRangeRingWidth;
-    wxPenStyle        m_iRangeRingStyle;
-    wxColour          m_wxcODPointRangeRingsColour;
-    wxString          m_sTypeString;
-    wxString          m_IconName;
-    wxString          m_ODPointName;
-    wxDateTime        m_CreateTimeX;
-    wxBitmap          *m_pbmIcon;
+    bool            m_bShowODPointRangeRings;
+    int             m_iODPointRangeRingsNumber;
+    float           m_fODPointRangeRingsStep;
+    int             m_iODPointRangeRingsStepUnits;
+    int             m_iRangeRingWidth;
+    wxPenStyle      m_iRangeRingStyle;
+    wxColour        m_wxcODPointRangeRingsColour;
+    wxString        m_sTypeString;
+    wxString        m_IconName;
+    wxString        m_ODPointName;
+    wxDateTime      m_CreateTimeX;
+    wxBitmap        *m_pbmIcon;
 
-    LLBBox            m_RangeRingsBBox;
+    LLBBox          m_RangeRingsBBox;
+
+    double          m_dNaturalScale;
+    double          m_dScaleFactor;
+    double          m_dVisibleAtScale;
+    bool            m_bEnableVisibleAtScale;
 
 protected:
     PI_ColorScheme  m_ColourScheme;

@@ -99,9 +99,6 @@ TextPoint::TextPoint() : ODPoint()
     m_iDisplayTextTexture = 0;
 #endif
 
-    m_natural_scale = g_ocpn_draw_pi->m_chart_scale;
-    m_scale_factor = 0;
-
     CreateColourSchemes();
     SetColourScheme();
 
@@ -125,8 +122,6 @@ TextPoint::TextPoint(const TextPoint& other) : ODPoint(other)
 #ifdef ocpnUSE_GL
     m_iDisplayTextTexture = other.m_iDisplayTextTexture;
 #endif
-    m_natural_scale = other.m_natural_scale;
-    m_scale_factor = other.m_scale_factor;
     m_bShowDisplayTextOnRollover = other.m_bShowDisplayTextOnRollover;
 
     CreateColourSchemes();
@@ -188,9 +183,6 @@ TextPoint::TextPoint( double lat, double lon, const wxString& icon_ident, const 
     wxColour wxCol;
     GetGlobalColor( wxT("YELO1"), &wxCol );
 
-    m_natural_scale = g_ocpn_draw_pi->m_chart_scale;
-    m_scale_factor = 0;
-
     CreateColourSchemes();
     SetColourScheme();
 
@@ -235,9 +227,9 @@ void TextPoint::Draw( ODDC& dc, wxPoint *odp)
             CalculateTextExtents(l_TextPointText);
 
             int teX, teY;
-            int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_natural_scale);
+            int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_dNaturalScale);
 
-            if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2) ) {
+            if(m_dNaturalScale > (g_ocpn_draw_pi->m_chart_scale / 2) ) {
                 teX = m_TextExtents.x;
                 teY = m_TextExtents.y;
             } else {
@@ -298,7 +290,7 @@ void TextPoint::Draw( ODDC& dc, wxPoint *odp)
                     dc.SetFont( m_DisplayTextFont );
                     dc.SetTextForeground( m_colourSchemeTextColour );
                     g_ocpn_draw_pi->AlphaBlending( dc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
-                    if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2) )
+                    if(m_dNaturalScale > (g_ocpn_draw_pi->m_chart_scale / 2) )
                         dc.DrawText( l_TextPointText, r.x + 10, r.y );
                     else
                         dc.DrawText( wxT(" "), r.x + 10, r.y );
@@ -329,9 +321,9 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
             CalculateTextExtents(l_TextPointText);
 
             int teX, teY;
-            int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_natural_scale);
+            int scalefactor = round(g_ocpn_draw_pi->m_chart_scale / m_dNaturalScale);
 
-            if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2) ) {
+            if(m_dNaturalScale > (g_ocpn_draw_pi->m_chart_scale / 2) ) {
                 teX = m_TextExtents.x;
                 teY = m_TextExtents.y;
             } else {
@@ -388,8 +380,18 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
 
                     r.x = r.x + m_TextLocationOffsetX;
                     r.y = r.y + m_TextLocationOffsetY;
-                    if( scalefactor != m_scale_factor || m_bTextChanged || ( !m_iDisplayTextTexture && teX != 0 && teY != 0 ) ) {
-                        m_scale_factor = scalefactor;
+                    DEBUGST("Text Point: GUID: ");
+                    DEBUGCONT(m_GUID);
+                    DEBUGCONT(", m_dScaleFactor: ");
+                    DEBUGCONT(m_dScaleFactor);
+                    DEBUGCONT(", scalefactor: ");
+                    DEBUGCONT(scalefactor);
+                    DEBUGCONT(", m_dNaturalScale: ");
+                    DEBUGCONT(m_dNaturalScale);
+                    DEBUGCONT(", m_chart_scale: ");
+                    DEBUGEND(g_ocpn_draw_pi->m_chart_scale);
+                    if( scalefactor != m_dScaleFactor || m_bTextChanged || ( !m_iDisplayTextTexture && teX != 0 && teY != 0 ) ) {
+                        m_dScaleFactor = scalefactor;
                         m_bTextChanged = false;
                         wxBitmap tbm(teX, teY); /* render text on dc */
                         wxMemoryDC dc;
@@ -398,7 +400,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         dc.Clear();
                         dc.SetFont( m_DisplayTextFont );
                         dc.SetTextForeground(* wxWHITE );
-                        if(m_natural_scale > (g_ocpn_draw_pi->m_chart_scale / 2))
+                        if(m_dNaturalScale > (g_ocpn_draw_pi->m_chart_scale / 2))
                             dc.DrawText( l_TextPointText, 10, 0);
                         //else
                         //    dc.DrawText( wxT(""), 10, 0 );

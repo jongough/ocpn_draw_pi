@@ -100,6 +100,9 @@ ODPoint::ODPoint()
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
 
+    m_dNaturalScale = g_ocpn_draw_pi->m_chart_scale;
+    m_dScaleFactor = 0;
+
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
 
@@ -158,6 +161,9 @@ ODPoint::ODPoint( ODPoint* orig )
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     SetRangeRingBBox();
+
+    m_dNaturalScale = orig->m_dNaturalScale;
+    m_dScaleFactor = orig->m_dScaleFactor;
 
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
@@ -242,6 +248,9 @@ ODPoint::ODPoint( double lat, double lon, const wxString& icon_ident, const wxSt
     m_iRangeRingStyle = wxPENSTYLE_SOLID;
     m_iRangeRingWidth = 2;
     SetRangeRingBBox();
+
+    m_dNaturalScale = g_ocpn_draw_pi->m_chart_scale;
+    m_dScaleFactor = 0;
 
     CreateColourSchemes();
     SetColourScheme(g_global_color_scheme);
@@ -488,7 +497,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
 #ifdef ocpnUSE_GL
     if( !m_bIsVisible )
     return;
-
+    if( m_dVisibleAtScale > g_ocpn_draw_pi->m_chart_scale)
     //    Optimization, especially apparent on tracks in normal cases
     if( m_IconName == _T("empty") && !m_bShowName && !m_bPtIsSelected ) return;
 

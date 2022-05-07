@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul 27 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -122,6 +122,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerTextPointIconName;
 		wxStaticText* m_staticTextTextPointIconName;
 		wxBitmapComboBox* m_bcomboBoxTextPointIconName;
+		wxCheckBox* m_checkBoxTPShowAtScale;
+		wxTextCtrl* m_textCtrlTPShowAtScale;
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choiceTextPosition;
 		wxStaticText* m_staticTextColour;

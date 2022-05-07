@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul 27 2021)
+// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -27,7 +27,6 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 		return false;
 	}
 
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_SizerProperties = new wxBoxSizer( wxVERTICAL );
 
@@ -376,7 +375,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelBoundaryPoint->SetSizer( bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
 	bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
-	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), true );
+	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
 	m_panelTextPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_panelTextPoint->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizerTextPoint;
@@ -408,6 +407,12 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 
 
 	m_fgSizerPositionAndColour->Add( m_fgSizerTextPointIconName, 1, wxALL|wxEXPAND, 5 );
+
+	m_checkBoxTPShowAtScale = new wxCheckBox( m_panelTextPoint, wxID_ANY, _("Show at scale> 1:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_fgSizerPositionAndColour->Add( m_checkBoxTPShowAtScale, 0, wxALL, 5 );
+
+	m_textCtrlTPShowAtScale = new wxTextCtrl( m_panelTextPoint, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	m_fgSizerPositionAndColour->Add( m_textCtrlTPShowAtScale, 0, wxALL, 5 );
 
 	m_staticTextPosition = new wxStaticText( m_panelTextPoint, wxID_ANY, _("Text position relative to point"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPosition->Wrap( -1 );
@@ -485,7 +490,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelTextPoint->SetSizer( fgSizerTextPoint );
 	m_panelTextPoint->Layout();
 	fgSizerTextPoint->Fit( m_panelTextPoint );
-	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
+	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), true );
 	m_panelPath = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelPath->SetScrollRate( 5, 5 );
 	m_panelPath->Enable( false );
@@ -1442,13 +1447,13 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer48->Fit( m_panelLicense );
 	m_notebookProperties->AddPage( m_panelLicense, _("License"), false );
 
-	bSizer121->Add( m_notebookProperties, 1, wxALL|wxEXPAND, 5 );
+	bSizer121->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
 
 
 	bSizer10->Add( bSizer121, 1, wxEXPAND, 5 );
 
 
-	m_SizerProperties->Add( bSizer10, 1, wxEXPAND, 5 );
+	m_SizerProperties->Add( bSizer10, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizerOKCancelApply;
 	bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );

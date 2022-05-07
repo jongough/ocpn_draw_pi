@@ -25,7 +25,6 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 		return false;
 	}
 
-	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_SizerDialogBox = new wxBoxSizer( wxVERTICAL );
 
@@ -318,7 +317,7 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	m_scrolledWindowBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_scrolledWindowBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_scrolledWindowBasicProperties );
-	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), true );
+	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), false );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_SizerDisplayText = new wxBoxSizer( wxVERTICAL );
 
@@ -418,8 +417,19 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
 
 	m_checkBoxVisible = new wxCheckBox( m_panelExtended, wxID_ANY, _("Show on chart"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_checkBoxVisible->SetValue(true);
 	bSizer3->Add( m_checkBoxVisible, 0, wxALL, 5 );
+
+	wxBoxSizer* bSizer25;
+	bSizer25 = new wxBoxSizer( wxHORIZONTAL );
+
+	m_checkBoxShowAtScale = new wxCheckBox( m_panelExtended, wxID_ANY, _("Show at scale> 1:"), wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer25->Add( m_checkBoxShowAtScale, 0, wxALL, 5 );
+
+	m_textCtrlShowAtScale = new wxTextCtrl( m_panelExtended, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	bSizer25->Add( m_textCtrlShowAtScale, 1, wxALL, 5 );
+
+
+	bSizer3->Add( bSizer25, 0, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer4;
 	bSizer4 = new wxBoxSizer( wxHORIZONTAL );
@@ -438,7 +448,7 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	m_panelExtended->SetSizer( bSizer3 );
 	m_panelExtended->Layout();
 	bSizer3->Fit( m_panelExtended );
-	m_notebookProperties->AddPage( m_panelExtended, _("Extended"), false );
+	m_notebookProperties->AddPage( m_panelExtended, _("Extended"), true );
 
 	bSizer26->Add( m_notebookProperties, 1, wxEXPAND | wxALL, 5 );
 

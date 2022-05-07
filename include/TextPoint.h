@@ -1,7 +1,7 @@
 /***************************************************************************
- * 
+ *
  * Project:  OpenCPN
- * Purpose:  Text points 
+ * Purpose:  Text points
  * Author:   Jon Gough
  *
  ***************************************************************************
@@ -37,7 +37,7 @@ class TextPoint : public ODPoint
         TextPoint(double lat, double lon, const wxString& icon_ident, const wxString& name, const wxString &pGUID = wxT("") , bool bAddToList = true);
         TextPoint(const TextPoint& other);
         ~TextPoint();
-        
+
         void Draw(ODDC& dc, wxPoint *odp= NULL );
         void DrawGL( PlugIn_ViewPort &pivp );
         void SetPointText( wxString sTextPointText );
@@ -56,10 +56,10 @@ class TextPoint : public ODPoint
         wxFont          m_DisplayTextFont;
         int             m_DisplayTextFontPointSize;
         bool            m_bTextChanged;
-        double          m_natural_scale;
+//        double          m_dNaturalScale;
         bool            m_bShowDisplayTextOnRollover;
         int             m_iDisplayTextWhen;
-        
+
     protected:
         wxColour        m_colourSchemeTextColour;
         wxColour        m_colourSchemeTextBackgroundColour;
@@ -75,18 +75,17 @@ class TextPoint : public ODPoint
     private:
         void CalculateTextExtents( void );
         void CalculateTextExtents( wxString TextPointText );
-        
+
         wxStaticText    *m_pstText;
         wxTextCtrl      *m_ptcText;
         wxSize          m_TextExtents;
         int             m_TextLocationOffsetX;
         int             m_TextLocationOffsetY;
-        
+
         unsigned int    m_iDisplayTextTexture;
         int             m_iDisplayTextTextureWidth, m_iDisplayTextTextureHeight;
         wxWindow        *m_Window;
-        double          m_scale_factor;
-        
+
 };
 
 #endif // TEXTPOINT_H

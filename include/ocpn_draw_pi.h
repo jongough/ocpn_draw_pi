@@ -139,6 +139,8 @@ typedef enum ColorScheme : int
     N_COLOR_SCHEMES
 }_ColorScheme;
 
+#define MAX_32BIT_INT 2147483647
+
 #ifdef __WXMSW__
 #include "GL/gl.h"            // local copy for Windows
 #include <GL/glu.h>

@@ -54,7 +54,7 @@
 #include <wx/msw/registry.h>
 #endif
 
-#if wxCHECK_VERSION(3,0,0) 
+#if wxCHECK_VERSION(3,0,0)
 #include <wx/valnum.h>
 #endif
 
@@ -81,7 +81,7 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
             wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
     this->Connect( ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
             wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
-    
+
     DimeWindow( this );
 
     m_parent_window = parent;
@@ -90,7 +90,7 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
     m_bLatitudeLocked = false;
     m_bLongitudeLocked = false;
     m_bArrivalRadiusLocked = false;
-    
+
 #if wxCHECK_VERSION(3,0,0)
     SetLayoutAdaptationMode(wxDIALOG_ADAPTATION_MODE_ENABLED);
     wxFloatingPointValidator<double> dODPointRangeRingStepVal(3, &m_dODPointRangeRingStepValidator, wxNUM_VAL_DEFAULT);
@@ -103,26 +103,26 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
     m_textCtrlODPointArrivalRadius->SetValidator( dODPointArrivalRadius );
     m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
 #endif // wxCHECK_VERSION(3,0,0)
-    
+
     // add unsuported wxOwnerDrawnComboBox combo box as it handles scrolling better
     m_bODIComboBoxODPointIconName = new ODIconCombo( m_scrolledWindowBasicProperties, wxID_ANY, _("Combo!"), wxDefaultPosition, wxDefaultSize, 0, NULL, wxCB_READONLY );
     m_bODIComboBoxODPointIconName->SetPopupMaxHeight(::wxGetDisplaySize().y / 2);
-    
+
     //  Accomodate scaling of icon
     int min_size = GetCharHeight() * 2;
     min_size = wxMax( min_size, (32 * GetOCPNChartScaleFactor_Plugin()) + 4 );
     m_bODIComboBoxODPointIconName->SetMinSize( wxSize(-1, min_size) );
     m_fgSizerNameIcon->Replace(m_bcomboBoxODPointIconName, m_bODIComboBoxODPointIconName );
-    
+
     m_pHyperLinkList = new HyperlinkList();
-    
+
     delete m_bcomboBoxODPointIconName;
-    
+
     SetDialogSize();
-    
+
     if(g_iDefaultPointPropertyDialogPostionX == -1 || g_iDefaultPointPropertyDialogPostionY == -1) Center();
     else SetPosition(wxPoint(g_iDefaultPointPropertyDialogPostionX, g_iDefaultPointPropertyDialogPostionY));
-    
+
     m_bShowingDisplayText = true;
 
 }
@@ -146,11 +146,11 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     m_scrolledWindowLinks->SetMinClientSize(m_bSizerLinks->ComputeFittingClientSize(this));
     m_scrolledWindowBasicProperties->SetMinClientSize(m_SizerBasicProperties->ComputeFittingClientSize(this));
     m_SizerDialogBox->Fit(m_scrolledWindowBasicProperties);
-    
+
     this->Layout();
     this->GetSizer()->Fit( m_scrolledWindowBasicProperties );
     this->Layout();
-    
+
     m_defaultClientSize = GetClientSize();
 }
 
@@ -166,7 +166,7 @@ void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
     m_contextObject = event.GetEventObject();
     PopupMenu( popup );
     delete popup;
-    
+
 }
 
 void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
@@ -233,18 +233,18 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 
     if( g_pPathAndPointManagerDialog && g_pPathAndPointManagerDialog->IsShown() )
         g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
-        
+
     if( g_pODPathPropDialog && g_pODPathPropDialog->IsShown() )
         g_pODPathPropDialog->UpdateProperties(  );
 
     SetClientSize(m_defaultClientSize);
-    
+
     g_ocpn_draw_pi->m_pFoundODPoint = NULL;
     m_notebookProperties->ChangeSelection( 0 );
     m_notebookProperties->Refresh();
-    
+
     RequestRefresh( m_parent_window );
-    
+
     event.Skip();
 }
 
@@ -275,7 +275,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     m_notebookProperties->Refresh();
 
     RequestRefresh( m_parent_window );
-    
+
     event.Skip();
 }
 
@@ -290,7 +290,7 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
             m_sliderBoundaryPointInclusionSize->Enable();
             break;
     }
-    
+
     ODPointPropertiesDialog::OnRadioBoxPointType(event);
 }
 
@@ -299,10 +299,10 @@ void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
     m_toggleBtnDeleteLink->SetValue(false);
     m_toggleBtnEditLink->SetValue(false);
     m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
-    
+
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
-    
+
     DimeWindow(g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
     if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
@@ -322,10 +322,10 @@ void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
 {
     wxString findurl = m_pClickedLink->GetURL();
     wxString findlabel = m_pClickedLink->GetLabel();
-    
+
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
-    
+
     DimeWindow(g_pODLinkPropertiesDialog);
     if(m_pHyperLinkList->GetCount()) {
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
@@ -344,7 +344,7 @@ void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
             l_plinknode = l_plinknode->GetNext();
         }
     }
-    
+
     event.Skip();
 }
 
@@ -352,7 +352,7 @@ void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
 {
     wxString findurl = m_pClickedLink->GetURL();
     wxString findlabel = m_pClickedLink->GetLabel();
-    
+
     if(m_pHyperLinkList->GetCount()) {
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
         while(l_plinknode) {
@@ -427,10 +427,11 @@ void ODPointPropertiesImpl::SaveChanges()
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
                     break;
             }
-            
-            
+
+
         }
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
+        m_pODPoint->SetVisible();
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
         if(m_pODPoint->m_sTypeString == wxT("Guard Zone Point")) {
             if(m_text_lat != m_textLatitude->GetValue() || m_text_lon != m_textLongitude->GetValue()) {
@@ -472,7 +473,7 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pODPoint->m_HyperlinkList->Append(link);
             linknode = linknode->GetNext();
         }
-        
+
         if( m_pODPoint->m_bIsInPath ) {
             // Update the Path segment selectables
             g_pODSelect->UpdateSelectablePathSegments( m_pODPoint );
@@ -499,7 +500,7 @@ void ODPointPropertiesImpl::SaveChanges()
                             pnode = pnode->GetNext();
                         }
                     }
-                    
+
                     g_pODConfig->UpdatePath( pp );
                 }
                 delete pEditPathArray;
@@ -528,9 +529,9 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
     } else {
         m_pODPoint = pOP;
     }
-    
+
     m_pHyperLinkList->clear();
-    
+
     int NbrOfLinks = m_pODPoint->m_HyperlinkList->GetCount();
     if( NbrOfLinks > 0 ) {
         HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
@@ -545,7 +546,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
             linknode = linknode->GetNext();
         }
     }
-    
+
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = TRUE;
         m_pODPoint->m_bPointPropertiesBlink = true;
@@ -556,11 +557,11 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
         m_bIsVisible_save = m_pODPoint->m_bIsVisible;
         RequestRefresh( m_parent_window );
     }
-    
+
     m_toggleBtnDeleteLink->SetValue(false);
     m_toggleBtnEditLink->SetValue(false);
     m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
-    
+
 }
 
 bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
@@ -617,7 +618,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_sliderBoundaryPointFillTransparency->Hide();
             m_SizerOuterProperties->Hide( m_SizerFill );
         }
-        
+
         m_text_lat = toSDMM_PlugIn( 1, m_pODPoint->m_lat );
         m_text_lon = toSDMM_PlugIn( 2, m_pODPoint->m_lon );
         if(!m_bLatitudeLocked) m_textLatitude->SetValue( toSDMM_PlugIn( 1, m_pODPoint->m_lat ) );
@@ -631,7 +632,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_textLatitude->Disable();
             m_textLongitude->Disable();
             wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
-            
+
             // Use path array (if any) to determine actual visibility for this point
             if( ppath_array ) {
                 for( unsigned int ip = 0; ip < ppath_array->GetCount(); ip++ ) {
@@ -641,15 +642,15 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                         m_textLongitude->Enable();
                     }
                 }
-            } 
-                
+            }
+
         } else {
             m_textLatitude->Enable();
             m_textLongitude->Enable();
             m_staticTextEBLPointWarning->Hide();
             m_SizerOuterProperties->Hide( m_bSizerEBLPointWarning );
         }
-    
+
         if( positionOnly ) return true;
 
         //Layer or not?
@@ -662,6 +663,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bODIComboBoxODPointIconName->Enable( false );
             m_checkBoxShowName->Enable( false );
             m_checkBoxVisible->Enable( false );
+            m_checkBoxShowAtScale->Enable( false );
             m_checkBoxChangeAllPointIcons->Enable( false );
             m_textCtrlODPointArrivalRadius->SetEditable ( false );
             m_checkBoxShowODPointRangeRings->Enable( false );
@@ -682,6 +684,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_bODIComboBoxODPointIconName->Enable( true );
             m_checkBoxShowName->Enable( true );
             m_checkBoxVisible->Enable( true );
+            m_checkBoxShowAtScale->Enable( false );
             m_textCtrlODPointArrivalRadius->SetEditable ( true );
             m_checkBoxShowODPointRangeRings->Enable( true );
             m_choiceDistanceUnitsString->Enable( true );
@@ -699,7 +702,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
 
         m_dODPointArrivalRadius = m_pODPoint->GetODPointArrivalRadius();
         m_textCtrlODPointArrivalRadius->GetValidator()->TransferToWindow();
-        
+
         m_textDescription->SetValue( m_pODPoint->m_ODPointDescription );
         m_textDisplayText->Clear();
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
@@ -735,9 +738,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             else
                 m_sliderBoundaryPointInclusionSize->Disable();
         }
-        
+
         m_checkBoxShowName->SetValue( m_pODPoint->m_bShowName );
         m_checkBoxVisible->SetValue( m_pODPoint->m_bIsVisible );
+        m_checkBoxShowAtScale->SetValue( m_pODPoint->m_dScaleFactor );
         m_textCtrlGuid->SetValue( m_pODPoint->m_GUID );
         m_checkBoxShowODPointRangeRings->SetValue( m_pODPoint->GetShowODPointRangeRings() );
         m_choicePointRangeRingsNumber->SetSelection( m_pODPoint->GetODPointRangeRingsNumber() );
@@ -745,7 +749,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         m_dODPointRangeRingStepValidator = m_pODPoint->GetODPointRangeRingsStep();
         m_textCtrlODPointRangeRingsSteps->GetValidator()->TransferToWindow();
         m_colourPickerRangeRingsColour->SetColour( m_pODPoint->GetODPointRangeRingsColour() );
-        
+
 
         m_bODIComboBoxODPointIconName->Clear();
         //      Iterate on the Icon Descriptions, filling in the combo control
@@ -758,7 +762,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 m_bODIComboBoxODPointIconName->Append( *ps, icons->GetBitmap( i ) );
             }
         }
-        
+
         // find the correct item in the combo box
         int iconToSelect = -1;
         for( int i = 0; i < g_pODPointMan->GetNumIcons(); i++ ) {
@@ -775,16 +779,16 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 }
             }
         }
-        
+
         //  not found, so add  it to the list, with a generic bitmap and using the name as description
         // n.b.  This should never happen...
-        if( -1 == iconToSelect){    
+        if( -1 == iconToSelect){
             m_bODIComboBoxODPointIconName->Append( m_pODPoint->GetIconName(), icons->GetBitmap( 0 ) );
             iconToSelect = m_bODIComboBoxODPointIconName->GetCount() - 1;
         }
-        
+
         m_bODIComboBoxODPointIconName->SetSelection( iconToSelect );
-        
+
         //    Get an array of all paths using this point
         wxArrayPtrVoid *ppath_array = g_pPathMan->GetPathArrayContaining( m_pODPoint );
         if( ppath_array ) {
@@ -798,10 +802,10 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_checkBoxChangeAllPointIcons->Disable();
         }
         m_checkBoxChangeAllPointIcons->SetValue( false );
-        
+
         icons = NULL;
-        
-        
+
+
         //if(m_pODPoint->m_HyperlinkList->GetCount() > 0) {
         //    Hyperlink *l_HyperLink = new HyperLink();
             //m_textCtrlLinkDescription->SetValue(m_pOD)
@@ -809,7 +813,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
         //}
         int linkcount = m_bSizerLinks->GetItemCount();
         m_bSizerLinks->Clear(true);
-        
+
         int NbrOfLinks = m_pHyperLinkList->GetCount();
         //HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
         bool lFirstLine = true;
@@ -819,26 +823,26 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 Hyperlink *link = linknode->GetData();
                 wxString Link = link->Link;
                 wxString Descr = link->DescrText;
-                
+
                 wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
                                                              Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
                 ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
                                wxHyperlinkEventHandler( ODPointPropertiesImpl::OnHyperLinkClick ), NULL, this );
                 if( !m_pODPoint->m_bIsInLayer ) ctrl->Connect( wxEVT_RIGHT_DOWN,
                     wxMouseEventHandler( ODPointPropertiesImpl::HyperLinkContextMenu ), NULL, this );
-                
+
                 m_bSizerLinks->Add( ctrl, 1, wxALL | wxALIGN_LEFT, 0);
                 if(lFirstLine) {
                     lFirstLine = false;
                     m_sSingleLineSize = m_bSizerLinks->CalcMin();
                 }
-                
+
                 linknode = linknode->GetNext();
             }
         }
-        
-        
-        
+
+
+
         wxString caption( wxS("") );
         if(m_pODPoint->m_bIsInLayer) {
             if ( m_pODPoint->GetTypeString().IsNull() || m_pODPoint->GetTypeString().IsEmpty() )
@@ -877,14 +881,14 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 caption.append(_("Guard Zone Point Properties"));
         }
         SetTitle( caption );
-        
+
         m_notebookProperties->SetSelection(1);
-        
+
         m_notebookProperties->SetSelection(0);
     }
-    
+
     SetDialogSize();
-    
+
     TransferDataToWindow();
 
     return true;
@@ -949,7 +953,7 @@ void ODPointPropertiesImpl::ValidateMark( void )
     //    Look in the master list of ODPoints to see if the currently selected ODPpoint is still valid
     //    It may have been deleted as part of a path
     wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-    
+
     bool b_found = false;
     while( node ) {
         ODPoint *op = node->GetData();
@@ -957,10 +961,10 @@ void ODPointPropertiesImpl::ValidateMark( void )
             b_found = true;
             break;
         }
-        
+
         node = node->GetNext();
     }
-    
+
     if( !b_found ) {
         m_pODPoint = NULL;
         Hide();
@@ -990,23 +994,23 @@ void ODPointPropertiesImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
     //
     //    But, we will do this only if the URL contains the anchor point charater '#'
     //    What a hack......
-    
+
     #ifdef __WXMSW__
-    
+
     wxString cc = event.GetURL();
     if( cc.Find( _T("#") ) != wxNOT_FOUND ) {
         wxRegKey RegKey( wxString( _T("HKEY_CLASSES_ROOT\\HTTP\\shell\\open\\command") ) );
         if( RegKey.Exists() ) {
             wxString command_line;
             RegKey.QueryValue( wxString( _T("") ), command_line );
-            
+
             //  Remove "
             command_line.Replace( wxString( _T("\"") ), wxString( _T("") ) );
-            
+
             //  Strip arguments
             int l = command_line.Find( _T(".exe") );
             if( wxNOT_FOUND == l ) l = command_line.Find( _T(".EXE") );
-            
+
             if( wxNOT_FOUND != l ) {
                 wxString cl = command_line.Mid( 0, l + 4 );
                 cl += _T(" ");
@@ -1032,16 +1036,16 @@ void ODPointPropertiesImpl::HyperLinkContextMenu( wxMouseEvent &event )
     m_scrolledWindowLinks->PopupMenu( m_menuLink,
                                       m_pClickedLink->GetPosition().x + event.GetPosition().x,
                                       m_pClickedLink->GetPosition().y + event.GetPosition().y );
-    
+
 }
 
 void ODPointPropertiesImpl::OnEditLinkToggle( wxCommandEvent& event )
 {
-    if( m_toggleBtnEditLink->GetValue() ) 
+    if( m_toggleBtnEditLink->GetValue() )
         m_staticTextLinkInfo->SetLabel( _("Left Click links are opened for editing.") );
     else
         m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
-    
+
     if(m_toggleBtnDeleteLink->GetValue())
         m_toggleBtnDeleteLink->SetValue(false);
     event.Skip();
@@ -1049,11 +1053,11 @@ void ODPointPropertiesImpl::OnEditLinkToggle( wxCommandEvent& event )
 
 void ODPointPropertiesImpl::OnDeleteLinkToggle( wxCommandEvent& event )
 {
-    if( m_toggleBtnDeleteLink->GetValue() ) 
+    if( m_toggleBtnDeleteLink->GetValue() )
         m_staticTextLinkInfo->SetLabel( _("Left Click links are deleted.") );
     else
         m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
-    
+
     if(m_toggleBtnEditLink->GetValue())
         m_toggleBtnEditLink->SetValue(false);
     event.Skip();
