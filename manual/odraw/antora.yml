@@ -1,4 +1,4 @@
 name: odraw
 title: odraw
-version: '0.1'
+version: ~
 start_page: ROOT:odraw.adoc
