@@ -614,6 +614,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             DimeWindow( g_PILIndexLinePropDialog );
             g_PILIndexLinePropDialog->UpdateProperties( (PIL *)m_pSelectedPath, m_iFoundPIL );
             g_PILIndexLinePropDialog->Show();
+            g_PILIndexLinePropDialog->Raise();
             break;
         }
         case ID_PIL_MENU_ADD_INDEX_LINE: {
@@ -964,6 +965,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             DimeWindow( g_pODDRDialog );
 #endif
             g_pODDRDialog->Show();
+            g_pODDRDialog->Raise();
 
 
             //    Required if RMDialog is not STAY_ON_TOP

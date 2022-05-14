@@ -784,6 +784,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
     DimeWindow(g_pODPathPropDialog);
     if( !g_pODPathPropDialog->IsShown() )
         g_pODPathPropDialog->Show();
+    g_pODPathPropDialog->Raise();
 
     UpdatePathListCtrl();
 }
@@ -1455,6 +1456,7 @@ void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog( ODPoint* odp, w
     g_pODPointPropDialog->SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
     if( !g_pODPointPropDialog->IsShown() )
         g_pODPointPropDialog->Show();
+    g_pODPointPropDialog->Raise();
     g_pODPointPropDialog->SetExtraStyle(l_lStyle);
 }
 

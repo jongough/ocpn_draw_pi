@@ -1,3 +1,4 @@
-name: ocpn_draw
-title: Ocpn Draw
-version: '0.1'
+name: odraw
+title: Ocpn_Draw
+version: ~
+start_page: ROOT:odraw.adoc

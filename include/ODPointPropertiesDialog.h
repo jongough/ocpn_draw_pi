@@ -135,6 +135,8 @@ class ODPointPropertiesDialog : public wxDialog
 		wxRadioBox* m_radioBoxShowDisplayText;
 		wxPanel* m_panelExtended;
 		wxCheckBox* m_checkBoxVisible;
+		wxCheckBox* m_checkBoxShowAtScale;
+		wxTextCtrl* m_textCtrlShowAtScale;
 		wxStaticText* m_staticText1;
 		wxTextCtrl* m_textCtrlGuid;
 		wxBoxSizer* m_SizerButtons;

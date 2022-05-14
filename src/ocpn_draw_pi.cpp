@@ -1241,6 +1241,7 @@ void ocpn_draw_pi::ItemProcess(int id)
             g_pPathAndPointManagerDialog->UpdateODPointsListCtrl();
             g_pPathAndPointManagerDialog->UpdateLayerListCtrl();
             g_pPathAndPointManagerDialog->Show();
+            g_pPathAndPointManagerDialog->Raise();
 
             //    Required if RMDialog is not STAY_ON_TOP
 #ifdef __WXOSX__
@@ -2290,6 +2291,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             DimeWindow( g_PILIndexLinePropDialog );
             g_PILIndexLinePropDialog->UpdateProperties( (PIL *)m_pSelectedPath, m_iPILId );
             g_PILIndexLinePropDialog->Show();
+            g_PILIndexLinePropDialog->Raise();
             bret = true;
         } else if( m_pFoundODPoint ) {
             wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
@@ -2311,6 +2313,7 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
             DimeWindow(g_pODPointPropDialog);
             if( !g_pODPointPropDialog->IsShown() )
                 g_pODPointPropDialog->Show();
+            g_pODPointPropDialog->Raise();
             m_pFoundODPoint = NULL;
             bret = true;
         }
@@ -4055,6 +4058,7 @@ bool ocpn_draw_pi::CreateDRLeftClick( wxMouseEvent &event )
     g_pODDRDialog->SetupDialog();
     DimeWindow( g_pODDRDialog );
     g_pODDRDialog->Show();
+    g_pODDRDialog->Raise();
 
 
     //    Required if RMDialog is not STAY_ON_TOP
