@@ -113,7 +113,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelGeneral->SetSizer( bSizerGeneral );
 	m_panelGeneral->Layout();
 	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
 	m_panelBoundary = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_panelBoundary->SetScrollRate( 5, 5 );
 	wxFlexGridSizer* fgSizerBoundarySettings;
@@ -490,7 +490,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelTextPoint->SetSizer( fgSizerTextPoint );
 	m_panelTextPoint->Layout();
 	fgSizerTextPoint->Fit( m_panelTextPoint );
-	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), true );
+	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
 	m_panelPath = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 	m_panelPath->SetScrollRate( 5, 5 );
 	m_panelPath->Enable( false );
@@ -1447,13 +1447,13 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer48->Fit( m_panelLicense );
 	m_notebookProperties->AddPage( m_panelLicense, _("License"), false );
 
-	bSizer121->Add( m_notebookProperties, 0, wxALL|wxEXPAND, 5 );
+	bSizer121->Add( m_notebookProperties, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer10->Add( bSizer121, 1, wxEXPAND, 5 );
 
 
-	m_SizerProperties->Add( bSizer10, 0, wxEXPAND, 5 );
+	m_SizerProperties->Add( bSizer10, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizerOKCancelApply;
 	bSizerOKCancelApply = new wxBoxSizer( wxHORIZONTAL );
@@ -1482,6 +1482,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 
 	this->SetSizer( m_SizerProperties );
 	this->Layout();
+	m_SizerProperties->Fit( this );
 
 	// Connect Events
 	m_buttonConfigFileEntries->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );

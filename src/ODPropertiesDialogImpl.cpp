@@ -183,7 +183,8 @@ ODPropertiesDialogImpl::ODPropertiesDialogImpl( wxWindow* parent )
     m_textCtrlTextMaxWidth->SetValidator( iTextPointTextMaxWidth );
 
     int l_iPage = m_notebookProperties->FindPage(m_panelPath);
-    m_notebookProperties->DeletePage(l_iPage);
+    if(l_iPage != wxNOT_FOUND)
+        m_notebookProperties->DeletePage(l_iPage);
 #else
     for(size_t i = 0; i < m_notebookProperties->GetPageCount(); i++) {
         if(m_notebookProperties->GetPageText(i) == _("Path")) {
