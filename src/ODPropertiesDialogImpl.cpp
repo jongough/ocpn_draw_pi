@@ -678,34 +678,27 @@ void ODPropertiesDialogImpl::SetDialogSize( void )
 #else
     m_notebookProperties->SetSelection(0);
 #endif
-    GetTextExtent(_T("W"), &m_CharWidth, &m_CharHeight, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
 
-    wxSize sz;
-    sz.x = 160 * m_CharWidth;
-    sz.y = 130 * m_CharHeight;
+    RecalculateSize();
 
-    wxSize csize = ::wxGetDisplaySize();
+    m_panelGeneral->SetMinClientSize(m_bSizerGeneral->ComputeFittingClientSize(this));
+    m_panelBoundary->SetMinClientSize(m_fgSizerBoundarySettings->ComputeFittingClientSize(this));
+    m_panelBoundaryPoint->SetMinClientSize(m_bSizerOCPNPoint->ComputeFittingClientSize(this));
+    m_panelTextPoint->SetMinClientSize(m_fgSizerTextPoint->ComputeFittingClientSize(this));
+    m_panelEBL->SetMinClientSize(m_fgSizerEBLSettings->ComputeFittingClientSize(this));
+    m_panelDR->SetMinClientSize(m_fgSizerDRSettings->ComputeFittingClientSize(this));
+    m_panelDRPoint->SetMinClientSize(m_fgSizerDRPointSettings->ComputeFittingClientSize(this));
+    m_panelGZ->SetMinClientSize(m_fgSizerGZSettings->ComputeFittingClientSize(this));
+    m_panelPIL->SetMinClientSize(m_fgSizerPILSettings->ComputeFittingClientSize(this));
+    m_panelAbout->SetMinClientSize(m_bSizerAbout->ComputeFittingClientSize(this));
+    m_panelHelp->SetMinClientSize(m_fgSizerHelp->ComputeFittingClientSize(this));
+    m_panelLicense->SetMinClientSize(m_fgSizerLicense->ComputeFittingClientSize(this));
+    m_SizerProperties->Fit(m_notebookProperties);
 
-    wxSize dsize = GetGrandParent()->GetClientSize();           // The options->plugin list
-
-    wxDialog *ocpnOptions = GetActiveOptionsDialog();
-    if(ocpnOptions){
-        dsize = ocpnOptions->GetSize();
-    }
-
-    sz.y = wxMin(csize.y, dsize.y );
-    sz.x = wxMin(csize.x, dsize.x * 12 / 10 );
-    SetClientSize(sz);
-    SetMinClientSize(sz);
-
-    CentreOnParent();
-
-    //SetSizerAndFit(m_SizerProperties);
-
+    SetSizerAndFit(m_SizerProperties);
+    this->Layout();
     applyStyle();
 }
-
-
 void ODPropertiesDialogImpl::UpdateProperties( void )
 {
     SetGlobalLocale();
@@ -1101,5 +1094,50 @@ void ODPropertiesDialogImpl::OnClickConfigFileEntries( wxCommandEvent& event )
         m_buttonConfigFileEntries->SetLabel(_("Yes"));
         m_staticTextConfigFileEntriesMsg->SetLabel(_("Delete current OCPN_Draw config entries (No)"));
     }
+}
+
+void ODPropertiesDialogImpl::RecalculateSize()
+{
+
+    //  All of this dialog layout is expandable, so we need to set a specific size target
+    //  for the onscreen display.
+    //  The size will then be adjusted so that it fits within the parent's client area, with some padding
+
+    //  Get a text height metric for reference
+
+    int char_width, char_height;
+    //GetTextExtent(_T("W"), &char_width, &char_height);
+    GetTextExtent(_T("W"), &char_width, &char_height, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
+
+    wxSize sz;
+    sz.x = 60 * char_width;
+    sz.y = 30 * char_height;
+
+    wxSize dsize = GetGrandParent()->GetClientSize();
+    //dsize = g_parent_window->GetClientSize();
+    sz.y = wxMin(sz.y, dsize.y - (0 * char_height));
+    sz.x = wxMin(sz.x, dsize.x - (0 * char_height));
+    sz.y = wxMax(sz.y, m_panelGeneral->GetSize().GetY());
+//    m_bSizerGeneral->RecalcSizes();
+//    m_fgSizerPILSettings->RecalcSizes();
+    sz.y = wxMax(sz.y, m_bSizerGeneral->GetSize().GetHeight());
+    sz.y = wxMax(sz.y, m_panelBoundary->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelBoundaryPoint->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelTextPoint->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelEBL->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelDR->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelDRPoint->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelGZ->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelDR->GetSize().GetY());
+    sz.y = wxMax(sz.y, m_panelPIL->GetSize().GetY());
+    SetClientSize(sz);
+
+    wxSize fsize = GetSize();
+    fsize.y = wxMin(fsize.y, dsize.y - (0 * char_height));
+    fsize.x = wxMin(fsize.x, dsize.x - (0 * char_height));
+    SetSize(fsize);
+
+    CentreOnParent();
+
 }
 

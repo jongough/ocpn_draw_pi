@@ -62,6 +62,8 @@ protected:
     
     void SaveChanges();
     void applyStyle( void );
+
+    void RecalculateSize( void );
     
     wxSize              m_defaultClientSize;
     ODIconCombo         *m_bODIComboBoxODPointIconName;
