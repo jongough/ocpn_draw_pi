@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
+// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b3)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -53,6 +53,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxBoxSizer* m_SizerProperties;
 		wxNotebook* m_notebookProperties;
 		wxScrolledWindow* m_panelGeneral;
+		wxBoxSizer* m_bSizerGeneral;
 		wxCheckBox* m_checkBoxConfirmObjectDelete;
 		wxCheckBox* m_checkBoxRememberPropertyPosition;
 		wxCheckBox* m_checkBoxShowMagBearings;
@@ -68,6 +69,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextConfigFileEntriesMsg;
 		wxButton* m_buttonConfigFileEntries;
 		wxScrolledWindow* m_panelBoundary;
+		wxFlexGridSizer* m_fgSizerBoundarySettings;
 		wxFlexGridSizer* m_fgSizerBoundarySettingsColours;
 		wxStaticText* m_staticTextActiveBoundayLineColour;
 		ODColourPickerCtrl* m_colourPickerActiveBoundaryLineColour;
@@ -88,6 +90,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxRadioBox* m_radioBoxBoundaryType;
 		wxCheckBox* m_checkBoxBoundaryODPointsVisible;
 		wxScrolledWindow* m_panelBoundaryPoint;
+		wxBoxSizer* m_bSizerOCPNPoint;
 		wxStaticText* m_staticTextArrivalRadius;
 		wxTextCtrl* m_textCtrlODPointArrivalRadius;
 		wxBoxSizer* m_SizerNameIcon;
@@ -117,6 +120,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextRangeRingStyle;
 		wxChoice* m_choiceRangeRingStyle;
 		wxScrolledWindow* m_panelTextPoint;
+		wxFlexGridSizer* m_fgSizerTextPoint;
 		wxFlexGridSizer* m_fgSizerPositionAndColour;
 		wxCheckBox* m_checkBoxTextPointShowName;
 		wxFlexGridSizer* m_fgSizerTextPointIconName;
@@ -175,6 +179,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxEBLAllwaysShowInfo;
 		wxRadioBox* m_radioBoxEBLPersistence;
 		wxScrolledWindow* m_panelDR;
+		wxFlexGridSizer* m_fgSizerDRSettings;
 		wxFlexGridSizer* m_fgSizerDRDefaultSizes;
 		wxStaticText* m_staticTextActiveDRLineColour;
 		ODColourPickerCtrl* m_colourPickerDRLineColour;
@@ -199,6 +204,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxDRShowArrow;
 		wxRadioBox* m_radioBoxDRPersistence;
 		wxScrolledWindow* m_panelDRPoint;
+		wxBoxSizer* m_bSizerDRP;
 		wxFlexGridSizer* m_fgSizerDRPointSettings;
 		wxStaticText* m_staticTextDRPointIcon;
 		wxBitmapComboBox* m_bcomboBoxDRPointIconName;
@@ -216,6 +222,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextDRPointRangeRingStyle;
 		wxChoice* m_choiceDRPointRangeRingStyle;
 		wxScrolledWindow* m_panelGZ;
+		wxFlexGridSizer* m_fgSizerGZSettings;
 		wxFlexGridSizer* m_fgSizerGZIcons;
 		wxFlexGridSizer* m_fgSizerGZFASIcon;
 		wxStaticText* m_staticTextGZFirstIcon;
@@ -279,6 +286,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxChoice* m_choicePILOffsetLine2Style;
 		wxRadioBox* m_radioBoxPILPersistence;
 		wxScrolledWindow* m_panelAbout;
+		wxBoxSizer* m_bSizerAbout;
 		wxStaticText* m_staticTextName;
 		wxStaticText* m_staticTextNameVal;
 		wxStaticText* m_staticTextVersion;
@@ -314,14 +322,17 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextOther;
 		wxStaticText* m_staticText34;
 		wxScrolledWindow* m_panelHelp;
+		wxFlexGridSizer* m_fgSizerHelp;
 		wxStaticText* m_staticTextHelp;
 		wxScrolledWindow* m_panelLicense;
+		wxFlexGridSizer* m_fgSizerLicense;
 		wxTextCtrl* m_textCtrlLicense;
 		wxButton* m_buttonOK;
 		wxButton* m_buttonCancel;
 		wxButton* m_buttonApply;
 
 		// Virtual event handlers, override them in your derived class
+		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnClickConfigFileEntries( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
@@ -337,8 +348,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxGrid* m_gridODWDInteractions;
 
 		ODPropertiesDialogDef();
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
-		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,645 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,645 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP );
 
 		~ODPropertiesDialogDef();
 

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
+// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b3)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -27,20 +27,17 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 		return false;
 	}
 
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_SizerProperties = new wxBoxSizer( wxVERTICAL );
 
 	wxBoxSizer* bSizer10;
 	bSizer10 = new wxBoxSizer( wxVERTICAL );
 
-	wxBoxSizer* bSizer121;
-	bSizer121 = new wxBoxSizer( wxHORIZONTAL );
-
-	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
-	m_panelGeneral = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookProperties = new wxNotebook( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0|wxTAB_TRAVERSAL );
+	m_panelGeneral = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxHSCROLL|wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelGeneral->SetScrollRate( 5, 5 );
-	wxBoxSizer* bSizerGeneral;
-	bSizerGeneral = new wxBoxSizer( wxVERTICAL );
+	m_bSizerGeneral = new wxBoxSizer( wxVERTICAL );
 
 	wxFlexGridSizer* fgSizer4;
 	fgSizer4 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -107,19 +104,18 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer4->Add( m_buttonConfigFileEntries, 0, wxALL, 5 );
 
 
-	bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
+	m_bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
 
 
-	m_panelGeneral->SetSizer( bSizerGeneral );
+	m_panelGeneral->SetSizer( m_bSizerGeneral );
 	m_panelGeneral->Layout();
-	bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
-	m_panelBoundary = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_bSizerGeneral->Fit( m_panelGeneral );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_panelBoundary = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelBoundary->SetScrollRate( 5, 5 );
-	wxFlexGridSizer* fgSizerBoundarySettings;
-	fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizerBoundarySettings->SetFlexibleDirection( wxVERTICAL );
-	fgSizerBoundarySettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
+	m_fgSizerBoundarySettings->SetFlexibleDirection( wxVERTICAL );
+	m_fgSizerBoundarySettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_fgSizerBoundarySettingsColours = new wxFlexGridSizer( 0, 4, 0, 0 );
 	m_fgSizerBoundarySettingsColours->SetFlexibleDirection( wxVERTICAL );
@@ -188,7 +184,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerBoundarySettingsColours->Add( m_sliderInclusionBoundarySize, 1, wxALL|wxEXPAND, 5 );
 
 
-	fgSizerBoundarySettings->Add( m_fgSizerBoundarySettingsColours, 1, wxEXPAND, 5 );
+	m_fgSizerBoundarySettings->Add( m_fgSizerBoundarySettingsColours, 1, wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizerBoundaryType;
 	fgSizerBoundaryType = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -206,17 +202,16 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizerBoundaryType->Add( m_checkBoxBoundaryODPointsVisible, 0, wxALL, 5 );
 
 
-	fgSizerBoundarySettings->Add( fgSizerBoundaryType, 1, wxEXPAND, 5 );
+	m_fgSizerBoundarySettings->Add( fgSizerBoundaryType, 1, wxEXPAND, 5 );
 
 
-	m_panelBoundary->SetSizer( fgSizerBoundarySettings );
+	m_panelBoundary->SetSizer( m_fgSizerBoundarySettings );
 	m_panelBoundary->Layout();
-	fgSizerBoundarySettings->Fit( m_panelBoundary );
+	m_fgSizerBoundarySettings->Fit( m_panelBoundary );
 	m_notebookProperties->AddPage( m_panelBoundary, _("Boundary"), false );
-	m_panelBoundaryPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelBoundaryPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelBoundaryPoint->SetScrollRate( 5, 5 );
-	wxBoxSizer* bSizerOCPNPoint;
-	bSizerOCPNPoint = new wxBoxSizer( wxVERTICAL );
+	m_bSizerOCPNPoint = new wxBoxSizer( wxVERTICAL );
 
 	wxBoxSizer* bSizerArrivalRadius;
 	bSizerArrivalRadius = new wxBoxSizer( wxHORIZONTAL );
@@ -229,7 +224,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	bSizerArrivalRadius->Add( m_textCtrlODPointArrivalRadius, 0, wxALL, 5 );
 
 
-	bSizerOCPNPoint->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
+	m_bSizerOCPNPoint->Add( bSizerArrivalRadius, 0, wxEXPAND, 5 );
 
 	m_SizerNameIcon = new wxBoxSizer( wxHORIZONTAL );
 
@@ -253,7 +248,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_SizerNameIcon->Add( m_fgSizerODPointIcon, 1, wxEXPAND, 5 );
 
 
-	bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
+	m_bSizerOCPNPoint->Add( m_SizerNameIcon, 0, wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizerRingsShow;
 	fgSizerRingsShow = new wxFlexGridSizer( 5, 2, 0, 0 );
@@ -307,7 +302,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizerRingsShow->Add( 0, 0, 1, wxEXPAND, 5 );
 
 
-	bSizerOCPNPoint->Add( fgSizerRingsShow, 0, wxEXPAND, 5 );
+	m_bSizerOCPNPoint->Add( fgSizerRingsShow, 0, wxEXPAND, 5 );
 
 	m_fgSizerRingsDetail = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerRingsDetail->AddGrowableCol( 0 );
@@ -369,20 +364,19 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerRingsDetail->Add( m_choiceRangeRingStyle, 0, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
 
 
-	bSizerOCPNPoint->Add( m_fgSizerRingsDetail, 0, wxEXPAND, 5 );
+	m_bSizerOCPNPoint->Add( m_fgSizerRingsDetail, 0, wxEXPAND, 5 );
 
 
-	m_panelBoundaryPoint->SetSizer( bSizerOCPNPoint );
+	m_panelBoundaryPoint->SetSizer( m_bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
-	bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
+	m_bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
 	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
-	m_panelTextPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelTextPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelTextPoint->SetScrollRate( 5, 5 );
-	wxFlexGridSizer* fgSizerTextPoint;
-	fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizerTextPoint->AddGrowableCol( 0 );
-	fgSizerTextPoint->SetFlexibleDirection( wxBOTH );
-	fgSizerTextPoint->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
+	m_fgSizerTextPoint->AddGrowableCol( 0 );
+	m_fgSizerTextPoint->SetFlexibleDirection( wxBOTH );
+	m_fgSizerTextPoint->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_fgSizerPositionAndColour = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerPositionAndColour->AddGrowableCol( 0 );
@@ -465,7 +459,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerPositionAndColour->Add( m_textCtrlTextMaxWidth, 0, wxALL, 5 );
 
 
-	fgSizerTextPoint->Add( m_fgSizerPositionAndColour, 1, wxEXPAND, 5 );
+	m_fgSizerTextPoint->Add( m_fgSizerPositionAndColour, 1, wxEXPAND, 5 );
 
 	m_fgSizerTextPointFont = new wxFlexGridSizer( 0, 3, 0, 0 );
 	m_fgSizerTextPointFont->AddGrowableCol( 1 );
@@ -484,14 +478,14 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerTextPointFont->Add( m_buttonTextFont, 0, wxALIGN_CENTER_VERTICAL|wxALL|wxEXPAND, 5 );
 
 
-	fgSizerTextPoint->Add( m_fgSizerTextPointFont, 1, wxEXPAND, 5 );
+	m_fgSizerTextPoint->Add( m_fgSizerTextPointFont, 1, wxEXPAND, 5 );
 
 
-	m_panelTextPoint->SetSizer( fgSizerTextPoint );
+	m_panelTextPoint->SetSizer( m_fgSizerTextPoint );
 	m_panelTextPoint->Layout();
-	fgSizerTextPoint->Fit( m_panelTextPoint );
+	m_fgSizerTextPoint->Fit( m_panelTextPoint );
 	m_notebookProperties->AddPage( m_panelTextPoint, _("Text Point"), false );
-	m_panelPath = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
+	m_panelPath = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxVSCROLL );
 	m_panelPath->SetScrollRate( 5, 5 );
 	m_panelPath->Enable( false );
 	m_panelPath->Hide();
@@ -539,7 +533,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelPath->Layout();
 	m_fgSizerPathSettings->Fit( m_panelPath );
 	m_notebookProperties->AddPage( m_panelPath, _("Path"), false );
-	m_panelEBL = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelEBL = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelEBL->SetScrollRate( 5, 5 );
 	m_fgSizerEBLSettings = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerEBLSettings->AddGrowableCol( 0 );
@@ -646,12 +640,11 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelEBL->Layout();
 	m_fgSizerEBLSettings->Fit( m_panelEBL );
 	m_notebookProperties->AddPage( m_panelEBL, _("EBL"), false );
-	m_panelDR = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDR = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelDR->SetScrollRate( 5, 5 );
-	wxFlexGridSizer* fgSizerDRSettings;
-	fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizerDRSettings->SetFlexibleDirection( wxBOTH );
-	fgSizerDRSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_fgSizerDRSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
+	m_fgSizerDRSettings->SetFlexibleDirection( wxBOTH );
+	m_fgSizerDRSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_fgSizerDRDefaultSizes = new wxFlexGridSizer( 0, 4, 0, 0 );
 	m_fgSizerDRDefaultSizes->AddGrowableCol( 0 );
@@ -722,7 +715,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerDRDefaultSizes->Add( m_textCtrlDRPointInterval, 0, wxALIGN_RIGHT|wxALL, 5 );
 
 
-	fgSizerDRSettings->Add( m_fgSizerDRDefaultSizes, 1, wxEXPAND, 5 );
+	m_fgSizerDRSettings->Add( m_fgSizerDRDefaultSizes, 1, wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizer16;
 	fgSizer16 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -766,17 +759,16 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer16->Add( m_radioBoxDRPersistence, 0, wxALL, 5 );
 
 
-	fgSizerDRSettings->Add( fgSizer16, 1, wxEXPAND, 5 );
+	m_fgSizerDRSettings->Add( fgSizer16, 1, wxEXPAND, 5 );
 
 
-	m_panelDR->SetSizer( fgSizerDRSettings );
+	m_panelDR->SetSizer( m_fgSizerDRSettings );
 	m_panelDR->Layout();
-	fgSizerDRSettings->Fit( m_panelDR );
+	m_fgSizerDRSettings->Fit( m_panelDR );
 	m_notebookProperties->AddPage( m_panelDR, _("DR"), false );
-	m_panelDRPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelDRPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelDRPoint->SetScrollRate( 5, 5 );
-	wxBoxSizer* bSizer12;
-	bSizer12 = new wxBoxSizer( wxVERTICAL );
+	m_bSizerDRP = new wxBoxSizer( wxVERTICAL );
 
 	m_fgSizerDRPointSettings = new wxFlexGridSizer( 0, 2, 0, 0 );
 	m_fgSizerDRPointSettings->AddGrowableCol( 0 );
@@ -852,20 +844,19 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerDRPointSettings->Add( m_choiceDRPointRangeRingStyle, 0, wxALIGN_RIGHT|wxALL|wxEXPAND, 5 );
 
 
-	bSizer12->Add( m_fgSizerDRPointSettings, 0, wxEXPAND, 5 );
+	m_bSizerDRP->Add( m_fgSizerDRPointSettings, 0, wxEXPAND, 5 );
 
 
-	m_panelDRPoint->SetSizer( bSizer12 );
+	m_panelDRPoint->SetSizer( m_bSizerDRP );
 	m_panelDRPoint->Layout();
-	bSizer12->Fit( m_panelDRPoint );
+	m_bSizerDRP->Fit( m_panelDRPoint );
 	m_notebookProperties->AddPage( m_panelDRPoint, _("DR Point"), false );
-	m_panelGZ = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelGZ = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelGZ->SetScrollRate( 5, 5 );
-	wxFlexGridSizer* fgSizerGZSettings;
-	fgSizerGZSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizerGZSettings->AddGrowableCol( 0 );
-	fgSizerGZSettings->SetFlexibleDirection( wxBOTH );
-	fgSizerGZSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_fgSizerGZSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
+	m_fgSizerGZSettings->AddGrowableCol( 0 );
+	m_fgSizerGZSettings->SetFlexibleDirection( wxBOTH );
+	m_fgSizerGZSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_fgSizerGZIcons = new wxFlexGridSizer( 0, 1, 0, 0 );
 	m_fgSizerGZIcons->AddGrowableCol( 0 );
@@ -896,7 +887,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerGZIcons->Add( m_fgSizerGZFASIcon, 1, wxEXPAND, 5 );
 
 
-	fgSizerGZSettings->Add( m_fgSizerGZIcons, 1, wxEXPAND, 5 );
+	m_fgSizerGZSettings->Add( m_fgSizerGZIcons, 1, wxEXPAND, 5 );
 
 	m_fgSizerGZSettingsColours = new wxFlexGridSizer( 0, 4, 0, 0 );
 	m_fgSizerGZSettingsColours->AddGrowableCol( 0 );
@@ -962,7 +953,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_fgSizerGZSettingsColours->Add( m_sliderGZFillTransparency, 0, wxALL|wxEXPAND, 5 );
 
 
-	fgSizerGZSettings->Add( m_fgSizerGZSettingsColours, 1, wxEXPAND, 5 );
+	m_fgSizerGZSettings->Add( m_fgSizerGZSettingsColours, 1, wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizerGZRotate;
 	fgSizerGZRotate = new wxFlexGridSizer( 0, 3, 0, 0 );
@@ -985,7 +976,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizerGZRotate->Add( m_radioBoxGZLineType, 0, wxALL, 5 );
 
 
-	fgSizerGZSettings->Add( fgSizerGZRotate, 1, wxEXPAND, 5 );
+	m_fgSizerGZSettings->Add( fgSizerGZRotate, 1, wxEXPAND, 5 );
 
 	wxFlexGridSizer* fgSizerGZPersistence;
 	fgSizerGZPersistence = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -999,17 +990,20 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizerGZPersistence->Add( m_radioBoxGZPersistence, 1, wxALL, 5 );
 
 
-	fgSizerGZSettings->Add( fgSizerGZPersistence, 1, wxEXPAND, 5 );
+	m_fgSizerGZSettings->Add( fgSizerGZPersistence, 1, wxEXPAND, 5 );
 
 
-	m_panelGZ->SetSizer( fgSizerGZSettings );
+	m_panelGZ->SetSizer( m_fgSizerGZSettings );
 	m_panelGZ->Layout();
-	fgSizerGZSettings->Fit( m_panelGZ );
+	m_fgSizerGZSettings->Fit( m_panelGZ );
 	m_notebookProperties->AddPage( m_panelGZ, _("Guard Zone"), false );
-	m_panelPIL = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelPIL = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelPIL->SetScrollRate( 5, 5 );
 	m_fgSizerPILSettings = new wxFlexGridSizer( 0, 1, 0, 0 );
 	m_fgSizerPILSettings->AddGrowableCol( 0 );
+	m_fgSizerPILSettings->AddGrowableRow( 0 );
+	m_fgSizerPILSettings->AddGrowableRow( 1 );
+	m_fgSizerPILSettings->AddGrowableRow( 2 );
 	m_fgSizerPILSettings->SetFlexibleDirection( wxBOTH );
 	m_fgSizerPILSettings->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -1184,11 +1178,10 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelPIL->SetSizer( m_fgSizerPILSettings );
 	m_panelPIL->Layout();
 	m_fgSizerPILSettings->Fit( m_panelPIL );
-	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), false );
-	m_panelAbout = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), true );
+	m_panelAbout = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelAbout->SetScrollRate( 5, 5 );
-	wxBoxSizer* bSizerAbout;
-	bSizerAbout = new wxBoxSizer( wxVERTICAL );
+	m_bSizerAbout = new wxBoxSizer( wxVERTICAL );
 
 	wxFlexGridSizer* fgSizerAboutLayout;
 	fgSizerAboutLayout = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -1312,14 +1305,14 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizerAboutLayout->Add( m_staticTextDateVal, 0, wxALL, 5 );
 
 
-	bSizerAbout->Add( fgSizerAboutLayout, 0, wxEXPAND, 5 );
+	m_bSizerAbout->Add( fgSizerAboutLayout, 0, wxEXPAND, 5 );
 
 	m_staticline1 = new wxStaticLine( m_panelAbout, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizerAbout->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
+	m_bSizerAbout->Add( m_staticline1, 0, wxEXPAND | wxALL, 5 );
 
 	m_staticTextPluginDirectories = new wxStaticText( m_panelAbout, wxID_ANY, _("OCPN Draw Directories:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextPluginDirectories->Wrap( -1 );
-	bSizerAbout->Add( m_staticTextPluginDirectories, 0, wxALL, 5 );
+	m_bSizerAbout->Add( m_staticTextPluginDirectories, 0, wxALL, 5 );
 
 	wxFlexGridSizer* fgSizer49;
 	fgSizer49 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -1351,10 +1344,10 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer49->Add( m_staticTextLayersDirectory, 0, wxALL, 5 );
 
 
-	bSizerAbout->Add( fgSizer49, 0, wxEXPAND, 5 );
+	m_bSizerAbout->Add( fgSizer49, 0, wxEXPAND, 5 );
 
 	m_staticline11 = new wxStaticLine( m_panelAbout, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLI_HORIZONTAL );
-	bSizerAbout->Add( m_staticline11, 0, wxEXPAND | wxALL, 5 );
+	m_bSizerAbout->Add( m_staticline11, 0, wxEXPAND | wxALL, 5 );
 
 	wxFlexGridSizer* fgSizer50;
 	fgSizer50 = new wxFlexGridSizer( 0, 2, 0, 0 );
@@ -1370,23 +1363,22 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	fgSizer50->Add( m_staticText34, 0, wxALL, 5 );
 
 
-	bSizerAbout->Add( fgSizer50, 0, wxEXPAND, 5 );
+	m_bSizerAbout->Add( fgSizer50, 0, wxEXPAND, 5 );
 
 
-	m_panelAbout->SetSizer( bSizerAbout );
+	m_panelAbout->SetSizer( m_bSizerAbout );
 	m_panelAbout->Layout();
-	bSizerAbout->Fit( m_panelAbout );
+	m_bSizerAbout->Fit( m_panelAbout );
 	m_notebookProperties->AddPage( m_panelAbout, _("About"), false );
 	m_panelHelp = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_panelHelp->SetScrollRate( 5, 5 );
-	wxFlexGridSizer* fgSizer22;
-	fgSizer22 = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizer22->SetFlexibleDirection( wxBOTH );
-	fgSizer22->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_fgSizerHelp = new wxFlexGridSizer( 0, 1, 0, 0 );
+	m_fgSizerHelp->SetFlexibleDirection( wxBOTH );
+	m_fgSizerHelp->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
 	m_staticTextHelp = new wxStaticText( m_panelHelp, wxID_ANY, _("This chart shows the interactions between Boundaries and WatchDog alam boundaries"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextHelp->Wrap( -1 );
-	fgSizer22->Add( m_staticTextHelp, 0, wxALL, 5 );
+	m_fgSizerHelp->Add( m_staticTextHelp, 0, wxALL, 5 );
 
 	m_gridODWDInteractions = new wxGrid( m_panelHelp, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
 
@@ -1422,35 +1414,31 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	// Cell Defaults
 	m_gridODWDInteractions->SetDefaultCellBackgroundColour( wxSystemSettings::GetColour( wxSYS_COLOUR_WINDOW ) );
 	m_gridODWDInteractions->SetDefaultCellAlignment( wxALIGN_CENTER, wxALIGN_CENTER );
-	fgSizer22->Add( m_gridODWDInteractions, 0, wxALL, 5 );
+	m_fgSizerHelp->Add( m_gridODWDInteractions, 0, wxALL, 5 );
 
 
-	m_panelHelp->SetSizer( fgSizer22 );
+	m_panelHelp->SetSizer( m_fgSizerHelp );
 	m_panelHelp->Layout();
-	fgSizer22->Fit( m_panelHelp );
+	m_fgSizerHelp->Fit( m_panelHelp );
 	m_notebookProperties->AddPage( m_panelHelp, _("Help"), false );
-	m_panelLicense = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	m_panelLicense = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelLicense->SetScrollRate( 5, 5 );
-	wxFlexGridSizer* fgSizer48;
-	fgSizer48 = new wxFlexGridSizer( 0, 1, 0, 0 );
-	fgSizer48->AddGrowableCol( 0 );
-	fgSizer48->AddGrowableRow( 0 );
-	fgSizer48->SetFlexibleDirection( wxBOTH );
-	fgSizer48->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_ALL );
+	m_fgSizerLicense = new wxFlexGridSizer( 0, 1, 0, 0 );
+	m_fgSizerLicense->AddGrowableCol( 0 );
+	m_fgSizerLicense->AddGrowableRow( 0 );
+	m_fgSizerLicense->SetFlexibleDirection( wxBOTH );
+	m_fgSizerLicense->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_ALL );
 
 	m_textCtrlLicense = new wxTextCtrl( m_panelLicense, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxTE_READONLY|wxTE_WORDWRAP );
-	fgSizer48->Add( m_textCtrlLicense, 0, wxALL|wxEXPAND, 5 );
+	m_fgSizerLicense->Add( m_textCtrlLicense, 0, wxALL|wxEXPAND, 5 );
 
 
-	m_panelLicense->SetSizer( fgSizer48 );
+	m_panelLicense->SetSizer( m_fgSizerLicense );
 	m_panelLicense->Layout();
-	fgSizer48->Fit( m_panelLicense );
+	m_fgSizerLicense->Fit( m_panelLicense );
 	m_notebookProperties->AddPage( m_panelLicense, _("License"), false );
 
-	bSizer121->Add( m_notebookProperties, 1, wxALL|wxEXPAND, 5 );
-
-
-	bSizer10->Add( bSizer121, 1, wxEXPAND, 5 );
+	bSizer10->Add( m_notebookProperties, 1, wxALL|wxEXPAND, 5 );
 
 
 	m_SizerProperties->Add( bSizer10, 1, wxEXPAND, 5 );
@@ -1482,9 +1470,9 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 
 	this->SetSizer( m_SizerProperties );
 	this->Layout();
-	m_SizerProperties->Fit( this );
 
 	// Connect Events
+	m_panelGeneral->Connect( wxEVT_SIZE, wxSizeEventHandler( ODPropertiesDialogDef::OnSize ), NULL, this );
 	m_buttonConfigFileEntries->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
@@ -1501,6 +1489,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
+	m_panelGeneral->Disconnect( wxEVT_SIZE, wxSizeEventHandler( ODPropertiesDialogDef::OnSize ), NULL, this );
 	m_buttonConfigFileEntries->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
