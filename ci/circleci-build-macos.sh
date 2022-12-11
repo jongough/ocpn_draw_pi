@@ -18,9 +18,9 @@ done
 if [ -n "$WXVERSION" ] && [ "$WXVERSION" -eq "32" ]; then
     echo "Building for WXVERSION 32";
     WX_URL=https://download.opencpn.org/s/Djqm4SXzYjF8nBw/download
-    WX_DOWNLOAD=/tmp/wx32_opencpn50_macos1010.tar.xz
-    WX_EXECUTABLE=/tmp/wx32_opencpn50_macos1010/bin/wx-config
-    WX_CONFIG="--prefix=/tmp/wx32_opencpn50_macos1010"
+    WX_DOWNLOAD=/tmp/wx321_opencpn50_macos1010.tar.xz
+    WX_EXECUTABLE=/tmp/wx321_opencpn50_macos1010/bin/wx-config
+    WX_CONFIG="--prefix=/tmp/wx321_opencpn50_macos1010"
     MACOSX_DEPLOYMENT_TARGET=10.10
 else
     echo "Building for WXVERSION 312";
