@@ -1113,14 +1113,7 @@ void ODPropertiesDialogImpl::RecalculateSize()
     sz.x = 60 * char_width;
     sz.y = 30 * char_height;
 
-    wxSize dsize = GetGrandParent()->GetClientSize();
-    //dsize = g_parent_window->GetClientSize();
-    sz.y = wxMin(sz.y, dsize.y - (0 * char_height));
-    sz.x = wxMin(sz.x, dsize.x - (0 * char_height));
     sz.y = wxMax(sz.y, m_panelGeneral->GetSize().GetY());
-//    m_bSizerGeneral->RecalcSizes();
-//    m_fgSizerPILSettings->RecalcSizes();
-    sz.y = wxMax(sz.y, m_bSizerGeneral->GetSize().GetHeight());
     sz.y = wxMax(sz.y, m_panelBoundary->GetSize().GetY());
     sz.y = wxMax(sz.y, m_panelBoundaryPoint->GetSize().GetY());
     sz.y = wxMax(sz.y, m_panelTextPoint->GetSize().GetY());
@@ -1130,6 +1123,10 @@ void ODPropertiesDialogImpl::RecalculateSize()
     sz.y = wxMax(sz.y, m_panelGZ->GetSize().GetY());
     sz.y = wxMax(sz.y, m_panelDR->GetSize().GetY());
     sz.y = wxMax(sz.y, m_panelPIL->GetSize().GetY());
+
+    wxSize dsize = GetGrandParent()->GetClientSize();
+    sz.y = wxMin(sz.y, dsize.y - (0 * char_height));
+    sz.x = wxMin(sz.x, dsize.x - (0 * char_height));
     SetClientSize(sz);
 
     wxSize fsize = GetSize();

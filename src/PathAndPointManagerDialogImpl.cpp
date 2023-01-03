@@ -2275,7 +2275,6 @@ void PathAndPointManagerDialogImpl::RecalculateSize()
     //  Get a text height metric for reference
 
     int char_width, char_height;
-    //GetTextExtent(_T("W"), &char_width, &char_height);
     GetTextExtent(_T("W"), &char_width, &char_height, NULL, NULL, GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0));
 
     wxSize sz;
