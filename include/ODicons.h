@@ -94,6 +94,9 @@ public:
 
     bool        m_bUpdateIcons;
     double      m_dScaleFactor;
+    int         m_iDisplayScaleFactor;
+    int         m_iToolScaleFactor;
+    int         m_iImageRefSize;
 
 
 private:
