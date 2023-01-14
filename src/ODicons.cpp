@@ -40,6 +40,9 @@
 ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
+    m_iDisplayScaleFactor = 32;
+    m_iToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    m_iImageRefSize = m_iDisplayScaleFactor * m_iToolScaleFactor;
     m_bUpdateIcons = false;
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
 
@@ -273,6 +276,12 @@ void ODicons::initialize_images(void)
 #ifdef ODraw_USE_SVG
 wxBitmap ODicons::LoadSVG( const wxString filename, unsigned int width, unsigned int height )
 {
+    if( width == -1 ) width = m_iImageRefSize;
+    if( height == -1 ) height = m_iImageRefSize;
+
+    wxString s = _("ocpn_draw_pi LoadSVG");
+    wxLogMessage( wxT("%s: filename: %s,  width: %u, height: %u"), s.c_str(), filename, width, height);
+
     wxBitmap l__Bitmap = GetBitmapFromSVGFile(filename , width, height);
     if(!l__Bitmap.IsOk()) {
         m_failedBitmapLoad = true;
