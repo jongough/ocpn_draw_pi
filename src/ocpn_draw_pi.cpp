@@ -287,6 +287,7 @@ ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
+int             g_IconDisplayScaleFactor;
 
 wxString        *g_ODlocale;
 int             g_iLocaleDepth;
@@ -1603,6 +1604,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "RemeberPropertiesDialogPosition" ), g_bRememberPropertyDialogPosition );
             pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
             pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
+            pConf->Write( wxS( "IconDisplayScaleFactor"), g_IconDisplayScaleFactor );
             pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
             pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
             pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
@@ -1906,6 +1908,7 @@ void ocpn_draw_pi::LoadConfig()
 
         pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
         pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
+        pConf->Read( wxS( "IconDisplayScaleFactor"), &g_IconDisplayScaleFactor, 32 );
 
         pConf->Read( wxS( "ToolBarPosX" ), &g_iToolbarPosX, 0);
         pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
