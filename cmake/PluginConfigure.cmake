@@ -574,6 +574,14 @@ if(NOT QT_ANDROID)
     set(wxWidgets_LIBRARIES ${REVISED_wxWidgets_LIBRARIES})
 
     message(STATUS "${CMLOC} Revised wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
+
+#    if(OD_USE_SVG)
+#        message(STATUS "${CMLOC}    Adding local wxsvg")
+#        add_subdirectory(libs/wxsvg)
+#        message(STATUS "${CMLOC}PACKAGE_NAME: ${PACKAGE_NAME}")
+#        target_link_libraries(${PACKAGE_NAME} "wxsvg_static")
+#    endif(OD_USE_SVG)
+
 else(NOT QT_ANDROID)
     IF(_wx_selected_config MATCHES "androideabi-qt-arm64")
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include")
