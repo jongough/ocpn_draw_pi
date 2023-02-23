@@ -154,13 +154,6 @@ else()
 endif()
 message(STATUS "${CMLOC}PKG_TARGET_GTK: ${PKG_TARGET_GTK}")
 
-#message(STATUS "${CMLOC}ENV WX_VER: $ENV{WX_VER}")
-#if(NOT "$ENV{WX_VER}" STREQUAL "")
-#    set(PKG_TARGET_WX_VER "-$ENV{WX_VER}")
-#else()
-#    set(PKG_TARGET_WX_VER "")
-#endif()
-
 if(UNIX AND NOT APPLE)
     # Handle gtk3 build variant
     string(STRIP "${PKG_TARGET}" PKG_TARGET)
@@ -278,7 +271,7 @@ endif()
 message(STATUS "${CMLOC}PACKAGING_NAME: ${PACKAGING_NAME}")
 message(STATUS "${CMLOC}PACKAGING_NAME_XML: ${PACKAGING_NAME_XML}")
 
-set(PKG_TARGET_FULL "${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_ARCH}${PKG_TARGET_WX_VER}")
+set(PKG_TARGET_FULL "${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_WX_VER}${PKG_TARGET_ARCH}")
 message(STATUS "${CMLOC}PKG_TARGET_FULL: ${PKG_TARGET_FULL}")
 message(STATUS "${CMLOC}PKG_BUILD_TARGET: ${PKG_BUILD_TARGET}")
 message(STATUS "${CMLOC}PKG_BUILD_GTK: ${PKG_TARGET_GTK}")
@@ -574,14 +567,6 @@ if(NOT QT_ANDROID)
     set(wxWidgets_LIBRARIES ${REVISED_wxWidgets_LIBRARIES})
 
     message(STATUS "${CMLOC} Revised wxWidgets Libraries: ${wxWidgets_LIBRARIES}")
-
-#    if(OD_USE_SVG)
-#        message(STATUS "${CMLOC}    Adding local wxsvg")
-#        add_subdirectory(libs/wxsvg)
-#        message(STATUS "${CMLOC}PACKAGE_NAME: ${PACKAGE_NAME}")
-#        target_link_libraries(${PACKAGE_NAME} "wxsvg_static")
-#    endif(OD_USE_SVG)
-
 else(NOT QT_ANDROID)
     IF(_wx_selected_config MATCHES "androideabi-qt-arm64")
         set(qt_android_include ${qt_android_include} "${OCPN_Android_Common}/qt5/build_arm64_O3/qtbase/include")
