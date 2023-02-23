@@ -588,6 +588,12 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
     g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
 
+    if(g_IconDisplayScaleFactor != m_sliderIconScaling->GetValue()) {
+        g_IconDisplayScaleFactor = m_sliderIconScaling->GetValue();
+        g_ocpn_draw_pi->m_pODicons->m_bScaleIcons = true;
+        DEBUGSL("ODProp: set m_bScaleIcons");
+    }
+
     g_iDisplayToolbar = m_choiceToolbar->GetSelection();
     switch (g_iDisplayToolbar) {
         case ID_DISPLAY_NEVER:
@@ -626,7 +632,7 @@ background: #32CC99;\
 width: 0px;\
 subcontrol-position: left;\
 subcontrol-origin: margin;\
-}\
+}\;
 QScrollBar:vertical {\
 border: 0px solid grey;\
 background-color: rgb(240, 240, 240);\
@@ -1006,6 +1012,7 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
     m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
     m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
+    m_sliderIconScaling->SetValue( g_IconDisplayScaleFactor );
     m_choiceToolbar->Select( g_iDisplayToolbar );
 
     m_colourPickerDRLineColour->SetColour( g_colourDRLineColour );

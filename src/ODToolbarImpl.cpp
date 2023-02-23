@@ -40,6 +40,9 @@
 #include "ODToolbarImpl.h"
 #include "ODicons.h"
 #include "ocpn_draw_pi.h"
+#if wxCHECK_VERSION( 3, 1, 6 )
+#include "wx/bmpbndl.h"
+#endif
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  )
 {
@@ -50,6 +53,8 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& t
     Create( parent );
 
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
+    m_bbDefault = new wxBitmapBundle;
+    m_PreferredSize = m_bbDefault->GetPreferredLogicalSizeFor(this);
 
     AddTools();
 
@@ -167,12 +172,13 @@ void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
     SetToolbarTool( m_Mode );
 }
 
-void ODToolbarImpl::Show(void)
+bool ODToolbarImpl::Show(bool show)
 {
     SetToolbarFont();
+    UpdateIcons();
     this->Layout();
     m_bSizerToolbar->Fit( this );
-    ODToolbarDialog::Show();
+    return ODToolbarDialog::Show(show);
 }
 
 void ODToolbarImpl::OnKeyDown(wxKeyEvent& event)
@@ -408,7 +414,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
     {
         case ID_MODE_BOUNDARY:
         {
-            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), wxBitmapBundle::FromBitmap(*g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey).GetBitmap(	m_bbDefault->GetPreferredLogicalSizeFor(g_parent_window)) );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl );
@@ -525,7 +531,8 @@ void ODToolbarImpl::AddTools(void)
     DEBUGCONT(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth());
     DEBUGCONT(", Height: ");
     DEBUGEND(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight());
-    //m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
+    //g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->SetHeight(g_ocpn_draw_pi->m_pODicons->m_iToolIconScaleFactor);
+    m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
     m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary, wxNullBitmap, _("Create Boundary"), wxEmptyString );
     m_toolODPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_POINT, _("Boundary Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point, wxNullBitmap, _("Create Boundary Point"), wxEmptyString );
     m_toolTextPoint = m_toolBarODToolbar->AddCheckTool( ID_MODE_TEXT_POINT, _("Text Point"),  *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint, wxNullBitmap, _("Create Text Point"), wxEmptyString );

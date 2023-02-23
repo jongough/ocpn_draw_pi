@@ -432,8 +432,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_GLMinSymbolLineWidth = 1.0f;
 #endif
 
-    m_pODicons = new ODicons();
-
     m_bRecreateConfig = false;
     DEBUGSL("ocpn_draw_pi: return");
 
@@ -543,6 +541,8 @@ int ocpn_draw_pi::Init(void)
 
     LoadConfig();
     g_pODConfig->LateInit();
+
+    m_pODicons = new ODicons();
 
     g_pODSelect = new ODSelect();
 
@@ -1326,7 +1326,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
-                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show(true);
                 } else {
                     m_iCallerId = 0;
                     nBoundary_State = 0;
@@ -3449,14 +3449,14 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
         int EBLbrgTo = EBLbrgFrom - 180;
         if(EBLbrgTo < 0) EBLbrgTo += 360;
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("From: %03d째(M), To: %03d째(M)\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo  );
+            pathInfo << wxString::Format( wxString("From: %03d \u00B0(M), To: %03d \u00B0(M)\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo  );
         else
-            pathInfo << wxString::Format( wxString("From: %03d째, To: %03d째\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
+            pathInfo << wxString::Format( wxString("From: %03d \u00B0, To: %03d \u00B0\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
     } else {
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("%03d째(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d\u00B0�(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
         else
-            pathInfo << wxString::Format( wxString("%03d째  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d \u00B0  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
     }
 
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );

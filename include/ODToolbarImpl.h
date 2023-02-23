@@ -32,7 +32,7 @@ public:
     void SetToolbarToolEnableAll( void );
     void SetColourScheme( PI_ColorScheme cs );
     void SetToolbarFont( void );
-    void Show( void );
+    bool Show( bool show = true );
 
     wxToolBarToolBase *m_toolBoundary;
     wxToolBarToolBase *m_toolODPoint;
@@ -51,8 +51,9 @@ private:
     wxSize m_toolbarSize;
     PI_ColorScheme m_ColourScheme;
     wxFont *m_dialogLabelFont;
+    wxSize m_PreferredSize;
 
-
+    wxBitmapBundle *m_bbDefault;
 };
 
 #endif // __ODToolbarImpl__

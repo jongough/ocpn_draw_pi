@@ -94,9 +94,11 @@ public:
 
     bool        m_bUpdateIcons;
     double      m_dScaleFactor;
-    int         m_iDisplayScaleFactor;
+    bool        m_bScaleIcons;
     int         m_iToolScaleFactor;
-    int         m_iImageRefSize;
+    int         m_iToolIconScaleFactor;
+    int         m_iToolIconRefSize;
+    unsigned int    m_iImageRefSize;
 
 
 private:
@@ -104,7 +106,8 @@ private:
     wxBitmap    BuildDimmedToolBitmap(wxBitmap bmp_nosrmal, unsigned char dim_ratio);
 
 #if defined ODraw_USE_SVG || defined ODraw_USE_MUI
-    wxBitmap    LoadSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1 );
+    wxBitmap    LoadSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1);
+    wxBitmap    LoadToolbarSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1);
     wxBitmap    ScaleIcon( wxBitmap bitmap, const wxString filename, double sf );
 
 #endif
