@@ -53,7 +53,7 @@ private:
     wxFont *m_dialogLabelFont;
     wxSize m_PreferredSize;
 
-#if wxCHECK_VERSION( 3, 1, 6 )
+#if wxCHECK_VERSION( 3, 2, 0 )
     wxBitmapBundle *m_bbDefault;
 #endif
 };

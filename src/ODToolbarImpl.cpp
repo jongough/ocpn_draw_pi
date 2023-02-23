@@ -40,7 +40,7 @@
 #include "ODToolbarImpl.h"
 #include "ODicons.h"
 #include "ocpn_draw_pi.h"
-#if wxCHECK_VERSION( 3, 1, 6 )
+#if wxCHECK_VERSION( 3, 2, 0 )
 #include "wx/bmpbndl.h"
 #endif
 
@@ -53,7 +53,7 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& t
     Create( parent );
 
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
-#if wxCHECK_VERSION( 3, 1, 6 )
+#if wxCHECK_VERSION( 3, 2, 0 )
     m_bbDefault = new wxBitmapBundle;
     m_PreferredSize = m_bbDefault->GetPreferredLogicalSizeFor(this);
 #endif
@@ -416,7 +416,7 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
     {
         case ID_MODE_BOUNDARY:
         {
-#if wxCHECK_VERSION( 3, 1, 6 )
+#if wxCHECK_VERSION( 3, 2, 0 )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), wxBitmapBundle::FromBitmap(*g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey).GetBitmap(	m_bbDefault->GetPreferredLogicalSizeFor(g_parent_window)) );
 #else
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
