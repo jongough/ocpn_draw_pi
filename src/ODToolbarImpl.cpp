@@ -53,8 +53,10 @@ ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& t
     Create( parent );
 
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
+#if wxCHECK_VERSION( 3, 1, 6 )
     m_bbDefault = new wxBitmapBundle;
     m_PreferredSize = m_bbDefault->GetPreferredLogicalSizeFor(this);
+#endif
 
     AddTools();
 
@@ -414,7 +416,11 @@ void ODToolbarImpl::SetToolbarToolBitmap( int iTool )
     {
         case ID_MODE_BOUNDARY:
         {
+#if wxCHECK_VERSION( 3, 1, 6 )
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), wxBitmapBundle::FromBitmap(*g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey).GetBitmap(	m_bbDefault->GetPreferredLogicalSizeFor(g_parent_window)) );
+#else
+            m_toolBarODToolbar->SetToolNormalBitmap( m_toolBoundary->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary_grey );
+#endif
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolODPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_point );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolTextPoint->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_textpoint );
             m_toolBarODToolbar->SetToolNormalBitmap( m_toolEBL->GetId(), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_ebl );

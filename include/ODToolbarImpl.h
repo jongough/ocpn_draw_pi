@@ -53,7 +53,9 @@ private:
     wxFont *m_dialogLabelFont;
     wxSize m_PreferredSize;
 
+#if wxCHECK_VERSION( 3, 1, 6 )
     wxBitmapBundle *m_bbDefault;
+#endif
 };
 
 #endif // __ODToolbarImpl__
