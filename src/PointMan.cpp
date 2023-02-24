@@ -38,11 +38,6 @@
 #include "cutil.h"
 #include "TextPoint.h"
 #include "BoundaryPoint.h"
-#ifdef ODraw_USE_SVG
-#ifdef USE_ANDROID_GLES2
-#include androidUTIL.h
-#endif
-#endif
 
 #include <stddef.h>                     // for NULL
 
