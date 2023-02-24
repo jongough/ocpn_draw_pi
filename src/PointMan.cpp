@@ -985,11 +985,13 @@ wxImage PointMan::LoadSVGIcon(wxString filename, unsigned int width, unsigned in
 //    }
     return wxImage(32, 32);
 #else
-    wxBitmap bmp = loadAndroidSVG(filename, width, height);
-    if (bmp.IsOk())
-        return bmp.ConvertToImage();
-    else
-        return wxImage(32, 32);
+    \\ not working with wxwidgets 3.2
+//    wxBitmap bmp = loadAndroidSVG(filename, width, height);
+//    if (bmp.IsOk())
+//        return bmp.ConvertToImage();
+//    else
+//        return wxImage(32, 32);
+    return wxImage(32, 32);
 
 #endif
 #else
