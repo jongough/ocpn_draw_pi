@@ -633,7 +633,6 @@ width: 0px;\
 subcontrol-position: left;\
 subcontrol-origin: margin;\
 }\
-";
 QScrollBar:vertical {\
 border: 0px solid grey;\
 background-color: rgb(240, 240, 240);\
