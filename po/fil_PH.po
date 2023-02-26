@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Filipino\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " patungo "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Paganahin"
@@ -224,9 +228,7 @@ msgid "Active Centre Line Colour"
 msgstr "Aktibong kulay ng Linya"
 #
 #, fuzzy
-msgid ""
-"Active DR Line\n"
-"Colour"
+msgid "Active DR Line Colour"
 msgstr "Aktibong kulay ng Linya"
 #
 msgid "Active EBL Line Colour"
@@ -257,6 +259,9 @@ msgstr ""
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Payagan i-drag ang Kaliwang Pindutan ng Mouse"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Palagi"
@@ -375,6 +380,9 @@ msgstr "Direksyon Mula-Patungo (M)"
 msgid "Bearing: "
 msgstr "Direksyon: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Barko"
 #
@@ -423,6 +431,12 @@ msgstr "Mga Katangian ng Hangganan, Leyer: "
 #, fuzzy
 msgid "Boundary Type"
 msgstr "Uri ng Puntong Hangganan"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Sentro"
@@ -746,6 +760,21 @@ msgstr "Mula Punto"
 msgid "From: "
 msgstr "Mula sa: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr ""
 #
@@ -786,6 +815,9 @@ msgstr "Mga Katangian ng Punto ng Bantay sa Sona"
 #
 msgid "Guard Zone Properties"
 msgstr "Mga Katangian ng Bantay ng Sona"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr ""
@@ -832,7 +864,7 @@ msgstr "Aykon"
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -846,6 +878,10 @@ msgid "Import file"
 msgstr "Iangkat ang talangkas ng GPX"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "Iangkat ang talangkas ng GPX"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "Iangkat ang talangkas ng GPX"
 #
@@ -854,9 +890,7 @@ msgid "Inactive Centre Line Colour"
 msgstr "D-aktibong Kulay ng Linya"
 #
 #, fuzzy
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+msgid "Inactive DR Line Colour"
 msgstr "D-aktibong Kulay ng Linya"
 #
 msgid "Inactive EBL Line Colour"
@@ -1238,6 +1272,12 @@ msgstr "Katangian ng Punto ng OD"
 msgid "OD Points"
 msgstr "Mga Punto ng OD"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1341,6 +1381,9 @@ msgstr "Katangian ng Landas"
 msgid "Path Properties, Layer: "
 msgstr "Mga Katangian ng Daanan, Leyer: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Mga Daanan"
 #
@@ -1419,6 +1462,9 @@ msgstr "Kanan"
 #
 msgid "Ring"
 msgstr "Taginting"
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
 #
 msgid ""
 "Rotate with\n"
@@ -1509,6 +1555,9 @@ msgstr "Ipakita ang mga bilog ng Saklaw"
 #, fuzzy
 msgid "Show VRM"
 msgstr "Ipakita"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Ipakita ang pangalan"
@@ -1658,6 +1707,10 @@ msgstr ""
 #
 msgid "Yes"
 msgstr "Oo"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "ocpn_guhit_pi lokasyon ng datos"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_guhit_pi lokasyon ng datos"
