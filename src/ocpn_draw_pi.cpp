@@ -432,6 +432,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_GLMinSymbolLineWidth = 1.0f;
 #endif
 
+    m_pODicons = new ODicons();
+
     m_bRecreateConfig = false;
     DEBUGSL("ocpn_draw_pi: return");
 
@@ -541,8 +543,6 @@ int ocpn_draw_pi::Init(void)
 
     LoadConfig();
     g_pODConfig->LateInit();
-
-    m_pODicons = new ODicons();
 
     g_pODSelect = new ODSelect();
 
