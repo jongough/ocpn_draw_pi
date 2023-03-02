@@ -382,6 +382,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 {
     DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
+    m_pODicons = new ODicons();
+
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     nBlinkerTick = 0;
@@ -542,7 +544,7 @@ int ocpn_draw_pi::Init(void)
     LoadConfig();
     g_pODConfig->LateInit();
 
-    m_pODicons = new ODicons();
+//    m_pODicons = new ODicons();
 
     g_pODSelect = new ODSelect();
 
