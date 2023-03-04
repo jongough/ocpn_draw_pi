@@ -38,6 +38,8 @@ ODicons::ODicons()
     m_iToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
     m_iToolIconScaleFactor = g_IconDisplayScaleFactor * m_iToolScaleFactor;
     m_iToolIconRefSize = g_IconDisplayScaleFactor * m_iToolScaleFactor;
+    wxLogMessage(wxT("ocpn_draw_pi ToolBarIconRefSize: %i"), m_iToolIconRefSize);
+
     m_bUpdateIcons = false;
     m_bScaleIcons = false;
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;

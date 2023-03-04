@@ -112,8 +112,8 @@ private:
     wxBitmap    BuildDimmedToolBitmap(wxBitmap bmp_nosrmal, unsigned char dim_ratio);
 
 #if defined ODraw_USE_SVG || defined ODraw_USE_MUI
-    wxBitmap    LoadSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1);
-    wxBitmap    LoadToolbarSVG( const wxString filename, unsigned int width = -1, unsigned int height = -1);
+    wxBitmap    LoadSVG( const wxString filename, unsigned int width = UINT_MAX, unsigned int height = UINT_MAX);
+    wxBitmap    LoadToolbarSVG( const wxString filename, unsigned int width = UINT_MAX, unsigned int height = UINT_MAX);
     wxBitmap    ScaleIcon( wxBitmap bitmap, const wxString filename, double sf );
 
 #endif
