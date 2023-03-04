@@ -32,11 +32,6 @@
 #include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
 
-#include <wx/mstream.h>
-#include <wx/filename.h>
-
-#include <wx/stdpaths.h>
-
 ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
@@ -47,24 +42,12 @@ ODicons::ODicons()
     m_bScaleIcons = false;
     m_ColourScheme = PI_GLOBAL_COLOR_SCHEME_RGB;
 
-    initialize_images();
-}
-
-ODicons::~ODicons()
-{
-
-}
-
-void ODicons::initialize_images(void)
-{
-    wxFileName fn;
-
-    fn.SetPath(GetPluginDataDir( "ocpn_draw_pi"));
-    fn.AppendDir(wxT("data"));
-    g_SData_Locn = new wxString(fn.GetFullPath().c_str());
+    m_FileName.SetPath(GetPluginDataDir( "ocpn_draw_pi"));
+    m_FileName.AppendDir(wxT("data"));
+    g_SData_Locn = new wxString(m_FileName.GetFullPath().c_str());
 
     wxString s = _("ocpn_draw_pi data location");
-    wxLogMessage( wxT("%s: %s"), s.c_str(), fn.GetFullPath().c_str());
+    wxLogMessage( wxT("%s: %s"), s.c_str(), m_FileName.GetFullPath().c_str());
 
     m_failedBitmapLoad = false;
 
@@ -86,186 +69,212 @@ void ODicons::initialize_images(void)
     m_p_bm_ocpn_draw_pil = &m_bm_ocpn_draw_pil;
     m_p_bm_ocpn_draw_pil_grey = &m_bm_ocpn_draw_pil_grey;
 
+    initialize_properties_image();
+}
 
+ODicons::~ODicons()
+{
+
+}
+
+void ODicons::initialize_properties_image(void)
+{
 #ifdef ODraw_USE_MUI
-    fn.SetFullName(wxT("ODManager_Properties_MUI.svg"));
-    m_s_ocpn_draw_pi_properties = fn.GetFullPath();
-    m_bm_ocpn_draw_pi_properties = LoadToolbarSVG( fn.GetFullPath());
-
-    fn.SetFullName(wxT("ODManager_MUI.svg"));
-    m_s_ocpn_draw_pi = fn.GetFullPath();
-    m_bm_ocpn_draw_pi = LoadToolbarSVG( fn.GetFullPath());
-    fn.SetFullName(wxT("ODManagergrey_MUI.svg"));
-    m_s_ocpn_draw_grey_pi = fn.GetFullPath();
-    m_bm_ocpn_draw_grey_pi = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("boundary_MUI.svg"));
-    m_bm_ocpn_draw_boundary = LoadToolbarSVG( fn.GetFullPath() );
-    m_s_ocpn_draw_boundary = fn.GetFullPath();
-    fn.SetFullName(wxT("boundarygrey_MUI.svg"));
-    m_s_ocpn_draw_boundary_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_boundary_grey = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("pointbutton_MUI.svg"));
-    m_s_ocpn_draw_point = fn.GetFullPath();
-    m_bm_ocpn_draw_point = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("pointbuttongrey_MUI.svg"));
-    m_s_ocpn_draw_point_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_point_grey = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("textpointbutton_MUI.svg"));
-    m_s_ocpn_draw_textpoint = fn.GetFullPath();
-    m_bm_ocpn_draw_textpoint = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("textpointbuttongrey_MUI.svg"));
-    m_s_ocpn_draw_textpoint_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_textpoint_grey = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("EBL_MUI.svg"));
-    m_s_ocpn_draw_ebl = fn.GetFullPath();
-    m_bm_ocpn_draw_ebl = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("EBLgrey_MUI.svg"));
-    m_s_ocpn_draw_ebl_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_ebl_grey = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("DR_MUI.svg"));
-    m_s_ocpn_draw_dr = fn.GetFullPath();
-    m_bm_ocpn_draw_dr = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("DRgrey_MUI.svg"));
-    m_s_ocpn_draw_dr_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_dr_grey = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("GZ_MUI.svg"));
-    m_s_ocpn_draw_gz = fn.GetFullPath();
-    m_bm_ocpn_draw_gz = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("GZgrey_MUI.svg"));
-    m_s_ocpn_draw_gz_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_gz_grey = LoadToolbarSVG( fn.GetFullPath() );
-
-    fn.SetFullName(wxT("PIL_MUI.svg"));
-    m_s_ocpn_draw_pil = fn.GetFullPath();
-    m_bm_ocpn_draw_pil = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("PILgrey_MUI.svg"));
-    m_s_ocpn_draw_pil_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_pil_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("ODManager_Properties_MUI.svg"));
+    m_s_ocpn_draw_pi_properties = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pi_properties = LoadToolbarSVG( m_FileName.GetFullPath());
 #else
 #ifdef ODraw_USE_SVG
-    fn.SetFullName(wxT("ODManager_Properties.svg"));
-    m_s_ocpn_draw_pi_properties = fn.GetFullPath();
-    m_bm_ocpn_draw_pi_properties = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("ODManager_Properties.svg"));
+    m_s_ocpn_draw_pi_properties = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pi_properties = LoadToolbarSVG( m_FileName.GetFullPath() );
+#endif
+#endif
+    if(m_failedBitmapLoad) {
+        int ret = OCPNMessageBox_PlugIn( NULL, _("Failed to load all OCPN Draw Plugin icons, check OCPN log for details"), _("OpenCPN Alert"), wxOK );
+    } else {
+        CreateSchemeIcons();
+        //ScaleIcons();
+    }
+}
 
-    fn.SetFullName(wxT("ODManager.svg"));
-    m_s_ocpn_draw_pi = fn.GetFullPath();
-    m_bm_ocpn_draw_pi = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("ODManagergrey.svg"));
-    m_s_ocpn_draw_grey_pi = fn.GetFullPath();
-    m_bm_ocpn_draw_grey_pi = LoadToolbarSVG( fn.GetFullPath() );
+void ODicons::initialize_images(void)
+{
 
-    fn.SetFullName(wxT("boundary.svg"));
-    m_s_ocpn_draw_boundary = fn.GetFullPath();
-    m_bm_ocpn_draw_boundary = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("boundarygrey.svg"));
-    m_s_ocpn_draw_boundary_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_boundary_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_failedBitmapLoad = false;
 
-    fn.SetFullName(wxT("pointbutton.svg"));
-    m_s_ocpn_draw_point = fn.GetFullPath();
-    m_bm_ocpn_draw_point = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("pointbuttongrey.svg"));
-    m_s_ocpn_draw_point_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_point_grey = LoadToolbarSVG( fn.GetFullPath() );
+#ifdef ODraw_USE_MUI
+    m_FileName.SetFullName(wxT("ODManager_MUI.svg"));
+    m_s_ocpn_draw_pi = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pi = LoadToolbarSVG( m_FileName.GetFullPath());
+    m_FileName.SetFullName(wxT("ODManagergrey_MUI.svg"));
+    m_s_ocpn_draw_grey_pi = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_grey_pi = LoadToolbarSVG( m_FileName.GetFullPath() );
 
-    fn.SetFullName(wxT("textpointbutton.svg"));
-    m_s_ocpn_draw_textpoint = fn.GetFullPath();
-    m_bm_ocpn_draw_textpoint = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("textpointbuttongrey.svg"));
-    m_s_ocpn_draw_textpoint_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_textpoint_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("boundary_MUI.svg"));
+    m_bm_ocpn_draw_boundary = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_s_ocpn_draw_boundary = m_FileName.GetFullPath();
+    m_FileName.SetFullName(wxT("boundarygrey_MUI.svg"));
+    m_s_ocpn_draw_boundary_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_boundary_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
 
-    fn.SetFullName(wxT("EBL.svg"));
-    m_s_ocpn_draw_ebl = fn.GetFullPath();
-    m_bm_ocpn_draw_ebl = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("EBLgrey.svg"));
-    m_s_ocpn_draw_ebl_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_ebl_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("pointbutton_MUI.svg"));
+    m_s_ocpn_draw_point = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_point = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("pointbuttongrey_MUI.svg"));
+    m_s_ocpn_draw_point_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_point_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
 
-    fn.SetFullName(wxT("DR.svg"));
-    m_s_ocpn_draw_dr = fn.GetFullPath();
-    m_bm_ocpn_draw_dr = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("DRgrey.svg"));
-    m_s_ocpn_draw_dr_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_dr_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("textpointbutton_MUI.svg"));
+    m_s_ocpn_draw_textpoint = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_textpoint = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("textpointbuttongrey_MUI.svg"));
+    m_s_ocpn_draw_textpoint_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_textpoint_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
 
-    fn.SetFullName(wxT("GZ.svg"));
-    m_s_ocpn_draw_gz = fn.GetFullPath();
-    m_bm_ocpn_draw_gz = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("GZgrey.svg"));
-    m_s_ocpn_draw_gz_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_gz_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("EBL_MUI.svg"));
+    m_s_ocpn_draw_ebl = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_ebl = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("EBLgrey_MUI.svg"));
+    m_s_ocpn_draw_ebl_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_ebl_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
 
-    fn.SetFullName(wxT("PIL.svg"));
-    m_s_ocpn_draw_pil = fn.GetFullPath();
-    m_bm_ocpn_draw_pil = LoadToolbarSVG( fn.GetFullPath() );
-    fn.SetFullName(wxT("PILgrey.svg"));
-    m_s_ocpn_draw_pil_grey = fn.GetFullPath();
-    m_bm_ocpn_draw_pil_grey = LoadToolbarSVG( fn.GetFullPath() );
+    m_FileName.SetFullName(wxT("DR_MUI.svg"));
+    m_s_ocpn_draw_dr = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_dr = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("DRgrey_MUI.svg"));
+    m_s_ocpn_draw_dr_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_dr_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("GZ_MUI.svg"));
+    m_s_ocpn_draw_gz = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_gz = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("GZgrey_MUI.svg"));
+    m_s_ocpn_draw_gz_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_gz_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("PIL_MUI.svg"));
+    m_s_ocpn_draw_pil = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pil = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("PILgrey_MUI.svg"));
+    m_s_ocpn_draw_pil_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pil_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
 #else
-    fn.SetFullName(wxT("ODManager.png"));
-    m_p_bm_ocpn_draw_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );m_iImageRefSize
+#ifdef ODraw_USE_SVG
+    m_FileName.SetFullName(wxT("ODManager.svg"));
+    m_s_ocpn_draw_pi = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pi = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("ODManagergrey.svg"));
+    m_s_ocpn_draw_grey_pi = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_grey_pi = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("boundary.svg"));
+    m_s_ocpn_draw_boundary = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_boundary = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("boundarygrey.svg"));
+    m_s_ocpn_draw_boundary_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_boundary_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("pointbutton.svg"));
+    m_s_ocpn_draw_point = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_point = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("pointbuttongrey.svg"));
+    m_s_ocpn_draw_point_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_point_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("textpointbutton.svg"));
+    m_s_ocpn_draw_textpoint = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_textpoint = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("textpointbuttongrey.svg"));
+    m_s_ocpn_draw_textpoint_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_textpoint_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("EBL.svg"));
+    m_s_ocpn_draw_ebl = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_ebl = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("EBLgrey.svg"));
+    m_s_ocpn_draw_ebl_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_ebl_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("DR.svg"));
+    m_s_ocpn_draw_dr = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_dr = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("DRgrey.svg"));
+    m_s_ocpn_draw_dr_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_dr_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("GZ.svg"));
+    m_s_ocpn_draw_gz = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_gz = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("GZgrey.svg"));
+    m_s_ocpn_draw_gz_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_gz_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+
+    m_FileName.SetFullName(wxT("PIL.svg"));
+    m_s_ocpn_draw_pil = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pil = LoadToolbarSVG( m_FileName.GetFullPath() );
+    m_FileName.SetFullName(wxT("PILgrey.svg"));
+    m_s_ocpn_draw_pil_grey = m_FileName.GetFullPath();
+    m_bm_ocpn_draw_pil_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
+#else
+    m_FileName.SetFullName(wxT("ODManager.png"));
+    m_p_bm_ocpn_draw_pi = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );m_iImageRefSize
     if(!m_p_bm_ocpn_draw_pi->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("ODManagergrey.png"));
-    m_p_bm_ocpn_draw_grey_pi = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("ODManagergrey.png"));
+    m_p_bm_ocpn_draw_grey_pi = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_grey_pi->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("boundary.png"));
-    m_p_bm_ocpn_draw_boundary = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("boundary.png"));
+    m_p_bm_ocpn_draw_boundary = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_boundary->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("boundarygrey.png"));
-    m_p_bm_ocpn_draw_boundary_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("boundarygrey.png"));
+    m_p_bm_ocpn_draw_boundary_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_boundary_grey->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("pointbutton.png"));
-    m_p_bm_ocpn_draw_point = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("pointbutton.png"));
+    m_p_bm_ocpn_draw_point = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_point->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("pointbuttongrey.png"));
-    m_p_bm_ocpn_draw_point_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("pointbuttongrey.png"));
+    m_p_bm_ocpn_draw_point_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_point_grey->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("textpointbutton.png"));
-    m_p_bm_ocpn_draw_textpoint = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("textpointbutton.png"));
+    m_p_bm_ocpn_draw_textpoint = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_textpoint->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("textpointbuttongrey.png"));
-    m_p_bm_ocpn_draw_textpoint_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("textpointbuttongrey.png"));
+    m_p_bm_ocpn_draw_textpoint_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_textpoint_grey->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("EBL.png"));
-    m_p_bm_ocpn_draw_ebl = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("EBL.png"));
+    m_p_bm_ocpn_draw_ebl = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_ebl->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("EBLgrey.png"));
-    m_p_bm_ocpn_draw_ebl_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("EBLgrey.png"));
+    m_p_bm_ocpn_draw_ebl_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_ebl_grey->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("DR.png"));
-    m_p_bm_ocpn_draw_dr = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("DR.png"));
+    m_p_bm_ocpn_draw_dr = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_dr->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("DRgrey.png"));
-    m_p_bm_ocpn_draw_dr_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("DRgrey.png"));
+    m_p_bm_ocpn_draw_dr_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_dr_grey->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("GZ.png"));
-    m_p_bm_ocpn_draw_gz = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("GZ.png"));
+    m_p_bm_ocpn_draw_gz = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_gz->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("GZgrey.png"));
-    m_p_bm_ocpn_draw_gz_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("GZgrey.png"));
+    m_p_bm_ocpn_draw_gz_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_gz_grey->IsOk())  m_failedBitmapLoad = true;
 
-    fn.SetFullName(wxT("PIL.png"));
-    m_p_bm_ocpn_draw_pil = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("PIL.png"));
+    m_p_bm_ocpn_draw_pil = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_pil->IsOk())  m_failedBitmapLoad = true;
-    fn.SetFullName(wxT("PILgrey.png"));
-    m_p_bm_ocpn_draw_pil_grey = new wxBitmap( fn.GetFullPath(), wxBITMAP_TYPE_PNG );
+    m_FileName.SetFullName(wxT("PILgrey.png"));
+    m_p_bm_ocpn_draw_pil_grey = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_pil_grey->IsOk())  m_failedBitmapLoad = true;
 #endif
 #endif
+
     if(m_failedBitmapLoad) {
         int ret = OCPNMessageBox_PlugIn( NULL, _("Failed to load all OCPN Draw Plugin icons, check OCPN log for details"), _("OpenCPN Alert"), wxOK );
     } else {

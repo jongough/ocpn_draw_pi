@@ -557,6 +557,8 @@ int ocpn_draw_pi::Init(void)
     //    Layers
     g_pLayerList = new ODLayerList;
 
+    m_pODicons->initialize_images();
+
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
         m_config_button_id  = InsertPlugInToolSVG(_("OCPN Draw Manager"), m_pODicons->m_s_ocpn_draw_pi, m_pODicons->m_s_ocpn_draw_pi, m_pODicons->m_s_ocpn_draw_grey_pi, wxITEM_CHECK,
