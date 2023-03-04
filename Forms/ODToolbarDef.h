@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
+// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -46,8 +46,8 @@ class ODToolbarDialog : public wxDialog
 		wxToolBar* m_toolBarODToolbar;
 
 		ODToolbarDialog();
-		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
-		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
+		ODToolbarDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Draw Toolbar"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP );
 
 		~ODToolbarDialog();
 
