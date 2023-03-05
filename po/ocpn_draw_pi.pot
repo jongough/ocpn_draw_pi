@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 1.8.21.0\n"
+"Project-Id-Version: ocpn_draw_pi 1.8.24.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 19:06+1100\n"
+"POT-Creation-Date: 2023-03-05 16:12+1100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,8 +41,8 @@ msgstr ""
 msgid "OCPN Draw Properties"
 msgstr ""
 
-#: include/ODToolbarDef.h:49 include/ODToolbarDef.h:50 src/ocpn_draw_pi.cpp:653
-#: src/ocpn_draw_pi.cpp:655
+#: include/ODToolbarDef.h:49 include/ODToolbarDef.h:50 src/ocpn_draw_pi.cpp:655
+#: src/ocpn_draw_pi.cpp:657
 msgid "Draw Toolbar"
 msgstr ""
 
@@ -66,8 +66,8 @@ msgstr ""
 #: src/EBL.cpp:82 src/EBL.cpp:264 src/ODPathPropertiesDialogImpl.cpp:463
 #: src/ODPathPropertiesDialogImpl.cpp:471 src/ODPathPropertiesDialogImpl.cpp:507
 #: src/ODPathPropertiesDialogImpl.cpp:580 src/ODPathPropertiesDialogImpl.cpp:588
-#: src/ODPathPropertiesDialogImpl.cpp:623 src/ocpn_draw_pi.cpp:3006
-#: src/ocpn_draw_pi.cpp:4006 src/ocpn_draw_pi.cpp:4196
+#: src/ODPathPropertiesDialogImpl.cpp:623 src/ocpn_draw_pi.cpp:3008
+#: src/ocpn_draw_pi.cpp:4008 src/ocpn_draw_pi.cpp:4198
 msgid "Boat"
 msgstr ""
 
@@ -76,7 +76,7 @@ msgstr ""
 msgid "Start"
 msgstr ""
 
-#: src/EBL.cpp:90 src/ocpn_draw_pi.cpp:4013 src/ocpn_draw_pi.cpp:4202
+#: src/EBL.cpp:90 src/ocpn_draw_pi.cpp:4015 src/ocpn_draw_pi.cpp:4204
 msgid "End"
 msgstr ""
 
@@ -698,7 +698,7 @@ msgid "will be deleted."
 msgstr ""
 
 #: src/ODNewODPointDialogDef.cpp:35 src/ODPropertiesDialogDef.cpp:218
-#: src/ODToolbarImpl.cpp:542 src/ocpn_draw_pi.cpp:3494
+#: src/ODToolbarImpl.cpp:542 src/ocpn_draw_pi.cpp:3496
 msgid "Boundary"
 msgstr ""
 
@@ -1469,7 +1469,7 @@ msgid ""
 msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:89
-msgid "Icon Scaling"
+msgid "Toolbar icon scaling (requires restart)"
 msgstr ""
 
 #: src/ODPropertiesDialogDef.cpp:96
@@ -1663,7 +1663,7 @@ msgstr ""
 msgid "Show Perpendicular Index Line"
 msgstr ""
 
-#: src/ODPropertiesDialogDef.cpp:649 src/ocpn_draw_pi.cpp:4002
+#: src/ODPropertiesDialogDef.cpp:649 src/ocpn_draw_pi.cpp:4004
 msgid "EBL"
 msgstr ""
 
@@ -1972,15 +1972,16 @@ msgstr ""
 msgid "ODDC::DrawPolygon: bcolloc -1"
 msgstr ""
 
-#: src/ODicons.cpp:66
+#: src/ODicons.cpp:51
 msgid "ocpn_draw_pi data location"
 msgstr ""
 
-#: src/ODicons.cpp:270
+#: src/ODicons.cpp:96 src/ODicons.cpp:281
 msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
 msgstr ""
 
-#: src/ODicons.cpp:270 src/PathAndPointManagerDialogImpl.cpp:561
+#: src/ODicons.cpp:96 src/ODicons.cpp:281
+#: src/PathAndPointManagerDialogImpl.cpp:561
 #: src/PathAndPointManagerDialogImpl.cpp:608
 #: src/PathAndPointManagerDialogImpl.cpp:1481
 #: src/PathAndPointManagerDialogImpl.cpp:1512
@@ -1989,7 +1990,7 @@ msgstr ""
 msgid "OpenCPN Alert"
 msgstr ""
 
-#: src/ODicons.cpp:283
+#: src/ODicons.cpp:294
 msgid "ocpn_draw_pi LoadSVG"
 msgstr ""
 
@@ -2241,92 +2242,92 @@ msgstr ""
 msgid "(Unnamed Layer)"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:562 src/ocpn_draw_pi.cpp:563 src/ocpn_draw_pi.cpp:567
-#: src/ocpn_draw_pi.cpp:568
+#: src/ocpn_draw_pi.cpp:564 src/ocpn_draw_pi.cpp:565 src/ocpn_draw_pi.cpp:569
+#: src/ocpn_draw_pi.cpp:570
 msgid "OCPN Draw Manager"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:564 src/ocpn_draw_pi.cpp:569
+#: src/ocpn_draw_pi.cpp:566 src/ocpn_draw_pi.cpp:571
 msgid "OCPN Draw Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:565 src/ocpn_draw_pi.cpp:570
+#: src/ocpn_draw_pi.cpp:567 src/ocpn_draw_pi.cpp:572
 msgid "OCPN Draw"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:678
+#: src/ocpn_draw_pi.cpp:680
 msgid "Use OCPN Draw Tool"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:823
+#: src/ocpn_draw_pi.cpp:825
 msgid "BlinkTimer->Unbind not found or not removed"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:832
+#: src/ocpn_draw_pi.cpp:834
 msgid "RolloverPopupTimer->Unbind not found or not removed"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:1081
+#: src/ocpn_draw_pi.cpp:1083
 msgid "General drawing for OpenCPN"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:1085
+#: src/ocpn_draw_pi.cpp:1087
 msgid ""
 "General Drawing for OpenCPN\n"
 "\n"
 "Thanks to the community for their helpful suggestions."
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3497
+#: src/ocpn_draw_pi.cpp:3499
 msgid "Layer Boundary"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3722 src/ocpn_draw_pi.cpp:3789
+#: src/ocpn_draw_pi.cpp:3724 src/ocpn_draw_pi.cpp:3791
 msgid "Use nearby Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3723 src/ocpn_draw_pi.cpp:3790
+#: src/ocpn_draw_pi.cpp:3725 src/ocpn_draw_pi.cpp:3792
 msgid "OCPN Draw Point Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3869
+#: src/ocpn_draw_pi.cpp:3871
 msgid "Use nearby OD Point?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3870 src/ocpn_draw_pi.cpp:3923
+#: src/ocpn_draw_pi.cpp:3872 src/ocpn_draw_pi.cpp:3925
 msgid "OCPN Draw Boundary Create"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3917
+#: src/ocpn_draw_pi.cpp:3919
 msgid "For this leg the Great Circle boundary is "
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3918
+#: src/ocpn_draw_pi.cpp:3920
 msgid ""
 " shorter than rhumbline.\n"
 "\n"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:3919
+#: src/ocpn_draw_pi.cpp:3921
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:4094
+#: src/ocpn_draw_pi.cpp:4096
 msgid "GZ"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:4132
+#: src/ocpn_draw_pi.cpp:4134
 msgid "Second"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:4159
+#: src/ocpn_draw_pi.cpp:4161
 msgid "First"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:4192
+#: src/ocpn_draw_pi.cpp:4194
 msgid "PIL"
 msgstr ""
 
-#: src/ocpn_draw_pi.cpp:4471
+#: src/ocpn_draw_pi.cpp:4473
 msgid "Alpha blending not drawn as OpenGL not available in this build"
 msgstr ""
