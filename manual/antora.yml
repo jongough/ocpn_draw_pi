@@ -1,4 +1,4 @@
 name: odraw
 title: Ocpn_Draw
 version: ~
-start_page: ROOT:odraw.adoc
+start_page: odraw::index.adoc
