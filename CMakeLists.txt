@@ -2,6 +2,9 @@
 # Author:      jongough aka. Jon Gough Copyright: License:     wxWidgets License
 # ---------------------------------------------------------------------------
 
+## ------------------------------------------------------------
+## TP 1.0.238  16/06/2023") # DD/MM/YYYY format   by Jon Gough
+## ------------------------------------------------------------
 set(CMLOC "CMakeLists: ")
 
 cmake_minimum_required(VERSION 3.1.1)
@@ -30,10 +33,10 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "20")
+set(VERSION_PATCH "25")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "14/01/2023") # DD/MM/YYYY forma0t
-set(OCPN_MIN_VERSION "ov50")
+set(VERSION_DATE "16/06/2023") # DD/MM/YYYY forma0t
+set(OCPN_MIN_VERSION "ov58")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
 set(OD_API_VERSION_MAJOR "1")
@@ -333,6 +336,7 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
+#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxsvg/include)
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
     include_directories( ${PROJECT_SOURCE_DIR}/extinclude/GLES2)

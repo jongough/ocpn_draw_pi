@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:51\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " pisteeseen "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Aktivoi"
@@ -207,9 +211,8 @@ msgstr "Aktiivinen"
 msgid "Active Centre Line Colour"
 msgstr "Aktiivisen keskirivin väri"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Aktiivisen DR-viivan\n"
 "Väri"
@@ -240,6 +243,9 @@ msgstr "Kaikki"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Salli veto hiiren vasemmalla painikeella"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Aina"
@@ -357,6 +363,9 @@ msgstr "Välinen suunta (M)"
 msgid "Bearing: "
 msgstr "Suuntima: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Vene"
 #
@@ -402,6 +411,12 @@ msgstr "Reunan ominaisuudet, kerros: "
 #
 msgid "Boundary Type"
 msgstr "Rajantyyppi"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Keskellä"
@@ -714,6 +729,21 @@ msgstr "Pisteestä"
 msgid "From: "
 msgstr "Alku: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -752,6 +782,9 @@ msgstr "Suojavyöhykepisteen ominaisuudet"
 #
 msgid "Guard Zone Properties"
 msgstr "Suojavyöhyke ominaisuudet"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Suunta"
@@ -798,8 +831,8 @@ msgstr "Ikoni"
 msgid "Icon Directory"
 msgstr "Ikonihakemisto"
 #
-msgid "Import"
-msgstr "Tuo"
+msgid "Icon Scaling"
+msgstr ""
 #
 msgid "Import Error"
 msgstr "Tuontivirhe"
@@ -810,15 +843,18 @@ msgstr "Tuo GPX-tiedosto"
 msgid "Import file"
 msgstr "Tuo tiedosto"
 #
+#, fuzzy
+msgid "Import gpx"
+msgstr "Tuo"
+#
 msgid "Import incomplete."
 msgstr "Tuonti oli epätäydellinen."
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Passiivisen keskirivin väri"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Passiivisen DR-viivan\n"
 "Väri"
@@ -1189,6 +1225,12 @@ msgstr "OD-pisteen ominaisuudet"
 msgid "OD Points"
 msgstr "OD pisteet"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1282,6 +1324,9 @@ msgstr "Polun ominaisuudet"
 msgid "Path Properties, Layer: "
 msgstr "Polun ominaisuuksien, kerros: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Polut"
 #
@@ -1371,6 +1416,9 @@ msgstr "Oikealla"
 msgid "Ring"
 msgstr "Rengas"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1456,6 +1504,9 @@ msgstr "Näytä etäisyysrenkaat"
 #
 msgid "Show VRM"
 msgstr "Näytä VRM"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Näytä nimi"
@@ -1598,6 +1649,10 @@ msgstr "Haluatko lisätä isoympyrärajan pisteet tähän osuuteen?"
 #
 msgid "Yes"
 msgstr "Kyllä"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "OCPN Draw tietojen sijainti"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "OCPN Draw tietojen sijainti"

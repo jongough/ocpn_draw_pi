@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " till "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Aktivera"
@@ -207,9 +211,8 @@ msgstr "Aktiv"
 msgid "Active Centre Line Colour"
 msgstr "Färg på aktiv linje"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Aktiv DR Linje\n"
 "Kulör"
@@ -240,6 +243,9 @@ msgstr "Allt"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Använd vänster musknapp för att dra"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Alltid"
@@ -356,6 +362,9 @@ msgstr "Bäring från-till (M)"
 msgid "Bearing: "
 msgstr "Bäring: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Båt"
 #
@@ -401,6 +410,12 @@ msgstr "Egenskaper för gränslinje, Lager: "
 #
 msgid "Boundary Type"
 msgstr "Gränstyp"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Mitten"
@@ -711,6 +726,21 @@ msgstr "Från punkt"
 msgid "From: "
 msgstr "Från: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -749,6 +779,9 @@ msgstr "Larmzon. Punkt-egenskaper"
 #
 msgid "Guard Zone Properties"
 msgstr "Larmzonens egenskaper"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Kurs (K/T)"
@@ -795,8 +828,8 @@ msgstr "Ikon"
 msgid "Icon Directory"
 msgstr "Ikonkatalog"
 #
-msgid "Import"
-msgstr "Importera"
+msgid "Icon Scaling"
+msgstr ""
 #
 msgid "Import Error"
 msgstr "Fel vid import"
@@ -807,15 +840,18 @@ msgstr "Importera GPX-fil"
 msgid "Import file"
 msgstr "Importera fil"
 #
+#, fuzzy
+msgid "Import gpx"
+msgstr "Importera"
+#
 msgid "Import incomplete."
 msgstr "Ofullständig import."
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Färg på aktiv linje"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Inaktiv DR-linje\n"
 "Kulör"
@@ -1187,6 +1223,12 @@ msgstr "OR punktegenskaper"
 msgid "OD Points"
 msgstr "OR Punkt"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1280,6 +1322,9 @@ msgstr "Linjeegenskaper"
 msgid "Path Properties, Layer: "
 msgstr "Linjeegenskaper. Lager: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Linjer"
 #
@@ -1368,6 +1413,9 @@ msgstr "Höger"
 msgid "Ring"
 msgstr "Ring"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1454,6 +1502,9 @@ msgstr "Visa avståndsringar"
 #
 msgid "Show VRM"
 msgstr "Visa VRM"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Visa namn"
@@ -1596,6 +1647,10 @@ msgstr "Vill du använda gränspunkter efter en storcirkel för detta ben?"
 #
 msgid "Yes"
 msgstr "Ja"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "ocpn_draw_pi data finns på"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi data finns på"

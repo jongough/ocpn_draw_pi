@@ -65,6 +65,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxSlider* m_sliderEdgePan;
 		wxStaticText* m_staticTextInitialEdgePan;
 		wxSlider* m_sliderInitialEdgePan;
+		wxStaticText* m_staticTextIconScaling;
+		wxSlider* m_sliderIconScaling;
 		wxStaticText* m_staticTextToolbar;
 		wxStaticText* m_staticTextConfigFileEntriesMsg;
 		wxButton* m_buttonConfigFileEntries;

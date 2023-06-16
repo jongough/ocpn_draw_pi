@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Dutch\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " naar "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Activeren"
@@ -207,9 +211,8 @@ msgstr "Actief"
 msgid "Active Centre Line Colour"
 msgstr "Kleur actieve middenlijn"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Kleur actief\n"
 "gegist traject"
@@ -240,6 +243,9 @@ msgstr "elk"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Slepen met linker muisknop toestaan"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "altijd"
@@ -357,6 +363,9 @@ msgstr "Richting van-naar (M)"
 msgid "Bearing: "
 msgstr "Richting: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Eigen Schip"
 #
@@ -402,6 +411,12 @@ msgstr "Eigenschappen Gebied, kaartlaag: "
 #
 msgid "Boundary Type"
 msgstr "Betreft gebiedstype"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "centrum"
@@ -714,6 +729,21 @@ msgstr "Vanaf punt"
 msgid "From: "
 msgstr "Richting: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -751,6 +781,9 @@ msgstr "Eigenschappen bewakingszonepunt"
 #
 msgid "Guard Zone Properties"
 msgstr "Eigenschappen bewakingszone"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Voorliggende koers"
@@ -797,8 +830,8 @@ msgstr "Pictogram"
 msgid "Icon Directory"
 msgstr "Pictogrammenfolder"
 #
-msgid "Import"
-msgstr "Importeren"
+msgid "Icon Scaling"
+msgstr ""
 #
 msgid "Import Error"
 msgstr "Fout bij importeren"
@@ -809,15 +842,18 @@ msgstr "Importeer GPX-bestand"
 msgid "Import file"
 msgstr "Bestand importeren"
 #
+#, fuzzy
+msgid "Import gpx"
+msgstr "Importeren"
+#
 msgid "Import incomplete."
 msgstr "Import onvolledig."
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Kleur inactieve middenlijn"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Kleur niet-actief\n"
 "gegist traject"
@@ -1191,6 +1227,12 @@ msgstr "Eigenschappen OD-punt"
 msgid "OD Points"
 msgstr "Punten en Cirkelgebieden"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1283,6 +1325,9 @@ msgstr "Eigenschappen Lijn"
 #
 msgid "Path Properties, Layer: "
 msgstr "Eigenschappen Lijn, kaartlaag: "
+#
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Paths"
 msgstr "Lijnen en Rechtlijnige gebieden"
@@ -1377,6 +1422,9 @@ msgstr "rechts"
 msgid "Ring"
 msgstr "alarm"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1463,6 +1511,9 @@ msgstr "Toon afstandscirkels"
 #
 msgid "Show VRM"
 msgstr "Toon afstandscirkel"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Toon puntnaam"
@@ -1608,6 +1659,10 @@ msgstr "Wilt u voor dit lijndeel ook grootcirkelpunten toevoegen?"
 #
 msgid "Yes"
 msgstr "Ja"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "Gegevensmap opencpn_draw_pi"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "Gegevensmap opencpn_draw_pi"

@@ -256,6 +256,7 @@ extern ODLayerList     *g_pLayerList;
 extern int             g_navobjbackups;
 extern int             g_EdgePanSensitivity;
 extern int             g_InitialEdgePanSensitivity;
+extern int             g_IconDisplayScaleFactor;
 
 extern wxString        *g_ODlocale;
 extern int             g_iLocaleDepth;

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:51\n"
 "Last-Translator: \n"
 "Language-Team: Catalan\n"
@@ -31,6 +31,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " fins "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Activa"
@@ -218,9 +222,7 @@ msgstr "Activa"
 msgid "Active Centre Line Colour"
 msgstr ""
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+msgid "Active DR Line Colour"
 msgstr ""
 #
 msgid "Active EBL Line Colour"
@@ -248,6 +250,9 @@ msgid "All"
 msgstr ""
 #
 msgid "Allow Left Mouse Button Drag"
+msgstr ""
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
 msgstr ""
 #
 msgid "Always"
@@ -386,6 +391,9 @@ msgstr "Rumb (M)"
 msgid "Bearing: "
 msgstr "Rumb"
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr ""
 #
@@ -430,6 +438,12 @@ msgid "Boundary Properties, Layer: "
 msgstr ""
 #
 msgid "Boundary Type"
+msgstr ""
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
 msgstr ""
 #
 #, fuzzy
@@ -755,6 +769,21 @@ msgstr "Al Punt"
 msgid "From: "
 msgstr ""
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr ""
 #
@@ -791,6 +820,9 @@ msgstr ""
 #, fuzzy
 msgid "Guard Zone Properties"
 msgstr "Propietats"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr ""
@@ -838,7 +870,7 @@ msgstr "Icona"
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -852,15 +884,17 @@ msgid "Import file"
 msgstr "Importar fitxers GPX"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "Importar fitxers GPX"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "Importar fitxers GPX"
 #
 msgid "Inactive Centre Line Colour"
 msgstr ""
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+msgid "Inactive DR Line Colour"
 msgstr ""
 #
 msgid "Inactive EBL Line Colour"
@@ -1242,6 +1276,12 @@ msgstr "Propietats"
 msgid "OD Points"
 msgstr "Al Punt"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr ""
 #
@@ -1340,6 +1380,9 @@ msgstr "Propietats"
 msgid "Path Properties, Layer: "
 msgstr ""
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Camins"
 #
@@ -1414,6 +1457,9 @@ msgid "Right"
 msgstr ""
 #
 msgid "Ring"
+msgstr ""
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
 msgstr ""
 #
 msgid ""
@@ -1505,6 +1551,9 @@ msgstr ""
 #, fuzzy
 msgid "Show VRM"
 msgstr "Mostrar"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 #, fuzzy
 msgid "Show name"
@@ -1643,6 +1692,9 @@ msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 #
 msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi LoadSVG"
 msgstr ""
 #
 msgid "ocpn_draw_pi data location"

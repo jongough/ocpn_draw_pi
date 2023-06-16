@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " oraya "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Etkinleştir"
@@ -210,9 +214,8 @@ msgstr "Etkin"
 msgid "Active Centre Line Colour"
 msgstr "Aktif merkez hattı rengi"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Aktif DR hattı\n"
 "Rengi"
@@ -244,6 +247,9 @@ msgstr "Hepsi"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Sol fare tuşuyla sürüklemeye izin ver"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Daima"
@@ -361,6 +367,9 @@ msgstr "-dan taşı-e doğru (M)"
 msgid "Bearing: "
 msgstr "Yön tayini: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Tekne"
 #
@@ -408,6 +417,12 @@ msgstr "Sınır özellikleri, Etiket: "
 #
 msgid "Boundary Type"
 msgstr "Sınır tipi"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Merkez"
@@ -722,6 +737,21 @@ msgstr "Noktadan"
 msgid "From: "
 msgstr "İtibaren: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -761,6 +791,9 @@ msgstr "Koruma bölge noktası özellikleri"
 #
 msgid "Guard Zone Properties"
 msgstr "Koruma bölgesi özellikleri"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Pruva"
@@ -809,7 +842,7 @@ msgstr "Simge"
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -823,15 +856,18 @@ msgid "Import file"
 msgstr "GPX dosyasını içe aktar"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "GPX dosyasını içe aktar"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "GPX dosyasını içe aktar"
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Pasif merkez hattı rengi"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Pasif DR hattı\n"
 "Rengi"
@@ -1212,6 +1248,12 @@ msgstr "OD Noktası Özellikleri"
 msgid "OD Points"
 msgstr "OD noktası"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1310,6 +1352,9 @@ msgstr "İz Özellikleri"
 msgid "Path Properties, Layer: "
 msgstr "Yol özellikleri, etiket: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Yollar"
 #
@@ -1396,6 +1441,9 @@ msgstr "Sağ"
 #
 msgid "Ring"
 msgstr "Halka"
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
 #
 msgid ""
 "Rotate with\n"
@@ -1486,6 +1534,9 @@ msgstr "Menzil halkalarını göster"
 #
 msgid "Show VRM"
 msgstr "VRM göster"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Adı göster"
@@ -1634,6 +1685,10 @@ msgstr "Bu bacak için Büyük Daire sınır noktalarını eklemek ister misiniz
 #
 msgid "Yes"
 msgstr ""
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "ocpn_çizim_pi veri konumu"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_çizim_pi veri konumu"

@@ -169,8 +169,8 @@ void PointMan::ProcessUserIcons( )
             if (fn.GetExt().Lower() == _T("svg")) {
                 // double bm_size = 16.0 * g_Platform->GetDisplayDPmm() *
                 // g_ChartScaleFactorExp;
-                double bm_size = 62 * g_ChartScaleFactorExp;
-                wxBitmap iconSVG = LoadSVGIcon(name, bm_size, bm_size);
+                unsigned int ui_size = 62 * g_ChartScaleFactorExp;
+                wxBitmap iconSVG = GetBitmapFromSVGFile(name, ui_size, ui_size);
                 ODMarkIcon *pmi = ProcessIcon(iconSVG, iconname, iconname);
                 if (pmi) pmi->preScaled = true;
             }
@@ -967,27 +967,29 @@ wxString PointMan::FindLineCrossingBoundary( double StartLon, double StartLat, d
 
 }
 
-wxImage PointMan::LoadSVGIcon(wxString filename, int width, int height) {
-    #ifdef ocpnUSE_SVG
-
-    #ifndef USE_ANDROID_GLES2
-    wxSVGDocument svgDoc;
-    if (svgDoc.Load(filename))
-        return svgDoc.Render(width, height, NULL, true, true);
-    else {
-        wxLogMessage(filename);
-        return wxImage(32, 32);
-    }
-    #else
-    wxBitmap bmp = loadAndroidSVG(filename, width, height);
-    if (bmp.IsOk())
-        return bmp.ConvertToImage();
-    else
-        return wxImage(32, 32);
-
-    #endif
-
-    #else
+wxImage PointMan::LoadSVGIcon(wxString filename, unsigned int width, unsigned int height)
+{
+#ifdef ODraw_USE_SVG
+#ifndef USE_ANDROID_GLES2
+//    if(g_ocpn_draw_pi->m_pODicons != null) {
+//        wxBitmap l_icon = *g_ocpn_draw_pi->m_pODicons->LoadSVG(filename, width, height);
+//        if(l_icon.IsOk())
+//            return l_icon.ConvertToImage();
+//        else
+//            return wxImage(32, 32);
+//    }
     return wxImage(32, 32);
-    #endif  // ocpnUSE_SVG
+#else
+    // not working with wxwidgets 3.2
+//    wxBitmap bmp = loadAndroidSVG(filename, width, height);
+//    if (bmp.IsOk())
+//        return bmp.ConvertToImage();
+//    else
+//        return wxImage(32, 32);
+    return wxImage(32, 32);
+
+#endif
+#else
+    return wxImage(32, 32);
+#endif  // ODraw_USE_SVG
 }

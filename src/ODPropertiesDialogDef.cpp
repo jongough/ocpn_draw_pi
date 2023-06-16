@@ -86,6 +86,13 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_sliderInitialEdgePan = new wxSlider( m_panelGeneral, wxID_ANY, 3, 0, 10, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer4->Add( m_sliderInitialEdgePan, 0, wxALL|wxEXPAND, 5 );
 
+	m_staticTextIconScaling = new wxStaticText( m_panelGeneral, wxID_ANY, _("Toolbar icon scaling (requires restart)"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextIconScaling->Wrap( -1 );
+	fgSizer4->Add( m_staticTextIconScaling, 0, wxALL, 5 );
+
+	m_sliderIconScaling = new wxSlider( m_panelGeneral, wxID_ANY, 32, 1, 128, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
+	fgSizer4->Add( m_sliderIconScaling, 0, wxALL|wxEXPAND, 5 );
+
 	m_staticTextToolbar = new wxStaticText( m_panelGeneral, wxID_ANY, _("Display Toolbar"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextToolbar->Wrap( -1 );
 	fgSizer4->Add( m_staticTextToolbar, 0, wxALL, 5 );
@@ -110,7 +117,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelGeneral->SetSizer( m_bSizerGeneral );
 	m_panelGeneral->Layout();
 	m_bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
 	m_panelBoundary = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelBoundary->SetScrollRate( 5, 5 );
 	m_fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -1178,7 +1185,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelPIL->SetSizer( m_fgSizerPILSettings );
 	m_panelPIL->Layout();
 	m_fgSizerPILSettings->Fit( m_panelPIL );
-	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), true );
+	m_notebookProperties->AddPage( m_panelPIL, _("Parallel Index Line"), false );
 	m_panelAbout = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelAbout->SetScrollRate( 5, 5 );
 	m_bSizerAbout = new wxBoxSizer( wxVERTICAL );
