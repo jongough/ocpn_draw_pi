@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:51\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " προς "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Ενεργοποίηση"
@@ -207,9 +211,8 @@ msgstr "Ενεργό"
 msgid "Active Centre Line Colour"
 msgstr "Χρώμα ενεργής κεντρικής γραμμής"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Χρώμα ενεργής\n"
 " γραμμής DR"
@@ -240,6 +243,9 @@ msgstr "Όλα"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Παράσυρση ποντικιού με αριστερό πλήκτρο"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Πάντα"
@@ -359,6 +365,9 @@ msgstr "Διόπτευση Από-Προς (Μ)"
 msgid "Bearing: "
 msgstr "Διόπτευση: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Πλοίο"
 #
@@ -404,6 +413,12 @@ msgstr "Ιδιότητες ορίου, ταξίδι: "
 #
 msgid "Boundary Type"
 msgstr "Τύπος ορίου"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Κέντρο"
@@ -714,6 +729,21 @@ msgstr "Από το σημείο"
 msgid "From: "
 msgstr "Από: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "ID Σημείου"
 #
@@ -752,6 +782,9 @@ msgstr "Ιδιότητες σημείων ζώνης επιφυλακής"
 #
 msgid "Guard Zone Properties"
 msgstr "Ιδιότητες ζώνης επιφυλακής"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Πορεία"
@@ -798,8 +831,8 @@ msgstr "Εικονίδιο"
 msgid "Icon Directory"
 msgstr "Κατάλογος εικόνων"
 #
-msgid "Import"
-msgstr "Εισαγωγή"
+msgid "Icon Scaling"
+msgstr ""
 #
 msgid "Import Error"
 msgstr "Σφάλμα κατά την Εισαγωγή"
@@ -810,15 +843,18 @@ msgstr "Εισαγωγή αρχείου GPX"
 msgid "Import file"
 msgstr "Εισαγωγή αρχείου"
 #
+#, fuzzy
+msgid "Import gpx"
+msgstr "Εισαγωγή"
+#
 msgid "Import incomplete."
 msgstr "Ατελής εισαγωγή."
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Χρώμα μη ενεργής κεντρικής γραμμής"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Χρώμα ανενεργής\n"
 "γραμμής DR"
@@ -1189,6 +1225,12 @@ msgstr "Ιδιότητες σημείου OD"
 msgid "OD Points"
 msgstr "Σημεία OD"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1282,6 +1324,9 @@ msgstr "Ιδιότητες πορείας"
 msgid "Path Properties, Layer: "
 msgstr "Ιδιότητες διαδρομής, ταξίδι: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Διαδρομές"
 #
@@ -1371,6 +1416,9 @@ msgstr "Δεξιά"
 msgid "Ring"
 msgstr "Δακτύλιος"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1456,6 +1504,9 @@ msgstr "Εμφάνιση δακτυλίων απόστασης"
 #
 msgid "Show VRM"
 msgstr "Εμφάνιση δακτυλίων"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Εμφάνιση ονόματος"
@@ -1603,6 +1654,10 @@ msgstr ""
 #
 msgid "Yes"
 msgstr "Ναί"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "τοποθεσία δεδομένων ocpn_draw_pi"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "τοποθεσία δεδομένων ocpn_draw_pi"

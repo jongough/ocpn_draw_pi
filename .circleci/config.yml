@@ -512,7 +512,7 @@ jobs:
         environment:
         - OCPN_TARGET:  flatpak
         - FLATPAK_BRANCH: beta
-        - WX_VER: wx32
+        - WX_VER: 32
         - CLOUDSMITH_PKG_EXT: gz
         - SDK_VER: 20.08
         - DEPLOY_USE_ORB: true
@@ -561,7 +561,7 @@ jobs:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
         - DEPLOY_USE_ORB: true
-        - WXVERSION: 312
+        - WX_VER: 312
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -574,7 +574,7 @@ jobs:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
         - DEPLOY_USE_ORB: true
-        - WXVERSION: 32
+        - WX_VER: 32
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -610,7 +610,7 @@ jobs:
         environment:
         - OCPN_TARGET: MSVC
         - MSVC_VERSION: 2022
-        - WXVERSION: 32
+        - WX_VER: 32
         - DEPLOY_USE_ORB: true
         steps:
         - checkout

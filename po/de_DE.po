@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:51\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " bis "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Aktivieren"
@@ -207,9 +211,8 @@ msgstr "Aktiv"
 msgid "Active Centre Line Colour"
 msgstr "Farbe Aktive Mittellinie"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "DR Linie \"Aktiv\"\n"
 "Farbe"
@@ -240,6 +243,9 @@ msgstr "Alle"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "\"Verschieben mit Linker Maustaste\" zulassen"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Immer"
@@ -356,6 +362,9 @@ msgstr "Peilung von-bis (M)"
 msgid "Bearing: "
 msgstr "Peilung: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Boot"
 #
@@ -401,6 +410,12 @@ msgstr "Begrenzungs Eigenschaften, Ebene: "
 #
 msgid "Boundary Type"
 msgstr "Begrenzungs Typ"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Zentriert"
@@ -712,6 +727,21 @@ msgstr "Vom Punkt"
 msgid "From: "
 msgstr "Von: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -750,6 +780,9 @@ msgstr "Wachzonenpunkt Eigenschaften"
 #
 msgid "Guard Zone Properties"
 msgstr "Wachzone Eigenschaften"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Richtung"
@@ -796,8 +829,8 @@ msgstr "Symbol"
 msgid "Icon Directory"
 msgstr "Symbolverzeichnis"
 #
-msgid "Import"
-msgstr "Importieren"
+msgid "Icon Scaling"
+msgstr ""
 #
 msgid "Import Error"
 msgstr "Fehler beim Import"
@@ -808,15 +841,18 @@ msgstr "GPX Datei importieren"
 msgid "Import file"
 msgstr "Datei importieren"
 #
+#, fuzzy
+msgid "Import gpx"
+msgstr "Importieren"
+#
 msgid "Import incomplete."
 msgstr "Import unvollständig."
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Farbe Inaktive Mittellinie"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "DR Linie \"Inaktiv\"\n"
 "Farbe"
@@ -1189,6 +1225,12 @@ msgstr "OD Punkt Eigenschaften"
 msgid "OD Points"
 msgstr "OD Punkte"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1282,6 +1324,9 @@ msgstr "Pfadeigenschaften"
 msgid "Path Properties, Layer: "
 msgstr "Pfad Eigenschaften, Ebene: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Pfade"
 #
@@ -1372,6 +1417,9 @@ msgstr "Rechts"
 msgid "Ring"
 msgstr "Klingeln"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1458,6 +1506,9 @@ msgstr "Bereichsradien anzeigen"
 #
 msgid "Show VRM"
 msgstr "VRM anzeigen"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Namen anzeigen"
@@ -1604,6 +1655,10 @@ msgstr "Sollen Großkreis-Begrenzungspunkte zu diesem Abschnitt zugefügt werden
 #
 msgid "Yes"
 msgstr "Ja"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "Speicherort der Ocpn_draw_pi-Daten"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "Speicherort der Ocpn_draw_pi-Daten"

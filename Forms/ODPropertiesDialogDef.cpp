@@ -86,7 +86,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_sliderInitialEdgePan = new wxSlider( m_panelGeneral, wxID_ANY, 3, 0, 10, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL|wxSL_LABELS );
 	fgSizer4->Add( m_sliderInitialEdgePan, 0, wxALL|wxEXPAND, 5 );
 
-	m_staticTextIconScaling = new wxStaticText( m_panelGeneral, wxID_ANY, _("Icon Scaling"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticTextIconScaling = new wxStaticText( m_panelGeneral, wxID_ANY, _("Toolbar icon scaling (requires restart)"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextIconScaling->Wrap( -1 );
 	fgSizer4->Add( m_staticTextIconScaling, 0, wxALL, 5 );
 
