@@ -33,7 +33,7 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "25")
+set(VERSION_PATCH "26")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE "16/06/2023") # DD/MM/YYYY forma0t
 set(OCPN_MIN_VERSION "ov58")
