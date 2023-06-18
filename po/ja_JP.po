@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Japanese\n"
@@ -30,6 +30,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " to "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "有効にする（&A）"
@@ -225,9 +229,7 @@ msgid "Active Centre Line Colour"
 msgstr "線の色"
 #
 #, fuzzy
-msgid ""
-"Active DR Line\n"
-"Colour"
+msgid "Active DR Line Colour"
 msgstr "線の色"
 #
 #, fuzzy
@@ -260,6 +262,9 @@ msgid "All"
 msgstr ""
 #
 msgid "Allow Left Mouse Button Drag"
+msgstr ""
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
 msgstr ""
 #
 msgid "Always"
@@ -394,6 +399,9 @@ msgstr ""
 msgid "Bearing: "
 msgstr "方位: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "船"
 #
@@ -442,6 +450,12 @@ msgstr ""
 #, fuzzy
 msgid "Boundary Type"
 msgstr "領域"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 #, fuzzy
 msgid "Centre"
@@ -770,6 +784,21 @@ msgstr "発: "
 msgid "From: "
 msgstr "発: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -810,6 +839,9 @@ msgstr "インデックス行のプロパティ"
 #, fuzzy
 msgid "Guard Zone Properties"
 msgstr "ガード ゾーンの永続性"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr ""
@@ -859,7 +891,7 @@ msgstr ""
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -873,16 +905,19 @@ msgid "Import file"
 msgstr "GPX ファイルからインポート"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "GPX ファイルからインポート"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "GPX ファイルからインポート"
 #
 msgid "Inactive Centre Line Colour"
 msgstr ""
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
-msgstr ""
+#, fuzzy
+msgid "Inactive DR Line Colour"
+msgstr "線の色"
 #
 #, fuzzy
 msgid "Inactive EBL Line Colour"
@@ -1292,6 +1327,12 @@ msgstr "パスのプロパティ"
 msgid "OD Points"
 msgstr ""
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr ""
 #
@@ -1400,6 +1441,9 @@ msgstr "パスのプロパティ"
 msgid "Path Properties, Layer: "
 msgstr "パスのプロパティ"
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr ""
 #
@@ -1480,6 +1524,9 @@ msgid "Right"
 msgstr ""
 #
 msgid "Ring"
+msgstr ""
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
 msgstr ""
 #
 msgid ""
@@ -1572,6 +1619,9 @@ msgstr ""
 #, fuzzy
 msgid "Show VRM"
 msgstr "表示"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 #, fuzzy
 msgid "Show name"
@@ -1713,6 +1763,9 @@ msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 #
 msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi LoadSVG"
 msgstr ""
 #
 msgid "ocpn_draw_pi data location"

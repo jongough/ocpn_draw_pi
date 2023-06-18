@@ -287,6 +287,7 @@ ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
+int             g_IconDisplayScaleFactor;
 
 wxString        *g_ODlocale;
 int             g_iLocaleDepth;
@@ -555,6 +556,8 @@ int ocpn_draw_pi::Init(void)
     g_pPathList = new PathList;
     //    Layers
     g_pLayerList = new ODLayerList;
+
+    m_pODicons->initialize_images();
 
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
@@ -1325,7 +1328,7 @@ void ocpn_draw_pi::ItemProcess(int id)
                     SetCursor_PlugIn( m_pCurrentCursor );
                     SetToolbarItemState( m_draw_button_id, true );
                     g_pODToolbar->SetToolbarTool( m_Mode );
-                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show();
+                    if( g_iDisplayToolbar != ID_DISPLAY_NEVER ) g_pODToolbar->Show(true);
                 } else {
                     m_iCallerId = 0;
                     nBoundary_State = 0;
@@ -1603,6 +1606,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "RemeberPropertiesDialogPosition" ), g_bRememberPropertyDialogPosition );
             pConf->Write( wxS( "InitialEdgePanSensitivity" ), g_InitialEdgePanSensitivity );
             pConf->Write( wxS( "EdgePanSensitivity" ), g_EdgePanSensitivity );
+            pConf->Write( wxS( "IconDisplayScaleFactor"), g_IconDisplayScaleFactor );
             pConf->Write( wxS( "ToolBarPosX" ), g_iToolbarPosX );
             pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
             pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
@@ -1906,6 +1910,7 @@ void ocpn_draw_pi::LoadConfig()
 
         pConf->Read( wxS( "InitialEdgePanSensitivity" ), &g_InitialEdgePanSensitivity, 2);
         pConf->Read( wxS( "EdgePanSensitivity" ), &g_EdgePanSensitivity, 5);
+        pConf->Read( wxS( "IconDisplayScaleFactor"), &g_IconDisplayScaleFactor, 32 );
 
         pConf->Read( wxS( "ToolBarPosX" ), &g_iToolbarPosX, 0);
         pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
@@ -3446,14 +3451,14 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
         int EBLbrgTo = EBLbrgFrom - 180;
         if(EBLbrgTo < 0) EBLbrgTo += 360;
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("From: %03d째(M), To: %03d째(M)\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo  );
+            pathInfo << wxString::Format( wxString("From: %03d \u00B0(M), To: %03d \u00B0(M)\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo  );
         else
-            pathInfo << wxString::Format( wxString("From: %03d째, To: %03d째\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
+            pathInfo << wxString::Format( wxString("From: %03d \u00B0, To: %03d \u00B0\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
     } else {
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("%03d째(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d\u00B0�(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
         else
-            pathInfo << wxString::Format( wxString("%03d째  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d \u00B0  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
     }
 
     pathInfo << wxS(" ") << FormatDistanceAdaptive( dist );

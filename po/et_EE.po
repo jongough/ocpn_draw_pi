@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Estonian\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " kuni "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Käivita"
@@ -207,9 +211,8 @@ msgstr "Aktiivne"
 msgid "Active Centre Line Colour"
 msgstr "Aktiivse keskjoone värv"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Aktiivse DR'i joon\n"
 "Värv"
@@ -240,6 +243,9 @@ msgstr "Kõik"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Võimalda hiire vasaku klahvi lohistamine"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Alati"
@@ -358,6 +364,9 @@ msgstr "Peiling sealt-sinna (M)"
 msgid "Bearing: "
 msgstr "Suund: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Paat"
 #
@@ -403,6 +412,12 @@ msgstr "Piiri omadused, kiht: "
 #
 msgid "Boundary Type"
 msgstr "Piiri laad"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Keskel"
@@ -715,6 +730,21 @@ msgstr "Punktist"
 msgid "From: "
 msgstr "Alates: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -753,6 +783,9 @@ msgstr "Valvetsooni punkti omadused"
 #
 msgid "Guard Zone Properties"
 msgstr "Valvetsooni omadused"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Suund"
@@ -799,8 +832,8 @@ msgstr "Ikoon"
 msgid "Icon Directory"
 msgstr "Ikoonide kataloog"
 #
-msgid "Import"
-msgstr "Impordi"
+msgid "Icon Scaling"
+msgstr ""
 #
 msgid "Import Error"
 msgstr "Importimise tõrge"
@@ -811,15 +844,18 @@ msgstr "Impordi GPX-fail"
 msgid "Import file"
 msgstr "Impordi fail"
 #
+#, fuzzy
+msgid "Import gpx"
+msgstr "Impordi"
+#
 msgid "Import incomplete."
 msgstr "Lõpetamata import."
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Passiivse keskjoone värv"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Passiivse DR'i joon\n"
 "Värv"
@@ -1190,6 +1226,12 @@ msgstr "OD-punkti omadused"
 msgid "OD Points"
 msgstr "OD-punktid"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1283,6 +1325,9 @@ msgstr "Tee omadused"
 msgid "Path Properties, Layer: "
 msgstr "Tee omadused, kiht: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Teed"
 #
@@ -1370,6 +1415,9 @@ msgstr "Paremal"
 msgid "Ring"
 msgstr "Ring"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1455,6 +1503,9 @@ msgstr "Näita vahemaaringe"
 #
 msgid "Show VRM"
 msgstr "Näita VRM"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Näita nime"
@@ -1596,6 +1647,10 @@ msgstr "Kas sa sooviksid lisada selle lõigu jaoks suure ringi piiripunktid?"
 #
 msgid "Yes"
 msgstr "Jah"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "ocpn_draw_pi andmete asukoht"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi andmete asukoht"

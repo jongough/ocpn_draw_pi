@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
@@ -10,9 +10,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n"
-"%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n"
-"%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: pl\n"
@@ -34,6 +34,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " do "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Aktywuj"
@@ -212,9 +216,8 @@ msgstr "Aktywny"
 msgid "Active Centre Line Colour"
 msgstr "Kolor aktywnej linii środkowej"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr ""
 "Aktywna linia pozycji zliczonej (DR)\n"
 "Kolor"
@@ -246,6 +249,9 @@ msgstr "Wszystkie"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Pozwól na przeciąganie lewym przyciskiem myszy"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Zawsze"
@@ -362,6 +368,9 @@ msgstr "Namiar magnetyczny z-do"
 msgid "Bearing: "
 msgstr "Namiar: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Łódź"
 #
@@ -408,6 +417,12 @@ msgstr "Właściwości Granicy, warstwa: "
 #
 msgid "Boundary Type"
 msgstr "Typ Granicy"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Środek"
@@ -723,6 +738,21 @@ msgstr "Od punktu"
 msgid "From: "
 msgstr "Z: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -762,6 +792,9 @@ msgstr "Właściwości punktu Strefy Ochronnej- GZ"
 #
 msgid "Guard Zone Properties"
 msgstr "Właściwości Strefy Ochronnej- GZ"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Kurs"
@@ -809,9 +842,8 @@ msgstr "Ikona"
 msgid "Icon Directory"
 msgstr "Katalog ikon"
 #
-#, fuzzy
-msgid "Import"
-msgstr "Importuj plik"
+msgid "Icon Scaling"
+msgstr ""
 #
 #, fuzzy
 msgid "Import Error"
@@ -824,15 +856,18 @@ msgid "Import file"
 msgstr "Importuj plik"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "Importuj plik"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "Importuj plik"
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Kolor nieaktywnej linii środkowej"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr ""
 "Nieaktywna linia pozycji zliczonej (DR)\n"
 "Kolor"
@@ -1210,6 +1245,12 @@ msgstr "Właściwości punktu OD"
 msgid "OD Points"
 msgstr "Punkty OD"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1308,6 +1349,9 @@ msgstr "Właściwości ścieżki"
 msgid "Path Properties, Layer: "
 msgstr "Właściwości ścieżki, warstwa: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Ścieżki"
 #
@@ -1398,6 +1442,9 @@ msgstr "Na Prawo"
 msgid "Ring"
 msgstr "Dzwonek"
 #
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid ""
 "Rotate with\n"
 "Boat"
@@ -1483,6 +1530,9 @@ msgstr "Pokaż okręgi odległości"
 #
 msgid "Show VRM"
 msgstr "Pokaż Krąg Odległości-VRM"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Pokaż nazwę"
@@ -1629,6 +1679,10 @@ msgstr "Zaplanować ten odcinek po ortodromie?"
 #
 msgid "Yes"
 msgstr "Tak"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "lokalizacja danych ocpn_draw_pi"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "lokalizacja danych ocpn_draw_pi"

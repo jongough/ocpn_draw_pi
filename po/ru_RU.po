@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
@@ -11,8 +11,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 && "
-"n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && n"
-"%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 && "
+"n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Project-ID: 49843\n"
 "X-Crowdin-Language: ru\n"
@@ -34,6 +34,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " до  "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Активировать"
@@ -212,9 +216,8 @@ msgstr "Активный"
 msgid "Active Centre Line Colour"
 msgstr "Цвет Активной Центральной Линии"
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Active DR Line Colour"
 msgstr "Цвет Активной Линии АС"
 #
 msgid "Active EBL Line Colour"
@@ -243,6 +246,9 @@ msgstr "Все"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Разрешить перемещение объектов левой кн. мыши"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Всегда"
@@ -358,6 +364,9 @@ msgstr "Пеленг От-До (Маг)"
 msgid "Bearing: "
 msgstr "Азимут: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Судно"
 #
@@ -403,6 +412,12 @@ msgstr "Параметры Геозоны, слой: "
 #
 msgid "Boundary Type"
 msgstr "Тип Геозоны"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Центр"
@@ -717,6 +732,21 @@ msgstr "От точки"
 msgid "From: "
 msgstr "Откуда: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -756,6 +786,9 @@ msgstr "Свойства точки охранник зоны"
 #
 msgid "Guard Zone Properties"
 msgstr "Параметры Охранной зоны"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Путевой угол"
@@ -802,7 +835,7 @@ msgstr "Значок"
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -816,15 +849,18 @@ msgid "Import file"
 msgstr "Импортировать файл"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "Импортировать файл"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "Импортировать файл"
 #
 msgid "Inactive Centre Line Colour"
 msgstr "Цвет не Активной Центральной Линии"
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+#, fuzzy
+msgid "Inactive DR Line Colour"
 msgstr "Цвет не Активной Линии АС"
 #
 msgid "Inactive EBL Line Colour"
@@ -1200,6 +1236,12 @@ msgstr "Параметры Точки"
 msgid "OD Points"
 msgstr "Точки"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "Геозоны/Тревоги"
 #
@@ -1295,6 +1337,9 @@ msgstr "Параметры пути"
 msgid "Path Properties, Layer: "
 msgstr "Параметры Полигона, слой: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Пути"
 #
@@ -1379,6 +1424,9 @@ msgstr "Справа"
 #
 msgid "Ring"
 msgstr "Тревога"
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
 #
 msgid ""
 "Rotate with\n"
@@ -1465,6 +1513,9 @@ msgstr "Показывать кольца дальности"
 #
 msgid "Show VRM"
 msgstr "Показать ПКД (VRM)"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Показать название"
@@ -1610,6 +1661,10 @@ msgstr "Хотите добавить ортодромические точки 
 #
 msgid "Yes"
 msgstr "Да"
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "местоположение данных модуля"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "местоположение данных модуля"

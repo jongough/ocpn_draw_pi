@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Indonesian\n"
@@ -32,6 +32,10 @@ msgstr ""
 #
 msgid " to "
 msgstr " ke "
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
 #
 msgid "&Activate"
 msgstr "&Mengaktifkan"
@@ -212,9 +216,7 @@ msgid "Active Centre Line Colour"
 msgstr "Warna jalur pusat aktif"
 #
 #, fuzzy
-msgid ""
-"Active DR Line\n"
-"Colour"
+msgid "Active DR Line Colour"
 msgstr "Warna Jalur Aktif"
 #
 msgid "Active EBL Line Colour"
@@ -244,6 +246,9 @@ msgstr "Semua"
 #
 msgid "Allow Left Mouse Button Drag"
 msgstr "Memungkinkan Tombol Kiri Mouse Drag"
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Always"
 msgstr "Selalu"
@@ -363,6 +368,9 @@ msgstr "Bantalan dari-untuk"
 msgid "Bearing: "
 msgstr "Bantalan: "
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr "Perahu"
 #
@@ -410,6 +418,12 @@ msgstr "Boundary Properties, Lapisan: "
 #
 msgid "Boundary Type"
 msgstr "Batas Jenis"
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Centre"
 msgstr "Pusat"
@@ -725,6 +739,21 @@ msgstr "Dari titik"
 msgid "From: "
 msgstr "Dari: "
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr "GUID"
 #
@@ -765,6 +794,9 @@ msgstr "Properti zona penjaga"
 #
 msgid "Guard Zone Properties"
 msgstr "Properti zona penjaga"
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr ""
 #
 msgid "Heading"
 msgstr "Bagian Atas"
@@ -813,7 +845,7 @@ msgstr "Ikon"
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -827,6 +859,10 @@ msgid "Import file"
 msgstr "Impor berkas GPX"
 #
 #, fuzzy
+msgid "Import gpx"
+msgstr "Impor berkas GPX"
+#
+#, fuzzy
 msgid "Import incomplete."
 msgstr "Impor berkas GPX"
 #
@@ -834,9 +870,7 @@ msgid "Inactive Centre Line Colour"
 msgstr "Warna jalur pusat tidak aktif"
 #
 #, fuzzy
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+msgid "Inactive DR Line Colour"
 msgstr "Warna Jalur tidak Aktif"
 #
 msgid "Inactive EBL Line Colour"
@@ -1218,6 +1252,12 @@ msgstr "EBL Titik Properti"
 msgid "OD Points"
 msgstr "Titik OD"
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr "OD\\WD"
 #
@@ -1317,6 +1357,9 @@ msgstr "Properti Jalan"
 msgid "Path Properties, Layer: "
 msgstr "DR Properties, Lapisan: "
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr "Jalan"
 #
@@ -1405,6 +1448,9 @@ msgstr "Kanan"
 #
 msgid "Ring"
 msgstr "Cincin"
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
 #
 msgid ""
 "Rotate with\n"
@@ -1495,6 +1541,9 @@ msgstr "Tampilkan Rentang Rentang"
 #
 msgid "Show VRM"
 msgstr "Tampilkan VRM"
+#
+msgid "Show at scale> 1:"
+msgstr ""
 #
 msgid "Show name"
 msgstr "Tampilkan nama"
@@ -1644,6 +1693,10 @@ msgstr ""
 #
 msgid "Yes"
 msgstr ""
+#
+#, fuzzy
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "ocpn_draw_pi lokasi data"
 #
 msgid "ocpn_draw_pi data location"
 msgstr "ocpn_draw_pi lokasi data"

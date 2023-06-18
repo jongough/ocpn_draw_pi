@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-02 12:53+1100\n"
+"POT-Creation-Date: 2023-02-26 19:06+1100\n"
 "PO-Revision-Date: 2020-07-02 21:52\n"
 "Last-Translator: \n"
 "Language-Team: Hungarian\n"
@@ -29,6 +29,10 @@ msgid ""
 msgstr ""
 #
 msgid " to "
+msgstr ""
+#
+#, c-format
+msgid "%s:%i %s(), %s\n"
 msgstr ""
 #
 msgid "&Activate"
@@ -205,9 +209,7 @@ msgstr ""
 msgid "Active Centre Line Colour"
 msgstr ""
 #
-msgid ""
-"Active DR Line\n"
-"Colour"
+msgid "Active DR Line Colour"
 msgstr ""
 #
 msgid "Active EBL Line Colour"
@@ -235,6 +237,9 @@ msgid "All"
 msgstr ""
 #
 msgid "Allow Left Mouse Button Drag"
+msgstr ""
+#
+msgid "Alpha blending not drawn as OpenGL not available in this build"
 msgstr ""
 #
 msgid "Always"
@@ -350,6 +355,9 @@ msgstr ""
 msgid "Bearing: "
 msgstr ""
 #
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+#
 msgid "Boat"
 msgstr ""
 #
@@ -392,6 +400,12 @@ msgid "Boundary Properties, Layer: "
 msgstr ""
 #
 msgid "Boundary Type"
+msgstr ""
+#
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr ""
+#
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
 msgstr ""
 #
 msgid "Centre"
@@ -697,6 +711,21 @@ msgstr ""
 msgid "From: "
 msgstr ""
 #
+msgid "GL_INVALID_ENUM "
+msgstr ""
+#
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+#
+msgid "GL_INVALID_VALUE "
+msgstr ""
+#
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+#
 msgid "GUID"
 msgstr ""
 #
@@ -731,6 +760,9 @@ msgid "Guard Zone Point Properties"
 msgstr ""
 #
 msgid "Guard Zone Properties"
+msgstr ""
+#
+msgid "Guard Zone not drawn as OpenGL not available in this build"
 msgstr ""
 #
 msgid "Heading"
@@ -778,7 +810,7 @@ msgstr ""
 msgid "Icon Directory"
 msgstr ""
 #
-msgid "Import"
+msgid "Icon Scaling"
 msgstr ""
 #
 msgid "Import Error"
@@ -790,15 +822,16 @@ msgstr ""
 msgid "Import file"
 msgstr ""
 #
+msgid "Import gpx"
+msgstr ""
+#
 msgid "Import incomplete."
 msgstr ""
 #
 msgid "Inactive Centre Line Colour"
 msgstr ""
 #
-msgid ""
-"Inactive DR Line\n"
-"Colour"
+msgid "Inactive DR Line Colour"
 msgstr ""
 #
 msgid "Inactive EBL Line Colour"
@@ -1163,6 +1196,12 @@ msgstr ""
 msgid "OD Points"
 msgstr ""
 #
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+#
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "OD\\WD"
 msgstr ""
 #
@@ -1256,6 +1295,9 @@ msgstr ""
 msgid "Path Properties, Layer: "
 msgstr ""
 #
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+#
 msgid "Paths"
 msgstr ""
 #
@@ -1329,6 +1371,9 @@ msgid "Right"
 msgstr ""
 #
 msgid "Ring"
+msgstr ""
+#
+msgid "RolloverPopupTimer->Unbind not found or not removed"
 msgstr ""
 #
 msgid ""
@@ -1411,6 +1456,9 @@ msgid "Show Range Rings"
 msgstr ""
 #
 msgid "Show VRM"
+msgstr ""
+#
+msgid "Show at scale> 1:"
 msgstr ""
 #
 msgid "Show name"
@@ -1545,6 +1593,9 @@ msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr ""
 #
 msgid "Yes"
+msgstr ""
+#
+msgid "ocpn_draw_pi LoadSVG"
 msgstr ""
 #
 msgid "ocpn_draw_pi data location"

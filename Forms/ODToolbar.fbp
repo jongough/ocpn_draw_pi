@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <wxFormBuilder_Project>
-    <FileVersion major="1" minor="15" />
+    <FileVersion major="1" minor="16" />
     <object class="Project" expanded="1">
         <property name="class_decoration">; extra_formbuilder_headers.h</property>
         <property name="code_generation">C++</property>
@@ -36,7 +36,6 @@
             <property name="center"></property>
             <property name="context_help"></property>
             <property name="context_menu">0</property>
-            <property name="create_children">1</property>
             <property name="enabled">1</property>
             <property name="event_handler">impl_virtual</property>
             <property name="extra_style"></property>
@@ -49,7 +48,7 @@
             <property name="name">ODToolbarDialog</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
-            <property name="style">wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER</property>
+            <property name="style">wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER|wxSTAY_ON_TOP</property>
             <property name="subclass"></property>
             <property name="title">Draw Toolbar</property>
             <property name="tooltip"></property>
@@ -62,7 +61,7 @@
             <event name="OnKeyDown">OnKeyDown</event>
             <event name="OnLeftDown">OnLeftDown</event>
             <event name="OnSize">OnSize</event>
-            <object class="wxBoxSizer" expanded="0">
+            <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size">-1,-1</property>
                 <property name="name">m_bSizerToolbar</property>
                 <property name="orient">wxVERTICAL</property>

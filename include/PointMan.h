@@ -114,7 +114,7 @@ private:
     wxBitmap    *CreateDimBitmap(wxBitmap *pBitmap, double factor);
     double      deg2rad(double degree) { return degree*(PI/180.0); };
     bool        DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance );
-    wxImage     LoadSVGIcon(wxString filename, int width, int height);
+    wxImage     LoadSVGIcon(wxString filename, unsigned int width, unsigned int height);
 
     ODPointList *m_pODPointList;
     wxImageList *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
