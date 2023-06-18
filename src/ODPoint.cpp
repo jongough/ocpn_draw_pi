@@ -670,10 +670,22 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
     }
 
     if( m_bShowName && m_pMarkFont ) {
+        wxFont *pfsave;
+#ifdef __WXMSW__
+        pfsave = m_pMarkFont;
+        double factor = (double)(GetOCPNCanvasWindow()->ToDIP(100)) / 100.;
+        wxFont sFont(*m_pMarkFont);
+        m_pMarkFont = &sFont;
+        m_pMarkFont->Scale(1. / factor);
+#endif
+
         dc.SetFont( *m_pMarkFont );
         dc.SetTextForeground(m_FontColor);
         int x = l_odp.x + (m_NameLocationOffsetX * l_fIconScaleFactor), y = l_odp.y + (m_NameLocationOffsetY * l_fIconScaleFactor);
         dc.DrawTextEx( m_ODPointName, x, y, l_fIconScaleFactor );
+#ifdef __WXMSW__
+        m_pMarkFont = pfsave;
+#endif
     }
 
     // Draw ODPoint range rings if activated
