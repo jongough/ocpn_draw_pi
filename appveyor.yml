@@ -5,6 +5,8 @@ clone_depth: 10
 image:
   - Visual Studio 2022
   - Visual Studio 2017
+#  - Visual Studio 20xx
+
 
 platform:
 # - x64
@@ -13,8 +15,15 @@ platform:
 configuration: Release
 test: OFF
 
+#build_cloud: docker
+
 environment:
   OCPN_TARGET: MSVC
+#  build_cloud: QEMU_WIN10
+#  APPVEYOR_BUILD_WORKER_IMAGE: install_vs2022.ps1
+# docker environment not working on appveyor 20230115
+#  docker_image: Windows
+#  docker_pull: always
 
 matrix:
 # allow either job to fail and the other to complete

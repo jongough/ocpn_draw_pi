@@ -382,6 +382,8 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 {
     DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
+    m_pODicons = new ODicons();
+
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
     nBlinkerTick = 0;
@@ -431,8 +433,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     // XXX FIXME get it from driver
     g_GLMinSymbolLineWidth = 1.0f;
 #endif
-
-    m_pODicons = new ODicons();
 
     m_bRecreateConfig = false;
     DEBUGSL("ocpn_draw_pi: return");
@@ -543,9 +543,7 @@ int ocpn_draw_pi::Init(void)
 
     LoadConfig();
     g_pODConfig->LateInit();
-
     g_pODSelect = new ODSelect();
-
     g_pODJSON = new ODJSON;
     g_pODAPI = new ODAPI;
     g_pBoundaryList = new BoundaryList;
@@ -556,6 +554,9 @@ int ocpn_draw_pi::Init(void)
     g_pPathList = new PathList;
     //    Layers
     g_pLayerList = new ODLayerList;
+
+    // Re-Create the PlugIn icons
+    m_pODicons = new ODicons();
 
     m_pODicons->initialize_images();
 

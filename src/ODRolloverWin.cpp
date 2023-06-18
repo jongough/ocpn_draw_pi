@@ -124,17 +124,29 @@ void ODRolloverWin::SetBitmap( int rollover )
         case POINT_ROLLOVER:
             mdc.SetTextForeground( GetFontColour_PlugIn( wxT("OD_PointInfoRollover") ) );
             break;
-            
+
     }
 
 
     if(m_plabelFont && m_plabelFont->IsOk()) {
 
     //    Draw the text
-        mdc.SetFont( *m_plabelFont );
+        wxFont *pfsave;
+#ifdef __WXMSW__
+        pfsave = m_plabelFont;
+        double factor = (double)(GetOCPNCanvasWindow()->ToDIP(100)) / 100.;
+        wxFont sFont(*m_plabelFont);
+        m_plabelFont = &sFont;
+        m_plabelFont->Scale(1. / factor);
+#endif
 
+        mdc.SetFont( *m_plabelFont );
         mdc.DrawLabel( m_string, wxRect( 0, 0, m_size.x, m_size.y ), wxALIGN_CENTRE_HORIZONTAL | wxALIGN_CENTRE_VERTICAL);
-        
+
+#ifdef __WXMSW__
+        m_plabelFont = pfsave;
+#endif
+
     }
 
     SetSize( m_position.x, m_position.y, m_size.x, m_size.y );   // Assumes a nominal 32 x 32 cursor
