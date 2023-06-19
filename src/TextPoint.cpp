@@ -398,6 +398,11 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         dc.SelectObject( tbm );
                         dc.SetBackground( wxBrush( *wxBLACK ) );
                         dc.Clear();
+#ifdef __WXMSW__
+                        double factor = (double)(GetOCPNCanvasWindow()->ToDIP(100)) / 100.;
+                        wxFont sFont(m_DisplayTextFont);
+                        m_DisplayTextFont.Scale(1. / factor);
+#endif
                         dc.SetFont( m_DisplayTextFont );
                         dc.SetTextForeground(* wxWHITE );
                         if(m_dNaturalScale > (g_ocpn_draw_pi->m_chart_scale / 2))
@@ -405,6 +410,10 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         //else
                         //    dc.DrawText( wxT(""), 10, 0 );
                         dc.SelectObject( wxNullBitmap );
+
+#ifdef __WXMSW__
+                        m_DisplayTextFont = sFont;
+#endif
 
                         /* make alpha texture for text */
                         wxImage image = tbm.ConvertToImage();
