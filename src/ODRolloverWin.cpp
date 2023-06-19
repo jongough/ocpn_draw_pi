@@ -134,7 +134,7 @@ void ODRolloverWin::SetBitmap( int rollover )
         wxFont *pfsave;
         pfsave = m_plabelFont;
         double factor = (double)(GetOCPNCanvasWindow()->ToDIP(100)) / 100.;
-        wxFont sFont(*m_pMarkFont);
+        wxFont sFont(*m_plabelFont);
         m_plabelFont = &sFont;
         m_plabelFont->Scale(1. / factor);
 #endif
