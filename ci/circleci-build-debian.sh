@@ -22,25 +22,25 @@ rm -rf build && mkdir build && cd build
 # Install extra build libs
 ME=$(echo ${0##*/} | sed 's/\.sh//g')
 EXTRA_LIBS=./ci/extras/extra_libs.txt
-if test -f ${EXTRA_LIBS}; then
+if test -f "$EXTRA_LIBS"; then
     while read -r line; do
         sudo apt-get install $line
-    done < ${EXTRA_LIBS}
+    done < "$EXTRA_LIBS"
 fi
 EXTRA_LIBS=./ci/extras/${ME}_extra_libs.txt
-if test -f ${EXTRA_LIBS}; then
+if test -f "$EXTRA_LIBS"; then
     while read -r line; do
         sudo apt-get install $line
-    done < ${EXTRA_LIBS}
+    done < "$EXTRA_LIBS"
 fi
 echo ${CIRCLE_JOB}
 EXTRA_LIBS=./ci/extras/${CIRCLE_JOB}_extra_libs.txt
 echo $EXTRA_LIBS
-if test -f ${EXTRA_LIBS}; then
+if test -f "$EXTRA_LIBS"; then
     echo "Found build-jammy_extra_libs.txt"
     while read -r line; do
         sudo apt-get install $line
-    done < ${EXTRA_LIBS}
+    done < ""$EXTRA_LIBS"
 fi
 
 pwd
