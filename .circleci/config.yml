@@ -18,66 +18,66 @@ std-filters: &std-filters
 workflows:
     build_all:
         jobs:
-#        - build-armhf-stretch:
-#            <<: *std-filters
-### Derecated in favour of ubuntu-armhf:18.04 build - 14/01/2022
-###        - build-armhf-raspbian-buster:
-###            <<: *std-filters
-#        - build-armhf-ubuntu-buster:
-#            <<: *std-filters
-#        - build-armhf-debian-buster:
-#            <<: *std-filters
-#        - build-armhf-debian-buster-gtk3:
-#            <<: *std-filters
-#        - build-arm64-debian-buster:
-#            <<: *std-filters
-### Derecated in favour of ubuntu-armhf:20.04 build - 14/01/2022
-###        - build-armhf-bullseye:
-###            <<: *std-filters
-#        - build-armhf-debian-bullseye:
-#            <<: *std-filters
-### Cannot build due to dependencies not being met. - 30/04/2023
-##        - build-armhf-debian-bullseye-wx32:
+        - build-armhf-stretch:
+            <<: *std-filters
+## Derecated in favour of ubuntu-armhf:18.04 build - 14/01/2022
+##        - build-armhf-raspbian-buster:
 ##            <<: *std-filters
-#        - build-arm64-debian-bullseye:
+        - build-armhf-ubuntu-buster:
+            <<: *std-filters
+        - build-armhf-debian-buster:
+            <<: *std-filters
+        - build-armhf-debian-buster-gtk3:
+            <<: *std-filters
+        - build-arm64-debian-buster:
+            <<: *std-filters
+## Derecated in favour of ubuntu-armhf:20.04 build - 14/01/2022
+##        - build-armhf-bullseye:
+##            <<: *std-filters
+        - build-armhf-debian-bullseye:
+            <<: *std-filters
+## Cannot build due to dependencies not being met. - 30/04/2023
+#        - build-armhf-debian-bullseye-wx32:
 #            <<: *std-filters
-### Cannot build due to dependencies not being met. - 30/04/2023
+        - build-arm64-debian-bullseye:
+            <<: *std-filters
+## Cannot build due to dependencies not being met. - 30/04/2023
 ##        - build-arm64-debian-bullseye-wx32:
 ##            <<: *std-filters
-#        - build-armhf-debian-bookworm:
-#            <<: *std-filters
-#        - build-arm64-debian-bookworm:
-#            <<: *std-filters
-#        - build-armhf-ubuntu-focal:
-#            <<: *std-filters
-#        - build-bionic:
-#            <<: *std-filters
-#        - build-bionic-gtk3:
-#            <<: *std-filters
-#        - build-focal-gtk3:
-#            <<: *std-filters
+        - build-armhf-debian-bookworm:
+            <<: *std-filters
+        - build-arm64-debian-bookworm:
+            <<: *std-filters
+        - build-armhf-ubuntu-focal:
+            <<: *std-filters
+        - build-bionic:
+            <<: *std-filters
+        - build-bionic-gtk3:
+            <<: *std-filters
+        - build-focal-gtk3:
+            <<: *std-filters
         - build-jammy:
             <<: *std-filters
-#        - build-buster:
-#            <<: *std-filters
-#        - build-bullseye:
-#            <<: *std-filters
-#        - build-bookworm:
-#            <<: *std-filters
-#        - build-flatpak-x86-2008:
-#            <<: *std-filters
-#        - build-flatpak-x86-2208:
-#            <<: *std-filters
-#        - build-flatpak-arm64:
-#            <<: *std-filters
-#        - build-macos:
-#             <<: *std-filters
-#        - build-macos-wx32:
-#             <<: *std-filters
-#        - build-android-arm64:
-#             <<: *std-filters
-#        - build-android-armhf:
-#             <<: *std-filters
+        - build-buster:
+            <<: *std-filters
+        - build-bullseye:
+            <<: *std-filters
+        - build-bookworm:
+            <<: *std-filters
+        - build-flatpak-x86-2008:
+            <<: *std-filters
+        - build-flatpak-x86-2208:
+            <<: *std-filters
+        - build-flatpak-arm64:
+            <<: *std-filters
+        - build-macos:
+             <<: *std-filters
+        - build-macos-wx32:
+             <<: *std-filters
+        - build-android-arm64:
+             <<: *std-filters
+        - build-android-armhf:
+             <<: *std-filters
 ### Work in progress to allow circleci to do windows builds
 ###        - build-msvc-2022:
 ###            <<: *std-filters
