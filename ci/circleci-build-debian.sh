@@ -33,6 +33,12 @@ if test -f "$EXTRA_LIBS"; then
         sudo apt-get install $line
     done < $EXTRA_LIBS
 fi
+EXTRA_LIBS=./ci/extras/${CIRCLE_JOB}_extra_libs.txt
+if test -f "$EXTRA_LIBS"; then
+    while read line; do
+        sudo apt-get install $line
+    done < $EXTRA_LIBS
+fi
 
 pwd
 sudo mk-build-deps --install ../ci/control
