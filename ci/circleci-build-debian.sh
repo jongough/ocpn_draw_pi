@@ -37,6 +37,7 @@ echo ${CIRCLE_JOB}
 printenv
 EXTRA_LIBS=./ci/extras/${CIRCLE_JOB}_extra_libs.txt
 if test -f "$EXTRA_LIBS"; then
+    echo "Found build-jammy_extra_libs.txt"
     while read line; do
         sudo apt-get install $line
     done < $EXTRA_LIBS
