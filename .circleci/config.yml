@@ -333,7 +333,7 @@ jobs:
         - BUILD_ENV=ubuntu
         - TZ="America/New_York"
         - DEBIAN_FRONTEND="noninteractive"
-        - BUILD_GTK3: truedebian
+        - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
