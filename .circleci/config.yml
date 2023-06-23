@@ -42,8 +42,8 @@ workflows:
         - build-arm64-debian-bullseye:
             <<: *std-filters
 ## Cannot build due to dependencies not being met. - 30/04/2023
-#        - build-arm64-debian-bullseye-wx32:
-#            <<: *std-filters
+##        - build-arm64-debian-bullseye-wx32:
+##            <<: *std-filters
         - build-armhf-debian-bookworm:
             <<: *std-filters
         - build-arm64-debian-bookworm:
@@ -78,9 +78,9 @@ workflows:
              <<: *std-filters
         - build-android-armhf:
              <<: *std-filters
-## Work in progress to allow circleci to do windows builds
-##        - build-msvc-2022:
-##            <<: *std-filters
+### Work in progress to allow circleci to do windows builds
+###        - build-msvc-2022:
+###            <<: *std-filters
 
 orbs:
     cloudsmith: cloudsmith/cloudsmith@1.0.4
@@ -300,20 +300,10 @@ jobs:
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
-        - restore_cache:
-            name: Restore build machine dependencies
-            keys:
-                - arm64-debian-bullseye-wx32-{{ checksum "CMakeLists.txt" }}
-#                - arm64-debian-bullseye-wx32-
-        - run: chmod a+x ./ci/*.sh
         - run:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-        - save_cache:
-            name: Save build machine cache
-            key: arm64-debian-bullseye-wx32-{{ checksum "CMakeLists.txt" }}
-            paths: ./
     build-arm64-debian-bookworm:
         machine:
             image: ubuntu-2004:202104-01
@@ -559,7 +549,7 @@ jobs:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
         - DEPLOY_USE_ORB: true
-        - WX_VER: 312
+        - WX_VER: 31
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
