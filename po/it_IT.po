@@ -1607,7 +1607,7 @@ msgstr "Tipo di punto di confine"
 #: src/ODPropertiesDialogDef.cpp:298
 msgid "Boundary Point Inclusion\n"
 "Size"
-msgstr "Dimensione dei punti del confine\n"
+msgstr "Dimensione dei punti del confine"
 
 #: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:799
 msgid "Number of Range Rings"
