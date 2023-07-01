@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: ocpn_draw_pi 1.8.24.2\n"
+"Project-Id-Version: ocpn_draw_pi 1.8.27.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-05 16:12+1100\n"
+"POT-Creation-Date: 2023-06-30 12:09+1000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1070,7 +1070,7 @@ msgstr ""
 msgid "Are you sure you want to remove this point?"
 msgstr ""
 
-#: src/ODPoint.cpp:719
+#: src/ODPoint.cpp:732
 msgid "ODPoint not drawn as OpenGL not available in this build"
 msgstr ""
 

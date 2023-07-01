@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 19:06+1100\n"
-"PO-Revision-Date: 2020-07-02 21:52\n"
+"POT-Creation-Date: 2023-06-30 12:09+1000\n"
+"PO-Revision-Date: 2023-06-30 03:49\n"
 "Last-Translator: \n"
 "Language-Team: Turkish\n"
 "Language: tr_TR\n"
@@ -16,1688 +16,2314 @@ msgstr ""
 "X-Crowdin-Language: tr\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
-#
-msgid " &Properties..."
-msgstr " &Özellikler..."
-#
-msgid " To: "
-msgstr " Oraya: "
-#
-msgid ""
-" shorter than rhumbline.\n"
-"\n"
-msgstr ""
-" rhumbline'dan daha kısa.\n"
-"\n"
-#
-msgid " to "
-msgstr " oraya "
-#
-#, c-format
-msgid "%s:%i %s(), %s\n"
-msgstr ""
-#
-msgid "&Activate"
-msgstr "&Etkinleştir"
-#
-msgid "&Add"
-msgstr ""
-#
-msgid "&Apply"
-msgstr "&Uygula"
-#
-msgid "&Cancel"
-msgstr "&İptal"
-#
-msgid "&Center View"
-msgstr "&Merkez görünüm"
-#
-msgid "&Deactivate"
-msgstr "&Etkisizleştir"
-#
-msgid "&Delete"
-msgstr "&Sil"
-#
-#, fuzzy
-msgid "&Delete Selected"
-msgstr "&Seçileni kaldır"
-#
-msgid "&Edit"
-msgstr ""
-#
-#, fuzzy
-msgid "&Export Selected..."
-msgstr "&Seçileni kaldır"
-#
-#, fuzzy
-msgid "&List contents"
-msgstr "İçeriği listele "
-#
-msgid "&New"
-msgstr "&Yeni"
-#
-msgid "&OK"
-msgstr "&TAMAM"
-#
-msgid "&Properties"
-msgstr "&Özellikler"
-#
-msgid "&Remove Selected"
-msgstr "&Seçileni kaldır"
-#
-msgid "(Unnamed )"
-msgstr "(İsimsiz)"
-#
-msgid "(Unnamed Layer)"
-msgstr "(Adsız etiket)"
-#
-msgid "(Unnamed) "
-msgstr "(İsimsiz) "
-#
-msgid "(unnamed)"
-msgstr "(isimsiz)"
-#
-msgid "*.*"
-msgstr ""
-#
-msgid "0"
-msgstr "0"
-#
-msgid "0.0"
-msgstr "0.0"
-#
-msgid "0.5"
-msgstr "0.5"
-#
-msgid "1"
-msgstr "1"
-#
-msgid "1 Pixel"
-msgstr "1 piksel"
-#
-msgid "1 pixel"
-msgstr "1 piksel"
-#
-msgid "1.0"
-msgstr "1.0"
-#
-msgid "10"
-msgstr "10"
-#
-msgid "10 Pixels"
-msgstr "10 piksel"
-#
-msgid "10 pixels"
-msgstr "10 piksel"
-#
-msgid "2"
-msgstr "2"
-#
-msgid "2 Pixels"
-msgstr "2 piksel"
-#
-msgid "2 pixels"
-msgstr "2 piksel"
-#
-msgid "3"
-msgstr "3"
-#
-msgid "3 Pixels"
-msgstr "3 piksel"
-#
-msgid "3 pixels"
-msgstr "3 piksel"
-#
-msgid "4"
-msgstr "4"
-#
-msgid "4 Pixels"
-msgstr "4 piksel"
-#
-msgid "4 pixels"
-msgstr "4 piksel"
-#
-msgid "5"
-msgstr "5"
-#
-msgid "5 Pixels"
-msgstr "5 piksel"
-#
-msgid "5 pixels"
-msgstr "5 piksel"
-#
-msgid "6"
-msgstr "6"
-#
-msgid "6 Pixels"
-msgstr "6 piksel"
-#
-msgid "6 pixels"
-msgstr "6 piksel"
-#
-msgid "7"
-msgstr "7"
-#
-msgid "7 Pixels"
-msgstr "7 piksel"
-#
-msgid "7 pixels"
-msgstr "7 piksel"
-#
-msgid "8"
-msgstr "8"
-#
-msgid "8 Pixels"
-msgstr "8 piksel"
-#
-msgid "8 pixels"
-msgstr "8 piksel"
-#
-msgid "9"
-msgstr "9"
-#
-msgid "9 Pixels"
-msgstr "9 piksel"
-#
-msgid "9 pixels"
-msgstr "9 piksel"
-#
-msgid "About"
-msgstr "Hakkında"
-#
-msgid "Activate"
-msgstr "Etkinleştir"
-#
-msgid "Active"
-msgstr "Etkin"
-#
-msgid "Active Centre Line Colour"
-msgstr "Aktif merkez hattı rengi"
-#
-#, fuzzy
-msgid "Active DR Line Colour"
-msgstr ""
-"Aktif DR hattı\n"
-"Rengi"
-#
-msgid "Active EBL Line Colour"
-msgstr "Aktif EBL hattının rengi"
-#
-msgid "Active Fill Colour"
-msgstr "Aktif dolgu rengi"
-#
-msgid "Active Line Colour"
-msgstr "Aktif hattın rengi"
-#
-#, fuzzy
-msgid "Active Offset Line 2 Colour"
-msgstr "Aktif ofset hattı rengi"
-#
-msgid "Active Offset Line Colour"
-msgstr "Aktif ofset hattı rengi"
-#
-msgid "Add Index Line"
-msgstr "İşaret hattı ekle"
-#
-msgid "Add New"
-msgstr ""
-#
-msgid "All"
-msgstr "Hepsi"
-#
-msgid "Allow Left Mouse Button Drag"
-msgstr "Sol fare tuşuyla sürüklemeye izin ver"
-#
-msgid "Alpha blending not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Always"
-msgstr "Daima"
-#
-msgid ""
-"Always Show\n"
-"EBL Info"
-msgstr ""
-"Her zaman göster\n"
-"EBL bilgisi"
-#
-msgid "Applying changes from "
-msgstr "-itibaren değişiklikler uygulanıyor "
-#
-msgid "Arc"
-msgstr ""
-#
-msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr "Od noktalarının <ALL> silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete <ALL> paths?"
-msgstr "Yolların <ALL> silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Seçili nesneleri silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Bu sınır noktasını silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this Boundary?"
-msgstr "Bu sınırı silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this DR Point?"
-msgstr "Bu DR Noktasını silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this DR?"
-msgstr "Bu DR yi silmek istediğinden emin misin?"
-#
-msgid "Are you sure you want to delete this EBL Point?"
-msgstr "Bu EBL noktasını silmek istediğinden emin misin?"
-#
-msgid "Are you sure you want to delete this EBL?"
-msgstr "Bu EBL yi silmek istediğinden emin misin?"
-#
-msgid "Are you sure you want to delete this Guard Zone?"
-msgstr "Bu koruma bölgesini silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this OD Point?"
-msgstr "Bu OD Noktasını silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this PIL Point?"
-msgstr "Bu PIL noktasını silmek istediğinden emin misin?"
-#
-msgid "Are you sure you want to delete this Parallel Index Line Group?"
-msgstr "Paralel Dizin Hattı Grubunu silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this Parallel Index Line?"
-msgstr "Paralel dizin hattını silmek ister misin?"
-#
-msgid "Are you sure you want to delete this Text Point?"
-msgstr "Bu metin noktasını silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr "Bu içeriklerin <ALL> ve bu etiketi silmek istediğinizden emin misiniz?"
-#
-#, fuzzy
-msgid "Are you sure you want to delete this point?"
-msgstr "Bu DR Noktasını silmek istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to remove this "
-msgstr "Bunu kaldırmak istediğinizden emin misiniz "
-#
-msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Bu Sınır Noktasını kaldırmak istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to remove this DR Point?"
-msgstr "Bu DR Noktasını kaldırmak istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to remove this EBL Point?"
-msgstr "Bu EBL noktasını kaldırmak istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to remove this OD Point?"
-msgstr "Bu OD Noktasını kaldırmak istediğinizden emin misiniz?"
-#
-msgid "Are you sure you want to remove this point?"
-msgstr "Bu noktayı kaldırmak istediğinizden emin misiniz?"
-#
-msgid "Arrival Radius"
-msgstr "Varış Yarıçapı"
-#
-msgid "Background Colour"
-msgstr "Arka Plan Rengi"
-#
-msgid "Background Density"
-msgstr "Arka plan yoğunluğu"
-#
-msgid "Background Transparency"
-msgstr "Arka Plan Şeffaflığı"
-#
-msgid "Basic"
-msgstr "Temel"
-#
-msgid "Bearing"
-msgstr "Yön"
-#
-msgid "Bearing (M)"
-msgstr "Yön (M)"
-#
-msgid "Bearing From-To"
-msgstr "-dan taşı-e doğru"
-#
-msgid "Bearing From-To (M)"
-msgstr "-dan taşı-e doğru (M)"
-#
-msgid "Bearing: "
-msgstr "Yön tayini: "
-#
-msgid "BlinkTimer->Unbind not found or not removed"
-msgstr ""
-#
-msgid "Boat"
-msgstr "Tekne"
-#
-msgid "Bottom"
-msgstr "Alt"
-#
-msgid "Bottom Centre"
-msgstr "Alt Merkezi"
-#
-msgid "Boundary"
-msgstr "Sınır"
-#
-#, fuzzy
-msgid "Boundary '"
-msgstr "Sınır"
-#
-msgid "Boundary Point"
-msgstr "Sınır noktası"
-#
-#, fuzzy
-msgid "Boundary Point Icon"
-msgstr "Sınır noktası ikonlarını gizle"
-#
-msgid ""
-"Boundary Point Inclusion\n"
-"Size"
-msgstr ""
-"Sınır noktası kapsama\n"
-"Boyut"
-#
-msgid "Boundary Point Properties"
-msgstr "Sınır noktası özellikleri"
-#
-msgid "Boundary Point Properties, Layer: "
-msgstr "Sınır noktası özellikleri, etiket: "
-#
-msgid "Boundary Point Type"
-msgstr "Sınır noktası tipi"
-#
-msgid "Boundary Properties"
-msgstr "Sınır özellikleri"
-#
-msgid "Boundary Properties, Layer: "
-msgstr "Sınır özellikleri, Etiket: "
-#
-msgid "Boundary Type"
-msgstr "Sınır tipi"
-#
-msgid "Boundary not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "BoundaryPoint not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Centre"
-msgstr "Merkez"
-#
-msgid "Centre Line Style"
-msgstr "Merkez hattı stili"
-#
-msgid "Centre Line Width"
-msgstr "Merkez hattı genişliği"
-#
-msgid "Centre on moving boat"
-msgstr "Tekne hareket merkezi"
-#
-msgid "Change all Path Point Icons"
-msgstr "Tüm yol nokta ikonlarını değiştir"
-#
-msgid "Character Based"
-msgstr ""
-#
-msgid "Combo!"
-msgstr "Açılır menü!"
-#
-msgid "Confirm"
-msgstr "Onayla"
-#
-msgid "Confirm Object Delete"
-msgstr "Nesne silmeyi onayla"
-#
-msgid "Control Line"
-msgstr "Kontrol hattı"
-#
-msgid "Copy"
-msgstr "Kopyala"
-#
-msgid "Copy Boundary GUID"
-msgstr "Sınır GUID kopyala"
-#
-msgid "Copy DR GUID"
-msgstr "DR GUID kopyala"
-#
-msgid "Copy EBL GUID"
-msgstr "EBL GUID kopyala"
-#
-msgid "Copy Guard Zone GUID"
-msgstr "Koruma bölgesi GUID kopyala"
-#
-msgid "Copy Point GUID"
-msgstr "GUID noktasını kopyala"
-#
-msgid "Copy lat/long"
-msgstr "Enlem/Boylam'ı kopyala"
-#
-msgid "Course over Ground"
-msgstr "Yer üstündeli rota"
-#
-msgid "Course over Ground (M)"
-msgstr "Yer üstündeki rota (M)"
-#
-msgid "Course over Ground (T)"
-msgstr "Yer üzerindeki rota (T)"
-#
-msgid "Create Boundary"
-msgstr "Sınır oluştur"
-#
-msgid "Create Boundary Point"
-msgstr "Sınır noktası oluştur"
-#
-msgid "Create DR"
-msgstr "DR oluştur"
-#
-msgid "Create EBL"
-msgstr "EBL oluştur"
-#
-msgid "Create GZ"
-msgstr "GZ oluştur"
-#
-msgid "Create PIL"
-msgstr "PIL oluştur"
-#
-msgid "Create Text Point"
-msgstr "Metin noktası oluştur"
-#
-msgid "DR"
-msgstr "DR"
-#
-msgid "DR Path Length"
-msgstr "DR yol uzunluğu"
-#
-msgid "DR Persistence"
-msgstr "DR sürekliliği"
-#
-msgid "DR Point"
-msgstr "DR noktası"
-#
-msgid "DR Point Icon"
-msgstr "DR noktası ikonu"
-#
-msgid "DR Point Interval"
-msgstr "DR nokta aralığı"
-#
-msgid "DR Point Properties"
-msgstr "DR noktası özellikleri"
-#
-msgid "DR Point Properties, Layer: "
-msgstr "DR noktası özellikleri, Etiket: "
-#
-msgid "DR Properties"
-msgstr "DR özellikleri"
-#
-msgid "DR Properties, Layer: "
-msgstr "DR özellikleri, Katman: "
-#
-msgid "Data Directory"
-msgstr ""
-#
-msgid "Data:"
-msgstr ""
-#
-msgid "Date:"
-msgstr "Tarih:"
-#
-msgid "Days"
-msgstr "Günler"
-#
-msgid "Deactivate"
-msgstr "Devre dışı bırak"
-#
+
+#: include/ODDRDialogDef.h:64 include/ODDRDialogDef.h:65
+#: src/ODToolbarImpl.cpp:546
 msgid "Dead Reckoning"
 msgstr "Parakete Hesabı"
-#
-msgid "Default Offset (+Stbd/-Port)"
-msgstr "Varsayılan ofset (+Stbd/-Port)"
-#
-#, fuzzy
-msgid "Dele&te All"
-msgstr "Sil"
-#
-msgid "Delete"
-msgstr "Sil"
-#
-msgid "Delete Line"
-msgstr "Hattı sil"
-#
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr ""
-#
-msgid "Delete current OCPN_Draw config entries (Yes)"
-msgstr ""
-#
-msgid "Delete..."
-msgstr "Sil..."
-#
-msgid "Desc"
-msgstr "Açıklama"
-#
-msgid "Description"
-msgstr "Açıklama"
-#
-#, fuzzy
-msgid "Display Text"
-msgstr "Ekran yazısı"
-#
-msgid "Display Toolbar"
-msgstr "Araç çubuğunu görüntüle"
-#
-msgid "Display text"
-msgstr "Ekran yazısı"
-#
-msgid "Distance"
-msgstr "Mesafe"
-#
-msgid "Distance Between Range Rings"
-msgstr "Menzil çemberleri arası uzaklık"
-#
-msgid "Distance From Boat"
-msgstr "Tekneden uzaklık"
-#
-msgid "Distance Unit"
-msgstr "Uzaklık birimi"
-#
-msgid "Distance Units"
-msgstr "Uzaklık Birimleri"
-#
-msgid "Distance between Range Rings"
-msgstr "Menzil çemberleri arasındaki uzaklık"
-#
-msgid "Distance from Ownship"
-msgstr "Kendi geminden uzaklık"
-#
-msgid ""
-"Do you also want to make the shared OD Points being part of this boundary "
-"invisible?"
-msgstr ""
-"Paylaşılmış OD noktalarını bu sınırın görünmez bir parçası yapmak istiyor "
-"musunuz?"
-#
-msgid "Dot"
-msgstr "Nokta"
-#
-msgid "Dot Dash"
-msgstr "Noktalı çizgi"
-#
+
+#: include/ODNewODPointDialogDef.h:51 include/ODNewODPointDialogDef.h:52
+#: src/ODNewODPointDialogDef.cpp:37 src/ODPointPropertiesDialog.cpp:137
+msgid "Point Type"
+msgstr "Nokta tipi"
+
+#: include/ODPathPropertiesDialogDef.h:141
+#: include/ODPathPropertiesDialogDef.h:142
+#: src/PathAndPointManagerDialogImpl.cpp:756
+msgid "Path Properties"
+msgstr "İz Özellikleri"
+
+#: include/ODPointPropertiesDialog.h:165 include/ODPointPropertiesDialog.h:166
+msgid "OD Point Properties"
+msgstr "OD Noktası Özellikleri"
+
+#: include/ODPropertiesDialogDef.h:353 include/ODPropertiesDialogDef.h:354
+msgid "OCPN Draw Properties"
+msgstr "OCPN çizim özelikleri"
+
+#: include/ODToolbarDef.h:49 include/ODToolbarDef.h:50 src/ocpn_draw_pi.cpp:655
+#: src/ocpn_draw_pi.cpp:657
 msgid "Draw Toolbar"
 msgstr "Çizim araç çubuğu"
-#
-#, fuzzy
-msgid "E&xport All Visible"
-msgstr "GPX dosyasını dışa aktar"
-#
-msgid "EBL"
-msgstr "EBL"
-#
-msgid "EBL Angle (-P/+S)"
-msgstr "Ebl açı (-P/+S)"
-#
-msgid ""
-"EBL Fixed\n"
-"End Position"
-msgstr ""
-"EBL düzeltme\n"
-"Bitiş pozisyonu"
-#
-msgid "EBL Fixed End Position"
-msgstr "EBL sabit bitiş pozisyonu"
-#
-msgid "EBL Persistence"
-msgstr "EBL sürekliliği"
-#
-msgid "EBL Point"
-msgstr "EBL noktası"
-#
-msgid "EBL Point Properties"
-msgstr "EBL noktası özellikleri"
-#
-msgid "EBL Point Properties, Layer: "
-msgstr "EBL noktası özellikleri, Etiket: "
-#
-msgid "EBL Properties"
-msgstr "EBL özellikleri"
-#
-msgid "EBL Properties, Layer: "
-msgstr "EBL özellikleri, Etiket: "
-#
-msgid ""
-"Edge Panning Sensitivity\n"
-"(percentage screen width) Default 5"
-msgstr ""
-"Kenar Döşeme Duyarlılığı\n"
-"(yüzde ekran genişliği) Varsayılan 5"
-#
-msgid "Edit"
-msgstr ""
-#
-msgid "Electronic Bearing Line"
-msgstr "Elektronik yön hattı"
-#
-msgid "End"
-msgstr "Son"
-#
-msgid "End Point Icon"
-msgstr "Bitiş noktası ikonu"
-#
-msgid "Error in import file."
-msgstr ""
-#
-msgid "Example"
-msgstr "Örnek"
-#
-msgid "Exclusion"
-msgstr "Çıkarılanlar"
-#
-msgid "Export GPX file"
-msgstr "GPX dosyasını dışa aktar"
-#
-msgid "Extended"
-msgstr "Genişletilmiş"
-#
-msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-msgstr ""
-#
-msgid "Fill Colour"
-msgstr "Dolgu rengi"
-#
-msgid "Fill Density"
-msgstr "Dolgu yoğunluğu"
-#
-msgid "First"
-msgstr "Birinci"
-#
-msgid "First Angle (-P/+S)"
-msgstr "İlk açı (-P/+S)"
-#
-msgid "First Point Icon"
-msgstr "Birinci nokta ikonu"
-#
-msgid "First distance"
-msgstr "İlk mesafe"
-#
-#, fuzzy
-msgid "Font Based"
-msgstr "Yazı tipleri"
-#
-msgid "Fonts"
-msgstr "Yazı tipleri"
-#
-msgid "For this leg the Great Circle boundary is "
-msgstr "Bu bacak için Büyük Çember sınırı "
-#
-msgid "From Point"
-msgstr "Noktadan"
-#
-msgid "From: "
-msgstr "İtibaren: "
-#
-msgid "GL_INVALID_ENUM "
-msgstr ""
-#
-msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
-msgstr ""
-#
-msgid "GL_INVALID_OPERATION "
-msgstr ""
-#
-msgid "GL_INVALID_VALUE "
-msgstr ""
-#
-msgid "GL_OUT_OF_MEMORY "
-msgstr ""
-#
-msgid "GUID"
-msgstr "GUID"
-#
-msgid "GZ"
-msgstr "GZ"
-#
-#, fuzzy
-msgid "GZ Point Properties, Layer: "
-msgstr "DR noktası özellikleri, Etiket: "
-#
-msgid "General"
-msgstr "Genel"
-#
-msgid ""
-"General Drawing for OpenCPN\n"
-"\n"
-"Thanks to the community for their helpful suggestions."
-msgstr ""
-"OpenCPN için Genel çizim\n"
-"\n"
-"Yararlı önerileri için topluluğa teşekkür ederim."
-#
-msgid "General drawing for OpenCPN"
-msgstr "OpenCPN için Genel çizim"
-#
-msgid "Guard Zone"
-msgstr "Koruma bölgesi"
-#
-msgid "Guard Zone Persistence"
-msgstr "Koruma bölge sürekliliği"
-#
-msgid "Guard Zone Point"
-msgstr "Koruma bölgesi noktası"
-#
-msgid "Guard Zone Point Properties"
-msgstr "Koruma bölge noktası özellikleri"
-#
-msgid "Guard Zone Properties"
-msgstr "Koruma bölgesi özellikleri"
-#
-msgid "Guard Zone not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Heading"
-msgstr "Pruva"
-#
-msgid "Help"
-msgstr "Yardım"
-#
-msgid "Hide Boundary Point Icons"
-msgstr "Sınır noktası ikonlarını gizle"
-#
-#, fuzzy
-msgid "Hide Layer(s)"
-msgstr "Katmanlar"
-#
-msgid "Hide Path(s)"
-msgstr ""
-#
-msgid "Hide Point names"
-msgstr "Nokta isimlerini gizle"
-#
-#, fuzzy
-msgid "Hide Point(s)"
-msgstr "Nokta isimlerini gizle"
-#
-msgid "Hide from chart"
-msgstr "Haritada gizle"
-#
-msgid "Hours"
-msgstr "Saatler"
-#
-msgid "I&mport"
-msgstr ""
-#
-msgid "ID"
-msgstr "Kimlik"
-#
-msgid "ID Num"
-msgstr "Kimlik numarası"
-#
-msgid "ID: "
-msgstr "ID: "
-#
-msgid "Icon"
-msgstr "Simge"
-#
-msgid "Icon Directory"
-msgstr ""
-#
-msgid "Icon Scaling"
-msgstr ""
-#
-msgid "Import Error"
-msgstr ""
-#
-msgid "Import GPX file"
-msgstr "GPX dosyasını içe aktar"
-#
-#, fuzzy
-msgid "Import file"
-msgstr "GPX dosyasını içe aktar"
-#
-#, fuzzy
-msgid "Import gpx"
-msgstr "GPX dosyasını içe aktar"
-#
-#, fuzzy
-msgid "Import incomplete."
-msgstr "GPX dosyasını içe aktar"
-#
-msgid "Inactive Centre Line Colour"
-msgstr "Pasif merkez hattı rengi"
-#
-#, fuzzy
-msgid "Inactive DR Line Colour"
-msgstr ""
-"Pasif DR hattı\n"
-"Rengi"
-#
-msgid "Inactive EBL Line Colour"
-msgstr "Pasif EBL hattının rengi"
-#
-msgid "Inactive Fill Colour"
-msgstr "Pasif dolgu rengi"
-#
-msgid "Inactive Line Colour"
-msgstr "Pasif hattın rengi"
-#
-#, fuzzy
-msgid "Inactive Offset Line 2 Colour"
-msgstr "Pasif ofset hattı rengi"
-#
-msgid "Inactive Offset Line Colour"
-msgstr "Pasif ofset hattı rengi"
-#
-msgid "Inclusion"
-msgstr "Eklenen"
-#
-msgid ""
-"Inclusion Boundary\n"
-"Size"
-msgstr ""
-"Kapsanan Sınır\n"
-"boyutu"
-#
-msgid "Inclusion Boundary Size"
-msgstr "Kapsanan sınır boyutu"
-#
+
+#: include/PILPropertiesDialogDef.h:73 include/PILPropertiesDialogDef.h:74
 msgid "Index Line Properties"
 msgstr "Dizin satır özellikleri"
-#
-msgid "Index Lines (+ Stbd/- Port)"
-msgstr "Dizin çizgileri (+ Stbd/- Port)"
-#
-msgid ""
-"Initial Edge Panning Sensitivity\n"
-"(percentage screen width) Default 3"
+
+#: include/PathAndPointManagerDialogDef.h:121
+#: include/PathAndPointManagerDialogDef.h:122
+msgid "Path & Point Manager"
+msgstr "Yol & nokta yöneticisi"
+
+#: src/Boundary.cpp:399
+msgid "Boundary not drawn as OpenGL not available in this build"
 msgstr ""
-"Başlangıç ​​Kenar Kaydırma Hassaslığı\n"
-"(yüzde ekran genişliği) Varsayılan 3"
-#
-#, fuzzy
-msgid "Initial number of index lines"
-msgstr "Menzil çemberi numarası"
-#
-msgid "Insert Boundary Point"
-msgstr "Sınır noktası ekle"
-#
-msgid "Insert EBL Point"
-msgstr "EBL noktası ekle"
-#
-msgid "Interval Type"
-msgstr "Mesafe Türü"
-#
-msgid "Kilometres"
-msgstr "Kilometre"
-#
-msgid "Latitude"
-msgstr "Enlem"
-#
-msgid "Layer"
-msgstr "Katman"
-#
-msgid "Layer "
-msgstr "Katman "
-#
-msgid "Layer Boundary"
-msgstr "Sınır katmanı"
-#
-msgid "Layer Boundary Point"
-msgstr "Sınır noktası katmanı"
-#
-msgid "Layer DR Point"
-msgstr "DR noktası katmanı"
-#
-msgid "Layer EBL Point"
-msgstr "EBL noktası katmanı"
-#
-msgid "Layer Name"
-msgstr "Katman ismi"
-#
-msgid "Layer Text Point"
-msgstr "Metin noktası katmanı"
-#
-msgid "Layers"
-msgstr "Katmanlar"
-#
-#, fuzzy
-msgid "Layers Directory"
-msgstr "Sınır katmanı"
-#
-msgid "Left"
-msgstr "Ayrıldı"
-#
-msgid "Left Click links are deleted."
+
+#: src/BoundaryPoint.cpp:209
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
 msgstr ""
-#
-msgid "Left Click links are opened for editing."
+
+#: src/EBL.cpp:82 src/EBL.cpp:264 src/ODPathPropertiesDialogImpl.cpp:463
+#: src/ODPathPropertiesDialogImpl.cpp:471 src/ODPathPropertiesDialogImpl.cpp:507
+#: src/ODPathPropertiesDialogImpl.cpp:580 src/ODPathPropertiesDialogImpl.cpp:588
+#: src/ODPathPropertiesDialogImpl.cpp:623 src/ocpn_draw_pi.cpp:3008
+#: src/ocpn_draw_pi.cpp:4008 src/ocpn_draw_pi.cpp:4198
+msgid "Boat"
+msgstr "Tekne"
+
+#: src/EBL.cpp:82 src/EBL.cpp:293 src/EBL.cpp:340 src/EBL.cpp:350
+#: src/ODEventHandler.cpp:829 src/PIL.cpp:270
+msgid "Start"
+msgstr "Başla"
+
+#: src/EBL.cpp:90 src/ocpn_draw_pi.cpp:4015 src/ocpn_draw_pi.cpp:4204
+msgid "End"
+msgstr "Son"
+
+#: src/EBLProp.cpp:60 src/ODPropertiesDialogDef.cpp:641
+msgid "EBL Persistence"
+msgstr "EBL sürekliliği"
+
+#: src/GZ.cpp:293
+msgid "Guard Zone not drawn as OpenGL not available in this build"
 msgstr ""
-#
-msgid "Left Click links are opened in the default browser."
-msgstr ""
-#
-msgid "Left click opens in browser"
-msgstr ""
-#
-msgid "Leg: from "
-msgstr "Bacak: itibaren "
-#
-msgid "Length Type"
-msgstr "Uzunluk Türü"
-#
-msgid "License"
-msgstr ""
-#
-msgid "Line Colour"
-msgstr "Hat rengi"
-#
-msgid "Line Style"
-msgstr "Hat stili"
-#
-#, fuzzy
-msgid "Line Type"
-msgstr "Hat stili"
-#
-msgid "Line Width"
-msgstr "Hat genişliği"
-#
-msgid "Link"
-msgstr ""
-#
-#, fuzzy
-msgid "Link Description"
-msgstr "Açıklama"
-#
-msgid "Links"
-msgstr ""
-#
-msgid "List contents "
-msgstr "İçeriği listele "
-#
+
+#: src/GZProp.cpp:77 src/ODPropertiesDialogDef.cpp:995
+msgid "Guard Zone Persistence"
+msgstr "Koruma bölge sürekliliği"
+
+#: src/ODConfig.cpp:158 src/ODConfig.cpp:198 src/ODConfig.cpp:379
+#: src/ODConfig.cpp:404
+msgid "Export GPX file"
+msgstr "GPX dosyasını dışa aktar"
+
+#: src/ODConfig.cpp:181 src/ODConfig.cpp:211 src/ODConfig.cpp:392
+msgid "Confirm"
+msgstr "Onayla"
+
+#: src/ODConfig.cpp:181 src/ODConfig.cpp:211 src/ODConfig.cpp:392
+msgid "Overwrite existing file?"
+msgstr "Varolan dosyanın üzerine yazılsın mı?"
+
+#: src/ODConfig.cpp:246
 msgid "Loading navobjects from "
 msgstr "-den navigasyon nesnesi yükleniyor "
-#
-msgid "Local file..."
-msgstr ""
-#
-msgid "Long Dash"
-msgstr "Uzun Çizgi"
-#
-msgid "Longitude"
-msgstr "Boylam"
-#
-msgid "Maintain with"
-msgstr "ile birlikte bakımını yap"
-#
-msgid "Major:"
-msgstr "Önemli:"
-#
-msgid "Match VRM colour to EBL colour"
-msgstr "VRM rengini EBL rengine denkle"
-#
-msgid "Maximum Text Width"
-msgstr ""
-#
-msgid "Maximum Width Type"
-msgstr ""
-#
-msgid "Merge and Delete Boundaries"
-msgstr "Sınırları birleştir ve sil"
-#
-msgid "Merge and Keep Boundaries"
-msgstr "Sınırları birleştir ve sakla"
-#
-msgid "Minor:"
-msgstr "Küçük:"
-#
-msgid "Minutes"
-msgstr "Dakika"
-#
-msgid "Move Boundary"
-msgstr "Sınırı Taşı"
-#
-msgid "Move Boundary Point"
-msgstr "Sınır noktasını taşı"
-#
-msgid "Move Boundary Segment"
-msgstr "Sınır bölümünü taşı"
-#
-msgid "Move DR Point"
-msgstr "DR noktasını taşı"
-#
-msgid "Move EBL"
-msgstr "EBL'yi taşı"
-#
-msgid "Move EBL Point"
-msgstr "EBL noktasını taşı"
-#
-msgid "Move Guard Zone Point"
-msgstr "Koruma bölgesi noktasını taşı"
-#
-msgid "Move Line"
-msgstr "Hattı taşı"
-#
-msgid "Move OD Point"
-msgstr "OD noktasını taşı"
-#
-msgid "Move PIL Point"
-msgstr "PIL noktasını taşı"
-#
-msgid "Move Text Point"
-msgstr "Metin noktasını taşı"
-#
-msgid "Move start point to boat lat/lon"
-msgstr "Başlangıç noktasını teknenin enlem/boylam'ına taşı"
-#
-msgid "Multiple Boundaries"
-msgstr "Çoklu sınırlar"
-#
-msgid "Name"
-msgstr "Adı"
-#
-msgid "Name:"
-msgstr "Adı:"
-#
-msgid "Name: "
-msgstr "Ad: "
-#
-msgid "Nautical Miles"
-msgstr "Deniz Mili"
-#
-msgid "Neither"
-msgstr "Hiçbiri"
-#
-msgid "Never"
-msgstr "Asla"
-#
-msgid "New &temporary Layer"
-msgstr ""
-#
+
+#: src/ODConfig.cpp:278
+msgid "Applying changes from "
+msgstr "-itibaren değişiklikler uygulanıyor "
+
+#: src/ODConfig.cpp:505 src/ODConfig.cpp:511 src/ODConfig.cpp:625
+msgid "Import GPX file"
+msgstr "GPX dosyasını içe aktar"
+
+#: src/ODConfig.cpp:560 src/ODConfig.cpp:688 src/ODConfig.cpp:728
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Yeni katman %d: %s"
-#
-msgid "New persistent &Layer"
+
+#: src/ODConfig.cpp:632
+msgid "Import file"
 msgstr ""
-#
-#, fuzzy
-msgid "No"
-msgstr "Yok"
-#
-msgid "No alarm"
-msgstr "Alarm yok"
-#
-msgid "No. of items"
-msgstr "Öğe yok"
-#
-msgid "None"
-msgstr "Yok"
-#
-msgid "Number of Point Range Rings"
-msgstr "Nokta menzil çemberinin numarası"
-#
-msgid "Number of Range Rings"
-msgstr "Menzil çemberi numarası"
-#
-#, fuzzy
-msgid "OCPN API Version:"
-msgstr "Sürüm:"
-#
-msgid "OCPN Draw"
-msgstr "OCPN çizim"
-#
-#, fuzzy
-msgid "OCPN Draw API Version:"
-msgstr "OCPN'nin çizim noktası"
-#
-msgid "OCPN Draw Boundary"
-msgstr "OCPN sınır çizim"
-#
-msgid "OCPN Draw Boundary Create"
-msgstr "OCPN sınır çizimini oluştur"
-#
-msgid "OCPN Draw Boundary Delete"
-msgstr "OCPN çizimi sınırı sil"
-#
-msgid "OCPN Draw DR Delete"
-msgstr "OCPN çizimi DR sil"
-#
-msgid "OCPN Draw Delete Boundary Point"
-msgstr "OCPN çizimi sınır noktasını sil"
-#
-msgid "OCPN Draw Delete DR Point"
-msgstr "OCPN çizimi DR noktasını sil"
-#
-msgid "OCPN Draw Delete EBL Point"
-msgstr "OCPN çizimi EBL noktasını sil"
-#
-msgid "OCPN Draw Delete OD Point"
-msgstr "OCPN çizimi OD noktasını sil"
-#
-msgid "OCPN Draw Delete PIL Point"
-msgstr "OCPN çizimi PIL noktasını sil"
-#
-msgid "OCPN Draw Delete Text Point"
-msgstr "OCPN çizimi metin noktasını sil"
-#
-#, fuzzy
-msgid "OCPN Draw Directories:"
-msgstr "OCPN çizim özelikleri"
-#
-msgid "OCPN Draw EBL Delete"
-msgstr "OCPN çizimi EBL sil"
-#
-msgid "OCPN Draw GZ Delete"
-msgstr "OCPN GZ çizimini sil"
-#
-msgid "OCPN Draw Manager"
-msgstr "OCPN çizim yöneticisi"
-#
-msgid "OCPN Draw PIL Delete"
-msgstr "OCPN çizimi PIL sil"
-#
-msgid "OCPN Draw Parallel Index Line Delete"
-msgstr "OCPN paralel dizin hattı çizimini sil"
-#
-#, fuzzy
-msgid "OCPN Draw Path"
-msgstr "OCPN'nin çizim noktası"
-#
-msgid "OCPN Draw Point"
-msgstr "OCPN'nin çizim noktası"
-#
-msgid "OCPN Draw Point Create"
-msgstr "OCPN çizim noktası oluştur"
-#
-msgid "OCPN Draw Point, Layer: "
-msgstr "OCPN çizim noktası, etiket: "
-#
-msgid "OCPN Draw Properties"
-msgstr "OCPN çizim özelikleri"
-#
-msgid "OCPN Draw Remove "
-msgstr "OCPN çizimini kaldır "
-#
-msgid "OCPN Draw Remove Boundary Point"
-msgstr "OCPN sınır noktası çizimini kaldır"
-#
-msgid "OCPN Draw Remove DR Point"
-msgstr "OCPN çizimi DR noktasını kaldır"
-#
-msgid "OCPN Draw Remove EBL Point"
-msgstr "OCPN EBL çizim noktasını kaldır"
-#
-msgid "OCPN Draw Remove OD Point"
-msgstr "OCPN çizimi OD noktası kaldır"
-#
-msgid "OCPN_Draw Nav Object Backups"
-msgstr ""
-#
-msgid "OD"
-msgstr "Od"
-#
-msgid "OD Point"
-msgstr "OD noktası"
-#
-msgid "OD Point Name"
-msgstr "OD noktası adı"
-#
-msgid "OD Point Properties"
-msgstr "OD Noktası Özellikleri"
-#
-msgid "OD Points"
-msgstr "OD noktası"
-#
-msgid "ODDC::DrawPolygon: bcolloc -1"
-msgstr ""
-#
-msgid "ODPoint not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "OD\\WD"
-msgstr "OD\\WD"
-#
-msgid "Offset"
-msgstr "Dengeleme"
-#
-msgid "Offset (+ Stbd/- Port)"
-msgstr "Ofset (+ Stbd/- port)"
-#
-#, fuzzy
-msgid "Offset Line 2 Style"
-msgstr "Ofset hattı stili"
-#
-#, fuzzy
-msgid "Offset Line 2 Width"
-msgstr "Ofset hattı genişliği"
-#
-msgid "Offset Line Style"
-msgstr "Ofset hattı stili"
-#
-msgid "Offset Line Width"
-msgstr "Ofset hattı genişliği"
-#
-msgid "Offset: "
-msgstr "Kaydırma: "
-#
-msgid "On Rollover Only"
-msgstr "Yalnızca yuvarlanma üzerinde"
-#
-msgid "OpenCPN Alert"
-msgstr "OpenCPN Alarmı"
-#
-msgid "Other:"
-msgstr "Diğer:"
-#
-msgid "Overwrite existing file?"
-msgstr "Varolan dosyanın üzerine yazılsın mı?"
-#
-msgid "PIL"
-msgstr "PIL"
-#
-msgid "PIL Persistence"
-msgstr "PIL sürerkliliği"
-#
-msgid "PIL Point"
-msgstr "PIL noktası"
-#
-#, fuzzy
-msgid "PIL Point Properties"
-msgstr "EBL noktası özellikleri"
-#
-#, fuzzy
-msgid "PIL Point Properties, Layer: "
-msgstr "EBL noktası özellikleri, Etiket: "
-#
-msgid "Parallel Index Line"
-msgstr "Paralel dizin hattı"
-#
-msgid "Parallel Index Line Angle (+Stbd/-Port)"
-msgstr "Paralel dizin çizgi açısı (+Stbd/-Port)"
-#
-msgid "Parallel Index Line Persistence"
-msgstr "Paralel dizin hattı sürekliliği"
-#
-msgid "Parallel Index Line Properties"
-msgstr "Paralel dizin hattı özellikleri"
-#
-msgid "Paste"
-msgstr "Yapıştır"
-#
-msgid "Paste lat/long"
-msgstr "Enlem/Boylam'ı yapıştır"
-#
-msgid "Patch:"
-msgstr "Yama:"
-#
-msgid "Path"
-msgstr "Yol"
-#
-msgid "Path & Point Manager"
-msgstr "Yol & nokta yöneticisi"
-#
-#, fuzzy
-msgid "Path Manager Dialog"
-msgstr "Yol & nokta yöneticisi"
-#
-msgid "Path Name"
-msgstr "Yol adı"
-#
-msgid "Path Persistence"
-msgstr "Yol sürekliliği"
-#
-msgid "Path Properties"
-msgstr "İz Özellikleri"
-#
-msgid "Path Properties, Layer: "
-msgstr "Yol özellikleri, etiket: "
-#
-msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Paths"
-msgstr "Yollar"
-#
-msgid "Permanent Layers:"
-msgstr ""
-#
-msgid "Persistent"
-msgstr "Kalıcı"
-#
-msgid "Persistent over Crash"
-msgstr "Kaza üzerine kalıcılık"
-#
-msgid "Pick a new start point"
-msgstr "Yeni bir başlangıç noktası seçin"
-#
-msgid ""
-"Please report problems using FlySpray at:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-"\n"
-"or\n"
-"\n"
-"at the OpenCPN forum:\n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"or\n"
-"\n"
-"Raise an issue in GIT at:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-msgstr ""
-"Lütfen FlySpray kullanarak şurada sorunları bildirin:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-"\n"
-"veya\n"
-"\n"
-"OpenCPN forumunda:\n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"veya\n"
-"\n"
-"Gıt içersinde bir sorunu bildirin:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-#
-msgid "Point Inclusion Size"
-msgstr "Nokta kapsama boyutu"
-#
-msgid "Point Type"
-msgstr "Nokta tipi"
-#
-msgid "Points"
-msgstr "Noktalar"
-#
-msgid "Properties"
-msgstr "Özellikler"
-#
-msgid "Properties..."
-msgstr "Özellikler..."
-#
-msgid "Question"
-msgstr "Soru"
-#
-msgid "Range Ring Colours"
-msgstr "Menzil çemberi renkleri"
-#
-msgid "Range Ring Line Style"
-msgstr "Menzil çemberi hat stili"
-#
-msgid "Range Ring Line Width"
-msgstr "Menzil halkası hat genişliği"
-#
-msgid "Remember properties dialogs positions over a restart"
-msgstr ""
-#
-msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
-msgstr ""
-#
-msgid "Remove Point from Path"
-msgstr "Noktayı yoldan kaldır"
-#
-msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr "Bu noktanın kaldırılması Sınırı geçersiz kılacak, buna izin verilmiyor."
-#
-msgid "Right"
-msgstr "Sağ"
-#
-msgid "Ring"
-msgstr "Halka"
-#
-msgid "RolloverPopupTimer->Unbind not found or not removed"
-msgstr ""
-#
-msgid ""
-"Rotate with\n"
-"Boat"
-msgstr ""
-"İle döndür\n"
-"Tekne"
-#
-msgid "Rotate with Boat"
-msgstr "Tekne ile döndür"
-#
-msgid "Second"
-msgstr "Saniye"
-#
-msgid "Second Angle (-P/+S)"
-msgstr "İkinci açı (-P/+S)"
-#
-msgid "Second Point Icon"
-msgstr "İkinci nokta ikonu"
-#
-msgid "Second distance"
-msgstr "İkinci mesafe"
-#
-msgid "Short Dash"
-msgstr "Kısa Çizgi"
-#
-msgid "Show"
-msgstr "Göster"
-#
-#, fuzzy
-msgid "Show &Point names"
-msgstr "Nokta adını göster"
-#
-msgid "Show Boundary Point Icons"
-msgstr "Sınır noktası ikonlarını göster"
-#
-msgid "Show DR Direction Arrow"
-msgstr "DR yön oklarını göster"
-#
-msgid "Show Display Text"
-msgstr "Ekran metnini göster"
-#
-msgid "Show EBL Direction Arrow"
-msgstr "EBL yön oklarını göster"
-#
-#, fuzzy
-msgid "Show Layer(s)"
-msgstr "Adı göster"
-#
-#, fuzzy
-msgid "Show Layers"
-msgstr "Katmanlar"
-#
-msgid "Show Magnetic Bearings"
-msgstr "Manyetik yönleri göster"
-#
-msgid "Show Name"
-msgstr "Adı göster"
-#
-msgid "Show Path Direction Arrow"
-msgstr "Yol yön oklarını göster"
-#
-msgid "Show Paths(s)"
-msgstr ""
-#
-msgid ""
-"Show Perpendicular\n"
-"Index Line"
-msgstr ""
-"Dikey göster\n"
-"dizin çizgisi"
-#
-msgid "Show Perpendicular Index Line"
-msgstr "Dikey dizin çizgisini göster"
-#
-msgid "Show Point Range Rings"
-msgstr "Menzil halkalarını işaret et"
-#
-msgid "Show Point names"
-msgstr "Nokta adını göster"
-#
-#, fuzzy
-msgid "Show Point(s)"
-msgstr "Nokta adını göster"
-#
-msgid "Show Range Rings"
-msgstr "Menzil halkalarını göster"
-#
-msgid "Show VRM"
-msgstr "VRM göster"
-#
-msgid "Show at scale> 1:"
-msgstr ""
-#
-msgid "Show name"
-msgstr "Adı göster"
-#
-#, fuzzy
-msgid "Show on &chart"
-msgstr "Grafiklerde göster"
-#
-msgid "Show on chart"
-msgstr "Grafiklerde göster"
-#
-msgid "Solid"
-msgstr "Katı"
-#
+
+#: src/ODDRDialogDef.cpp:40 src/ODPropertiesDialogDef.cpp:696
 msgid "Speed over Ground"
 msgstr "Yer üstündeki hız"
-#
-msgid "Start"
-msgstr "Başla"
-#
-msgid "Start Point Icon"
-msgstr "Başlangıç noktası ikonu"
-#
-#, fuzzy
-msgid "Straight"
-msgstr "Sağ"
-#
-#, fuzzy
-msgid "Text"
-msgstr "Metin Yazı Tipi"
-#
-msgid "Text Colour"
-msgstr "Metin Rengi"
-#
-msgid "Text Font"
-msgstr "Metin Yazı Tipi"
-#
+
+#: src/ODDRDialogDef.cpp:44 src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:65
+msgid "0.0"
+msgstr "0.0"
+
+#: src/ODDRDialogDef.cpp:47 src/ODPathPropertiesDialogDef.cpp:189
+#: src/ODPathPropertiesDialogDef.cpp:238 src/ODPropertiesDialogDef.cpp:618
+#: src/ODPropertiesDialogDef.cpp:703 src/ODPropertiesDialogDef.cpp:973
+msgid "Course over Ground"
+msgstr "Yer üstündeli rota"
+
+#: src/ODDRDialogDef.cpp:51
+msgid "0"
+msgstr "0"
+
+#: src/ODDRDialogDef.cpp:54 src/ODPropertiesDialogDef.cpp:710
+msgid "DR Path Length"
+msgstr "DR yol uzunluğu"
+
+#: src/ODDRDialogDef.cpp:61 src/ODPropertiesDialogDef.cpp:717
+msgid "DR Point Interval"
+msgstr "DR nokta aralığı"
+
+#: src/ODDRDialogDef.cpp:68 src/ODDRDialogDef.cpp:74
+#: src/ODPropertiesDialogDef.cpp:734 src/ODPropertiesDialogDef.cpp:740
+msgid "Distance"
+msgstr "Mesafe"
+
+#: src/ODDRDialogDef.cpp:68 src/ODDRDialogDef.cpp:74
+#: src/ODPropertiesDialogDef.cpp:734 src/ODPropertiesDialogDef.cpp:740
+msgid "Time"
+msgstr "Zaman"
+
+#: src/ODDRDialogDef.cpp:70 src/ODPropertiesDialogDef.cpp:736
+msgid "Length Type"
+msgstr "Uzunluk Türü"
+
+#: src/ODDRDialogDef.cpp:76 src/ODPropertiesDialogDef.cpp:742
+msgid "Interval Type"
+msgstr "Mesafe Türü"
+
+#: src/ODDRDialogDef.cpp:88 src/ODPointPropertiesDialog.cpp:200
+#: src/ODPropertiesDialogDef.cpp:340 src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:820
+msgid "Kilometres"
+msgstr "Kilometre"
+
+#: src/ODDRDialogDef.cpp:88 src/ODPointPropertiesDialog.cpp:200
+#: src/ODPropertiesDialogDef.cpp:340 src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:820
+msgid "Nautical Miles"
+msgstr "Deniz Mili"
+
+#: src/ODDRDialogDef.cpp:90 src/ODPropertiesDialogDef.cpp:748
+msgid "Distance Units"
+msgstr "Uzaklık Birimleri"
+
+#: src/ODDRDialogDef.cpp:94 src/ODPropertiesDialogDef.cpp:752
+msgid "Days"
+msgstr "Günler"
+
+#: src/ODDRDialogDef.cpp:94 src/ODPropertiesDialogDef.cpp:752
+msgid "Hours"
+msgstr "Saatler"
+
+#: src/ODDRDialogDef.cpp:94 src/ODPropertiesDialogDef.cpp:752
+msgid "Minutes"
+msgstr "Dakika"
+
+#: src/ODDRDialogDef.cpp:96 src/ODPropertiesDialogDef.cpp:754
+msgid "Time Units"
+msgstr "Zaman Birimi"
+
+#: src/ODDRDialogDef.cpp:106 src/ODLinkPropertiesDialogDef.cpp:59
+#: src/ODNewODPointDialogDef.cpp:44 src/ODPathPropertiesDialogDef.cpp:349
+#: src/ODPointPropertiesDialog.cpp:463 src/ODPropertiesDialogDef.cpp:1462
+#: src/PILPropertiesDialogDef.cpp:118 src/PathAndPointManagerDialogDef.cpp:204
+msgid "&OK"
+msgstr "&TAMAM"
+
+#: src/ODDRDialogDef.cpp:111 src/ODLinkPropertiesDialogDef.cpp:62
+#: src/ODNewODPointDialogDef.cpp:47 src/ODPathPropertiesDialogDef.cpp:354
+#: src/ODPointPropertiesDialog.cpp:466 src/ODPropertiesDialogDef.cpp:1465
+#: src/PILPropertiesDialogDef.cpp:121
+msgid "&Cancel"
+msgstr "&İptal"
+
+#: src/ODDRDialogImpl.cpp:76 src/ODDRDialogImpl.cpp:109
+#: src/ODDRDialogImpl.cpp:150
+msgid "Course over Ground (M)"
+msgstr "Yer üstündeki rota (M)"
+
+#: src/ODDRDialogImpl.cpp:77 src/ODDRDialogImpl.cpp:110
+#: src/ODDRDialogImpl.cpp:151
+msgid "Course over Ground (T)"
+msgstr "Yer üzerindeki rota (T)"
+
+#: src/ODDRDialogImpl.cpp:197 src/ODPropertiesDialogDef.cpp:775
+msgid "DR"
+msgstr "DR"
+
+#: src/ODEventHandler.cpp:231 src/ODEventHandler.cpp:1038
+msgid "Layer "
+msgstr "Katman "
+
+#: src/ODEventHandler.cpp:241
+msgid "(unnamed)"
+msgstr "(isimsiz)"
+
+#: src/ODEventHandler.cpp:248
+msgid "Total Length: "
+msgstr "Toplam Uzunluk: "
+
+#: src/ODEventHandler.cpp:249
+msgid "Leg: from "
+msgstr "Bacak: itibaren "
+
+#: src/ODEventHandler.cpp:250
+msgid " to "
+msgstr " oraya "
+
+#: src/ODEventHandler.cpp:260
+msgid "Name: "
+msgstr "Ad: "
+
+#: src/ODEventHandler.cpp:261
+msgid "ID: "
+msgstr "ID: "
+
+#: src/ODEventHandler.cpp:262
+msgid "Offset: "
+msgstr "Kaydırma: "
+
+#: src/ODEventHandler.cpp:265
+msgid "Bearing: "
+msgstr "Yön tayini: "
+
+#: src/ODEventHandler.cpp:268
+msgid "From: "
+msgstr "İtibaren: "
+
+#: src/ODEventHandler.cpp:273
+msgid " To: "
+msgstr " Oraya: "
+
+#: src/ODEventHandler.cpp:383
+msgid "Layer"
+msgstr "Katman"
+
+#: src/ODEventHandler.cpp:561
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Bu sınırı silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:562
+msgid "OCPN Draw Boundary Delete"
+msgstr "OCPN çizimi sınırı sil"
+
+#: src/ODEventHandler.cpp:565
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Bu EBL yi silmek istediğinden emin misin?"
+
+#: src/ODEventHandler.cpp:566
+msgid "OCPN Draw EBL Delete"
+msgstr "OCPN çizimi EBL sil"
+
+#: src/ODEventHandler.cpp:569
+msgid "Are you sure you want to delete this DR?"
+msgstr "Bu DR yi silmek istediğinden emin misin?"
+
+#: src/ODEventHandler.cpp:570
+msgid "OCPN Draw DR Delete"
+msgstr "OCPN çizimi DR sil"
+
+#: src/ODEventHandler.cpp:573
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Bu koruma bölgesini silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:574
+msgid "OCPN Draw GZ Delete"
+msgstr "OCPN GZ çizimini sil"
+
+#: src/ODEventHandler.cpp:577
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Paralel Dizin Hattı Grubunu silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:578
+msgid "OCPN Draw PIL Delete"
+msgstr "OCPN çizimi PIL sil"
+
+#: src/ODEventHandler.cpp:597 src/ODPathPropertiesDialogImpl.cpp:924
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Paralel dizin hattını silmek ister misin?"
+
+#: src/ODEventHandler.cpp:598 src/ODPathPropertiesDialogImpl.cpp:925
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "OCPN paralel dizin hattı çizimini sil"
+
+#: src/ODEventHandler.cpp:761
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr "Bu noktanın kaldırılması Sınırı geçersiz kılacak, buna izin verilmiyor."
+
+#: src/ODEventHandler.cpp:762 src/ODEventHandler.cpp:779
+msgid "OCPN Draw Remove "
+msgstr "OCPN çizimini kaldır "
+
+#: src/ODEventHandler.cpp:765 src/ODEventHandler.cpp:1182
+msgid "OD Point"
+msgstr "OD noktası"
+
+#: src/ODEventHandler.cpp:778
+msgid "Are you sure you want to remove this "
+msgstr "Bunu kaldırmak istediğinizden emin misiniz "
+
+#: src/ODEventHandler.cpp:782 src/ODEventHandler.cpp:794
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Bu OD Noktasını kaldırmak istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:783 src/ODEventHandler.cpp:795
+#: src/ODPathPropertiesDialogImpl.cpp:863
+msgid "OCPN Draw Remove OD Point"
+msgstr "OCPN çizimi OD noktası kaldır"
+
+#: src/ODEventHandler.cpp:785
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Bu Sınır Noktasını kaldırmak istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:786
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "OCPN sınır noktası çizimini kaldır"
+
+#: src/ODEventHandler.cpp:788
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Bu EBL noktasını kaldırmak istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:789
+msgid "OCPN Draw Remove EBL Point"
+msgstr "OCPN EBL çizim noktasını kaldır"
+
+#: src/ODEventHandler.cpp:791
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Bu DR Noktasını kaldırmak istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:792
+msgid "OCPN Draw Remove DR Point"
+msgstr "OCPN çizimi DR noktasını kaldır"
+
+#: src/ODEventHandler.cpp:844 src/ODEventHandler.cpp:886
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Bu OD Noktasını silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:845 src/ODEventHandler.cpp:887
+#: src/ODPathPropertiesDialogImpl.cpp:843
+msgid "OCPN Draw Delete OD Point"
+msgstr "OCPN çizimi OD noktasını sil"
+
+#: src/ODEventHandler.cpp:847 src/ODEventHandler.cpp:889
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Bu sınır noktasını silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:848 src/ODEventHandler.cpp:890
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "OCPN çizimi sınır noktasını sil"
+
+#: src/ODEventHandler.cpp:850 src/ODEventHandler.cpp:895
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Bu DR Noktasını silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:851 src/ODEventHandler.cpp:896
+msgid "OCPN Draw Delete DR Point"
+msgstr "OCPN çizimi DR noktasını sil"
+
+#: src/ODEventHandler.cpp:853 src/ODEventHandler.cpp:898
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Bu EBL noktasını silmek istediğinden emin misin?"
+
+#: src/ODEventHandler.cpp:854 src/ODEventHandler.cpp:899
+msgid "OCPN Draw Delete EBL Point"
+msgstr "OCPN çizimi EBL noktasını sil"
+
+#: src/ODEventHandler.cpp:856
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Bu PIL noktasını silmek istediğinden emin misin?"
+
+#: src/ODEventHandler.cpp:857
+msgid "OCPN Draw Delete PIL Point"
+msgstr "OCPN çizimi PIL noktasını sil"
+
+#: src/ODEventHandler.cpp:892
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Bu metin noktasını silmek istediğinizden emin misiniz?"
+
+#: src/ODEventHandler.cpp:893
+msgid "OCPN Draw Delete Text Point"
+msgstr "OCPN çizimi metin noktasını sil"
+
+#: src/ODEventHandler.cpp:1046 src/ODEventHandler.cpp:1060
+msgid "Control Line"
+msgstr "Kontrol hattı"
+
+#: src/ODEventHandler.cpp:1049 src/ODEventHandler.cpp:1064
+#: src/ODEventHandler.cpp:1162 src/ODEventHandler.cpp:1184
+#: src/ODEventHandler.cpp:1231
+msgid "Properties..."
+msgstr "Özellikler..."
+
+#: src/ODEventHandler.cpp:1067 src/ODEventHandler.cpp:1076
+msgid "Centre on moving boat"
+msgstr "Tekne hareket merkezi"
+
+#: src/ODEventHandler.cpp:1068 src/ODEventHandler.cpp:1077
+msgid "Move start point to boat lat/lon"
+msgstr "Başlangıç noktasını teknenin enlem/boylam'ına taşı"
+
+#: src/ODEventHandler.cpp:1070 src/ODEventHandler.cpp:1079
+msgid "Pick a new start point"
+msgstr "Yeni bir başlangıç noktası seçin"
+
+#: src/ODEventHandler.cpp:1073
+msgid "Match VRM colour to EBL colour"
+msgstr "VRM rengini EBL rengine denkle"
+
+#: src/ODEventHandler.cpp:1082
+msgid "Update initial conditions"
+msgstr "Başlangıç koşullarını güncelle"
+
+#: src/ODEventHandler.cpp:1087
+msgid "Move Boundary"
+msgstr "Sınırı Taşı"
+
+#: src/ODEventHandler.cpp:1089
+msgid "Move EBL"
+msgstr "EBL'yi taşı"
+
+#: src/ODEventHandler.cpp:1095
+msgid "Move Boundary Segment"
+msgstr "Sınır bölümünü taşı"
+
+#: src/ODEventHandler.cpp:1101
+msgid "Insert Boundary Point"
+msgstr "Sınır noktası ekle"
+
+#: src/ODEventHandler.cpp:1103
+msgid "Insert EBL Point"
+msgstr "EBL noktası ekle"
+
+#: src/ODEventHandler.cpp:1110
+msgid "Add Index Line"
+msgstr "İşaret hattı ekle"
+
+#: src/ODEventHandler.cpp:1115
+msgid "Hide Boundary Point Icons"
+msgstr "Sınır noktası ikonlarını gizle"
+
+#: src/ODEventHandler.cpp:1117 src/ODPathPropertiesDialogDef.cpp:162
+#: src/ODPropertiesDialogDef.cpp:207
+msgid "Show Boundary Point Icons"
+msgstr "Sınır noktası ikonlarını göster"
+
+#: src/ODEventHandler.cpp:1121
+msgid "Delete..."
+msgstr "Sil..."
+
+#: src/ODEventHandler.cpp:1123 src/ODEventHandler.cpp:1209
+#: src/ODEventHandler.cpp:1212 src/ODPointPropertiesDialog.cpp:276
+msgid "Delete"
+msgstr "Sil"
+
+#: src/ODEventHandler.cpp:1126
+msgid "Deactivate"
+msgstr "Devre dışı bırak"
+
+#: src/ODEventHandler.cpp:1127
+msgid "Activate"
+msgstr "Etkinleştir"
+
+#: src/ODEventHandler.cpp:1131
+msgid "Copy Boundary GUID"
+msgstr "Sınır GUID kopyala"
+
+#: src/ODEventHandler.cpp:1133
+msgid "Copy EBL GUID"
+msgstr "EBL GUID kopyala"
+
+#: src/ODEventHandler.cpp:1135
+msgid "Copy DR GUID"
+msgstr "DR GUID kopyala"
+
+#: src/ODEventHandler.cpp:1137
+msgid "Copy Guard Zone GUID"
+msgstr "Koruma bölgesi GUID kopyala"
+
+#: src/ODEventHandler.cpp:1154
+msgid "Layer Boundary Point"
+msgstr "Sınır noktası katmanı"
+
+#: src/ODEventHandler.cpp:1156
+msgid "Layer Text Point"
+msgstr "Metin noktası katmanı"
+
+#: src/ODEventHandler.cpp:1158
+msgid "Layer EBL Point"
+msgstr "EBL noktası katmanı"
+
+#: src/ODEventHandler.cpp:1160
+msgid "Layer DR Point"
+msgstr "DR noktası katmanı"
+
+#: src/ODEventHandler.cpp:1170 src/ODPathPropertiesDialogImpl.cpp:218
+#: src/ODPropertiesDialogDef.cpp:380 src/ODToolbarImpl.cpp:543
+msgid "Boundary Point"
+msgstr "Sınır noktası"
+
+#: src/ODEventHandler.cpp:1172 src/ODPropertiesDialogDef.cpp:494
+#: src/ODToolbarImpl.cpp:544
 msgid "Text Point"
 msgstr "Metin noktası"
-#
-msgid "Text Point Icon"
-msgstr "Metin noktası ikonu"
-#
-#, fuzzy
-msgid "Text Point Properties"
-msgstr "DR noktası özellikleri"
-#
-#, fuzzy
-msgid "Text Point Properties, Layer: "
-msgstr "DR noktası özellikleri, Etiket: "
-#
-msgid "Text position relative to point"
-msgstr "Noktaya göre metnin konumlandırılması"
-#
+
+#: src/ODEventHandler.cpp:1174 src/ODPathPropertiesDialogImpl.cpp:222
+msgid "EBL Point"
+msgstr "EBL noktası"
+
+#: src/ODEventHandler.cpp:1176 src/ODPathPropertiesDialogImpl.cpp:224
+#: src/ODPropertiesDialogDef.cpp:860
+msgid "DR Point"
+msgstr "DR noktası"
+
+#: src/ODEventHandler.cpp:1178
+msgid "Guard Zone Point"
+msgstr "Koruma bölgesi noktası"
+
+#: src/ODEventHandler.cpp:1180 src/ODPathPropertiesDialogImpl.cpp:226
+msgid "PIL Point"
+msgstr "PIL noktası"
+
+#: src/ODEventHandler.cpp:1187
+msgid "Move Boundary Point"
+msgstr "Sınır noktasını taşı"
+
+#: src/ODEventHandler.cpp:1189
+msgid "Move Text Point"
+msgstr "Metin noktasını taşı"
+
+#: src/ODEventHandler.cpp:1191
+msgid "Move EBL Point"
+msgstr "EBL noktasını taşı"
+
+#: src/ODEventHandler.cpp:1193
+msgid "Move DR Point"
+msgstr "DR noktasını taşı"
+
+#: src/ODEventHandler.cpp:1195
+msgid "Move PIL Point"
+msgstr "PIL noktasını taşı"
+
+#: src/ODEventHandler.cpp:1197 src/ODEventHandler.cpp:1200
+msgid "Move OD Point"
+msgstr "OD noktasını taşı"
+
+#: src/ODEventHandler.cpp:1199
+msgid "Move Guard Zone Point"
+msgstr "Koruma bölgesi noktasını taşı"
+
+#: src/ODEventHandler.cpp:1207
+msgid "Remove Point from Path"
+msgstr "Noktayı yoldan kaldır"
+
+#: src/ODEventHandler.cpp:1213
+msgid "Copy Point GUID"
+msgstr "GUID noktasını kopyala"
+
+#: src/ODEventHandler.cpp:1221
+msgid "Multiple Boundaries"
+msgstr "Çoklu sınırlar"
+
+#: src/ODEventHandler.cpp:1222
+msgid "Merge and Keep Boundaries"
+msgstr "Sınırları birleştir ve sakla"
+
+#: src/ODEventHandler.cpp:1223
+msgid "Merge and Delete Boundaries"
+msgstr "Sınırları birleştir ve sil"
+
+#: src/ODEventHandler.cpp:1230 src/ODPropertiesDialogDef.cpp:1188
+#: src/ODToolbarImpl.cpp:548
+msgid "Parallel Index Line"
+msgstr "Paralel dizin hattı"
+
+#: src/ODEventHandler.cpp:1232
+msgid "Move Line"
+msgstr "Hattı taşı"
+
+#: src/ODEventHandler.cpp:1233
+msgid "Delete Line"
+msgstr "Hattı sil"
+
+#: src/ODEventHandler.cpp:1238 src/ODEventHandler.cpp:1245
+#: src/ODEventHandler.cpp:1252
+msgid "Path Manager Dialog"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1239
+msgid "Hide Path(s)"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1240
+msgid "Show Paths(s)"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1246
+msgid "Hide Point(s)"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1247
+msgid "Show Point(s)"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1253
+msgid "Hide Layer(s)"
+msgstr ""
+
+#: src/ODEventHandler.cpp:1254
+msgid "Show Layer(s)"
+msgstr ""
+
+#: src/ODLinkPropertiesDialogDef.cpp:34
+msgid "Link"
+msgstr ""
+
+#: src/ODLinkPropertiesDialogDef.cpp:36
+msgid "Link Description"
+msgstr ""
+
+#: src/ODLinkPropertiesDialogDef.cpp:43
+msgid "URL"
+msgstr ""
+
+#: src/ODLinkPropertiesDialogDef.cpp:50
+msgid "*.*"
+msgstr ""
+
+#: src/ODLinkPropertiesDialogDef.cpp:50
+msgid "Local file..."
+msgstr ""
+
+#: src/ODNavObjectChanges.cpp:2070
+msgid "Error in import file."
+msgstr ""
+
+#: src/ODNavObjectChanges.cpp:2072 src/ODNavObjectChanges.cpp:2165
+msgid "Boundary '"
+msgstr ""
+
+#: src/ODNavObjectChanges.cpp:2075
+msgid "will be deleted. No further boundaries will be imported"
+msgstr ""
+
+#: src/ODNavObjectChanges.cpp:2077 src/ODNavObjectChanges.cpp:2170
+msgid "Import Error"
+msgstr ""
+
+#: src/ODNavObjectChanges.cpp:2163
+msgid "Import incomplete."
+msgstr ""
+
+#: src/ODNavObjectChanges.cpp:2168
+msgid "will be deleted."
+msgstr ""
+
+#: src/ODNewODPointDialogDef.cpp:35 src/ODPropertiesDialogDef.cpp:218
+#: src/ODToolbarImpl.cpp:542 src/ocpn_draw_pi.cpp:3496
+msgid "Boundary"
+msgstr "Sınır"
+
+#: src/ODNewODPointDialogDef.cpp:35
+msgid "Text"
+msgstr ""
+
+#: src/ODPath.cpp:603
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:45 src/ODPointPropertiesDialog.cpp:50
+#: src/PILProp.cpp:333 src/PILPropertiesDialogDef.cpp:49
+msgid "Name"
+msgstr "Adı"
+
+#: src/ODPathPropertiesDialogDef.cpp:52 src/ODPathPropertiesDialogImpl.cpp:730
+#: src/ODPointPropertiesDialog.cpp:241 src/PILProp.cpp:335
+#: src/PILPropertiesDialogDef.cpp:56
+msgid "Description"
+msgstr "Açıklama"
+
+#: src/ODPathPropertiesDialogDef.cpp:59 src/ODPointPropertiesDialog.cpp:437
+msgid "GUID"
+msgstr "GUID"
+
+#: src/ODPathPropertiesDialogDef.cpp:82 src/PILPropertiesDialogDef.cpp:70
+msgid "Active"
+msgstr "Etkin"
+
+#: src/ODPathPropertiesDialogDef.cpp:86
+msgid "Total Length"
+msgstr "Toplam uzunluk"
+
+#: src/ODPathPropertiesDialogDef.cpp:103 src/PILPropertiesDialogDef.cpp:85
+msgid "Line Colour"
+msgstr "Hat rengi"
+
+#: src/ODPathPropertiesDialogDef.cpp:110 src/ODPropertiesDialogDef.cpp:169
+#: src/ODPropertiesDialogDef.cpp:528 src/ODPropertiesDialogDef.cpp:605
+#: src/ODPropertiesDialogDef.cpp:686 src/ODPropertiesDialogDef.cpp:945
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "Line Style"
+msgstr "Hat stili"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/PILPropertiesDialogDef.cpp:96
+msgid "Dot"
+msgstr "Nokta"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Dot Dash"
+msgstr "Noktalı çizgi"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Long Dash"
+msgstr "Uzun Çizgi"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Short Dash"
+msgstr "Kısa Çizgi"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Solid"
+msgstr "Katı"
+
+#: src/ODPathPropertiesDialogDef.cpp:120 src/ODPropertiesDialogDef.cpp:159
+#: src/ODPropertiesDialogDef.cpp:518 src/ODPropertiesDialogDef.cpp:595
+#: src/ODPropertiesDialogDef.cpp:676 src/ODPropertiesDialogDef.cpp:935
+#: src/PILPropertiesDialogDef.cpp:102
+msgid "Line Width"
+msgstr "Hat genişliği"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "1 pixel"
+msgstr "1 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "10 pixels"
+msgstr "10 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "2 pixels"
+msgstr "2 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "3 pixels"
+msgstr "3 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "4 pixels"
+msgstr "4 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "5 pixels"
+msgstr "5 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "6 pixels"
+msgstr "6 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "7 pixels"
+msgstr "7 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "8 pixels"
+msgstr "8 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "9 pixels"
+msgstr "9 piksel"
+
+#: src/ODPathPropertiesDialogDef.cpp:130
+msgid "Fill Colour"
+msgstr "Dolgu rengi"
+
+#: src/ODPathPropertiesDialogDef.cpp:137 src/ODPointPropertiesDialog.cpp:146
+#: src/ODPropertiesDialogDef.cpp:179 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:955
+msgid "Fill Density"
+msgstr "Dolgu yoğunluğu"
+
+#: src/ODPathPropertiesDialogDef.cpp:144
+msgid "Inclusion Boundary\n"
+"Size"
+msgstr "Kapsanan Sınır\n"
+"boyutu"
+
+#: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
+#: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
+#: src/ODPropertiesDialogDef.cpp:1404 src/ODPropertiesDialogDef.cpp:1413
+#: src/ODPropertiesDialogImpl.cpp:131 src/ODPropertiesDialogImpl.cpp:134
+msgid "Exclusion"
+msgstr "Çıkarılanlar"
+
+#: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
+#: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
+#: src/ODPropertiesDialogDef.cpp:1405 src/ODPropertiesDialogDef.cpp:1414
+#: src/ODPropertiesDialogImpl.cpp:132 src/ODPropertiesDialogImpl.cpp:135
+msgid "Inclusion"
+msgstr "Eklenen"
+
+#: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
+#: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
+#: src/ODPropertiesDialogDef.cpp:1406 src/ODPropertiesDialogDef.cpp:1415
+#: src/ODPropertiesDialogImpl.cpp:133 src/ODPropertiesDialogImpl.cpp:136
+msgid "Neither"
+msgstr "Hiçbiri"
+
+#: src/ODPathPropertiesDialogDef.cpp:158 src/ODPropertiesDialogDef.cpp:203
+msgid "Boundary Type"
+msgstr "Sınır tipi"
+
+#: src/ODPathPropertiesDialogDef.cpp:172
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Paralel dizin çizgi açısı (+Stbd/-Port)"
+
+#: src/ODPathPropertiesDialogDef.cpp:186 src/ODPathPropertiesDialogDef.cpp:235
+msgid "Rotate with\n"
+"Boat"
+msgstr "İle döndür\n"
+"Tekne"
+
+#: src/ODPathPropertiesDialogDef.cpp:189 src/ODPathPropertiesDialogDef.cpp:238
+#: src/ODPropertiesDialogDef.cpp:618 src/ODPropertiesDialogDef.cpp:973
+msgid "Heading"
+msgstr "Pruva"
+
+#: src/ODPathPropertiesDialogDef.cpp:191 src/ODPathPropertiesDialogDef.cpp:240
+#: src/ODPropertiesDialogDef.cpp:620 src/ODPropertiesDialogDef.cpp:975
+msgid "Maintain with"
+msgstr "ile birlikte bakımını yap"
+
+#: src/ODPathPropertiesDialogDef.cpp:197
+msgid "EBL Angle (-P/+S)"
+msgstr "Ebl açı (-P/+S)"
+
+#: src/ODPathPropertiesDialogDef.cpp:211
+msgid "EBL Fixed\n"
+"End Position"
+msgstr "EBL düzeltme\n"
+"Bitiş pozisyonu"
+
+#: src/ODPathPropertiesDialogDef.cpp:214 src/ODPropertiesDialogDef.cpp:630
+msgid "Show VRM"
+msgstr "VRM göster"
+
+#: src/ODPathPropertiesDialogDef.cpp:217 src/ODPropertiesDialogDef.cpp:636
+msgid "Always Show\n"
+"EBL Info"
+msgstr "Her zaman göster\n"
+"EBL bilgisi"
+
+#: src/ODPathPropertiesDialogDef.cpp:220
+msgid "Show Perpendicular\n"
+"Index Line"
+msgstr "Dikey göster\n"
+"dizin çizgisi"
+
+#: src/ODPathPropertiesDialogDef.cpp:246 src/ODPropertiesDialogDef.cpp:979
+msgid "Arc"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:246 src/ODPropertiesDialogDef.cpp:979
+msgid "Straight"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:248 src/ODPropertiesDialogDef.cpp:981
+msgid "Line Type"
+msgstr ""
+
+#: src/ODPathPropertiesDialogDef.cpp:260
+msgid "First Angle (-P/+S)"
+msgstr "İlk açı (-P/+S)"
+
+#: src/ODPathPropertiesDialogDef.cpp:267
+msgid "First distance"
+msgstr "İlk mesafe"
+
+#: src/ODPathPropertiesDialogDef.cpp:274
+msgid "Second Angle (-P/+S)"
+msgstr "İkinci açı (-P/+S)"
+
+#: src/ODPathPropertiesDialogDef.cpp:281
+msgid "Second distance"
+msgstr "İkinci mesafe"
+
+#: src/ODPathPropertiesDialogDef.cpp:298
+msgid "Show Path Direction Arrow"
+msgstr "Yol yön oklarını göster"
+
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPointPropertiesDialog.cpp:401
+#: src/ODPropertiesDialogDef.cpp:100 src/ODPropertiesDialogDef.cpp:455
+#: src/ODPropertiesDialogDef.cpp:639 src/ODPropertiesDialogDef.cpp:762
+#: src/ODPropertiesDialogDef.cpp:993 src/ODPropertiesDialogDef.cpp:1175
+msgid "Never"
+msgstr "Asla"
+
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPropertiesDialogDef.cpp:639
+#: src/ODPropertiesDialogDef.cpp:762 src/ODPropertiesDialogDef.cpp:993
+#: src/ODPropertiesDialogDef.cpp:1175
+msgid "Persistent"
+msgstr "Kalıcı"
+
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPropertiesDialogDef.cpp:639
+#: src/ODPropertiesDialogDef.cpp:762 src/ODPropertiesDialogDef.cpp:993
+#: src/ODPropertiesDialogDef.cpp:1175
+msgid "Persistent over Crash"
+msgstr "Kaza üzerine kalıcılık"
+
+#: src/ODPathPropertiesDialogDef.cpp:303
+msgid "Path Persistence"
+msgstr "Yol sürekliliği"
+
+#: src/ODPathPropertiesDialogDef.cpp:314
+msgid "Points"
+msgstr "Noktalar"
+
+#: src/ODPathPropertiesDialogDef.cpp:331
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Dizin çizgileri (+ Stbd/- Port)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:216
+msgid "OCPN Draw Path"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:228 src/ODPathPropertiesDialogImpl.cpp:253
+msgid " &Properties..."
+msgstr " &Özellikler..."
+
+#: src/ODPathPropertiesDialogImpl.cpp:233 src/ODPathPropertiesDialogImpl.cpp:257
+msgid "&Remove Selected"
+msgstr "&Seçileni kaldır"
+
+#: src/ODPathPropertiesDialogImpl.cpp:236
+msgid "&Delete Selected"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:715
+msgid "From Point"
+msgstr "Noktadan"
+
+#: src/ODPathPropertiesDialogImpl.cpp:716
+msgid "To Point"
+msgstr "Noktaya"
+
+#: src/ODPathPropertiesDialogImpl.cpp:717
+msgid "Distance From Boat"
+msgstr "Tekneden uzaklık"
+
+#: src/ODPathPropertiesDialogImpl.cpp:720
+msgid "Bearing (M)"
+msgstr "Yön (M)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:722
+msgid "Bearing"
+msgstr "Yön"
+
+#: src/ODPathPropertiesDialogImpl.cpp:724 src/ODPointPropertiesDialog.cpp:91
+msgid "Latitude"
+msgstr "Enlem"
+
+#: src/ODPathPropertiesDialogImpl.cpp:725 src/ODPointPropertiesDialog.cpp:98
+msgid "Longitude"
+msgstr "Boylam"
+
+#: src/ODPathPropertiesDialogImpl.cpp:727
+msgid "Bearing From-To (M)"
+msgstr "-dan taşı-e doğru (M)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:729
+msgid "Bearing From-To"
+msgstr "-dan taşı-e doğru"
+
+#: src/ODPathPropertiesDialogImpl.cpp:842
+msgid "Are you sure you want to delete this point?"
+msgstr ""
+
+#: src/ODPathPropertiesDialogImpl.cpp:862
+msgid "Are you sure you want to remove this point?"
+msgstr "Bu noktayı kaldırmak istediğinizden emin misiniz?"
+
+#: src/ODPoint.cpp:732
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:41
+msgid "Properties"
+msgstr "Özellikler"
+
+#: src/ODPointPropertiesDialog.cpp:68
+msgid "Show name"
+msgstr "Adı göster"
+
+#: src/ODPointPropertiesDialog.cpp:71 src/ODPointPropertiesImpl.cpp:108
+#: src/ODPropertiesDialogDef.cpp:251 src/ODPropertiesDialogDef.cpp:406
+#: src/ODPropertiesDialogDef.cpp:560 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:790 src/ODPropertiesDialogDef.cpp:883
+#: src/ODPropertiesDialogDef.cpp:890 src/ODPropertiesDialogDef.cpp:1027
+#: src/ODPropertiesDialogDef.cpp:1034 src/ODPropertiesDialogImpl.cpp:198
+#: src/ODPropertiesDialogImpl.cpp:209 src/ODPropertiesDialogImpl.cpp:218
+#: src/ODPropertiesDialogImpl.cpp:227 src/ODPropertiesDialogImpl.cpp:236
+#: src/ODPropertiesDialogImpl.cpp:245 src/ODPropertiesDialogImpl.cpp:254
+#: src/ODPropertiesDialogImpl.cpp:263 src/ODPropertiesDialogImpl.cpp:272
+msgid "Combo!"
+msgstr "Açılır menü!"
+
+#: src/ODPointPropertiesDialog.cpp:82
+msgid "Change all Path Point Icons"
+msgstr "Tüm yol nokta ikonlarını değiştir"
+
+#: src/ODPointPropertiesDialog.cpp:110
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:120 src/ODPropertiesDialogDef.cpp:226
+msgid "Arrival Radius"
+msgstr "Varış Yarıçapı"
+
+#: src/ODPointPropertiesDialog.cpp:132
+msgid "Show Point Range Rings"
+msgstr "Menzil halkalarını işaret et"
+
+#: src/ODPointPropertiesDialog.cpp:153
+msgid "Point Inclusion Size"
+msgstr "Nokta kapsama boyutu"
+
+#: src/ODPointPropertiesDialog.cpp:171
+msgid "Number of Point Range Rings"
+msgstr "Nokta menzil çemberinin numarası"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803 src/ODPropertiesDialogDef.cpp:1041
+msgid "1"
+msgstr "1"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "10"
+msgstr "10"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803 src/ODPropertiesDialogDef.cpp:1041
+msgid "2"
+msgstr "2"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "3"
+msgstr "3"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "4"
+msgstr "4"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "5"
+msgstr "5"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "6"
+msgstr "6"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "7"
+msgstr "7"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "8"
+msgstr "8"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "9"
+msgstr "9"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "None"
+msgstr "Yok"
+
+#: src/ODPointPropertiesDialog.cpp:189
+msgid "Distance between Range Rings"
+msgstr "Menzil çemberleri arasındaki uzaklık"
+
+#: src/ODPointPropertiesDialog.cpp:196 src/ODPropertiesDialogDef.cpp:336
+#: src/ODPropertiesDialogDef.cpp:816
+msgid "Distance Unit"
+msgstr "Uzaklık birimi"
+
+#: src/ODPointPropertiesDialog.cpp:206 src/ODPropertiesDialogDef.cpp:346
+#: src/ODPropertiesDialogDef.cpp:826
+msgid "Range Ring Colours"
+msgstr "Menzil çemberi renkleri"
+
+#: src/ODPointPropertiesDialog.cpp:213 src/ODPropertiesDialogDef.cpp:353
+#: src/ODPropertiesDialogDef.cpp:833
+msgid "Range Ring Line Width"
+msgstr "Menzil halkası hat genişliği"
+
+#: src/ODPointPropertiesDialog.cpp:223 src/ODPropertiesDialogDef.cpp:363
+#: src/ODPropertiesDialogDef.cpp:843
+msgid "Range Ring Line Style"
+msgstr "Menzil çemberi hat stili"
+
+#: src/ODPointPropertiesDialog.cpp:258
+msgid "Links"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:268
+msgid "wxFB Website"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:279
+msgid "Edit"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:282
+msgid "Add New"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:289
+msgid "Left click opens in browser"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:295
+msgid "&Add"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:298
+msgid "&Edit"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:301 src/PathAndPointManagerDialogDef.cpp:66
+#: src/PathAndPointManagerDialogDef.cpp:113
+#: src/PathAndPointManagerDialogDef.cpp:157
+msgid "&Delete"
+msgstr "&Sil"
+
+#: src/ODPointPropertiesDialog.cpp:320
+msgid "Basic"
+msgstr "Temel"
+
+#: src/ODPointPropertiesDialog.cpp:324
 msgid "Text to Display with Point"
 msgstr "Nokta ile birlikte görüntülenecek metin"
-#
-msgid ""
-"The OD Point you want to delete is used in a path, do you really want to "
-"delete it?"
+
+#: src/ODPointPropertiesDialog.cpp:335 src/ODPropertiesDialogDef.cpp:418
+msgid "Text position relative to point"
+msgstr "Noktaya göre metnin konumlandırılması"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Bottom"
+msgstr "Alt"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Bottom Centre"
+msgstr "Alt Merkezi"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Centre"
+msgstr "Merkez"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Left"
+msgstr "Ayrıldı"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Right"
+msgstr "Sağ"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Top"
+msgstr "Üst"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Top Centre"
+msgstr "Üst orta"
+
+#: src/ODPointPropertiesDialog.cpp:345 src/ODPropertiesDialogDef.cpp:428
+msgid "Text Colour"
+msgstr "Metin Rengi"
+
+#: src/ODPointPropertiesDialog.cpp:352 src/ODPropertiesDialogDef.cpp:435
+msgid "Background Colour"
+msgstr "Arka Plan Rengi"
+
+#: src/ODPointPropertiesDialog.cpp:359
+msgid "Background Transparency"
+msgstr "Arka Plan Şeffaflığı"
+
+#: src/ODPointPropertiesDialog.cpp:368 src/ODPropertiesDialogDef.cpp:449
+msgid "Character Based"
 msgstr ""
-"Silmek istediğiniz OD Noktası bir yolda kullanılıyor, bunu gerçekten silmek "
-"istiyor musunuz?"
-#
-msgid "The file will also be deleted from OCPN Draw's layers directory."
+
+#: src/ODPointPropertiesDialog.cpp:368 src/ODPropertiesDialogDef.cpp:449
+msgid "Font Based"
 msgstr ""
-#
-msgid ""
-"There are some OD points used in paths or anchor alarms.\n"
+
+#: src/ODPointPropertiesDialog.cpp:370 src/ODPropertiesDialogDef.cpp:451
+msgid "Maximum Width Type"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:377 src/ODPropertiesDialogDef.cpp:461
+msgid "Maximum Text Width"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:387 src/ODPropertiesDialogDef.cpp:476
+msgid "Text Font"
+msgstr "Metin Yazı Tipi"
+
+#: src/ODPointPropertiesDialog.cpp:391 src/ODPropertiesDialogDef.cpp:480
+msgid "Example"
+msgstr "Örnek"
+
+#: src/ODPointPropertiesDialog.cpp:398 src/ODPropertiesDialogDef.cpp:484
+msgid "Fonts"
+msgstr "Yazı tipleri"
+
+#: src/ODPointPropertiesDialog.cpp:401 src/ODPropertiesDialogDef.cpp:100
+#: src/ODPropertiesDialogDef.cpp:455
+msgid "Always"
+msgstr "Daima"
+
+#: src/ODPointPropertiesDialog.cpp:401 src/ODPropertiesDialogDef.cpp:455
+msgid "On Rollover Only"
+msgstr "Yalnızca yuvarlanma üzerinde"
+
+#: src/ODPointPropertiesDialog.cpp:403 src/ODPropertiesDialogDef.cpp:457
+msgid "Show Display Text"
+msgstr "Ekran metnini göster"
+
+#: src/ODPointPropertiesDialog.cpp:414
+msgid "Display text"
+msgstr "Ekran yazısı"
+
+#: src/ODPointPropertiesDialog.cpp:419
+#: src/PathAndPointManagerDialogImpl.cpp:1670
+#: src/PathAndPointManagerDialogImpl.cpp:1682
+msgid "Show on chart"
+msgstr "Grafiklerde göster"
+
+#: src/ODPointPropertiesDialog.cpp:425 src/ODPropertiesDialogDef.cpp:412
+msgid "Show at scale> 1:"
+msgstr ""
+
+#: src/ODPointPropertiesDialog.cpp:451
+msgid "Extended"
+msgstr "Genişletilmiş"
+
+#: src/ODPointPropertiesImpl.cpp:160
+msgid "Copy"
+msgstr "Kopyala"
+
+#: src/ODPointPropertiesImpl.cpp:161
+msgid "Copy lat/long"
+msgstr "Enlem/Boylam'ı kopyala"
+
+#: src/ODPointPropertiesImpl.cpp:163
+msgid "Paste"
+msgstr "Yapıştır"
+
+#: src/ODPointPropertiesImpl.cpp:164
+msgid "Paste lat/long"
+msgstr "Enlem/Boylam'ı yapıştır"
+
+#: src/ODPointPropertiesImpl.cpp:301 src/ODPointPropertiesImpl.cpp:563
+#: src/ODPointPropertiesImpl.cpp:1047 src/ODPointPropertiesImpl.cpp:1059
+msgid "Left Click links are opened in the default browser."
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:572
+msgid "Display Text"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:849
+msgid "OCPN Draw Point, Layer: "
+msgstr "OCPN çizim noktası, etiket: "
+
+#: src/ODPointPropertiesImpl.cpp:851
+msgid "Boundary Point Properties, Layer: "
+msgstr "Sınır noktası özellikleri, etiket: "
+
+#: src/ODPointPropertiesImpl.cpp:853
+msgid "Text Point Properties, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:855
+msgid "EBL Point Properties, Layer: "
+msgstr "EBL noktası özellikleri, Etiket: "
+
+#: src/ODPointPropertiesImpl.cpp:857
+msgid "DR Point Properties, Layer: "
+msgstr "DR noktası özellikleri, Etiket: "
+
+#: src/ODPointPropertiesImpl.cpp:859
+msgid "PIL Point Properties, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:861
+msgid "GZ Point Properties, Layer: "
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:869
+msgid "OCPN Draw Point"
+msgstr "OCPN'nin çizim noktası"
+
+#: src/ODPointPropertiesImpl.cpp:871
+msgid "Boundary Point Properties"
+msgstr "Sınır noktası özellikleri"
+
+#: src/ODPointPropertiesImpl.cpp:873
+msgid "Text Point Properties"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:875
+msgid "EBL Point Properties"
+msgstr "EBL noktası özellikleri"
+
+#: src/ODPointPropertiesImpl.cpp:877
+msgid "DR Point Properties"
+msgstr "DR noktası özellikleri"
+
+#: src/ODPointPropertiesImpl.cpp:879
+msgid "PIL Point Properties"
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:881
+msgid "Guard Zone Point Properties"
+msgstr "Koruma bölge noktası özellikleri"
+
+#: src/ODPointPropertiesImpl.cpp:1045
+msgid "Left Click links are opened for editing."
+msgstr ""
+
+#: src/ODPointPropertiesImpl.cpp:1057
+msgid "Left Click links are deleted."
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:49
+msgid "Confirm Object Delete"
+msgstr "Nesne silmeyi onayla"
+
+#: src/ODPropertiesDialogDef.cpp:53
+msgid "Remember properties dialogs positions over a restart"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:56
+msgid "Show Magnetic Bearings"
+msgstr "Manyetik yönleri göster"
+
+#: src/ODPropertiesDialogDef.cpp:59
+msgid "Allow Left Mouse Button Drag"
+msgstr "Sol fare tuşuyla sürüklemeye izin ver"
+
+#: src/ODPropertiesDialogDef.cpp:62
+msgid "Show Layers"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:68
+msgid "OCPN_Draw Nav Object Backups"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:75
+msgid "Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr "Kenar Döşeme Duyarlılığı\n"
+"(yüzde ekran genişliği) Varsayılan 5"
+
+#: src/ODPropertiesDialogDef.cpp:82
+msgid "Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr "Başlangıç ​​Kenar Kaydırma Hassaslığı\n"
+"(yüzde ekran genişliği) Varsayılan 3"
+
+#: src/ODPropertiesDialogDef.cpp:89
+msgid "Toolbar icon scaling (requires restart)"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:96
+msgid "Display Toolbar"
+msgstr "Araç çubuğunu görüntüle"
+
+#: src/ODPropertiesDialogDef.cpp:100
+msgid "Whilst Drawing"
+msgstr "Çiziyorken"
+
+#: src/ODPropertiesDialogDef.cpp:106
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:110 src/ODPropertiesDialogImpl.cpp:1101
+msgid "Yes"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:120
+msgid "General"
+msgstr "Genel"
+
+#: src/ODPropertiesDialogDef.cpp:131 src/ODPropertiesDialogDef.cpp:504
+#: src/ODPropertiesDialogDef.cpp:907
+msgid "Active Line Colour"
+msgstr "Aktif hattın rengi"
+
+#: src/ODPropertiesDialogDef.cpp:138 src/ODPropertiesDialogDef.cpp:914
+msgid "Active Fill Colour"
+msgstr "Aktif dolgu rengi"
+
+#: src/ODPropertiesDialogDef.cpp:145 src/ODPropertiesDialogDef.cpp:511
+#: src/ODPropertiesDialogDef.cpp:921
+msgid "Inactive Line Colour"
+msgstr "Pasif hattın rengi"
+
+#: src/ODPropertiesDialogDef.cpp:152 src/ODPropertiesDialogDef.cpp:928
+msgid "Inactive Fill Colour"
+msgstr "Pasif dolgu rengi"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "1 Pixel"
+msgstr "1 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "10 Pixels"
+msgstr "10 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "2 Pixels"
+msgstr "2 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "3 Pixels"
+msgstr "3 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "4 Pixels"
+msgstr "4 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "5 Pixels"
+msgstr "5 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "6 Pixels"
+msgstr "6 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "7 Pixels"
+msgstr "7 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "8 Pixels"
+msgstr "8 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "9 Pixels"
+msgstr "9 piksel"
+
+#: src/ODPropertiesDialogDef.cpp:186
+msgid "Inclusion Boundary Size"
+msgstr "Kapsanan sınır boyutu"
+
+#: src/ODPropertiesDialogDef.cpp:230 src/ODPropertiesDialogDef.cpp:333
+#: src/ODPropertiesDialogDef.cpp:813
+msgid "0.5"
+msgstr "0.5"
+
+#: src/ODPropertiesDialogDef.cpp:244 src/ODPropertiesDialogDef.cpp:394
+msgid "Show Name"
+msgstr "Adı göster"
+
+#: src/ODPropertiesDialogDef.cpp:247
+msgid "Boundary Point Icon"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:267 src/ODPropertiesDialogDef.cpp:793
+msgid "Show Range Rings"
+msgstr "Menzil halkalarını göster"
+
+#: src/ODPropertiesDialogDef.cpp:272
+msgid "Boundary Point Type"
+msgstr "Sınır noktası tipi"
+
+#: src/ODPropertiesDialogDef.cpp:298
+msgid "Boundary Point Inclusion\n"
+"Size"
+msgstr "Sınır noktası kapsama\n"
+"Boyut"
+
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:799
+msgid "Number of Range Rings"
+msgstr "Menzil çemberi numarası"
+
+#: src/ODPropertiesDialogDef.cpp:329 src/ODPropertiesDialogDef.cpp:809
+msgid "Distance Between Range Rings"
+msgstr "Menzil çemberleri arası uzaklık"
+
+#: src/ODPropertiesDialogDef.cpp:402
+msgid "Text Point Icon"
+msgstr "Metin noktası ikonu"
+
+#: src/ODPropertiesDialogDef.cpp:442
+msgid "Background Density"
+msgstr "Arka plan yoğunluğu"
+
+#: src/ODPropertiesDialogDef.cpp:542 src/ODPropertiesDialogImpl.cpp:190
+msgid "Path"
+msgstr "Yol"
+
+#: src/ODPropertiesDialogDef.cpp:551 src/ODPropertiesDialogDef.cpp:1023
+msgid "Start Point Icon"
+msgstr "Başlangıç noktası ikonu"
+
+#: src/ODPropertiesDialogDef.cpp:566 src/ODPropertiesDialogDef.cpp:1030
+msgid "End Point Icon"
+msgstr "Bitiş noktası ikonu"
+
+#: src/ODPropertiesDialogDef.cpp:581
+msgid "Active EBL Line Colour"
+msgstr "Aktif EBL hattının rengi"
+
+#: src/ODPropertiesDialogDef.cpp:588
+msgid "Inactive EBL Line Colour"
+msgstr "Pasif EBL hattının rengi"
+
+#: src/ODPropertiesDialogDef.cpp:615 src/ODPropertiesDialogDef.cpp:970
+msgid "Rotate with Boat"
+msgstr "Tekne ile döndür"
+
+#: src/ODPropertiesDialogDef.cpp:624
+msgid "EBL Fixed End Position"
+msgstr "EBL sabit bitiş pozisyonu"
+
+#: src/ODPropertiesDialogDef.cpp:627
+msgid "Show EBL Direction Arrow"
+msgstr "EBL yön oklarını göster"
+
+#: src/ODPropertiesDialogDef.cpp:633
+msgid "Show Perpendicular Index Line"
+msgstr "Dikey dizin çizgisini göster"
+
+#: src/ODPropertiesDialogDef.cpp:649 src/ocpn_draw_pi.cpp:4004
+msgid "EBL"
+msgstr "EBL"
+
+#: src/ODPropertiesDialogDef.cpp:662
+msgid "Active DR Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:669
+msgid "Inactive DR Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:758
+msgid "Show DR Direction Arrow"
+msgstr "DR yön oklarını göster"
+
+#: src/ODPropertiesDialogDef.cpp:764
+msgid "DR Persistence"
+msgstr "DR sürekliliği"
+
+#: src/ODPropertiesDialogDef.cpp:786
+msgid "DR Point Icon"
+msgstr "DR noktası ikonu"
+
+#: src/ODPropertiesDialogDef.cpp:879
+msgid "First Point Icon"
+msgstr "Birinci nokta ikonu"
+
+#: src/ODPropertiesDialogDef.cpp:886
+msgid "Second Point Icon"
+msgstr "İkinci nokta ikonu"
+
+#: src/ODPropertiesDialogDef.cpp:1006 src/ODToolbarImpl.cpp:547
+msgid "Guard Zone"
+msgstr "Koruma bölgesi"
+
+#: src/ODPropertiesDialogDef.cpp:1037
+msgid "Initial number of index lines"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1047
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Varsayılan ofset (+Stbd/-Port)"
+
+#: src/ODPropertiesDialogDef.cpp:1051
+msgid "1.0"
+msgstr "1.0"
+
+#: src/ODPropertiesDialogDef.cpp:1065
+msgid "Active Centre Line Colour"
+msgstr "Aktif merkez hattı rengi"
+
+#: src/ODPropertiesDialogDef.cpp:1072
+msgid "Inactive Centre Line Colour"
+msgstr "Pasif merkez hattı rengi"
+
+#: src/ODPropertiesDialogDef.cpp:1079
+msgid "Active Offset Line Colour"
+msgstr "Aktif ofset hattı rengi"
+
+#: src/ODPropertiesDialogDef.cpp:1086
+msgid "Inactive Offset Line Colour"
+msgstr "Pasif ofset hattı rengi"
+
+#: src/ODPropertiesDialogDef.cpp:1093
+msgid "Active Offset Line 2 Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1100
+msgid "Inactive Offset Line 2 Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1107
+msgid "Centre Line Width"
+msgstr "Merkez hattı genişliği"
+
+#: src/ODPropertiesDialogDef.cpp:1117
+msgid "Centre Line Style"
+msgstr "Merkez hattı stili"
+
+#: src/ODPropertiesDialogDef.cpp:1127
+msgid "Offset Line Width"
+msgstr "Ofset hattı genişliği"
+
+#: src/ODPropertiesDialogDef.cpp:1137
+msgid "Offset Line Style"
+msgstr "Ofset hattı stili"
+
+#: src/ODPropertiesDialogDef.cpp:1147
+msgid "Offset Line 2 Width"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1157
+msgid "Offset Line 2 Style"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1177
+msgid "Parallel Index Line Persistence"
+msgstr "Paralel dizin hattı sürekliliği"
+
+#: src/ODPropertiesDialogDef.cpp:1198
+msgid "Name:"
+msgstr "Adı:"
+
+#: src/ODPropertiesDialogDef.cpp:1206
+msgid "Version:"
+msgstr "Sürüm:"
+
+#: src/ODPropertiesDialogDef.cpp:1215 src/ODPropertiesDialogDef.cpp:1259
+#: src/ODPropertiesDialogDef.cpp:1287
+msgid "Major:"
+msgstr "Önemli:"
+
+#: src/ODPropertiesDialogDef.cpp:1223 src/ODPropertiesDialogDef.cpp:1267
+#: src/ODPropertiesDialogDef.cpp:1295
+msgid "Minor:"
+msgstr "Küçük:"
+
+#: src/ODPropertiesDialogDef.cpp:1231
+msgid "Patch:"
+msgstr "Yama:"
+
+#: src/ODPropertiesDialogDef.cpp:1239
+msgid "Tweak:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1250
+msgid "OCPN Draw API Version:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1278
+msgid "OCPN API Version:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1306
+msgid "Date:"
+msgstr "Tarih:"
+
+#: src/ODPropertiesDialogDef.cpp:1320
+msgid "OCPN Draw Directories:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1329
+msgid "Data:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1333
+msgid "Data Directory"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1337
+msgid "User Icons:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1341
+msgid "Icon Directory"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1345
+msgid "Permanent Layers:"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1349
+msgid "Layers Directory"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1364
+msgid "Other:"
+msgstr "Diğer:"
+
+#: src/ODPropertiesDialogDef.cpp:1368
+msgid "Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
+"or\n\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"or\n\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr "Lütfen FlySpray kullanarak şurada sorunları bildirin:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
+"veya\n\n"
+"OpenCPN forumunda:\n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"veya\n\n"
+"Gıt içersinde bir sorunu bildirin:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+
+#: src/ODPropertiesDialogDef.cpp:1379
+msgid "About"
+msgstr "Hakkında"
+
+#: src/ODPropertiesDialogDef.cpp:1386
+msgid "This chart shows the interactions between Boundaries and WatchDog alam boundaries"
+msgstr "Bu tablo, sınırlar ile WatchDog uyarı sınırları arasındaki etkileşimleri gösterir"
+
+#: src/ODPropertiesDialogDef.cpp:1402
+msgid "WD"
+msgstr "WD"
+
+#: src/ODPropertiesDialogDef.cpp:1403 src/ODPropertiesDialogImpl.cpp:130
+msgid "All"
+msgstr "Hepsi"
+
+#: src/ODPropertiesDialogDef.cpp:1412
+msgid "OD"
+msgstr "Od"
+
+#: src/ODPropertiesDialogDef.cpp:1430
+msgid "Help"
+msgstr "Yardım"
+
+#: src/ODPropertiesDialogDef.cpp:1446
+msgid "License"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:1468
+msgid "&Apply"
+msgstr "&Uygula"
+
+#: src/ODPropertiesDialogImpl.cpp:129
+msgid "OD\\WD"
+msgstr "OD\\WD"
+
+#: src/ODPropertiesDialogImpl.cpp:138 src/ODPropertiesDialogImpl.cpp:139
+#: src/ODPropertiesDialogImpl.cpp:140 src/ODPropertiesDialogImpl.cpp:141
+#: src/ODPropertiesDialogImpl.cpp:145 src/ODPropertiesDialogImpl.cpp:149
+msgid "Ring"
+msgstr "Halka"
+
+#: src/ODPropertiesDialogImpl.cpp:142 src/ODPropertiesDialogImpl.cpp:143
+#: src/ODPropertiesDialogImpl.cpp:144 src/ODPropertiesDialogImpl.cpp:146
+#: src/ODPropertiesDialogImpl.cpp:147 src/ODPropertiesDialogImpl.cpp:148
+msgid "No alarm"
+msgstr "Alarm yok"
+
+#: src/ODPropertiesDialogImpl.cpp:1049 src/ODPropertiesDialogImpl.cpp:1097
+msgid "No"
+msgstr ""
+
+#: src/ODPropertiesDialogImpl.cpp:1050 src/ODPropertiesDialogImpl.cpp:1098
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr ""
+
+#: src/ODPropertiesDialogImpl.cpp:1102
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr ""
+
+#: src/ODToolbarImpl.cpp:542
+msgid "Create Boundary"
+msgstr "Sınır oluştur"
+
+#: src/ODToolbarImpl.cpp:543
+msgid "Create Boundary Point"
+msgstr "Sınır noktası oluştur"
+
+#: src/ODToolbarImpl.cpp:544
+msgid "Create Text Point"
+msgstr "Metin noktası oluştur"
+
+#: src/ODToolbarImpl.cpp:545
+msgid "Create EBL"
+msgstr "EBL oluştur"
+
+#: src/ODToolbarImpl.cpp:545
+msgid "Electronic Bearing Line"
+msgstr "Elektronik yön hattı"
+
+#: src/ODToolbarImpl.cpp:546
+msgid "Create DR"
+msgstr "DR oluştur"
+
+#: src/ODToolbarImpl.cpp:547
+msgid "Create GZ"
+msgstr "GZ oluştur"
+
+#: src/ODToolbarImpl.cpp:548
+msgid "Create PIL"
+msgstr "PIL oluştur"
+
+#: src/ODUtils.cpp:491
+msgid "GL_INVALID_ENUM "
+msgstr ""
+
+#: src/ODUtils.cpp:494
+msgid "GL_INVALID_VALUE "
+msgstr ""
+
+#: src/ODUtils.cpp:497
+msgid "GL_INVALID_OPERATION "
+msgstr ""
+
+#: src/ODUtils.cpp:500
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr ""
+
+#: src/ODUtils.cpp:503
+msgid "GL_OUT_OF_MEMORY "
+msgstr ""
+
+#: src/ODUtils.cpp:509
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr ""
+
+#: src/ODdc.cpp:1688
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr ""
+
+#: src/ODicons.cpp:51
+msgid "ocpn_draw_pi data location"
+msgstr "ocpn_çizim_pi veri konumu"
+
+#: src/ODicons.cpp:96 src/ODicons.cpp:281
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr ""
+
+#: src/ODicons.cpp:96 src/ODicons.cpp:281
+#: src/PathAndPointManagerDialogImpl.cpp:561
+#: src/PathAndPointManagerDialogImpl.cpp:608
+#: src/PathAndPointManagerDialogImpl.cpp:1481
+#: src/PathAndPointManagerDialogImpl.cpp:1512
+#: src/PathAndPointManagerDialogImpl.cpp:1579
+#: src/PathAndPointManagerDialogImpl.cpp:1765
+msgid "OpenCPN Alert"
+msgstr "OpenCPN Alarmı"
+
+#: src/ODicons.cpp:294
+msgid "ocpn_draw_pi LoadSVG"
+msgstr ""
+
+#: src/PILProp.cpp:62
+msgid "PIL Persistence"
+msgstr "PIL sürerkliliği"
+
+#: src/PILProp.cpp:332
+msgid "ID"
+msgstr "Kimlik"
+
+#: src/PILProp.cpp:334
+msgid "Offset"
+msgstr "Dengeleme"
+
+#: src/PILPropertiesDialogDef.cpp:42
+msgid "ID Num"
+msgstr "Kimlik numarası"
+
+#: src/PILPropertiesDialogDef.cpp:63
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Ofset (+ Stbd/- port)"
+
+#: src/PathAndPointManagerDialogDef.cpp:57
+#: src/PathAndPointManagerDialogDef.cpp:107
+msgid "&Properties"
+msgstr "&Özellikler"
+
+#: src/PathAndPointManagerDialogDef.cpp:60
+#: src/PathAndPointManagerDialogImpl.cpp:1115
+msgid "&Activate"
+msgstr "&Etkinleştir"
+
+#: src/PathAndPointManagerDialogDef.cpp:63
+#: src/PathAndPointManagerDialogDef.cpp:110
+msgid "&Center View"
+msgstr "&Merkez görünüm"
+
+#: src/PathAndPointManagerDialogDef.cpp:69
+#: src/PathAndPointManagerDialogDef.cpp:116
+msgid "&Export Selected..."
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:72
+#: src/PathAndPointManagerDialogDef.cpp:119
+msgid "Dele&te All"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:85
+msgid "Paths"
+msgstr "Yollar"
+
+#: src/PathAndPointManagerDialogDef.cpp:104
+msgid "&New"
+msgstr "&Yeni"
+
+#: src/PathAndPointManagerDialogDef.cpp:132
+msgid "OD Points"
+msgstr "OD noktası"
+
+#: src/PathAndPointManagerDialogDef.cpp:151
+msgid "New &temporary Layer"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:154
+msgid "New persistent &Layer"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:160
+msgid "Show on &chart"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:163
+msgid "Show &Point names"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:166
+msgid "&List contents"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:179
+msgid "Layers"
+msgstr "Katmanlar"
+
+#: src/PathAndPointManagerDialogDef.cpp:195
+msgid "Import gpx"
+msgstr ""
+
+#: src/PathAndPointManagerDialogDef.cpp:198
+msgid "E&xport All Visible"
+msgstr ""
+
+#: src/PathAndPointManagerDialogImpl.cpp:450
+#: src/PathAndPointManagerDialogImpl.cpp:456
+msgid "Show"
+msgstr "Göster"
+
+#: src/PathAndPointManagerDialogImpl.cpp:451
+msgid "Path Name"
+msgstr "Yol adı"
+
+#: src/PathAndPointManagerDialogImpl.cpp:452
+msgid "Desc"
+msgstr "Açıklama"
+
+#: src/PathAndPointManagerDialogImpl.cpp:453
+msgid "Icon"
+msgstr "Simge"
+
+#: src/PathAndPointManagerDialogImpl.cpp:454
+msgid "OD Point Name"
+msgstr "OD noktası adı"
+
+#: src/PathAndPointManagerDialogImpl.cpp:455
+msgid "Distance from Ownship"
+msgstr "Kendi geminden uzaklık"
+
+#: src/PathAndPointManagerDialogImpl.cpp:457
+msgid "Layer Name"
+msgstr "Katman ismi"
+
+#: src/PathAndPointManagerDialogImpl.cpp:458
+msgid "No. of items"
+msgstr "Öğe yok"
+
+#: src/PathAndPointManagerDialogImpl.cpp:518
+#: src/PathAndPointManagerDialogImpl.cpp:531
+#: src/PathAndPointManagerDialogImpl.cpp:2077
+msgid "I&mport"
+msgstr ""
+
+#: src/PathAndPointManagerDialogImpl.cpp:561
+#: src/PathAndPointManagerDialogImpl.cpp:1481
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Seçili nesneleri silmek istediğinizden emin misiniz?"
+
+#: src/PathAndPointManagerDialogImpl.cpp:608
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Yolların <ALL> silmek istediğinizden emin misiniz?"
+
+#: src/PathAndPointManagerDialogImpl.cpp:758
+msgid "Boundary Properties"
+msgstr "Sınır özellikleri"
+
+#: src/PathAndPointManagerDialogImpl.cpp:760
+msgid "EBL Properties"
+msgstr "EBL özellikleri"
+
+#: src/PathAndPointManagerDialogImpl.cpp:762
+msgid "DR Properties"
+msgstr "DR özellikleri"
+
+#: src/PathAndPointManagerDialogImpl.cpp:764
+msgid "Guard Zone Properties"
+msgstr "Koruma bölgesi özellikleri"
+
+#: src/PathAndPointManagerDialogImpl.cpp:766
+msgid "Parallel Index Line Properties"
+msgstr "Paralel dizin hattı özellikleri"
+
+#: src/PathAndPointManagerDialogImpl.cpp:771
+msgid "Path Properties, Layer: "
+msgstr "Yol özellikleri, etiket: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:773
+msgid "Boundary Properties, Layer: "
+msgstr "Sınır özellikleri, Etiket: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:775
+msgid "EBL Properties, Layer: "
+msgstr "EBL özellikleri, Etiket: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:777
+msgid "DR Properties, Layer: "
+msgstr "DR özellikleri, Katman: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:894
+msgid "Do you also want to make the shared OD Points being part of this boundary invisible?"
+msgstr "Paylaşılmış OD noktalarını bu sınırın görünmez bir parçası yapmak istiyor musunuz?"
+
+#: src/PathAndPointManagerDialogImpl.cpp:894
+msgid "Question"
+msgstr "Soru"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1039
+msgid "(Unnamed )"
+msgstr "(İsimsiz)"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1114
+msgid "&Deactivate"
+msgstr "&Etkisizleştir"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1209
+#: src/PathAndPointManagerDialogImpl.cpp:2192
+msgid "(Unnamed) "
+msgstr "(İsimsiz) "
+
+#: src/PathAndPointManagerDialogImpl.cpp:1512
+msgid "The OD Point you want to delete is used in a path, do you really want to delete it?"
+msgstr "Silmek istediğiniz OD Noktası bir yolda kullanılıyor, bunu gerçekten silmek istiyor musunuz?"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1569
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Od noktalarının <ALL> silmek istediğinizden emin misiniz?"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1575
+msgid "There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
-msgstr ""
-"Yollarda veya anchor alarmlarında kullanılan bazı OD noktaları var.\n"
+msgstr "Yollarda veya anchor alarmlarında kullanılan bazı OD noktaları var.\n"
 " Onları da silmek istiyor musunuz?\n"
 " Bu, yolları değiştirecek ve anchor alarmlarını devre dışı bırakacak.\n"
 " Hayır derseniz, yollarda veya alarmlarda kullanılan OD puanlarını korunacak."
-#
-msgid ""
-"This chart shows the interactions between Boundaries and WatchDog alam "
-"boundaries"
-msgstr ""
-"Bu tablo, sınırlar ile WatchDog uyarı sınırları arasındaki etkileşimleri "
-"gösterir"
-#
-msgid "Time"
-msgstr "Zaman"
-#
-msgid "Time Units"
-msgstr "Zaman Birimi"
-#
-msgid "To Point"
-msgstr "Noktaya"
-#
-msgid "Top"
-msgstr "Üst"
-#
-msgid "Top Centre"
-msgstr "Üst orta"
-#
-msgid "Total Length"
-msgstr "Toplam uzunluk"
-#
-msgid "Total Length: "
-msgstr "Toplam Uzunluk: "
-#
-msgid "Tweak:"
-msgstr ""
-#
-msgid "URL"
-msgstr ""
-#
+
+#: src/PathAndPointManagerDialogImpl.cpp:1668
+msgid "Hide from chart"
+msgstr "Haritada gizle"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1673
+msgid "Hide Point names"
+msgstr "Nokta isimlerini gizle"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1675
+#: src/PathAndPointManagerDialogImpl.cpp:1683
+msgid "Show Point names"
+msgstr "Nokta adını göster"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1678
 msgid "Unlist contents "
 msgstr "Listelenmemiş içerik "
-#
-msgid "Update initial conditions"
-msgstr "Başlangıç koşullarını güncelle"
-#
-#, fuzzy
+
+#: src/PathAndPointManagerDialogImpl.cpp:1680
+#: src/PathAndPointManagerDialogImpl.cpp:1684
+msgid "List contents "
+msgstr "İçeriği listele "
+
+#: src/PathAndPointManagerDialogImpl.cpp:1759
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Bu içeriklerin <ALL> ve bu etiketi silmek istediğinizden emin misiniz?"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1762
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr ""
+
+#: src/PathAndPointManagerDialogImpl.cpp:2035
+msgid "(Unnamed Layer)"
+msgstr "(Adsız etiket)"
+
+#: src/ocpn_draw_pi.cpp:564 src/ocpn_draw_pi.cpp:565 src/ocpn_draw_pi.cpp:569
+#: src/ocpn_draw_pi.cpp:570
+msgid "OCPN Draw Manager"
+msgstr "OCPN çizim yöneticisi"
+
+#: src/ocpn_draw_pi.cpp:566 src/ocpn_draw_pi.cpp:571
+msgid "OCPN Draw Boundary"
+msgstr "OCPN sınır çizim"
+
+#: src/ocpn_draw_pi.cpp:567 src/ocpn_draw_pi.cpp:572
+msgid "OCPN Draw"
+msgstr "OCPN çizim"
+
+#: src/ocpn_draw_pi.cpp:680
 msgid "Use OCPN Draw Tool"
-msgstr "OCPN'nin çizim noktası"
-#
-msgid "Use nearby OD Point?"
-msgstr "Yakındaki OD noktası kullanılsın mı?"
-#
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:825
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:834
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr ""
+
+#: src/ocpn_draw_pi.cpp:1083
+msgid "General drawing for OpenCPN"
+msgstr "OpenCPN için Genel çizim"
+
+#: src/ocpn_draw_pi.cpp:1087
+msgid "General Drawing for OpenCPN\n\n"
+"Thanks to the community for their helpful suggestions."
+msgstr "OpenCPN için Genel çizim\n\n"
+"Yararlı önerileri için topluluğa teşekkür ederim."
+
+#: src/ocpn_draw_pi.cpp:3499
+msgid "Layer Boundary"
+msgstr "Sınır katmanı"
+
+#: src/ocpn_draw_pi.cpp:3724 src/ocpn_draw_pi.cpp:3791
 msgid "Use nearby Point?"
 msgstr "Yakındaki nokta kullanılsın mı?"
-#
-msgid "User Icons:"
-msgstr ""
-#
-msgid "Version:"
-msgstr "Sürüm:"
-#
-msgid "WD"
-msgstr "WD"
-#
-msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
-msgstr ""
-#
-msgid "Whilst Drawing"
-msgstr "Çiziyorken"
-#
+
+#: src/ocpn_draw_pi.cpp:3725 src/ocpn_draw_pi.cpp:3792
+msgid "OCPN Draw Point Create"
+msgstr "OCPN çizim noktası oluştur"
+
+#: src/ocpn_draw_pi.cpp:3871
+msgid "Use nearby OD Point?"
+msgstr "Yakındaki OD noktası kullanılsın mı?"
+
+#: src/ocpn_draw_pi.cpp:3872 src/ocpn_draw_pi.cpp:3925
+msgid "OCPN Draw Boundary Create"
+msgstr "OCPN sınır çizimini oluştur"
+
+#: src/ocpn_draw_pi.cpp:3919
+msgid "For this leg the Great Circle boundary is "
+msgstr "Bu bacak için Büyük Çember sınırı "
+
+#: src/ocpn_draw_pi.cpp:3920
+msgid " shorter than rhumbline.\n\n"
+msgstr " rhumbline'dan daha kısa.\n\n"
+
+#: src/ocpn_draw_pi.cpp:3921
 msgid "Would you like include the Great Circle boundary points for this leg?"
 msgstr "Bu bacak için Büyük Daire sınır noktalarını eklemek ister misiniz?"
-#
-msgid "Yes"
+
+#: src/ocpn_draw_pi.cpp:4096
+msgid "GZ"
+msgstr "GZ"
+
+#: src/ocpn_draw_pi.cpp:4134
+msgid "Second"
+msgstr "Saniye"
+
+#: src/ocpn_draw_pi.cpp:4161
+msgid "First"
+msgstr "Birinci"
+
+#: src/ocpn_draw_pi.cpp:4194
+msgid "PIL"
+msgstr "PIL"
+
+#: src/ocpn_draw_pi.cpp:4473
+msgid "Alpha blending not drawn as OpenGL not available in this build"
 msgstr ""
-#
-#, fuzzy
-msgid "ocpn_draw_pi LoadSVG"
-msgstr "ocpn_çizim_pi veri konumu"
-#
-msgid "ocpn_draw_pi data location"
-msgstr "ocpn_çizim_pi veri konumu"
-#
-msgid "will be deleted."
-msgstr ""
-#
-msgid "will be deleted. No further boundaries will be imported"
-msgstr ""
-#
-msgid "wxFB Website"
-msgstr ""
+
