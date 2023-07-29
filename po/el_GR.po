@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-26 19:06+1100\n"
-"PO-Revision-Date: 2020-07-02 21:51\n"
+"POT-Creation-Date: 2023-06-30 12:09+1000\n"
+"PO-Revision-Date: 2023-06-30 03:49\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -16,1657 +16,2314 @@ msgstr ""
 "X-Crowdin-Language: el\n"
 "X-Crowdin-File: /plugins/ocpn_draw_pi/po/ocpn_draw_pi.pot\n"
 "X-Crowdin-File-ID: 173\n"
-#
-msgid " &Properties..."
-msgstr " &Ιδιότητες..."
-#
-msgid " To: "
-msgstr " Προς: "
-#
-msgid ""
-" shorter than rhumbline.\n"
-"\n"
-msgstr ""
-" κοντύτερο από την ισογώνια.\n"
-"\n"
-#
-msgid " to "
-msgstr " προς "
-#
-#, c-format
-msgid "%s:%i %s(), %s\n"
-msgstr ""
-#
-msgid "&Activate"
-msgstr "&Ενεργοποίηση"
-#
-msgid "&Add"
-msgstr "&Προσθήκη"
-#
-msgid "&Apply"
-msgstr "&Εφαρμογή"
-#
-msgid "&Cancel"
-msgstr "&Ακύρωση"
-#
-msgid "&Center View"
-msgstr "&Κεντράρισμα"
-#
-msgid "&Deactivate"
-msgstr "&Απενεργοποίηση"
-#
-msgid "&Delete"
-msgstr "&Διαγραφή"
-#
-msgid "&Delete Selected"
-msgstr "&Διαγραφή επιλεγμένων"
-#
-msgid "&Edit"
-msgstr "&Επεξεργασία"
-#
-msgid "&Export Selected..."
-msgstr "Ε&ξαγωγή επιλεγμένων..."
-#
-msgid "&List contents"
-msgstr "&Περιεχόμενα"
-#
-msgid "&New"
-msgstr "&Νέο"
-#
-msgid "&OK"
-msgstr "&Εντάξει"
-#
-msgid "&Properties"
-msgstr "&Ιδιότητες"
-#
-msgid "&Remove Selected"
-msgstr "Α&φαίρεση επιλεγμένων"
-#
-msgid "(Unnamed )"
-msgstr "(Χωρίς όνομα)"
-#
-msgid "(Unnamed Layer)"
-msgstr "(ανώνυμο ταξίδι)"
-#
-msgid "(Unnamed) "
-msgstr "(Χωρίς όνομα) "
-#
-msgid "(unnamed)"
-msgstr "(ανώνυμο)"
-#
-msgid "*.*"
-msgstr "*.*"
-#
-msgid "0"
-msgstr "0"
-#
-msgid "0.0"
-msgstr "0.0"
-#
-msgid "0.5"
-msgstr "0.5"
-#
-msgid "1"
-msgstr "1"
-#
-msgid "1 Pixel"
-msgstr "1 πίξελ"
-#
-msgid "1 pixel"
-msgstr "1 πίξελ"
-#
-msgid "1.0"
-msgstr "1.0"
-#
-msgid "10"
-msgstr "10"
-#
-msgid "10 Pixels"
-msgstr "10 πίξελ"
-#
-msgid "10 pixels"
-msgstr "10 πίξελ"
-#
-msgid "2"
-msgstr "2"
-#
-msgid "2 Pixels"
-msgstr "2 πίξελ"
-#
-msgid "2 pixels"
-msgstr "2 πίξελ"
-#
-msgid "3"
-msgstr "3"
-#
-msgid "3 Pixels"
-msgstr "3 πίξελ"
-#
-msgid "3 pixels"
-msgstr "3 πίξελ"
-#
-msgid "4"
-msgstr "4"
-#
-msgid "4 Pixels"
-msgstr "4 πίξελ"
-#
-msgid "4 pixels"
-msgstr "4 πίξελ"
-#
-msgid "5"
-msgstr "5"
-#
-msgid "5 Pixels"
-msgstr "5 πίξελ"
-#
-msgid "5 pixels"
-msgstr "5 πίξελ"
-#
-msgid "6"
-msgstr "6"
-#
-msgid "6 Pixels"
-msgstr "6 πίξελ"
-#
-msgid "6 pixels"
-msgstr "6 πίξελ"
-#
-msgid "7"
-msgstr "7"
-#
-msgid "7 Pixels"
-msgstr "7 πίξελ"
-#
-msgid "7 pixels"
-msgstr "7 πίξελ"
-#
-msgid "8"
-msgstr "8"
-#
-msgid "8 Pixels"
-msgstr "8 πίξελ"
-#
-msgid "8 pixels"
-msgstr "8 πίξελ"
-#
-msgid "9"
-msgstr "9"
-#
-msgid "9 Pixels"
-msgstr "9 πίξελ"
-#
-msgid "9 pixels"
-msgstr "9 πίξελ"
-#
-msgid "About"
-msgstr "Περί"
-#
-msgid "Activate"
-msgstr "Ενεργοποίηση"
-#
-msgid "Active"
-msgstr "Ενεργό"
-#
-msgid "Active Centre Line Colour"
-msgstr "Χρώμα ενεργής κεντρικής γραμμής"
-#
-#, fuzzy
-msgid "Active DR Line Colour"
-msgstr ""
-"Χρώμα ενεργής\n"
-" γραμμής DR"
-#
-msgid "Active EBL Line Colour"
-msgstr "Χρώμα ενεργής γραμμής EBL"
-#
-msgid "Active Fill Colour"
-msgstr "Χρώμα ενεργού εσωτερικού"
-#
-msgid "Active Line Colour"
-msgstr "Xρώμα ενεργής γραμμής"
-#
-msgid "Active Offset Line 2 Colour"
-msgstr "Χρώμα 2ης ενεργής γραμμής μετατόπισης"
-#
-msgid "Active Offset Line Colour"
-msgstr "Χρώμα ενεργής γραμμής μετατόπισης"
-#
-msgid "Add Index Line"
-msgstr "Προσθέστε γραμμή Index"
-#
-msgid "Add New"
-msgstr "Προσθήκη νέου"
-#
-msgid "All"
-msgstr "Όλα"
-#
-msgid "Allow Left Mouse Button Drag"
-msgstr "Παράσυρση ποντικιού με αριστερό πλήκτρο"
-#
-msgid "Alpha blending not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Always"
-msgstr "Πάντα"
-#
-msgid ""
-"Always Show\n"
-"EBL Info"
-msgstr ""
-"Μόνιμη εμφάνιση\n"
-"πληροφοριών EBL"
-#
-msgid "Applying changes from "
-msgstr "Εφαρμογή αλλαγών από "
-#
-msgid "Arc"
-msgstr "Τόξο"
-#
-msgid "Are you sure you want to delete <ALL> OD points?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε <ΟΛΑ> τα σημεία OD;"
-#
-msgid "Are you sure you want to delete <ALL> paths?"
-msgstr "Σίγουρα θέλετε να διαγράψετε <ΟΛΑ> τα ίχνη πορείας;"
-#
-msgid "Are you sure you want to delete the selected object(s)"
-msgstr "Σίγουρα θέλεις να διαγράψεις τα επιλεγμένα"
-#
-msgid "Are you sure you want to delete this Boundary Point?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο oρίου;"
-#
-msgid "Are you sure you want to delete this Boundary?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το όριο;"
-#
-msgid "Are you sure you want to delete this DR Point?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο DR;"
-#
-msgid "Are you sure you want to delete this DR?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή την εκτίμηση;"
-#
-msgid "Are you sure you want to delete this EBL Point?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο EBL;"
-#
-msgid "Are you sure you want to delete this EBL?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή την EBL;"
-#
-msgid "Are you sure you want to delete this Guard Zone?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη ζώνη επιφυλακής;"
-#
-msgid "Are you sure you want to delete this OD Point?"
-msgstr "Σίγουρα θέλετε να διαγράψετε αυτό το σημείο OD;"
-#
-msgid "Are you sure you want to delete this PIL Point?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο PIL;"
-#
-msgid "Are you sure you want to delete this Parallel Index Line Group?"
-msgstr ""
-"Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την ομάδα γραμμών Parallel Index;"
-#
-msgid "Are you sure you want to delete this Parallel Index Line?"
-msgstr ""
-"Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη γραμμή του Parallel Index;"
-#
-msgid "Are you sure you want to delete this Text Point?"
-msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο κείμενου;"
-#
-msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
-msgstr ""
-"Σίγουρα θέλετε να διαγράψετε αυτό το ταξίδι και <όλα> τα περιεχόμενά του;"
-#
-msgid "Are you sure you want to delete this point?"
-msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε το σημείο;"
-#
-msgid "Are you sure you want to remove this "
-msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτό το "
-#
-msgid "Are you sure you want to remove this Boundary Point?"
-msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτό το σημείο oρίου;"
-#
-msgid "Are you sure you want to remove this DR Point?"
-msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο DR;"
-#
-msgid "Are you sure you want to remove this EBL Point?"
-msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο;"
-#
-msgid "Are you sure you want to remove this OD Point?"
-msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο OD;"
-#
-msgid "Are you sure you want to remove this point?"
-msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο;"
-#
-msgid "Arrival Radius"
-msgstr "Ακτίνα άφιξης"
-#
-msgid "Background Colour"
-msgstr "Χρώμα φόντου"
-#
-msgid "Background Density"
-msgstr "Πυκνότητα φόντου"
-#
-msgid "Background Transparency"
-msgstr "Διαφάνεια φόντου"
-#
-msgid "Basic"
-msgstr "Βασικό"
-#
-msgid "Bearing"
-msgstr "Διόπτευση"
-#
-msgid "Bearing (M)"
-msgstr "Διόπτευση (Μ)"
-#
-msgid "Bearing From-To"
-msgstr "Διόπτευση Από-Προς"
-#
-msgid "Bearing From-To (M)"
-msgstr "Διόπτευση Από-Προς (Μ)"
-#
-msgid "Bearing: "
-msgstr "Διόπτευση: "
-#
-msgid "BlinkTimer->Unbind not found or not removed"
-msgstr ""
-#
-msgid "Boat"
-msgstr "Πλοίο"
-#
-msgid "Bottom"
-msgstr "Κάτω"
-#
-msgid "Bottom Centre"
-msgstr "Κάτω κέντρο"
-#
-msgid "Boundary"
-msgstr "Σύνορο"
-#
-msgid "Boundary '"
-msgstr "Σύνορο '"
-#
-msgid "Boundary Point"
-msgstr "Σημείο ορίου"
-#
-msgid "Boundary Point Icon"
-msgstr "Εικονίδιο σημείου ορίου"
-#
-msgid ""
-"Boundary Point Inclusion\n"
-"Size"
-msgstr ""
-"Μέγεθος σημείου ορίου\n"
-"εγκλείσματος"
-#
-msgid "Boundary Point Properties"
-msgstr "Ιδιότητες σημείου ορίου"
-#
-msgid "Boundary Point Properties, Layer: "
-msgstr "Ιδιότητες σημείου ορίου, ταξίδι: "
-#
-msgid "Boundary Point Type"
-msgstr "Τύπος σημείου ορίου"
-#
-msgid "Boundary Properties"
-msgstr "Ιδιότητες ορίου"
-#
-msgid "Boundary Properties, Layer: "
-msgstr "Ιδιότητες ορίου, ταξίδι: "
-#
-msgid "Boundary Type"
-msgstr "Τύπος ορίου"
-#
-msgid "Boundary not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "BoundaryPoint not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Centre"
-msgstr "Κέντρο"
-#
-msgid "Centre Line Style"
-msgstr "Στιλ κεντρικής γραμμής"
-#
-msgid "Centre Line Width"
-msgstr "Πλάτος κεντρικής γραμμής"
-#
-msgid "Centre on moving boat"
-msgstr "Κεντράρισε στο κινούμενο πλοίο"
-#
-msgid "Change all Path Point Icons"
-msgstr "Αλλαγή όλων των εικονιδίων των σημείων διαδρομής"
-#
-msgid "Character Based"
-msgstr "Βασισμένη στους χαρακτήρες"
-#
-msgid "Combo!"
-msgstr "Συνδυασμός!"
-#
-msgid "Confirm"
-msgstr "Επιβεβαίωση"
-#
-msgid "Confirm Object Delete"
-msgstr "Επιβεβαίωση διαγραφής αντικειμένου"
-#
-msgid "Control Line"
-msgstr "Γραμμή ελέγχου"
-#
-msgid "Copy"
-msgstr "Αντιγραφή"
-#
-msgid "Copy Boundary GUID"
-msgstr "Αντιγραφή ID ορίου"
-#
-msgid "Copy DR GUID"
-msgstr "Αντιγραφή ID DR"
-#
-msgid "Copy EBL GUID"
-msgstr "Αντιγραφή ID EBL"
-#
-msgid "Copy Guard Zone GUID"
-msgstr "Αντίγραφο GUID ζώνης επιφυλακής"
-#
-msgid "Copy Point GUID"
-msgstr "Αντιγραφή ID σημείου"
-#
-msgid "Copy lat/long"
-msgstr "Αντιγραφή πλάτους/μήκους"
-#
-msgid "Course over Ground"
-msgstr "Πραγματική πορεία"
-#
-msgid "Course over Ground (M)"
-msgstr "Πραγματική πορεία (Μαγν)"
-#
-msgid "Course over Ground (T)"
-msgstr "Πραγματική πορεία"
-#
-msgid "Create Boundary"
-msgstr "Δημιουργία ορίου"
-#
-msgid "Create Boundary Point"
-msgstr "Δημιουργία σημείου ορίου"
-#
-msgid "Create DR"
-msgstr "Δημιουργία DR"
-#
-msgid "Create EBL"
-msgstr "Δημιουργία EBL"
-#
-msgid "Create GZ"
-msgstr "Δημιουργία GZ"
-#
-msgid "Create PIL"
-msgstr "Δημιουργία PIL"
-#
-msgid "Create Text Point"
-msgstr "Δημιουργία σημείου κειμένου"
-#
-msgid "DR"
-msgstr "Εκτ. Πορεία"
-#
-msgid "DR Path Length"
-msgstr "Μήκος εκτιμώμενης πορείας"
-#
-msgid "DR Persistence"
-msgstr "Παραμένουσα DR"
-#
-msgid "DR Point"
-msgstr "Σημείο DR"
-#
-msgid "DR Point Icon"
-msgstr "Εικονίδιο σημείου DR"
-#
-msgid "DR Point Interval"
-msgstr "Διάστημα μεταξύ εκτιμώμενων σημείων"
-#
-msgid "DR Point Properties"
-msgstr "Ιδιότητες σημείου DR"
-#
-msgid "DR Point Properties, Layer: "
-msgstr "Ιδιότητες σημείου DR, ταξίδι: "
-#
-msgid "DR Properties"
-msgstr "Ιδιότητες DR"
-#
-msgid "DR Properties, Layer: "
-msgstr "Ιδιότητες DR, ταξίδι: "
-#
-msgid "Data Directory"
-msgstr "Κατάλογος δεδομένων"
-#
-msgid "Data:"
-msgstr "Δεδομένα:"
-#
-msgid "Date:"
-msgstr "Ημερομηνία:"
-#
-msgid "Days"
-msgstr "Μέρες"
-#
-msgid "Deactivate"
-msgstr "Απενεργοποίηση"
-#
+
+#: include/ODDRDialogDef.h:64 include/ODDRDialogDef.h:65
+#: src/ODToolbarImpl.cpp:546
 msgid "Dead Reckoning"
 msgstr "Εκτίμηση θέσης"
-#
-msgid "Default Offset (+Stbd/-Port)"
-msgstr "Προεπιλεγμένη αντιστάθμιση (+δεξιά /-αριστερά)"
-#
-msgid "Dele&te All"
-msgstr "Διαγρ&αφή όλων"
-#
-msgid "Delete"
-msgstr "Διαγραφή"
-#
-msgid "Delete Line"
-msgstr "Διαγραφή γραμμής"
-#
-msgid "Delete current OCPN_Draw config entries (No)"
-msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Όχι)"
-#
-msgid "Delete current OCPN_Draw config entries (Yes)"
-msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Ναι)"
-#
-msgid "Delete..."
-msgstr "Διαγραφή..."
-#
-msgid "Desc"
-msgstr "Περιγρ"
-#
-msgid "Description"
-msgstr "Περιγραφή"
-#
-msgid "Display Text"
-msgstr "Εμφάνιση κειμένου"
-#
-msgid "Display Toolbar"
-msgstr "Εμφάνιση γραμμής εργαλείων"
-#
-msgid "Display text"
-msgstr "Εμφάνιση κειμένου"
-#
-msgid "Distance"
-msgstr "Απόσταση"
-#
-msgid "Distance Between Range Rings"
-msgstr "Διάστημα μεταξύ των δακτυλίων απόστασης"
-#
-msgid "Distance From Boat"
-msgstr "Απόσταση από το πλοίο"
-#
-msgid "Distance Unit"
-msgstr "Μονάδα απόστασης"
-#
-msgid "Distance Units"
-msgstr "Μονάδες απόστασης"
-#
-msgid "Distance between Range Rings"
-msgstr "Διάστημα μεταξύ των δακτυλίων απόστασης"
-#
-msgid "Distance from Ownship"
-msgstr "Απόσταση από ίδιον πλοίο"
-#
-msgid ""
-"Do you also want to make the shared OD Points being part of this boundary "
-"invisible?"
-msgstr "Να κρυφτούν και τα κοινά σημεία OD αυτού του ορίου;"
-#
-msgid "Dot"
-msgstr "Διάστικτη"
-#
-msgid "Dot Dash"
-msgstr "Τελεία-παύλα"
-#
+
+#: include/ODNewODPointDialogDef.h:51 include/ODNewODPointDialogDef.h:52
+#: src/ODNewODPointDialogDef.cpp:37 src/ODPointPropertiesDialog.cpp:137
+msgid "Point Type"
+msgstr "Τύπος σημείου"
+
+#: include/ODPathPropertiesDialogDef.h:141
+#: include/ODPathPropertiesDialogDef.h:142
+#: src/PathAndPointManagerDialogImpl.cpp:756
+msgid "Path Properties"
+msgstr "Ιδιότητες πορείας"
+
+#: include/ODPointPropertiesDialog.h:165 include/ODPointPropertiesDialog.h:166
+msgid "OD Point Properties"
+msgstr "Ιδιότητες σημείου OD"
+
+#: include/ODPropertiesDialogDef.h:353 include/ODPropertiesDialogDef.h:354
+msgid "OCPN Draw Properties"
+msgstr "Ιδιότητες OCPN Draw"
+
+#: include/ODToolbarDef.h:49 include/ODToolbarDef.h:50 src/ocpn_draw_pi.cpp:655
+#: src/ocpn_draw_pi.cpp:657
 msgid "Draw Toolbar"
 msgstr "Λωρίδα εργαλείων"
-#
-msgid "E&xport All Visible"
-msgstr "Ε&ξαγωγή όλων των ορατών"
-#
-msgid "EBL"
-msgstr "EBL"
-#
-msgid "EBL Angle (-P/+S)"
-msgstr "Γωνία EBL (-Αρ/+Δξ)"
-#
-msgid ""
-"EBL Fixed\n"
-"End Position"
-msgstr ""
-"Εκτ. πορεία με\n"
-" σταθερό τελικό σημείο"
-#
-msgid "EBL Fixed End Position"
-msgstr "Εκτ. πορεία με σταθερό τελικό σημείο"
-#
-msgid "EBL Persistence"
-msgstr "Πaραμένουσα EBL"
-#
-msgid "EBL Point"
-msgstr "Σημείο EBL"
-#
-msgid "EBL Point Properties"
-msgstr "Ιδιότητες σημείου EBL"
-#
-msgid "EBL Point Properties, Layer: "
-msgstr "Ιδιότητες σημείου EBL, ταξίδι: "
-#
-msgid "EBL Properties"
-msgstr "Ιδιότητες EBL"
-#
-msgid "EBL Properties, Layer: "
-msgstr "Ιδιότητες EBL, ταξίδι: "
-#
-msgid ""
-"Edge Panning Sensitivity\n"
-"(percentage screen width) Default 5"
-msgstr ""
-"Ευαισθησία άκρης του πάνινγκ\n"
-"(% πλάτους οθόνης) προεπιλογή 5"
-#
-msgid "Edit"
-msgstr "Επεξεργασία"
-#
-msgid "Electronic Bearing Line"
-msgstr "Γραμμή ηλεκτρονικής διόπτευσης"
-#
-msgid "End"
-msgstr "Τέλος"
-#
-msgid "End Point Icon"
-msgstr "Εικονίδιο σημείου τερματισμού"
-#
-msgid "Error in import file."
-msgstr "Σφάλμα κατά την εισαγωγή του αρχείου."
-#
-msgid "Example"
-msgstr "Παράδειγμα"
-#
-msgid "Exclusion"
-msgstr "Αποκλεισμένη"
-#
-msgid "Export GPX file"
-msgstr "Εξαγωγή αρχείου GPX"
-#
-msgid "Extended"
-msgstr "Εκτεταμένο"
-#
-msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
-msgstr ""
-"Αποτυχία φόρτωσης όλων των εικόνων του προσθέτου OCPN Draw, κοιτάξτε το OCPN "
-"log για λεπτομέρειες"
-#
-msgid "Fill Colour"
-msgstr "Εσωτερικό χρώμα"
-#
-msgid "Fill Density"
-msgstr "Εσωτερική πυκνότητα"
-#
-msgid "First"
-msgstr "Πρώτο"
-#
-msgid "First Angle (-P/+S)"
-msgstr "Πρώτη γωνία (-Αρ/+Δ)"
-#
-msgid "First Point Icon"
-msgstr "Εικονίδιο πρώτου σημείου"
-#
-msgid "First distance"
-msgstr "Πρώτη απόσταση"
-#
-msgid "Font Based"
-msgstr "Βασισμένη στη γραμματοσειρά"
-#
-msgid "Fonts"
-msgstr "Γραμματοσειρές"
-#
-msgid "For this leg the Great Circle boundary is "
-msgstr "Για αυτό το σκέλος τ όριο Μεγάλου Κύκλου είναι "
-#
-msgid "From Point"
-msgstr "Από το σημείο"
-#
-msgid "From: "
-msgstr "Από: "
-#
-msgid "GL_INVALID_ENUM "
-msgstr ""
-#
-msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
-msgstr ""
-#
-msgid "GL_INVALID_OPERATION "
-msgstr ""
-#
-msgid "GL_INVALID_VALUE "
-msgstr ""
-#
-msgid "GL_OUT_OF_MEMORY "
-msgstr ""
-#
-msgid "GUID"
-msgstr "ID Σημείου"
-#
-msgid "GZ"
-msgstr "GZ"
-#
-msgid "GZ Point Properties, Layer: "
-msgstr "Ιδιότητες σημείου GZ, ταξίδι: "
-#
-msgid "General"
-msgstr "Γενικά"
-#
-msgid ""
-"General Drawing for OpenCPN\n"
-"\n"
-"Thanks to the community for their helpful suggestions."
-msgstr ""
-"Γενικό σχέδιο για το OpenCPN\n"
-"\n"
-"Ευχαριστούμε την Κοινότητα για τις χρήσιμες προτάσεις."
-#
-msgid "General drawing for OpenCPN"
-msgstr "Γενικό σχέδιο για το OpenCPN"
-#
-msgid "Guard Zone"
-msgstr "Ζώνης επιφυλακής"
-#
-msgid "Guard Zone Persistence"
-msgstr "Επιμονή ζώνης επιφυλακής"
-#
-msgid "Guard Zone Point"
-msgstr "Σημείο ζώνης επιφυλακής"
-#
-msgid "Guard Zone Point Properties"
-msgstr "Ιδιότητες σημείων ζώνης επιφυλακής"
-#
-msgid "Guard Zone Properties"
-msgstr "Ιδιότητες ζώνης επιφυλακής"
-#
-msgid "Guard Zone not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Heading"
-msgstr "Πορεία"
-#
-msgid "Help"
-msgstr "Βοήθεια"
-#
-msgid "Hide Boundary Point Icons"
-msgstr "Απόκρυψη εικονιδίων σημείων ορίου"
-#
-msgid "Hide Layer(s)"
-msgstr "Απόκρυψη ταξιδιού(ών)"
-#
-msgid "Hide Path(s)"
-msgstr "Απόκρυψη διαδρομής(ών)"
-#
-msgid "Hide Point names"
-msgstr "Απόκρυψη ονομάτων σημείων"
-#
-msgid "Hide Point(s)"
-msgstr "Απόκρυψη σημείου(ων)"
-#
-msgid "Hide from chart"
-msgstr "Κρύψε από τον χάρτη"
-#
-msgid "Hours"
-msgstr "Ώρες"
-#
-msgid "I&mport"
-msgstr "Ε&ισαγωγή"
-#
-msgid "ID"
-msgstr "ID"
-#
-msgid "ID Num"
-msgstr "Αρ. ID"
-#
-msgid "ID: "
-msgstr "ID: "
-#
-msgid "Icon"
-msgstr "Εικονίδιο"
-#
-msgid "Icon Directory"
-msgstr "Κατάλογος εικόνων"
-#
-msgid "Icon Scaling"
-msgstr ""
-#
-msgid "Import Error"
-msgstr "Σφάλμα κατά την Εισαγωγή"
-#
-msgid "Import GPX file"
-msgstr "Εισαγωγή αρχείου GPX"
-#
-msgid "Import file"
-msgstr "Εισαγωγή αρχείου"
-#
-#, fuzzy
-msgid "Import gpx"
-msgstr "Εισαγωγή"
-#
-msgid "Import incomplete."
-msgstr "Ατελής εισαγωγή."
-#
-msgid "Inactive Centre Line Colour"
-msgstr "Χρώμα μη ενεργής κεντρικής γραμμής"
-#
-#, fuzzy
-msgid "Inactive DR Line Colour"
-msgstr ""
-"Χρώμα ανενεργής\n"
-"γραμμής DR"
-#
-msgid "Inactive EBL Line Colour"
-msgstr "Ανενεργό χρώμα γραμμής EBL"
-#
-msgid "Inactive Fill Colour"
-msgstr "Χρώμα ανενεργού εσωτερικού"
-#
-msgid "Inactive Line Colour"
-msgstr "Χρώμα ανενεργής γραμμής"
-#
-msgid "Inactive Offset Line 2 Colour"
-msgstr "Χρώμα 2ης ανενεργής γραμμής μετατόπισης"
-#
-msgid "Inactive Offset Line Colour"
-msgstr "Χρώμα μη ενεργής γραμμής μετατόπισης"
-#
-msgid "Inclusion"
-msgstr "Περιορισμένη"
-#
-msgid ""
-"Inclusion Boundary\n"
-"Size"
-msgstr ""
-"Μέγεθος ορίου\n"
-"εγκλείσματος"
-#
-msgid "Inclusion Boundary Size"
-msgstr "Μέγεθος ορίου εγκλείσματος"
-#
+
+#: include/PILPropertiesDialogDef.h:73 include/PILPropertiesDialogDef.h:74
 msgid "Index Line Properties"
 msgstr "Ιδιότητες γραμμής Index"
-#
-msgid "Index Lines (+ Stbd/- Port)"
-msgstr "Γραμμές Index (+ δεξιά/- αριστερά)"
-#
-msgid ""
-"Initial Edge Panning Sensitivity\n"
-"(percentage screen width) Default 3"
-msgstr ""
-"Αρχική ευαισθησία του πάνινγκ\n"
-"(% πλάτους οθόνης) προεπιλογή 3"
-#
-msgid "Initial number of index lines"
-msgstr "Αρχικός αριθμός γραμμών αναφοράς"
-#
-msgid "Insert Boundary Point"
-msgstr "Εισαγωγή σημείου ορίου"
-#
-msgid "Insert EBL Point"
-msgstr "Εισαγωγή σημείου EBL"
-#
-msgid "Interval Type"
-msgstr "Τύπος διαστήματος"
-#
-msgid "Kilometres"
-msgstr "Χιλιόμετρα"
-#
-msgid "Latitude"
-msgstr "Γεωγρ. πλάτος"
-#
-msgid "Layer"
-msgstr "Ταξίδι"
-#
-msgid "Layer "
-msgstr "Ταξίδι "
-#
-msgid "Layer Boundary"
-msgstr "Όριο ταξιδιού"
-#
-msgid "Layer Boundary Point"
-msgstr "Σημείο ορίου ταξιδιού"
-#
-msgid "Layer DR Point"
-msgstr "Σημείο DR ταξιδιού"
-#
-msgid "Layer EBL Point"
-msgstr "Σημείο EBL ταξιδιού"
-#
-msgid "Layer Name"
-msgstr "Όνομα ταξιδιού"
-#
-msgid "Layer Text Point"
-msgstr "Σημείο κειμένου ταξιδιού"
-#
-msgid "Layers"
-msgstr "Ταξίδια"
-#
-msgid "Layers Directory"
-msgstr "Κατάλογος ταξιδιών"
-#
-msgid "Left"
-msgstr "Αριστερά"
-#
-msgid "Left Click links are deleted."
-msgstr "Διαγράφονται οι σύνδεσμοι αριστερού κλικ."
-#
-msgid "Left Click links are opened for editing."
-msgstr "Σύνδεσμοι αριστερού κλικ ανοίγουν για επεξεργασία."
-#
-msgid "Left Click links are opened in the default browser."
-msgstr "Σύνδεσμοι αριστερού κλικ ανοίγουν στον στάνταρτ browser."
-#
-msgid "Left click opens in browser"
-msgstr "Αριστερό κλικ ανοίγει το πρόγραμμα περιήγησης"
-#
-msgid "Leg: from "
-msgstr "Σκέλος: από "
-#
-msgid "Length Type"
-msgstr "Τύπος μήκους"
-#
-msgid "License"
-msgstr "Άδεια χρήσης"
-#
-msgid "Line Colour"
-msgstr "Χρώμα γραμμής"
-#
-msgid "Line Style"
-msgstr "Στυλ γραμμής"
-#
-msgid "Line Type"
-msgstr "Τύπος γραμμής"
-#
-msgid "Line Width"
-msgstr "Πλάτος Γραμμής"
-#
-msgid "Link"
-msgstr "Σύνδεσμος"
-#
-msgid "Link Description"
-msgstr "Περιγραφή συνδέσμου"
-#
-msgid "Links"
-msgstr "Σύνδεσμοι"
-#
-msgid "List contents "
-msgstr "Περιεχόμενα "
-#
+
+#: include/PathAndPointManagerDialogDef.h:121
+#: include/PathAndPointManagerDialogDef.h:122
+msgid "Path & Point Manager"
+msgstr "Διαχείρηση διαδρομής & σημείων"
+
+#: src/Boundary.cpp:399
+msgid "Boundary not drawn as OpenGL not available in this build"
+msgstr "Το όριο δεν σχεδιάζεται καθώς το OpenGL δεν είναι διαθέσιμο εδώ"
+
+#: src/BoundaryPoint.cpp:209
+msgid "BoundaryPoint not drawn as OpenGL not available in this build"
+msgstr "Το σημείο ορίου δεν σχεδιάστηκε καθώς το OpenGL δεν είναι διαθέσιμο"
+
+#: src/EBL.cpp:82 src/EBL.cpp:264 src/ODPathPropertiesDialogImpl.cpp:463
+#: src/ODPathPropertiesDialogImpl.cpp:471 src/ODPathPropertiesDialogImpl.cpp:507
+#: src/ODPathPropertiesDialogImpl.cpp:580 src/ODPathPropertiesDialogImpl.cpp:588
+#: src/ODPathPropertiesDialogImpl.cpp:623 src/ocpn_draw_pi.cpp:3008
+#: src/ocpn_draw_pi.cpp:4008 src/ocpn_draw_pi.cpp:4198
+msgid "Boat"
+msgstr "Πλοίο"
+
+#: src/EBL.cpp:82 src/EBL.cpp:293 src/EBL.cpp:340 src/EBL.cpp:350
+#: src/ODEventHandler.cpp:829 src/PIL.cpp:270
+msgid "Start"
+msgstr "Αρχή"
+
+#: src/EBL.cpp:90 src/ocpn_draw_pi.cpp:4015 src/ocpn_draw_pi.cpp:4204
+msgid "End"
+msgstr "Τέλος"
+
+#: src/EBLProp.cpp:60 src/ODPropertiesDialogDef.cpp:641
+msgid "EBL Persistence"
+msgstr "Πaραμένουσα EBL"
+
+#: src/GZ.cpp:293
+msgid "Guard Zone not drawn as OpenGL not available in this build"
+msgstr "Η ζώνη προστασίας δεν σχεδιάζεται καθώς το OpenGL δεν είναι διαθέσιμο"
+
+#: src/GZProp.cpp:77 src/ODPropertiesDialogDef.cpp:995
+msgid "Guard Zone Persistence"
+msgstr "Επιμονή ζώνης επιφυλακής"
+
+#: src/ODConfig.cpp:158 src/ODConfig.cpp:198 src/ODConfig.cpp:379
+#: src/ODConfig.cpp:404
+msgid "Export GPX file"
+msgstr "Εξαγωγή αρχείου GPX"
+
+#: src/ODConfig.cpp:181 src/ODConfig.cpp:211 src/ODConfig.cpp:392
+msgid "Confirm"
+msgstr "Επιβεβαίωση"
+
+#: src/ODConfig.cpp:181 src/ODConfig.cpp:211 src/ODConfig.cpp:392
+msgid "Overwrite existing file?"
+msgstr "Επικάλυψη υπάρχοντος αρχείου;"
+
+#: src/ODConfig.cpp:246
 msgid "Loading navobjects from "
 msgstr "Φόρτωση navobjects από "
-#
-msgid "Local file..."
-msgstr "Τοπικό αρχείο..."
-#
-msgid "Long Dash"
-msgstr "Μεγάλη παύλα"
-#
-msgid "Longitude"
-msgstr "Γεωγρ. μήκος"
-#
-msgid "Maintain with"
-msgstr "Διατήρηση με"
-#
-msgid "Major:"
-msgstr "Κύριο:"
-#
-msgid "Match VRM colour to EBL colour"
-msgstr "Ταίριαξε το χρώμα του δακτυλίου με το χρώμα της EBL"
-#
-msgid "Maximum Text Width"
-msgstr "Μέγιστο πλάτος κειμένου"
-#
-msgid "Maximum Width Type"
-msgstr "Μέγιστο πλάτος"
-#
-msgid "Merge and Delete Boundaries"
-msgstr "Συγχώνευση και διαγραφή ορίων"
-#
-msgid "Merge and Keep Boundaries"
-msgstr "Συγχώνευση και διατήρηση ορίων"
-#
-msgid "Minor:"
-msgstr "Έλασσον:"
-#
-msgid "Minutes"
-msgstr "Λεπτά"
-#
-msgid "Move Boundary"
-msgstr "Μετακίνησε το όριο"
-#
-msgid "Move Boundary Point"
-msgstr "Μετακίνησε το σημείο ορίου"
-#
-msgid "Move Boundary Segment"
-msgstr "Μετακίνηση του τμήματος του ορίου"
-#
-msgid "Move DR Point"
-msgstr "Μετακίνησε το σημείο DR"
-#
-msgid "Move EBL"
-msgstr "Μετακίνησε την EBL"
-#
-msgid "Move EBL Point"
-msgstr "Μετακίνησε το σημείο EBL"
-#
-msgid "Move Guard Zone Point"
-msgstr "Μετακίνηση σημείου ζώνης επιφυλακής"
-#
-msgid "Move Line"
-msgstr "Μετακίνηση γραμμής"
-#
-msgid "Move OD Point"
-msgstr "Μετακίνησε το σημείο OD"
-#
-msgid "Move PIL Point"
-msgstr "Μετακίνησε το σημείο PIL"
-#
-msgid "Move Text Point"
-msgstr "Μετακίνησε το σημείο κειμένου"
-#
-msgid "Move start point to boat lat/lon"
-msgstr "Μετακινήσετε το σημείο εκκίνησης στις συντεταγμένες του πλοίου"
-#
-msgid "Multiple Boundaries"
-msgstr "Πολλαπλά όρια"
-#
-msgid "Name"
-msgstr "Όνομα"
-#
-msgid "Name:"
-msgstr "Όνομα:"
-#
-msgid "Name: "
-msgstr "Όνομα: "
-#
-msgid "Nautical Miles"
-msgstr "Ναυτικά μίλια"
-#
-msgid "Neither"
-msgstr "Γενική"
-#
-msgid "Never"
-msgstr "Ποτέ"
-#
-msgid "New &temporary Layer"
-msgstr "Νέο &προσωρινό ταξίδι"
-#
+
+#: src/ODConfig.cpp:278
+msgid "Applying changes from "
+msgstr "Εφαρμογή αλλαγών από "
+
+#: src/ODConfig.cpp:505 src/ODConfig.cpp:511 src/ODConfig.cpp:625
+msgid "Import GPX file"
+msgstr "Εισαγωγή αρχείου GPX"
+
+#: src/ODConfig.cpp:560 src/ODConfig.cpp:688 src/ODConfig.cpp:728
 #, c-format
 msgid "New layer %d: %s"
 msgstr "Νέα ταξίδι %d: %s"
-#
-msgid "New persistent &Layer"
-msgstr "Νέα μόνιμο &ταξίδι"
-#
-msgid "No"
-msgstr "Όχι"
-#
-msgid "No alarm"
-msgstr "Όχι συναγερμός"
-#
-msgid "No. of items"
-msgstr "Αρ. στοιχείων"
-#
-msgid "None"
-msgstr "Καμία"
-#
-msgid "Number of Point Range Rings"
-msgstr "Αριθμός δακτυλίων απόστασης σημείου"
-#
-msgid "Number of Range Rings"
-msgstr "Αριθμός δακτυλίων απόστασης"
-#
-msgid "OCPN API Version:"
-msgstr "Εκδοχή προσθέτου OCPN:"
-#
-msgid "OCPN Draw"
-msgstr "OCPN Draw"
-#
-msgid "OCPN Draw API Version:"
-msgstr "Εκδοχή προσθέτου OCPN Draw:"
-#
-msgid "OCPN Draw Boundary"
-msgstr "Όριο OCPN Draw"
-#
-msgid "OCPN Draw Boundary Create"
-msgstr "Δημιουργία ορίου OCPN Draw"
-#
-msgid "OCPN Draw Boundary Delete"
-msgstr "Διαγραφή του ορίου OCPN Draw"
-#
-msgid "OCPN Draw DR Delete"
-msgstr "Διαγραφή εκτίμησης"
-#
-msgid "OCPN Draw Delete Boundary Point"
-msgstr "Διαγραφή σημείου ορίου"
-#
-msgid "OCPN Draw Delete DR Point"
-msgstr "Διαγραφή σημείου DR"
-#
-msgid "OCPN Draw Delete EBL Point"
-msgstr "Διαγραφή σημείου EBL"
-#
-msgid "OCPN Draw Delete OD Point"
-msgstr "Διαγραφή σημείου OD"
-#
-msgid "OCPN Draw Delete PIL Point"
-msgstr "Διαγραφή σημείου PIL"
-#
-msgid "OCPN Draw Delete Text Point"
-msgstr "Διαγραφή σημείου κειμένου"
-#
-msgid "OCPN Draw Directories:"
-msgstr "Φάκελοι OCPN Draw:"
-#
-msgid "OCPN Draw EBL Delete"
-msgstr "Διαγραφή εκτ. πορείας OCPN Draw"
-#
-msgid "OCPN Draw GZ Delete"
-msgstr "Διαγραφή ζώνης επιφυλακής"
-#
-msgid "OCPN Draw Manager"
-msgstr "OCPN Draw Manager"
-#
-msgid "OCPN Draw PIL Delete"
-msgstr "Διαγραφή PIL"
-#
-msgid "OCPN Draw Parallel Index Line Delete"
-msgstr "Διαγραφή γραμμής Parallel Index"
-#
-msgid "OCPN Draw Path"
-msgstr "Διαδρομή OCPN Draw"
-#
-msgid "OCPN Draw Point"
-msgstr "Σημείο OCPN Draw"
-#
-msgid "OCPN Draw Point Create"
-msgstr "Δημιουργία σημείου OCPN Draw"
-#
-msgid "OCPN Draw Point, Layer: "
-msgstr "Σημείο OCPN Draw, ταξίδι: "
-#
-msgid "OCPN Draw Properties"
-msgstr "Ιδιότητες OCPN Draw"
-#
-msgid "OCPN Draw Remove "
-msgstr "Αφαίρεση "
-#
-msgid "OCPN Draw Remove Boundary Point"
-msgstr "Αφαίρεση σημείου ορίου"
-#
-msgid "OCPN Draw Remove DR Point"
-msgstr "Αφαίρεση σημείου DR"
-#
-msgid "OCPN Draw Remove EBL Point"
-msgstr "Αφαίρεση σημείου EBL"
-#
-msgid "OCPN Draw Remove OD Point"
-msgstr "Αφαίρεση σημείου OD"
-#
-msgid "OCPN_Draw Nav Object Backups"
-msgstr "Back-up των αντικειμένων OCPN_Draw Nav"
-#
-msgid "OD"
-msgstr "OD"
-#
-msgid "OD Point"
-msgstr "Σημείο OD"
-#
-msgid "OD Point Name"
-msgstr "Όνομα σημείου OD"
-#
-msgid "OD Point Properties"
-msgstr "Ιδιότητες σημείου OD"
-#
-msgid "OD Points"
-msgstr "Σημεία OD"
-#
-msgid "ODDC::DrawPolygon: bcolloc -1"
-msgstr ""
-#
-msgid "ODPoint not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "OD\\WD"
-msgstr "OD\\WD"
-#
-msgid "Offset"
-msgstr "Μετατόπιση"
-#
-msgid "Offset (+ Stbd/- Port)"
-msgstr "Offset: + δεξιά, - αριστερά"
-#
-msgid "Offset Line 2 Style"
-msgstr "Στιλ 2ης γραμμής μετατόπισης"
-#
-msgid "Offset Line 2 Width"
-msgstr "Πλάτος 2ης γραμμής μετατόπισης"
-#
-msgid "Offset Line Style"
-msgstr "Στιλ γραμμής μετατόπισης"
-#
-msgid "Offset Line Width"
-msgstr "Πλάτος γραμμής μετατόπισης"
-#
-msgid "Offset: "
-msgstr "Μετατόπιση: "
-#
-msgid "On Rollover Only"
-msgstr "Στο Rollover μόνο"
-#
-msgid "OpenCPN Alert"
-msgstr "OpenCPN: Συναγερμός"
-#
-msgid "Other:"
-msgstr "Άλλο:"
-#
-msgid "Overwrite existing file?"
-msgstr "Επικάλυψη υπάρχοντος αρχείου;"
-#
-msgid "PIL"
-msgstr "PIL"
-#
-msgid "PIL Persistence"
-msgstr "Διάρκεια PIL"
-#
-msgid "PIL Point"
-msgstr "Σημείο PIL"
-#
-msgid "PIL Point Properties"
-msgstr "Ιδιότητες σημείου PIL"
-#
-msgid "PIL Point Properties, Layer: "
-msgstr "Ιδιότητες σημείου PIL, ταξίδι: "
-#
-msgid "Parallel Index Line"
-msgstr "Παράλληλη γραμμή Index"
-#
-msgid "Parallel Index Line Angle (+Stbd/-Port)"
-msgstr "Γωνία γραμμής Parallel Index (+δεξιά/-αριστερά)"
-#
-msgid "Parallel Index Line Persistence"
-msgstr "Διάρκεια παράλληλης γραμμής Index"
-#
-msgid "Parallel Index Line Properties"
-msgstr "Ιδιότητες παράλληλης γραμμής Index"
-#
-msgid "Paste"
-msgstr "Επικόλληση"
-#
-msgid "Paste lat/long"
-msgstr "Επικόλληση πλάτους/μήκους"
-#
-msgid "Patch:"
-msgstr "Ενημέρωση κώδικα:"
-#
-msgid "Path"
-msgstr "Διαδρομή"
-#
-msgid "Path & Point Manager"
-msgstr "Διαχείρηση διαδρομής & σημείων"
-#
-msgid "Path Manager Dialog"
-msgstr "Διάλογος διαχείρισης διαδρομής"
-#
-msgid "Path Name"
-msgstr "Όνομα διαδρομής"
-#
-msgid "Path Persistence"
-msgstr "Παραμένουσα εκτ. πορεία"
-#
-msgid "Path Properties"
-msgstr "Ιδιότητες πορείας"
-#
-msgid "Path Properties, Layer: "
-msgstr "Ιδιότητες διαδρομής, ταξίδι: "
-#
-msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
-msgstr ""
-#
-msgid "Paths"
-msgstr "Διαδρομές"
-#
-msgid "Permanent Layers:"
-msgstr "Μόνιμα ταξίδια:"
-#
-msgid "Persistent"
-msgstr "Παραμένον"
-#
-msgid "Persistent over Crash"
-msgstr "Παραμένον μετά το κρας"
-#
-msgid "Pick a new start point"
-msgstr "Διαλέξτε ένα νέο σημείο εκκίνησης"
-#
-msgid ""
-"Please report problems using FlySpray at:\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-"\n"
-"or\n"
-"\n"
-"at the OpenCPN forum:\n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"or\n"
-"\n"
-"Raise an issue in GIT at:\n"
-"https://github.com/jongough/ocpn_draw_pi/issues\n"
-msgstr ""
-"Αναφέρετε προβλήματα μέσω του FlySpray στο::\n"
-"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n"
-"\n"
-"ή\n"
-"\n"
-"στο φόρουμ OpenCPN: \n"
-"http://www.cruisersforum.com/forums/f134\n"
-"\n"
-"ή\n"
-"\n"
-"δηλώστε το στο GIT: \n"
-"https://github.com/jongough/ocpn_draw_pi/issues \n"
-#
-msgid "Point Inclusion Size"
-msgstr "Μέγεθος σημείου"
-#
-msgid "Point Type"
-msgstr "Τύπος σημείου"
-#
-msgid "Points"
-msgstr "Σημεία"
-#
-msgid "Properties"
-msgstr "Ιδιότητες"
-#
-msgid "Properties..."
-msgstr "Ιδιότητες..."
-#
-msgid "Question"
-msgstr "Ερώτηση"
-#
-msgid "Range Ring Colours"
-msgstr "Χρώμα δακτυλίων απόστασης"
-#
-msgid "Range Ring Line Style"
-msgstr "Στυλ γραμμής δακτυλίων απόστασης"
-#
-msgid "Range Ring Line Width"
-msgstr "Πλάτος γραμμής δακτυλίων απόστασης"
-#
-msgid "Remember properties dialogs positions over a restart"
-msgstr "Κράτησε τη θέση των διαλόγων των ιδιοτήτων για επανέναρξη"
-#
-msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
-msgstr ""
-"Κατάργηση των επιλογών του OCPN_Draw και επιστροφή στις προεπιλεγμένες κατά "
-"την επανέναρξη (Όχι)"
-#
-msgid "Remove Point from Path"
-msgstr "Αφαίρεση σημείου από διαδρομή"
-#
-msgid "Removing this point will invalidate the Boundary, this is not allowed."
-msgstr "Αφαίρεση αυτoύ του σημείου θα ακυρώσει το όριο, δεν επιτρέπεται."
-#
-msgid "Right"
-msgstr "Δεξιά"
-#
-msgid "Ring"
-msgstr "Δακτύλιος"
-#
-msgid "RolloverPopupTimer->Unbind not found or not removed"
-msgstr ""
-#
-msgid ""
-"Rotate with\n"
-"Boat"
-msgstr ""
-"Περιστροφή\n"
-" με το πλοίο"
-#
-msgid "Rotate with Boat"
-msgstr "Περιστροφή με το πλοίο"
-#
-msgid "Second"
-msgstr "Δεύτερο"
-#
-msgid "Second Angle (-P/+S)"
-msgstr "Δεύτερη γωνία (-Αρ/+Δ)"
-#
-msgid "Second Point Icon"
-msgstr "Εικονίδιο δευτέρου σημείου"
-#
-msgid "Second distance"
-msgstr "Δεύτερη απόσταση"
-#
-msgid "Short Dash"
-msgstr "Με κοντές παύλες"
-#
-msgid "Show"
-msgstr "Εμφάνιση"
-#
-msgid "Show &Point names"
-msgstr "Εμφάνιση ονομάτων &σημείων"
-#
-msgid "Show Boundary Point Icons"
-msgstr "Εμφάνιση εικονιδίων σημείων ορίου"
-#
-msgid "Show DR Direction Arrow"
-msgstr "Εμφάνιση βέλος κατεύθυνσης DR"
-#
-msgid "Show Display Text"
-msgstr "Εμφάνιση οθόνης κειμένου"
-#
-msgid "Show EBL Direction Arrow"
-msgstr "Εμφάνιση βέλους κατεύθυνσης EBL"
-#
-msgid "Show Layer(s)"
-msgstr "Ταξίδι(α)"
-#
-msgid "Show Layers"
-msgstr "Ταξίδια"
-#
-msgid "Show Magnetic Bearings"
-msgstr "Εμφάνιση μαγν. διόπτευσης"
-#
-msgid "Show Name"
-msgstr "Εμφάνιση ονόματος"
-#
-msgid "Show Path Direction Arrow"
-msgstr "Εμφάνιση βέλους εκτ. κατεύθυνσης"
-#
-msgid "Show Paths(s)"
-msgstr "Διαδρομή(ές)"
-#
-msgid ""
-"Show Perpendicular\n"
-"Index Line"
-msgstr ""
-"Εμφάνιση κάθετης\n"
-" γραμμής Index"
-#
-msgid "Show Perpendicular Index Line"
-msgstr "Εμφάνιση κάθετης γραμμής Index"
-#
-msgid "Show Point Range Rings"
-msgstr "Εμφάνιση δακτυλίων απόστασης σημείων"
-#
-msgid "Show Point names"
-msgstr "Εμφάνιση ονομάτων σημείων"
-#
-msgid "Show Point(s)"
-msgstr "Σημείο(α)"
-#
-msgid "Show Range Rings"
-msgstr "Εμφάνιση δακτυλίων απόστασης"
-#
-msgid "Show VRM"
-msgstr "Εμφάνιση δακτυλίων"
-#
-msgid "Show at scale> 1:"
-msgstr ""
-#
-msgid "Show name"
-msgstr "Εμφάνιση ονόματος"
-#
-msgid "Show on &chart"
-msgstr "Εμφάνιση στον &χάρτη"
-#
-msgid "Show on chart"
-msgstr "Εμφάνιση στον χάρτη"
-#
-msgid "Solid"
-msgstr "Συμπαγής"
-#
+
+#: src/ODConfig.cpp:632
+msgid "Import file"
+msgstr "Εισαγωγή αρχείου"
+
+#: src/ODDRDialogDef.cpp:40 src/ODPropertiesDialogDef.cpp:696
 msgid "Speed over Ground"
 msgstr "Πραγματική ταχύτητα"
-#
-msgid "Start"
-msgstr "Αρχή"
-#
-msgid "Start Point Icon"
-msgstr "Εικονίδιο σημείου εκκίνησης"
-#
-msgid "Straight"
-msgstr "Ευθεία"
-#
-msgid "Text"
-msgstr "Κείμενο"
-#
-msgid "Text Colour"
-msgstr "Χρώμα κειμένου"
-#
-msgid "Text Font"
-msgstr "Γραμματοσειρά κειμένου"
-#
+
+#: src/ODDRDialogDef.cpp:44 src/ODDRDialogDef.cpp:58 src/ODDRDialogDef.cpp:65
+msgid "0.0"
+msgstr "0.0"
+
+#: src/ODDRDialogDef.cpp:47 src/ODPathPropertiesDialogDef.cpp:189
+#: src/ODPathPropertiesDialogDef.cpp:238 src/ODPropertiesDialogDef.cpp:618
+#: src/ODPropertiesDialogDef.cpp:703 src/ODPropertiesDialogDef.cpp:973
+msgid "Course over Ground"
+msgstr "Πραγματική πορεία"
+
+#: src/ODDRDialogDef.cpp:51
+msgid "0"
+msgstr "0"
+
+#: src/ODDRDialogDef.cpp:54 src/ODPropertiesDialogDef.cpp:710
+msgid "DR Path Length"
+msgstr "Μήκος εκτιμώμενης πορείας"
+
+#: src/ODDRDialogDef.cpp:61 src/ODPropertiesDialogDef.cpp:717
+msgid "DR Point Interval"
+msgstr "Διάστημα μεταξύ εκτιμώμενων σημείων"
+
+#: src/ODDRDialogDef.cpp:68 src/ODDRDialogDef.cpp:74
+#: src/ODPropertiesDialogDef.cpp:734 src/ODPropertiesDialogDef.cpp:740
+msgid "Distance"
+msgstr "Απόσταση"
+
+#: src/ODDRDialogDef.cpp:68 src/ODDRDialogDef.cpp:74
+#: src/ODPropertiesDialogDef.cpp:734 src/ODPropertiesDialogDef.cpp:740
+msgid "Time"
+msgstr "Χρόνος"
+
+#: src/ODDRDialogDef.cpp:70 src/ODPropertiesDialogDef.cpp:736
+msgid "Length Type"
+msgstr "Τύπος μήκους"
+
+#: src/ODDRDialogDef.cpp:76 src/ODPropertiesDialogDef.cpp:742
+msgid "Interval Type"
+msgstr "Τύπος διαστήματος"
+
+#: src/ODDRDialogDef.cpp:88 src/ODPointPropertiesDialog.cpp:200
+#: src/ODPropertiesDialogDef.cpp:340 src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:820
+msgid "Kilometres"
+msgstr "Χιλιόμετρα"
+
+#: src/ODDRDialogDef.cpp:88 src/ODPointPropertiesDialog.cpp:200
+#: src/ODPropertiesDialogDef.cpp:340 src/ODPropertiesDialogDef.cpp:746
+#: src/ODPropertiesDialogDef.cpp:820
+msgid "Nautical Miles"
+msgstr "Ναυτικά μίλια"
+
+#: src/ODDRDialogDef.cpp:90 src/ODPropertiesDialogDef.cpp:748
+msgid "Distance Units"
+msgstr "Μονάδες απόστασης"
+
+#: src/ODDRDialogDef.cpp:94 src/ODPropertiesDialogDef.cpp:752
+msgid "Days"
+msgstr "Μέρες"
+
+#: src/ODDRDialogDef.cpp:94 src/ODPropertiesDialogDef.cpp:752
+msgid "Hours"
+msgstr "Ώρες"
+
+#: src/ODDRDialogDef.cpp:94 src/ODPropertiesDialogDef.cpp:752
+msgid "Minutes"
+msgstr "Λεπτά"
+
+#: src/ODDRDialogDef.cpp:96 src/ODPropertiesDialogDef.cpp:754
+msgid "Time Units"
+msgstr "Μονάδες χρόνου"
+
+#: src/ODDRDialogDef.cpp:106 src/ODLinkPropertiesDialogDef.cpp:59
+#: src/ODNewODPointDialogDef.cpp:44 src/ODPathPropertiesDialogDef.cpp:349
+#: src/ODPointPropertiesDialog.cpp:463 src/ODPropertiesDialogDef.cpp:1462
+#: src/PILPropertiesDialogDef.cpp:118 src/PathAndPointManagerDialogDef.cpp:204
+msgid "&OK"
+msgstr "&Εντάξει"
+
+#: src/ODDRDialogDef.cpp:111 src/ODLinkPropertiesDialogDef.cpp:62
+#: src/ODNewODPointDialogDef.cpp:47 src/ODPathPropertiesDialogDef.cpp:354
+#: src/ODPointPropertiesDialog.cpp:466 src/ODPropertiesDialogDef.cpp:1465
+#: src/PILPropertiesDialogDef.cpp:121
+msgid "&Cancel"
+msgstr "&Ακύρωση"
+
+#: src/ODDRDialogImpl.cpp:76 src/ODDRDialogImpl.cpp:109
+#: src/ODDRDialogImpl.cpp:150
+msgid "Course over Ground (M)"
+msgstr "Πραγματική πορεία (Μαγν)"
+
+#: src/ODDRDialogImpl.cpp:77 src/ODDRDialogImpl.cpp:110
+#: src/ODDRDialogImpl.cpp:151
+msgid "Course over Ground (T)"
+msgstr "Πραγματική πορεία"
+
+#: src/ODDRDialogImpl.cpp:197 src/ODPropertiesDialogDef.cpp:775
+msgid "DR"
+msgstr "Εκτ. Πορεία"
+
+#: src/ODEventHandler.cpp:231 src/ODEventHandler.cpp:1038
+msgid "Layer "
+msgstr "Ταξίδι "
+
+#: src/ODEventHandler.cpp:241
+msgid "(unnamed)"
+msgstr "(ανώνυμο)"
+
+#: src/ODEventHandler.cpp:248
+msgid "Total Length: "
+msgstr "Συνολικό μήκος: "
+
+#: src/ODEventHandler.cpp:249
+msgid "Leg: from "
+msgstr "Σκέλος: από "
+
+#: src/ODEventHandler.cpp:250
+msgid " to "
+msgstr " προς "
+
+#: src/ODEventHandler.cpp:260
+msgid "Name: "
+msgstr "Όνομα: "
+
+#: src/ODEventHandler.cpp:261
+msgid "ID: "
+msgstr "ID: "
+
+#: src/ODEventHandler.cpp:262
+msgid "Offset: "
+msgstr "Μετατόπιση: "
+
+#: src/ODEventHandler.cpp:265
+msgid "Bearing: "
+msgstr "Διόπτευση: "
+
+#: src/ODEventHandler.cpp:268
+msgid "From: "
+msgstr "Από: "
+
+#: src/ODEventHandler.cpp:273
+msgid " To: "
+msgstr " Προς: "
+
+#: src/ODEventHandler.cpp:383
+msgid "Layer"
+msgstr "Ταξίδι"
+
+#: src/ODEventHandler.cpp:561
+msgid "Are you sure you want to delete this Boundary?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το όριο;"
+
+#: src/ODEventHandler.cpp:562
+msgid "OCPN Draw Boundary Delete"
+msgstr "Διαγραφή του ορίου OCPN Draw"
+
+#: src/ODEventHandler.cpp:565
+msgid "Are you sure you want to delete this EBL?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή την EBL;"
+
+#: src/ODEventHandler.cpp:566
+msgid "OCPN Draw EBL Delete"
+msgstr "Διαγραφή εκτ. πορείας OCPN Draw"
+
+#: src/ODEventHandler.cpp:569
+msgid "Are you sure you want to delete this DR?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή την εκτίμηση;"
+
+#: src/ODEventHandler.cpp:570
+msgid "OCPN Draw DR Delete"
+msgstr "Διαγραφή εκτίμησης"
+
+#: src/ODEventHandler.cpp:573
+msgid "Are you sure you want to delete this Guard Zone?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη ζώνη επιφυλακής;"
+
+#: src/ODEventHandler.cpp:574
+msgid "OCPN Draw GZ Delete"
+msgstr "Διαγραφή ζώνης επιφυλακής"
+
+#: src/ODEventHandler.cpp:577
+msgid "Are you sure you want to delete this Parallel Index Line Group?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτήν την ομάδα γραμμών Parallel Index;"
+
+#: src/ODEventHandler.cpp:578
+msgid "OCPN Draw PIL Delete"
+msgstr "Διαγραφή PIL"
+
+#: src/ODEventHandler.cpp:597 src/ODPathPropertiesDialogImpl.cpp:924
+msgid "Are you sure you want to delete this Parallel Index Line?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτή τη γραμμή του Parallel Index;"
+
+#: src/ODEventHandler.cpp:598 src/ODPathPropertiesDialogImpl.cpp:925
+msgid "OCPN Draw Parallel Index Line Delete"
+msgstr "Διαγραφή γραμμής Parallel Index"
+
+#: src/ODEventHandler.cpp:761
+msgid "Removing this point will invalidate the Boundary, this is not allowed."
+msgstr "Αφαίρεση αυτoύ του σημείου θα ακυρώσει το όριο, δεν επιτρέπεται."
+
+#: src/ODEventHandler.cpp:762 src/ODEventHandler.cpp:779
+msgid "OCPN Draw Remove "
+msgstr "Αφαίρεση "
+
+#: src/ODEventHandler.cpp:765 src/ODEventHandler.cpp:1182
+msgid "OD Point"
+msgstr "Σημείο OD"
+
+#: src/ODEventHandler.cpp:778
+msgid "Are you sure you want to remove this "
+msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτό το "
+
+#: src/ODEventHandler.cpp:782 src/ODEventHandler.cpp:794
+msgid "Are you sure you want to remove this OD Point?"
+msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο OD;"
+
+#: src/ODEventHandler.cpp:783 src/ODEventHandler.cpp:795
+#: src/ODPathPropertiesDialogImpl.cpp:863
+msgid "OCPN Draw Remove OD Point"
+msgstr "Αφαίρεση σημείου OD"
+
+#: src/ODEventHandler.cpp:785
+msgid "Are you sure you want to remove this Boundary Point?"
+msgstr "Είστε βέβαιοι ότι θέλετε να καταργήσετε αυτό το σημείο oρίου;"
+
+#: src/ODEventHandler.cpp:786
+msgid "OCPN Draw Remove Boundary Point"
+msgstr "Αφαίρεση σημείου ορίου"
+
+#: src/ODEventHandler.cpp:788
+msgid "Are you sure you want to remove this EBL Point?"
+msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο;"
+
+#: src/ODEventHandler.cpp:789
+msgid "OCPN Draw Remove EBL Point"
+msgstr "Αφαίρεση σημείου EBL"
+
+#: src/ODEventHandler.cpp:791
+msgid "Are you sure you want to remove this DR Point?"
+msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο DR;"
+
+#: src/ODEventHandler.cpp:792
+msgid "OCPN Draw Remove DR Point"
+msgstr "Αφαίρεση σημείου DR"
+
+#: src/ODEventHandler.cpp:844 src/ODEventHandler.cpp:886
+msgid "Are you sure you want to delete this OD Point?"
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτό το σημείο OD;"
+
+#: src/ODEventHandler.cpp:845 src/ODEventHandler.cpp:887
+#: src/ODPathPropertiesDialogImpl.cpp:843
+msgid "OCPN Draw Delete OD Point"
+msgstr "Διαγραφή σημείου OD"
+
+#: src/ODEventHandler.cpp:847 src/ODEventHandler.cpp:889
+msgid "Are you sure you want to delete this Boundary Point?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο oρίου;"
+
+#: src/ODEventHandler.cpp:848 src/ODEventHandler.cpp:890
+msgid "OCPN Draw Delete Boundary Point"
+msgstr "Διαγραφή σημείου ορίου"
+
+#: src/ODEventHandler.cpp:850 src/ODEventHandler.cpp:895
+msgid "Are you sure you want to delete this DR Point?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο DR;"
+
+#: src/ODEventHandler.cpp:851 src/ODEventHandler.cpp:896
+msgid "OCPN Draw Delete DR Point"
+msgstr "Διαγραφή σημείου DR"
+
+#: src/ODEventHandler.cpp:853 src/ODEventHandler.cpp:898
+msgid "Are you sure you want to delete this EBL Point?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο EBL;"
+
+#: src/ODEventHandler.cpp:854 src/ODEventHandler.cpp:899
+msgid "OCPN Draw Delete EBL Point"
+msgstr "Διαγραφή σημείου EBL"
+
+#: src/ODEventHandler.cpp:856
+msgid "Are you sure you want to delete this PIL Point?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο PIL;"
+
+#: src/ODEventHandler.cpp:857
+msgid "OCPN Draw Delete PIL Point"
+msgstr "Διαγραφή σημείου PIL"
+
+#: src/ODEventHandler.cpp:892
+msgid "Are you sure you want to delete this Text Point?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτό το σημείο κείμενου;"
+
+#: src/ODEventHandler.cpp:893
+msgid "OCPN Draw Delete Text Point"
+msgstr "Διαγραφή σημείου κειμένου"
+
+#: src/ODEventHandler.cpp:1046 src/ODEventHandler.cpp:1060
+msgid "Control Line"
+msgstr "Γραμμή ελέγχου"
+
+#: src/ODEventHandler.cpp:1049 src/ODEventHandler.cpp:1064
+#: src/ODEventHandler.cpp:1162 src/ODEventHandler.cpp:1184
+#: src/ODEventHandler.cpp:1231
+msgid "Properties..."
+msgstr "Ιδιότητες..."
+
+#: src/ODEventHandler.cpp:1067 src/ODEventHandler.cpp:1076
+msgid "Centre on moving boat"
+msgstr "Κεντράρισε στο κινούμενο πλοίο"
+
+#: src/ODEventHandler.cpp:1068 src/ODEventHandler.cpp:1077
+msgid "Move start point to boat lat/lon"
+msgstr "Μετακινήσετε το σημείο εκκίνησης στις συντεταγμένες του πλοίου"
+
+#: src/ODEventHandler.cpp:1070 src/ODEventHandler.cpp:1079
+msgid "Pick a new start point"
+msgstr "Διαλέξτε ένα νέο σημείο εκκίνησης"
+
+#: src/ODEventHandler.cpp:1073
+msgid "Match VRM colour to EBL colour"
+msgstr "Ταίριαξε το χρώμα του δακτυλίου με το χρώμα της EBL"
+
+#: src/ODEventHandler.cpp:1082
+msgid "Update initial conditions"
+msgstr "Ανανέωσε τις αρχικές συνθήκες"
+
+#: src/ODEventHandler.cpp:1087
+msgid "Move Boundary"
+msgstr "Μετακίνησε το όριο"
+
+#: src/ODEventHandler.cpp:1089
+msgid "Move EBL"
+msgstr "Μετακίνησε την EBL"
+
+#: src/ODEventHandler.cpp:1095
+msgid "Move Boundary Segment"
+msgstr "Μετακίνηση του τμήματος του ορίου"
+
+#: src/ODEventHandler.cpp:1101
+msgid "Insert Boundary Point"
+msgstr "Εισαγωγή σημείου ορίου"
+
+#: src/ODEventHandler.cpp:1103
+msgid "Insert EBL Point"
+msgstr "Εισαγωγή σημείου EBL"
+
+#: src/ODEventHandler.cpp:1110
+msgid "Add Index Line"
+msgstr "Προσθέστε γραμμή Index"
+
+#: src/ODEventHandler.cpp:1115
+msgid "Hide Boundary Point Icons"
+msgstr "Απόκρυψη εικονιδίων σημείων ορίου"
+
+#: src/ODEventHandler.cpp:1117 src/ODPathPropertiesDialogDef.cpp:162
+#: src/ODPropertiesDialogDef.cpp:207
+msgid "Show Boundary Point Icons"
+msgstr "Εμφάνιση εικονιδίων σημείων ορίου"
+
+#: src/ODEventHandler.cpp:1121
+msgid "Delete..."
+msgstr "Διαγραφή..."
+
+#: src/ODEventHandler.cpp:1123 src/ODEventHandler.cpp:1209
+#: src/ODEventHandler.cpp:1212 src/ODPointPropertiesDialog.cpp:276
+msgid "Delete"
+msgstr "Διαγραφή"
+
+#: src/ODEventHandler.cpp:1126
+msgid "Deactivate"
+msgstr "Απενεργοποίηση"
+
+#: src/ODEventHandler.cpp:1127
+msgid "Activate"
+msgstr "Ενεργοποίηση"
+
+#: src/ODEventHandler.cpp:1131
+msgid "Copy Boundary GUID"
+msgstr "Αντιγραφή ID ορίου"
+
+#: src/ODEventHandler.cpp:1133
+msgid "Copy EBL GUID"
+msgstr "Αντιγραφή ID EBL"
+
+#: src/ODEventHandler.cpp:1135
+msgid "Copy DR GUID"
+msgstr "Αντιγραφή ID DR"
+
+#: src/ODEventHandler.cpp:1137
+msgid "Copy Guard Zone GUID"
+msgstr "Αντίγραφο GUID ζώνης επιφυλακής"
+
+#: src/ODEventHandler.cpp:1154
+msgid "Layer Boundary Point"
+msgstr "Σημείο ορίου ταξιδιού"
+
+#: src/ODEventHandler.cpp:1156
+msgid "Layer Text Point"
+msgstr "Σημείο κειμένου ταξιδιού"
+
+#: src/ODEventHandler.cpp:1158
+msgid "Layer EBL Point"
+msgstr "Σημείο EBL ταξιδιού"
+
+#: src/ODEventHandler.cpp:1160
+msgid "Layer DR Point"
+msgstr "Σημείο DR ταξιδιού"
+
+#: src/ODEventHandler.cpp:1170 src/ODPathPropertiesDialogImpl.cpp:218
+#: src/ODPropertiesDialogDef.cpp:380 src/ODToolbarImpl.cpp:543
+msgid "Boundary Point"
+msgstr "Σημείο ορίου"
+
+#: src/ODEventHandler.cpp:1172 src/ODPropertiesDialogDef.cpp:494
+#: src/ODToolbarImpl.cpp:544
 msgid "Text Point"
 msgstr "Σημείο κειμένου"
-#
-msgid "Text Point Icon"
-msgstr "Εικονίδιο σημείου κειμένου"
-#
-msgid "Text Point Properties"
-msgstr "Ιδιότητες σημείου κειμένου"
-#
-msgid "Text Point Properties, Layer: "
-msgstr "Ιδιότητες σημείου κειμένου, ταξίδι: "
-#
-msgid "Text position relative to point"
-msgstr "Θέση κειμένου σε σχέση με το σημείο"
-#
+
+#: src/ODEventHandler.cpp:1174 src/ODPathPropertiesDialogImpl.cpp:222
+msgid "EBL Point"
+msgstr "Σημείο EBL"
+
+#: src/ODEventHandler.cpp:1176 src/ODPathPropertiesDialogImpl.cpp:224
+#: src/ODPropertiesDialogDef.cpp:860
+msgid "DR Point"
+msgstr "Σημείο DR"
+
+#: src/ODEventHandler.cpp:1178
+msgid "Guard Zone Point"
+msgstr "Σημείο ζώνης επιφυλακής"
+
+#: src/ODEventHandler.cpp:1180 src/ODPathPropertiesDialogImpl.cpp:226
+msgid "PIL Point"
+msgstr "Σημείο PIL"
+
+#: src/ODEventHandler.cpp:1187
+msgid "Move Boundary Point"
+msgstr "Μετακίνησε το σημείο ορίου"
+
+#: src/ODEventHandler.cpp:1189
+msgid "Move Text Point"
+msgstr "Μετακίνησε το σημείο κειμένου"
+
+#: src/ODEventHandler.cpp:1191
+msgid "Move EBL Point"
+msgstr "Μετακίνησε το σημείο EBL"
+
+#: src/ODEventHandler.cpp:1193
+msgid "Move DR Point"
+msgstr "Μετακίνησε το σημείο DR"
+
+#: src/ODEventHandler.cpp:1195
+msgid "Move PIL Point"
+msgstr "Μετακίνησε το σημείο PIL"
+
+#: src/ODEventHandler.cpp:1197 src/ODEventHandler.cpp:1200
+msgid "Move OD Point"
+msgstr "Μετακίνησε το σημείο OD"
+
+#: src/ODEventHandler.cpp:1199
+msgid "Move Guard Zone Point"
+msgstr "Μετακίνηση σημείου ζώνης επιφυλακής"
+
+#: src/ODEventHandler.cpp:1207
+msgid "Remove Point from Path"
+msgstr "Αφαίρεση σημείου από διαδρομή"
+
+#: src/ODEventHandler.cpp:1213
+msgid "Copy Point GUID"
+msgstr "Αντιγραφή ID σημείου"
+
+#: src/ODEventHandler.cpp:1221
+msgid "Multiple Boundaries"
+msgstr "Πολλαπλά όρια"
+
+#: src/ODEventHandler.cpp:1222
+msgid "Merge and Keep Boundaries"
+msgstr "Συγχώνευση και διατήρηση ορίων"
+
+#: src/ODEventHandler.cpp:1223
+msgid "Merge and Delete Boundaries"
+msgstr "Συγχώνευση και διαγραφή ορίων"
+
+#: src/ODEventHandler.cpp:1230 src/ODPropertiesDialogDef.cpp:1188
+#: src/ODToolbarImpl.cpp:548
+msgid "Parallel Index Line"
+msgstr "Παράλληλη γραμμή Index"
+
+#: src/ODEventHandler.cpp:1232
+msgid "Move Line"
+msgstr "Μετακίνηση γραμμής"
+
+#: src/ODEventHandler.cpp:1233
+msgid "Delete Line"
+msgstr "Διαγραφή γραμμής"
+
+#: src/ODEventHandler.cpp:1238 src/ODEventHandler.cpp:1245
+#: src/ODEventHandler.cpp:1252
+msgid "Path Manager Dialog"
+msgstr "Διάλογος διαχείρισης διαδρομής"
+
+#: src/ODEventHandler.cpp:1239
+msgid "Hide Path(s)"
+msgstr "Απόκρυψη διαδρομής(ών)"
+
+#: src/ODEventHandler.cpp:1240
+msgid "Show Paths(s)"
+msgstr "Διαδρομή(ές)"
+
+#: src/ODEventHandler.cpp:1246
+msgid "Hide Point(s)"
+msgstr "Απόκρυψη σημείου(ων)"
+
+#: src/ODEventHandler.cpp:1247
+msgid "Show Point(s)"
+msgstr "Σημείο(α)"
+
+#: src/ODEventHandler.cpp:1253
+msgid "Hide Layer(s)"
+msgstr "Απόκρυψη ταξιδιού(ών)"
+
+#: src/ODEventHandler.cpp:1254
+msgid "Show Layer(s)"
+msgstr "Ταξίδι(α)"
+
+#: src/ODLinkPropertiesDialogDef.cpp:34
+msgid "Link"
+msgstr "Σύνδεσμος"
+
+#: src/ODLinkPropertiesDialogDef.cpp:36
+msgid "Link Description"
+msgstr "Περιγραφή συνδέσμου"
+
+#: src/ODLinkPropertiesDialogDef.cpp:43
+msgid "URL"
+msgstr "URL"
+
+#: src/ODLinkPropertiesDialogDef.cpp:50
+msgid "*.*"
+msgstr "*.*"
+
+#: src/ODLinkPropertiesDialogDef.cpp:50
+msgid "Local file..."
+msgstr "Τοπικό αρχείο..."
+
+#: src/ODNavObjectChanges.cpp:2070
+msgid "Error in import file."
+msgstr "Σφάλμα κατά την εισαγωγή του αρχείου."
+
+#: src/ODNavObjectChanges.cpp:2072 src/ODNavObjectChanges.cpp:2165
+msgid "Boundary '"
+msgstr "Σύνορο '"
+
+#: src/ODNavObjectChanges.cpp:2075
+msgid "will be deleted. No further boundaries will be imported"
+msgstr "θα διαγραφεί. Δεν θα εισαχθούν άλλα σύνορα"
+
+#: src/ODNavObjectChanges.cpp:2077 src/ODNavObjectChanges.cpp:2170
+msgid "Import Error"
+msgstr "Σφάλμα κατά την Εισαγωγή"
+
+#: src/ODNavObjectChanges.cpp:2163
+msgid "Import incomplete."
+msgstr "Ατελής εισαγωγή."
+
+#: src/ODNavObjectChanges.cpp:2168
+msgid "will be deleted."
+msgstr "θα διαγραφεί."
+
+#: src/ODNewODPointDialogDef.cpp:35 src/ODPropertiesDialogDef.cpp:218
+#: src/ODToolbarImpl.cpp:542 src/ocpn_draw_pi.cpp:3496
+msgid "Boundary"
+msgstr "Σύνορο"
+
+#: src/ODNewODPointDialogDef.cpp:35
+msgid "Text"
+msgstr "Κείμενο"
+
+#: src/ODPath.cpp:603
+msgid "Path Segment Arrow not drawn as OpenGL not available in this build"
+msgstr "Το Βέλος Τμήματος Διαδρομής δεν σχεδιάστηκε καθώς το OpenGL δεν είναι διαθέσιμο"
+
+#: src/ODPathPropertiesDialogDef.cpp:45 src/ODPointPropertiesDialog.cpp:50
+#: src/PILProp.cpp:333 src/PILPropertiesDialogDef.cpp:49
+msgid "Name"
+msgstr "Όνομα"
+
+#: src/ODPathPropertiesDialogDef.cpp:52 src/ODPathPropertiesDialogImpl.cpp:730
+#: src/ODPointPropertiesDialog.cpp:241 src/PILProp.cpp:335
+#: src/PILPropertiesDialogDef.cpp:56
+msgid "Description"
+msgstr "Περιγραφή"
+
+#: src/ODPathPropertiesDialogDef.cpp:59 src/ODPointPropertiesDialog.cpp:437
+msgid "GUID"
+msgstr "ID Σημείου"
+
+#: src/ODPathPropertiesDialogDef.cpp:82 src/PILPropertiesDialogDef.cpp:70
+msgid "Active"
+msgstr "Ενεργό"
+
+#: src/ODPathPropertiesDialogDef.cpp:86
+msgid "Total Length"
+msgstr "Συνολικό μήκος"
+
+#: src/ODPathPropertiesDialogDef.cpp:103 src/PILPropertiesDialogDef.cpp:85
+msgid "Line Colour"
+msgstr "Χρώμα γραμμής"
+
+#: src/ODPathPropertiesDialogDef.cpp:110 src/ODPropertiesDialogDef.cpp:169
+#: src/ODPropertiesDialogDef.cpp:528 src/ODPropertiesDialogDef.cpp:605
+#: src/ODPropertiesDialogDef.cpp:686 src/ODPropertiesDialogDef.cpp:945
+#: src/PILPropertiesDialogDef.cpp:92
+msgid "Line Style"
+msgstr "Στυλ γραμμής"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/PILPropertiesDialogDef.cpp:96
+msgid "Dot"
+msgstr "Διάστικτη"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Dot Dash"
+msgstr "Τελεία-παύλα"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Long Dash"
+msgstr "Μεγάλη παύλα"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Short Dash"
+msgstr "Με κοντές παύλες"
+
+#: src/ODPathPropertiesDialogDef.cpp:114 src/ODPointPropertiesDialog.cpp:227
+#: src/ODPropertiesDialogDef.cpp:173 src/ODPropertiesDialogDef.cpp:367
+#: src/ODPropertiesDialogDef.cpp:532 src/ODPropertiesDialogDef.cpp:609
+#: src/ODPropertiesDialogDef.cpp:690 src/ODPropertiesDialogDef.cpp:847
+#: src/ODPropertiesDialogDef.cpp:949 src/ODPropertiesDialogDef.cpp:1121
+#: src/ODPropertiesDialogDef.cpp:1141 src/ODPropertiesDialogDef.cpp:1161
+#: src/PILPropertiesDialogDef.cpp:96
+msgid "Solid"
+msgstr "Συμπαγής"
+
+#: src/ODPathPropertiesDialogDef.cpp:120 src/ODPropertiesDialogDef.cpp:159
+#: src/ODPropertiesDialogDef.cpp:518 src/ODPropertiesDialogDef.cpp:595
+#: src/ODPropertiesDialogDef.cpp:676 src/ODPropertiesDialogDef.cpp:935
+#: src/PILPropertiesDialogDef.cpp:102
+msgid "Line Width"
+msgstr "Πλάτος Γραμμής"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "1 pixel"
+msgstr "1 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "10 pixels"
+msgstr "10 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "2 pixels"
+msgstr "2 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "3 pixels"
+msgstr "3 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "4 pixels"
+msgstr "4 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "5 pixels"
+msgstr "5 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "6 pixels"
+msgstr "6 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "7 pixels"
+msgstr "7 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "8 pixels"
+msgstr "8 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:124 src/ODPointPropertiesDialog.cpp:217
+#: src/ODPropertiesDialogDef.cpp:357 src/ODPropertiesDialogDef.cpp:837
+#: src/PILPropertiesDialogDef.cpp:106
+msgid "9 pixels"
+msgstr "9 πίξελ"
+
+#: src/ODPathPropertiesDialogDef.cpp:130
+msgid "Fill Colour"
+msgstr "Εσωτερικό χρώμα"
+
+#: src/ODPathPropertiesDialogDef.cpp:137 src/ODPointPropertiesDialog.cpp:146
+#: src/ODPropertiesDialogDef.cpp:179 src/ODPropertiesDialogDef.cpp:282
+#: src/ODPropertiesDialogDef.cpp:955
+msgid "Fill Density"
+msgstr "Εσωτερική πυκνότητα"
+
+#: src/ODPathPropertiesDialogDef.cpp:144
+msgid "Inclusion Boundary\n"
+"Size"
+msgstr "Μέγεθος ορίου\n"
+"εγκλείσματος"
+
+#: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
+#: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
+#: src/ODPropertiesDialogDef.cpp:1404 src/ODPropertiesDialogDef.cpp:1413
+#: src/ODPropertiesDialogImpl.cpp:131 src/ODPropertiesDialogImpl.cpp:134
+msgid "Exclusion"
+msgstr "Αποκλεισμένη"
+
+#: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
+#: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
+#: src/ODPropertiesDialogDef.cpp:1405 src/ODPropertiesDialogDef.cpp:1414
+#: src/ODPropertiesDialogImpl.cpp:132 src/ODPropertiesDialogImpl.cpp:135
+msgid "Inclusion"
+msgstr "Περιορισμένη"
+
+#: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
+#: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
+#: src/ODPropertiesDialogDef.cpp:1406 src/ODPropertiesDialogDef.cpp:1415
+#: src/ODPropertiesDialogImpl.cpp:133 src/ODPropertiesDialogImpl.cpp:136
+msgid "Neither"
+msgstr "Γενική"
+
+#: src/ODPathPropertiesDialogDef.cpp:158 src/ODPropertiesDialogDef.cpp:203
+msgid "Boundary Type"
+msgstr "Τύπος ορίου"
+
+#: src/ODPathPropertiesDialogDef.cpp:172
+msgid "Parallel Index Line Angle (+Stbd/-Port)"
+msgstr "Γωνία γραμμής Parallel Index (+δεξιά/-αριστερά)"
+
+#: src/ODPathPropertiesDialogDef.cpp:186 src/ODPathPropertiesDialogDef.cpp:235
+msgid "Rotate with\n"
+"Boat"
+msgstr "Περιστροφή\n"
+" με το πλοίο"
+
+#: src/ODPathPropertiesDialogDef.cpp:189 src/ODPathPropertiesDialogDef.cpp:238
+#: src/ODPropertiesDialogDef.cpp:618 src/ODPropertiesDialogDef.cpp:973
+msgid "Heading"
+msgstr "Πορεία"
+
+#: src/ODPathPropertiesDialogDef.cpp:191 src/ODPathPropertiesDialogDef.cpp:240
+#: src/ODPropertiesDialogDef.cpp:620 src/ODPropertiesDialogDef.cpp:975
+msgid "Maintain with"
+msgstr "Διατήρηση με"
+
+#: src/ODPathPropertiesDialogDef.cpp:197
+msgid "EBL Angle (-P/+S)"
+msgstr "Γωνία EBL (-Αρ/+Δξ)"
+
+#: src/ODPathPropertiesDialogDef.cpp:211
+msgid "EBL Fixed\n"
+"End Position"
+msgstr "Εκτ. πορεία με\n"
+" σταθερό τελικό σημείο"
+
+#: src/ODPathPropertiesDialogDef.cpp:214 src/ODPropertiesDialogDef.cpp:630
+msgid "Show VRM"
+msgstr "Εμφάνιση δακτυλίων"
+
+#: src/ODPathPropertiesDialogDef.cpp:217 src/ODPropertiesDialogDef.cpp:636
+msgid "Always Show\n"
+"EBL Info"
+msgstr "Μόνιμη εμφάνιση\n"
+"πληροφοριών EBL"
+
+#: src/ODPathPropertiesDialogDef.cpp:220
+msgid "Show Perpendicular\n"
+"Index Line"
+msgstr "Εμφάνιση κάθετης\n"
+" γραμμής Index"
+
+#: src/ODPathPropertiesDialogDef.cpp:246 src/ODPropertiesDialogDef.cpp:979
+msgid "Arc"
+msgstr "Τόξο"
+
+#: src/ODPathPropertiesDialogDef.cpp:246 src/ODPropertiesDialogDef.cpp:979
+msgid "Straight"
+msgstr "Ευθεία"
+
+#: src/ODPathPropertiesDialogDef.cpp:248 src/ODPropertiesDialogDef.cpp:981
+msgid "Line Type"
+msgstr "Τύπος γραμμής"
+
+#: src/ODPathPropertiesDialogDef.cpp:260
+msgid "First Angle (-P/+S)"
+msgstr "Πρώτη γωνία (-Αρ/+Δ)"
+
+#: src/ODPathPropertiesDialogDef.cpp:267
+msgid "First distance"
+msgstr "Πρώτη απόσταση"
+
+#: src/ODPathPropertiesDialogDef.cpp:274
+msgid "Second Angle (-P/+S)"
+msgstr "Δεύτερη γωνία (-Αρ/+Δ)"
+
+#: src/ODPathPropertiesDialogDef.cpp:281
+msgid "Second distance"
+msgstr "Δεύτερη απόσταση"
+
+#: src/ODPathPropertiesDialogDef.cpp:298
+msgid "Show Path Direction Arrow"
+msgstr "Εμφάνιση βέλους εκτ. κατεύθυνσης"
+
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPointPropertiesDialog.cpp:401
+#: src/ODPropertiesDialogDef.cpp:100 src/ODPropertiesDialogDef.cpp:455
+#: src/ODPropertiesDialogDef.cpp:639 src/ODPropertiesDialogDef.cpp:762
+#: src/ODPropertiesDialogDef.cpp:993 src/ODPropertiesDialogDef.cpp:1175
+msgid "Never"
+msgstr "Ποτέ"
+
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPropertiesDialogDef.cpp:639
+#: src/ODPropertiesDialogDef.cpp:762 src/ODPropertiesDialogDef.cpp:993
+#: src/ODPropertiesDialogDef.cpp:1175
+msgid "Persistent"
+msgstr "Παραμένον"
+
+#: src/ODPathPropertiesDialogDef.cpp:301 src/ODPropertiesDialogDef.cpp:639
+#: src/ODPropertiesDialogDef.cpp:762 src/ODPropertiesDialogDef.cpp:993
+#: src/ODPropertiesDialogDef.cpp:1175
+msgid "Persistent over Crash"
+msgstr "Παραμένον μετά το κρας"
+
+#: src/ODPathPropertiesDialogDef.cpp:303
+msgid "Path Persistence"
+msgstr "Παραμένουσα εκτ. πορεία"
+
+#: src/ODPathPropertiesDialogDef.cpp:314
+msgid "Points"
+msgstr "Σημεία"
+
+#: src/ODPathPropertiesDialogDef.cpp:331
+msgid "Index Lines (+ Stbd/- Port)"
+msgstr "Γραμμές Index (+ δεξιά/- αριστερά)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:216
+msgid "OCPN Draw Path"
+msgstr "Διαδρομή OCPN Draw"
+
+#: src/ODPathPropertiesDialogImpl.cpp:228 src/ODPathPropertiesDialogImpl.cpp:253
+msgid " &Properties..."
+msgstr " &Ιδιότητες..."
+
+#: src/ODPathPropertiesDialogImpl.cpp:233 src/ODPathPropertiesDialogImpl.cpp:257
+msgid "&Remove Selected"
+msgstr "Α&φαίρεση επιλεγμένων"
+
+#: src/ODPathPropertiesDialogImpl.cpp:236
+msgid "&Delete Selected"
+msgstr "&Διαγραφή επιλεγμένων"
+
+#: src/ODPathPropertiesDialogImpl.cpp:715
+msgid "From Point"
+msgstr "Από το σημείο"
+
+#: src/ODPathPropertiesDialogImpl.cpp:716
+msgid "To Point"
+msgstr "Προς το σημείο"
+
+#: src/ODPathPropertiesDialogImpl.cpp:717
+msgid "Distance From Boat"
+msgstr "Απόσταση από το πλοίο"
+
+#: src/ODPathPropertiesDialogImpl.cpp:720
+msgid "Bearing (M)"
+msgstr "Διόπτευση (Μ)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:722
+msgid "Bearing"
+msgstr "Διόπτευση"
+
+#: src/ODPathPropertiesDialogImpl.cpp:724 src/ODPointPropertiesDialog.cpp:91
+msgid "Latitude"
+msgstr "Γεωγρ. πλάτος"
+
+#: src/ODPathPropertiesDialogImpl.cpp:725 src/ODPointPropertiesDialog.cpp:98
+msgid "Longitude"
+msgstr "Γεωγρ. μήκος"
+
+#: src/ODPathPropertiesDialogImpl.cpp:727
+msgid "Bearing From-To (M)"
+msgstr "Διόπτευση Από-Προς (Μ)"
+
+#: src/ODPathPropertiesDialogImpl.cpp:729
+msgid "Bearing From-To"
+msgstr "Διόπτευση Από-Προς"
+
+#: src/ODPathPropertiesDialogImpl.cpp:842
+msgid "Are you sure you want to delete this point?"
+msgstr "Είστε σίγουροι ότι θέλετε να διαγράψετε το σημείο;"
+
+#: src/ODPathPropertiesDialogImpl.cpp:862
+msgid "Are you sure you want to remove this point?"
+msgstr "Σίγουρα θέλετε να αφαιρέσετε αυτό το σημείο;"
+
+#: src/ODPoint.cpp:732
+msgid "ODPoint not drawn as OpenGL not available in this build"
+msgstr "Το ODPoint δεν σχεδιάστηκε καθώς το OpenGL δεν είναι διαθέσιμο"
+
+#: src/ODPointPropertiesDialog.cpp:41
+msgid "Properties"
+msgstr "Ιδιότητες"
+
+#: src/ODPointPropertiesDialog.cpp:68
+msgid "Show name"
+msgstr "Εμφάνιση ονόματος"
+
+#: src/ODPointPropertiesDialog.cpp:71 src/ODPointPropertiesImpl.cpp:108
+#: src/ODPropertiesDialogDef.cpp:251 src/ODPropertiesDialogDef.cpp:406
+#: src/ODPropertiesDialogDef.cpp:560 src/ODPropertiesDialogDef.cpp:575
+#: src/ODPropertiesDialogDef.cpp:790 src/ODPropertiesDialogDef.cpp:883
+#: src/ODPropertiesDialogDef.cpp:890 src/ODPropertiesDialogDef.cpp:1027
+#: src/ODPropertiesDialogDef.cpp:1034 src/ODPropertiesDialogImpl.cpp:198
+#: src/ODPropertiesDialogImpl.cpp:209 src/ODPropertiesDialogImpl.cpp:218
+#: src/ODPropertiesDialogImpl.cpp:227 src/ODPropertiesDialogImpl.cpp:236
+#: src/ODPropertiesDialogImpl.cpp:245 src/ODPropertiesDialogImpl.cpp:254
+#: src/ODPropertiesDialogImpl.cpp:263 src/ODPropertiesDialogImpl.cpp:272
+msgid "Combo!"
+msgstr "Συνδυασμός!"
+
+#: src/ODPointPropertiesDialog.cpp:82
+msgid "Change all Path Point Icons"
+msgstr "Αλλαγή όλων των εικονιδίων των σημείων διαδρομής"
+
+#: src/ODPointPropertiesDialog.cpp:110
+msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
+msgstr "Προσοχή: Μήκος και πλάτος δεν μπορούν να αλλάξουν όταν τελικό σημείο του EBL κινείται"
+
+#: src/ODPointPropertiesDialog.cpp:120 src/ODPropertiesDialogDef.cpp:226
+msgid "Arrival Radius"
+msgstr "Ακτίνα άφιξης"
+
+#: src/ODPointPropertiesDialog.cpp:132
+msgid "Show Point Range Rings"
+msgstr "Εμφάνιση δακτυλίων απόστασης σημείων"
+
+#: src/ODPointPropertiesDialog.cpp:153
+msgid "Point Inclusion Size"
+msgstr "Μέγεθος σημείου"
+
+#: src/ODPointPropertiesDialog.cpp:171
+msgid "Number of Point Range Rings"
+msgstr "Αριθμός δακτυλίων απόστασης σημείου"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803 src/ODPropertiesDialogDef.cpp:1041
+msgid "1"
+msgstr "1"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "10"
+msgstr "10"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803 src/ODPropertiesDialogDef.cpp:1041
+msgid "2"
+msgstr "2"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "3"
+msgstr "3"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "4"
+msgstr "4"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "5"
+msgstr "5"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "6"
+msgstr "6"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "7"
+msgstr "7"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "8"
+msgstr "8"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "9"
+msgstr "9"
+
+#: src/ODPointPropertiesDialog.cpp:175 src/ODPropertiesDialogDef.cpp:323
+#: src/ODPropertiesDialogDef.cpp:803
+msgid "None"
+msgstr "Καμία"
+
+#: src/ODPointPropertiesDialog.cpp:189
+msgid "Distance between Range Rings"
+msgstr "Διάστημα μεταξύ των δακτυλίων απόστασης"
+
+#: src/ODPointPropertiesDialog.cpp:196 src/ODPropertiesDialogDef.cpp:336
+#: src/ODPropertiesDialogDef.cpp:816
+msgid "Distance Unit"
+msgstr "Μονάδα απόστασης"
+
+#: src/ODPointPropertiesDialog.cpp:206 src/ODPropertiesDialogDef.cpp:346
+#: src/ODPropertiesDialogDef.cpp:826
+msgid "Range Ring Colours"
+msgstr "Χρώμα δακτυλίων απόστασης"
+
+#: src/ODPointPropertiesDialog.cpp:213 src/ODPropertiesDialogDef.cpp:353
+#: src/ODPropertiesDialogDef.cpp:833
+msgid "Range Ring Line Width"
+msgstr "Πλάτος γραμμής δακτυλίων απόστασης"
+
+#: src/ODPointPropertiesDialog.cpp:223 src/ODPropertiesDialogDef.cpp:363
+#: src/ODPropertiesDialogDef.cpp:843
+msgid "Range Ring Line Style"
+msgstr "Στυλ γραμμής δακτυλίων απόστασης"
+
+#: src/ODPointPropertiesDialog.cpp:258
+msgid "Links"
+msgstr "Σύνδεσμοι"
+
+#: src/ODPointPropertiesDialog.cpp:268
+msgid "wxFB Website"
+msgstr "Ιστοσελίδα wxFB"
+
+#: src/ODPointPropertiesDialog.cpp:279
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+#: src/ODPointPropertiesDialog.cpp:282
+msgid "Add New"
+msgstr "Προσθήκη νέου"
+
+#: src/ODPointPropertiesDialog.cpp:289
+msgid "Left click opens in browser"
+msgstr "Αριστερό κλικ ανοίγει το πρόγραμμα περιήγησης"
+
+#: src/ODPointPropertiesDialog.cpp:295
+msgid "&Add"
+msgstr "&Προσθήκη"
+
+#: src/ODPointPropertiesDialog.cpp:298
+msgid "&Edit"
+msgstr "&Επεξεργασία"
+
+#: src/ODPointPropertiesDialog.cpp:301 src/PathAndPointManagerDialogDef.cpp:66
+#: src/PathAndPointManagerDialogDef.cpp:113
+#: src/PathAndPointManagerDialogDef.cpp:157
+msgid "&Delete"
+msgstr "&Διαγραφή"
+
+#: src/ODPointPropertiesDialog.cpp:320
+msgid "Basic"
+msgstr "Βασικό"
+
+#: src/ODPointPropertiesDialog.cpp:324
 msgid "Text to Display with Point"
 msgstr "Κείμενο προς εμφάνιση στο σημείο"
-#
-msgid ""
-"The OD Point you want to delete is used in a path, do you really want to "
-"delete it?"
+
+#: src/ODPointPropertiesDialog.cpp:335 src/ODPropertiesDialogDef.cpp:418
+msgid "Text position relative to point"
+msgstr "Θέση κειμένου σε σχέση με το σημείο"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Bottom"
+msgstr "Κάτω"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Bottom Centre"
+msgstr "Κάτω κέντρο"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Centre"
+msgstr "Κέντρο"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Left"
+msgstr "Αριστερά"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Right"
+msgstr "Δεξιά"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Top"
+msgstr "Πάνω"
+
+#: src/ODPointPropertiesDialog.cpp:339 src/ODPropertiesDialogDef.cpp:422
+msgid "Top Centre"
+msgstr "Επάνω κέντρο"
+
+#: src/ODPointPropertiesDialog.cpp:345 src/ODPropertiesDialogDef.cpp:428
+msgid "Text Colour"
+msgstr "Χρώμα κειμένου"
+
+#: src/ODPointPropertiesDialog.cpp:352 src/ODPropertiesDialogDef.cpp:435
+msgid "Background Colour"
+msgstr "Χρώμα φόντου"
+
+#: src/ODPointPropertiesDialog.cpp:359
+msgid "Background Transparency"
+msgstr "Διαφάνεια φόντου"
+
+#: src/ODPointPropertiesDialog.cpp:368 src/ODPropertiesDialogDef.cpp:449
+msgid "Character Based"
+msgstr "Βασισμένη στους χαρακτήρες"
+
+#: src/ODPointPropertiesDialog.cpp:368 src/ODPropertiesDialogDef.cpp:449
+msgid "Font Based"
+msgstr "Βασισμένη στη γραμματοσειρά"
+
+#: src/ODPointPropertiesDialog.cpp:370 src/ODPropertiesDialogDef.cpp:451
+msgid "Maximum Width Type"
+msgstr "Μέγιστο πλάτος"
+
+#: src/ODPointPropertiesDialog.cpp:377 src/ODPropertiesDialogDef.cpp:461
+msgid "Maximum Text Width"
+msgstr "Μέγιστο πλάτος κειμένου"
+
+#: src/ODPointPropertiesDialog.cpp:387 src/ODPropertiesDialogDef.cpp:476
+msgid "Text Font"
+msgstr "Γραμματοσειρά κειμένου"
+
+#: src/ODPointPropertiesDialog.cpp:391 src/ODPropertiesDialogDef.cpp:480
+msgid "Example"
+msgstr "Παράδειγμα"
+
+#: src/ODPointPropertiesDialog.cpp:398 src/ODPropertiesDialogDef.cpp:484
+msgid "Fonts"
+msgstr "Γραμματοσειρές"
+
+#: src/ODPointPropertiesDialog.cpp:401 src/ODPropertiesDialogDef.cpp:100
+#: src/ODPropertiesDialogDef.cpp:455
+msgid "Always"
+msgstr "Πάντα"
+
+#: src/ODPointPropertiesDialog.cpp:401 src/ODPropertiesDialogDef.cpp:455
+msgid "On Rollover Only"
+msgstr "Στο Rollover μόνο"
+
+#: src/ODPointPropertiesDialog.cpp:403 src/ODPropertiesDialogDef.cpp:457
+msgid "Show Display Text"
+msgstr "Εμφάνιση οθόνης κειμένου"
+
+#: src/ODPointPropertiesDialog.cpp:414
+msgid "Display text"
+msgstr "Εμφάνιση κειμένου"
+
+#: src/ODPointPropertiesDialog.cpp:419
+#: src/PathAndPointManagerDialogImpl.cpp:1670
+#: src/PathAndPointManagerDialogImpl.cpp:1682
+msgid "Show on chart"
+msgstr "Εμφάνιση στον χάρτη"
+
+#: src/ODPointPropertiesDialog.cpp:425 src/ODPropertiesDialogDef.cpp:412
+msgid "Show at scale> 1:"
+msgstr "Εμφάνιση σε κλίμακα > 1:"
+
+#: src/ODPointPropertiesDialog.cpp:451
+msgid "Extended"
+msgstr "Εκτεταμένο"
+
+#: src/ODPointPropertiesImpl.cpp:160
+msgid "Copy"
+msgstr "Αντιγραφή"
+
+#: src/ODPointPropertiesImpl.cpp:161
+msgid "Copy lat/long"
+msgstr "Αντιγραφή πλάτους/μήκους"
+
+#: src/ODPointPropertiesImpl.cpp:163
+msgid "Paste"
+msgstr "Επικόλληση"
+
+#: src/ODPointPropertiesImpl.cpp:164
+msgid "Paste lat/long"
+msgstr "Επικόλληση πλάτους/μήκους"
+
+#: src/ODPointPropertiesImpl.cpp:301 src/ODPointPropertiesImpl.cpp:563
+#: src/ODPointPropertiesImpl.cpp:1047 src/ODPointPropertiesImpl.cpp:1059
+msgid "Left Click links are opened in the default browser."
+msgstr "Σύνδεσμοι αριστερού κλικ ανοίγουν στον στάνταρτ browser."
+
+#: src/ODPointPropertiesImpl.cpp:572
+msgid "Display Text"
+msgstr "Εμφάνιση κειμένου"
+
+#: src/ODPointPropertiesImpl.cpp:849
+msgid "OCPN Draw Point, Layer: "
+msgstr "Σημείο OCPN Draw, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:851
+msgid "Boundary Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου ορίου, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:853
+msgid "Text Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου κειμένου, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:855
+msgid "EBL Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου EBL, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:857
+msgid "DR Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου DR, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:859
+msgid "PIL Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου PIL, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:861
+msgid "GZ Point Properties, Layer: "
+msgstr "Ιδιότητες σημείου GZ, ταξίδι: "
+
+#: src/ODPointPropertiesImpl.cpp:869
+msgid "OCPN Draw Point"
+msgstr "Σημείο OCPN Draw"
+
+#: src/ODPointPropertiesImpl.cpp:871
+msgid "Boundary Point Properties"
+msgstr "Ιδιότητες σημείου ορίου"
+
+#: src/ODPointPropertiesImpl.cpp:873
+msgid "Text Point Properties"
+msgstr "Ιδιότητες σημείου κειμένου"
+
+#: src/ODPointPropertiesImpl.cpp:875
+msgid "EBL Point Properties"
+msgstr "Ιδιότητες σημείου EBL"
+
+#: src/ODPointPropertiesImpl.cpp:877
+msgid "DR Point Properties"
+msgstr "Ιδιότητες σημείου DR"
+
+#: src/ODPointPropertiesImpl.cpp:879
+msgid "PIL Point Properties"
+msgstr "Ιδιότητες σημείου PIL"
+
+#: src/ODPointPropertiesImpl.cpp:881
+msgid "Guard Zone Point Properties"
+msgstr "Ιδιότητες σημείων ζώνης επιφυλακής"
+
+#: src/ODPointPropertiesImpl.cpp:1045
+msgid "Left Click links are opened for editing."
+msgstr "Σύνδεσμοι αριστερού κλικ ανοίγουν για επεξεργασία."
+
+#: src/ODPointPropertiesImpl.cpp:1057
+msgid "Left Click links are deleted."
+msgstr "Διαγράφονται οι σύνδεσμοι αριστερού κλικ."
+
+#: src/ODPropertiesDialogDef.cpp:49
+msgid "Confirm Object Delete"
+msgstr "Επιβεβαίωση διαγραφής αντικειμένου"
+
+#: src/ODPropertiesDialogDef.cpp:53
+msgid "Remember properties dialogs positions over a restart"
+msgstr "Κράτησε τη θέση των διαλόγων των ιδιοτήτων για επανέναρξη"
+
+#: src/ODPropertiesDialogDef.cpp:56
+msgid "Show Magnetic Bearings"
+msgstr "Εμφάνιση μαγν. διόπτευσης"
+
+#: src/ODPropertiesDialogDef.cpp:59
+msgid "Allow Left Mouse Button Drag"
+msgstr "Παράσυρση ποντικιού με αριστερό πλήκτρο"
+
+#: src/ODPropertiesDialogDef.cpp:62
+msgid "Show Layers"
+msgstr "Ταξίδια"
+
+#: src/ODPropertiesDialogDef.cpp:68
+msgid "OCPN_Draw Nav Object Backups"
+msgstr "Back-up των αντικειμένων OCPN_Draw Nav"
+
+#: src/ODPropertiesDialogDef.cpp:75
+msgid "Edge Panning Sensitivity\n"
+"(percentage screen width) Default 5"
+msgstr "Ευαισθησία άκρης του πάνινγκ\n"
+"(% πλάτους οθόνης) προεπιλογή 5"
+
+#: src/ODPropertiesDialogDef.cpp:82
+msgid "Initial Edge Panning Sensitivity\n"
+"(percentage screen width) Default 3"
+msgstr "Αρχική ευαισθησία του πάνινγκ\n"
+"(% πλάτους οθόνης) προεπιλογή 3"
+
+#: src/ODPropertiesDialogDef.cpp:89
+msgid "Toolbar icon scaling (requires restart)"
 msgstr ""
-"Το σημείο OD που θέλετε να διαγράψετε χρησιμοποιείται σε μια διαδρομή, είστε "
-"βέβαιοι ότι θέλετε να το διαγράψετε;"
-#
-msgid "The file will also be deleted from OCPN Draw's layers directory."
-msgstr "Το αρχείο θα διαγραφεί κι από τον φάκελο ταξιδιών του OpenCPN."
-#
-msgid ""
-"There are some OD points used in paths or anchor alarms.\n"
+
+#: src/ODPropertiesDialogDef.cpp:96
+msgid "Display Toolbar"
+msgstr "Εμφάνιση γραμμής εργαλείων"
+
+#: src/ODPropertiesDialogDef.cpp:100
+msgid "Whilst Drawing"
+msgstr "Καθώς σχεδιάζει"
+
+#: src/ODPropertiesDialogDef.cpp:106
+msgid "Remove OCPN_Draw settings and restore to default on restart (No)"
+msgstr "Κατάργηση των επιλογών του OCPN_Draw και επιστροφή στις προεπιλεγμένες κατά την επανέναρξη (Όχι)"
+
+#: src/ODPropertiesDialogDef.cpp:110 src/ODPropertiesDialogImpl.cpp:1101
+msgid "Yes"
+msgstr "Ναί"
+
+#: src/ODPropertiesDialogDef.cpp:120
+msgid "General"
+msgstr "Γενικά"
+
+#: src/ODPropertiesDialogDef.cpp:131 src/ODPropertiesDialogDef.cpp:504
+#: src/ODPropertiesDialogDef.cpp:907
+msgid "Active Line Colour"
+msgstr "Xρώμα ενεργής γραμμής"
+
+#: src/ODPropertiesDialogDef.cpp:138 src/ODPropertiesDialogDef.cpp:914
+msgid "Active Fill Colour"
+msgstr "Χρώμα ενεργού εσωτερικού"
+
+#: src/ODPropertiesDialogDef.cpp:145 src/ODPropertiesDialogDef.cpp:511
+#: src/ODPropertiesDialogDef.cpp:921
+msgid "Inactive Line Colour"
+msgstr "Χρώμα ανενεργής γραμμής"
+
+#: src/ODPropertiesDialogDef.cpp:152 src/ODPropertiesDialogDef.cpp:928
+msgid "Inactive Fill Colour"
+msgstr "Χρώμα ανενεργού εσωτερικού"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "1 Pixel"
+msgstr "1 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "10 Pixels"
+msgstr "10 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "2 Pixels"
+msgstr "2 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "3 Pixels"
+msgstr "3 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "4 Pixels"
+msgstr "4 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "5 Pixels"
+msgstr "5 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "6 Pixels"
+msgstr "6 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "7 Pixels"
+msgstr "7 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "8 Pixels"
+msgstr "8 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:163 src/ODPropertiesDialogDef.cpp:522
+#: src/ODPropertiesDialogDef.cpp:599 src/ODPropertiesDialogDef.cpp:680
+#: src/ODPropertiesDialogDef.cpp:939 src/ODPropertiesDialogDef.cpp:1111
+#: src/ODPropertiesDialogDef.cpp:1131 src/ODPropertiesDialogDef.cpp:1151
+msgid "9 Pixels"
+msgstr "9 πίξελ"
+
+#: src/ODPropertiesDialogDef.cpp:186
+msgid "Inclusion Boundary Size"
+msgstr "Μέγεθος ορίου εγκλείσματος"
+
+#: src/ODPropertiesDialogDef.cpp:230 src/ODPropertiesDialogDef.cpp:333
+#: src/ODPropertiesDialogDef.cpp:813
+msgid "0.5"
+msgstr "0.5"
+
+#: src/ODPropertiesDialogDef.cpp:244 src/ODPropertiesDialogDef.cpp:394
+msgid "Show Name"
+msgstr "Εμφάνιση ονόματος"
+
+#: src/ODPropertiesDialogDef.cpp:247
+msgid "Boundary Point Icon"
+msgstr "Εικονίδιο σημείου ορίου"
+
+#: src/ODPropertiesDialogDef.cpp:267 src/ODPropertiesDialogDef.cpp:793
+msgid "Show Range Rings"
+msgstr "Εμφάνιση δακτυλίων απόστασης"
+
+#: src/ODPropertiesDialogDef.cpp:272
+msgid "Boundary Point Type"
+msgstr "Τύπος σημείου ορίου"
+
+#: src/ODPropertiesDialogDef.cpp:298
+msgid "Boundary Point Inclusion\n"
+"Size"
+msgstr "Μέγεθος σημείου ορίου\n"
+"εγκλείσματος"
+
+#: src/ODPropertiesDialogDef.cpp:319 src/ODPropertiesDialogDef.cpp:799
+msgid "Number of Range Rings"
+msgstr "Αριθμός δακτυλίων απόστασης"
+
+#: src/ODPropertiesDialogDef.cpp:329 src/ODPropertiesDialogDef.cpp:809
+msgid "Distance Between Range Rings"
+msgstr "Διάστημα μεταξύ των δακτυλίων απόστασης"
+
+#: src/ODPropertiesDialogDef.cpp:402
+msgid "Text Point Icon"
+msgstr "Εικονίδιο σημείου κειμένου"
+
+#: src/ODPropertiesDialogDef.cpp:442
+msgid "Background Density"
+msgstr "Πυκνότητα φόντου"
+
+#: src/ODPropertiesDialogDef.cpp:542 src/ODPropertiesDialogImpl.cpp:190
+msgid "Path"
+msgstr "Διαδρομή"
+
+#: src/ODPropertiesDialogDef.cpp:551 src/ODPropertiesDialogDef.cpp:1023
+msgid "Start Point Icon"
+msgstr "Εικονίδιο σημείου εκκίνησης"
+
+#: src/ODPropertiesDialogDef.cpp:566 src/ODPropertiesDialogDef.cpp:1030
+msgid "End Point Icon"
+msgstr "Εικονίδιο σημείου τερματισμού"
+
+#: src/ODPropertiesDialogDef.cpp:581
+msgid "Active EBL Line Colour"
+msgstr "Χρώμα ενεργής γραμμής EBL"
+
+#: src/ODPropertiesDialogDef.cpp:588
+msgid "Inactive EBL Line Colour"
+msgstr "Ανενεργό χρώμα γραμμής EBL"
+
+#: src/ODPropertiesDialogDef.cpp:615 src/ODPropertiesDialogDef.cpp:970
+msgid "Rotate with Boat"
+msgstr "Περιστροφή με το πλοίο"
+
+#: src/ODPropertiesDialogDef.cpp:624
+msgid "EBL Fixed End Position"
+msgstr "Εκτ. πορεία με σταθερό τελικό σημείο"
+
+#: src/ODPropertiesDialogDef.cpp:627
+msgid "Show EBL Direction Arrow"
+msgstr "Εμφάνιση βέλους κατεύθυνσης EBL"
+
+#: src/ODPropertiesDialogDef.cpp:633
+msgid "Show Perpendicular Index Line"
+msgstr "Εμφάνιση κάθετης γραμμής Index"
+
+#: src/ODPropertiesDialogDef.cpp:649 src/ocpn_draw_pi.cpp:4004
+msgid "EBL"
+msgstr "EBL"
+
+#: src/ODPropertiesDialogDef.cpp:662
+msgid "Active DR Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:669
+msgid "Inactive DR Line Colour"
+msgstr ""
+
+#: src/ODPropertiesDialogDef.cpp:758
+msgid "Show DR Direction Arrow"
+msgstr "Εμφάνιση βέλος κατεύθυνσης DR"
+
+#: src/ODPropertiesDialogDef.cpp:764
+msgid "DR Persistence"
+msgstr "Παραμένουσα DR"
+
+#: src/ODPropertiesDialogDef.cpp:786
+msgid "DR Point Icon"
+msgstr "Εικονίδιο σημείου DR"
+
+#: src/ODPropertiesDialogDef.cpp:879
+msgid "First Point Icon"
+msgstr "Εικονίδιο πρώτου σημείου"
+
+#: src/ODPropertiesDialogDef.cpp:886
+msgid "Second Point Icon"
+msgstr "Εικονίδιο δευτέρου σημείου"
+
+#: src/ODPropertiesDialogDef.cpp:1006 src/ODToolbarImpl.cpp:547
+msgid "Guard Zone"
+msgstr "Ζώνης επιφυλακής"
+
+#: src/ODPropertiesDialogDef.cpp:1037
+msgid "Initial number of index lines"
+msgstr "Αρχικός αριθμός γραμμών αναφοράς"
+
+#: src/ODPropertiesDialogDef.cpp:1047
+msgid "Default Offset (+Stbd/-Port)"
+msgstr "Προεπιλεγμένη αντιστάθμιση (+δεξιά /-αριστερά)"
+
+#: src/ODPropertiesDialogDef.cpp:1051
+msgid "1.0"
+msgstr "1.0"
+
+#: src/ODPropertiesDialogDef.cpp:1065
+msgid "Active Centre Line Colour"
+msgstr "Χρώμα ενεργής κεντρικής γραμμής"
+
+#: src/ODPropertiesDialogDef.cpp:1072
+msgid "Inactive Centre Line Colour"
+msgstr "Χρώμα μη ενεργής κεντρικής γραμμής"
+
+#: src/ODPropertiesDialogDef.cpp:1079
+msgid "Active Offset Line Colour"
+msgstr "Χρώμα ενεργής γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1086
+msgid "Inactive Offset Line Colour"
+msgstr "Χρώμα μη ενεργής γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1093
+msgid "Active Offset Line 2 Colour"
+msgstr "Χρώμα 2ης ενεργής γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1100
+msgid "Inactive Offset Line 2 Colour"
+msgstr "Χρώμα 2ης ανενεργής γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1107
+msgid "Centre Line Width"
+msgstr "Πλάτος κεντρικής γραμμής"
+
+#: src/ODPropertiesDialogDef.cpp:1117
+msgid "Centre Line Style"
+msgstr "Στιλ κεντρικής γραμμής"
+
+#: src/ODPropertiesDialogDef.cpp:1127
+msgid "Offset Line Width"
+msgstr "Πλάτος γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1137
+msgid "Offset Line Style"
+msgstr "Στιλ γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1147
+msgid "Offset Line 2 Width"
+msgstr "Πλάτος 2ης γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1157
+msgid "Offset Line 2 Style"
+msgstr "Στιλ 2ης γραμμής μετατόπισης"
+
+#: src/ODPropertiesDialogDef.cpp:1177
+msgid "Parallel Index Line Persistence"
+msgstr "Διάρκεια παράλληλης γραμμής Index"
+
+#: src/ODPropertiesDialogDef.cpp:1198
+msgid "Name:"
+msgstr "Όνομα:"
+
+#: src/ODPropertiesDialogDef.cpp:1206
+msgid "Version:"
+msgstr "Έκδοση:"
+
+#: src/ODPropertiesDialogDef.cpp:1215 src/ODPropertiesDialogDef.cpp:1259
+#: src/ODPropertiesDialogDef.cpp:1287
+msgid "Major:"
+msgstr "Κύριο:"
+
+#: src/ODPropertiesDialogDef.cpp:1223 src/ODPropertiesDialogDef.cpp:1267
+#: src/ODPropertiesDialogDef.cpp:1295
+msgid "Minor:"
+msgstr "Έλασσον:"
+
+#: src/ODPropertiesDialogDef.cpp:1231
+msgid "Patch:"
+msgstr "Ενημέρωση κώδικα:"
+
+#: src/ODPropertiesDialogDef.cpp:1239
+msgid "Tweak:"
+msgstr "Tweak"
+
+#: src/ODPropertiesDialogDef.cpp:1250
+msgid "OCPN Draw API Version:"
+msgstr "Εκδοχή προσθέτου OCPN Draw:"
+
+#: src/ODPropertiesDialogDef.cpp:1278
+msgid "OCPN API Version:"
+msgstr "Εκδοχή προσθέτου OCPN:"
+
+#: src/ODPropertiesDialogDef.cpp:1306
+msgid "Date:"
+msgstr "Ημερομηνία:"
+
+#: src/ODPropertiesDialogDef.cpp:1320
+msgid "OCPN Draw Directories:"
+msgstr "Φάκελοι OCPN Draw:"
+
+#: src/ODPropertiesDialogDef.cpp:1329
+msgid "Data:"
+msgstr "Δεδομένα:"
+
+#: src/ODPropertiesDialogDef.cpp:1333
+msgid "Data Directory"
+msgstr "Κατάλογος δεδομένων"
+
+#: src/ODPropertiesDialogDef.cpp:1337
+msgid "User Icons:"
+msgstr "Εικονίδια χρηστών:"
+
+#: src/ODPropertiesDialogDef.cpp:1341
+msgid "Icon Directory"
+msgstr "Κατάλογος εικόνων"
+
+#: src/ODPropertiesDialogDef.cpp:1345
+msgid "Permanent Layers:"
+msgstr "Μόνιμα ταξίδια:"
+
+#: src/ODPropertiesDialogDef.cpp:1349
+msgid "Layers Directory"
+msgstr "Κατάλογος ταξιδιών"
+
+#: src/ODPropertiesDialogDef.cpp:1364
+msgid "Other:"
+msgstr "Άλλο:"
+
+#: src/ODPropertiesDialogDef.cpp:1368
+msgid "Please report problems using FlySpray at:\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
+"or\n\n"
+"at the OpenCPN forum:\n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"or\n\n"
+"Raise an issue in GIT at:\n"
+"https://github.com/jongough/ocpn_draw_pi/issues\n"
+msgstr "Αναφέρετε προβλήματα μέσω του FlySpray στο::\n"
+"https://www.opencpn.org/flyspray/index.php?project=60&do=index&switch=1\n\n"
+"ή\n\n"
+"στο φόρουμ OpenCPN: \n"
+"http://www.cruisersforum.com/forums/f134\n\n"
+"ή\n\n"
+"δηλώστε το στο GIT: \n"
+"https://github.com/jongough/ocpn_draw_pi/issues \n"
+
+#: src/ODPropertiesDialogDef.cpp:1379
+msgid "About"
+msgstr "Περί"
+
+#: src/ODPropertiesDialogDef.cpp:1386
+msgid "This chart shows the interactions between Boundaries and WatchDog alam boundaries"
+msgstr "Αυτό το διάγραμμα δείχνει τις αλληλεπιδράσεις μεταξύ των Boundaries και του συναγερμού του WatchDog"
+
+#: src/ODPropertiesDialogDef.cpp:1402
+msgid "WD"
+msgstr "WD"
+
+#: src/ODPropertiesDialogDef.cpp:1403 src/ODPropertiesDialogImpl.cpp:130
+msgid "All"
+msgstr "Όλα"
+
+#: src/ODPropertiesDialogDef.cpp:1412
+msgid "OD"
+msgstr "OD"
+
+#: src/ODPropertiesDialogDef.cpp:1430
+msgid "Help"
+msgstr "Βοήθεια"
+
+#: src/ODPropertiesDialogDef.cpp:1446
+msgid "License"
+msgstr "Άδεια χρήσης"
+
+#: src/ODPropertiesDialogDef.cpp:1468
+msgid "&Apply"
+msgstr "&Εφαρμογή"
+
+#: src/ODPropertiesDialogImpl.cpp:129
+msgid "OD\\WD"
+msgstr "OD\\WD"
+
+#: src/ODPropertiesDialogImpl.cpp:138 src/ODPropertiesDialogImpl.cpp:139
+#: src/ODPropertiesDialogImpl.cpp:140 src/ODPropertiesDialogImpl.cpp:141
+#: src/ODPropertiesDialogImpl.cpp:145 src/ODPropertiesDialogImpl.cpp:149
+msgid "Ring"
+msgstr "Δακτύλιος"
+
+#: src/ODPropertiesDialogImpl.cpp:142 src/ODPropertiesDialogImpl.cpp:143
+#: src/ODPropertiesDialogImpl.cpp:144 src/ODPropertiesDialogImpl.cpp:146
+#: src/ODPropertiesDialogImpl.cpp:147 src/ODPropertiesDialogImpl.cpp:148
+msgid "No alarm"
+msgstr "Όχι συναγερμός"
+
+#: src/ODPropertiesDialogImpl.cpp:1049 src/ODPropertiesDialogImpl.cpp:1097
+msgid "No"
+msgstr "Όχι"
+
+#: src/ODPropertiesDialogImpl.cpp:1050 src/ODPropertiesDialogImpl.cpp:1098
+msgid "Delete current OCPN_Draw config entries (Yes)"
+msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Ναι)"
+
+#: src/ODPropertiesDialogImpl.cpp:1102
+msgid "Delete current OCPN_Draw config entries (No)"
+msgstr "Διαγραφή των τρεχόντων ρυθμίσεων του OCPN_Draw (Όχι)"
+
+#: src/ODToolbarImpl.cpp:542
+msgid "Create Boundary"
+msgstr "Δημιουργία ορίου"
+
+#: src/ODToolbarImpl.cpp:543
+msgid "Create Boundary Point"
+msgstr "Δημιουργία σημείου ορίου"
+
+#: src/ODToolbarImpl.cpp:544
+msgid "Create Text Point"
+msgstr "Δημιουργία σημείου κειμένου"
+
+#: src/ODToolbarImpl.cpp:545
+msgid "Create EBL"
+msgstr "Δημιουργία EBL"
+
+#: src/ODToolbarImpl.cpp:545
+msgid "Electronic Bearing Line"
+msgstr "Γραμμή ηλεκτρονικής διόπτευσης"
+
+#: src/ODToolbarImpl.cpp:546
+msgid "Create DR"
+msgstr "Δημιουργία DR"
+
+#: src/ODToolbarImpl.cpp:547
+msgid "Create GZ"
+msgstr "Δημιουργία GZ"
+
+#: src/ODToolbarImpl.cpp:548
+msgid "Create PIL"
+msgstr "Δημιουργία PIL"
+
+#: src/ODUtils.cpp:491
+msgid "GL_INVALID_ENUM "
+msgstr "GL_INVALID_ENUM "
+
+#: src/ODUtils.cpp:494
+msgid "GL_INVALID_VALUE "
+msgstr "GL_INVALID_VALUE "
+
+#: src/ODUtils.cpp:497
+msgid "GL_INVALID_OPERATION "
+msgstr "GL_INVALID_OPERATION "
+
+#: src/ODUtils.cpp:500
+msgid "GL_INVALID_FRAMEBUFFER_OPERATION "
+msgstr "GL_INVALID_FRAMEBUFFER_OPERATION "
+
+#: src/ODUtils.cpp:503
+msgid "GL_OUT_OF_MEMORY "
+msgstr "GL_OUT_OF_MEMORY "
+
+#: src/ODUtils.cpp:509
+#, c-format
+msgid "%s:%i %s(), %s\n"
+msgstr "%s:%i %s(), %s\n"
+
+#: src/ODdc.cpp:1688
+msgid "ODDC::DrawPolygon: bcolloc -1"
+msgstr "ODDC::DrawPolygon: bcolloc -1"
+
+#: src/ODicons.cpp:51
+msgid "ocpn_draw_pi data location"
+msgstr "τοποθεσία δεδομένων ocpn_draw_pi"
+
+#: src/ODicons.cpp:96 src/ODicons.cpp:281
+msgid "Failed to load all OCPN Draw Plugin icons, check OCPN log for details"
+msgstr "Αποτυχία φόρτωσης όλων των εικόνων του προσθέτου OCPN Draw, κοιτάξτε το OCPN log για λεπτομέρειες"
+
+#: src/ODicons.cpp:96 src/ODicons.cpp:281
+#: src/PathAndPointManagerDialogImpl.cpp:561
+#: src/PathAndPointManagerDialogImpl.cpp:608
+#: src/PathAndPointManagerDialogImpl.cpp:1481
+#: src/PathAndPointManagerDialogImpl.cpp:1512
+#: src/PathAndPointManagerDialogImpl.cpp:1579
+#: src/PathAndPointManagerDialogImpl.cpp:1765
+msgid "OpenCPN Alert"
+msgstr "OpenCPN: Συναγερμός"
+
+#: src/ODicons.cpp:294
+msgid "ocpn_draw_pi LoadSVG"
+msgstr "ocpn_draw_pi LoadSVG"
+
+#: src/PILProp.cpp:62
+msgid "PIL Persistence"
+msgstr "Διάρκεια PIL"
+
+#: src/PILProp.cpp:332
+msgid "ID"
+msgstr "ID"
+
+#: src/PILProp.cpp:334
+msgid "Offset"
+msgstr "Μετατόπιση"
+
+#: src/PILPropertiesDialogDef.cpp:42
+msgid "ID Num"
+msgstr "Αρ. ID"
+
+#: src/PILPropertiesDialogDef.cpp:63
+msgid "Offset (+ Stbd/- Port)"
+msgstr "Offset: + δεξιά, - αριστερά"
+
+#: src/PathAndPointManagerDialogDef.cpp:57
+#: src/PathAndPointManagerDialogDef.cpp:107
+msgid "&Properties"
+msgstr "&Ιδιότητες"
+
+#: src/PathAndPointManagerDialogDef.cpp:60
+#: src/PathAndPointManagerDialogImpl.cpp:1115
+msgid "&Activate"
+msgstr "&Ενεργοποίηση"
+
+#: src/PathAndPointManagerDialogDef.cpp:63
+#: src/PathAndPointManagerDialogDef.cpp:110
+msgid "&Center View"
+msgstr "&Κεντράρισμα"
+
+#: src/PathAndPointManagerDialogDef.cpp:69
+#: src/PathAndPointManagerDialogDef.cpp:116
+msgid "&Export Selected..."
+msgstr "Ε&ξαγωγή επιλεγμένων..."
+
+#: src/PathAndPointManagerDialogDef.cpp:72
+#: src/PathAndPointManagerDialogDef.cpp:119
+msgid "Dele&te All"
+msgstr "Διαγρ&αφή όλων"
+
+#: src/PathAndPointManagerDialogDef.cpp:85
+msgid "Paths"
+msgstr "Διαδρομές"
+
+#: src/PathAndPointManagerDialogDef.cpp:104
+msgid "&New"
+msgstr "&Νέο"
+
+#: src/PathAndPointManagerDialogDef.cpp:132
+msgid "OD Points"
+msgstr "Σημεία OD"
+
+#: src/PathAndPointManagerDialogDef.cpp:151
+msgid "New &temporary Layer"
+msgstr "Νέο &προσωρινό ταξίδι"
+
+#: src/PathAndPointManagerDialogDef.cpp:154
+msgid "New persistent &Layer"
+msgstr "Νέα μόνιμο &ταξίδι"
+
+#: src/PathAndPointManagerDialogDef.cpp:160
+msgid "Show on &chart"
+msgstr "Εμφάνιση στον &χάρτη"
+
+#: src/PathAndPointManagerDialogDef.cpp:163
+msgid "Show &Point names"
+msgstr "Εμφάνιση ονομάτων &σημείων"
+
+#: src/PathAndPointManagerDialogDef.cpp:166
+msgid "&List contents"
+msgstr "&Περιεχόμενα"
+
+#: src/PathAndPointManagerDialogDef.cpp:179
+msgid "Layers"
+msgstr "Ταξίδια"
+
+#: src/PathAndPointManagerDialogDef.cpp:195
+msgid "Import gpx"
+msgstr "Εισαγωγή gpx"
+
+#: src/PathAndPointManagerDialogDef.cpp:198
+msgid "E&xport All Visible"
+msgstr "Ε&ξαγωγή όλων των ορατών"
+
+#: src/PathAndPointManagerDialogImpl.cpp:450
+#: src/PathAndPointManagerDialogImpl.cpp:456
+msgid "Show"
+msgstr "Εμφάνιση"
+
+#: src/PathAndPointManagerDialogImpl.cpp:451
+msgid "Path Name"
+msgstr "Όνομα διαδρομής"
+
+#: src/PathAndPointManagerDialogImpl.cpp:452
+msgid "Desc"
+msgstr "Περιγρ"
+
+#: src/PathAndPointManagerDialogImpl.cpp:453
+msgid "Icon"
+msgstr "Εικονίδιο"
+
+#: src/PathAndPointManagerDialogImpl.cpp:454
+msgid "OD Point Name"
+msgstr "Όνομα σημείου OD"
+
+#: src/PathAndPointManagerDialogImpl.cpp:455
+msgid "Distance from Ownship"
+msgstr "Απόσταση από ίδιον πλοίο"
+
+#: src/PathAndPointManagerDialogImpl.cpp:457
+msgid "Layer Name"
+msgstr "Όνομα ταξιδιού"
+
+#: src/PathAndPointManagerDialogImpl.cpp:458
+msgid "No. of items"
+msgstr "Αρ. στοιχείων"
+
+#: src/PathAndPointManagerDialogImpl.cpp:518
+#: src/PathAndPointManagerDialogImpl.cpp:531
+#: src/PathAndPointManagerDialogImpl.cpp:2077
+msgid "I&mport"
+msgstr "Ε&ισαγωγή"
+
+#: src/PathAndPointManagerDialogImpl.cpp:561
+#: src/PathAndPointManagerDialogImpl.cpp:1481
+msgid "Are you sure you want to delete the selected object(s)"
+msgstr "Σίγουρα θέλεις να διαγράψεις τα επιλεγμένα"
+
+#: src/PathAndPointManagerDialogImpl.cpp:608
+msgid "Are you sure you want to delete <ALL> paths?"
+msgstr "Σίγουρα θέλετε να διαγράψετε <ΟΛΑ> τα ίχνη πορείας;"
+
+#: src/PathAndPointManagerDialogImpl.cpp:758
+msgid "Boundary Properties"
+msgstr "Ιδιότητες ορίου"
+
+#: src/PathAndPointManagerDialogImpl.cpp:760
+msgid "EBL Properties"
+msgstr "Ιδιότητες EBL"
+
+#: src/PathAndPointManagerDialogImpl.cpp:762
+msgid "DR Properties"
+msgstr "Ιδιότητες DR"
+
+#: src/PathAndPointManagerDialogImpl.cpp:764
+msgid "Guard Zone Properties"
+msgstr "Ιδιότητες ζώνης επιφυλακής"
+
+#: src/PathAndPointManagerDialogImpl.cpp:766
+msgid "Parallel Index Line Properties"
+msgstr "Ιδιότητες παράλληλης γραμμής Index"
+
+#: src/PathAndPointManagerDialogImpl.cpp:771
+msgid "Path Properties, Layer: "
+msgstr "Ιδιότητες διαδρομής, ταξίδι: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:773
+msgid "Boundary Properties, Layer: "
+msgstr "Ιδιότητες ορίου, ταξίδι: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:775
+msgid "EBL Properties, Layer: "
+msgstr "Ιδιότητες EBL, ταξίδι: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:777
+msgid "DR Properties, Layer: "
+msgstr "Ιδιότητες DR, ταξίδι: "
+
+#: src/PathAndPointManagerDialogImpl.cpp:894
+msgid "Do you also want to make the shared OD Points being part of this boundary invisible?"
+msgstr "Να κρυφτούν και τα κοινά σημεία OD αυτού του ορίου;"
+
+#: src/PathAndPointManagerDialogImpl.cpp:894
+msgid "Question"
+msgstr "Ερώτηση"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1039
+msgid "(Unnamed )"
+msgstr "(Χωρίς όνομα)"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1114
+msgid "&Deactivate"
+msgstr "&Απενεργοποίηση"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1209
+#: src/PathAndPointManagerDialogImpl.cpp:2192
+msgid "(Unnamed) "
+msgstr "(Χωρίς όνομα) "
+
+#: src/PathAndPointManagerDialogImpl.cpp:1512
+msgid "The OD Point you want to delete is used in a path, do you really want to delete it?"
+msgstr "Το σημείο OD που θέλετε να διαγράψετε χρησιμοποιείται σε μια διαδρομή, είστε βέβαιοι ότι θέλετε να το διαγράψετε;"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1569
+msgid "Are you sure you want to delete <ALL> OD points?"
+msgstr "Είστε βέβαιοι ότι θέλετε να διαγράψετε <ΟΛΑ> τα σημεία OD;"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1575
+msgid "There are some OD points used in paths or anchor alarms.\n"
 " Do you want to delete them as well?\n"
 " This will change the paths and disable the anchor alarms.\n"
 " Answering No keeps the OD points used in paths or alarms."
-msgstr ""
-"Υπάρχουν μερικά σημεία OCPN που χρησιμοποιούνται σε διαδρομές ή συναγερμούς "
-"αγκυροβολίου.\n"
+msgstr "Υπάρχουν μερικά σημεία OCPN που χρησιμοποιούνται σε διαδρομές ή συναγερμούς αγκυροβολίου.\n"
 "Θέλετε να τα διαγράψετε κι αυτά;\n"
 "Αυτό θα αλλάξει τις διαδρομές και θα ακυρώσει τους συναγερμούς.\n"
-" Με ΟΧΙ τα σημεία OD που χρησιμοποιούνται σε μονοπάτια ή συναγερμούς "
-"διατηρούνται."
-#
-msgid ""
-"This chart shows the interactions between Boundaries and WatchDog alam "
-"boundaries"
-msgstr ""
-"Αυτό το διάγραμμα δείχνει τις αλληλεπιδράσεις μεταξύ των Boundaries και του "
-"συναγερμού του WatchDog"
-#
-msgid "Time"
-msgstr "Χρόνος"
-#
-msgid "Time Units"
-msgstr "Μονάδες χρόνου"
-#
-msgid "To Point"
-msgstr "Προς το σημείο"
-#
-msgid "Top"
-msgstr "Πάνω"
-#
-msgid "Top Centre"
-msgstr "Επάνω κέντρο"
-#
-msgid "Total Length"
-msgstr "Συνολικό μήκος"
-#
-msgid "Total Length: "
-msgstr "Συνολικό μήκος: "
-#
-msgid "Tweak:"
-msgstr "Tweak"
-#
-msgid "URL"
-msgstr "URL"
-#
+" Με ΟΧΙ τα σημεία OD που χρησιμοποιούνται σε μονοπάτια ή συναγερμούς διατηρούνται."
+
+#: src/PathAndPointManagerDialogImpl.cpp:1668
+msgid "Hide from chart"
+msgstr "Κρύψε από τον χάρτη"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1673
+msgid "Hide Point names"
+msgstr "Απόκρυψη ονομάτων σημείων"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1675
+#: src/PathAndPointManagerDialogImpl.cpp:1683
+msgid "Show Point names"
+msgstr "Εμφάνιση ονομάτων σημείων"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1678
 msgid "Unlist contents "
 msgstr "Απόκρυψη περιεχομένων "
-#
-msgid "Update initial conditions"
-msgstr "Ανανέωσε τις αρχικές συνθήκες"
-#
+
+#: src/PathAndPointManagerDialogImpl.cpp:1680
+#: src/PathAndPointManagerDialogImpl.cpp:1684
+msgid "List contents "
+msgstr "Περιεχόμενα "
+
+#: src/PathAndPointManagerDialogImpl.cpp:1759
+msgid "Are you sure you want to delete this layer and <ALL> of its contents?"
+msgstr "Σίγουρα θέλετε να διαγράψετε αυτό το ταξίδι και <όλα> τα περιεχόμενά του;"
+
+#: src/PathAndPointManagerDialogImpl.cpp:1762
+msgid "The file will also be deleted from OCPN Draw's layers directory."
+msgstr "Το αρχείο θα διαγραφεί κι από τον φάκελο ταξιδιών του OpenCPN."
+
+#: src/PathAndPointManagerDialogImpl.cpp:2035
+msgid "(Unnamed Layer)"
+msgstr "(ανώνυμο ταξίδι)"
+
+#: src/ocpn_draw_pi.cpp:564 src/ocpn_draw_pi.cpp:565 src/ocpn_draw_pi.cpp:569
+#: src/ocpn_draw_pi.cpp:570
+msgid "OCPN Draw Manager"
+msgstr "OCPN Draw Manager"
+
+#: src/ocpn_draw_pi.cpp:566 src/ocpn_draw_pi.cpp:571
+msgid "OCPN Draw Boundary"
+msgstr "Όριο OCPN Draw"
+
+#: src/ocpn_draw_pi.cpp:567 src/ocpn_draw_pi.cpp:572
+msgid "OCPN Draw"
+msgstr "OCPN Draw"
+
+#: src/ocpn_draw_pi.cpp:680
 msgid "Use OCPN Draw Tool"
 msgstr "Χρήση εργαλείου OCPN Draw"
-#
-msgid "Use nearby OD Point?"
-msgstr "Χρήση κοντινού σημείου OD;"
-#
+
+#: src/ocpn_draw_pi.cpp:825
+msgid "BlinkTimer->Unbind not found or not removed"
+msgstr "BlinkTimer->Η αποσύνδεση δεν βρέθηκε ή δεν αφαιρέθηκε"
+
+#: src/ocpn_draw_pi.cpp:834
+msgid "RolloverPopupTimer->Unbind not found or not removed"
+msgstr "Το RolloverPopupTimer->Αποσύνδεση δεν βρέθηκε ή δεν αφαιρέθηκε"
+
+#: src/ocpn_draw_pi.cpp:1083
+msgid "General drawing for OpenCPN"
+msgstr "Γενικό σχέδιο για το OpenCPN"
+
+#: src/ocpn_draw_pi.cpp:1087
+msgid "General Drawing for OpenCPN\n\n"
+"Thanks to the community for their helpful suggestions."
+msgstr "Γενικό σχέδιο για το OpenCPN\n\n"
+"Ευχαριστούμε την Κοινότητα για τις χρήσιμες προτάσεις."
+
+#: src/ocpn_draw_pi.cpp:3499
+msgid "Layer Boundary"
+msgstr "Όριο ταξιδιού"
+
+#: src/ocpn_draw_pi.cpp:3724 src/ocpn_draw_pi.cpp:3791
 msgid "Use nearby Point?"
 msgstr "Χρήση κοντινού σημείου;"
-#
-msgid "User Icons:"
-msgstr "Εικονίδια χρηστών:"
-#
-msgid "Version:"
-msgstr "Έκδοση:"
-#
-msgid "WD"
-msgstr "WD"
-#
-msgid "Warning: Lat and Lon cannot be changed when EBL end point moving"
-msgstr ""
-"Προσοχή: Μήκος και πλάτος δεν μπορούν να αλλάξουν όταν τελικό σημείο του EBL "
-"κινείται"
-#
-msgid "Whilst Drawing"
-msgstr "Καθώς σχεδιάζει"
-#
+
+#: src/ocpn_draw_pi.cpp:3725 src/ocpn_draw_pi.cpp:3792
+msgid "OCPN Draw Point Create"
+msgstr "Δημιουργία σημείου OCPN Draw"
+
+#: src/ocpn_draw_pi.cpp:3871
+msgid "Use nearby OD Point?"
+msgstr "Χρήση κοντινού σημείου OD;"
+
+#: src/ocpn_draw_pi.cpp:3872 src/ocpn_draw_pi.cpp:3925
+msgid "OCPN Draw Boundary Create"
+msgstr "Δημιουργία ορίου OCPN Draw"
+
+#: src/ocpn_draw_pi.cpp:3919
+msgid "For this leg the Great Circle boundary is "
+msgstr "Για αυτό το σκέλος τ όριο Μεγάλου Κύκλου είναι "
+
+#: src/ocpn_draw_pi.cpp:3920
+msgid " shorter than rhumbline.\n\n"
+msgstr " κοντύτερο από την ισογώνια.\n\n"
+
+#: src/ocpn_draw_pi.cpp:3921
 msgid "Would you like include the Great Circle boundary points for this leg?"
-msgstr ""
-"Θέλετε να συμπεριλάβετε τα σημεία ορίου Μεγίστου Κύκλου για αυτό το σκέλος;"
-#
-msgid "Yes"
-msgstr "Ναί"
-#
-#, fuzzy
-msgid "ocpn_draw_pi LoadSVG"
-msgstr "τοποθεσία δεδομένων ocpn_draw_pi"
-#
-msgid "ocpn_draw_pi data location"
-msgstr "τοποθεσία δεδομένων ocpn_draw_pi"
-#
-msgid "will be deleted."
-msgstr "θα διαγραφεί."
-#
-msgid "will be deleted. No further boundaries will be imported"
-msgstr "θα διαγραφεί. Δεν θα εισαχθούν άλλα σύνορα"
-#
-msgid "wxFB Website"
-msgstr "Ιστοσελίδα wxFB"
+msgstr "Θέλετε να συμπεριλάβετε τα σημεία ορίου Μεγίστου Κύκλου για αυτό το σκέλος;"
+
+#: src/ocpn_draw_pi.cpp:4096
+msgid "GZ"
+msgstr "GZ"
+
+#: src/ocpn_draw_pi.cpp:4134
+msgid "Second"
+msgstr "Δεύτερο"
+
+#: src/ocpn_draw_pi.cpp:4161
+msgid "First"
+msgstr "Πρώτο"
+
+#: src/ocpn_draw_pi.cpp:4194
+msgid "PIL"
+msgstr "PIL"
+
+#: src/ocpn_draw_pi.cpp:4473
+msgid "Alpha blending not drawn as OpenGL not available in this build"
+msgstr "Η ανάμειξη άλφα δεν έγινε καθώς το OpenGL δεν είναι διαθέσιμο"
+

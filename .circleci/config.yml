@@ -18,69 +18,110 @@ std-filters: &std-filters
 workflows:
     build_all:
         jobs:
-        - build-armhf-stretch:
-            <<: *std-filters
-## Derecated in favour of ubuntu-armhf:18.04 build - 14/01/2022
-##        - build-armhf-raspbian-buster:
-##            <<: *std-filters
-        - build-armhf-ubuntu-buster:
-            <<: *std-filters
-        - build-armhf-debian-buster:
-            <<: *std-filters
-        - build-armhf-debian-buster-gtk3:
-            <<: *std-filters
-        - build-arm64-debian-buster:
-            <<: *std-filters
-## Derecated in favour of ubuntu-armhf:20.04 build - 14/01/2022
-##        - build-armhf-bullseye:
-##            <<: *std-filters
-        - build-armhf-debian-bullseye:
-            <<: *std-filters
-## Cannot build due to dependencies not being met. - 30/04/2023
-#        - build-armhf-debian-bullseye-wx32:
-#            <<: *std-filters
-        - build-arm64-debian-bullseye:
-            <<: *std-filters
-## Cannot build due to dependencies not being met. - 30/04/2023
-##        - build-arm64-debian-bullseye-wx32:
-##            <<: *std-filters
-        - build-armhf-debian-bookworm:
-            <<: *std-filters
-        - build-arm64-debian-bookworm:
-            <<: *std-filters
-        - build-armhf-ubuntu-focal:
-            <<: *std-filters
-        - build-bionic:
-            <<: *std-filters
-        - build-bionic-gtk3:
-            <<: *std-filters
-        - build-focal-gtk3:
-            <<: *std-filters
-        - build-jammy:
-            <<: *std-filters
-        - build-buster:
-            <<: *std-filters
-        - build-bullseye:
-            <<: *std-filters
-        - build-bookworm:
-            <<: *std-filters
-        - build-flatpak-x86-2008:
-            <<: *std-filters
-        - build-flatpak-x86-2208:
-            <<: *std-filters
-        - build-flatpak-arm64:
-            <<: *std-filters
-        - build-macos:
-             <<: *std-filters
-        - build-macos-wx32:
-             <<: *std-filters
+###  --------------------
+## OpenCPN 5.8 Plugins
+## ---------------------
         - build-android-arm64:
              <<: *std-filters
         - build-android-armhf:
              <<: *std-filters
-### Work in progress to allow circleci to do windows builds
-###        - build-msvc-2022:
-###            <<: *std-filters
+        - build-macos-wx32:
+             <<: *std-filters
+        - build-flatpak-arm64-2208:
+            <<: *std-filters
+        - build-flatpak-x86-2208:
+            <<: *std-filters
+## No flatpak-armhf - Insufficient performance.
+## See appveyor for Windows build.
+## Work in progress to allow circleci to do windows builds
+##        - build-msvc-wx32-2022:
+##            <<: *std-filters
+        - build-debian-arm64-12-bookworm:
+            <<: *std-filters
+        - build-debian-armhf-12-bookworm:
+            <<: *std-filters
+        - build-debian-x86_64-12-bookworm:
+            <<: *std-filters
+## ---------------------
+## OpenCPN 5.6.2 Plugins
+## ---------------------
+## Frozen - 28/05/2023
+        - build-macos:
+             <<: *std-filters
+## See appveyor for Windows build.
+## Frozen - 28/05/2023
+##        - build-msvc-2022:
+##            <<: *std-filters
+## Deprecated in favour of flatpak:22.08 build - 28/05/2023
+##        - build-flatpak-arm64-2008:
+##            <<: *std-filters
+## Deprecated in favour of flatpak:22.08 build - 28/05/2023
+##        - build-flatpak-x86-2008:
+##            <<: *std-filters
+## No flatpak-armhf - Insufficient performance.
+## Frozen - 28/05/2023
+        - build-debian-armhf-10-buster:
+            <<: *std-filters
+## Frozen - 28/05/2023
+        - build-debian-armhf-10-buster-gtk3:
+            <<: *std-filters
+## Frozen - 28/05/2023
+        - build-debian-arm64-10-buster:
+            <<: *std-filters
+## Frozen - 28/05/2023
+        - build-debian-x86_64-10-buster:
+            <<: *std-filters
+## Frozen - 28/05/2023
+        - build-debian-armhf-11-bullseye:
+            <<: *std-filters
+## Frozen - 28/05/2023
+        - build-debian-arm64-11-bullseye:
+            <<: *std-filters
+## Frozen - 28/05/2023
+        - build-debian-x86_64-11-bullseye:
+            <<: *std-filters
+## Not needed. Deps not met. - 30/04/2023
+##        - build-debian-armhf-11-bullseye-wx32:
+##            <<: *std-filters
+## Not needed. Deps not met. - 30/04/2023
+##        - build-debian-x86_64-11-bullseye-wx32:
+##            <<: *std-filters
+## Frozen - 28/05/2023  KEEP some users.
+        - build-raspian-armhf-913-stretch:
+            <<: *std-filters
+##
+## UBUNTU OS
+## Frozen - 28/05/2023  DROP
+        - build-ubuntu-armhf-1804-buster:
+            <<: *std-filters
+## Frozen - 28/05/2023  DROP
+        - build-ubuntu-x86_64-1804-bionic:
+            <<: *std-filters
+## Frozen - 28/05/2023  DROP
+        - build-ubuntu-x86_64-1804-bionic-gtk3:
+            <<: *std-filters
+## Frozen - 28/05/2023  DROP
+        - build-ubuntu-armhf-2004-focal-gtk3:
+            <<: *std-filters
+## Frozen - 28/05/2023 DROP
+        - build-ubuntu-x86_64-2004-focal-gtk3:
+            <<: *std-filters
+## Frozen - 28/05/2023 KEEP (an unfortunate special case)
+        - build-ubuntu-x86_64-2204-jammy:
+            <<: *std-filters
+## Deprecated in favour of ubuntu-armhf:18.04 buster build - 14/01/2022
+##        - build-raspbian-armhf-buster:
+##            <<: *std-filters
+## Deprecated in favour of ubuntu-armhf:20.04 build - 14/01/2022
+##        - build-armhf-bullseye:
+##            <<: *std-filters
+#
+## Work in progress to allow circleci to do windows builds
+# Not supported under circleci
+#        - build-msvc-2019:
+#            <<: *std-filters
+        - build-msvc-2022:
+            <<: *std-filters
 
 orbs:
     cloudsmith: cloudsmith/cloudsmith@1.0.4
@@ -92,9 +133,9 @@ commands:
             install-python:
                 type: boolean
                 default: false
-            use-orb:
-                type: env_var_name
-                default: DEPLOY_USE_ORB
+            DEPLOY-USE-ORB:
+                type: boolean
+                default: true
         steps:
             - when:
                 condition: <<pipeline.parameters.run_workflow_deploy>>
@@ -105,11 +146,11 @@ commands:
                     - run: sudo apt install -y python3-pip
                     - run: python3.8 -m pip install cloudsmith-cli
                 - when:
-                    condition: <<parameters.use-orb>>
+                    condition: <<parameters.DEPLOY-USE-ORB>>
                     steps:
                     - cloudsmith/ensure-api-key
                     - cloudsmith/install-cli
-                - run: ci/cloudsmith-upload.sh
+                - run: bash ci/cloudsmith-upload.sh
 
     # if you want to use a local proxy add Acquire::http::Proxy \"http://192.168.1.1:3142\"; to a file called circleci-cache/apt-proxy. This will require
     #    --volume {your local directory}/circleci-cache:/home/circleci/circleci-cache
@@ -118,7 +159,7 @@ commands:
     # provide the wxWidgets QT information.
 
 jobs:
-    build-armhf-stretch:
+    build-raspian-armhf-913-stretch:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -150,7 +191,7 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-armhf-ubuntu-buster:
+    build-ubuntu-armhf-1804-buster:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -166,7 +207,7 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-armhf-debian-buster:
+    build-debian-armhf-10-buster:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -182,7 +223,7 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-armhf-debian-buster-gtk3:
+    build-debian-armhf-10-buster-gtk3:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -199,7 +240,7 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-arm64-debian-buster:
+    build-debian-arm64-10-buster:
         machine:
             image: ubuntu-2004:202104-01
         resource_class: arm.medium
@@ -216,7 +257,7 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-armhf-debian-bullseye:
+    build-debian-armhf-11-bullseye:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -251,7 +292,63 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-armhf-debian-bookworm:
+# replaced by build-debian-arm64-12-bookworm
+#    build-arm64-debian-bookworm:
+#        machine:
+#            image: ubuntu-2004:202104-01
+#        environment:
+#        - OCPN_TARGET=bookworm-arm64
+#        - DOCKER_IMAGE=arm64v8/debian:bookworm
+#        - BUILD_FLAGS=-j3
+#        - BUILD_ENV=debian
+#        - WX_VER: 32
+#        - BUILD_GTK3: true
+#        - DEPLOY_USE_ORB: true
+#        steps:
+#        - checkout
+#        - run: chmod a+x ./ci/*.sh
+#        - run:
+#            command: ci/circleci-build-ubuntu-docker.sh
+#            no_output_timeout: 30m
+#        - deploy-code
+    build-debian-arm64-12-bookworm:
+        machine:
+            image: ubuntu-2004:202104-01
+        environment:
+        - OCPN_TARGET=bookworm-arm64
+        - DOCKER_IMAGE=arm64v8/debian:bookworm
+        - BUILD_FLAGS=-j3
+        - BUILD_ENV=debian
+        - WX_VER: 32
+        - BUILD_GTK3: true
+        - DEPLOY_USE_ORB: true
+        steps:
+        - checkout
+        - run: chmod a+x ./ci/*.sh
+        - run:
+            command: ci/circleci-build-ubuntu-docker.sh
+            no_output_timeout: 30m
+# replaced by build-debian-armhf-12-bookworm
+#        build-armhf-debian-bookworm:
+#        machine:
+#            image: ubuntu-2004:202104-01
+#        resource_class: arm.medium
+#        environment:
+#        - OCPN_TARGET=bookworm-armhf
+#        - DOCKER_IMAGE=arm32v7/debian:bookworm
+#        - BUILD_FLAGS=-j3
+#        - BUILD_ENV=debian
+#        - WX_VER: 32
+#        - BUILD_GTK3: true
+#        - DEPLOY_USE_ORB: true
+#        steps:
+#        - checkout
+#        - run: chmod a+x ./ci/*.sh
+#        - run:
+#            command: ci/circleci-build-ubuntu-docker.sh
+#            no_output_timeout: 30m
+#        - deploy-code
+    build-debian-armhf-12-bookworm:
         machine:
             image: ubuntu-2004:202104-01
         resource_class: arm.medium
@@ -270,7 +367,42 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-arm64-debian-bullseye:
+# replaced by build-debian-x86_64-12-bookworm
+#    build-bookworm:
+#        machine:
+#            image: ubuntu-2004:202104-01
+#        environment:
+#        - OCPN_TARGET: bookworm
+#        - BUILD_GTK3: true
+#        - WX_VER: 32
+#        - DEPLOY_USE_ORB: true
+#        - BUILD_ENV=debian
+#        - DOCKER_IMAGE=debian:bookworm
+#        steps:
+#        - checkout
+#        - run: chmod a+x ci/*.sh
+#        - run:
+#            command: ci/circleci-build-ubuntu-docker.sh
+#            no_output_timeout: 30m
+#        - deploy-code
+    build-debian-x86_64-12-bookworm:
+        machine:
+            image: ubuntu-2004:202104-01
+        environment:
+        - OCPN_TARGET: bookworm
+        - BUILD_GTK3: true
+        - WX_VER: 32
+        - DEPLOY_USE_ORB: true
+        - BUILD_ENV=debian
+        - DOCKER_IMAGE=debian:bookworm
+        steps:
+        - checkout
+        - run: chmod a+x ci/*.sh
+        - run:
+            command: ci/circleci-build-ubuntu-docker.sh
+            no_output_timeout: 30m
+        - deploy-code
+    build-debian-arm64-11-bullseye:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -300,29 +432,21 @@ jobs:
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
-        - run:
-            command: ci/circleci-build-ubuntu-docker.sh
-            no_output_timeout: 30m
-        - deploy-code
-    build-arm64-debian-bookworm:
-        machine:
-            image: ubuntu-2004:202104-01
-        environment:
-        - OCPN_TARGET=bookworm-arm64
-        - DOCKER_IMAGE=arm64v8/debian:bookworm
-        - BUILD_FLAGS=-j3
-        - BUILD_ENV=debian
-        - WX_VER: 32
-        - BUILD_GTK3: true
-        - DEPLOY_USE_ORB: true
-        steps:
-        - checkout
+        - restore_cache:
+            name: Restore build machine dependencies
+            keys:
+                - arm64-debian-bullseye-wx32-{{ checksum "CMakeLists.txt" }}
+#                - arm64-debian-bullseye-wx32-
         - run: chmod a+x ./ci/*.sh
         - run:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-armhf-ubuntu-focal:
+        - save_cache:
+            name: Save build machine cache
+            key: arm64-debian-bullseye-wx32-{{ checksum "CMakeLists.txt" }}
+            paths: ./
+    build-ubuntu-armhf-2004-focal-gtk3:
         machine:
             image: ubuntu-2004:202104-01
         environment:
@@ -342,7 +466,7 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-    build-bionic:
+    build-ubuntu-x86_64-1804-bionic:
         docker:
         - image: cimg/base:stable-18.04
         environment:
@@ -360,7 +484,7 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - deploy-code
-    build-bionic-gtk3:
+    build-ubuntu-x86_64-1804-bionic-gtk3:
         docker:
         - image: cimg/base:stable-18.04
         environment:
@@ -380,7 +504,7 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - deploy-code
-    build-focal-gtk3:
+    build-ubuntu-x86_64-2004-focal-gtk3:
         docker:
         - image: cimg/base:stable-20.04
         environment:
@@ -398,7 +522,7 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - deploy-code
-    build-jammy:
+    build-ubuntu-x86_64-2204-jammy:
         docker:
         - image: cimg/base:edge-22.04
         environment:
@@ -419,7 +543,7 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - deploy-code
-    build-buster:
+    build-debian-x86_64-10-buster:
         docker:
         - image: circleci/buildpack-deps:buster-scm
         environment:
@@ -437,7 +561,7 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - deploy-code
-    build-bullseye:
+    build-debian-x86_64-11-bullseye:
         docker:
         - image: circleci/buildpack-deps:bullseye-scm
         environment:
@@ -457,42 +581,6 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: ci/circleci-build-debian.sh
         - deploy-code
-    build-bookworm:
-        machine:
-            image: ubuntu-2004:202104-01
-        environment:
-        - OCPN_TARGET: bookworm
-        - BUILD_GTK3: true
-        - WX_VER: 32
-        - DEPLOY_USE_ORB: true
-        - BUILD_ENV=debian
-        - DOCKER_IMAGE=debian:bookworm
-        steps:
-
-        - checkout
-        - run: chmod a+x ci/*.sh
-        - run:
-            command: ci/circleci-build-ubuntu-docker.sh
-            no_output_timeout: 30m
-        - deploy-code
-    build-flatpak:
-        machine:
-            image: ubuntu-2004:202010-01
-        environment:
-        - OCPN_TARGET:  flatpak
-        - FLATPAK_BRANCH: stable
-        - CLOUDSMITH_PKG_EXT: gz
-        - SDK_VER: 20.08
-        - WXWIDGETS_FORCE_VERSION: 3.0
-        steps:
-        - checkout
-        - run: chmod a+x ci/*.sh
-        - run:
-            command: bash ci/circleci-build-flatpak.sh
-        - when:
-            condition: <<pipeline.parameters.run_workflow_deploy>>
-            steps:
-            - run: ci/cloudsmith-upload.sh
     build-flatpak-x86-2008:
         machine:
             image: ubuntu-2004:202010-01
@@ -525,7 +613,7 @@ jobs:
             command: bash ci/circleci-build-flatpak.sh
             no_output_timeout: 30m
         - deploy-code
-    build-flatpak-arm64:
+    build-flatpak-arm64-2008:
         machine:
             image: ubuntu-2004:202101-01
         resource_class: arm.medium
@@ -534,6 +622,22 @@ jobs:
         - FLATPAK_BRANCH: stable
         - CLOUDSMITH_PKG_EXT: gz
         - SDK_VER: 20.08
+        - DEPLOY_USE_ORB: true
+        steps:
+        - checkout
+        - run: chmod a+x ci/*.sh
+        - run:
+            command: bash ci/circleci-build-flatpak.sh
+        - deploy-code
+    build-flatpak-arm64-2208:
+        machine:
+            image: ubuntu-2004:202101-01
+        resource_class: arm.medium
+        environment:
+        - OCPN_TARGET:  flatpak-arm64
+        - FLATPAK_BRANCH: stable
+        - CLOUDSMITH_PKG_EXT: gz
+        - SDK_VER: 22.08
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
@@ -594,15 +698,35 @@ jobs:
         - run: bash ci/circleci-build-android-armhf.sh
         - deploy-code:
             install-python: true
+    build-msvc-2019:
+        executor:
+            name: win/server-2019
+            shell: cmd.exe
+        environment:
+        - OCPN_TARGET: MSVC
+        - MSVC_VERSION: 2019
+        - WX_VER: 31
+        steps:
+        - checkout
+        - run:
+            privileged: False
+            shell: cmd.exe
+            command: ci\circleci-build-msvc.bat
+        - deploy-code:
+            DEPLOY-USE-ORB: false
     build-msvc-2022:
-        executor: win/server-2022
+        executor:
+            name: win/server-2022
+            shell: cmd.exe
         environment:
         - OCPN_TARGET: MSVC
         - MSVC_VERSION: 2022
         - WX_VER: 32
-        - DEPLOY_USE_ORB: true
         steps:
         - checkout
-        - run: ci/circleci-build-msvc
+        - run:
+            privileged: False
+            shell: cmd.exe
+            command: ci\circleci-build-msvc.bat
         - deploy-code:
-            install-python: true
+            DEPLOY-USE-ORB: false
