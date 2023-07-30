@@ -120,7 +120,7 @@ elseif(UNIX)
         message(STATUS "${CMLOC}PKG_TARGET_WX_VER: ${PKG_TARGET_WX_VER}, WX_VER: $ENV{WX_VER}")
     elseif(("$ENV{BUILD_ENV}" STREQUAL "ubuntu" OR "$ENV{BUILD_ENV}" STREQUAL "UBUNTU") AND
             (("$ENV{OCPN_TARGET}" STREQUAL "jammy" OR "$ENV{OCPN_TARGET}" STREQUAL "JAMMY")))
-        set(PKG_TARGET "debian")
+        set(PKG_TARGET "ubuntu")
         if( NOT "$ENV{WX_VER}" STREQUAL "" )
             set(PKG_TARGET_WX_VER "-wx$ENV{WX_VER}")
         endif()
