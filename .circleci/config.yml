@@ -292,25 +292,6 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-# replaced by build-debian-arm64-12-bookworm
-#    build-arm64-debian-bookworm:
-#        machine:
-#            image: ubuntu-2004:202104-01
-#        environment:
-#        - OCPN_TARGET=bookworm-arm64
-#        - DOCKER_IMAGE=arm64v8/debian:bookworm
-#        - BUILD_FLAGS=-j3
-#        - BUILD_ENV=debian
-#        - WX_VER: 32
-#        - BUILD_GTK3: true
-#        - DEPLOY_USE_ORB: true
-#        steps:
-#        - checkout
-#        - run: chmod a+x ./ci/*.sh
-#        - run:
-#            command: ci/circleci-build-ubuntu-docker.sh
-#            no_output_timeout: 30m
-#        - deploy-code
     build-debian-arm64-12-bookworm:
         machine:
             image: ubuntu-2004:202104-01
@@ -328,26 +309,7 @@ jobs:
         - run:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
-# replaced by build-debian-armhf-12-bookworm
-#        build-armhf-debian-bookworm:
-#        machine:
-#            image: ubuntu-2004:202104-01
-#        resource_class: arm.medium
-#        environment:
-#        - OCPN_TARGET=bookworm-armhf
-#        - DOCKER_IMAGE=arm32v7/debian:bookworm
-#        - BUILD_FLAGS=-j3
-#        - BUILD_ENV=debian
-#        - WX_VER: 32
-#        - BUILD_GTK3: true
-#        - DEPLOY_USE_ORB: true
-#        steps:
-#        - checkout
-#        - run: chmod a+x ./ci/*.sh
-#        - run:
-#            command: ci/circleci-build-ubuntu-docker.sh
-#            no_output_timeout: 30m
-#        - deploy-code
+        - deploy-code
     build-debian-armhf-12-bookworm:
         machine:
             image: ubuntu-2004:202104-01
@@ -367,24 +329,6 @@ jobs:
             command: ci/circleci-build-ubuntu-docker.sh
             no_output_timeout: 30m
         - deploy-code
-# replaced by build-debian-x86_64-12-bookworm
-#    build-bookworm:
-#        machine:
-#            image: ubuntu-2004:202104-01
-#        environment:
-#        - OCPN_TARGET: bookworm
-#        - BUILD_GTK3: true
-#        - WX_VER: 32
-#        - DEPLOY_USE_ORB: true
-#        - BUILD_ENV=debian
-#        - DOCKER_IMAGE=debian:bookworm
-#        steps:
-#        - checkout
-#        - run: chmod a+x ci/*.sh
-#        - run:
-#            command: ci/circleci-build-ubuntu-docker.sh
-#            no_output_timeout: 30m
-#        - deploy-code
     build-debian-x86_64-12-bookworm:
         machine:
             image: ubuntu-2004:202104-01
