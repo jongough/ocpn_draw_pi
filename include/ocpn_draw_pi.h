@@ -147,7 +147,7 @@ typedef enum ColorScheme : int
 #else
 
 #ifdef USE_ANDROID_GLES2
-#include <gl2.h>
+//#include <gl2.h>
 #endif
 
 #ifndef __OCPN__ANDROID__
@@ -155,7 +155,7 @@ typedef enum ColorScheme : int
 #include <GL/glu.h>
 #else
 #include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include "GL/gl_private.h"
+//#include "GL/gl_private.h"
 #endif
 #endif
 
@@ -361,7 +361,7 @@ public:
 };
 
 
-class ocpn_draw_pi : public opencpn_plugin_116
+class ocpn_draw_pi : public opencpn_plugin_117
 {
 public:
 
@@ -397,8 +397,11 @@ public:
 
     int GetPlugInVersionMajor();
     int GetPlugInVersionMinor();
+    int GetPlugInVersionPatch();
+    int GetPlugInVersionPost();
     int GetAPIVersionMajor();
     int GetAPIVersionMinor();
+
     wxBitmap *GetPlugInBitmap();
     wxString GetCommonName();
     wxString GetShortDescription();

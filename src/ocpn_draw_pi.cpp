@@ -378,7 +378,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
-:opencpn_plugin_116(ppimgr)
+:opencpn_plugin_117(ppimgr)
 {
     DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
@@ -1064,6 +1064,16 @@ int ocpn_draw_pi::GetPlugInVersionMinor()
 {
     return PLUGIN_VERSION_MINOR;
 }
+
+int ocpn_draw_pi::GetPlugInVersionPatch()
+{
+    return PLUGIN_VERSION_PATCH;
+};
+
+int ocpn_draw_pi::GetPlugInVersionPost()
+{
+    return PLUGIN_VERSION_TWEAK;
+};
 
 int ocpn_draw_pi::GetAPIVersionMajor()
 {
