@@ -374,9 +374,6 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/tinyxml)
     target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
 
-    add_subdirectory(opencpn-libs/ODAPI)
-    target_link_libraries(${PACKAGE_NAME} ocpn::odapi)
-
     add_subdirectory(opencpn-libs/jsonlib)
     target_link_libraries(${PACKAGE_NAME} ocpn::jsonlib)
 
