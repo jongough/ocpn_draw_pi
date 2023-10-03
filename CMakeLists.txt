@@ -61,7 +61,7 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "29")
-set(VERSION_TWEAK "1")
+set(VERSION_TWEAK "2")
 set(VERSION_DATE "3/10/2023") # DD/MM/YYYY forma0t
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
@@ -388,8 +388,9 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/plugingl)
     target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 
-#    add_subdirectory(opencpn-libs/glu)
+    #add_subdirectory(opencpn-libs/glu)
     target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+    include_directories(BEFORE ${PROJECT_SOURCE_DIR}/opencpn-libs/glu)
 
 endif(NOT OCPN_FLATPAK_CONFIG)
 
