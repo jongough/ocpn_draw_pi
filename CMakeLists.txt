@@ -388,6 +388,9 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/plugingl)
     target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
 
+#    add_subdirectory(opencpn-libs/glu)
+    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+
 endif(NOT OCPN_FLATPAK_CONFIG)
 
 message(STATUS "${CMLOC}Checking to see if JSON Schema needs checking")
