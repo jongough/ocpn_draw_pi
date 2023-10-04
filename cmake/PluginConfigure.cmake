@@ -499,6 +499,7 @@ if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
 #        target_link_libraries(${PACKAGE_NAME} "GLU_static")
         add_definitions(-DocpnUSE_GL)
         message(STATUS "${CMLOC}    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
+        target_include_directories(${PACKAGE_NAME} BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     elseif(OPENGL_FOUND)
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)

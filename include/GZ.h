@@ -34,14 +34,14 @@ enum {
 
 //forward definitions
 class ODPoint;
-class ODDC;
+class piDC;
 
 class GZ : public ODPath
 {
     public:
         GZ();
         virtual ~GZ();
-        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
+        void Draw( piDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void SetActiveColours( void );
         void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB );

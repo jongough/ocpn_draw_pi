@@ -52,7 +52,7 @@
 #include <vector>
 
 #include "ocpn_draw_pi.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ODUtils.h"
 #include "wx28compat.h"
 #include "cutil.h"

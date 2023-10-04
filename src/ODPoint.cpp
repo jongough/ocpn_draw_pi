@@ -33,7 +33,7 @@
 #include "cutil.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
-#include "ODdc.h"
+#include "pidc.h"
 
 #ifdef USE_ANDROID_GLES2
 //#include "/usr/include/GLES2/gl2.h"
@@ -346,7 +346,7 @@ void ODPoint::ReLoadIcon( void )
     m_fIconScaleFactor = -1;
 }
 
-void ODPoint::Draw( ODDC& dc, wxPoint *odp)
+void ODPoint::Draw( piDC& dc, wxPoint *odp)
 {
     wxPoint l_odp;
     wxRect hilitebox;
@@ -581,7 +581,7 @@ void ODPoint::DrawGL( PlugIn_ViewPort &pivp )
         m_wpBBox_rotation = pivp.rotation;
     }
 
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&pivp);
 
     //  Highlite any selected point
@@ -745,7 +745,7 @@ void ODPoint::CalculateDCRect( wxDC& dc, wxRect *prect )
     dc.DestroyClippingRegion();
 
     // Draw the mark on the dc
-    ODDC odc( dc );
+    piDC odc( dc );
     Draw( odc, NULL );
 
     //  Retrieve the drawing extents

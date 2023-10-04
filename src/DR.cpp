@@ -25,7 +25,7 @@
  **************************************************************************/
 
 #include "DR.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ocpn_draw_pi.h"
 #include "ODSelect.h"
 #include "PathMan.h"

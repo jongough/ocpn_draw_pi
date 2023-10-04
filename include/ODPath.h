@@ -47,7 +47,7 @@ enum {
 };
 
 
-class ODDC;
+class piDC;
 
 class ODPath : public wxObject
 {
@@ -63,11 +63,11 @@ public:
     virtual ODPoint *InsertPointBefore(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
     virtual ODPoint *InsertPointAfter(ODPoint *pOP, double lat, double lon, bool bRenamePoints = false);
     virtual void InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints = false);
-    void DrawPointWhich(ODDC& dc, int iPoint, wxPoint *rpn);
-    void DrawSegment(ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
-    void DrawArcSegment(ODDC& dc, wxPoint *rc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow);
-    void RenderArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow );
-    virtual void Draw(ODDC& dc, PlugIn_ViewPort &pVP);
+    void DrawPointWhich(piDC& dc, int iPoint, wxPoint *rpn);
+    void DrawSegment(piDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow);
+    void DrawArcSegment(piDC& dc, wxPoint *rc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow);
+    void RenderArcSegment( piDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow );
+    virtual void Draw(piDC& dc, PlugIn_ViewPort &pVP);
     virtual void DrawGL( PlugIn_ViewPort &piVP );
     ODPoint *GetLastPoint();
     virtual void DeletePoint(ODPoint *rp, bool bRenamePoints = false);
@@ -91,9 +91,9 @@ public:
     void ClonePath(ODPath *psourceboundary, int start_nPoint, int end_nPoint, const wxString & suffix);
     void CloneAddedODPoint(ODPoint *ptargetpoint, ODPoint *psourcepoint);
     void ClearHighlights(void);
-    void RenderSegment(ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
+    void RenderSegment(piDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     void RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP);
-    void RenderArcSegment(ODDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
+    void RenderArcSegment(piDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP, bool bdraw_arrow, int hilite_width = 0);
     virtual void SetColours( ODPath * );
     virtual void SetActiveColours( void );
     virtual void SetColourScheme( PI_ColorScheme cs = PI_GLOBAL_COLOR_SCHEME_RGB );

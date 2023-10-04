@@ -31,7 +31,7 @@ class EBL : public ODPath
     public:
         EBL();
         virtual ~EBL();
-        void Draw( ODDC& dc, PlugIn_ViewPort &VP );
+        void Draw( piDC& dc, PlugIn_ViewPort &VP );
         void DrawGL( PlugIn_ViewPort &piVP );
         void RemovePoint( ODPoint *op, bool bRenamePoints = false );
         void Resize( double lat, double lon, bool FixedAngle = false );
@@ -68,7 +68,7 @@ class EBL : public ODPath
     private:
         void MaintainWith( void );
         wxColour    m_wxcLineColour;
-        void        RenderPerpLine( ODDC &dc, PlugIn_ViewPort &piVP );
+        void        RenderPerpLine( piDC &dc, PlugIn_ViewPort &piVP );
 };
 
 WX_DECLARE_LIST(EBL, EBLList); // establish class EBL list member

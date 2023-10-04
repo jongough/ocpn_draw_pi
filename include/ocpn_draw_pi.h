@@ -446,14 +446,14 @@ public:
     bool RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp);
     bool RenderOverlayMultiCanvas(wxDC &dc, PlugIn_ViewPort *vp, int canvas_index);
     wxString FormatDistanceAdaptive( double distance );
-    void DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox);
+    void DrawAllPathsInBBox(piDC &dc,  LLBBox& BltBBox);
     void DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp );
-    void DrawAllODPointsInBBox( ODDC &dc, LLBBox& BltBBox );
+    void DrawAllODPointsInBBox( piDC &dc, LLBBox& BltBBox );
     void CanvasPopupMenu( int x, int y, int seltype );
     double  GetTrueOrMag(double a);
     void SetPositionFixEx( PlugIn_Position_Fix_Ex &pfix );
 
-    void RenderPathLegs( ODDC &dc );
+    void RenderPathLegs( piDC &dc );
 
     // OD Methods
     void    ProcessTimerEvent(wxTimerEvent& ev);
@@ -461,12 +461,12 @@ public:
 
     void    SaveConfig( void );
 
-    void    AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
+    void    AlphaBlending( piDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color, unsigned char transparency );
 
     void    SetToolbarTool( void );
 
-    void    RenderExtraPathLegInfo(ODDC &dc, wxPoint ref_point, wxString s );
-    wxString CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
+    void    RenderExtraPathLegInfo(piDC &dc, wxPoint ref_point, wxString s );
+    wxString CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point);
 
     void    ODRequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
 

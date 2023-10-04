@@ -60,7 +60,7 @@ class ODToolbarImpl;
 class ODJSON;
 class ODPlugIn_Position_Fix_Ex;
 class ODAPI;
-class ODDC;
+class piDC;
 
 class PlugIn_ViewPort;
 
@@ -240,7 +240,7 @@ extern int             g_iTextMaxWidth;
 extern int             g_iTextMaxWidthType;
 
 extern PlugIn_ViewPort g_VP;
-extern ODDC            *g_pDC;
+extern piDC            *g_pDC;
 extern bool            g_bShowMag;
 extern bool            g_bAllowLeftDrag;
 extern double          g_dVar;

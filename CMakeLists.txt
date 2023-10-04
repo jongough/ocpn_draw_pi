@@ -161,7 +161,6 @@ set(SRCS
     src/ocpn_draw_pi.cpp
     src/ODAPI.cpp
     src/ODConfig.cpp
-    src/ODdc.cpp
     src/ODDRDialogDef.cpp
     src/ODDRDialogImpl.cpp
     src/ODEventHandler.cpp
@@ -222,7 +221,6 @@ set(HDRS
     include/PointMan.h
     include/ODAPI.h
     include/ODConfig.h
-    include/ODdc.h
     include/ODDRDialogDef.h
     include/ODDRDialogImpl.h
     include/ODEventHandler.h

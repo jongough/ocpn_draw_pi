@@ -25,7 +25,7 @@
  **************************************************************************/
 
 #include "EBL.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ocpn_draw_pi.h"
 #include "ODSelect.h"
 #include "PathMan.h"
@@ -397,7 +397,7 @@ void EBL::UpdateEBL( void )
     }
 }
 
-void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
+void EBL::Draw( piDC& dc, PlugIn_ViewPort &VP )
 {
     if(m_bVRM) {
         ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
@@ -425,7 +425,7 @@ void EBL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
     
 void EBL::DrawGL( PlugIn_ViewPort &piVP )
 {
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&piVP);
     
     RenderPerpLine( dc, piVP );
@@ -465,7 +465,7 @@ void EBL::MaintainWith( void )
     }
 }
 
-void EBL::RenderPerpLine( ODDC &dc, PlugIn_ViewPort &VP)
+void EBL::RenderPerpLine( piDC &dc, PlugIn_ViewPort &VP)
 {
     wxString colour;
     wxPenStyle style = wxPENSTYLE_SOLID;
