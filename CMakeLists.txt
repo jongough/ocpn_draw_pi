@@ -368,7 +368,7 @@ if(NOT OCPN_FLATPAK_CONFIG)
         target_link_libraries(${PACKAGE_NAME} windows::headers)
     ENDIF(MSVC)
 
-    if(_APPLE_)
+    if(APPLE)
         add_subdirectory(opencpn-libs/libglu)
         target_link_libraries(${PACKAGE_NAME} ocpn::glu)
     endif(_APPLE_)
