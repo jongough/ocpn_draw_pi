@@ -1,5 +1,4 @@
 [submodule "opencpn-libs"]
 	path = opencpn-libs
 	url = https://github.com/OpenCPN/opencpn-libs.git
-[submodule "https://github.com/OpenCPN/opencpn-libs"]
-	branch = devel
+	branch = add_oddc_to_pidc
