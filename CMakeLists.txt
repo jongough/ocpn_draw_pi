@@ -368,11 +368,6 @@ if(NOT OCPN_FLATPAK_CONFIG)
         target_link_libraries(${PACKAGE_NAME} windows::headers)
     ENDIF(MSVC)
 
-    if(APPLE)
-        add_subdirectory(opencpn-libs/libglu)
-        target_link_libraries(${PACKAGE_NAME} ocpn::glu)
-    endif(_APPLE_)
-
     add_subdirectory(libs/gdal)
     target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
 
