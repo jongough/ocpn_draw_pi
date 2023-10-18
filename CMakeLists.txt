@@ -60,9 +60,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "29")
-set(VERSION_TWEAK "7")
-set(VERSION_DATE "6/10/2023") # DD/MM/YYYY forma0t
+set(VERSION_PATCH "31")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "18/10/2023") # DD/MM/YYYY forma0t
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")
@@ -185,7 +185,6 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
-    src/ODShaders.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -246,7 +245,6 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
-    include/ODShaders.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
@@ -362,11 +360,6 @@ target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIB
 if(NOT OCPN_FLATPAK_CONFIG)
     # Build environment not available when flatpak is being configured so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
-
-    IF(MSVC)
-        add_subdirectory(opencpn-libs/WindowsHeaders)
-        target_link_libraries(${PACKAGE_NAME} windows::headers)
-    ENDIF(MSVC)
 
     add_subdirectory(libs/gdal)
     target_link_libraries(${PACKAGE_NAME} ocpn::gdal)

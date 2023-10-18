@@ -493,6 +493,11 @@ if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
 
     if(USE_LOCAL_GLU)
         message(STATUS "${CMLOC}    Adding local GLU")
+        if (WIN32)
+            add_subdirectory(opencpn-libs/WindowsHeaders)
+            target_link_libraries(${PACKAGE_NAME} windows::headers)
+        endif(WIN32)
+
         add_subdirectory(opencpn-libs/glu)
         message(STATUS "${CMLOC}PACKAGE_NAME: ${PACKAGE_NAME}")
         target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
