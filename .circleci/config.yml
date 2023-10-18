@@ -156,7 +156,7 @@ jobs:
     build-macos-wx32:
         macos:
             xcode: "13.4"
-            resource_class: macos.m1.medium.gen1
+#            resource_class: macos.m1.medium.gen1
         environment:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
