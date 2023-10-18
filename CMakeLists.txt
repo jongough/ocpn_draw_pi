@@ -23,7 +23,7 @@
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 #-----------------------------------------------------------------------------
 # Frontend2 Author: Jon Gough
-# Testplugn(TP) v1.0.259.0 01/10/2023 DD/MM/YYYY format
+# Testplugn(TP) v1.0.265.0 19/10/2023 DD/MM/YYYY format
 # buildCI:yes provideODAPI:yes validateJSON:yes
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
@@ -60,9 +60,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "31")
-set(VERSION_TWEAK "1")
-set(VERSION_DATE "18/10/2023") # DD/MM/YYYY forma0t
+set(VERSION_PATCH "33")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "19/10/2023") # DD/MM/YYYY forma0t
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")

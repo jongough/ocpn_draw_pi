@@ -61,8 +61,9 @@ workflows:
 ## -------------------------------------------
 ## OpenCPN 5.6.2 Plugins  Frozen - 28/05/2023
 ## ------------------------------------------
-        - build-macos:
-             <<: *std-filters
+## Circleci will not build for macos 11 so removed - 18/10/2023
+##        - build-macos:
+##             <<: *std-filters
 ## Appveyor no longer builds for Windows.
         - build-msvc-2022:
             <<: *std-filters
@@ -156,7 +157,6 @@ jobs:
     build-macos-wx32:
         macos:
             xcode: "13.4"
-#            resource_class: macos.m1.medium.gen1
         environment:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
