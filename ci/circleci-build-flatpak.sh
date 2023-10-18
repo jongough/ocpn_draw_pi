@@ -46,11 +46,6 @@ if test -f "$EXTRA_LIBS"; then
 fi
 
 git submodule update --init opencpn-libs
-cd opencpn-libs
-git checkout add_oddc_to_pidc
-cd ..
-
-cat .gitmodules
 
 if [ -n "$CI" ]; then
     sudo apt update
