@@ -23,7 +23,7 @@
 
 #include "GZ.h"
 #include "GZProp.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ocpn_draw_pi.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
@@ -35,7 +35,6 @@
 #ifdef ocpnUSE_GL
 #include <wx/glcanvas.h>
 #endif
-
 
 #include <wx/graphics.h>
 
@@ -117,7 +116,7 @@ void GZ::SetColourScheme(PI_ColorScheme cs)
 
 }
 
-void GZ::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
+void GZ::Draw( piDC& dc, PlugIn_ViewPort &piVP )
 {
     if(m_dSecondDistance == 0) return;
     if(!m_bVisible) return;
@@ -194,7 +193,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 
     GetLatLonPoints( piVP, &l_pCentre, &l_l1p1, &l_l1p2, &l_l2p1, &l_l2p2 );
 
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&piVP);
 
     m_bSetTransparent = true;
@@ -284,7 +283,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
 
     dc.SetPen( *wxThePenList->FindOrCreatePen( m_col, width, style ) );
     if(m_iLineType == ID_LINE_TYPE_ARC)
-        numpoints = ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
+        numpoints = dc.ArcSectorPoints( *&points, l_pCentre.x, l_pCentre.y, l_l1p1.x, l_l1p1.y, l_l1p2.x, l_l1p2.y, l_l2p2.x, l_l2p2.y, l_l2p1.x, l_l2p1.y, true);
 
     dc.DrawLines( numpoints, points );
     delete [] points;

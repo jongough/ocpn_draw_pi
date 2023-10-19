@@ -31,7 +31,7 @@
 
 #include "TextPoint.h"
 #include "ocpn_draw_pi.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ODUtils.h"
 #include "PointMan.h"
 #include "cutil.h"
@@ -207,7 +207,7 @@ void TextPoint::CreateColourSchemes(void)
     ODPoint::CreateColourSchemes();
 }
 
-void TextPoint::Draw( ODDC& dc, wxPoint *odp)
+void TextPoint::Draw( piDC& dc, wxPoint *odp)
 {
     if( !m_bIsVisible )
         return;
@@ -442,13 +442,13 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
 
                     if(m_iDisplayTextTexture) {
                         // Draw backing box
-                        ODDC ocpndc;
+                        piDC ocpndc;
                         g_ocpn_draw_pi->AlphaBlending( ocpndc, r.x, r.y, r2.width, r2.height, 6.0, m_colourSchemeTextBackgroundColour, m_iBackgroundTransparency );
 
                         /* draw texture with text */
                         glBindTexture(GL_TEXTURE_2D, m_iDisplayTextTexture);
 
-                        ODDC dc;
+                        piDC dc;
                         dc.SetVP(&pivp);
 
                         wxRect texrect = wxRect(0, 0, m_iDisplayTextTextureWidth,m_iDisplayTextTextureHeight);      // the texture rectangle

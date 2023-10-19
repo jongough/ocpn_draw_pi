@@ -31,7 +31,7 @@
 
 #include "ODPath.h"
 #include "georef.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "cutil.h"
 #include "ODSelect.h"
 #include "PointMan.h"
@@ -41,7 +41,6 @@
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 #include "bbox.h"
-#include "ODdc.h"
 //#include "dychart.h"
 #include <wx/gdicmn.h>
 
@@ -190,13 +189,13 @@ ODPoint *ODPath::GetPoint( const wxString &guid )
     return ( NULL );
 }
 
-void ODPath::DrawPointWhich( ODDC& dc, int iPoint, wxPoint *odp)
+void ODPath::DrawPointWhich( piDC& dc, int iPoint, wxPoint *odp)
 {
     if( iPoint <= GetnPoints() )
         GetPoint( iPoint )->Draw( dc, odp);
 }
 
-void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
+void ODPath::DrawSegment( piDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
     else
@@ -207,7 +206,7 @@ void ODPath::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort 
     RenderSegment( dc, rp1->x, rp1->y, rp2->x, rp2->y, VP, bdraw_arrow );
 }
 
-void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
+void ODPath::DrawArcSegment( piDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     if( m_bPathIsSelected ) dc.SetPen( *g_pPathMan->GetSelectedPathPen() );
     else {
@@ -220,7 +219,7 @@ void ODPath::DrawArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2,
     RenderArcSegment(dc, rpc, rp1, rp2, rp3, rp4, VP, false);
 }
 
-void ODPath::Draw( ODDC& dc, PlugIn_ViewPort &VP )
+void ODPath::Draw( piDC& dc, PlugIn_ViewPort &VP )
 {
     wxString colour;
     wxPenStyle style = wxPENSTYLE_SOLID;
@@ -325,7 +324,7 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if( m_nPoints < 1 || !m_bVisible ) return;
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&piVP);
 
     /* determine color and width */
@@ -376,7 +375,7 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
 
 static int s_arrow_icon[] = { 0, 0, 5, 2, 18, 6, 12, 0, 18, -6, 5, -2, 0, 0 };
 
-void ODPath::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP,
+void ODPath::RenderSegment( piDC& dc, int xa, int ya, int xb, int yb, PlugIn_ViewPort &VP,
         bool bdraw_arrow, int hilite_width )
 {
     //    Get the dc boundary
@@ -466,12 +465,12 @@ void ODPath::RenderSegment( ODDC& dc, int xa, int ya, int xb, int yb, PlugIn_Vie
     }
 }
 
-void ODPath::RenderArcSegment( ODDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
+void ODPath::RenderArcSegment( piDC& dc, wxPoint *rpc, wxPoint *rp1, wxPoint *rp2, wxPoint *rp3, wxPoint *rp4, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     RenderArcSegment( dc, rpc->x, rpc->y, rp1->x, rp1->y, rp2->x, rp2->y, rp3->x, rp3->y, rp4->x, rp4->y, VP, bdraw_arrow );
 }
 
-void ODPath::RenderArcSegment( ODDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP,
+void ODPath::RenderArcSegment( piDC& dc, int centre_x, int centre_y, int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, PlugIn_ViewPort &VP,
                             bool bdraw_arrow, int hilite_width )
 {
     //    Get the dc boundary
@@ -863,7 +862,7 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
             bool pointpropblinksave = pOp2->m_bPointPropertiesBlink;
             pOp2->m_bPathManagerBlink = false;
             pOp2->m_bPointPropertiesBlink = false;
-            ODDC odc_boundary( dc_boundary );
+            piDC odc_boundary( dc_boundary );
             pOp2->Draw( odc_boundary, NULL );
             pOp2->m_bPathManagerBlink = pathpropblinksave;
             pOp2->m_bPointPropertiesBlink = pointpropblinksave;

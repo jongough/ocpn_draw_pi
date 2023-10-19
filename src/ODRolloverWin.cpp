@@ -31,7 +31,7 @@
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODRolloverWin.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "timers.h"
 
 extern bool         g_bOpenGL;
@@ -110,7 +110,7 @@ void ODRolloverWin::SetBitmap( int rollover )
               m_position.y + canvasPos.y );
     delete cdc;
 
-    ODDC dc( mdc );
+    piDC dc( mdc );
 
     wxColour wxCol;
     GetGlobalColor( wxT("YELO1"), &wxCol );

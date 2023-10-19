@@ -32,7 +32,7 @@
 
 #include "PIL.h"
 #include "PILProp.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ocpn_draw_pi.h"
 #include "ODSelect.h"
 #include "PathMan.h"
@@ -179,7 +179,7 @@ void PIL::ChangeOffset(int iID, double dOffset)
     }
 }
 
-void PIL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
+void PIL::Draw( piDC& dc, PlugIn_ViewPort &VP )
 {
     RenderPIL( dc, VP );
     ODPath::Draw( dc, VP );
@@ -187,19 +187,19 @@ void PIL::Draw( ODDC& dc, PlugIn_ViewPort &VP )
 
 void PIL::DrawGL( PlugIn_ViewPort &piVP )
 {
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&piVP);
     
     RenderPIL( dc, piVP );
     ODPath::DrawGL( piVP );
 }
 
-void PIL::DrawSegment( ODDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
+void PIL::DrawSegment( piDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP, bool bdraw_arrow )
 {
     ODPath::DrawSegment( dc, rp1, rp2, VP, bdraw_arrow );
 }
 
-void PIL::RenderPIL( ODDC &dc, PlugIn_ViewPort &VP)
+void PIL::RenderPIL( piDC &dc, PlugIn_ViewPort &VP)
 {
     wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *l_pCentre = node->GetData();

@@ -39,7 +39,7 @@ class wxDialog;
 #include "bbox.h"
 #include "georef.h"
 
-class ODDC;
+class piDC;
 class wxDC;
 
 class ODPoint
@@ -49,7 +49,7 @@ public:
     ODPoint( ODPoint* orig );
     ODPoint();
     virtual ~ODPoint(void);
-    virtual void Draw(ODDC& dc, wxPoint *odp= NULL );
+    virtual void Draw(piDC& dc, wxPoint *odp= NULL );
     void ReLoadIcon(void);
 
     wxDateTime GetCreateTime(void);

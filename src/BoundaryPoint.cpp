@@ -30,7 +30,7 @@
 
 #include "BoundaryPoint.h"
 //#include "georef.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ocpn_draw_pi.h"
 
 #include <wx/graphics.h>
@@ -82,7 +82,7 @@ BoundaryPoint::BoundaryPoint() : ODPoint()
     m_iRangeRingStyle = g_iBoundaryPointRangeRingLineStyle;
 }
 
-void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
+void BoundaryPoint::Draw(piDC& dc, wxPoint* odp)
 {
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {
         wxPoint r;
@@ -128,7 +128,7 @@ void BoundaryPoint::Draw(ODDC& dc, wxPoint* odp)
 void BoundaryPoint::DrawGL(PlugIn_ViewPort& pivp)
 {
 #ifdef ocpnUSE_GL
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&pivp);
 
     if (m_bIsVisible && (m_bExclusionBoundaryPoint || m_bInclusionBoundaryPoint) && m_iODPointRangeRingsNumber && m_bShowODPointRangeRings ) {

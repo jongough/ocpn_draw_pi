@@ -54,7 +54,7 @@
 #include "PointMan.h"
 #include "ODAPI.h"
 #include "ODConfig.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ODDRDialogImpl.h"
 #include "ODEventHandler.h"
 #include "ODPropertiesDialogImpl.h"
@@ -271,7 +271,7 @@ int             g_iTextMaxWidth;
 int             g_iTextMaxWidthType;
 
 PlugIn_ViewPort g_VP;
-ODDC            *g_pDC;
+piDC            *g_pDC;
 bool            g_bShowMag;
 bool            g_bAllowLeftDrag;
 double          g_dVar;
@@ -350,9 +350,6 @@ wxImage ICursorDown;
 wxImage ICursorPencil;
 wxImage ICursorCross;
 
-// Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
-float g_GLMinSymbolLineWidth;
-
 wxWindow *g_current_canvas;
 wxWindow *g_current_timer_canvas;
 int      g_current_canvas_index;
@@ -378,7 +375,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
-:opencpn_plugin_116(ppimgr)
+:opencpn_plugin_117(ppimgr)
 {
     DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
@@ -424,13 +421,6 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append(*l_pDir);
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
-#if defined(__WXMSW__) || defined(__WXOSX__)
-    // Windows wants 0? cf. 1b982628
-    g_GLMinSymbolLineWidth = 0.f;
-#else
-    // XXX FIXME get it from driver
-    g_GLMinSymbolLineWidth = 1.0f;
-#endif
 
     m_pODicons = new ODicons();
 
@@ -1064,6 +1054,16 @@ int ocpn_draw_pi::GetPlugInVersionMinor()
 {
     return PLUGIN_VERSION_MINOR;
 }
+
+int ocpn_draw_pi::GetPlugInVersionPatch()
+{
+    return PLUGIN_VERSION_PATCH;
+};
+
+int ocpn_draw_pi::GetPlugInVersionPost()
+{
+    return PLUGIN_VERSION_TWEAK;
+};
 
 int ocpn_draw_pi::GetAPIVersionMajor()
 {
@@ -3195,7 +3195,7 @@ bool ocpn_draw_pi::RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *pivp)
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
 
-    ODDC ocpnmdc( *pmdc );
+    piDC ocpnmdc( *pmdc );
 
     RenderPathLegs( ocpnmdc );
     return TRUE;
@@ -3214,7 +3214,7 @@ bool ocpn_draw_pi::RenderOverlays(wxDC &dc, PlugIn_ViewPort *pivp)
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
 
-    g_pDC = new ODDC( dc );
+    g_pDC = new piDC( dc );
     LLBBox llbb;
     llbb.Set( pivp->lat_min, pivp->lon_min, pivp->lat_max, pivp->lon_max );
 
@@ -3248,7 +3248,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
 
-    g_pDC = new ODDC();
+    g_pDC = new piDC();
     g_pDC->SetVP(pivp);
 
     LLBBox llbb;
@@ -3273,7 +3273,7 @@ bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_View
     return bRet;
 }
 
-void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
+void ocpn_draw_pi::RenderPathLegs( piDC &dc )
 {
     if(m_mouse_canvas_index != m_current_canvas_index) return;
 
@@ -3443,7 +3443,7 @@ void ocpn_draw_pi::RenderPathLegs( ODDC &dc )
 
 }
 
-wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point)
+wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg, double dist, wxPoint ref_point)
 {
     wxString pathInfo;
     if(path->m_sTypeString == wxT("EBL")) {
@@ -3456,7 +3456,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
             pathInfo << wxString::Format( wxString("From: %03d \u00B0, To: %03d \u00B0\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
     } else {
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("%03d\u00B0·(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d\u00B0ï¿½(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
         else
             pathInfo << wxString::Format( wxString("%03d \u00B0  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
     }
@@ -3505,7 +3505,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(ODDC &dc, ODPath *path, double brg
     return s0;
 }
 
-void ocpn_draw_pi::RenderExtraPathLegInfo( ODDC &dc, wxPoint ref_point, wxString s )
+void ocpn_draw_pi::RenderExtraPathLegInfo( piDC &dc, wxPoint ref_point, wxString s )
 {
     wxFont *dFont = GetOCPNScaledFont_PlugIn( wxS("OD_PathLegInfoRollover"), 0 );
     dc.SetFont( *dFont );
@@ -3587,7 +3587,7 @@ void ocpn_draw_pi::FinishBoundary( void )
     RequestRefresh( m_parent_window );
 }
 
-void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
+void ocpn_draw_pi::DrawAllPathsInBBox(piDC &dc,  LLBBox& BltBBox)
 {
     wxPathListNode *pnode = g_pPathList->GetFirst();
     while( pnode ) {
@@ -3666,7 +3666,7 @@ void ocpn_draw_pi::DrawAllPathsInBBox(ODDC &dc,  LLBBox& BltBBox)
     }
 }
 
-void ocpn_draw_pi::DrawAllODPointsInBBox( ODDC& dc, LLBBox& BltBBox )
+void ocpn_draw_pi::DrawAllODPointsInBBox( piDC& dc, LLBBox& BltBBox )
 {
     //        wxBoundingBox bbx;
     if(!g_pODPointMan)
@@ -4331,7 +4331,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
                 pPathDraw->DrawGL( pivp );
         }
         if(pPathDraw == m_pSelectedEBL && m_bODPointEditing && !m_pSelectedEBL->m_bAlwaysShowInfo) {
-            ODDC dc;
+            piDC dc;
             double brg, dist;
             wxPoint destPoint;
             ODPoint *pStartPoint = m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
@@ -4342,7 +4342,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
             if(info.length() > 0)
                 RenderExtraPathLegInfo( dc, destPoint, info );
         } else if(pPathDraw == m_pSelectedPIL  && m_bPathEditing) {
-            ODDC dc;
+            piDC dc;
             wxString info;
             if(m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE)  {
                 std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
@@ -4383,7 +4383,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints( PlugIn_ViewPort &pivp )
 }
 
 /* render a rectangle at a given color and transparency */
-void ocpn_draw_pi::AlphaBlending( ODDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color,
+void ocpn_draw_pi::AlphaBlending( piDC &dc, int x, int y, int size_x, int size_y, float radius, wxColour color,
                                   unsigned char transparency )
 {
 #if 1

@@ -23,7 +23,7 @@
 
 #include "Boundary.h"
 #include "BoundaryPoint.h"
-#include "ODdc.h"
+#include "pidc.h"
 #include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 #include "clipper.hpp"
@@ -113,7 +113,7 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 
 }
 
-void Boundary::Draw( ODDC& dc, PlugIn_ViewPort &piVP )
+void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
 {
     if ( m_bVisible && m_pODPointList->GetCount() > 2) {
 
@@ -240,7 +240,7 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 {
 #ifdef ocpnUSE_GL
     if ( !m_bVisible ) return;
-    ODDC dc;
+    piDC dc;
     dc.SetVP(&piVP);
     if(m_pODPointList->GetCount() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {

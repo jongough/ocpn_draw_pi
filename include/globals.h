@@ -60,7 +60,7 @@ class ODToolbarImpl;
 class ODJSON;
 class ODPlugIn_Position_Fix_Ex;
 class ODAPI;
-class ODDC;
+class piDC;
 
 class PlugIn_ViewPort;
 
@@ -240,7 +240,7 @@ extern int             g_iTextMaxWidth;
 extern int             g_iTextMaxWidthType;
 
 extern PlugIn_ViewPort g_VP;
-extern ODDC            *g_pDC;
+extern piDC            *g_pDC;
 extern bool            g_bShowMag;
 extern bool            g_bAllowLeftDrag;
 extern double          g_dVar;
@@ -317,9 +317,6 @@ extern wxImage ICursorUp;
 extern wxImage ICursorDown;
 extern wxImage ICursorPencil;
 extern wxImage ICursorCross;
-
-// Needed for ocpndc.cpp to compile. Normally would be in glChartCanvas.cpp
-extern float g_GLMinSymbolLineWidth;
 
 extern wxWindow *g_current_canvas;
 extern wxWindow *g_current_timer_canvas;

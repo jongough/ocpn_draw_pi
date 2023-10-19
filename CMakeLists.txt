@@ -1,16 +1,45 @@
 # ---------------------------------------------------------------------------
 # Author:      jongough aka. Jon Gough Copyright: License:     wxWidgets License
 # ---------------------------------------------------------------------------
+# Build process based on Frontend2
+## ---------------------------------------------------------------------------
+## Frontend2 Author:   jongough aka. Jon Gough Copyright: License:  wxWidgets License
+## ---------------------------------------------------------------------------
+## *   Copyright (C)  by Jon Gough                            *
+## *   License:     GPLv3+
+## *   This program is free software; you can redistribute it and/or modify  *
+## *   it under the terms of the GNU General Public License as published by  *
+## *   the Free Software Foundation; either version 2 of the License, or     *
+## *   (at your option) any later version.                                   *
+## *                                                                         *
+## *   This program is distributed in the hope that it will be useful,       *
+## *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+## *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+## *   GNU General Public License for more details.                          *
+## *                                                                         *
+## *   You should have received a copy of the GNU General Public License     *
+## *   along with this program; if not, write to the                         *
+## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
+## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
+#-----------------------------------------------------------------------------
+# Frontend2 Author: Jon Gough
+# Testplugn(TP) v1.0.265.0 19/10/2023 DD/MM/YYYY format
+# buildCI:yes provideODAPI:yes validateJSON:yes
+# ---------------------------------------------------------------------------
+## -- When changing this file do NOT change the order of the sections.    -- ##
+## -- Make changes only between the section blocks identified             -- ##
+## -- The whole configuration process relies on this sequence for success.-- ##
+##
+## -- Modify section below to include all the details for your plugin.    -- ##
 
 set(CMLOC "CMakeLists: ")
 
-cmake_minimum_required(VERSION 3.1.1)
+cmake_minimum_required(VERSION 3.5.1)
 if(COMMAND cmake_policy)
     if(POLICY CMP0043)
         cmake_policy(SET CMP0043 NEW)
     endif(POLICY CMP0043)
     cmake_policy(SET CMP0048 NEW)
-    message(STATUS "${CMLOC}CMP0048 set to New")
     if(POLICY CMP0076)
         cmake_policy(SET CMP0076 NEW)
     endif(POLICY CMP0076)
@@ -22,6 +51,7 @@ if(COMMAND cmake_policy)
     endif(POLICY CMP0079)
 endif(COMMAND cmake_policy)
 
+# define plugin name, owner and versions
 set(VERBOSE_NAME "OCPN_Draw")
 set(COMMON_NAME "OCPN Draw")
 set(TITLE_NAME "OCPNDRAW")
@@ -30,12 +60,12 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "28")
-set(VERSION_TWEAK "2")
-set(VERSION_DATE "30/07/2023") # DD/MM/YYYY forma0t
+set(VERSION_PATCH "33")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "19/10/2023") # DD/MM/YYYY forma0t
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
-set(OCPN_API_VERSION_MINOR "16")
+set(OCPN_API_VERSION_MINOR "17")
 set(OD_API_VERSION_MAJOR "1")
 set(OD_API_VERSION_MINOR "1")
 
@@ -50,9 +80,9 @@ set(PARENT "opencpn")
 set(GIT_REPOSITORY_SERVER "github.com")
 
 # Builds repository sufficies
-set(PROD "prod") # Standard Repos
-set(BETA "beta") # Standard Repos
-set(ALPHA "alpha") # Standard Repos
+set(PROD "prod")    # Standard Repos
+set(BETA "beta")    # Standard Repos
+set(ALPHA "alpha")  # Standard Repos
 
 set(CLOUDSMITH_USER "opencpn")
 # set this if your cloudsmith repository name does not match your git repository name set(CLOUDSMITH_BASE_REPOSITORY "${GIT_REPOSITORY_NAME}")
@@ -62,13 +92,8 @@ set(XML_INFO_URL "https://opencpn.org/OpenCPN/plugins/draw.html")
 set(XML_SUMMARY "Drawing Plugin to allow extra objects to be drawn and used within OCPN")
 set(XML_DESCRIPTION "OCPN_DRAW (OD) is a plugin that extends the capability of OCPN to include non-standard object: Boundaries, Boundary Points, Text Points, Dead Reckoning paths, Electronic Bearing Lines (EBL) and Guard Zones. The plugin also has an API to allow other plugins to directly interact with it.")
 
-#
-# ----- Modify section above to include all the details for your plugin ----- ##
-#
-
-#
-# ----- Modify section below if there are special requirements for the plugin ----- ##
-#
+## ----- Modify section above to include all the details for your plugin ----- ##
+## ----- Modify section below if there are special requirements for the plugin ----- ##
 
 option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
@@ -81,45 +106,43 @@ set(OpenGL_GL_PREFERENCE "LEGACY")
 option(USE_GL "Enable OpenGL support" ON)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
 
-set(BUNDLE_DATA FALSE)
-set(CMAKE_BUILD_TYPE
-    "Release"
-    CACHE STRING "Choose the type of build")
-set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "None" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
-
+if("${CMAKE_BUILD_TYPE}" STREQUAL "")
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" FORCE)
+endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
+set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")
 
-##
-## ----- The statements below are used to setup standard variables that are required by the CMAKE process - do not remove ----- ##
-##
+## ----- Statements below used to setup standard variables required by the CMAKE process -- Do not remove - ##
 
 project(${PACKAGE})
 
-include("cmake/PluginSetup.cmake")
+set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+##========================================================
+
+include("PluginSetup")
+
+##========================================================
+## ----- Above sets up standard variables required by CMAKE - Do not remove -----##
+## ----- Modify section below if there are special requirements for the plugin --##
+
+set(CMAKE_VERBOSE_MAKEFILE "Activate verbose mode for make files" ON)
 
 option(Plugin_CXX11 "Use c++11" OFF)
 
-#
-# ----- Modify section above if there are special requirements for the plugin ----- ##
-#
-
-##
-## ----- do not change next section - needed to configure build process ----- ##
-##
+## ----- Modify section above if there are special requirements for the plugin --##
+## ----- Do not change next section - needed to configure build process ---------##
+##===========================================================
 
 include("PluginConfigure")
 
-##
-## ----- do not change section above - needed to configure build process ----- ##
-##
-
-#
-# ----- Change below to match project requirements ----- ##
-#
+##===========================================================
+## ----- Do not change section above - needed to configure build process --------##
+## ----- Change below to match project requirements for source, headers, etc. ---##
 
 add_definitions(-DUSE_S57)
+
+## ---- Section Below - Add your project SET(SRCS and SET(HDRS  etc..
 
 set(SRCS
     src/Boundary.cpp
@@ -138,7 +161,6 @@ set(SRCS
     src/ocpn_draw_pi.cpp
     src/ODAPI.cpp
     src/ODConfig.cpp
-    src/ODdc.cpp
     src/ODDRDialogDef.cpp
     src/ODDRDialogImpl.cpp
     src/ODEventHandler.cpp
@@ -163,7 +185,6 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
-    src/ODShaders.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -199,7 +220,6 @@ set(HDRS
     include/PointMan.h
     include/ODAPI.h
     include/ODConfig.h
-    include/ODdc.h
     include/ODDRDialogDef.h
     include/ODDRDialogImpl.h
     include/ODEventHandler.h
@@ -225,7 +245,6 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
-    include/ODShaders.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
@@ -249,7 +268,6 @@ set(OCPNSRC
     ocpnsrc/georef.cpp
     ocpnsrc/Hyperlink.cpp
     ocpnsrc/SelectItem.cpp
-    ocpnsrc/TexFont.cpp
 )
 set(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
@@ -259,12 +277,8 @@ set(OCPNHDRS
     ocpninclude/geodesic.h
     ocpninclude/georef.h
     ocpninclude/Hyperlink.h
-    ocpninclude/ocpn_plugin.h
     ocpninclude/SelectItem.h
-    ocpninclude/TexFont.h
     ocpninclude/timers.h
-    ocpninclude/vector2D.h
-    ocpninclude/wx28compat.h
 )
 set(EXTSRC
     extsrc/clipper.cpp
@@ -277,41 +291,25 @@ set(EXTINCLUDE
     extinclude/pugiconfig.hpp
 )
 
-set(LIBSRC
-    libs/wxJSON/src/jsonreader.cpp
-    libs/wxJSON/src/jsonval.cpp
-    libs/wxJSON/src/jsonwriter.cpp
-)
-
-set(LIBHDRS
-    libs/GL/gl.h
-    libs/GL/gl_private.h
-    libs/GL/glext.h
-    libs/GL/glu.h
-    libs/wxJSON/include/json_defs.h
-    libs/wxJSON/include/jsonreader.h
-    libs/wxJSON/include/jsonval.h
-    libs/wxJSON/include/jsonwriter.h
-)
-
-set (EXTINCLUDE_DIR ${EXTINCLUDE_DIR} extinclude)
-
 if(APPLE OR QT_ANDROID)
-    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+    option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else(APPLE OR QT_ANDROID)
-    option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
+    option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
 endif(APPLE OR QT_ANDROID)
 
-if(OD_JSON_SCHEMA_VALIDATOR)
+
+if(PI_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN")
-    add_definitions(-DOD_JSON_SCHEMA_VALIDATOR)
+    add_definitions(-DPI_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Adding JSON Schema validation")
 
-    set(EXTSRC ${EXTSRC} extsrc/json-schema-validator/json-schema-draft7.json.cpp extsrc/json-schema-validator/json-uri.cpp extsrc/json-schema-validator/json-validator.cpp extsrc/json-schema-validator/json-patch.cpp)
-    set(EXTINCLUDE_DIR ${EXTINCLUDE_DIR} "extinclude/json-schema-validator")
-else(OD_JSON_SCHEMA_VALIDATOR)
+    add_subdirectory(opencpn-libs/json-schema-validator)
+    target_link_libraries(${PACKAGE_NAME} ocpn::json-schema-validator)
+
+else(PI_JSON_SCHEMA_VALIDATOR)
     message(STATUS "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes")
-endif(OD_JSON_SCHEMA_VALIDATOR)
+endif(PI_JSON_SCHEMA_VALIDATOR)
+
 option(OD_USE_SVG "Use SVG graphics" ON)
 
 if(OD_USE_SVG)
@@ -326,37 +324,62 @@ if(OCPN_MIN_VERSION)
     endif(NOT QT_ANDROID)
 endif(OCPN_MIN_VERSION)
 
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxsvg/include)
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
     include_directories( ${PROJECT_SOURCE_DIR}/extinclude/GLES2)
-
-#    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
 endif(QT_ANDROID)
-#include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
+
+##=============================================================
+## Change as required to collect all the set( headers and SRCS
+## This add_library  can be used in conditionals below.
+##=============================================================
+
+SET(SRC ${SRCS} ${HDRS}  ${OCPNSRC} ${EXTSRC} ${LIBSRC})
+
+##=============================================================
+## Modify/configure 'Include' Directories below for the Plugin
+##=============================================================
+
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/extinclude)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
+
+## Change target_sources to match your project needs.
+##==============================================================
+
+target_sources(${PACKAGE_NAME} PUBLIC ${SRC} )
+
+##==============================================================
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSRC})
+
+#    #include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/glshim/include/GLES)
 
 if(NOT OCPN_FLATPAK_CONFIG)
     # Build environment not available when flatpak is being configured so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
     add_subdirectory(libs/gdal)
-    add_subdirectory(libs/tinyxml)
-
     target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
+
+    add_subdirectory(opencpn-libs/api-17)
+    target_link_libraries(${PACKAGE_NAME} ocpn::api)
+
+    add_subdirectory(opencpn-libs/tinyxml)
     target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+
+    add_subdirectory(opencpn-libs/jsonlib)
+    target_link_libraries(${PACKAGE_NAME} ocpn::jsonlib)
+
+    add_subdirectory(opencpn-libs/wxJSON)
+    target_link_libraries(${PACKAGE_NAME} ocpn::wxjson)
+
+    add_subdirectory(opencpn-libs/plugingl)
+    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
+
 endif(NOT OCPN_FLATPAK_CONFIG)
-
-
-add_definitions(-DTIXML_USE_STL)
 
 message(STATUS "${CMLOC}Checking to see if JSON Schema needs checking")
 if(UNIX AND NOT APPLE AND NOT QT_ANDROID)
