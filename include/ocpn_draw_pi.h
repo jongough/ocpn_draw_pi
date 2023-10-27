@@ -168,7 +168,7 @@ typedef enum ColorScheme : int
 #include "ODRolloverWin.h"
 
 //#include "georef.h"
-#include "wx28compat.h"
+//#include "wx28compat.h"
 #include <wx/aui/aui.h>
 #include <wx/string.h>
 #include <wx/settings.h>

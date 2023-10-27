@@ -491,7 +491,7 @@ if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
         message(STATUS "${CMLOC}OpenGL disabled by option...")
     endif(USE_GL MATCHES "ON")
 
-    if(USE_LOCAL_GLU)
+   if(USE_LOCAL_GLU)
         message(STATUS "${CMLOC}    Adding local GLU")
         if (WIN32)
             add_subdirectory(opencpn-libs/WindowsHeaders)
@@ -501,10 +501,10 @@ if((NOT OPENGLES_FOUND) AND (NOT QT_ANDROID))
         add_subdirectory(opencpn-libs/glu)
         message(STATUS "${CMLOC}PACKAGE_NAME: ${PACKAGE_NAME}")
         target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
-#        target_link_libraries(${PACKAGE_NAME} "GLU_static")
         add_definitions(-DocpnUSE_GL)
+
+        set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
         message(STATUS "${CMLOC}    Revised GL Lib (with local): " ${OPENGL_LIBRARIES})
-        target_include_directories(${PACKAGE_NAME} BEFORE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
     elseif(OPENGL_FOUND)
 
         set(wxWidgets_USE_LIBS ${wxWidgets_USE_LIBS} gl)
@@ -648,6 +648,13 @@ else(NOT QT_ANDROID)
 
     # Needed for android builds
     include_directories(BEFORE ${qt_android_include})
+	
+	if(USE_LOCAL_GLU)
+        message(STATUS "${CMLOC} Android:Adding local GLU")
+        add_subdirectory(opencpn-libs/glu)
+        message(STATUS "${CMLOC}PACKAGE_NAME: ${PACKAGE_NAME}")
+        target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+    endif()
 
 endif(NOT QT_ANDROID)
 

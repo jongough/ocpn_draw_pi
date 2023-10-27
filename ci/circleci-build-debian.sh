@@ -32,19 +32,10 @@ if test -f "$EXTRA_LIBS"; then
     done < "$EXTRA_LIBS"
 fi
 
-echo ${CIRCLE_JOB}
-EXTRA_LIBS=./ci/extras/${CIRCLE_JOB}_extra_libs.txt
-echo $EXTRA_LIBS
-if test -f "$EXTRA_LIBS"; then
-    echo "Found ${CIRCLE_JOB}_extra_libs.txt"
-    while read -r line; do
-        sudo apt-get install $line
-    done < "$EXTRA_LIBS"
-fi
+pwd
 
 git submodule update --init opencpn-libs
 
-pwd
 sudo mk-build-deps --install ./ci/control
 
 sudo apt-get --allow-unauthenticated install ./*all.deb  || :
