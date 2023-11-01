@@ -78,8 +78,9 @@ export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET
 #    brew install --cask packages
 #fi
 
-git submodule set-branch -b devel opencpn-libs
 git submodule update --init opencpn-libs
+git submodule add -b devel opencpn-libs
+git submodule update --remote
 
 rm -rf build && mkdir build && cd build
 cmake \
