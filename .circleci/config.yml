@@ -80,8 +80,8 @@ workflows:
 ## UBUNTU OS  Frozen - 28/05/2023  DROP
 ## -------------------------------------
 ## KEEP needed for Raspbian OpenCPN v5.6
-        - build-ubuntu-armhf-1804-buster:
-            <<: *std-filters
+#        - build-ubuntu-armhf-1804-buster:
+#            <<: *std-filters
 ##        - build-ubuntu-x86_64-1804-bionic:
 ##            <<: *std-filters
 ##        - build-ubuntu-x86_64-1804-bionic-gtk3:
