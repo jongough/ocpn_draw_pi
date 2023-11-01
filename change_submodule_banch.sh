@@ -1,15 +1,21 @@
 #!/usr/bin/env bash
 
-if [ "$#" -ne "2" ]; then
+if [ "$#" -lt "1" ]; then
     echo "Incorrect invocation: Should be change_submodule_branch.sh branch git-url"
     echo "where:"
     echo "  branch is the new branch required"
-    echo "  git-url is the url of the submodule required"
-    echo "  example:"
+    echo "  (optional) git-url is the url of the submodule git repository required"
+    echo "  examples:"
+    echo "  change_submodule_branch main"
     echo "  change_submodule_branch main https://github.com/OpenCPN/opencpn-libs.git"
     exit
 fi
-
+if [ "$#" -eq "2" ]; then
+    echo "Using $2 instead of https://github.com/OpenCPN/opencpn-libs"
+else
+    echo "Using devault repository: https://github.com/OpenCPN/opencpn-libs"
+fi
+exit
 git submodule deinit -f opencpn-libs
 git rm --cached opencpn-libs
 rm -rf .git/modules/opencpn-libs  #(on Windows, simply delete the target directory ".git/modules/opencpn-libs" )
