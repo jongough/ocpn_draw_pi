@@ -78,9 +78,7 @@ export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET
 #    brew install --cask packages
 #fi
 
-#git submodule update --init opencpn-libs
-#git submodule set-branch -b devel opencpn-libs
-git submodule update --remote
+git submodule update --init opencpn-libs
 
 rm -rf build && mkdir build && cd build
 cmake \
@@ -90,6 +88,8 @@ cmake \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   "/" \
   ..
-make 
+
+make
+
 make package
 
