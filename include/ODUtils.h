@@ -43,5 +43,4 @@
  int            ArcSectorPoints( wxPoint *&points, wxCoord xc, wxCoord yc, wxCoord x1, wxCoord y1, wxCoord x2, wxCoord y2, wxCoord x3, wxCoord y3, wxCoord x4, wxCoord y4, bool bHighQuality );
  wxString       WrapText(wxWindow *win, const wxString& text, int widthMax);
  wxString       WrapString(const wxString &text, int widthMax);
- void           checkGlError(const char* op, const char* filename, int linenumber);
 #endif

@@ -141,22 +141,24 @@ typedef enum ColorScheme : int
 
 #define MAX_32BIT_INT 2147483647
 
-#ifdef __WXMSW__
-#include "GL/gl.h"            // local copy for Windows
-#include <GL/glu.h>
-#else
+#ifdef __ANDROID__
+#include <qopengl.h>
+typedef double GLdouble;
+#define GL_GLEXT_LEGACY 1
+#include "GLES2/gl2.h"
+#include "glu_gl.h"
+#include "GL/glu.h"
 
-#ifdef USE_ANDROID_GLES2
-//#include <gl2.h>
-#endif
+#elif defined(__WXOSX__)
+#include "OpenGL/gl.h"
+#include "OpenGL/glu.h"
+#include "OpenGL/glext.h"
+typedef void (*_GLUfuncptr)();
 
-#ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
 #else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-//#include "GL/gl_private.h"
-#endif
+#include "GL/gl.h"
+#include "GL/glu.h"
+#include "GL/glext.h"
 #endif
 
 #include "wxWTranslateCatalog.h"
