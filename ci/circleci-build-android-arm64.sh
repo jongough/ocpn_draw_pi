@@ -66,7 +66,7 @@ sudo apt install python3-pip
 python3 -m pip install --user --force-reinstall -q pip setuptools
 sudo apt remove python3-six python3-colorama python3-urllib3
 export LC_ALL=C.UTF-8  LANG=C.UTF-8
-python3 -m pip install --user -q cmake
+python3 -m pip install --user -q cmake -vv
 
 
 last_ndk=$(ls -d /home/circleci/android-sdk/ndk/* | tail -1)
