@@ -14,7 +14,8 @@ if [ "${CIRCLECI_LOCAL,,}" = "true" ]; then
     fi
 fi
 
-sudo apt-get -qq update
+#sudo apt-get -qq update
+sudo apt-get update
 sudo apt-get install devscripts equivs
 
 # Install extra build libs

@@ -10,12 +10,16 @@ if [ "$#" -lt "1" ]; then
     echo "  change_submodule_branch main https://github.com/OpenCPN/opencpn-libs.git"
     exit
 fi
+BRANCH=$1
+REPO=""
 if [ "$#" -eq "2" ]; then
     echo "Using $2 instead of https://github.com/OpenCPN/opencpn-libs"
+    REPO=$2
 else
     echo "Using devault repository: https://github.com/OpenCPN/opencpn-libs"
+   REPO="https://github.com/OpenCPN/opencpn-libs"
 fi
-exit
+
 git submodule deinit -f opencpn-libs
 git rm --cached opencpn-libs
 rm -rf .git/modules/opencpn-libs  #(on Windows, simply delete the target directory ".git/modules/opencpn-libs" )
@@ -24,7 +28,7 @@ git config -f .gitmodules --remove-section submodule.opencpn-libs
 git add .gitmodules
 git commit -m "Remove opencpn-libs submodule."
 
-git submodule add -b $1 $2
-git commit -m "Adding $2 submodule branch $1"
+git submodule add -b $BRANCH $REPO
+git commit -m "Adding $REPO submodule branch $BRANCH"
 
 echo "This will now need to be pushed to make it available to circleci builds in the cloud"

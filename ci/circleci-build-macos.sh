@@ -66,18 +66,30 @@ fi
 
 export MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET
 
+# MacOS .pkg installer is deprecated in OCPN 5.6.2+
+# use brew to get Packages.pkg
+#if brew list --cask --versions packages; then
+#    version=$(brew list --cask --versions packages)
+#    version="${version/"packages "/}"
+#    sudo installer \
+#        -pkg /usr/local/Caskroom/packages/$version/packages/Packages.pkg \
+#        -target /
+#else
+#    brew install --cask packages
+#fi
+
 git submodule update --init opencpn-libs
 
 rm -rf build && mkdir build && cd build
 cmake \
   -DwxWidgets_CONFIG_EXECUTABLE=$WX_EXECUTABLE \
   -DwxWidgets_CONFIG_OPTIONS=$WX_CONFIG \
-  -DCMAKE_INSTALL_PREFIX= \
+  -DCMAKE_INSTALL_PREFIX=app/files \
+  -DBUILD_TYPE_PACKAGE:STRING=tarball \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET \
   "/" \
   ..
-
 make
-
+make install
 make package
 

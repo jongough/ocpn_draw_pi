@@ -35,11 +35,11 @@
 #include "ODUtils.h"
 #include "pidc.h"
 
-#ifdef USE_ANDROID_GLES2
-//#include "/usr/include/GLES2/gl2.h"
-#include <gl2.h>
-#include "linmath.h"
-#endif
+//#ifdef USE_ANDROID_GLES2
+////#include "/usr/include/GLES2/gl2.h"
+//#include <gl2.h>
+//#include "linmath.h"
+//#endif
 
 #include <wx/listimpl.cpp>
 WX_DEFINE_LIST ( ODPointList );
