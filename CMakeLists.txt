@@ -23,7 +23,7 @@
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 #-----------------------------------------------------------------------------
 # Frontend2 Author: Jon Gough
-# Testplugn(TP) v1.0.265.0 19/10/2023 DD/MM/YYYY format
+# Testplugn(TP) v1.0.283.0 03/11/2023 DD/MM/YYYY format
 # buildCI:yes provideODAPI:yes validateJSON:yes
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
@@ -60,9 +60,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "33")
+set(VERSION_PATCH "39")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "19/10/2023") # DD/MM/YYYY forma0t
+set(VERSION_DATE "03/11/2023") # DD/MM/YYYY forma0t
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")
@@ -100,7 +100,7 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 set(CMAKE_CXX_STANDARD 11)
 
 # Use local version of GLU library
-set(USE_LOCAL_GLU TRUE)
+set(USE_LOCAL_GLU FALSE)
 # Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")
 option(USE_GL "Enable OpenGL support" ON)
@@ -361,6 +361,11 @@ if(NOT OCPN_FLATPAK_CONFIG)
     # Build environment not available when flatpak is being configured so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
+    if (WIN32)
+        add_subdirectory(opencpn-libs/WindowsHeaders)
+        target_link_libraries(${PACKAGE_NAME} windows::headers)
+    endif (WIN32)
+
     add_subdirectory(libs/gdal)
     target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
 
@@ -376,8 +381,8 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/wxJSON)
     target_link_libraries(${PACKAGE_NAME} ocpn::wxjson)
 
-    add_subdirectory(opencpn-libs/plugingl)
-    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
+    add_subdirectory(opencpn-libs/plugin_dc)
+    target_link_libraries(${PACKAGE_NAME} ocpn::plugin-dc)
 
 endif(NOT OCPN_FLATPAK_CONFIG)
 

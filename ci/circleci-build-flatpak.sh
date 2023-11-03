@@ -54,8 +54,7 @@ if [ -n "$CI" ]; then
     sudo apt install --reinstall  ca-certificates
 
     # Use updated flatpak workaround
-#    sudo add-apt-repository -y ppa:alexlarsson/flatpak
-    sudo add-apt-repository -y ppa:flatpak/stable
+    sudo add-apt-repository -y ppa:alexlarsson/flatpak
     sudo apt update
 
     # Install flatpak and flatpak-builder - obsoleted by flathub

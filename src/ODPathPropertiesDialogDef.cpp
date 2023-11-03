@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.9.0 Jul  6 2021)
+// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -25,6 +25,7 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 		return false;
 	}
 
+	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_bSizerDialogBox = new wxBoxSizer( wxVERTICAL );
 
