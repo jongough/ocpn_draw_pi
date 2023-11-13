@@ -1038,7 +1038,6 @@ void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
     g_pODToolbar->UpdateIcons();
     g_pODPointMan->SetColorScheme( g_global_color_scheme );
     g_pPathMan->SetColorScheme( g_global_color_scheme );
-
 }
 
 void ocpn_draw_pi::UpdateAuiStatus(void)

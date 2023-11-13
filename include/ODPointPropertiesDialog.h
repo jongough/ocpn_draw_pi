@@ -10,6 +10,8 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
+class ODColourPickerCtrl;
+
 #include <wx/string.h>
 #include <wx/stattext.h>
 #include <wx/gdicmn.h>
@@ -23,14 +25,14 @@
 #include <wx/radiobox.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
-#include <wx/clrpicker.h>
-#include <wx/hyperlink.h>
+#include <wx/bmpbuttn.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
+#include <wx/button.h>
+#include <wx/hyperlink.h>
 #include <wx/menu.h>
 #include <wx/scrolwin.h>
-#include <wx/button.h>
 #include <wx/tglbtn.h>
 #include <wx/panel.h>
 #include <wx/notebook.h>
@@ -89,7 +91,7 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextDistanceUnit;
 		wxChoice* m_choiceDistanceUnitsString;
 		wxStaticText* m_staticTextRangeRingColours;
-		wxColourPickerCtrl* m_colourPickerRangeRingsColour;
+		ODColourPickerCtrl* m_colourPickerRangeRingsColour;
 		wxStaticText* m_staticTextRangeRingWidth;
 		wxChoice* m_choiceRangeRingLineWidth;
 		wxStaticText* m_staticTextRangeRingStyle;
@@ -121,9 +123,9 @@ class ODPointPropertiesDialog : public wxDialog
 		wxStaticText* m_staticTextPosition;
 		wxChoice* m_choicePosition;
 		wxStaticText* m_staticTextColour;
-		wxColourPickerCtrl* m_colourPickerText;
+		ODColourPickerCtrl* m_colourPickerText;
 		wxStaticText* m_staticTextBackgroundColour;
-		wxColourPickerCtrl* m_colourPickerBacgroundColour;
+		ODColourPickerCtrl* m_colourPickerBackgroundColour;
 		wxStaticText* m_staticTextBackgroundTransparency;
 		wxSlider* m_sliderBackgroundTransparency;
 		wxRadioBox* m_radioBoxWidthType;

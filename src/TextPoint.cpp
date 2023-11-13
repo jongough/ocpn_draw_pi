@@ -315,7 +315,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                     l_TextPointText = WrapText(g_parent_window, m_TextPointText, m_iWrapLen);
                 else
                     l_TextPointText = WrapString(m_TextPointText, m_iWrapLen);
-                else
+            else
                 l_TextPointText = m_TextPointText;
 
             CalculateTextExtents(l_TextPointText);

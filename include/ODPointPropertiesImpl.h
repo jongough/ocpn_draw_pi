@@ -113,6 +113,7 @@ protected:
     void OnArrivalRadiusChange( wxCommandEvent& event );
     void OnShowRangeRingsSelect( wxCommandEvent& event );
     void OnRangeRingsStepChange( wxCommandEvent& event );
+    //void OnRangeRingColour( wxColourPickerEvent& event );
     void OnDescChangedBasic( wxCommandEvent& event );
     void OnPointPropertiesOKClick( wxCommandEvent& event );
     void OnPointPropertiesCancelClick( wxCommandEvent& event );

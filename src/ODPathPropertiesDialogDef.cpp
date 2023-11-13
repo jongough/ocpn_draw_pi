@@ -5,6 +5,8 @@
 // PLEASE DO *NOT* EDIT THIS FILE!
 ///////////////////////////////////////////////////////////////////////////
 
+#include "ODPlatform.h"
+
 #include "ODPathPropertiesDialogDef.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -105,7 +107,7 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 	m_staticTextLineColour->Wrap( -1 );
 	m_fgSizerBoundary->Add( m_staticTextLineColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerLineColour = new wxColourPickerCtrl( m_scrolledWindowProperties, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_colourPickerLineColour = new ODColourPickerCtrl( m_scrolledWindowProperties, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
 	m_fgSizerBoundary->Add( m_colourPickerLineColour, 0, wxALL, 5 );
 
 	m_staticTextLineStyle = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Line Style"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -132,8 +134,8 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 	m_staticTextFillColour->Wrap( -1 );
 	m_fgSizerBoundary->Add( m_staticTextFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
 
-	m_colourPickerFillColour = new wxColourPickerCtrl( m_scrolledWindowProperties, wxID_ANY, wxColour( 255, 0, 0 ), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	m_fgSizerBoundary->Add( m_colourPickerFillColour, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
+	m_colourPickerFillColour = new ODColourPickerCtrl( m_scrolledWindowProperties, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW|0 );
+	m_fgSizerBoundary->Add( m_colourPickerFillColour, 0, wxALL, 5 );
 
 	m_staticTextFillTransparency = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Fill Density"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextFillTransparency->Wrap( -1 );
@@ -369,7 +371,6 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPathPropertiesDialogDef::OnClose ) );
 	m_textCtrlTotalLength->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlTotalLength->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
-	m_colourPickerLineColour->Connect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( ODPathPropertiesDialogDef::OnColourChangedLineColour ), NULL, this );
 	m_choiceLineStyle->Connect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnChoiceLineStyle ), NULL, this );
 	m_choiceLineStyle->Connect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocusChoiceLineStyle ), NULL, this );
 	m_choiceLineStyle->Connect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocusChoiceLineStyle ), NULL, this );
@@ -407,7 +408,6 @@ ODPathPropertiesDialogDef::~ODPathPropertiesDialogDef()
 	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPathPropertiesDialogDef::OnClose ) );
 	m_textCtrlTotalLength->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocus ), NULL, this );
 	m_textCtrlTotalLength->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocus ), NULL, this );
-	m_colourPickerLineColour->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( ODPathPropertiesDialogDef::OnColourChangedLineColour ), NULL, this );
 	m_choiceLineStyle->Disconnect( wxEVT_COMMAND_CHOICE_SELECTED, wxCommandEventHandler( ODPathPropertiesDialogDef::OnChoiceLineStyle ), NULL, this );
 	m_choiceLineStyle->Disconnect( wxEVT_KILL_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnKillFocusChoiceLineStyle ), NULL, this );
 	m_choiceLineStyle->Disconnect( wxEVT_SET_FOCUS, wxFocusEventHandler( ODPathPropertiesDialogDef::OnSetFocusChoiceLineStyle ), NULL, this );

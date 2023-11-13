@@ -10,6 +10,8 @@
 #include <wx/artprov.h>
 #include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
+class ODColourPickerCtrl;
+
 #include <wx/string.h>
 #include <wx/stattext.h>
 #include <wx/gdicmn.h>
@@ -19,16 +21,16 @@
 #include <wx/textctrl.h>
 #include <wx/sizer.h>
 #include <wx/checkbox.h>
-#include <wx/clrpicker.h>
+#include <wx/bmpbuttn.h>
+#include <wx/bitmap.h>
+#include <wx/image.h>
+#include <wx/icon.h>
+#include <wx/button.h>
 #include <wx/choice.h>
 #include <wx/slider.h>
 #include <wx/radiobox.h>
 #include <wx/listctrl.h>
 #include <wx/scrolwin.h>
-#include <wx/button.h>
-#include <wx/bitmap.h>
-#include <wx/image.h>
-#include <wx/icon.h>
 #include <wx/dialog.h>
 
 #include "extra_formbuilder_headers.h"
@@ -59,13 +61,13 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxTextCtrl* m_textCtrlTotalLength;
 		wxStaticText* m_staticTextDistUntis;
 		wxStaticText* m_staticTextLineColour;
-		wxColourPickerCtrl* m_colourPickerLineColour;
+		ODColourPickerCtrl* m_colourPickerLineColour;
 		wxStaticText* m_staticTextLineStyle;
 		wxChoice* m_choiceLineStyle;
 		wxStaticText* m_staticTextLineWidth;
 		wxChoice* m_choiceLineWidth;
 		wxStaticText* m_staticTextFillColour;
-		wxColourPickerCtrl* m_colourPickerFillColour;
+		ODColourPickerCtrl* m_colourPickerFillColour;
 		wxStaticText* m_staticTextFillTransparency;
 		wxSlider* m_sliderFillTransparency;
 		wxStaticText* m_staticTextInclusionBoundarySize;
@@ -116,7 +118,6 @@ class ODPathPropertiesDialogDef : public wxDialog
 		virtual void OnClose( wxCloseEvent& event ) { event.Skip(); }
 		virtual void OnKillFocus( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnSetFocus( wxFocusEvent& event ) { event.Skip(); }
-		virtual void OnColourChangedLineColour( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnChoiceLineStyle( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnKillFocusChoiceLineStyle( wxFocusEvent& event ) { event.Skip(); }
 		virtual void OnSetFocusChoiceLineStyle( wxFocusEvent& event ) { event.Skip(); }
