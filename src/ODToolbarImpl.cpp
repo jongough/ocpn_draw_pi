@@ -46,7 +46,6 @@
 
 ODToolbarImpl::ODToolbarImpl( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint &pos, const wxSize &size, long style  )
 {
-    DEBUGSL("ODToolbarImpl::ODToolbarImpl");
     //m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     //SetFont( *m_dialogLabelFont );
     SetToolbarFont();
@@ -70,7 +69,6 @@ ODToolbarImpl::~ODToolbarImpl()
 {
     //Disconnect( wxEVT_MENU, wxCommandEventHandler( ODToolbarImpl::OnToolButtonClick ), NULL, this );
     //Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
-    DEBUGSL("ODToolbarImpl::~ODToolbarImpl");
 }
 
 void ODToolbarImpl::OnToolButtonClick( wxCommandEvent& event )
@@ -533,10 +531,6 @@ void ODToolbarImpl::UpdateIcons( void )
 void ODToolbarImpl::AddTools(void)
 {
     Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, this);
-    DEBUGST("Width: ");
-    DEBUGCONT(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth());
-    DEBUGCONT(", Height: ");
-    DEBUGEND(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight());
     //g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->SetHeight(g_ocpn_draw_pi->m_pODicons->m_iToolIconScaleFactor);
     m_toolBarODToolbar->SetToolBitmapSize(wxSize(g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetWidth(), g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary->GetHeight()));
     m_toolBoundary = m_toolBarODToolbar->AddCheckTool( ID_MODE_BOUNDARY, _("Boundary"), *g_ocpn_draw_pi->m_pODicons->m_p_bm_ocpn_draw_boundary, wxNullBitmap, _("Create Boundary"), wxEmptyString );

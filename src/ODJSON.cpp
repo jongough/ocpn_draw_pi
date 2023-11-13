@@ -130,19 +130,13 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
     int         l_BoundaryState;
     bool        bFail = false;
 
-    //DEBUGSL(message_body);
-
     if(message_id == wxS("OCPN_DRAW_PI")) {
 #ifdef OD_JSON_SCHEMA_VALIDATOR
         if(!gODJSONMsgValidator) {
             gODJSONMsgValidator = new json_validator;
             try {
-                DEBUGST("Input message: ");
-                DEBUGEND(jSchema);
                 gODJSONMsgValidator->set_root_schema(jSchema);
             } catch (const std::exception &e) {
-                DEBUGST("Validation of schema failed, here is why: ");
-                DEBUGEND(e.what());
                 wxString l_errorMsg;
                 l_errorMsg.Append("Validation of schema failed, here is why: ");
                 l_errorMsg.Append(e.what());
@@ -155,8 +149,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 json message = json::parse(static_cast<const char*>(message_body));
                 gODJSONMsgValidator->validate(message);
             } catch (const std::exception &e) {
-                DEBUGST("Validation of message against schema failed, here is why: ");
-                DEBUGEND(e.what());
                 wxString l_errorMsg;
                 l_errorMsg.Append("Validation of message against schema failed, here is why: ");
                 l_errorMsg.Append(e.what());
@@ -209,7 +201,6 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             bFail = true;
         }
 #endif
-        //DEBUGSL(root[wxS("Msg")].AsString());
         if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
             jMsg[wxT("Msg")] = root[wxT("Msg")];

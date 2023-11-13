@@ -380,16 +380,6 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
 
                     r.x = r.x + m_TextLocationOffsetX;
                     r.y = r.y + m_TextLocationOffsetY;
-                    DEBUGST("Text Point: GUID: ");
-                    DEBUGCONT(m_GUID);
-                    DEBUGCONT(", m_dScaleFactor: ");
-                    DEBUGCONT(m_dScaleFactor);
-                    DEBUGCONT(", scalefactor: ");
-                    DEBUGCONT(scalefactor);
-                    DEBUGCONT(", m_dNaturalScale: ");
-                    DEBUGCONT(m_dNaturalScale);
-                    DEBUGCONT(", m_chart_scale: ");
-                    DEBUGEND(g_ocpn_draw_pi->m_chart_scale);
                     if( scalefactor != m_dScaleFactor || m_bTextChanged || ( !m_iDisplayTextTexture && teX != 0 && teY != 0 ) ) {
                         m_dScaleFactor = scalefactor;
                         m_bTextChanged = false;

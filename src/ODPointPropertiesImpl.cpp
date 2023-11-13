@@ -399,8 +399,6 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pTextPoint->m_iWrapLen = m_iTextPointTextMaxWidth;
             m_pTextPoint->m_iTextMaxWidthType = m_radioBoxWidthType->GetSelection();
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
-            DEBUGST("ODPP: text colour: ");
-            DEBUGEND(m_colourPickerText->GetColour().GetAsString(wxC2S_HTML_SYNTAX));
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
             m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
             m_pTextPoint->m_iBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
