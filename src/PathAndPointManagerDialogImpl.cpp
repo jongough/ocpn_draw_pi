@@ -182,7 +182,7 @@ int wxCALLBACK SortPathOnDesc(long item1, long item2, long list)
     wxString it1, it2;
     it1 = ((ODPath *)item1)->GetDescription();
     it2 = ((ODPath *)item2)->GetDescription();
-    if(sort_path_name_dir & 1)
+    if(sort_path_desc_dir & 1)
         return it2.CmpNoCase(it1);
     else
         return it1.CmpNoCase(it2);

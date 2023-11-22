@@ -47,7 +47,7 @@ bool PathAndPointManagerDialogDef::Create( wxWindow* parent, wxWindowID id, cons
 	bSizer202 = new wxBoxSizer( wxVERTICAL );
 
 	m_listCtrlPath = new wxListCtrl( m_panelPath, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES|wxLC_REPORT|wxLC_SORT_ASCENDING|wxLC_VRULES|wxBORDER_SUNKEN );
-	bSizer202->Add( m_listCtrlPath, 0, wxALL|wxEXPAND, 5 );
+	bSizer202->Add( m_listCtrlPath, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer17->Add( bSizer202, 1, wxEXPAND, 5 );
@@ -76,7 +76,7 @@ bool PathAndPointManagerDialogDef::Create( wxWindow* parent, wxWindowID id, cons
 	bSizer17->Add( m_bSizerPathButtons, 0, wxEXPAND, 5 );
 
 
-	bSizer2->Add( bSizer17, 0, wxEXPAND, 5 );
+	bSizer2->Add( bSizer17, 1, wxEXPAND, 5 );
 
 
 	m_panelPath->SetSizer( bSizer2 );
@@ -94,7 +94,7 @@ bool PathAndPointManagerDialogDef::Create( wxWindow* parent, wxWindowID id, cons
 	bSizer21 = new wxBoxSizer( wxVERTICAL );
 
 	m_listCtrlODPoints = new wxListCtrl( m_panelODPoint, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES|wxLC_REPORT|wxLC_SORT_ASCENDING|wxLC_VRULES );
-	bSizer21->Add( m_listCtrlODPoints, 0, wxALL|wxEXPAND, 5 );
+	bSizer21->Add( m_listCtrlODPoints, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer18->Add( bSizer21, 1, wxEXPAND, 5 );
@@ -123,7 +123,7 @@ bool PathAndPointManagerDialogDef::Create( wxWindow* parent, wxWindowID id, cons
 	bSizer18->Add( m_bSizerODPointsButtons, 0, wxEXPAND, 5 );
 
 
-	bSizer3->Add( bSizer18, 0, wxEXPAND, 5 );
+	bSizer3->Add( bSizer18, 1, wxEXPAND, 5 );
 
 
 	m_panelODPoint->SetSizer( bSizer3 );
@@ -141,7 +141,7 @@ bool PathAndPointManagerDialogDef::Create( wxWindow* parent, wxWindowID id, cons
 	bSizer22 = new wxBoxSizer( wxVERTICAL );
 
 	m_listCtrlLayers = new wxListCtrl( m_panelLayer, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES|wxLC_REPORT|wxLC_SORT_ASCENDING|wxLC_VRULES );
-	bSizer22->Add( m_listCtrlLayers, 0, wxALL|wxEXPAND, 5 );
+	bSizer22->Add( m_listCtrlLayers, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer191->Add( bSizer22, 1, wxEXPAND, 5 );
@@ -178,13 +178,13 @@ bool PathAndPointManagerDialogDef::Create( wxWindow* parent, wxWindowID id, cons
 	bSizer4->Fit( m_panelLayer );
 	m_notebookPathAndPointManager->AddPage( m_panelLayer, _("Layers"), false );
 
-	bSizer16->Add( m_notebookPathAndPointManager, 0, wxALL|wxEXPAND, 5 );
+	bSizer16->Add( m_notebookPathAndPointManager, 1, wxALL|wxEXPAND, 5 );
 
 
 	bSizer19->Add( bSizer16, 1, wxEXPAND, 5 );
 
 
-	m_bSizerDialog->Add( bSizer19, 0, wxEXPAND|wxFIXED_MINSIZE, 5 );
+	m_bSizerDialog->Add( bSizer19, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer8;
 	bSizer8 = new wxBoxSizer( wxHORIZONTAL );

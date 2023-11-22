@@ -118,8 +118,8 @@ class PathAndPointManagerDialogDef : public wxDialog
 	public:
 
 		PathAndPointManagerDialogDef();
-		PathAndPointManagerDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
-		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE );
+		PathAndPointManagerDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("Path & Point Manager"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 
 		~PathAndPointManagerDialogDef();
 
