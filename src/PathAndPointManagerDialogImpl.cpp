@@ -129,140 +129,94 @@ enum { colPATHVISIBLE = 0, colPATHNAME, colPATHDESC };
 enum { colLAYVISIBLE = 0, colLAYNAME, colLAYITEMS };
 enum { colOCPNPOINTICON = 0, colOCPNPOINTNAME, colOCPNPOINTDIST };
 
-int sort_path_on_vis;
+static int sort_path_on_vis;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortPathOnVis(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortPathOnVis(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortPathOnVis(long item1, long item2, long list)
 #endif
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
+    bool it1, it2;
+    it1 = ((ODPath *)item1)->IsVisible();
+    it2 = ((ODPath *)item2)->IsVisible();
 
-    wxListItem it1, it2;
-    it1.SetId(lc->FindItem(-1, item1));
-    it1.SetColumn(0);
-    it1.SetMask(it1.GetMask() | wxLIST_MASK_IMAGE);
-
-    it2.SetId(lc->FindItem(-1, item2));
-    it2.SetColumn(0);
-    it2.SetMask(it2.GetMask() | wxLIST_MASK_IMAGE);
-
-    lc->GetItem(it1);
-    lc->GetItem(it2);
-
+    if(it2 == it1)
+        return 0;
     if(sort_path_on_vis & 1)
-        if(it2.GetImage() > it1.GetImage())
+        if(it2 > it1)
             return 1;
         else
-            return 0;
+            return -1;
+    else
+        if(it2 < it1)
+            return 1;
         else
-            if(it2.GetImage() <= it1.GetImage())
-                return 1;
-            else
-                return 0;
-
+            return -1;
 }
 
 // sort callback. Sort by path name.
-int sort_path_name_dir;
+static int sort_path_name_dir;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortPathOnName(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortPathOnName(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortPathOnName(long item1, long item2, long list)
 #endif
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
-
-    wxListItem it1, it2;
-    it1.SetId(lc->FindItem(-1, item1));
-    it1.SetColumn(1);
-    it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
-
-    it2.SetId(lc->FindItem(-1, item2));
-    it2.SetColumn(1);
-    it2.SetMask(it2.GetMask() | wxLIST_MASK_TEXT);
-
-    lc->GetItem(it1);
-    lc->GetItem(it2);
-
+    wxString it1, it2;
+    it1 = ((ODPath *)item1)->GetName();
+    it2 = ((ODPath *)item2)->GetName();
     if(sort_path_name_dir & 1)
-        return it2.GetText().CmpNoCase(it1.GetText());
+        return it2.CmpNoCase(it1);
     else
-        return it1.GetText().CmpNoCase(it2.GetText());
-
+        return it1.CmpNoCase(it2);
 }
 
-// sort callback. Sort by path Destination.
-int sort_path_to_dir;
+// sort callback. Sort by path Description.
+static int sort_path_desc_dir;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortPathOnTo(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortPathOnDesc(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
-int wxCALLBACK SortPathOnTo(long item1, long item2, long list)
+int wxCALLBACK SortPathOnDesc(long item1, long item2, long list)
 #endif
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
-
-    wxListItem it1, it2;
-    it1.SetId(lc->FindItem(-1, item1));
-    it1.SetColumn(2);
-    it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
-
-    it2.SetId(lc->FindItem(-1, item2));
-    it2.SetColumn(2);
-    it2.SetMask(it2.GetMask() | wxLIST_MASK_TEXT);
-
-    lc->GetItem(it1);
-    lc->GetItem(it2);
-
-    if(sort_path_to_dir & 1)
-        return it2.GetText().CmpNoCase(it1.GetText());
+    wxString it1, it2;
+    it1 = ((ODPath *)item1)->GetDescription();
+    it2 = ((ODPath *)item2)->GetDescription();
+    if(sort_path_name_dir & 1)
+        return it2.CmpNoCase(it1);
     else
-        return it1.GetText().CmpNoCase(it2.GetText());
+        return it1.CmpNoCase(it2);
 }
 
 int sort_ODPoint_key;
 
 // sort callback. Sort by path visibility.
-int sort_ODPoint_on_vis;
+static int sort_ODPoint_on_vis;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortODPointsOnVis(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortODPointsOnVis(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortODPointsOnVis(long item1, long item2, long list)
 #endif
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
+    wxString it1, it2;
+    it1 = ((ODPoint *)item1)->GetIconName();
+    it2 = ((ODPoint *)item2)->GetIconName();
 
-    wxListItem it1, it2;
-    it1.SetId(lc->FindItem(-1, item1));
-    it1.SetColumn(0);
-    it1.SetMask(it1.GetMask() | wxLIST_MASK_IMAGE);
-
-    it2.SetId(lc->FindItem(-1, item2));
-    it2.SetColumn(0);
-    it2.SetMask(it2.GetMask() | wxLIST_MASK_IMAGE);
-
-    lc->GetItem(it1);
-    lc->GetItem(it2);
-    int l_iNumIcons = g_pODPointMan->GetNumIcons();
-    int l_iImageVis1 = (it1.GetImage() > l_iNumIcons) ? 0 : 1;
-    int l_iImageVis2 = (it2.GetImage() > l_iNumIcons) ? 0 : 1;
-
-    if(sort_ODPoint_on_vis & 1)
-        if(l_iImageVis2 > l_iImageVis1)
-            return 1;
-        else
-            return 0;
-        else
-            if(l_iImageVis2 <= l_iImageVis1)
-                return 1;
-            else
-                return 0;
+    if(it1 == it2) return 0;
+    if(sort_ODPoint_on_vis & 1) {
+        if(it2 > it1) return 1;
+        else return -1;
+    }
+    else {
+        if(it1 > it2) return 1;
+        else return -1;
+    }
 }
 
 // sort callback. Sort by point name.
-int sort_ODPoint_name_dir;
+static int sort_ODPoint_name_dir;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortODPointsOnName(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortODPointsOnName(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortODPointsOnName(long item1, long item2, long list)
 #endif
@@ -279,17 +233,15 @@ int wxCALLBACK SortODPointsOnName(long item1, long item2, long list)
     }
     else
         return 0;
-
 }
 
 // sort callback. Sort by point distance.
-int sort_ODPoint_len_dir;
+static int sort_ODPoint_len_dir;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortODPointsOnDistance(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortODPointsOnDistance(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortODPointsOnDistance(long item1, long item2, long list)
 #endif
-
 {
     wxListCtrl *lc = (wxListCtrl*)list;
 
@@ -306,26 +258,30 @@ int wxCALLBACK SortODPointsOnDistance(long item1, long item2, long list)
     lc->GetItem(it2);
 
     wxString s1, s2;
-    s1.Printf(_T("%11s"), it1.GetText().c_str());
-    s2.Printf(_T("%11s"), it2.GetText().c_str());
+    s1 = it1.GetText().c_str();
+    s2 = it2.GetText().c_str();
+    s1 = s1.Strip(wxString::leading);
+    s2 = s2.Strip(wxString::leading);
 
     double l1, l2;
     s1.ToDouble(&l1);
     s2.ToDouble(&l2);
 
+    if(l1 == l2) return 0;
     if(sort_ODPoint_len_dir & 1)
-        return(l1 < l2);
+        if(l1 < l2) return 1;
+        else return -1;
     else
-        return(l2 < l1);
-
+        if(l2 < l1) return 1;
+        else return -1;
 }
 
 // sort callback. Sort by layer visibility.
-int sort_layer_on_vis;
+static int sort_layer_on_vis;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortLayerOnVis(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortLayersOnVis(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
-int wxCALLBACK SortLaerOnVis(long item1, long item2, long list)
+int wxCALLBACK SortLayersOnVis(long item1, long item2, long list)
 #endif
 {
     wxListCtrl *lc = (wxListCtrl*)list;
@@ -342,82 +298,55 @@ int wxCALLBACK SortLaerOnVis(long item1, long item2, long list)
     lc->GetItem(it1);
     lc->GetItem(it2);
 
-    if(sort_path_on_vis & 1)
+    if(it1.GetImage() == it2.GetImage()) return 0;
+    if(sort_layer_on_vis & 1)
         if(it2.GetImage() > it1.GetImage())
             return 1;
         else
-            return 0;
+            return -1;
         else
             if(it2.GetImage() <= it1.GetImage())
                 return 1;
             else
-                return 0;
-
+                return -1;
 }
 
 // sort callback. Sort by layer name.
-int sort_layer_name_dir;
+static int sort_layer_name_dir;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortLayersOnName(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortLayersOnName(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortLayersOnName(long item1, long item2, long list)
 #endif
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
-
-    wxListItem it1, it2;
-    it1.SetId(lc->FindItem(-1, item1));
-    it1.SetColumn(1);
-    it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
-
-    it2.SetId(lc->FindItem(-1, item2));
-    it2.SetColumn(1);
-    it2.SetMask(it2.GetMask() | wxLIST_MASK_TEXT);
-
-    lc->GetItem(it1);
-    lc->GetItem(it2);
-
+    wxString it1, it2;
+    it1 = ((ODLayer *)item1)->GetName();
+    it2 = ((ODLayer *)item2)->GetName();
     if(sort_layer_name_dir & 1)
-        return it2.GetText().CmpNoCase(it1.GetText());
+        return it2.CmpNoCase(it1);
     else
-        return it1.GetText().CmpNoCase(it2.GetText());
-
+        return it1.CmpNoCase(it2);
 }
 
 // sort callback. Sort by layer size.
-int sort_layer_len_dir;
+static int sort_layer_len_dir;
 #if wxCHECK_VERSION(2, 9, 0)
-int wxCALLBACK SortLayersOnSize(long item1, long item2, wxIntPtr list)
+static int wxCALLBACK SortLayersOnSize(wxIntPtr item1, wxIntPtr item2, wxIntPtr list)
 #else
 int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
 #endif
 {
-    wxListCtrl *lc = (wxListCtrl*)list;
+    long it1, it2;
+    it1 = ((ODLayer *)item1)->GetNoOfItems();
+    it2 = ((ODLayer *)item2)->GetNoOfItems();
 
-    wxListItem it1, it2;
-    it1.SetId(lc->FindItem(-1, item1));
-    it1.SetColumn(2);
-    it1.SetMask(it1.GetMask() | wxLIST_MASK_TEXT);
-
-    it2.SetId(lc->FindItem(-1, item2));
-    it2.SetColumn(2);
-    it2.SetMask(it2.GetMask() | wxLIST_MASK_TEXT);
-
-    lc->GetItem(it1);
-    lc->GetItem(it2);
-
-    wxString s1, s2;
-    s1.Printf(_T("%11s"), it1.GetText().c_str());
-    s2.Printf(_T("%11s"), it2.GetText().c_str());
-
-    double l1, l2;
-    s1.ToDouble(&l1);
-    s2.ToDouble(&l2);
-
+    if(it1 == it2) return 0;
     if(sort_layer_len_dir & 1)
-        return(l1 < l2);
+        if(it1 < it2) return 1;
+        else return -1;
     else
-        return(l2 < l1);
+        if(it2 < it1) return 1;
+        else return -1;
 
 }
 
@@ -574,7 +503,7 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
         if ( item == -1 )
             break;
 
-        ODPath *ppath_to_delete = g_pPathList->Item( m_listCtrlPath->GetItemData( item ) )->GetData();
+        ODPath *ppath_to_delete = (ODPath *) m_listCtrlPath->GetItemData( item );
 
         if( ppath_to_delete )
             list.Append( ppath_to_delete );
@@ -632,7 +561,7 @@ void PathAndPointManagerDialogImpl::OnPathPropertiesClick( wxCommandEvent &event
     item = m_listCtrlPath->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODPath *path = g_pPathList->Item( m_listCtrlPath->GetItemData( item ) )->GetData();
+    ODPath *path = (ODPath *)m_listCtrlPath->GetItemData( item );
 
     if( !path ) return;
 
@@ -709,7 +638,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
             }
         }
 
-        if( NULL == g_pGZPropDialog )          // There is one global instance of the DRProp Dialog
+        if( NULL == g_pGZPropDialog )          // There is one global instance of the GZProp Dialog
             g_pGZPropDialog = new GZProp( m_parent_window );
         g_pODPathPropDialog = g_pGZPropDialog;
         l_pGZ = (GZ *) inpath;
@@ -726,7 +655,7 @@ void PathAndPointManagerDialogImpl::ShowPathPropertiesDialog ( ODPath *inpath )
             }
         }
 
-        if( NULL == g_pPILPropDialog )          // There is one global instance of the ELBProp Dialog
+        if( NULL == g_pPILPropDialog )          // There is one global instance of the PILProp Dialog
             g_pPILPropDialog = new PILProp( m_parent_window );
         g_pODPathPropDialog = g_pPILPropDialog;
         l_pPIL = (PIL *) inpath;
@@ -799,7 +728,7 @@ void PathAndPointManagerDialogImpl::OnPathCenterViewClick( wxCommandEvent &event
     // optionally make this path exclusively visible
     if( m_bCtrlDown ) MakeAllPathsInvisible();
 
-    ODPath *path = g_pPathList->Item( m_listCtrlPath->GetItemData( item ) )->GetData();
+    ODPath *path = (ODPath *) m_listCtrlPath->GetItemData( item );
 
     if( !path ) return;
 
@@ -827,8 +756,7 @@ void PathAndPointManagerDialogImpl::OnPathExportSelectedClick( wxCommandEvent &e
         if ( item == -1 )
             break;
 
-        ODPath *ppath_to_export = g_pPathList->Item( m_listCtrlPath->GetItemData( item ) )->GetData();
-
+        ODPath *ppath_to_export = (ODPath *) m_listCtrlPath->GetItemData( item );
         if( ppath_to_export ) {
             list.Append( ppath_to_export );
             if( ppath_to_export->m_PathNameString != wxEmptyString )
@@ -848,7 +776,7 @@ void PathAndPointManagerDialogImpl::OnPathActivateClick( wxCommandEvent &event )
 
     if( m_bCtrlDown ) MakeAllPathsInvisible();
 
-    ODPath *ppath = g_pPathList->Item( m_listCtrlPath->GetItemData( item ) )->GetData();
+    ODPath *ppath = (ODPath *) m_listCtrlPath->GetItemData( item );
 
     if( !ppath ) return;
 
@@ -884,7 +812,7 @@ void PathAndPointManagerDialogImpl::OnPathToggleVisibility( wxMouseEvent &event 
     //    Clicking Visibility column?
     if( clicked_index > -1 && event.GetX() < m_listCtrlPath->GetColumnWidth( colPATHVISIBLE ) ) {
         // Process the clicked item
-        ODPath *path = g_pPathList->Item( m_listCtrlPath->GetItemData( clicked_index ) )->GetData();
+        ODPath *path = (ODPath *) m_listCtrlPath->GetItemData( clicked_index );
 
         int ODPoints_set_viz = wxID_YES;
         bool togglesharedODPoints = true;
@@ -920,7 +848,7 @@ void PathAndPointManagerDialogImpl::SelectedPathToggleVisibility( bool visible )
         if ( item == -1 )
             break;
 
-        ODPath *ppath = g_pPathList->Item( m_listCtrlPath->GetItemData( item ) )->GetData();
+        ODPath *ppath = (ODPath *) m_listCtrlPath->GetItemData( item );
 
         if( ppath ) {
             ppath->SetVisible(visible);
@@ -939,7 +867,9 @@ void PathAndPointManagerDialogImpl::OnPathSelected( wxListEvent &event )
 {
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
-    ODPath *path = g_pPathList->Item( m_listCtrlPath->GetItemData( clicked_index ) )->GetData();
+    ODPath *path = (ODPath *)m_listCtrlPath->GetItemData( clicked_index );
+    //ODPath *path = (ODPath *) m_listCtrlPath->GetItemData( item );
+    //    ODPath *path = g_pPathList->Item( m_listCtrlPath->GetId() )->GetData();
     path->m_bPathManagerBlink = true;
 
     m_listCtrlPath->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
@@ -954,9 +884,8 @@ void PathAndPointManagerDialogImpl::OnPathDeSelected( wxListEvent &event )
 {
     long clicked_index = event.m_itemIndex;
     // Process the clicked item
-    ODPath *path = g_pPathList->Item( m_listCtrlPath->GetItemData( clicked_index ) )->GetData();
+    ODPath *path = (ODPath *) m_listCtrlPath->GetItemData( clicked_index );
     path->m_bPathManagerBlink = false;
-
     m_listCtrlPath->SetItemImage( clicked_index, path->IsVisible() ? 0 : 1 );
 
     RequestRefresh( GetOCPNCanvasWindow() );
@@ -977,8 +906,8 @@ void PathAndPointManagerDialogImpl::OnPathColumnClicked( wxListEvent &event )
             m_listCtrlPath->SortItems( SortPathOnName, (long) m_listCtrlPath );
             break;
         case 2:
-            sort_path_to_dir++;
-            m_listCtrlPath->SortItems( SortPathOnTo, (long) m_listCtrlPath );
+            sort_path_desc_dir++;
+            m_listCtrlPath->SortItems( SortPathOnDesc, (long) m_listCtrlPath );
             break;
     }
 }
@@ -1012,7 +941,7 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
     if( item != -1 ) selected_id = m_listCtrlPath->GetItemData( item );
 
     // Delete existing items
-    m_listCtrlPath->DeleteAllItems();
+    if( !m_listCtrlPath->DeleteAllItems() ) return;
 
     // then add path to the listctrl
     PathList::iterator it;
@@ -1023,7 +952,7 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
         wxListItem li;
         li.SetId( index );
         li.SetImage( ( *it )->IsVisible() ? 0 : 1 );
-        li.SetData( index );
+        li.SetData( *it );
         li.SetText( _T("") );
 
         if( ( *it )->m_bPathIsActive ) {
@@ -1037,19 +966,18 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
         wxString name = ( *it )->m_PathNameString;
         if( name.IsEmpty() ) {
             name = _("(Unnamed )");
-            #if wxCHECK_VERSION(3,0,0)
+#if wxCHECK_VERSION(3,0,0)
             name.append( _(( *it )->m_sTypeString ) );
-            #else
+#else
             name.append( ( *it )->m_sTypeString );
-            #endif
+#endif
         }
         m_listCtrlPath->SetItem( idx, colPATHNAME, name );
         wxString desc = ( *it ) ->m_PathDescription;
         m_listCtrlPath->SetItem( idx, colPATHDESC, desc );
-        //        m_listCtrlPath->SetItemData( idx, ( *it )->IsVisible() ? 0 : 1 );
     }
 
-    m_listCtrlPath->SortItems( SortPathOnName, (long) m_listCtrlPath );
+    m_listCtrlPath->SortItems( SortPathOnName, (wxIntPtr) m_listCtrlPath );
 
     // restore selection if possible
     // NOTE this will select a different item, if one is deleted
@@ -1071,8 +999,6 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
         m_listCtrlPath->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
 
-    //this->GetSizer()->Fit( this );
-    //this->Layout();
     m_bSizerPathButtons->Layout();
     SetSizerAndFit(m_bSizerDialog);
 
@@ -1108,7 +1034,7 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     // activate button text
     ODPath *path = NULL;
     if( enable1 ) {
-        path = g_pPathList->Item( m_listCtrlPath->GetItemData( selected_index_index ) )->GetData();
+        path = (ODPath *)m_listCtrlPath->GetItemData( selected_index_index );
         if ( path ) {
             m_buttonPathActivate->Enable( true );
             if ( path->IsActive() ) m_buttonPathActivate->SetLabel( _("&Deactivate") );
@@ -1631,15 +1557,15 @@ void PathAndPointManagerDialogImpl::OnLayerColumnClick( wxListEvent &event )
     switch (event.m_col) {
         case 0:
             sort_layer_on_vis++;
-            m_listCtrlLayers->SortItems( SortPathOnVis, (long) m_listCtrlLayers );
+            m_listCtrlLayers->SortItems( SortLayersOnVis, (long) m_listCtrlLayers );
             break;
         case 1:
             sort_layer_name_dir++;
-            m_listCtrlLayers->SortItems( SortPathOnName, (long) m_listCtrlLayers );
+            m_listCtrlLayers->SortItems( SortLayersOnName, (long) m_listCtrlLayers );
             break;
         case 2:
             sort_layer_len_dir++;
-            m_listCtrlLayers->SortItems( SortPathOnTo, (long) m_listCtrlLayers );
+            m_listCtrlLayers->SortItems( SortLayersOnSize, (long) m_listCtrlLayers );
             break;
     }
 }
@@ -1664,18 +1590,20 @@ void PathAndPointManagerDialogImpl::UpdateLayerButtons()
     m_buttonLayerShowPointNames->Enable( enable );
 
     if( item >= 0 ) {
-        if( g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData()->IsVisible() ) m_buttonLayerShowOnChart->SetLabel(
-            _("Hide from chart") );
+        ODLayer *layer;
+        layer = (ODLayer *)m_listCtrlLayers->GetItemData(item);
+        if( layer->IsVisible() )
+            m_buttonLayerShowOnChart->SetLabel( _("Hide from chart") );
         else
             m_buttonLayerShowOnChart->SetLabel( _("Show on chart") );
 
-        if( g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData()->HasVisibleNames() ) m_buttonLayerShowPointNames->SetLabel(
-            _("Hide Point names") );
+        if( layer->HasVisibleNames() )
+            m_buttonLayerShowPointNames->SetLabel( _("Hide Point names") );
         else
             m_buttonLayerShowPointNames->SetLabel( _("Show Point names") );
 
-        if( g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData()->IsVisibleOnListing() ) m_buttonLayerListContents->SetLabel(
-            _("Unlist contents ") );
+        if( layer->IsVisibleOnListing() )
+            m_buttonLayerListContents->SetLabel( _("Unlist contents ") );
         else
             m_buttonLayerListContents->SetLabel( _("List contents ") );
     } else {
@@ -1696,7 +1624,7 @@ void PathAndPointManagerDialogImpl::OnLayerToggleVisibility( wxMouseEvent &event
     //    Clicking Visibility column?
     if( clicked_index > -1 && event.GetX() < m_listCtrlLayers->GetColumnWidth( colLAYVISIBLE ) ) {
         // Process the clicked item
-        ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( clicked_index ) )->GetData();
+        ODLayer *layer = (ODLayer *) m_listCtrlLayers->GetItemData( clicked_index );
 
         layer->SetVisible( !layer->IsVisible() );
         m_listCtrlLayers->SetItemImage( clicked_index, layer->IsVisible() ? 0 : 1 );
@@ -1955,7 +1883,7 @@ void PathAndPointManagerDialogImpl::OnLayerListContentsClick( wxCommandEvent &ev
     item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    ODLayer *layer = ( ODLayer * )m_listCtrlLayers->GetItemData( item );
 
     if( !layer ) return;
 
@@ -2020,24 +1948,23 @@ void PathAndPointManagerDialogImpl::UpdateLayerListCtrl()
     ODLayerList::iterator it;
     int index = 0;
     for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
-        ODLayer *lay = (ODLayer *) ( *it );
 
         wxListItem li;
         li.SetId( index );
-        li.SetImage( lay->IsVisible() ? 0 : 1 );
-        li.SetData( index );
+        li.SetImage( ( *it )->IsVisible() ? 0 : 1 );
+        li.SetData( *it );
         li.SetText( _T("") );
 
         long idx = m_listCtrlLayers->InsertItem( li );
 
-        wxString name = lay->m_LayerName;
+        wxString name = ( *it )->m_LayerName;
         if( name.IsEmpty() ) {
             name = _("(Unnamed Layer)");
         }
         m_listCtrlLayers->SetItem( idx, colLAYNAME, name );
 
         wxString len;
-        len.Printf( wxT("%d"), (int) lay->m_NoOfItems );
+        len.Printf( wxT("%d"), ( *it )->m_NoOfItems );
         m_listCtrlLayers->SetItem( idx, colLAYITEMS, len );
     }
 
@@ -2050,6 +1977,7 @@ void PathAndPointManagerDialogImpl::UpdateLayerListCtrl()
         item = m_listCtrlLayers->FindItem( -1, selected_id );
         m_listCtrlLayers->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
     }
+
     UpdateLayerButtons();
 
     for(int i = 0; i < m_listCtrlLayers->GetColumnCount(); i++) {
@@ -2060,12 +1988,8 @@ void PathAndPointManagerDialogImpl::UpdateLayerListCtrl()
         m_listCtrlLayers->SetColumnWidth(i, (std::max)(a_width, h_width));
     }
 
-    //this->GetSizer()->Fit( this );
-    //this->Layout();
     m_bSizerLayerButtons->Layout();
-
     SetSizerAndFit(m_bSizerDialog);
-
 
 }
 
@@ -2190,11 +2114,11 @@ void PathAndPointManagerDialogImpl::UpdateODPointsListCtrl( ODPoint *op_select, 
             wxString name = op->GetName();
             if( name.IsEmpty() ) {
                 name.append( _("(Unnamed) ") );
-                #if wxCHECK_VERSION(3,0,0)
+#if wxCHECK_VERSION(3,0,0)
                 name.append( _(op->m_sTypeString) );
-                #else
+#else
                 name.append( op->m_sTypeString );
-                #endif
+#endif
             }
             m_listCtrlODPoints->SetItem( idx, colOCPNPOINTNAME, name );
 
@@ -2213,7 +2137,7 @@ void PathAndPointManagerDialogImpl::UpdateODPointsListCtrl( ODPoint *op_select, 
     }
 
     if( !b_retain_sort ) {
-        m_listCtrlODPoints->SortItems( SortODPointsOnName, (long) m_listCtrlODPoints );
+        m_listCtrlODPoints->SortItems( SortODPointsOnName, (wxIntPtr) m_listCtrlODPoints );
         sort_ODPoint_key = SORT_ON_NAME;
     } else {
         switch( sort_ODPoint_key ){

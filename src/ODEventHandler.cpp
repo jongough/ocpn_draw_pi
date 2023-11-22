@@ -42,11 +42,17 @@
 #include "PILPropertiesDialogImpl.h"
 #include "PointMan.h"
 #include "Boundary.h"
+#include "BoundaryProp.h"
 #include "EBL.h"
+#include "EBLProp.h"
 #include "DR.h"
+#include "DRProp.h"
 #include "GZ.h"
+#include "GZProp.h"
 #include "PIL.h"
+#include "PILProp.h"
 #include "ODDRDialogImpl.h"
+#include "ODLayer.h"
 #include "TextPoint.h"
 #include <wx/window.h>
 #include <wx/clipbrd.h>
@@ -511,12 +517,18 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
     switch( event.GetId() )
     {
         case ID_PATH_MENU_PROPERTIES:
-            if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
-                g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( g_ocpn_draw_pi->m_parent_window );
-#ifndef __WXOSX__
-            DimeWindow( g_pPathAndPointManagerDialog );
-#endif
-            g_pPathAndPointManagerDialog->ShowPathPropertiesDialog( m_pSelectedPath );
+            if ( NULL == g_pODPathPropDialog )
+                g_pODPathPropDialog = new ODPathPropertiesDialogImpl( g_ocpn_draw_pi->m_parent_window );
+//            if( NULL == g_pPathAndPointManagerDialog )         // There is one global instance of the Dialog
+//                g_pPathAndPointManagerDialog = new PathAndPointManagerDialogImpl( m_parent_window );
+//#ifndef __WXOSX__
+//            DimeWindow( g_pPathAndPointManagerDialog );
+//#endif
+//#ifndef __WXOSX__
+//            DimeWindow( g_pODPathPropDialog );
+//#endif
+
+            ShowPathPropertiesDialog( m_pSelectedPath );
             m_pSelectedPath = NULL;
             break;
         case ID_PATH_MENU_MOVE_POINT:
@@ -1393,3 +1405,166 @@ void ODEventHandler::ODERequestRefresh( int canvas_index, bool bFullRefresh )
         }
     }
 }
+
+void ODEventHandler::ShowPathPropertiesDialog ( ODPath *inpath )
+{
+    ODPath *l_pPath = NULL;;
+    Boundary *l_pBoundary = NULL;
+    EBL *l_pEBL = NULL;
+    DR  *l_pDR = NULL;
+    GZ  *l_pGZ = NULL;
+    PIL *l_pPIL = NULL;
+
+    if(inpath->m_sTypeString == wxT( "Boundary") ) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pBoundaryPropDialog) {
+                g_ocpn_draw_pi->DeleteWindow(g_pBoundaryPropDialog);
+                g_pBoundaryPropDialog = NULL;
+            }
+        }
+
+        if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
+            g_pBoundaryPropDialog = new BoundaryProp( m_parent_window );
+        g_pODPathPropDialog = g_pBoundaryPropDialog;
+        l_pBoundary = (Boundary *) inpath;
+        l_pPath = l_pBoundary;
+        g_pBoundaryPropDialog->SetPath( l_pBoundary );
+        g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
+    } else if(inpath->m_sTypeString == wxT("EBL")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pEBLPropDialog) {
+                g_ocpn_draw_pi->DeleteWindow(g_pEBLPropDialog);
+                g_pEBLPropDialog = NULL;
+            }
+        }
+
+        if( NULL == g_pEBLPropDialog )          // There is one global instance of the ELBProp Dialog
+            g_pEBLPropDialog = new EBLProp( m_parent_window );
+        g_pODPathPropDialog = g_pEBLPropDialog;
+        l_pEBL = (EBL *) inpath;
+        l_pPath = l_pEBL;
+        g_pEBLPropDialog->SetPath( l_pEBL );
+        g_pEBLPropDialog->UpdateProperties( l_pEBL );
+    } else if(inpath->m_sTypeString == wxT("DR")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pDRPropDialog) {
+                g_ocpn_draw_pi->DeleteWindow(g_pDRPropDialog);
+                g_pDRPropDialog = NULL;
+            }
+        }
+
+        if( NULL == g_pDRPropDialog )          // There is one global instance of the DRProp Dialog
+            g_pDRPropDialog = new DRProp( m_parent_window );
+        g_pODPathPropDialog = g_pDRPropDialog;
+        l_pDR = (DR *) inpath;
+        l_pPath = l_pDR;
+        g_pDRPropDialog->SetPath( l_pDR );
+        g_pDRPropDialog->UpdateProperties( l_pDR );
+    } else if(inpath->m_sTypeString == wxT("Guard Zone")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pGZPropDialog) {
+                g_ocpn_draw_pi->DeleteWindow(g_pGZPropDialog);
+                g_pGZPropDialog = NULL;
+            }
+        }
+
+        if( NULL == g_pGZPropDialog )          // There is one global instance of the GZProp Dialog
+            g_pGZPropDialog = new GZProp( m_parent_window );
+        g_pODPathPropDialog = g_pGZPropDialog;
+        l_pGZ = (GZ *) inpath;
+        l_pPath = l_pGZ;
+        g_pGZPropDialog->SetPath( l_pGZ );
+        g_pGZPropDialog->UpdateProperties( l_pGZ );
+    } else if(inpath->m_sTypeString == wxT("PIL")) {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pPILPropDialog) {
+                g_ocpn_draw_pi->DeleteWindow(g_pPILPropDialog);
+                g_pPILPropDialog = NULL;
+            }
+        }
+
+        if( NULL == g_pPILPropDialog )          // There is one global instance of the PILProp Dialog
+            g_pPILPropDialog = new PILProp( m_parent_window );
+        g_pODPathPropDialog = g_pPILPropDialog;
+        l_pPIL = (PIL *) inpath;
+        l_pPath = l_pPIL;
+        g_pPILPropDialog->SetPath( l_pPIL );
+        g_pPILPropDialog->UpdateProperties( l_pPIL );
+    } else {
+        wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
+        if( g_dialogFont != l_dialogFont) {
+            g_dialogFont = l_dialogFont;
+            if(NULL != g_pODPathPropDialog) {
+                g_ocpn_draw_pi->DeleteWindow(g_pODPathPropDialog);
+                g_pODPathPropDialog = NULL;
+            }
+        }
+
+        if( NULL == g_pODPathPropDialog )          // There is one global instance of the PathProp Dialog
+            g_pODDefaultPathPropDialog = new ODPathPropertiesDialogImpl( m_parent_window );
+        g_pODPathPropDialog = g_pODDefaultPathPropDialog;
+        l_pPath = inpath;
+        g_pODPathPropDialog->SetPath( l_pPath );
+        g_pODPathPropDialog->UpdateProperties( l_pPath );
+    }
+
+    if( !l_pPath->m_bIsInLayer ) {
+        if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() )
+            g_pODPathPropDialog->SetDialogTitle( _("Path Properties") );
+        else if(l_pPath->m_sTypeString == wxT("Boundary"))
+            g_pODPathPropDialog->SetDialogTitle(_("Boundary Properties"));
+        else if(l_pPath->m_sTypeString == wxT("EBL"))
+            g_pODPathPropDialog->SetDialogTitle(_("EBL Properties"));
+        else if(l_pPath->m_sTypeString == wxT("DR"))
+            g_pODPathPropDialog->SetDialogTitle(_("DR Properties"));
+        else if(l_pPath->m_sTypeString == wxT("Guard Zone"))
+            g_pODPathPropDialog->SetDialogTitle(_("Guard Zone Properties"));
+        else if(l_pPath->m_sTypeString == wxT("PIL"))
+            g_pODPathPropDialog->SetDialogTitle(_("Parallel Index Line Properties"));
+    }
+    else {
+        wxString caption( wxS("") );
+        if ( l_pPath->m_sTypeString.IsNull() || l_pPath->m_sTypeString.IsEmpty() )
+            caption.append( _("Path Properties, Layer: ") );
+        else if(l_pPath->m_sTypeString == wxT("Boundary"))
+            caption.append(_("Boundary Properties, Layer: "));
+        else if(l_pPath->m_sTypeString == wxT("EBL"))
+            caption.append(_("EBL Properties, Layer: "));
+        else if(l_pPath->m_sTypeString == wxT("DR"))
+            caption.append(_("DR Properties, Layer: "));
+
+        caption.append( GetLayerName( l_pPath->m_LayerID ) );
+        g_pODPathPropDialog->SetDialogTitle( caption );
+
+    }
+
+    DimeWindow(g_pODPathPropDialog);
+    if( !g_pODPathPropDialog->IsShown() )
+        g_pODPathPropDialog->Show();
+    g_pODPathPropDialog->Raise();
+
+}
+
+wxString ODEventHandler::GetLayerName( int id )
+{
+    wxString name( _T("unknown layer") );
+    if( id <= 0 ) return ( name );
+    ODLayerList::iterator it;
+    int index = 0;
+    for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
+        ODLayer *lay = (ODLayer *) ( *it );
+        if( lay->m_LayerID == id ) return ( lay->m_LayerName );
+    }
+    return ( name );
+}
+

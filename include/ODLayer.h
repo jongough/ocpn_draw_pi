@@ -42,6 +42,10 @@ public:
       bool HasVisibleNames() { return m_bHasVisibleNames; }
       void SetVisibleNames(bool viz = true){ m_bHasVisibleNames = viz; }
 
+      wxString GetName(void){ return m_LayerName; }
+      wxString GetDescription(void) { return m_LayerDescription; }
+      long  GetNoOfItems(void) { return m_NoOfItems; }
+
       bool m_bIsVisibleOnListing;
       bool m_bIsVisible;
       bool m_bHasVisibleNames;

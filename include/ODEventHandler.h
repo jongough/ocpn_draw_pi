@@ -77,6 +77,8 @@ class ODEventHandler : public wxEvtHandler
     protected:
     private:
         void ODERequestRefresh( int canvas_index, bool bFullRefresh = FALSE );
+        void ShowPathPropertiesDialog ( ODPath *inpath );
+        wxString GetLayerName( int id );
 
         ocpn_draw_pi    *m_parent;
         wxWindow        *m_parent_window;

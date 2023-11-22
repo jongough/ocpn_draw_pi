@@ -134,6 +134,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         void OnClose( wxCloseEvent& event );
 
     public:
+        PathAndPointManagerDialogImpl();
         PathAndPointManagerDialogImpl(wxWindow* parent);
         virtual ~PathAndPointManagerDialogImpl();
         
