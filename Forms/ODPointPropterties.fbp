@@ -48,7 +48,7 @@
             <property name="name">ODPointPropertiesDialog</property>
             <property name="pos"></property>
             <property name="size">-1,-1</property>
-            <property name="style">wxCAPTION|wxDEFAULT_DIALOG_STYLE</property>
+            <property name="style">wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</property>
             <property name="subclass"></property>
             <property name="title">OD Point Properties</property>
             <property name="tooltip"></property>
