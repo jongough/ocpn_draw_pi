@@ -591,7 +591,6 @@ void ODPropertiesDialogImpl::SaveChanges()
     if(g_IconDisplayScaleFactor != m_sliderIconScaling->GetValue()) {
         g_IconDisplayScaleFactor = m_sliderIconScaling->GetValue();
         g_ocpn_draw_pi->m_pODicons->m_bScaleIcons = true;
-        DEBUGSL("ODProp: set m_bScaleIcons");
     }
 
     g_iDisplayToolbar = m_choiceToolbar->GetSelection();

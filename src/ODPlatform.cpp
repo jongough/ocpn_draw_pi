@@ -157,12 +157,11 @@ void ODColourPickerCtrl::UpdateColour()
     SetBitmapLabel( m_bitmap );
 }
 
-void ODColourPickerCtrl::SetColour( wxColour& c)
+void ODColourPickerCtrl::SetColour( const wxColour& c)
 {
     m_colour = c;
     UpdateColour();
 }
-
 
 wxColour ODColourPickerCtrl::GetColour( void )
 {

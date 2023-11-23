@@ -188,6 +188,14 @@ void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
     // TODO: Implement OnShowRangeRingsSelect
 }
 
+/*void OnRangeRingColour( wxColourPickerEvent& event )
+{
+    int x=1;
+    int y;
+    y =x;
+
+}
+*/
 void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
 {
     // TODO: Implement OnDescChangedBasic
@@ -379,8 +387,6 @@ void ODPointPropertiesImpl::SaveChanges()
         m_pODPoint->m_iODPointRangeRingsStepUnits = m_choiceDistanceUnitsString->GetSelection();
         m_pODPoint->SetRangeRingBBox();
         m_pODPoint->m_wxcODPointRangeRingsColour = m_colourPickerRangeRingsColour->GetColour();
-        m_pODPoint->CreateColourSchemes();
-        m_pODPoint->SetColourScheme(g_global_color_scheme);
 
         m_pODPoint->SetName( m_textName->GetValue() );
         m_textCtrlODPointArrivalRadius->GetValidator()->TransferFromWindow();
@@ -394,7 +400,7 @@ void ODPointPropertiesImpl::SaveChanges()
             m_pTextPoint->m_iTextMaxWidthType = m_radioBoxWidthType->GetSelection();
             m_pTextPoint->m_iTextPosition = m_choicePosition->GetSelection();
             m_pTextPoint->m_colourTextColour = m_colourPickerText->GetColour();
-            m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBacgroundColour->GetColour();
+            m_pTextPoint->m_colourTextBackgroundColour = m_colourPickerBackgroundColour->GetColour();
             m_pTextPoint->m_iBackgroundTransparency = m_sliderBackgroundTransparency->GetValue();
             if(m_pfdDialog){
                 wxFontData twxfdData = m_pfdDialog->GetFontData();
@@ -427,9 +433,11 @@ void ODPointPropertiesImpl::SaveChanges()
                     m_pBoundaryPoint->m_bInclusionBoundaryPoint = false;
                     break;
             }
-
-
         }
+
+        m_pODPoint->CreateColourSchemes();
+        m_pODPoint->SetColourScheme(g_global_color_scheme);
+
         m_pODPoint->SetVisible( m_checkBoxVisible->GetValue() );
         m_pODPoint->SetVisible();
         m_pODPoint->SetNameShown( m_checkBoxShowName->GetValue() );
@@ -712,7 +720,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
             m_iTextPointTextMaxWidth = m_pTextPoint->m_iWrapLen;
             m_radioBoxWidthType->SetSelection(m_pTextPoint->m_iTextMaxWidthType);
             m_colourPickerText->SetColour( m_pTextPoint->m_colourTextColour );
-            m_colourPickerBacgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
+            m_colourPickerBackgroundColour->SetColour( m_pTextPoint->m_colourTextBackgroundColour );
             m_sliderBackgroundTransparency->SetValue( m_pTextPoint->m_iBackgroundTransparency );
             m_staticTextFontFaceExample->SetFont( m_pTextPoint->m_DisplayTextFont );
             m_radioBoxShowDisplayText->SetSelection( m_pTextPoint->m_iDisplayTextWhen );

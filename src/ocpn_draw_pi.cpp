@@ -359,13 +359,11 @@ int      g_current_timer_canvas_index;
 
 extern "C" DECL_EXP opencpn_plugin* create_pi(void *ppimgr)
 {
-    DEBUGSL("create_pi");
     return (opencpn_plugin *)new ocpn_draw_pi(ppimgr);
 }
 
 extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 {
-    DEBUGSL("destroy_pi");
     delete p;
 }
 
@@ -377,7 +375,6 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
 :opencpn_plugin_117(ppimgr)
 {
-    DEBUGSL("ocpn_draw_pi");
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
     m_pSelectedPath = NULL;
@@ -425,13 +422,10 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     m_pODicons = new ODicons();
 
     m_bRecreateConfig = false;
-    DEBUGSL("ocpn_draw_pi: return");
-
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
-    DEBUGSL("~ocpn_draw_pi");
 #ifdef __WXMSW__
 #ifdef _DEBUG
 // Only turn on if memory leaks suspected. Slows down shutdown when debugging
@@ -442,7 +436,6 @@ ocpn_draw_pi::~ocpn_draw_pi()
 
 int ocpn_draw_pi::Init(void)
 {
-    DEBUGSL("Init");
     m_bBoundaryEditing = false;
     m_bPathEditing = false;
     m_bODPointEditing = false;
@@ -509,7 +502,6 @@ int ocpn_draw_pi::Init(void)
 
     // Adds local language support for the plugin to OCPN
     AddLocaleCatalog( PLUGIN_CATALOG_NAME );
-    DEBUGSL("AddLocaleCatalog");
 
     lastODPointInPath = wxS("-1");
     eventsEnabled = true;
@@ -522,7 +514,6 @@ int ocpn_draw_pi::Init(void)
     //m_parent_window = GetOCPNCanvasWindow();
     m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
-    DEBUGSL("PluginGetFocusCanvas");
 
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
@@ -689,18 +680,10 @@ int ocpn_draw_pi::Init(void)
     m_BlinkTimer = new wxTimer;
     m_BlinkTimer->Bind( wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler);
     m_BlinkTimer->Start( BLINK_TIME, wxTIMER_CONTINUOUS );
-    DEBUGST("wxTimer m_BlinkTimer Getid: ");
-    DEBUGCONT(m_BlinkTimer->GetId());
-    DEBUGCONT(", GetOwner: ");
-    DEBUGEND(m_BlinkTimer->GetOwner());
 
     m_RolloverPopupTimer = new wxTimer;
     m_rollover_popup_timer_msec = 20;
     m_RolloverPopupTimer->Bind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler);
-    DEBUGST("wxTimer m_RolloverPopupTimer Getid: ");
-    DEBUGCONT(m_RolloverPopupTimer->GetId());
-    DEBUGCONT(", GetOwner: ");
-    DEBUGEND(m_RolloverPopupTimer->GetOwner());
 
     // Get item into font list in options/user interface
     AddPersistentFontKey( wxT("OD_PathLegInfoRollover") );
@@ -776,7 +759,6 @@ int ocpn_draw_pi::Init(void)
 
         g_pODConfig->LoadLayers(*g_pLayerDir);
     }
-    DEBUGSL("Init return");
     return (
     WANTS_OVERLAY_CALLBACK  |
     WANTS_CURSOR_LATLON       |
@@ -798,20 +780,17 @@ int ocpn_draw_pi::Init(void)
 
 void ocpn_draw_pi::LateInit(void)
 {
-    DEBUGSL("LateInit");
     SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
     return;
 }
 
 bool ocpn_draw_pi::DeInit(void)
 {
-    DEBUGSL("DeInit");
     RemoveCanvasContextMenuItem(m_iODToolContextId);
 
     if(m_BlinkTimer->IsRunning())
         m_BlinkTimer->Stop();
     if(!m_BlinkTimer->Unbind(wxEVT_TIMER, &ODEventHandler::OnODTimer, g_ODEventHandler)) {
-        DEBUGSL("BlinkTimer->Unbind not found or not removed");
         wxLogMessage(_("BlinkTimer->Unbind not found or not removed"));
     }
     delete m_BlinkTimer;
@@ -820,7 +799,6 @@ bool ocpn_draw_pi::DeInit(void)
     if(m_RolloverPopupTimer->IsRunning())
         m_RolloverPopupTimer->Stop();
     if(!m_RolloverPopupTimer->Unbind( wxEVT_TIMER, &ODEventHandler::OnRolloverPopupTimerEvent, g_ODEventHandler)) {
-        DEBUGSL("RolloverPopupTimer->Unbind not found or not removed");
         wxLogMessage(_("RolloverPopupTimer->Unbind not found or not removed"));
     }
     delete m_RolloverPopupTimer;
@@ -970,7 +948,6 @@ bool ocpn_draw_pi::DeInit(void)
 
 void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
 {
-    DEBUGSL("DeleteWindow");
     if (pWindow) {
         pWindow->Close(true);
 #if defined(APPLE) || defined(__MSVC__) || defined(__OCPN__ANDROID__)
@@ -988,7 +965,6 @@ void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
 
 void ocpn_draw_pi::DeleteWindow ( wxWindow **pWindow )
 {
-    DEBUGSL("DeleteWindow");
     wxWindow *l_pWindow = *pWindow;
     if (l_pWindow) {
 //        l_pWindow->Close(true);
@@ -1038,7 +1014,6 @@ void ocpn_draw_pi::SetColorScheme(PI_ColorScheme cs)
     g_pODToolbar->UpdateIcons();
     g_pODPointMan->SetColorScheme( g_global_color_scheme );
     g_pPathMan->SetColorScheme( g_global_color_scheme );
-
 }
 
 void ocpn_draw_pi::UpdateAuiStatus(void)
@@ -1700,7 +1675,6 @@ void ocpn_draw_pi::SaveConfig()
 
 void ocpn_draw_pi::LoadConfig()
 {
-    DEBUGSL("LoadConfig");
 #ifndef __WXMSW__
     wxString *l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)

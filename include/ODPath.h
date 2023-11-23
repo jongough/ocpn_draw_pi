@@ -47,12 +47,6 @@
 
 #define STYLE_UNDEFINED -1
 
-#define ROUTE_DEFAULT_SPEED 5.0
-#define RTE_TIME_DISP_UTC _T("UTC")
-#define RTE_TIME_DISP_PC _T("PC")
-#define RTE_TIME_DISP_LOCAL _T("LOCAL")
-#define RTE_UNDEF_DEPARTURE wxInvalidDateTime
-
 enum {
     ID_MAINTAIN_WITH_HEADING = 0,
     ID_MAINTAIN_WITH_COG
@@ -129,6 +123,9 @@ public:
     virtual void MoveAllPoints( double inc_lat, double inc_lon );
     virtual void MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, ODPoint* secondPoint );
     virtual void SetPointVisibility( void );
+
+    wxString GetName(void){ return m_PathNameString; }
+    wxString GetDescription(void) { return m_PathDescription; }
 
     int         m_ConfigPathNum;
     bool        m_bPathIsSelected;

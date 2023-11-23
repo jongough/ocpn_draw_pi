@@ -69,7 +69,7 @@ public:
 
     void OnButtonClick(wxCommandEvent& WXUNUSED(ev));
     void InitColourData();
-    void SetColour( wxColour& c);
+    void SetColour(const wxColour& c);
     wxColour GetColour( void );
 
 protected:

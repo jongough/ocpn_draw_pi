@@ -335,8 +335,6 @@ bool ODicons::ScaleIcons()
     if(!SetScaleFactor() && !m_bScaleIcons) return false;
 
     m_bScaleIcons = false;
-    DEBUGST("ScaleIcons(): ScaleFactor: ");
-    DEBUGEND(m_dScaleFactor);
 #ifdef ODraw_USE_SVG
 
     // Dont scale the OD manager as that should be done by the OCPN toolbar

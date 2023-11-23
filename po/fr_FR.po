@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-06-30 12:09+1000\n"
-"PO-Revision-Date: 2023-06-30 03:49\n"
+"PO-Revision-Date: 2023-11-09 21:22\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -57,7 +57,7 @@ msgstr "Gestionnaire de chemins et de points du traceur"
 
 #: src/Boundary.cpp:399
 msgid "Boundary not drawn as OpenGL not available in this build"
-msgstr "La limite n'est pas dessinée car OpenGL non disponible dans cette version"
+msgstr "La limite n'est pas dessinée car OpenGL est non disponible dans cette version"
 
 #: src/BoundaryPoint.cpp:209
 msgid "BoundaryPoint not drawn as OpenGL not available in this build"
@@ -284,7 +284,7 @@ msgstr "Limite/Zone : Voulez vous vraiment la supprimer ? "
 
 #: src/ODEventHandler.cpp:562
 msgid "OCPN Draw Boundary Delete"
-msgstr "Supprimer une limite/zone"
+msgstr "Supprimer une barrière/zone"
 
 #: src/ODEventHandler.cpp:565
 msgid "Are you sure you want to delete this EBL?"
@@ -464,7 +464,7 @@ msgstr "Déplacer la ligne EBL"
 
 #: src/ODEventHandler.cpp:1095
 msgid "Move Boundary Segment"
-msgstr "Déplacer ce segment de limite/zone"
+msgstr "Déplacer ce segment de barrière/zone"
 
 #: src/ODEventHandler.cpp:1101
 msgid "Insert Boundary Point"
@@ -480,12 +480,12 @@ msgstr "Ajouter une ligne à l'index"
 
 #: src/ODEventHandler.cpp:1115
 msgid "Hide Boundary Point Icons"
-msgstr "Masquer les icônes des points de la limite/zone"
+msgstr "Masquer les icônes des points de la barrière/zone"
 
 #: src/ODEventHandler.cpp:1117 src/ODPathPropertiesDialogDef.cpp:162
 #: src/ODPropertiesDialogDef.cpp:207
 msgid "Show Boundary Point Icons"
-msgstr "Icônes des points de la limite/zone : Voir"
+msgstr "Icônes des points de la barrière/zone : Voir"
 
 #: src/ODEventHandler.cpp:1121
 msgid "Delete..."
@@ -601,15 +601,15 @@ msgstr "Point : Copier le GUID"
 
 #: src/ODEventHandler.cpp:1221
 msgid "Multiple Boundaries"
-msgstr "Limites/zones multiples"
+msgstr "Barrières/zones multiples"
 
 #: src/ODEventHandler.cpp:1222
 msgid "Merge and Keep Boundaries"
-msgstr "Assembler et garder les limites/zones"
+msgstr "Assembler et garder les barrières/zones"
 
 #: src/ODEventHandler.cpp:1223
 msgid "Merge and Delete Boundaries"
-msgstr "Assembler et supprimer les limites/zones"
+msgstr "Assembler et supprimer les barrière/zones"
 
 #: src/ODEventHandler.cpp:1230 src/ODPropertiesDialogDef.cpp:1188
 #: src/ODToolbarImpl.cpp:548
@@ -679,11 +679,11 @@ msgstr "Erreur lors de l'importation du fichier."
 
 #: src/ODNavObjectChanges.cpp:2072 src/ODNavObjectChanges.cpp:2165
 msgid "Boundary '"
-msgstr "Limite/Zone '"
+msgstr "Barrière/Zone '"
 
 #: src/ODNavObjectChanges.cpp:2075
 msgid "will be deleted. No further boundaries will be imported"
-msgstr "sera supprimé. Aucune autre limite/zone ne sera importée"
+msgstr "sera supprimé. Aucune autre barrière/zone ne sera importée"
 
 #: src/ODNavObjectChanges.cpp:2077 src/ODNavObjectChanges.cpp:2170
 msgid "Import Error"
@@ -873,7 +873,7 @@ msgstr "Intensité du remplissage"
 #: src/ODPathPropertiesDialogDef.cpp:144
 msgid "Inclusion Boundary\n"
 "Size"
-msgstr "Taille zone extérieure de la limite/zone"
+msgstr "Taille zone extérieure de la barrière/zone"
 
 #: src/ODPathPropertiesDialogDef.cpp:156 src/ODPointPropertiesDialog.cpp:135
 #: src/ODPropertiesDialogDef.cpp:201 src/ODPropertiesDialogDef.cpp:270
@@ -1856,7 +1856,7 @@ msgstr "Au sujet de"
 
 #: src/ODPropertiesDialogDef.cpp:1386
 msgid "This chart shows the interactions between Boundaries and WatchDog alam boundaries"
-msgstr "Ce tableau montre les interaction entre les \"Limites/Zones\" et les alarmes du Chien de garde"
+msgstr "Ce tableau montre les interaction entre les \"Barrière/Zone et les alarmes du Chien de garde"
 
 #: src/ODPropertiesDialogDef.cpp:1402
 msgid "WD"
@@ -2246,7 +2246,7 @@ msgstr "Gestionnaire du traceur OD"
 
 #: src/ocpn_draw_pi.cpp:566 src/ocpn_draw_pi.cpp:571
 msgid "OCPN Draw Boundary"
-msgstr "Limite/Zone"
+msgstr "Barrière/Zone"
 
 #: src/ocpn_draw_pi.cpp:567 src/ocpn_draw_pi.cpp:572
 msgid "OCPN Draw"
@@ -2292,7 +2292,7 @@ msgstr "Utiliser le point du traceur, proche ?"
 
 #: src/ocpn_draw_pi.cpp:3872 src/ocpn_draw_pi.cpp:3925
 msgid "OCPN Draw Boundary Create"
-msgstr "Créer une limite/zone"
+msgstr "Créer une barrière/zone"
 
 #: src/ocpn_draw_pi.cpp:3919
 msgid "For this leg the Great Circle boundary is "
@@ -2304,7 +2304,7 @@ msgstr " plus court que la loxodromie.\n\n"
 
 #: src/ocpn_draw_pi.cpp:3921
 msgid "Would you like include the Great Circle boundary points for this leg?"
-msgstr "Voulez vous utiliser la limite orthodromique et inclure ses bornes pour ce segment ?"
+msgstr "Voulez vous utiliser la barrière orthodromique et inclure ses bornes pour ce segment ?"
 
 #: src/ocpn_draw_pi.cpp:4096
 msgid "GZ"
