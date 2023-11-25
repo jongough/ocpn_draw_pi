@@ -139,7 +139,7 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         virtual ~PathAndPointManagerDialogImpl();
         
         void SetColorScheme( void );
-        void UpdatePathListCtrl( void );     // Rebuild path list
+        void UpdatePathListCtrl( bool b_retain_selection = true );     // Rebuild path list
         void UpdateODPointsListCtrl(ODPoint *rp_select = NULL, bool b_retain_sort = false);
         void UpdateLayerListCtrl( void );
         void UpdateODPointListCtrlViz( void );
