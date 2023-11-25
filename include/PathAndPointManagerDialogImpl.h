@@ -83,6 +83,8 @@ class PathAndPointManagerDialogImpl : public PathAndPointManagerDialogDef
         int m_CharWidth;
         int m_CharHeight;
 
+        wxSize m_szDialogSize;
+
         wxFont *m_dialogLabelFont;
 
         wxWindow *m_parent_window;
