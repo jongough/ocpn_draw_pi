@@ -1428,7 +1428,7 @@ void ODEventHandler::ShowPathPropertiesDialog ( ODPath *inpath )
         if( NULL == g_pBoundaryPropDialog )          // There is one global instance of the BoundaryProp Dialog
             g_pBoundaryPropDialog = new BoundaryProp( m_parent_window );
         g_pODPathPropDialog = g_pBoundaryPropDialog;
-        l_pBoundary = (Boundary *) inpath;
+        l_pBoundary = reinterpret_cast<Boundary *>( inpath );
         l_pPath = l_pBoundary;
         g_pBoundaryPropDialog->SetPath( l_pBoundary );
         g_pBoundaryPropDialog->UpdateProperties( l_pBoundary );
@@ -1445,7 +1445,7 @@ void ODEventHandler::ShowPathPropertiesDialog ( ODPath *inpath )
         if( NULL == g_pEBLPropDialog )          // There is one global instance of the ELBProp Dialog
             g_pEBLPropDialog = new EBLProp( m_parent_window );
         g_pODPathPropDialog = g_pEBLPropDialog;
-        l_pEBL = (EBL *) inpath;
+        l_pEBL = reinterpret_cast<EBL *>( inpath );
         l_pPath = l_pEBL;
         g_pEBLPropDialog->SetPath( l_pEBL );
         g_pEBLPropDialog->UpdateProperties( l_pEBL );
@@ -1462,7 +1462,7 @@ void ODEventHandler::ShowPathPropertiesDialog ( ODPath *inpath )
         if( NULL == g_pDRPropDialog )          // There is one global instance of the DRProp Dialog
             g_pDRPropDialog = new DRProp( m_parent_window );
         g_pODPathPropDialog = g_pDRPropDialog;
-        l_pDR = (DR *) inpath;
+        l_pDR = reinterpret_cast<DR *>( inpath );
         l_pPath = l_pDR;
         g_pDRPropDialog->SetPath( l_pDR );
         g_pDRPropDialog->UpdateProperties( l_pDR );
@@ -1479,7 +1479,7 @@ void ODEventHandler::ShowPathPropertiesDialog ( ODPath *inpath )
         if( NULL == g_pGZPropDialog )          // There is one global instance of the GZProp Dialog
             g_pGZPropDialog = new GZProp( m_parent_window );
         g_pODPathPropDialog = g_pGZPropDialog;
-        l_pGZ = (GZ *) inpath;
+        l_pGZ = reinterpret_cast<GZ *>( inpath );
         l_pPath = l_pGZ;
         g_pGZPropDialog->SetPath( l_pGZ );
         g_pGZPropDialog->UpdateProperties( l_pGZ );
@@ -1496,7 +1496,7 @@ void ODEventHandler::ShowPathPropertiesDialog ( ODPath *inpath )
         if( NULL == g_pPILPropDialog )          // There is one global instance of the PILProp Dialog
             g_pPILPropDialog = new PILProp( m_parent_window );
         g_pODPathPropDialog = g_pPILPropDialog;
-        l_pPIL = (PIL *) inpath;
+        l_pPIL = reinterpret_cast<PIL *>( inpath );
         l_pPath = l_pPIL;
         g_pPILPropDialog->SetPath( l_pPIL );
         g_pPILPropDialog->UpdateProperties( l_pPIL );

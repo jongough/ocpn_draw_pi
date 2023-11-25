@@ -137,18 +137,18 @@ int wxCALLBACK SortPathOnVis(long item1, long item2, long list)
 #endif
 {
     bool it1, it2;
-    it1 = ((ODPath *)item1)->IsVisible();
-    it2 = ((ODPath *)item2)->IsVisible();
+    it1 = (reinterpret_cast<ODPath *>(item1))->IsVisible();
+    it2 = (reinterpret_cast<ODPath *>(item2))->IsVisible();
 
     if(it2 == it1)
         return 0;
     if(sort_path_on_vis & 1)
-        if(it2 > it1)
+        if(it2 && !it1)
             return 1;
         else
             return -1;
     else
-        if(it2 < it1)
+        if(!it2 && it1)
             return 1;
         else
             return -1;
@@ -163,8 +163,8 @@ int wxCALLBACK SortPathOnName(long item1, long item2, long list)
 #endif
 {
     wxString it1, it2;
-    it1 = ((ODPath *)item1)->GetName();
-    it2 = ((ODPath *)item2)->GetName();
+    it1 = (reinterpret_cast<ODPath *>(item1))->GetName();
+    it2 = (reinterpret_cast<ODPath *>(item2))->GetName();
     if(sort_path_name_dir & 1)
         return it2.CmpNoCase(it1);
     else
@@ -180,8 +180,8 @@ int wxCALLBACK SortPathOnDesc(long item1, long item2, long list)
 #endif
 {
     wxString it1, it2;
-    it1 = ((ODPath *)item1)->GetDescription();
-    it2 = ((ODPath *)item2)->GetDescription();
+    it1 = (reinterpret_cast<ODPath *>(item1))->GetDescription();
+    it2 = (reinterpret_cast<ODPath *>(item2))->GetDescription();
     if(sort_path_desc_dir & 1)
         return it2.CmpNoCase(it1);
     else
@@ -199,8 +199,8 @@ int wxCALLBACK SortODPointsOnVis(long item1, long item2, long list)
 #endif
 {
     wxString it1, it2;
-    it1 = ((ODPoint *)item1)->GetIconName();
-    it2 = ((ODPoint *)item2)->GetIconName();
+    it1 = (reinterpret_cast<ODPoint *>(item1))->GetIconName();
+    it2 = (reinterpret_cast<ODPoint *>(item2))->GetIconName();
 
     if(it1 == it2) return 0;
     if(sort_ODPoint_on_vis & 1) {
@@ -320,8 +320,8 @@ int wxCALLBACK SortLayersOnName(long item1, long item2, long list)
 #endif
 {
     wxString it1, it2;
-    it1 = ((ODLayer *)item1)->GetName();
-    it2 = ((ODLayer *)item2)->GetName();
+    it1 = (reinterpret_cast<ODLayer *>(item1))->GetName();
+    it2 = (reinterpret_cast<ODLayer *>(item2))->GetName();
     if(sort_layer_name_dir & 1)
         return it2.CmpNoCase(it1);
     else
@@ -337,8 +337,8 @@ int wxCALLBACK SortLayersOnSize(long item1, long item2, long list)
 #endif
 {
     long it1, it2;
-    it1 = ((ODLayer *)item1)->GetNoOfItems();
-    it2 = ((ODLayer *)item2)->GetNoOfItems();
+    it1 = (reinterpret_cast<ODLayer *>(item1))->GetNoOfItems();
+    it2 = (reinterpret_cast<ODLayer *>(item2))->GetNoOfItems();
 
     if(it1 == it2) return 0;
     if(sort_layer_len_dir & 1)
@@ -503,7 +503,7 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
         if ( item == -1 )
             break;
 
-        ODPath *ppath_to_delete = (ODPath *) m_listCtrlPath->GetItemData( item );
+        ODPath *ppath_to_delete = reinterpret_cast<ODPath *>(m_listCtrlPath->GetItemData( item ));
 
         if( ppath_to_delete )
             list.Append( ppath_to_delete );
@@ -520,7 +520,7 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick( wxCommandEvent &event )
         }
 
         m_lastPathItem = -1;
-        UpdatePathListCtrl();
+        UpdatePathListCtrl( false );
         if( g_pODPointPropDialog && g_pODPointPropDialog->IsShown() ) {
             g_pODPointPropDialog->ValidateMark();
         }
@@ -541,7 +541,7 @@ void PathAndPointManagerDialogImpl::OnPathDeleteAllClick( wxCommandEvent &event 
         g_pPathMan->DeleteAllPaths();
 
         m_lastPathItem = -1;
-        UpdatePathListCtrl();
+        UpdatePathListCtrl( false );
 
         if( g_pODPathPropDialog ) g_pODPathPropDialog->Hide();
 
@@ -561,7 +561,7 @@ void PathAndPointManagerDialogImpl::OnPathPropertiesClick( wxCommandEvent &event
     item = m_listCtrlPath->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODPath *path = (ODPath *)m_listCtrlPath->GetItemData( item );
+    ODPath *path = reinterpret_cast<ODPath *>(m_listCtrlPath->GetItemData( item ));
 
     if( !path ) return;
 
@@ -756,7 +756,7 @@ void PathAndPointManagerDialogImpl::OnPathExportSelectedClick( wxCommandEvent &e
         if ( item == -1 )
             break;
 
-        ODPath *ppath_to_export = (ODPath *) m_listCtrlPath->GetItemData( item );
+        ODPath *ppath_to_export = reinterpret_cast<ODPath *>(m_listCtrlPath->GetItemData( item ));
         if( ppath_to_export ) {
             list.Append( ppath_to_export );
             if( ppath_to_export->m_PathNameString != wxEmptyString )
@@ -771,33 +771,55 @@ void PathAndPointManagerDialogImpl::OnPathActivateClick( wxCommandEvent &event )
 {
     // Activate the selected path, unless it already is
     long item = -1;
-    item = m_listCtrlPath->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
-    if( item == -1 ) return;
 
     if( m_bCtrlDown ) MakeAllPathsInvisible();
+    int select_count = m_listCtrlPath->GetSelectedItemCount();
 
-    ODPath *ppath = (ODPath *) m_listCtrlPath->GetItemData( item );
+    int item_num = 1;
+    bool b_activate_paths = true;
+    ODPath *ppath;
+    for ( ;; ++item_num )
+    {
+        item = m_listCtrlPath->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+        if ( item == -1 )
+            break;
 
-    if( !ppath ) return;
+        ppath = (ODPath *) m_listCtrlPath->GetItemData( item );
 
-    if( !ppath->m_bPathIsActive ) {
-        if( !ppath->IsVisible() ) {
-            ppath->SetVisible( true );
-            m_listCtrlPath->SetItemImage( item, 0, 0 );
+        if( !ppath ) continue;
+
+        if(item_num == 1) {
+            if( !ppath->m_bPathIsActive ) {
+                m_buttonPathActivate->SetLabel( _T("&Deactivate") );
+                b_activate_paths = true;
+            }
+            else {
+                m_buttonPathActivate->SetLabel( _T("&Activate") );
+                b_activate_paths = false;
+            }
+
         }
 
-        ZoomtoPath( ppath );
+        if( select_count == 1 ) {
+            if( !ppath->IsVisible() ) {
+                ppath->SetVisible( true );
+                m_listCtrlPath->SetItemImage( item, 0, 0 );
+            }
+            if ( !ppath->m_bPathIsActive )
+                ZoomtoPath( ppath );
+        }
 
-        g_pPathMan->ActivatePath( (ODPath *) ppath );
-        m_buttonPathActivate->SetLabel( _T("&Deactivate") );
-    } else {
-        g_pPathMan->DeactivatePath( ppath );
-        m_buttonPathActivate->SetLabel( _T("&Activate") );
+        if( b_activate_paths )
+            g_pPathMan->ActivatePath( (ODPath *) ppath );
+        else
+            g_pPathMan->DeactivatePath( (ODPath *) ppath );
+
+        g_pODConfig->UpdatePath( ppath );
+
     }
 
     UpdatePathListCtrl();
 
-    g_pODConfig->UpdatePath( ppath );
     m_bCtrlDown = false;
 
     RequestRefresh( GetOCPNCanvasWindow() );
@@ -932,13 +954,26 @@ void PathAndPointManagerDialogImpl::SetColorScheme()
     DimeWindow( this );
 }
 
-void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
+void PathAndPointManagerDialogImpl::UpdatePathListCtrl( bool b_retain_selection )
 {
     // if an item was selected, make it selected again if it still exist
     long item = -1;
-    item = m_listCtrlPath->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+    int i_itemcount = m_listCtrlPath->GetSelectedItemCount();
+    long *l_selection = new long[i_itemcount];
+    if( b_retain_selection && i_itemcount > 0 ) {
+        item = m_listCtrlPath->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+        int i_element = 0;
+        for( ;; ++i_element ){
+            l_selection[i_element] = item;
+            item = m_listCtrlPath->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
+            if( item == -1 ) {
+                item = 0;
+                break;
+            }
+        }
+    }
     long selected_id = -1;
-    if( item != -1 ) selected_id = m_listCtrlPath->GetItemData( item );
+    if( item != -1 ) selected_id = l_selection[0];
 
     // Delete existing items
     if( !m_listCtrlPath->DeleteAllItems() ) return;
@@ -983,8 +1018,10 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
     // NOTE this will select a different item, if one is deleted
     // (the next path will get that index).
     if( selected_id > -1 ) {
-        item = m_listCtrlPath->FindItem( -1, selected_id );
-        m_listCtrlPath->SetItemState( item, wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
+        for( int i = 0; i < i_itemcount; ++i ) {
+            item = m_listCtrlPath->FindItem( -1, l_selection[i] );
+            m_listCtrlPath->SetItemState( l_selection[i], wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
+        }
     }
 
     if( (m_lastPathItem >= 0) && (m_listCtrlPath->GetItemCount()) )
@@ -1002,6 +1039,7 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl()
     m_bSizerPathButtons->Layout();
     SetSizerAndFit(m_bSizerDialog);
 
+    delete [] l_selection;
 
 }
 
@@ -1026,15 +1064,18 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons()
     m_buttonPathCenterView->Enable( enable1 );
     m_buttonPathProperties->Enable( enable1 );
     m_buttonPathDeleteAll->Enable( true );
-    if( enable1 || enablemultiple )
+    if( enable1 || enablemultiple ) {
         m_buttonPathExportSelected->Enable( true );
-    else
+    }
+    else {
+        m_buttonPathActivate->Enable( false );
         m_buttonPathExportSelected->Enable( false );
+    }
 
     // activate button text
     ODPath *path = NULL;
-    if( enable1 ) {
-        path = (ODPath *)m_listCtrlPath->GetItemData( selected_index_index );
+    if( enable1 || enablemultiple ) {
+        path = reinterpret_cast<ODPath *>(m_listCtrlPath->GetItemData( selected_index_index ));
         if ( path ) {
             m_buttonPathActivate->Enable( true );
             if ( path->IsActive() ) m_buttonPathActivate->SetLabel( _("&Deactivate") );
@@ -1591,7 +1632,7 @@ void PathAndPointManagerDialogImpl::UpdateLayerButtons()
 
     if( item >= 0 ) {
         ODLayer *layer;
-        layer = (ODLayer *)m_listCtrlLayers->GetItemData(item);
+        layer = reinterpret_cast<ODLayer *>(m_listCtrlLayers->GetItemData(item));
         if( layer->IsVisible() )
             m_buttonLayerShowOnChart->SetLabel( _("Hide from chart") );
         else
@@ -1883,7 +1924,7 @@ void PathAndPointManagerDialogImpl::OnLayerListContentsClick( wxCommandEvent &ev
     item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODLayer *layer = ( ODLayer * )m_listCtrlLayers->GetItemData( item );
+    ODLayer *layer = reinterpret_cast<ODLayer *>(m_listCtrlLayers->GetItemData( item ));
 
     if( !layer ) return;
 
