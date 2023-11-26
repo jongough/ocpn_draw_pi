@@ -143,12 +143,12 @@ int wxCALLBACK SortPathOnVis(long item1, long item2, long list)
     if(it2 == it1)
         return 0;
     if(sort_path_on_vis & 1)
-        if(it2 && !it1)
+        if(it2 == true && it1 == false)
             return 1;
         else
             return -1;
     else
-        if(!it2 && it1)
+        if(it2 == false && it1 == true)
             return 1;
         else
             return -1;
@@ -412,6 +412,7 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent)
     UpdateLayerListCtrl();
 
     RecalculateSize();
+    m_szDialogSize = GetSize();
 
     this-Layout();
 
@@ -777,14 +778,13 @@ void PathAndPointManagerDialogImpl::OnPathActivateClick( wxCommandEvent &event )
 
     int item_num = 1;
     bool b_activate_paths = true;
-    ODPath *ppath;
     for ( ;; ++item_num )
     {
         item = m_listCtrlPath->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
         if ( item == -1 )
             break;
 
-        ppath = (ODPath *) m_listCtrlPath->GetItemData( item );
+        ODPath *ppath = reinterpret_cast<ODPath *>(m_listCtrlPath->GetItemData( item ));
 
         if( !ppath ) continue;
 
@@ -810,9 +810,9 @@ void PathAndPointManagerDialogImpl::OnPathActivateClick( wxCommandEvent &event )
         }
 
         if( b_activate_paths )
-            g_pPathMan->ActivatePath( (ODPath *) ppath );
+            g_pPathMan->ActivatePath( ppath );
         else
-            g_pPathMan->DeactivatePath( (ODPath *) ppath );
+            g_pPathMan->DeactivatePath( ppath );
 
         g_pODConfig->UpdatePath( ppath );
 
@@ -1019,7 +1019,6 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl( bool b_retain_selection 
     // (the next path will get that index).
     if( selected_id > -1 ) {
         for( int i = 0; i < i_itemcount; ++i ) {
-            item = m_listCtrlPath->FindItem( -1, l_selection[i] );
             m_listCtrlPath->SetItemState( l_selection[i], wxLIST_STATE_SELECTED, wxLIST_STATE_SELECTED );
         }
     }
@@ -1037,7 +1036,8 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl( bool b_retain_selection 
     }
 
     m_bSizerPathButtons->Layout();
-    SetSizerAndFit(m_bSizerDialog);
+    if( m_szDialogSize == GetSize())
+        SetSizerAndFit(m_bSizerDialog);
 
     delete [] l_selection;
 
