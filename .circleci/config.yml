@@ -33,8 +33,9 @@ workflows:
              <<: *std-filters
         - build-android-armhf:
              <<: *std-filters
-        - build-macos-wx32:
-             <<: *std-filters
+# Duplicate  macos-universal covers this.
+#        - build-macos-wx32:
+#             <<: *std-filters
         - build-flatpak-arm64-2208:
             <<: *std-filters
         - build-flatpak-x86-2208:
@@ -58,9 +59,13 @@ workflows:
 ## KEEP needed for Jammy with wx32
         - build-ubuntu-x86_64-2204-jammy:
             <<: *std-filters
+        - build-macos-universal:
+              <<: *std-filters
+
 ## -------------------------------------------
 ## OpenCPN 5.6.2 Plugins  Frozen - 28/05/2023
 ## ------------------------------------------
+## Circleci will not build for macos 11 so removed - 18/10/2023
         - build-macos:
              <<: *std-filters
 ## Appveyor no longer builds for Windows.
@@ -74,6 +79,7 @@ workflows:
             <<: *std-filters
         - build-debian-x86_64-10-buster:
             <<: *std-filters
+
 ## -------------------------------------
 ## UBUNTU OS  Frozen - 28/05/2023  DROP
 ## -------------------------------------
@@ -109,7 +115,7 @@ commands:
                     condition: <<parameters.install-python>>
                     steps:
                     - run: sudo apt install -y python3-pip
-                    - run: python3.8 -m pip install cloudsmith-cli
+                    - run: python3 -m pip install cloudsmith-cli
                 - when:
                     condition: <<parameters.DEPLOY-USE-ORB>>
                     steps:
@@ -129,7 +135,7 @@ jobs:
 ## ---------------------
     build-android-arm64:
         docker:
-        - image: cimg/android:2021.10.2-ndk
+        - image: cimg/android:2023.12-ndk
         resource_class: large
         environment:
         - OCPN_TARGET:  android-arm64
@@ -142,10 +148,11 @@ jobs:
             install-python: true
     build-android-armhf:
         docker:
-        - image: cimg/android:2021.10.2-ndk
+        - image: cimg/android:2023.12-ndk
         resource_class: large
         environment:
         - OCPN_TARGET:  android-armhf
+        - DEPLOY_USE_ORB: true
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -165,6 +172,36 @@ jobs:
         - run: chmod a+x ci/*.sh
         - run: bash ci/circleci-build-macos.sh
         - deploy-code
+
+    build-macos-universal:
+        macos:
+            xcode: "12.5.1"
+        environment:
+            - OCPN_TARGET: macos
+            - CMAKE_BUILD_PARALLEL_LEVEL: 2
+            - WX_VER: 32
+        steps:
+            - checkout
+            - run: sudo chmod go+w /usr/local
+            - restore_cache:
+                  key: "{{checksum \"build-deps/macos-cache-stamp\"}}\
+              -{{checksum \"cmake/MacosWxwidgets.cmake\"}}\
+              -{{checksum \"ci/circleci-build-macos-universal.sh\"}}"
+            - run: chmod a+x ci/*.sh
+            - run: ci/circleci-build-macos-universal.sh
+            - save_cache:
+                  key: "{{checksum \"build-deps/macos-cache-stamp\"}}\
+              -{{checksum \"cmake/MacosWxwidgets.cmake\"}}\
+              -{{checksum \"ci/circleci-build-macos-universal.sh\"}}"
+                  paths:
+                      - /tmp/local.cache.tar
+                      - /Users/distiller/project/cache
+            - run: >
+                  sh -c "otool -L build/*.dylib"
+            - run: >
+                  sh -c "cat build/*.xml"
+            - deploy-code
+
     build-msvc-wx32-2022:
         executor:
             name: win/server-2022
