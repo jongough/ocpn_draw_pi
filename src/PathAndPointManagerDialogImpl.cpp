@@ -1036,8 +1036,7 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl( bool b_retain_selection 
     }
 
     m_bSizerPathButtons->Layout();
-    if( m_szDialogSize == GetSize())
-        SetSizerAndFit(m_bSizerDialog);
+    SetSizerAndFit(m_bSizerDialog);
 
     delete [] l_selection;
 
@@ -1721,7 +1720,7 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick( wxCommandEvent &event )
 
     item = m_listCtrlLayers->GetNextItem( -1, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     while(item != -1) {
-        ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+        ODLayer *layer = reinterpret_cast<ODLayer *>(m_listCtrlLayers->GetItemData( item ));
 
         if( layer ) {
             if(g_bConfirmObjectDelete) {
@@ -1799,7 +1798,7 @@ void PathAndPointManagerDialogImpl::SelectedLayerToggleVisibility( bool visible 
         if ( item == -1 )
             break;
 
-        ODLayer *player = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+        ODLayer *player = reinterpret_cast<ODLayer *>(m_listCtrlLayers->GetItemData( item ));
 
         if( player ) {
             player->SetVisible(visible);
@@ -1824,7 +1823,7 @@ void PathAndPointManagerDialogImpl::OnLayerShowOnChartClick( wxCommandEvent &eve
     item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODLayer *player = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    ODLayer *player = reinterpret_cast<ODLayer *>(m_listCtrlLayers->GetItemData( item ));
 
     if( !player ) return;
 
@@ -1874,7 +1873,7 @@ void PathAndPointManagerDialogImpl::OnLayerShowPointNamesClick( wxCommandEvent &
     item = m_listCtrlLayers->GetNextItem( item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED );
     if( item == -1 ) return;
 
-    ODLayer *layer = g_pLayerList->Item( m_listCtrlLayers->GetItemData( item ) )->GetData();
+    ODLayer *layer = reinterpret_cast<ODLayer *>(m_listCtrlLayers->GetItemData( item ));
 
     if( !layer ) return;
 
@@ -2067,6 +2066,7 @@ void PathAndPointManagerDialogImpl::OnOKClick(wxCommandEvent &event)
     g_ocpn_draw_pi->OnToolbarToolDownCallback(g_ocpn_draw_pi->m_config_button_id);
     DeSelectODPoints();
     DeSelectPaths();
+    m_szDialogSize = GetSize();
 }
 
 void PathAndPointManagerDialogImpl::OnClose(wxCloseEvent &event)
