@@ -187,6 +187,7 @@ jobs:
                   key: "{{checksum \"build-deps/macos-cache-stamp\"}}\
               -{{checksum \"cmake/MacosWxwidgets.cmake\"}}\
               -{{checksum \"ci/circleci-build-macos-universal.sh\"}}"
+            - run: chmod a+x ci/*.sh
             - run: ci/circleci-build-macos-universal.sh
             - save_cache:
                   key: "{{checksum \"build-deps/macos-cache-stamp\"}}\
