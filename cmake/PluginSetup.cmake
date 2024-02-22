@@ -242,16 +242,27 @@ if(NOT WIN32 AND NOT QT_ANDROID)
 
 else(NOT WIN32 AND NOT QT_ANDROID)
     set(ARCH "x86_64")
-    if(_wx_selected_config MATCHES "androideabi-qt-arm64")
-        set(ARCH "arm64")
-        # android cannot used graphics context is wxWidgets as it does not exist
-        set(wxUSE_GRAPHICS_CONTEXT 0)
-    endif(_wx_selected_config MATCHES "androideabi-qt-arm64")
-    if(_wx_selected_config MATCHES "androideabi-qt-armhf")
-        set(ARCH "armhf")
-        # android cannot used graphics context is wxWidgets as it does not exist
-        set(wxUSE_GRAPHICS_CONTEXT 0)
-    endif(_wx_selected_config MATCHES "androideabi-qt-armhf")
+    if(MSVC)
+        string(TOLOWER "${CMAKE_VS_PLATFORM_NAME}" platform_name)
+        if(platform_name MATCHES "x64")
+            set(ARCH "x86_64")
+        elseif(platform_name MATCHES "arm64")
+            set(ARCH "arm64")
+        else()
+            set(ARCH "x86")
+        endif()
+    else()
+        if(_wx_selected_config MATCHES "androideabi-qt-arm64")
+            set(ARCH "arm64")
+            # android cannot used graphics context is wxWidgets as it does not exist
+            set(wxUSE_GRAPHICS_CONTEXT 0)
+        endif(_wx_selected_config MATCHES "androideabi-qt-arm64")
+        if(_wx_selected_config MATCHES "androideabi-qt-armhf")
+            set(ARCH "armhf")
+            # android cannot used graphics context is wxWidgets as it does not exist
+            set(wxUSE_GRAPHICS_CONTEXT 0)
+        endif(_wx_selected_config MATCHES "androideabi-qt-armhf")
+    endif()
 endif(NOT WIN32 AND NOT QT_ANDROID)
 
 
