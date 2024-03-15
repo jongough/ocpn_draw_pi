@@ -189,11 +189,7 @@ if("${PKG_BUILD_TARGET}" STREQUAL "")
 endif()
 
 if(NOT WIN32 AND NOT APPLE AND NOT QT_ANDROID)
-    if(NOT "$ENV{BUILD_GTK3}" STREQUAL "TRUE")
-        find_package(GTK2 QUIET)
-    else()
-        set(GTK2_FOUND "FALSE")
-    endif()
+    find_package(GTK2)
 
     if(GTK2_FOUND AND NOT "$ENV{BUILD_GTK3}" STREQUAL "TRUE")
         set(wxWidgets_CONFIG_OPTIONS ${wxWidgets_CONFIG_OPTIONS} --toolkit=gtk2)
