@@ -66,7 +66,11 @@ ODRolloverWin::~ODRolloverWin()
 {
     m_timer_timeout.Stop();
     delete m_pbm;
-    glDeleteTextures(1, &m_texture);
+#ifdef ocpnUSE_GL
+    if (g_bOpenGL) {
+        glDeleteTextures(1, &m_texture);
+    }
+#endif
 }
 void ODRolloverWin::OnTimer( wxTimerEvent& event )
 {
