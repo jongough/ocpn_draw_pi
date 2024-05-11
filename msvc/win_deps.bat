@@ -49,7 +49,7 @@ if errorlevel 1 (
 ::
 set "POEDIT_HOME=C:\Program Files (x86)\Poedit\Gettexttools"
 if not exist "%POEDIT_HOME%" choco install -y poedit
-::pathman add "%POEDIT_HOME%\bin" > nul
+pathman add "%POEDIT_HOME%\bin" > nul
 
 :: Update required python stuff
 ::
