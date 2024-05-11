@@ -80,7 +80,7 @@ if "%~1"=="wx32" (
 
 if not exist %SCRIPTDIR%\..\cache ( mkdir %SCRIPTDIR%\..\cache )
 set "CONFIG_FILE=%SCRIPTDIR%\..\cache\wx-config.bat"
-echo set "PATH=%POEDIT_HOME%\bin;%PATH%" > %CONFIG_FILE%
+echo set "EXTRA_PATH=%POEDIT_HOME%\bin;%CMAKE_HOME%\bin" > %CONFIG_FILE%
 echo set "wxWidgets_ROOT_DIR=%wxWidgets_ROOT_DIR%" >> %CONFIG_FILE%
 echo set "wxWidgets_LIB_DIR=%wxWidgets_LIB_DIR%" >> %CONFIG_FILE%
 echo set "TARGET_TUPLE=%TARGET_TUPLE%" >> %CONFIG_FILE%

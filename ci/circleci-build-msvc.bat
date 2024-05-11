@@ -18,6 +18,8 @@ dir %SCRIPTDIR%..\msvc
 call %SCRIPTDIR%..\msvc\win_deps.bat %wx_vers%
 path %SCRIPTDIR%.local\bin;%PATH%;"C:\Program Files\CMake\bin"
 call "%SCRIPTDIR%..\cache\wx-config.bat"
+set PATH=%EXTRA_PATH%;%PATH%
+echo EXTRA_PATH: %EXTRA_PATH%
 echo USING wxWidgets_LIB_DIR: %wxWidgets_LIB_DIR%
 echo USING wxWidgets_ROOT_DIR: %wxWidgets_ROOT_DIR%
 echo USING OCPN_TARGET_TUPLE: %TARGET_TUPLE%
