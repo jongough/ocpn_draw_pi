@@ -45,20 +45,10 @@ if errorlevel 1 (
 ::  echo Adding !CMAKE_HOME!\bin to path
 )
 
-if not exist "%HomeDrive%%HomePath%\.local\bin\pathman.exe" (
-    pushd "%HomeDrive%%HomePath%"
-    curl.exe -sA "MS" https://webinstall.dev/pathman | powershell
-    popd
-)
-pathman list > nul 2>&1
-if errorlevel 1 set PATH=%PATH%;%HomeDrive%\%HomePath%\.local\bin
-pathman add %HomeDrive%%HomePath%\.local\bin >nul
-
 :: Install choco poedit and add it's persistent user path element
 ::
 set "POEDIT_HOME=C:\Program Files (x86)\Poedit\GettextTools"
 if not exist "%POEDIT_HOME%" (choco install -y poedit)
-pathman add "%POEDIT_HOME%\bin" > nul
 dir "%POEDIT_HOME%"
 
 :: Update required python stuff
@@ -90,7 +80,8 @@ if "%~1"=="wx32" (
 
 if not exist %SCRIPTDIR%\..\cache ( mkdir %SCRIPTDIR%\..\cache )
 set "CONFIG_FILE=%SCRIPTDIR%\..\cache\wx-config.bat"
-echo set "wxWidgets_ROOT_DIR=%wxWidgets_ROOT_DIR%" > %CONFIG_FILE%
+echo set "PATH=%POEDIT_HOME%\bin;%PATH%" > %CONFIG_FILE%
+echo set "wxWidgets_ROOT_DIR=%wxWidgets_ROOT_DIR%" >> %CONFIG_FILE%
 echo set "wxWidgets_LIB_DIR=%wxWidgets_LIB_DIR%" >> %CONFIG_FILE%
 echo set "TARGET_TUPLE=%TARGET_TUPLE%" >> %CONFIG_FILE%
 
@@ -115,5 +106,5 @@ if not exist "%WXWIN%" (
   )
 )
 dir cache
-type cache\wx-config.bat
+type "%CONFIG_FILE%"
 refreshenv
