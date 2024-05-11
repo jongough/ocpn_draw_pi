@@ -56,10 +56,10 @@ pathman add %HomeDrive%%HomePath%\.local\bin >nul
 
 :: Install choco poedit and add it's persistent user path element
 ::
-set POEDIT_HOME="C:\Program Files (x86)\Poedit\GettextTools"
-if not exist "C:\Program Files (x86)\Poedit\GettextTools" choco install -y poedit
-pathman add "C:\Program Files (x86)\Poedit\GettextTools\bin" > nul
-dir "C:\Program Files (x86)\Poedit\GettextTools"
+set "POEDIT_HOME=C:\Program Files (x86)\Poedit\GettextTools"
+if not exist "%POEDIT_HOME%" (choco install -y poedit)
+pathman add "%POEDIT_HOME%\bin" > nul
+dir "%POEDIT_HOME%"
 
 :: Update required python stuff
 ::
