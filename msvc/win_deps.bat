@@ -45,6 +45,15 @@ if errorlevel 1 (
 ::  echo Adding !CMAKE_HOME!\bin to path
 )
 
+if not exist "%HomeDrive%%HomePath%\.local\bin\pathman.exe" (
+    pushd "%HomeDrive%%HomePath%"
+    curl.exe -sA "MS" https://webinstall.dev/pathman | powershell
+    popd
+)
+pathman list > nul 2>&1
+if errorlevel 1 set PATH=%PATH%;%HomeDrive%\%HomePath%\.local\bin
+pathman add %HomeDrive%%HomePath%\.local\bin >nul
+
 :: Install choco poedit and add it's persistent user path element
 ::
 set "POEDIT_HOME=C:\Program Files (x86)\Poedit\Gettexttools"
