@@ -242,7 +242,7 @@ comment, 'B' is a Boundary, etc.
 Using this format in a spreadsheet will allow you to easily create
 multiple Draw objects and then import them when you have finished.
 
-=== Installation
+== Installation
 
 This version of the plugin requires at least version of OpenCPN 5.xx.yy.
 It is not compatible with any version before this. The reason is that
@@ -259,25 +259,31 @@ in the OpenCPN Toolbar, they will always appear together, but depending
 on the other plugins that are currently active may appear in different
 positions within the toolbar.
 
+=== OCPNToolbar icons
 image::od_toolbar_icons.png[image,width=44,height=71]
-OCPNToolbar icons
 
-The top icon is for the Draw Paths and Points Manger, the bottom icon is
-the Draw tool that was last used. It can be any of the tools from the
-Draw Toolbar below.
+The top icon is for the *Draw Paths and Points Manger*, the bottom icon is
+the Draw tool that was last used. This icon will change depening on the
+last tool used
 
-image::od_toolbar.png[image,width=239,height=69]
-Draw Toolbar
+==== Draw Manager (top icon)
 
-Depending on the settings you have chosen for Draw this toolbar may
-never be displayed, displayed whilst a drawing tool is in use or always
-displayed. There are 7 icons to choose between and each activates a
-different tool. The currently active tool icon will also show in the
-OCPN Toolbar when you are drawing. If you have finished drawing the last
-active tool is shown in the OCPN Toolbar for easy, quick, access to the
-last tool.
+The top Icon is for the *_Draw Manager_* which gives the user control
+over each of the _Drawing objects_ that have been created from the *Draw
+Toolbar*. Left click on the *_Drawing Manager_* menu and the Path & OD
+Point Manager dialog will be displayed. The *_Path & Point Manager_* has
+tabs for _Paths, OD Points and Layers_ from which selected Drawing
+Objects can be _Shown, Hidden, Deactivated, Centered, Deleted, Exported,
+Delete All, and Export All._ Additionally a drawing object's
+*_Properties_* can be accessed and changed. First select one or more
+*_Drawing Objects_* under a given *_Tab_* . Then select the desired
+*_Action_* on the right. For example: Select all *_Drawing Objects_*
+under *_Paths Tab_* , then select *_Delete_* . This will remove all of
+the *_Drawing Objects_* under *_Path Tab_* . Of course the quick
+alternative is to select *_Delete All_* . *_Properties, Deactivate and
+Center View_* are greyed out when more than one object is selected.
 
-=== Draw Create (bottom icon)
+==== Draw Create (bottom icon)
 
 The plugin has an interesting interface with two icons as shown above
 for *_Draw Manager_* and *_Draw Create_* . The bottom icon on the OCPN
@@ -290,13 +296,24 @@ containing *_Draw Tools_* , with the last one used selected by default
 points_, _EBL,_ DR, Guard Zone, and Parallel Index Line in that order.
 The Drawing Objects that are available are as follows:
 
-* Boundary
-* Boundary points
-* Text points
-* Electronic Bearing Lines (EBL) & Variable Range Marker (VRM)
-* Dead Reckoning
-* Guard Zone (GZ)
-* Parallel Index Line (PIL)
+* image:boundary_mui.png[] Boundary 
+* image:pointbutton_mui.png[] Boundary points
+* image:textpointbutton_mui.png[] Text points
+* image:ebl_mui.png[] Electronic Bearing Lines (EBL) & Variable Range Marker (VRM)
+* image:dr_mui.png[] Dead Reckoning
+* image:gz_mui.png[] Guard Zone (GZ)
+* image:pil_mui.png[] Parallel Index Line (PIL)
+
+=== Draw Toolbar
+image::od_toolbar.png[image,width=239,height=69]
+
+Depending on the settings you have chosen for Draw this toolbar may
+never be displayed, displayed whilst a drawing tool is in use or always
+displayed. There are 7 icons to choose between and each activates a
+different tool. The currently active tool icon will also show in the
+OCPN Toolbar when you are drawing. If you have finished drawing the last
+active tool is shown in the OCPN Toolbar for easy, quick, access to the
+last tool.
 
 Try drawing several of each type to learn how they work and what they
 create. You can select the next tool in sequence by right clicking the
@@ -325,26 +342,36 @@ information you have entered. The information that is first displayed is
 the default information entered into the properties panel or the current
 information available to OpenCPN, i.e. SOG and COG.
 
-image::od_toolbar_icons.png[]
+== Draw Manager image:ocpn_od_manager.png[]
 
-=== Draw Manager (top icon)
+Clicking on this icon will open the *Draw Manager* dialog box.
+This will allow you to interact with any of the Draw objects that have been drawn
+in the current session, including those that were loaded from the last
+OpenCPN session.
 
-The top Icon is for the *_Draw Manager_* which gives the user control
-over each of the _Drawing objects_ that have been created from the *Draw
-Toolbar*. Left click on the *_Drawing Manager_* menu and the Path & OD
-Point Manager dialog will be displayed. The *_Path & Point Manager_* has
-tabs for _Paths, OD Points and Layers_ from which selected Drawing
-Objects can be _Shown, Hidden, Deactivated, Centered, Deleted, Exported,
-Delete All, and Export All._ Additionally a drawing object's
-*_Properties_* can be accessed and changed. First select one or more
-*_Drawing Objects_* under a given *_Tab_* . Then select the desired
-*_Action_* on the right. For example: Select all *_Drawing Objects_*
-under *_Paths Tab_* , then select *_Delete_* . This will remove all of
-the *_Drawing Objects_* under *_Path Tab_* . Of course the quick
-alternative is to select *_Delete All_* . *_Properties, Deactivate and
-Center View_* are greyed out when more than one object is selected.
+image:od_manager.png[image,width=567,height=379]
 
-=== Drawing Manager > Layers
+There are three tabs, *Paths*, *OD Points* and *Layers*. *Paths* is the
+generic name for objects that have drawn lines, *OD Points* and the points
+on the display between which the lines are drawn and *Layers* are a waypoint
+of collecting Draw objects into groups that can be displayed or hidden by
+a single action.
+
+Eample pages:
+
+*Paths*
+
+image:od_manager_paths.png[image,width=566,height=378]
+
+*OD Points*
+
+image:od_manager_odpoints.png[image,width=566,height=378]
+
+*Layers*
+
+image:od_manager_layers.png[image,width=567,height=378]
+
+=== Layers
 
 Drawing Objects imported into Layers are static and non editable. Use
 Layers in the same way as the OCPN Route and Waypoint manager does, i.e.
@@ -394,7 +421,7 @@ the 'move' process is terminated. If you want to move the object again,
 you will have to right click again to get the popup and repeat the
 process.
 
-=== Edit Mode for Draw Object Properties
+=== Draw Object Properties
 
 There are multiple ways to access an object's *_Properties_* .
 
@@ -448,8 +475,7 @@ be taken.
 This section will describe in more detail the drawing tools that are
 available with this Plug In.
 
-=== Boundary
-image:boundary_mui.png[]
+=== Boundary image:boundary_mui.png[]
 
 This allows drawing of a closed path joining all points that of the
 path. The smallest Boundary has two points, but normal Boundaries will
@@ -500,8 +526,7 @@ Note: A Boundary is a line joining two or more Boundary Points together.
 As such, each Boundary Point can have the same capabilities as
 individual Boundary Points.
 
-=== Boundary Point
-image:pointbutton_mui.png[]
+=== Boundary Point image:pointbutton_mui.png[]
 
 This allows the placing of individual points on the chart. They are very
 similar to 'Marks' that can be dropped by OpenCPN. However, they have
@@ -530,8 +555,7 @@ Boundary Points continue to be placed on the chart until the drawing
 create mode is terminated. This allows the placing of as many points
 with single mouse left clicks as the user wishes.
 
-=== Text Point
-image:textpointbutton_mui.png[]
+=== Text Point image:textpointbutton_mui.png[]
 
 This allows the placing of individual Text Points on the chart. They
 appear very similar to Boundary Points, but they allow the displaying of
@@ -592,8 +616,7 @@ text and does not allow individual formatting of different parts of the
 text. You can pick the font and the font metrics to use for all the text
 associated with one text point.
 
-=== Electronic Bearing Line (EBL)
-image:ebl_mui.png[]
+=== Electronic Bearing Line (EBL) image:ebl_mui.png[]
 
 The EBL always starts attached to the boat with the far end of the line
 being placed by left clicking the chart. The default action for the end
@@ -669,8 +692,7 @@ plugin. If not you will, currently, need to set 'UserMagVariation=0.00'
 in the ocpn_draw_pi section of the config file as there is no setting in
 the properties dialog for this.
 
-=== Dead Reckoning (DR)
-image:dr_mui.png[]
+=== Dead Reckoning (DR) image:dr_mui.png[]
 
 This draws a Dead Reckoning line with multiple points along it starting
 at the boats current location. As mentioned above, this tool does not
@@ -683,8 +705,7 @@ neither the time/distance between points is maintained, nor is the
 COG/SOG. So the DR line at that point becomes more of a line with
 possibly little meaning in the context of DR.
 
-=== Guard Zone (GZ)
-image:gz_mui.png[]
+=== Guard Zone (GZ) image:gz_mui.png[]
 
 This draws a segment of a torus or doughnut. The centre is the boat and
 the angle and size is determined from the two points that are used to
@@ -702,8 +723,7 @@ the coarse over ground. Or it can maintain its position relative to the
 boat irrespective of which direction the boat is moving. This is set in
 the default propertiesd but can also be changed for each individual GZ.
 
-=== Parallel Index Line (PIL)
-image:pil_mui.png[]
+=== Parallel Index Line (PIL) image:pil_mui.png[]
 
 Annex to IMO res.A893(21)-Guidelines For Voyage Planning. Section 4-
 Appraisal
@@ -767,7 +787,7 @@ Plotting Part1 of 3]
 All objects that have been drawn have a properties dialog associated
 with them to allow changing of the objects attributes.
 
-=== Boundary Properties
+=== Boundary Properties 
 
 image::od_boundary_properties.png[]
 
