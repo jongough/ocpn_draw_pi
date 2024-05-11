@@ -31,7 +31,7 @@ setlocal enabledelayedexpansion
 
 if not exist %SCRIPTDIR%\..\cache ( mkdir %SCRIPTDIR%\..\cache )
 set "CONFIG_FILE=%SCRIPTDIR%\..\cache\wx-config.bat"
-set EXTRA_PATH=""
+set EXTRA_PATH=
 
 git --version > nul 2>&1
 if errorlevel 1 (
@@ -45,7 +45,7 @@ cmake --version > nul 2>&1
 if errorlevel 1 (
   set "CMAKE_HOME=C:\Program Files\CMake"
   choco install -y --no-progress cmake
-  set EXTRA_PATH=%CMAKE_HOME%\bin;%EXTRA_PATH%
+  set "EXTRA_PATH=%CMAKE_HOME%\bin;%EXTRA_PATH%"
 )
 
 :: Install choco poedit and add it's persistent user path element
@@ -53,7 +53,7 @@ if errorlevel 1 (
 set "POEDIT_HOME=C:\Program Files (x86)\Poedit\GettextTools"
 if not exist "%POEDIT_HOME%" (choco install -y poedit)
 dir "%POEDIT_HOME%"
-set EXTRA_PATH=%POEDIT_HOME%\bin;%EXTRA_PATH%
+set "EXTRA_PATH=%POEDIT_HOME%\bin;%EXTRA_PATH%"
 
 :: Update required python stuff
 ::
