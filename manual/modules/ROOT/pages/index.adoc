@@ -1,4 +1,4 @@
-= Ocpn_Draw 1.6
+= Ocpn_Draw 1.8
 
 Developer: Jon Gough
 
@@ -247,8 +247,10 @@ multiple Draw objects and then import them when you have finished.
 This version of the plugin requires at least version of OpenCPN 5.xx.yy.
 It is not compatible with any version before this. The reason is that
 the user interface changed with OCPN 5 and a new graphics library was
-used. +
-Download the plugin from the Plugin Downloads section of opencpn.org
+used.
+Download the plugin using OpenCPN Plugin Manager found in OpenCPN
+settings/Plugins.
+
 
 == Interface Icons
 
@@ -257,15 +259,15 @@ in the OpenCPN Toolbar, they will always appear together, but depending
 on the other plugins that are currently active may appear in different
 positions within the toolbar.
 
-image::od_toolbar_icons.png[image,width=44,height=71]OCPN
-Toolbar icons
+image::od_toolbar_icons.png[image,width=44,height=71]
+OCPNToolbar icons
 
 The top icon is for the Draw Paths and Points Manger, the bottom icon is
 the Draw tool that was last used. It can be any of the tools from the
 Draw Toolbar below.
 
-image::od_toolbar.png[image,width=239,height=69]Draw
-Toolbar
+image::od_toolbar.png[image,width=239,height=69]
+Draw Toolbar
 
 Depending on the settings you have chosen for Draw this toolbar may
 never be displayed, displayed whilst a drawing tool is in use or always
@@ -352,6 +354,12 @@ same layer, just select more than one file in the file manager popup and
 they will load into the same layer. To use Layers and move Drawing
 Objects into a temporary user created Layer, select them, Export
 Selected and then import then from the Layers tab Import.
+
+Layers can also be persistent meaning that the layer will be reloaded
+after a restart. By default persistent layers will not be shown,
+however, this behaviour can be changed by setting the *_Show Layers_*
+checkbox to a tick. Then all persistent layers will be shown over
+a restart.
 
 === Edit Mode for Draw Objects
 
@@ -441,8 +449,7 @@ This section will describe in more detail the drawing tools that are
 available with this Plug In.
 
 === Boundary
-
-image::boundary_mui.png[]
+image:boundary_mui.png[]
 
 This allows drawing of a closed path joining all points that of the
 path. The smallest Boundary has two points, but normal Boundaries will
@@ -494,8 +501,7 @@ As such, each Boundary Point can have the same capabilities as
 individual Boundary Points.
 
 === Boundary Point
-
-image::pointbutton_mui.png[]
+image:pointbutton_mui.png[]
 
 This allows the placing of individual points on the chart. They are very
 similar to 'Marks' that can be dropped by OpenCPN. However, they have
@@ -525,8 +531,7 @@ create mode is terminated. This allows the placing of as many points
 with single mouse left clicks as the user wishes.
 
 === Text Point
-
-image::textpointbutton_mui.png[]
+image:textpointbutton_mui.png[]
 
 This allows the placing of individual Text Points on the chart. They
 appear very similar to Boundary Points, but they allow the displaying of
@@ -588,8 +593,7 @@ text. You can pick the font and the font metrics to use for all the text
 associated with one text point.
 
 === Electronic Bearing Line (EBL)
-
-image::ebl_mui.png[]
+image:ebl_mui.png[]
 
 The EBL always starts attached to the boat with the far end of the line
 being placed by left clicking the chart. The default action for the end
@@ -666,8 +670,7 @@ in the ocpn_draw_pi section of the config file as there is no setting in
 the properties dialog for this.
 
 === Dead Reckoning (DR)
-
-image::dr_mui.png[]
+image:dr_mui.png[]
 
 This draws a Dead Reckoning line with multiple points along it starting
 at the boats current location. As mentioned above, this tool does not
@@ -681,8 +684,7 @@ COG/SOG. So the DR line at that point becomes more of a line with
 possibly little meaning in the context of DR.
 
 === Guard Zone (GZ)
-
-image::gz_mui.png[]
+image:gz_mui.png[]
 
 This draws a segment of a torus or doughnut. The centre is the boat and
 the angle and size is determined from the two points that are used to
@@ -701,8 +703,7 @@ boat irrespective of which direction the boat is moving. This is set in
 the default propertiesd but can also be changed for each individual GZ.
 
 === Parallel Index Line (PIL)
-
-image::pil_mui.png[]
+image:pil_mui.png[]
 
 Annex to IMO res.A893(21)-Guidelines For Voyage Planning. Section 4-
 Appraisal
@@ -870,8 +871,7 @@ These will either copy/past in the selected box or will copy/paste both
 the Latitude and Longitude at the same time.
 
 == Settings
-
-image::od-settings.png[]
+image:od-settings.png[]
 
 Options > Plugins > Ocpn Draw > Preferences +
 Under Preferences the Tabs are General, Boundary, Boundary Point, Text
@@ -926,6 +926,10 @@ unchecked and use right click and move waypoint. If you intend to move
 entire zone check this option, it is a brilliant concept and very
 useful.
 
+=== Show Layers
+
+This checkbox hides, unchecked, or shows, checked, layers on restart.
+
 === Nav Object Backups
 
 This setting determines how many backups to keep of the navigation
@@ -946,6 +950,12 @@ This is the same as above, but is used after a drawing tool is picked
 but before the first object is created. This is supplied so that the
 screen does not start panning if you move your pointer off of the toll
 bar near the edge of the screen.
+
+=== Toolbar icon scaling (requires restart)
+
+If the OCPN Draw toolbar is not the required size this item allows
+scaling of the icons. On most systems this will require restarting
+OpenCPN, or deactivating and reactivating OCPN Draw.
 
 === Display Toolbar
 
@@ -968,7 +978,7 @@ whether you are using the plugin.
 
 This setting allows the user to set all settings back to the default
 value. If the button has the label 'Yes' and it is clicked this will
-ensure that no settings are saved when OCPN is shut down. The text of
+ensure that no OCPN Draw settings are saved when OCPN is shut down. The text of
 the label will be changed to 'Remove OCPN_Draw setting and restore to
 default on restart (Yes)' to indicate what will happen. The button label
 will now say 'No' indicating what will hapen if it is clicked again.
@@ -1202,6 +1212,16 @@ wrapping the displayed text. In Font Based the font being used will
 determine where the wrapping occurs. In Character Based the count of the
 characters will determine where the wrapping occurs.
 
+=== Show Display Text
+
+This is the default for when the Display Text of a Text Point is shown.
+
+* Always - Display text is always shown
+* On Rollover Only - The text will be displayed when the mouse pointer
+rolls over the Text Point. This is to try and help declutter the screen
+if there are many objects being concurrently displayed.
+* Never - The display text is not displayed
+
 === Maximum Text Width
 
 Depending on the selection of Maximum Width Type will determine the
@@ -1229,16 +1249,6 @@ You can pick the Family, Style and Size of the font. This is presented
 by a platform specific font picker. The current font that will be used
 is shown by the work 'Example' which will be drawn using the font
 selected.
-
-=== Show Display Text
-
-This is the default for when the Display Text of a Text Point is shown.
-
-* Always - Display text is always shown
-* On Rollover Only - The text will be displayed when the mouse pointer
-rolls over the Text Point. This is to try and help declutter the screen
-if there are many objects being concurrently displayed.
-* Never - The display text is not displayed
 
 === Path (this item is currently hidden)
 
@@ -1717,8 +1727,6 @@ image::od_preferences_-_help.png[]
 This page provides information on the interaction of this plugin with
 the Watchdog plugin. This shows when alarms should ring for various
 boundary types.
-
-== 
 
 == OCPN_Draw directories
 
