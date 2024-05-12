@@ -388,6 +388,16 @@ however, this behaviour can be changed by setting the *_Show Layers_*
 checkbox to a tick. Then all persistent layers will be shown over
 a restart.
 
+An OpenCPN user has provided a set of layers for use within *Draw*
+describing zoning in Queensland Great Barrier Reef Marine Park
+(GBRMP), the Great Sandy Marine Park (GSMP) and the Moreton _Boundary
+Marine Park (MBMP). These show the usage allowed in each zone and the
+limits of such zones. These can be found here:
+https://github.com/redog666/qld-coastal-zones
+The following is an excerpt from the Moreton Bay area:
+
+image:Moreton Bay Green Zone.png[image,width=794,height=615]
+
 === Edit Mode for Draw Objects
 
 First, if you are in the 'create' mode you must terminate this by, Right
