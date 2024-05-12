@@ -12,7 +12,7 @@ http://www.cruisersforum.com/forums/f134/ocpn-draw-1-4-available-187632.html[Ocp
 
 == Summary
 
-image::od_toolbar_icons.png[]
+image::od_toolbar_icons.png[Toolbar Icons]
 
 The Ocpn_Draw Plugin (OD) is designed to allow users to place
 objects/items on the OpenCPN interface and have these georeferenced.
@@ -361,15 +361,15 @@ Eample pages:
 
 *Paths*
 
-image:od_manager_paths.png[image,width=566,height=378]
+image:od_manager_paths.png[Paths,width=566,height=378]
 
 *OD Points*
 
-image:od_manager_odpoints.png[image,width=566,height=378]
+image:od_manager_odpoints.png[Points,width=566,height=378]
 
 *Layers*
 
-image:od_manager_layers.png[image,width=567,height=378]
+image:od_manager_layers.png[Layers,width=567,height=378]
 
 === Layers
 
