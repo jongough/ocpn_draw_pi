@@ -69,6 +69,10 @@ should definitely CLOSE this request….”
 
 == Integration with other plugins
 
+There are two methods that plugins can use to interact with Ocpn_Draw_pi,
+the interactions are described for developers here:
+https://opencpn-manuals.github.io/main/opencpn-dev/odraw-messaging.html[ODraw Messaging]
+
 === WatchDog Alarms
 
 Ocpn_Draw_pi (OD) provides a graphics companion to Watchdog_pi (WD)
