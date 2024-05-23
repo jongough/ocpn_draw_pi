@@ -77,6 +77,7 @@ cmake -DCMAKE_TOOLCHAIN_FILE=cmake/android-aarch64-toolchain.cmake \
   -DwxQt_Build=build_android_release_64_static_O3 \
   -DQt_Build=build_arm64/qtbase \
   -DOCPN_Android_Common=OCPNAndroidCommon-master \
+  -DCMAKE_BUILD_TYPE=$BUILD_TYPE
   ..
 
 make VERBOSE=1

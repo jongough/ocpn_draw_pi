@@ -120,7 +120,7 @@ jobs:
         - OCPN_TARGET:  android-arm64
         - DEPLOY_USE_ORB: true
         - INSTALL_PYTHON: true
-        - CMAKE_BUILD_TYPE: Debug
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
