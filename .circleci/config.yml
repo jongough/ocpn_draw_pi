@@ -29,8 +29,8 @@ workflows:
 ## --------------------
 ## OpenCPN 5.8 Plugins
 ## ----------------------
-        - build-android-arm64:
-             <<: *std-filters
+#        - build-android-arm64:
+#             <<: *std-filters
 #        - build-android-armhf:
 #             <<: *std-filters
 #        - build-flatpak-arm64-2208:
@@ -39,16 +39,16 @@ workflows:
 #            <<: *std-filters
 #        - build-msvc-wx32-2022:
 #            <<: *std-filters
-#        - build-debian-arm64-12-bookworm:
-#            <<: *std-filters
-#        - build-debian-armhf-12-bookworm:
-#            <<: *std-filters
-#        - build-debian-x86_64-12-bookworm:
-#            <<: *std-filters
-#        - build-debian-armhf-11-bullseye:
-#            <<: *std-filters
-#        - build-debian-arm64-11-bullseye:
-#            <<: *std-filters
+        - build-debian-arm64-12-bookworm:
+            <<: *std-filters
+        - build-debian-armhf-12-bookworm:
+            <<: *std-filters
+        - build-debian-x86_64-12-bookworm:
+            <<: *std-filters
+        - build-debian-armhf-11-bullseye:
+            <<: *std-filters
+        - build-debian-arm64-11-bullseye:
+            <<: *std-filters
 #        - build-debian-x86_64-11-bullseye:
 #            <<: *std-filters
 ### KEEP needed for Jammy with wx32
