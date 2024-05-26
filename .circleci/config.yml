@@ -135,6 +135,7 @@ jobs:
         - OCPN_TARGET:  android-armhf
         - DEPLOY_USE_ORB: true
         - INSTALL_PYTHON: true
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -247,6 +248,7 @@ jobs:
         - WX_VER: 32
         - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -266,6 +268,7 @@ jobs:
         - WX_VER: 32
         - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -283,6 +286,7 @@ jobs:
         - DEPLOY_USE_ORB: true
         - BUILD_ENV=debian
         - DOCKER_IMAGE=debian:bookworm
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ci/*.sh
@@ -300,6 +304,7 @@ jobs:
         - BUILD_ENV=debian
         - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -317,6 +322,7 @@ jobs:
         - BUILD_ENV=debian
         - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: chmod a+x ./ci/*.sh
@@ -332,6 +338,7 @@ jobs:
         - BUILD_GTK3: true
         - DEPLOY_USE_ORB: true
         - BUILD_ENV=debian
+        - BUILD_TYPE: Debug
         steps:
         - checkout
         - run: >

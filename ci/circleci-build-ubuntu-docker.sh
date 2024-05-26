@@ -39,6 +39,7 @@ docker run --privileged -d -ti -e "container=docker"  \
     -e "BUILD_ENV=$BUILD_ENV" \
     -e "TZ=$TZ" \
     -e "DEBIAN_FRONTEND=$DEBIAN_FRONTEND" \
+    -e "DCMAKE_BUILD_TYPE=$BUILD_TYPE" \
     -v $(pwd):/ci-source:rw -v ~/source_top:/source_top $DOCKER_IMAGE /bin/bash
 
 DOCKER_CONTAINER_ID=$(docker ps | grep $DOCKER_IMAGE | awk '{print $1}')
