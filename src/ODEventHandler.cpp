@@ -364,6 +364,10 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     }
 
                     TextPoint *tp = NULL;
+                    DEBUGST("pp->m_sTypeString: ");
+                    DEBUGCONT(pp->m_sTypeString);
+                    DEBUGCONT(" GUID: ");
+                    DEBUGEND(pp->m_GUID);
                     if( pp->m_sTypeString == wxT("Text Point") ) tp = (TextPoint *) pFindSel->m_pData1;
 
                     if( tp && tp->m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER ) {
