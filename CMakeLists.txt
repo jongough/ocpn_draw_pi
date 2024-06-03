@@ -61,8 +61,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "49")
-set(VERSION_TWEAK "5")
-set(VERSION_DATE "01/06/2024") # DD/MM/YYYY format
+set(VERSION_TWEAK "6")
+set(VERSION_DATE "03/06/2024") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")
@@ -211,6 +211,7 @@ set(SRCS
     src/ODPropertiesDialogImpl.cpp
     src/ODRolloverWin.cpp
     src/ODSelect.cpp
+    src/ODSelectItem.cpp
     src/ODToolbarDef.cpp
     src/ODToolbarImpl.cpp
     src/ODUtils.cpp
@@ -271,6 +272,7 @@ set(HDRS
     include/ODPropertiesDialogImpl.h
     include/ODRolloverWin.h
     include/ODSelect.h
+    include/ODSelectItem.h
     include/ODToolbarDef.h
     include/ODToolbarImpl.h
     include/ODUtils.h
@@ -293,7 +295,6 @@ set(OCPNSRC
     ocpnsrc/geodesic.cpp
     ocpnsrc/georef.cpp
     ocpnsrc/Hyperlink.cpp
-    ocpnsrc/SelectItem.cpp
 )
 set(OCPNHDRS
     ocpninclude/AISTargetAlertDialog.h
@@ -303,7 +304,6 @@ set(OCPNHDRS
     ocpninclude/geodesic.h
     ocpninclude/georef.h
     ocpninclude/Hyperlink.h
-    ocpninclude/SelectItem.h
     ocpninclude/timers.h
 )
 set(EXTSRC

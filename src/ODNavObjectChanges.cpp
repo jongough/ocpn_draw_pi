@@ -918,8 +918,10 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                         g_pODPointMan->AddODPoint( pOp );
                     g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
                 }
-                else
+                else {
+                    g_pODSelect->DeleteSelectableODPoint( pOp );
                     delete pOp;
+                }
             }
         }
             else
@@ -934,13 +936,12 @@ bool ODNavObjectChanges::LoadAllGPXObjects( bool b_full_viz )
                         }
                     }
                     if ( !TypeString.compare( wxS("Boundary") ) || !TypeString.compare( wxS("EBL") ) ||
-                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("Guard Zone") ) || !TypeString.compare( wxS("PIL") ) ) {
+                        !TypeString.compare( wxS("DR") ) || !TypeString.compare( wxS("Guard Zone") ) || !TypeString.compare( wxS("PIL") ))  {
                         ODPath *pPath = GPXLoadPath1( object, b_full_viz, false, false, 0, &TypeString );
-                        InsertPathA( pPath );
+                        if( !PathExists(pPath->m_GUID) )
+                            InsertPathA( pPath );
                     }
                 }
-
-
     }
 
     return true;
@@ -1201,6 +1202,9 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     pOP = tempODPointExists( GuidString );
     if(!pOP)
         pOP = ODPointExists( GuidString );
+    if(pOP && b_layer)
+        return NULL; // dont import if in a layer and ODPoint already exists
+
     if( !pOP ) {
         if( TypeString == wxT("Text Point") ) {
             pTP = new TextPoint( rlat, rlon, SymString, NameString, GuidString, false );
@@ -1937,10 +1941,12 @@ int ODNavObjectChanges::LoadAllGPXObjectsAsLayer(int layer_id, bool b_layerviz)
         if( !strcmp(object.name(), "opencpn:ODPoint") ) {
             ODPoint *pOp = GPXLoadODPoint1( object, _T("circle"), _T(""), true, true, b_layerviz, layer_id );
             if(pOp) {
-                pOp->m_bIsolatedMark = true;      // This is an isolated mark
-                g_pODPointMan->AddODPoint( pOp );
-                g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
-                n_obj++;
+                if( !(ODPointExists(pOp->m_GUID)) ) {
+                    pOp->m_bIsolatedMark = true;      // This is an isolated mark
+                    g_pODPointMan->AddODPoint( pOp );
+                    g_pODSelect->AddSelectableODPoint( pOp->m_lat, pOp->m_lon, pOp );
+                    n_obj++;
+                }
             }
         }
         else{

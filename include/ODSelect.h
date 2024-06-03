@@ -24,7 +24,7 @@
 #ifndef __ODSELECT_H__
 #define __ODSELECT_H__
 
-#include "SelectItem.h"
+#include "ODSelectItem.h"
 #include "ODPath.h"
 #include "ODvector2D.h"
 
@@ -38,8 +38,8 @@ public:
     bool AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
             ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath, int UserData = 0 );
 
-    SelectItem *FindSelection( float slat, float slon, int fseltype );
-    SelectableItemList FindSelectionList( float slat, float slon, int fseltype );
+    ODSelectItem *FindSelection( float slat, float slon, int fseltype );
+    ODSelectableItemList FindSelectionList( float slat, float slon, int fseltype );
 
     bool DeleteAllSelectablePathSegments( ODPath * );
     bool DeleteSelectablePathSegment( ODPath *pr, int iUserData );
@@ -48,7 +48,7 @@ public:
     bool AddAllSelectableODPoints( ODPath *pr );
     bool UpdateSelectablePathSegments( ODPoint *prp );
     bool IsSegmentSelected( float a, float b, float c, float d, float slat, float slon );
-    bool IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel );
+    bool IsSelectableSegmentSelected( float slat, float slon, ODSelectItem *pFindSel );
 
     //    Generic Point Support
     //      e.g. Tides/Currents and AIS Targets
@@ -60,12 +60,12 @@ public:
     bool DeleteAllSelectableTypePoints( int SeltypeToDelete );
 
     bool DeleteSelectableODPoint( ODPoint *prp );
-    
+
     int GetSelectPixelRadius( void );
-    
+
     //  Accessors
 
-    SelectableItemList *GetSelectList()
+    ODSelectableItemList *GetSelectList()
     {
         return pSelectList;
     }
@@ -79,7 +79,7 @@ private:
     double vVectorSquared( pODVector2D v0 );
     double vVectorMagnitude( pODVector2D v0 );
 
-    SelectableItemList *pSelectList;
+    ODSelectableItemList *pSelectList;
     float selectRadius;
 };
 

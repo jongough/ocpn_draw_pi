@@ -38,6 +38,7 @@ src/ODPropertiesDialogDef.cpp
 src/ODPropertiesDialogImpl.cpp
 src/ODRolloverWin.cpp
 src/ODSelect.cpp
+src/ODSelectItem.cpp
 src/ODToolbarDef.cpp
 src/ODToolbarImpl.cpp
 src/ODUtils.cpp
@@ -95,6 +96,7 @@ include/ODPropertiesDialogDef.h
 include/ODPropertiesDialogImpl.h
 include/ODRolloverWin.h
 include/ODSelect.h
+include/ODSelectItem.h
 include/ODToolbarDef.h
 include/ODToolbarImpl.h
 include/ODUtils.h
