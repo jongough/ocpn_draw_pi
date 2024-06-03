@@ -22,26 +22,32 @@
  ***************************************************************************
  */
 
-#include "SelectItem.h"
+#ifndef __ODSELECTITEM_H__
+#define __ODSELECTITEM_H__
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( SelectableItemList );
+#include <wx/list.h>
 
-SelectItem::SelectItem()
+class ODSelectItem
 {
-}
+public:
+      ODSelectItem();
+      ~ODSelectItem();
 
-SelectItem::~SelectItem()
-{
-}
+      int   GetUserData(void);
+      void  SetUserData(int data);
 
-int SelectItem::GetUserData(void)
-{
-    return m_Data4;
-}
+      float m_slat;
+      float m_slon;
+      float m_slat2;
+      float m_slon2;
+      int   m_seltype;
+      bool  m_bIsSelected;
+      const void  *m_pData1;
+      void  *m_pData2;
+      void  *m_pData3;
+      int   m_Data4;
+};
 
-void SelectItem::SetUserData(int data)
-{
-    m_Data4 = data;
-}
+WX_DECLARE_LIST(ODSelectItem, ODSelectableItemList);// establish class as list member
 
+#endif
