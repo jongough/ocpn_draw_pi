@@ -66,7 +66,7 @@
 #include "ODToolbarImpl.h"
 #include "ODUtils.h"
 #include "version.h"
-#include "SelectItem.h"
+#include "ODSelectItem.h"
 #include "TextPoint.h"
 #include "PILPropertiesDialogImpl.h"
 
@@ -141,8 +141,8 @@ PILList                 *g_pPILList;
 ODPath                  *g_PathToEdit;
 int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
-SelectItem              *g_pRolloverPathSeg;
-SelectItem              *g_pRolloverPoint;
+ODSelectItem            *g_pRolloverPathSeg;
+ODSelectItem            *g_pRolloverPoint;
 PI_ColorScheme          g_global_color_scheme;
 bool                    g_bOpenGL;
 GLenum                  g_texture_rectangle_format;
@@ -2922,10 +2922,10 @@ bool ocpn_draw_pi::MouseEventHook( wxMouseEvent &event )
     //      If so, start the rollover timer which creates the popup
     bool b_start_rollover = false;
     if(!b_start_rollover && !m_bPathEditing && !bRefresh){
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
-        wxSelectableItemListNode *node = SelList.GetFirst();
+        ODSelectableItemList SelList = g_pODSelect->FindSelectionList( m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT );
+        wxODSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
-            SelectItem *pFindSel = node->GetData();
+            ODSelectItem *pFindSel = node->GetData();
 
             ODPath *pp= (ODPath *) pFindSel->m_pData3;        //candidate
 
@@ -2956,9 +2956,9 @@ void ocpn_draw_pi::FindSelectedObject()
     m_seltype = 0;
     m_iPILId = 0;
 
-    SelectItem *pFindPP;
-    SelectItem *pFindPathSeg;
-    SelectItem *pFindPILIndex;
+    ODSelectItem *pFindPP;
+    ODSelectItem *pFindPathSeg;
+    ODSelectItem *pFindPILIndex;
     pFindPP = g_pODSelect->FindSelection( slat, slon, SELTYPE_ODPOINT );
     pFindPathSeg = g_pODSelect->FindSelection( slat, slon, SELTYPE_PATHSEGMENT );
     pFindPILIndex = g_pODSelect->FindSelection( slat, slon, SELTYPE_PIL );
@@ -2973,10 +2973,10 @@ void ocpn_draw_pi::FindSelectedObject()
         ODPath *pSelectedVizPath = NULL;
 
         //There is at least one OCPNpoint, so get the whole list
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_ODPOINT );
-        wxSelectableItemListNode *node = SelList.GetFirst();
+        ODSelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon, SELTYPE_ODPOINT );
+        wxODSelectableItemListNode *node = SelList.GetFirst();
         while( node ) {
-            SelectItem *pFindSel = node->GetData();
+            ODSelectItem *pFindSel = node->GetData();
 
             ODPoint *pop = (ODPoint *) pFindSel->m_pData1;        //candidate
             if( ( pop->m_sTypeString == wxT("EBL Point") && pop->m_ODPointName == _("Boat") ) || !pop->m_bIsVisible ) {
@@ -3076,15 +3076,15 @@ void ocpn_draw_pi::FindSelectedObject()
     }
 
     if( pFindPathSeg ) {                 // there is at least one select item
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
+        ODSelectableItemList SelList = g_pODSelect->FindSelectionList( slat, slon,
                                                                      SELTYPE_PATHSEGMENT );
 
         if( NULL == m_pSelectedPath )  // the case where a segment only is selected
         {
             //  Choose the first visible path containing segment in the list
-            wxSelectableItemListNode *node = SelList.GetFirst();
+            wxODSelectableItemListNode *node = SelList.GetFirst();
             while( node ) {
-                SelectItem *pFindSel = node->GetData();
+                ODSelectItem *pFindSel = node->GetData();
 
                 ODPath *pp = (ODPath *) pFindSel->m_pData3;
                 if( pp->IsVisible() ) {

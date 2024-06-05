@@ -30,8 +30,8 @@
 
 ODSelect::ODSelect()
 {
-    pSelectList = new SelectableItemList;
-    
+    pSelectList = new ODSelectableItemList;
+
 }
 
 ODSelect::~ODSelect()
@@ -59,7 +59,7 @@ int ODSelect::GetSelectPixelRadius( void )
 
 bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAdd )
 {
-    SelectItem *pSelItem = new SelectItem;
+    ODSelectItem *pSelItem = new ODSelectItem;
     pSelItem->m_slat = slat;
     pSelItem->m_slon = slon;
     pSelItem->m_slat2 = slat;
@@ -68,22 +68,22 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
     pSelItem->m_bIsSelected = false;
     pSelItem->m_pData1 = pODPointAdd;
 
-    wxSelectableItemListNode *node;
-    
+    wxODSelectableItemListNode *node;
+
     if( pODPointAdd->m_bIsInLayer )
         node = pSelectList->Append( pSelItem );
     else
         node = pSelectList->Append( pSelItem );
 
     pODPointAdd->SetSelectNode(node);
-    
+
     return true;
 }
 
 bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, float slon2,
         ODPoint *pODPointAdd1, ODPoint *pODPointAdd2, ODPath *pPath, int iUserData )
 {
-    SelectItem *pSelItem = new SelectItem;
+    ODSelectItem *pSelItem = new ODSelectItem;
     pSelItem->m_slat = slat1;
     pSelItem->m_slon = slon1;
     pSelItem->m_slat2 = slat2;
@@ -107,14 +107,14 @@ bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, 
 
 bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
 
 //    Iterate on the select list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
-        wxSelectableItemListNode *next = node->GetNext();
+        wxODSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT || pFindSel->m_seltype == SELTYPE_PIL ) {
 
             if( (ODPath *) pFindSel->m_pData3 == pr ) {
@@ -130,14 +130,14 @@ bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
 
 bool ODSelect::DeleteSelectablePathSegment( ODPath *pr, int iUserData )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
 
     //    Iterate on the select list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
-        wxSelectableItemListNode *next = node->GetNext();
+        wxODSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SELTYPE_PIL ) {
 
             if( (ODPath *) pFindSel->m_pData3 == pr && pFindSel->GetUserData() == iUserData) {
@@ -154,14 +154,14 @@ bool ODSelect::DeleteSelectablePathSegment( ODPath *pr, int iUserData )
 
 bool ODSelect::DeleteAllSelectableODPoints( ODPath *pp )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
 
 //    Iterate on the select list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
-        wxSelectableItemListNode *next = node->GetNext();
+        wxODSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SELTYPE_ODPOINT ) {
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
@@ -234,11 +234,11 @@ bool ODSelect::AddAllSelectablePathSegments( ODPath *pp )
 
 bool ODSelect::UpdateSelectablePathSegments( ODPoint *ppp )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
     bool ret = false;
 
 //    Iterate on the select list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
@@ -274,13 +274,13 @@ bool ODSelect::DeleteAllPoints( void )
 
 bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
     bool found = false;
 
     if( NULL != pdata ) {
 //    Iterate on the list
-        wxSelectableItemListNode *node = pSelectList->GetFirst();
-        wxSelectableItemListNode *next;
+        wxODSelectableItemListNode *node = pSelectList->GetFirst();
+        wxODSelectableItemListNode *next;
         while( node ) {
             pFindSel = node->GetData();
             next = node->GetNext();
@@ -289,12 +289,12 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
                     delete pFindSel;
                     delete node;
                     g_pRolloverPoint = NULL;
-                    
+
                     if( SELTYPE_ODPOINT == SeltypeToDelete ){
                         ODPoint *podp = (ODPoint *)pdata;
                         podp->SetSelectNode( NULL );
                     }
-                    
+
                     found = true;
                 }
             }
@@ -306,17 +306,17 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
 
 bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
 
 //    Iterate on the list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
-        wxSelectableItemListNode *next = node->GetNext();
+        wxODSelectableItemListNode *next = node->GetNext();
         if( pFindSel->m_seltype == SeltypeToDelete ) {
             delete node;
-            
+
             if( SELTYPE_ODPOINT == SeltypeToDelete ){
                 ODPoint *podp = (ODPoint *)pFindSel->m_pData1;
                 podp->SetSelectNode( NULL );
@@ -331,11 +331,11 @@ bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
 
 bool ODSelect::DeleteSelectableODPoint( ODPoint *podp )
 {
-    
+
     if( NULL != podp ) {
-        wxSelectableItemListNode *node = (wxSelectableItemListNode *)podp->GetSelectNode();
+        wxODSelectableItemListNode *node = (wxODSelectableItemListNode *)podp->GetSelectNode();
         if(node){
-            SelectItem *pFindSel = node->GetData();
+            ODSelectItem *pFindSel = node->GetData();
             if(pFindSel){
                 delete pFindSel;
                 delete node;            // automatically removes from list
@@ -345,17 +345,17 @@ bool ODSelect::DeleteSelectableODPoint( ODPoint *podp )
         }
         else
             return DeleteSelectablePoint( podp, SELTYPE_ODPOINT );
-        
+
     }
     return false;
 }
 
 bool ODSelect::ModifySelectablePoint( float lat, float lon, void *data, int SeltypeToModify )
 {
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
 
 //    Iterate on the list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
@@ -431,15 +431,15 @@ void ODSelect::CalcSelectRadius()
         selectRadius = GetSelectPixelRadius() / ( g_VP.view_scale_ppm * 1852 * 60 );
 }
 
-SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
+ODSelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
 {
     float a, b, c, d;
-    SelectItem *pFindSel;
+    ODSelectItem *pFindSel;
 
     CalcSelectRadius();
 
 //    Iterate on the list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();
@@ -449,7 +449,7 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
                     if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
                             && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) return pFindSel;
                     break;
-                case SELTYPE_PATHSEGMENT: 
+                case SELTYPE_PATHSEGMENT:
                     a = pFindSel->m_slat;
                     b = pFindSel->m_slat2;
                     c = pFindSel->m_slon;
@@ -475,7 +475,7 @@ SelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
     return NULL;
 }
 
-bool ODSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem *pFindSel )
+bool ODSelect::IsSelectableSegmentSelected( float slat, float slon, ODSelectItem *pFindSel )
 {
     CalcSelectRadius();
 
@@ -491,16 +491,16 @@ bool ODSelect::IsSelectableSegmentSelected( float slat, float slon, SelectItem *
     return IsSegmentSelected( a, b, c, d, slat, slon );
 }
 
-SelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fseltype )
+ODSelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fseltype )
 {
     float a, b, c, d;
-    SelectItem *pFindSel;
-    SelectableItemList ret_list;
+    ODSelectItem *pFindSel;
+    ODSelectableItemList ret_list;
 
     CalcSelectRadius();
-    
+
     //    Iterate on the list
-    wxSelectableItemListNode *node = pSelectList->GetFirst();
+    wxODSelectableItemListNode *node = pSelectList->GetFirst();
 
     while( node ) {
         pFindSel = node->GetData();

@@ -177,10 +177,10 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     bool showRollover = false;
     if( !g_pRolloverPathSeg && !g_pRolloverPoint) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
-        SelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
+        ODSelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
+        wxODSelectableItemListNode *node_ODPath = SelList.GetFirst();
 
-        wxSelectableItemListNode *node = SelList.GetFirst();
-        if(node) {
+        if(node_ODPath) {
 #ifndef __WXMSW__
 			l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)
@@ -196,12 +196,12 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             g_pODRolloverWin = NULL;
         }
 
-        while( node ) {
-            SelectItem *pFindSel = node->GetData();
+        while( node_ODPath ) {
+            ODSelectItem *pFindSel = node_ODPath->GetData();
             ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
 
             if( pp && pp->IsVisible() ) {
-                g_pRolloverPathSeg = new SelectItem;
+                g_pRolloverPathSeg = new ODSelectItem;
                 *g_pRolloverPathSeg = *pFindSel;
 
                 if( NULL == g_pODRolloverWin ) {
@@ -328,13 +328,13 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                    assert(false);
                 }
             } else
-                node = node->GetNext();
+                node_ODPath = node_ODPath->GetNext();
         }
         if( !showRollover && !g_pRolloverPathSeg) {
-            SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_ODPOINT );
-            node = SelList.GetFirst();
+            ODSelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_ODPOINT );
+            wxODSelectableItemListNode *node_ODPoint = SelList.GetFirst();
 
-            if(node) {
+            if(node_ODPoint) {
 #ifndef __WXMSW__
                 l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)
@@ -345,11 +345,11 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 #endif
             }
 
-            while( node ) {
-                SelectItem *pFindSel = node->GetData();
+            while( node_ODPoint ) {
+                ODSelectItem *pFindSel = node_ODPoint->GetData();
                 ODPoint *pp = (ODPoint *) pFindSel->m_pData1;        //candidate
                 if( pp && pp->IsVisible() ) {
-                    g_pRolloverPoint = new SelectItem();
+                    g_pRolloverPoint = new ODSelectItem();
                     *g_pRolloverPoint = *pFindSel;
                     showRollover = true;
 
@@ -364,6 +364,10 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                     }
 
                     TextPoint *tp = NULL;
+                    DEBUGST("pp->m_sTypeString: ");
+                    DEBUGCONT(pp->m_sTypeString);
+                    DEBUGCONT(" GUID: ");
+                    DEBUGEND(pp->m_GUID);
                     if( pp->m_sTypeString == wxT("Text Point") ) tp = (TextPoint *) pFindSel->m_pData1;
 
                     if( tp && tp->m_iDisplayTextWhen == ID_TEXTPOINT_DISPLAY_TEXT_SHOW_ON_ROLLOVER ) {
@@ -423,7 +427,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                             break;
                         }
                         else {
-                            // XXX FIXME may leak g_pRolloverPoint = new SelectItem();
+                            // XXX FIXME may leak g_pRolloverPoint = new ODSelectItem();
                             // on following loops
                             assert(false);
                         }
@@ -432,7 +436,7 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         break;
                     }
                 }
-                node = node->GetNext();
+                node_ODPoint = node_ODPoint->GetNext();
             }
         }
     } else {

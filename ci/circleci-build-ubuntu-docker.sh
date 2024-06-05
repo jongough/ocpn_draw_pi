@@ -39,6 +39,7 @@ docker run --privileged -d -ti -e "container=docker"  \
     -e "BUILD_ENV=$BUILD_ENV" \
     -e "TZ=$TZ" \
     -e "DEBIAN_FRONTEND=$DEBIAN_FRONTEND" \
+    -e "BUILD_TYPE=$BUILD_TYPE" \
     -v $(pwd):/ci-source:rw -v ~/source_top:/source_top $DOCKER_IMAGE /bin/bash
 
 DOCKER_CONTAINER_ID=$(docker ps | grep $DOCKER_IMAGE | awk '{print $1}')
@@ -166,7 +167,7 @@ then
 fi
 
 docker exec -ti \
-    $DOCKER_CONTAINER_ID /bin/bash -xec "bash -xe ci-source/build.sh; rm -rf ci-source/build; mkdir ci-source/build; cd ci-source/build; cmake ..; make $BUILD_FLAGS; make package; chmod -R a+rw ../build;"
+    $DOCKER_CONTAINER_ID /bin/bash -xec "bash -xe ci-source/build.sh; rm -rf ci-source/build; mkdir ci-source/build; cd ci-source/build; cmake -DCMAKE_BUILD_TYPE=$BUILD_TYPE ..; make $BUILD_FLAGS; make package; chmod -R a+rw ../build;"
 
 echo "Stopping"
 docker ps -a

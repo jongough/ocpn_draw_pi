@@ -64,7 +64,7 @@ class piDC;
 
 class PlugIn_ViewPort;
 
-class SelectItem;
+class ODSelectItem;
 
 
 
@@ -109,8 +109,8 @@ extern PILList                  *g_pPILList;
 extern ODPath                   *g_PathToEdit;
 extern int                      g_PILToEdit;
 extern ODRolloverWin            *g_pODRolloverWin;
-extern SelectItem               *g_pRolloverPathSeg;
-extern SelectItem               *g_pRolloverPoint;
+extern ODSelectItem               *g_pRolloverPathSeg;
+extern ODSelectItem               *g_pRolloverPoint;
 extern PI_ColorScheme           g_global_color_scheme;
 extern bool                     g_bOpenGL;
 extern GLenum                   g_texture_rectangle_format;
