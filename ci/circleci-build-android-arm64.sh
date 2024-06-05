@@ -72,6 +72,16 @@ last_ndk=$(ls -d /home/circleci/android-sdk/ndk/* | tail -1)
 test -d /opt/android || sudo mkdir -p /opt/android
 sudo ln -sf $last_ndk /opt/android/ndk
 
+if [ ! -z "$(BUILD_TYPE)" ]; then
+  tag=$(git tag --contains HEAD)
+  current_branch=$(git branch --show-current)
+  if [ -n "$tag" ] || [ "$current_branch" = "master" ]; then
+  BUILD_TYPE=Release
+  else
+  BUILD_TYPE=Debug
+  fi
+fi
+
 cmake -DCMAKE_TOOLCHAIN_FILE=cmake/android-aarch64-toolchain.cmake \
   -D_wx_selected_config=androideabi-qt-arm64 \
   -DwxQt_Build=build_android_release_64_static_O3 \
