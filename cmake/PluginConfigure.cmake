@@ -266,7 +266,9 @@ if (NOT WIN32
     AND NOT APPLE
     AND NOT QT_ANDROID
 )
-  find_package(GTK2)
+  if(OD_FORCE_GTK2)
+    find_package(GTK2)
+  endif()
 
   if (GTK2_FOUND AND NOT "$ENV{BUILD_GTK3}" STREQUAL "TRUE")
     set(wxWidgets_CONFIG_OPTIONS ${wxWidgets_CONFIG_OPTIONS} --toolkit=gtk2)

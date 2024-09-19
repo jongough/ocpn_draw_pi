@@ -419,7 +419,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
 
-    m_pODicons = new ODicons();
+    m_pODicons = NULL;
 
     m_bRecreateConfig = false;
 }
@@ -521,6 +521,9 @@ int ocpn_draw_pi::Init(void)
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( wxS("/home/jon/.opencpn/odnavobj.xml.changes") );
     wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
+
+    if (m_pODicons == NULL)
+        m_pODicons = new ODicons();
 
     LoadConfig();
     g_pODConfig->LateInit();
