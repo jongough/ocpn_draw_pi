@@ -60,12 +60,12 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "52")
+set(VERSION_PATCH "53")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "19/09/2024") # DD/MM/YYYY format
+set(VERSION_DATE "16/10/2024") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
-set(OCPN_API_VERSION_MINOR "17")
+set(OCPN_API_VERSION_MINOR "18")
 set(OD_API_VERSION_MAJOR "1")
 set(OD_API_VERSION_MINOR "1")
 
@@ -401,7 +401,7 @@ if (NOT OCPN_FLATPAK_CONFIG)
   add_subdirectory(libs/gdal)
   target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
 
-  add_subdirectory(opencpn-libs/api-17)
+  add_subdirectory(opencpn-libs/api-18)
   target_link_libraries(${PACKAGE_NAME} ocpn::api)
 
   add_subdirectory(opencpn-libs/tinyxml)

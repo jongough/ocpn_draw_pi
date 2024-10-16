@@ -61,6 +61,7 @@ class ODJSON;
 class ODPlugIn_Position_Fix_Ex;
 class ODAPI;
 class piDC;
+class ODicons;
 
 class PlugIn_ViewPort;
 
@@ -310,6 +311,8 @@ extern int     g_iDefaultPILLinePropertyDialogPostionX;
 extern int     g_iDefaultPILLinePropertyDialogPostionY;
 extern int     g_iDefaultPathAnPointManagerDialogPostionX;
 extern int     g_iDefaultPathAnPointManagerDialogPostionY;
+
+extern ODicons  *g_pODicons;
 
 extern wxImage ICursorLeft;
 extern wxImage ICursorRight;

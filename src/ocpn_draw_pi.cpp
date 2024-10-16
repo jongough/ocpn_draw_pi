@@ -342,6 +342,7 @@ int     g_iDefaultPILLinePropertyDialogPostionY;
 int     g_iDefaultPathAnPointManagerDialogPostionX;
 int     g_iDefaultPathAnPointManagerDialogPostionY;
 
+ODicons   *g_pODicons;
 
 wxImage ICursorLeft;
 wxImage ICursorRight;
@@ -373,7 +374,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
-:opencpn_plugin_117(ppimgr)
+:opencpn_plugin_118(ppimgr)
 {
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
@@ -419,13 +420,17 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
 
-    m_pODicons = NULL;
+    g_pODicons = new ODicons();
+    g_pODicons->initialize_images();
 
     m_bRecreateConfig = false;
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
+  delete g_pODicons;
+  g_pODicons = NULL;
+
 #ifdef __WXMSW__
 #ifdef _DEBUG
 // Only turn on if memory leaks suspected. Slows down shutdown when debugging
@@ -496,6 +501,8 @@ int ocpn_draw_pi::Init(void)
     g_bShowLayers = false;
     g_ocpn_draw_display_name = new wxString("OCPN Draw");
 
+    m_pODicons = g_pODicons;
+
     // Drawing modes from toolbar
     m_Mode = 0;
     m_numModes = ID_MODE_LAST - 1;
@@ -522,9 +529,6 @@ int ocpn_draw_pi::Init(void)
     wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
 
-    if (m_pODicons == NULL)
-        m_pODicons = new ODicons();
-
     LoadConfig();
     g_pODConfig->LateInit();
 
@@ -540,8 +544,6 @@ int ocpn_draw_pi::Init(void)
     g_pPathList = new PathList;
     //    Layers
     g_pLayerList = new ODLayerList;
-
-    m_pODicons->initialize_images();
 
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
@@ -870,10 +872,9 @@ bool ocpn_draw_pi::DeInit(void)
     if( g_pODToolbar ) {
         g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
         DeleteWindow((wxWindow**)&g_pODToolbar);
+        delete g_pODToolbar;
+        g_pODToolbar = NULL;
     }
-
-    delete m_pODicons;
-    m_pODicons = NULL;
 
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
@@ -1081,14 +1082,17 @@ void ocpn_draw_pi::SetDefaults(void)
 {
 
 }
+
 wxBitmap *ocpn_draw_pi::GetPlugInBitmap()
 {
-    return m_pODicons->m_p_bm_ocpn_draw_pi_properties;
+    return g_pODicons->m_p_bm_ocpn_draw_pi_properties;
 }
+
 int ocpn_draw_pi::GetToolbarToolCount(void)
 {
     return 1;
 }
+
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
     wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
@@ -3433,7 +3437,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg
             pathInfo << wxString::Format( wxString("From: %03d \u00B0, To: %03d \u00B0\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
     } else {
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("%03d\u00B0�(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d\u00B0(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
         else
             pathInfo << wxString::Format( wxString("%03d \u00B0  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
     }
