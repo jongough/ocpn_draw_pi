@@ -640,16 +640,19 @@ int ocpn_draw_pi::Init(void)
 #else
     g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
 #endif
-    wxPoint wxpToolbarPos;
-    wxpToolbarPos.x = g_iToolbarPosX;
-    wxpToolbarPos.y = g_iToolbarPosY;
-    g_pODToolbar->SetPosition( wxpToolbarPos );
+    if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 )
+      g_pODToolbar->CenterOnParent();
+    else {
+      wxPoint wxpToolbarPos;
+      wxpToolbarPos.x = g_iToolbarPosX;
+      wxpToolbarPos.y = g_iToolbarPosY;
+      g_pODToolbar->SetPosition( wxpToolbarPos );
+    }
     g_pODToolbar->SetToolbarFont();
     g_pODToolbar->Fit();
     g_pODToolbar->SetInitialSize();
     g_pODToolbar->Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
     //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
-    if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
     if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
 
     // TODO fix up undo
