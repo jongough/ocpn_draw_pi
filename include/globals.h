@@ -312,8 +312,6 @@ extern int     g_iDefaultPILLinePropertyDialogPostionY;
 extern int     g_iDefaultPathAnPointManagerDialogPostionX;
 extern int     g_iDefaultPathAnPointManagerDialogPostionY;
 
-extern ODicons  *g_pODicons;
-
 extern wxImage ICursorLeft;
 extern wxImage ICursorRight;
 extern wxImage ICursorUp;

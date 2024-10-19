@@ -419,13 +419,16 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
 
-    m_pODicons = NULL;
+    m_pODicons = new ODicons();
+    m_pODicons->initialize_images();
 
     m_bRecreateConfig = false;
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
+  delete m_pODicons;
+  m_pODicons = NULL;
 #ifdef __WXMSW__
 #ifdef _DEBUG
 // Only turn on if memory leaks suspected. Slows down shutdown when debugging
@@ -524,8 +527,7 @@ int ocpn_draw_pi::Init(void)
 
     LoadConfig();
 
-    if (m_pODicons == NULL)
-        m_pODicons = new ODicons();
+    m_pODicons->initialize_images();
 
     g_pODConfig->LateInit();
 
@@ -541,8 +543,6 @@ int ocpn_draw_pi::Init(void)
     g_pPathList = new PathList;
     //    Layers
     g_pLayerList = new ODLayerList;
-
-    m_pODicons->initialize_images();
 
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
@@ -873,7 +873,8 @@ bool ocpn_draw_pi::DeInit(void)
 
     if( g_pODToolbar ) {
         g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
-        DeleteWindow((wxWindow**)&g_pODToolbar);
+        delete m_pODicons;
+        m_pODicons = NULL;
     }
 
     delete m_pODicons;
