@@ -363,7 +363,7 @@ public:
 };
 
 
-class ocpn_draw_pi : public opencpn_plugin_117
+class ocpn_draw_pi : public opencpn_plugin_118
 {
 public:
 

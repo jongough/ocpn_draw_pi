@@ -37,6 +37,10 @@ workflows:
             <<: *std-filters
         - build-flatpak-x86-2208:
             <<: *std-filters
+        - build-flatpak-arm64-2408:
+            <<: *std-filters
+        - build-flatpak-x86-2408:
+            <<: *std-filters
         - build-msvc-wx32-2022:
             <<: *std-filters
         - build-debian-arm64-12-bookworm:
@@ -65,13 +69,6 @@ workflows:
              <<: *std-filters
         - build-msvc-2022:
             <<: *std-filters
-
-## -------------------------------------
-## UBUNTU OS  Frozen - 28/05/2023  DROP
-## -------------------------------------
-## KEEP needed for Raspbian OpenCPN v5.6
-#        - build-ubuntu-armhf-1804-buster:
-#            <<: *std-filters
 
 orbs:
     cloudsmith: cloudsmith/cloudsmith@1.0.4
@@ -142,7 +139,7 @@ jobs:
             install_python: true
     build-macos-wx32:
         macos:
-            xcode: "13.4"
+            xcode: "14.2"
         environment:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
@@ -154,9 +151,10 @@ jobs:
         - run: bash ci/circleci-build-macos.sh
         - deploy-code:
             deploy_use_orb: false
+            install_python: false
     build-macos-universal:
         macos:
-            xcode: "13.4"
+            xcode: "14.2"
         environment:
             OCPN_TARGET: macos
             CMAKE_BUILD_PARALLEL_LEVEL: 2
@@ -186,6 +184,7 @@ jobs:
               sh -c "cat build/*.xml"
         - deploy-code:
             deploy_use_orb: false
+            install_python: false
     build-msvc-wx32-2022:
         executor:
             name: win/server-2022
@@ -228,6 +227,39 @@ jobs:
         - FLATPAK_BRANCH: stable
         - CLOUDSMITH_PKG_EXT: gz
         - SDK_VER: 22.08
+        - DEPLOY_USE_ORB: true
+        steps:
+        - checkout
+        - run: chmod a+x ci/*.sh
+        - run:
+            command: bash ci/circleci-build-flatpak.sh
+            no_output_timeout: 30m
+        - deploy-code
+    build-flatpak-arm64-2408:
+        machine:
+            image: ubuntu-2204:current
+            resource_class: arm.medium
+        environment:
+        - OCPN_TARGET:  flatpak-arm64
+        - FLATPAK_BRANCH: stable
+        - CLOUDSMITH_PKG_EXT: gz
+        - SDK_VER: 24.08
+        - DEPLOY_USE_ORB: true
+        steps:
+        - checkout
+        - run: chmod a+x ci/*.sh
+        - run:
+            command: bash ci/circleci-build-flatpak.sh
+        - deploy-code
+    build-flatpak-x86-2408:
+        machine:
+            image: ubuntu-2204:current
+            resource_class: arm.medium
+        environment:
+        - OCPN_TARGET:  flatpak
+        - FLATPAK_BRANCH: stable
+        - CLOUDSMITH_PKG_EXT: gz
+        - SDK_VER: 24.08
         - DEPLOY_USE_ORB: true
         steps:
         - checkout
@@ -375,7 +407,7 @@ jobs:
 ## ---------------------
     build-macos:
         macos:
-            xcode: "13.4"
+            xcode: "14.2"
         environment:
         - OCPN_TARGET:  macos
         - CLOUDSMITH_PKG_EXT: pkg
@@ -387,6 +419,7 @@ jobs:
         - run: bash ci/circleci-build-macos.sh
         - deploy-code:
             deploy_use_orb: false
+            install_python: false
 
 ## Appveyor doesn't build for Windows now.
 ## If below is used, WinXT will not work.
@@ -408,24 +441,4 @@ jobs:
         - deploy-code:
             deploy_use_orb: false
 
-## -------------------------------------------
-## Ubuntu OS - Generally deprecated and not used.
-## -------------------------------------------
-## KEEP needed for Raspbian OpenCPN v5.6
-    build-ubuntu-armhf-1804-buster:
-        machine:
-            image: ubuntu-2204:current
-            resource_class: arm.medium
-        environment:
-        - OCPN_TARGET=buster-armhf
-        - DOCKER_IMAGE=jongough/ubuntu-armhf:18.04
-        - BUILD_FLAGS=-j3
-        - BUILD_ENV=ubuntu
-        - DEPLOY_USE_ORB: true
-        steps:
-        - checkout
-        - run: chmod a+x ./ci/*.sh
-        - run:
-            command: ci/circleci-build-ubuntu-docker.sh
-            no_output_timeout: 30m
-        - deploy-code
+
