@@ -419,13 +419,16 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     g_pLayerDir->Append( wxT("Layers") );
     appendOSDirSlash( g_pLayerDir );
 
-    m_pODicons = NULL;
+    m_pODicons = new ODicons();
+    m_pODicons->initialize_images();
 
     m_bRecreateConfig = false;
 }
 
 ocpn_draw_pi::~ocpn_draw_pi()
 {
+  delete m_pODicons;
+  m_pODicons = NULL;
 #ifdef __WXMSW__
 #ifdef _DEBUG
 // Only turn on if memory leaks suspected. Slows down shutdown when debugging
@@ -522,10 +525,10 @@ int ocpn_draw_pi::Init(void)
     wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
 
-    if (m_pODicons == NULL)
-        m_pODicons = new ODicons();
-
     LoadConfig();
+
+    m_pODicons->initialize_images();
+
     g_pODConfig->LateInit();
 
     g_pODSelect = new ODSelect();
@@ -540,8 +543,6 @@ int ocpn_draw_pi::Init(void)
     g_pPathList = new PathList;
     //    Layers
     g_pLayerList = new ODLayerList;
-
-    m_pODicons->initialize_images();
 
     if(m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
@@ -640,16 +641,19 @@ int ocpn_draw_pi::Init(void)
 #else
     g_pODToolbar = new ODToolbarImpl( m_parent_window, wxID_ANY, _("Draw Toolbar"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxCLOSE_BOX|wxRESIZE_BORDER );
 #endif
-    wxPoint wxpToolbarPos;
-    wxpToolbarPos.x = g_iToolbarPosX;
-    wxpToolbarPos.y = g_iToolbarPosY;
-    g_pODToolbar->SetPosition( wxpToolbarPos );
+    if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 )
+      g_pODToolbar->CenterOnParent();
+    else {
+      wxPoint wxpToolbarPos;
+      wxpToolbarPos.x = g_iToolbarPosX;
+      wxpToolbarPos.y = g_iToolbarPosY;
+      g_pODToolbar->SetPosition( wxpToolbarPos );
+    }
     g_pODToolbar->SetToolbarFont();
     g_pODToolbar->Fit();
     g_pODToolbar->SetInitialSize();
     g_pODToolbar->Bind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
     //g_pODToolbar->SetMaxSize(g_pODToolbar->GetSize());
-    if( g_iToolbarPosX == 0 && g_iToolbarPosY == 0 ) g_pODToolbar->CenterOnParent();
     if( g_iDisplayToolbar == ID_DISPLAY_ALWAYS ) g_pODToolbar->Show();
 
     // TODO fix up undo
@@ -869,11 +873,9 @@ bool ocpn_draw_pi::DeInit(void)
 
     if( g_pODToolbar ) {
         g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
-        DeleteWindow((wxWindow**)&g_pODToolbar);
+        delete g_pODToolbar;
+        g_pODToolbar = NULL;
     }
-
-    delete m_pODicons;
-    m_pODicons = NULL;
 
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
@@ -1081,14 +1083,17 @@ void ocpn_draw_pi::SetDefaults(void)
 {
 
 }
+
 wxBitmap *ocpn_draw_pi::GetPlugInBitmap()
 {
     return m_pODicons->m_p_bm_ocpn_draw_pi_properties;
 }
+
 int ocpn_draw_pi::GetToolbarToolCount(void)
 {
     return 1;
 }
+
 void ocpn_draw_pi::ShowPreferencesDialog( wxWindow* parent )
 {
     wxFont *l_dialogFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
@@ -3225,7 +3230,7 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
     m_chart_scale = pivp->chart_scale;
     m_view_scale = pivp->view_scale_ppm;
 
-    g_pDC = new piDC();
+    g_pDC = new piDC(pcontext);
     g_pDC->SetVP(pivp);
 
     LLBBox llbb;
@@ -3433,7 +3438,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg
             pathInfo << wxString::Format( wxString("From: %03d \u00B0, To: %03d \u00B0\n Dist:", wxConvUTF8 ), EBLbrgFrom, EBLbrgTo );
     } else {
         if( g_bShowMag )
-            pathInfo << wxString::Format( wxString("%03d\u00B0�(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
+            pathInfo << wxString::Format( wxString("%03d\u00B0(M)  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
         else
             pathInfo << wxString::Format( wxString("%03d \u00B0  ", wxConvUTF8 ), (int)GetTrueOrMag( brg ) );
     }
@@ -3822,7 +3827,7 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick( wxMouseEvent &event )
         r_rband.y = g_cursor_y;
         m_dStartLat = m_cursor_lat;
         m_dStartLon = m_cursor_lon;
-        //m_drawing_canvas_index = m_mouse_canvas_index;
+        m_drawing_canvas_index = m_mouse_canvas_index;
     }
 
     if(m_drawing_canvas_index != m_mouse_canvas_index) return false;

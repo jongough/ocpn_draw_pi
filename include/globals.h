@@ -61,6 +61,7 @@ class ODJSON;
 class ODPlugIn_Position_Fix_Ex;
 class ODAPI;
 class piDC;
+class ODicons;
 
 class PlugIn_ViewPort;
 
