@@ -105,6 +105,12 @@ void ODicons::initialize_images(void)
 
     m_failedBitmapLoad = false;
 
+    // Reload scaling constants to pick up global changes
+    // and local config file
+    m_iToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    m_iToolIconScaleFactor = g_IconDisplayScaleFactor * m_iToolScaleFactor;
+    m_iToolIconRefSize = g_IconDisplayScaleFactor * m_iToolScaleFactor;
+
 #ifdef ODraw_USE_MUI
     m_FileName.SetFullName(wxT("ODManager_MUI.svg"));
     m_s_ocpn_draw_pi = m_FileName.GetFullPath();

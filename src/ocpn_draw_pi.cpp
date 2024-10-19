@@ -873,12 +873,9 @@ bool ocpn_draw_pi::DeInit(void)
 
     if( g_pODToolbar ) {
         g_pODToolbar->Unbind(wxEVT_MENU, &ODToolbarImpl::OnToolButtonClick, g_pODToolbar);
-        delete m_pODicons;
-        m_pODicons = NULL;
+        delete g_pODToolbar;
+        g_pODToolbar = NULL;
     }
-
-    delete m_pODicons;
-    m_pODicons = NULL;
 
     if( g_ODEventHandler ) {
         if(g_ODEventHandler->GetEvtHandlerEnabled())
