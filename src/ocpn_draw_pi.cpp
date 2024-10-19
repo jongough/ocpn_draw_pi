@@ -522,10 +522,11 @@ int ocpn_draw_pi::Init(void)
     wxString sChangesFile = g_pODConfig->m_sODNavObjSetChangesFile;
     //    g_pODConfig->m_pODNavObjectChangesSet = new ODNavObjectChanges( sChangesFile );
 
+    LoadConfig();
+
     if (m_pODicons == NULL)
         m_pODicons = new ODicons();
 
-    LoadConfig();
     g_pODConfig->LateInit();
 
     g_pODSelect = new ODSelect();
