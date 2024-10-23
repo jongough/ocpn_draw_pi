@@ -1203,7 +1203,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
     if(!pOP)
         pOP = ODPointExists( GuidString );
     if(pOP && b_layer)
-        return NULL; // dont import if in a layer and ODPoint already exists
+        return pOP; // dont import if in a layer and ODPoint already exists
 
     if( !pOP ) {
         if( TypeString == wxT("Text Point") ) {
@@ -1378,7 +1378,6 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
 
         if( ChildName == _T ( "opencpn:ODPoint" ) ) {
             ODPoint *tpOp = GPXLoadODPoint1(  tschild, _T("square"), _T(""), b_fullviz, b_layer, b_layerviz, layer_id, true );
-
             pTentPath->AddPoint( tpOp, false, true, true);          // defer BBox calculation
             if(pTentBoundary) {
                 BoundaryPoint *l_pBP = dynamic_cast<BoundaryPoint *>(tpOp);
