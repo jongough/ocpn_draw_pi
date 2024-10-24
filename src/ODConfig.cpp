@@ -331,7 +331,7 @@ bool ODConfig::LoadLayers(wxString &path)
                     wxString laymsg;
                     laymsg.Printf( wxT("New layer %d: %s"), l_lLayer->m_LayerID, l_lLayer->m_LayerName.c_str() );
                     wxLogMessage( laymsg );
-                    
+
                     g_pLayerList->Insert( l_lLayer );
                     
                     //  Load the entire file array as a single layer
@@ -556,8 +556,21 @@ void ODConfig::UI_ImportGPX( wxWindow* parent, bool islayer, wxString dirpath, b
                 bLayerViz = false;
             l->m_bIsVisible = bLayerViz;
 
+            ODLayerList::iterator iter;
+            bool l_foundLayer = false;
+            for (iter = g_pLayerList->begin(); iter != g_pLayerList->end(); ++iter){
+              ODLayer *current = *iter;
+              if(current->GetName() == l->m_LayerName){
+                l_foundLayer = true;
+                break;
+              }
+            }
             wxString laymsg;
-            laymsg.Printf( _("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
+            if(l_foundLayer){
+              laymsg.Printf( wxT("Layer %d: %s is a duplicate"), l->m_LayerID, l->m_LayerName.c_str() );
+            } else {
+              laymsg.Printf( wxT("New layer %d: %s"), l->m_LayerID, l->m_LayerName.c_str() );
+            }
             wxLogMessage( laymsg );
 
             g_pLayerList->Insert( l );
@@ -710,7 +723,7 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
                         destf << name << _T(".") << ext;
                         wxString msg;
                         if( wxCopyFile(f, destf, true) ) {
-                            msg.Printf(_T("File: %s.%s also added to persistent layers"), name, ext);
+                            msg.Printf(_T("File: %s.%s also potentially added to persistent layers"), name, ext);
                             l_pLayer->m_LayerFileName = destf;
                         }
                         else
@@ -724,9 +737,24 @@ void ODConfig::UI_Import( wxWindow* parent, bool islayer, bool isTemporary, wxSt
                             bLayerViz = false;
                         l_pLayer->m_bIsVisibleOnChart = bLayerViz;
 
+                        ODLayerList::iterator iter;
+                        bool l_foundLayer = false;
+                        for (iter = g_pLayerList->begin(); iter != g_pLayerList->end(); ++iter){
+                          ODLayer *current = *iter;
+                          if(current->GetName() == l_pLayer->m_LayerName){
+                            l_foundLayer = true;
+                            break;
+                          }
+                        }
                         wxString laymsg;
-                        laymsg.Printf( _("New layer %d: %s"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
-                        wxLogMessage( laymsg );
+                        if(l_foundLayer){
+                          laymsg.Printf( wxT("Layer %d: %s is a duplicate, not added"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
+                          wxLogMessage( laymsg );
+                          continue;
+                        } else {
+                          laymsg.Printf( wxT("New layer %d: %s"), l_pLayer->m_LayerID, l_pLayer->m_LayerName.c_str() );
+                          wxLogMessage( laymsg );
+                        }
 
                         g_pLayerList->Insert( l_pLayer );
                     }
