@@ -69,7 +69,7 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "59")
+set(VERSION_PATCH "60")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE "09/04/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
@@ -406,9 +406,6 @@ if (NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/WindowsHeaders)
     target_link_libraries(${PACKAGE_NAME} windows::headers)
   endif (WIN32)
-
-#  add_subdirectory(libs/gdal)
-#  target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
 
   add_subdirectory(opencpn-libs/api-18)
   target_link_libraries(${PACKAGE_NAME} ocpn::api)
