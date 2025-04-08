@@ -289,6 +289,7 @@ bool ODConfig::LoadLayers(wxString& path) {
       }
 
       if (file_array.GetCount()) {
+        g_bLayersLoaded = true;
         l_lLayer = new ODLayer();
         l_lLayer->m_LayerID = ++g_LayerIdx;
         l_lLayer->m_LayerFileName = file_array[0];
@@ -301,9 +302,11 @@ bool ODConfig::LoadLayers(wxString& path) {
 
         bool bLayerViz = g_bShowLayers;
 
-        if (g_VisibleLayers.Contains(l_lLayer->m_LayerName)) bLayerViz = true;
-        if (g_InvisibleLayers.Contains(l_lLayer->m_LayerName))
-          bLayerViz = false;
+        if (g_bRestoreLayerVisability) {
+          if (g_VisibleLayers.Contains(l_lLayer->m_LayerName)) bLayerViz = true;
+          if (g_InvisibleLayers.Contains(l_lLayer->m_LayerName))
+            bLayerViz = false;
+        }
 
         l_lLayer->m_bIsVisible = bLayerViz;
 

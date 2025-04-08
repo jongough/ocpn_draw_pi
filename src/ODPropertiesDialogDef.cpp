@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b3)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -62,8 +62,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_checkBoxShowLayers = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Show Layers"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
 	fgSizer4->Add( m_checkBoxShowLayers, 0, wxALL, 5 );
 
-
-	fgSizer4->Add( 0, 0, 1, wxEXPAND, 5 );
+	m_checkBoxRestoreLayerVisability = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Remember layer visibility over restart"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_checkBoxRestoreLayerVisability, 0, wxALL, 5 );
 
 	m_staticTextNavObjBackups = new wxStaticText( m_panelGeneral, wxID_ANY, _("OCPN_Draw Nav Object Backups"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextNavObjBackups->Wrap( -1 );
@@ -1480,6 +1480,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 
 	// Connect Events
 	m_panelGeneral->Connect( wxEVT_SIZE, wxSizeEventHandler( ODPropertiesDialogDef::OnSize ), NULL, this );
+	m_checkBoxShowLayers->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnShowLayersClicked ), NULL, this );
+	m_checkBoxRestoreLayerVisability->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnRestoreLayerVisabilityClicked ), NULL, this );
 	m_buttonConfigFileEntries->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
@@ -1497,6 +1499,8 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 {
 	// Disconnect Events
 	m_panelGeneral->Disconnect( wxEVT_SIZE, wxSizeEventHandler( ODPropertiesDialogDef::OnSize ), NULL, this );
+	m_checkBoxShowLayers->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnShowLayersClicked ), NULL, this );
+	m_checkBoxRestoreLayerVisability->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnRestoreLayerVisabilityClicked ), NULL, this );
 	m_buttonConfigFileEntries->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );

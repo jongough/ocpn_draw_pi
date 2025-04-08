@@ -572,7 +572,12 @@ void ODPropertiesDialogImpl::SaveChanges()
     g_bRememberPropertyDialogPosition = m_checkBoxRememberPropertyPosition->GetValue();
     g_bShowMag = m_checkBoxShowMagBearings->GetValue();
     g_bAllowLeftDrag = m_checkBoxAllowLeftDrag->GetValue();
-    g_bShowLayers = m_checkBoxShowLayers->GetValue();
+    if(m_checkBoxShowLayers->IsEnabled())
+      g_bShowLayers = m_checkBoxShowLayers->GetValue();
+    else
+      g_bShowLayers = false;
+    if(m_checkBoxRestoreLayerVisability->IsEnabled())
+      g_bRestoreLayerVisability = m_checkBoxRestoreLayerVisability->GetValue();
     g_navobjbackups = m_spinCtrlNavObjBackups->GetValue();
 
     g_sTextPointIconName = m_bODIComboBoxTextPointIconName->GetValue();
@@ -1008,6 +1013,21 @@ void ODPropertiesDialogImpl::UpdateProperties( void )
     m_checkBoxShowMagBearings->SetValue( g_bShowMag );
     m_checkBoxAllowLeftDrag->SetValue( g_bAllowLeftDrag );
     m_checkBoxShowLayers->SetValue( g_bShowLayers );
+    if(g_bShowLayers) {
+      m_checkBoxRestoreLayerVisability->Disable();
+    }
+    else {
+      m_checkBoxRestoreLayerVisability->Enable();
+    }
+    m_checkBoxRestoreLayerVisability->SetValue( g_bRestoreLayerVisability );
+    if(g_bRestoreLayerVisability) {
+      m_checkBoxShowLayers->Disable();
+      m_checkBoxShowLayers-Show(false);
+    }
+    else {
+      m_checkBoxShowLayers->Enable();
+      m_checkBoxShowLayers-Show(true);
+    }
     m_spinCtrlNavObjBackups->SetValue( g_navobjbackups );
     m_sliderInitialEdgePan->SetValue( g_InitialEdgePanSensitivity );
     m_sliderEdgePan->SetValue( g_EdgePanSensitivity );
@@ -1144,3 +1164,22 @@ void ODPropertiesDialogImpl::RecalculateSize()
 
 }
 
+void ODPropertiesDialogImpl::OnShowLayersClicked( wxCommandEvent& event )
+{
+  if(m_checkBoxShowLayers->GetValue()) {
+    m_checkBoxRestoreLayerVisability->Disable();
+  }
+  else {
+    m_checkBoxRestoreLayerVisability->Enable();
+  }
+}
+
+void ODPropertiesDialogImpl::OnRestoreLayerVisabilityClicked( wxCommandEvent& event )
+{
+  if(m_checkBoxRestoreLayerVisability->GetValue()) {
+    m_checkBoxShowLayers->Disable();
+  }
+  else {
+    m_checkBoxShowLayers->Enable();
+  }
+}
