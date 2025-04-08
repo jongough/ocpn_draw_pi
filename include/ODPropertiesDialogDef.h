@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -41,7 +41,6 @@ class ODColourPickerCtrl;
 
 ///////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODPropertiesDialogDef
 ///////////////////////////////////////////////////////////////////////////////
@@ -59,6 +58,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxCheckBox* m_checkBoxShowMagBearings;
 		wxCheckBox* m_checkBoxAllowLeftDrag;
 		wxCheckBox* m_checkBoxShowLayers;
+		wxCheckBox* m_checkBoxRestoreLayerVisability;
 		wxStaticText* m_staticTextNavObjBackups;
 		wxSpinCtrl* m_spinCtrlNavObjBackups;
 		wxStaticText* m_staticTextEdgePan;
@@ -335,6 +335,8 @@ class ODPropertiesDialogDef : public wxDialog
 
 		// Virtual event handlers, override them in your derived class
 		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
+		virtual void OnShowLayersClicked( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnRestoreLayerVisabilityClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnClickConfigFileEntries( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }

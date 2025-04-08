@@ -23,7 +23,7 @@
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # -----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough Testplugn(TP) v1.0.319.0 21/12/2024 DD/MM/YYYY
+# Frontend2 Author: Jon Gough Testplugn(TP) v1.0.331.0 06/04/2025 DD/MM/YYYY
 # format buildCI:yes provideODAPI:yes validateJSON:yes
 # ---------------------------------------------------------------------------
 # -- When changing this file do NOT change the order of the sections. -- Make
@@ -34,12 +34,15 @@
 
 set(CMLOC "CMakeLists: ")
 
-cmake_minimum_required(VERSION 3.5.1)
-if (COMMAND cmake_policy)
+cmake_minimum_required(VERSION 3.10)
+if(COMMAND cmake_policy)
   if (POLICY CMP0043)
     cmake_policy(SET CMP0043 NEW)
   endif (POLICY CMP0043)
   cmake_policy(SET CMP0048 NEW)
+  if (POLICY CMP0068)
+    cmake_policy(SET CMP0068 NEW)
+  endif (POLICY CMP0068)
   if (POLICY CMP0076)
     cmake_policy(SET CMP0076 NEW)
   endif (POLICY CMP0076)
@@ -49,6 +52,12 @@ if (COMMAND cmake_policy)
   if (POLICY CMP0079)
     cmake_policy(SET CMP0079 NEW)
   endif (POLICY CMP0079)
+  if (POLICY CMP0175)
+    cmake_policy(SET CMP0175 NEW)
+  endif (POLICY CMP0175)
+  if (POLICY CMP0177)
+    cmake_policy(SET CMP0177 NEW)
+  endif (POLICY CMP0177)
 endif (COMMAND cmake_policy)
 
 # define plugin name, owner and versions
@@ -60,9 +69,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "58")
+set(VERSION_PATCH "60")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "22/12/2024") # DD/MM/YYYY format
+set(VERSION_DATE "09/04/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")
@@ -397,9 +406,6 @@ if (NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/WindowsHeaders)
     target_link_libraries(${PACKAGE_NAME} windows::headers)
   endif (WIN32)
-
-  add_subdirectory(libs/gdal)
-  target_link_libraries(${PACKAGE_NAME} ocpn::gdal)
 
   add_subdirectory(opencpn-libs/api-18)
   target_link_libraries(${PACKAGE_NAME} ocpn::api)

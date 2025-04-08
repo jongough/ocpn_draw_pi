@@ -59,6 +59,8 @@ protected:
     void OnDrawPropertiesCancelClick( wxCommandEvent& event );
     void OnDrawPropertiesApplyClick( wxCommandEvent& event );
     void OnPILIndexLineChoice( wxCommandEvent& event );
+    void OnShowLayersClicked( wxCommandEvent& event );
+    void OnRestoreLayerVisabilityClicked( wxCommandEvent& event );
     
     void SaveChanges();
     void applyStyle( void );

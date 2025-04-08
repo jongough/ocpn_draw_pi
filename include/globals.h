@@ -251,6 +251,8 @@ extern wxRect          g_blink_rect;
 
 extern int             g_LayerIdx;
 extern bool            g_bShowLayers;
+extern bool            g_bRestoreLayerVisability;
+extern bool            g_bLayersLoaded;
 extern wxString        g_VisibleLayers;
 extern wxString        g_InvisibleLayers;
 extern ODLayerList     *g_pLayerList;

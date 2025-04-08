@@ -281,6 +281,8 @@ wxRect          g_blink_rect;
 
 int             g_LayerIdx;
 bool            g_bShowLayers;
+bool            g_bRestoreLayerVisability;
+bool            g_bLayersLoaded;
 wxString        g_VisibleLayers;
 wxString        g_InvisibleLayers;
 ODLayerList     *g_pLayerList;
@@ -497,6 +499,7 @@ int ocpn_draw_pi::Init(void)
     m_mouse_canvas_index = -1;
     m_drawing_canvas_index = -1;
     g_bShowLayers = false;
+    g_bLayersLoaded = false;
     g_ocpn_draw_display_name = new wxString("OCPN Draw");
 
     // Drawing modes from toolbar
@@ -1594,6 +1597,7 @@ void ocpn_draw_pi::SaveConfig()
             pConf->Write( wxS( "ToolBarPosY" ), g_iToolbarPosY );
             pConf->Write( wxS( "DisplayToolbar"), g_iDisplayToolbar );
             pConf->Write( wxS( "DefaultShowLayers"), g_bShowLayers );
+            pConf->Write( wxS( "DefaultRestoreLayerVisability"), g_bRestoreLayerVisability );
             pConf->Write( wxS( "DefaultTextPointShowName"), g_bTextPointShowName );
             pConf->Write( wxS( "DefaultTextPointIcon" ), g_sTextPointIconName );
             pConf->Write( wxS( "DefaultTextColour" ), g_colourDefaultTextColour.GetAsString( wxC2S_CSS_SYNTAX ) );
@@ -1667,7 +1671,23 @@ void ocpn_draw_pi::SaveConfig()
                 pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionX" ), -1);
                 pConf->Write( wxS( "DefaultPathAndPointManagerDialogPositionY" ), -1);
             }
+            if (g_bLayersLoaded) {
+              wxString vis, invis, visnames, invisnames;
+              ODLayerList::iterator it;
+              int index = 0;
+              for (it = (*g_pLayerList).begin(); it != (*g_pLayerList).end(); ++it, ++index) {
+                ODLayer *lay = (ODLayer *)(*it);
+                if (lay->IsVisible())
+                  vis += (lay->m_LayerName) + _T(";");
+                else
+                  invis += (lay->m_LayerName) + _T(";");
+              }
+              g_VisibleLayers = vis;
+              g_InvisibleLayers = invis;
+            }
 
+            pConf->Write( wxS( "VisibleLayers" ), g_VisibleLayers);
+            pConf->Write( wxS( "InvisibleLayers" ), g_InvisibleLayers);
         }
     }
 
@@ -1898,6 +1918,7 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "ToolBarPosY" ), &g_iToolbarPosY, 0);
         pConf->Read( wxS( "DisplayToolbar" ), &g_iDisplayToolbar, 1 );
         pConf->Read( wxS( "DefaultShowLayers"), &g_bShowLayers, false );
+        pConf->Read( wxS( "DefaultRestoreLayerVisability"), &g_bRestoreLayerVisability, false );
 
         pConf->Read( wxS( "DefaultTextPointShowName"), &g_bTextPointShowName, false );
         pConf->Read( wxS( "DefaultTextPointIcon" ), &g_sTextPointIconName, wxS("Circle") );
@@ -1969,6 +1990,8 @@ void ocpn_draw_pi::LoadConfig()
         pConf->Read( wxS( "DefaultPathAndPointManagerDialogPositionX" ), &g_iDefaultPathAnPointManagerDialogPostionX, -1);
         pConf->Read( wxS( "DefaultPathAndPointManagerDialogPositionY" ), &g_iDefaultPathAnPointManagerDialogPostionY, -1);
 
+        pConf->Read( wxS( "VisibleLayers" ), &g_VisibleLayers, "");
+        pConf->Read( wxS( "InvisibleLayers" ), &g_InvisibleLayers, "");
     }
 
 #ifndef __WXMSW__
