@@ -388,9 +388,11 @@ Selected and then import then from the Layers tab Import.
 
 Layers can also be persistent meaning that the layer will be reloaded
 after a restart. By default persistent layers will not be shown,
-however, this behaviour can be changed by setting the *_Show Layers_*
-checkbox to a tick. Then all persistent layers will be shown over
-a restart.
+however, this behaviour can be changed by setting the either *_Show Layers_*
+checkbox or *_Remember layer visibility over restart_* checkbox to a tick.
+*_Show Layers_* will show all layers loaded.
+*_Remember layer visibility over restart_* will show layers shown at last
+ restart.
 
 An OpenCPN user has provided a set of layers for use within *Draw*
 describing zoning in Queensland Great Barrier Reef Marine Park
@@ -962,7 +964,15 @@ useful.
 
 === Show Layers
 
-This checkbox hides, unchecked, or shows, checked, layers on restart.
+This checkbox hides, unchecked, or shows, checked, layers on restart. If
+this checkbox is checked it disables the *_Remember layer visibility over restart_*
+checkbox.
+
+=== Remember layer visibility over restart
+
+This checkbox causes the currently displayed layers to be displayed again
+over a restart of OpenCPN. If this checkbox is checked it disables the
+ *_Show Layers_* checkbox.
 
 === Nav Object Backups
 
