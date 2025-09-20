@@ -40,8 +40,9 @@
     #undef snprintf
 #endif
 #include "nlohmann/json-schema.hpp"
-#include "json-patch.hpp"
-#include "jsonval.h"
+//#include "nlohmann/json.hpp"
+//#include "json-patch.hpp"
+//#include "jsonval.h"
 using nlohmann::json;
 using nlohmann::json_schema::json_validator;
 #endif
@@ -82,15 +83,9 @@ ODJSON::ODJSON()
     // ctor
 #ifdef OD_JSON_SCHEMA_VALIDATOR
     gODJSONMsgValidator = NULL;
-
-    /* Join both fragments of the schema together. Needed for MSVC limitation on litteral text */
-    jSchema = jSchema_defs.flatten();
-    json tmp = jSchema_scheme.flatten();
-    for(json::iterator it = tmp.begin(); it != tmp.end(); ++it)
-    {
-        jSchema[it.key()] = it.value();
-    }
-
+    DEBUGST("jSchema text: ");
+    DEBUGEND(json_text);
+    jSchema = json::parse(json_text);
 #endif
 }
 
@@ -153,6 +148,8 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 l_errorMsg.Append("Validation of message against schema failed, here is why: ");
                 l_errorMsg.Append(e.what());
                 wxLogMessage( l_errorMsg );
+                DEBUGST("l_errorMsg: ");
+                DEBUGEND(l_errorMsg);
                 bFail = true;
             }
         }
@@ -201,6 +198,9 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             bFail = true;
         }
 #endif
+DEBUGST("JSON Message: ");
+DEBUGEND(root[wxS("Msg")].AsString());
+
         if(!bFail && root[wxS("Msg")].AsString() == wxS("Version")) {
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
             jMsg[wxT("Msg")] = root[wxT("Msg")];
@@ -248,6 +248,10 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
                 jMsg[wxT("OD_AddPointIcon")] = wxString::From8BitData(ptr);
                 snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_DeletePointIcon );
                 jMsg[wxT("OD_DeletePointIcon")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindAllPathsGUIDS);
+                jMsg[wxT("OD_FindAllPathsGUIDS")] = wxString::From8BitData(ptr);
+                snprintf(ptr, sizeof ptr, "%p", ODAPI::OD_FindAllPointsGUIDS);
+                jMsg[wxT("OD_FindAllPointsGUIDS")] = wxString::From8BitData(ptr);
                 writer.Write( jMsg, MsgString );
                 SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
                 return;
@@ -1331,6 +1335,54 @@ void ODJSON::ProcessMessage(wxString &message_id, wxString &message_body)
             } else {
                 jMsg[wxS("Deleted")] = false;
             }
+        } else if (!bFail && root[wxS("Msg")].AsString() == wxS("GetGUID")) {
+          wxJSONValue jv_GUIDType;
+          wxJSONValue jv_InLayer;
+          wxArrayString l_GUIDList;
+          if(root[wxS("Type")].AsString() != _T("Request")) {
+            wxLogMessage( wxS("Get GUIDS not 'Request'") );
+            bFail = true;
+          }
+          if(!root.HasMember( wxS("GUIDType"))) {
+            wxLogMessage( wxS("No GUIDType found in message") );
+            bFail = true;
+          } else {
+            jv_GUIDType = root[wxS("GUIDType")];
+          }
+          if(!root.HasMember( wxS("InLayer"))) {
+            jv_InLayer = false;
+          } else {
+            jv_InLayer =  root[wxS("InLayer")];
+          }
+          if(!bFail) {
+            if(jv_GUIDType.AsString() == "" || jv_GUIDType.AsString() == "Boundary" || jv_GUIDType.AsString() == "EBL"){
+              wxString l_GUIDType = jv_GUIDType.AsString();
+              bool l_InLayer = jv_InLayer.AsBool();
+              l_GUIDList = *g_pPathMan->FindAllPathsGUIDS(l_GUIDType, l_InLayer);
+            } else {
+              wxString l_GUIDType = jv_GUIDType.AsString();
+              bool l_InLayer = jv_InLayer.AsBool();
+              l_GUIDList = *g_pODPointMan->FindAllPointsGUIDS(l_GUIDType, l_InLayer);
+            }
+
+            jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
+            jMsg[wxT("Msg")] = root[wxT("Msg")];
+            jMsg[wxT("Type")] = wxT("Response");
+            jMsg[wxT("MsgId")] = root[wxT("MsgId")].AsString();
+            DEBUGST("MsgId: ");
+            DEBUGEND(root[wxT("MsgId")].AsString());
+            for(int i = 0; i < (int)l_GUIDList.Count(); i++) {
+              jMsg[wxT("GUIDS")].Append(l_GUIDList[i]);
+            }
+
+            writer.Write( jMsg, MsgString );
+            SendPluginMessage( root[wxT("Source")].AsString(), MsgString );
+
+            return;
+          } else {
+            jMsg[wxS("Deleted")] = false;
+          }
+
         }
     } else if(message_id == _T("WMM_VARIATION_BOAT")) {
 

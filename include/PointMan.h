@@ -107,6 +107,8 @@ class PointMan
       wxString FindLineCrossingBoundary( double StartLat, double StartLon, double EndLat, double EndLon,
             int type = ID_BOUNDARY_ANY, int state = ID_POINT_STATE_ANY );
 
+      wxArrayString * FindAllPointsGUIDS ( wxString GUIDType, bool InLayer = false );
+
 protected:
 private:
     //void ProcessUserIcons( ocpnStyle::Style* style );

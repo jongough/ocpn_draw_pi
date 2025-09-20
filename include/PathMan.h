@@ -81,6 +81,8 @@ class PathMan
 
         bool        m_bDataValid;
 
+        wxArrayString * FindAllPathsGUIDS ( wxString GUIDType, bool InLayer = false );
+
     private:
         void DoAdvance(void);
 

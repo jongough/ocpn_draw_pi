@@ -26,7 +26,8 @@ R"(
                         "DeleteBoundaryPoint",
                         "DeleteTextPoint",
                         "AddPointIcon",
-                        "DeletePointIcon"
+                        "DeletePointIcon",
+                        "GetGUID"
                     ]
                 },
                 "Type": {
@@ -377,7 +378,6 @@ R"(
                 {"$ref": "#/definitions/LatLon"},
                 {"$ref": "#/definitions/ODObject"}
             ]
-        }
+        },
 
-    }
 )"
