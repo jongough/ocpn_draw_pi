@@ -70,8 +70,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "62")
-set(VERSION_TWEAK "0")
-set(VERSION_DATE "20/09/2025") # DD/MM/YYYY format
+set(VERSION_TWEAK "1")
+set(VERSION_DATE "21/09/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")
@@ -440,7 +440,6 @@ if (UNIX
         TARGET ${PACKAGE_NAME}
         POST_BUILD
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${PACKAGE_NAME}
         COMMENT " Running post build action on ${lib_name}."
         COMMAND
           sh -c
