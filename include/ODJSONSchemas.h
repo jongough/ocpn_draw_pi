@@ -22,7 +22,7 @@
  *   You should have received a copy of the GNU General Public License     *
  *   along with this program; if not, write to the                         *
  *   Free Software Foundation, Inc.,                                       *
- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
+ *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.         *
  ***************************************************************************
  */
 
@@ -36,13 +36,12 @@
 #define ODJSONSCHEMAS_H
 #if 1
 // split schema to enable MSVC to include large literal text
-static json jSchema_defs =
+static json jSchema;
+static auto json_text =
 #include "ODSchema_defs.json"
-;
-static json jSchema_scheme =
 #include "ODSchema_scheme.json"
 ;
-static json jSchema;
+
 #else
 // original large litteral text, but MSVC has issues with this
 static json jSchema =

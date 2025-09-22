@@ -702,6 +702,21 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
     return i + m_markicon_image_list_base_count;        // index of "X-ed out" icon in the image list
 }
 
+wxArrayString *PointMan::FindAllPointsGUIDS ( wxString GUIDType, bool InLayer )
+{
+  wxArrayString *GUIDArray = new wxArrayString();
+  wxODPointListNode *node = m_pODPointList->GetFirst();
+  while( node ) {
+    ODPoint *ppoint = node->GetData();
+    if(GUIDType == "" || ppoint->m_sTypeString == GUIDType)
+      if(InLayer == ppoint->m_bIsInLayer){
+        GUIDArray->Add( ppoint->m_GUID );
+      }
+    node = node->GetNext();
+  }
+  return GUIDArray;
+}
+
 ODPoint *PointMan::FindODPointByGUID(const wxString &guid)
 {
     wxODPointListNode *podpnode = m_pODPointList->GetFirst();

@@ -282,6 +282,22 @@ ODPath *PathMan::FindPathContainingODPoint( ODPoint *pODP )
     return NULL;                              // not found
 }
 
+wxArrayString *PathMan::FindAllPathsGUIDS ( wxString GUIDType, bool InLayer )
+{
+  wxArrayString *GUIDArray = new wxArrayString();
+  wxPathListNode *node = g_pPathList->GetFirst();
+  while( node ) {
+    ODPath *ppath = node->GetData();
+    if(GUIDType == "" || ppath->m_sTypeString == GUIDType) {
+      if(InLayer == ppath->m_bIsInLayer){
+        GUIDArray->Add( ppath->m_GUID );
+      }
+    }
+    node = node->GetNext();
+  }
+    return GUIDArray;
+}
+
 ODPath *PathMan::FindPathByGUID( wxString guid )
 {
     wxPathListNode *node = g_pPathList->GetFirst();

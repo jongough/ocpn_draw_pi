@@ -1,7 +1,7 @@
 R"(
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "OD Schemas",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
         "schemahead": {
             "description": "Standalone for simple queries or required for complex internactions as a part of the message",
@@ -26,7 +26,8 @@ R"(
                         "DeleteBoundaryPoint",
                         "DeleteTextPoint",
                         "AddPointIcon",
-                        "DeletePointIcon"
+                        "DeletePointIcon",
+                        "GetGUID"
                     ]
                 },
                 "Type": {
@@ -377,6 +378,51 @@ R"(
                 {"$ref": "#/definitions/LatLon"},
                 {"$ref": "#/definitions/ODObject"}
             ]
+        },
+        "GetGUID": {
+            "description": "Used to return a list of GUIDS of a certain type",
+            "type": "object",
+            "anyOf": [
+                {
+                    "allOf": [
+                        {
+                            "properties": {
+                                "GUIDType": {
+                                    "description": "Type of GUIDS to be returned",
+                                    "type": "string"
+                                }
+                            },
+                            "Type": {
+                                "description": "Type of Message",
+                                "enum": ["Request"]
+                            }
+                        }
+                    ],
+                    "anyOf":  [
+                        {
+                            "properties": {
+                                "InLayer": {
+                                    "description": "Is object in a Layer",
+                                    "type": "boolean",
+                                    "default": false
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "allOf": [
+                        {
+                            "properties": {
+                                "GUIDS": {
+                                    "description": "List of GUIDS returned",
+                                    "type": "array"
+                                }
+                            }
+                        }
+                    ],
+                }
+            ]
         }
 
     },
@@ -524,4 +570,4 @@ R"(
         }
     ]
 }
-)"_json
+)"_json;

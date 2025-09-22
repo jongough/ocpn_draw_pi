@@ -69,9 +69,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "60")
-set(VERSION_TWEAK "0")
-set(VERSION_DATE "09/04/2025") # DD/MM/YYYY format
+set(VERSION_PATCH "62")
+set(VERSION_TWEAK "1")
+set(VERSION_DATE "21/09/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "17")
@@ -327,28 +327,28 @@ set(EXTINCLUDE
 )
 
 if (APPLE OR QT_ANDROID)
-  option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
+  option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" OFF)
 else (APPLE OR QT_ANDROID)
-  option(PI_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
+  option(OD_JSON_SCHEMA_VALIDATOR "Use JSON Schema validator" ON)
 endif (APPLE OR QT_ANDROID)
 
-if (PI_JSON_SCHEMA_VALIDATOR)
+if (OD_JSON_SCHEMA_VALIDATOR)
   message(
     STATUS
       "${CMLOC}Using JSON Schema validation - warning this changes the 'flavour' of the executable and it may not be compatible with OpenCPN"
   )
-  add_definitions(-DPI_JSON_SCHEMA_VALIDATOR)
+  add_definitions(-DOD_JSON_SCHEMA_VALIDATOR)
   message(STATUS "${CMLOC}Adding JSON Schema validation")
 
   add_subdirectory(opencpn-libs/json-schema-validator)
   target_link_libraries(${PACKAGE_NAME} ocpn::json-schema-validator)
 
-else (PI_JSON_SCHEMA_VALIDATOR)
+else (OD_JSON_SCHEMA_VALIDATOR)
   message(
     STATUS
       "${CMLOC}Not using JSON Schema validation - warning invalid JSON 'may' cause unexpected crashes"
   )
-endif (PI_JSON_SCHEMA_VALIDATOR)
+endif (OD_JSON_SCHEMA_VALIDATOR)
 
 option(OD_USE_SVG "Use SVG graphics" ON)
 
@@ -440,7 +440,6 @@ if (UNIX
         TARGET ${PACKAGE_NAME}
         POST_BUILD
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        DEPENDS ${PACKAGE_NAME}
         COMMENT " Running post build action on ${lib_name}."
         COMMAND
           sh -c

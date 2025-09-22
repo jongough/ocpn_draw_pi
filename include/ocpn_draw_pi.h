@@ -162,6 +162,8 @@ typedef void (*_GLUfuncptr)();
 #endif
 
 #include "wxWTranslateCatalog.h"
+#include <cstdint>
+using std::int32_t;
 #include "ocpn_plugin.h"
 #include "globals.h"
 #include "ODUndo.h"
