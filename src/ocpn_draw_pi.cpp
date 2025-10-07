@@ -357,6 +357,8 @@ wxWindow *g_current_timer_canvas;
 int      g_current_canvas_index;
 int      g_current_timer_canvas_index;
 
+double  g_OCPN_GetDisplayContentScaleFactor;
+
 // the class factories, used to create and destroy instances of the PlugIn
 
 extern "C" DECL_EXP opencpn_plugin* create_pi(void *ppimgr)
@@ -375,7 +377,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
-:opencpn_plugin_117(ppimgr)
+:opencpn_plugin_118(ppimgr)
 {
     // Create the PlugIn icons
     g_ocpn_draw_pi = this;
@@ -520,6 +522,8 @@ int ocpn_draw_pi::Init(void)
     //m_parent_window = GetOCPNCanvasWindow();
     m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
+
+    g_OCPN_GetDisplayContentScaleFactor = OCPN_GetDisplayContentScaleFactor();
 
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );
@@ -964,7 +968,7 @@ void ocpn_draw_pi::DeleteWindow(wxWindow *pWindow)
         pWindow->Destroy();
         //delete pWindow;
 #endif
-        if(g_pODPathPropDialog == pWindow)
+        if((wxWindow *)g_pODPathPropDialog == pWindow)
             g_pODPathPropDialog = NULL;
 
         return;

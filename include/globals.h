@@ -326,4 +326,6 @@ extern wxWindow *g_current_timer_canvas;
 extern int      g_current_canvas_index;
 extern int      g_current_timer_canvas_index;
 
+extern double  g_OCPN_GetDisplayContentScaleFactor;
+
 #endif
