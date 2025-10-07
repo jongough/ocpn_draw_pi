@@ -357,7 +357,7 @@ wxWindow *g_current_timer_canvas;
 int      g_current_canvas_index;
 int      g_current_timer_canvas_index;
 
-double  g_OCPN_GetDisplayContentScaleFactor;
+double  g_OCPN_DisplayScaleFactor;
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -523,7 +523,10 @@ int ocpn_draw_pi::Init(void)
     m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
 
-    g_OCPN_GetDisplayContentScaleFactor = OCPN_GetDisplayContentScaleFactor();
+    g_OCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
+    #ifdef __WXMSW__
+      g_OCPN_DisplayScaleFactor *= OCPN_GetWinDIPScaleFactor();
+    #endif
 
     m_pODConfig = GetOCPNConfigObject();
     g_pODConfig = new ODConfig( wxString( wxS("") ), wxString( wxS("") ), wxS(" ") );

@@ -403,7 +403,7 @@ bool ODicons::SetScaleFactor()
 {
     if(m_dScaleFactor != GetOCPNGUIToolScaleFactor_PlugIn()) {
         m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
-        m_dScaleFactor *= g_OCPN_GetDisplayContentScaleFactor;
+        m_dScaleFactor *= g_OCPN_DisplayScaleFactor;
         return true;
     }
     return false;
