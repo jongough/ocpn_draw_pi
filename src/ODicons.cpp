@@ -36,8 +36,11 @@ ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
     m_iToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    if (g_IconDisplayScaleFactor == 0)
+      g_IconDisplayScaleFactor = 16;
     m_iToolIconScaleFactor = g_IconDisplayScaleFactor * m_iToolScaleFactor;
     m_iToolIconRefSize = g_IconDisplayScaleFactor * m_iToolScaleFactor;
+    m_iImageRefSize = m_iToolIconRefSize;
     wxLogMessage(wxT("ocpn_draw_pi ToolBarIconRefSize: %i"), m_iToolIconRefSize);
 
     m_bUpdateIcons = false;
@@ -226,7 +229,7 @@ void ODicons::initialize_images(void)
     m_bm_ocpn_draw_pil_grey = LoadToolbarSVG( m_FileName.GetFullPath() );
 #else
     m_FileName.SetFullName(wxT("ODManager.png"));
-    m_p_bm_ocpn_draw_pi = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );m_iImageRefSize
+    m_p_bm_ocpn_draw_pi = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
     if(!m_p_bm_ocpn_draw_pi->IsOk())  m_failedBitmapLoad = true;
     m_FileName.SetFullName(wxT("ODManagergrey.png"));
     m_p_bm_ocpn_draw_grey_pi = new wxBitmap( m_FileName.GetFullPath(), wxBITMAP_TYPE_PNG );
@@ -400,6 +403,7 @@ bool ODicons::SetScaleFactor()
 {
     if(m_dScaleFactor != GetOCPNGUIToolScaleFactor_PlugIn()) {
         m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+        m_dScaleFactor *= g_OCPN_GetDisplayContentScaleFactor;
         return true;
     }
     return false;
