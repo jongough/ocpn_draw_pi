@@ -531,7 +531,7 @@ int ocpn_draw_pi::Init(void)
 
     #ifdef __WXMSW__
       g_dOCPN_DisplayScaleFactor *= OCPN_GetWinDIPScaleFactor();
-      wxString sLogMessage;
+      sLogMessage.Empty();
       sLogMessage.append(wxT("ocpn_draw_pi: With Windows DIP Display Scale Factor: "));
       sLogMessage<<(g_dOCPN_DisplayScaleFactor);
       wxLogMessage(sLogMessage);
