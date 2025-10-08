@@ -69,7 +69,7 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
-set(VERSION_PATCH "64")
+set(VERSION_PATCH "65")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE "08/10/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")

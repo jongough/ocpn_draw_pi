@@ -83,8 +83,6 @@ ODJSON::ODJSON()
     // ctor
 #ifdef OD_JSON_SCHEMA_VALIDATOR
     gODJSONMsgValidator = NULL;
-    DEBUGST("jSchema text: ");
-    DEBUGEND(json_text);
     jSchema = json::parse(json_text);
 #endif
 }

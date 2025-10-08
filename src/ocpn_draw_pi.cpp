@@ -357,7 +357,7 @@ wxWindow *g_current_timer_canvas;
 int      g_current_canvas_index;
 int      g_current_timer_canvas_index;
 
-double  g_OCPN_DisplayScaleFactor;
+double  g_dOCPN_DisplayScaleFactor;
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -424,7 +424,7 @@ ocpn_draw_pi::ocpn_draw_pi(void *ppimgr)
     appendOSDirSlash( g_pLayerDir );
 
     m_pODicons = new ODicons();
-    m_pODicons->initialize_images();
+//    m_pODicons->initialize_images();
 
     m_bRecreateConfig = false;
 }
@@ -523,9 +523,18 @@ int ocpn_draw_pi::Init(void)
     m_parent_window = PluginGetFocusCanvas();
     g_parent_window = m_parent_window;
 
-    g_OCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
+    g_dOCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
+    wxString sLogMessage;
+    sLogMessage.append(wxT("ocpn_draw_pi: Base Display Scale Factor: "));
+    sLogMessage<<(g_dOCPN_DisplayScaleFactor);
+    wxLogMessage(sLogMessage);
+
     #ifdef __WXMSW__
-      g_OCPN_DisplayScaleFactor *= OCPN_GetWinDIPScaleFactor();
+      g_dOCPN_DisplayScaleFactor *= OCPN_GetWinDIPScaleFactor();
+      wxString sLogMessage;
+      sLogMessage.append(wxT("ocpn_draw_pi: With Windows DIP Display Scale Factor: "));
+      sLogMessage<<(g_dOCPN_DisplayScaleFactor);
+      wxLogMessage(sLogMessage);
     #endif
 
     m_pODConfig = GetOCPNConfigObject();
