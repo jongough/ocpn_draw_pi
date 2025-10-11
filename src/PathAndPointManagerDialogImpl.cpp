@@ -414,7 +414,7 @@ PathAndPointManagerDialogImpl::PathAndPointManagerDialogImpl(wxWindow* parent) {
                         g_iDefaultPathAnPointManagerDialogPostionY));
 
   // create a image list for the list with just the eye icon
-  wxImageList* imglist = new wxImageList(20, 20, true, 1);
+  wxImageList* imglist = new wxImageList(20 * g_dOCPN_DisplayScaleFactor, 20 * g_dOCPN_DisplayScaleFactor, true, 1);
   wxBitmap l_bmEye = wxBitmap(eye);
   wxBitmap l_bmEyex = wxBitmap(eyex);
   int w = l_bmEye.GetWidth();
