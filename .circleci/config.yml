@@ -41,8 +41,8 @@ workflows:
 #             <<: *std-filters
 #         - build-flatpak-x86-2408:
 #             <<: *std-filters
-         - build-msvc-wx32-2022:
-             <<: *std-filters
+#         - build-msvc-wx32-2022:
+#             <<: *std-filters
 #         - build-debian-arm64-12-bookworm:
 #             <<: *std-filters
 #         - build-debian-armhf-12-bookworm:
