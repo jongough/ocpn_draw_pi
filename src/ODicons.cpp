@@ -408,7 +408,7 @@ bool ODicons::SetScaleFactor()
         sLogMessage<<(m_dScaleFactor);
         wxLogMessage(sLogMessage);
 
-        //m_dScaleFactor *= g_dOCPN_DisplayScaleFactor;
+        m_dScaleFactor /= g_dOCPN_DisplayScaleFactor;
         return true;
     }
     return false;
