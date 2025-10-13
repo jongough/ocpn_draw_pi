@@ -403,6 +403,11 @@ bool ODicons::SetScaleFactor()
 {
     if(m_dScaleFactor != GetOCPNGUIToolScaleFactor_PlugIn()) {
         m_dScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+        wxString sLogMessage;
+        sLogMessage.append(wxT("ODicons: m_dScaleFactor: "));
+        sLogMessage<<(m_dScaleFactor);
+        wxLogMessage(sLogMessage);
+
         //m_dScaleFactor *= g_dOCPN_DisplayScaleFactor;
         return true;
     }
