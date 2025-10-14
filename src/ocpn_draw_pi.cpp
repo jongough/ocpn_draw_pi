@@ -3511,7 +3511,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg
     GetGlobalColor( wxS("UBLCK"), &tColour );
     dc.SetTextForeground( tColour );
     dc.SetPen( wxPen( tColour ) );
-    dc.DrawText( pathInfo, xp, yp );
+    dc.DrawTextEx( pathInfo, xp, yp, g_dOCPN_DisplayScaleFactor );
 
     wxString s0;
     if(path->m_sTypeString == wxT("Boundary")) {
@@ -3554,7 +3554,7 @@ void ocpn_draw_pi::RenderExtraPathLegInfo( piDC &dc, wxPoint ref_point, wxString
 
     GetGlobalColor( wxS("UBLCK"), &tColour );
     dc.SetPen( wxPen( tColour ) );
-    dc.DrawText( s, xp, yp );
+    dc.DrawTextEx( s, xp, yp, g_dOCPN_DisplayScaleFactor );
 }
 
 void ocpn_draw_pi::SetCurrentViewPort(PlugIn_ViewPort &vp)
