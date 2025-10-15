@@ -3500,6 +3500,10 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg
 #else
     dc.GetTextExtent( pathInfo, &w, &h );
 #endif
+    // Scale width and height
+    w *= g_dOCPN_DisplayScaleFactor;
+    h *= g_dOCPN_DisplayScaleFactor;
+
     xp = ref_point.x - w;
     yp = ref_point.y;
     yp += hilite_offset;
@@ -3547,6 +3551,9 @@ void ocpn_draw_pi::RenderExtraPathLegInfo( piDC &dc, wxPoint ref_point, wxString
     #else
     dc.GetTextExtent( s, &w, &h );
     #endif
+    // Scale width and height
+    w *= g_dOCPN_DisplayScaleFactor;
+    h *= g_dOCPN_DisplayScaleFactor;
 
     xp = ref_point.x - w;
     yp = ref_point.y + h;
