@@ -448,7 +448,7 @@ void TextPoint::DrawGL( PlugIn_ViewPort &pivp )
                         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
                         dc.SetPen( wxPen( m_colourSchemeTextColour ) );
-                        dc.DrawTextureAlpha( texrect, teX, teY, 1.0, wxPoint(r.x,r.y), 0, wxPoint(0,0));
+                        dc.DrawTextureAlpha( texrect, teX, teY, g_dOCPN_DisplayScaleFactor, wxPoint(r.x,r.y), 0, wxPoint(0,0));
 
                         glDisable(GL_BLEND);
                         glDisable(GL_TEXTURE_2D);
