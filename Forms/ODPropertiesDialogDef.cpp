@@ -103,12 +103,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_choiceToolbar->SetSelection( 1 );
 	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
 
-	m_staticTextConfigFileEntriesMsg = new wxStaticText( m_panelGeneral, wxID_ANY, _("Remove OCPN_Draw settings and restore to default on restart (No)"), wxDefaultPosition, wxDefaultSize, 0 );
-	m_staticTextConfigFileEntriesMsg->Wrap( 200 );
-	fgSizer4->Add( m_staticTextConfigFileEntriesMsg, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5 );
-
-	m_buttonConfigFileEntries = new wxButton( m_panelGeneral, wxID_ANY, _("Yes"), wxDefaultPosition, wxDefaultSize, 0 );
-	fgSizer4->Add( m_buttonConfigFileEntries, 0, wxALL, 5 );
+	m_cbConfigFileEntries = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Remove OCPN_Draw settings and\rrestore to default on restart"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_cbConfigFileEntries, 0, wxALL, 5 );
 
 
 	m_bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
@@ -1482,7 +1478,6 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelGeneral->Connect( wxEVT_SIZE, wxSizeEventHandler( ODPropertiesDialogDef::OnSize ), NULL, this );
 	m_checkBoxShowLayers->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnShowLayersClicked ), NULL, this );
 	m_checkBoxRestoreLayerVisability->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnRestoreLayerVisabilityClicked ), NULL, this );
-	m_buttonConfigFileEntries->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
@@ -1501,7 +1496,6 @@ ODPropertiesDialogDef::~ODPropertiesDialogDef()
 	m_panelGeneral->Disconnect( wxEVT_SIZE, wxSizeEventHandler( ODPropertiesDialogDef::OnSize ), NULL, this );
 	m_checkBoxShowLayers->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnShowLayersClicked ), NULL, this );
 	m_checkBoxRestoreLayerVisability->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnRestoreLayerVisabilityClicked ), NULL, this );
-	m_buttonConfigFileEntries->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnClickConfigFileEntries ), NULL, this );
 	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
 	m_checkBoxRotateWithBoat->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLRotateWithBoat ), NULL, this );
 	m_checkBoxEBLFixedEndPosition->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPropertiesDialogDef::OnEBLFixedEndPosition ), NULL, this );
