@@ -87,7 +87,7 @@ else ()
           STATUS
             "${CMLOC}START_URL: ${START_URL}, STRING_LENGTH: ${STRING_LENGTH}"
         )
-        if (${START_URL} GREATER_EQUAL ${STRING_LENGTH})
+        if (${START_URL} LESS_EQUAL ${STRING_LENGTH})
           string(SUBSTRING ${GIT_REPOSITORY_URL} ${START_URL} ${STRING_LENGTH}
                          GIT_REPOSITORY
           )
