@@ -3515,7 +3515,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg
     GetGlobalColor( wxS("UBLCK"), &tColour );
     dc.SetTextForeground( tColour );
     dc.SetPen( wxPen( tColour ) );
-    dc.DrawTextEx( pathInfo, xp, yp, 2.0 );
+    dc.DrawTextEx( pathInfo, xp, yp, g_dOCPN_DisplayScaleFactor );
     wxString sLogMessage;
     sLogMessage.append(wxT("ocpn_draw_pi: g_dOCPN_DisplayScaleFactor: "));
     sLogMessage<<(g_dOCPN_DisplayScaleFactor);
@@ -3552,8 +3552,8 @@ void ocpn_draw_pi::RenderExtraPathLegInfo( piDC &dc, wxPoint ref_point, wxString
     dc.GetTextExtent( s, &w, &h );
     #endif
     // Scale width and height
-    w *= g_dOCPN_DisplayScaleFactor;
-    h *= g_dOCPN_DisplayScaleFactor;
+    //w *= g_dOCPN_DisplayScaleFactor;
+    //h *= g_dOCPN_DisplayScaleFactor;
 
     xp = ref_point.x - w;
     yp = ref_point.y + h;
@@ -3565,7 +3565,7 @@ void ocpn_draw_pi::RenderExtraPathLegInfo( piDC &dc, wxPoint ref_point, wxString
 
     GetGlobalColor( wxS("UBLCK"), &tColour );
     dc.SetPen( wxPen( tColour ) );
-    dc.DrawTextEx( s, xp, yp, 4.0 );
+    dc.DrawTextEx( s, xp, yp, g_dOCPN_DisplayScaleFactor );
     wxString sLogMessage;
     sLogMessage.append(wxT("ocpn_draw_pi: g_dOCPN_DisplayScaleFactor: "));
     sLogMessage<<(g_dOCPN_DisplayScaleFactor);
