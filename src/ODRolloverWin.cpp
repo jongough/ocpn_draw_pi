@@ -93,16 +93,14 @@ void ODRolloverWin::SetBitmap( int rollover )
 //    wxPoint canvasPos = GetParent()->GetScreenPosition();
     wxPoint canvasPos = m_parent->GetScreenPosition();
 
-
+  bool usegl = false;
 #ifdef ocpnUSE_GL
-    bool usegl = g_bOpenGL;
-
+    usegl = g_bOpenGL;
 #ifdef __WXOSX__
     usegl = false;
 #endif
-
 #else
-    bool usegl = false;
+    usegl = false;
 #endif
 
     wxMemoryDC mdc;
