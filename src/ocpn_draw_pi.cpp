@@ -3558,10 +3558,6 @@ void ocpn_draw_pi::RenderExtraPathLegInfo( piDC &dc, wxPoint ref_point, wxString
     GetGlobalColor( wxS("UBLCK"), &tColour );
     dc.SetPen( wxPen( tColour ) );
     dc.DrawTextEx( s, xp, yp, g_dOCPN_DisplayScaleFactor );
-    wxString sLogMessage;
-    sLogMessage.append(wxT("ocpn_draw_pi: g_dOCPN_DisplayScaleFactor: "));
-    sLogMessage<<(g_dOCPN_DisplayScaleFactor);
-    wxLogMessage(sLogMessage);
 
 }
 
