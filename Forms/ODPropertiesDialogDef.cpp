@@ -103,8 +103,8 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_choiceToolbar->SetSelection( 1 );
 	fgSizer4->Add( m_choiceToolbar, 0, wxALL, 5 );
 
-	m_cbConfigFileEntries = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Remove OCPN_Draw settings and\rrestore to default on restart"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
-	fgSizer4->Add( m_cbConfigFileEntries, 0, wxALL, 5 );
+	m_cbConfigFileEntries = new wxCheckBox( m_panelGeneral, wxID_ANY, _("Remove OCPN_Draw settings and\nrestore to default on restart"), wxDefaultPosition, wxDefaultSize, wxALIGN_RIGHT );
+	fgSizer4->Add( m_cbConfigFileEntries, 0, wxALIGN_CENTER_VERTICAL|wxALIGN_LEFT|wxALL, 5 );
 
 
 	m_bSizerGeneral->Add( fgSizer4, 1, wxEXPAND, 5 );
