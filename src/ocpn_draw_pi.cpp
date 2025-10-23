@@ -535,6 +535,12 @@ int ocpn_draw_pi::Init(void)
       sLogMessage.append(_T("ocpn_draw_pi: WXMSW - DisplayScaleFactor: "));
       sLogMessage<<g_dOCPN_DisplayScaleFactor;
       wxLogMessage(sLogMessage);
+      double lCanvasWindowToDIP = GetOCPNCanvasWindow()->ToDIP(100);
+      sLogMessage = "";
+      sLogMessage.append(_T("ocpn_draw_pi: WXMSW - lCanvasWindowToDIP: "));
+      sLogMessage<<lCanvasWindowToDIP;
+      wxLogMessage(sLogMessage);
+
     #endif
 
     m_pODConfig = GetOCPNConfigObject();
