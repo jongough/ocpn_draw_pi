@@ -524,20 +524,9 @@ int ocpn_draw_pi::Init(void)
     g_parent_window = m_parent_window;
 
     g_dOCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
-    wxString sLogMessage;
-    sLogMessage.append(wxT("ocpn_draw_pi: Base Display Scale Factor: "));
-    sLogMessage<<(g_dOCPN_DisplayScaleFactor);
-    wxLogMessage(sLogMessage);
 
     #ifdef __WXMSW__
-      double DIPscale = OCPN_GetWinDIPScaleFactor();
       g_dOCPN_DisplayScaleFactor /= OCPN_GetWinDIPScaleFactor();
-      sLogMessage.Empty();
-      sLogMessage.append(wxT("ocpn_draw_pi: With Windows DIP Display Scale Factor: "));
-      sLogMessage<<(DIPscale);
-      sLogMessage.append(wxT(", DisplayScaleFactor: "));
-      sLogMessage<<(g_dOCPN_DisplayScaleFactor);
-      wxLogMessage(sLogMessage);
     #endif
 
     m_pODConfig = GetOCPNConfigObject();
