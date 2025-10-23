@@ -524,9 +524,17 @@ int ocpn_draw_pi::Init(void)
     g_parent_window = m_parent_window;
 
     g_dOCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
+    wxString sLogMessage = "";
+    sLogMessage.append(_T("ocpn_draw_pi: DisplayScaleFactor: "));
+    sLogMessage<<g_dOCPN_DisplayScaleFactor;
+    wxLogMessage(sLogMessage);
 
     #ifdef __WXMSW__
-      g_dOCPN_DisplayScaleFactor /= OCPN_GetWinDIPScaleFactor();
+      g_dOCPN_DisplayScaleFactor = 1.0 / OCPN_GetWinDIPScaleFactor();
+      sLogMessage = "";
+      sLogMessage.append(_T("ocpn_draw_pi: WXMSW - DisplayScaleFactor: "));
+      sLogMessage<<g_dOCPN_DisplayScaleFactor;
+      wxLogMessage(sLogMessage);
     #endif
 
     m_pODConfig = GetOCPNConfigObject();
