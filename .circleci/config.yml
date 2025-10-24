@@ -50,8 +50,8 @@ workflows:
 ## KEEP needed for Jammy with wx32
 #          - build-ubuntu-x86_64-2204-jammy:
 #              <<: *std-filters
-#          - build-macos-universal:
-#              <<: *std-filters
+          - build-macos-universal:
+              <<: *std-filters
 
 ## -------------------------------------------
 ## OpenCPN 5.6.2 Plugins  Frozen - 28/05/2023

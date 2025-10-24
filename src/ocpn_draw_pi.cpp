@@ -524,23 +524,10 @@ int ocpn_draw_pi::Init(void)
     g_parent_window = m_parent_window;
 
     g_dOCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
-    wxString sLogMessage = "";
-    sLogMessage.append(_T("ocpn_draw_pi: DisplayScaleFactor: "));
-    sLogMessage<<g_dOCPN_DisplayScaleFactor;
-    wxLogMessage(sLogMessage);
 
     #ifdef __WXMSW__
       g_dOCPN_DisplayScaleFactor = 1.0 / OCPN_GetWinDIPScaleFactor();
-      sLogMessage = "";
-      sLogMessage.append(_T("ocpn_draw_pi: WXMSW - DisplayScaleFactor: "));
-      sLogMessage<<g_dOCPN_DisplayScaleFactor;
-      wxLogMessage(sLogMessage);
       double lCanvasWindowToDIP = GetOCPNCanvasWindow()->ToDIP(100);
-      sLogMessage = "";
-      sLogMessage.append(_T("ocpn_draw_pi: WXMSW - lCanvasWindowToDIP: "));
-      sLogMessage<<lCanvasWindowToDIP;
-      wxLogMessage(sLogMessage);
-
     #endif
 
     m_pODConfig = GetOCPNConfigObject();
@@ -3294,6 +3281,8 @@ bool ocpn_draw_pi::RenderGLOverlays(wxGLContext *pcontext, PlugIn_ViewPort *pivp
 
 bool ocpn_draw_pi::RenderGLOverlayMultiCanvas(wxGLContext *pcontext, PlugIn_ViewPort *vp, int canvas_index, int priority)
 {
+  if(priority != OVERLAY_LEGACY) return false;
+
     g_bOpenGL = true;
     m_current_canvas_index = canvas_index;
     bool bRet = RenderGLOverlays(pcontext, vp);
@@ -3519,10 +3508,6 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC &dc, ODPath *path, double brg
     dc.SetTextForeground( tColour );
     dc.SetPen( wxPen( tColour ) );
     dc.DrawTextEx( pathInfo, xp, yp, g_dOCPN_DisplayScaleFactor );
-    wxString sLogMessage;
-    sLogMessage.append(wxT("ocpn_draw_pi: g_dOCPN_DisplayScaleFactor: "));
-    sLogMessage<<(g_dOCPN_DisplayScaleFactor);
-    wxLogMessage(sLogMessage);
 
     wxString s0;
     if(path->m_sTypeString == wxT("Boundary")) {
