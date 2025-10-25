@@ -113,7 +113,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelGeneral->SetSizer( m_bSizerGeneral );
 	m_panelGeneral->Layout();
 	m_bSizerGeneral->Fit( m_panelGeneral );
-	m_notebookProperties->AddPage( m_panelGeneral, _("General"), true );
+	m_notebookProperties->AddPage( m_panelGeneral, _("General"), false );
 	m_panelBoundary = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelBoundary->SetScrollRate( 5, 5 );
 	m_fgSizerBoundarySettings = new wxFlexGridSizer( 0, 1, 0, 0 );
@@ -373,7 +373,7 @@ bool ODPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxStr
 	m_panelBoundaryPoint->SetSizer( m_bSizerOCPNPoint );
 	m_panelBoundaryPoint->Layout();
 	m_bSizerOCPNPoint->Fit( m_panelBoundaryPoint );
-	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), false );
+	m_notebookProperties->AddPage( m_panelBoundaryPoint, _("Boundary Point"), true );
 	m_panelTextPoint = new wxScrolledWindow( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL|wxVSCROLL );
 	m_panelTextPoint->SetScrollRate( 5, 5 );
 	m_fgSizerTextPoint = new wxFlexGridSizer( 0, 1, 0, 0 );
