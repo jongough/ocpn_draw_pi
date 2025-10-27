@@ -728,6 +728,8 @@ void ODPathPropertiesDialogImpl::SetPointsListHeadings()
     else
         m_listCtrlODPoints->InsertColumn( ID_BEARING_FROM_TO, _("Bearing From-To"), wxLIST_FORMAT_LEFT );
     m_listCtrlODPoints->InsertColumn( ID_DESCRIPTION, _("Description"), wxLIST_FORMAT_LEFT );
+    m_bSizerListCtrl->Layout();
+    m_listCtrlODPoints->Layout();
 }
 
 void ODPathPropertiesDialogImpl::SetViewableItems()
