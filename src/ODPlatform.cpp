@@ -76,6 +76,9 @@ bool ODColourPickerCtrl::Create( wxWindow *parent, wxWindowID id,
                         const wxValidator& validator, const wxString &name)
 {
     int refDim = parent->GetCharHeight();
+#ifdef __WXMSW__
+    refDim /= g_dOCPN_DisplayScaleFactor;
+#endif
     m_bitmap = wxBitmap( refDim * 4, refDim * 1 );
 
     // create this button
