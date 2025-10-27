@@ -75,7 +75,7 @@ GZProp::GZProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
     m_radioBoxPathPersistence->SetLabel( _("Guard Zone Persistence") );
-    m_fgSizerPathPoints->ShowItems( true );
+    m_bSizerPathPoints->ShowItems( true );
 
 #ifdef __OCPN__ANDROID__
     wxSizerItem *l_sizerItem = m_fgSizerBoundary->GetItem(m_colourPickerLineColour);

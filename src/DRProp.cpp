@@ -45,7 +45,7 @@ DRProp::DRProp( wxWindow* parent, wxWindowID id, const wxString& caption, const 
     m_checkBoxPathShowArrow->Enable( true );
     m_radioBoxPathPersistence->Show();
     m_radioBoxPathPersistence->Enable( true );
-    m_fgSizerPathPoints->ShowItems( true );
+    m_bSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));

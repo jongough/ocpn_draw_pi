@@ -71,7 +71,7 @@ EBLProp::EBLProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     m_textCtrlEBLAngle->Show();
     m_textCtrlEBLAngle->Enable(true);
     m_textCtrlEBLAngle->SetEditable(true);
-    m_fgSizerPathPoints->ShowItems( true );
+    m_bSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
 
