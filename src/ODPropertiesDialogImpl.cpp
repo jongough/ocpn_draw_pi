@@ -686,18 +686,18 @@ void ODPropertiesDialogImpl::SaveChanges() {
   g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
   g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
 
-  if (g_IconDisplayScaleFactor != m_sliderIconScaling->GetValue()) {
-    g_IconDisplayScaleFactor = m_sliderIconScaling->GetValue();
+  if (g_IconDisplayScaleFactor != (double)m_sliderIconScaling->GetValue()) {
+    g_IconDisplayScaleFactor = (double)m_sliderIconScaling->GetValue();
     g_ocpn_draw_pi->m_pODicons->m_bScaleIcons = true;
   }
 
   g_iDisplayToolbar = m_choiceToolbar->GetSelection();
   switch (g_iDisplayToolbar) {
     case ID_DISPLAY_NEVER:
-      g_pODToolbar->Hide();
+      g_pODToolbar->Show(false);
       break;
     case ID_DISPLAY_ALWAYS:
-      g_pODToolbar->Show();
+      g_pODToolbar->Show(true);
       break;
   }
 

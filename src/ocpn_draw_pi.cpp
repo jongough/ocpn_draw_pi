@@ -288,7 +288,7 @@ ODLayerList     *g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
-int             g_IconDisplayScaleFactor;
+double          g_IconDisplayScaleFactor;
 
 wxString        *g_ODlocale;
 int             g_iLocaleDepth;

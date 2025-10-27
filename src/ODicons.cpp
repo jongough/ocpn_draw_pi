@@ -35,13 +35,13 @@
 ODicons::ODicons()
 {
     m_dScaleFactor = 1.0;
-    m_iToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    m_dToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
     if (g_IconDisplayScaleFactor == 0)
       g_IconDisplayScaleFactor = 16;
-    m_iToolIconScaleFactor = g_IconDisplayScaleFactor * m_iToolScaleFactor;
-    m_iToolIconRefSize = g_IconDisplayScaleFactor * m_iToolScaleFactor;
-    m_iImageRefSize = m_iToolIconRefSize;
-    wxLogMessage(wxT("ocpn_draw_pi ToolBarIconRefSize: %i"), m_iToolIconRefSize);
+    m_dToolIconScaleFactor = g_IconDisplayScaleFactor * m_dToolScaleFactor;
+    m_dToolScaleFactor = g_IconDisplayScaleFactor * m_dToolScaleFactor;
+    m_dToolScaleFactor = m_dToolScaleFactor;
+    wxLogMessage(wxT("ocpn_draw_pi ToolBarIconRefSize: %d"), m_dToolScaleFactor);
 
     m_bUpdateIcons = false;
     m_bScaleIcons = false;
@@ -99,7 +99,7 @@ void ODicons::initialize_properties_image(void)
         int ret = OCPNMessageBox_PlugIn( NULL, _("Failed to load all OCPN Draw Plugin icons, check OCPN log for details"), _("OpenCPN Alert"), wxOK );
     } else {
         CreateSchemeIcons();
-        //ScaleIcons();
+        ScaleIcons();
     }
 }
 
@@ -110,9 +110,9 @@ void ODicons::initialize_images(void)
 
     // Reload scaling constants to pick up global changes
     // and local config file
-    m_iToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
-    m_iToolIconScaleFactor = g_IconDisplayScaleFactor * m_iToolScaleFactor;
-    m_iToolIconRefSize = g_IconDisplayScaleFactor * m_iToolScaleFactor;
+    m_dToolScaleFactor = GetOCPNGUIToolScaleFactor_PlugIn();
+    m_dToolIconScaleFactor = g_IconDisplayScaleFactor * m_dToolScaleFactor;
+    m_dToolScaleFactor = g_IconDisplayScaleFactor * m_dToolScaleFactor;
 
 #ifdef ODraw_USE_MUI
     m_FileName.SetFullName(wxT("ODManager_MUI.svg"));
@@ -290,15 +290,15 @@ void ODicons::initialize_images(void)
         int ret = OCPNMessageBox_PlugIn( NULL, _("Failed to load all OCPN Draw Plugin icons, check OCPN log for details"), _("OpenCPN Alert"), wxOK );
     } else {
         CreateSchemeIcons();
-        //ScaleIcons();
+        ScaleIcons();
     }
 }
 
 #ifdef ODraw_USE_SVG
 wxBitmap ODicons::LoadSVG( const wxString filename, unsigned int width, unsigned int height)
 {
-    if( width == UINT_MAX ) width = m_iImageRefSize;
-    if( height == UINT_MAX ) height = m_iImageRefSize;
+    if( width == UINT_MAX ) width = m_dToolScaleFactor;
+    if( height == UINT_MAX ) height = m_dToolScaleFactor;
 
     wxString s = _("ocpn_draw_pi LoadSVG");
     wxLogMessage( wxT("%s: filename: %s,  width: %u, height: %u"), s.c_str(), filename, width, height);
@@ -313,8 +313,8 @@ wxBitmap ODicons::LoadSVG( const wxString filename, unsigned int width, unsigned
 
 wxBitmap ODicons::LoadToolbarSVG( const wxString filename, unsigned int width, unsigned int height)
 {
-    if( width == UINT_MAX ) width = m_iToolIconRefSize;
-    if( height == UINT_MAX) height = m_iToolIconRefSize;
+    if( width == UINT_MAX ) width = m_dToolScaleFactor;
+    if( height == UINT_MAX) height = m_dToolScaleFactor;
 
     return LoadSVG(filename, width, height);
 }
