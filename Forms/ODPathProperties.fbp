@@ -3404,7 +3404,7 @@
                   <property name="minimum_size"></property>
                   <property name="name">m_bSizerPathPoints</property>
                   <property name="orient">wxVERTICAL</property>
-                  <property name="permission">none</property>
+                  <property name="permission">protected</property>
                   <object class="sizeritem" expanded="false">
                     <property name="border">5</property>
                     <property name="flag">wxALL</property>
