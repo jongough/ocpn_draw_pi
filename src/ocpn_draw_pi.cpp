@@ -514,7 +514,7 @@ int ocpn_draw_pi::Init(void) {
 
   g_dOCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
 
-#ifdef __WXMSW__
+#if defined(__WXMSW__) || defined(__WXOSX__)
   g_dOCPN_DisplayScaleFactor = 1.0 / OCPN_GetWinDIPScaleFactor();
   double lCanvasWindowToDIP = GetOCPNCanvasWindow()->ToDIP(100);
 #endif
@@ -3600,7 +3600,7 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
     if (info.length() > 0) RenderExtraPathLegInfo(dc, m_cursorPoint, info);
     delete ebl;
   } else if (m_pSelectedPIL && (nPIL_State > 0 || m_bEBLMoveOrigin)) {
-    EBL* ebl = new EBL();
+    PIL* pil = new PIL();
     double brg, dist;
     wxPoint boatpoint;
     if (m_bEBLMoveOrigin) {
@@ -3609,16 +3609,16 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
       GetCanvasPixLL(&g_VP, &boatpoint, tp->m_lat, tp->m_lon);
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, tp->m_lat,
                                      tp->m_lon, &brg, &dist);
-      ebl->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
+      pil->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
     } else {
       GetCanvasPixLL(&g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon);
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, g_pfFix.Lat,
                                      g_pfFix.Lon, &brg, &dist);
-      ebl->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
+      pil->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
     }
-    wxString info = CreateExtraPathLegInfo(dc, ebl, brg, dist, m_cursorPoint);
+    wxString info = CreateExtraPathLegInfo(dc, pil, brg, dist, m_cursorPoint);
     if (info.length() > 0) RenderExtraPathLegInfo(dc, m_cursorPoint, info);
-    delete ebl;
+    delete pil;
   } else if (nGZ_State > 0) {
     // draw line from boat to cursor
     EBL* ebl = new EBL();
