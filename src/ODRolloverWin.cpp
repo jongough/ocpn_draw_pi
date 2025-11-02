@@ -228,10 +228,13 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
     m_plabelFont = wxTheFontList->FindOrCreateFont( font_size, dFont->GetFamily(),
                          dFont->GetStyle(), dFont->GetWeight(), false, dFont->GetFaceName() );
 
+    wxSize sizeM;
     if(m_plabelFont && m_plabelFont->IsOk()) {
 #ifdef __WXMAC__
         wxScreenDC sdc;
+        sdc.SetFont(*m_plabelFont);
         sdc.GetMultiLineTextExtent(m_string, &w, &h, NULL, m_plabelFont);
+        sizeM = sdc.GetTextExtent("M");
 #else
 //        wxClientDC cdc( GetParent() );
         wxClientDC cdc( m_parent );
@@ -243,8 +246,10 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
         h = 10;
     }
 
-    m_size.x = w + 8;
-    m_size.y = h + 8;
+    m_size.x = w + sizeM.x;
+    m_size.y = h + sizeM.y;
+
+    m_size *= OCPN_GetWinDIPScaleFactor();  // g_BasePlatform->GetDisplayDPIMult(this);
 
     int xp, yp;
     if( ( x + off_x + m_size.x ) > parent_size.x ) {
