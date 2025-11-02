@@ -522,7 +522,7 @@ int ocpn_draw_pi::Init(void) {
   double lCanvasWindowToDIP = GetOCPNCanvasWindow()->ToDIP(100);
   l_sLogMessage.append(_T(", DIP Scale Factor: "));
   l_sLogMessage<<(OCPN_GetWinDIPScaleFactor());
-  l_sLogMessage.append(_T(", DisplayScaleFactor: "))
+  l_sLogMessage.append(_T(", DisplayScaleFactor: "));
   l_sLogMessage<<(g_dOCPN_DisplayScaleFactor);
 #endif
   wxLogMessage(l_sLogMessage);
