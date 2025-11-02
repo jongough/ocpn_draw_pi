@@ -142,6 +142,13 @@ void ODEventHandler::SetLatLon( double lat, double lon )
 {
     m_cursor_lat = lat;
     m_cursor_lon = lon;
+    wxString l_sLatLon;
+    l_sLatLon.append(_T("ODE:: Lat: "));
+    l_sLatLon<<(lat);
+    l_sLatLon.append(_T(", Lon: "));
+    l_sLatLon<<(lon);
+    wxLogMessage(l_sLatLon);
+
 }
 
 
