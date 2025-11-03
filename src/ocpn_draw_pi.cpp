@@ -3485,13 +3485,13 @@ bool ocpn_draw_pi::RenderOverlayMultiCanvas(wxDC& dc, PlugIn_ViewPort* vp,
   return bRet;
 }
 
-bool ocpn_draw_pi::RenderGLOverlay(wxGLContext* pcontext,
+bool ocpn_draw_pi::RenderGLOverlay1(wxGLContext* pcontext,
                                    PlugIn_ViewPort* pivp) {
   g_bOpenGL = true;
   return RenderGLOverlays(pcontext, pivp);
 }
 
-bool ocpn_draw_pi::RenderGLOverlays1(wxGLContext* pcontext,
+bool ocpn_draw_pi::RenderGLOverlays(wxGLContext* pcontext,
                                     PlugIn_ViewPort* pivp) {
   m_pcontext = pcontext;
   m_VP = *pivp;
