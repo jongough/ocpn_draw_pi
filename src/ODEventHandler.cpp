@@ -142,7 +142,6 @@ void ODEventHandler::SetLatLon( double lat, double lon )
 {
     m_cursor_lat = lat;
     m_cursor_lon = lon;
-
 }
 
 

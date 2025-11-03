@@ -3491,7 +3491,7 @@ bool ocpn_draw_pi::RenderGLOverlay(wxGLContext* pcontext,
   return RenderGLOverlays(pcontext, pivp);
 }
 
-bool ocpn_draw_pi::RenderGLOverlays(wxGLContext* pcontext,
+bool ocpn_draw_pi::RenderGLOverlays1(wxGLContext* pcontext,
                                     PlugIn_ViewPort* pivp) {
   m_pcontext = pcontext;
   m_VP = *pivp;
