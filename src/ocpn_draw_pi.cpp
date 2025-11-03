@@ -513,19 +513,11 @@ int ocpn_draw_pi::Init(void) {
   g_parent_window = m_parent_window;
 
   g_dOCPN_DisplayScaleFactor = OCPN_GetDisplayContentScaleFactor();
-  wxString l_sLogMessage;
-  l_sLogMessage.append(_T("OD:: DisplayContentScaleFactor: "));
-  l_sLogMessage<<(g_dOCPN_DisplayScaleFactor);
 
-#if defined(__WXMSW__) || defined(__WXOSX__)
+#ifdef __WXMSW__
   g_dOCPN_DisplayScaleFactor *= 1.0 / OCPN_GetWinDIPScaleFactor();
   double lCanvasWindowToDIP = GetOCPNCanvasWindow()->ToDIP(100);
-  l_sLogMessage.append(_T(", DIP Scale Factor: "));
-  l_sLogMessage<<(OCPN_GetWinDIPScaleFactor());
-  l_sLogMessage.append(_T(", DisplayScaleFactor: "));
-  l_sLogMessage<<(g_dOCPN_DisplayScaleFactor);
 #endif
-  wxLogMessage(l_sLogMessage);
 
   m_pODConfig = GetOCPNConfigObject();
   g_pODConfig = new ODConfig(wxString(wxS("")), wxString(wxS("")), wxS(" "));
@@ -3397,6 +3389,10 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon) {
   m_cursor_lat = lat;
   m_cursor_lon = lon;
 
+  DEBUGST("OD:: Lat: ");
+  DEBUGCONT(lat);
+  DEBUGCONT(", Lon: ");
+  DEBUGEND(lon);
   wxString l_sLatLon;
   l_sLatLon.append(_T("OD:: Lat: "));
   l_sLatLon<<(lat);
