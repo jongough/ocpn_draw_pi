@@ -3700,14 +3700,15 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
       ptPath = ebl;
     }
     double brg, dist;
-    wxPoint boatpoint;
+    wxPoint boatpoint, cursorpoint;
     GetCanvasPixLL(&g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon);
+    GetCanvasPixLL(&g_VP, &cursorpoint, m_cursor_lat, m_cursor_lon);
     DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, g_pfFix.Lat,
                                    g_pfFix.Lon, &brg, &dist);
-    ptPath->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
+    ptPath->DrawSegment(dc, &boatpoint, &cursorpoint, m_VP, false);
     wxString info =
-        CreateExtraPathLegInfo(dc, ptPath, brg, dist, m_cursorPoint);
-    if (info.length() > 0) RenderExtraPathLegInfo(dc, m_cursorPoint, info);
+        CreateExtraPathLegInfo(dc, ptPath, brg, dist, cursorpoint);
+    if (info.length() > 0) RenderExtraPathLegInfo(dc, cursorpoint, info);
     delete ptPath;
   }
 }
