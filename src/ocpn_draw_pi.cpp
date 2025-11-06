@@ -61,7 +61,7 @@
 #include "ODJSON.h"
 #include "ODPoint.h"
 #include "ODSelect.h"
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "ODToolbarImpl.h"
 #include "ODUtils.h"
 #include "version.h"
@@ -128,7 +128,7 @@ GZProp                  *g_pGZPropDialog;
 ODLinkPropertiesDialogImpl *g_pODLinkPropertiesDialog;
 PILProp                 *g_pPILPropDialog;
 PathAndPointManagerDialogImpl *g_pPathAndPointManagerDialog;
-ODPointPropertiesImpl   *g_pODPointPropDialog;
+ODPointPropertiesDialogImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 ODDRDialogImpl          *g_pODDRDialog;
@@ -2508,7 +2508,7 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
       }
 
       if (NULL == g_pODPointPropDialog)
-        g_pODPointPropDialog = new ODPointPropertiesImpl(m_parent_window);
+        g_pODPointPropDialog = new ODPointPropertiesDialogImpl(m_parent_window);
 
       DimeWindow(g_pODPointPropDialog);
       g_pODPointPropDialog->SetODPoint(m_pFoundODPoint);
@@ -3388,17 +3388,6 @@ void ocpn_draw_pi::SetCursorLatLon(double lat, double lon) {
 
   m_cursor_lat = lat;
   m_cursor_lon = lon;
-
-  DEBUGST("OD:: Lat: ");
-  DEBUGCONT(lat);
-  DEBUGCONT(", Lon: ");
-  DEBUGEND(lon);
-  wxString l_sLatLon;
-  l_sLatLon.append(_T("OD:: Lat: "));
-  l_sLatLon<<(lat);
-  l_sLatLon.append(_T(", Lon: "));
-  l_sLatLon<<(lon);
-  wxLogMessage(l_sLatLon);
 
   if (g_ODEventHandler) {
     g_ODEventHandler->SetLatLon(lat, lon);

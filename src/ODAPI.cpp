@@ -42,7 +42,7 @@
 #include "ODPath.h"
 #include "ODPathPropertiesDialogImpl.h"
 #include "PathAndPointManagerDialogImpl.h"
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "ODSelect.h"
 #include "PathMan.h"
 #include "PointMan.h"

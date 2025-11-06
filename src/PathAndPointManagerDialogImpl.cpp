@@ -37,7 +37,7 @@
 #include "ODEventHandler.h"
 #include "ODPath.h"
 #include "ODPathPropertiesDialogImpl.h"
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "Boundary.h"
 #include "BoundaryProp.h"
 #include "EBL.h"
@@ -1443,7 +1443,7 @@ void PathAndPointManagerDialogImpl::OnODPointPropertiesClick(
 void PathAndPointManagerDialogImpl::ODPointShowPropertiesDialog(
     ODPoint* odp, wxWindow* parent) {
   if (NULL == g_pODPointPropDialog)
-    g_pODPointPropDialog = new ODPointPropertiesImpl(parent);
+    g_pODPointPropDialog = new ODPointPropertiesDialogImpl(parent);
 
   g_pODPointPropDialog->SetODPoint(odp);
   g_pODPointPropDialog->UpdateProperties();

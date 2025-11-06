@@ -65,7 +65,7 @@ using nlohmann::json_schema::json_validator;
 #include "ODAPI.h"
 #include "PointMan.h"
 #include "TextPoint.h"
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "ODPathPropertiesDialogImpl.h"
 
 #include "version.h"

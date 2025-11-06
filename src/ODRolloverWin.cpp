@@ -249,7 +249,8 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
     m_size.x = w + sizeM.x;
     m_size.y = h + sizeM.y;
 
-    m_size *= OCPN_GetWinDIPScaleFactor();  // g_BasePlatform->GetDisplayDPIMult(this);
+    m_size.x *= OCPN_GetWinDIPScaleFactor();  // g_BasePlatform->GetDisplayDPIMult(this);
+    m_size.y *= OCPN_GetWinDIPScaleFactor();  // g_BasePlatform->GetDisplayDPIMult(this);
 
     int xp, yp;
     if( ( x + off_x + m_size.x ) > parent_size.x ) {

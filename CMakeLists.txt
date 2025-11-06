@@ -70,8 +70,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "8")
 set(VERSION_PATCH "65")
-set(VERSION_TWEAK "53")
-set(VERSION_DATE "03/11/2025") # DD/MM/YYYY format
+set(VERSION_TWEAK "54")
+set(VERSION_DATE "06/11/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "18")
@@ -213,8 +213,8 @@ set(SRCS
     src/ODPathPropertiesDialogDef.cpp
     src/ODPathPropertiesDialogImpl.cpp
     src/ODPoint.cpp
-    src/ODPointPropertiesDialog.cpp
-    src/ODPointPropertiesImpl.cpp
+    src/ODPointPropertiesDialogDef.cpp
+    src/ODPointPropertiesDialogImpl.cpp
     src/ODPositionParser.cpp
     src/ODPropertiesDialogDef.cpp
     src/ODPropertiesDialogImpl.cpp
@@ -274,8 +274,8 @@ set(HDRS
     include/ODPathPropertiesDialogDef.h
     include/ODPathPropertiesDialogImpl.h
     include/ODPoint.h
-    include/ODPointPropertiesDialog.h
-    include/ODPointPropertiesImpl.h
+    include/ODPointPropertiesDialogDef.h
+    include/ODPointPropertiesDialogImpl.h
     include/ODPositionParser.h
     include/ODPropertiesDialogDef.h
     include/ODPropertiesDialogImpl.h

@@ -44,7 +44,7 @@
 #include "styles.h"
 #include "PathMan.h"
 #include "PathAndPointManagerDialogImpl.h"
-#include "ODPointPropertiesImpl.h"
+#include ""
 #include "tinyxml.h"
 
 Undo::Undo()

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -7,20 +7,20 @@
 
 #include "ODPlatform.h"
 
-#include "ODPointPropertiesDialog.h"
+#include "ODPointPropertiesDialogDef.h"
 
 ///////////////////////////////////////////////////////////////////////////
 
-ODPointPropertiesDialog::ODPointPropertiesDialog()
+ODPointPropertiesDialogDef::ODPointPropertiesDialogDef()
 {
 }
 
-ODPointPropertiesDialog::ODPointPropertiesDialog( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+ODPointPropertiesDialogDef::ODPointPropertiesDialogDef( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
 	this->Create( parent, id, title, pos, size, style );
 }
 
-bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
+bool ODPointPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style )
 {
 	if ( !wxDialog::Create( parent, id, title, pos, size, style ) )
 	{
@@ -138,7 +138,7 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	wxString m_radioBoxBoundaryPointTypeChoices[] = { _("Exclusion"), _("Inclusion"), _("Neither") };
 	int m_radioBoxBoundaryPointTypeNChoices = sizeof( m_radioBoxBoundaryPointTypeChoices ) / sizeof( wxString );
 	m_radioBoxBoundaryPointType = new wxRadioBox( m_scrolledWindowBasicProperties, wxID_ANY, _("Point Type"), wxDefaultPosition, wxDefaultSize, m_radioBoxBoundaryPointTypeNChoices, m_radioBoxBoundaryPointTypeChoices, 1, wxRA_SPECIFY_ROWS );
-	m_radioBoxBoundaryPointType->SetSelection( 1 );
+	m_radioBoxBoundaryPointType->SetSelection( 0 );
 	m_bSizerRangeRingsControl->Add( m_radioBoxBoundaryPointType, 1, wxALL|wxEXPAND, 5 );
 
 
@@ -285,7 +285,7 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	m_menuItemAddNew = new wxMenuItem( m_menuLink, wxID_ANY, wxString( _("Add New") ) , wxEmptyString, wxITEM_NORMAL );
 	m_menuLink->Append( m_menuItemAddNew );
 
-	m_scrolledWindowLinks->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::m_scrolledWindowLinksOnContextMenu ), NULL, this );
+	m_scrolledWindowLinks->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialogDef::m_scrolledWindowLinksOnContextMenu ), NULL, this );
 
 	m_bSizerHyperlinkExt->Add( m_scrolledWindowLinks, 1, wxEXPAND | wxALL, 0 );
 
@@ -320,7 +320,7 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	m_scrolledWindowBasicProperties->SetSizer( m_SizerBasicProperties );
 	m_scrolledWindowBasicProperties->Layout();
 	m_SizerBasicProperties->Fit( m_scrolledWindowBasicProperties );
-	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), false );
+	m_notebookProperties->AddPage( m_scrolledWindowBasicProperties, _("Basic"), true );
 	m_panelDisplayText = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	m_SizerDisplayText = new wxBoxSizer( wxVERTICAL );
 
@@ -424,7 +424,7 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	m_panelDisplayText->SetSizer( m_SizerDisplayText );
 	m_panelDisplayText->Layout();
 	m_SizerDisplayText->Fit( m_panelDisplayText );
-	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), true );
+	m_notebookProperties->AddPage( m_panelDisplayText, _("Display text"), false );
 	m_panelExtended = new wxPanel( m_notebookProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* bSizer3;
 	bSizer3 = new wxBoxSizer( wxVERTICAL );
@@ -490,44 +490,44 @@ bool ODPointPropertiesDialog::Create( wxWindow* parent, wxWindowID id, const wxS
 	m_SizerDialogBox->Fit( this );
 
 	// Connect Events
-	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialog::OnPointPropertiesClose ) );
-	m_textLatitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
-	m_textLatitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textLongitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
-	m_textLongitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
-	m_radioBoxBoundaryPointType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
-	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
-	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnMenuSelection ), this, m_menuItemDelete->GetId());
-	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnMenuSelection ), this, m_menuItemEdit->GetId());
-	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnMenuSelection ), this, m_menuItemAddNew->GetId());
-	m_buttonAddLink->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnAddLink ), NULL, this );
-	m_toggleBtnEditLink->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnEditLinkToggle ), NULL, this );
-	m_toggleBtnDeleteLink->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnDeleteLinkToggle ), NULL, this );
-	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );
-	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
-	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
+	this->Connect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialogDef::OnPointPropertiesClose ) );
+	m_textLatitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialogDef::OnRightClick ), NULL, this );
+	m_textLatitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPositionCtlUpdated ), NULL, this );
+	m_textLongitude->Connect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialogDef::OnRightClick ), NULL, this );
+	m_textLongitude->Connect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPositionCtlUpdated ), NULL, this );
+	m_checkBoxShowODPointRangeRings->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnShowRangeRingsSelect ), NULL, this );
+	m_radioBoxBoundaryPointType->Connect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnRadioBoxPointType ), NULL, this );
+	m_textDescription->Connect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnDescChangedBasic ), NULL, this );
+	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnMenuSelection ), this, m_menuItemDelete->GetId());
+	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnMenuSelection ), this, m_menuItemEdit->GetId());
+	m_menuLink->Bind(wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnMenuSelection ), this, m_menuItemAddNew->GetId());
+	m_buttonAddLink->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnAddLink ), NULL, this );
+	m_toggleBtnEditLink->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnEditLinkToggle ), NULL, this );
+	m_toggleBtnDeleteLink->Connect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnDeleteLinkToggle ), NULL, this );
+	m_buttonTextFont->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
+	m_OK->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPointPropertiesOKClick ), NULL, this );
+	m_Cancel->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPointPropertiesCancelClick ), NULL, this );
 
 	return true;
 }
 
-ODPointPropertiesDialog::~ODPointPropertiesDialog()
+ODPointPropertiesDialogDef::~ODPointPropertiesDialogDef()
 {
 	// Disconnect Events
-	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialog::OnPointPropertiesClose ) );
-	m_textLatitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
-	m_textLatitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_textLongitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialog::OnRightClick ), NULL, this );
-	m_textLongitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialog::OnPositionCtlUpdated ), NULL, this );
-	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnShowRangeRingsSelect ), NULL, this );
-	m_radioBoxBoundaryPointType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialog::OnRadioBoxPointType ), NULL, this );
-	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialog::OnDescChangedBasic ), NULL, this );
-	m_buttonAddLink->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnAddLink ), NULL, this );
-	m_toggleBtnEditLink->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnEditLinkToggle ), NULL, this );
-	m_toggleBtnDeleteLink->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnDeleteLinkToggle ), NULL, this );
-	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnButtonClickFonts ), NULL, this );
-	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesOKClick ), NULL, this );
-	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialog::OnPointPropertiesCancelClick ), NULL, this );
+	this->Disconnect( wxEVT_CLOSE_WINDOW, wxCloseEventHandler( ODPointPropertiesDialogDef::OnPointPropertiesClose ) );
+	m_textLatitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialogDef::OnRightClick ), NULL, this );
+	m_textLatitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPositionCtlUpdated ), NULL, this );
+	m_textLongitude->Disconnect( wxEVT_RIGHT_DOWN, wxMouseEventHandler( ODPointPropertiesDialogDef::OnRightClick ), NULL, this );
+	m_textLongitude->Disconnect( wxEVT_COMMAND_TEXT_ENTER, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPositionCtlUpdated ), NULL, this );
+	m_checkBoxShowODPointRangeRings->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnShowRangeRingsSelect ), NULL, this );
+	m_radioBoxBoundaryPointType->Disconnect( wxEVT_COMMAND_RADIOBOX_SELECTED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnRadioBoxPointType ), NULL, this );
+	m_textDescription->Disconnect( wxEVT_COMMAND_TEXT_UPDATED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnDescChangedBasic ), NULL, this );
+	m_buttonAddLink->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnAddLink ), NULL, this );
+	m_toggleBtnEditLink->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnEditLinkToggle ), NULL, this );
+	m_toggleBtnDeleteLink->Disconnect( wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnDeleteLinkToggle ), NULL, this );
+	m_buttonTextFont->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnButtonClickFonts ), NULL, this );
+	m_OK->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPointPropertiesOKClick ), NULL, this );
+	m_Cancel->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( ODPointPropertiesDialogDef::OnPointPropertiesCancelClick ), NULL, this );
 
 	delete m_menuLink;
 }

@@ -31,8 +31,8 @@ src/ODPath.cpp
 src/ODPathPropertiesDialogDef.cpp
 src/ODPathPropertiesDialogImpl.cpp
 src/ODPoint.cpp
-src/ODPointPropertiesDialog.cpp
-src/ODPointPropertiesImpl.cpp
+src/ODPointPropertiesDialogDef.cpp
+src/ODPointPropertiesDialogImpl.cpp
 src/ODPositionParser.cpp
 src/ODPropertiesDialogDef.cpp
 src/ODPropertiesDialogImpl.cpp
@@ -89,8 +89,8 @@ include/ODPath.h
 include/ODPathPropertiesDialogDef.h
 include/ODPathPropertiesDialogImpl.h
 include/ODPoint.h
-include/ODPointPropertiesDialog.h
-include/ODPointPropertiesImpl.h
+include/ODPointPropertiesDialogDef.h
+include/ODPointPropertiesDialogImpl.h
 include/ODPositionParser.h
 include/ODPropertiesDialogDef.h
 include/ODPropertiesDialogImpl.h
