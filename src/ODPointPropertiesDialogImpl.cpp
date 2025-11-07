@@ -325,6 +325,7 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         h->LType = wxEmptyString;
         //m_pODPoint->m_HyperlinkList->Append( h );
         m_pHyperLinkList->Append(h);
+        g_pODLinkPropertiesDialog = NULL;
         UpdateProperties();
     }
     event.Skip();
