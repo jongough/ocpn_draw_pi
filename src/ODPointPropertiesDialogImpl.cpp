@@ -327,6 +327,7 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         m_pHyperLinkList->Append(h);
         UpdateProperties();
     }
+    event.Skip();
 }
 
 void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
@@ -1036,7 +1037,11 @@ void ODPointPropertiesDialogImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
     #else
     wxString url = event.GetURL();
     url.Replace(_T(" "), _T("%20") );
-    ::wxLaunchDefaultBrowser(url);
+      #ifdef __WXOSX__
+        ::wxExecute( url, wxEXEC_ASYNC, NULL, NULL );
+      #else
+        ::wxLaunchDefaultBrowser(url);
+      #endif
     //    event.Skip();
     #endif
 }
