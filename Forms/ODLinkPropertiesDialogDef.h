@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -30,7 +30,6 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
 /// Class ODLinkPropertiesDialogDef
 ///////////////////////////////////////////////////////////////////////////////
@@ -56,8 +55,8 @@ class ODLinkPropertiesDialogDef : public wxDialog
 	public:
 
 		ODLinkPropertiesDialogDef();
-		ODLinkPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 189,299 ), long style = wxDEFAULT_DIALOG_STYLE );
-		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 189,299 ), long style = wxDEFAULT_DIALOG_STYLE );
+		ODLinkPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 189,299 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 189,299 ), long style = wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP );
 
 		~ODLinkPropertiesDialogDef();
 
