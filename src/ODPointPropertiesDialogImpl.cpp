@@ -214,7 +214,7 @@ void ODPointPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
     m_pfdDialog = new wxFontDialog( this, l_FontData );
     m_pfdDialog->Centre( wxBOTH );
 
-    int iRet = m_pfdDialog->ShowModal();
+    int iRet = m_pfdDialog->Show();
     if(iRet == wxID_OK) {
         m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
         SetDialogSize();
@@ -316,7 +316,7 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
 
     DimeWindow(g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
-    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
+    if( g_pODLinkPropertiesDialog->Show() == wxID_OK ) {
         wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
         if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
         Hyperlink* h = new Hyperlink();
@@ -347,7 +347,7 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
             if(findurl == l_link->Link && findlabel == l_link->DescrText) {
                 g_pODLinkPropertiesDialog->SetLinkDescription(l_link->DescrText);
                 g_pODLinkPropertiesDialog->SetLinkURL(l_link->Link);
-                if(g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
+                if(g_pODLinkPropertiesDialog->Show() == wxID_OK) {
                     l_link->DescrText = g_pODLinkPropertiesDialog->GetLinkDescription();
                     l_link->Link = g_pODLinkPropertiesDialog->GetLinkURL();
                     UpdateProperties();
