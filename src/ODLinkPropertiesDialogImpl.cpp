@@ -61,6 +61,7 @@ void ODLinkPropertiesDialogImpl::OnOKClick(wxCommandEvent& event)
     
     Show( false );
     SetReturnCode(wxID_OK);
+    EndModal(wxID_OK);
     event.Skip();
 }
 
