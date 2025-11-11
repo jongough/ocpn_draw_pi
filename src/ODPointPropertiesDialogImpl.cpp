@@ -315,6 +315,8 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
 //    ODLinkPropertiesDialogImpl dlg(m_parent_window);
 
+    long l_lStyle = GetExtraStyle();
+    SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
     DimeWindow((wxWindow *)g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
     if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
@@ -328,6 +330,7 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         m_pHyperLinkList->Append(h);
         UpdateProperties();
     }
+    SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
     Show(true);
     Raise();
     event.Skip();
@@ -341,6 +344,8 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
 
+    long l_lStyle = GetExtraStyle();
+    SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
     DimeWindow(g_pODLinkPropertiesDialog);
     if(m_pHyperLinkList->GetCount()) {
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
@@ -361,6 +366,7 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
         }
     }
 
+    SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
     Show(true);
     Raise();
 
