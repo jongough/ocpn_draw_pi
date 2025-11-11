@@ -51,7 +51,7 @@
       <property name="name">ODPointPropertiesDialogDef</property>
       <property name="pos"></property>
       <property name="size">-1,-1</property>
-      <property name="style">wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER</property>
+      <property name="style">wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxSTAY_ON_TOP</property>
       <property name="subclass"></property>
       <property name="title">OD Point Properties</property>
       <property name="tooltip"></property>
@@ -244,7 +244,7 @@
                       <property name="window_extra_style"></property>
                       <property name="window_name"></property>
                       <property name="window_style"></property>
-                      <object class="wxBoxSizer" expanded="false">
+                      <object class="wxBoxSizer" expanded="true">
                         <property name="minimum_size"></property>
                         <property name="name">m_SizerBasicProperties</property>
                         <property name="orient">wxVERTICAL</property>
@@ -311,11 +311,11 @@
                             <property name="wrap">-1</property>
                           </object>
                         </object>
-                        <object class="sizeritem" expanded="false">
+                        <object class="sizeritem" expanded="true">
                           <property name="border">5</property>
                           <property name="flag">wxEXPAND</property>
                           <property name="proportion">0</property>
-                          <object class="wxBoxSizer" expanded="false">
+                          <object class="wxBoxSizer" expanded="true">
                             <property name="minimum_size"></property>
                             <property name="name">m_SizerOuterProperties</property>
                             <property name="orient">wxVERTICAL</property>
@@ -2554,11 +2554,11 @@
                                 </object>
                               </object>
                             </object>
-                            <object class="sizeritem" expanded="false">
+                            <object class="sizeritem" expanded="true">
                               <property name="border">5</property>
                               <property name="flag">wxEXPAND</property>
                               <property name="proportion">0</property>
-                              <object class="wxBoxSizer" expanded="false">
+                              <object class="wxBoxSizer" expanded="true">
                                 <property name="minimum_size"></property>
                                 <property name="name">m_bSizerHyperlink</property>
                                 <property name="orient">wxVERTICAL</property>
@@ -2625,11 +2625,11 @@
                                     <property name="wrap">-1</property>
                                   </object>
                                 </object>
-                                <object class="sizeritem" expanded="false">
+                                <object class="sizeritem" expanded="true">
                                   <property name="border">5</property>
                                   <property name="flag">wxEXPAND</property>
                                   <property name="proportion">1</property>
-                                  <object class="wxBoxSizer" expanded="false">
+                                  <object class="wxBoxSizer" expanded="true">
                                     <property name="minimum_size"></property>
                                     <property name="name">m_bSizerHyperlinkExt</property>
                                     <property name="orient">wxVERTICAL</property>

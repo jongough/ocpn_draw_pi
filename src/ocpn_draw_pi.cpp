@@ -1321,7 +1321,7 @@ void ocpn_draw_pi::ItemProcess(int id) {
           SetCursor_PlugIn(m_pCurrentCursor);
           SetToolbarItemState(m_draw_button_id, true);
           g_pODToolbar->SetToolbarTool(m_Mode);
-          if (g_iDisplayToolbar != ID_DISPLAY_NEVER) g_pODToolbar->Show(true);
+          if (g_iDisplayToolbar != ID_DISPLAY_NEVER) g_pODToolbar->Show();
         } else {
           m_iCallerId = 0;
           nBoundary_State = 0;

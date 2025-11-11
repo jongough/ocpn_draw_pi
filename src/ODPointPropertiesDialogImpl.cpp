@@ -313,10 +313,11 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
 
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
+//    ODLinkPropertiesDialogImpl dlg(m_parent_window);
 
-    DimeWindow(g_pODLinkPropertiesDialog);
+    DimeWindow((wxWindow *)g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
-    if( g_pODLinkPropertiesDialog->Show() == wxID_OK ) {
+    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
         wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
         if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
         Hyperlink* h = new Hyperlink();
@@ -325,9 +326,9 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         h->LType = wxEmptyString;
         //m_pODPoint->m_HyperlinkList->Append( h );
         m_pHyperLinkList->Append(h);
-        g_pODLinkPropertiesDialog = NULL;
         UpdateProperties();
     }
+
     event.Skip();
 }
 
@@ -344,14 +345,15 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
         while(l_plinknode) {
             Hyperlink *l_link = l_plinknode->GetData();
-            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+            if(findurl == l_link->Link || findlabel == l_link->DescrText) {
                 g_pODLinkPropertiesDialog->SetLinkDescription(l_link->DescrText);
                 g_pODLinkPropertiesDialog->SetLinkURL(l_link->Link);
-                if(g_pODLinkPropertiesDialog->Show() == wxID_OK) {
+                if(g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
                     l_link->DescrText = g_pODLinkPropertiesDialog->GetLinkDescription();
                     l_link->Link = g_pODLinkPropertiesDialog->GetLinkURL();
                     UpdateProperties();
                 }
+
                 break;
             }
             l_plinknode = l_plinknode->GetNext();
