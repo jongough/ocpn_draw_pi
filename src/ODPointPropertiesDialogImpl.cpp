@@ -329,6 +329,7 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         UpdateProperties();
     }
     Show(true);
+    Raise();
     event.Skip();
 }
 
@@ -359,6 +360,9 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
             l_plinknode = l_plinknode->GetNext();
         }
     }
+
+    Show(true);
+    Raise();
 
     event.Skip();
 }
