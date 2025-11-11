@@ -1048,11 +1048,11 @@ void ODPointPropertiesDialogImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
     #else
     wxString url = event.GetURL();
     url.Replace(_T(" "), _T("%20") );
-      #ifdef __WXOSX__
-        ::wxExecute( url, wxEXEC_ASYNC, NULL, NULL );
-      #else
+//      #ifdef __WXOSX__
+//        ::wxExecute( url, wxEXEC_ASYNC, NULL, NULL );
+//      #else
         ::wxLaunchDefaultBrowser(url);
-      #endif
+//      #endif
     //    event.Skip();
     #endif
 }
