@@ -380,7 +380,7 @@ void ODPointPropertiesDialogImpl::OnDeleteLink( wxCommandEvent& event )
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
         while(l_plinknode) {
             Hyperlink *l_link = l_plinknode->GetData();
-            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+            if(findurl == l_link->Link || findlabel == l_link->DescrText) {
                 m_pHyperLinkList->DeleteNode(l_plinknode);
                 break;
             }
