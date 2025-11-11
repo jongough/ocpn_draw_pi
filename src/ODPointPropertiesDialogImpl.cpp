@@ -318,7 +318,6 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
     SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
     DimeWindow((wxWindow *)g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
-    //if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
     if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
         wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
         if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
@@ -369,7 +368,6 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
     SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
     Show(true);
     Raise();
-
     event.Skip();
 }
 

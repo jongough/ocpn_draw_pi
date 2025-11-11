@@ -48,7 +48,8 @@ ODLinkPropertiesDialogImpl::ODLinkPropertiesDialogImpl( wxWindow* parent )
 void ODLinkPropertiesDialogImpl::OnCancelClick(wxCommandEvent& event)
 {
     Show( false );
-    SetReturnCode(wxID_CANCEL);
+    //SetReturnCode(wxID_CANCEL);
+    EndModal(wxID_CANCEL);
     event.Skip();
 }
 
@@ -60,7 +61,7 @@ void ODLinkPropertiesDialogImpl::OnOKClick(wxCommandEvent& event)
         m_textCtrlURL->SetValue(m_filePickerLocalFile->GetFileName().GetFullPath());
     
     Show( false );
-    SetReturnCode(wxID_OK);
+    //SetReturnCode(wxID_OK);
     EndModal(wxID_OK);
     event.Skip();
 }
