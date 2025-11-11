@@ -313,18 +313,23 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
 
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
-//    ODLinkPropertiesDialogImpl dlg(m_parent_window);
+    ODLinkPropertiesDialogImpl dlg(m_parent_window);
 
     long l_lStyle = GetExtraStyle();
     SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
     DimeWindow((wxWindow *)g_pODLinkPropertiesDialog);
+    DimeWindow((wxWindow *)&dlg);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
-    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
+    dlg.SetODPoint(m_pODPoint);
+    //if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
+    if( dlg.ShowModal() == wxID_OK ) {
         wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
+        desc = dlg.GetLinkDescription();
         if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
         Hyperlink* h = new Hyperlink();
         h->DescrText = desc;
         h->Link = g_pODLinkPropertiesDialog->GetLinkURL();
+        h->Link = dlg.GetLinkURL();
         h->LType = wxEmptyString;
         //m_pODPoint->m_HyperlinkList->Append( h );
         m_pHyperLinkList->Append(h);
