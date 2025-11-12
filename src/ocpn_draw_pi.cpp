@@ -4657,7 +4657,7 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
       wxString info =
           CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, mouse_cursor);
       if (info.length() > 0) RenderExtraPathLegInfo(dc, mouse_cursor, info);
-    } else if (pPathDraw == m_pSelectedPIL && m_bODPointEditing) {
+    } else if (pPathDraw == m_pSelectedPIL && (m_bODPointEditing || m_bPathEditing)) {
       piDC dc;
       wxString info;
       wxPoint mouse_cursor;
