@@ -3602,11 +3602,12 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
   } else if (m_pSelectedPIL && (nPIL_State > 0 || m_bEBLMoveOrigin)) {
     PIL* pil = new PIL();
     double brg, dist;
-    wxPoint boatpoint;
+    wxPoint boatpoint, cursorpoint;
     if (m_bEBLMoveOrigin) {
       ODPoint* tp =
           (ODPoint*)m_pSelectedPIL->m_pODPointList->GetLast()->GetData();
       GetCanvasPixLL(&g_VP, &boatpoint, tp->m_lat, tp->m_lon);
+      GetCanvasPixLL(&g_VP, &cursorpoint, tp->m_lat, tp->m_lon);
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, tp->m_lat,
                                      tp->m_lon, &brg, &dist);
       pil->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
