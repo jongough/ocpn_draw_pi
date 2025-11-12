@@ -29,6 +29,7 @@
 #include "wx/wx.h"
 #endif  // precompiled headers
 
+#include <wx/window.h>
 #include "ODPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
 #include "ODicons.h"
@@ -685,20 +686,26 @@ void ODPropertiesDialogImpl::SaveChanges() {
   g_EdgePanSensitivity = m_sliderEdgePan->GetValue();
   g_InitialEdgePanSensitivity = m_sliderInitialEdgePan->GetValue();
 
-  if (g_IconDisplayScaleFactor != m_sliderIconScaling->GetValue()) {
-    g_IconDisplayScaleFactor = m_sliderIconScaling->GetValue();
+  if (g_IconDisplayScaleFactor != (double)m_sliderIconScaling->GetValue()) {
+    g_IconDisplayScaleFactor = (double)m_sliderIconScaling->GetValue();
     g_ocpn_draw_pi->m_pODicons->m_bScaleIcons = true;
   }
 
   g_iDisplayToolbar = m_choiceToolbar->GetSelection();
   switch (g_iDisplayToolbar) {
     case ID_DISPLAY_NEVER:
-      g_pODToolbar->Hide();
+      g_pODToolbar->Show(false);
       break;
     case ID_DISPLAY_ALWAYS:
-      g_pODToolbar->Show();
+      g_pODToolbar->Show(true);
       break;
   }
+
+  if(m_cbConfigFileEntries->GetValue())
+    g_ocpn_draw_pi->m_bRecreateConfig = true;
+  else
+    g_ocpn_draw_pi->m_bRecreateConfig = false;
+
 }
 
 #ifdef __OCPN__ANDROID__
@@ -1159,10 +1166,10 @@ void ODPropertiesDialogImpl::UpdateProperties(void) {
   m_checkBoxRestoreLayerVisability->SetValue(g_bRestoreLayerVisability);
   if (g_bRestoreLayerVisability) {
     m_checkBoxShowLayers->Disable();
-    m_checkBoxShowLayers - Show(false);
+    m_checkBoxShowLayers->Show(false);
   } else {
     m_checkBoxShowLayers->Enable();
-    m_checkBoxShowLayers - Show(true);
+    m_checkBoxShowLayers->Show(true);
   }
   m_spinCtrlNavObjBackups->SetValue(g_navobjbackups);
   m_sliderInitialEdgePan->SetValue(g_InitialEdgePanSensitivity);
@@ -1200,11 +1207,11 @@ void ODPropertiesDialogImpl::UpdateProperties(void) {
   m_dDRPathLengthValidator = g_dDRLength;
   m_dODPointIntervalValidator = g_dDRPointInterval;
 
-  if (g_ocpn_draw_pi->m_bRecreateConfig) {
-    m_buttonConfigFileEntries->SetLabel(_("No"));
-    m_staticTextConfigFileEntriesMsg->SetLabel(
-        _("Delete current OCPN_Draw config entries (Yes)"));
-  }
+  if (g_ocpn_draw_pi->m_bRecreateConfig)
+    m_cbConfigFileEntries->SetValue(true);
+  else
+    m_cbConfigFileEntries->SetValue(false);
+
   TransferDataToWindow();
   SetDialogSize();
 
@@ -1243,20 +1250,6 @@ void ODPropertiesDialogImpl::SetTableCellBackgroundColours() {
   m_gridODWDInteractions->SetCellBackgroundColour(3, 4, wxGreen);
 
   return;
-}
-
-void ODPropertiesDialogImpl::OnClickConfigFileEntries(wxCommandEvent& event) {
-  if (!g_ocpn_draw_pi->m_bRecreateConfig) {
-    g_ocpn_draw_pi->m_bRecreateConfig = true;
-    m_buttonConfigFileEntries->SetLabel(_("No"));
-    m_staticTextConfigFileEntriesMsg->SetLabel(
-        _("Delete current OCPN_Draw config entries (Yes)"));
-  } else {
-    g_ocpn_draw_pi->m_bRecreateConfig = false;
-    m_buttonConfigFileEntries->SetLabel(_("Yes"));
-    m_staticTextConfigFileEntriesMsg->SetLabel(
-        _("Delete current OCPN_Draw config entries (No)"));
-  }
 }
 
 void ODPropertiesDialogImpl::RecalculateSize() {

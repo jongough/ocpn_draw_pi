@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -103,9 +103,8 @@ class ODPathPropertiesDialogDef : public wxDialog
 		wxFlexGridSizer* m_fgSizerPath;
 		wxCheckBox* m_checkBoxPathShowArrow;
 		wxRadioBox* m_radioBoxPathPersistence;
-		wxFlexGridSizer* m_fgSizerPathPoints;
+		wxBoxSizer* m_bSizerPathPoints;
 		wxStaticText* m_staticTextODPoints;
-		wxBoxSizer* m_bSizerListCtrl;
 		wxListCtrl* m_listCtrlODPoints;
 		wxBoxSizer* m_bSizerPILLines;
 		wxStaticText* m_staticTextPILLines;

@@ -376,7 +376,7 @@ void ODPoint::Draw( piDC& dc, wxPoint *odp)
     if ((l_ChartScaleFactorExp > 1.0) && !m_bPreScaled) {
         if(m_fIconScaleFactor != l_ChartScaleFactorExp) {
             m_fIconScaleFactor = l_ChartScaleFactorExp;
-            m_fIconScaleFactor *= g_OCPN_GetDisplayContentScaleFactor;
+            m_fIconScaleFactor *= g_dOCPN_DisplayScaleFactor;
             if(m_fIconScaleFactor != 0) {
                 wxImage scaled_image = pbm->ConvertToImage();
                 int new_width = pbm->GetWidth() * m_fIconScaleFactor;

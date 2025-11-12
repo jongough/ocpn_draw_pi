@@ -87,9 +87,12 @@ else ()
           STATUS
             "${CMLOC}START_URL: ${START_URL}, STRING_LENGTH: ${STRING_LENGTH}"
         )
-        string(SUBSTRING ${GIT_REPOSITORY_URL} ${START_URL} ${STRING_LENGTH}
+        if (${START_URL} LESS_EQUAL ${STRING_LENGTH})
+          string(SUBSTRING ${GIT_REPOSITORY_URL} ${START_URL} ${STRING_LENGTH}
                          GIT_REPOSITORY
-        )
+          )
+        else (${GIT_REPOSITORY} = "")
+        endif ()
       endif ()
     else ()
       message(STATUS "${CMLOC}Branch is not tracking a remote branch")

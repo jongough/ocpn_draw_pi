@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -310,24 +310,17 @@ bool ODPathPropertiesDialogDef::Create( wxWindow* parent, wxWindowID id, const w
 
 	m_fgSizerProperties->Add( m_fgSizerPath, 1, wxEXPAND, 5 );
 
-	m_fgSizerPathPoints = new wxFlexGridSizer( 2, 1, 0, 0 );
-	m_fgSizerPathPoints->SetFlexibleDirection( wxVERTICAL );
-	m_fgSizerPathPoints->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
+	m_bSizerPathPoints = new wxBoxSizer( wxVERTICAL );
 
 	m_staticTextODPoints = new wxStaticText( m_scrolledWindowProperties, wxID_ANY, _("Points"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticTextODPoints->Wrap( -1 );
-	m_fgSizerPathPoints->Add( m_staticTextODPoints, 0, wxALL, 5 );
+	m_bSizerPathPoints->Add( m_staticTextODPoints, 0, wxALL, 5 );
 
-	m_bSizerListCtrl = new wxBoxSizer( wxVERTICAL );
-
-	m_listCtrlODPoints = new wxListCtrl( m_scrolledWindowProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_HRULES|wxLC_REPORT|wxLC_VRULES );
-	m_bSizerListCtrl->Add( m_listCtrlODPoints, 1, wxALL|wxEXPAND, 5 );
+	m_listCtrlODPoints = new wxListCtrl( m_scrolledWindowProperties, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxLC_EDIT_LABELS|wxLC_HRULES|wxLC_REPORT|wxLC_VRULES );
+	m_bSizerPathPoints->Add( m_listCtrlODPoints, 0, wxALL|wxEXPAND, 5 );
 
 
-	m_fgSizerPathPoints->Add( m_bSizerListCtrl, 1, wxEXPAND, 5 );
-
-
-	m_fgSizerProperties->Add( m_fgSizerPathPoints, 1, wxEXPAND, 5 );
+	m_fgSizerProperties->Add( m_bSizerPathPoints, 0, wxEXPAND, 5 );
 
 	m_bSizerPILLines = new wxBoxSizer( wxVERTICAL );
 

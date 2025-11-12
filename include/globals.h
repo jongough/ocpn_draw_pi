@@ -43,7 +43,7 @@ class GZProp;
 class ODLinkPropertiesDialogImpl;
 class PILProp;
 class PathAndPointManagerDialogImpl;
-class ODPointPropertiesImpl;
+class ODPointPropertiesDialogImpl;
 class ODPropertiesDialogImpl;
 class PILPropertiesDialogImpl;
 class ODDRDialogImpl;
@@ -98,7 +98,7 @@ extern GZProp                   *g_pGZPropDialog;
 extern ODLinkPropertiesDialogImpl   *g_pODLinkPropertiesDialog;
 extern PILProp                  *g_pPILPropDialog;
 extern PathAndPointManagerDialogImpl    *g_pPathAndPointManagerDialog;
-extern ODPointPropertiesImpl    *g_pODPointPropDialog;
+extern ODPointPropertiesDialogImpl     *g_pODPointPropDialog;
 extern ODPropertiesDialogImpl   *g_pOCPNDrawPropDialog;
 extern PILPropertiesDialogImpl  *g_PILIndexLinePropDialog;
 extern ODDRDialogImpl           *g_pODDRDialog;
@@ -259,7 +259,7 @@ extern ODLayerList     *g_pLayerList;
 extern int             g_navobjbackups;
 extern int             g_EdgePanSensitivity;
 extern int             g_InitialEdgePanSensitivity;
-extern int             g_IconDisplayScaleFactor;
+extern double          g_IconDisplayScaleFactor;
 
 extern wxString        *g_ODlocale;
 extern int             g_iLocaleDepth;
@@ -326,6 +326,6 @@ extern wxWindow *g_current_timer_canvas;
 extern int      g_current_canvas_index;
 extern int      g_current_timer_canvas_index;
 
-extern double  g_OCPN_GetDisplayContentScaleFactor;
+extern double  g_dOCPN_DisplayScaleFactor;
 
 #endif

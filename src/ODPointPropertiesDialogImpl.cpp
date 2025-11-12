@@ -30,7 +30,7 @@
 #endif //precompiled headers
 
 
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 #include "ODConfig.h"
@@ -58,7 +58,7 @@
 #include <wx/valnum.h>
 #endif
 
-ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
+ODPointPropertiesDialogImpl::ODPointPropertiesDialogImpl( wxWindow* parent )
 {
     m_dialogLabelFont = GetOCPNScaledFont_PlugIn(wxS("Dialog"), 0);
     SetFont( *m_dialogLabelFont );
@@ -74,13 +74,13 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 #endif // wxCHECK_VERSION(3,0,0)
 
     this->Connect( ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
-            wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+            wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
     this->Connect( ID_RCLK_MENU_COPY_LL, wxEVT_COMMAND_MENU_SELECTED,
-            wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+            wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
     this->Connect( ID_RCLK_MENU_PASTE, wxEVT_COMMAND_MENU_SELECTED,
-            wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+            wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
     this->Connect( ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
-            wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+            wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
 
     DimeWindow( this );
 
@@ -127,19 +127,19 @@ ODPointPropertiesImpl::ODPointPropertiesImpl( wxWindow* parent )
 
 }
 
-ODPointPropertiesImpl::~ODPointPropertiesImpl()
+ODPointPropertiesDialogImpl::~ODPointPropertiesDialogImpl()
 {
     this->Disconnect( ID_RCLK_MENU_COPY, wxEVT_COMMAND_MENU_SELECTED,
-                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+                   wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
     this->Disconnect( ID_RCLK_MENU_COPY_LL, wxEVT_COMMAND_MENU_SELECTED,
-                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+                   wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
     this->Disconnect( ID_RCLK_MENU_PASTE, wxEVT_COMMAND_MENU_SELECTED,
-                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+                   wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
     this->Disconnect( ID_RCLK_MENU_PASTE_LL, wxEVT_COMMAND_MENU_SELECTED,
-                   wxCommandEventHandler( ODPointPropertiesImpl::OnCopyPasteLatLon ) );
+                   wxCommandEventHandler( ODPointPropertiesDialogImpl::OnCopyPasteLatLon ) );
 }
 
-void ODPointPropertiesImpl::SetDialogSize( void )
+void ODPointPropertiesDialogImpl::SetDialogSize( void )
 {
     RecalculateSize();
 
@@ -154,7 +154,7 @@ void ODPointPropertiesImpl::SetDialogSize( void )
     m_defaultClientSize = GetClientSize();
 }
 
-void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
+void ODPointPropertiesDialogImpl::OnRightClick( wxMouseEvent& event )
 {
     wxMenu* popup = new wxMenu();
     popup->Append( ID_RCLK_MENU_COPY, _("Copy") );
@@ -169,7 +169,7 @@ void ODPointPropertiesImpl::OnRightClick( wxMouseEvent& event )
 
 }
 
-void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnPositionCtlUpdated( wxCommandEvent& event )
 {
     double lat = fromDMM_Plugin( m_textLatitude->GetValue() );
     double lon = fromDMM_Plugin( m_textLongitude->GetValue() );
@@ -183,7 +183,7 @@ void ODPointPropertiesImpl::OnPositionCtlUpdated( wxCommandEvent& event )
     RequestRefresh( m_parent_window );
 }
 
-void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 {
     // TODO: Implement OnShowRangeRingsSelect
 }
@@ -196,16 +196,16 @@ void ODPointPropertiesImpl::OnShowRangeRingsSelect( wxCommandEvent& event )
 
 }
 */
-void ODPointPropertiesImpl::OnDescChangedBasic( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnDescChangedBasic( wxCommandEvent& event )
 {
     // TODO: Implement OnDescChangedBasic
 }
 
-void ODPointPropertiesImpl::OnComboboxSelected( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnComboboxSelected( wxCommandEvent& event )
 {
 }
 
-void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnButtonClickFonts( wxCommandEvent& event )
 {
     if(m_pfdDialog) delete m_pfdDialog;
 
@@ -214,14 +214,14 @@ void ODPointPropertiesImpl::OnButtonClickFonts( wxCommandEvent& event )
     m_pfdDialog = new wxFontDialog( this, l_FontData );
     m_pfdDialog->Centre( wxBOTH );
 
-    int iRet = m_pfdDialog->ShowModal();
+    int iRet = m_pfdDialog->Show();
     if(iRet == wxID_OK) {
         m_staticTextFontFaceExample->SetFont(m_pfdDialog->GetFontData().GetChosenFont());
         SetDialogSize();
     }
 }
 
-void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
 {
     if( !Validate() || ! TransferDataFromWindow() ) return;
 
@@ -256,13 +256,13 @@ void ODPointPropertiesImpl::OnPointPropertiesOKClick( wxCommandEvent& event )
     event.Skip();
 }
 
-void ODPointPropertiesImpl::OnPointPropertiesClose( wxCloseEvent& event )
+void ODPointPropertiesDialogImpl::OnPointPropertiesClose( wxCloseEvent& event )
 {
     wxCommandEvent nullEvent;
     OnPointPropertiesCancelClick( nullEvent );
 }
 
-void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnPointPropertiesCancelClick( wxCommandEvent& event )
 {
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
@@ -287,7 +287,7 @@ void ODPointPropertiesImpl::OnPointPropertiesCancelClick( wxCommandEvent& event 
     event.Skip();
 }
 
-void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
+void ODPointPropertiesDialogImpl::OnRadioBoxPointType(wxCommandEvent& event)
 {
     switch (m_radioBoxBoundaryPointType->GetSelection()) {
         case ID_BOUNDARY_EXCLUSION:
@@ -299,11 +299,14 @@ void ODPointPropertiesImpl::OnRadioBoxPointType(wxCommandEvent& event)
             break;
     }
 
-    ODPointPropertiesDialog::OnRadioBoxPointType(event);
+    ODPointPropertiesDialogDef::OnRadioBoxPointType(event);
 }
 
-void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
+void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
 {
+    m_toggleBtnEditLink->SetValue(false);
+    m_toggleBtnDeleteLink->SetValue(false);
+
     m_toggleBtnDeleteLink->SetValue(false);
     m_toggleBtnEditLink->SetValue(false);
     m_staticTextLinkInfo->SetLabel( _("Left Click links are opened in the default browser.") );
@@ -311,9 +314,11 @@ void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
 
-    DimeWindow(g_pODLinkPropertiesDialog);
+    long l_lStyle = GetExtraStyle();
+    SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
+    DimeWindow((wxWindow *)g_pODLinkPropertiesDialog);
     g_pODLinkPropertiesDialog->SetODPoint(m_pODPoint);
-    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK ) {
+    if( g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
         wxString desc = g_pODLinkPropertiesDialog->GetLinkDescription();
         if( desc == wxEmptyString ) desc = g_pODLinkPropertiesDialog->GetLinkURL();
         Hyperlink* h = new Hyperlink();
@@ -324,9 +329,13 @@ void ODPointPropertiesImpl::OnAddLink(wxCommandEvent& event)
         m_pHyperLinkList->Append(h);
         UpdateProperties();
     }
+    SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
+    Show(true);
+    Raise();
+    event.Skip();
 }
 
-void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
+void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
 {
     wxString findurl = m_pClickedLink->GetURL();
     wxString findlabel = m_pClickedLink->GetLabel();
@@ -334,12 +343,14 @@ void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
     if(g_pODLinkPropertiesDialog == NULL)
         g_pODLinkPropertiesDialog = new ODLinkPropertiesDialogImpl(this);
 
+    long l_lStyle = GetExtraStyle();
+    SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
     DimeWindow(g_pODLinkPropertiesDialog);
     if(m_pHyperLinkList->GetCount()) {
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
         while(l_plinknode) {
             Hyperlink *l_link = l_plinknode->GetData();
-            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+            if(findurl == l_link->Link || findlabel == l_link->DescrText) {
                 g_pODLinkPropertiesDialog->SetLinkDescription(l_link->DescrText);
                 g_pODLinkPropertiesDialog->SetLinkURL(l_link->Link);
                 if(g_pODLinkPropertiesDialog->ShowModal() == wxID_OK) {
@@ -347,16 +358,20 @@ void ODPointPropertiesImpl::OnEditLink(wxCommandEvent& event)
                     l_link->Link = g_pODLinkPropertiesDialog->GetLinkURL();
                     UpdateProperties();
                 }
+
                 break;
             }
             l_plinknode = l_plinknode->GetNext();
         }
     }
 
+    SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
+    Show(true);
+    Raise();
     event.Skip();
 }
 
-void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnDeleteLink( wxCommandEvent& event )
 {
     wxString findurl = m_pClickedLink->GetURL();
     wxString findlabel = m_pClickedLink->GetLabel();
@@ -365,7 +380,7 @@ void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
         wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
         while(l_plinknode) {
             Hyperlink *l_link = l_plinknode->GetData();
-            if(findurl == l_link->Link && findlabel == l_link->DescrText) {
+            if(findurl == l_link->Link || findlabel == l_link->DescrText) {
                 m_pHyperLinkList->DeleteNode(l_plinknode);
                 break;
             }
@@ -375,7 +390,7 @@ void ODPointPropertiesImpl::OnDeleteLink( wxCommandEvent& event )
     }
 }
 
-void ODPointPropertiesImpl::SaveChanges()
+void ODPointPropertiesDialogImpl::SaveChanges()
 {
     if( m_pODPoint ) {
         if( m_pODPoint->m_bIsInLayer ) return;
@@ -520,7 +535,7 @@ void ODPointPropertiesImpl::SaveChanges()
     return;
 }
 
-void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
+void ODPointPropertiesDialogImpl::SetODPoint( ODPoint *pOP )
 {
     if( m_pODPoint ) {
         m_pODPoint->m_bIsBeingEdited = FALSE;
@@ -572,7 +587,7 @@ void ODPointPropertiesImpl::SetODPoint( ODPoint *pOP )
 
 }
 
-bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
+bool ODPointPropertiesDialogImpl::UpdateProperties( bool positionOnly )
 {
     if( m_pODPoint ) {
         if(m_pODPoint->m_sTypeString == wxT("Text Point")) {
@@ -835,9 +850,9 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
                 wxHyperlinkCtrl* ctrl = new wxHyperlinkCtrl( m_scrolledWindowLinks, wxID_ANY, Descr,
                                                              Link, wxDefaultPosition, wxDefaultSize, wxHL_DEFAULT_STYLE );
                 ctrl->Connect( wxEVT_COMMAND_HYPERLINK,
-                               wxHyperlinkEventHandler( ODPointPropertiesImpl::OnHyperLinkClick ), NULL, this );
+                               wxHyperlinkEventHandler( ODPointPropertiesDialogImpl::OnHyperLinkClick ), NULL, this );
                 if( !m_pODPoint->m_bIsInLayer ) ctrl->Connect( wxEVT_RIGHT_DOWN,
-                    wxMouseEventHandler( ODPointPropertiesImpl::HyperLinkContextMenu ), NULL, this );
+                    wxMouseEventHandler( ODPointPropertiesDialogImpl::HyperLinkContextMenu ), NULL, this );
 
                 m_bSizerLinks->Add( ctrl, 1, wxALL | wxALIGN_LEFT, 0);
                 if(lFirstLine) {
@@ -902,7 +917,7 @@ bool ODPointPropertiesImpl::UpdateProperties( bool positionOnly )
     return true;
 }
 
-void ODPointPropertiesImpl::OnCopyPasteLatLon( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnCopyPasteLatLon( wxCommandEvent& event )
 {
     // Fetch the control values, convert to degrees
     double lat = fromDMM_Plugin( m_textLatitude->GetValue() );
@@ -956,7 +971,7 @@ void ODPointPropertiesImpl::OnCopyPasteLatLon( wxCommandEvent& event )
     }
 }
 
-void ODPointPropertiesImpl::ValidateMark( void )
+void ODPointPropertiesDialogImpl::ValidateMark( void )
 {
     //    Look in the master list of ODPoints to see if the currently selected ODPpoint is still valid
     //    It may have been deleted as part of a path
@@ -982,7 +997,7 @@ void ODPointPropertiesImpl::ValidateMark( void )
     }
 }
 
-void ODPointPropertiesImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
+void ODPointPropertiesDialogImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
 {
     if( m_toggleBtnEditLink->GetValue() ) {
         m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
@@ -1033,12 +1048,16 @@ void ODPointPropertiesImpl::OnHyperLinkClick( wxHyperlinkEvent &event )
     #else
     wxString url = event.GetURL();
     url.Replace(_T(" "), _T("%20") );
-    ::wxLaunchDefaultBrowser(url);
+//      #ifdef __WXOSX__
+//        ::wxExecute( url, wxEXEC_ASYNC, NULL, NULL );
+//      #else
+        ::wxLaunchDefaultBrowser(url);
+//      #endif
     //    event.Skip();
     #endif
 }
 
-void ODPointPropertiesImpl::HyperLinkContextMenu( wxMouseEvent &event )
+void ODPointPropertiesDialogImpl::HyperLinkContextMenu( wxMouseEvent &event )
 {
     m_pClickedLink = (wxHyperlinkCtrl*) event.GetEventObject();
     m_scrolledWindowLinks->PopupMenu( m_menuLink,
@@ -1047,7 +1066,7 @@ void ODPointPropertiesImpl::HyperLinkContextMenu( wxMouseEvent &event )
 
 }
 
-void ODPointPropertiesImpl::OnEditLinkToggle( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnEditLinkToggle( wxCommandEvent& event )
 {
     if( m_toggleBtnEditLink->GetValue() )
         m_staticTextLinkInfo->SetLabel( _("Left Click links are opened for editing.") );
@@ -1059,7 +1078,7 @@ void ODPointPropertiesImpl::OnEditLinkToggle( wxCommandEvent& event )
     event.Skip();
 }
 
-void ODPointPropertiesImpl::OnDeleteLinkToggle( wxCommandEvent& event )
+void ODPointPropertiesDialogImpl::OnDeleteLinkToggle( wxCommandEvent& event )
 {
     if( m_toggleBtnDeleteLink->GetValue() )
         m_staticTextLinkInfo->SetLabel( _("Left Click links are deleted.") );
@@ -1071,7 +1090,7 @@ void ODPointPropertiesImpl::OnDeleteLinkToggle( wxCommandEvent& event )
     event.Skip();
 }
 
-void ODPointPropertiesImpl::OnMenuSelection(wxCommandEvent& event)
+void ODPointPropertiesDialogImpl::OnMenuSelection(wxCommandEvent& event)
 {
     if(event.GetId() == m_menuItemDelete->GetId())
         OnDeleteLink(event);
@@ -1081,7 +1100,7 @@ void ODPointPropertiesImpl::OnMenuSelection(wxCommandEvent& event)
         OnAddLink(event);
 }
 
-void ODPointPropertiesImpl::RecalculateSize()
+void ODPointPropertiesDialogImpl::RecalculateSize()
 {
 
     //  All of this dialog layout is expandable, so we need to set a specific size target

@@ -65,7 +65,7 @@ using nlohmann::json_schema::json_validator;
 #include "ODAPI.h"
 #include "PointMan.h"
 #include "TextPoint.h"
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "ODPathPropertiesDialogImpl.h"
 
 #include "version.h"
@@ -83,8 +83,6 @@ ODJSON::ODJSON()
     // ctor
 #ifdef OD_JSON_SCHEMA_VALIDATOR
     gODJSONMsgValidator = NULL;
-    DEBUGST("jSchema text: ");
-    DEBUGEND(json_text);
     jSchema = json::parse(json_text);
 #endif
 }

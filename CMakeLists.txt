@@ -23,7 +23,7 @@
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # -----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough Testplugn(TP) v1.0.331.0 06/04/2025 DD/MM/YYYY
+# Frontend2 Author: Jon Gough Testplugn(TP) v1.0.351.0 19/10/2025 DD/MM/YYYY
 # format buildCI:yes provideODAPI:yes validateJSON:yes
 # ---------------------------------------------------------------------------
 # -- When changing this file do NOT change the order of the sections. -- Make
@@ -68,15 +68,15 @@ set(PACKAGE_CONTACT "Jon Gough")
 set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
-set(VERSION_MINOR "8")
-set(VERSION_PATCH "63")
+set(VERSION_MINOR "10")
+set(VERSION_PATCH "0")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "07/10/2025") # DD/MM/YYYY format
+set(VERSION_DATE "12/11/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
-set(OCPN_API_VERSION_MINOR "17")
+set(OCPN_API_VERSION_MINOR "18")
 set(OD_API_VERSION_MAJOR "1")
-set(OD_API_VERSION_MINOR "1")
+set(OD_API_VERSION_MINOR "2")
 
 message(
   STATUS
@@ -213,8 +213,8 @@ set(SRCS
     src/ODPathPropertiesDialogDef.cpp
     src/ODPathPropertiesDialogImpl.cpp
     src/ODPoint.cpp
-    src/ODPointPropertiesDialog.cpp
-    src/ODPointPropertiesImpl.cpp
+    src/ODPointPropertiesDialogDef.cpp
+    src/ODPointPropertiesDialogImpl.cpp
     src/ODPositionParser.cpp
     src/ODPropertiesDialogDef.cpp
     src/ODPropertiesDialogImpl.cpp
@@ -274,8 +274,8 @@ set(HDRS
     include/ODPathPropertiesDialogDef.h
     include/ODPathPropertiesDialogImpl.h
     include/ODPoint.h
-    include/ODPointPropertiesDialog.h
-    include/ODPointPropertiesImpl.h
+    include/ODPointPropertiesDialogDef.h
+    include/ODPointPropertiesDialogImpl.h
     include/ODPositionParser.h
     include/ODPropertiesDialogDef.h
     include/ODPropertiesDialogImpl.h

@@ -53,7 +53,7 @@ PILProp::PILProp( wxWindow* parent, wxWindowID id, const wxString& caption, cons
     //ctor
     m_bLockUpdate = false;
     m_fgSizerPIL->ShowItems( true );
-    m_fgSizerPathPoints->ShowItems( false );
+    m_bSizerPathPoints->ShowItems( false );
     m_bSizerPILLines->ShowItems( true );
     
     

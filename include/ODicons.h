@@ -100,10 +100,10 @@ public:
     bool        m_bUpdateIcons;
     double      m_dScaleFactor;
     bool        m_bScaleIcons;
-    int         m_iToolScaleFactor;
-    int         m_iToolIconScaleFactor;
-    int         m_iToolIconRefSize;
-    unsigned int    m_iImageRefSize;
+    double      m_dToolScaleFactor;
+    double      m_dToolIconScaleFactor;
+    double      m_dToolIconRefSize;;
+    double      m_dImageRefSize;
 
 
 private:

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version 3.10.1-0-g8feb16b)
+// C++ code generated with wxFormBuilder (version 4.2.1-0-g80c4cb6)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO *NOT* EDIT THIS FILE!
@@ -42,11 +42,10 @@ class ODColourPickerCtrl;
 
 ///////////////////////////////////////////////////////////////////////////
 
-
 ///////////////////////////////////////////////////////////////////////////////
-/// Class ODPointPropertiesDialog
+/// Class ODPointPropertiesDialogDef
 ///////////////////////////////////////////////////////////////////////////////
-class ODPointPropertiesDialog : public wxDialog
+class ODPointPropertiesDialogDef : public wxDialog
 {
 	private:
 
@@ -163,11 +162,11 @@ class ODPointPropertiesDialog : public wxDialog
 
 	public:
 
-		ODPointPropertiesDialog();
-		ODPointPropertiesDialog( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
+		ODPointPropertiesDialogDef();
+		ODPointPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OD Point Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxCAPTION|wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER );
 
-		~ODPointPropertiesDialog();
+		~ODPointPropertiesDialogDef();
 
 		void m_scrolledWindowLinksOnContextMenu( wxMouseEvent &event )
 		{

@@ -52,7 +52,10 @@ int ODSelect::GetSelectPixelRadius( void )
         int w,h;
         wxDisplaySize( &w, &h );
         if( h > 800 ) pixelRadius = 10;
-        if( h > 1024 ) pixelRadius = 12;
+        if( h > 1024 ) {
+          pixelRadius = 12;
+          pixelRadius *= g_dOCPN_DisplayScaleFactor;
+        }
     }
     return pixelRadius;
 }

@@ -254,11 +254,16 @@ ODMarkIcon *PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const w
         m_pIconArray->Add( (void *) pmi );
     }
 
+    int w = pimage.GetWidth();
+    int h = pimage.GetHeight();
+    w *= g_dOCPN_DisplayScaleFactor;
+    h *= g_dOCPN_DisplayScaleFactor;
+
     pmi->icon_name = key;
     pmi->icon_description = description;
-    pmi->picon_bitmap = new wxBitmap( pimage );
-    pmi->picon_bitmap_Day = new wxBitmap( pimage );
-    pmi->picon_bitmap_RGB = new wxBitmap( pimage );
+    pmi->picon_bitmap = new wxBitmap( pimage.ConvertToImage().Scale(w, h, wxIMAGE_QUALITY_HIGH) );
+    pmi->picon_bitmap_Day = new wxBitmap( pimage.ConvertToImage().Scale(w, h, wxIMAGE_QUALITY_HIGH) );
+    pmi->picon_bitmap_RGB = new wxBitmap( pimage.ConvertToImage().Scale(w, h, wxIMAGE_QUALITY_HIGH) );
     pmi->picon_bitmap_Dusk = CreateDimBitmap( pmi-> picon_bitmap, 0.5 );
     pmi->picon_bitmap_Night = CreateDimBitmap( pmi->picon_bitmap, 0.25 );
 #ifdef ODraw_USE_SVG

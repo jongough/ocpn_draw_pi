@@ -38,7 +38,7 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     //ctor
     m_fgSizerBoundary->ShowItems( true );
     m_bSizerBoundaryType->ShowItems( true );
-    m_fgSizerPathPoints->ShowItems( true );
+    m_bSizerPathPoints->ShowItems( true );
     m_staticTextTotalLength->Show();
     m_textCtrlTotalLength->Show();
     m_staticTextFillColour->Show();
@@ -58,7 +58,7 @@ BoundaryProp::BoundaryProp( wxWindow* parent, wxWindowID id, const wxString& cap
     m_radioBoxBoundaryType->Enable( true );
     m_checkBoxShowBoundaryPoints->Show();
     m_checkBoxShowBoundaryPoints->Enable( true );
-    m_fgSizerPathPoints->ShowItems( true );
+    m_bSizerPathPoints->ShowItems( true );
     m_listCtrlODPoints->Show();
     
     m_scrolledWindowProperties->SetMinClientSize(m_fgSizerProperties->ComputeFittingClientSize(this));

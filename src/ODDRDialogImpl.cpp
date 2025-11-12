@@ -35,7 +35,7 @@
 #include "ODConfig.h"
 #include "ODSelect.h"
 #include "ODPathPropertiesDialogImpl.h"
-#include "ODPointPropertiesImpl.h"
+#include "ODPointPropertiesDialogImpl.h"
 #include "ODUtils.h"
 #include "PathMan.h"
 #include "PathAndPointManagerDialogImpl.h"

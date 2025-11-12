@@ -22,13 +22,13 @@ class ODColourPickerCtrl;
 #include <wx/spinctrl.h>
 #include <wx/slider.h>
 #include <wx/choice.h>
-#include <wx/button.h>
+#include <wx/sizer.h>
+#include <wx/scrolwin.h>
 #include <wx/bitmap.h>
 #include <wx/image.h>
 #include <wx/icon.h>
-#include <wx/sizer.h>
-#include <wx/scrolwin.h>
 #include <wx/bmpbuttn.h>
+#include <wx/button.h>
 #include <wx/radiobox.h>
 #include <wx/textctrl.h>
 #include <wx/bmpcbox.h>
@@ -68,8 +68,7 @@ class ODPropertiesDialogDef : public wxDialog
 		wxStaticText* m_staticTextIconScaling;
 		wxSlider* m_sliderIconScaling;
 		wxStaticText* m_staticTextToolbar;
-		wxStaticText* m_staticTextConfigFileEntriesMsg;
-		wxButton* m_buttonConfigFileEntries;
+		wxCheckBox* m_cbConfigFileEntries;
 		wxScrolledWindow* m_panelBoundary;
 		wxFlexGridSizer* m_fgSizerBoundarySettings;
 		wxFlexGridSizer* m_fgSizerBoundarySettingsColours;
@@ -337,7 +336,6 @@ class ODPropertiesDialogDef : public wxDialog
 		virtual void OnSize( wxSizeEvent& event ) { event.Skip(); }
 		virtual void OnShowLayersClicked( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnRestoreLayerVisabilityClicked( wxCommandEvent& event ) { event.Skip(); }
-		virtual void OnClickConfigFileEntries( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnButtonClickFonts( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLRotateWithBoat( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnEBLFixedEndPosition( wxCommandEvent& event ) { event.Skip(); }
@@ -352,8 +350,8 @@ class ODPropertiesDialogDef : public wxDialog
 		wxGrid* m_gridODWDInteractions;
 
 		ODPropertiesDialogDef();
-		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,645 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP );
-		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 656,645 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP );
+		ODPropertiesDialogDef( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP );
+		bool Create( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = _("OCPN Draw Properties"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( -1,-1 ), long style = wxDEFAULT_DIALOG_STYLE|wxRESIZE_BORDER|wxSTAY_ON_TOP );
 
 		~ODPropertiesDialogDef();
 
