@@ -4590,7 +4590,6 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
     DR* pDRDraw = NULL;
     GZ* pGZDraw = NULL;
     PIL* pPILDraw = NULL;
-    wxPoint l_mouse_cursor;
 
     {
       if (pTempPath->m_sTypeString == wxT("Boundary")) {
@@ -4641,14 +4640,12 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
       if (test_maxx - 360 >= pivp.lon_min && test_minx - 360 <= pivp.lon_max)
         pPathDraw->DrawGL(pivp);
     }
-
-    GetCanvasPixLL(&g_VP, &l_mouse_cursor, m_cursor_lat, m_cursor_lon);
-
     if (pPathDraw == m_pSelectedEBL && m_bODPointEditing &&
         !m_pSelectedEBL->m_bAlwaysShowInfo) {
       piDC dc;
       double brg, dist;
       wxPoint destPoint;
+      wxPoint mouse_cursor;
       ODPoint* pStartPoint =
           m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
       ODPoint* pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
@@ -4656,12 +4653,15 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
                                      pStartPoint->m_lat, pStartPoint->m_lon,
                                      &brg, &dist);
       GetCanvasPixLL(&m_VP, &destPoint, pEndPoint->m_lat, pEndPoint->m_lon);
+      GetCanvasPixLL(&m_VP, &mouse_cursor, m_cursor_lat, m_cursor_lon);
       wxString info =
-          CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, l_mouse_cursor);
-      if (info.length() > 0) RenderExtraPathLegInfo(dc, l_mouse_cursor, info);
-    } else if (pPathDraw == m_pSelectedPIL && m_bPathEditing) {
+          CreateExtraPathLegInfo(dc, m_pSelectedEBL, brg, dist, mouse_cursor);
+      if (info.length() > 0) RenderExtraPathLegInfo(dc, mouse_cursor, info);
+    } else if (pPathDraw == m_pSelectedPIL && m_bODPointEditing) {
       piDC dc;
       wxString info;
+      wxPoint mouse_cursor;
+      GetCanvasPixLL(&g_VP, &mouse_cursor, m_cursor_lat, m_cursor_lon);
       if (m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE) {
         std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
         while (it != m_pSelectedPIL->m_PilLineList.end()) {
@@ -4671,14 +4671,14 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
         if (it != m_pSelectedPIL->m_PilLineList.end()) {
           info = CreateExtraPathLegInfo(dc, m_pSelectedPIL,
                                         m_pSelectedPIL->m_dEBLAngle,
-                                        it->dOffset, l_mouse_cursor);
+                                        it->dOffset, mouse_cursor);
         }
       } else
         info = CreateExtraPathLegInfo(dc, m_pSelectedPIL,
                                       m_pSelectedPIL->m_dEBLAngle,
-                                      m_pSelectedPIL->m_dLength, l_mouse_cursor);
+                                      m_pSelectedPIL->m_dLength, mouse_cursor);
 
-      if (info.length() > 0) RenderExtraPathLegInfo(dc, l_mouse_cursor, info);
+      if (info.length() > 0) RenderExtraPathLegInfo(dc, mouse_cursor, info);
     }
   }
 
