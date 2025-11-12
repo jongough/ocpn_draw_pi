@@ -4657,23 +4657,25 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
     } else if (pPathDraw == m_pSelectedPIL && m_bPathEditing) {
       piDC dc;
       wxString info;
+      wxPoint PILCursor;
       if (m_iEditMode == ID_PIL_MENU_MOVE_INDEX_LINE) {
         std::list<PILLINE>::iterator it = m_pSelectedPIL->m_PilLineList.begin();
         while (it != m_pSelectedPIL->m_PilLineList.end()) {
           if (it->iID == m_iPILId) break;
           ++it;
         }
+        GetCanvasPixLL(&g_VP, &PILCursor, m_cursor_lat, m_cursor_lon);
         if (it != m_pSelectedPIL->m_PilLineList.end()) {
           info = CreateExtraPathLegInfo(dc, m_pSelectedPIL,
                                         m_pSelectedPIL->m_dEBLAngle,
-                                        it->dOffset, m_cursorPoint);
+                                        it->dOffset, PILCursor);
         }
       } else
         info = CreateExtraPathLegInfo(dc, m_pSelectedPIL,
                                       m_pSelectedPIL->m_dEBLAngle,
-                                      m_pSelectedPIL->m_dLength, m_cursorPoint);
+                                      m_pSelectedPIL->m_dLength, PILCursor);
 
-      if (info.length() > 0) RenderExtraPathLegInfo(dc, m_cursorPoint, info);
+      if (info.length() > 0) RenderExtraPathLegInfo(dc, PILCursor, info);
     }
   }
 
