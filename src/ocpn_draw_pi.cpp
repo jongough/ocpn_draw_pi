@@ -3739,7 +3739,7 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC& dc, ODPath* path,
   int w, h;
   int xp, yp;
   int hilite_offset = 3;
-#ifdef __WXMAC__
+#ifdef __WXOSX__
   wxScreenDC sdc;
   sdc.GetTextExtent(pathInfo, &w, &h, NULL, NULL, dFont);
 #else
@@ -3749,6 +3749,9 @@ wxString ocpn_draw_pi::CreateExtraPathLegInfo(piDC& dc, ODPath* path,
 #ifdef __WXMSW__
   w *= g_dOCPN_DisplayScaleFactor;
   h *= g_dOCPN_DisplayScaleFactor;
+#else
+  w /= g_dOCPN_DisplayScaleFactor,
+  h /= g_dOCPN_DisplayScaleFactor;
 #endif
 
   xp = ref_point.x - w;
@@ -3787,7 +3790,7 @@ void ocpn_draw_pi::RenderExtraPathLegInfo(piDC& dc, wxPoint ref_point,
   int w, h;
   int xp, yp;
   int hilite_offset = 3;
-#ifdef __WXMAC__
+#ifdef __WXOSX__
   wxScreenDC sdc;
   sdc.GetTextExtent(s, &w, &h, NULL, NULL, dFont);
 #else
