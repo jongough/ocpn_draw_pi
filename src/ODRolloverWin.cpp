@@ -230,7 +230,7 @@ void ODRolloverWin::SetBestPosition( int x, int y, int off_x, int off_y, int rol
 
     wxSize sizeM;
     if(m_plabelFont && m_plabelFont->IsOk()) {
-#ifdef __WXMAC__
+#ifdef __WXOSX__
         wxScreenDC sdc;
         sdc.SetFont(*m_plabelFont);
         sdc.GetMultiLineTextExtent(m_string, &w, &h, NULL, m_plabelFont);

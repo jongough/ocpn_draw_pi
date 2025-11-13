@@ -174,7 +174,7 @@ wxColour ODColourPickerCtrl::GetColour( void )
 wxSize ODColourPickerCtrl::DoGetBestSize() const
 {
     wxSize sz(wxBitmapButton::DoGetBestSize());
-#ifdef __WXMAC__
+#ifdef __WXOSX__
     sz.y += 6;
 #else
     sz.y += 2;
