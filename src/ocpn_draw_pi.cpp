@@ -3606,19 +3606,20 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
     if (m_bEBLMoveOrigin) {
       ODPoint* tp =
           (ODPoint*)m_pSelectedPIL->m_pODPointList->GetLast()->GetData();
-      GetCanvasPixLL(&g_VP, &boatpoint, tp->m_lat, tp->m_lon);
-      GetCanvasPixLL(&g_VP, &cursorpoint, tp->m_lat, tp->m_lon);
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, tp->m_lat,
                                      tp->m_lon, &brg, &dist);
+      GetCanvasPixLL(&g_VP, &boatpoint, tp->m_lat, tp->m_lon);
+      GetCanvasPixLL(&g_VP, &cursorpoint, m_cursor_lat, m_cursor_lon);
       pil->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
     } else {
       GetCanvasPixLL(&g_VP, &boatpoint, g_pfFix.Lat, g_pfFix.Lon);
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, g_pfFix.Lat,
                                      g_pfFix.Lon, &brg, &dist);
-      pil->DrawSegment(dc, &boatpoint, &m_cursorPoint, m_VP, false);
+      GetCanvasPixLL(&g_VP, &cursorpoint, m_cursor_lat, m_cursor_lon);
+      pil->DrawSegment(dc, &boatpoint, &cursorpoint, m_VP, false);
     }
-    wxString info = CreateExtraPathLegInfo(dc, pil, brg, dist, m_cursorPoint);
-    if (info.length() > 0) RenderExtraPathLegInfo(dc, m_cursorPoint, info);
+    wxString info = CreateExtraPathLegInfo(dc, pil, brg, dist, cursorpoint);
+    if (info.length() > 0) RenderExtraPathLegInfo(dc, cursorpoint, info);
     delete pil;
   } else if (nGZ_State > 0) {
     // draw line from boat to cursor
