@@ -328,4 +328,6 @@ extern int      g_current_timer_canvas_index;
 
 extern double  g_dOCPN_DisplayScaleFactor;
 
+extern  ocpn_draw_pi  *g_ocpn_draw;
+
 #endif

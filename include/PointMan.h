@@ -77,7 +77,8 @@ class PointMan
       void DestroyODPoint(ODPoint *pRp, bool b_update_changeset = true);
       void ClearODPointFonts(void);
       //void ProcessIcons( ocpnStyle::Style* style );
-      void ProcessIcons( );
+      void ProcessIcons(void);
+      void ProcessOCPNIcons(void);
       void RemoveIcon(wxString key);
 
       bool DoesIconExist(const wxString & icon_key) const;

@@ -163,6 +163,7 @@ typedef void (*_GLUfuncptr)();
 
 #include "wxWTranslateCatalog.h"
 #include <cstdint>
+#include <inttypes.h>
 using std::int32_t;
 #include "ocpn_plugin.h"
 #include "globals.h"
@@ -393,8 +394,6 @@ public:
     bool            m_bGZEditing;
     int             m_iEditMode;
 
-
-
     //    The required PlugIn Methods
     int Init(void);
     bool DeInit(void);
@@ -425,7 +424,6 @@ public:
     //    The required override PlugIn Methods
     //     bool RenderOverlay(wxMemoryDC *pmdc, PlugIn_ViewPort *vp);
     //      void SetCursorLatLon(double lat, double lon);
-
 
     void SetDefaults(void);
     int GetToolbarToolCount(void);
@@ -551,6 +549,11 @@ public:
     bool        m_bRecreateConfig;
 
     int         m_drawing_canvas_index;
+
+#if OCPN_API_VERSION_MAJOR >= 1 && OCPN_API_VERSION_MINOR >= 21
+    std::shared_ptr<HostApi> m_host_api;
+    std::shared_ptr<HostApi121> m_api_121;
+#endif
 
 private:
     void    OnTimer(wxTimerEvent& ev);

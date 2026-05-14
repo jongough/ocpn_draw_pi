@@ -178,7 +178,6 @@ void PointMan::ProcessUserIcons( )
     }
 }
 
-
 void PointMan::ProcessIcons( )
 {
     ProcessIcon( GetIcon_PlugIn( _T("empty") ), _T("empty"), _T("Empty") );
@@ -225,11 +224,23 @@ void PointMan::ProcessIcons( )
     ProcessIcon( GetIcon_PlugIn( _T("xmgreen") ), _T("xmgreen"), _T("Green X") );
     ProcessIcon( GetIcon_PlugIn( _T("xmred") ), _T("xmred"), _T("Red X") );
     ProcessIcon( GetIcon_PlugIn( _T("activepoint") ), _T("activepoint"), _T("Active WP") );
-// Load user defined icons.
+    // Load user defined icons.
     // Done after default icons are initialized,
     // so that user may substitute an icon by using the same name in the Usericons file.
     ProcessUserIcons( );
 
+}
+
+void PointMan::ProcessOCPNIcons()
+{
+#if OCPN_API_VERSION_MAJOR >= 1 && OCPN_API_VERSION_MINOR >= 21
+  wxArrayString l_IconArray = GetIconNameArray();
+  for (int i = 0; i < (int)l_IconArray.size(); i++) {
+    if(g_ocpn_draw_pi->m_api_121) {
+      ProcessIcon(g_ocpn_draw_pi->m_api_121->GetObjectIcon_PlugIn( l_IconArray.Item(i)), l_IconArray.Item(i), l_IconArray.Item(i));
+    }
+  }
+#endif
 }
 
 ODMarkIcon *PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description)
@@ -244,13 +255,16 @@ ODMarkIcon *PointMan::ProcessIcon(wxBitmap pimage, const wxString & key, const w
         if( pmi->icon_name.IsSameAs( key ) ) {
             newIcon = false;
             delete pmi->picon_bitmap;
+            delete pmi->picon_bitmap_Day;
+            delete pmi->picon_bitmap_RGB;
+            delete pmi->picon_bitmap_Dusk;
+            delete pmi->picon_bitmap_Night;
             break;
         }
     }
 
     if( newIcon ) {
         pmi = new ODMarkIcon;
-        //pmi->icon_name = key;
         m_pIconArray->Add( (void *) pmi );
     }
 
@@ -520,6 +534,9 @@ unsigned int PointMan::GetIconTexture( const wxBitmap *pbm, int &glw, int &glh )
 {
 #ifdef ocpnUSE_GL
     int index = GetIconIndex( pbm );
+    if (index == -1) {
+      index = 0;
+    }
     ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( index );
     assert(pmi != 0);
 
@@ -686,6 +703,8 @@ int PointMan::GetIconIndex( const wxBitmap *pbm )
         if( pmi->picon_bitmap_Night == pbm) break;
 
     }
+    //if (i >= m_pIconArray->GetCount())
+    //  i = -1;
 
     return i;                                           // index of base icon in the image list
 

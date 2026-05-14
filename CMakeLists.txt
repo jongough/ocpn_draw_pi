@@ -70,8 +70,8 @@ set(PACKAGE "ocpn_draw")
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "10")
 set(VERSION_PATCH "1")
-set(VERSION_TWEAK "1")
-set(VERSION_DATE "13/11/2025") # DD/MM/YYYY format
+set(VERSION_TWEAK "3")
+set(VERSION_DATE "14/05/2026") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "18")
@@ -150,6 +150,8 @@ project(${PACKAGE})
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # ========================================================
+add_compile_definitions(OCPN_API_VERSION_MAJOR=${OCPN_API_VERSION_MAJOR})
+add_compile_definitions(OCPN_API_VERSION_MINOR=${OCPN_API_VERSION_MINOR})
 
 include("PluginSetup")
 
@@ -407,7 +409,7 @@ if (NOT OCPN_FLATPAK_CONFIG)
     target_link_libraries(${PACKAGE_NAME} windows::headers)
   endif (WIN32)
 
-  add_subdirectory(opencpn-libs/api-18)
+  add_subdirectory(opencpn-libs/api-${OCPN_API_VERSION_MINOR})
   target_link_libraries(${PACKAGE_NAME} ocpn::api)
 
   add_subdirectory(opencpn-libs/tinyxml)

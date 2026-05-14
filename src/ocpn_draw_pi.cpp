@@ -417,6 +417,7 @@ ocpn_draw_pi::ocpn_draw_pi(void* ppimgr) : opencpn_plugin_118(ppimgr) {
   //    m_pODicons->initialize_images();
 
   m_bRecreateConfig = false;
+
 }
 
 ocpn_draw_pi::~ocpn_draw_pi() {
@@ -495,6 +496,11 @@ int ocpn_draw_pi::Init(void) {
   // Drawing modes from toolbar
   m_Mode = 0;
   m_numModes = ID_MODE_LAST - 1;
+
+#if OCPN_API_VERSION_MAJOR >= 1 && OCPN_API_VERSION_MINOR >= 21
+  m_host_api = std::move(GetHostApi());
+  m_api_121 = std::dynamic_pointer_cast<HostApi121>(m_host_api);
+#endif
 
   // Adds local language support for the plugin to OCPN
   AddLocaleCatalog(PLUGIN_CATALOG_NAME);
@@ -835,6 +841,7 @@ int ocpn_draw_pi::Init(void) {
 }
 
 void ocpn_draw_pi::LateInit(void) {
+  g_pODPointMan->ProcessOCPNIcons();
   SendPluginMessage(wxS("OCPN_DRAW_PI_READY_FOR_REQUESTS"), wxS("TRUE"));
   return;
 }
