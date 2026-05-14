@@ -50,7 +50,7 @@ if errorlevel 1 (
 
 :: Install choco poedit and add it's persistent user path element
 ::
-set "POEDIT_HOME=C:\Program Files (x86)\Poedit\GettextTools"
+set "POEDIT_HOME=C:\Program Files\Poedit\GettextTools"
 if not exist "%POEDIT_HOME%" (choco install -y poedit)
 dir "%POEDIT_HOME%"
 set "EXTRA_PATH=%POEDIT_HOME%\bin;%EXTRA_PATH%"
