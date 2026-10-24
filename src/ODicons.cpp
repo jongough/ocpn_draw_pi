@@ -28,9 +28,9 @@
 #include <wx/wx.h>
 #endif
 
+#include "ocpn_draw_pi.h"
 #include "ODicons.h"
 #include "ocpn_plugin.h"
-#include "ocpn_draw_pi.h"
 
 ODicons::ODicons()
 {

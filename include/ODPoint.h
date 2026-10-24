@@ -32,6 +32,7 @@ class wxDialog;
 #include <wx/gauge.h>
 #include <wx/colour.h>
 #include <wx/pen.h>
+#include <cstdint>
 #include "Hyperlink.h"
 #include "ocpn_plugin.h"
 //#include "OCPNRegion.h"

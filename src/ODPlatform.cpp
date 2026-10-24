@@ -30,9 +30,9 @@
 #endif //precompiled headers
 #include <wx/textwrapper.h>
 
+#include "ocpn_draw_pi.h"
 #include "ODPlatform.h"
 #include "ocpn_plugin.h"
-#include "ocpn_draw_pi.h"
 
 #ifdef __OCPN__ANDROID__
 unsigned int androidColorPicker( unsigned int initialColor);

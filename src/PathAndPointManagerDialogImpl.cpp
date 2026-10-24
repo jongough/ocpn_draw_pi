@@ -30,8 +30,8 @@
 #endif
 
 #include "PathAndPointManagerDialogImpl.h"
-#include "ocpn_plugin.h"
 #include "ocpn_draw_pi.h"
+#include "ocpn_plugin.h"
 // #include "dychart.h"
 #include "ODConfig.h"
 #include "ODEventHandler.h"

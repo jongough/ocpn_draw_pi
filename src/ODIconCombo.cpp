@@ -30,6 +30,7 @@
 #endif //precompiled headers
 
 #include "ODIconCombo.h"
+#include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
 
 #include <wx/listimpl.cpp>

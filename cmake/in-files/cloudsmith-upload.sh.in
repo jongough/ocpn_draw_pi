@@ -224,7 +224,7 @@ ls -la ~/.
 
 # Find if file exists in directory
 function have_any() {
-    [ $# -gt 0 ]REPO=
+    [ $# -gt 0 ]
 }
 
 if [ ! -z ${LOCAL_DEPLOY+x} ]; then

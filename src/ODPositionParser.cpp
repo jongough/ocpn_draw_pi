@@ -36,8 +36,9 @@
 #include <wx/tokenzr.h>
 #include <wx/regex.h>
 
-#include "ODPositionParser.h"
+#include "ocpn_draw_pi.h"
 #include "ocpn_plugin.h"
+#include "ODPositionParser.h"
 
 PositionParser::PositionParser(const wxString & src)
 {

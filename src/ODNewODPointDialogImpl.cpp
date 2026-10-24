@@ -29,6 +29,7 @@
 #include "wx/wx.h"
 #endif
 
+#include "ocpn_draw_pi.h"
 #include "ODNewODPointDialogImpl.h"
 #include "ocpn_plugin.h"
 

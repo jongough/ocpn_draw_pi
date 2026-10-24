@@ -30,9 +30,9 @@
 #endif //precompiled headers
 #include <wx/textwrapper.h>
 
+#include "ocpn_draw_pi.h"
 #include "ODUtils.h"
 #include "ocpn_plugin.h"
-#include "ocpn_draw_pi.h"
 
 /*!
  * Helper stuff for calculating Path
