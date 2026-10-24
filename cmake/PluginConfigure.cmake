@@ -87,12 +87,9 @@ else ()
           STATUS
             "${CMLOC}START_URL: ${START_URL}, STRING_LENGTH: ${STRING_LENGTH}"
         )
-        if (${START_URL} LESS_EQUAL ${STRING_LENGTH})
-          string(SUBSTRING ${GIT_REPOSITORY_URL} ${START_URL} ${STRING_LENGTH}
+        string(SUBSTRING ${GIT_REPOSITORY_URL} ${START_URL} ${STRING_LENGTH}
                          GIT_REPOSITORY
-          )
-        else (${GIT_REPOSITORY} = "")
-        endif ()
+        )
       endif ()
     else ()
       message(STATUS "${CMLOC}Branch is not tracking a remote branch")
@@ -258,11 +255,15 @@ else ()
   if (MINGW)
     set(PKG_TARGET_ARCH "-x86_64")
   else (MINGW)
-    set(PKG_TARGET_ARCH "")
+    if (OCPN_ARCH MATCHES "x64")
+        set(PKG_TARGET_ARCH "-64")
+    else ()
+        set(PKG_TARGET_ARCH "")
+    endif ()
   endif (MINGW)
 endif ()
 
-message(STATUS "${CMLOC}ARCH: ${ARCH}")
+message(STATUS "${CMLOC}ARCH: ${ARCH}, PKG_TARGET_ARCH: ${PKG_TARGET_ARCH}")
 
 if ("${PKG_BUILD_TARGET}" STREQUAL "")
   set(PKG_BUILD_TARGET "${PKG_TARGET}")
@@ -361,7 +362,7 @@ else ()
       OR MSVC
   )
     set(PACKAGING_NAME
-        "${PKG_NVR}-${PKG_TARGET}-${ARCH}-${PKG_TARGET_VERSION}${PKG_BUILD_GTK}"
+        "${PKG_NVR}-${PKG_TAOCPN_TARGETRGET}-${ARCH}-${PKG_TARGET_VERSION}${PKG_BUILD_GTK}"
     )
     set(PACKAGING_NAME_XML
         "${PKG_NVR}-${PKG_TARGET}-${ARCH}-${PKG_TARGET_VERSION}${PKG_BUILD_GTK}"
@@ -433,9 +434,16 @@ endif ()
 message(STATUS "${CMLOC}PACKAGING_NAME: ${PACKAGING_NAME}")
 message(STATUS "${CMLOC}PACKAGING_NAME_XML: ${PACKAGING_NAME_XML}")
 
-set(PKG_TARGET_FULL
-    "${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_WX_VER}${PKG_TARGET_ARCH}"
-)
+message(STATUS "${CMLOC}PKG_TARGET: ${PKG_TARGET}, OCPN_ARCH: $ENV{OCPN_ARCH}")
+#if (PKG_TARGET MATCHES "MSVC" AND ENV{OCPN_ARCH} MATCHES "x64")
+if (MSVC AND "$ENV{OCPN_ARCH}" STREQUAL "64")
+    message(STATUS "${CMLOC}Setting PKG_TARGET_FULL for x64")
+    set(PKG_TARGET_FULL "${PKG_TARGET}-$ENV{OCPN_ARCH}")
+    set(PKG_BUILD_TARGET "${PKG_TARGET_FULL}")
+else ()
+    message(STATUS "${CMLOC}Setting PKG_TARGET_FULL for non x64")
+    set(PKG_TARGET_FULL "${PKG_TARGET}${PKG_TARGET_GTK}${PKG_TARGET_WX_VER}${PKG_TARGET_ARCH}")
+endif ()
 message(STATUS "${CMLOC}PKG_TARGET_FULL: ${PKG_TARGET_FULL}")
 message(STATUS "${CMLOC}PKG_BUILD_TARGET: ${PKG_BUILD_TARGET}")
 message(STATUS "${CMLOC}PKG_BUILD_GTK: ${PKG_TARGET_GTK}")
@@ -453,6 +461,7 @@ configure_file(
   ${PROJECT_SOURCE_DIR}/cmake/in-files/cloudsmith-upload.sh.in
   ${CMAKE_CURRENT_BINARY_DIR}/cloudsmith-upload.sh @ONLY
 )
+
 configure_file(
   ${PROJECT_SOURCE_DIR}/cmake/in-files/PluginCPackOptions.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/PluginCPackOptions.cmake @ONLY
@@ -730,6 +739,7 @@ if (NOT QT_ANDROID)
   set(WXWIDGETS_FORCE_VERSION
       CACHE STRING "Force usage of a specific wxWidgets version."
   )
+  message(STATUS "${CMLOC}WX_VER: $ENV{WX_VER}")
   if (NOT "$ENV{WX_VER}" STREQUAL "")
     string(LENGTH $ENV{WX_VER} WX_VER_LEN)
     string(SUBSTRING $ENV{WX_VER} 0 1 MAJOR)
@@ -737,8 +747,8 @@ if (NOT QT_ANDROID)
     string(CONCAT WXWIDGETS_FORCE_VERSION ${MAJOR} "." ${MINOR})
     if (${WX_VER_LEN} EQUAL 3)
       string(SUBSTRING $ENV{WX_VER} 2 1 PATCH)
-      # string(CONCAT WXWIDGETS_FORCE_VERSION ${WXWIDGETS_FORCE_VERSION} "."
-      # ${PATCH})
+      string(CONCAT WXWIDGETS_FORCE_VERSION ${WXWIDGETS_FORCE_VERSION} "."
+        ${PATCH})
     endif ()
   endif ()
   message(STATUS "${CMLOC}wxWidgets_Version: ${WXWIDGETS_FORCE_VERSION}")

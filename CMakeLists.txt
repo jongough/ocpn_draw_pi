@@ -23,7 +23,7 @@
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 # -----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough Testplugn(TP) v1.0.351.0 19/10/2025 DD/MM/YYYY
+# Frontend2 Author: Jon Gough Testplugn(TP) v1.0.365.0 24/10/2026 DD/MM/YYYY
 # format buildCI:yes provideODAPI:yes validateJSON:yes
 # ---------------------------------------------------------------------------
 # -- When changing this file do NOT change the order of the sections. -- Make
@@ -69,9 +69,9 @@ set(PACKAGE "ocpn_draw")
 
 set(VERSION_MAJOR "1")
 set(VERSION_MINOR "10")
-set(VERSION_PATCH "1")
-set(VERSION_TWEAK "4")
-set(VERSION_DATE "14/05/2026") # DD/MM/YYYY format
+set(VERSION_PATCH "2")
+set(VERSION_TWEAK "0")
+set(VERSION_DATE "24/10/2026") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov50")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "18")
@@ -82,7 +82,7 @@ message(
   STATUS
     "${CMLOC}OD Version: ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}.${VERSION_TWEAK}"
 )
-message(
+message(USE_GL
   STATUS
     "${CMLOC}OD API Version: ${OD_API_VERSION_MAJOR}.${OD_API_VERSION_MINOR}"
 )
