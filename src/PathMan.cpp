@@ -230,14 +230,15 @@ void PathMan::DeleteAllPaths( void )
 {
     //    Iterate on the pathList
     if(g_PathList.m_pODPathList.size() > 0) {
-        for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
-            if(g_PathList.m_pODPathList.size() > 0) return;
+        for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end();) {
             ODPath *ppath = *it;
             if( ppath->m_bIsInLayer ) {
+                ++it;
                 continue;
             }
 
             DeletePath( ppath );
+            it = g_PathList.m_pODPathList.begin();
         }
     }
 

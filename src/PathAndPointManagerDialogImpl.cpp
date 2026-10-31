@@ -513,7 +513,7 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void) {
 }
 
 void PathAndPointManagerDialogImpl::OnPathDeleteClick(wxCommandEvent& event) {
-
+  ODPathList l_PathList;
   int answer = OCPNMessageBox_PlugIn(
       this, _("Are you sure you want to delete the selected object(s)"),
       _("OpenCPN Alert"), wxYES_NO);
@@ -533,17 +533,18 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick(wxCommandEvent& event) {
     ODPath* ppath_to_delete =
         reinterpret_cast<ODPath*>(m_listCtrlPath->GetItemData(item));
 
-    if (ppath_to_delete) g_PathList.m_pODPathList.remove(ppath_to_delete);
+    if (ppath_to_delete) l_PathList.m_pODPathList.push_back(ppath_to_delete);
   }
 
   if (busy) {
-    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    for(std::list<ODPath *>::iterator it = l_PathList.m_pODPathList.begin(); it != l_PathList.m_pODPathList.end(); ++it) {
       ODPath* path = *it;
       if (path) {
         g_pODConfig->DeleteConfigPath(path);
         g_pPathMan->DeletePath(path);
       }
     }
+    l_PathList.m_pODPathList.clear();
 
     m_lastPathItem = -1;
     UpdatePathListCtrl(false);
