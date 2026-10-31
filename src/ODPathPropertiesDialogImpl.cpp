@@ -146,9 +146,8 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
     //    Look in the path list to be sure the path is still available
     //    (May have been deleted by PathAndPointManagerDialog...)
 
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        ODPath *pPath = node->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *pPath = *it;
 
         if( pPath == m_pPath ) {
             m_pPath->m_bPathPropertiesBlink = false;
@@ -156,7 +155,6 @@ void ODPathPropertiesDialogImpl::OnOK( wxCommandEvent& event )
             m_pPath->ClearHighlights();
             break;
         }
-        node = node->GetNext();
     }
 
 
@@ -180,16 +178,14 @@ void ODPathPropertiesDialogImpl::OnCancel( wxCommandEvent& event )
     //    Look in the path list to be sure the path is still available
     //    (May have been deleted by PathMangerDialog...)
 
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        ODPath *pPath = node->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *pPath = *it;
 
         if( pPath == m_pPath ) {
             m_pPath->m_bPathPropertiesBlink = false;
             m_pPath->ClearHighlights();
             break;
         }
-        node = node->GetNext();
     }
 
 
@@ -454,7 +450,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     wxString tide_form;
 
     //  Iterate on Path Points
-    wxODPointListNode *node = pPath->m_pODPointList->GetFirst();
     double slat, slon;
     slat = g_pfFix.Lat;
     slon = g_pfFix.Lon;
@@ -462,8 +457,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
     long item_line_index = 0;
     wxString wxsLastPoint = _("Boat");
     ODPoint * p_last_pOp = NULL;
-    while( node ) {
-        ODPoint *pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = pPath->m_ODPointList.m_pODPoint.begin(); it != pPath->m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *pOp = *it;
         wxString t;
         //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
@@ -535,9 +530,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( ODPath *pInPath )
         p_last_pOp = pOp;
 
         item_line_index++;
-
-        node = node->GetNext();
-
     }
 
 //    if( pPath->m_ActiveLineColour == wxEmptyString ) m_colourPickerLineColour->SetColour( g_colourActivePathLineColour );
@@ -570,7 +562,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     SetGlobalLocale();
 
     //  Iterate on Path Points
-    wxODPointListNode *node = m_pPath->m_pODPointList->GetFirst();
 
     double brgFromBoat = 0.;
     double distanceFromBoat = 0.;
@@ -579,8 +570,8 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
     long item_line_index = 0;
     wxString wxsLastPoint = _("Boat");
     ODPoint *p_last_pOp = NULL;
-    while( node ) {
-        ODPoint *pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_pPath->m_ODPointList.m_pODPoint.begin(); it != m_pPath->m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *pOp = *it;
         wxString t;
         //  Leg
         m_listCtrlODPoints->SetItem( item_line_index, ID_FROM_POINT, wxsLastPoint );
@@ -649,8 +640,6 @@ bool ODPathPropertiesDialogImpl::UpdateProperties( void )
         p_last_pOp = pOp;
 
         item_line_index++;
-        node = node->GetNext();
-
     }
 
     ResetGlobalLocale();
@@ -695,17 +684,16 @@ void ODPathPropertiesDialogImpl::InitializeList()
     if( NULL == m_pPath ) return;
 
     //  Iterate on Route Points, inserting blank fields starting with index 0
-    wxODPointListNode *pnode = m_pPath->m_pODPointList->GetFirst();
     int in = 0;
-    while( pnode ) {
+    for(std::list<ODPoint *>::iterator it = m_pPath->m_ODPointList.m_pODPoint.begin(); it != m_pPath->m_ODPointList.m_pODPoint.end(); ++it) {
         m_listCtrlODPoints->InsertItem( in, _T(""), 0 );
-        m_listCtrlODPoints->SetItemPtrData( in, (wxUIntPtr)pnode->GetData() );
+        m_listCtrlODPoints->SetItemPtrData( in, (wxUIntPtr)*it );
         in++;
-        if( pnode->GetData()->m_seg_etd.IsValid() ) {
+        ODPoint *l_pPoint = *it;
+        if( l_pPoint->m_seg_etd.IsValid() ) {
             m_listCtrlODPoints->InsertItem( in, _T(""), 0 );
             in++;
         }
-        pnode = pnode->GetNext();
     }
 }
 

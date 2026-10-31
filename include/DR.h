@@ -86,6 +86,10 @@ class DR : public ODPath
         wxColour    m_wxcLineColour;
 };
 
-WX_DECLARE_LIST(DR, DRList); // establish class DR list member
+class DRList
+{
+public:
+    std::list<DR *> m_pDRList;
+};
 
 #endif // DR_H

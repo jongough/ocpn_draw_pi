@@ -85,6 +85,10 @@ class PIL :  public EBL
         int     m_iMaxPILNumber;
 };
 
-WX_DECLARE_LIST(PIL, PILList); // establish class PIL list member
+class PILList
+{
+public:
+    std::list<PIL *> m_pPILList;
+};
 
 #endif // PIL_H

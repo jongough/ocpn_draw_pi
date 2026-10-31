@@ -102,7 +102,7 @@ static const long long lNaN = 0xfff8000000000000;
 ocpn_draw_pi            *g_ocpn_draw_pi;
 wxString                *g_ocpn_draw_display_name;
 wxWindow                *g_parent_window;
-PathList                *g_pPathList;
+ODPathList               g_PathList;
 PointMan                *g_pODPointMan;
 bool                    g_bODIsNewLayer;
 int                     g_ODLayerIdx;
@@ -132,11 +132,11 @@ ODPointPropertiesDialogImpl   *g_pODPointPropDialog;
 ODPropertiesDialogImpl  *g_pOCPNDrawPropDialog;
 PILPropertiesDialogImpl *g_PILIndexLinePropDialog;
 ODDRDialogImpl          *g_pODDRDialog;
-BoundaryList            *g_pBoundaryList;
-EBLList                 *g_pEBLList;
-DRList                  *g_pDRList;
-GZList                  *g_pGZList;
-PILList                 *g_pPILList;
+BoundaryList            g_BoundaryList;
+EBLList                 g_EBLList;
+DRList                  g_DRList;
+GZList                  g_GZList;
+PILList                 g_PILList;
 ODPath                  *g_PathToEdit;
 int                     g_PILToEdit;
 ODRolloverWin           *g_pODRolloverWin;
@@ -545,12 +545,12 @@ int ocpn_draw_pi::Init(void) {
 
   g_pODJSON = new ODJSON;
   g_pODAPI = new ODAPI;
-  g_pBoundaryList = new BoundaryList;
-  g_pEBLList = new EBLList;
-  g_pDRList = new DRList;
-  g_pGZList = new GZList;
-  g_pPILList = new PILList;
-  g_pPathList = new PathList;
+  std::list<Boundary *> g_BoundaryList;
+  std::list<EBL *> g_EBLList;
+  std::list<DR *> g_DRList;
+  std::list<GZ *> g_GZList;
+  std::list<PIL *> g_PILList;
+  std::list<ODPath *> g_PathList;
   //    Layers
   g_pLayerList = new ODLayerList;
 
@@ -969,8 +969,8 @@ bool ocpn_draw_pi::DeInit(void) {
   }
 
   g_pODConfig->m_bSkipChangeSetUpdate = true;
-  g_pPathMan->DeleteAllPaths();
-  g_pODPointMan->DeleteAllODPoints(false);
+  //g_pPathMan->DeleteAllPaths();
+  //g_pODPointMan->DeleteAllODPoints(false);
 
   if (g_pGZMan) delete g_pGZMan;
   g_pGZMan = NULL;
@@ -996,16 +996,11 @@ bool ocpn_draw_pi::DeInit(void) {
   g_pODJSON = NULL;
   if (g_pODAPI) delete g_pODAPI;
   g_pODAPI = NULL;
-  if (g_pBoundaryList) delete g_pBoundaryList;
-  g_pBoundaryList = NULL;
-  if (g_pEBLList) delete g_pEBLList;
-  g_pEBLList = NULL;
-  if (g_pGZList) delete g_pGZList;
-  g_pGZList = NULL;
-  if (g_pPILList) delete g_pPILList;
-  g_pPILList = NULL;
-  if (g_pPathList) delete g_pPathList;
-  g_pPathList = NULL;
+  if (g_BoundaryList.m_pBoundaryList.size() > 0) g_BoundaryList.m_pBoundaryList.clear();
+  if (g_EBLList.m_pEBLList.size() > 0) g_EBLList.m_pEBLList.clear();
+  if (g_GZList.m_pGZList.size() > 0) g_GZList.m_pGZList.clear();
+  if (g_PILList.m_pPILList.size() > 0) g_PILList.m_pPILList.clear();
+  if (g_PathList.m_pODPathList.size() > 0) g_PathList.m_pODPathList.clear();
   if (g_pLayerList) delete g_pLayerList;
   g_pLayerList = NULL;
 
@@ -1152,7 +1147,7 @@ void ocpn_draw_pi::SetPositionFixEx(PlugIn_Position_Fix_Ex& pfix) {
   if (g_pfFix.valid && (g_pfFix.Lat != pfix.Lat || g_pfFix.Lon != pfix.Lon ||
                         (g_pfFix.Cog != pfix.Cog && !wxIsNaN(pfix.Cog)) ||
                         (g_pfFix.Hdt != pfix.Hdt && !wxIsNaN(pfix.Hdt))))
-    l_bBoatChange = true;
+    l_bBoatChange = false;
 
   g_pfFix.Lat = pfix.Lat;
   g_pfFix.Lon = pfix.Lon;
@@ -1191,39 +1186,38 @@ void ocpn_draw_pi::SetPositionFixEx(PlugIn_Position_Fix_Ex& pfix) {
   }
 
   if (l_bBoatChange) {
-    wxEBLListNode* EBLnode = g_pEBLList->GetFirst();
-    for (size_t i = 0; i < g_pEBLList->GetCount(); i++) {
-      EBL* ebl = (EBL*)EBLnode->GetData();
-      if (ebl->m_bCentreOnBoat) {
-        bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
-        ebl->m_bSaveUpdates = false;
-        ebl->CentreOnBoat(true);
-        ebl->m_bSaveUpdates = l_bSaveUpdatesState;
-      }
-      EBLnode = EBLnode->GetNext();
+    if(g_EBLList.m_pEBLList.size() > 0) {
+        for(std::list<EBL *>::iterator it = g_EBLList.m_pEBLList.begin(); it != g_EBLList.m_pEBLList.end(); ++it) {
+            EBL* l_pebl = *it;
+            if (l_pebl->m_bCentreOnBoat) {
+                bool l_bSaveUpdatesState = l_pebl->m_bSaveUpdates;
+                l_pebl->m_bSaveUpdates = false;
+                l_pebl->CentreOnBoat(true);
+                l_pebl->m_bSaveUpdates = l_bSaveUpdatesState;
+            }
+        }
     }
 
-    wxGZListNode* GZnode = g_pGZList->GetFirst();
-    for (size_t i = 0; i < g_pGZList->GetCount(); i++) {
-      GZ* gz = (GZ*)GZnode->GetData();
-      bool l_bSaveUpdatesState = gz->m_bSaveUpdates;
-      gz->m_bSaveUpdates = false;
-      gz->UpdateGZ();
-      gz->m_bSaveUpdates = l_bSaveUpdatesState;
-
-      GZnode = GZnode->GetNext();
+    if(g_GZList.m_pGZList.size() > 0) {
+        for(std::list<GZ *>::iterator it = g_GZList.m_pGZList.begin(); it != g_GZList.m_pGZList.end(); ++it) {
+        GZ* gz = *it;
+        bool l_bSaveUpdatesState = gz->m_bSaveUpdates;
+        gz->m_bSaveUpdates = false;
+        gz->UpdateGZ();
+        gz->m_bSaveUpdates = l_bSaveUpdatesState;
+        }
     }
 
-    wxPILListNode* PILnode = g_pPILList->GetFirst();
-    for (size_t i = 0; i < g_pPILList->GetCount(); i++) {
-      PIL* pil = (PIL*)PILnode->GetData();
-      if (pil->m_bCentreOnBoat) {
-        bool l_bSaveUpdatesState = pil->m_bSaveUpdates;
-        pil->m_bSaveUpdates = false;
-        pil->CentreOnBoat(true);
-        pil->m_bSaveUpdates = l_bSaveUpdatesState;
-      }
-      PILnode = PILnode->GetNext();
+    if(g_PILList.m_pPILList.size() > 0) {
+        for(std::list<PIL *>::iterator it = g_PILList.m_pPILList.begin(); it != g_PILList.m_pPILList.end(); ++it) {
+            PIL* pil = *it;
+            if (pil->m_bCentreOnBoat) {
+                bool l_bSaveUpdatesState = pil->m_bSaveUpdates;
+                pil->m_bSaveUpdates = false;
+                pil->CentreOnBoat(true);
+                pil->m_bSaveUpdates = l_bSaveUpdatesState;
+            }
+        }
     }
   }
 }
@@ -2395,14 +2389,11 @@ bool ocpn_draw_pi::KeyboardEventHook(wxKeyEvent& event) {
           g_pODToolbar->GetPosition(&g_iToolbarPosX, &g_iToolbarPosY);
           if (g_iDisplayToolbar != ID_DISPLAY_ALWAYS) g_pODToolbar->Hide();
 
-          if (!m_pBoundaryList.empty()) {
-            std::list<Boundary*>::iterator it = m_pBoundaryList.begin();
-            while (it != m_pBoundaryList.end()) {
+          if(m_BoundaryList.m_pBoundaryList.size() == 0) {
+            for(std::list<Boundary *>::iterator it = m_BoundaryList.m_pBoundaryList.begin(); it != m_BoundaryList.m_pBoundaryList.end(); ++it) {
               (*it)->m_bPathPropertiesBlink = false;
-              ++it;
             }
-
-            m_pBoundaryList.clear();
+            m_BoundaryList.m_pBoundaryList.clear();
           }
         }
         break;
@@ -2624,13 +2615,13 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
           if (m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
             m_pSelectedBoundary = (Boundary*)m_pSelectedPath;
             if (event.ControlDown()) {
-              std::list<Boundary*>::iterator it = m_pBoundaryList.begin();
-              while (it != m_pBoundaryList.end()) {
+              std::list<Boundary *>::iterator it_current;
+              for(std::list<Boundary*>::iterator it = m_BoundaryList.m_pBoundaryList.begin(); it != m_BoundaryList.m_pBoundaryList.end(); ++it) {
                 if (*it == m_pSelectedBoundary) break;
-                ++it;
+                it_current = it;
               }
-              if (it == m_pBoundaryList.end()) {
-                m_pBoundaryList.push_back(m_pSelectedBoundary);
+              if (it_current == m_BoundaryList.m_pBoundaryList.end()) {
+                g_BoundaryList.m_pBoundaryList.push_back(m_pSelectedBoundary);
                 m_pSelectedBoundary->m_bPathPropertiesBlink = true;
               }
             }
@@ -2676,14 +2667,12 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
         bRefresh = TRUE;
         bret = FALSE;
       }
-    } else if (!m_pBoundaryList.empty()) {
-      std::list<Boundary*>::iterator it = m_pBoundaryList.begin();
-      while (it != m_pBoundaryList.end()) {
+    } else if (!m_BoundaryList.m_pBoundaryList.empty()) {
+      for(std::list<Boundary*>::iterator it = m_BoundaryList.m_pBoundaryList.begin(); it != m_BoundaryList.m_pBoundaryList.end(); ++it) {
         (*it)->m_bPathPropertiesBlink = false;
-        ++it;
       }
 
-      m_pBoundaryList.clear();
+      m_BoundaryList.m_pBoundaryList.clear();
     }
   }
 
@@ -2791,34 +2780,22 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
           g_pODConfig->UpdatePath(m_pSelectedPath);
         g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
 
-        if (m_pSelectedPath->m_pODPointList) {
-          for (unsigned int ip = 0;
-               ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++) {
-            ODPath* pp = (ODPath*)m_pSelectedPath->m_pODPointList->Item(ip);
-            if (g_pPathMan->IsPathValid(pp)) {
-              pp->FinalizeForRendering();
-              pp->UpdateSegmentDistances();
-              pp->m_bIsBeingEdited = false;
+        if (g_pPathMan->IsPathValid(m_pSelectedPath)) {
+            m_pSelectedPath->FinalizeForRendering();
+            m_pSelectedPath->UpdateSegmentDistances();
+            m_pSelectedPath->m_bIsBeingEdited = false;
 
-              g_pODConfig->UpdatePath(pp);
+            g_pODConfig->UpdatePath(m_pSelectedPath);
 
-              pp->SetHiLite(0);
-            }
-          }
-          bRefresh = TRUE;
+            m_pSelectedPath->SetHiLite(0);
         }
+        bRefresh = TRUE;
 
         //    Update the PathProperties Dialog, if currently shown
         if ((NULL != g_pODPathPropDialog) && (g_pODPathPropDialog->IsShown())) {
-          if (m_pSelectedPath->m_pODPointList) {
-            for (unsigned int ip = 0;
-                 ip < m_pSelectedPath->m_pODPointList->GetCount(); ip++) {
-              ODPath* pp = (ODPath*)m_pSelectedPath->m_pODPointList->Item(ip);
-              if (g_pPathMan->IsPathValid(pp)) {
-                g_pODPathPropDialog->SetPathAndUpdate(pp, true);
-              }
+            if (g_pPathMan->IsPathValid(m_pSelectedPath)) {
+            g_pODPathPropDialog->SetPathAndUpdate(m_pSelectedPath, true);
             }
-          }
         }
 
         // m_pSelectedPath->m_bPtIsSelected = false;
@@ -2873,14 +2850,10 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
 
   if (event.Dragging()) {
     if (event.LeftIsDown()) {
-      if (!m_pBoundaryList.empty()) {
-        std::list<Boundary*>::iterator it = m_pBoundaryList.begin();
-        while (it != m_pBoundaryList.end()) {
+        for(std::list<Boundary*>::iterator it = m_BoundaryList.m_pBoundaryList.begin(); it != m_BoundaryList.m_pBoundaryList.end(); ++it) {
           (*it)->m_bPathPropertiesBlink = false;
-          ++it;
         }
-        m_pBoundaryList.clear();
-      }
+        m_BoundaryList.m_pBoundaryList.clear();
       if (nBoundary_State > 0 || nPoint_State > 0)
         bret = true;
       else if (m_pFoundODPoint && (m_iEditMode == ID_PATH_MENU_MOVE_POINT ||
@@ -3147,11 +3120,11 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
       bFullRefresh = TRUE;
       m_drawing_canvas_index = -1;
       bret = TRUE;
-    } else if (m_pBoundaryList.size() > 0) {
+    } else if (m_BoundaryList.m_pBoundaryList.size() > 0) {
       g_ODEventHandler->SetWindow(m_parent_window);
-      g_ODEventHandler->SetBoundaryList(m_pBoundaryList);
+      g_ODEventHandler->SetBoundaryList(g_BoundaryList.m_pBoundaryList);
       g_ODEventHandler->PopupMenu(SELTYPE_BOUNDARYLIST);
-      m_pBoundaryList.clear();
+      m_BoundaryList.m_pBoundaryList.clear();
       bRefresh = TRUE;
       bret = true;
     } else if (nBoundary_State == 0 && nPoint_State == 0 &&
@@ -3591,8 +3564,7 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
     wxPoint boatpoint, l_cursorPoint;
     GetCanvasPixLL(&g_VP, &l_cursorPoint, m_cursor_lat, m_cursor_lon);
     if (m_bEBLMoveOrigin) {
-      ODPoint* tp =
-          (ODPoint*)m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+      ODPoint* tp = (ODPoint*)m_pSelectedEBL->m_ODPointList.m_pODPoint.back();
       GetCanvasPixLL(&g_VP, &boatpoint, tp->m_lat, tp->m_lon);
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, tp->m_lat,
                                      tp->m_lon, &brg, &dist);
@@ -3611,8 +3583,7 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
     double brg, dist;
     wxPoint boatpoint, cursorpoint;
     if (m_bEBLMoveOrigin) {
-      ODPoint* tp =
-          (ODPoint*)m_pSelectedPIL->m_pODPointList->GetLast()->GetData();
+      ODPoint* tp = (ODPoint*)m_pSelectedPIL->m_ODPointList.m_pODPoint.back();
       DistanceBearingMercator_Plugin(m_cursor_lat, m_cursor_lon, tp->m_lat,
                                      tp->m_lon, &brg, &dist);
       GetCanvasPixLL(&g_VP, &boatpoint, tp->m_lat, tp->m_lon);
@@ -3654,8 +3625,8 @@ void ocpn_draw_pi::RenderPathLegs(piDC& dc) {
       GZ* gz = new GZ();
       // get x, y of first point on first line
       GetCanvasPixLL(&g_VP, &l_l1p1,
-                     m_pMouseGZ->m_pODPointList->GetFirst()->GetData()->m_lat,
-                     m_pMouseGZ->m_pODPointList->GetFirst()->GetData()->m_lon);
+                     m_pMouseGZ->m_ODPointList.m_pODPoint.front()->m_lat,
+                     m_pMouseGZ->m_ODPointList.m_pODPoint.front()->m_lon);
       // get x, y of second point on first line
       PositionBearingDistanceMercator_Plugin(g_pfFix.Lat, g_pfFix.Lon,
                                              m_pMouseGZ->m_dFirstLineDirection,
@@ -3880,10 +3851,9 @@ void ocpn_draw_pi::FinishBoundary(void) {
 }
 
 void ocpn_draw_pi::DrawAllPathsInBBox(piDC& dc, LLBBox& BltBBox) {
-  wxPathListNode* pnode = g_pPathList->GetFirst();
-  while (pnode) {
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
     bool b_run = false;
-    ODPath* pPath = pnode->GetData();
+    ODPath* pPath = *it;
     ODPath* pPathDraw = NULL;
     Boundary* pBoundaryDraw = NULL;
     EBL* pEBLDraw = NULL;
@@ -3924,10 +3894,8 @@ void ocpn_draw_pi::DrawAllPathsInBBox(piDC& dc, LLBBox& BltBBox) {
           !m_pSelectedEBL->m_bAlwaysShowInfo) {
         double brg, dist;
         wxPoint destPoint;
-        ODPoint* pStartPoint =
-            m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
-        ODPoint* pEndPoint =
-            m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+        ODPoint* pStartPoint = m_pSelectedEBL->m_ODPointList.m_pODPoint.front();
+        ODPoint* pEndPoint =  m_pSelectedEBL->m_ODPointList.m_pODPoint.back();
         DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon,
                                        pStartPoint->m_lat, pStartPoint->m_lon,
                                        &brg, &dist);
@@ -3960,7 +3928,6 @@ void ocpn_draw_pi::DrawAllPathsInBBox(piDC& dc, LLBBox& BltBBox) {
         if (info.length() > 0) RenderExtraPathLegInfo(dc, m_cursorPoint, info);
       }
     }
-    pnode = pnode->GetNext();
   }
 }
 
@@ -3968,14 +3935,12 @@ void ocpn_draw_pi::DrawAllODPointsInBBox(piDC& dc, LLBBox& BltBBox) {
   //        wxBoundingBox bbx;
   if (!g_pODPointMan) return;
 
-  wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
-  while (node) {
-    ODPoint* pOP = node->GetData();
-    if (node->GetData()->m_sTypeString == _T("Boundary Point"))
-      pOP = (BoundaryPoint*)node->GetData();
+  for(std::list<ODPoint *>::iterator it = g_pODPointMan->GetODPointList()->m_pODPoint.begin(); it != g_pODPointMan->GetODPointList()->m_pODPoint.end(); ++it) {
+    ODPoint* pOP = *it;
+    if (pOP->m_sTypeString == _T("Boundary Point"))
+      pOP = (BoundaryPoint*)pOP;
     if (pOP) {
       if (pOP->m_bIsInPath) {
-        node = node->GetNext();
         continue;
       } else {
         if (!pOP->m_bShowODPointRangeRings) {
@@ -3985,8 +3950,6 @@ void ocpn_draw_pi::DrawAllODPointsInBBox(piDC& dc, LLBBox& BltBBox) {
         }
       }
     }
-
-    node = node->GetNext();
   }
 }
 
@@ -4136,8 +4099,8 @@ bool ocpn_draw_pi::CreateBoundaryLeftClick(wxMouseEvent& event) {
 
   if (nBoundary_State == 1) {
     m_pMouseBoundary = new Boundary();
-    g_pBoundaryList->Append(m_pMouseBoundary);
-    g_pPathList->Append(m_pMouseBoundary);
+    g_BoundaryList.m_pBoundaryList.push_back(m_pMouseBoundary);
+    g_PathList.m_pODPathList.push_back(m_pMouseBoundary);
     m_pMouseBoundary->m_width = g_BoundaryLineWidth;
     m_pMouseBoundary->m_style = g_BoundaryLineStyle;
     r_rband.x = g_cursor_x;
@@ -4317,10 +4280,10 @@ bool ocpn_draw_pi::CreateEBLLeftClick(wxMouseEvent& event) {
   rlon = m_cursor_lon;
 
   m_pMouseEBL = new EBL();
-  g_pEBLList->Append(m_pMouseEBL);
-  g_pPathList->Append(m_pMouseEBL);
+  g_EBLList.m_pEBLList.push_back(m_pMouseEBL);
+  g_PathList.m_pODPathList.push_back(m_pMouseEBL);
   m_pMouseEBL->m_PathNameString << _("EBL") << _T(" ")
-                                << g_pEBLList->GetCount();
+                                << g_EBLList.m_pEBLList.size();
   m_dStartLat = g_pfFix.Lat;
   m_dStartLon = g_pfFix.Lon;
 
@@ -4409,8 +4372,8 @@ bool ocpn_draw_pi::CreateGZLeftClick(wxMouseEvent& event) {
 
   if (nGZ_State & 1) {
     m_pMouseGZ = new GZ();
-    g_pGZList->Append(m_pMouseGZ);
-    g_pPathList->Append(m_pMouseGZ);
+    g_GZList.m_pGZList.push_back(m_pMouseGZ);
+    g_PathList.m_pODPathList.push_back(m_pMouseGZ);
     m_pMouseGZ->m_PathNameString << _("GZ") << _T(" ") << ++g_iGZMaxNum;
     m_pMouseGZ->m_dCentreLat = g_pfFix.Lat;
     m_pMouseGZ->m_dCentreLon = g_pfFix.Lon;
@@ -4513,10 +4476,10 @@ bool ocpn_draw_pi::CreatePILLeftClick(wxMouseEvent& event) {
   rlon = m_cursor_lon;
 
   m_pMousePIL = new PIL();
-  g_pPILList->Append(m_pMousePIL);
-  g_pPathList->Append(m_pMousePIL);
+  g_PILList.m_pPILList.push_back(m_pMousePIL);
+  g_PathList.m_pODPathList.push_back(m_pMousePIL);
   m_pMousePIL->m_PathNameString << _("PIL") << _T(" ")
-                                << g_pPILList->GetCount();
+                                << g_PILList.m_pPILList.size();
   m_dStartLat = g_pfFix.Lat;
   m_dStartLon = g_pfFix.Lon;
 
@@ -4587,9 +4550,8 @@ void ocpn_draw_pi::appendOSDirSlash(wxString* pString) {
 }
 
 void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
-  for (wxPathListNode* node = g_pPathList->GetFirst(); node;
-       node = node->GetNext()) {
-    ODPath* pTempPath = node->GetData();
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    ODPath* pTempPath = *it;
     if (!pTempPath) continue;
     if ((pTempPath->m_bIsBeingEdited || pTempPath->m_bIsBeingCreated) &&
         m_mouse_canvas_index != m_current_canvas_index) {
@@ -4659,8 +4621,8 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
       wxPoint destPoint;
       wxPoint mouse_cursor;
       ODPoint* pStartPoint =
-          m_pSelectedEBL->m_pODPointList->GetFirst()->GetData();
-      ODPoint* pEndPoint = m_pSelectedEBL->m_pODPointList->GetLast()->GetData();
+          m_pSelectedEBL->m_ODPointList.m_pODPoint.front();
+      ODPoint* pEndPoint = m_pSelectedEBL->m_ODPointList.m_pODPoint.back();
       DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon,
                                      pStartPoint->m_lat, pStartPoint->m_lon,
                                      &brg, &dist);
@@ -4699,9 +4661,8 @@ void ocpn_draw_pi::DrawAllPathsAndODPoints(PlugIn_ViewPort& pivp) {
     LLBBox llbb;
     llbb.Set(pivp.lat_min, pivp.lon_min, pivp.lat_max, pivp.lon_max);
 
-    for (wxODPointListNode* pnode = g_pODPointMan->GetODPointList()->GetFirst();
-         pnode; pnode = pnode->GetNext()) {
-      ODPoint* pOP = pnode->GetData();
+    for(std::list<ODPoint *>::iterator it = g_pODPointMan->GetODPointList()->m_pODPoint.begin(); it != g_pODPointMan->GetODPointList()->m_pODPoint.end(); ++it) {
+      ODPoint* pOP = *it;
       if (pOP->m_bIsInPath) continue;
       if (!pOP->m_bShowODPointRangeRings ||
           (pOP->m_bShowODPointRangeRings &&
@@ -5031,3 +4992,5 @@ void ocpn_draw_pi::ODRequestRefresh(int canvas_index, bool bFullRefresh) {
     }
   }
 }
+
+

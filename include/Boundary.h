@@ -25,6 +25,7 @@
 #define BOUNDARY_H
 
 #include "ODPath.h"
+#include "BoundaryPoint.h"
 
 #ifdef USE_ANDROID_GLES2
 #include "linmath.h"
@@ -52,6 +53,7 @@ class Boundary : public ODPath
         int             m_iInclusionBoundarySize;
         bool            m_bExclusionBoundary;
         bool            m_bInclusionBoundary;
+        BoundaryPointList m_BoundaryPointList;
         
     protected:
 
@@ -72,6 +74,10 @@ class Boundary : public ODPath
         
 };
 
-WX_DECLARE_LIST(Boundary, BoundaryList); // establish class Boundary as list member
+class BoundaryList
+{
+public:
+    std::list<Boundary *> m_pBoundaryList;
+};
 
 #endif // BOUNDARY_H

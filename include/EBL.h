@@ -71,6 +71,10 @@ class EBL : public ODPath
         void        RenderPerpLine( piDC &dc, PlugIn_ViewPort &piVP );
 };
 
-WX_DECLARE_LIST(EBL, EBLList); // establish class EBL list member
+class EBLList
+{
+public:
+    std::list<EBL *> m_pEBLList;
+};
 
 #endif // EBL_H

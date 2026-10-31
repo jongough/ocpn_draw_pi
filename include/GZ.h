@@ -92,6 +92,10 @@ class GZ : public ODPath
         
 };
 
-WX_DECLARE_LIST(GZ, GZList); // establish class GZ as list member
+class GZList
+{
+public:
+    std::list<GZ *> m_pGZList;
+};
 
 #endif // GZ_H

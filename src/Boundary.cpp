@@ -46,8 +46,6 @@
 using namespace std;
 using namespace ClipperLib;
 
-WX_DEFINE_LIST ( BoundaryList );
-
 Boundary::Boundary() : ODPath()
 {
     m_sTypeString = _T("Boundary");
@@ -69,7 +67,7 @@ Boundary::Boundary() : ODPath()
 
 Boundary::~Boundary()
 {
-    //dtor
+    g_BoundaryList.m_pBoundaryList.remove(this);
 }
 
 void Boundary::CreateColourSchemes(void)
@@ -115,13 +113,13 @@ void Boundary::SetColourScheme(PI_ColorScheme cs)
 
 void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
 {
-    if ( m_bVisible && m_pODPointList->GetCount() > 2) {
+    if ( m_bVisible && m_ODPointList.m_pODPoint.size() > 2) {
 
         int l_iBoundaryPointCount = 0;
-        m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+        m_bpts = new wxPoint[ m_ODPointList.m_pODPoint.size() ];
         wxPoint r;
-        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-            ODPoint *pOp = node->GetData();
+        for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pOp = (ODPoint *)*it;
             GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
             m_bpts[ l_iBoundaryPointCount++ ] = r;
         }
@@ -144,7 +142,7 @@ void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
             wxGC->SetBrush( *wxTheBrushList->FindOrCreateBrush( tCol, wxBRUSHSTYLE_CROSSDIAG_HATCH ) );
             wxGraphicsPath path = wxGC->CreatePath();
             path.MoveToPoint(m_bpts[0].x, m_bpts[0].y);
-            for( size_t i = 1; i < m_pODPointList->GetCount(); i++ )
+            for( size_t i = 1; i < m_ODPointList.m_pODPoint.size(); i++ )
             {
                 path.AddLineToPoint(m_bpts[i].x, m_bpts[i].y);
             }
@@ -154,13 +152,13 @@ void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
             delete wxGC;
 #else
 
-            dc.DrawPolygonTessellated(m_pODPointList->GetCount(), m_bpts);
+            dc.DrawPolygonTessellated(m_ODPointList->GetCount(), m_bpts);
 #endif
-        } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
+        } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_ODPointList.m_pODPoint.size() > 3 ) {
             // surround boundary with hatching if there is more than 10 pixels different between points
             int l_imaxpointdiffX = 0;
             int l_imaxpointdiffY = 0;
-            for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ) {
+            for( size_t i = 1; i < m_ODPointList.m_pODPoint.size(); i++ ) {
                 int l_ipointdiffX = abs(m_bpts[0].x - m_bpts[i].x);
                 int l_ipointdiffY = abs(m_bpts[0].y - m_bpts[i].y);
                 if(l_ipointdiffX > l_imaxpointdiffX) l_imaxpointdiffX = l_ipointdiffX;
@@ -171,7 +169,7 @@ void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
             // Use ClipperLib to manage Polygon
             // If needed simplify polygons to make shading stay outside
             Paths poly(1);
-            for( size_t i = 0; i < m_pODPointList->GetCount(); i++ ) {
+            for( size_t i = 0; i < m_ODPointList.m_pODPoint.size(); i++ ) {
                 poly[0] << IntPoint( m_bpts[i].x, m_bpts[i].y );
             }
             Paths polys;
@@ -192,7 +190,7 @@ void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
             l_InclusionBoundary[ ExpandedBoundaries[0].size()].y = ExpandedBoundaries[0][0].Y;
 
             int l_iPolygonPointCount[2];
-            l_iPolygonPointCount[0] = m_pODPointList->GetCount();
+            l_iPolygonPointCount[0] = m_ODPointList.m_pODPoint.size();
             l_iPolygonPointCount[1] = ExpandedBoundaries[0].size() + 1;
 
 #if wxUSE_GRAPHICS_CONTEXT == 1
@@ -242,24 +240,24 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
     if ( !m_bVisible ) return;
     piDC dc;
     dc.SetVP(&piVP);
-    if(m_pODPointList->GetCount() > 2 ) {
+    if(m_ODPointList.m_pODPoint.size() > 2 ) {
         if( m_bExclusionBoundary || m_bInclusionBoundary ) {
             wxPoint *l_AllPoints = NULL;
             int     l_iAllPointsSizes[2];
             int l_iBoundaryPointCount = 0;
-            m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+            m_bpts = new wxPoint[ m_ODPointList.m_pODPoint.size() ];
             wxPoint r;
-            for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-                ODPoint *pOp = node->GetData();
+            for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+                ODPoint *pOp = *it;
                 GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
                 m_bpts[ l_iBoundaryPointCount++ ] = r;
             }
 
-            if( !m_bExclusionBoundary && m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
+            if( !m_bExclusionBoundary && m_bInclusionBoundary && m_ODPointList.m_pODPoint.size() > 3 ) {
                 // surround boundary with hatching if there is more than 10 pixels different between points
                 int l_imaxpointdiffX = 0;
                 int l_imaxpointdiffY = 0;
-                for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ) {
+                for( size_t i = 1; i < m_ODPointList.m_pODPoint.size(); i++ ) {
                     int l_ipointdiffX = abs(m_bpts[0].x - m_bpts[i].x);
                     int l_ipointdiffY = abs(m_bpts[0].y - m_bpts[i].y);
                     if(l_ipointdiffX > l_imaxpointdiffX) l_imaxpointdiffX = l_ipointdiffX;
@@ -372,12 +370,12 @@ void Boundary::DrawGL( PlugIn_ViewPort &piVP )
 
             if( m_bExclusionBoundary ) {
                 if(m_bIsBeingCreated) {
-                    dc.DrawPolygon( m_pODPointList->GetCount(), m_bpts );
+                    dc.DrawPolygon( m_ODPointList.m_pODPoint.size(), m_bpts );
                 }
                 else {
-                    dc.DrawPolygon( m_pODPointList->GetCount() - 1, m_bpts );
+                    dc.DrawPolygon( m_ODPointList.m_pODPoint.size() - 1, m_bpts );
                 }
-            } else if( m_bInclusionBoundary && m_pODPointList->GetCount() > 3 ) {
+            } else if( m_bInclusionBoundary && m_ODPointList.m_pODPoint.size() > 3 ) {
                 dc.DrawPolygons( 2, l_iAllPointsSizes, l_AllPoints);
                 delete [] l_AllPoints;
             }
@@ -405,9 +403,9 @@ void Boundary::DeletePoint( ODPoint *op, bool bRenamePoints )
     //    n.b. must delete Selectables  and update config before deleting the point
     if( op->m_bIsInLayer ) return;
 
-    if((ODPoint *)m_pODPointList->GetFirst()->GetData() == op) {
-        m_pODPointList->DeleteObject( op );
-        m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
+    if((ODPoint *)*m_ODPointList.m_pODPoint.begin() == op) {
+        m_ODPointList.m_pODPoint.remove( op );
+        m_ODPointList.m_pODPoint.push_back( (ODPoint *)*m_ODPointList.m_pODPoint.begin() );
     }
 
     ODPath::DeletePoint( op, bRenamePoints );
@@ -425,22 +423,24 @@ void Boundary::SetActiveColours( void )
 
 void Boundary::MoveAllPoints( double inc_lat, double inc_lon )
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    int nodeCount = m_pODPointList->GetCount();
+    int nodeCount = m_ODPointList.m_pODPoint.size();
     int i = 1;
-    while(node) {
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
         if(i == nodeCount) break;
-        ODPoint *bp = (ODPoint *)node->GetData();
+        ODPoint *bp = *it;
         bp->m_lat -= inc_lat;
         bp->m_lon -= inc_lon;
-        node = node->GetNext();
         i++;
     }
 }
 
 ODPoint *Boundary::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
-    int nOP = m_pODPointList->IndexOf( pOP );
+    auto it = std::find(m_ODPointList.m_pODPoint.begin(), m_ODPointList.m_pODPoint.end(), pOP);
+    int nOP = 0;
+    if(it != m_ODPointList.m_pODPoint.end()) {
+        nOP = std::distance(m_ODPointList.m_pODPoint.begin(), it);
+    }
     if( nOP >= m_nPoints - 1 )
         return NULL;
     nOP++;
@@ -451,7 +451,7 @@ ODPoint *Boundary::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool 
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
 
-    m_pODPointList->Insert( nOP, newpoint );
+    m_ODPointList.m_pODPoint.insert( ++it, newpoint );
 
     ODPointGUIDList.Insert( pOP->m_GUID, nOP );
 
@@ -476,9 +476,9 @@ void Boundary::SetColours( ODPath * pPath )
 
 void Boundary::RemovePointFromPath(ODPoint* point, ODPath* path)
 {
-    if((ODPoint *)m_pODPointList->GetFirst()->GetData() == point) {
-        m_pODPointList->DeleteObject( point );
-        m_pODPointList->Append( (ODPoint *)m_pODPointList->GetFirst()->GetData() );
+    if((ODPoint *)*m_ODPointList.m_pODPoint.begin() == point) {
+        m_ODPointList.m_pODPoint.remove( point );
+        m_ODPointList.m_pODPoint.push_back( (ODPoint *)*m_ODPointList.m_pODPoint.begin());
     }
 
     ODPath::RemovePointFromPath(point, path);

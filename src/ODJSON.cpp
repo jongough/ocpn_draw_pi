@@ -748,29 +748,24 @@ DEBUGEND(root[wxS("Msg")].AsString());
 
             wxJSONValue boundaries;
 
-            wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
-
             Boundary *pboundary = NULL;
             ODPoint *popSecond;
 
-            while( boundary_node ) {  //all boundaries
+            for(std::list<Boundary *>::iterator it = g_BoundaryList.m_pBoundaryList.begin(); it != g_BoundaryList.m_pBoundaryList.end(); ++it ) {
                 wxJSONValue current_boundary;
                 wxJSONValue boundary_points;
 
-                pboundary = boundary_node->GetData();
-                wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
-                wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
-
-                while( OCPNpoint_next_node ) {  //specific boundary
+                pboundary = *it;
+                std::list<ODPoint *>::iterator it1 = pboundary->m_ODPointList.m_pODPoint.begin();
+                std::list<ODPoint *>::iterator it2 = it1;
+                ++it2;
+                ODPoint * popFirst = pboundary->m_ODPointList.m_pODPoint.front();
+                for(ODPoint *popSecond = *it2; popSecond != pboundary->m_ODPointList.m_pODPoint.back(); popSecond = *(++it2)) {
                     wxJSONValue current_point;
-
-                    popSecond = OCPNpoint_next_node->GetData();
 
                     current_point[wxT("Lat")] = popSecond->m_lat;
                     current_point[wxT("Lon")] = popSecond->m_lon;
                     boundary_points.Append(current_point);
-
-                    OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
                 }
 
                 current_boundary[wxT("BoundaryPoints")] = boundary_points;
@@ -791,8 +786,6 @@ DEBUGEND(root[wxS("Msg")].AsString());
                     current_boundary[wxT("BoundaryType")] = wxT("Neither");
 
                 boundaries.Append(current_boundary);
-
-                boundary_node = boundary_node->GetNext();    // next boundary
             }
 
             jMsg[wxT("Source")] = wxT("OCPN_DRAW_PI");
@@ -896,7 +889,7 @@ DEBUGEND(root[wxS("Msg")].AsString());
                     pl_boundarypoint->SetColourScheme();
                 }
 
-                pl_boundary->AddPoint(pl_boundary->m_pODPointList->GetFirst()->GetData());
+                pl_boundary->m_ODPointList.m_pODPoint.push_back(pl_boundary->m_ODPointList.m_pODPoint.front());
                 pl_boundary->m_bIsBeingCreated = false;
                 pl_boundary->CreateColourSchemes();
                 pl_boundary->SetColourScheme();

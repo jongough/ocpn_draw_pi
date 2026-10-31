@@ -44,10 +44,6 @@
 //#include "dychart.h"
 #include <wx/gdicmn.h>
 
-
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( PathList );
-
 ODPath::ODPath( void )
 {
     m_sTypeString = wxS("Path");
@@ -72,7 +68,6 @@ ODPath::ODPath( void )
     m_hiliteWidth = 0;
     m_bSaveUpdates = true;
 
-    m_pODPointList = new ODPointList;
     m_pLastAddedPoint = NULL;
     m_pFirstAddedPoint = NULL;
     m_GUID = GetUUID();
@@ -100,9 +95,7 @@ ODPath::ODPath( void )
 
 ODPath::~ODPath( void )
 {
-    m_pODPointList->DeleteContents( false );            // do not delete Marks
-    m_pODPointList->Clear();
-    delete m_pODPointList;
+    m_ODPointList.m_pODPoint.clear();
     m_HyperlinkList->Clear();
     delete m_HyperlinkList;
 }
@@ -127,7 +120,7 @@ void ODPath::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_def
     pNewPoint->m_bIsolatedMark = false;       // definitely no longer isolated
     pNewPoint->m_bIsInPath = true;
 
-    m_pODPointList->Append( pNewPoint );
+    m_ODPointList.m_pODPoint.push_back( pNewPoint );
 
 
     m_nPoints++;
@@ -160,15 +153,13 @@ void ODPath::AddTentativePoint( const wxString& GUID )
 ODPoint *ODPath::GetPoint( int nWhichPoint )
 {
     ODPoint *pOp;
-    wxODPointListNode *node = m_pODPointList->GetFirst();
 
     int i = 1;
-    while( node ) {
-        pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        pOp = *it;
         if( i == nWhichPoint ) return pOp;
 
         i++;
-        node = node->GetNext();
     }
 
     return ( NULL );
@@ -177,13 +168,9 @@ ODPoint *ODPath::GetPoint( int nWhichPoint )
 ODPoint *ODPath::GetPoint( const wxString &guid )
 {
     ODPoint *pOp;
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
-    while( node ) {
-        pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+            pOp = *it;
         if( guid == pOp->m_GUID ) return pOp;
-
-        node = node->GetNext();
     }
 
     return ( NULL );
@@ -236,24 +223,24 @@ void ODPath::Draw( piDC& dc, PlugIn_ViewPort &VP )
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
 
     wxPoint ppt1, ppt2;
-    m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
+    m_bpts = new wxPoint[ m_ODPointList.m_pODPoint.size() ];
     int j = 0;
 
     if ( m_bVisible )
         DrawPointWhich( dc, 1, &ppt1 );
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *pOp1 = node->GetData();
-    node = node->GetNext();
+    std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin();
+    ODPoint *pOp1 = *it;
+    ++it;
 
     m_bpts[ j++ ] = ppt1;
 
     if ( !m_bVisible && pOp1->m_bKeepXPath )
             pOp1->Draw( dc );
 
-    while( node ) {
+    for(; it != m_ODPointList.m_pODPoint.end(); ++it) {
 
-        ODPoint *pOp2 = node->GetData();
+        ODPoint *pOp2 = *it;
         GetCanvasPixLL( &VP, &ppt2,  pOp2->m_lat, pOp2->m_lon);
         m_bpts[ j++ ] = ( ppt2 );
 
@@ -306,12 +293,10 @@ void ODPath::Draw( piDC& dc, PlugIn_ViewPort &VP )
 
         ppt1 = ppt2;
         pOp1 = pOp2;
-
-        node = node->GetNext();
     }
 
-    for(wxODPointListNode *node  = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-        ODPoint *pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *pOp = *it;
         wxPoint r;
         GetCanvasPixLL( &VP, &r, pOp->m_lat, pOp->m_lon );
         if ( m_bVisible || pOp->m_bKeepXPath )
@@ -340,9 +325,9 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     wxPoint r;
 
     if(m_bpts == NULL) {
-        m_bpts = new wxPoint[ m_pODPointList->GetCount() ];
-        for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-            ODPoint *pOp = node->GetData();
+        m_bpts = new wxPoint[ m_ODPointList.m_pODPoint.size() ];
+        for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pOp = *it;
             GetCanvasPixLL( &piVP, &r, pOp->m_lat, pOp->m_lon );
             m_bpts[ j++ ] = r;
         }
@@ -351,20 +336,20 @@ void ODPath::DrawGL( PlugIn_ViewPort &piVP )
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_TRANSPARENT ) );
     dc.SetGLStipple();
 
-    for( size_t i = 1; i < m_pODPointList->GetCount(); i++ ){
+    for( size_t i = 1; i < m_ODPointList.m_pODPoint.size(); i++ ){
         dc.DrawLine(m_bpts[i-1].x, m_bpts[i - 1].y, m_bpts[i].x, m_bpts[i].y);
     }
 
     glDisable( GL_LINE_STIPPLE );
 
     dc.SetBrush( *wxTheBrushList->FindOrCreateBrush( m_col, wxBRUSHSTYLE_SOLID ) );
-    for(size_t i = 1; i < m_pODPointList->GetCount(); i++) {
+    for(size_t i = 1; i < m_ODPointList.m_pODPoint.size(); i++) {
         if(m_bDrawArrow)
             RenderSegmentArrowsGL( m_bpts[i - 1].x, m_bpts[i - 1].y, m_bpts[i].x, m_bpts[i].y, piVP );
     }
     /*  ODPoints  */
-    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-        ODPoint *pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *pOp = *it;
         if ( m_bVisible || pOp->m_bKeepXPath )
             pOp->DrawGL( piVP );
     }
@@ -607,12 +592,9 @@ void ODPath::RenderSegmentArrowsGL( int xa, int ya, int xb, int yb, PlugIn_ViewP
 void ODPath::ClearHighlights( void )
 {
     ODPoint *pop = NULL;
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
-    while( node ) {
-        pop = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        pop = *it;
         if( pop ) pop->m_bPtIsSelected = false;
-        node = node->GetNext();
     }
 }
 
@@ -623,9 +605,8 @@ wxString ODPath::GetNewMarkSequenced( void )
     num = 0;
     ODPoint *pop = NULL;
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while ( node ) {
-        pop = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        pop = *it;
         wxString  sPointName = pop->GetName();
         if ( sPointName.length() == 5 ){
             if( sPointName.Left( 2 ) == wxT("NM") ) {
@@ -633,7 +614,6 @@ wxString ODPath::GetNewMarkSequenced( void )
                 if( num >= m_nm_sequence ) m_nm_sequence = num + 1;
             }
         }
-        node = node->GetNext();
     }
 
     ret.Printf( _T ( "NM%03d" ), m_nm_sequence );
@@ -645,22 +625,21 @@ wxString ODPath::GetNewMarkSequenced( void )
 ODPoint *ODPath::GetLastPoint()
 {
     ODPoint *data_m1 = NULL;
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
-    while( node ) {
-        data_m1 = node->GetData();
-        node = node->GetNext();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        data_m1 = *it;
     }
     return ( data_m1 );
 }
 
 int ODPath::GetIndexOf( ODPoint *pOp )
 {
-    int ret = m_pODPointList->IndexOf( pOp ) + 1;
-    if( ret == wxNOT_FOUND ) return 0;
-    else
-        return ret;
-
+    auto it = std::find(m_ODPointList.m_pODPoint.begin(), m_ODPointList.m_pODPoint.end(), pOp);
+    int nOP = 0;
+    if(it != m_ODPointList.m_pODPoint.end()) {
+        nOP = std::distance(m_ODPointList.m_pODPoint.begin(), it);
+    } else return 0;
+    ++nOP;
+    return nOP;
 }
 
 void ODPath::DeletePoint( ODPoint *rp, bool bRenamePoints )
@@ -672,7 +651,7 @@ void ODPath::DeletePoint( ODPoint *rp, bool bRenamePoints )
     g_pODSelect->DeleteAllSelectablePathSegments( (ODPath *) this );
     g_pODConfig->DeleteODPoint( rp );
 
-    m_pODPointList->DeleteObject( rp );
+    m_ODPointList.m_pODPoint.remove( rp );
 
     if( ( rp->m_GUID.Len() ) && ( wxNOT_FOUND != ODPointGUIDList.Index( rp->m_GUID ) ) ) ODPointGUIDList.Remove(
             rp->m_GUID );
@@ -700,7 +679,7 @@ void ODPath::RemovePoint( ODPoint *op, bool bRenamePoints )
     g_pODSelect->DeleteAllSelectableODPoints( this );
     g_pODSelect->DeleteAllSelectablePathSegments( this );
 
-    m_pODPointList->DeleteObject( op );
+    m_ODPointList.m_pODPoint.remove( op );
     if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove(
             op->m_GUID );
     m_nPoints -= 1;
@@ -733,27 +712,19 @@ void ODPath::RemovePoint( ODPoint *op, bool bRenamePoints )
 
 void ODPath::DeSelectPath()
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
     ODPoint *odp;
-    while( node ) {
-        odp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        odp = *it;
         odp->m_bPtIsSelected = false;
-
-        node = node->GetNext();
     }
 }
 
 void ODPath::ReloadPathPointIcons()
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
     ODPoint *op;
-    while( node ) {
-        op = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        op = *it;
         op->ReLoadIcon();
-
-        node = node->GetNext();
     }
 }
 
@@ -774,25 +745,23 @@ LLBBox ODPath::GetBBox( void )
 
     m_bcrosses_idl = CalculateCrossesIDL();
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
+    std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin();
     ODPoint *data;
 
     if( !m_bcrosses_idl ) {
-        while( node ) {
-            data = node->GetData();
+        for(; it != m_ODPointList.m_pODPoint.end(); ++it) {
+            data = *it;
 
             if( data->m_lon > bbox_xmax ) bbox_xmax = data->m_lon;
             if( data->m_lon < bbox_xmin ) bbox_xmin = data->m_lon;
             if( data->m_lat > bbox_ymax ) bbox_ymax = data->m_lat;
             if( data->m_lat < bbox_ymin ) bbox_ymin = data->m_lat;
-
-            node = node->GetNext();
         }
     } else {
         //    For Routes that cross the IDL, we compute and store
         //    the bbox as positive definite
-        while( node ) {
-            data = node->GetData();
+        for(; it != m_ODPointList.m_pODPoint.end(); ++it) {
+            data = *it;
             double lon = data->m_lon;
             if( lon < 0. ) lon += 360.;
 
@@ -800,8 +769,6 @@ LLBBox ODPath::GetBBox( void )
             if( lon < bbox_xmin ) bbox_xmin = lon;
             if( data->m_lat > bbox_ymax ) bbox_ymax = data->m_lat;
             if( data->m_lat < bbox_ymin ) bbox_ymin = data->m_lat;
-
-            node = node->GetNext();
         }
     }
 
@@ -813,17 +780,16 @@ LLBBox ODPath::GetBBox( void )
 
 bool ODPath::CalculateCrossesIDL( void )
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    if( NULL == node ) return false;
+    std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin();
+    if(it == m_ODPointList.m_pODPoint.end()) return false;
 
     bool idl_cross = false;
-    ODPoint *data = node->GetData();             // first node
+    ODPoint *data = *it;             // first node
 
     double lon0 = data->m_lon;
-    node = node->GetNext();
 
-    while( node ) {
-        data = node->GetData();
+    for(; it != m_ODPointList.m_pODPoint.end(); ++it) {
+        data = *it;
         if( ( lon0 < -150. ) && ( data->m_lon > 150. ) ) {
             idl_cross = true;
             break;
@@ -835,8 +801,6 @@ bool ODPath::CalculateCrossesIDL( void )
         }
 
         lon0 = data->m_lon;
-
-        node = node->GetNext();
     }
 
     return idl_cross;
@@ -854,10 +818,8 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
     // always be fully contained within the resulting rectangle.
     // Can we prove this?
     if( m_bVisible ) {
-        wxODPointListNode *node = m_pODPointList->GetFirst();
-        while( node ) {
-
-            ODPoint *pOp2 = node->GetData();
+        for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pOp2 = *it;
             bool pathpropblinksave = pOp2->m_bPathManagerBlink;
             bool pointpropblinksave = pOp2->m_bPointPropertiesBlink;
             pOp2->m_bPathManagerBlink = false;
@@ -871,7 +833,6 @@ void ODPath::CalculateDCRect( wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort 
             r.Inflate(m_hiliteWidth, m_hiliteWidth);        // allow for large hilite circles at segment ends
 
             update_rect.Union( r );
-            node = node->GetNext();
         }
     }
 
@@ -882,29 +843,23 @@ void ODPath::RebuildGUIDList( void )
 {
     ODPointGUIDList.Clear();               // empty the GUID list
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
     ODPoint *odp;
-    while( node ) {
-        odp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        odp = *it;
         ODPointGUIDList.Add( odp->m_GUID );
-
-        node = node->GetNext();
     }
 }
 void ODPath::SetVisible( bool visible, bool includeODPoints )
 {
     m_bVisible = visible;
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
     ODPoint *op;
-    while( node ) {
-        op = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        op = *it;
         if ( (!op->m_bKeepXPath  || includeODPoints) && m_bODPointsVisible )
         {
             op->SetVisible( visible );
         }
-        node = node->GetNext();
     }
 }
 
@@ -920,15 +875,13 @@ void ODPath::AssemblePath( void )
         wxString GUID = ODPointGUIDList[ip];
 
         //    And on the ODPoints themselves
-        wxODPointListNode *pOpnode = g_pODPointMan->GetODPointList()->GetFirst();
-        while( pOpnode ) {
-            ODPoint *pOp = pOpnode->GetData();
+        for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pOp = *it;
 
             if( pOp->m_GUID == GUID ) {
                 AddPoint( pOp );
                 break;
             }
-            pOpnode = pOpnode->GetNext(); //ODPoint
         }
     }
 }
@@ -938,18 +891,14 @@ void ODPath::RenameODPoints( void )
     //    iterate on the ODPoints.
     //    If dynamically named, rename according to current list position
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
     int i = 1;
-    while( node ) {
-        ODPoint *pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *pOp = *it;
         if( pOp->m_bDynamicName ) {
             wxString name;
             name.Printf( _T ( "%03d" ), i );
             pOp->SetName( name );
         }
-
-        node = node->GetNext();
         i++;
     }
 }
@@ -958,28 +907,27 @@ void ODPath::RenameODPoints( void )
 //    Do all ODPoint positions and names match?
 bool ODPath::IsEqualTo( ODPath *ptargetpath )
 {
-    wxODPointListNode *pthisnode = ( this->m_pODPointList )->GetFirst();
-    wxODPointListNode *pthatnode = ( ptargetpath->m_pODPointList )->GetFirst();
-
-    if( NULL == pthisnode ) return false;
+    if(this->m_ODPointList.m_pODPoint.empty()) return false;
+    if(ptargetpath->m_ODPointList.m_pODPoint.empty()) return false;
+    if(this->m_ODPointList.m_pODPoint.size() != ptargetpath->m_ODPointList.m_pODPoint.size()) return false;
+    std::list<ODPoint *>::iterator it_this = this->m_ODPointList.m_pODPoint.begin();
+    std::list<ODPoint *>::iterator it_that = ptargetpath->m_ODPointList.m_pODPoint.begin();
 
     if( this->m_bIsInLayer || ptargetpath->m_bIsInLayer ) return false;
 
     if( this->GetnPoints() != ptargetpath->GetnPoints() ) return false;
 
-    while( pthisnode ) {
-        if( NULL == pthatnode ) return false;
+    for(; it_this != this->m_ODPointList.m_pODPoint.end(); ++it_this) {
+        ++it_that;
 
-        ODPoint *pthisrp = pthisnode->GetData();
-        ODPoint *pthatrp = pthatnode->GetData();
+        ODPoint *pthisrp = *it_this;
+        ODPoint *pthatrp = *it_that;
 
         if( ( fabs( pthisrp->m_lat - pthatrp->m_lat ) > 1.0e-6 )
                 || ( fabs( pthisrp->m_lon - pthatrp->m_lon ) > 1.0e-6 ) ) return false;
 
         if( !pthisrp->GetName().IsSameAs( pthatrp->GetName() ) ) return false;
 
-        pthisnode = pthisnode->GetNext();
-        pthatnode = pthatnode->GetNext();
     }
 
     return true;                              // success, they are the same
@@ -995,17 +943,14 @@ void ODPath::UpdateSegmentDistances()
 
     double path_len = 0.0;
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-
-    if( node ) {
-        ODPoint *pOp0 = node->GetData();
+    std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin();
+    if( it != m_ODPointList.m_pODPoint.end() ) {
+        ODPoint *pOp0 = *it;
         slat1 = pOp0->m_lat;
         slon1 = pOp0->m_lon;
 
-        node = node->GetNext();
-
-        while( node ) {
-            ODPoint *pOp = node->GetData();
+        for(++it; it != m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pOp = *it;
             slat2 = pOp->m_lat;
             slon2 = pOp->m_lon;
 
@@ -1021,8 +966,6 @@ void ODPath::UpdateSegmentDistances()
 
             slat1 = slat2;
             slon1 = slon2;
-
-            node = node->GetNext();
         }
     }
 
@@ -1037,13 +980,14 @@ ODPoint *ODPath::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool b
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("Boundary Point") );
 
-    int nOP = m_pODPointList->IndexOf( pOP );
-    if ( nOP == 0 ) {
-        m_pODPointList->Insert( m_pODPointList->GetCount() - 1, newpoint );
-        nOP = m_pODPointList->GetCount();
-    }
-    else {
-        m_pODPointList->Insert( nOP, newpoint );
+    auto it = std::find(m_ODPointList.m_pODPoint.begin(), m_ODPointList.m_pODPoint.end(), pOP);
+    int nOP = 0;
+    if(it != m_ODPointList.m_pODPoint.end()) {
+        nOP = std::distance(m_ODPointList.m_pODPoint.begin(), it);
+        m_ODPointList.m_pODPoint.push_back( newpoint );
+    } else {
+        m_ODPointList.m_pODPoint.insert( --m_ODPointList.m_pODPoint.end() , newpoint );
+        nOP = m_ODPointList.m_pODPoint.size();
     }
 
     ODPointGUIDList.Insert( pOP->m_GUID, nOP );
@@ -1060,8 +1004,13 @@ ODPoint *ODPath::InsertPointBefore( ODPoint *pOP, double lat, double lon, bool b
 
 ODPoint *ODPath::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bRenamePoints )
 {
-    int nOP = m_pODPointList->IndexOf( pOP );
-    if( nOP >= m_nPoints - 1 )
+    auto it = std::find(m_ODPointList.m_pODPoint.begin(), m_ODPointList.m_pODPoint.end(), pOP);
+    int nOP = 0;
+    if(it != m_ODPointList.m_pODPoint.end()) {
+        nOP = std::distance(m_ODPointList.m_pODPoint.begin(), it);
+    }
+
+    if(nOP > m_ODPointList.m_pODPoint.size() - 1)
         return NULL;
     nOP++;
 
@@ -1071,7 +1020,7 @@ ODPoint *ODPath::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bR
     newpoint->SetNameShown( false );
     newpoint->SetTypeString( wxT("OD Point") );
 
-    m_pODPointList->Insert( nOP, newpoint );
+    m_ODPointList.m_pODPoint.insert( ++it, newpoint );
 
     ODPointGUIDList.Insert( pOP->m_GUID, nOP );
 
@@ -1087,12 +1036,16 @@ ODPoint *ODPath::InsertPointAfter( ODPoint *pOP, double lat, double lon, bool bR
 
 void ODPath::InsertPointAfter( ODPoint *pOP, ODPoint *pnOP, bool bRenamePoints )
 {
-    int nOP = m_pODPointList->IndexOf( pOP );
+    auto it = std::find(m_ODPointList.m_pODPoint.begin(), m_ODPointList.m_pODPoint.end(), pOP);
+    int nOP = 0;
+    if(it != m_ODPointList.m_pODPoint.end()) {
+        nOP = std::distance(m_ODPointList.m_pODPoint.begin(), it);
+    }
     if( nOP >= m_nPoints - 1 )
         return;
     nOP++;
 
-    m_pODPointList->Insert( nOP, pnOP );
+    m_ODPointList.m_pODPoint.insert( ++it, pnOP );
 
     ODPointGUIDList.Insert( pnOP->m_GUID, nOP );
 
@@ -1184,12 +1137,10 @@ wxColour ODPath::GetCurrentColour(void)
 
 void ODPath::MoveAllPoints( double inc_lat, double inc_lon )
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while(node) {
-        ODPoint *op = (ODPoint *)node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it ) {
+        ODPoint *op = *it;
         op->m_lat -= inc_lat;
         op->m_lon -= inc_lon;
-        node = node->GetNext();
     }
 }
 
@@ -1203,8 +1154,8 @@ void ODPath::MoveSegment( double inc_lat, double inc_lon, ODPoint* firstPoint, O
 
 void ODPath::SetPointVisibility()
 {
-    for(wxODPointListNode *node = m_pODPointList->GetFirst(); node; node = node->GetNext()) {
-        ODPoint *pOp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *pOp = *it;
         pOp->SetVisible( m_bODPointsVisible );
     }
 

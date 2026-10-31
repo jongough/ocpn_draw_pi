@@ -39,15 +39,13 @@
 
 wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
 {
-    wxGZListNode *GZ_node = g_pGZList->GetFirst();
     GZ *pGZ = NULL;
     bool bInPoly = false;
     ODPoint *pop;
     int k = 0;
     wxString l_GUID = wxEmptyString;
-    
-    while( GZ_node ) {
-        pGZ = GZ_node->GetData();
+    for(std::list<GZ *>::iterator it = g_GZList.m_pGZList.begin(); it != g_GZList.m_pGZList.end(); ++it) {
+        pGZ = *it;
 
         bool l_bOK = false;
         switch (state) {
@@ -86,22 +84,18 @@ wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
         if(l_bOK) {
             k++;
             int i, j;
-            j = pGZ->m_pODPointList->GetCount();
+            j = pGZ->m_ODPointList.m_pODPoint.size();
             double *polyX;
             double *polyY;
             polyX = new double[j];
             polyY = new double[j];
             
-            wxODPointListNode *OCPNpoint_node = ( pGZ->m_pODPointList )->GetFirst();
-            wxODPointListNode *OCPNpoint_last_node = ( pGZ->m_pODPointList )->GetLast();
             i = 0;
-            while( OCPNpoint_node ) {
-                pop = OCPNpoint_node->GetData();
+            for(std::list<ODPoint *>::iterator it = pGZ->m_ODPointList.m_pODPoint.begin(); it != pGZ->m_ODPointList.m_pODPoint.end(); ++it) {
+                pop = *it;
                 polyX[i] = pop->m_lon;
                 polyY[i] = pop->m_lat;
                 i++;
-                OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-                if(OCPNpoint_node == OCPNpoint_last_node) break;
             }
             bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
             delete [] polyX;
@@ -111,7 +105,6 @@ wxString GZMan::FindPointInGZ( double lat, double lon, int type, int state )
                 break;
             }
         }
-        GZ_node = GZ_node->GetNext();                         // next GZ
     }
     
     if(bInPoly) return l_GUID;
@@ -194,9 +187,8 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, in
     double *polyY = NULL;
     GZ *pGZ = NULL;
     
-    wxGZListNode *pGZ_node = g_pGZList->GetFirst();
-    while( pGZ_node ) {
-        pGZ = (GZ *)pGZ_node->GetData();
+    for(std::list<GZ *>::iterator it = g_GZList.m_pGZList.begin(); it != g_GZList.m_pGZList.end(); ++it) {
+        pGZ = *it;
         if(pGZ->m_GUID == l_GUID) {
             bool l_bOK = false;
             switch (state) {
@@ -236,21 +228,16 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, in
                 bGZFound = true;
             break;
         }
-        pGZ = (GZ *)pGZ_node->GetNext();
     }
     if(pGZ && bGZFound) {
-        polyX = new double[pGZ->m_pODPointList->GetCount()];
-        polyY = new double[pGZ->m_pODPointList->GetCount()];
-        wxODPointListNode *OCPNpoint_node = ( pGZ->m_pODPointList )->GetFirst();
-        wxODPointListNode *OCPNpoint_last_node = ( pGZ->m_pODPointList )->GetLast();
+        polyX = new double[pGZ->m_ODPointList.m_pODPoint.size()];
+        polyY = new double[pGZ->m_ODPointList.m_pODPoint.size()];
         int i = 0;
-        while( OCPNpoint_node ) {
-            ODPoint *pop = OCPNpoint_node->GetData();
+        for(std::list<ODPoint *>::iterator it = pGZ->m_ODPointList.m_pODPoint.begin(); it != pGZ->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pop = *it;
             polyX[i] = pop->m_lon;
             polyY[i] = pop->m_lat;
             ++i;
-            OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-            if(OCPNpoint_node == OCPNpoint_last_node) break;
         }
         bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
     } 
@@ -263,7 +250,6 @@ bool GZMan::FindPointInGZ( wxString l_GUID, double lat, double lon, int type, in
 
 wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state )
 {
-    wxGZListNode *GZ_node = g_pGZList->GetFirst();
     GZ *pGZ = NULL;
     ODPoint *popFirst;
     ODPoint *popSecond;
@@ -271,10 +257,9 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
     bool l_bCrosses;
     
     GZCrossingList.clear();
-    
-    while( GZ_node ) {
+    for(std::list<GZ *>::iterator it = g_GZList.m_pGZList.begin(); it != g_GZList.m_pGZList.end(); ++it) {
         bool    l_bNext = false;
-        pGZ = GZ_node->GetData();
+        pGZ = *it;
         switch (state) {
             case ID_PATH_STATE_ANY:
                 l_bNext = false;
@@ -307,14 +292,12 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
         }
         
         if(!l_bNext) {
-            wxODPointListNode *OCPNpoint_node = ( pGZ->m_pODPointList )->GetFirst();
-            wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
-
-            popFirst = OCPNpoint_node->GetData();
-            while( OCPNpoint_next_node ) {
+            std::list<ODPoint *>::iterator it = pGZ->m_ODPointList.m_pODPoint.begin();
+            popFirst = *it;
+            for(++it; it != pGZ->m_ODPointList.m_pODPoint.end(); ++it) {
                 double l_dCrossingLon;
                 double l_dCrossingLat;
-                popSecond = OCPNpoint_next_node->GetData();
+                popSecond = *it;
                 l_bCrosses = GetLineIntersection(StartLon, StartLat, EndLon, EndLat, popFirst->m_lon, popFirst->m_lat, popSecond->m_lon, popSecond->m_lat, &l_dCrossingLon, &l_dCrossingLat);
                 if(l_bCrosses) {
                     double brg;
@@ -328,10 +311,8 @@ wxString GZMan::FindLineCrossingGZ( double StartLon, double StartLat, double End
                     GZCrossingList.push_back(l_GZCrossing);
                 }
                 popFirst = popSecond;
-                OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
             }
         }
-        GZ_node = GZ_node->GetNext();                         // next GZ
     }
     // if list of crossings <> 0 then find one closest to start point
     if(!GZCrossingList.empty()) {

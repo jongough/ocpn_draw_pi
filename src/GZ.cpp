@@ -38,11 +38,7 @@
 
 #include <wx/graphics.h>
 
-#include <wx/listimpl.cpp>
-
 using namespace ClipperLib;
-
-WX_DEFINE_LIST ( GZList );
 
 GZ::GZ() : ODPath()
 {
@@ -271,7 +267,7 @@ void GZ::DrawGL( PlugIn_ViewPort &piVP )
         points[4].y = l_l1p1.y;
 
         //Fill
-        if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_pODPointList->GetCount(), points, 0, 0);
+        if(m_bIsBeingCreated) dc.DrawPolygonTessellated( m_ODPointList.m_pODPoint.size(), points, 0, 0);
         else dc.DrawPolygonTessellated( numpoints - 1, points, 0, 0);
     }
 
@@ -312,24 +308,23 @@ void GZ::SetActiveColours( void )
 
 void GZ::MoveAllPoints( double inc_lat, double inc_lon )
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    int nodeCount = m_pODPointList->GetCount();
+    int nodeCount = m_ODPointList.m_pODPoint.size();
     int i = 1;
-    while(node) {
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
         if(i == nodeCount) break;
-        ODPoint *bp = (ODPoint *)node->GetData();
+        ODPoint *bp = *it;
         bp->m_lat -= inc_lat;
         bp->m_lon -= inc_lon;
-        node = node->GetNext();
         i++;
     }
 }
 
 void GZ::UpdateGZ( bool bUpdateSelectablePath )
 {
-    if(m_pODPointList->size() < 2) return;
-    ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
-    ODPoint *pLastPoint = m_pODPointList->GetLast()->GetData();
+    if(m_ODPointList.m_pODPoint.size() < 2) return;
+    std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin();
+    ODPoint *pFirstPoint = *it++;
+    ODPoint *pLastPoint = *it;
     m_dCentreLat = g_pfFix.Lat;
     m_dCentreLon = g_pfFix.Lon;
     m_dBoatHeading = g_pfFix.Hdt;
@@ -359,7 +354,7 @@ void GZ::UpdateGZ( bool bUpdateSelectablePath )
 
 void GZ::UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath )
 {
-    if(pGZPoint == m_pODPointList->GetFirst()->GetData()) {
+    if(pGZPoint == m_ODPointList.m_pODPoint.front()) {
         DistanceBearingMercator_Plugin( pGZPoint->m_lat, pGZPoint->m_lon, g_pfFix.Lat, g_pfFix.Lon, &m_dFirstLineDirection, &m_dFirstDistance );
         if(m_bRotateWithBoat) {
             switch(m_iMaintainWith) {
@@ -392,25 +387,19 @@ void GZ::UpdateGZ( ODPoint *pGZPoint, bool bUpdateSelectablePath )
     g_pODConfig->UpdatePath( this );
     g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
 
-    for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-        ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
-        if( g_pPathMan->IsPathValid(pp) ) {
-            pp->FinalizeForRendering();
-            pp->m_bIsBeingEdited = false;
+    if( g_pPathMan->IsPathValid(this) ) {
+        this->FinalizeForRendering();
+        this->m_bIsBeingEdited = false;
 
-            g_pODConfig->UpdatePath( pp );
+        g_pODConfig->UpdatePath( this );
 
-            pp->SetHiLite( 0 );
-        }
+        this->SetHiLite( 0 );
     }
 
     //    Update the PathProperties Dialog, if currently shown
     if( ( NULL != g_pGZPropDialog ) && ( g_pGZPropDialog->IsShown() ) ) {
-        for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-            ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
-            if( g_pPathMan->IsPathValid(pp) ) {
-                g_pGZPropDialog->SetPathAndUpdate( pp, true );
-            }
+        if( g_pPathMan->IsPathValid(this) ) {
+            g_pGZPropDialog->SetPathAndUpdate( this, true );
         }
     }
 }
@@ -455,7 +444,7 @@ void GZ::UpdateGZSelectablePath( void )
 
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dPrevLat, &l_dPrevLon);
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
-    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_pODPointList->GetFirst()->GetData(), NULL, this );
+    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_ODPointList.m_pODPoint.front(), NULL, this );
     l_dPrevLat = l_dLat;
     l_dPrevLon = l_dLon;
     if(m_iLineType == ID_LINE_TYPE_ARC) {
@@ -469,11 +458,11 @@ void GZ::UpdateGZSelectablePath( void )
         }
     }
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dSecondDistance, &l_dLat, &l_dLon);
-    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_pODPointList->GetLast()->GetData(), this );
+    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_ODPointList.m_pODPoint.back(), this );
     l_dPrevLat = l_dLat;
     l_dPrevLon = l_dLon;
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);
-    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_pODPointList->GetLast()->GetData(), NULL, this );
+    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, m_ODPointList.m_pODPoint.back(), NULL, this );
     l_dPrevLat = l_dLat;
     l_dPrevLon = l_dLon;
     if(m_iLineType == ID_LINE_TYPE_ARC) {
@@ -487,7 +476,7 @@ void GZ::UpdateGZSelectablePath( void )
         }
     }
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dFirstDistance, &l_dLat, &l_dLon);
-    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_pODPointList->GetFirst()->GetData(), this );
+    g_pODSelect->AddSelectablePathSegment( l_dPrevLat, l_dPrevLon, l_dLat, l_dLon, NULL, m_ODPointList.m_pODPoint.front(), this );
 
     g_pODSelect->AddAllSelectableODPoints( this );
 
@@ -495,8 +484,8 @@ void GZ::UpdateGZSelectablePath( void )
 
 void GZ::MaintainWith( void )
 {
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pStartPoint = m_ODPointList.m_pODPoint.front();
+    ODPoint *pEndPoint = m_ODPointList.m_pODPoint.back();
     m_dCentreLat = g_pfFix.Lat;
     m_dCentreLon = g_pfFix.Lon;
 
@@ -545,13 +534,13 @@ void GZ::GetLatLonPoints( PlugIn_ViewPort &piVP, wxPoint *l_pCentre, wxPoint *l_
         }
     }
     // get x, y of first point on first line
-    ODPoint *l_point = m_pODPointList->GetFirst()->GetData();
+    ODPoint *l_point = m_ODPointList.m_pODPoint.front();
     GetCanvasPixLL( &piVP, *&l_l1p1, l_point->m_lat, l_point->m_lon );
     // get x, y of second point on first line
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, firstDirection, m_dSecondDistance, &l_dLat, &l_dLon);
     GetCanvasPixLL( &piVP, *&l_l1p2, l_dLat, l_dLon );
     // get x, y of second point on second line
-    l_point = m_pODPointList->GetLast()->GetData();
+    l_point = m_ODPointList.m_pODPoint.back();
     GetCanvasPixLL( &piVP, *&l_l2p2, l_point->m_lat, l_point->m_lon );
     // get x, y of first point on second line
     PositionBearingDistanceMercator_Plugin( m_dCentreLat, m_dCentreLon, secondDirection, m_dFirstDistance, &l_dLat, &l_dLon);

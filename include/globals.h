@@ -27,8 +27,10 @@
  */
 #ifndef _OCPNDRAWGLOBALS_H_
 #define _OCPNDRAWGLOBALS_H_
+#include <list>
+
 class ocpn_draw_pi;
-class PathList;
+class ODPathList;
 class PointMan;
 class ODSelect;
 class ODConfig;
@@ -48,7 +50,9 @@ class ODPropertiesDialogImpl;
 class PILPropertiesDialogImpl;
 class ODDRDialogImpl;
 class BoundaryList;
+class Boundary;
 class EBLList;
+class EBL;
 class DRList;
 class GZList;
 class PILList;
@@ -72,7 +76,7 @@ class ODSelectItem;
 extern ocpn_draw_pi             *g_ocpn_draw_pi;
 extern wxString                 *g_ocpn_draw_display_name;
 extern wxWindow                 *g_parent_window;
-extern PathList                 *g_pPathList;
+extern ODPathList                g_PathList;
 extern PointMan                 *g_pODPointMan;
 extern bool                     g_bODIsNewLayer;
 extern int                      g_ODLayerIdx;
@@ -102,11 +106,11 @@ extern ODPointPropertiesDialogImpl     *g_pODPointPropDialog;
 extern ODPropertiesDialogImpl   *g_pOCPNDrawPropDialog;
 extern PILPropertiesDialogImpl  *g_PILIndexLinePropDialog;
 extern ODDRDialogImpl           *g_pODDRDialog;
-extern BoundaryList             *g_pBoundaryList;
-extern EBLList                  *g_pEBLList;
-extern DRList                   *g_pDRList;
-extern GZList                   *g_pGZList;
-extern PILList                  *g_pPILList;
+extern BoundaryList             g_BoundaryList;
+extern EBLList                  g_EBLList;
+extern DRList                   g_DRList;
+extern GZList                   g_GZList;
+extern PILList                  g_PILList;
 extern ODPath                   *g_PathToEdit;
 extern int                      g_PILToEdit;
 extern ODRolloverWin            *g_pODRolloverWin;

@@ -81,7 +81,7 @@ class ODNavObjectChanges : public pugi::xml_document
     
     bool AddPath ( ODPath *pb, const char *action );
     bool AddODPoint( ODPoint *pr, const char *action );
-    bool AddGPXPathsList( PathList *pPaths );
+    bool AddGPXPathsList( ODPathList *pPaths );
     bool AddGPXPath(ODPath *pPath);
     bool AddGPXODPoint(ODPoint *pWP );
     bool AddGPXODPointsList( ODPointList *pODPoints );
@@ -132,7 +132,7 @@ class ODNavObjectChanges : public pugi::xml_document
         void CreateRotatingNavObjChangesBackup();
         
         wxString m_ODfilename;
-        ODPointList *m_ptODPointList;
+        std::list<ODPoint *> m_ptODPointList;
 
 };
 

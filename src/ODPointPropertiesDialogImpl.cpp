@@ -515,12 +515,10 @@ void ODPointPropertiesDialogImpl::SaveChanges()
                     pp->UpdateSegmentDistances();
 
                     if(m_checkBoxChangeAllPointIcons->IsChecked()) {
-                        wxODPointListNode *pnode = ( pp->m_pODPointList )->GetFirst();
-                        while( pnode ) {
-                            ODPoint *pop = pnode->GetData();
+                        for(std::list<ODPoint *>::iterator it = pp->m_ODPointList.m_pODPoint.begin(); it != pp->m_ODPointList.m_pODPoint.end(); ++it) {
+                            ODPoint *pop = *it;
                             pop->SetIconName( m_bODIComboBoxODPointIconName->GetValue() );
                             pop->ReLoadIcon();
-                            pnode = pnode->GetNext();
                         }
                     }
 
@@ -975,17 +973,14 @@ void ODPointPropertiesDialogImpl::ValidateMark( void )
 {
     //    Look in the master list of ODPoints to see if the currently selected ODPpoint is still valid
     //    It may have been deleted as part of a path
-    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
 
     bool b_found = false;
-    while( node ) {
-        ODPoint *op = node->GetData();
+    for(std::list<ODPoint *>::iterator it = g_pODPointMan->m_ODPointList.m_pODPoint.begin(); it != g_pODPointMan->m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *op = *it;
         if( m_pODPoint == op ) {
             b_found = true;
             break;
         }
-
-        node = node->GetNext();
     }
 
     if( !b_found ) {

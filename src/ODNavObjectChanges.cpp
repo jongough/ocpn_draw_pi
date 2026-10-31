@@ -25,6 +25,7 @@
 
 #include "ODNavObjectChanges.h"
 #include "ocpn_draw_pi.h"
+#include "globals.h"
 #include "ODSelect.h"
 #include "ODConfig.h"
 #include "PointMan.h"
@@ -43,30 +44,30 @@
 #include "TextPointCSVImport.h"
 #include <wx/tokenzr.h>
 
-extern PathList         *g_pPathList;
-extern BoundaryList     *g_pBoundaryList;
-extern EBLList          *g_pEBLList;
-extern GZList           *g_pGZList;
-extern PILList          *g_pPILList;
-extern ODSelect         *g_pODSelect;
+//extern PathList         *g_pPathList;
+//extern std::list<Boundary *> *g_BoundaryList;
+//extern std::list<EBL *> *g_EBLList;
+//extern GZList           *g_pGZList;
+//extern PILList          *g_pPILList;
+//extern ODSelect         *g_pODSelect;
 pugi::xml_node          gpx_path_child;
 pugi::xml_node          gpx_path_root;
-extern ODConfig         *g_pODConfig;
-extern PointMan         *g_pODPointMan;
-extern PathMan          *g_pPathMan;
-extern int              g_iTextPosition;
-extern wxColour         g_colourDefaultTextColour;
-extern wxColour         g_colourDefaultTextBackgroundColour;
-extern int              g_iTextBackgroundTransparency;
-extern wxFont           g_DisplayTextFont;
-extern int              g_iInclusionBoundaryPointSize;
-extern unsigned int     g_uiBoundaryPointFillTransparency;
-extern bool             g_bExclusionBoundaryPoint;
-extern bool             g_bInclusionBoundaryPoint;
-extern int              g_navobjbackups;
-extern int              g_iGZMaxNum;
-extern PI_ColorScheme   g_global_color_scheme;
-extern wxString         g_sODPointIconName;
+//extern ODConfig         *g_pODConfig;
+//extern PointMan         *g_pODPointMan;
+//extern PathMan          *g_pPathMan;
+//extern int              g_iTextPosition;
+//extern wxColour         g_colourDefaultTextColour;
+//extern wxColour         g_colourDefaultTextBackgroundColour;
+//extern int              g_iTextBackgroundTransparency;
+//extern wxFont           g_DisplayTextFont;
+//extern int              g_iInclusionBoundaryPointSize;
+//extern unsigned int     g_uiBoundaryPointFillTransparency;
+//extern bool             g_bExclusionBoundaryPoint;
+//extern bool             g_bInclusionBoundaryPoint;
+//extern int              g_navobjbackups;
+//extern int              g_iGZMaxNum;
+//extern PI_ColorScheme   g_global_color_scheme;
+//extern wxString         g_sODPointIconName;
 
 
 ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
@@ -74,7 +75,6 @@ ODNavObjectChanges::ODNavObjectChanges() : pugi::xml_document()
     //ctor
     m_bFirstPath = true;
     m_ODchanges_file = 0;
-    m_ptODPointList = new ODPointList;
 }
 
 ODNavObjectChanges::ODNavObjectChanges(wxString file_name) : pugi::xml_document()
@@ -83,7 +83,6 @@ ODNavObjectChanges::ODNavObjectChanges(wxString file_name) : pugi::xml_document(
     m_ODfilename = file_name;
     m_ODchanges_file = fopen(m_ODfilename.mb_str(), "a");
     m_bFirstPath = true;
-    m_ptODPointList = new ODPointList;
 }
 
 ODNavObjectChanges::~ODNavObjectChanges()
@@ -94,8 +93,7 @@ ODNavObjectChanges::~ODNavObjectChanges()
 
     if( ::wxFileExists( m_ODfilename ) )
         ::wxRemoveFile( m_ODfilename );
-    m_ptODPointList->clear();
-    delete m_ptODPointList;
+    m_ptODPointList.clear();
 }
 
 void ODNavObjectChanges::RemoveChangesFile( void )
@@ -180,7 +178,6 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     node.append_attribute("lat") = s.mb_str();
     s.Printf(_T("%.9f"), pop->m_lon);
     node.append_attribute("lon") = s.mb_str();
-
     if(flags & OUT_TYPE) {
         child = node.append_child("opencpn:type");
         child.append_child(pugi::node_pcdata).set_value(pop->GetTypeString().mb_str());
@@ -667,20 +664,16 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
 
     }
 
-    ODPointList *pODPointList = pPath->m_pODPointList;
-    wxODPointListNode *node2 = pODPointList->GetFirst();
     ODPoint *pop;
-
-    while( node2  ) {
+    for(std::list<ODPoint *>::iterator it = pPath->m_ODPointList.m_pODPoint.begin(); it != pPath->m_ODPointList.m_pODPoint.end(); ++it) {
+        pop = *it;
         if(pBoundary)
-            pop = dynamic_cast<BoundaryPoint *>(node2->GetData());
+            pop = dynamic_cast<BoundaryPoint *>(*it);
         else
-            pop = node2->GetData();
+            pop = *it;
         assert(pop != 0);
 
         GPXCreateODPoint(node.append_child("opencpn:ODPoint"), pop, OPT_OCPNPOINT);
-
-        node2 = node2->GetNext();
     }
 
 #ifndef __WXMSW__
@@ -742,16 +735,15 @@ bool ODNavObjectChanges::AddODPoint( ODPoint *pOP, const char *action )
     return true;
 }
 
-bool ODNavObjectChanges::AddGPXPathsList( PathList *pPaths )
+bool ODNavObjectChanges::AddGPXPathsList( ODPathList *pPaths )
 {
     SetRootGPXNode();
 
     m_bFirstPath = true;
-    wxPathListNode* pPath = pPaths->GetFirst();
-    while (pPath) {
-        ODPath* pPData = pPath->GetData();
+    //wxPathListNode* pPath = pPaths->GetFirst();
+    for(std::list<ODPath *>::iterator it = pPaths->m_pODPathList.begin(); it != pPaths->m_pODPathList.end(); ++it) {
+        ODPath* pPData = *it;
         AddGPXPath( pPData);
-        pPath = pPath->GetNext();
     }
 
     return true;
@@ -778,11 +770,9 @@ bool ODNavObjectChanges::AddGPXODPointsList( ODPointList *pODPoints )
 {
     SetRootGPXNode();
 
-    wxODPointListNode* pODPointNode = pODPoints->GetFirst();
-    while (pODPointNode) {
-        ODPoint* pRP = pODPointNode->GetData();
+    for(std::list<ODPoint *>::iterator it = pODPoints->m_pODPoint.begin(); it != pODPoints->m_pODPoint.end(); ++it) {
+        ODPoint* pRP = *it;
         AddGPXODPoint( pRP);
-        pODPointNode = pODPointNode->GetNext();
     }
 
     return true;
@@ -798,18 +788,18 @@ bool ODNavObjectChanges::CreateNavObjGPXPoints( void )
     if(!g_pODPointMan)
         return false;
 
-    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-
     ODPoint *pOP;
-
-    while( node ) {
-        pOP = node->GetData();
+    ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+    int i = l_ODPointList.m_pODPoint.size();
+    if(i > 0) {
+    for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+        pOP = *it;
 
         if( ( pOP->m_bIsolatedMark ) && !( pOP->m_bIsInLayer ) && !(pOP->m_bTemporary) )
         {
             GPXCreateODPoint(m_gpx_root.append_child("opencpn:ODPoint"), pOP, OPT_OCPNPOINT);
         }
-        node = node->GetNext();
+    }
     }
 
     return true;
@@ -819,7 +809,6 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
 {
     pugi::xml_node child_ext;
     // Paths
-    wxPathListNode *node1 = g_pPathList->GetFirst();
 //    child_ext = m_gpx_root.append_child("extensions");
     ODPath *pPath = NULL;
     Boundary *pBoundary = NULL;
@@ -827,27 +816,27 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
     DR *pDR = NULL;
     GZ *pGZ = NULL;
     PIL *pPIL = NULL;
-    while( node1 ) {
-        pPath = (ODPath *)node1->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        pPath = *it;
         pBoundary = NULL;
         pEBL = NULL;
         pDR = NULL;
         pGZ = NULL;
         pPIL = NULL;
         if(pPath->m_sTypeString == wxT("Boundary")) {
-            pBoundary = (Boundary *)node1->GetData();
+            pBoundary = (Boundary *)*it;
             pPath = pBoundary;
         } else if(pPath->m_sTypeString == wxT("EBL")) {
-            pEBL = (EBL *)node1->GetData();
+            pEBL = (EBL *)*it;
             pPath = pEBL;
         } else if(pPath->m_sTypeString == wxT("DR")) {
-            pDR = (DR *)node1->GetData();
+            pDR = (DR *)*it;
             pPath = pDR;
         } else if(pPath->m_sTypeString == wxT("Guard Zone")) {
-            pGZ = (GZ *)node1->GetData();
+            pGZ = (GZ *)*it;
             pPath = pGZ;
         } else if(pPath->m_sTypeString == wxT("PIL")) {
-            pPIL = (PIL *)node1->GetData();
+            pPIL = (PIL *)*it;
             pPath = pPIL;
         }
         if(pEBL) {
@@ -874,8 +863,6 @@ bool ODNavObjectChanges::CreateNavObjGPXPaths( void )
             if( !pPath->m_bIsInLayer)
                 GPXCreatePath(m_gpx_root.append_child("opencpn:path"), pPath);
         }
-
-        node1 = node1->GetNext();
     }
 
 
@@ -1218,7 +1205,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             pOP->m_sTypeString = TypeString;
         }
 
-        m_ptODPointList->Append( pOP );
+        m_ptODPointList.push_back( pOP );
     } else {
         if(pOP->m_sTypeString == wxT("Text Point")) {
             pTP = dynamic_cast<TextPoint *>(pOP);
@@ -1651,16 +1638,14 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
 
 ODPoint *ODNavObjectChanges::ODPointExists( const wxString& name, double lat, double lon )
 {
-    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = g_pODPointMan->GetODPointList()->m_pODPoint.begin(); it != g_pODPointMan->GetODPointList()->m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
 
 //        if( pr->m_bIsInLayer ) return NULL;
 
         if( fabs( lat - podp->m_lat ) < 1.e-6 && fabs( lon - podp->m_lon ) < 1.e-6 && name == podp->GetName() ) {
             return podp;
         }
-        node = node->GetNext();
     }
 
     return NULL;
@@ -1668,16 +1653,14 @@ ODPoint *ODNavObjectChanges::ODPointExists( const wxString& name, double lat, do
 
 ODPoint *ODNavObjectChanges::ODPointExists( const wxString& guid )
 {
-    wxODPointListNode *node = g_pODPointMan->GetODPointList()->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = g_pODPointMan->GetODPointList()->m_pODPoint.begin(); it != g_pODPointMan->GetODPointList()->m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
 
 //        if( pr->m_bIsInLayer ) return NULL;
 
         if( guid == podp->m_GUID ) {
             return podp;
         }
-        node = node->GetNext();
     }
 
     return NULL;
@@ -1685,16 +1668,14 @@ ODPoint *ODNavObjectChanges::ODPointExists( const wxString& guid )
 
 ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
 {
-    wxODPointListNode *node = m_ptODPointList->GetFirst();
     ODPoint *pp = NULL;
-    while( node ) {
-        pp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ptODPointList.begin(); it != m_ptODPointList.end(); ++it) {
+        pp = *it;
         //        if( pr->m_bIsInLayer ) return NULL;
         //TODO fix crash when pp->m_GUID is not valid. Why is this so? appears to be when a point is updated twice, but.....
         if( !pp->m_GUID.IsEmpty() && pp->m_GUID.length() > 0 && guid == pp->m_GUID ) {
             return pp;
         }
-        node = node->GetNext();
     }
 
     return NULL;
@@ -1702,16 +1683,14 @@ ODPoint *ODNavObjectChanges::tempODPointExists( const wxString& guid )
 
 void ODNavObjectChanges::tempODPointRemove( const wxString& guid )
 {
-    wxODPointListNode *node = m_ptODPointList->GetFirst();
-    while( node ) {
-        ODPoint *pp = node->GetData();
-        wxODPointListNode *next = node->GetNext();
-
+    for(std::list<ODPoint *>::iterator it = m_ptODPointList.begin(); it != m_ptODPointList.end(); ++it) {
+        ODPoint *pp = *it;
+        std::list<ODPoint *>::iterator it_next = ++it;
         if( pp && guid == pp->m_GUID ) {
-            m_ptODPointList->DeleteNode( node );
+            m_ptODPointList.remove( *it_next );
             return;
         }
-        node = next;
+        it = it_next;
     }
 }
 
@@ -1730,20 +1709,18 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
         if( PathExists( pTentPath->m_GUID ) ) { //We are importing a different path with the same guid, so let's generate it a new guid
             pTentPath->m_GUID = GetUUID();
             //Now also change guids for the ODPoints
-            wxODPointListNode *pthisnode = ( pTentPath->m_pODPointList )->GetFirst();
-            while( pthisnode ) {
-                ODPoint *pP =  pthisnode->GetData();
+            for(std::list<ODPoint *>::iterator it = pTentPath->m_ODPointList.m_pODPoint.begin(); it != pTentPath->m_ODPointList.m_pODPoint.end(); ++it ) {
+                ODPoint *pP =  *it;
                 if( pP && pP->m_bIsolatedMark )
                     pP->m_GUID = GetUUID();
-                pthisnode = pthisnode->GetNext();
             }
         }
 
-        g_pPathList->Append( pTentPath );
-        if(pTentPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->Append( (Boundary *)pTentPath );
-        if(pTentPath->m_sTypeString == wxT("EBL")) g_pEBLList->Append( (EBL *)pTentPath );
-        if(pTentPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->Append( (GZ *)pTentPath );
-        if(pTentPath->m_sTypeString == wxT("PIL")) g_pPILList->Append( (PIL *)pTentPath );
+        g_PathList.m_pODPathList.push_back( pTentPath );
+        if(pTentPath->m_sTypeString == wxT("Boundary")) g_BoundaryList.m_pBoundaryList.push_back( (Boundary *)pTentPath );
+        if(pTentPath->m_sTypeString == wxT("EBL")) g_EBLList.m_pEBLList.push_back( (EBL *)pTentPath );
+        if(pTentPath->m_sTypeString == wxT("Guard Zone")) g_GZList.m_pGZList.push_back( (GZ *)pTentPath );
+        if(pTentPath->m_sTypeString == wxT("PIL")) g_PILList.m_pPILList.push_back( (PIL *)pTentPath );
 
         pTentPath->RebuildGUIDList();                  // ensure the GUID list is intact
 
@@ -1758,9 +1735,8 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
         float prev_rlat = 0., prev_rlon = 0.;
         ODPoint *prev_pConfPoint = NULL;
 
-        wxODPointListNode *node = pTentPath->m_pODPointList->GetFirst();
-        while( node ) {
-            ODPoint *pop = node->GetData();
+        for(std::list<ODPoint *>::iterator it = pTentPath->m_ODPointList.m_pODPoint.begin(); it != pTentPath->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pop = *it;
 
             if( ip )
                 g_pODSelect->AddSelectablePathSegment( prev_rlat, prev_rlon, pop->m_lat,
@@ -1771,8 +1747,6 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
             prev_pConfPoint = pop;
 
             ip++;
-
-            node = node->GetNext();
         }
          if(pTentPath->m_sTypeString == wxT("Guard Zone")) {
              GZ * pGZ = (GZ *)pTentPath;
@@ -1786,9 +1760,8 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
     else {
 
         // walk the path, deleting points used only by this path
-        wxODPointListNode *pnode = ( pTentPath->m_pODPointList )->GetFirst();
-        while( pnode ) {
-            ODPoint *pop = pnode->GetData();
+        for(std::list<ODPoint *>::iterator it = pTentPath->m_ODPointList.m_pODPoint.begin(); it != pTentPath->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pop = *it;
 
             // check all other paths to see if this point appears in any other path
             ODPath *pcontainer_path = g_pPathMan->FindPathContainingODPoint( pop );
@@ -1802,8 +1775,6 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
                     delete pop;
                 }
             }
-
-            pnode = pnode->GetNext();
         }
 
         delete pTentPath;
@@ -1812,29 +1783,20 @@ void ODNavObjectChanges::InsertPathA( ODPath *pTentPath )
 
 ODPath *ODNavObjectChanges::PathExists( const wxString& guid )
 {
-    wxPathListNode *path_node = g_pPathList->GetFirst();
-
-    while( path_node ) {
-        ODPath *ppath = path_node->GetData();
-
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *ppath = *it;
         if( guid == ppath->m_GUID ) return ppath;
-
-        path_node = path_node->GetNext();
     }
     return NULL;
 }
 
 ODPath *ODNavObjectChanges::PathExists( ODPath * pTentPath )
 {
-    wxPathListNode *path_node = g_pPathList->GetFirst();
-    while( path_node ) {
-        ODPath *ppath = path_node->GetData();
-
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *ppath = *it;
         if( ppath->IsEqualTo( pTentPath ) ) {
             return ppath;
         }
-
-        path_node = path_node->GetNext();       // next path
     }
     return NULL;
 }
@@ -2004,20 +1966,18 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
         }
 
         if ( pPathUpdate->GetnPoints() < pExistingPath->GetnPoints() ) {
-            wxODPointListNode *enode = pExistingPath->m_pODPointList->GetFirst();
-            while( enode ) {
-                ODPoint *pFP = enode->GetData();
+            for(std::list<ODPoint *>::iterator it = pExistingPath->m_ODPointList.m_pODPoint.begin(); it != pExistingPath->m_ODPointList.m_pODPoint.end(); ++it) {
+                ODPoint *pFP = *it;
                 ODPoint *pOP = pPathUpdate->GetPoint( pFP->m_GUID );
                 if (!pOP ) {
                     pExistingPath->RemovePoint( pFP );
-                    enode = pExistingPath->m_pODPointList->GetFirst(); // start at begining of list again
-                } else enode = enode->GetNext();
+                    it = pExistingPath->m_ODPointList.m_pODPoint.begin(); // start at begining of list again
+                }
             }
         }
-        wxODPointListNode *unode = pPathUpdate->m_pODPointList->GetFirst();
         ODPoint *save_ex_op = NULL;
-        while( unode ) {
-            ODPoint *up_op = unode->GetData();
+        for(std::list<ODPoint *>::iterator it = pPathUpdate->m_ODPointList.m_pODPoint.begin(); it != pPathUpdate->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *up_op = *it;
             ODPoint *ex_op = pExistingPath->GetPoint( up_op->m_GUID );
             if( ex_op ) {
                 ex_op->m_lat = up_op->m_lat;
@@ -2030,7 +1990,6 @@ void ODNavObjectChanges::UpdatePathA( ODPath *pPathUpdate )
                 pExistingPath->InsertPointAfter( save_ex_op, up_op );
                 save_ex_op = up_op;
             }
-            unode = unode->GetNext();
         }
         if(pPathUpdate->m_sTypeString == wxT("Guard Zone")) {
             GZ * pGZ = (GZ *)pPathUpdate;
@@ -2157,7 +2116,7 @@ int ODNavObjectChanges::Load_CSV_File(wxString FileName, int layer_id, bool b_la
             delete l_TPCI;
         } else if(l_type == _T("/B")) {
             // end boundaryg
-            l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());
+            l_boundary->AddPoint(*l_boundary->m_ODPointList.m_pODPoint.begin());
             l_boundary->m_bIsBeingCreated = false;
             InsertPathA(l_boundary);
             l_boundary = NULL;

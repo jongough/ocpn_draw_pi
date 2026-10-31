@@ -89,10 +89,8 @@ PathMan::~PathMan()
 
 bool PathMan::IsPathValid( ODPath *pPath )
 {
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        if( pPath == node->GetData() ) return true;
-        node = node->GetNext();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        if( pPath == *it ) return true;
     }
     return false;
 }
@@ -124,18 +122,19 @@ bool PathMan::DeletePath( ODPath *pPath )
 
         //    Remove the path from associated lists
         g_pODSelect->DeleteAllSelectablePathSegments( pPath );
-        g_pPathList->DeleteObject( pPath );
-        if(pPath->m_sTypeString == wxT("Boundary")) g_pBoundaryList->DeleteObject( (Boundary *)pPath );
-        if(pPath->m_sTypeString == wxT("EBL")) g_pEBLList->DeleteObject( (EBL *)pPath );
-        if(pPath->m_sTypeString == wxT("DR")) g_pDRList->DeleteObject( (DR *)pPath );
-        if(pPath->m_sTypeString == wxT("Guard Zone")) g_pGZList->DeleteObject( (GZ *)pPath );
-        if(pPath->m_sTypeString == wxT("PIL")) g_pPILList->DeleteObject( (PIL *)pPath );
+        g_PathList.m_pODPathList.remove( pPath );
+        if(pPath->m_sTypeString == wxT("Boundary")) g_BoundaryList.m_pBoundaryList.remove( (Boundary *)pPath );
+        if(pPath->m_sTypeString == wxT("EBL")) g_EBLList.m_pEBLList.remove( (EBL *)pPath );
+        if(pPath->m_sTypeString == wxT("DR")) g_DRList.m_pDRList.remove( (DR *)pPath );
+        if(pPath->m_sTypeString == wxT("Guard Zone")) g_GZList.m_pGZList.remove( (GZ *)pPath );
+        if(pPath->m_sTypeString == wxT("PIL")) g_PILList.m_pPILList.remove( (PIL *)pPath );
 
         // walk the path, tentatively deleting/marking points used only by this path
-        wxODPointListNode *pnode = pPath->m_pODPointList->GetFirst();
-        while( pnode ) {
-            wxODPointListNode *next = pnode->GetNext();
-            ODPoint *podp = pnode->GetData();
+        std::list<ODPoint *>::iterator it1;
+        for(std::list<ODPoint *>::iterator it = pPath->m_ODPointList.m_pODPoint.begin(); it != pPath->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *podp = *it;
+            it1 = it;
+            ++it1;
 
             // check all other paths to see if this point appears in any other path
             ODPath *pcontainer_path = FindPathContainingODPoint( podp );
@@ -149,11 +148,7 @@ bool PathMan::DeletePath( ODPath *pPath )
                     g_pODSelect->DeleteSelectablePoint( podp, SELTYPE_ODPOINT );
 
                     // Remove all instances of this point from the list.
-                    wxODPointListNode *pdnode = pnode;
-                    while( pdnode ) {
-                        pPath->m_pODPointList->DeleteNode( pdnode );
-                        pdnode = pPath->m_pODPointList->Find( podp );
-                    }
+                    pPath->m_ODPointList.m_pODPoint.remove(podp);
 
                     if(podp->m_ODPointName == wxT("Boat") && pPath->m_sTypeString == wxT("EBL") ) g_ocpn_draw_pi->m_pEBLBoatPoint = NULL;
                     delete podp;
@@ -164,7 +159,7 @@ bool PathMan::DeletePath( ODPath *pPath )
                 }
 
             }
-            pnode = next;
+            it = it1;
         }
 
         delete pPath;
@@ -178,9 +173,8 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
     if( pPath ) {
         // walk the path, looking at each point to see if it is used by another path
         // or is isolated
-        wxODPointListNode *pnode = ( pPath->m_pODPointList )->GetFirst();
-        while( pnode ) {
-            ODPoint *podp = pnode->GetData();
+        for(std::list<ODPoint *>::iterator it = pPath->m_ODPointList.m_pODPoint.begin(); it != pPath->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *podp = *it;
 
             // check all other paths to see if this point appears in any other path
             wxArrayPtrVoid *pRA = GetPathArrayContaining( podp );
@@ -197,18 +191,13 @@ bool PathMan::DoesPathContainSharedPoints( ODPath *pPath )
                 }
                 delete pRA;
             }
-                
-            if( pnode ) pnode = pnode->GetNext();
         }
         
         //      Now walk the path again, looking for isolated type shared ODPoints
-        pnode = ( pPath->m_pODPointList )->GetFirst();
-        while( pnode ) {
-            ODPoint *podp = pnode->GetData();
+        for(std::list<ODPoint *>::iterator it = pPath->m_ODPointList.m_pODPoint.begin(); it != pPath->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *podp = *it;
             if( podp->m_bKeepXPath == true )
                 return true;
-            
-           if( pnode ) pnode = pnode->GetNext();
         }
     }
     
@@ -219,20 +208,14 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pODP )
 {
     wxArrayPtrVoid *pArray = new wxArrayPtrVoid;
 
-    wxPathListNode *path_node = g_pPathList->GetFirst();
-    while( path_node ) {
-        ODPath *ppath = path_node->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *ppath = *it;
 
-        wxODPointListNode *OCPNpoint_node = ( ppath->m_pODPointList )->GetFirst();
-        while( OCPNpoint_node ) {
-            ODPoint *podp = OCPNpoint_node->GetData();
+        for(std::list<ODPoint *>::iterator it1 = ppath->m_ODPointList.m_pODPoint.begin(); it1 != ppath->m_ODPointList.m_pODPoint.end(); ++it1) {
+            ODPoint *podp = *it1;
             if( podp == pODP )                // success
             pArray->Add( (void *) ppath );
-
-            OCPNpoint_node = OCPNpoint_node->GetNext();           // next ODPoint
         }
-
-        path_node = path_node->GetNext();                         // next path
     }
 
     if( pArray->GetCount() ) return pArray;
@@ -246,18 +229,16 @@ wxArrayPtrVoid *PathMan::GetPathArrayContaining( ODPoint *pODP )
 void PathMan::DeleteAllPaths( void )
 {
     //    Iterate on the pathList
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        ODPath *ppath = node->GetData();
-        if( ppath->m_bIsInLayer ) {
-            node = node->GetNext();
-            continue;
-        }
+    if(g_PathList.m_pODPathList.size() > 0) {
+        for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+            if(g_PathList.m_pODPathList.size() > 0) return;
+            ODPath *ppath = *it;
+            if( ppath->m_bIsInLayer ) {
+                continue;
+            }
 
-//        g_pODConfig->m_bSkipChangeSetUpdate = true;
-        DeletePath( ppath );
-        node = g_pPathList->GetFirst();                   // Path
-//        g_pODConfig->m_bSkipChangeSetUpdate = false;
+            DeletePath( ppath );
+        }
     }
 
 
@@ -265,18 +246,13 @@ void PathMan::DeleteAllPaths( void )
 
 ODPath *PathMan::FindPathContainingODPoint( ODPoint *pODP )
 {
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        ODPath *ppath = node->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *ppath = *it;
 
-        wxODPointListNode *pnode = ( ppath->m_pODPointList )->GetFirst();
-        while( pnode ) {
-            ODPoint *podp = pnode->GetData();
+        for(std::list<ODPoint *>::iterator it1 = ppath->m_ODPointList.m_pODPoint.begin(); it1 !=ppath->m_ODPointList.m_pODPoint.end(); ++it1) {
+            ODPoint *podp = *it1;
             if( podp == pODP )  return ppath;
-            pnode = pnode->GetNext();
         }
-
-        node = node->GetNext();
     }
 
     return NULL;                              // not found
@@ -285,26 +261,22 @@ ODPath *PathMan::FindPathContainingODPoint( ODPoint *pODP )
 wxArrayString *PathMan::FindAllPathsGUIDS ( wxString GUIDType, bool InLayer )
 {
   wxArrayString *GUIDArray = new wxArrayString();
-  wxPathListNode *node = g_pPathList->GetFirst();
-  while( node ) {
-    ODPath *ppath = node->GetData();
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    ODPath *ppath = *it;
     if(GUIDType == "" || ppath->m_sTypeString == GUIDType) {
       if(InLayer == ppath->m_bIsInLayer){
         GUIDArray->Add( ppath->m_GUID );
       }
     }
-    node = node->GetNext();
   }
     return GUIDArray;
 }
 
 ODPath *PathMan::FindPathByGUID( wxString guid )
 {
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        ODPath *ppath = node->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *ppath = *it;
         if(ppath->m_GUID == guid) return ppath;
-        node = node->GetNext();
     }
     
     return NULL;                              // not found
@@ -313,11 +285,9 @@ ODPath *PathMan::FindPathByGUID( wxString guid )
 void PathMan::SetColorScheme( PI_ColorScheme cs )
 {
     //    Iterate on the pathList
-    wxPathListNode *node = g_pPathList->GetFirst();
-    while( node ) {
-        ODPath *ppath = node->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+        ODPath *ppath = *it;
         ppath->SetColourScheme(cs);
-        node = node->GetNext();
     }
 
 

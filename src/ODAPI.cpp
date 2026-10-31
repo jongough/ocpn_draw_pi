@@ -256,8 +256,8 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB) {
   // Create boundary
   Boundary* l_boundary;
   l_boundary = new Boundary();
-  g_pBoundaryList->Append(l_boundary);
-  g_pPathList->Append(l_boundary);
+  g_BoundaryList.m_pBoundaryList.push_back(l_boundary);
+  g_PathList.m_pODPathList.push_back(l_boundary);
 
   l_boundary->m_PathNameString = pCB->name;
   switch (pCB->type) {
@@ -321,7 +321,7 @@ bool ODAPI::OD_CreateBoundary(CreateBoundary_t* pCB) {
     ++it;
   }
 
-  l_boundary->AddPoint(l_boundary->m_pODPointList->GetFirst()->GetData());
+  l_boundary->AddPoint(l_boundary->m_ODPointList.m_pODPoint.front());
   l_boundary->SetPointVisibility();
   l_boundary->m_bIsBeingCreated = false;
   l_boundary->CreateColourSchemes();

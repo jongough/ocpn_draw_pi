@@ -30,6 +30,7 @@
 #include "BoundaryPoint.h"
 #include "PointMan.h"
 #include "ODUtils.h"
+#include <list>
 
 #ifdef __WXOSX__
 #include <math.h>
@@ -39,16 +40,17 @@
 
 wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int state )
 {
-    wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
+    std::list<Boundary *>::iterator l_it;
+
+    Boundary * boundary_node = *l_it;
     Boundary *pboundary = NULL;
     bool bInPoly = false;
     ODPoint *pop;
     int k = 0;
     wxString l_GUID = wxEmptyString;
-    
-    while( boundary_node ) {
+    for (l_it = g_BoundaryList.m_pBoundaryList.begin(); l_it != g_BoundaryList.m_pBoundaryList.end(); ++l_it) {
         bool    l_bNext = false;
-        pboundary = boundary_node->GetData();
+        pboundary = *l_it;
         switch (state) {
             case ID_PATH_STATE_ANY:
                 l_bNext = false;
@@ -83,22 +85,18 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
         if(!l_bNext) {
             k++;
             int i, j;
-            j = pboundary->m_pODPointList->GetCount();
+            j = pboundary->m_ODPointList.m_pODPoint.size();
             double *polyX;
             double *polyY;
             polyX = new double[j];
             polyY = new double[j];
             
-            wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
-            wxODPointListNode *OCPNpoint_last_node = ( pboundary->m_pODPointList )->GetLast();
             i = 0;
-            while( OCPNpoint_node ) {
-                pop = OCPNpoint_node->GetData();
+            for (std::list<ODPoint *>::iterator it = pboundary->m_ODPointList.m_pODPoint.begin(); it != pboundary->m_ODPointList.m_pODPoint.end(); ++it) {
+                pop = *it;
                 polyX[i] = pop->m_lon;
                 polyY[i] = pop->m_lat;
                 i++;
-                OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-                if(OCPNpoint_node == OCPNpoint_last_node) break;
             }
             bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
             delete [] polyX;
@@ -108,7 +106,6 @@ wxString BoundaryMan::FindPointInBoundary( double lat, double lon, int type, int
                 break;
             }
         }
-        boundary_node = boundary_node->GetNext();                         // next boundary
     }
     
     if(bInPoly) return l_GUID;
@@ -119,7 +116,7 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
 {
     bool bInPoly = false;
     int i, j;
-    j = pBoundary->m_pODPointList->GetCount();
+    j = pBoundary->m_ODPointList.m_pODPoint.size();
     double *polyX;
     double *polyY;
     polyX = new double[j];
@@ -160,17 +157,13 @@ bool BoundaryMan::FindPointInBoundary( Boundary *pBoundary, double lat, double l
         }
     }
     if(l_bOK) {
-        wxODPointListNode *OCPNpoint_node = ( pBoundary->m_pODPointList )->GetFirst();
-        wxODPointListNode *OCPNpoint_last_node = ( pBoundary->m_pODPointList )->GetLast();
-        if(pBoundary->m_pODPointList->GetCount() > 3) {
+        if(pBoundary->m_ODPointList.m_pODPoint.size() > 3) {
             i = 0;
-            while( OCPNpoint_node ) {
-                ODPoint *pop = OCPNpoint_node->GetData();
+            for (std::list<ODPoint *>::iterator it = pBoundary->m_ODPointList.m_pODPoint.begin(); it != pBoundary->m_ODPointList.m_pODPoint.end(); ++it) {
+                ODPoint *pop = *it;
                 polyX[i] = pop->m_lon;
                 polyY[i] = pop->m_lat;
                 i++;
-                OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-                if(OCPNpoint_node == OCPNpoint_last_node) break;
             }
             bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
         }
@@ -190,14 +183,13 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon, 
     double *polyY = NULL;
     Boundary *l_pBoundary = NULL;
     
-    wxBoundaryListNode *pboundary_node = g_pBoundaryList->GetFirst();
-    while( pboundary_node ) {
-        l_pBoundary = (Boundary *)pboundary_node->GetData();
+    //wxBoundaryListNode *pboundary_node = g_BoundaryList->GetFirst();
+    for(std::list<Boundary *>::iterator it = g_BoundaryList.m_pBoundaryList.begin(); it != g_BoundaryList.m_pBoundaryList.end(); ++it) {
+        l_pBoundary = *it;
         if(l_pBoundary->m_GUID == l_GUID) {
             bBoundaryFound = true;
             break;
         }
-        l_pBoundary = (Boundary *)pboundary_node->GetNext();
     }
     if(l_pBoundary && bBoundaryFound) {
         bool l_bOK = false;
@@ -236,18 +228,14 @@ bool BoundaryMan::FindPointInBoundary( wxString l_GUID, double lat, double lon, 
         }
         if(!l_bOK) return false;
 
-        polyX = new double[l_pBoundary->m_pODPointList->GetCount()];
-        polyY = new double[l_pBoundary->m_pODPointList->GetCount()];
-        wxODPointListNode *OCPNpoint_node = ( l_pBoundary->m_pODPointList )->GetFirst();
-        wxODPointListNode *OCPNpoint_last_node = ( l_pBoundary->m_pODPointList )->GetLast();
+        polyX = new double[l_pBoundary->m_ODPointList.m_pODPoint.size()];
+        polyY = new double[l_pBoundary->m_ODPointList.m_pODPoint.size()];
         i = 0;
-        while( OCPNpoint_node ) {
-            ODPoint *pop = OCPNpoint_node->GetData();
+        for(std::list<ODPoint *>::iterator it = l_pBoundary->m_ODPointList.m_pODPoint.begin(); it != l_pBoundary->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *pop = *it;
             polyX[i] = pop->m_lon;
             polyY[i] = pop->m_lat;
             i++;
-            OCPNpoint_node = OCPNpoint_node->GetNext();           // next OD point
-            if(OCPNpoint_node == OCPNpoint_last_node) break;
         }
         bInPoly = pointInPolygon(i, polyX, polyY, lon, lat);
     } 
@@ -264,13 +252,12 @@ wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type
     ODPoint *pop;
     wxString l_GUID = wxEmptyString;
     
-    wxODPointListNode *ODpoint_node = g_pODPointMan->GetODPointList()->GetFirst();
     BoundaryPoint *l_pBoundaryPoint = NULL;
-    while( ODpoint_node ) {
+    for(std::list<ODPoint *>::iterator it = g_pODPointMan->m_ODPointList.m_pODPoint.begin(); it != g_pODPointMan->m_ODPointList.m_pODPoint.end(); ++it) {
         bool l_bNext = false;
-        pop = (ODPoint *) ODpoint_node->GetData();
+        pop = *it;
         if(pop->m_sTypeString == wxT("Boundary Point")) {
-            l_pBoundaryPoint = (BoundaryPoint *) ODpoint_node->GetData();
+            l_pBoundaryPoint = (BoundaryPoint *) *it;
             switch (state) {
                 case ID_POINT_STATE_ANY:
                     l_bNext = false;
@@ -319,7 +306,6 @@ wxString BoundaryMan::FindPointInBoundaryPoint( double lat, double lon, int type
                 }
             }
         }
-        ODpoint_node = ODpoint_node->GetNext();
     }
     
     if(bInPoly) return l_GUID;
@@ -439,7 +425,6 @@ bool BoundaryMan::FindPointInBoundaryPoint( wxString l_GUID, double lat, double 
 
 Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double StartLat, double EndLon, double EndLat, double *CrossingLon, double *CrossingLat, double *CrossingDist, int type, int state, bool FindFirst )
 {
-    wxBoundaryListNode *boundary_node = g_pBoundaryList->GetFirst();
     Boundary *pboundary = NULL;
     ODPoint *popFirst;
     ODPoint *popSecond;
@@ -450,9 +435,9 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
 
     std::list<BOUNDARYCROSSING> BoundaryCrossingList;
     
-    while( boundary_node ) {
+    for(std::list<Boundary *>::iterator it = g_BoundaryList.m_pBoundaryList.begin(); it != g_BoundaryList.m_pBoundaryList.end(); ++it) {
         bool    l_bNext = false;
-        pboundary = boundary_node->GetData();
+        pboundary = *it;
         switch (state) {
             case ID_PATH_STATE_ANY:
                 l_bNext = false;
@@ -485,14 +470,12 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
         }
         
         if(!l_bNext && !RBBox.IntersectOut(pboundary->GetBBox())) {
-            wxODPointListNode *OCPNpoint_node = ( pboundary->m_pODPointList )->GetFirst();
-            wxODPointListNode *OCPNpoint_next_node = OCPNpoint_node->GetNext();
-
-            popFirst = OCPNpoint_node->GetData();
-            while( OCPNpoint_next_node ) {
+            std::list<ODPoint *>::iterator it = pboundary->m_ODPointList.m_pODPoint.begin();
+            popFirst = *it;
+            for(++it; it != pboundary->m_ODPointList.m_pODPoint.end(); ++it) {
+                popSecond = *it;
                 double l_dCrossingLon;
                 double l_dCrossingLat;
-                popSecond = OCPNpoint_next_node->GetData();
                 l_bCrosses = GetLineIntersection(StartLon, StartLat, EndLon, EndLat, popFirst->m_lon, popFirst->m_lat, popSecond->m_lon, popSecond->m_lat, &l_dCrossingLon, &l_dCrossingLat);
                 if(l_bCrosses) {
                     if(!FindFirst) {
@@ -511,10 +494,8 @@ Boundary *BoundaryMan::FindLineCrossingBoundaryPtr(double StartLon, double Start
                     }
                 }
                 popFirst = popSecond;
-                OCPNpoint_next_node = OCPNpoint_next_node->GetNext();
             }
         }
-        boundary_node = boundary_node->GetNext();                         // next boundary
     }
     
     // if list of crossings <> 0 then find one closest to start point

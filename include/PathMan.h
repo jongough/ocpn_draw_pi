@@ -38,7 +38,7 @@ class PathMan
         bool DeletePath(ODPath *pPath);
         void DeleteAllPaths(void);
 
-        bool IsPathValid(ODPath *pRoute);
+        bool IsPathValid(ODPath *pPath);
 
         virtual ODPath *FindPathByGUID(wxString guid);
         ODPath *FindPathContainingODPoint(ODPoint *pWP);

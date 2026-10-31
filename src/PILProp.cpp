@@ -222,7 +222,7 @@ bool PILProp::UpdateProperties( void )
 bool PILProp::SaveChanges( void )
 {
     wxColour l_PILOrigColour = m_pPIL->GetCurrentColour();
-    ODPoint *pFirstPoint = m_pPIL->m_pODPointList->GetFirst()->GetData();
+    ODPoint *pFirstPoint = m_pPIL->m_ODPointList.m_pODPoint.front();
 
     bool l_bUpdatePath = false;
     

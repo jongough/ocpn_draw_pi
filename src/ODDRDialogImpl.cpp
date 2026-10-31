@@ -192,9 +192,9 @@ void ODDRDialogImpl::OnOK( wxCommandEvent& event )
     }
 
     DR *l_pDR = new(DR);
-    g_pDRList->Append( l_pDR );
-    g_pPathList->Append( l_pDR );
-    l_pDR->m_PathNameString << _("DR") << _T(" ") << g_pDRList->GetCount();
+    g_DRList.m_pDRList.push_back( l_pDR );
+    g_PathList.m_pODPathList.push_back( l_pDR );
+    l_pDR->m_PathNameString << _("DR") << _T(" ") << g_DRList.m_pDRList.size();
 
     ODPoint *beginPoint = new ODPoint( g_pfFix.Lat, g_pfFix.Lon, wxEmptyString, wxS("Start"), wxT("") );
     beginPoint->SetNameShown( false );

@@ -191,7 +191,7 @@ bool EBLProp::UpdateProperties( void )
 bool EBLProp::SaveChanges( void )
 {
     wxColour l_EBLOrigColour = m_pEBL->GetCurrentColour();
-    ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+    ODPoint *pFirstPoint = *m_pEBL->m_ODPointList.m_pODPoint.begin();
 
     bool l_bUpdatePath = false;
     double l_dLength;

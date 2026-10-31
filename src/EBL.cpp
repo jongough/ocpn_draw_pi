@@ -42,7 +42,7 @@
 #include <wx/graphics.h>
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( EBLList );
+//WX_DEFINE_LIST ( EBLList );
 
 EBL::EBL() : ODPath()
 {
@@ -88,17 +88,17 @@ void EBL::AddPoint( ODPoint *pNewPoint, bool b_rename_in_sequence, bool b_deferB
         else
             pNewPoint->m_bShowODPointRangeRings = false;
     } else if(pNewPoint->m_ODPointName == _("End")) {
-        ODPoint *pFirstPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pFirstPoint = *m_ODPointList.m_pODPoint.begin();
         pFirstPoint->SetODPointRangeRingsStep( pNewPoint->m_seg_len );
     }
 }
 
 void EBL::Resize( double lat, double lon, bool FixedAngle )
 {
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
     //pEndPoint->m_lat = lat;
     //pEndPoint->m_lon = lon;
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
     double brg;
     DistanceBearingMercator_Plugin( lat, lon, pStartPoint->m_lat, pStartPoint->m_lon, &brg, &m_dLength );
     if( FixedAngle ) {
@@ -112,8 +112,8 @@ void EBL::Resize( double lat, double lon, bool FixedAngle )
 
 void EBL::Resize( void )
 {
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
 
     DistanceBearingMercator_Plugin( pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength );
     pEndPoint->m_seg_len = m_dLength;
@@ -124,8 +124,8 @@ void EBL::Resize( void )
 
 void EBL::MoveStartPoint( double lat, double lon )
 {
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
     pStartPoint->m_lat = lat;
     pStartPoint->m_lon = lon;
     if(m_dLength == 0.) m_dLength = pEndPoint->m_seg_len;
@@ -138,7 +138,7 @@ void EBL::MoveStartPoint( double lat, double lon )
     
     
     if(m_bVRM) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
         pStartPoint->SetODPointRangeRingsStep( m_dLength / pStartPoint->GetODPointRangeRingsNumber() );
     }
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
@@ -148,8 +148,8 @@ void EBL::MoveStartPoint( double lat, double lon )
 
 void EBL::MoveEndPoint( void )
 {
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
     DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength);
     if(m_bRotateWithBoat) {
         switch(m_iMaintainWith) {
@@ -165,7 +165,7 @@ void EBL::MoveEndPoint( void )
     m_dBoatCOG = g_pfFix.Cog;
 
     if(m_bVRM) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
         pStartPoint->SetODPointRangeRingsStep( m_dLength / pStartPoint->GetODPointRangeRingsNumber() );
     }
     if(g_pEBLPropDialog && g_pEBLPropDialog->IsShown())
@@ -175,8 +175,8 @@ void EBL::MoveEndPoint( void )
 
 void EBL::MoveEndPoint( bool bUpdateEBL )
 {
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
 
     if(m_dLength == 0.) m_dLength = pEndPoint->m_seg_len;
     
@@ -213,8 +213,8 @@ void EBL::SetPersistence( int PersistenceType )
 
 void EBL::CentreOnBoat( bool bMoveEndPoint )
 {
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
     pStartPoint->m_lat = g_pfFix.Lat;
     pStartPoint->m_lon = g_pfFix.Lon;
 
@@ -266,7 +266,7 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
     
     UpdateEBL();
     if(m_bVRM) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+        ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
         pStartPoint->SetODPointRangeRingsStep( m_dLength / pStartPoint->GetODPointRangeRingsNumber() );
     }
     
@@ -283,8 +283,8 @@ void EBL::CentreOnBoat( bool bMoveEndPoint )
 
 void EBL::CentreOnLatLon( double lat, double lon )
 {
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
     pStartPoint->m_lat = lat;
     pStartPoint->m_lon = lon;
     DistanceBearingMercator_Plugin(pEndPoint->m_lat, pEndPoint->m_lon, pStartPoint->m_lat, pStartPoint->m_lon, &m_dEBLAngle, &m_dLength);
@@ -311,7 +311,7 @@ void EBL::RemovePoint( ODPoint *op, bool bRenamePoints )
     g_pODSelect->DeleteAllSelectableODPoints( this );
     g_pODSelect->DeleteAllSelectablePathSegments( this );
     
-    m_pODPointList->DeleteObject( op );
+    m_ODPointList.m_pODPoint.remove( op );
     if( wxNOT_FOUND != ODPointGUIDList.Index( op->m_GUID ) ) ODPointGUIDList.Remove( op->m_GUID );
     
     // check all other paths to see if this point appears in any other path
@@ -373,35 +373,36 @@ void EBL::UpdateEBL( void )
         g_pODConfig->UpdatePath( this ); 
     g_pODConfig->m_bSkipChangeSetUpdate = prev_bskip;
     
-    for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-        ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
-        if( g_pPathMan->IsPathValid(pp) ) {
-            pp->FinalizeForRendering();
-            pp->UpdateSegmentDistances();
-            pp->m_bIsBeingEdited = false;
+//    for( unsigned int ip = 0; ip < m_ODPointList->GetCount(); ip++ ) {
+//        ODPath *pp = (ODPath *) m_ODPointList->Item( ip );
+//      if( g_pPathMan->IsPathValid(pp) ) {
+        if( g_pPathMan->IsPathValid(this) ) {
+            FinalizeForRendering();
+            UpdateSegmentDistances();
+            m_bIsBeingEdited = false;
             
-            g_pODConfig->UpdatePath( pp );
+            g_pODConfig->UpdatePath( this );
             
-            pp->SetHiLite( 0 );
+            SetHiLite( 0 );
         }
-    }
+//    }
     
     //    Update the PathProperties Dialog, if currently shown
     if( ( NULL != g_pEBLPropDialog ) && ( g_pEBLPropDialog->IsShown() ) ) {
-        for( unsigned int ip = 0; ip < m_pODPointList->GetCount(); ip++ ) {
-            ODPath *pp = (ODPath *) m_pODPointList->Item( ip );
-            if( g_pPathMan->IsPathValid(pp) ) {
-                g_pEBLPropDialog->SetPathAndUpdate( pp, true );
+//        for( unsigned int ip = 0; ip < m_ODPointList->GetCount(); ip++ ) {
+//            ODPath *pp = (ODPath *) m_ODPointList->Item( ip );
+            if( g_pPathMan->IsPathValid(this) ) {
+                g_pEBLPropDialog->SetPathAndUpdate( this, true );
             }
         }
-    }
+//    }
 }
 
 void EBL::Draw( piDC& dc, PlugIn_ViewPort &VP )
 {
     if(m_bVRM) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+        ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
         double brg, dlength;
         DistanceBearingMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, pEndPoint->m_lat, pEndPoint->m_lon, &brg, &dlength);
         pStartPoint->SetODPointRangeRingsStep( pEndPoint->m_seg_len / pStartPoint->GetODPointRangeRingsNumber() );
@@ -411,8 +412,8 @@ void EBL::Draw( piDC& dc, PlugIn_ViewPort &VP )
     ODPath::Draw( dc, VP );
     
     if(m_bAlwaysShowInfo) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+        ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
         double brg, dlength;
         DistanceBearingMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, pEndPoint->m_lat, pEndPoint->m_lon, &brg, &dlength);
         wxPoint l_Point;
@@ -433,8 +434,8 @@ void EBL::DrawGL( PlugIn_ViewPort &piVP )
     ODPath::DrawGL( piVP );
     
     if(m_bAlwaysShowInfo) {
-        ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-        ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+        ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+        ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
         double brg, dlength;
         DistanceBearingMercator_Plugin(pStartPoint->m_lat, pStartPoint->m_lon, pEndPoint->m_lat, pEndPoint->m_lon, &brg, &dlength);
         wxPoint l_Point;
@@ -447,8 +448,8 @@ void EBL::DrawGL( PlugIn_ViewPort &piVP )
 
 void EBL::MaintainWith( void )
 {
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
-    ODPoint *pEndPoint = m_pODPointList->GetLast()->GetData();
+    ODPoint *pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
+    ODPoint *pStartPoint = *m_ODPointList.m_pODPoint.begin();
     switch(m_iMaintainWith) {
         case ID_MAINTAIN_WITH_HEADING:
             if(!wxIsNaN(g_pfFix.Hdt))
@@ -485,7 +486,7 @@ void EBL::RenderPerpLine( piDC &dc, PlugIn_ViewPort &VP)
         double l_dAngle = m_dEBLAngle + 90.;
         if(l_dAngle > 360.) l_dAngle -= 360.;
         l_dAngle = l_dAngle * PI / 180;
-        ODPoint *l_pEndPoint = m_pODPointList->GetLast()->GetData();
+        ODPoint *l_pEndPoint = *std::prev(m_ODPointList.m_pODPoint.end());
         wxPoint l_Centreppt;
         GetCanvasPixLL( &VP, &l_Centreppt,  l_pEndPoint->m_lat, l_pEndPoint->m_lon );
 

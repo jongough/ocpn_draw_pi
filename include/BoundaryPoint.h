@@ -43,4 +43,10 @@ public:
     
 };
 
+class BoundaryPointList
+{
+public:
+  std::list<ODPoint *> m_pBoundaryPointList;
+};
+
 #endif // BOUNDARYPOINT_H

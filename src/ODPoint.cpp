@@ -42,7 +42,7 @@
 //#endif
 
 #include <wx/listimpl.cpp>
-WX_DEFINE_LIST ( ODPointList );
+//WX_DEFINE_LIST ( ODPointList );
 
 ODPoint::ODPoint()
 {

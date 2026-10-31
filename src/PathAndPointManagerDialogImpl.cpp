@@ -513,7 +513,6 @@ void PathAndPointManagerDialogImpl::SetImportButtonText(void) {
 }
 
 void PathAndPointManagerDialogImpl::OnPathDeleteClick(wxCommandEvent& event) {
-  PathList list;
 
   int answer = OCPNMessageBox_PlugIn(
       this, _("Are you sure you want to delete the selected object(s)"),
@@ -534,12 +533,12 @@ void PathAndPointManagerDialogImpl::OnPathDeleteClick(wxCommandEvent& event) {
     ODPath* ppath_to_delete =
         reinterpret_cast<ODPath*>(m_listCtrlPath->GetItemData(item));
 
-    if (ppath_to_delete) list.Append(ppath_to_delete);
+    if (ppath_to_delete) g_PathList.m_pODPathList.remove(ppath_to_delete);
   }
 
   if (busy) {
-    for (unsigned int i = 0; i < list.GetCount(); i++) {
-      ODPath* path = list.Item(i)->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+      ODPath* path = *it;
       if (path) {
         g_pODConfig->DeleteConfigPath(path);
         g_pPathMan->DeletePath(path);
@@ -778,7 +777,6 @@ void PathAndPointManagerDialogImpl::OnPathCenterViewClick(
 
 void PathAndPointManagerDialogImpl::OnPathExportSelectedClick(
     wxCommandEvent& event) {
-  PathList list;
 
   wxString suggested_name = _T("paths");
 
@@ -791,13 +789,13 @@ void PathAndPointManagerDialogImpl::OnPathExportSelectedClick(
     ODPath* ppath_to_export =
         reinterpret_cast<ODPath*>(m_listCtrlPath->GetItemData(item));
     if (ppath_to_export) {
-      list.Append(ppath_to_export);
+      g_PathList.m_pODPathList.push_back(ppath_to_export);
       if (ppath_to_export->m_PathNameString != wxEmptyString)
         suggested_name = ppath_to_export->m_PathNameString;
     }
   }
 
-  g_pODConfig->ExportGPXPaths(this, &list, suggested_name);
+  g_pODConfig->ExportGPXPaths(this, &g_PathList, suggested_name);
 }
 
 void PathAndPointManagerDialogImpl::OnPathActivateClick(wxCommandEvent& event) {
@@ -1002,9 +1000,8 @@ void PathAndPointManagerDialogImpl::UpdatePathListCtrl(
   if (!m_listCtrlPath->DeleteAllItems()) return;
 
   // then add path to the listctrl
-  PathList::iterator it;
   int index = 0;
-  for (it = (*g_pPathList).begin(); it != (*g_pPathList).end(); ++it, ++index) {
+  for (std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it, ++index) {
     if (!(*it)->IsListed()) continue;
 
     wxListItem li;
@@ -1110,9 +1107,8 @@ void PathAndPointManagerDialogImpl::UpdatePathButtons() {
 }
 
 void PathAndPointManagerDialogImpl::MakeAllPathsInvisible() {
-  PathList::iterator it;
   long index = 0;
-  for (it = (*g_pPathList).begin(); it != (*g_pPathList).end(); ++it, ++index) {
+  for (std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it, ++index) {
     if ((*it)->IsVisible()) {  // avoid config updating as much as possible!
       (*it)->SetVisible(false);
       m_listCtrlPath->SetItemImage(m_listCtrlPath->FindItem(-1, index),
@@ -1175,15 +1171,14 @@ void PathAndPointManagerDialogImpl::UpdatePointListCtrl(ODPoint* op_select,
 
   m_listCtrlODPoints->DeleteAllItems();
 
-  wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
 
   long index = 0;
-  while (node) {
-    ODPoint* op = node->GetData();
+  ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+  for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+    ODPoint* op = *it;
     if (op && op->IsListed()) {
       if (op->m_bIsInPath) {
         if (!op->m_bKeepXPath) {
-          node = node->GetNext();
           continue;
         }
       }
@@ -1220,8 +1215,6 @@ void PathAndPointManagerDialogImpl::UpdatePointListCtrl(ODPoint* op_select,
 
       index++;
     }
-
-    node = node->GetNext();
   }
 
   if (!b_retain_sort) {
@@ -1472,7 +1465,6 @@ void PathAndPointManagerDialogImpl::OnODPointCenterViewClick(
 
 void PathAndPointManagerDialogImpl::OnODPointDeleteClick(
     wxCommandEvent& event) {
-  ODPointList list;
 
   int answer = OCPNMessageBox_PlugIn(
       this, _("Are you sure you want to delete the selected object(s)"),
@@ -1494,12 +1486,13 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteClick(
     item_last_selected = item;
     ODPoint* odp = (ODPoint*)m_listCtrlODPoints->GetItemData(item);
 
-    if (odp && !odp->m_bIsInLayer) list.Append(odp);
+    if (odp && !odp->m_bIsInLayer) g_pODPointMan->m_ODPointList.m_pODPoint.push_back(odp);
   }
 
   if (busy) {
-    for (unsigned int i = 0; i < list.GetCount(); i++) {
-      ODPoint* odp = list.Item(i)->GetData();
+    ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+    for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+      ODPoint* odp = *it;
       if (odp) {
         if (odp->m_bIsInPath) {
           if (wxYES == OCPNMessageBox_PlugIn(
@@ -1532,7 +1525,6 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteClick(
 
 void PathAndPointManagerDialogImpl::OnODPointExportSecectedClick(
     wxCommandEvent& event) {
-  ODPointList list;
 
   wxString suggested_name = _T("OD Points");
 
@@ -1545,12 +1537,12 @@ void PathAndPointManagerDialogImpl::OnODPointExportSecectedClick(
     ODPoint* odp = (ODPoint*)m_listCtrlODPoints->GetItemData(item);
 
     if (odp && !odp->m_bIsInLayer) {
-      list.Append(odp);
+      g_pODPointMan->m_ODPointList.m_pODPoint.push_back(odp);
       if (odp->GetName() != wxEmptyString) suggested_name = odp->GetName();
     }
   }
 
-  g_pODConfig->ExportGPXODPoints(this, &list, suggested_name);
+  g_pODConfig->ExportGPXODPoints(this, g_pODPointMan->GetODPointList(), suggested_name);
 }
 
 void PathAndPointManagerDialogImpl::OnODPointDeleteAllClick(
@@ -1770,27 +1762,25 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick(wxCommandEvent& event) {
           wxRemoveFile(layer->m_LayerFileName);
 
         // Process Paths in this layer
-        wxPathListNode* node1 = g_pPathList->GetFirst();
-        wxPathListNode* node2;
-        while (node1) {
-          ODPath* pPath = node1->GetData();
-          node2 = node1->GetNext();
+        std::list<ODPath *>::iterator it2;
+        for(std::list<ODPath *>::iterator it1 = g_PathList.m_pODPathList.begin(); it1 != g_PathList.m_pODPathList.end(); ++it1) {
+          ODPath* pPath = *it1;
+          it2 = it1;
+          ++it2;
           if (pPath->m_bIsInLayer && (pPath->m_LayerID == layer->m_LayerID)) {
             pPath->m_bIsInLayer = false;
             pPath->m_LayerID = 0;
             g_pPathMan->DeletePath(pPath);
           }
-          node1 = node2;
-          node2 = NULL;
+          it1 = it2;
         }
 
         // Process ODPoints in this layer
-        wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
-        wxODPointListNode* node3;
-
-        while (node) {
-          node3 = node->GetNext();
-          ODPoint* pp = node->GetData();
+        std::list<ODPoint *>::iterator it3;
+        ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+        for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+          it3 = it;
+          ODPoint* pp = *it;
           if (pp && (pp->m_LayerID == layer->m_LayerID)) {
             pp->m_bIsInLayer = false;
             pp->m_LayerID = 0;
@@ -1799,8 +1789,7 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick(wxCommandEvent& event) {
             delete pp;
           }
 
-          node = node3;
-          node3 = NULL;
+          it = it3;
         }
 
         l_LayerIterator[l_item_count++] = g_pLayerList->Find(layer);
@@ -1869,26 +1858,21 @@ void PathAndPointManagerDialogImpl::OnLayerShowOnChartClick(
 
 void PathAndPointManagerDialogImpl::ToggleLayerContentsOnChart(ODLayer* layer) {
   // Process Paths in this layer
-  wxPathListNode* node1 = g_pPathList->GetFirst();
-  while (node1) {
-    ODPath* pPath = node1->GetData();
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    ODPath* pPath = *it;
     if (pPath->m_bIsInLayer && (pPath->m_LayerID == layer->m_LayerID)) {
       pPath->SetVisible(layer->IsVisible());
       g_pODConfig->UpdatePath(pPath);
     }
-    node1 = node1->GetNext();
   }
 
   // Process OD points in this layer
-  wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
-
-  while (node) {
-    ODPoint* pp = node->GetData();
+  ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+  for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+    ODPoint* pp = *it;
     if (pp && !pp->m_bIsInPath && (pp->m_LayerID == layer->m_LayerID)) {
       pp->SetVisible(layer->IsVisible());
     }
-
-    node = node->GetNext();
   }
 
   UpdatePathListCtrl();
@@ -1919,30 +1903,23 @@ void PathAndPointManagerDialogImpl::OnLayerShowPointNamesClick(
 
 void PathAndPointManagerDialogImpl::ToggleLayerContentsNames(ODLayer* layer) {
   // Process Paths in this layer
-  wxPathListNode* node1 = g_pPathList->GetFirst();
-  while (node1) {
-    ODPath* pPath = node1->GetData();
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    ODPath* pPath = *it;
     if (pPath->m_bIsInLayer && (pPath->m_LayerID == layer->m_LayerID)) {
-      wxODPointListNode* node = pPath->m_pODPointList->GetFirst();
-      ODPoint* podp1 = node->GetData();
-      while (node) {
+      for(std::list<ODPoint *>::iterator it1 = pPath->m_ODPointList.m_pODPoint.begin(); it1 != pPath->m_ODPointList.m_pODPoint.end(); ++it1) {
+        ODPoint* podp1 = *it1;
         podp1->m_bShowName = layer->HasVisibleNames();
-        node = node->GetNext();
       }
     }
-    node1 = node1->GetNext();
   }
 
   // Process OD points in this layer
-  wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
-
-  while (node) {
-    ODPoint* pp = node->GetData();
+  ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+  for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+    ODPoint* pp = *it;
     if (pp && (pp->m_LayerID == layer->m_LayerID)) {
       pp->SetNameShown(layer->HasVisibleNames());
     }
-
-    node = node->GetNext();
   }
 
   UpdateLayerButtons();
@@ -1950,8 +1927,7 @@ void PathAndPointManagerDialogImpl::ToggleLayerContentsNames(ODLayer* layer) {
   RequestRefresh(GetOCPNCanvasWindow());
 }
 
-void PathAndPointManagerDialogImpl::OnLayerListContentsClick(
-    wxCommandEvent& event) {
+void PathAndPointManagerDialogImpl::OnLayerListContentsClick(wxCommandEvent& event) {
   // Toggle  visibility on listing for selected layer
   long item = -1;
   item = m_listCtrlLayers->GetNextItem(item, wxLIST_NEXT_ALL,
@@ -1971,29 +1947,23 @@ void PathAndPointManagerDialogImpl::OnLayerListContentsClick(
 void PathAndPointManagerDialogImpl::ToggleLayerContentsOnListing(
     ODLayer* layer) {
   // Process Paths in this layer
-  wxPathListNode* node1 = g_pPathList->GetFirst();
-  while (node1) {
-    ODPath* pPath = node1->GetData();
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    ODPath* pPath = *it;
     if (pPath->m_bIsInLayer && (pPath->m_LayerID == layer->m_LayerID)) {
       pPath->SetListed(layer->IsVisibleOnListing());
       g_pODConfig->UpdatePath(pPath);
     }
-    node1 = node1->GetNext();
   }
 
   // Process OD points in this layer
   //  n.b.  If the OD point belongs to a track, and is not shared, then do not
   //  list it. This is a performance optimization, allowing large track support.
-
-  wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
-
-  while (node) {
-    ODPoint* op = node->GetData();
+  ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+  for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+    ODPoint* op = *it;
     if (op->m_bIsolatedMark && (op->m_LayerID == layer->m_LayerID)) {
       op->SetListed(layer->IsVisibleOnListing());
     }
-
-    node = node->GetNext();
   }
 
   UpdatePathListCtrl();
@@ -2165,53 +2135,55 @@ void PathAndPointManagerDialogImpl::UpdateODPointsListCtrl(ODPoint* op_select,
 
   m_listCtrlODPoints->DeleteAllItems();
 
-  wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
 
   long index = 0;
-  while (node) {
-    ODPoint* op = node->GetData();
-    if (op && op->IsListed()) {
-      if (op->m_bIsInPath) {
-        if (!op->m_bKeepXPath) {
-          node = node->GetNext();
-          continue;
+  ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+  if(l_ODPointList.m_pODPoint.size() > 0) {
+    for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint* op = *it;
+        if (op && op->IsListed()) {
+        if (op->m_bIsInPath) {
+            if (!op->m_bKeepXPath) {
+            ++*it;
+            continue;
+            }
         }
-      }
 
-      wxListItem li;
-      li.SetId(index);
-      li.SetImage(op->IsVisible()
-                      ? g_pODPointMan->GetIconIndex(op->GetIconBitmap())
-                      : g_pODPointMan->GetXIconIndex(op->GetIconBitmap()));
-      li.SetData(op);
-      li.SetText(_T(""));
-      long idx = m_listCtrlODPoints->InsertItem(li);
+        wxListItem li;
+        li.SetId(index);
+        li.SetImage(op->IsVisible()
+                        ? g_pODPointMan->GetIconIndex(op->GetIconBitmap())
+                        : g_pODPointMan->GetXIconIndex(op->GetIconBitmap()));
+        li.SetData(op);
+        li.SetText(_T(""));
+        long idx = m_listCtrlODPoints->InsertItem(li);
 
-      wxString name = op->GetName();
-      if (name.IsEmpty()) {
-        name.append(_("(Unnamed) "));
+        wxString name = op->GetName();
+        if (name.IsEmpty()) {
+            name.append(_("(Unnamed) "));
 #if wxCHECK_VERSION(3, 0, 0)
-        name.append(_(op->m_sTypeString));
+            name.append(_(op->m_sTypeString));
 #else
-        name.append(op->m_sTypeString);
+            name.append(op->m_sTypeString);
 #endif
-      }
-      m_listCtrlODPoints->SetItem(idx, colOCPNPOINTNAME, name);
+        }
+        m_listCtrlODPoints->SetItem(idx, colOCPNPOINTNAME, name);
 
-      double dst;
-      DistanceBearingMercator_Plugin(op->m_lat, op->m_lon, g_pfFix.Lat,
-                                     g_pfFix.Lon, NULL, &dst);
-      wxString dist;
-      dist.Printf(_T("%5.2f ") + getUsrDistanceUnit_Plugin(),
-                  toUsrDistance_Plugin(dst));
-      m_listCtrlODPoints->SetItem(idx, colOCPNPOINTDIST, dist);
+        double dst;
+        DistanceBearingMercator_Plugin(op->m_lat, op->m_lon, g_pfFix.Lat,
+                                        g_pfFix.Lon, NULL, &dst);
+        wxString dist;
+        dist.Printf(_T("%5.2f ") + getUsrDistanceUnit_Plugin(),
+                    toUsrDistance_Plugin(dst));
+        m_listCtrlODPoints->SetItem(idx, colOCPNPOINTDIST, dist);
 
-      if (op == op_select) selected_id = (long)op_select;  // index;
+        if (op == op_select) selected_id = (long)op_select;  // index;
 
-      index++;
+        index++;
+        }
+
+        ++*it;
     }
-
-    node = node->GetNext();
   }
 
   if (!b_retain_sort) {

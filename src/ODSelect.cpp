@@ -169,9 +169,8 @@ bool ODSelect::DeleteAllSelectableODPoints( ODPath *pp )
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
 
             //    inner loop iterates on the path's point list
-            wxODPointListNode *pnode = ( pp->m_pODPointList )->GetFirst();
-            while( pnode ) {
-                ODPoint *prp = pnode->GetData();
+            for(std::list<ODPoint *>::iterator it = pp->m_ODPointList.m_pODPoint.begin(); it != pp->m_ODPointList.m_pODPoint.end(); ++it) {
+                ODPoint *prp = *it;
 
                 if( prp == ps ) {
                     delete pFindSel;
@@ -179,7 +178,6 @@ bool ODSelect::DeleteAllSelectableODPoints( ODPath *pp )
                     prp->SetSelectNode( NULL );
                     goto got_next_outer_node;
                 }
-                pnode = pnode->GetNext();
             }
         }
 got_next_outer_node:
@@ -190,13 +188,10 @@ got_next_outer_node:
 
 bool ODSelect::AddAllSelectableODPoints( ODPath *pp )
 {
-    if( pp->m_pODPointList->GetCount() ) {
-        wxODPointListNode *node = ( pp->m_pODPointList )->GetFirst();
-
-        while( node ) {
-            ODPoint *podp = node->GetData();
+    if( pp->m_ODPointList.m_pODPoint.size() ) {
+        for(std::list<ODPoint *>::iterator it = pp->m_ODPointList.m_pODPoint.begin(); it != pp->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *podp = *it;
             AddSelectableODPoint( podp->m_lat, podp->m_lon, podp );
-            node = node->GetNext();
         }
         return true;
     } else
@@ -208,17 +203,15 @@ bool ODSelect::AddAllSelectablePathSegments( ODPath *pp )
     wxPoint rpt, rptn;
     float slat1, slon1, slat2, slon2;
 
-    if( pp->m_pODPointList->GetCount() ) {
-        wxODPointListNode *node = ( pp->m_pODPointList )->GetFirst();
+    if( pp->m_ODPointList.m_pODPoint.size() ) {
+        std::list<ODPoint *>::iterator it = pp->m_ODPointList.m_pODPoint.begin();
 
-        ODPoint *podp0 = node->GetData();
+        ODPoint *podp0 = *it;
         slat1 = podp0->m_lat;
         slon1 = podp0->m_lon;
 
-        node = node->GetNext();
-
-        while( node ) {
-            ODPoint *podp = node->GetData();
+        for(++it; it != pp->m_ODPointList.m_pODPoint.end(); ++it) {
+            ODPoint *podp = *it;
             slat2 = podp->m_lat;
             slon2 = podp->m_lon;
 
@@ -227,8 +220,6 @@ bool ODSelect::AddAllSelectablePathSegments( ODPath *pp )
             slat1 = slat2;
             slon1 = slon2;
             podp0 = podp;
-
-            node = node->GetNext();
         }
         return true;
     } else

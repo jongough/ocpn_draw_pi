@@ -47,7 +47,6 @@
 
 class ODPath;
 class ODPoint;
-class ODPointList;
 class wxFontEnumerator;
 
 class BoundaryPoint;
@@ -94,8 +93,7 @@ class PointMan
 
       bool AddODPoint(ODPoint *prp);
       bool RemoveODPoint(ODPoint *prp);
-      ODPointList *GetODPointList(void) { return m_pODPointList; }
-
+      ODPointList *GetODPointList(void) { return &m_ODPointList; };
       ODMarkIcon *ProcessIcon(wxBitmap pimage, const wxString & key, const wxString & description);
 
       wxArrayString     m_wxasFontFacenames;
@@ -110,6 +108,8 @@ class PointMan
 
       wxArrayString * FindAllPointsGUIDS ( wxString GUIDType, bool InLayer = false );
 
+      ODPointList m_ODPointList;
+
 protected:
 private:
     //void ProcessUserIcons( ocpnStyle::Style* style );
@@ -119,7 +119,6 @@ private:
     bool        DistancePointLine( double pLon, double pLat, double StartLon, double StartLat, double EndLon, double EndLat, double Distance );
     wxImage     LoadSVGIcon(wxString filename, unsigned int width, unsigned int height);
 
-    ODPointList *m_pODPointList;
     wxImageList *pmarkicon_image_list;        // Current wxImageList, updated on colorscheme change
     int         m_markicon_image_list_base_count;
     wxArrayPtrVoid  *m_pIconArray;
@@ -127,6 +126,8 @@ private:
     int         m_nGUID;
 
     wxArrayString   m_asFacenames;
+
+
 };
 
 #endif // POINTMAN_H

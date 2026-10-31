@@ -42,8 +42,6 @@
 
 #include <wx/listimpl.cpp>
 
-WX_DEFINE_LIST ( PILList );
-
 PIL::PIL() : EBL()
 {
     m_sTypeString = _T("PIL");
@@ -122,8 +120,7 @@ int PIL::AddLine(wxString sName, wxString sDescription, double dOffset, bool bDe
     m_PilLineList.push_back(plNewLine);
     SetColourScheme(g_global_color_scheme);
     
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *l_pCentre = node->GetData();
+    ODPoint *l_pCentre = m_ODPointList.m_pODPoint.front();
     wxPoint l_Centreppt;
     wxPoint l_dPoint1, l_dPoint2;
     double l_dLat, l_dLon;
@@ -201,8 +198,7 @@ void PIL::DrawSegment( piDC& dc, wxPoint *rp1, wxPoint *rp2, PlugIn_ViewPort &VP
 
 void PIL::RenderPIL( piDC &dc, PlugIn_ViewPort &VP)
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *l_pCentre = node->GetData();
+    ODPoint *l_pCentre = m_ODPointList.m_pODPoint.front();
     wxPoint l_Centreppt;
 
     GetCanvasPixLL( &VP, &l_Centreppt,  l_pCentre->m_lat, l_pCentre->m_lon);
@@ -250,8 +246,7 @@ void PIL::CentreOnBoat( bool bMoveEndPoint )
 {
     EBL::CentreOnBoat( bMoveEndPoint );
     
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *l_pCentre = node->GetData();
+    ODPoint *l_pCentre = m_ODPointList.m_pODPoint.front();
 
     SetPILLineSelect( l_pCentre->m_lat, l_pCentre->m_lon );
 
@@ -266,7 +261,7 @@ void PIL::CentreOnBoat( bool bMoveEndPoint )
 
 void PIL::CentreOnLatLon( double lat, double lon )
 {
-    ODPoint *pStartPoint = m_pODPointList->GetFirst()->GetData();
+    ODPoint *pStartPoint = m_ODPointList.m_pODPoint.front();
     pStartPoint->m_ODPointName = _("Start");
     if(pStartPoint->GetIconName() == wxEmptyString) {
         pStartPoint->SetIconName( g_sPILStartIconName );
@@ -280,8 +275,7 @@ void PIL::CentreOnLatLon( double lat, double lon )
 
 void PIL::UpdatePIL( void )
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *l_pCentre = node->GetData();
+    ODPoint *l_pCentre = m_ODPointList.m_pODPoint.front();
     
     SetPILLineSelect( l_pCentre->m_lat, l_pCentre->m_lon );
 }
@@ -356,8 +350,7 @@ void PIL::CalcOffsetPoints( wxPoint Centreppt, wxPoint *FirstPoint, wxPoint *Sec
 void PIL::MovePILLine(double dLat, double dLon, int iPILId)
 {
     double brg, dist;
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    ODPoint *l_pCentre = node->GetData();
+    ODPoint *l_pCentre = m_ODPointList.m_pODPoint.front();
 
     DistanceBearingMercator_Plugin(l_pCentre->GetLatitude(), l_pCentre->GetLongitude(), dLat, dLon, &brg, &dist);
     dist = -dist * sin((brg - m_dEBLAngle) * PI / 180);

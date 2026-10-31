@@ -134,7 +134,7 @@ bool ODConfig::DeleteODPoint(ODPoint* pODP) {
   return true;
 }
 
-bool ODConfig::ExportGPXPaths(wxWindow* parent, PathList* pPaths,
+bool ODConfig::ExportGPXPaths(wxWindow* parent, ODPathList* pPaths,
                               const wxString suggestedName) {
   wxFileDialog saveDialog(NULL, _("Export GPX file"), m_sGPX_Path,
                           suggestedName, wxT("GPX files (*.gpx)|*.gpx"),
@@ -174,7 +174,7 @@ bool ODConfig::ExportGPXPaths(wxWindow* parent, PathList* pPaths,
     return false;
 }
 
-bool ODConfig::ExportGPXODPoints(wxWindow* parent, ODPointList* pODPoints,
+bool ODConfig::ExportGPXODPoints(wxWindow* parent, ODPointList *pODPoints,
                                  const wxString suggestedName) {
   wxFileDialog saveDialog(NULL, _("Export GPX file"), m_sGPX_Path,
                           suggestedName, wxT("GPX files (*.gpx)|*.gpx"),
@@ -344,16 +344,17 @@ bool ODConfig::LoadLayers(wxString& path) {
   }
 
   // make sure any EBL hanging of the boat is repositioned
-  wxEBLListNode* node = g_pEBLList->GetFirst();
-  for (size_t i = 0; i < g_pEBLList->GetCount(); i++) {
-    EBL* ebl = (EBL*)node->GetData();
+  //wxEBLListNode* node = g_EBLList->GetFirst();
+  //EBL *l_pebl = g_EBLList->front();
+  for(std::list<EBL *>::iterator l_pebl = g_EBLList.m_pEBLList.begin(); l_pebl != g_EBLList.m_pEBLList.end(); ++l_pebl) {
+  //for (size_t i = 0; i < g_EBLList->GetCount(); i++) {
+    EBL* ebl = *l_pebl;
     if (ebl->m_bCentreOnBoat) {
       bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
       ebl->m_bSaveUpdates = false;
       ebl->CentreOnBoat(true);
       ebl->m_bSaveUpdates = l_bSaveUpdatesState;
     }
-    node = node->GetNext();
   }
 
   return true;
@@ -384,7 +385,7 @@ void ODConfig::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer) {
     ODNavObjectChanges* pgpx = new ODNavObjectChanges;
 
     wxProgressDialog* pprog = NULL;
-    int count = g_pODPointMan->GetODPointList()->GetCount();
+    int count = g_pODPointMan->GetODPointList()->m_pODPoint.size();
     if (count > 200) {
       pprog = new wxProgressDialog(_("Export GPX file"), _T("0/0"), count, NULL,
                                    wxPD_APP_MODAL | wxPD_SMOOTH |
@@ -397,7 +398,6 @@ void ODConfig::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer) {
     // Points
     int ic = 0;
 
-    wxPathListNode* node1 = g_pPathList->GetFirst();
 // #ifdef COMPILER_SUPPORTS_CXX11
 #ifdef OD_USE_CXX11
     // build an unordered map list for high speed access
@@ -406,24 +406,20 @@ void ODConfig::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer) {
 #else
     std::map<ODPoint*, ODPoint*> tp_hash;
 #endif
-    while (node1) {
-      ODPath* pPath = node1->GetData();
-      ODPointList* pODPointList = pPath->m_pODPointList;
-      wxODPointListNode* node2 = pODPointList->GetFirst();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+      ODPath* pPath = *it;
+      ODPointList pODPointList = pPath->m_ODPointList;
       ODPoint* pop;
-      while (node2) {
-        pop = node2->GetData();
+      for(std::list<ODPoint *>::iterator it1 = pODPointList.m_pODPoint.begin(); it1 != pODPointList.m_pODPoint.end(); ++it1) {
+        pop = *it1;
         tp_hash[pop] = pop;
-        node2 = node2->GetNext();
       }
-      node1 = node1->GetNext();
     }
 
-    wxODPointListNode* node = g_pODPointMan->GetODPointList()->GetFirst();
     ODPoint* podp;
     time_t l_tStart = time(0);
     time_t l_tCurrent;
-    while (node) {
+    for(std::list<ODPoint *>::iterator it = g_pODPointMan->GetODPointList()->m_pODPoint.begin(); it != g_pODPointMan->GetODPointList()->m_pODPoint.end(); ++it) {
       l_tCurrent = time(0);
       if (pprog && l_tStart != l_tCurrent) {
         wxString msg;
@@ -432,7 +428,7 @@ void ODConfig::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer) {
         ic++;
       }
 
-      podp = node->GetData();
+      podp = *it;
 
       bool b_add = true;
 
@@ -443,13 +439,10 @@ void ODConfig::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer) {
         if (podp->m_bKeepXPath || tp_hash.find(podp) == tp_hash.end())
           pgpx->AddGPXODPoint(podp);
       }
-
-      node = node->GetNext();
     }
     // Paths
-    node1 = g_pPathList->GetFirst();
-    while (node1) {
-      ODPath* pPath = node1->GetData();
+    for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it){
+      ODPath* pPath = *it;
 
       bool b_add = true;
 
@@ -460,7 +453,6 @@ void ODConfig::ExportGPX(wxWindow* parent, bool bviz_only, bool blayer) {
       if (b_add) {
         pgpx->AddGPXPath(pPath);
       }
-      node1 = node1->GetNext();
     }
 
     pgpx->SaveFile(fn.GetFullPath());
@@ -588,16 +580,17 @@ void ODConfig::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath,
     }
 
     // make sure any EBL hanging off the boat is repositioned
-    wxEBLListNode* node = g_pEBLList->GetFirst();
-    for (size_t i = 0; i < g_pEBLList->GetCount(); i++) {
-      EBL* ebl = (EBL*)node->GetData();
-      if (ebl->m_bCentreOnBoat) {
-        bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
-        ebl->m_bSaveUpdates = false;
-        ebl->CentreOnBoat(true);
-        ebl->m_bSaveUpdates = l_bSaveUpdatesState;
+    //wxEBLListNode* node = g_EBLList->GetFirst();
+    for(std::list<EBL *>::iterator it = g_EBLList.m_pEBLList.begin(); it != g_EBLList.m_pEBLList.end(); ++it) {
+    //for (size_t i = 0; i < g_EBLList->GetCount(); i++) {
+      //EBL ebl = (EBL*)node->GetData();
+      EBL* l_pebl = (EBL *)*it;
+      if (l_pebl->m_bCentreOnBoat) {
+        bool l_bSaveUpdatesState = l_pebl->m_bSaveUpdates;
+        l_pebl->m_bSaveUpdates = false;
+        l_pebl->CentreOnBoat(true);
+        l_pebl->m_bSaveUpdates = l_bSaveUpdatesState;
       }
-      node = node->GetNext();
     }
   }
 }
@@ -789,16 +782,14 @@ void ODConfig::UI_Import(wxWindow* parent, bool islayer, bool isTemporary,
     }
 
     // make sure any EBL hanging of the boat is repositioned
-    wxEBLListNode* node = g_pEBLList->GetFirst();
-    for (size_t i = 0; i < g_pEBLList->GetCount(); i++) {
-      EBL* ebl = (EBL*)node->GetData();
-      if (ebl->m_bCentreOnBoat) {
-        bool l_bSaveUpdatesState = ebl->m_bSaveUpdates;
-        ebl->m_bSaveUpdates = false;
-        ebl->CentreOnBoat(true);
-        ebl->m_bSaveUpdates = l_bSaveUpdatesState;
+    for(std::list<EBL *>::iterator it = g_EBLList.m_pEBLList.begin(); it != g_EBLList.m_pEBLList.end(); ++it) {
+      EBL* l_pebl = *it;
+      if (l_pebl->m_bCentreOnBoat) {
+        bool l_bSaveUpdatesState = l_pebl->m_bSaveUpdates;
+        l_pebl->m_bSaveUpdates = false;
+        l_pebl->CentreOnBoat(true);
+        l_pebl->m_bSaveUpdates = l_bSaveUpdatesState;
       }
-      node = node->GetNext();
     }
   }
 }
@@ -854,25 +845,18 @@ void ODConfig::CreateRotatingNavObjBackup() {
 bool ODConfig::ODPointIsInPathList(ODPoint* podp) {
   bool IsInList = false;
 
-  wxPathListNode* node1 = g_pPathList->GetFirst();
-  while (node1) {
-    ODPath* pPath = node1->GetData();
-    ODPointList* pODPointList = pPath->m_pODPointList;
+  for(std::list<ODPath *>::iterator it = g_PathList.m_pODPathList.begin(); it != g_PathList.m_pODPathList.end(); ++it) {
+    ODPath* pPath = *it;
 
-    wxODPointListNode* node2 = pODPointList->GetFirst();
     ODPoint* ppodp;
-
-    while (node2) {
-      ppodp = node2->GetData();
+    for(std::list<ODPoint *>::iterator it1 = pPath->m_ODPointList.m_pODPoint.begin(); it1 != pPath->m_ODPointList.m_pODPoint.end(); ++it1) {
+      ppodp = *it1;
 
       if (podp->IsSame(ppodp)) {
         IsInList = true;
         break;
       }
-
-      node2 = node2->GetNext();
     }
-    node1 = node1->GetNext();
   }
   return IsInList;
 }

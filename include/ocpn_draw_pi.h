@@ -168,6 +168,7 @@ typedef void (*_GLUfuncptr)();
 #include "ocpn_plugin.h"
 #include "globals.h"
 #include "ODUndo.h"
+#include "Boundary.h"
 #include "ODPoint.h"
 #include "ODConfig.h"
 #include "ODRolloverWin.h"
@@ -184,7 +185,6 @@ typedef void (*_GLUfuncptr)();
 #include <wx/splitter.h>
 #include <wx/fileconf.h>
 #include <wx/dynarray.h>
-#include <list>
 
 
 //----------------------------------------------------------------------------------------------------------
@@ -345,8 +345,9 @@ enum {
 
 class Boundary;
 class BoundaryProp;
-class Boundarylist;
+class BoundaryList;
 class EBL;
+class EBLList;
 class DR;
 class GZ;
 class PIL;
@@ -621,8 +622,7 @@ private:
     int         m_mouse_canvas_index;
     int         m_current_canvas_index;
 
-    std::list<Boundary*> m_pBoundaryList;
-
+    BoundaryList m_BoundaryList;
 
 };
 

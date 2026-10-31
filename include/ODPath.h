@@ -28,6 +28,10 @@
 #include <wx/list.h>
 #include <wx/hashmap.h>
 
+#include <list>
+#include <algorithm>
+#include <iterator>
+
 #include "ODPoint.h"
 #include "Hyperlink.h"
 
@@ -42,8 +46,6 @@
 #include "GL/glu.h"
 #include "GL/glext.h"
 #endif
-
-#include <list>
 
 #define STYLE_UNDEFINED -1
 
@@ -84,7 +86,7 @@ public:
     void CalculateDCRect(wxDC& dc_boundary, wxRect *prect, PlugIn_ViewPort &VP);
     int GetnPoints(void){ return m_nPoints; }
     virtual LLBBox GetBBox();
-    void SetnPoints(void){ m_nPoints = m_pODPointList->GetCount(); }
+    void SetnPoints(void){m_nPoints = m_ODPointList.m_pODPoint.size(); }
     void SetHiLite( int width ) {m_hiliteWidth = width; }
     void Reverse(bool bRenamePoints = false);
     void RebuildGUIDList(void);
@@ -154,8 +156,7 @@ public:
     HyperlinkList     *m_HyperlinkList;
 
     wxArrayString      ODPointGUIDList;
-    ODPointList     *m_pODPointList;
-
+    ODPointList m_ODPointList;
     wxRect      active_pt_rect;
     wxColour    m_wxcActiveLineColour;
     wxColour    m_wxcInActiveLineColour;
@@ -167,10 +168,11 @@ public:
     bool        m_bPathPropertiesBlink;
     
     bool        m_bDrawArrow;
+
     bool        m_bSaveUpdates;
     
     bool        m_bODPointsVisible; // should the ODPoints on a path be drawn 
-    
+
 protected:    
     bool        m_bNeedsUpdateBBox;
     LLBBox      RBBox;
@@ -196,12 +198,15 @@ protected:
     wxColour    m_wxcActiveLineColourRGB;
     wxColour    m_wxcInActiveLineColourRGB;
 
-    
 private:
 
     
 };
 
-WX_DECLARE_LIST(ODPath, PathList); // establish class Path as list member
+class ODPathList
+{
+public:
+    std::list<ODPath *> m_pODPathList;
+};
 
 #endif

@@ -33,6 +33,7 @@ class wxDialog;
 #include <wx/colour.h>
 #include <wx/pen.h>
 #include <cstdint>
+#include <list>
 #include "Hyperlink.h"
 #include "ocpn_plugin.h"
 //#include "OCPNRegion.h"
@@ -213,6 +214,12 @@ private:
 
 };
 
-WX_DECLARE_LIST(ODPoint, ODPointList);// establish class as list member
+//WX_DECLARE_LIST(ODPoint, ODPointList);// establish class as list member
+
+class ODPointList
+{
+public:
+    std::list<ODPoint *> m_pODPoint;
+};
 
 #endif

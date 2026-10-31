@@ -55,7 +55,8 @@
 PointMan::PointMan()
 {
 
-    m_pODPointList = new ODPointList;
+    //m_ODPointList = new ODPointList;
+    m_ODPointList.m_pODPoint.clear();
 
     pmarkicon_image_list = NULL;
 
@@ -78,25 +79,10 @@ PointMan::~PointMan()
     //    Copy the master ODPoint list to a temporary list,
     //    then clear and delete objects from the temp list
 
-    ODPointList temp_list;
+    std::list<ODPoint *> temp_list;
     bool bListEntry = false;
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
-
-        temp_list.Append( podp );
-        node = node->GetNext();
-        bListEntry = true;
-    }
-
-    if(bListEntry) {
-        temp_list.DeleteContents( true );
-        temp_list.Clear();
-    }
-
-    m_pODPointList->Clear();
-    delete m_pODPointList;
+    m_ODPointList.m_pODPoint.clear();
 
     for( unsigned int i = 0; i < m_pIconArray->GetCount(); i++ ) {
         ODMarkIcon *pmi = (ODMarkIcon *) m_pIconArray->Item( i );
@@ -117,8 +103,9 @@ bool PointMan::AddODPoint(ODPoint *podp)
     if(!podp)
         return false;
 
-    wxODPointListNode *podpnode = m_pODPointList->Append(podp);
-    podp->SetManagerListNode( podpnode );
+    m_ODPointList.m_pODPoint.push_back(podp);
+    std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.end();
+    podp->SetManagerListNode( *it );
 
     return true;
 }
@@ -127,13 +114,12 @@ bool PointMan::RemoveODPoint(ODPoint *podp)
 {
     if(!podp)
         return false;
-
-    wxODPointListNode *podpnode = (wxODPointListNode *)podp->GetManagerListNode();
-
-    if(podpnode)
-        delete podpnode;
-    else
-        m_pODPointList->DeleteObject(podp);
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        if (podp == *it) {
+            m_ODPointList.m_pODPoint.remove(podp);
+            break;
+        }
+    }
 
     podp->SetManagerListNode( NULL );
 
@@ -431,12 +417,10 @@ void PointMan::SetColorScheme( PI_ColorScheme cs )
 
     //    Iterate on the ODPoint list, requiring each to reload icon
     m_ColourScheme = cs;
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
         podp->SetColourScheme(cs);
         podp->ReLoadIcon();
-        node = node->GetNext();
     }
 }
 
@@ -729,27 +713,21 @@ int PointMan::GetXIconIndex( const wxBitmap *pbm )
 wxArrayString *PointMan::FindAllPointsGUIDS ( wxString GUIDType, bool InLayer )
 {
   wxArrayString *GUIDArray = new wxArrayString();
-  wxODPointListNode *node = m_pODPointList->GetFirst();
-  while( node ) {
-    ODPoint *ppoint = node->GetData();
+  for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+    ODPoint *ppoint = *it;
     if(GUIDType == "" || ppoint->m_sTypeString == GUIDType)
       if(InLayer == ppoint->m_bIsInLayer){
         GUIDArray->Add( ppoint->m_GUID );
       }
-    node = node->GetNext();
   }
   return GUIDArray;
 }
 
 ODPoint *PointMan::FindODPointByGUID(const wxString &guid)
 {
-    wxODPointListNode *podpnode = m_pODPointList->GetFirst();
-    while( podpnode ) {
-        ODPoint *podp = podpnode->GetData();
-
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
         if( podp->m_GUID == guid ) return ( podp );
-
-        podpnode = podpnode->GetNext(); //ODPoint
     }
 
     return NULL;
@@ -759,17 +737,14 @@ ODPoint *PointMan::GetNearbyODPoint( double lat, double lon, double radius_meter
 {
     //    Iterate on the ODPoint list, checking distance
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
 
         double a = lat - podp->m_lat;
         double b = lon - podp->m_lon;
         double l = sqrt( ( a * a ) + ( b * b ) );
 
         if( !podp->m_bSingleUse && ( l * 60. * 1852. ) < radius_meters ) return podp;
-
-        node = node->GetNext();
     }
     return NULL;
 
@@ -780,17 +755,14 @@ ODPoint *PointMan::GetOtherNearbyODPoint( double lat, double lon, double radius_
 {
     //    Iterate on the ODPoint list, checking distance
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
 
         double a = lat - podp->m_lat;
         double b = lon - podp->m_lon;
         double l = sqrt( ( a * a ) + ( b * b ) );
 
         if( ( l * 60. * 1852. ) < radius_meters ) if( podp->m_GUID != guid ) return podp;
-
-        node = node->GetNext();
     }
     return NULL;
 
@@ -801,23 +773,19 @@ void PointMan::ClearODPointFonts( void )
     //    Iterate on the ODPoint list, clearing Font pointers
     //    This is typically done globally after a font switch
 
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
 
         podp->m_pMarkFont = NULL;
-        node = node->GetNext();
     }
 }
 
 bool PointMan::SharedODPointsExist()
 {
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *podp = *it;
         if (podp->m_bKeepXPath && podp->m_bIsInPath )
             return true;
-        node = node->GetNext();
     }
     return false;
 }
@@ -825,18 +793,18 @@ bool PointMan::SharedODPointsExist()
 void PointMan::DeleteAllODPoints( bool b_delete_used )
 {
     //    Iterate on the ODPoint list, deleting all
-    wxODPointListNode *node = m_pODPointList->GetFirst();
-    while( node ) {
-        ODPoint *podp = node->GetData();
+    std::list<ODPoint *>::iterator it1;
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end();) {
+        ODPoint *podp = *it;
         // if argument is false, then only delete non-path ODPoints
         if( !podp->m_bIsInLayer && ( podp->GetIconName() != _T("mob") )
             && ( ( b_delete_used && podp->m_bKeepXPath )
                         ||  !podp->m_bIsInPath   ) ) {
             DestroyODPoint(podp, b_delete_used);
-			delete podp;
-            node = m_pODPointList->GetFirst();
-        } else
-            node = node->GetNext();
+            delete podp;
+            it = m_ODPointList.m_pODPoint.begin();
+            //it = m_ODPointList.m_pODPoint.erase(podp);
+        } else ++it;
     }
     return;
 
@@ -944,12 +912,10 @@ bool PointMan::DistancePointLine( double pLon, double pLat, double StartLon, dou
 BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double StartLat, double EndLon, double EndLat, int type, int state )
 {
     // search boundary point
-    wxODPointListNode *node = GetODPointList()->GetFirst();
-    while( node ) {
-        ODPoint *od = static_cast<ODPoint *>(node->GetData());
+    for(std::list<ODPoint *>::iterator it = m_ODPointList.m_pODPoint.begin(); it != m_ODPointList.m_pODPoint.end(); ++it) {
+        ODPoint *od = static_cast<ODPoint *>(*it);
         if( od->IsListed() ) {
             if( od->m_bIsInPath && !od->m_bKeepXPath ) {
-                node = node->GetNext();
                 continue;
             }
             // if there's no ring there's nothing to do
@@ -957,12 +923,10 @@ BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double St
                     od->GetODPointRangeRingsNumber() == 0 ||
                     od->GetODPointRangeRingsStep() == 0.f)
             {
-                node = node->GetNext();
                 continue;
             }
-            BoundaryPoint *op = dynamic_cast<BoundaryPoint *>(node->GetData());
+            BoundaryPoint *op = dynamic_cast<BoundaryPoint *>(*it);
             if (!op) {
-                node = node->GetNext();
                 continue;
             }
             bool l_bNext = false;
@@ -990,7 +954,6 @@ BoundaryPoint *PointMan::FindLineCrossingBoundaryPtr( double StartLon, double St
                }
             }
         }
-        node = node->GetNext();
     }
     return 0;
 }

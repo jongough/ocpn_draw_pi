@@ -56,6 +56,7 @@
 #include "TextPoint.h"
 #include <wx/window.h>
 #include <wx/clipbrd.h>
+//#include <list>
 
 ODEventHandler::ODEventHandler(ocpn_draw_pi *parent)
 {
@@ -294,18 +295,16 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 
                             // Compute and display cumulative distance from path start point to current
                             // leg end point.
+                            std::list<ODPoint *>::iterator it = pp->m_ODPointList.m_pODPoint.begin();
 
-                            if( segShow_point_a && segShow_point_a != pp->m_pODPointList->GetFirst()->GetData() ) {
-                                wxODPointListNode *node = (pp->m_pODPointList)->GetFirst()->GetNext();
+                            if( segShow_point_a && segShow_point_a != *it) {
                                 ODPoint *pop;
                                 float dist_to_endleg = 0;
                                 wxString t;
-
-                                while( node ) {
-                                    pop = node->GetData();
+                                for(++it; it != pp->m_ODPointList.m_pODPoint.end(); ++it) {
+                                    pop = *it;
                                     dist_to_endleg += pop->m_seg_len;
                                     if( pop->IsSame( segShow_point_a ) ) break;
-                                    node = node->GetNext();
                                 }
                                 s << _T(" (+") << g_ocpn_draw_pi->FormatDistanceAdaptive( dist_to_endleg ) << _T(")");
                             }
@@ -660,8 +659,8 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
         case ID_BOUNDARY_LIST_KEEP_MENU:
         case ID_BOUNDARY_LIST_DELETE_MENU: {
             Boundary *l_pBoundary = new Boundary();
-            g_pBoundaryList->Append( l_pBoundary );
-            g_pPathList->Append( l_pBoundary);
+            g_BoundaryList.m_pBoundaryList.push_back( l_pBoundary );
+            g_PathList.m_pODPathList.push_back( l_pBoundary);
             l_pBoundary->m_width = g_BoundaryLineWidth;
             l_pBoundary->m_style = g_BoundaryLineStyle;
 
@@ -753,7 +752,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             g_ocpn_draw_pi->m_pCurrentCursor = g_ocpn_draw_pi->m_pCursorCross;
             break;
         case ID_EBL_MENU_VRM_MATCH_EBL_COLOUR: {
-            ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+            ODPoint *pFirstPoint = m_pEBL->m_ODPointList.m_pODPoint.front();
             pFirstPoint->SetODPointRangeRingsColour( m_pEBL->GetCurrentColour() );
             break;
         }
@@ -769,7 +768,7 @@ void ODEventHandler::PopupMenuHandler(wxCommandEvent& event )
             break;
         case ID_PATH_MENU_REMPOINT: {
             dlg_return = wxID_YES;
-            if( m_pSelectedPath->m_pODPointList->GetCount() < 4 && m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
+            if( m_pSelectedPath->m_ODPointList.m_pODPoint.size() < 4 && m_pSelectedPath->m_sTypeString == wxT("Boundary")) {
                 wxString sMessage(_("Removing this point will invalidate the Boundary, this is not allowed."));
                 wxString sCaption( _("OCPN Draw Remove ") );
                 wxString sType( wxS("") );
@@ -1080,7 +1079,7 @@ void ODEventHandler::PopupMenu( int popuptype )
                     MenuAppend( menuPath, ID_EBL_MENU_CENTRE_ON_BOAT_LATLON, _("Move start point to boat lat/lon") );
                 }
                 MenuAppend( menuPath, ID_EBL_MENU_PICK_NEW_START, _("Pick a new start point") );
-                ODPoint *pFirstPoint = m_pEBL->m_pODPointList->GetFirst()->GetData();
+                ODPoint *pFirstPoint = m_pEBL->m_ODPointList.m_pODPoint.front();
                 if(m_pEBL->GetCurrentColour() != pFirstPoint->GetODPointRangeRingsColour())
                     MenuAppend( menuPath, ID_EBL_MENU_VRM_MATCH_EBL_COLOUR, _("Match VRM colour to EBL colour"));
             } else if(m_pSelectedPath->m_sTypeString == wxT("PIL")) {
