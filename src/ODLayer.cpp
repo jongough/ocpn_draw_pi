@@ -31,9 +31,6 @@
 #include "ODLayer.h"
 #include "ocpn_draw_pi.h"
 
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(ODLayerList);
-
 ODLayer::ODLayer( void )
 {
     m_bIsVisibleOnListing = false;
@@ -50,7 +47,7 @@ ODLayer::ODLayer( void )
 ODLayer::~ODLayer( void )
 {
 //  Remove this layer from the global layer list
-    if( NULL != g_pLayerList ) g_pLayerList->DeleteObject( this );
+    if( g_pLayerList.m_pODLayerList.size() > 0 ) g_pLayerList.m_pODLayerList.remove( this );
 
 }
 

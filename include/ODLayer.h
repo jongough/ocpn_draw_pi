@@ -28,6 +28,7 @@
 #include <wx/string.h>
 #include <wx/list.h>
 #include <wx/datetime.h>
+#include <list>
 
 class ODLayer
 {
@@ -59,6 +60,10 @@ public:
       wxDateTime        m_CreateTime;
 };
 
-WX_DECLARE_LIST(ODLayer, ODLayerList);// establish class as list member
+class ODLayerList
+{
+public:
+    std::list<ODLayer *> m_pODLayerList;
+};
 
 #endif

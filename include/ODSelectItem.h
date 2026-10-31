@@ -25,7 +25,7 @@
 #ifndef __ODSELECTITEM_H__
 #define __ODSELECTITEM_H__
 
-#include <wx/list.h>
+#include <list>
 
 class ODSelectItem
 {
@@ -48,6 +48,8 @@ public:
       int   m_Data4;
 };
 
-WX_DECLARE_LIST(ODSelectItem, ODSelectableItemList);// establish class as list member
-
+class ODSelectableItemList {
+public:
+    std::list<ODSelectItem *> m_pSelectItem;
+};
 #endif

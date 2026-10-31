@@ -179,9 +179,9 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
     if( !g_pRolloverPathSeg && !g_pRolloverPoint) {
         //    Get a list of all selectable sgements, and search for the first visible segment as the rollover target.
         ODSelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_PATHSEGMENT | SELTYPE_PIL );
-        wxODSelectableItemListNode *node_ODPath = SelList.GetFirst();
+        std::list<ODSelectItem *>::iterator it = SelList.m_pSelectItem.begin();
 
-        if(node_ODPath) {
+        if(*it) {
 #ifndef __WXMSW__
 			l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)
@@ -196,10 +196,9 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
             g_pODRolloverWin->Destroy();
             g_pODRolloverWin = NULL;
         }
-
-        while( node_ODPath ) {
-            ODSelectItem *pFindSel = node_ODPath->GetData();
-            ODPath *pp = (ODPath *) pFindSel->m_pData3;        //candidate
+        for(; it != SelList.m_pSelectItem.end(); ++it) {
+            ODSelectItem *pFindSel = *it;
+            ODPath *pp = (ODPath *)pFindSel->m_pData3;        //candidate
 
             if( pp && pp->IsVisible() ) {
                 g_pRolloverPathSeg = new ODSelectItem;
@@ -326,14 +325,12 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                    // XXX endless loop
                    assert(false);
                 }
-            } else
-                node_ODPath = node_ODPath->GetNext();
+            }
         }
         if( !showRollover && !g_pRolloverPathSeg) {
             ODSelectableItemList SelList = g_pODSelect->FindSelectionList( g_ocpn_draw_pi->m_cursor_lat, g_ocpn_draw_pi->m_cursor_lon, SELTYPE_ODPOINT );
-            wxODSelectableItemListNode *node_ODPoint = SelList.GetFirst();
-
-            if(node_ODPoint) {
+            std::list<ODSelectItem *>::iterator it = SelList.m_pSelectItem.begin();
+            if(*it) {
 #ifndef __WXMSW__
                 l_locale = new wxString(wxSetlocale(LC_NUMERIC, NULL));
 #if wxCHECK_VERSION(3,0,0)
@@ -343,9 +340,8 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
 #endif
 #endif
             }
-
-            while( node_ODPoint ) {
-                ODSelectItem *pFindSel = node_ODPoint->GetData();
+            for(; it != SelList.m_pSelectItem.end(); ++it) {
+                ODSelectItem *pFindSel = *it;
                 ODPoint *pp = (ODPoint *) pFindSel->m_pData1;        //candidate
                 if( pp && pp->IsVisible() ) {
                     g_pRolloverPoint = new ODSelectItem();
@@ -431,7 +427,6 @@ void ODEventHandler::OnRolloverPopupTimerEvent( wxTimerEvent& event )
                         break;
                     }
                 }
-                node_ODPoint = node_ODPoint->GetNext();
             }
         }
     } else {
@@ -1558,10 +1553,8 @@ wxString ODEventHandler::GetLayerName( int id )
 {
     wxString name( _T("unknown layer") );
     if( id <= 0 ) return ( name );
-    ODLayerList::iterator it;
-    int index = 0;
-    for( it = ( *g_pLayerList ).begin(); it != ( *g_pLayerList ).end(); ++it, ++index ) {
-        ODLayer *lay = (ODLayer *) ( *it );
+    for(std::list<ODLayer *>::iterator it = g_pLayerList.m_pODLayerList.begin(); it != g_pLayerList.m_pODLayerList.end(); ++it) {
+        ODLayer *lay = *it;
         if( lay->m_LayerID == id ) return ( lay->m_LayerName );
     }
     return ( name );

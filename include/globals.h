@@ -259,7 +259,7 @@ extern bool            g_bRestoreLayerVisability;
 extern bool            g_bLayersLoaded;
 extern wxString        g_VisibleLayers;
 extern wxString        g_InvisibleLayers;
-extern ODLayerList     *g_pLayerList;
+extern ODLayerList     g_pLayerList;
 extern int             g_navobjbackups;
 extern int             g_EdgePanSensitivity;
 extern int             g_InitialEdgePanSensitivity;

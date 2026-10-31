@@ -62,8 +62,4 @@ private:
     
 };
 
-WX_DECLARE_LIST(wxBitmap, BitmapList);
-
-
-
 #endif // ODICONCOMBO_H

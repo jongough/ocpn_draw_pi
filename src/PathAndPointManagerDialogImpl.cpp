@@ -1729,9 +1729,7 @@ void PathAndPointManagerDialogImpl::CreateLayer(bool isTemporary) {
 void PathAndPointManagerDialogImpl::OnLayerDeleteClick(wxCommandEvent& event) {
   long item = -1;
   int l_answer = wxID_YES;
-  ODLayerList::compatibility_iterator* l_LayerIterator =
-      new ODLayerList::compatibility_iterator[m_listCtrlLayers
-                                                  ->GetSelectedItemCount()];
+
   int l_item_count = 0;
 
   item =
@@ -1792,16 +1790,13 @@ void PathAndPointManagerDialogImpl::OnLayerDeleteClick(wxCommandEvent& event) {
           it = it3;
         }
 
-        l_LayerIterator[l_item_count++] = g_pLayerList->Find(layer);
+        auto itf = std::find(g_pLayerList.m_pODLayerList.begin(), g_pLayerList.m_pODLayerList.end(), layer );
+        g_pLayerList.m_pODLayerList.remove(layer);
       }
       l_answer = wxID_YES;
     }
     item = m_listCtrlLayers->GetNextItem(item, wxLIST_NEXT_ALL,
                                          wxLIST_STATE_SELECTED);
-  }
-
-  while (l_item_count > 0) {
-    g_pLayerList->DeleteNode(l_LayerIterator[--l_item_count]);
   }
 
   UpdatePathListCtrl();
@@ -1990,10 +1985,8 @@ void PathAndPointManagerDialogImpl::UpdateLayerListCtrl() {
   m_listCtrlLayers->DeleteAllItems();
 
   // then add paths to the listctrl
-  ODLayerList::iterator it;
   int index = 0;
-  for (it = (*g_pLayerList).begin(); it != (*g_pLayerList).end();
-       ++it, ++index) {
+  for(std::list<ODLayer *>::iterator it = g_pLayerList.m_pODLayerList.begin(); it != g_pLayerList.m_pODLayerList.end(); ++it, ++index) {
     wxListItem li;
     li.SetId(index);
     li.SetImage((*it)->IsVisible() ? 0 : 1);
@@ -2106,11 +2099,9 @@ void PathAndPointManagerDialogImpl::DeSelectODPoints(void) {
 wxString PathAndPointManagerDialogImpl::GetLayerName(int id) {
   wxString name(_T("unknown layer"));
   if (id <= 0) return (name);
-  ODLayerList::iterator it;
-  int index = 0;
-  for (it = (*g_pLayerList).begin(); it != (*g_pLayerList).end();
-       ++it, ++index) {
-    ODLayer* lay = (ODLayer*)(*it);
+
+  for(std::list<ODLayer *>::iterator it = g_pLayerList.m_pODLayerList.begin(); it != g_pLayerList.m_pODLayerList.end(); ++it) {
+    ODLayer* lay = *it;
     if (lay->m_LayerID == id) return (lay->m_LayerName);
   }
   return (name);

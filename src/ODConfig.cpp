@@ -315,7 +315,7 @@ bool ODConfig::LoadLayers(wxString& path) {
                       l_lLayer->m_LayerName.c_str());
         wxLogMessage(laymsg);
 
-        g_pLayerList->Insert(l_lLayer);
+        g_pLayerList.m_pODLayerList.push_front(l_lLayer);
 
         //  Load the entire file array as a single layer
 
@@ -531,10 +531,9 @@ void ODConfig::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath,
       if (g_InvisibleLayers.Contains(l->m_LayerName)) bLayerViz = false;
       l->m_bIsVisible = bLayerViz;
 
-      ODLayerList::iterator iter;
       bool l_foundLayer = false;
-      for (iter = g_pLayerList->begin(); iter != g_pLayerList->end(); ++iter) {
-        ODLayer* current = *iter;
+      for(std::list<ODLayer *>::iterator it = g_pLayerList.m_pODLayerList.begin(); it != g_pLayerList.m_pODLayerList.end(); ++it) {
+        ODLayer* current = *it;
         if (current->GetName() == l->m_LayerName) {
           l_foundLayer = true;
           break;
@@ -550,7 +549,7 @@ void ODConfig::UI_ImportGPX(wxWindow* parent, bool islayer, wxString dirpath,
       }
       wxLogMessage(laymsg);
 
-      g_pLayerList->Insert(l);
+      g_pLayerList.m_pODLayerList.push_front(l);
     }
 
     for (unsigned int i = 0; i < file_array.GetCount(); i++) {
@@ -694,7 +693,7 @@ void ODConfig::UI_Import(wxWindow* parent, bool islayer, bool isTemporary,
                             l_pLayer->m_LayerName.c_str());
               wxLogMessage(laymsg);
 
-              g_pLayerList->Insert(l_pLayer);
+              g_pLayerList.m_pODLayerList.push_front(l_pLayer);
             }
           } else {
             l_pLayer = new ODLayer();
@@ -732,11 +731,9 @@ void ODConfig::UI_Import(wxWindow* parent, bool islayer, bool isTemporary,
               bLayerViz = false;
             l_pLayer->m_bIsVisibleOnChart = bLayerViz;
 
-            ODLayerList::iterator iter;
             bool l_foundLayer = false;
-            for (iter = g_pLayerList->begin(); iter != g_pLayerList->end();
-                 ++iter) {
-              ODLayer* current = *iter;
+            for(std::list<ODLayer *>::iterator it = g_pLayerList.m_pODLayerList.begin(); it != g_pLayerList.m_pODLayerList.end(); ++it) {
+              ODLayer* current = *it;
               if (current->GetName() == l_pLayer->m_LayerName) {
                 l_foundLayer = true;
                 break;
@@ -754,7 +751,7 @@ void ODConfig::UI_Import(wxWindow* parent, bool islayer, bool isTemporary,
               wxLogMessage(laymsg);
             }
 
-            g_pLayerList->Insert(l_pLayer);
+            g_pLayerList.m_pODLayerList.push_front(l_pLayer);
           }
         }
 

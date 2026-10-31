@@ -214,8 +214,6 @@ private:
 
 };
 
-//WX_DECLARE_LIST(ODPoint, ODPointList);// establish class as list member
-
 class ODPointList
 {
 public:

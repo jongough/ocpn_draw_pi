@@ -36,8 +36,7 @@ ODSelect::ODSelect()
 
 ODSelect::~ODSelect()
 {
-    pSelectList->DeleteContents( true );
-    pSelectList->Clear();
+    pSelectList->m_pSelectItem.clear();
     delete pSelectList;
 
 }
@@ -71,14 +70,12 @@ bool ODSelect::AddSelectableODPoint( float slat, float slon, ODPoint *pODPointAd
     pSelItem->m_bIsSelected = false;
     pSelItem->m_pData1 = pODPointAdd;
 
-    wxODSelectableItemListNode *node;
-
     if( pODPointAdd->m_bIsInLayer )
-        node = pSelectList->Append( pSelItem );
+        pSelectList->m_pSelectItem.push_back( pSelItem );
     else
-        node = pSelectList->Append( pSelItem );
+        pSelectList->m_pSelectItem.push_back( pSelItem );
 
-    pODPointAdd->SetSelectNode(node);
+    pODPointAdd->SetSelectNode(pSelectList);
 
     return true;
 }
@@ -101,9 +98,9 @@ bool ODSelect::AddSelectablePathSegment( float slat1, float slon1, float slat2, 
     pSelItem->m_pData3 = pPath;
     pSelItem->SetUserData(iUserData);
 
-    if( pPath->m_bIsInLayer ) pSelectList->Append( pSelItem );
+    if( pPath->m_bIsInLayer ) pSelectList->m_pSelectItem.push_back( pSelItem );
     else
-        pSelectList->Append( pSelItem );
+        pSelectList->m_pSelectItem.push_back( pSelItem );
 
     return true;
 }
@@ -113,19 +110,15 @@ bool ODSelect::DeleteAllSelectablePathSegments( ODPath *pr )
     ODSelectItem *pFindSel;
 
 //    Iterate on the select list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
-        wxODSelectableItemListNode *next = node->GetNext();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT || pFindSel->m_seltype == SELTYPE_PIL ) {
 
             if( (ODPath *) pFindSel->m_pData3 == pr ) {
                 delete pFindSel;
-                pSelectList->DeleteNode( node );   //delete node;
+                it = pSelectList->m_pSelectItem.erase( it );   //delete node;
             }
         }
-        node = next;
     }
 
     return true;
@@ -136,19 +129,14 @@ bool ODSelect::DeleteSelectablePathSegment( ODPath *pr, int iUserData )
     ODSelectItem *pFindSel;
 
     //    Iterate on the select list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
-        wxODSelectableItemListNode *next = node->GetNext();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == SELTYPE_PIL ) {
-
             if( (ODPath *) pFindSel->m_pData3 == pr && pFindSel->GetUserData() == iUserData) {
                 delete pFindSel;
-                pSelectList->DeleteNode( node );   //delete node;
+                it = pSelectList->m_pSelectItem.erase( it );   //delete node;
             }
         }
-        node = next;
     }
 
     return true;
@@ -160,28 +148,22 @@ bool ODSelect::DeleteAllSelectableODPoints( ODPath *pp )
     ODSelectItem *pFindSel;
 
 //    Iterate on the select list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
-        wxODSelectableItemListNode *next = node->GetNext();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == SELTYPE_ODPOINT ) {
             ODPoint *ps = (ODPoint *) pFindSel->m_pData1;
-
             //    inner loop iterates on the path's point list
-            for(std::list<ODPoint *>::iterator it = pp->m_ODPointList.m_pODPoint.begin(); it != pp->m_ODPointList.m_pODPoint.end(); ++it) {
-                ODPoint *prp = *it;
+            for(std::list<ODPoint *>::iterator it1 = pp->m_ODPointList.m_pODPoint.begin(); it1 != pp->m_ODPointList.m_pODPoint.end(); ++it1) {
+                ODPoint *prp = *it1;
 
                 if( prp == ps ) {
                     delete pFindSel;
-                    pSelectList->DeleteNode( node );   //delete node;
+                    it = pSelectList->m_pSelectItem.erase( it );   //delete node;
                     prp->SetSelectNode( NULL );
-                    goto got_next_outer_node;
+                    break;
                 }
             }
         }
-got_next_outer_node:
-        node = next;
     }
     return true;
 }
@@ -232,18 +214,14 @@ bool ODSelect::UpdateSelectablePathSegments( ODPoint *ppp )
     bool ret = false;
 
 //    Iterate on the select list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == SELTYPE_PATHSEGMENT ) {
             if( pFindSel->m_pData1 == ppp ) {
                 pFindSel->m_slat = ppp->m_lat;
                 pFindSel->m_slon = ppp->m_lon;
                 ret = true;
-                ;
             }
-
             else
                 if( pFindSel->m_pData2 == ppp ) {
                     pFindSel->m_slat2 = ppp->m_lat;
@@ -251,7 +229,6 @@ bool ODSelect::UpdateSelectablePathSegments( ODPoint *ppp )
                     ret = true;
                 }
         }
-        node = node->GetNext();
     }
 
     return ret;
@@ -260,8 +237,7 @@ bool ODSelect::UpdateSelectablePathSegments( ODPoint *ppp )
 /*
 bool ODSelect::DeleteAllPoints( void )
 {
-    pSelectList->DeleteContents( true );
-    pSelectList->Clear();
+    pSelectList->m_pSelectItem.clear();
     return true;
 }
 */
@@ -273,26 +249,21 @@ bool ODSelect::DeleteSelectablePoint( void *pdata, int SeltypeToDelete )
 
     if( NULL != pdata ) {
 //    Iterate on the list
-        wxODSelectableItemListNode *node = pSelectList->GetFirst();
-        wxODSelectableItemListNode *next;
-        while( node ) {
-            pFindSel = node->GetData();
-            next = node->GetNext();
+        for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+            pFindSel = *it;
             if( pFindSel->m_seltype == SeltypeToDelete ) {
                 if( pdata == pFindSel->m_pData1 ) {
                     delete pFindSel;
-                    delete node;
+                    it = pSelectList->m_pSelectItem.erase( it );
                     g_pRolloverPoint = NULL;
 
                     if( SELTYPE_ODPOINT == SeltypeToDelete ){
                         ODPoint *podp = (ODPoint *)pdata;
                         podp->SetSelectNode( NULL );
                     }
-
                     found = true;
                 }
             }
-            node = next;
         }
     }
     return found;
@@ -303,13 +274,10 @@ bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
     ODSelectItem *pFindSel;
 
 //    Iterate on the list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
-        wxODSelectableItemListNode *next = node->GetNext();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == SeltypeToDelete ) {
-            delete node;
+            it = pSelectList->m_pSelectItem.erase(it);
 
             if( SELTYPE_ODPOINT == SeltypeToDelete ){
                 ODPoint *podp = (ODPoint *)pFindSel->m_pData1;
@@ -317,8 +285,6 @@ bool ODSelect::DeleteAllSelectableTypePoints( int SeltypeToDelete )
             }
             delete pFindSel;
         }
-
-        node = next;
     }
     return true;
 }
@@ -327,12 +293,13 @@ bool ODSelect::DeleteSelectableODPoint( ODPoint *podp )
 {
 
     if( NULL != podp ) {
-        wxODSelectableItemListNode *node = (wxODSelectableItemListNode *)podp->GetSelectNode();
+        //wxODSelectableItemListNode *node = (wxODSelectableItemListNode *)podp->GetSelectNode();
+        ODSelectableItemList * node = (ODSelectableItemList *)podp->GetSelectNode();
         if(node){
-            ODSelectItem *pFindSel = node->GetData();
+            ODSelectItem *pFindSel = node->m_pSelectItem.front();
             if(pFindSel){
-                delete pFindSel;
-                delete node;            // automatically removes from list
+                //delete pFindSel;
+                //delete node;            // automatically removes from list
                 podp->SetSelectNode( NULL );
                 return true;
             }
@@ -349,10 +316,8 @@ bool ODSelect::ModifySelectablePoint( float lat, float lon, void *data, int Selt
     ODSelectItem *pFindSel;
 
 //    Iterate on the list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == SeltypeToModify ) {
             if( data == pFindSel->m_pData1 ) {
                 pFindSel->m_slat = lat;
@@ -360,8 +325,6 @@ bool ODSelect::ModifySelectablePoint( float lat, float lon, void *data, int Selt
                 return true;
             }
         }
-
-        node = node->GetNext();
     }
     return false;
 }
@@ -433,10 +396,8 @@ ODSelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
     CalcSelectRadius();
 
 //    Iterate on the list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype == fseltype ) {
             switch( fseltype ){
                 case SELTYPE_ODPOINT:
@@ -462,8 +423,6 @@ ODSelectItem *ODSelect::FindSelection( float slat, float slon, int fseltype )
                     break;
             }
         }
-
-        node = node->GetNext();
     }
 
     return NULL;
@@ -494,15 +453,14 @@ ODSelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fs
     CalcSelectRadius();
 
     //    Iterate on the list
-    wxODSelectableItemListNode *node = pSelectList->GetFirst();
-
-    while( node ) {
-        pFindSel = node->GetData();
+    if(pSelectList->m_pSelectItem.size() == 0) return ret_list;
+    for(std::list<ODSelectItem *>::iterator it = pSelectList->m_pSelectItem.begin(); it != pSelectList->m_pSelectItem.end(); ++it) {
+        pFindSel = *it;
         if( pFindSel->m_seltype & fseltype ) {
             if(fseltype & SELTYPE_ODPOINT) {
                 if( ( fabs( slat - pFindSel->m_slat ) < selectRadius )
                     && ( fabs( slon - pFindSel->m_slon ) < selectRadius ) ) {
-                    ret_list.Append( pFindSel );
+                    ret_list.m_pSelectItem.push_back( pFindSel );
                     }
             } else if(fseltype & SELTYPE_PATHSEGMENT) {
                 a = pFindSel->m_slat;
@@ -511,12 +469,11 @@ ODSelectableItemList ODSelect::FindSelectionList( float slat, float slon, int fs
                 d = pFindSel->m_slon2;
 
                 if( IsSegmentSelected( a, b, c, d, slat, slon ) )
-                    ret_list.Append( pFindSel );
+                    ret_list.m_pSelectItem.push_back( pFindSel );
             } else if(fseltype & SELTYPE_PIL) {
-                ret_list.Append( pFindSel );
+                ret_list.m_pSelectItem.push_back( pFindSel );
             }
         }
-        node = node->GetNext();
     }
 
     return ret_list;

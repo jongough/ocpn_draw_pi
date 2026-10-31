@@ -284,7 +284,7 @@ bool            g_bRestoreLayerVisability;
 bool            g_bLayersLoaded;
 wxString        g_VisibleLayers;
 wxString        g_InvisibleLayers;
-ODLayerList     *g_pLayerList;
+ODLayerList     g_pLayerList;
 int             g_navobjbackups;
 int             g_EdgePanSensitivity;
 int             g_InitialEdgePanSensitivity;
@@ -552,7 +552,7 @@ int ocpn_draw_pi::Init(void) {
   std::list<PIL *> g_PILList;
   std::list<ODPath *> g_PathList;
   //    Layers
-  g_pLayerList = new ODLayerList;
+  g_pLayerList.m_pODLayerList.clear();
 
   if (m_bLOGShowIcon) {
 #ifdef ODraw_USE_SVG
@@ -1001,8 +1001,7 @@ bool ocpn_draw_pi::DeInit(void) {
   if (g_GZList.m_pGZList.size() > 0) g_GZList.m_pGZList.clear();
   if (g_PILList.m_pPILList.size() > 0) g_PILList.m_pPILList.clear();
   if (g_PathList.m_pODPathList.size() > 0) g_PathList.m_pODPathList.clear();
-  if (g_pLayerList) delete g_pLayerList;
-  g_pLayerList = NULL;
+  if (g_pLayerList.m_pODLayerList.size() > 0) g_pLayerList.m_pODLayerList.clear();
 
   shutdown(false);
 
@@ -1773,11 +1772,8 @@ void ocpn_draw_pi::SaveConfig() {
       }
       if (g_bLayersLoaded) {
         wxString vis, invis, visnames, invisnames;
-        ODLayerList::iterator it;
-        int index = 0;
-        for (it = (*g_pLayerList).begin(); it != (*g_pLayerList).end();
-             ++it, ++index) {
-          ODLayer* lay = (ODLayer*)(*it);
+        for(std::list<ODLayer *>::iterator it = g_pLayerList.m_pODLayerList.begin(); it != g_pLayerList.m_pODLayerList.end(); ++it) {
+          ODLayer* lay = *it;
           if (lay->IsVisible())
             vis += (lay->m_LayerName) + _T(";");
           else
@@ -3173,19 +3169,19 @@ bool ocpn_draw_pi::MouseEventHook(wxMouseEvent& event) {
   if (!b_start_rollover && !m_bPathEditing && !bRefresh) {
     ODSelectableItemList SelList = g_pODSelect->FindSelectionList(
         m_cursor_lat, m_cursor_lon, SELTYPE_PATHSEGMENT);
-    wxODSelectableItemListNode* node = SelList.GetFirst();
-    while (node) {
-      ODSelectItem* pFindSel = node->GetData();
+    if(SelList.m_pSelectItem.size() != 0 ) {
+        for(std::list<ODSelectItem *>::iterator it = SelList.m_pSelectItem.begin(); it != SelList.m_pSelectItem.end(); ++it) {
+        ODSelectItem* pFindSel = *it;
 
-      ODPath* pp = (ODPath*)pFindSel->m_pData3;  // candidate
+        ODPath* pp = (ODPath*)pFindSel->m_pData3;  // candidate
 
-      if (pp && pp->IsVisible()) {
-        b_start_rollover = true;
-        bRefresh = true;
-        break;
-      }
-      node = node->GetNext();
-    }  // while
+        if (pp && pp->IsVisible()) {
+            b_start_rollover = true;
+            bRefresh = true;
+            break;
+        }
+        }  // while
+    }
   }
 
   if (b_start_rollover)
@@ -3224,15 +3220,13 @@ void ocpn_draw_pi::FindSelectedObject() {
     // There is at least one OCPNpoint, so get the whole list
     ODSelectableItemList SelList =
         g_pODSelect->FindSelectionList(slat, slon, SELTYPE_ODPOINT);
-    wxODSelectableItemListNode* node = SelList.GetFirst();
-    while (node) {
-      ODSelectItem* pFindSel = node->GetData();
+    for(std::list<ODSelectItem *>::iterator it = SelList.m_pSelectItem.begin(); it != SelList.m_pSelectItem.end(); ++it) {
+      ODSelectItem* pFindSel = *it;
 
       ODPoint* pop = (ODPoint*)pFindSel->m_pData1;  // candidate
       if ((pop->m_sTypeString == wxT("EBL Point") &&
            pop->m_ODPointName == _("Boat")) ||
           !pop->m_bIsVisible) {
-        node = node->GetNext();
         continue;
       }
 
@@ -3283,8 +3277,6 @@ void ocpn_draw_pi::FindSelectedObject() {
 
         delete ppath_array;
       }
-
-      node = node->GetNext();
     }
 
     //      Now choose the "best" selections
@@ -3330,9 +3322,8 @@ void ocpn_draw_pi::FindSelectedObject() {
     if (NULL == m_pSelectedPath)  // the case where a segment only is selected
     {
       //  Choose the first visible path containing segment in the list
-      wxODSelectableItemListNode* node = SelList.GetFirst();
-      while (node) {
-        ODSelectItem* pFindSel = node->GetData();
+      for(std::list<ODSelectItem *>::iterator it = SelList.m_pSelectItem.begin(); it != SelList.m_pSelectItem.end(); ++it) {
+        ODSelectItem* pFindSel = *it;
 
         ODPath* pp = (ODPath*)pFindSel->m_pData3;
         if (pp->IsVisible()) {
@@ -3340,7 +3331,6 @@ void ocpn_draw_pi::FindSelectedObject() {
           pFindPathSeg = pFindSel;
           break;
         }
-        node = node->GetNext();
       }
     }
 
