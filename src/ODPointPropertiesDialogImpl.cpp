@@ -326,7 +326,7 @@ void ODPointPropertiesDialogImpl::OnAddLink(wxCommandEvent& event)
         h->Link = g_pODLinkPropertiesDialog->GetLinkURL();
         h->LType = wxEmptyString;
         //m_pODPoint->m_HyperlinkList->Append( h );
-        m_pHyperLinkList->Append(h);
+        m_pHyperLinkList->m_pHyperlink.push_back(h);
         UpdateProperties();
     }
     SetExtraStyle(l_lStyle | wxSTAY_ON_TOP);
@@ -346,10 +346,9 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
     long l_lStyle = GetExtraStyle();
     SetExtraStyle(l_lStyle ^ wxSTAY_ON_TOP);
     DimeWindow(g_pODLinkPropertiesDialog);
-    if(m_pHyperLinkList->GetCount()) {
-        wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
-        while(l_plinknode) {
-            Hyperlink *l_link = l_plinknode->GetData();
+    if(m_pHyperLinkList->m_pHyperlink.size()) {
+        for(std::list<Hyperlink *>::iterator it = m_pHyperLinkList->m_pHyperlink.begin(); it != m_pHyperLinkList->m_pHyperlink.end(); ++it) {
+            Hyperlink *l_link = *it;
             if(findurl == l_link->Link || findlabel == l_link->DescrText) {
                 g_pODLinkPropertiesDialog->SetLinkDescription(l_link->DescrText);
                 g_pODLinkPropertiesDialog->SetLinkURL(l_link->Link);
@@ -361,7 +360,6 @@ void ODPointPropertiesDialogImpl::OnEditLink(wxCommandEvent& event)
 
                 break;
             }
-            l_plinknode = l_plinknode->GetNext();
         }
     }
 
@@ -376,15 +374,13 @@ void ODPointPropertiesDialogImpl::OnDeleteLink( wxCommandEvent& event )
     wxString findurl = m_pClickedLink->GetURL();
     wxString findlabel = m_pClickedLink->GetLabel();
 
-    if(m_pHyperLinkList->GetCount()) {
-        wxHyperlinkListNode *l_plinknode = m_pHyperLinkList->GetFirst();
-        while(l_plinknode) {
-            Hyperlink *l_link = l_plinknode->GetData();
+    if(m_pHyperLinkList->m_pHyperlink.size()) {
+        for(std::list<Hyperlink *>::iterator it = m_pHyperLinkList->m_pHyperlink.begin(); it != m_pHyperLinkList->m_pHyperlink.end(); ++it) {
+            Hyperlink *l_link = *it;
             if(findurl == l_link->Link || findlabel == l_link->DescrText) {
-                m_pHyperLinkList->DeleteNode(l_plinknode);
+                m_pHyperLinkList->m_pHyperlink.remove(l_link);
                 break;
             }
-            l_plinknode = l_plinknode->GetNext();
         }
         UpdateProperties();
     }
@@ -488,13 +484,10 @@ void ODPointPropertiesDialogImpl::SaveChanges()
         } else
             m_pODPoint->m_bDynamicName = false;
 
-        m_pODPoint->m_HyperlinkList->Clear();
-        HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
-        wxHyperlinkListNode *linknode = m_pHyperLinkList->GetFirst();
-        while( linknode ) {
-            Hyperlink *link = linknode->GetData();
-            m_pODPoint->m_HyperlinkList->Append(link);
-            linknode = linknode->GetNext();
+        m_pODPoint->m_HyperlinkList->m_pHyperlink.clear();
+        for(std::list<Hyperlink *>::iterator it = m_pHyperLinkList->m_pHyperlink.begin(); it != m_pHyperLinkList->m_pHyperlink.end(); ++it) {
+            Hyperlink *link = *it;
+            m_pODPoint->m_HyperlinkList->m_pHyperlink.push_back(link);
         }
 
         if( m_pODPoint->m_bIsInPath ) {
@@ -551,20 +544,18 @@ void ODPointPropertiesDialogImpl::SetODPoint( ODPoint *pOP )
         m_pODPoint = pOP;
     }
 
-    m_pHyperLinkList->clear();
+    m_pHyperLinkList->m_pHyperlink.clear();
 
-    int NbrOfLinks = m_pODPoint->m_HyperlinkList->GetCount();
+    int NbrOfLinks = m_pODPoint->m_HyperlinkList->m_pHyperlink.size();
     if( NbrOfLinks > 0 ) {
         HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
-        wxHyperlinkListNode *linknode = hyperlinklist->GetFirst();
-        while( linknode ) {
-            Hyperlink *link = linknode->GetData();
+        for(std::list<Hyperlink *>::iterator it = hyperlinklist->m_pHyperlink.begin(); it != hyperlinklist->m_pHyperlink.end(); ++it) {
+            Hyperlink *link = *it;
             Hyperlink* h = new Hyperlink();
             h->DescrText = link->DescrText;
             h->Link = link->Link;
             h->LType = wxEmptyString;
-            m_pHyperLinkList->Append( h );
-            linknode = linknode->GetNext();
+            m_pHyperLinkList->m_pHyperlink.push_back( h );
         }
     }
 
@@ -714,7 +705,7 @@ bool ODPointPropertiesDialogImpl::UpdateProperties( bool positionOnly )
             m_colourPickerRangeRingsColour->Enable( true );
             m_bSizerLinkButtons->Show( true );
             m_buttonAddLink->Enable( true );
-            if(m_pODPoint->m_HyperlinkList->GetCount() > 0) {
+            if(m_pODPoint->m_HyperlinkList->m_pHyperlink.size() > 0) {
                 m_toggleBtnEditLink->Enable( true );
                 m_toggleBtnDeleteLink->Enable( true );
             }
@@ -835,13 +826,12 @@ bool ODPointPropertiesDialogImpl::UpdateProperties( bool positionOnly )
         int linkcount = m_bSizerLinks->GetItemCount();
         m_bSizerLinks->Clear(true);
 
-        int NbrOfLinks = m_pHyperLinkList->GetCount();
+        int NbrOfLinks = m_pHyperLinkList->m_pHyperlink.size();
         //HyperlinkList *hyperlinklist = m_pODPoint->m_HyperlinkList;
         bool lFirstLine = true;
         if( NbrOfLinks > 0 ) {
-            wxHyperlinkListNode *linknode = m_pHyperLinkList->GetFirst();
-            while( linknode ) {
-                Hyperlink *link = linknode->GetData();
+            for(std::list<Hyperlink *>::iterator it = m_pHyperLinkList->m_pHyperlink.begin(); it != m_pHyperLinkList->m_pHyperlink.end(); ++it) {
+                Hyperlink *link = *it;
                 wxString Link = link->Link;
                 wxString Descr = link->DescrText;
 
@@ -858,7 +848,6 @@ bool ODPointPropertiesDialogImpl::UpdateProperties( bool positionOnly )
                     m_sSingleLineSize = m_bSizerLinks->CalcMin();
                 }
 
-                linknode = linknode->GetNext();
             }
         }
 

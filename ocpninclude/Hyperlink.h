@@ -26,7 +26,7 @@
 #define __HYPERLINK_H__
 
 #include <wx/string.h>
-#include <wx/list.h>
+#include <list>
 
 class Hyperlink // toh, 2009.02.14
 {
@@ -36,6 +36,11 @@ class Hyperlink // toh, 2009.02.14
             wxString LType;
 };
 
-WX_DECLARE_LIST(Hyperlink, HyperlinkList);// establish class as list member
+class HyperlinkList
+{
+public:
+    std::list<Hyperlink *> m_pHyperlink;
+};
+
 
 #endif

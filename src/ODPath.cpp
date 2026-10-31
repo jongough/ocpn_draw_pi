@@ -96,7 +96,7 @@ ODPath::ODPath( void )
 ODPath::~ODPath( void )
 {
     m_ODPointList.m_pODPoint.clear();
-    m_HyperlinkList->Clear();
+    m_HyperlinkList->m_pHyperlink.clear();
     delete m_HyperlinkList;
 }
 

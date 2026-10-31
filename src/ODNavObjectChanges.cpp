@@ -277,10 +277,9 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
     // Hyperlinks
     if(flags & OUT_HYPERLINKS ){
         HyperlinkList *linklist = pop->m_HyperlinkList;
-        if( linklist && linklist->GetCount() ) {
-            wxHyperlinkListNode *linknode = linklist->GetFirst();
-            while( linknode ) {
-                Hyperlink *link = linknode->GetData();
+        if( linklist && linklist->m_pHyperlink.size() ) {
+            for(std::list<Hyperlink *>::iterator it = linklist->m_pHyperlink.begin(); it != linklist->m_pHyperlink.end(); ++it) {
+                Hyperlink *link = *it;
 
                 pugi::xml_node child_link = node.append_child("link");;
                 wxCharBuffer buffer=link->Link.ToUTF8();
@@ -298,8 +297,6 @@ bool ODNavObjectChanges::GPXCreateODPoint( pugi::xml_node node, ODPoint *pop, un
                     child = child_link.append_child("type");
                     child.append_child(pugi::node_pcdata).set_value(buffer.data());
                 }
-
-                linknode = linknode->GetNext();
             }
         }
     }
@@ -452,10 +449,9 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
 
     // Hyperlinks
     HyperlinkList *linklist = pPath->m_HyperlinkList;
-    if( linklist && linklist->GetCount() ) {
-        wxHyperlinkListNode *linknode = linklist->GetFirst();
-        while( linknode ) {
-            Hyperlink *link = linknode->GetData();
+    if( linklist && linklist->m_pHyperlink.size() ) {
+        for(std::list<Hyperlink *>::iterator it = linklist->m_pHyperlink.begin(); it != linklist->m_pHyperlink.end(); ++it) {
+            Hyperlink *link = *it;
 
             pugi::xml_node child_link = node.append_child("link");
             wxCharBuffer buffer = link->Link.ToUTF8();
@@ -474,8 +470,6 @@ bool ODNavObjectChanges::GPXCreatePath( pugi::xml_node node, ODPath *pInPath )
                 child = child_link.append_child("type");
                 child.append_child(pugi::node_pcdata).set_value(buffer.data());
             }
-
-            linknode = linknode->GetNext();
         }
     }
 
@@ -1098,7 +1092,7 @@ ODPoint * ODNavObjectChanges::GPXLoadODPoint1( pugi::xml_node &opt_node,
             link->Link = HrefString;
             link->DescrText = HrefTextString;
             link->LType = HrefTypeString;
-            linklist->Append( link );
+            linklist->m_pHyperlink.push_back( link );
         }
 
     //    OpenCPN Extensions....
@@ -1411,7 +1405,7 @@ ODPath *ODNavObjectChanges::GPXLoadPath1( pugi::xml_node &odpoint_node  , bool b
             link->Link = HrefString;
             link->DescrText = HrefTextString;
             link->LType = HrefTypeString;
-            linklist->Append( link );
+            linklist->m_pHyperlink.push_back( link );
         }
 
         else if( ChildName == _T ( "opencpn:viz" ) ) {

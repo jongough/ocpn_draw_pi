@@ -264,8 +264,8 @@ ODPoint::~ODPoint( void )
         g_pODPointMan->RemoveODPoint( this );
 
     if( m_HyperlinkList ) {
-        m_HyperlinkList->DeleteContents( true );
-        m_HyperlinkList->Clear();
+        //m_HyperlinkList->DeleteContents( true );
+        m_HyperlinkList->m_pHyperlink.clear();
         delete m_HyperlinkList;
     }
 }
@@ -875,6 +875,6 @@ void ODPoint::AddURL(wxString URL, wxString URLDescription)
     l_Link->DescrText = URLDescription;
     l_Link->LType = wxEmptyString;
 
-    m_HyperlinkList->Insert(l_Link);
+    m_HyperlinkList->m_pHyperlink.push_front(l_Link);
 }
 
