@@ -1467,6 +1467,8 @@ void PathAndPointManagerDialogImpl::OnODPointCenterViewClick(
 void PathAndPointManagerDialogImpl::OnODPointDeleteClick(
     wxCommandEvent& event) {
 
+    ODPointList l_ODPointList;
+
   int answer = OCPNMessageBox_PlugIn(
       this, _("Are you sure you want to delete the selected object(s)"),
       wxString(_("OpenCPN Alert")), wxYES_NO);
@@ -1487,11 +1489,11 @@ void PathAndPointManagerDialogImpl::OnODPointDeleteClick(
     item_last_selected = item;
     ODPoint* odp = (ODPoint*)m_listCtrlODPoints->GetItemData(item);
 
-    if (odp && !odp->m_bIsInLayer) g_pODPointMan->m_ODPointList.m_pODPoint.push_back(odp);
+    if (odp && !odp->m_bIsInLayer) l_ODPointList.m_pODPoint.push_back(odp);
   }
 
   if (busy) {
-    ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
+    //ODPointList l_ODPointList = g_pODPointMan->m_ODPointList;
     for(std::list<ODPoint *>::iterator it = l_ODPointList.m_pODPoint.begin(); it != l_ODPointList.m_pODPoint.end(); ++it) {
       ODPoint* odp = *it;
       if (odp) {
