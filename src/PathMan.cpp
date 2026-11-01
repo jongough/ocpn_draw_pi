@@ -60,17 +60,6 @@
 #include <wx/stdpaths.h>
 #include <wx/apptrait.h>
 
-//    List definitions for Point Manager Icons
-WX_DECLARE_LIST(wxBitmap, markicon_bitmap_list_type);
-WX_DECLARE_LIST(wxString, markicon_key_list_type);
-WX_DECLARE_LIST(wxString, markicon_description_list_type);
-
-//    List implementation for Point Manager Icons
-#include <wx/listimpl.cpp>
-WX_DEFINE_LIST(markicon_bitmap_list_type);
-WX_DEFINE_LIST(markicon_key_list_type);
-WX_DEFINE_LIST(markicon_description_list_type);
-
 //--------------------------------------------------------------------------------
 //      Pathman   "Path Manager"
 //--------------------------------------------------------------------------------

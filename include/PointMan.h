@@ -52,10 +52,6 @@ class wxFontEnumerator;
 class BoundaryPoint;
 //    List definitions for Point Manager Icons
 
-class markicon_bitmap_list_type;
-class markicon_key_list_type;
-class markicon_description_list_type;
-
 class PointMan
 {
     public:

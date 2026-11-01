@@ -39,7 +39,6 @@
 #include <wx/gdicmn.h>
 
 
-//WX_DEFINE_LIST(BitmapList);
 WX_DEFINE_OBJARRAY(ArrayOfBitmaps);
 
 ODIconCombo::ODIconCombo (wxWindow* parent, wxWindowID id, const wxString& value,

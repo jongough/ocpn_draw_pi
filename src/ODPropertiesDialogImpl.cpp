@@ -353,7 +353,7 @@ ODPropertiesDialogImpl::ODPropertiesDialogImpl(wxWindow* parent) {
   delete m_bcomboBoxPILStartIconName;
   delete m_bcomboBoxPILEndIconName;
 
-  wxTextFile license_filea(g_SData_Locn->c_str() + _T("license.txt"));
+  wxTextFile license_filea(g_SData_Locn->c_str().AsString() + _T("license.txt"));
   wxString l_LicenseText = wxEmptyString;
   if (license_filea.Open()) {
     for (wxString str = license_filea.GetFirstLine(); !license_filea.Eof();
@@ -364,7 +364,7 @@ ODPropertiesDialogImpl::ODPropertiesDialogImpl(wxWindow* parent) {
     m_textCtrlLicense->Clear();
     m_textCtrlLicense->SetValue(l_LicenseText);
   } else {
-    wxLogMessage(_T("Could not open License file: ") + g_SData_Locn->c_str());
+    wxLogMessage(_T("Could not open License file: ") + g_SData_Locn->c_str().AsString());
   }
 
   SetDialogSize();
