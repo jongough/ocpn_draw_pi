@@ -151,8 +151,7 @@ void Boundary::Draw( piDC& dc, PlugIn_ViewPort &piVP )
             wxGC->FillPath( path );
             delete wxGC;
 #else
-
-            dc.DrawPolygonTessellated(m_ODPointList->GetCount(), m_bpts);
+            dc.DrawPolygonTessellated(m_ODPointList.m_pODPoint.size(), m_bpts);
 #endif
         } else if( !m_bExclusionBoundary && m_bInclusionBoundary && m_ODPointList.m_pODPoint.size() > 3 ) {
             // surround boundary with hatching if there is more than 10 pixels different between points
