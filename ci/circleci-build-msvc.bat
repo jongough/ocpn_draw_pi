@@ -48,8 +48,6 @@ echo Check if poedit has been installed
 poedit -version
 echo Done check
 
-echo Create build environment
-
 if "%MSVC_VERSION%" == "2019" (
 cmake -T v141_xp -G "Visual Studio 16 2019" ^
     -DCMAKE_GENERATOR_PLATFORM=Win32 ^
@@ -65,7 +63,6 @@ cmake -A Win32 -G "Visual Studio 17 2022" ^
     -DwxWidgets_ROOT_DIR=%wxWidgets_ROOT_DIR% ^
     ..
 )
-
 
 cd
 dir
